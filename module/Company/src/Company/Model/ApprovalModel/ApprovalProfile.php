@@ -14,8 +14,7 @@ use Company\Model\Company;
  *
  *
  */
-class ApprovalProfile implements ApprovalAbstract
-{
+class ApprovalProfile implements ApprovalAbstract{
 
 
 
@@ -31,7 +30,7 @@ class ApprovalProfile implements ApprovalAbstract
      *
      * @ORM\Column(type="boolean")
      */
-    protected $approved;
+    protected $rejected = false;
 
 
     // TODO add other profile variables
@@ -176,8 +175,44 @@ class ApprovalProfile implements ApprovalAbstract
      *
      * @return boolean
      */
-    public function getApproved()
+    public function getRejected()
     {
-        return $this->approved;
+        return $this->rejected;
+    }
+
+    /**
+     * Returns an array copy with varName=> var for all variables except the
+     * translation.
+     *
+     * It will aso add keys in the form $lan_varName=>$this->getTranslationFromLocale($lang)=>var
+     *
+     */
+    public function getArrayCopy()
+    {
+        $arraycopy = [];
+        $arraycopy['id'] = $this->getId();
+        $arraycopy['name'] = $this->getName();
+        $arraycopy['slugName'] = $this->getSlugName();
+        $arraycopy['contactName'] = $this->getContactName();
+        $arraycopy['contactEmail'] = $this->getContactEmail();
+        $arraycopy['email'] = $this->getEmail();
+        $arraycopy['address'] = $this->getAddress();
+        $arraycopy['phone'] = $this->getPhone();
+        $arraycopy['highlightCredits'] = $this->getHighlightCredits();
+        $arraycopy['bannerCredits'] = $this->getBannerCredits();
+        $arraycopy['hidden'] = $this->getHidden();
+        $arraycopy['sector'] = $this->getSector();
+
+        // Languages
+        $arraycopy['languages'] = [];
+        foreach ($this->getTranslations() as $translation) {
+            $arraycopy[$translation->getLanguage() . '_' . 'slogan'] = $translation->getSlogan();
+            $arraycopy[$translation->getLanguage() . '_' . 'website'] = $translation->getWebsite();
+            $arraycopy[$translation->getLanguage() . '_' . 'description'] = $translation->getDescription();
+            $arraycopy[$translation->getLanguage() . '_' . 'logo'] = $translation->getLogo();
+            $arraycopy['languages'][] = $translation->getLanguage();
+        }
+
+        return $arraycopy;
     }
 }

@@ -26,6 +26,6 @@ interface ApprovalAbstract
      *
      * @return boolean
      */
-    public function getApproved();
+    public function getRejected();
 
 }

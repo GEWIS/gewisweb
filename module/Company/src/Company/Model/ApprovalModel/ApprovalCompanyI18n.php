@@ -1,17 +1,23 @@
 <?php
 
-namespace Company\Model;
 
+
+namespace Company\Model\ApprovalModel;
+use Company\Model\ApprovalModel\ApprovalAbstract;
 use Doctrine\ORM\Mapping as ORM;
+use Company\Model\ApprovalModel\Company;
 
 /**
- * CompanyI18n model.
- * Contains language-specific information of companies.
+ * VacancyApproval model.
+ *
  *
  * @ORM\Entity
+ *
+ *
  */
-class CompanyI18n //implements ArrayHydrator (for zend2 form)
+class ApprovalCompanyI18n implements ApprovalAbstract
 {
+
     /**
      * Id of the company details.
      *
@@ -63,23 +69,6 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      */
     protected $language;
 
-    /**
-     * The approval's status.
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $rejected = false;
-
-    /**
-     * Constructor.
-     */
-    public function __construct($locale, $company)
-    {
-        $this->description = '';
-        $this->website = '';
-        $this->setLanguage($locale);
-        $this->setCompany($company);
-    }
 
     /**
      * Get the company's id.
@@ -91,10 +80,15 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
         return $this->id;
     }
 
+    public function getRejected()
+    {
+        return $this->rejected;
+    }
+
     /**
      * Get the company entity that these details are for.
      *
-     * @return Company company that these details are for
+     * @return \Company\Model\Company company that these details are for
      */
     public function getCompany()
     {
