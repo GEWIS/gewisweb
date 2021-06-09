@@ -138,7 +138,7 @@ class companyaccountController extends AbstractActionController
                     'highlight'
                 )) {
                     return $this->redirect()->toRoute(
-                        'companyaccount'
+                        'companyaccount/highlight'
                     );
                 }
             } else {
