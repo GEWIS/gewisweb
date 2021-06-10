@@ -30,7 +30,7 @@ class ApprovalCompanyI18n implements ApprovalAbstract
     /**
      * Company entity that these details are for.
      *
-     * @ORM\ManyToOne(targetEntity="\Company\Model\Company", inversedBy="translations", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="\Company\Model\ApprovalModel\ApprovalProfile", inversedBy="translations", cascade={"persist"})
      */
     protected $company;
 
@@ -100,7 +100,7 @@ class ApprovalCompanyI18n implements ApprovalAbstract
      *
      * @param Company $company company that these details are for
      */
-    public function setCompany(Company $company)
+    public function setCompany(ApprovalProfile $company)
     {
         $this->company = $company;
     }
@@ -227,5 +227,17 @@ class ApprovalCompanyI18n implements ApprovalAbstract
 
         return $arraycopy;
     }
+
+    /**
+     * Constructor.
+     */
+    public function __construct($locale, $company)
+    {
+        $this->description = '';
+        $this->website = '';
+        $this->setLanguage($locale);
+        $this->setCompany($company);
+    }
+
 
 }

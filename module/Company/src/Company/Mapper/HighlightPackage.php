@@ -75,6 +75,24 @@ class HighlightPackage extends Package
         return $qb->getQuery()->getResult();
     }
 
+    public function findAllActiveHighlightsList()
+    {
+        $today = date("Y/m/d");
+
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('h');
+        $qb->select('IDENTITY(h.vacancy)', 'c.name', 'h.starts', 'h.expires', 'jc.languageNeutralId')
+            ->join('h.company', 'c')
+            ->join('h.vacancy', 'j')
+            ->join('j.category', 'jc')
+            ->where('h.starts <= ?1')
+            ->andWhere('h.expires >= ?1')
+            ->andWhere('h.published = 1')
+            ->setParameter(1, $today);
+
+        return $qb->getQuery()->getResult();
+    }
+
     /**
      * Get the repository for this mapper.
      *
