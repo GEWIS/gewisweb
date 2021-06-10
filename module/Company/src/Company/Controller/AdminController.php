@@ -191,8 +191,13 @@ class AdminController extends AbstractActionController
         //Set the values for the selection element
         if ($type === 'highlight') {
             $packageForm->get('vacancy_id')
-                ->setValueOptions($companyAccountController->getVacancyNames($companyAccountController->
-                getHighlightableVacancies(14)));
+                ->setValueOptions($companyAccountController->getVacancyNames(
+                    $companyAccountController->getHighlightableVacancies(
+                        $this->getCompanyService()->getCompanyBySlugName(
+                            $companyName
+                        )->getId()
+                    )
+                ));
         }
 
 
