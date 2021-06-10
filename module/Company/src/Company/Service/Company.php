@@ -286,7 +286,7 @@ class Company extends AbstractACLService
         $highlightPackages = $this->getHighlightPackageMapper()->findAllActiveHighlights();
         $highlightIds = [];
         foreach($highlightPackages as $package) {
-            $id = $package->getVacancy()->getId();
+            $id = $package->getVacancy()->getLanguageNeutralId();
             $localeId = $this->getJobMapper()->siblingId($id, $lang);
             $highlightIds = array_merge($highlightIds, $localeId);
         }
