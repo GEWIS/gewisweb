@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-25 18:17+0100\n"
-"PO-Revision-Date: 2021-06-08 21:56+0200\n"
+"PO-Revision-Date: 2021-06-10 12:15+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -149,8 +149,7 @@ msgstr "Toon aantal deelnemers"
 msgid ""
 "Select this to display the number of subscribed GEWIS members to external visitors."
 msgstr ""
-"Selecteer dit om het aantal deelnemers te tonen aan bezoekers welke niet ingelogd "
-"zijn."
+"Selecteer dit om het aantal deelnemers te tonen aan bezoekers welke niet ingelogd zijn."
 
 #: module/Activity/view/partial/create.phtml:230
 msgid "This is a food subscription list"
@@ -158,11 +157,11 @@ msgstr "Dit is een eetlijst"
 
 #: module/Activity/view/partial/create.phtml:231
 msgid ""
-"Select this if the activity is a food subscription list, it then won't be displayed "
-"on the information screens."
+"Select this if the activity is a food subscription list, it then won't be displayed on "
+"the information screens."
 msgstr ""
-"Selecteer dit wanneer deze activiteit een eetlijst is, deze zal dan niet "
-"weergegeven worden op de schermen."
+"Selecteer dit wanneer deze activiteit een eetlijst is, deze zal dan niet weergegeven "
+"worden op de schermen."
 
 #: module/Activity/view/partial/create.phtml:241
 msgid "This is a career related activity"
@@ -170,12 +169,11 @@ msgstr "Dit is een carrière gerelateerde activiteit"
 
 #: module/Activity/view/partial/create.phtml:242
 msgid ""
-"If this is checked the My Future logo will be displayed on the activity page and "
-"the activity will be included on the career activities page."
+"If this is checked the My Future logo will be displayed on the activity page and the "
+"activity will be included on the career activities page."
 msgstr ""
-"Als dit geselecteerd is dan wordt het My Future logo weergegeven op de pagina van "
-"de activiteit en zal de activiteit op de carrière activiteiten pagina weergegeven "
-"worden."
+"Als dit geselecteerd is dan wordt het My Future logo weergegeven op de pagina van de "
+"activiteit en zal de activiteit op de carrière activiteiten pagina weergegeven worden."
 
 #: module/Activity/view/partial/create.phtml:252
 msgid "This activity needs a GEFLITST member to take photos"
@@ -186,8 +184,7 @@ msgid ""
 "When this is checked, GEFLITST will be notified that this activity needs a "
 "photographer."
 msgstr ""
-"Door dit te selecteren zal GEFLITST van deze activiteit op de hoogte gebracht "
-"worden."
+"Door dit te selecteren zal GEFLITST van deze activiteit op de hoogte gebracht worden."
 
 #: module/Activity/view/partial/option.phtml:10
 #: module/Activity/view/activity/activity-calendar/index.phtml:76
@@ -214,11 +211,11 @@ msgstr "Inschrijven zonder GEWIS lidmaatschap"
 
 #: module/Activity/view/partial/signupForm.phtml:26
 msgid ""
-"By subscribing an external participant to this activity, they must agree to the "
-"terms outlined in the"
+"By subscribing an external participant to this activity, they must agree to the terms "
+"outlined in the"
 msgstr ""
-"Door iemand zonder GEWIS lidmaatschap in te schrijven voor deze activiteit moet "
-"deze persoon akkoord gaan met de voorwaarden in het"
+"Door iemand zonder GEWIS lidmaatschap in te schrijven voor deze activiteit moet deze "
+"persoon akkoord gaan met de voorwaarden in het"
 
 #: module/Activity/view/partial/signupForm.phtml:28
 msgid "Subscribe an external participant"
@@ -369,14 +366,13 @@ msgstr "Optiekalender"
 #: module/Activity/view/activity/activity-calendar/index.phtml:16
 msgid ""
 "Welcome on the page of the digital Option Calendar. In the calendar below you can "
-"place options for GEWIS activities, just like you were used to do in the paper "
-"version of the option calendar before. The red dots indicate activities that are "
-"already fixed in the GEWIS agenda, the blue dots are options for activities. If you "
-"insert an option, please give it a clear name, so it is clear what the option is "
-"for."
+"place options for GEWIS activities, just like you were used to do in the paper version "
+"of the option calendar before. The red dots indicate activities that are already fixed "
+"in the GEWIS agenda, the blue dots are options for activities. If you insert an "
+"option, please give it a clear name, so it is clear what the option is for."
 msgstr ""
-"Welkom bij de digitale optiekalender. In onderstaande kalender kunnen er opties "
-"voor GEWIS-activiteiten geplaatst worden, net zoals dat voorheen in de papieren "
+"Welkom bij de digitale optiekalender. In onderstaande kalender kunnen er opties voor "
+"GEWIS-activiteiten geplaatst worden, net zoals dat voorheen in de papieren "
 "optiekalender gebeurde. De rode bolletjes geven goedgekeurde en vaststaande "
 "activiteiten in de GEWIS agenda aan, de blauwe bolletjes zijn opties voor "
 "activiteiten. Als je een optie plaatst, geef deze dan een duidelijke naam waaruit "
@@ -390,26 +386,25 @@ msgstr "Er zijn een paar regels:"
 msgid ""
 "It is not allowed to put more than 3 options for the same activity in the calendar."
 msgstr ""
-"Er mogen niet meer dan 3 opties voor dezelfde activiteit in de optiekalender "
-"geplaatst worden."
+"Er mogen niet meer dan 3 opties voor dezelfde activiteit in de optiekalender geplaatst "
+"worden."
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:21
 msgid ""
-"The first to put an option for an activity on a particular date, has the first dibs "
-"to let the activity take place on this date. Five weeks before the activity takes "
-"place, the budget must have been presented to the board. When this has not been "
-"done, the option will only stay in the calendar for two more weeks. In case the "
-"entity involved does not present their budget within these two weeks nontheless, "
-"the option lapses and the next one in line gets the chance to use this date for an "
-"activity."
+"The first to put an option for an activity on a particular date, has the first dibs to "
+"let the activity take place on this date. Five weeks before the activity takes place, "
+"the budget must have been presented to the board. When this has not been done, the "
+"option will only stay in the calendar for two more weeks. In case the entity involved "
+"does not present their budget within these two weeks nontheless, the option lapses and "
+"the next one in line gets the chance to use this date for an activity."
 msgstr ""
-"Het eerste orgaan dat een optie op een bepaalde dag plaatst, heeft ook het eerst "
-"recht om hun activiteit plaats te laten vinden op deze dag. Vijf weken voordat de "
-"activiteit plaats vindt, moet er een begroting bij het bestuur liggen. Als dit niet "
-"het geval is, dan blijft de optie nog slechts 1 week in de optiekalender staan "
-"(vanaf het moment dat de activiteit over 5 weken plaatsvindt). Wanneer er niet "
-"binnen deze week alsnog een begroting wordt ingediend, dan vervalt de optie, en "
-"krijgt de volgende in de rij de kans om deze dag te gebruiken."
+"Het eerste orgaan dat een optie op een bepaalde dag plaatst, heeft ook het eerst recht "
+"om hun activiteit plaats te laten vinden op deze dag. Vijf weken voordat de activiteit "
+"plaats vindt, moet er een begroting bij het bestuur liggen. Als dit niet het geval is, "
+"dan blijft de optie nog slechts 1 week in de optiekalender staan (vanaf het moment dat "
+"de activiteit over 5 weken plaatsvindt). Wanneer er niet binnen deze week alsnog een "
+"begroting wordt ingediend, dan vervalt de optie, en krijgt de volgende in de rij de "
+"kans om deze dag te gebruiken."
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:22
 msgid ""
@@ -417,9 +412,9 @@ msgid ""
 "example in case of dependence on a third party, or when it concerns very big "
 "activities or weekends."
 msgstr ""
-"Het bestuur kan altijd beslissen om een uitzondering op bovenstaande regels te "
-"maken, bijvoorbeeld in het geval van afhankelijkheid van een derde partij, of als "
-"het gaat om grote activiteiten en weekenden."
+"Het bestuur kan altijd beslissen om een uitzondering op bovenstaande regels te maken, "
+"bijvoorbeeld in het geval van afhankelijkheid van een derde partij, of als het gaat om "
+"grote activiteiten en weekenden."
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:28
 msgid "Your option has been added successfully"
@@ -524,8 +519,7 @@ msgstr "Je kunt momenteel opties plaatsen tussen %s en %s."
 
 #: module/Activity/view/activity/activity-calendar/create.phtml:75
 msgid "The activity could not be saved. Check and correct your input data."
-msgstr ""
-"De activiteit kon niet worden opgeslagen. Controleer en verbeter de input data."
+msgstr "De activiteit kon niet worden opgeslagen. Controleer en verbeter de input data."
 
 #: module/Activity/view/activity/activity-calendar/create.phtml:82
 #: module/Activity/view/activity/admin/list.phtml:51
@@ -670,8 +664,8 @@ msgstr "Inloggen"
 msgid ""
 "To sign up for an activity you must login using an RFID pass or your SuSOS pincode."
 msgstr ""
-"Om in te schrijven voor een activiteit moet je inloggen met een RFID-pas of je "
-"SuSOS pincode."
+"Om in te schrijven voor een activiteit moet je inloggen met een RFID-pas of je SuSOS "
+"pincode."
 
 #: module/Activity/view/activity/activity/touch.phtml:82
 #: module/Activity/view/activity/activity/touch.phtml:125
@@ -901,8 +895,7 @@ msgstr "Bewerk activiteit"
 msgid "Details for activity"
 msgstr "Activiteit details"
 
-#: module/User/view/user/email/reset.phtml:1
-#: module/User/view/user/email/register.phtml:1
+#: module/User/view/user/email/reset.phtml:1 module/User/view/user/email/register.phtml:1
 #, php-format
 msgid "Dear %s,"
 msgstr "Beste %s,"
@@ -931,8 +924,8 @@ msgstr "WebCommissie GEWIS"
 
 #: module/User/view/user/email/register.phtml:3
 msgid ""
-"You have been registered on the website of Study association GEWIS, with the "
-"following information:"
+"You have been registered on the website of Study association GEWIS, with the following "
+"information:"
 msgstr ""
 "Je bent geregistreerd op de website van Studievereniging GEWIS, met de volgende "
 "informatie:"
@@ -958,8 +951,7 @@ msgstr "Reset wachtwoord"
 #, php-format
 msgid "An email has been sent to %s with instructions for resetting your password."
 msgstr ""
-"Er is een e-mail naar %s gestuurd met instructies voor het resetten van je "
-"wachtwoord."
+"Er is een e-mail naar %s gestuurd met instructies voor het resetten van je wachtwoord."
 
 #: module/User/view/user/user/logout.phtml:1
 msgid "You are logged out."
@@ -984,8 +976,7 @@ msgid "You are logged in."
 msgstr "Je bent ingelogd."
 
 #: module/User/view/user/user/activate.phtml:2
-#: module/User/view/user/user/activate.phtml:23
-#: module/User/src/User/Form/Activate.php:37
+#: module/User/view/user/user/activate.phtml:23 module/User/src/User/Form/Activate.php:37
 msgid "Activate"
 msgstr "Activeer"
 
@@ -1008,8 +999,7 @@ msgid "Verify password"
 msgstr "Verifier wachtwoord"
 
 #: module/User/view/user/user/register.phtml:2
-#: module/User/view/user/user/register.phtml:23
-#: module/User/src/User/Form/Register.php:44
+#: module/User/view/user/user/register.phtml:23 module/User/src/User/Form/Register.php:44
 msgid "Register"
 msgstr "Registreer"
 
@@ -1042,8 +1032,7 @@ msgstr "Voeg een nieuw Token toe"
 msgid "Add a token"
 msgstr "Voeg een token toe"
 
-#: module/User/view/user/api-admin/add.phtml:28
-#: module/User/src/User/Form/ApiToken.php:29
+#: module/User/view/user/api-admin/add.phtml:28 module/User/src/User/Form/ApiToken.php:29
 msgid "Create API token"
 msgstr "Maak een API token"
 
@@ -1140,8 +1129,7 @@ msgstr "Stem voor de foto van de week"
 msgid "Metadata"
 msgstr "Metadata"
 
-#: module/Photo/view/photo/photo/view.phtml:3
-#: module/Photo/view/photo/photo/view.phtml:40
+#: module/Photo/view/photo/photo/view.phtml:3 module/Photo/view/photo/photo/view.phtml:40
 #: module/Photo/view/photo/photo/view.phtml:88
 msgid "Photo"
 msgstr "Foto"
@@ -1262,8 +1250,8 @@ msgstr "Bevestig verwijderen"
 msgid ""
 "Are you sure you want to delete this photo? <b>This action can not be reverted.</b>"
 msgstr ""
-"Weet je zeker dat je deze foto wil verwijderen? <strong>Deze actie kan niet "
-"ongedaan gemaakt worden</strong>"
+"Weet je zeker dat je deze foto wil verwijderen? <strong>Deze actie kan niet ongedaan "
+"gemaakt worden</strong>"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:107
 msgid "Please wait while your photo is being deleted."
@@ -1336,11 +1324,11 @@ msgstr "Het album is verplaatst"
 
 #: module/Photo/view/photo/album-admin/index.phtml:182
 msgid ""
-"Are you sure you want to delete this album including all photos inside of it? "
-"<b>This action can not be reverted.</b>"
+"Are you sure you want to delete this album including all photos inside of it? <b>This "
+"action can not be reverted.</b>"
 msgstr ""
-"Weet je zeker dat je dit album met alle foto's wil verwijderen? <strong>Deze actie "
-"kan niet ongedaan gemaakt worden</strong>"
+"Weet je zeker dat je dit album met alle foto's wil verwijderen? <strong>Deze actie kan "
+"niet ongedaan gemaakt worden</strong>"
 
 #: module/Photo/view/photo/album-admin/index.phtml:185
 msgid "Please wait while the album is being deleted."
@@ -1352,8 +1340,8 @@ msgstr "Dit album kan verwijderd worden"
 
 #: module/Photo/view/photo/album-admin/index.phtml:214
 msgid ""
-"Are you sure you want to delete the selected items? <b>This action can not be "
-"reverted.</b>"
+"Are you sure you want to delete the selected items? <b>This action can not be reverted."
+"</b>"
 msgstr ""
 "Weet je zeker dat je de geselecteerde items wil verwijderen? <strong>Deze actie kan "
 "niet ongedaan gemaakt worden</strong>"
@@ -1405,8 +1393,7 @@ msgstr "Tag iemand"
 msgid "Artist"
 msgstr "Artiest"
 
-#: module/Photo/view/partial/metadata.phtml:9
-#: module/Photo/view/partial/metadata.phtml:16
+#: module/Photo/view/partial/metadata.phtml:9 module/Photo/view/partial/metadata.phtml:16
 #: module/Photo/view/partial/metadata.phtml:37
 #: module/Photo/view/partial/metadata.phtml:44
 #: module/Photo/view/partial/metadata.phtml:51
@@ -1761,6 +1748,7 @@ msgstr "Verwijder pakket"
 #: module/Company/view/company/admin/edit-package.phtml:10
 #: module/Company/src/Company/Form/EditPackage.php:86
 #: module/Decision/view/decision/company-account/index.phtml:132
+#: module/Decision/view/decision/company-account/settings.phtml:290
 msgid "Banner"
 msgstr "Banner"
 
@@ -1820,10 +1808,9 @@ msgid ""
 "You may still be able to authorize someone or revoke an authorization by contacting "
 "the board."
 msgstr ""
-"Er zijn geen vergaderingen waar je machtigingen voor af kunt geven of kan "
-"wijzigen.\n"
-"Mogelijk kun je nog wel iemand machtigen of een machtiging intrekken door contact "
-"op te nemen met het bestuur."
+"Er zijn geen vergaderingen waar je machtigingen voor af kunt geven of kan wijzigen.\n"
+"Mogelijk kun je nog wel iemand machtigen of een machtiging intrekken door contact op "
+"te nemen met het bestuur."
 
 #: module/Decision/view/decision/decision/authorizations.phtml:14
 #, php-format
@@ -1832,8 +1819,8 @@ msgstr "Je hebt %s gemachtigd voor AV %s (%s)"
 
 #: module/Decision/view/decision/decision/authorizations.phtml:20
 msgid ""
-"If you want to revoke your authorization you have to communicate this to the board "
-"in writing (not by email)."
+"If you want to revoke your authorization you have to communicate this to the board in "
+"writing (not by email)."
 msgstr ""
 "Mocht je deze machtiging willen intrekken, dan kan dit door dit schriftelijk aan te "
 "geven bij het bestuur (dus niet per mail)."
@@ -1854,8 +1841,8 @@ msgstr "Voorwaarden"
 #: module/Decision/view/decision/decision/authorizations.phtml:58
 #, php-format
 msgid ""
-"I, %s am fully aware that by filling in this form I authorize the person in this "
-"form to represent me at General Meeting %s of s.v. GEWIS"
+"I, %s am fully aware that by filling in this form I authorize the person in this form "
+"to represent me at General Meeting %s of s.v. GEWIS"
 msgstr ""
 "Ik, %s ben mij volledig bewust van het feit dat ik de persoon in dit formulier een "
 "machtiging geef voor de %sste Algemene ledenvergadering der s.v. GEWIS"
@@ -2074,8 +2061,8 @@ msgstr "Einddatum van lidmaatschap"
 
 #: module/Decision/view/decision/member/self.phtml:99
 msgid ""
-"If your information is no longer up to date and you would like to change it, you "
-"can contact the secretary of GEWIS."
+"If your information is no longer up to date and you would like to change it, you can "
+"contact the secretary of GEWIS."
 msgstr ""
 "Als je gegevens niet meer actueel zijn of je ze wilt ze laten wijzigen, neem dan "
 "contact op met de secretaris van GEWIS."
@@ -2124,6 +2111,7 @@ msgstr "Land"
 
 #: module/Decision/view/decision/member/self.phtml:136
 #: module/Decision/view/decision/member/view.phtml:90
+#: module/Decision/view/decision/company-account/settings.phtml:60
 msgid "Street and number"
 msgstr "Straat en huisnummer"
 
@@ -2133,6 +2121,7 @@ msgid "City and postal code"
 msgstr "Woonplaats en postcode"
 
 #: module/Decision/view/decision/member/self.phtml:144
+#: module/Decision/view/decision/company-account/settings.phtml:64
 msgid "Phone number"
 msgstr "Telefoonnummer"
 
@@ -2321,16 +2310,16 @@ msgstr "Generatie"
 
 #: module/Decision/view/decision/member/search.phtml:31
 msgid ""
-"Er zijn teveel resultaten om weer te geven. Probeer te filteren om andere "
-"resultaten te zien."
+"Er zijn teveel resultaten om weer te geven. Probeer te filteren om andere resultaten "
+"te zien."
 msgstr ""
-"Er zijn teveel resultaten om weer te geven. Probeer te filteren om andere "
-"resultaten te zien."
+"Er zijn teveel resultaten om weer te geven. Probeer te filteren om andere resultaten "
+"te zien."
 
 #: module/Decision/view/decision/organ-admin/index.phtml:2
 msgid ""
-"Select an organ to edit its information. Changes will not be displayed until they "
-"have been approved."
+"Select an organ to edit its information. Changes will not be displayed until they have "
+"been approved."
 msgstr ""
 "Selecteer een orgaan om de informatie te wijzigen. Wijzigingen worden niet getoond "
 "totdat deze goedgekeurd zijn."
@@ -2352,8 +2341,8 @@ msgstr ""
 #: module/Decision/view/decision/organ-admin/edit.phtml:123
 msgid "To optimally display your image your page, please crop it below"
 msgstr ""
-"Om deze afbeelding optimaal weer te kunnen geven op je persoonlijke commissie "
-"pagina, moet deze bijgesneden worden"
+"Om deze afbeelding optimaal weer te kunnen geven op je persoonlijke commissie pagina, "
+"moet deze bijgesneden worden"
 
 #: module/Decision/view/decision/admin/notes.phtml:2
 msgid "Meeting notes uploaded"
@@ -2473,12 +2462,12 @@ msgstr "Disputen"
 #: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:8
 msgid ""
 "Study association GEWIS obviously has several fraternities which contribute to the "
-"atmosphere at GEWIS and organize fun activities. Some fraternities have retired, "
-"but luckily new fraternities continue to be founded."
+"atmosphere at GEWIS and organize fun activities. Some fraternities have retired, but "
+"luckily new fraternities continue to be founded."
 msgstr ""
 "Studievereniging GEWIS heeft natuurlijk verschillende disputen die bijdragen aan de "
-"goede atmosfeer bij GEWIS en leuke activiteiten organiseren. Sommige disputen zijn "
-"in ruste."
+"goede atmosfeer bij GEWIS en leuke activiteiten organiseren. Sommige disputen zijn in "
+"ruste."
 
 #: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:9
 msgid "The currently active fraternities of GEWIS (in arbitrary order)"
@@ -2523,8 +2512,7 @@ msgstr "Log in om meer informatie te zien"
 
 #: module/Frontpage/view/frontpage/organ/committee-list.phtml:8
 msgid "GEWIS has many different committees, learn more about them below!"
-msgstr ""
-"GEWIS heeft veel verschillende commissies, zie hieronder voor meer informatie!"
+msgstr "GEWIS heeft veel verschillende commissies, zie hieronder voor meer informatie!"
 
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:12
 msgid "Polls awaiting approval"
@@ -2621,11 +2609,10 @@ msgstr "Studievereniging GEWIS"
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:11
 msgid ""
 "Welcome to the website of Study association GEWIS, the study association of the "
-"department of Mathematics & Computer Science of the Eindhoven University of "
-"Technology."
+"department of Mathematics & Computer Science of the Eindhoven University of Technology."
 msgstr ""
-"Welkom op de website van Studievereniging GEWIS. De studievereniging van de "
-"faculteit Wiskunde & Informatica aan de Technische Universiteit Eindhoven."
+"Welkom op de website van Studievereniging GEWIS. De studievereniging van de faculteit "
+"Wiskunde & Informatica aan de Technische Universiteit Eindhoven."
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:16
 #: module/Application/view/partial/admin-nav.phtml:76
@@ -2689,11 +2676,10 @@ msgid "URL options"
 msgstr "URL opties"
 
 #: module/Frontpage/view/frontpage/page-admin/edit.phtml:14
-msgid ""
-"Make this page available at the following URL. Providing a category is required."
+msgid "Make this page available at the following URL. Providing a category is required."
 msgstr ""
-"Maak deze pagina beschikbaar op de volgende URL. Het is verplicht om een categorie "
-"te specificeren."
+"Maak deze pagina beschikbaar op de volgende URL. Het is verplicht om een categorie te "
+"specificeren."
 
 #: module/Frontpage/view/frontpage/page-admin/edit.phtml:93
 msgid "Permissions"
@@ -2712,8 +2698,8 @@ msgid ""
 "Welcome to the admin interface of the GEWIS website. If you are experiencing any "
 "issues or have a question, please contact the web committee."
 msgstr ""
-"Welkom op de admin interface. Als er problemen zijn, of als je vragen hebt, "
-"contacteer de WebCommissie."
+"Welkom op de admin interface. Als er problemen zijn, of als je vragen hebt, contacteer "
+"de WebCommissie."
 
 #: module/Frontpage/view/frontpage/admin/index.phtml:3
 msgid "Recent changes"
@@ -2971,11 +2957,11 @@ msgstr "Bekijk beschikbare documenten"
 #: module/Education/view/education/education/index.phtml:89
 #, php-format
 msgid ""
-"Do you want to contribute to the collection of old exams and summaries? Send them "
-"to the %seducation officer%s so that your (future) peers can benefit."
+"Do you want to contribute to the collection of old exams and summaries? Send them to "
+"the %seducation officer%s so that your (future) peers can benefit."
 msgstr ""
-"Wil je bijdragen aan het verzamelen van samenvattingen? Stuur je samenvatting naar "
-"de %sonderwijs commissaris%s zodat je (toekomstige) studiegenoten er van kunnen "
+"Wil je bijdragen aan het verzamelen van samenvattingen? Stuur je samenvatting naar de "
+"%sonderwijs commissaris%s zodat je (toekomstige) studiegenoten er van kunnen "
 "profiteren."
 
 #: module/Education/view/education/education/index.phtml:90
@@ -3017,8 +3003,8 @@ msgstr "Boeken"
 
 #: module/Education/view/education/education/index.phtml:125
 msgid ""
-"Order your course books via GEWIS to receive a discount. Specific ordering "
-"deadlines and pickup dates will be timely communicated to you via an email."
+"Order your course books via GEWIS to receive a discount. Specific ordering deadlines "
+"and pickup dates will be timely communicated to you via an email."
 msgstr ""
 "Bestel je boeken met korting via GEWIS. Specifieke bestel deadlines en ophaaltijden "
 "worden tijdig naar je gecommuniceerd via de e-mail."
@@ -3033,8 +3019,8 @@ msgstr "Bezoek webshop"
 
 #: module/Education/view/education/education/index.phtml:140
 msgid ""
-"Through Microsoft Imagine you have access to a vast variety of Microsoft products "
-"at no cost. The only requirement is that you are a member of GEWIS."
+"Through Microsoft Imagine you have access to a vast variety of Microsoft products at "
+"no cost. The only requirement is that you are a member of GEWIS."
 msgstr ""
 "Via Microsoft Imagine heb je gratis toegang tot een gevarieerd assortiment van "
 "Microsoft-producten. De enige vereiste is dat je lid bent van GEWIS."
@@ -3057,8 +3043,8 @@ msgid ""
 "Do you have a complaint or suggestion concerning the education at the TU/e? Contact "
 "the %seducation officer%s to share your ideas."
 msgstr ""
-"Heb je een klacht of een suggestie over het onderwijs aan de TU/e? Neem dan contact "
-"op met de %sonderwijscommissaris%s om je feedback te delen."
+"Heb je een klacht of een suggestie over het onderwijs aan de TU/e? Neem dan contact op "
+"met de %sonderwijscommissaris%s om je feedback te delen."
 
 #: module/Education/view/education/education/index.phtml:169
 msgid "Disclaimer on educational content"
@@ -3066,11 +3052,11 @@ msgstr "Disclaimer over onderwijsinhoud"
 
 #: module/Education/view/education/education/index.phtml:174
 msgid ""
-"The exams on the website of GEWIS are provided by Education & Student Affairs of "
-"the department of Mathematics and Computer Science of the TU/e."
+"The exams on the website of GEWIS are provided by Education & Student Affairs of the "
+"department of Mathematics and Computer Science of the TU/e."
 msgstr ""
-"De tentamens op de site van GEWIS zijn verstrekt door Education & Student Affairs "
-"van de faculteit Wiskunde en Informatica van de TU/e."
+"De tentamens op de site van GEWIS zijn verstrekt door Education & Student Affairs van "
+"de faculteit Wiskunde en Informatica van de TU/e."
 
 #: module/Education/view/education/education/index.phtml:175
 msgid ""
@@ -3090,8 +3076,8 @@ msgstr "een mail te sturen naar het bestuur van GEWIS"
 
 #: module/Education/view/education/education/index.phtml:177
 msgid ""
-"then this exam will be removed from the website. Using the summaries or exams on "
-"this website for commercial goals without the permission of the author is illegal."
+"then this exam will be removed from the website. Using the summaries or exams on this "
+"website for commercial goals without the permission of the author is illegal."
 msgstr ""
 "dan zal dit tentamen worden verwijderd van de website. Het is niet toegestaan om de "
 "samenvattingen of tentamens op deze website zonder toestemming van de auteur te "
@@ -3142,8 +3128,8 @@ msgstr "Het uploaden van alle tentamens is klaar."
 #: module/Education/view/education/admin/edit-exam.phtml:10
 msgid "There are no exams to be edited. Upload exams to edit them."
 msgstr ""
-"Er zijn geen tentamens om te wijzigen. Upload nieuwe tentamens om deze correct in "
-"de Website te zetten."
+"Er zijn geen tentamens om te wijzigen. Upload nieuwe tentamens om deze correct in de "
+"Website te zetten."
 
 #: module/Education/view/education/admin/index.phtml:1
 msgid "Education admin"
@@ -3241,8 +3227,8 @@ msgstr "Je hebt niet de rechten om aankomende activiteiten te zien"
 #: module/Activity/src/Activity/Service/ActivityQuery.php:227
 msgid "You are not allowed to view upcoming activities coupled to a member account"
 msgstr ""
-"Je hebt niet de rechten om aankomende activiteiten te zien die gekoppeld zijn een "
-"het account van een lid"
+"Je hebt niet de rechten om aankomende activiteiten te zien die gekoppeld zijn een het "
+"account van een lid"
 
 #: module/Activity/src/Activity/Service/Signup.php:50
 #: module/Activity/src/Activity/Service/Signup.php:186
@@ -3263,8 +3249,7 @@ msgstr "Je hebt niet de rechten om ingeschreven leden te zien"
 
 #: module/Activity/src/Activity/Service/Signup.php:161
 msgid "You are not allowed to view activities which you signed up for"
-msgstr ""
-"Je hebt niet de rechten om te zien voor welke activiteiten je ingeschreven bent"
+msgstr "Je hebt niet de rechten om te zien voor welke activiteiten je ingeschreven bent"
 
 #: module/Activity/src/Activity/Service/Signup.php:210
 #: module/Activity/src/Activity/Service/Signup.php:230
@@ -3278,8 +3263,7 @@ msgstr "Je moet ingelogd zijn om je uit te schrijven voor deze activiteit"
 #: module/Activity/src/Activity/Service/Signup.php:328
 msgid "You are not allowed to remove external signups for this activity"
 msgstr ""
-"Je hebt niet de rechten om externe inschrijvingen te verwijderen voor deze "
-"activiteit"
+"Je hebt niet de rechten om externe inschrijvingen te verwijderen voor deze activiteit"
 
 #: module/Activity/src/Activity/Form/ActivityCalendarOption.php:30
 msgid "Lunch lecture"
@@ -4207,14 +4191,17 @@ msgid "Company Account"
 msgstr "Bedrijfsaccount"
 
 #: module/Decision/view/decision/company-account/index.phtml:45
+#: module/Decision/view/decision/company-account/settings.phtml:35
 msgid "Vacancy package will expire within one month!"
 msgstr "Vacature pakket verloopt binnen een maand!"
 
 #: module/Decision/view/decision/company-account/index.phtml:55
+#: module/Decision/view/decision/company-account/settings.phtml:45
 msgid "Vacancy package has expired, please contact an administrator."
 msgstr "Vacature pakket is verlopen, neemt alstublieft contact op met een administrator."
 
 #: module/Decision/view/decision/company-accomsgunt/index.phtml:92
+#: module/Decision/view/decision/company-account/settings.phtml:3
 msgid "Settings"
 msgstr "Instellingen"
 
@@ -4255,6 +4242,75 @@ msgstr "Er zijn geen actieve vacatures, "
 msgid "add new vacancy."
 msgstr "voeg een nieuwe vacature toe"
 
+#: module/Decision/view/decision/company-account/settings.phtml:52
+msgid "Personal information (double click to edit)"
+msgstr "Persoonlijke informatie (dubbel click om te bewerken)"
+
+#: module/Decision/view/decision/company-account/settings.phtml:55
+msgid "Contact email"
+msgstr "Contact email"
+
+#: module/Decision/view/decision/company-account/settings.phtml:68
+msgid "Email subscription"
+msgstr "Email abonnement"
+
+#: module/Decision/view/decision/company-account/settings.phtml:83
+msgid "Safe changes"
+msgstr "Veranderingen opslaan"
+
+#: module/Decision/view/decision/company-account/settings.phtml:123
+msgid "Please enter a valid email address!"
+msgstr "Voer alstublieft een correct email adres in!"
+
+#: module/Decision/view/decision/company-account/settings.phtml:131
+msgid "Please enter a valid street and number!"
+msgstr "Voer alstublieft een correct straat en huisnummer in!"
+
+#: module/Decision/view/decision/company-account/settings.phtml:139
+msgid "Please enter a valid phone number!"
+msgstr "Voer alstublief en correct telefoon nummer in!"
+
+#: module/Decision/view/decision/company-account/settings.phtml:259
+#: module/Decision/view/decision/company-account/settings.phtml:262
+msgid "Account status"
+msgstr "Account status"
+
+#: module/Decision/view/decision/company-account/settings.phtml:73
+#: module/Decision/view/decision/company-account/settings.phtml:265
+msgid "inactive"
+msgstr "inactief"
+
+#: module/Decision/view/decision/company-account/settings.phtml:71
+#: module/Decision/view/decision/company-account/settings.phtml:269
+msgid "active"
+msgstr "actief"
+
+#: module/Decision/view/decision/company-account/settings.phtml:275
+msgid "Start date of membership"
+msgstr "Start datum van lidmaatschap"
+
+#: module/Decision/view/decision/company-account/settings.phtml:280
+msgid "Eind datum van lidmaatschap"
+msgstr "End date of membership"
+
+#: module/Decision/view/decision/company-account/settings.phtml:285
+msgid "Contract number vacancy package"
+msgstr "Contract nummer vacature pakket"
+
+#: module/Decision/view/decision/company-account/settings.phtml:296
+#: module/Decision/view/decision/company-account/settings.phtml:310
+msgid "day left"
+msgstr "dag over"
+
+#: module/Decision/view/decision/company-account/settings.phtml:298
+#: module/Decision/view/decision/company-account/settings.phtml:312
+msgid "days left"
+msgstr "dagen over"
+
+#: module/Decision/view/decision/company-account/settings.phtml:304
+msgid "highlight"
+msgstr "highlight"
+
 #~ msgid "Create activity"
 #~ msgstr "Create activity"
 
@@ -4269,8 +4325,7 @@ msgstr "voeg een nieuwe vacature toe"
 
 #~ msgid "A list of helpful pages to manage the organ(s) you are part of."
 #~ msgstr ""
-#~ "Een lijst met behulpzame paginas voor het beheren van organen waar je lid van "
-#~ "bent."
+#~ "Een lijst met behulpzame paginas voor het beheren van organen waar je lid van bent."
 
 #~ msgid "Notes for this meeting"
 #~ msgstr "Notulen voor deze vergadering"
@@ -4355,8 +4410,8 @@ msgstr "voeg een nieuwe vacature toe"
 #~ "Studenten) and was founded in 1982.\r\n"
 #~ "                    On this website you can find out %s and %s."
 #~ msgstr ""
-#~ "GEWIS betekent GEmeenschap van Wiskunde en Informatica Studenten en was "
-#~ "opgericht in 1982. Op deze website kun je %s en %s vinden."
+#~ "GEWIS betekent GEmeenschap van Wiskunde en Informatica Studenten en was opgericht "
+#~ "in 1982. Op deze website kun je %s en %s vinden."
 
 #~ msgid "who we are"
 #~ msgstr "wie we zijn"
@@ -4450,12 +4505,12 @@ msgstr "voeg een nieuwe vacature toe"
 
 #~ msgid ""
 #~ "Do you really want to delete this package? This will delete all containing Jobs. "
-#~ "Instead, you can also disable the 'published' option of this package to just "
-#~ "hide it."
+#~ "Instead, you can also disable the 'published' option of this package to just hide "
+#~ "it."
 #~ msgstr ""
-#~ "Weet je zeker dat je dit pakket wilt verwijderen? Dit verwijderd ook alle banen. "
-#~ "In plaats van verwijderen kun je ook the 'publiceer' optie uitzetten om hem niet "
-#~ "op de website te tonen."
+#~ "Weet je zeker dat je dit pakket wilt verwijderen? Dit verwijderd ook alle banen. In "
+#~ "plaats van verwijderen kun je ook the 'publiceer' optie uitzetten om hem niet op de "
+#~ "website te tonen."
 
 #~ msgid "Commissions"
 #~ msgstr "Commissies"
@@ -4479,20 +4534,20 @@ msgstr "voeg een nieuwe vacature toe"
 #~ msgstr "Importeer foto's"
 
 #~ msgid ""
-#~ "Make sure that the folder permissions on your import folder are set such that "
-#~ "the webserver user can read the files inside of it. Please note that importing a "
-#~ "large amount of photos may take a while."
+#~ "Make sure that the folder permissions on your import folder are set such that the "
+#~ "webserver user can read the files inside of it. Please note that importing a large "
+#~ "amount of photos may take a while."
 #~ msgstr ""
-#~ "Zorg dat de rechten op de importmap zo zijn gezet dat de webserver de bestanden "
-#~ "in de map kan bereiken. Het importeren van een grote hoeveelheid foto's kan een "
-#~ "lange tijd duren."
+#~ "Zorg dat de rechten op de importmap zo zijn gezet dat de webserver de bestanden in "
+#~ "de map kan bereiken. Het importeren van een grote hoeveelheid foto's kan een lange "
+#~ "tijd duren."
 
 #~ msgid ""
 #~ "Welcome to the website of Study association %sGEWIS%s. This is just a bootstrap "
 #~ "thingy for now, until the design is implemented."
 #~ msgstr ""
-#~ "Welkom op de website van Studievereniging %sGEWIS%s. Dit is slechts een "
-#~ "bootstrap dingetje op het moment, totdat het design geimplementeerd is."
+#~ "Welkom op de website van Studievereniging %sGEWIS%s. Dit is slechts een bootstrap "
+#~ "dingetje op het moment, totdat het design geimplementeerd is."
 
 #~ msgid "Welcome to %sGEWIS%s"
 #~ msgstr "Welkom op de %sGEWIS%s website"
@@ -4507,13 +4562,13 @@ msgstr "voeg een nieuwe vacature toe"
 #~ msgstr "Welkom bij %sZend Framework 2%s"
 
 #~ msgid ""
-#~ "Congratulations! You have successfully installed the %sZF2 Skeleton Application"
-#~ "%s. You are currently running Zend Framework version %s. This skeleton can serve "
-#~ "as a simple starting point for you to begin building your application on ZF2."
+#~ "Congratulations! You have successfully installed the %sZF2 Skeleton Application%s. "
+#~ "You are currently running Zend Framework version %s. This skeleton can serve as a "
+#~ "simple starting point for you to begin building your application on ZF2."
 #~ msgstr ""
-#~ "Gefeliciteerd! Je hebt de %sZF2 Applicatie Fundering%s succesvol geinstalleerd. "
-#~ "Je gebruikt Zend Framework versie %s. Deze fundering biedt je een startpunt om "
-#~ "je ZF2 applicatie op voort te bouwen."
+#~ "Gefeliciteerd! Je hebt de %sZF2 Applicatie Fundering%s succesvol geinstalleerd. Je "
+#~ "gebruikt Zend Framework versie %s. Deze fundering biedt je een startpunt om je ZF2 "
+#~ "applicatie op voort te bouwen."
 
 #~ msgid "Fork Zend Framework 2 on GitHub"
 #~ msgstr "Fork Zend Framework 2 op Github"
@@ -4524,15 +4579,15 @@ msgstr "voeg een nieuwe vacature toe"
 #~ msgid ""
 #~ "Zend Framework 2 is under active development. If you are interested in following "
 #~ "the development of ZF2, there is a special ZF2 portal on the official Zend "
-#~ "Framework website which provides links to the ZF2 %swiki%s, %sdev blog%s, "
-#~ "%sissue tracker%s, and much more. This is a great resource for staying up to "
-#~ "date with the latest developments!"
+#~ "Framework website which provides links to the ZF2 %swiki%s, %sdev blog%s, %sissue "
+#~ "tracker%s, and much more. This is a great resource for staying up to date with the "
+#~ "latest developments!"
 #~ msgstr ""
-#~ "Zend Framework 2 wordt actief ontwikkeld. Als je interesse hebt in het volgen "
-#~ "van deze ontwikkelingen dan kun je de ZF2 portaal bezoeken op de offici&euml;le "
-#~ "website van Zend Framework. Daar staan links naar de ZF2 %swiki%s, %sdev blog%s, "
-#~ "%sissue tracker%s en nog veel meer. Het is het perfecte middel om up-to-date te "
-#~ "blijven met de ontwikkelingen."
+#~ "Zend Framework 2 wordt actief ontwikkeld. Als je interesse hebt in het volgen van "
+#~ "deze ontwikkelingen dan kun je de ZF2 portaal bezoeken op de offici&euml;le website "
+#~ "van Zend Framework. Daar staan links naar de ZF2 %swiki%s, %sdev blog%s, %sissue "
+#~ "tracker%s en nog veel meer. Het is het perfecte middel om up-to-date te blijven met "
+#~ "de ontwikkelingen."
 
 #~ msgid "ZF2 Development Portal"
 #~ msgstr "ZF2 Ontwikkelaars Portaal"
@@ -4546,10 +4601,10 @@ msgstr "voeg een nieuwe vacature toe"
 #~ "currently live and currently contains a list of some of the modules already "
 #~ "available for ZF2."
 #~ msgstr ""
-#~ "De community werkt aan een eigen community website die dient als een "
-#~ "bewaarplaats en galerij voor ZF2 modules. Het project is beschikbaar %sop GitHub"
-#~ "%s. De site staat op dit moment live en bevat een lijst met modules die op dit "
-#~ "moment beschikbaar zijn voor ZF2."
+#~ "De community werkt aan een eigen community website die dient als een bewaarplaats "
+#~ "en galerij voor ZF2 modules. Het project is beschikbaar %sop GitHub%s. De site "
+#~ "staat op dit moment live en bevat een lijst met modules die op dit moment "
+#~ "beschikbaar zijn voor ZF2."
 
 #~ msgid "Explore ZF2 Modules"
 #~ msgstr "Verken ZF2 Modules"
@@ -4559,14 +4614,14 @@ msgstr "voeg een nieuwe vacature toe"
 
 #~ msgid ""
 #~ "If you need any help or support while developing with ZF2, you may reach us via "
-#~ "IRC: %s#zftalk on Freenode%s. We'd love to hear any questions or feedback you "
-#~ "may have regarding the beta releases. Alternatively, you may subscribe and post "
+#~ "IRC: %s#zftalk on Freenode%s. We'd love to hear any questions or feedback you may "
+#~ "have regarding the beta releases. Alternatively, you may subscribe and post "
 #~ "questions to the %smailing lists%s."
 #~ msgstr ""
-#~ "Als je hulp nodig hebt tijdens het ontwikkelen met ZF2, dan kun je ons bereiken "
-#~ "via IRC: %s#zftalk op Freenode%s. We beantwoorde met alle liefde je vragen en "
-#~ "zouden graag feedback krijgen betreffende de beta releases. Je kunt je ook "
-#~ "abonneren op de %smailing lists%s."
+#~ "Als je hulp nodig hebt tijdens het ontwikkelen met ZF2, dan kun je ons bereiken via "
+#~ "IRC: %s#zftalk op Freenode%s. We beantwoorde met alle liefde je vragen en zouden "
+#~ "graag feedback krijgen betreffende de beta releases. Je kunt je ook abonneren op de "
+#~ "%smailing lists%s."
 
 #~ msgid "Ping us on IRC"
 #~ msgstr "Ping ons via IRC"

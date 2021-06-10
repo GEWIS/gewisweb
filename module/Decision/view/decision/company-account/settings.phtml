@@ -68,9 +68,9 @@ if ($companyPackageInfo[0]->getExpirationDate() < $now){
                             <th><?= $this->translate('Email subscription') ?></th>
                             <td><?php
                                 if($emailSubscription === 1){
-                                    echo "active";
+                                    echo $this->translate("active");
                                 }else{
-                                    echo "inactive";
+                                    echo $this->translate("inactive");
                                 }
                                 ?></td>
                             <td><input type="checkbox" id="edit" name="emailSubscription" onclick="changed();" <?php if($emailSubscription === 1){echo "checked";}?> ></td>
@@ -80,7 +80,7 @@ if ($companyPackageInfo[0]->getExpirationDate() < $now){
 
                 <form id = "finalsubmit" name = "finalsubmit" method="post" action="/companyAccount/settings" >
                     <input type="text" id="finaltext" name="finaltext" value="">
-                    <input type="submit" value="Safe changes">
+                    <input type="submit" value="<?= $this->translate('Safe changes') ?>">
                 </form>
 
                 <!--PHP handling the form validation-->
@@ -256,7 +256,7 @@ if ($companyPackageInfo[0]->getExpirationDate() < $now){
 
                 </script>
 
-                <h2><?= "Account status" ?></h2>
+                <h2><?= $this->translate("Account status") ?></h2>
                 <table class="table table-bordered">
                     <tr>
                         <th><?= $this->translate('Account status') ?></th>
@@ -293,9 +293,9 @@ if ($companyPackageInfo[0]->getExpirationDate() < $now){
 
                             //append the relevant text depending on the number of credits
                             if($bannerCredits === 1){
-                                echo "$bannerCredits day left";
+                                echo "$bannerCredits " . $this->translate("day left");
                             }else{
-                                echo "$bannerCredits days left";
+                                echo "$bannerCredits " . $this->translate("days left");
                             }
                             ?></td>
                     </tr>
@@ -307,9 +307,9 @@ if ($companyPackageInfo[0]->getExpirationDate() < $now){
 
                             //append the relevant text depending on the number of credits
                             if($highlightCredits === 1){
-                                echo $this->translate("$highlightCredits day left");
+                                echo "$highlightCredits  " . $this->translate("day left");
                             }else{
-                                echo $this->translate("$highlightCredits days left");
+                                echo "$highlightCredits " . $this->translate("days left");
                             }
                             ?></td>
                     </tr>
