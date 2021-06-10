@@ -35,7 +35,7 @@ $element->setAttribute('class', 'form-control');
         <?= $this->formElementErrors($element) ?>
     </div>
 </div>
-<?php
+<?php if ($type === 'job'):
 $element = $form->get('contractNumber');
 $element->setAttribute('class', 'form-control');
 ?>
@@ -48,6 +48,7 @@ $element->setAttribute('class', 'form-control');
         <?= $this->formElementErrors($element) ?>
     </div>
 </div>
+<?php endif; ?>
 <?php
 $element = $form->get('published');
 ?>
