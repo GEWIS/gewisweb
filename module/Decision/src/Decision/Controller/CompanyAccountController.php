@@ -360,7 +360,7 @@ class CompanyAccountController extends AbstractActionController
 
             $post = $request->getPost();
             // Save the company
-            $companyService->saveCompanyByData(
+            $companyService->saveCompanyApprovalByData(
                 $company,
                 $post,
                 $request->getFiles()
@@ -368,7 +368,7 @@ class CompanyAccountController extends AbstractActionController
 
             $company->setSlugName($companySlugName);
             $company->setName($companyName);
-            $companyService->saveCompany();
+//            $companyService->saveCompany();
 
             return $this->redirect()->toRoute(
                 'companyaccount/profile',

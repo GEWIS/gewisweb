@@ -11,6 +11,7 @@ use Company\Model\JobSector as SectorModel;
 use Company\Model\JobLabel as LabelModel;
 use Company\Model\Job;
 use Company\Model\JobLabelAssignment;
+use Company\Model\ApprovalModel\ApprovalProfile;
 
 /**
  * Company service.
@@ -634,23 +635,6 @@ class Company extends AbstractACLService
      */
     public function saveCompanyByData($company, $data, $files)
     {
-
-        // TODO bug fix company changing profile (merge problems)
-        // when a company edits their profile, make sure the data they can't edit is maintained
-        // fill in missing data using current database entries
-        if ($this->getCompanyIdentity() !== null) {
-            $data['name'] = $company->getName();
-            $data['slugName'] = $company->getSlugName();
-            $data['phone'] = $company->getPhone();
-            $data['contactEmail'] = $company->getContactEmail();
-            $data['highlightCredits'] = $company->getHighlightCredits();
-            $data['bannerCredits'] = $company->getBannerCredits();
-            // comment out next line if company profile should be hidden after editing by company themselves
-            $data['hidden'] = (int)$company->isHidden();
-            // uncomment next line if company profile should be hidden after editing by company themselves
-//            $data['hidden'] = $company->setHidden(1);
-        }
-
         $companyForm = $this->getCompanyForm();
         $mergedData = array_merge_recursive(
             $data->toArray(),
@@ -658,7 +642,6 @@ class Company extends AbstractACLService
         );
         $companyForm->setData($mergedData);
 
-//        print_r($data);
         if ($companyForm->isValid()) {
             $company->exchangeArray($data);
             foreach ($company->getTranslations() as $translation) {
@@ -676,7 +659,54 @@ class Company extends AbstractACLService
                 }
             }
             $this->saveCompany();
-//            print_r(var_dump($companyForm->isValid()));
+            return true;
+        }
+    }
+
+    public function saveCompanyApprovalByData($company, $data, $files) {
+
+        $profile = new ApprovalProfile();
+
+        // when a company edits their profile, make sure the data they can't edit is maintained
+        // fill in missing data using current database entries
+        $data['name'] = $company->getName();
+        $data['slugName'] = $company->getSlugName();
+        $data['phone'] = $company->getPhone();
+        $data['contactEmail'] = $company->getContactEmail();
+        $data['highlightCredits'] = $company->getHighlightCredits();
+        $data['bannerCredits'] = $company->getBannerCredits();
+        $data['hidden'] = (int)$company->isHidden();
+        $data['emailSubscription'] = (int)$company->getEmailSubscription();
+
+        $companyForm = $this->getCompanyForm();
+        $mergedData = array_merge_recursive(
+            $data->toArray(),
+            $files->toArray()
+        );
+        $companyForm->setData($mergedData);
+//        print_r(var_dump($companyForm->isValid()));
+//print_r($data);
+
+        if ($companyForm->isValid()) {
+            $profile = $this->getApprovalMapper()->insert($data['languages']);
+            $profile->setSector($this->getJobMapper()->findSectorsById($data['sector']));
+            $profile->setCompany($company);
+            $profile->exchangeArray($data);
+            foreach ($profile->getTranslations() as $translation) {
+                $file = $files[$translation->getLanguage() . '_logo'];
+                if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
+                    if ($file['error'] !== UPLOAD_ERR_OK) {
+                        return false;
+                    }
+                    $oldPath = $translation->getLogo();
+                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                    $translation->setLogo($newPath);
+                    if ($oldPath !== '' && $oldPath != $newPath) {
+                        $this->getFileStorageService()->removeFile($oldPath);
+                    }
+                }
+            }
+            $this->getApprovalMapper()->save($profile);
             return true;
         }
     }
@@ -1562,14 +1592,14 @@ class Company extends AbstractACLService
     }
 
 
-//    /**
-//     * Returns the sector mapper
-//     *
-//     */
-//    public function getSectorMapper()
-//    {
-//        return $this->sm->get('company_mapper_sector');
-//    }
+    /**
+     * Returns the approval mapper
+     *
+     */
+    public function getApprovalMapper()
+    {
+        return $this->sm->get('company_mapper_approval');
+    }
 
 
     public function getLanguageDescription($lang)

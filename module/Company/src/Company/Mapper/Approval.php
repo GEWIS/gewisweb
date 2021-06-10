@@ -4,6 +4,8 @@
 namespace Company\Mapper;
 
 use Company\Model\ApprovalModel\ApprovalPending;
+use Company\Model\ApprovalModel\ApprovalProfile;
+use Company\Model\ApprovalModel\ApprovalCompanyI18n;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
@@ -73,7 +75,41 @@ class Approval
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Company\Model\Company');
+        return $this->em->getRepository('Company\Model\ApprovalModel\ApprovalProfile');
+    }
+
+    /**
+     * Saves all unsaved entities, that are marked persistent
+     *
+     */
+    public function save($profile)
+    {
+        $this->em->persist($profile);
+        $this->em->flush();
+    }
+
+    /**
+     * Inserts a company into the datebase, and initializes the given
+     * translations as empty translations for them
+     *
+     * @param mixed $languages
+     */
+    public function insert($languages)
+    {
+        $company = new ApprovalProfile($this->em);
+
+        foreach ($languages as $language) {
+            $translation = new ApprovalCompanyI18n($language, $company);
+            if (is_null($translation->getLogo())) {
+                $translation->setLogo('');
+            }
+            $this->em->persist($translation);
+            $company->addTranslation($translation);
+        }
+
+        $this->em->persist($company);
+
+        return $company;
     }
 
 }
