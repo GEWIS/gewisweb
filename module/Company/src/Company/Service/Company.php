@@ -744,7 +744,6 @@ class Company extends AbstractACLService
      */
     public function insertCompanyByData($data, $files)
     {
-//        print_r($data);
         $companyForm = $this->getCompanyForm();
         $mergedData = array_merge_recursive(
             $data->toArray(),

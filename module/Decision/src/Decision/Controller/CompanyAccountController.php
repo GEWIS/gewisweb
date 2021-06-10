@@ -647,10 +647,11 @@ class CompanyAccountController extends AbstractActionController
 
         if ($request->isPost()) {
             // Check if data is valid, and insert when it is
-            $job = $companyService->createJob(
+            $job = $companyService->createJobApproval(
                 $packageId,
                 $request->getPost(),
-                $request->getFiles()
+                $request->getFiles(),
+                ""
             );
             if ($job) {
                 //Send approval email to admin
