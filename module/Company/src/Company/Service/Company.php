@@ -276,7 +276,7 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Returns all sectors for the given language
+     * Returns all highlights for the given language
      *
      *
      * @return array
@@ -291,6 +291,22 @@ class Company extends AbstractACLService
             $highlightIds = array_merge($highlightIds, $localeId);
         }
         return $highlightIds;
+
+    }
+
+    /**
+     * Returns all sectors for the given language
+     *
+     *
+     * @return array
+     */
+    public function getHighlightsListAll($lang)
+    {
+        $highlightPackages = $this->getHighlightPackageMapper()->findAllActiveHighlightsList();
+        foreach($highlightPackages as &$package) {
+            $package['vacancy_name'] = $this->getJobMapper()->findJobById($this->getJobMapper()->siblingId($package[1], $lang)['id'])->getName();
+        }
+        return $highlightPackages;
 
     }
 

@@ -863,6 +863,20 @@ class AdminController extends AbstractActionController
     }
 
     /**
+     * Action to delete a job.
+     */
+    public function editHighlightAction()
+    {
+        $companyService = $this->getCompanyService();
+        $translator = $companyService->getTranslator();
+
+        return new ViewModel([
+            'highlightList' => $companyService->getHighlightsListAll($translator->getLocale()),
+            'categoryList' => $companyService->getCategoryList(false),
+        ]);
+    }
+
+    /**
      * Method that returns the service object for the company module.
      *
      * @return CompanyService

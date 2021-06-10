@@ -123,6 +123,11 @@ $locale = $this->translator->getLocale();
                     </tfoot>
                 </table>
             </div>
+            <div class="col-sm-6">
+                <a class="btn btn-success" href=<?= $this->url('admin_company/editHighlight', ['action' => 'editHighlight']) ?>>
+                    <?= $this->translate('Active highlights'); ?>
+                </a>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-12">

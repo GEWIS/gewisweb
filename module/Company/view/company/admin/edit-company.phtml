@@ -104,13 +104,14 @@ $submit->setAttribute('class', 'btn btn-primary pull-right');
             <td>
                 <?php if ($package->getType() === 'banner') {
                     echo $this->translate('Banner package');
+                } else if ($package->getType() === 'highlight'){
+                    echo $this->translate('Highlight package');
+                } else if ($package->getType() === 'featured') {
+                    echo $this->translate('Featured Package');
                 } else {
-                    if ($package->getType() == 'featured') {
-                        echo $this->translate('Featured Package');
-                    } else {
-                        echo $package->getJobs()->count();
-                    }
-                } ?>
+                    echo $package->getJobs()->count();
+                }
+                ?>
             </td>
             <td>
                 <a class="btn btn-xs btn-primary" href="<?= $this->url("admin_company/editCompany/editPackage",

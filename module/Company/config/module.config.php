@@ -318,6 +318,16 @@ return [
                             ],
                         ],
                     ],
+                    'editHighlight' => [
+                        'priority' => 3,
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/editHighlight/',
+                            'defaults' => [
+                                'action' => 'editHighlight',
+                            ],
+                        ],
+                    ],
                     'default' => [
                         'priority' => 2,
                         'type' => 'Segment',

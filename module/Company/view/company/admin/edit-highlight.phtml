@@ -1,0 +1,89 @@
+<?php
+foreach ($categoryList as $category):?>
+    <div class="row">
+        <h1><?= $this->translate($category->getName());?></h1>
+        <div class="col-md-12">
+            <table class="table table-striped ">
+                <thead>
+                <tr>
+                    <th>
+                        <?= $this->translate('Company') ?>
+                    </th>
+                    <th>
+                        <?= $this->translate('Vacancy name') ?>
+                    </th>
+                    <th>
+                        <?= $this->translate('Starting date') ?>
+                    </th>
+                    <th>
+                        <?= $this->translate('Expiration date') ?>
+                    </th>
+                </tr>
+                </thead>
+                <?php foreach ($highlightList as $highlight): ?>
+                <?php if ($highlight['languageNeutralId'] == $category->getLanguageNeutralId()): ?>
+                <tr>
+                    <th>
+                        <?= $highlight['name'] ?>
+                    </th>
+                    <th>
+                        <?= $highlight['vacancy_name'] ?>
+                    </th>
+                    <th>
+<!--                    <td id="edit" name="Startdate">--><?//= $highlight['starts']->format('Y-m-d') ?><!--</td>-->
+                        <?= $highlight['starts']->format('Y-m-d')  ?>
+                    </th>
+                    <th>
+                        <?= $highlight['expires']->format('Y-m-d')  ?>
+                    </th>
+                </tr>
+                <?php endif; ?>
+                <?php endforeach;?>
+            </table>
+        </div>
+    </div>
+<?php endforeach; ?>
+
+<script>
+    //dictionary storing all changed company settings
+    var dict = {startDate: "", expires: ""};
+
+    //the form that will submit the changes
+    var finalsubmit = document.getElementById("finalsubmit");
+
+    //the text field containing the changes
+    var finaltext = document.getElementById("finaltext");
+
+    //Set both the form and text field to be not visible
+    finalsubmit.style.display = "none";
+    finaltext.style.display = "none";
+
+    //Select setting that is double clicked and has the tag "edit"
+    document.querySelectorAll("#edit").forEach(function(node){
+        node.ondblclick = function(){
+            //Make the form submit button visible
+            finalsubmit.style.display = "block";
+
+            //Setup the input text field
+            var val=this.innerHTML;
+            var input=document.createElement("input");
+            input.value=val;
+
+            //Set changed setting equal to the newly inputted value
+            //and update the form text field to store the changed values
+            input.onblur=function(){
+                var val=this.value;
+                this.parentNode.innerHTML=val;
+                dict[node.getAttribute("name")] = val;
+                console.log(dict);
+
+                var parsed = JSON.stringify(dict);
+                finaltext.value = parsed;
+            }
+
+            this.innerHTML="";
+            this.appendChild(input);
+            input.focus();
+        }
+    });
+</script>
