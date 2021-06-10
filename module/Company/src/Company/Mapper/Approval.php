@@ -27,6 +27,29 @@ class Approval
         $this->em = $em;
     }
 
+    public function persist($job)
+    {
+        $this->em->persist($job);
+        $this->em->flush();
+    }
+
+    /**
+     * Flush.
+     */
+    public function flush()
+    {
+        $this->em->flush();
+    }
+
+    /**
+     * Saves all modified entities that are marked persistant
+     *
+     */
+    public function save()
+    {
+        $this->em->flush();
+    }
+
     /**
      * Find all pending approvals
      *
@@ -73,7 +96,7 @@ class Approval
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Company\Model\Company');
+        return $this->em->getRepository('Company\Model\Approval');
     }
 
 }

@@ -550,7 +550,8 @@ class CompanyAccountController extends AbstractActionController
                 $jobDict[$job->getLanguage()] = $job;
             }
 
-            $companyService->saveJobData($languageNeutralId, $jobDict, $post, $files);
+//            $companyService->saveJobData($languageNeutralId, $jobDict, $post, $files);
+            $companyService->createJobApproval($packageId, $post, $files, $languageNeutralId);
         }
 
         // Initialize the form
@@ -583,7 +584,7 @@ class CompanyAccountController extends AbstractActionController
                 $x++;
                 $job->exchangeArray($post);
             }
-            $companyService->saveJob();
+//            $companyService->saveJob();
         }
 
 
