@@ -8,16 +8,7 @@ use Company\Model\ApprovalModel\ApprovalAbstract;
 use Doctrine\ORM\Mapping as ORM;
 use Company\Model\ApprovalModel\Company;
 
-/**
- * VacancyApproval model.
- *
- *
- * @ORM\Entity
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="packageType",type="string")
- * @ORM\DiscriminatorMap({"job"="Company\Model\CompanyJobPackage","banner"="Company\Model\CompanyBannerPackage","featured"="Company\Model\CompanyFeaturedPackage", "highlight"="Company\Model\CompanyHighlightPackage"})
- *
- */
+
 class ApprovalBanner implements ApprovalAbstract
 {
 

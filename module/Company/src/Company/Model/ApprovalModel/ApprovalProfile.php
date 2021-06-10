@@ -28,6 +28,14 @@ class ApprovalProfile implements ApprovalAbstract{
     protected $company;
 
     /**
+     * @return mixed
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
      * The profile approvals approved status
      *
      * @ORM\Column(type="boolean")
@@ -326,7 +334,7 @@ class ApprovalProfile implements ApprovalAbstract{
     /**
      * @param bool $rejected
      */
-    public function setRejected(bool $rejected)
+    public function setRejected($rejected)
     {
         $this->rejected = $rejected;
     }
@@ -396,26 +404,13 @@ class ApprovalProfile implements ApprovalAbstract{
         return $this->id;
     }
 
-    /**
-     * Get the company's translations.
-     *
-     * @return array
-     */
-    public function getTranslations()
-    {
-        if (!is_null($this->translations)) {
-            return $this->translations;
-        }
-
-        return [];
-    }
 
     /**
      * Add a translation.
      *
      * @param CompanyI18n $translation
      */
-    public function addTranslation(CompanyI18n $translation)
+    public function addTranslation($translation)
     {
         $this->translations->add($translation);
     }
@@ -425,40 +420,12 @@ class ApprovalProfile implements ApprovalAbstract{
      *
      * @param CompanyI18n $translation Translation to remove
      */
-    public function removeTranslation(CompanyI18n $translation)
+    public function removeTranslation($translation)
     {
         $this->translations->removeElement($translation);
     }
 
-    /**
-     * Get the company's name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
 
-    /**
-     * Set the company's name.
-     *
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * Gets the company's slug name.
-     *
-     * @return string the company's slug name
-     */
-    public function getSlugName()
-    {
-        return $this->slugName;
-    }
 
     /**
      * Sets the company's slug name.
@@ -470,161 +437,6 @@ class ApprovalProfile implements ApprovalAbstract{
         $this->slugName = $slugName;
     }
 
-    /**
-     * Get the company's contact's name.
-     *
-     * @return string
-     */
-    public function getContactName()
-    {
-        return $this->contactName;
-    }
-
-    /**
-     * Set the company's contact's name.
-     *
-     * @param string $name
-     */
-    public function setContactName($name)
-    {
-        $this->contactName = $name;
-    }
-
-    /**
-     * Get the company's address.
-     *
-     * @return string
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    /**
-     * Set the company's address.
-     *
-     * @param string $address
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-    }
-
-    /**
-     * Get the company's contact email.
-     *
-     * @return string
-     */
-    public function getContactEmail()
-    {
-        return $this->contactEmail;
-    }
-
-    /**
-     * Set the company's contact email.
-     *
-     * @param string $contactEmail
-     */
-    public function setContactEmail($contactEmail)
-    {
-        $this->contactEmail = $contactEmail;
-    }
-
-    /**
-     * Get the company's contact email.
-     *
-     * @return string
-     */
-    public function getHighlightCredits()
-    {
-        return $this->highlightCredits;
-    }
-
-    /**
-     * Set the company's contact email.
-     *
-     * @param string $highlightCredits
-     */
-    public function setHighlightCredits($highlightCredits)
-    {
-        $this->highlightCredits = $highlightCredits;
-    }
-
-    /**
-     * Get the company's contact email.
-     *
-     * @return string
-     */
-    public function getBannerCredits()
-    {
-        return $this->bannerCredits;
-    }
-
-    /**
-     * Set the company's contact email.
-     *
-     * @param string $bannerCredits
-     */
-    public function setBannerCredits($bannerCredits)
-    {
-        $this->bannerCredits = $bannerCredits;
-    }
-
-    /**
-     * Get the company's public email.
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set the company's public email.
-     *
-     * @param string $email
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    /**
-     * Get the company's phone.
-     *
-     * @return string
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    /**
-     * Set the company's phone.
-     *
-     * @param string $phone
-     */
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSector()
-    {
-        return $this->sector;
-    }
-
-    /**
-     * @param mixed $sector
-     */
-    public function setSector($sector)
-    {
-        $this->sector = $sector;
-    }
 
 
 
@@ -649,36 +461,8 @@ class ApprovalProfile implements ApprovalAbstract{
         return !$visible || $this->getHidden();
     }
 
-    /**
-     * Get the company's hidden status.
-     *
-     * @return bool
-     */
-    public function getHidden()
-    {
-        return $this->hidden;
-        // TODO check whether package is not expired
-    }
 
-    /**
-     * Set the company's hidden status.
-     *
-     * @param string $hidden
-     */
-    public function setHidden($hidden)
-    {
-        $this->hidden = $hidden;
-    }
 
-    /**
-     * Get the company's packages.
-     *
-     * @return CompanyPackages
-     */
-    public function getPackages()
-    {
-        return $this->packages;
-    }
 
     /**
      * Get the number of packages.
@@ -792,28 +576,6 @@ class ApprovalProfile implements ApprovalAbstract{
         $this->languageNeutralId = $language;
     }
 
-    /**
-     * If this object contains an translation for a given locale, it is returned, otherwise null is returned
-     *
-     */
-    public function getTranslationFromLocale($locale)
-    {
-        $companyLanguages = $this->getTranslations()->map(function ($value) {
-            return $value->getLanguage();
-        });
-
-        if ($companyLanguages->contains($locale)) {
-            return $this->getTranslations()[$companyLanguages->indexOf($locale)];
-        }
-
-        throw new \Exception(
-            sprintf(
-                'Requested non-existent translation for locale %s of company with language neutral id %d',
-                $locale,
-                $this->getLanguageNeutralId()
-            )
-        );
-    }
 
     /**
      * Updates the variable if the first argument is set, Otherwise, it will
@@ -831,35 +593,7 @@ class ApprovalProfile implements ApprovalAbstract{
         return $default;
     }
 
-    /**
-     * Returns the translation identified by $language
-     *
-     * Note, does not set $logo, the user should set this property himself
-     *
-     * @param mixed $data
-     * @param mixed $language
-     */
-    public function getTranslationFromArray($data, $language)
-    {
-        if ($language !== '') {
-            $translation = $this->getTranslationFromLocale($language);
 
-            if (is_null($translation)) {
-                $translation = new CompanyI18n($language, $this);
-            }
-
-            $language = $language . '_';
-
-            // Translated properties
-            $translation->setWebsite($this->updateIfSet($data[($language) . 'website'], ''));
-            $translation->setSlogan($this->updateIfSet($data[$language . 'slogan'], ''));
-            $translation->setDescription($this->updateIfSet($data[$language . 'description'], ''));
-
-            // Do not set logo, because most likely, $data[logo] is bogus.
-            // Instead, the user should set this property himself later.
-            return $translation;
-        }
-    }
 
     /**
      *Splits a sentence $string into several $words based on whitespaces
@@ -913,16 +647,16 @@ class ApprovalProfile implements ApprovalAbstract{
     {
         $arraycopy = [];
         $arraycopy['id'] = $this->getId();
-//        $arraycopy['name'] = $this->getName();
+        $arraycopy['name'] = $this->getName();
         $arraycopy['slugName'] = $this->getSlugName();
         $arraycopy['contactName'] = $this->getContactName();
-//        $arraycopy['contactEmail'] = $this->getContactEmail();
+        $arraycopy['contactEmail'] = $this->getContactEmail();
         $arraycopy['email'] = $this->getEmail();
         $arraycopy['address'] = $this->getAddress();
-//        $arraycopy['phone'] = $this->getPhone();
-//        $arraycopy['highlightCredits'] = $this->getHighlightCredits();
-//        $arraycopy['bannerCredits'] = $this->getBannerCredits();
-//        $arraycopy['hidden'] = $this->getHidden();
+        $arraycopy['phone'] = $this->getPhone();
+        $arraycopy['highlightCredits'] = $this->getHighlightCredits();
+        $arraycopy['bannerCredits'] = $this->getBannerCredits();
+        $arraycopy['hidden'] = $this->getHidden();
         $arraycopy['sector'] = $this->getSector();
 
         // Languages
@@ -971,30 +705,6 @@ class ApprovalProfile implements ApprovalAbstract{
         $this->setHidden($this->updateIfSet($data['hidden'], ''));
         $this->setEmailSubscription($this->updateIfSet($data['emailSubscription'], false));
         $this->translations = $newTranslations;
-    }
-
-    /**
-     * Updates the variable if the first argument is set, Otherwise, it will
-     * use the second argument.
-     *
-     * @param mixed $object
-     * @param mixed $default
-     */
-    private function updateIfSet($object, $default)
-    {
-        if (isset($object)) {
-            return $object;
-        }
-
-        return $default;
-    }
-
-    /**
-     * @param mixed $slugName
-     */
-    public function setSlugName($slugName)
-    {
-        $this->slugName = $slugName;
     }
 
 
@@ -1052,15 +762,6 @@ class ApprovalProfile implements ApprovalAbstract{
 //        );
     }
 
-    /**
-     * Add a translation.
-     *
-     * @param CompanyI18n $translation
-     */
-    public function addTranslation(ApprovalCompanyI18n $translation)
-    {
-        $this->translations->add($translation);
-    }
 
     /**
      * Constructor.

@@ -34,7 +34,7 @@ class Approval extends AbstractAclService
 //            );
 //        }
 //
-        return $this->getApprovalMapper()->findEditableCompaniesBySlugName2($slugName, true);
+        return $this->getApprovalMapper()->findEditableCompaniesBySlugName($slugName, true);
     }
 
     public function getApprovalCompanyI18($cId){

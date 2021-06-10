@@ -71,6 +71,7 @@ class AdminController extends AbstractActionController
         // Get the specified company
 
         $companyList = $approvalService->getEditableCompaniesBySlugName($companyName);
+        $oldCompanyList = $companyService->getEditableCompaniesBySlugName($companyName);
         //echo var_dump($companyList);
         //$companyList = $companyService->getEditableCompaniesBySlugName($companyName);
 
@@ -80,9 +81,12 @@ class AdminController extends AbstractActionController
             return $this->notFoundAction();
         }
 
+
         $company = $companyList[0];
+        $oldCompany = $oldCompanyList[0];
         $companyl18 = $approvalService->getApprovalCompanyI18($company->getCompany()->getId());
         //echo var_dump($companyl18);
+
 
 
         // Handle incoming form data
@@ -90,23 +94,24 @@ class AdminController extends AbstractActionController
         if ($request->isPost() && !isset($_POST['reject'])) {
             $post = $request->getPost();
             if ($companyService->saveCompanyByData(////////////////////
-                $company,
+                $oldCompany,
                 $post,
                 $request->getFiles()
             )) {
                 //$companyName = $request->getPost()['slugName'];
-                return $this->redirect()->toRoute(
+                print_r("test");
+                /*return $this->redirect()->toRoute(
                     '/admin/company/approval-page',
                     [
                         'action' => 'approvalPage'
                     ],
                     [],
                     false
-                );
+                );*/
             }
         }elseif (isset($_POST['reject'])){
             //TODO send email
-            echo "hdkfdkfjdkf";
+
             //$approvalService->rejectApproval($company->getCompany()->getId());
 
         }
@@ -114,13 +119,13 @@ class AdminController extends AbstractActionController
         // Initialize form
         //echo var_dump($company->getArrayCopy());
         $companyArray = $company->getArrayCopy();
-        $companyArray['languages'] = [];
-        $i = 0;
-        foreach($companyl18 as $language){
-            $companyArray['languages'][$i] = $language->getLanguage();
-            $i++;
-            $companyArray = $companyArray + $language->getArrayCopy();
-        }
+//        $companyArray['languages'] = [];
+//        $i = 0;
+//        foreach($companyl18 as $language){
+//            $companyArray['languages'][$i] = $language->getLanguage();
+//            $i++;
+//            $companyArray = $companyArray + $language->getArrayCopy();
+//        }
         //echo var_dump($companyArray);
 
         $companyForm->setData($companyArray);
@@ -128,16 +133,13 @@ class AdminController extends AbstractActionController
 
 
 
-        $companyForm->setAttribute(
-            'action',
-            $this->url()->fromRoute(
-                'admin_company/default',
-                [
-                   'action' => 'editCompany',
-                    'slugCompanyName' => $companyName,
-                ]
-            )
-        );
+//        $companyForm->setAttribute(
+//            'action',
+//            $this->url()->fromRoute(
+//                'admin/company/approval-page'
+//
+//            )
+//        );
 
         return new ViewModel([
             'company' => $company,
