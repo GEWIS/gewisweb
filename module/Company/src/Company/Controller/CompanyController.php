@@ -207,6 +207,11 @@ class CompanyController extends AbstractActionController
         ]);
     }
 
+    public function indexAction()
+    {
+        return new ViewModel();
+    }
+
     /**
      * Method that returns the service object for the company module.
      *

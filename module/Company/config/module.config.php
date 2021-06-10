@@ -59,6 +59,19 @@ return [
                         ],
                         'may_terminate' => true,
                     ],
+                    'index' => [
+                        'priority' => 3,
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/index',
+                            'defaults' => [
+                                'controller' => 'Company\Controller\Company',
+                                'action' => 'index',
+                                'slugCompanyName' => '',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                    ],
                     'companyItem' => [
                         'priority' => 2,
                         'type' => 'segment',

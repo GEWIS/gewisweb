@@ -174,13 +174,13 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                 <!-- Career section -->
                 <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['company']) ? 'active default' : '' ?>">
                     <!-- Button career, takes you to the general career page -->
-                    <a href="<?= $this->url('companyaccount/dummy') ?>" role="button" aria-haspopup="true"
+                    <a href="<?= $this->url('company/index') ?>" role="button" aria-haspopup="true"
                        aria-expanded="false"
                        class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown">
                         <?= $this->translate('Career') ?>
                         <span class="caret"></span>
                     </a>
-                    <a href="<?= $this->url('companyaccount/dummy') ?>" role="button" class="hidden-sm hidden-xs">
+                    <a href="<?= $this->url('company/index') ?>" role="button" class="hidden-sm hidden-xs">
                         <?= $this->translate('Career') ?>
                     </a>
                     <ul class="dropdown-menu">
@@ -195,9 +195,6 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             <a href="<?= $this->url('company') ?>"><?= $this->translate('Companies') ?></a>
                         <li class="dropdown dropdown-submenu">
                             <!-- Button to general vacancies page  -->
-                            <!-- TODO: add right url once implemented -->
-<!--                            Url for all vacancies:-->
-<!--                            <a href="--><?//= $this->url('company/jobList', ['category' => 'all']) ?><!--">--><?//= $this->translate('Vacancies') ?>
                             <a href="<?= $this->url('company/jobList', ['category' => 'all']) ?>" role="button"
                                class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="false">
