@@ -203,8 +203,13 @@ a.card {
     }
 }
 
-#job-search, #job-label, #job-sort {
+#job-search, #job-label, #job-sort, #hours-filter, #sector-filter {
+    appearance: none;
     width: auto;
     min-width: 150px;
     max-width: 250px;
+    border: none;
+    border-radius: 0.4em;
 }
+
+
