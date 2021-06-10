@@ -136,6 +136,10 @@ class CompanyAccountController extends AbstractActionController
         $companyService = $this->getCompanyService();
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
 
+        //Get current language
+        $translator = $companyService->getTranslator();
+        $lang = $translator->getLocale();
+
         //Get package form of type highlight
         $packageForm = $companyService->getPackageForm('highlight');
 
@@ -174,10 +178,7 @@ class CompanyAccountController extends AbstractActionController
             )
         );
 
-        //TODO: Make sure that vacancies are shown in the correct language
-        $currentHighlights = $this->getCurrentHighlights($company->getId());
-        //$currentHighlights = [];
-        //print_r($this->getCurrentHighlights($company->getId()));
+        $currentHighlights = $this->getCompanyService()->getCurrentHighlights($company->getId(), $lang);
 
         return new ViewModel([
             'form' => $packageForm,
@@ -258,20 +259,6 @@ class CompanyAccountController extends AbstractActionController
         //Find the vacancies which are not in a category that has the same languageNeurtalId as already highlighted vacancies
         return $this->getCompanyService()->getHighlightableVacancies($companyId, $locale);
     }
-
-    //TODO: function description
-    /**
-     * Gets all highlightable vacancies for a certain company
-     * A vacancy is highlightable if
-     * - It is active
-     * - No other vacancies in the same category have been highlighted
-     *
-     * @return all highlightable vacancies for a certain company
-     */
-    public function getCurrentHighlights($companyId) {
-        return $this->getCompanyService()->getCurrentHighlights($companyId);
-    }
-
 
     /**
      * Gets an array with the names from all vacancies in a vacancy object

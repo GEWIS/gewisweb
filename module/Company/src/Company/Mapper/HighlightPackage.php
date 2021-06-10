@@ -36,14 +36,13 @@ class HighlightPackage extends Package
         return $qb->getQuery()->getResult();
     }
 
-    //TODO: function desctription
     /**
-     * Find the number of highlights a company has
+     * Find the highlights a company has
      *
      * @param integer $companyId the id of the company who's
      * number of highlights will be fetched.
      *
-     * @return int number of highlights
+     * @return array with the vacancyId of the highlighted vacancy and the expiration date of the highlight
      */
     public function findCurrentHighlights($companyId)
     {
@@ -51,8 +50,7 @@ class HighlightPackage extends Package
 
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('h');
-        $qb->select('j.name, h.expires')
-            ->join('h.vacancy', 'j')
+        $qb->select('IDENTITY(h.vacancy), h.expires')
             ->where('h.company = ?1')
             ->andWhere('h.expires >= ?2')
             ->andWhere('h.published = 1')

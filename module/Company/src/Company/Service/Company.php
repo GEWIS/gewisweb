@@ -1290,17 +1290,31 @@ class Company extends AbstractACLService
             $locale);
     }
 
-    //TODO: function description
     /**
-     * Get the number of highlights a company has
+     * Get the active highlights a company has
      *
      * @param integer $companyId the id of the company who's
      * number of highlights will be fetched.
+     * @param string $lang the language in which the vacancies should be fetched
      *
-     * @return int number of highlights
+     * @return array The names and the expiration dates of the active highlights of a company
      */
-    public function getCurrentHighlights($companyId) {
-        return $this->getHighlightPackageMapper()->findCurrentHighlights($companyId);
+    public function getCurrentHighlights($companyId, $lang) {
+        //Get the vacancy ids and the expiration dates of the highlights in the companyPackage table
+        $highlights = $this->getHighlightPackageMapper()->findCurrentHighlights($companyId);
+        $temp = [];
+        $correctHighlights = [];
+
+        foreach ($highlights as $highlight) {
+            //Get the correct vacancy id based on language
+            $vacancyId = $this->getJobMapper()->siblingId($highlight[1], $lang)['id'];
+            //Get the name of the vacancy in the correct language
+            $temp['name'] = $this->getJobMapper()->findJobById($vacancyId)->getName();
+            $temp['expires'] = $highlight['expires'];
+
+            array_push($correctHighlights, $temp);
+        }
+        return $correctHighlights;
     }
 
     /**
