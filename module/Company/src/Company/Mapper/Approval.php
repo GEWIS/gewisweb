@@ -40,9 +40,26 @@ class Approval
         $select = $builder->generateSelectClause(['ap' => 't1']);
         $sql = "SELECT $select FROM ApprovalPending AS t1";
         $query = $this->em->createNativeQuery($sql, $builder);
+
         return $query->getResult();
     }
 
+    public function rejectApproval($cId){
+        $qb = $this->em->createQueryBuilder();
+        $qb->update("Company\Model\ApprovalProfile", "ap");
+        $qb->where("ap.company_id = $cid");
+        $qb->set("ap.rejected", ":rejected");
+        $qb->setParameter("rejected", "0");
+        $qb->getQuery()->getResult();
+
+        $qb = $this->em->createQueryBuilder();
+        $qb->update("Company\Model\ApprovalCompanyl18n", "ap");
+        $qb->where("ap.company_id = $cid");
+        $qb->set("ap.rejected", ":rejected");
+        $qb->setParameter("rejected", "0");
+        $qb->getQuery()->getResult();
+
+    }
 
     /**
      * Find the company with the given slugName.
@@ -54,6 +71,7 @@ class Approval
      */
     public function findEditableCompaniesBySlugName($slugName, $asObject)
     {
+
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('c');
         $qb->select('c')->where('c.slugName=:slugCompanyName');
@@ -64,6 +82,40 @@ class Approval
         }
 
         return $qb->getQuery()->getResult(Query::HYDRATE_ARRAY);
+    }
+
+    /**
+     * Find the company with the given slugName.
+     *
+     * @param slugName The 'username' of the company to get.
+     * @param asObject if yes, returns the company as an object in an array, otherwise returns the company as an array of an array
+     *
+     * @return An array of companies with the given slugName.
+     */
+    public function findEditableCompaniesBySlugName2($slugName, $asObject)
+    {
+
+        $builder = new ResultSetMappingBuilder($this->em);
+        $builder->addRootEntityFromClassMetadata('Company\Model\ApprovalModel\ApprovalProfile', 'ci');
+
+        $select = $builder->generateSelectClause(['ci' => 't1']);
+        $sql = "SELECT $select FROM ApprovalProfile AS t1".
+            " WHERE t1.slugName = '$slugName'";
+
+        $query = $this->em->createNativeQuery($sql, $builder);
+        return $query->getResult();
+    }
+
+    public function findApprovalCompanyI18($cId){
+        $builder = new ResultSetMappingBuilder($this->em);
+        $builder->addRootEntityFromClassMetadata('Company\Model\ApprovalModel\ApprovalCompanyI18n', 'ci');
+
+        $select = $builder->generateSelectClause(['ci' => 't1']);
+        $sql = "SELECT $select FROM ApprovalCompanyI18n AS t1".
+            " WHERE t1.company_id = $cId";
+
+        $query = $this->em->createNativeQuery($sql, $builder);
+        return $query->getResult();
     }
 
     /**

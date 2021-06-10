@@ -69,7 +69,7 @@ class companyAccount
 
         $select = $builder->generateSelectClause(['cp' => 't1']);
         $sql = "SELECT $select FROM CompanyPackage AS t1".
-            " WHERE t1.company_id = $id AND packageType = 'job'";
+            " WHERE t1.company_id = $id AND t1.packageType = 'job'";
 
         $query = $this->em->createNativeQuery($sql, $builder);
         return $query->getResult();

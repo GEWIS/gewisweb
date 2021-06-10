@@ -8,45 +8,19 @@ $this->scriptUrl()->requireUrls(
     ['slugCompanyName', 'packageId']
 );
 ?>
-<h1><?= $this->translate('Edit Company'); ?></h1>
-<a class="btn btn-success" href="<?= $this->url("admin_company/editCompany/addPackage",
-    [
-        "type" => "job",
-        "slugCompanyName" => $company->getSlugName()
-    ]
-); ?>"><i class="fas fa-plus"></i>
-    <?= $this->translate('Add Job package'); ?>
-</a>
-<a class="btn btn-success" href="<?= $this->url("admin_company/editCompany/addPackage",
-    [
-        "type" => "featured",
-        "slugCompanyName" => $company->getSlugName()
-    ]
-); ?>">
-    <span class="fas fa-asterisk"></span>
-    <?= $this->translate('Add spotlight package'); ?>
-</a>
-<a class="btn btn-success" href="<?= $this->url("admin_company/editCompany/addPackage",
-    [
-        "type" => "banner",
-        "slugCompanyName" => $company->getSlugName()
-    ]
-); ?>">
-    <span class="fas fa-image"></span>
-    <?= $this->translate('Add Banner package'); ?>
-</a>
+<h1><?= $this->translate("Approve profile"); ?></h1>
 
 <div class="row">
     <div class="col-md-6">
         <h2><?= $this->translate('Dutch logo') ?></h2>
-        <?php $translation = $company->getTranslationFromLocale('nl'); ?>
+        <?php $translation = Null;//$translation = $company->getTranslationFromLocale('nl'); ?>
         <?php if (!is_null($translation)): ?>
             <img class="img-responsive" src="<?= $this->fileUrl($translation->getLogo()) ?>"/>
         <?php endif; ?>
     </div>
     <div class="col-md-6">
         <h2><?= $this->translate('English logo') ?></h2>
-        <?php $translation = $company->getTranslationFromLocale('en'); ?>
+        <?php //$translation = $company->getTranslationFromLocale('en'); ?>
         <?php if (!is_null($translation)): ?>
             <img class="img-responsive" src="<?= $this->fileUrl($translation->getLogo()) ?>"/>
         <?php endif; ?>
@@ -63,10 +37,21 @@ $this->scriptUrl()->requireUrls(
 $submit = $form->get('submit');
 $submit->setLabel($this->translate('Save'));
 $submit->setAttribute('class', 'btn btn-primary pull-right');
+
+
 ?>
 <div class="form-group">
     <?= $this->formButton($submit) ?>
+    <button type="submit" class="btn btn-primary pull-right" name="reject">
+        <?= $this->translate('Reject') ?>
+    </button>
 </div>
+
+<?php
+
+
+?>
+
 <?= $this->form()->closeTag(); ?>
 
 

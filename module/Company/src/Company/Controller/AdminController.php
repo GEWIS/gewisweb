@@ -52,6 +52,10 @@ class AdminController extends AbstractActionController
 
     }
 
+    public function approvalBannerAction(){
+
+    }
+
     public function approvalProfileAction()
     {
         // Get useful stuff
@@ -62,10 +66,12 @@ class AdminController extends AbstractActionController
 
 
         // Get parameter
-        $companyName = "intel";
+        $companyName = $this->params('slugCompanyName');
 
         // Get the specified company
+
         $companyList = $approvalService->getEditableCompaniesBySlugName($companyName);
+        //echo var_dump($companyList);
         //$companyList = $companyService->getEditableCompaniesBySlugName($companyName);
 
         // If the company is not found, throw 404
@@ -75,32 +81,53 @@ class AdminController extends AbstractActionController
         }
 
         $company = $companyList[0];
+        $companyl18 = $approvalService->getApprovalCompanyI18($company->getCompany()->getId());
+        //echo var_dump($companyl18);
+
 
         // Handle incoming form data
         $request = $this->getRequest();
-        if ($request->isPost()) {
+        if ($request->isPost() && !isset($_POST['reject'])) {
             $post = $request->getPost();
             if ($companyService->saveCompanyByData(////////////////////
                 $company,
                 $post,
                 $request->getFiles()
             )) {
-                $companyName = $request->getPost()['slugName'];
+                //$companyName = $request->getPost()['slugName'];
                 return $this->redirect()->toRoute(
-                    'admin_company/default',
+                    '/admin/company/approval-page',
                     [
-                        'action' => 'edit',
-                        'slugCompanyName' => $companyName,
+                        'action' => 'approvalPage'
                     ],
                     [],
                     false
                 );
             }
+        }elseif (isset($_POST['reject'])){
+            //TODO send email
+            echo "hdkfdkfjdkf";
+            //$approvalService->rejectApproval($company->getCompany()->getId());
+
         }
 
         // Initialize form
-        $companyForm->setData($company->getArrayCopy());
-        $companyForm->get('languages')->setValue($company->getArrayCopy()['languages']);
+        //echo var_dump($company->getArrayCopy());
+        $companyArray = $company->getArrayCopy();
+        $companyArray['languages'] = [];
+        $i = 0;
+        foreach($companyl18 as $language){
+            $companyArray['languages'][$i] = $language->getLanguage();
+            $i++;
+            $companyArray = $companyArray + $language->getArrayCopy();
+        }
+        //echo var_dump($companyArray);
+
+        $companyForm->setData($companyArray);
+        $companyForm->get('languages')->setValue($companyArray['languages']);
+
+
+
         $companyForm->setAttribute(
             'action',
             $this->url()->fromRoute(
@@ -111,11 +138,14 @@ class AdminController extends AbstractActionController
                 ]
             )
         );
+
         return new ViewModel([
             'company' => $company,
-            'form' => $companyForm,
+            'form' => $companyForm
         ]);
     }
+
+
 
     /**
      * Action that allows adding a company

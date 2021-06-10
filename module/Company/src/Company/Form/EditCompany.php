@@ -261,6 +261,15 @@ class EditCompany extends Form
             ],
         ]);
 
+        $this->add([
+            'name' => 'reject',
+            'attributes' => [
+                'type' => 'button',
+                'value' => $translate->translate('Reject approval'),
+                'id' => 'rejectbutton',
+            ],
+        ]);
+
 //        $this->add([
 //            'name' => 'sector' ,
 //            'type' => 'Zend\Form\Element\Select',

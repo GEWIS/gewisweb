@@ -14,6 +14,10 @@
                 </th>
                 <th>
                     <?= $this->translate('Approval type') ?>
+
+                </th>
+                <th>
+                    <?= $this->translate('Approval status') ?>
                 </th>
                 <th>
                     <?= $this->translate('Actions') ?>
@@ -30,16 +34,42 @@
                         <?= $pendingApproval->getType() ?>
                     </th>
                     <th>
-                        <button type="button" class="btn btn-danger btn-xs">
+                        <?php
+                        if($pendingApproval->getStatus()){
+                            echo $this->translate("Rejected");
+                        }else{
+                            echo $this->translate("Waiting for approval");
+                        }
+
+                        ?>
+                    </th>
+                    <th>
+                        <?php
+                        $slugName = $pendingApproval->getCompany()->getSlugName();
+                        $url = "/admin/company/";
+                        //determing type
+
+                        if($pendingApproval->getType() === "profile") {
+                            $url .= "approval-profile/" . $slugName;
+                        }elseif($pendingApproval->getType() === "vacancy"){
+                            $url .= "approval-vacancy/" . $slugName;
+                        }elseif($pendingApproval->getType() == "banner"){
+                            $url .= "approval-banner/" . $slugName;
+                        }
+                        ?>
+
+                        <button type="button" class="btn btn-danger btn-xs" onclick="location.href='<?= $url; ?>';">
                             <?= $this->translate('View request') ?>
                         </button>
                     </th>
                 </tr>
-                <?php endforeach; ?>            </tbody>
+                <?php endforeach; ?>
+            </tbody>
             <tfoot>
             <tr>
                 <th><?= $this->translate('Company name') ?></th>
                 <th><?= $this->translate('Approval type') ?></th>
+                <th><?= $this->translate('Approval status') ?></th>
                 <th><?= $this->translate('Actions') ?></th>
             </tr>
             </tfoot>

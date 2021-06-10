@@ -146,9 +146,24 @@ return [
                     'approvalProfile' => [
                         'type' => 'literal',
                         'options' => [
-                            'route' => '/approval-profile',
+                            'route' => '/approval-profile/[:slugCompanyName]',
                             'defaults' => [
                                 'action' => 'approvalProfile',
+                            ],
+                            'constraints' => [
+                                'slugCompanyName' => '[a-zA-Z0-9_\-\.]*',
+                            ],
+                        ],
+                    ],
+                    'approvalBanner' => [
+                        'type' => 'literal',
+                        'options' => [
+                            'route' => '/approval-banner/[:slugCompanyName]',
+                            'defaults' => [
+                                'action' => 'approvalBanner',
+                            ],
+                            'constraints' => [
+                                'slugCompanyName' => '[a-zA-Z0-9_\-\.]*',
                             ],
                         ],
                     ],
