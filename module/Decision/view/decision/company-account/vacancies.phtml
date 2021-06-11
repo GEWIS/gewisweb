@@ -39,6 +39,8 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     <?= $this->translate('Active'); ?>
                 </th>
                 <th>
+                </th>
+                <th>
                     <?= $this->translate('Actions'); ?>
                 </th>
             </tr>
@@ -61,6 +63,15 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     </td>
                     <td>
                         <?php echo $job->isActive() ? $this->translate('Yes') : $this->translate('No') ?>
+                    </td>
+                    <td>
+                        <a class="btn btn-xs btn-primary"
+                           href="<?= $this->url("companyaccount/vacancies/switch",
+                               [
+                                   "languageNeutralJobId" => $job->getLanguageNeutralId(),
+                               ]
+                           ); ?>">
+                            <?= $job->isActive() ? $this->translate('Set to inactive') : $this->translate('Set to active') ?>
                     </td>
                     <td>
                         <a class="btn btn-xs btn-primary"

@@ -530,6 +530,7 @@ class CompanyAccountController extends AbstractActionController
 
         // Get the parameters
         $languageNeutralId = $this->params('languageNeutralJobId');
+        print_r($languageNeutralId);
 
         // Find the specified jobs
         $jobs = $companyService->getEditableJobsByLanguageNeutralId($languageNeutralId);
@@ -602,7 +603,29 @@ class CompanyAccountController extends AbstractActionController
 
     }
 
+    public function switchActiveAction() {
 
+        $companyService = $this->getCompanyService();
+        $languageNeutralId = $this->params('languageNeutralJobId');
+
+        // Find the specified jobs
+        $jobs = $companyService->getEditableJobsByLanguageNeutralId($languageNeutralId);
+
+        // Check the job is found. If not, throw 404
+        if (empty($jobs)) {
+            return $this->notFoundAction();
+        }
+
+        foreach($jobs as $job) {
+            $job->setActive($job->getActive() ? 0: 1);
+            $companyService->getJobMapper()->persist($job);
+            $companyService->getJobMapper()->save();
+        }
+
+        return $this->redirect()->toRoute(
+            'companyaccount/vacancies'
+        );
+    }
 
 
     /**

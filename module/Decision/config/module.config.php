@@ -427,6 +427,19 @@ return [
                                     ]
                                 ],
                             ],
+                            'switch' => [
+                                'type' => 'segment',
+                                'options' => [
+                                    'route' => '/switch/:languageNeutralJobId',
+                                    'defaults' => [
+                                        'action' => 'switchActive',
+                                    ],
+                                    'constraints' => [
+                                        'languageNeutralJobId' => '[0-9]*',
+                                    ],
+                                    'may_terminate' => true,
+                                ],
+                            ],
                             'editvacancy' => [
                                 'type' => 'segment',
                                 'options' => [
