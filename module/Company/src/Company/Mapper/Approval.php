@@ -29,6 +29,29 @@ class Approval
         $this->em = $em;
     }
 
+    public function persist($job)
+    {
+        $this->em->persist($job);
+        $this->em->flush();
+    }
+
+    /**
+     * Flush.
+     */
+    public function flush()
+    {
+        $this->em->flush();
+    }
+
+    /**
+     * Saves all modified entities that are marked persistant
+     *
+     */
+    public function save()
+    {
+        $this->em->flush();
+    }
+
     /**
      * Find all pending approvals
      *
@@ -49,14 +72,14 @@ class Approval
     public function rejectApproval($cId){
         $qb = $this->em->createQueryBuilder();
         $qb->update("Company\Model\ApprovalProfile", "ap");
-        $qb->where("ap.company_id = $cid");
+        $qb->where("ap.company_id = $cId");
         $qb->set("ap.rejected", ":rejected");
         $qb->setParameter("rejected", "0");
         $qb->getQuery()->getResult();
 
         $qb = $this->em->createQueryBuilder();
         $qb->update("Company\Model\ApprovalCompanyl18n", "ap");
-        $qb->where("ap.company_id = $cid");
+        $qb->where("ap.company_id = $cId");
         $qb->set("ap.rejected", ":rejected");
         $qb->setParameter("rejected", "0");
         $qb->getQuery()->getResult();
@@ -127,18 +150,18 @@ class Approval
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Company\Model\ApprovalModel\ApprovalProfile');
+        return $this->em->getRepository('Company\Model\ApprovalModel\ApprovalAbstract');
     }
 
-    /**
-     * Saves all unsaved entities, that are marked persistent
-     *
-     */
-    public function save($profile)
-    {
-        $this->em->persist($profile);
-        $this->em->flush();
-    }
+//    /**
+//     * Saves all unsaved entities, that are marked persistent
+//     *
+//     */
+//    public function save($profile)
+//    {
+//        $this->em->persist($profile);
+//        $this->em->flush();
+//    }
 
     /**
      * Inserts a company into the datebase, and initializes the given

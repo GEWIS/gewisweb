@@ -96,6 +96,17 @@ class CompanyUser extends Model implements RoleInterface, ResourceInterface
         return $this->id;
     }
 
+
+    /**
+     * Get the company's id.
+     *
+     * @return int
+     */
+    public function getLidnr()
+    {
+        return $this->id;
+    }
+
     /**
      * Get the company's contact email address.
      *

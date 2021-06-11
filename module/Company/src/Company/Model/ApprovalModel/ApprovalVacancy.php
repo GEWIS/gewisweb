@@ -170,12 +170,12 @@ class ApprovalVacancy implements ApprovalAbstract
      */
     protected $languageNeutralId;
 
-    /**
-     * Job labels
-     *
-     * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="job", cascade={"persist", "remove"}, fetch="EAGER")
-     */
-    protected $labels;
+//    /**
+//     * Job labels
+//     *
+//     * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="job", cascade={"persist", "remove"}, fetch="EAGER")
+//     */
+//    protected $labels;
 
     /**
      * The type of hours.
@@ -199,6 +199,14 @@ class ApprovalVacancy implements ApprovalAbstract
     public function getRejected()
     {
         return $this->rejected;
+    }
+
+    /**
+     * @param bool $rejected
+     */
+    public function setRejected(bool $rejected)
+    {
+        $this->rejected = $rejected;
     }
 
     /**
@@ -557,39 +565,39 @@ class ApprovalVacancy implements ApprovalAbstract
         return $this->getPackage()->getCompany();
     }
 
-    /**
-     * Get the labels. Returns an array of JobLabelAssignments
-     *
-     * @return array
-     */
-    public function getLabels()
-    {
-        return $this->labels;
-    }
-
-    /**
-     * Sets all labels.
-     *
-     * @param array $labels
-     */
-    public function setLabels($labels)
-    {
-        $this->labels = $labels;
-    }
-
-    /**
-     * Adds a label.
-     *
-     * @param JobLabelAssignment $label
-     */
-    public function addLabel($label)
-    {
-        if ($this->labels === null) {
-            $this->labels = [];
-        }
-        $label->setJob($this);
-        $this->labels[] = $label;
-    }
+//    /**
+//     * Get the labels. Returns an array of JobLabelAssignments
+//     *
+//     * @return array
+//     */
+//    public function getLabels()
+//    {
+//        return $this->labels;
+//    }
+//
+//    /**
+//     * Sets all labels.
+//     *
+//     * @param array $labels
+//     */
+//    public function setLabels($labels)
+//    {
+//        $this->labels = $labels;
+//    }
+//
+//    /**
+//     * Adds a label.
+//     *
+//     * @param JobLabelAssignment $label
+//     */
+//    public function addLabel($label)
+//    {
+//        if ($this->labels === null) {
+//            $this->labels = [];
+//        }
+//        $label->setJob($this);
+//        $this->labels[] = $label;
+//    }
 
     public function setPackage(CompanyPackage $package)
     {

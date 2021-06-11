@@ -269,18 +269,18 @@ $form->prepare();
             </div>
         </div>
 
-        <?php
-        $element = $form->get('labels');
-        ?>
-        <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-            <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
-                <?= $element->getOption('label') ?>
-            </label>
-            <div class="col-sm-10">
-                <?= $this->formMultiCheckbox($element) ?>
-                <?= $this->formElementErrors($element) ?>
-            </div>
-        </div>
+<!--        --><?php
+//        $element = $form->get('labels');
+//        ?>
+<!--        <div class="form-group --><?//= $this->bootstrapElementError($element) ?><!--">-->
+<!--            <label for="--><?//= $element->getName() ?><!--" class="control-label col-sm-2">-->
+<!--                --><?//= $element->getOption('label') ?>
+<!--            </label>-->
+<!--            <div class="col-sm-10">-->
+<!--                --><?//= $this->formMultiCheckbox($element) ?>
+<!--                --><?//= $this->formElementErrors($element) ?>
+<!--            </div>-->
+<!--        </div>-->
 
 
         <?= $this->form()->closeTag(); ?>
