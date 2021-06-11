@@ -530,7 +530,6 @@ class CompanyAccountController extends AbstractActionController
 
         // Get the parameters
         $languageNeutralId = $this->params('languageNeutralJobId');
-        print_r($languageNeutralId);
 
         // Find the specified jobs
         $jobs = $companyService->getEditableJobsByLanguageNeutralId($languageNeutralId);

@@ -1,5 +1,5 @@
 <?php
-$this->headTitle($this->translate('Create Activity'));
+$this->headTitle($this->translate('Create Vacancy'));
 $this->headLink()
     ->prependStylesheet($this->basePath() . '/css/bootstrap-markdown.min.css')
     ->prependStylesheet($this->basePath() . '/css/jquery.datetimepicker.css');
@@ -56,6 +56,18 @@ $form->prepare();
                     </label>
                     <div class="col-sm-10">
                         <?= $this->formInput($element) ?>
+                        <?= $this->formElementErrors($element) ?>
+                    </div>
+                </div>
+                <?php
+                $element = $fieldset->get('active');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+                    <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                        <?= $element->getOption('label') ?>
+                    </label>
+                    <div class="col-sm-10">
+                        <?= $this->formCheckbox($element) ?>
                         <?= $this->formElementErrors($element) ?>
                     </div>
                 </div>
@@ -269,18 +281,18 @@ $form->prepare();
             </div>
         </div>
 
-<!--        --><?php
-//        $element = $form->get('labels');
-//        ?>
-<!--        <div class="form-group --><?//= $this->bootstrapElementError($element) ?><!--">-->
-<!--            <label for="--><?//= $element->getName() ?><!--" class="control-label col-sm-2">-->
-<!--                --><?//= $element->getOption('label') ?>
-<!--            </label>-->
-<!--            <div class="col-sm-10">-->
-<!--                --><?//= $this->formMultiCheckbox($element) ?>
-<!--                --><?//= $this->formElementErrors($element) ?>
-<!--            </div>-->
-<!--        </div>-->
+        <!--        --><?php
+        //        $element = $form->get('labels');
+        //        ?>
+        <!--        <div class="form-group --><?//= $this->bootstrapElementError($element) ?><!--">-->
+        <!--            <label for="--><?//= $element->getName() ?><!--" class="control-label col-sm-2">-->
+        <!--                --><?//= $element->getOption('label') ?>
+        <!--            </label>-->
+        <!--            <div class="col-sm-10">-->
+        <!--                --><?//= $this->formMultiCheckbox($element) ?>
+        <!--                --><?//= $this->formElementErrors($element) ?>
+        <!--            </div>-->
+        <!--        </div>-->
 
 
         <?= $this->form()->closeTag(); ?>
