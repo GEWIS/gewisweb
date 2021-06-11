@@ -30,7 +30,7 @@ with your career orientation!') . ' ',
                             $this->translate(' For example by hosting business cases, in-house
 days, and weekly lunch lectures.') . ' ', sprintf(
                             $this->translate('You can find a full overview of career events
-on %sthis%s page. '), '<a href="https://gewis.nl/activity/career" title="' . '">',
+on %sthis%s page. '), '<a href="/activity/career" title="' . '">',
                             '</a>')
                         ?>
                     </p>
@@ -87,6 +87,7 @@ lunch lectures to business cases.') . ' ',
                     </p>
                 </div>
             </div>
+        <hr/>
 
             <div class="row row-spacing-top">
                 <div class="col-md-12">
@@ -101,7 +102,12 @@ lectures to case contests to company visits and are aimed at giving you as a
 student a clear overview of where you can work and what you can do when you
 are finished with your studies.')
                         ?>
-                    </p>
+                        <a href="https://myfuture.tue.nl/activities" style="margin-bottom: 0 !important;">
+                            <img class="img-responsive"
+                                 src="/img/myfuture2.png"
+                                 alt="<?= $this->translate('MyFuture') ?>">
+                        </a>
+                </p>
                 </div>
             </div>
 
@@ -120,9 +126,15 @@ Activities. ') . ' ',
                         $this->translate('The remaining five can be obtained by participating in MyFuture
 Activities of your own choice.')
                         ?>
+                        <a href="https://myfuture.tue.nl/myfuture-activities" style="margin-bottom: 0 !important;">
+                            <img class="img-responsive"
+                                 src="/img/myfuture2.png"
+                                 alt="<?= $this->translate('MyFuture') ?>">
+                        </a>
                     </p>
                 </div>
             </div>
+            <hr/>
 
             <div class="row row-spacing-top">
                 <div class="col-md-12">
@@ -135,9 +147,18 @@ Activities of your own choice.')
 TU/e, including GEWIS. Every year, Wervingsdagen hosts 3 main events: the
 Skill Sessions, Career Expo and Interviewing Days.')
                         ?>
+
                     </p>
                 </div>
-            </div>
+
+            <div class="col-md-12">
+                <a class="" href="https://wervingsdagen.nl/index/" style="margin-bottom: 0 !important;">
+                    <img class="img-responsive"
+                         src="/img/wervingsdagen.png"
+                         alt="<?= $this->translate('Wervingsdagen') ?>">
+                </a>
+            </div</div>
+            <hr/>
 
             <div class="row row-spacing-top">
                 <div class="col-md-12">
@@ -151,6 +172,11 @@ of what kind of an engineer they want to be. Career Academy offers career
 workshops and activities, individual career coaching, and CV, cover letter and
 LinkedIn checks!')
                         ?>
+                        <a href="https://www.tue.nl/universiteit/community/career-academy/" style="margin-bottom: 0 !important;">
+                            <img class="img-responsive"
+                                 src="/img/careeracademy.jpg"
+                                 alt="<?= $this->translate('Career Academy') ?>">
+                        </a>
                     </p>
                 </div>
             </div>
