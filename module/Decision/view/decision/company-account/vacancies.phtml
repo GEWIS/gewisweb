@@ -92,6 +92,42 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                 </tr>
             <?php endforeach ?>
         </table>
+        <h2>
+            <?= $this->translate('Jobs awaiting approval') ?>
+        </h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>
+                    <?= $this->translate('Name'); ?>
+                </th>
+                <th>
+                    <?= $this->translate('Status'); ?>
+                </th>
+            </tr>
+            </thead>
+
+            <?php $lniDoneList = [] ?>
+            <?php foreach ($package->getApprovalVacancies() as $job): ?>
+                <?php
+                if($job->getLanguage() != $lang) {
+                    continue;
+                    if (array_key_exists($job->getLanguageNeutralId(), $lniDoneList)) {
+                        continue;
+                    }
+                    $lniDoneList[$job->getLanguageNeutralId()] = $job;
+                }
+                ?>
+                <tr>
+                    <td>
+                        <?= $job->getName() ?>
+                    </td>
+                    <td>
+                        <?= $job->getRejected() ? $this->translate('Rejected') : $this->translate('Awaiting Approval') ?>
+                    </td>
+                </tr>
+            <?php endforeach ?>
+        </table>
         <!-- Delete job modal -->
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">

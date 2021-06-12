@@ -152,7 +152,7 @@ class ApprovalVacancy implements ApprovalAbstract
     /**
      * The job's package.
      *
-     * @ORM\ManyToOne(targetEntity="\Company\Model\CompanyJobPackage", inversedBy="jobs")
+     * @ORM\ManyToOne(targetEntity="\Company\Model\CompanyJobPackage", inversedBy="approvalVacancies")
      */
     protected $package;
 

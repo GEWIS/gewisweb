@@ -2,6 +2,7 @@
 
 namespace Company\Model;
 
+use Company\Model\ApprovalModel\ApprovalVacancy;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
@@ -19,6 +20,7 @@ class CompanyJobPackage extends CompanyPackage
     {
         parent::__construct();
         $this->jobs = new ArrayCollection();
+        $this->approvalVacancies = new ArrayCollection();
     }
 
     /**
@@ -28,6 +30,14 @@ class CompanyJobPackage extends CompanyPackage
      */
     protected $jobs;
 
+
+    /**
+     * The package's pending job approvals.
+     *
+     * @ORM\OneToMany(targetEntity="\Company\Model\ApprovalModel\ApprovalVacancy", mappedBy="package", cascade={"persist", "remove"})
+     */
+    protected $approvalVacancies;
+
     /**
      * Get the jobs in the package.
      *
@@ -36,6 +46,16 @@ class CompanyJobPackage extends CompanyPackage
     public function getJobs()
     {
         return $this->jobs;
+    }
+
+    /**
+     * Get the approval vacancies in the package.
+     *
+     * @return array approval vacancies in the package
+     */
+    public function getApprovalVacancies()
+    {
+        return $this->approvalVacancies;
     }
 
     /**
@@ -89,5 +109,25 @@ class CompanyJobPackage extends CompanyPackage
     public function removeJob(Job $job)
     {
         $this->jobs->removeElement($job);
+    }
+
+    /**
+     * Adds a approvalVacancy to the package.
+     *
+     * @param ApprovalVacancy $approvalVacancy approvalVacancy to be added
+     */
+    public function addApprovalVacancy(ApprovalVacancy $approvalVacancy)
+    {
+        $this->approvalVacancies->add($approvalVacancy);
+    }
+
+    /**
+     * Removes a approvalVacancy from the package.
+     *
+     * @param ApprovalVacancy $approvalVacancy approvalVacancy to be removed
+     */
+    public function removeApprovalVacancy(ApprovalVacancy $approvalVacancy)
+    {
+        $this->approvalVacancies->removeElement($approvalVacancy);
     }
 }
