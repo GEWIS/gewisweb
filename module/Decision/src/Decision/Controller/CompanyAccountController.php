@@ -30,9 +30,11 @@ class CompanyAccountController extends AbstractActionController
         $translator = $companyService->getTranslator();
         $locale = $translator->getLocale();
 
+        $vacancies = empty($companyPackageInfo) ? [] : $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getID(), $locale);
+
         return new ViewModel([
             //fetch the active vacancies of the logged in company
-            'vacancies' => $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getID(), $locale),
+            'vacancies' => $vacancies,
             'companyPackageInfo' => $companyPackageInfo,
             'companyInfo'  => $companyInfo
         ]);

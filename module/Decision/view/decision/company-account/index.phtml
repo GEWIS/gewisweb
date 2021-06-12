@@ -2,19 +2,21 @@
 // set title
 $this->headTitle($this->translate('Company Account'));
 
-$accountStyle = "panel-image"; //Style for vacancies and activities buttons (used to specify disabled and enabled style)
+$accountStyle = "panel-image-disabled"; //Style for vacancies and activities buttons (used to specify disabled and enabled style)
 $bannerStyle = "panel-image";  //Style for banner button (used to specify disabled and enabled style)
 $highlightStyle = "panel-image";  //Style for highlight button (used to specify disabled and enabled style)
 
-$accountActive = True; //False if account is inactive
+$accountActive = False; //False if account is inactive
 $bannerActive = True;  //False if banner credits are 0
 $highlightActive = True;  //False if highlight credits are 0
 
 //determine whether the account is active or not
 $now = new DateTime();
-if ($companyPackageInfo[0]->getExpirationDate() < $now) {
-    $accountActive = False;
-    $accountStyle = "panel-image-disabled";
+if (!empty($companyPackageInfo)) {
+    if ($companyPackageInfo[0]->getExpirationDate() > $now) {
+        $accountActive = True;
+        $accountStyle = "panel-image";
+    }
 }
 
 //determine if banner upload is active
@@ -35,16 +37,17 @@ if ($companyInfo[0]->getHighLightCredits() <= 0){
     <section class="section">
         <div class="row">
 
-            <?php
-            $diff = $now->diff($companyPackageInfo[0]->getExpirationDate());
+            <?php if (!empty($companyPackageInfo)):
+                $diff = $now->diff($companyPackageInfo[0]->getExpirationDate());
 
-            //If vacancy package will expire within one month display notification
-            if ($diff->m === 0 && $diff->d >= 0 && $companyPackageInfo[0]->getExpirationDate() >= $now): ?>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <strong><?= $this->translate("Vacancy package will expire within one month!") ?></strong>
+                //If vacancy package will expire within one month display notification
+                if ($diff->m === 0 && $diff->d >= 0 && $companyPackageInfo[0]->getExpirationDate() >= $now): ?>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <strong><?= $this->translate("Vacancy package will expire within one month!") ?></strong>
+                        </div>
                     </div>
-                </div>
+                <?php endif; ?>
             <?php endif; ?>
 
             <?php
