@@ -32,7 +32,7 @@ class SignupFieldValue
      */
     public function getFieldValuesBySignup(\Activity\Model\Signup $signup)
     {
-        return $this->getRepository()->findBy(array('signup' => $signup->getId()));
+        return $this->getRepository()->findBy(['signup' => $signup->getId()]);
     }
 
     /**

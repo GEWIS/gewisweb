@@ -22,7 +22,7 @@ class AdminApprovalController extends AbstractActionController
         $id = (int) $this->params('id');
         $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
 
-        $acl = $translator = $this->getServiceLocator()->get('activity_acl');
+        $acl = $this->getServiceLocator()->get('activity_acl');
         $identity = $this->getServiceLocator()->get('user_role');
 
         if (!$acl->isAllowed($identity, 'activity', 'approval')) {

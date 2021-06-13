@@ -4,7 +4,7 @@ namespace Activity;
 
 use Activity\Form\ActivityCategory as CategoryForm;
 use Activity\Form\SignupList as SignupListForm;
-use Activity\Form\SignupListFields;
+use Activity\Form\SignupListField;
 use Activity\Mapper\Activity;
 use Activity\Mapper\ActivityCalendarOption;
 use Activity\Mapper\ActivityCategory;
@@ -84,7 +84,7 @@ class Module
                     return $form;
                 },
                 'activity_form_signuplist_fields' => function ($sm) {
-                    $form = new SignupListFields();
+                    $form = new SignupListField();
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },

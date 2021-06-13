@@ -557,7 +557,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      *
      * @param array $array1
      * @param array $array2
-     * @return bool
+     * @return array
      */
     protected function array_diff_assoc_recursive(array $array1, array $array2)
     {
@@ -570,7 +570,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
                 } else {
                     $newDifference = $this->array_diff_assoc_recursive($value, $array2[$key]);
 
-                    if (!empty($new_diff)) {
+                    if (!empty($newDifference)) {
                         $difference[$key] = $newDifference;
                     }
                 }

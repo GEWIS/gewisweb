@@ -222,7 +222,6 @@ class AdminController extends AbstractActionController
             );
         }
 
-        $signupService = $this->getServiceLocator()->get('activity_service_signup');
         $signupLists = [];
 
         foreach ($activity->getSignupLists()->getValues() as $signupList) {

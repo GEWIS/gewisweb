@@ -465,7 +465,7 @@ class ActivityCalendar extends AbstractAclService
     public function getEditableOrgans()
     {
         $allOrgans = $this->getOrganService()->getEditableOrgans();
-        $organs = array();
+        $organs = [];
         foreach ($allOrgans as $organ) {
             $organId = $organ->getId();
             if ($this->canOrganCreateProposal($organId)) {
