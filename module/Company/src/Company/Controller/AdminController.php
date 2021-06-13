@@ -87,7 +87,7 @@ class AdminController extends AbstractActionController
 
         // Initialize the form
         $jobDict = [];
-        foreach ($jobs as $job) {
+        foreach ($vacancyApprovals as $job) {
             $jobDict[$job->getLanguage()] = $job;
         }
         $languages = array_keys($jobDict);

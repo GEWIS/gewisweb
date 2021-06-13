@@ -151,18 +151,18 @@ class Approval
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Company\Model\ApprovalModel\ApprovalAbstract');
+        return $this->em->getRepository('Company\Model\ApprovalModel\ApprovalProfile');
     }
 
-//    /**
-//     * Saves all unsaved entities, that are marked persistent
-//     *
-//     */
-//    public function save($profile)
-//    {
-//        $this->em->persist($profile);
-//        $this->em->flush();
-//    }
+    /**
+     * Get the repository for this mapper.
+     *
+     * @return Doctrine\ORM\EntityRepository
+     */
+    public function getVacancyRepository()
+    {
+        return $this->em->getRepository('Company\Model\ApprovalModel\ApprovalVacancy');
+    }
 
     /**
      * Get the a job by it's id
@@ -170,7 +170,7 @@ class Approval
      * @return ApprovalVacancy
      */
     public function findVacanciesByLanguageNeutralId($vacancy_id) {
-        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb = $this->getVacancyRepository()->createQueryBuilder('j');
         $qb->select('j');
         $qb->where('j.languageNeutralId =:vacancy_id');
         $qb->setParameter('vacancy_id', $vacancy_id);
