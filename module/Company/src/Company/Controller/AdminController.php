@@ -49,6 +49,69 @@ class AdminController extends AbstractActionController
 
     public function approvalVacancyAction()
     {
+        // Get useful stuff
+        $companyService = $this->getCompanyService();
+        $approvalService = $this->getApprovalService();
+        $jobForm = $companyService->getJobFormCompany();
+
+        // Get the parameters
+        $languageNeutralId = $this->params('languageNeutralJobId');
+
+        // For testing purposes
+        // TODO: make sure this is retrieved from the given params
+        $languageNeutralId = 5;
+
+
+        // Find the specified jobs
+        $jobs = $companyService->getEditableJobsByLanguageNeutralId($languageNeutralId);
+        $vacancyApprovals = $approvalService->getEditableVacanciesByLanguageNeutralId($languageNeutralId);
+
+        // Check the job is found. If not, throw 404
+        if (empty($jobs)) {
+            return $this->notFoundAction();
+        }
+
+        // Handle incoming form results
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $files = $request->getFiles();
+            $post = $request->getPost();
+            $jobDict = [];
+
+            foreach ($jobs as $job) {
+                $jobDict[$job->getLanguage()] = $job;
+            }
+
+            $companyService->saveJobData($languageNeutralId, $jobDict, $post, $files);
+        }
+
+        // Initialize the form
+        $jobDict = [];
+        foreach ($jobs as $job) {
+            $jobDict[$job->getLanguage()] = $job;
+        }
+        $languages = array_keys($jobDict);
+        $jobForm->setLanguages($languages);
+
+        $labels = $jobs[0]->getLabels();
+
+        $mapper = $companyService->getLabelMapper();
+        $actualLabels = [];
+        foreach ($labels as $label) {
+            $actualLabel = $label->getLabel();
+            $actualLabels[] = $mapper->siblingLabel($actualLabel, 'en');
+            $actualLabels[] = $mapper->siblingLabel($actualLabel, 'nl');
+        }
+        $jobForm->setLabels($actualLabels);
+        $jobForm->setData($jobs[0]->getArrayCopy());
+        $jobForm->bind($jobDict);
+
+        // Initialize the view
+        return new ViewModel([
+            'form' => $jobForm,
+            'job' => $job,
+            'languages' => $this->getLanguageDescriptions(),
+        ]);
 
     }
 

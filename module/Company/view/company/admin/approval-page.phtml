@@ -46,19 +46,22 @@
                     <th>
                         <?php
                         $slugName = $pendingApproval->getCompany()->getSlugName();
+                        if(!empty($pendingApproval->getVacancyApproval())) {
+                            $vacancyApprovalId = $pendingApproval->getVacancyApproval()->getLanguageNeutralId();
+                        }
                         $url = "/admin/company/";
                         //determing type
 
                         if($pendingApproval->getType() === "profile") {
                             $url .= "approval-profile/" . $slugName;
                         }elseif($pendingApproval->getType() === "vacancy"){
-                            $url .= "approval-vacancy/" . $slugName;
+                            $url .= "approval-vacancy/" . $slugName . "/" . $vacancyApprovalId;
                         }elseif($pendingApproval->getType() == "banner"){
                             $url .= "approval-banner/" . $slugName;
                         }
                         ?>
 
-                        <button type="button" class="btn btn-danger btn-xs" onclick="location.href='<?= $url; ?>';">
+                        <button type="button" class="btn btn-danger btn-xs" onclick="location.href='<?= $url;  ?>';">
                             <?= $this->translate('View request') ?>
                         </button>
                     </th>

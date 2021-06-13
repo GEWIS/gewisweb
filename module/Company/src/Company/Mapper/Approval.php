@@ -6,6 +6,7 @@ namespace Company\Mapper;
 use Company\Model\ApprovalModel\ApprovalPending;
 use Company\Model\ApprovalModel\ApprovalProfile;
 use Company\Model\ApprovalModel\ApprovalCompanyI18n;
+use Company\Model\ApprovalModel\ApprovalVacancy;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
@@ -162,6 +163,19 @@ class Approval
 //        $this->em->persist($profile);
 //        $this->em->flush();
 //    }
+
+    /**
+     * Get the a job by it's id
+     *
+     * @return ApprovalVacancy
+     */
+    public function findVacanciesByLanguageNeutralId($vacancy_id) {
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->select('j');
+        $qb->where('j.languageNeutralId =:vacancy_id');
+        $qb->setParameter('vacancy_id', $vacancy_id);
+        return $qb->getQuery()->getResult();
+    }
 
     /**
      * Inserts a company into the datebase, and initializes the given

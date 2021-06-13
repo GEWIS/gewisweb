@@ -45,6 +45,10 @@ class Approval extends AbstractAclService
         return $this->getApprovalMapper()->rejectApproval($cId);
     }
 
+    public function getEditableVacanciesByLanguageNeutralId($languageNeutralId) {
+        return $this->getApprovalMapper()->findVacanciesByLanguageNeutralId($languageNeutralId);
+    }
+
     /**
      * Get the default resource ID.
      *

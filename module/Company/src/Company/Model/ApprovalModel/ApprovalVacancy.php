@@ -3,7 +3,6 @@
 
 namespace Company\Model\ApprovalModel;
 use Carbon\Carbon;
-use Company\Model\ApprovalModel\ApprovalAbstract;
 use Company\Model\Company;
 use Company\Model\CompanyPackage;
 use Company\Model\JobLabelAssignment;
@@ -204,7 +203,7 @@ class ApprovalVacancy implements ApprovalAbstract
     /**
      * @param bool $rejected
      */
-    public function setRejected(bool $rejected)
+    public function setRejected($rejected)
     {
         $this->rejected = $rejected;
     }
