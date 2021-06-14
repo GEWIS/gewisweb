@@ -15,10 +15,10 @@ class HighlightIds extends AbstractHelper implements ServiceLocatorAwareInterfac
      * Returns all visible categories
      *
      */
-    public function __invoke($lang)
+    public function __invoke($category, $hours, $sector, $language)
     {
         $pluginManager = $this->getServiceLocator();
         $companyService = $pluginManager->getServiceLocator()->get('Company\Service\Company');
-        return $companyService->getHighlightsList($lang);
+        return $companyService->pickVacancies($category, $hours, $sector, $language);
     }
 }

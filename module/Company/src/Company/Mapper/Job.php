@@ -333,7 +333,7 @@ class Job
             -> setParameter(1, $language)
             -> andWhere('j.hours = ?2')
             -> setParameter(2, $hours)
-            -> andWhere('IDENTITY(j.sector) = ?3')
+            -> andWhere('IDENTITY(j.sectors) = ?3')
             -> setParameter(3, $sector)
             -> andWhere('IDENTITY(j.category) = (?5)')
             ->setParameter(5, $category);

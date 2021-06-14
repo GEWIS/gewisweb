@@ -112,7 +112,7 @@ class HighlightPackage extends Package
             ->setParameter(2, $language)
             -> andWhere('j.hours = ?3')
             -> setParameter(3, $hours)
-            -> andWhere('IDENTITY(j.sector) = ?4')
+            -> andWhere('IDENTITY(j.sectors) = ?4')
             -> setParameter(4, $sector)
             ->andWhere('h.published = 1')
             ->andWhere('j.category = ?5')
