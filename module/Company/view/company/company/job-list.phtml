@@ -1,10 +1,11 @@
 <?php
 
 $locale = $this->translator->getLocale();
-$category = $this->category;
-$hours = $this->hours;
-$sector = $this->sector;
-$highlightIds = $this->highlightedIds($category, $hours, $sector, $locale);
+$cat = NULL;
+if(!$all){
+    $cat = $this->category->getId();
+}
+$highlightIds = $this->highlightedIds($cat, $locale);
 // set title
 if (isset($this->company)) {
     $this->headTitle($this->company->getName());

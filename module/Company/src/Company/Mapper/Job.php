@@ -323,21 +323,18 @@ class Job
      *
      * @return array Company\Model\JobCategory.
      */
-    public function getRandomVacancies($highlightIds, $category, $hours, $sector, $language) {
+    public function getRandomVacancies($highlightIds, $category, $language) {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
 
         $qb = $objectRepository->createQueryBuilder('j');
         $qb -> select('j.id')
             -> where('j.active = 1')
             -> andWhere('j.language = ?1')
-            -> setParameter(1, $language)
-            -> andWhere('j.hours = ?2')
-            -> setParameter(2, $hours)
-            -> andWhere('IDENTITY(j.sectors) = ?3')
-            -> setParameter(3, $sector)
-            -> andWhere('IDENTITY(j.category) = (?5)')
-            ->setParameter(5, $category);
-
+            -> setParameter(1, $language);
+        if ($category!=NULL) {
+            $qb -> andWhere('IDENTITY(j.category) = (?5)')
+                ->setParameter(5, $category);
+        }
         if ($highlightIds!=NULL){
             $qb -> andWhere('j.id NOT IN (?4)')
                 -> setParameter(4, $highlightIds);

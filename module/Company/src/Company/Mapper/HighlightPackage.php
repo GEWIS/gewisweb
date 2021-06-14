@@ -98,7 +98,7 @@ class HighlightPackage extends Package
      *
      * @return array id's of highlighted vacancies
      */
-    public function getHighlightedVacancies($category, $hours, $sector, $language)
+    public function getHighlightedVacancies($category, $language)
     {
         $today = date("Y/m/d");
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
@@ -110,14 +110,11 @@ class HighlightPackage extends Package
             ->setParameter(1, $today)
             ->andWhere('j.language = ?2')
             ->setParameter(2, $language)
-            -> andWhere('j.hours = ?3')
-            -> setParameter(3, $hours)
-            -> andWhere('IDENTITY(j.sectors) = ?4')
-            -> setParameter(4, $sector)
-            ->andWhere('h.published = 1')
-            ->andWhere('j.category = ?5')
-            ->setParameter(5, $category);
-
+            ->andWhere('h.published = 1');
+        if ($category!=NULL) {
+            $qb->andWhere('j.category = ?5')
+                ->setParameter(5, $category);
+        }
         return $qb->getQuery()->getResult();
     }
 
