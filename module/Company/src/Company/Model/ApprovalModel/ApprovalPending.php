@@ -23,7 +23,7 @@ class ApprovalPending
     /**
      * The approval
      *
-     * @ORM\ManyToOne(targetEntity="\Company\Model\ApprovalModel\ApprovalVacancy", inversedBy="packages")
+     * @ORM\OneToOne(targetEntity="\Company\Model\ApprovalModel\ApprovalVacancy")
      * @var ApprovalAbstract
      */
     protected $VacancyApproval;
@@ -99,6 +99,39 @@ class ApprovalPending
     public function getType()
     {
         return $this->type;
+    }
+
+
+    /**
+     * @param ApprovalAbstract $VacancyApproval
+     */
+    public function setVacancyApproval($VacancyApproval)
+    {
+        $this->VacancyApproval = $VacancyApproval;
+    }
+
+    /**
+     * @param ApprovalAbstract $BannerApproval
+     */
+    public function setBannerApproval($BannerApproval)
+    {
+        $this->BannerApproval = $BannerApproval;
+    }
+
+    /**
+     * @param ApprovalAbstract $ProfileApproval
+     */
+    public function setProfileApproval($ProfileApproval)
+    {
+        $this->ProfileApproval = $ProfileApproval;
+    }
+
+    /**
+     * @param String $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 
     public function getCompany(){

@@ -55,7 +55,7 @@
                         if($pendingApproval->getType() === "profile") {
                             $url .= "approval-profile/" . $slugName;
                         }elseif($pendingApproval->getType() === "vacancy"){
-                            $url .= "approval-vacancy/" . $slugName . "/" . $vacancyApprovalId;
+                            $url .= "approval-vacancy/" . $vacancyApprovalId;
                         }elseif($pendingApproval->getType() == "banner"){
                             $url .= "approval-banner/" . $slugName;
                         }

@@ -4,6 +4,7 @@ namespace Company\Service;
 
 //use Application\Service\AbstractService;
 use Application\Service\AbstractAclService;
+use Company\Model\ApprovalModel\ApprovalPending;
 use Company\Model\ApprovalModel\ApprovalVacancy;
 use Company\Model\Job as JobModel;
 use Company\Model\JobCategory as CategoryModel;
@@ -1098,6 +1099,12 @@ class Company extends AbstractACLService
 
             $id = $this->setLanguageNeutralJobId($id, $job, $languageNeutralId, $this->getApprovalMapper());
             $this->getApprovalMapper()->persist($job);
+
+            $pending = new ApprovalPending();
+            $pending->setType('vacancy');
+            $pending->setVacancyApproval($job);
+            $this->getApprovalMapper()->persist($pending);
+
             $this->getApprovalMapper()->save();
 
 //            $mapper = $this->getLabelMapper();

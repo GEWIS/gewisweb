@@ -148,15 +148,15 @@ return [
                         ],
                     ],
                     'approvalVacancy' => [
-                        'type' => 'segment',
+                        'type' => 'literal',
                         'options' => [
-                            'route' => '/approval-vacancy/[:slugCompanyName]/[:languageNeutralId]',
+                            'route' => '/approval-vacancy/[:slugCompanyName]',
                             'defaults' => [
                                 'action' => 'approvalVacancy',
                             ],
                             'constraints' => [
                                 'slugCompanyName' => '[a-zA-Z0-9_\-\.]*',
-                                'languageNeutralId' => '[0-9]*',
+//                                'languageNeutralId' => '[0-9]*',
                             ],
                         ],
                     ],

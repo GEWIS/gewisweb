@@ -55,11 +55,8 @@ class AdminController extends AbstractActionController
         $jobForm = $companyService->getJobFormCompany();
 
         // Get the parameters
-        $languageNeutralId = $this->params('languageNeutralJobId');
-
-        // For testing purposes
-        // TODO: make sure this is retrieved from the given params
-        $languageNeutralId = 5;
+        // TODO: make sure this doesn't need to be called 'slugCompanyName'
+        $languageNeutralId = $this->params('slugCompanyName');
 
 
         // Find the specified jobs
