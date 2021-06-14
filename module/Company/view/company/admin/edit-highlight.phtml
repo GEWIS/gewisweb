@@ -1,4 +1,12 @@
 <?php
+$this->headScript()
+    ->prependFile($this->basePath() . '/js/company-admin.js');
+$this->scriptUrl()->requireUrls(
+    [
+        'admin_company/editCompany/editPackage/deletePackage'
+    ],
+    ['slugCompanyName', 'packageId']
+);
 foreach ($categoryList as $category):?>
     <div class="row">
         <h1><?= $this->translate($category->getName());?></h1>
@@ -30,60 +38,57 @@ foreach ($categoryList as $category):?>
                         <?= $highlight['vacancy_name'] ?>
                     </th>
                     <th>
-<!--                    <td id="edit" name="Startdate">--><?//= $highlight['starts']->format('Y-m-d') ?><!--</td>-->
                         <?= $highlight['starts']->format('Y-m-d')  ?>
                     </th>
                     <th>
                         <?= $highlight['expires']->format('Y-m-d')  ?>
                     </th>
+                    <td>
+                        <a class="btn btn-xs btn-primary" href="<?= $this->url("admin_company/editCompany/editPackage",
+                            [
+                                "slugCompanyName" => $highlight['slugName'],
+                                "packageId" => $highlight['id']
+                            ]
+                        ); ?>">
+                            <?= $this->translate('edit'); ?></a>
+                        <button type="button" class="btn btn-danger btn-xs"
+                                onclick="Company.Admin.deletePackage('<?= $highlight['slugName'] ?>', '<?= $highlight['id'] ?>')"
+                                data-toggle="modal"
+                                data-target="#deleteModal">
+                            <?= $this->translate('Delete') ?>
+                        </button>
+                    </td>
                 </tr>
                 <?php endif; ?>
                 <?php endforeach;?>
             </table>
+            <!-- Delete package modal -->
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title"><?= $this->translate('Delete confirmation') ?></h4>
+                        </div>
+                        <div class="modal-body">
+                            <p><?= $this->translate('Are you sure you want to delete this package?') ?> </p>
+                            <p class="options">
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <form id="deleteForm" method="POST">
+                                <input type="submit" name="submit" value="<?= $this->translate('Delete package') ?>"
+                                       class="btn btn-danger"/>
+                                <button type="button" class="btn" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 <?php endforeach; ?>
 
-<script>
-    //dictionary storing all changed company settings
-    var dict = {startDate: "", expires: ""};
 
-    //the form that will submit the changes
-    var finalsubmit = document.getElementById("finalsubmit");
-
-    //the text field containing the changes
-    var finaltext = document.getElementById("finaltext");
-
-    //Set both the form and text field to be not visible
-    finalsubmit.style.display = "none";
-    finaltext.style.display = "none";
-
-    //Select setting that is double clicked and has the tag "edit"
-    document.querySelectorAll("#edit").forEach(function(node){
-        node.ondblclick = function(){
-            //Make the form submit button visible
-            finalsubmit.style.display = "block";
-
-            //Setup the input text field
-            var val=this.innerHTML;
-            var input=document.createElement("input");
-            input.value=val;
-
-            //Set changed setting equal to the newly inputted value
-            //and update the form text field to store the changed values
-            input.onblur=function(){
-                var val=this.value;
-                this.parentNode.innerHTML=val;
-                dict[node.getAttribute("name")] = val;
-                console.log(dict);
-
-                var parsed = JSON.stringify(dict);
-                finaltext.value = parsed;
-            }
-
-            this.innerHTML="";
-            this.appendChild(input);
-            input.focus();
-        }
-    });
-</script>
