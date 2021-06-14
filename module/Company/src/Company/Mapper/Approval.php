@@ -54,6 +54,18 @@ class Approval
     }
 
     /**
+     * Delete the given Approval Model
+     *
+     * @param mixed $approval approval model to be removed
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function removeApproval($approval)
+    {
+        $this->em->remove($approval);
+        $this->em->flush();
+    }
+
+    /**
      * Find all pending approvals
      *
      * @return array ApprovalPending model
@@ -111,6 +123,26 @@ class Approval
     }
 
     /**
+     * Find the Pending approval with the given vacancy id.
+     *
+     * @param Int $id The vacancy id of the pending approval to get.
+     *
+     * @return Array An array containing the pending approvals with the given vacancy id.
+     */
+    public function findPendingVacancyApprovalById($id)
+    {
+
+        $objectRepository = $this->getPendingRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('c');
+        $qb->select('c')->where('c.VacancyApproval=:id');
+        $qb->setParameter('id', $id);
+//        $qb->setMaxResults(1);
+
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Find the company with the given slugName.
      *
      * @param slugName The 'username' of the company to get.
@@ -162,6 +194,16 @@ class Approval
     public function getVacancyRepository()
     {
         return $this->em->getRepository('Company\Model\ApprovalModel\ApprovalVacancy');
+    }
+
+    /**
+     * Get the repository for this mapper.
+     *
+     * @return Doctrine\ORM\EntityRepository
+     */
+    public function getPendingRepository()
+    {
+        return $this->em->getRepository('Company\Model\ApprovalModel\ApprovalPending');
     }
 
     /**

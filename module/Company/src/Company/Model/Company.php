@@ -594,6 +594,14 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
      * Returns the translation identified by $language
      *
      * Note, does not set $logo, the user should set this property himself

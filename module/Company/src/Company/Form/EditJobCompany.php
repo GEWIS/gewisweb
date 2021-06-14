@@ -103,6 +103,15 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
         ]);
 
         $this->add([
+            'name' => 'reject',
+            'attributes' => [
+                'type' => 'button',
+                'value' => $translator->translate('Reject approval'),
+                'id' => 'rejectbutton',
+            ],
+        ]);
+
+        $this->add([
             'name' => 'location',
             'attributes' => [
                 'type' => 'text',

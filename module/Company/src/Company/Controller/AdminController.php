@@ -83,7 +83,7 @@ class AdminController extends AbstractActionController
 
         // Handle incoming form results
         $request = $this->getRequest();
-        if ($request->isPost()) {
+        if ($request->isPost()  && !isset($_POST['reject'])) {
             $files = $request->getFiles();
             $post = $request->getPost();
             $jobDict = [];
@@ -93,6 +93,16 @@ class AdminController extends AbstractActionController
             }
 
             $companyService->saveJobData($languageNeutralId, $jobDict, $post, $files);
+            $companyService->deleteVacancyApprovals($vacancyApprovals);
+            return $this->redirect()->toRoute(
+                'admin_company/approvalPage'
+            );
+
+        } elseif (isset($_POST['reject'])){
+
+            return $this->redirect()->toRoute(
+                'admin_company/approvalPage'
+            );
         }
 
         // Initialize the form
