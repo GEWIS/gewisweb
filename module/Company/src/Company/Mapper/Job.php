@@ -317,4 +317,33 @@ class Job
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * Find all vacancies that may be highlighted
+     *
+     * @return array Company\Model\JobCategory.
+     */
+    public function getRandomVacancies($highlightIds, $category, $hours, $sector, $language) {
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+
+        $qb = $objectRepository->createQueryBuilder('j');
+        $qb -> select('j.id')
+            -> where('j.active = 1')
+            -> andWhere('j.language = ?1')
+            -> setParameter(1, $language)
+            -> andWhere('j.hours = ?2')
+            -> setParameter(2, $hours)
+            -> andWhere('IDENTITY(j.sector) = ?3')
+            -> setParameter(3, $sector)
+            -> andWhere('IDENTITY(j.category) = (?5)')
+            ->setParameter(5, $category);
+
+        if ($highlightIds!=NULL){
+            $qb -> andWhere('j.id NOT IN (?4)')
+                -> setParameter(4, $highlightIds);
+        }
+
+
+        return $qb->getQuery()->getResult();
+    }
 }

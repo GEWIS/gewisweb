@@ -94,6 +94,34 @@ class HighlightPackage extends Package
     }
 
     /**
+     * Pick vacancies that are visible as highlighted
+     *
+     * @return array id's of highlighted vacancies
+     */
+    public function getHighlightedVacancies($category, $hours, $sector, $language)
+    {
+        $today = date("Y/m/d");
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('h');
+        $qb->select('IDENTITY(h.vacancy)')
+            ->join('h.vacancy', 'j')
+            ->join('j.category', 'jc')
+            ->where('h.expires >= ?1')
+            ->setParameter(1, $today)
+            ->andWhere('j.language = ?2')
+            ->setParameter(2, $language)
+            -> andWhere('j.hours = ?3')
+            -> setParameter(3, $hours)
+            -> andWhere('IDENTITY(j.sector) = ?4')
+            -> setParameter(4, $sector)
+            ->andWhere('h.published = 1')
+            ->andWhere('j.category = ?5')
+            ->setParameter(5, $category);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Get the repository for this mapper.
      *
      * @return Doctrine\ORM\EntityRepository

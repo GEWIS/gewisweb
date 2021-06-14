@@ -279,6 +279,53 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Pick the vacancies that are visible as highlighted
+     *
+     * @param string $filter The current filter applied
+     *
+     * @return array Company\Model\JobCategory.
+     */
+    public function pickVacancies($category, $hours, $sector, $language){
+        // Get all vacancyID's of highlighted vacancies
+        $highlights = [];
+        $highlights = $this->getHighlightPackageMapper()->getHighlightedVacancies($category, $hours, $sector, $language);
+
+        $highlightIDs = [];
+        $highlightNames = [];
+
+        // If we already have at least 3 vacancies to highlight, we will pick a random selection of 3
+        if (count($highlights)>=3) {
+            $numbers = range(0, count($highlights)-1);
+            shuffle($numbers);
+            for ($x = 0; $x < 3; $x++){
+                array_push($highlightNames, $this->getJobMapper()->findJobById($highlights[$numbers[$x]][1])->getName());
+                array_push($highlightIDs, $highlights[$numbers[$x]][1]);
+            }
+            //If we don't have 3 vacancies to highlight we will pick some random vacancies
+        } else {
+            // Update the array with vacancies first
+            for ($x = 0; $x < count($highlights); $x++){
+                array_push($highlightNames, $this->getJobMapper()->findJobById($highlights[$x][1])->getName());
+                array_push($highlightIDs, $highlights[$x][1]);
+            }
+
+            $needed = 3 - count($highlights);
+            for ($needed; $needed > 0; $needed--) {
+                // Randomly pick some new vacancies to highlight
+                $extra = $this->getJobMapper()->getRandomVacancies($highlightIDs, $category, $hours, $sector, $language);
+                // If there are no vacancies, we will show less than three
+                If(count($extra)<1){
+                    return $highlightNames;
+                }
+                $random = rand(0,count($extra)-1);
+                array_push($highlightNames, $this->getJobMapper()->findJobById($extra[$random]['id'])->getName());
+                array_push($highlightIDs, $extra[$random]['id']);
+            }
+        }
+        return $highlightNames;
+    }
+
+    /**
      * Returns all highlights for the given language
      *
      *
