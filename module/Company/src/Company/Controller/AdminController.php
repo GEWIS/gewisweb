@@ -176,6 +176,7 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost() && !isset($_POST['reject'])) {
             $post = $request->getPost();
+            $post['id'] = $oldCompany->getId();
             if ($companyService->saveCompanyByData(////////////////////
                 $oldCompany,
                 $post,
@@ -213,16 +214,6 @@ class AdminController extends AbstractActionController
 
         $companyForm->setData($companyArray);
         $companyForm->get('languages')->setValue($companyArray['languages']);
-
-
-
-//        $companyForm->setAttribute(
-//            'action',
-//            $this->url()->fromRoute(
-//                'admin/company/approval-page'
-//
-//            )
-//        );
 
         return new ViewModel([
             'company' => $company,
