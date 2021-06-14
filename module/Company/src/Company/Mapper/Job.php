@@ -114,8 +114,26 @@ class Job
 
         $ids = $qb->getQuery()->getResult();
 
-        return $ids[0];
+
+        if (!is_null($ids)){
+            return $ids[0];
+        }
+
+        return null;
     }
+
+    public function findAllCompanyJobs($companyId)
+    {
+        $objectRepository = $this->getRepository();
+        $qb = $objectRepository->createQueryBuilder('j')
+            ->select('j.languageNeutralId', 'j.name')
+            ->join('j.package', 'h')
+            ->where('h.company=?1')
+            ->setParameter('1', $companyId);
+
+        return $qb->getQuery()->getResult();
+    }
+
 
     /**
      * Find all jobs identified by $jobSlugName that are owned by a company

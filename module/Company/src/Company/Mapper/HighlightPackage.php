@@ -93,6 +93,19 @@ class HighlightPackage extends Package
         return $qb->getQuery()->getResult();
     }
 
+    public function findVacancies($company)
+    {
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('h');
+        $qb->select('IDENTITY(h.vacancy)', 'j.name')
+            ->join('h.vacancy', 'j')
+            ->Where('h.company = ?2' )
+            ->andWhere('h.published = 1')
+            ->setParameter(2, $company);
+
+        return $qb->getQuery()->getResult();
+    }
+
     /**
      * Pick vacancies that are visible as highlighted
      *

@@ -361,6 +361,27 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Returns all vacancies for a company
+     *
+     *
+     * @return array
+     */
+    public function getHighlightsForCompany($companyId, $lang)
+    {
+        $highlightPackages = [];
+        $highlights = $this->getJobMapper()->findAllCompanyJobs($companyId);
+        if (!is_null($highlights)){
+            foreach ($highlights as $highlight) {
+//                print_r($highlight['id']);
+//                print_r($this->getJobMapper()->siblingID($highlight['languageNeutralId'], $lang)['id']);
+//                print_r($this->getJobMapper()->siblingID($highlight['id'], $lang)['id'])->getId();
+                $highlightPackages[$this->getJobMapper()->siblingID($highlight['languageNeutralId'], $lang)['id']] = $this->getJobMapper()->findJobById($this->getJobMapper()->siblingID($highlight['languageNeutralId'], $lang)['id'])->getName();
+            }
+        }
+        return $highlightPackages;
+    }
+
+    /**
      * Returns all labels if $visible is false, only returns visible labels if $visible is false
      *
      * @param $visible
