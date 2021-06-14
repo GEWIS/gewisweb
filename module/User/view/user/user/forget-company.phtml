@@ -10,7 +10,7 @@ $this->headTitle($this->translate('Reset password'));
             $form = $this->form;
             $form->prepare();
 
-            $form->setAttribute('action', $this->url('user/forget-company', ['code' => $this->newcompany->getCode()]));
+            $form->setAttribute('action', $this->url('user/forget-company', ['action' => 'resetCompany']));
             $form->setAttribute('method', 'post');
 
             $form->setAttribute('role', 'form');

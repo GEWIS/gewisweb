@@ -48,13 +48,35 @@ class CompanyPassword extends Form
     {
         switch ($error) {
             case self::ERROR_WRONG_EMAIL:
+                echo 'test';
                 $this->setMessages([
                     'email' => [
-                        $this->translate->translate("This email address does not belong to the given member.")
+                        $this->translate->translate("This email address does not be long to the given member.")
                     ]
                 ]);
                 break;
-                    }
+            case self::ERROR_MEMBER_NOT_EXISTS:
+                $this->setMessages([
+                    'lidnr' => [
+                        $this->translate->translate("There is no member with this membership number.")
+                    ]
+                ]);
+                break;
+            case self::ERROR_ALREADY_REGISTERED:
+                $this->setMessages([
+                    'lidnr' => [
+                        $this->translate->translate("You already attempted to register, please check your email or try again after 15 minutes.")
+                    ]
+                ]);
+                break;
+            case self::ERROR_USER_ALREADY_EXISTS:
+                $this->setMessages([
+                    'lidnr' => [
+                        $this->translate->translate("This member already has an account.")
+                    ]
+                ]);
+                break;
+        }
     }
 
     protected function initFilters()

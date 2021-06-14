@@ -150,6 +150,7 @@ class Package
      */
     public function findEditablePackage($packageId)
     {
+        //$packageId = 2;
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('p');
         $qb->select('p')->where('p.id=:packageId')
@@ -157,8 +158,6 @@ class Package
             ->setMaxResults(1);
 
         $packages = $qb->getQuery()->getResult();
-
-
 
         if (count($packages) != 1) {
             return;

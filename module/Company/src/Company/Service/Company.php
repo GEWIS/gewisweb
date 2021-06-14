@@ -1398,11 +1398,15 @@ class Company extends AbstractACLService
             throw new \InvalidArgumentException('Invalid argument');
         }
         $package = $this->getPackageMapper()->findEditablePackage($packageId);
+
         if (is_null($package)) {
             $package = $this->getBannerPackageMapper()->findEditablePackage($packageId);
         }
         if (is_null($package)) {
             $package = $this->getFeaturedPackageMapper()->findEditablePackage($packageId);
+        }
+        if (is_null($package)) {
+            $package = $this->getHighlightPackageMapper()->findEditablePackage($packageId);
         }
         return $package;
     }
@@ -1497,6 +1501,23 @@ class Company extends AbstractACLService
             $companyId,
             $this->getHighlightPackageMapper()->findHighlightedCategories($companyId),
             $locale);
+    }
+
+    /**
+     * Gets an array with the names from all vacancies in a vacancy object
+     * where the location in the array is the vacancy id
+     *
+     *
+     */
+    public function getVacancyNames($companyId, $locale) {
+        $vacancy_objects = $this->getHighlightableVacancies($companyId, $locale);
+
+        $vacancyNames = [];
+
+        foreach ($vacancy_objects as &$vacancy) {
+            $vacancyNames[$vacancy->getId()] = $vacancy->getName();
+        }
+        return $vacancyNames;
     }
 
     /**
