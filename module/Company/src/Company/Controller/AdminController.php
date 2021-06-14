@@ -39,10 +39,23 @@ class AdminController extends AbstractActionController
 
     public function approvalPageAction(){
         $pendingApprovals = $this->getApprovalService()->getPendingApprovals();
-        //echo var_dump($pendingApprovals);
+        $companyService = $this->getCompanyService();
+        $translator = $companyService->getTranslator();
+
+        // Filter out vacancy approvals with non-locale languages
+        $singleLanguageApprovals = [];
+        foreach ($pendingApprovals as $approval) {
+            if ($approval->getType() == "vacancy") {
+                if ($approval->getVacancyApproval()->getLanguage() == $translator->getLocale()) {
+                    array_push($singleLanguageApprovals, $approval);
+                }
+            } else {
+                array_push($singleLanguageApprovals, $approval);
+            }
+        }
         // Initialize the view
         return new ViewModel([
-            'pendingApprovals' => $pendingApprovals
+            'pendingApprovals' => $singleLanguageApprovals
         ]);
     }
 
