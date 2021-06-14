@@ -101,7 +101,6 @@ class CompanyController extends AbstractActionController
 
 
 
-
     /**
      *
      * Action that displays a list of all jobs (facaturebank) or a list of jobs for a company

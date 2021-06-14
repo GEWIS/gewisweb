@@ -142,7 +142,7 @@ class CompanyAccountController extends AbstractActionController
         $packageForm = $companyService->getPackageForm('highlight');
 
         //Set the values for the selection element
-        $packageForm->get('vacancy_id')->setValueOptions($this->getVacancyNames($this->getHighlightableVacancies($company->getId())));
+        $packageForm->get('vacancy_id')->setValueOptions($this->getHighlightableVacancies($company->getId()));
 
         // Handle incoming form results
         $request = $this->getRequest();
@@ -246,24 +246,10 @@ class CompanyAccountController extends AbstractActionController
         $locale = $translator->getLocale();
 
         //Find the vacancies which are not in a category that has the same languageNeurtalId as already highlighted vacancies
-        return $this->getCompanyService()->getHighlightableVacancies($companyId, $locale);
+        return $this->getCompanyService()->getVacancyNames($companyId, $locale);
     }
 
 
-    /**
-     * Gets an array with the names from all vacancies in a vacancy object
-     * where the location in the array is the vacancy id
-     *
-     *
-     */
-    public function getVacancyNames($vacancy_objects) {
-        $vacancyNames = [];
-
-        foreach ($vacancy_objects as &$vacancy) {
-            $vacancyNames[$vacancy->getId()] = $vacancy->getName();
-        }
-        return $vacancyNames;
-    }
 
     public function deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type) {
         $credits_owned = $credits_owned - $days_scheduled;            //deduct banner credits based on days scheduled

@@ -658,13 +658,22 @@ class AdminController extends AbstractActionController
         $companyName = $this->params('slugCompanyName');
         $packageId = $this->params('packageId');
 
+
         // Get the specified package (Assuming it is found)
         $package = $companyService->getEditablePackage($packageId);
+
+        $companyId = $package->getCompany()->getId();
 
         $type = $package->getType();
 
         // Get form
         $packageForm = $companyService->getPackageForm($type);
+
+        $translator = $companyService->getTranslator();
+        $locale = $translator->getLocale();
+        print_r($companyService->getVacancyNames($companyId, $locale));
+
+        $packageForm->get('vacancy_id')->setValueOptions($companyService->getVacancyNames($companyId, $locale));
 
         // Handle incoming form results
         $request = $this->getRequest();
@@ -922,7 +931,6 @@ class AdminController extends AbstractActionController
     public function deletePackageAction()
     {
         // Get useful stuff
-        console.log('hi');
         $companyService = $this->getCompanyService();
 
         // Get parameters
@@ -1055,5 +1063,16 @@ class AdminController extends AbstractActionController
     protected function getCompanyAccountController()
     {
         return $this->getServiceLocator()->get('decision_controller_companyAccountController');
+    }
+
+    /**
+     * Get the email service.
+     *
+     * @return Job
+     */
+    public function getJobMapper()
+    {
+        return $this->getServiceLocator()->get('company_mapper_job');
+
     }
 }

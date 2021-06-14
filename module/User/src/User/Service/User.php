@@ -5,6 +5,7 @@ namespace User\Service;
 use Application\Service\AbstractAclService;
 use DateInterval;
 use DateTime;
+use User\Form\Password;
 use User\Form\Register as RegisterForm;
 use User\Mapper\User as UserMapper;
 use User\Model\CompanyUser as CompanyUserModel;
@@ -13,6 +14,7 @@ use User\Model\NewUser as NewUserModel;
 use User\Model\NewCompany as NewCompanyModel;
 use User\Model\User as UserModel;
 use User\Permissions\NotAllowedException;
+use User\Form\CompanyPassword as CompanyPasswordForm;
 
 /**
  * User service.
@@ -230,14 +232,7 @@ class User extends AbstractAclService
 
         #check if the member has a corresponding user.
         if (null === $company) {
-            $form->setError(RegisterForm::ERROR_MEMBER_NOT_EXISTS);
-            echo "Company is null";
-            return null;
-        }
-
-        #Check if the e-mail entered and the e-mail in the database match
-        if ($company->getContactEmail() != $data['email']) {
-            $form->setError(RegisterForm::ERROR_WRONG_EMAIL);
+            $form->setError(CompanyPasswordForm::ERROR_MEMBER_NOT_EXISTS);
             return null;
         }
 
