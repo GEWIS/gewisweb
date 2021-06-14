@@ -647,6 +647,7 @@ class AdminController extends AbstractActionController
 
         // Get the specified package (Assuming it is found)
         $package = $companyService->getEditablePackage($packageId);
+
         $type = $package->getType();
 
         // Get form
@@ -908,6 +909,7 @@ class AdminController extends AbstractActionController
     public function deletePackageAction()
     {
         // Get useful stuff
+        console.log('hi');
         $companyService = $this->getCompanyService();
 
         // Get parameters

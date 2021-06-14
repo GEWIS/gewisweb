@@ -1344,7 +1344,6 @@ class Company extends AbstractACLService
         if (is_null($package)) {
             $package = $this->getFeaturedPackageMapper()->findEditablePackage($packageId);
         }
-
         return $package;
     }
 
