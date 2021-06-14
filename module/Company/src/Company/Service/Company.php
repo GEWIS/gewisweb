@@ -1189,6 +1189,19 @@ class Company extends AbstractACLService
         return true;
     }
 
+    public function deleteVacancyApprovals($vacancyApprovals) {
+        // Remove ApprovalVacancyEntries
+        foreach ($vacancyApprovals as $approval) {
+            // Get ApprovalPending entry for the VacancyApproval
+            $id = $approval->getId();
+            $pending = $this->getApprovalMapper()->findPendingVacancyApprovalById($id)[0];
+
+            // Delete the approvals
+            $this->getApprovalMapper()->removeApproval($pending);
+            $this->getApprovalMapper()->removeApproval($approval);
+        }
+    }
+
 
     /**
      * @param Job $job
