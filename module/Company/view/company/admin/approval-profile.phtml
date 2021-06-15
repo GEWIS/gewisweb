@@ -29,6 +29,15 @@ $this->scriptUrl()->requireUrls(
 <hr>
 <?php $form->prepare() ?>
 <?= $this->form()->openTag($form) ?>
+<?php $element = $form->get('sendEmail');?>
+<div class="checkbox">
+    <label>
+        <?= $this->formCheckbox($element) ?>
+        <?= $element->getOption('label') ?>
+        <?= $this->formElementErrors($element) ?>
+
+    </label>
+</div>
 <?= $this->partial('partial/company/admin/editors/company.phtml',
     ['form' => $form]
 ); ?>

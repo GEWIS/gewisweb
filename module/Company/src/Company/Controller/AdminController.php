@@ -94,11 +94,21 @@ class AdminController extends AbstractActionController
 
             $companyService->saveJobData($languageNeutralId, $jobDict, $post, $files);
             $companyService->deleteVacancyApprovals($vacancyApprovals);
+
+            if($_POST['sendEmail']) {
+                //TODO: add email sending function
+                print_r('test');
+            }
             return $this->redirect()->toRoute(
                 'admin_company/approvalPage'
             );
 
         } elseif (isset($_POST['reject'])){
+
+            if($_POST['sendEmail']) {
+                //TODO: add email sending function
+                print_r('test');
+            }
 
             return $this->redirect()->toRoute(
                 'admin_company/approvalPage'
@@ -182,6 +192,11 @@ class AdminController extends AbstractActionController
                 $post,
                 $request->getFiles()
             )) {
+                if($_POST['sendEmail']) {
+                    //TODO: add email sending function
+                    print_r('test');
+                }
+                
                 //$companyName = $request->getPost()['slugName'];
                 /*return $this->redirect()->toRoute(
                     '/admin/company/approval-page',
@@ -194,6 +209,11 @@ class AdminController extends AbstractActionController
             }
         }elseif (isset($_POST['reject'])){
             //TODO send email
+
+            if($_POST['sendEmail']) {
+                //TODO: add email sending function
+                print_r('test');
+            }
 
             //$approvalService->rejectApproval($company->getCompany()->getId());
 
