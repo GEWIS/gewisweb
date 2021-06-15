@@ -183,7 +183,6 @@ class AdminController extends AbstractActionController
                 $request->getFiles()
             )) {
                 //$companyName = $request->getPost()['slugName'];
-                print_r("test");
                 /*return $this->redirect()->toRoute(
                     '/admin/company/approval-page',
                     [
@@ -688,6 +687,7 @@ class AdminController extends AbstractActionController
         //Set the values for the selection element
         if ($type === 'highlight') {
             $packageForm->get('vacancy_id')->setValueOptions($companyService->getHighlightsForCompany($companyId, $locale));
+            $packageForm->get('vacancy_id')->setValue($package->getVacancy()->getId());
         }
 
         $packageForm->setAttribute(

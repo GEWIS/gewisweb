@@ -692,9 +692,13 @@ class Company extends AbstractACLService
     {
         $packageForm = $this->getPackageForm();
         $packageForm->setData($data);
+        $type = $package->getType();
         if ($packageForm->isValid()) {
+            if ($type === 'highlight') {
+                $data['vacancy_id'] = $this->getJobMapper()->findJobById($data['vacancy_id']);
+            }
             $package->exchangeArray($data);
-            if ($package->getType() == 'banner') {
+            if ($type === 'banner') {
                 $file = $files['banner'];
                 if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
                     if ($file['error'] !== UPLOAD_ERR_OK) {
@@ -708,6 +712,7 @@ class Company extends AbstractACLService
                     }
                 }
             }
+
             $this->savePackage();
             return true;
         }

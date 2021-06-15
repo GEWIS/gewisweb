@@ -34,8 +34,6 @@ class CompanyHighlightPackage extends CompanyPackage //implements RoleInterface,
         $this->vacancy = $vacancy;
     }
 
-
-
     public function getType()
     {
         return "highlight";
