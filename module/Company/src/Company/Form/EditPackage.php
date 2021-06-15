@@ -36,7 +36,6 @@ class EditPackage extends Form
             'attributes' => [
                 'required' => 'required',
                 'step' => '1',
-                'min' => $this->setTomorrow(),
                 'value' => $this->setTomorrow()
             ],
             'options' => [

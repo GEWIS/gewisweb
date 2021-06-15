@@ -26,6 +26,9 @@ foreach ($categoryList as $category):?>
                     <th>
                         <?= $this->translate('Expiration date') ?>
                     </th>
+                    <th>
+                        <?= $this->translate('Action') ?>
+                    </th>
                 </tr>
                 </thead>
                 <?php foreach ($highlightList as $highlight): ?>
@@ -43,7 +46,8 @@ foreach ($categoryList as $category):?>
                     <th>
                         <?= $highlight['expires']->format('Y-m-d')  ?>
                     </th>
-                    <td>
+
+                    <th>
                         <a class="btn btn-xs btn-primary" href="<?= $this->url("admin_company/editCompany/editPackage",
                             [
                                 "slugCompanyName" => $highlight['slugName'],
@@ -57,7 +61,7 @@ foreach ($categoryList as $category):?>
                                 data-target="#deleteModal">
                             <?= $this->translate('Delete') ?>
                         </button>
-                    </td>
+                    </th>
                 </tr>
                 <?php endif; ?>
                 <?php endforeach;?>
