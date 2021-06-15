@@ -121,7 +121,6 @@ $this->headTitle($all ? 'All Vacancies': $this->category->getPluralName());
                                data-teaser="<?= $job->getTeaser() ?>"
                                data-highlight="<?= in_array($job->getId(), $highlightIds)?>"
                                data-starts="<?= $job->getStartingDate()->format(DateTime::ATOM) ?>">
-                                <?php if(in_array($job->getId(), $highlightIds)) : ?>
                                     <div class="card-img">
                                         <img
                                             src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
@@ -139,7 +138,8 @@ $this->headTitle($all ? 'All Vacancies': $this->category->getPluralName());
                                     </div>
                                     <div>
                                         <br>
-                                        <?php if($job->getTeaser() != null):?>
+                                        <!-- Show teaser only if filter is highlighted -->
+                                        <?php if(in_array($job->getId(), $highlightIds) && $job->getTeaser() != null) : ?>
                                             <p class="card-subtitle text-muted"><?= $job->getTeaser() ?></p>
                                         <?php endif;?>
                                     </div>
@@ -155,36 +155,6 @@ $this->headTitle($all ? 'All Vacancies': $this->category->getPluralName());
                                     <?php endif; ?>
                                     </span>
                                     </div>
-                                <?php else:?>
-                                    <div class="card-img">
-                                        <img
-                                            src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
-                                            alt="<?= $this->escapeHtmlAttr($company->getName()) ?>"/>
-                                    </div>
-                                    <h2 class="card-title"><?= $job->getName() ?></h2>
-                                    <p class="card-subtitle text-muted"><?= $company->getName() ?></p>
-                                    <div>
-                                        <?php foreach ($job->getLabels() as $labelAsg): ?>
-                                            <?php $label = $labelAsg->getLabel(); ?>
-                                            <span class="label label-default job-label"
-                                                  data-label="<?= $label->getSlug(); ?>" data-toggle="tooltip"
-                                                  title="<?= $label->getName(); ?>"><?= $label->getSlug(); ?></span>
-                                        <?php endforeach; ?>
-                                    </div>
-                                    <span class="label label-default job-hours"
-                                          data-hours="<?= $job->getHours(); ?>" data-toggle="tooltip"></span>
-                                    <span class="label label-default job-sectors"
-                                          data-sectors="<?= $job->getSectors()->getLanguageNeutralId(); ?>" data-toggle="tooltip"></span>
-                                    <div class="card-footer">
-                                        <button class="btn btn-link"><?= $this->translate('View') ?></button>
-                                        <span class="small">
-                                    <?php if (!is_null($job->getLocation())): ?>
-                                        <p class="job-location"><?= $job->getLocation() ?></p>
-                                    <?php endif; ?>
-                                    </span>
-                                    </div>
-                                <?php endif;?>
-
                             </a>
                         <?php endforeach; ?>
                     </div>
