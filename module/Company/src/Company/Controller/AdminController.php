@@ -290,19 +290,21 @@ class AdminController extends AbstractActionController
         $companyName = $this->params('slugCompanyName');
         $type = $this->params('type');
 
+        $translator = $companyService->getTranslator();
+        $locale = $translator->getLocale();
+
         // Get form
         $packageForm = $companyService->getPackageForm($type);
 
         //Set the values for the selection element
         if ($type === 'highlight') {
             $packageForm->get('vacancy_id')
-                ->setValueOptions($companyAccountController->getVacancyNames(
-                    $companyAccountController->getHighlightableVacancies(
+                ->setValueOptions($companyService->getVacancyNames(
                         $this->getCompanyService()->getCompanyBySlugName(
                             $companyName
-                        )->getId()
+                        )->getId(), $locale
                     )
-                ));
+                );
         }
 
 
