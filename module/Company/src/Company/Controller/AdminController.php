@@ -283,14 +283,11 @@ class AdminController extends AbstractActionController
             if (!is_null($company)) {
                 //Send activation email
                 $this->getCompanyEmailService()->sendActivationEmail($company, $newcompany);
-
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
-                    'admin_company/default',
-                    [
-                        'action' => 'edit',
-                        'slugCompanyName' => $company->getSlugName(),
-                    ]
+                    'admin_company/editCompany/addPackage',
+                    ['slugCompanyName' => $company->getSlugName(), 'type' => 'job']
+
                 );
             }
         }
