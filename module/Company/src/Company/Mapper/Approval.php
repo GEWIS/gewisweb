@@ -82,7 +82,25 @@ class Approval
         return $query->getResult();
     }
 
-    public function rejectApproval($cId){
+    public function findBannerApprovalById($id){
+        $builder = new ResultSetMappingBuilder($this->em);
+        $builder->addRootEntityFromClassMetadata('Company\Model\ApprovalModel\ApprovalPending', 'ap');
+
+        $select = $builder->generateSelectClause(['ap' => 't1']);
+        $sql = "SELECT $select FROM ApprovalPending AS t1".
+        " WHERE t1.id = $id AND t1.type = 'banner'";
+        $query = $this->em->createNativeQuery($sql, $builder);
+
+        return $query->getResult();
+    }
+
+
+    /**
+     * Find a company
+     *
+     * @param $cId id of the company whose profile is to be rejected
+     */
+    public function rejectProfileApproval($cId){
         $qb = $this->em->createQueryBuilder();
         $qb->update("Company\Model\ApprovalProfile", "ap");
         $qb->where("ap.company_id = $cId");
@@ -96,7 +114,20 @@ class Approval
         $qb->set("ap.rejected", ":rejected");
         $qb->setParameter("rejected", "0");
         $qb->getQuery()->getResult();
+    }
 
+    /**
+     * Find a vacancy and set it to rejected
+     *
+     * @param $vId id of the vacancy to be rejected
+     */
+    public function rejectVacancyApproval($vId){
+        $qb = $this->em->createQueryBuilder();
+        $qb->update("Company\Model\ApprovalVacancy", "ap");
+        $qb->where("ap.id = $vId");
+        $qb->set("ap.rejected", ":rejected");
+        $qb->setParameter("rejected", "0");
+        $qb->getQuery()->getResult();
     }
 
     /**
