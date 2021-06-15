@@ -41,12 +41,28 @@ class Approval extends AbstractAclService
         return $this->getApprovalMapper()->findApprovalCompanyI18($cId);
     }
 
-    public function rejectProfileApproval($cId){
-        return $this->getApprovalMapper()->rejectProfileApproval($cId);
+    public function rejectProfileApproval($pId){
+        $profileApproval = $this->getApprovalMapper()->findProfileApprovalById($pId)[0];
+        $profileApproval->setRejected(true);
+        $this->getApprovalMapper()->persist($profileApproval);
+        $this->getApprovalMapper()->save();
+
+        $pendingApproval = $this->getApprovalMapper()->findPendingProfileApprovalById($profileApproval->getId())[0];
+        $pendingApproval->setRejected(true);
+        $this->getApprovalMapper()->persist($pendingApproval);
+        $this->getApprovalMapper()->save();
     }
 
-    public function rejectVacancyApproval($cId){
-        return $this->getApprovalMapper()->rejectVacancyApproval($cId);
+    public function rejectVacancyApproval($vId){
+        $vacancyApproval = $this->getApprovalMapper()->findVacancyApprovalById($vId)[0];
+        $vacancyApproval->setRejected(true);
+        $this->getApprovalMapper()->persist($vacancyApproval);
+        $this->getApprovalMapper()->save();
+
+        $pendingApproval = $this->getApprovalMapper()->findPendingVacancyApprovalById($vacancyApproval->getId())[0];
+        $pendingApproval->setRejected(true);
+        $this->getApprovalMapper()->persist($pendingApproval);
+        $this->getApprovalMapper()->save();
     }
 
     public function getEditableVacanciesByLanguageNeutralId($languageNeutralId) {
@@ -55,6 +71,14 @@ class Approval extends AbstractAclService
 
     public function getBannerApprovalById($id){
         return $this->getApprovalMapper()->findBannerApprovalById($id);
+    }
+
+    public function rejectBannerApproval($id){
+        return $this->getApprovalMapper()->rejectBannerApproval($id);
+    }
+
+    public function acceptBannerApproval($id, $approvalId){
+        return $this->getApprovalMapper()->acceptBannerApproval($id, $approvalId);
     }
 
     /**

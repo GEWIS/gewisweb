@@ -104,6 +104,9 @@ class AdminController extends AbstractActionController
             );
 
         } elseif (isset($_POST['reject'])){
+            foreach($vacancyApprovals as $approval) {
+                $approvalService->rejectVacancyApproval($approval->getId());
+            }
 
             if($_POST['sendEmail']) {
                 //TODO: add email sending function
@@ -157,6 +160,25 @@ class AdminController extends AbstractActionController
         $bannerApproval = $approvalService->getBannerApprovalById($approvalId);
 
 
+        if (isset($_POST['accept'])) {
+            $id = $bannerApproval[0]->getBannerApproval()->getId();
+
+            $approvalService->acceptBannerApproval($id, $approvalId);
+
+            return $this->redirect()->toRoute(
+                'admin_company/approvalPage'
+            );
+
+        }elseif(isset($_POST['reject'])){
+            $approvalService->rejectBannerApproval($approvalId);
+
+            return $this->redirect()->toRoute(
+                'admin_company/approvalPage'
+            );
+        }
+
+
+
         // Initialize the view
         return new ViewModel([
             'bannerApproval' => $bannerApproval[0]
@@ -203,7 +225,7 @@ class AdminController extends AbstractActionController
         if ($request->isPost() && !isset($_POST['reject'])) {
             $post = $request->getPost();
             $post['id'] = $oldCompany->getId();
-            if ($companyService->saveCompanyByData(////////////////////
+            if ($companyService->saveCompanyByData(
                 $oldCompany,
                 $post,
                 $request->getFiles()
@@ -222,6 +244,9 @@ class AdminController extends AbstractActionController
                     [],
                     false
                 );*/
+                return $this->redirect()->toRoute(
+                    'admin_company/approvalPage'
+                );
             }
         }elseif (isset($_POST['reject'])){
             //TODO send email
@@ -231,8 +256,11 @@ class AdminController extends AbstractActionController
                 print_r('test');
             }
 
-            //$approvalService->rejectApproval($company->getCompany()->getId());
+            $approvalService->rejectProfileApproval($_POST['id']);
 
+            return $this->redirect()->toRoute(
+                'admin_company/approvalPage'
+            );
         }
 
         // Initialize form

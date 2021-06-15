@@ -1,21 +1,29 @@
-<?php $this->headScript()->prependFile($this->basePath() . '/js/photo.js')
+<?php
+$companyName = $bannerApproval->getCompany()->getName();
+
+$this->headScript()->prependFile($this->basePath() . '/js/photo.js')
     ->prependFile($this->basePath() . '/js/masonry.pkgd.min.js')
     ->prependFile($this->basePath() . '/js/imagesloaded.pkgd.min.js');
 ?>
 <h1><?= $this->translate("Approve banner"); ?></h1>
-
+<p>Approve the banner of <?= "$companyName"  ?></p>
 <div class="row">
+
+
+
 <img class="img-responsive"
      src="<?= $this->fileUrl($bannerApproval->getBannerApproval()->getImage()) ?>" alt="">
 
 
 <div class="form-group">
+    <form action='' method="post">
     <button type="submit" class="btn btn-primary pull-left" name="accept">
         <?= $this->translate('Accept') ?>
     </button>
     <button type="submit" class="btn btn-primary pull-left" name="reject">
         <?= $this->translate('Reject') ?>
     </button>
+    </form>
 </div>
 
 </div
