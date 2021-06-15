@@ -1566,6 +1566,7 @@ class Company extends AbstractACLService
             //Get the name of the vacancy in the correct language
             $temp['name'] = $this->getJobMapper()->findJobById($vacancyId)->getName();
             $temp['expires'] = $highlight['expires'];
+            $temp['id'] = $highlight['id'];
 
             array_push($correctHighlights, $temp);
         }

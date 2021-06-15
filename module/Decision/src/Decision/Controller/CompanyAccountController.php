@@ -192,13 +192,24 @@ class CompanyAccountController extends AbstractActionController
 
     public function highlightPostCorrect($post) {
         global $MSG;
+
         //Get usefull stuff
         $companyService = $this->getCompanyService();
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+        $today = date("Y-m-d");
+
 
         // Check if valid timespan is selected
         if (new \DateTime($post['expirationDate']) <= new \DateTime($post['startDate'])) {
             $MSG = "Please make sure the expirationdate is after the startingdate.";
+            return false;
+        }
+
+        // Check if valid timespan is selected
+        if (new \DateTime($post['startDate']) <= $today) {
+            print_r(new \DateTime($post['startDate']));
+            print_r($today);
+            $MSG = "Please make sure the startingdate is after today.";
             return false;
         }
 
