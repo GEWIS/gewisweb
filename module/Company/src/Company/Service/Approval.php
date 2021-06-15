@@ -41,12 +41,20 @@ class Approval extends AbstractAclService
         return $this->getApprovalMapper()->findApprovalCompanyI18($cId);
     }
 
-    public function rejectApproval($cId){
-        return $this->getApprovalMapper()->rejectApproval($cId);
+    public function rejectProfileApproval($cId){
+        return $this->getApprovalMapper()->rejectProfileApproval($cId);
+    }
+
+    public function rejectVacancyApproval($cId){
+        return $this->getApprovalMapper()->rejectVacancyApproval($cId);
     }
 
     public function getEditableVacanciesByLanguageNeutralId($languageNeutralId) {
         return $this->getApprovalMapper()->findVacanciesByLanguageNeutralId($languageNeutralId);
+    }
+
+    public function getBannerApprovalById($id){
+        return $this->getApprovalMapper()->findBannerApprovalById($id);
     }
 
     /**

@@ -21,6 +21,15 @@ class ApprovalPending
     protected $id;
 
     /**
+     * The profile approvals approved status
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $rejected = false;
+
+
+
+    /**
      * The approval
      *
      * @ORM\OneToOne(targetEntity="\Company\Model\ApprovalModel\ApprovalVacancy")
@@ -31,7 +40,7 @@ class ApprovalPending
     /**
      * The approval
      *
-     * @ORM\ManyToOne(targetEntity="\Company\Model\ApprovalModel\ApprovalVacancy", inversedBy="packages")
+     * @ORM\ManyToOne(targetEntity="\Company\Model\CompanyPackage")
      * @var ApprovalAbstract
      */
     protected $BannerApproval;
@@ -39,7 +48,7 @@ class ApprovalPending
     /**
      * The approval
      *
-     * @ORM\ManyToOne(targetEntity="\Company\Model\ApprovalModel\ApprovalProfile", inversedBy="packages")
+     * @ORM\ManyToOne(targetEntity="\Company\Model\ApprovalModel\ApprovalProfile")
      * @var ApprovalAbstract
      */
     protected $ProfileApproval;
@@ -59,6 +68,14 @@ class ApprovalPending
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getRejected()
+    {
+        return $this->rejected;
     }
 
     /**
@@ -155,7 +172,7 @@ class ApprovalPending
             return $this->VacancyApproval->getRejected();
 
         }else if(!is_null($this->BannerApproval)){
-            return $this->BannerApproval->getRejected();
+            return $this->getRejected();
 
         }else if(!is_null($this->ProfileApproval)){
 
