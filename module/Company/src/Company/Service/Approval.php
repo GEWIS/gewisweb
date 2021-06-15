@@ -73,6 +73,14 @@ class Approval extends AbstractAclService
         return $this->getApprovalMapper()->findBannerApprovalById($id);
     }
 
+    public function rejectBannerApproval($id){
+        return $this->getApprovalMapper()->rejectBannerApproval($id);
+    }
+
+    public function acceptBannerApproval($id, $approvalId){
+        return $this->getApprovalMapper()->acceptBannerApproval($id, $approvalId);
+    }
+
     /**
      * Get the default resource ID.
      *

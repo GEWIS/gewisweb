@@ -160,6 +160,25 @@ class AdminController extends AbstractActionController
         $bannerApproval = $approvalService->getBannerApprovalById($approvalId);
 
 
+        if (isset($_POST['accept'])) {
+            $id = $bannerApproval[0]->getBannerApproval()->getId();
+
+            $approvalService->acceptBannerApproval($id, $approvalId);
+
+            return $this->redirect()->toRoute(
+                'admin_company/approvalPage'
+            );
+
+        }elseif(isset($_POST['reject'])){
+            $approvalService->rejectBannerApproval($approvalId);
+
+            return $this->redirect()->toRoute(
+                'admin_company/approvalPage'
+            );
+        }
+
+
+
         // Initialize the view
         return new ViewModel([
             'bannerApproval' => $bannerApproval[0]

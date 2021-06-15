@@ -94,6 +94,35 @@ class Approval
         return $query->getResult();
     }
 
+    public function rejectBannerApproval($id){
+        $qb = $this->em->createQueryBuilder();
+        $qb->update("Company\Model\ApprovalModel\ApprovalPending", "ap");
+        $qb->where("ap.id = $id");
+        $qb->set("ap.rejected", ":rejected");
+        $qb->setParameter("rejected", "1");
+        $qb->getQuery()->getResult();
+
+
+
+
+    }
+
+    public function acceptBannerApproval($id, $approvalId){
+        $qb = $this->em->createQueryBuilder();
+        $qb->update("Company\Model\CompanyPackage", "cp");
+        $qb->where("cp.id = $id");
+        $qb->set("cp.published", ":published");
+        $qb->setParameter("published", "1");
+        $qb->getQuery()->getResult();
+
+        $qb = $this->em->createQueryBuilder();
+        $qb->delete("Company\Model\ApprovalModel\ApprovalPending", "ap");
+        $qb->where("ap.id = $approvalId");
+        $qb->getQuery()->getResult();
+
+
+    }
+
 
     /**
      * Find the company with the given slugName.
