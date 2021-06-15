@@ -712,7 +712,6 @@ class Company extends AbstractACLService
                     }
                 }
             }
-
             $this->savePackage();
             return true;
         }
@@ -1309,7 +1308,6 @@ class Company extends AbstractACLService
                 $translator->translate('You are not allowed to delete packages')
             );
         }
-
         $this->getPackageMapper()->delete($packageId);
         $this>$this->getHighlightPackageMapper()->delete($packageId);
         $this->getBannerPackageMapper()->delete($packageId);
@@ -1426,7 +1424,6 @@ class Company extends AbstractACLService
             throw new \InvalidArgumentException('Invalid argument');
         }
         $package = $this->getPackageMapper()->findEditablePackage($packageId);
-
         if (is_null($package)) {
             $package = $this->getBannerPackageMapper()->findEditablePackage($packageId);
         }
@@ -1549,15 +1546,55 @@ class Company extends AbstractACLService
     }
 
     /**
+     * Get the active highlights a company has
+     *
+     * @param integer $companyId the id of the company who's
+     * number of highlights will be fetched.
+     * @param string $lang the language in which the vacancies should be fetched
+     *
+     * @return array The names and the expiration dates of the active highlights of a company
+     */
+    public function getCurrentHighlights($companyId, $lang) {
+        //Get the vacancy ids and the expiration dates of the highlights in the companyPackage table
+        $highlights = $this->getHighlightPackageMapper()->findCurrentHighlights($companyId);
+        $temp = [];
+        $correctHighlights = [];
+
+        foreach ($highlights as $highlight) {
+            //Get the correct vacancy id based on language
+            $vacancyId = $this->getJobMapper()->siblingId($highlight[1], $lang)['id'];
+            //Get the name of the vacancy in the correct language
+            $temp['name'] = $this->getJobMapper()->findJobById($vacancyId)->getName();
+            $temp['expires'] = $highlight['expires'];
+
+            array_push($correctHighlights, $temp);
+        }
+        return $correctHighlights;
+    }
+
+    /**
      * Get the number of highlights a company has
      *
      * @param integer $companyId the id of the company who's
      * number of highlights will be fetched.
      *
-     * @return int number of highlights
+     * @return int number of highlights for a company
      */
-    public function getNumberOfHighlights($companyId) {
-        return $this->getHighlightPackageMapper()->getNumberOfHighlights($companyId);
+    public function getNumberOfHighlightsPerCompany($companyId) {
+        return $this->getHighlightPackageMapper()->findNumberOfHighlightsPerCompany($companyId);
+    }
+
+    /**
+     * Get the number of highlights in a category
+     *
+     * @param integer $vacancyId the id of the vacancy who's
+     * number of highlights will be fetched.
+     *
+     * @return int number of highlights in a category
+     */
+    public function getNumberOfHighlightsPerCategory($vacancyId) {
+        $categoryId = $this->getJobMapper()->findJobById($vacancyId)->getCategory();
+        return $this->getHighlightPackageMapper()->findNumberOfHighlightsPerCategory($categoryId);
     }
 
     /**

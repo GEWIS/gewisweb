@@ -1,5 +1,5 @@
-<section class="section">
-    <div class="container">
+<div class="container">
+    <section class="section">
         <div class="row">
             <div class="col-md-12">
                 <h1>Add highlight</h1>
@@ -16,5 +16,44 @@
         echo $this->form()->openTag($form);
         echo $this->partial('partial/company/company/editors/package.phtml', ['form' => $form, 'type' => 'highlight']);
         echo $this->form()->closeTag($form);?>
-    </div>
-</section>
+
+        <div class="row">
+            <div class="col-md-8">
+
+                <h2><?= $this->translate('Active highlights') ?></h2>
+                <?php if (count($currentHighlights) > 0): ?>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>
+                                <?= $this->translate('Name'); ?>
+                            </th>
+                            <th>
+                                <?= $this->translate('Expiration date'); ?>
+                            </th>
+                        </tr>
+                        </thead>
+                        <?php foreach ($currentHighlights as &$highlight): ?>
+                            <tr>
+                                <td>
+                                    <?php echo $this->translate($highlight['name']) ?>
+                                </td>
+                                <td>
+                                    <?php echo $this->translate($highlight['expires']->format('Y-m-d') )?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                <?php endif; ?>
+
+                <?php if (count($currentHighlights) === 0): ?>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <?= $this->translate("Currently there are no active highlights, you can add a highlight above")?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </section>
+</div>

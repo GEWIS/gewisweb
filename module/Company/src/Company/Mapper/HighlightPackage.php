@@ -37,6 +37,30 @@ class HighlightPackage extends Package
     }
 
     /**
+     * Find the highlights a company has
+     *
+     * @param integer $companyId the id of the company who's
+     * number of highlights will be fetched.
+     *
+     * @return array with the vacancyId of the highlighted vacancy and the expiration date of the highlight
+     */
+    public function findCurrentHighlights($companyId)
+    {
+        $today = date("Y/m/d");
+
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('h');
+        $qb->select('IDENTITY(h.vacancy), h.expires')
+            ->where('h.company = ?1')
+            ->andWhere('h.expires >= ?2')
+            ->andWhere('h.published = 1')
+            ->setParameter(1, $companyId)
+            ->setParameter(2, $today);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Find the number of highlights a company has
      *
      * @param integer $companyId the id of the company who's
@@ -44,7 +68,7 @@ class HighlightPackage extends Package
      *
      * @return int number of highlights
      */
-    public function getNumberOfHighlights($companyId)
+    public function findNumberOfHighlightsPerCompany($companyId)
     {
         $today = date("Y/m/d");
 
@@ -129,6 +153,31 @@ class HighlightPackage extends Package
                 ->setParameter(5, $category);
         }
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Find the number of highlights in a category
+     *
+     * @param integer $categoryId the id of the category who's
+     * number of highlights will be fetched.
+     *
+     * @return int number of highlights
+     */
+    public function findNumberOfHighlightsPerCategory($categoryId)
+    {
+        $today = date("Y/m/d");
+
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('h');
+        $qb->select('COUNT(h)')
+            ->join('h.vacancy', 'j')
+            ->where('h.expires >= ?1')
+            ->andWhere('h.published = 1')
+            ->andWhere('j.category = ?2')
+            ->setParameter(1, $today)
+            ->setParameter(2, $categoryId);
+
+        return $qb->getQuery()->getResult()[0][1];
     }
 
     /**

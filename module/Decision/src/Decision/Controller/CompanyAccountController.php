@@ -138,6 +138,10 @@ class CompanyAccountController extends AbstractActionController
         $companyService = $this->getCompanyService();
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
 
+        //Get current language
+        $translator = $companyService->getTranslator();
+        $lang = $translator->getLocale();
+
         //Get package form of type highlight
         $packageForm = $companyService->getPackageForm('highlight');
 
@@ -159,7 +163,7 @@ class CompanyAccountController extends AbstractActionController
                     'highlight'
                 )) {
                     return $this->redirect()->toRoute(
-                        'companyaccount'
+                        'companyaccount/highlight'
                     );
                 }
             } else {
@@ -176,9 +180,12 @@ class CompanyAccountController extends AbstractActionController
             )
         );
 
+        $currentHighlights = $this->getCompanyService()->getCurrentHighlights($company->getId(), $lang);
+
         return new ViewModel([
             'form' => $packageForm,
-            'company' => $company
+            'company' => $company,
+            'currentHighlights' => $currentHighlights
         ]);
     }
 
@@ -196,8 +203,14 @@ class CompanyAccountController extends AbstractActionController
         }
 
         //Check if a company does not already have three highlights
-        if ($this->getCompanyService()->getNumberOfHighlights($company->getId()) >= 3) {
+        if ($this->getCompanyService()->getNumberOfHighlightsPerCompany($company->getId()) >= 3) {
             $MSG = "Unfortunately you can place at most 3 highlights, which you already have";
+            return false;
+        }
+
+        //Check if there are not already three highlights in a certain category
+        if ($this->getCompanyService()->getNumberOfHighlightsPerCategory($post['vacancy_id']) >= 3) {
+            $MSG = "Unfortunately at most 3 vacancies in this category can be highlighted, which there already are";
             return false;
         }
 
@@ -249,8 +262,6 @@ class CompanyAccountController extends AbstractActionController
         return $this->getCompanyService()->getVacancyNames($companyId, $locale);
     }
 
-
-
     public function deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type) {
         $credits_owned = $credits_owned - $days_scheduled;            //deduct banner credits based on days scheduled
 
@@ -275,6 +286,7 @@ class CompanyAccountController extends AbstractActionController
             $credits_owned = $company->getHighlightCredits();
         }
         if ($credits_owned >= $days_scheduled ){
+            //TODO: Make sure this line is only run after the banner/highlight has actually been uploaded
             $this->deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type);
             return true;
         }
