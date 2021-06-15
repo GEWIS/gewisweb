@@ -1539,8 +1539,10 @@ class Company extends AbstractACLService
         $highlightedCategories = $this->getHighlightPackageMapper()->findHighlightedCategories($companyId);
 
         //Remove the current category from this list, such that vacancies from this category can be chosen
-        if (($key = array_search($currentCategory, $highlightedCategories[0])) !== false) {
-            unset($highlightedCategories[0][$key]);
+        foreach ($highlightedCategories as &$highlightedCategory) {
+            if (($key = array_search($currentCategory, $highlightedCategory)) !== false) {
+                unset($highlightedCategory[$key]);
+            }
         }
 
         return $this->getJobMapper()->findHighlightableVacancies(
