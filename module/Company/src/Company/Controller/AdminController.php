@@ -104,6 +104,9 @@ class AdminController extends AbstractActionController
             );
 
         } elseif (isset($_POST['reject'])){
+            foreach($vacancyApprovals as $approval) {
+                $approvalService->rejectVacancyApproval($approval->getId());
+            }
 
             if($_POST['sendEmail']) {
                 //TODO: add email sending function
@@ -187,7 +190,7 @@ class AdminController extends AbstractActionController
         if ($request->isPost() && !isset($_POST['reject'])) {
             $post = $request->getPost();
             $post['id'] = $oldCompany->getId();
-            if ($companyService->saveCompanyByData(////////////////////
+            if ($companyService->saveCompanyByData(
                 $oldCompany,
                 $post,
                 $request->getFiles()
@@ -206,6 +209,9 @@ class AdminController extends AbstractActionController
                     [],
                     false
                 );*/
+                return $this->redirect()->toRoute(
+                    'admin_company/approvalPage'
+                );
             }
         }elseif (isset($_POST['reject'])){
             //TODO send email
@@ -215,8 +221,11 @@ class AdminController extends AbstractActionController
                 print_r('test');
             }
 
-            //$approvalService->rejectApproval($company->getCompany()->getId());
+            $approvalService->rejectProfileApproval($_POST['id']);
 
+            return $this->redirect()->toRoute(
+                'admin_company/approvalPage'
+            );
         }
 
         // Initialize form

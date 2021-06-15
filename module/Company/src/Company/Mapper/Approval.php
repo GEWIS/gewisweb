@@ -83,41 +83,6 @@ class Approval
     }
 
     /**
-     * Find a company
-     *
-     * @param $cId id of the company whose profile is to be rejected
-     */
-    public function rejectProfileApproval($cId){
-        $qb = $this->em->createQueryBuilder();
-        $qb->update("Company\Model\ApprovalProfile", "ap");
-        $qb->where("ap.company_id = $cId");
-        $qb->set("ap.rejected", ":rejected");
-        $qb->setParameter("rejected", "0");
-        $qb->getQuery()->getResult();
-
-        $qb = $this->em->createQueryBuilder();
-        $qb->update("Company\Model\ApprovalCompanyl18n", "ap");
-        $qb->where("ap.company_id = $cId");
-        $qb->set("ap.rejected", ":rejected");
-        $qb->setParameter("rejected", "0");
-        $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Find a vacancy and set it to rejected
-     *
-     * @param $vId id of the vacancy to be rejected
-     */
-    public function rejectVacancyApproval($vId){
-        $qb = $this->em->createQueryBuilder();
-        $qb->update("Company\Model\ApprovalVacancy", "ap");
-        $qb->where("ap.id = $vId");
-        $qb->set("ap.rejected", ":rejected");
-        $qb->setParameter("rejected", "0");
-        $qb->getQuery()->getResult();
-    }
-
-    /**
      * Find the company with the given slugName.
      *
      * @param slugName The 'username' of the company to get.
@@ -141,7 +106,7 @@ class Approval
     }
 
     /**
-     * Find the Pending approval with the given vacancy id.
+     * Find the Pending approval with the given vacancy approval id.
      *
      * @param Int $id The vacancy id of the pending approval to get.
      *
@@ -149,16 +114,83 @@ class Approval
      */
     public function findPendingVacancyApprovalById($id)
     {
-
         $objectRepository = $this->getPendingRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('c');
         $qb->select('c')->where('c.VacancyApproval=:id');
         $qb->setParameter('id', $id);
-//        $qb->setMaxResults(1);
-
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * Find the Profile approval with the given profile approval id.
+     *
+     * @param Int $id The profile id of the pending approval to get.
+     *
+     * @return Array An array containing the pending approvals with the given profile id.
+     */
+    public function findPendingProfileApprovalById($id)
+    {
+        $objectRepository = $this->getPendingRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('c');
+        $qb->select('c')->where('c.ProfileApproval=:id');
+        $qb->setParameter('id', $id);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Find the Pending approval with the given id.
+     *
+     * @param Int $id The id of the pending approval to get.
+     *
+     * @return Array An array containing the pending approvals with the given id.
+     */
+    public function findPendingApprovalById($id)
+    {
+
+        $objectRepository = $this->getPendingRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('c');
+        $qb->select('c')->where('c.id=:id');
+        $qb->setParameter('id', $id);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Find the Profile approval with the given id.
+     *
+     * @param Int $id The profile id
+     *
+     * @return Array An array containing the profile approvals with the given id.
+     */
+    public function findProfileApprovalById($id)
+    {
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('c');
+        $qb->select('c')->where('c.id=:id');
+        $qb->setParameter('id', $id);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Find the Vacancy approval with the given id.
+     *
+     * @param Int $id The vacancy id
+     *
+     * @return Array An array containing the vacancy approvals with the given id.
+     */
+    public function findVacancyApprovalById($id)
+    {
+        $objectRepository = $this->getVacancyRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('c');
+        $qb->select('c')->where('c.id=:id');
+        $qb->setParameter('id', $id);
+
+        return $qb->getQuery()->getResult();
+    }
+
 
     /**
      * Find the company with the given slugName.

@@ -36,6 +36,14 @@ class ApprovalPending
     }
 
     /**
+     * @param bool $rejected
+     */
+    public function setRejected($rejected)
+    {
+        $this->rejected = $rejected;
+    }
+
+    /**
      * The approval
      *
      * @ORM\OneToOne(targetEntity="\Company\Model\ApprovalModel\ApprovalVacancy")
