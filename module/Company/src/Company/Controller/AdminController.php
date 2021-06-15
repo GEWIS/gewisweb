@@ -235,6 +235,8 @@ class AdminController extends AbstractActionController
                     print_r('test');
                 }
 
+                $companyService->deleteProfileApprovals($company);
+
                 //$companyName = $request->getPost()['slugName'];
                 /*return $this->redirect()->toRoute(
                     '/admin/company/approval-page',

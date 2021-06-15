@@ -1207,6 +1207,22 @@ class Company extends AbstractACLService
         }
     }
 
+    public function deleteProfileApprovals($profileApproval) {
+        // Get ApprovalPending entry for the VacancyApproval
+        $id = $profileApproval->getId();
+        $pending = $this->getApprovalMapper()->findPendingProfileApprovalById($id)[0];
+
+        // Get the ApprovalCompanyI18n entries for the company
+        $languages = $this->getApprovalMapper()->findApprovalCompanyI18($id);
+
+        // Delete the approvals
+        foreach ($languages as $lang) {
+            $this->getApprovalMapper()->removeApproval($lang);
+        }
+        $this->getApprovalMapper()->removeApproval($pending);
+        $this->getApprovalMapper()->removeApproval($profileApproval);
+    }
+
 
     /**
      * @param Job $job
