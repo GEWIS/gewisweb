@@ -129,14 +129,58 @@ class CompanyAccountController extends AbstractActionController
 
     public function deleteHighlightAction() {
         //Call function to delete
+        $this->getCompanyService()->getHighlightPackageMapper()->delete($this->params('packageId'));
 
+        //Redirect to highlight page
         return $this->redirect()->toRoute(
             'companyaccount/highlight'
         );
     }
 
     public function editHighlightAction() {
-        echo "test";
+        $companyService = $this->getCompanyService();
+
+        //Get package form of type highlight
+        $packageForm = $companyService->getPackageForm('highlight');
+        // Get the specified package (Assuming it is found)
+        $highlight = $companyService->getEditablePackage($this->params('packageId'));
+        // Initialize form
+        $packageForm->bind($highlight);
+
+        //Set the selectable values for the selection element
+        $packageForm->get('vacancy_id')->setValueOptions(
+            $this->getCompanyService()->getEditVacancyNames($highlight->getCompany()->getId(),
+                $highlight->getVacancy()->getCategory()->getLanguageNeutralId()));
+        //Set the current highlighted vacancy as selected
+        $packageForm->get('vacancy_id')->setValue($highlight->getVacancy()->getId());
+
+        // Handle incoming form results
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            //Set published to one, since a highlight does not need to be approved
+            $post['published'] = 1;
+            if ($companyService->savePackageByData($highlight, $post, null
+            )) {
+                return $this->redirect()->toRoute(
+                    'companyaccount/highlight'
+                );
+            }
+        }
+
+        //Initialize the form
+        $packageForm->setAttribute(
+            'action',
+            $this->url()->fromRoute("companyaccount/highlight/edit",
+                [
+                    "packageId" => $highlight->getId(),
+                ]
+            )
+        );
+
+        return new ViewModel([
+            'form' => $packageForm
+        ]);
     }
 
     /**
@@ -158,7 +202,7 @@ class CompanyAccountController extends AbstractActionController
         $packageForm = $companyService->getPackageForm('highlight');
 
         //Set the values for the selection element
-        $packageForm->get('vacancy_id')->setValueOptions($this->getHighlightableVacancies($company->getId()));
+        $packageForm->get('vacancy_id')->setValueOptions($this->getCompanyService()->getVacancyNames($company->getId()));
 
         // Handle incoming form results
         $request = $this->getRequest();
@@ -264,25 +308,6 @@ class CompanyAccountController extends AbstractActionController
         $companyPackageInfo = $this->getcompanyAccountService()->getCompanyPackageInfo($companyId);
 
         return $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getId(), $locale);
-    }
-
-    /**
-     * Gets all highlightable vacancies for a certain company
-     * A vacancy is highlightable if
-     * - It is active
-     * - No other vacancies in the same category have been highlighted
-     *
-     * @return all highlightable vacancies for a certain company
-     */
-    public function getHighlightableVacancies($companyId) {
-        $companyService = $this->getCompanyService();
-
-        //Get current language
-        $translator = $companyService->getTranslator();
-        $locale = $translator->getLocale();
-
-        //Find the vacancies which are not in a category that has the same languageNeurtalId as already highlighted vacancies
-        return $this->getCompanyService()->getVacancyNames($companyId, $locale);
     }
 
     public function deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type) {
