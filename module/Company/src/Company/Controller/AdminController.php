@@ -55,7 +55,7 @@ class AdminController extends AbstractActionController
         }
         // Initialize the view
         return new ViewModel([
-            'pendingApprovals' => $singleLanguageApprovals
+            'pendingApprovals' => $pendingApprovals
         ]);
     }
 
@@ -146,6 +146,22 @@ class AdminController extends AbstractActionController
     }
 
     public function approvalBannerAction(){
+        $approvalService = $this->getApprovalService();
+
+        //get company
+        $approvalId = intval($this->params('slugCompanyName'));
+
+
+
+        //get banner
+        $bannerApproval = $approvalService->getBannerApprovalById($approvalId);
+
+
+        // Initialize the view
+        return new ViewModel([
+            'bannerApproval' => $bannerApproval[0]
+        ]);
+
 
     }
 
@@ -196,7 +212,7 @@ class AdminController extends AbstractActionController
                     //TODO: add email sending function
                     print_r('test');
                 }
-                
+
                 //$companyName = $request->getPost()['slugName'];
                 /*return $this->redirect()->toRoute(
                     '/admin/company/approval-page',

@@ -82,6 +82,18 @@ class Approval
         return $query->getResult();
     }
 
+    public function findBannerApprovalById($id){
+        $builder = new ResultSetMappingBuilder($this->em);
+        $builder->addRootEntityFromClassMetadata('Company\Model\ApprovalModel\ApprovalPending', 'ap');
+
+        $select = $builder->generateSelectClause(['ap' => 't1']);
+        $sql = "SELECT $select FROM ApprovalPending AS t1".
+        " WHERE t1.id = $id AND t1.type = 'banner'";
+        $query = $this->em->createNativeQuery($sql, $builder);
+
+        return $query->getResult();
+    }
+
     public function rejectApproval($cId){
         $qb = $this->em->createQueryBuilder();
         $qb->update("Company\Model\ApprovalProfile", "ap");

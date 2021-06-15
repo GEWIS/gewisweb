@@ -27,13 +27,7 @@ class ApprovalPending
      */
     protected $rejected = false;
 
-    /**
-     * @return bool
-     */
-    public function getRejected()
-    {
-        return $this->rejected;
-    }
+
 
     /**
      * The approval
@@ -46,7 +40,7 @@ class ApprovalPending
     /**
      * The approval
      *
-     * @ORM\ManyToOne(targetEntity="\Company\Model\CompanyPackage", inversedBy="packages")
+     * @ORM\ManyToOne(targetEntity="\Company\Model\CompanyPackage")
      * @var ApprovalAbstract
      */
     protected $BannerApproval;
@@ -54,7 +48,7 @@ class ApprovalPending
     /**
      * The approval
      *
-     * @ORM\ManyToOne(targetEntity="\Company\Model\ApprovalModel\ApprovalProfile", inversedBy="packages")
+     * @ORM\ManyToOne(targetEntity="\Company\Model\ApprovalModel\ApprovalProfile")
      * @var ApprovalAbstract
      */
     protected $ProfileApproval;
@@ -74,6 +68,14 @@ class ApprovalPending
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getRejected()
+    {
+        return $this->rejected;
     }
 
     /**
