@@ -20,50 +20,26 @@ $this->headTitle($this->translate('Career'));
 
             <div class="row row-spacing-top">
                 <div class="col-md-12">
-                    <h2><?= $this->translate('Companies') ?></h2>
+                    <h2><?= $this->translate("Companies") ?></h2>
                 </div>
                 <div class="col-md-12">
                     <p>
                         <?=
-                        $this->translate('GEWIS collaborates with different companies from the industry to help you out
-with your career orientation!') . ' ',
-                            $this->translate(' For example by hosting business cases, in-house
-days, and weekly lunch lectures.') . ' ', sprintf(
-                            $this->translate('You can find a full overview of career events
-on %sthis%s page. '), '<a href="/activity/career" title="' . '">',
+                        $this->translate("GEWIS collaborates with different companies from the industry to help you out with your career orientation!") . ' ',
+                            $this->translate("For example by hosting business cases, in-house days, and weekly lunch lectures.") . ' ', sprintf(
+                            $this->translate("You can find a full overview of career events on %sthis%s page."), '<a href="/activity/career" title="' . '">',
                             '</a>')
                         ?>
                     </p>
                     <p>
                         <?=
-                        $this->translate('Furthermore GEWIS functions an a platform where students and companies
-can get in contact, through our job board, via social media, or at our events!')
+                        $this->translate("Furthermore GEWIS functions an a platform where students and companies can get in contact, through our job board, via social media, or at our events!")
                         ?>
                     </p>
                     <p>
                         <?=
-                        $this->translate('If you are a company and interested in setting up a collaboration with
-GEWIS, please send out an '),
-                            '<a href="mailto:ceb@gewis.nl" title="' . '">' . $this->translate('email to the ceb@gewis.nl') . '</a>'
-                        ?>
-                    </p>
-                </div>
-            </div>
-
-            <div class="row row-spacing-top">
-                <div class="col-md-12">
-                    <h2><?= $this->translate('Internship, graduation project or student job?') ?></h2>
-                </div>
-                <div class="col-md-12">
-                    <p>
-                        <?=
-                        $this->translate('GEWIS has many contacts with different companies.') . ' ',
-                            $this->translate('We can easily help you
-out if you want to get in touch with a company for an internship, graduation
-project or student job.') . ' ',
-                        $this->translate('If you want GEWIS to help out with finding interesting
-opportunities, you can '),
-                            '<a href="mailto:ceb@gewis.nl" title="' . '">' . $this->translate('reach out to ceb@gewis.nl') . '</a>', '!'
+                        $this->translate("If you are a company and interested in setting up a collaboration with GEWIS, please send out an "),
+                            '<a href="mailto:ceb@gewis.nl" title="' . '">' . $this->translate("email to the ceb@gewis.nl") . '</a>'
                         ?>
                     </p>
                 </div>
@@ -71,17 +47,31 @@ opportunities, you can '),
 
             <div class="row row-spacing-top">
                 <div class="col-md-12">
-                    <h2><?= $this->translate('Career Newsletter') ?></h2>
+                    <h2><?= $this->translate("Internship, graduation project or student job?") ?></h2>
                 </div>
                 <div class="col-md-12">
                     <p>
                         <?=
-                        $this->translate('Via the monthly Career Newsletter, you can find all GEWIS career events, from
-lunch lectures to business cases.') . ' ',
-                            $this->translate('Furthermore interesting events and job opportunities from companies are shared.') . ' ',
+                        $this->translate("GEWIS has many contacts with different companies.") . ' ',
+                            $this->translate("We can easily help you out if you want to get in touch with a company for an internship, graduation project or student job.") . ' ',
+                        $this->translate("If you want GEWIS to help out with finding interesting opportunities, you can "),
+                            '<a href="mailto:ceb@gewis.nl" title="' . '">' . $this->translate("reach out to ceb@gewis.nl") . '</a>', '!'
+                        ?>
+                    </p>
+                </div>
+            </div>
+
+            <div class="row row-spacing-top">
+                <div class="col-md-12">
+                    <h2><?= $this->translate("Career Newsletter") ?></h2>
+                </div>
+                <div class="col-md-12">
+                    <p>
+                        <?=
+                        $this->translate("Via the monthly Career Newsletter, you can find all GEWIS career events, from lunch lectures to business cases.") . ' ',
+                            $this->translate("Furthermore interesting events and job opportunities from companies are shared.") . ' ',
                         sprintf(
-                            $this->translate(' You can sign up for the Career Newsletter
-%shere%s.'), '<a href="https://lists.gewis.nl" title="' . '">',
+                            $this->translate("You can sign up for the Career Newsletter %shere%s."), '<a href="https://lists.gewis.nl" title="' . '">',
                             '</a>')
                         ?>
                     </p>
@@ -91,21 +81,18 @@ lunch lectures to business cases.') . ' ',
 
             <div class="row row-spacing-top">
                 <div class="col-md-12">
-                    <h2><?= $this->translate('MyFuture') ?></h2>
+                    <h2><?= $this->translate("MyFuture") ?></h2>
                 </div>
                 <div class="col-md-12">
                     <p>
                         <?=
-                        $this->translate('MyFuture provides an overview of the activities, organized by all TU/e affiliated parties, that best suit your needs and ambitions.') . ' ',
-                        $this->translate('These range from lunch
-lectures to case contests to company visits and are aimed at giving you as a
-student a clear overview of where you can work and what you can do when you
-are finished with your studies.')
+                        $this->translate("MyFuture provides an overview of the activities, organized by all TU/e affiliated parties, that best suit your needs and ambitions.") . ' ',
+                        $this->translate("These range from lunch lectures to case contests to company visits and are aimed at giving you as a student a clear overview of where you can work and what you can do when you are finished with your studies.")
                         ?>
                         <a href="https://myfuture.tue.nl/activities" style="margin-bottom: 0 !important;">
                             <img class="img-responsive"
                                  src="/img/myfuture2.png"
-                                 alt="<?= $this->translate('MyFuture') ?>">
+                                 alt="<?= $this->translate("MyFuture") ?>">
                         </a>
                 </p>
                 </div>
@@ -113,23 +100,19 @@ are finished with your studies.')
 
             <div class="row row-spacing-top">
                 <div class="col-md-12">
-                    <h2><?= $this->translate('MyFuture Activities') ?></h2>
+                    <h2><?= $this->translate("MyFuture Activities") ?></h2>
                 </div>
                 <div class="col-md-12">
                     <p>
                         <?=
-                        $this->translate('To complete your bachelor, you will need to have participated in a sufficient
-amount of MyFuture Activities to obtain a value of at least 7.') . ' ',
-                            $this->translate('The MyFuture
-Activities kick-off with the first-year excursion, which is valued as 2 MyFuture
-Activities. ') . ' ',
-                        $this->translate('The remaining five can be obtained by participating in MyFuture
-Activities of your own choice.')
+                        $this->translate("To complete your bachelor, you will need to have participated in a sufficient amount of MyFuture Activities to obtain a value of at least 7.") . ' ',
+                            $this->translate("The MyFuture Activities kick-off with the first-year excursion, which is valued as 2 MyFuture Activities.") . ' ',
+                        $this->translate("The remaining five can be obtained by participating in MyFuture Activities of your own choice.")
                         ?>
                         <a href="https://myfuture.tue.nl/myfuture-activities" style="margin-bottom: 0 !important;">
                             <img class="img-responsive"
                                  src="/img/myfuture2.png"
-                                 alt="<?= $this->translate('MyFuture') ?>">
+                                 alt="<?= $this->translate("MyFuture") ?>">
                         </a>
                     </p>
                 </div>
@@ -138,14 +121,12 @@ Activities of your own choice.')
 
             <div class="row row-spacing-top">
                 <div class="col-md-12">
-                    <h2><?= $this->translate('Wervingsdagen') ?></h2>
+                    <h2><?= $this->translate("Wervingsdagen") ?></h2>
                 </div>
                 <div class="col-md-12">
                     <p>
                         <?=
-                        $this->translate('Wervingsdagen is a colaborative initiative from 10 study associations of the
-TU/e, including GEWIS. Every year, Wervingsdagen hosts 3 main events: the
-Skill Sessions, Career Expo and Interviewing Days.')
+                        $this->translate("Wervingsdagen is a colaborative initiative from 10 study associations of the TU/e, including GEWIS. Every year, Wervingsdagen hosts 3 main events: the Skill Sessions, Career Expo and Interviewing Days.")
                         ?>
 
                     </p>
@@ -155,27 +136,25 @@ Skill Sessions, Career Expo and Interviewing Days.')
                 <a class="" href="https://wervingsdagen.nl/index/" style="margin-bottom: 0 !important;">
                     <img class="img-responsive"
                          src="/img/wervingsdagen.png"
-                         alt="<?= $this->translate('Wervingsdagen') ?>">
+                         alt="<?= $this->translate("Wervingsdagen") ?>">
                 </a>
             </div</div>
             <hr/>
 
             <div class="row row-spacing-top">
                 <div class="col-md-12">
-                    <h2><?= $this->translate('Career Academy') ?></h2>
+                    <h2><?= $this->translate("Career Academy") ?></h2>
                 </div>
                 <div class="col-md-12">
                     <p>
                         <?=
-                        $this->translate('The TU/e Career Academy supports students in awareness and development
-of what kind of an engineer they want to be. Career Academy offers career
-workshops and activities, individual career coaching, and CV, cover letter and
-LinkedIn checks!')
+                        $this->translate("The TU/e Career Academy supports students in awareness and development of what kind of an engineer they want to be.") . ' ',
+                         $this->translate("Career Academy offers career workshops and activities, individual career coaching, and CV, cover letter and LinkedIn checks!")
                         ?>
                         <a href="https://www.tue.nl/universiteit/community/career-academy/" style="margin-bottom: 0 !important;">
                             <img class="img-responsive"
                                  src="/img/careeracademy.jpg"
-                                 alt="<?= $this->translate('Career Academy') ?>">
+                                 alt="<?= $this->translate("Career Academy") ?>">
                         </a>
                     </p>
                 </div>

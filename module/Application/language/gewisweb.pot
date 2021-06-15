@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-15 11:15+0200\n"
+"POT-Creation-Date: 2021-06-15 12:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -836,6 +836,7 @@ msgstr ""
 
 #: module/Decision/view/decision/company-account/vacancies.phtml:36
 #: module/Decision/view/decision/company-account/vacancies.phtml:102
+#: module/Decision/view/decision/company-account/highlight.phtml:29
 #: module/Decision/view/decision/organ-admin/index.phtml:8
 #: module/Decision/view/decision/admin/document.phtml:34
 #: module/Decision/view/decision/member/birthdays.phtml:12
@@ -1142,6 +1143,21 @@ msgstr ""
 #: module/Company/view/company/admin/edit-company.phtml:48
 #: module/Company/view/company/admin/approval-profile.phtml:22
 msgid "English logo"
+msgstr ""
+
+#: module/Decision/view/decision/company-account/highlight.phtml:23
+#: module/Company/view/company/admin/index.phtml:128
+msgid "Active highlights"
+msgstr ""
+
+#: module/Decision/view/decision/company-account/highlight.phtml:32
+#: module/Company/view/company/admin/edit-company.phtml:83
+#: module/Company/view/company/admin/edit-highlight.phtml:27
+msgid "Expiration date"
+msgstr ""
+
+#: module/Decision/view/decision/company-account/highlight.phtml:52
+msgid "Currently there are no active highlights, you can add a highlight above"
 msgstr ""
 
 #: module/Decision/view/decision/organ-admin/index.phtml:2
@@ -1786,161 +1802,149 @@ msgstr ""
 #: module/Company/view/company/company/index.phtml:28
 msgid ""
 "GEWIS collaborates with different companies from the industry to help you "
-"out\n"
-"with your career orientation!"
+"out with your career orientation!"
+msgstr ""
+
+#: module/Company/view/company/company/index.phtml:29
+msgid ""
+"For example by hosting business cases, in-house days, and weekly lunch "
+"lectures."
 msgstr ""
 
 #: module/Company/view/company/company/index.phtml:30
-msgid ""
-" For example by hosting business cases, in-house\n"
-"days, and weekly lunch lectures."
-msgstr ""
-
-#: module/Company/view/company/company/index.phtml:32
 #, php-format
-msgid ""
-"You can find a full overview of career events\n"
-"on %sthis%s page. "
+msgid "You can find a full overview of career events on %sthis%s page."
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:39
+#: module/Company/view/company/company/index.phtml:36
 msgid ""
-"Furthermore GEWIS functions an a platform where students and companies\n"
-"can get in contact, through our job board, via social media, or at our "
-"events!"
+"Furthermore GEWIS functions an a platform where students and companies can "
+"get in contact, through our job board, via social media, or at our events!"
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:45
+#: module/Company/view/company/company/index.phtml:41
 msgid ""
-"If you are a company and interested in setting up a collaboration with\n"
+"If you are a company and interested in setting up a collaboration with "
 "GEWIS, please send out an "
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:47
+#: module/Company/view/company/company/index.phtml:42
 msgid "email to the ceb@gewis.nl"
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:55
+#: module/Company/view/company/company/index.phtml:50
 msgid "Internship, graduation project or student job?"
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:60
+#: module/Company/view/company/company/index.phtml:55
 msgid "GEWIS has many contacts with different companies."
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:61
+#: module/Company/view/company/company/index.phtml:56
 msgid ""
-"We can easily help you\n"
-"out if you want to get in touch with a company for an internship, "
-"graduation\n"
-"project or student job."
+"We can easily help you out if you want to get in touch with a company for an "
+"internship, graduation project or student job."
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:64
+#: module/Company/view/company/company/index.phtml:57
 msgid ""
-"If you want GEWIS to help out with finding interesting\n"
-"opportunities, you can "
+"If you want GEWIS to help out with finding interesting opportunities, you "
+"can "
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:66
+#: module/Company/view/company/company/index.phtml:58
 msgid "reach out to ceb@gewis.nl"
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:74
+#: module/Company/view/company/company/index.phtml:66
 msgid "Career Newsletter"
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:79
+#: module/Company/view/company/company/index.phtml:71
 msgid ""
 "Via the monthly Career Newsletter, you can find all GEWIS career events, "
-"from\n"
-"lunch lectures to business cases."
+"from lunch lectures to business cases."
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:81
+#: module/Company/view/company/company/index.phtml:72
 msgid ""
 "Furthermore interesting events and job opportunities from companies are "
 "shared."
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:83
+#: module/Company/view/company/company/index.phtml:74
 #, php-format
-msgid ""
-" You can sign up for the Career Newsletter\n"
-"%shere%s."
+msgid "You can sign up for the Career Newsletter %shere%s."
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:94
-#: module/Company/view/company/company/index.phtml:108
-#: module/Company/view/company/company/index.phtml:132
+#: module/Company/view/company/company/index.phtml:84
+#: module/Company/view/company/company/index.phtml:95
+#: module/Company/view/company/company/index.phtml:115
 msgid "MyFuture"
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:99
+#: module/Company/view/company/company/index.phtml:89
 msgid ""
 "MyFuture provides an overview of the activities, organized by all TU/e "
 "affiliated parties, that best suit your needs and ambitions."
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:100
+#: module/Company/view/company/company/index.phtml:90
 msgid ""
-"These range from lunch\n"
-"lectures to case contests to company visits and are aimed at giving you as "
-"a\n"
-"student a clear overview of where you can work and what you can do when you\n"
-"are finished with your studies."
+"These range from lunch lectures to case contests to company visits and are "
+"aimed at giving you as a student a clear overview of where you can work and "
+"what you can do when you are finished with your studies."
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:116
+#: module/Company/view/company/company/index.phtml:103
 msgid "MyFuture Activities"
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:121
+#: module/Company/view/company/company/index.phtml:108
 msgid ""
 "To complete your bachelor, you will need to have participated in a "
-"sufficient\n"
-"amount of MyFuture Activities to obtain a value of at least 7."
+"sufficient amount of MyFuture Activities to obtain a value of at least 7."
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:123
+#: module/Company/view/company/company/index.phtml:109
 msgid ""
-"The MyFuture\n"
-"Activities kick-off with the first-year excursion, which is valued as 2 "
-"MyFuture\n"
-"Activities. "
+"The MyFuture Activities kick-off with the first-year excursion, which is "
+"valued as 2 MyFuture Activities."
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:126
+#: module/Company/view/company/company/index.phtml:110
 msgid ""
-"The remaining five can be obtained by participating in MyFuture\n"
-"Activities of your own choice."
+"The remaining five can be obtained by participating in MyFuture Activities "
+"of your own choice."
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:141
-#: module/Company/view/company/company/index.phtml:158
+#: module/Company/view/company/company/index.phtml:124
+#: module/Company/view/company/company/index.phtml:139
 msgid "Wervingsdagen"
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:146
+#: module/Company/view/company/company/index.phtml:129
 msgid ""
-"Wervingsdagen is a colaborative initiative from 10 study associations of "
-"the\n"
-"TU/e, including GEWIS. Every year, Wervingsdagen hosts 3 main events: the\n"
+"Wervingsdagen is a colaborative initiative from 10 study associations of the "
+"TU/e, including GEWIS. Every year, Wervingsdagen hosts 3 main events: the "
 "Skill Sessions, Career Expo and Interviewing Days."
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:165
-#: module/Company/view/company/company/index.phtml:178
+#: module/Company/view/company/company/index.phtml:146
+#: module/Company/view/company/company/index.phtml:157
 msgid "Career Academy"
 msgstr ""
 
-#: module/Company/view/company/company/index.phtml:170
+#: module/Company/view/company/company/index.phtml:151
 msgid ""
-"The TU/e Career Academy supports students in awareness and development\n"
-"of what kind of an engineer they want to be. Career Academy offers career\n"
-"workshops and activities, individual career coaching, and CV, cover letter "
-"and\n"
-"LinkedIn checks!"
+"The TU/e Career Academy supports students in awareness and development of "
+"what kind of an engineer they want to be."
+msgstr ""
+
+#: module/Company/view/company/company/index.phtml:152
+msgid ""
+"Career Academy offers career workshops and activities, individual career "
+"coaching, and CV, cover letter and LinkedIn checks!"
 msgstr ""
 
 #: module/Company/view/company/company/jobs.phtml:44
@@ -2024,11 +2028,6 @@ msgstr ""
 msgid "Start date"
 msgstr ""
 
-#: module/Company/view/company/admin/edit-company.phtml:83
-#: module/Company/view/company/admin/edit-highlight.phtml:27
-msgid "Expiration date"
-msgstr ""
-
 #: module/Company/view/company/admin/edit-company.phtml:86
 msgid "Jobs / Type"
 msgstr ""
@@ -2106,10 +2105,6 @@ msgstr ""
 #: module/Company/view/company/admin/index.phtml:103
 #: module/Company/view/company/admin/index.phtml:121
 msgid "Labels"
-msgstr ""
-
-#: module/Company/view/company/admin/index.phtml:128
-msgid "Active highlights"
 msgstr ""
 
 #: module/Company/view/company/admin/index.phtml:134
@@ -3860,15 +3855,15 @@ msgstr ""
 msgid "You are not allowed to view this page"
 msgstr ""
 
-#: module/Decision/src/Decision/Controller/CompanyAccountController.php:425
-#: module/Decision/src/Decision/Controller/CompanyAccountController.php:499
-#: module/Decision/src/Decision/Controller/CompanyAccountController.php:636
+#: module/Decision/src/Decision/Controller/CompanyAccountController.php:437
+#: module/Decision/src/Decision/Controller/CompanyAccountController.php:511
+#: module/Decision/src/Decision/Controller/CompanyAccountController.php:648
 msgid "You need a vacancy package to manage your vacancies."
 msgstr ""
 
-#: module/Decision/src/Decision/Controller/CompanyAccountController.php:440
-#: module/Decision/src/Decision/Controller/CompanyAccountController.php:514
-#: module/Decision/src/Decision/Controller/CompanyAccountController.php:651
+#: module/Decision/src/Decision/Controller/CompanyAccountController.php:452
+#: module/Decision/src/Decision/Controller/CompanyAccountController.php:526
+#: module/Decision/src/Decision/Controller/CompanyAccountController.php:663
 msgid ""
 "Your vacancy package has expired, please contact an administrator if you "
 "wish to extend your vacancy package."
@@ -3979,58 +3974,58 @@ msgstr ""
 msgid "You are not allowed to edit job labels"
 msgstr ""
 
-#: module/Company/src/Company/Service/Company.php:908
+#: module/Company/src/Company/Service/Company.php:907
 msgid "You are not allowed to insert a company"
 msgstr ""
 
-#: module/Company/src/Company/Service/Company.php:953
+#: module/Company/src/Company/Service/Company.php:952
 msgid "You are not allowed to insert a package"
 msgstr ""
 
-#: module/Company/src/Company/Service/Company.php:1005
-#: module/Company/src/Company/Service/Company.php:1125
-#: module/Company/src/Company/Service/Company.php:1471
-#: module/Company/src/Company/Service/Company.php:1651
-#: module/Company/src/Company/Service/Company.php:1664
+#: module/Company/src/Company/Service/Company.php:1004
+#: module/Company/src/Company/Service/Company.php:1124
+#: module/Company/src/Company/Service/Company.php:1468
+#: module/Company/src/Company/Service/Company.php:1688
+#: module/Company/src/Company/Service/Company.php:1701
 msgid "You are not allowed to edit jobs"
 msgstr ""
 
-#: module/Company/src/Company/Service/Company.php:1291
+#: module/Company/src/Company/Service/Company.php:1290
 msgid "You are not allowed to insert a job"
 msgstr ""
 
-#: module/Company/src/Company/Service/Company.php:1309
+#: module/Company/src/Company/Service/Company.php:1308
 msgid "You are not allowed to delete packages"
 msgstr ""
 
-#: module/Company/src/Company/Service/Company.php:1328
+#: module/Company/src/Company/Service/Company.php:1326
 msgid "You are not allowed to delete jobs"
 msgstr ""
 
-#: module/Company/src/Company/Service/Company.php:1344
+#: module/Company/src/Company/Service/Company.php:1342
 msgid "You are not allowed to delete companies"
 msgstr ""
 
-#: module/Company/src/Company/Service/Company.php:1371
-#: module/Company/src/Company/Service/Company.php:1388
-#: module/Company/src/Company/Service/Company.php:1405
-#: module/Company/src/Company/Service/Company.php:1422
+#: module/Company/src/Company/Service/Company.php:1369
+#: module/Company/src/Company/Service/Company.php:1386
+#: module/Company/src/Company/Service/Company.php:1403
+#: module/Company/src/Company/Service/Company.php:1420
 msgid "You are not allowed to edit packages"
 msgstr ""
 
-#: module/Company/src/Company/Service/Company.php:1452
+#: module/Company/src/Company/Service/Company.php:1449
 msgid "You are not allowed to edit companies"
 msgstr ""
 
-#: module/Company/src/Company/Service/Company.php:1583
+#: module/Company/src/Company/Service/Company.php:1620
 msgid "You are not allowed to edit categories"
 msgstr ""
 
-#: module/Company/src/Company/Service/Company.php:1599
+#: module/Company/src/Company/Service/Company.php:1636
 msgid "You are not allowed to edit sectors"
 msgstr ""
 
-#: module/Company/src/Company/Service/Company.php:1615
+#: module/Company/src/Company/Service/Company.php:1652
 msgid "You are not allowed to edit labels"
 msgstr ""
 
