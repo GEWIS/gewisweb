@@ -321,8 +321,12 @@ class Company extends AbstractACLService
                 array_push($highlightIDs, $extra[$random]['id']);
             }
         }
-        print_r($highlightIDs);
-        return $highlightIDs;//$highlightNames;
+//        print_r($highlightIDs);
+        $highlights = [];
+        foreach ($highlightIDs as $id) {
+            array_push($highlights, $this->getJobMapper()->findJobById($id));
+        }
+        return $highlights;//$highlightNames;
     }
 
     /**
