@@ -94,7 +94,7 @@ class Approval
         return $query->getResult();
     }
 
-    public function rejectApproval($cId){
+
     /**
      * Find a company
      *
