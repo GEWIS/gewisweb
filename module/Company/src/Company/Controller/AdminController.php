@@ -256,7 +256,6 @@ class AdminController extends AbstractActionController
 
         // Check if data is valid, and insert when it is
         if ($request->isPost()) {
-            print_r($request->getPost());
             $companies = $companyService->insertCompanyByData(
                 $request->getPost(),
                 $request->getFiles()
@@ -266,7 +265,6 @@ class AdminController extends AbstractActionController
             $newcompany = $companies[1];
 
             if (!is_null($company)) {
-
                 //Send activation email
                 $this->getCompanyEmailService()->sendActivationEmail($company, $newcompany);
 
