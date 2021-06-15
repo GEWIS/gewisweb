@@ -36,6 +36,17 @@ class Company extends AbstractACLService
         return $this->getBannerPackageMapper()->getBannerPackage();
     }
 
+    public function addBannerApproval($id){
+
+//        $approval = new ApprovalPending();
+//        $label->setLanguage($lang);
+//        $labelDict[$lang] = $label;
+//
+//
+//        $this->saveLabelData("", $labelDict, $data);
+
+    }
+
     public function getCompanyIdentity() {
         $companyservice = $this->sm->get('company_auth_service');
         return $companyservice->getIdentity();

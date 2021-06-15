@@ -24,6 +24,18 @@ class BannerPackage extends Package
         return empty($banners) ? null : $banners[array_rand($banners)];
     }
 
+    public function addBannerApproval($id){
+        $qb = $this->em->createQueryBuilder();
+        $qb->add("Company\Model\ApprovalModel\ApprovalPending", "ap");
+        $qb->set("ap.type", ":type");
+        $qb->set("ap.BannerApproval_id", ":BannerApproval_id");
+        $qb->set("ap.rejected", ":rejected");
+        $qb->setParameter("type", "banner");
+        $qb->setParameter("BannerApproval_id", $id);
+        $qb->setParameter("rejected", "0");
+        $qb->getQuery()->getResult();
+    }
+
     /**
      * Get the repository for this mapper.
      *
