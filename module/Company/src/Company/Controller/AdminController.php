@@ -295,6 +295,7 @@ class AdminController extends AbstractActionController
             }
         }
 
+
         // The form was not valid, or we did not get data back
         // Initialize the form
         $companyForm->setAttribute(
