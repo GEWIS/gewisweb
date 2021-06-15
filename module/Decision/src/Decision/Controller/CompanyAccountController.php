@@ -158,10 +158,15 @@ class CompanyAccountController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $post = $request->getPost();
+
             //Set published to one, since a highlight does not need to be approved
-            $post['published'] = 1;
+            $post['published'] = $highlight->isPublished();
+            $post['startDate'] = $highlight->getStartingDate()->format('Y-m-d') ;
+            $post['expirationDate'] = $highlight->getExpirationDate()->format('Y-m-d') ;
+
             if ($companyService->savePackageByData($highlight, $post, null
             )) {
+
                 return $this->redirect()->toRoute(
                     'companyaccount/highlight'
                 );

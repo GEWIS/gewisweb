@@ -12,6 +12,9 @@
 <?php
 $element = $form->get('startDate');
 $element->setAttribute('class', 'form-control');
+if (isset($edit_highlight)) {
+    $element->setAttribute('disabled', 'disabled');
+}
 ?>
 <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
     <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
@@ -25,6 +28,9 @@ $element->setAttribute('class', 'form-control');
 <?php
 $element = $form->get('expirationDate');
 $element->setAttribute('class', 'form-control');
+if (isset($edit_highlight)) {
+    $element->setAttribute('disabled', 'disabled');
+}
 ?>
 <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
     <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
