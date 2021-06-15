@@ -13,6 +13,17 @@ $form->prepare();
 ?>
 
 <?= $this->form()->openTag($form) ?>
+<?php $element = $form->get('sendEmail');
+
+?>
+<div class="checkbox">
+    <label>
+        <?= $this->formCheckbox($element) ?>
+        <?= $element->getOption('label') ?>
+        <?= $this->formElementErrors($element) ?>
+
+    </label>
+</div>
 <div class="row">
 </div>
 <?php foreach ($form->getLanguages() as $lang):
