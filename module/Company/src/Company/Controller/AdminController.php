@@ -235,6 +235,8 @@ class AdminController extends AbstractActionController
                     print_r('test');
                 }
 
+                $companyService->deleteProfileApprovals($company);
+
                 //$companyName = $request->getPost()['slugName'];
                 /*return $this->redirect()->toRoute(
                     '/admin/company/approval-page',
@@ -311,14 +313,11 @@ class AdminController extends AbstractActionController
             if (!is_null($company)) {
                 //Send activation email
                 $this->getCompanyEmailService()->sendActivationEmail($company, $newcompany);
-
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
-                    'admin_company/default',
-                    [
-                        'action' => 'edit',
-                        'slugCompanyName' => $company->getSlugName(),
-                    ]
+                    'admin_company/editCompany/addPackage',
+                    ['slugCompanyName' => $company->getSlugName(), 'type' => 'job']
+
                 );
             }
         }
