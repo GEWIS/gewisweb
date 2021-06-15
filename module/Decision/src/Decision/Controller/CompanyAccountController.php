@@ -127,6 +127,18 @@ class CompanyAccountController extends AbstractActionController
         return true;
     }
 
+    public function deleteHighlightAction() {
+        //Call function to delete
+
+        return $this->redirect()->toRoute(
+            'companyaccount/highlight'
+        );
+    }
+
+    public function editHighlightAction() {
+        echo "test";
+    }
+
     /**
      * Shows the highlighting page and processes the form when submit has been clicked
      *
