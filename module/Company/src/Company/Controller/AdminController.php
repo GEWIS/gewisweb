@@ -196,7 +196,7 @@ class AdminController extends AbstractActionController
                     //TODO: add email sending function
                     print_r('test');
                 }
-                
+
                 //$companyName = $request->getPost()['slugName'];
                 /*return $this->redirect()->toRoute(
                     '/admin/company/approval-page',
@@ -256,6 +256,7 @@ class AdminController extends AbstractActionController
 
         // Check if data is valid, and insert when it is
         if ($request->isPost()) {
+            print_r($request->getPost());
             $companies = $companyService->insertCompanyByData(
                 $request->getPost(),
                 $request->getFiles()
@@ -265,6 +266,7 @@ class AdminController extends AbstractActionController
             $newcompany = $companies[1];
 
             if (!is_null($company)) {
+
                 //Send activation email
                 $this->getCompanyEmailService()->sendActivationEmail($company, $newcompany);
 
@@ -278,6 +280,7 @@ class AdminController extends AbstractActionController
                 );
             }
         }
+
 
         // The form was not valid, or we did not get data back
         // Initialize the form
