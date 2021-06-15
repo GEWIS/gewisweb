@@ -354,7 +354,7 @@ return [
                         'priority' => 3,
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/editHighlight/',
+                            'route' => '/editHighlight',
                             'defaults' => [
                                 'action' => 'editHighlight',
                             ],
