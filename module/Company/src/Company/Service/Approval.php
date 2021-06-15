@@ -69,6 +69,10 @@ class Approval extends AbstractAclService
         return $this->getApprovalMapper()->findVacanciesByLanguageNeutralId($languageNeutralId);
     }
 
+    public function getBannerApprovalById($id){
+        return $this->getApprovalMapper()->findBannerApprovalById($id);
+    }
+
     /**
      * Get the default resource ID.
      *

@@ -321,8 +321,12 @@ class Company extends AbstractACLService
                 array_push($highlightIDs, $extra[$random]['id']);
             }
         }
-        print_r($highlightIDs);
-        return $highlightIDs;//$highlightNames;
+//        print_r($highlightIDs);
+        $highlights = [];
+        foreach ($highlightIDs as $id) {
+            array_push($highlights, $this->getJobMapper()->findJobById($id));
+        }
+        return $highlights;//$highlightNames;
     }
 
     /**
@@ -372,9 +376,6 @@ class Company extends AbstractACLService
         $highlights = $this->getJobMapper()->findAllCompanyJobs($companyId);
         if (!is_null($highlights)){
             foreach ($highlights as $highlight) {
-//                print_r($highlight['id']);
-//                print_r($this->getJobMapper()->siblingID($highlight['languageNeutralId'], $lang)['id']);
-//                print_r($this->getJobMapper()->siblingID($highlight['id'], $lang)['id'])->getId();
                 $highlightPackages[$this->getJobMapper()->siblingID($highlight['languageNeutralId'], $lang)['id']] = $this->getJobMapper()->findJobById($this->getJobMapper()->siblingID($highlight['languageNeutralId'], $lang)['id'])->getName();
             }
         }
@@ -1513,7 +1514,7 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Get all categories in which a company has highlighted a vacancy.
+     *
      *
      * @param integer $companyId the id of the company who's
      * categories will be fetched.
@@ -1529,12 +1530,61 @@ class Company extends AbstractACLService
     }
 
     /**
+     *
+     *
+     * @param integer $companyId the id of the company who's
+     * categories will be fetched.
+     * @param string $locale The current language of the website
+     * @param int the languageNeutralId of the category in which the currently highlighted vacancy lies
+     *
+     * @return array Company\Model\JobCategory.
+     */
+    public function getEditHighlightableVacancies($companyId, $locale, $currentCategory){
+        $highlightedCategories = $this->getHighlightPackageMapper()->findHighlightedCategories($companyId);
+
+        //Remove the current category from this list, such that vacancies from this category can be chosen
+        foreach ($highlightedCategories as &$highlightedCategory) {
+            if (($key = array_search($currentCategory, $highlightedCategory)) !== false) {
+                unset($highlightedCategory[$key]);
+            }
+        }
+
+        return $this->getJobMapper()->findHighlightableVacancies(
+            $companyId,
+            $highlightedCategories,
+            $locale);
+    }
+
+    /**
      * Gets an array with the names from all vacancies in a vacancy object
      * where the location in the array is the vacancy id
      *
      *
      */
-    public function getVacancyNames($companyId, $locale) {
+    public function getEditVacancyNames($companyId, $currentCategory) {
+        //Get current language
+        $locale = $this->getTranslator()->getLocale();
+
+        $vacancy_objects = $this->getEditHighlightableVacancies($companyId, $locale, $currentCategory);
+
+        $vacancyNames = [];
+
+        foreach ($vacancy_objects as &$vacancy) {
+            $vacancyNames[$vacancy->getId()] = $vacancy->getName();
+        }
+        return $vacancyNames;
+    }
+
+    /**
+     * Gets an array with the names from all vacancies in a vacancy object
+     * where the location in the array is the vacancy id
+     *
+     *
+     */
+    public function getVacancyNames($companyId) {
+        //Get current language
+        $locale = $this->getTranslator()->getLocale();
+
         $vacancy_objects = $this->getHighlightableVacancies($companyId, $locale);
 
         $vacancyNames = [];
@@ -1562,7 +1612,7 @@ class Company extends AbstractACLService
 
         foreach ($highlights as $highlight) {
             //Get the correct vacancy id based on language
-            $vacancyId = $this->getJobMapper()->siblingId($highlight[1], $lang)['id'];
+            $vacancyId = $this->getJobMapper()->siblingId($highlight['languageNeutralId'], $lang)['id'];
             //Get the name of the vacancy in the correct language
             $temp['name'] = $this->getJobMapper()->findJobById($vacancyId)->getName();
             $temp['expires'] = $highlight['expires'];

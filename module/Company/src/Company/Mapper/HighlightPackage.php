@@ -50,7 +50,8 @@ class HighlightPackage extends Package
 
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('h');
-        $qb->select('IDENTITY(h.vacancy), h.expires', 'h.id')
+        $qb->select('j.languageNeutralId, h.expires', 'h.id')
+            ->join('h.vacancy', 'j')
             ->where('h.company = ?1')
             ->andWhere('h.expires >= ?2')
             ->andWhere('h.published = 1')

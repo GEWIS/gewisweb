@@ -55,7 +55,7 @@ class AdminController extends AbstractActionController
         }
         // Initialize the view
         return new ViewModel([
-            'pendingApprovals' => $singleLanguageApprovals
+            'pendingApprovals' => $pendingApprovals
         ]);
     }
 
@@ -149,6 +149,22 @@ class AdminController extends AbstractActionController
     }
 
     public function approvalBannerAction(){
+        $approvalService = $this->getApprovalService();
+
+        //get company
+        $approvalId = intval($this->params('slugCompanyName'));
+
+
+
+        //get banner
+        $bannerApproval = $approvalService->getBannerApprovalById($approvalId);
+
+
+        // Initialize the view
+        return new ViewModel([
+            'bannerApproval' => $bannerApproval[0]
+        ]);
+
 
     }
 

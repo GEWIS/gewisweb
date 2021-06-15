@@ -386,6 +386,33 @@ return [
                             ]
 
                         ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'edit' => [
+                                'type' => 'segment',
+                                'options' => [
+                                    'route' => '/edit/:packageId',
+                                    'constraints' => [
+                                        'packageId' => '[0-9]+',
+                                    ],
+                                    'defaults' => [
+                                        'action' => 'editHighlight'
+                                    ]
+                                ],
+                            ],
+                            'delete' => [
+                                'type' => 'segment',
+                                'options' => [
+                                    'route' => '/delete/:packageId',
+                                    'constraints' => [
+                                        'packageId' => '[0-9]+',
+                                    ],
+                                    'defaults' => [
+                                        'action' => 'deleteHighlight'
+                                    ]
+                                ],
+                            ],
+                        ],
                     ],
                     'bannerupload' => [
                         'type' => 'literal',

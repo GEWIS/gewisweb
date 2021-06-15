@@ -1,0 +1,17 @@
+<div class="container">
+    <section class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Edit highlight</h1>
+            </div>
+        </div>
+        <?php
+        $form->setAttribute('class', 'form-horizontal');
+        $form->prepare();
+        echo $this->form()->openTag($form);
+        echo $this->partial('partial/company/company/editors/package.phtml', ['form' => $form, 'type' => 'highlight', 'edit_highlight' => 'yes']);
+        echo $this->form()->closeTag($form);?>
+
+
+    </section>
+</div>
