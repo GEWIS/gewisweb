@@ -100,6 +100,8 @@ class Job
     }
 
 
+
+
     /**
      * Find the same job, but in the given language
      *
@@ -109,6 +111,23 @@ class Job
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('j')
             ->select('j.id')->where('j.languageNeutralId=:languageNeutralId')->andWhere('j.language=:language')
+            ->setParameter('languageNeutralId', $languageNeutraLId)
+            ->setParameter('language', $lang);
+
+        $ids = $qb->getQuery()->getResult();
+
+        return $ids[0];
+    }
+
+    /**
+     * Find the same job, but in the given language
+     *
+     */
+    public function siblingJob($languageNeutraLId, $lang)
+    {
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('j')
+            ->select('j')->where('j.languageNeutralId=:languageNeutralId')->andWhere('j.language=:language')
             ->setParameter('languageNeutralId', $languageNeutraLId)
             ->setParameter('language', $lang);
 
