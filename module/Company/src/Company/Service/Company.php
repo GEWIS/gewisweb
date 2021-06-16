@@ -36,14 +36,13 @@ class Company extends AbstractACLService
         return $this->getBannerPackageMapper()->getBannerPackage();
     }
 
-    public function addBannerApproval($id){
+    public function addBannerApproval($banner){
 
-//        $approval = new ApprovalPending();
-//        $label->setLanguage($lang);
-//        $labelDict[$lang] = $label;
-//
-//
-//        $this->saveLabelData("", $labelDict, $data);
+       $pending = new ApprovalPending();
+       $pending->setType('banner');
+       $pending->setBannerApproval($banner);
+       $this->getApprovalMapper()->persist($pending);
+       $this->getApprovalMapper()->save();
 
     }
 
@@ -325,7 +324,11 @@ class Company extends AbstractACLService
                 $extra = $this->getJobMapper()->getRandomVacancies($highlightIDs, $category, $language);
                 // If there are no vacancies, we will show less than three
                 If(count($extra)<1){
-                    return $highlightIDs;//$highlightNames;
+                    $highlights = [];
+                    foreach ($highlightIDs as $id) {
+                        array_push($highlights, $this->getJobMapper()->findJobById($id));
+                    }
+                    return $highlights;
                 }
                 $random = rand(0,count($extra)-1);
                 //array_push($highlightNames, $this->getJobMapper()->findJobById($extra[$random]['id'])->getName());
@@ -808,6 +811,11 @@ class Company extends AbstractACLService
                     }
                 }
             }
+            $pending = new ApprovalPending();
+            $pending->setType('profile');
+            $pending->setProfileApproval($profile);
+            $this->getApprovalMapper()->persist($pending);
+
             $this->getApprovalMapper()->save($profile);
             return true;
         }
@@ -929,7 +937,7 @@ class Company extends AbstractACLService
      * @param mixed $companySlugName
      * @param mixed $data
      */
-    public function insertPackageForCompanySlugNameByData($companySlugName, $data, $files, $type = "job")
+    public function insertPackageForCompanySlugNameByData($companySlugName, $data, $files, $type = "job", $isCompany = false)
     {
         $packageForm = $this->getPackageForm($type);
         $packageForm->setData($data);
@@ -945,8 +953,15 @@ class Company extends AbstractACLService
             }
             $package->exchangeArray($data);
             $this->savePackage();
+
+            if($isCompany && $type === "banner"){
+                $this->addBannerApproval($package);
+            }
+
             return true;
         }
+
+
 
         return false;
     }

@@ -101,11 +101,18 @@ class Approval
         $qb->set("ap.rejected", ":rejected");
         $qb->setParameter("rejected", "1");
         $qb->getQuery()->getResult();
-
-
-
-
     }
+
+    public function findApprovalProfileById($id) {
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('c');
+        $qb->select('c')->where('c.id=:id');
+        $qb->setParameter('id', $id);
+
+        return $qb->getQuery()->getResult();
+    }
+
+
 
     public function acceptBannerApproval($id, $approvalId){
         $qb = $this->em->createQueryBuilder();
@@ -123,8 +130,46 @@ class Approval
 
     }
 
+    public function deletePendingApproval($approvalId){
+        $qb = $this->em->createQueryBuilder();
+        $qb->delete("Company\Model\ApprovalModel\ApprovalPending", "ap");
+        $qb->where("ap.id = $approvalId");
+        $qb->getQuery()->getResult();
+    }
 
-    /**
+    public function deleteBannerApproval($approvalId){
+        $this->deletePendingApproval($approvalId);
+    }
+
+    public function deleteProfileApproval($approvalId, $companyId){
+        //$this->deletePendingApproval($approvalId);
+
+        $qb = $this->em->createQueryBuilder();
+        $qb->delete("Company\Model\ApprovalModel\ApprovalCompanyI18n", "ac");
+        $qb->where("ac.company = $companyId");
+        $qb->getQuery()->getResult();
+
+//        $qb = $this->em->createQueryBuilder();
+//        $qb->delete("Company\Model\ApprovalModel\ApprovalProfile", "ap");
+//        $qb->where("ap.company = $companyId");
+//        $qb->getQuery()->getResult();
+
+
+
+    }
+
+    public function deleteVacancyApproval($approvalId, $packageId){
+        $this->deletePendingApproval($approvalId);
+
+        $qb = $this->em->createQueryBuilder();
+        $qb->delete("Company\Model\ApprovalModel\ApprovalVacancy", "av");
+        $qb->where("av.package = $packageId");
+        $qb->getQuery()->getResult();
+
+    }
+
+
+        /**
      * Find the company with the given slugName.
      *
      * @param slugName The 'username' of the company to get.
@@ -334,5 +379,8 @@ class Approval
 
         return $company;
     }
+
+
+
 
 }

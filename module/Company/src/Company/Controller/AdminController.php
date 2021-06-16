@@ -1,5 +1,7 @@
 <?php
 
+
+
 namespace Company\Controller;
 
 use DateInterval;
@@ -38,14 +40,17 @@ class AdminController extends AbstractActionController
     }
 
     public function approvalPageAction(){
-        $pendingApprovals = $this->getApprovalService()->getPendingApprovals();
+
+        $approvalService = $this->getApprovalService();
+
+        $pendingApprovals = $approvalService->getPendingApprovals();
         $companyService = $this->getCompanyService();
         $translator = $companyService->getTranslator();
 
         // Filter out vacancy approvals with non-locale languages
         $singleLanguageApprovals = [];
         foreach ($pendingApprovals as $approval) {
-            if ($approval->getType() == "vacancy") {
+            if ($approval->getType() === "vacancy") {
                 if ($approval->getVacancyApproval()->getLanguage() == $translator->getLocale()) {
                     array_push($singleLanguageApprovals, $approval);
                 }
@@ -53,6 +58,13 @@ class AdminController extends AbstractActionController
                 array_push($singleLanguageApprovals, $approval);
             }
         }
+
+        if (isset($_POST['delete'])) {
+            $deleteInfo = json_decode($_POST["delete"], True);
+            $approvalService->deletePendingApproval($deleteInfo);
+            header("Refresh:0");
+        }
+
         // Initialize the view
         return new ViewModel([
             'pendingApprovals' => $pendingApprovals
@@ -195,12 +207,12 @@ class AdminController extends AbstractActionController
 
 
         // Get parameter
-        $companyName = $this->params('slugCompanyName');
+        $approvalId = $this->params('slugCompanyName');
 
         // Get the specified company
 
-        $companyList = $approvalService->getEditableCompaniesBySlugName($companyName);
-        $oldCompanyList = $companyService->getEditableCompaniesBySlugName($companyName);
+        $companyList = $approvalService->getApprovalProfileById($approvalId);
+        $oldCompanyList = $companyService->getEditableCompaniesBySlugName($companyList[0]->getSlugName());
         //echo var_dump($companyList);
         //$companyList = $companyService->getEditableCompaniesBySlugName($companyName);
 

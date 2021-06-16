@@ -63,9 +63,9 @@ class CompanyAccountController extends AbstractActionController
                     $company->getName(),
                     $post,
                     $files['banner'],
-                    'banner'
+                    'banner',
+                    True
                 )){
-                    $companyService->addBannerApproval(3);
                     $email = $this->getDecisionEmail();
                     $email->sendApprovalMail($company);
                     return $this->redirect()->toRoute(

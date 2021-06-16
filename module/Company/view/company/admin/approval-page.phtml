@@ -2,6 +2,8 @@
 
 //echo var_dump($pendingApprovals[0]->getProfileApproval()->getCompany()->getName());
 
+$test = "d";
+
 ?>
 
 <div class="row">
@@ -45,6 +47,7 @@
                     </th>
                     <th>
                         <?php
+                        $deleteValue = ["type" => $pendingApproval->getType(), "approvalId" => $pendingApproval->getId()];
                         $slugName = $pendingApproval->getCompany()->getSlugName();
                         if(!empty($pendingApproval->getVacancyApproval())) {
                             $vacancyApprovalId = $pendingApproval->getVacancyApproval()->getLanguageNeutralId();
@@ -53,20 +56,28 @@
                         //determing type
 
                         if($pendingApproval->getType() === "profile") {
-                            $url .= "approval-profile/" . $slugName;
+                            $url .= "approval-profile/" . $pendingApproval->getProfileApproval()->getId();
+                            $deleteValue["companyId"] = $pendingApproval->getCompany()->getId();
+                            $deleteValue["profileApprovalId"] = $pendingApproval->getProfileApproval()->getId();
                         }elseif($pendingApproval->getType() === "vacancy"){
                             $url .= "approval-vacancy/" . $vacancyApprovalId;
+                            $deleteValue["packageId"] = $pendingApproval->getVacancyApproval()->getPackage()->getId();
+                            $deleteValue["languageNeutralId"] = $pendingApproval->getVacancyApproval()->getLanguageNeutralId();
                         }elseif($pendingApproval->getType() == "banner"){
                             $url .= "approval-banner/" . $pendingApproval->getId();
                         }
-                        ?>
 
+                        $deleteValue = json_encode($deleteValue);
+
+                        ?>
+                        <form action='' method="post">
                         <button type="button" class="btn btn-primary btn-xs" onclick="location.href='<?= $url;  ?>';">
                             <?= $this->translate('View request') ?>
                         </button>
-                        <button type="button" class="btn btn-danger btn-xs" onclick="location.href='<?= $url;  ?>';">
+                        <button type="submit" class="btn btn-danger btn-xs" name="delete" value='<?= $deleteValue;?>'>
                             <?= $this->translate('Delete request') ?>
                         </button>
+                        </form>
                     </th>
                 </tr>
                 <?php endforeach; ?>
