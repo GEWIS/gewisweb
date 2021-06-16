@@ -7,6 +7,7 @@ use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 use DateTime;
 use Zend\Validator\File\IsImage;
+use Company\Form\EditPackage as EditPackageForm;
 
 class CompanyAccountController extends AbstractActionController
 {
@@ -56,7 +57,7 @@ class CompanyAccountController extends AbstractActionController
             $post = $request->getPost();
             $post['published'] = 0;
 
-            if ($this->bannerPostCorrect($post, $files)) {
+            if ($this->bannerPostCorrect($post, $files, $packageForm)) {
                 // Upload the banner to database and redirect to Companypanel
                 if ($companyService->insertPackageForCompanySlugNameByData(
                     $company->getName(),
@@ -73,7 +74,7 @@ class CompanyAccountController extends AbstractActionController
                 }
 
             } else {
-                echo $this->function_alert($MSG);
+                //echo $this->function_alert($MSG);
                 $packageForm->setData($this->resetInsertedDates($post));
             }
         }
@@ -93,35 +94,33 @@ class CompanyAccountController extends AbstractActionController
     }
 
 
-    public function bannerPostCorrect($post, $files) {
-        global $MSG;
+    public function bannerPostCorrect($post, $files, &$packageForm) {
         // Get Zend validator
         $image_validator = new IsImage();
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
 
-        // Check if valid timespan is selected
-        if (new \DateTime($post['expirationDate']) <= new \DateTime($post['startDate'])) {
-            $MSG = "Please make sure the expirationdate is after the startingdate.";
+        if (!$this->checkDates($post, $packageForm)) {
             return false;
         }
 
         // Check if the upload file is an image
         if (!$image_validator->isValid($files['banner'])) {
-            $MSG = "Please submit an image.";
-            //$packageForm->setData($this->resetInsertedDates($post));
+            $packageForm->setError(EditPackageForm::INVALID_IMAGE_FILE, $companyService->getTranslator());
             return false;
         }
 
-        // Check if the size of the image is 90x728
-        if (!$this->checkImageSize($files['banner'])) {
+        list($image_width, $image_height) = getimagesize($files['banner']['tmp_name']);
+        if ($image_height != 90 || $image_width != 728) {
+            $packageForm->setError(EditPackageForm::IMAGE_WRONG_SIZE, $companyService->getTranslator());
             // TODO Implement cropping tool (Could)
             return false;
         }
 
         // Check if Company has enough credits and subtract them if so
         if (!$this->checkCredits($post, $company, $companyService, "banner")) {
+            $packageForm->setError(EditPackageForm::NOT_ENOUGH_CREDITS_BANNER, $companyService->getTranslator());
             return false;
         }
 
@@ -217,7 +216,7 @@ class CompanyAccountController extends AbstractActionController
             //Set published to one, since a highlight does not need to be approved
             $post['published'] = 1;
 
-            if ($this->highlightPostCorrect($post)) {
+            if ($this->highlightPostCorrect($post, $packageForm)) {
                 if ($companyService->insertPackageForCompanySlugNameByData(
                     $company->getName(),
                     $post,
@@ -229,7 +228,6 @@ class CompanyAccountController extends AbstractActionController
                     );
                 }
             } else {
-                echo $this->function_alert($MSG);
                 $packageForm->setData($this->resetInsertedDates($post));
             }
         }
@@ -252,46 +250,52 @@ class CompanyAccountController extends AbstractActionController
     }
 
 
-    public function highlightPostCorrect($post) {
-        global $MSG;
-
+    public function highlightPostCorrect($post, &$packageForm) {
         //Get usefull stuff
         $companyService = $this->getCompanyService();
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
-        $today = date("Y-m-d");
 
-
-        // Check if valid timespan is selected
-        if (new \DateTime($post['expirationDate']) <= new \DateTime($post['startDate'])) {
-            $MSG = "Please make sure the expirationdate is after the startingdate.";
-            return false;
-        }
-
-        // Check if valid timespan is selected
-        if (new \DateTime($post['startDate']) <= $today) {
-            print_r(new \DateTime($post['startDate']));
-            print_r($today);
-            $MSG = "Please make sure the startingdate is after today.";
+        if (!$this->checkDates($post, $packageForm)) {
             return false;
         }
 
         //Check if a company does not already have three highlights
         if ($this->getCompanyService()->getNumberOfHighlightsPerCompany($company->getId()) >= 3) {
-            $MSG = "Unfortunately you can place at most 3 highlights, which you already have";
+            $packageForm->setError(EditPackageForm::COMPANY_HAS_THREE_HIGHLIGHTS, $companyService->getTranslator());
             return false;
         }
 
         //Check if there are not already three highlights in a certain category
         if ($this->getCompanyService()->getNumberOfHighlightsPerCategory($post['vacancy_id']) >= 3) {
-            $MSG = "Unfortunately at most 3 vacancies in this category can be highlighted, which there already are";
+            $packageForm->setError(EditPackageForm::ALREADY_THREE_HIGHLIGHTS_IN_CATEGORY, $companyService->getTranslator());
             return false;
         }
 
         // Check if Company has enough credits and subtract them if so
         if (!$this->checkCredits($post, $company, $companyService, "highlight")) {
+            $packageForm->setError(EditPackageForm::NOT_ENOUGH_CREDITS_HIGHLIGHT, $companyService->getTranslator());
             return false;
         }
 
+        return true;
+    }
+
+    public function checkDates($post, &$packageForm) {
+        //Get usefull stuff
+        $companyService = $this->getCompanyService();
+        $today = date("Y-m-d");
+
+        // Check if valid timespan is selected
+        if ($post['expirationDate'] <= $post['startDate']) {
+            $packageForm->setError(EditPackageForm::EXPIRATIONDATE_AFTER_STARTDATE, $companyService->getTranslator());
+            return false;
+        }
+
+        // Check if valid timespan is selected
+        if ($post['startDate'] <= $today) {
+            $packageForm->setError(EditPackageForm::START_DATE_IN_PAST, $companyService->getTranslator());
+            return false;
+        }
         return true;
     }
 
@@ -329,7 +333,6 @@ class CompanyAccountController extends AbstractActionController
     }
 
     public function checkCredits($post, $company, $companyService, $type) {
-        global $MSG;
         $start_date = new \DateTime($post['startDate']);
         $end_date = new \DateTime($post['expirationDate']);
         $days_scheduled = $end_date->diff($start_date)->format("%a");
@@ -344,10 +347,6 @@ class CompanyAccountController extends AbstractActionController
             $this->deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type);
             return true;
         }
-
-
-        $MSG = "The amount of highlighting days needed is: " . $days_scheduled . ". The amount you have is: " . $credits_owned . ".";
-
         return false;
     }
 
@@ -362,19 +361,7 @@ class CompanyAccountController extends AbstractActionController
         return $insertedDates;
     }
 
-    public function checkImageSize($image) {
-        global $MSG;
-        list($image_width, $image_height) = getimagesize($image['tmp_name']);
 
-        if ($image_height != 90 ||
-            $image_width != 728) {
-            $MSG = "The image you submitted does not have the right dimensions. " .
-                "The dimensions of your image are " . $image_height . " x " . $image_width .
-                ". The dimensions of the image should be 90 x 728.";
-            return false;
-        }
-        return true;
-    }
 
 
 

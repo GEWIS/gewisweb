@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-15 12:19+0200\n"
-"PO-Revision-Date: 2021-06-15 20:23+0200\n"
+"PO-Revision-Date: 2021-06-16 11:38+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -1182,6 +1182,30 @@ msgstr "Pas uitgelichte vacature aan"
 
 msgid "You have currently got %s days left to highlight a vacancy."
 msgstr "U heeft nog %s dagen om een vacature uit te lichten."
+
+msgid "Please make sure the expiration date is after the starting date."
+msgstr "Zorg er alstublieft voor dat de verloopdatum na de startdatum is."
+
+msgid "Please submit an image file."
+msgstr "Upload alstublieft een afbeeldingsbestand."
+
+msgid "The image you submitted does not have the right dimensions. The dimensions of the image should be 90 x 728."
+msgstr "De afbeelding die u heeft geupload heeft niet de juist dimensies. The dimensies moeten 90 x 728 zijn."
+
+msgid "Unfortunately there are not enough days available to highlight this vacancy."
+msgstr "Er zijn helaas niet genoeg dagen beschikbaar om deze vacature uit te lichten."
+
+msgid "Unfortunately there are not enough days available to add this banner."
+msgstr "Er zijn helaas niet genoeg dagen beschikbaar om deze banner te plaatsen."
+
+msgid "Please make sure the starting date is after today."
+msgstr "Zorg er alstublieft voor dat de start datum na vandaag is."
+
+msgid "Unfortunately you can place at most 3 highlights, which you already have"
+msgstr "U kunt helaas maar 3 vacatures tegelijkertijd uitlichten"
+
+msgid "There are already a maximum of 3 vacancies highlighted in this vacancies' category"
+msgstr "Er zijn al maximaal 3 vacatures uitgelicht in de categorie van deze vacature"
 
 #: module/Decision/view/decision/organ-admin/index.phtml:2
 msgid "Select an organ to edit its information. Changes will not be displayed until they have been approved."

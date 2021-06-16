@@ -4,10 +4,19 @@ namespace Company\Form;
 
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
-use Zend\Mvc\I18n\Translator;
+use Zend\I18n\Translator\TranslatorInterface as Translator;
 
 class EditPackage extends Form
 {
+    const EXPIRATIONDATE_AFTER_STARTDATE = 'wrong_expirationDate';
+    const START_DATE_IN_PAST = 'wrong_startDate';
+    const INVALID_IMAGE_FILE = 'wrong_image';
+    const IMAGE_WRONG_SIZE = 'wrong_imagesize';
+    const NOT_ENOUGH_CREDITS_HIGHLIGHT = 'insufficient_credits_highlight';
+    const NOT_ENOUGH_CREDITS_BANNER = 'insufficient_credits_banner';
+    const COMPANY_HAS_THREE_HIGHLIGHTS = 'to_many_highlights';
+    const ALREADY_THREE_HIGHLIGHTS_IN_CATEGORY = 'to_many_highlights_category';
+
     public function __construct(Translator $translate, $type)
     {
         // we want to ignore the name passed
@@ -131,6 +140,73 @@ class EditPackage extends Form
         ]);
 
         $this->initFilters();
+    }
+
+    /**
+     * Set the error.
+     *
+     * @param string $error
+     */
+    public function setError($error, Translator $translate)
+    {
+        switch ($error) {
+            case self::EXPIRATIONDATE_AFTER_STARTDATE:
+                $this->setMessages([
+                    'expirationDate' => [
+                       $translate->translate("Please make sure the expiration date is after the starting date.")
+                    ]
+                ]);
+                break;
+            case self::INVALID_IMAGE_FILE:
+                $this->setMessages([
+                    'banner' => [
+                        $translate->translate("Please submit an image file.")
+                    ]
+                ]);
+                break;
+            case self::IMAGE_WRONG_SIZE:
+                $this->setMessages([
+                    'banner' => [
+                        $translate->translate("The image you submitted does not have the right dimensions. The dimensions of the image should be 90 x 728.")
+                    ]
+                ]);
+                break;
+            case self::NOT_ENOUGH_CREDITS_HIGHLIGHT:
+                $this->setMessages([
+                    'expirationDate' => [
+                        $translate->translate("Unfortunately there are not enough days available to highlight this vacancy.")
+                    ]
+                ]);
+                break;
+            case self::NOT_ENOUGH_CREDITS_BANNER:
+                $this->setMessages([
+                    'expirationDate' => [
+                        $translate->translate("Unfortunately there are not enough days available to add this banner.")
+                    ]
+                ]);
+                break;
+            case self::START_DATE_IN_PAST:
+                $this->setMessages([
+                    'startDate' => [
+                        $translate->translate("Please make sure the starting date is after today.")
+                    ]
+                ]);
+                break;
+            case self::COMPANY_HAS_THREE_HIGHLIGHTS:
+                $this->setMessages([
+                    'vacancy_id' => [
+                        $translate->translate("Unfortunately you can place at most 3 highlights, which you already have")
+                    ]
+                ]);
+                break;
+            case self::ALREADY_THREE_HIGHLIGHTS_IN_CATEGORY:
+                $this->setMessages([
+                    'vacancy_id' => [
+                        $translate->translate("There are already a maximum of 3 vacancies highlighted in this vacancies' category")
+                    ]
+                ]);
+                break;
+        }
     }
 
     protected function initFilters()
