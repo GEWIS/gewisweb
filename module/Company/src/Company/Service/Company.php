@@ -325,7 +325,11 @@ class Company extends AbstractACLService
                 $extra = $this->getJobMapper()->getRandomVacancies($highlightIDs, $category, $language);
                 // If there are no vacancies, we will show less than three
                 If(count($extra)<1){
-                    return $highlightIDs;//$highlightNames;
+                    $highlights = [];
+                    foreach ($highlightIDs as $id) {
+                        array_push($highlights, $this->getJobMapper()->findJobById($id));
+                    }
+                    return $highlights;
                 }
                 $random = rand(0,count($extra)-1);
                 //array_push($highlightNames, $this->getJobMapper()->findJobById($extra[$random]['id'])->getName());
