@@ -181,7 +181,6 @@ if (isset($this->company)) {
             },
             filterBySector: function (sector) {
                 cards.forEach(function (card) {
-                    console.log(card);
                     card.isMatchOn['sectors'] = (card.sectors.indexOf(parseInt(sector)) > -1);
                 });
 
@@ -261,8 +260,6 @@ if (isset($this->company)) {
     // Filter on sectors
     $("#sector-filter").change(function () {
         var sector = $(this).val();
-
-        console.log(sector);
 
         // When "all" is selected clear all filters.
         if (sector == "all") {
