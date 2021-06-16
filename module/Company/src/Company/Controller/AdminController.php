@@ -123,7 +123,7 @@ class AdminController extends AbstractActionController
             $companyService->deleteVacancyApprovals($vacancyApprovals);
 
             if($_POST['sendEmail']) {
-                $this->getCompanyEmailService()->sendApprovalResult($jobs[0]->getPackage()->getCompany(),$jobs[0], false);
+                $this->getCompanyEmailService()->sendApprovalResult($vacancyApprovals[0]->getPackage()->getCompany(),$vacancyApprovals[0], false);
             }
             return $this->redirect()->toRoute(
                 'admin_company/approvalPage'
@@ -135,7 +135,7 @@ class AdminController extends AbstractActionController
             }
 
             if($_POST['sendEmail']) {
-                $this->getCompanyEmailService()->sendApprovalResult($jobs[0]->getPackage()->getCompany(),$jobs[0], true);
+                $this->getCompanyEmailService()->sendApprovalResult($vacancyApprovals[0]->getPackage()->getCompany(),$vacancyApprovals[0], true);
             }
 
             return $this->redirect()->toRoute(

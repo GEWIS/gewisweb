@@ -624,17 +624,6 @@ class CompanyAccountController extends AbstractActionController
         $languages = array_keys($jobDict);
         $jobForm->setLanguages($languages);
 
-        $labels = $jobs[0]->getLabels();
-
-        $mapper = $companyService->getLabelMapper();
-        $actualLabels = [];
-        foreach ($labels as $label) {
-            $actualLabel = $label->getLabel();
-            $actualLabels[] = $mapper->siblingLabel($actualLabel, 'en');
-            $actualLabels[] = $mapper->siblingLabel($actualLabel, 'nl');
-        }
-
-
         // Handle incoming form data for central fields
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -649,8 +638,6 @@ class CompanyAccountController extends AbstractActionController
 //            $companyService->saveJob();
         }
 
-
-        $jobForm->setLabels($actualLabels);
         $jobForm->setData($jobs[0]->getArrayCopy());
         $jobForm->bind($jobDict);
 
