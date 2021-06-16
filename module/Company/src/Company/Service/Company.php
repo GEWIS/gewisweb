@@ -36,14 +36,13 @@ class Company extends AbstractACLService
         return $this->getBannerPackageMapper()->getBannerPackage();
     }
 
-    public function addBannerApproval($id){
+    public function addBannerApproval($banner){
 
-//        $approval = new ApprovalPending();
-//        $label->setLanguage($lang);
-//        $labelDict[$lang] = $label;
-//
-//
-//        $this->saveLabelData("", $labelDict, $data);
+       $pending = new ApprovalPending();
+       $pending->setType('banner');
+       $pending->setBannerApproval($banner);
+       $this->getApprovalMapper()->persist($pending);
+       $this->getApprovalMapper()->save();
 
     }
 
@@ -934,7 +933,7 @@ class Company extends AbstractACLService
      * @param mixed $companySlugName
      * @param mixed $data
      */
-    public function insertPackageForCompanySlugNameByData($companySlugName, $data, $files, $type = "job")
+    public function insertPackageForCompanySlugNameByData($companySlugName, $data, $files, $type = "job", $isCompany = false)
     {
         $packageForm = $this->getPackageForm($type);
         $packageForm->setData($data);
@@ -950,8 +949,15 @@ class Company extends AbstractACLService
             }
             $package->exchangeArray($data);
             $this->savePackage();
+
+            if($isCompany && $type === "banner"){
+                $this->addBannerApproval($package);
+            }
+
             return true;
         }
+
+
 
         return false;
     }
