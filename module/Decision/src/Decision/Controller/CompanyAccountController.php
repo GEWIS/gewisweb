@@ -404,7 +404,9 @@ class CompanyAccountController extends AbstractActionController
             $companyService->saveCompanyApprovalByData(
                 $company,
                 $post,
-                $request->getFiles()
+                $request->getFiles(),
+                $company->getArrayCopy()['en_logo'],
+                $company->getArrayCopy()['nl_logo']
             );
 
             $company->setSlugName($companySlugName);

@@ -738,29 +738,53 @@ class Company extends AbstractACLService
      * @param mixed $company
      * @param mixed $data
      */
-    public function saveCompanyByData($company, $data, $files)
+    public function saveCompanyByData($company, $data, $files, $logo_en = "", $logo_nl = "")
     {
         $companyForm = $this->getCompanyForm();
+
         $mergedData = array_merge_recursive(
             $data->toArray(),
             $files->toArray()
         );
+
         $companyForm->setData($mergedData);
 
         if ($companyForm->isValid()) {
             $company->exchangeArray($data);
+
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
+
+
+
                 if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
                     if ($file['error'] !== UPLOAD_ERR_OK) {
                         return false;
                     }
                     $oldPath = $translation->getLogo();
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                    //echo var_dump($newPath);
+
+
+
+
                     $translation->setLogo($newPath);
                     if ($oldPath !== '' && $oldPath != $newPath) {
                         $this->getFileStorageService()->removeFile($oldPath);
                     }
+                }else{
+                    if($logo_en != "" && $translation->getLanguage() === "en"){
+                        $newPath = $logo_en;
+                        $translation->setLogo($newPath);
+                    }
+
+                    if($logo_nl != "" && $translation->getLanguage() === "nl"){
+                        $newPath = $logo_nl;
+                        $translation->setLogo($newPath);
+                    }
+
+
+
                 }
             }
             $this->saveCompany();
@@ -768,7 +792,7 @@ class Company extends AbstractACLService
         }
     }
 
-    public function saveCompanyApprovalByData($company, $data, $files) {
+    public function saveCompanyApprovalByData($company, $data, $files, $logo_en = "", $logo_nl = "") {
 
         $profile = new ApprovalProfile();
 
@@ -809,7 +833,24 @@ class Company extends AbstractACLService
                     if ($oldPath !== '' && $oldPath != $newPath) {
                         $this->getFileStorageService()->removeFile($oldPath);
                     }
+                }else{
+                    if($logo_en != "" && $translation->getLanguage() === "en"){
+                        $newPath = $logo_en;
+                        $translation->setLogo($newPath);
+                    }
+
+                    if($logo_nl != "" && $translation->getLanguage() === "nl"){
+                        $newPath = $logo_nl;
+                        $translation->setLogo($newPath);
+                    }
+
+
+
                 }
+
+
+
+
             }
             $pending = new ApprovalPending();
             $pending->setType('profile');

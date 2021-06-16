@@ -235,10 +235,15 @@ class AdminController extends AbstractActionController
         if ($request->isPost() && !isset($_POST['reject'])) {
             $post = $request->getPost();
             $post['id'] = $oldCompany->getId();
+            //$post['en_logo'] = $company->getArrayCopy()['en_logo'];
+            //echo var_dump($post);
+
             if ($companyService->saveCompanyByData(
                 $oldCompany,
                 $post,
-                $request->getFiles()
+                $request->getFiles(),
+                $company->getArrayCopy()['en_logo'],
+                $company->getArrayCopy()['nl_logo']
             )) {
                 if($_POST['sendEmail']) {
                     $this->getCompanyEmailService()->sendApprovalResult($oldCompany, false);
@@ -694,6 +699,7 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $post = $request->getPost();
+
             if ($companyService->saveCompanyByData(
                 $company,
                 $post,
