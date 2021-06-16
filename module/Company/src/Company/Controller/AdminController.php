@@ -121,10 +121,8 @@ class AdminController extends AbstractActionController
             }
             if (!$newVacancy) {
                 $jobDict = [];
-//                print_r($post);
                 foreach ($jobs as $job) {
                     $jobDict[$job->getLanguage()] = $job;
-//                    $post[$job->getLanguage()]['id'] = $job->getId();
                 }
             }
 
@@ -136,7 +134,10 @@ class AdminController extends AbstractActionController
             $companyService->deleteVacancyApprovals($vacancyApprovals);
 
             if($_POST['sendEmail']) {
-                $this->getCompanyEmailService()->sendApprovalResult($jobs[0]->getPackage()->getCompany(),$jobs[0], false);
+                $company = $vacancyApprovals[0]->getPackage()->getCompany();
+                $name = $vacancyApprovals[0]->getName();
+                $route = 'career/company/' . $company->getSlugName() . "/" . $vacancyApprovals[0]->getCategory()->getSlug() . "/" . $vacancyApprovals[0]->getSlugName();
+                $this->getCompanyEmailService()->sendApprovalResult($company, false, $name, $route);
             }
             return $this->redirect()->toRoute(
                 'admin_company/approvalPage'
@@ -148,7 +149,10 @@ class AdminController extends AbstractActionController
             }
 
             if($_POST['sendEmail']) {
-                $this->getCompanyEmailService()->sendApprovalResult($jobs[0]->getPackage()->getCompany(),$jobs[0], true);
+                $company = $vacancyApprovals[0]->getPackage()->getCompany();
+                $name = $vacancyApprovals[0]->getName();
+                $route = "";
+                $this->getCompanyEmailService()->sendApprovalResult($company, true, $name, $route);
             }
 
             return $this->redirect()->toRoute(
@@ -278,7 +282,10 @@ class AdminController extends AbstractActionController
                 $company->getArrayCopy()['nl_logo']
             )) {
                 if($_POST['sendEmail']) {
-                    $this->getCompanyEmailService()->sendApprovalResult($oldCompany, false);
+
+                    $name = $oldCompany->getName();
+                    $route = 'career/company/' . $oldCompany->getSlugName();
+                    $this->getCompanyEmailService()->sendApprovalResult($oldCompany, false, $name, $route);
                 }
 
                 $companyService->deleteProfileApprovals($company);
@@ -297,10 +304,11 @@ class AdminController extends AbstractActionController
                 );
             }
         }elseif (isset($_POST['reject'])){
-            //TODO send email
 
             if($_POST['sendEmail']) {
-                $this->getCompanyEmailService()->sendApprovalResult($oldCompany, true);
+                $name = $oldCompany->getName();
+                $route = "";
+                $this->getCompanyEmailService()->sendApprovalResult($oldCompany, true, $name, $route);
             }
 
             $approvalService->rejectProfileApproval($_POST['id']);

@@ -1,7 +1,7 @@
 <?= "Dear ". $this->escapeHtml($company->getContactName()) .", \n"?>
 
-<?= "The vacancy " . "vacancy title" . " has just been approved and uploaded by an administrator to the GEWIS website. "?>
-<?= "You can find the vacancy here:" . $this->serverUrl($this->url('company/activate-company', ['code' => $user->getCode()])) . ".\n" ?>
+<?= "The changes to the item " . $name . " have just been approved and uploaded by an administrator to the GEWIS website. "?>
+<?= "You can find the item here: " . $this->serverUrl($route) . ".\n"?>
 <?="This is an automated email. For any questions, please contact the external affairs officer at ceb@gewis.nl .\n"?>
 
 <?= "With kind regards\n\n"?>
