@@ -298,23 +298,15 @@ class CompanyAccountController extends AbstractActionController
         }
 
         // Check if valid timespan is selected
-//        $date = '2021-01-01';
-//        $id = $this->getCompanyAccountService()->getCompany()->getCompanyAccount()->getId();
-//        print_r($id);
-//        $packages = $this->getCompanyService()->getPackageMapper()->findAll();
-//        print_r(gettype($packages));
-//        foreach ($packages as $package):
-//            print_r($package->getCompany()->getId());
-//            if ($package->getCompany()->getId() === $id && $package->getType() === 'job') {
-//                print_r('test');
-//                $date = $package->getExpires();
-//            }
-//        endforeach;
-//            print_r($date);
-//        if ($post['expirationDate'] >= $date) {
-//            $packageForm->setError(EditPackageForm::EXPIRATIONDATE_AFTER_PACKAGEDATE, $companyService->getTranslator());
-//            return false;
-//        }
+        $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
+        $companyId = $company->getId();
+        $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyId);
+        $date = $companyPackageInfo[0]->getExpirationDate();
+
+        if ($post['expirationDate'] >= $date) {
+            $packageForm->setError(EditPackageForm::EXPIRATIONDATE_AFTER_PACKAGEDATE, $companyService->getTranslator());
+            return false;
+        }
         return true;
     }
 
@@ -432,10 +424,10 @@ class CompanyAccountController extends AbstractActionController
             $company->setName($companyName);
 //            $companyService->saveCompany();
 
+            sleep(5);
             return $this->redirect()->toRoute(
-                'companyaccount/profile',
+                'companyaccount/index',
                 [
-                    'action' => 'edit',
                     'slugCompanyName' => $companyName,
                 ],
                 [],
@@ -624,17 +616,6 @@ class CompanyAccountController extends AbstractActionController
         $languages = array_keys($jobDict);
         $jobForm->setLanguages($languages);
 
-        $labels = $jobs[0]->getLabels();
-
-        $mapper = $companyService->getLabelMapper();
-        $actualLabels = [];
-        foreach ($labels as $label) {
-            $actualLabel = $label->getLabel();
-            $actualLabels[] = $mapper->siblingLabel($actualLabel, 'en');
-            $actualLabels[] = $mapper->siblingLabel($actualLabel, 'nl');
-        }
-
-
         // Handle incoming form data for central fields
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -649,8 +630,6 @@ class CompanyAccountController extends AbstractActionController
 //            $companyService->saveJob();
         }
 
-
-        $jobForm->setLabels($actualLabels);
         $jobForm->setData($jobs[0]->getArrayCopy());
         $jobForm->bind($jobDict);
 

@@ -818,7 +818,11 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             if ($companyService->savePackageByData($package, $request->getPost(), $request->getFiles())) {
-                    return $this->redirect()->toRoute('admin_company/editHighlight');
+                    return $this->redirect()->toRoute(
+                        'admin_company/editCompany',
+                        ['slugCompanyName' => $companyName],
+                        [],
+                        false);
                 // TODO: possibly redirect to company
             }
         }

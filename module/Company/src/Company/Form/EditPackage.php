@@ -59,7 +59,6 @@ class EditPackage extends Form
             'attributes' => [
                 'required' => 'required',
                 'step' => '1',
-                'min' => $this->setTomorrow(),
                 'value' => $this->setDayInterval(14)
             ],
             'options' => [
@@ -175,7 +174,7 @@ class EditPackage extends Form
             case self::IMAGE_WRONG_SIZE:
                 $this->setMessages([
                     'banner' => [
-                        $translate->translate("The image you submitted does not have the right dimensions. The dimensions of the image should be 90 x 728.")
+                        $translate->translate("The image you submitted does not have the right dimensions. The dimensions of the image should be 728 x 90.")
                     ]
                 ]);
                 break;
