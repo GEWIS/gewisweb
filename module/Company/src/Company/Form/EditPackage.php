@@ -9,6 +9,7 @@ use Zend\I18n\Translator\TranslatorInterface as Translator;
 class EditPackage extends Form
 {
     const EXPIRATIONDATE_AFTER_STARTDATE = 'wrong_expirationDate';
+    const EXPIRATIONDATE_AFTER_PACKAGEDATE = 'wrong_expirationDate_package';
     const START_DATE_IN_PAST = 'wrong_startDate';
     const INVALID_IMAGE_FILE = 'wrong_image';
     const IMAGE_WRONG_SIZE = 'wrong_imagesize';
@@ -154,6 +155,13 @@ class EditPackage extends Form
                 $this->setMessages([
                     'expirationDate' => [
                        $translate->translate("Please make sure the expiration date is after the starting date.")
+                    ]
+                ]);
+                break;
+            case self::EXPIRATIONDATE_AFTER_PACKAGEDATE :
+                $this->setMessages([
+                    'expirationDate' => [
+                        $translate->translate("Please make sure the expiration date is before your vacancy package expires.")
                     ]
                 ]);
                 break;

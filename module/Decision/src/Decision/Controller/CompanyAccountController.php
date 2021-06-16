@@ -296,6 +296,25 @@ class CompanyAccountController extends AbstractActionController
             $packageForm->setError(EditPackageForm::START_DATE_IN_PAST, $companyService->getTranslator());
             return false;
         }
+
+        // Check if valid timespan is selected
+//        $date = '2021-01-01';
+//        $id = $this->getCompanyAccountService()->getCompany()->getCompanyAccount()->getId();
+//        print_r($id);
+//        $packages = $this->getCompanyService()->getPackageMapper()->findAll();
+//        print_r(gettype($packages));
+//        foreach ($packages as $package):
+//            print_r($package->getCompany()->getId());
+//            if ($package->getCompany()->getId() === $id && $package->getType() === 'job') {
+//                print_r('test');
+//                $date = $package->getExpires();
+//            }
+//        endforeach;
+//            print_r($date);
+//        if ($post['expirationDate'] >= $date) {
+//            $packageForm->setError(EditPackageForm::EXPIRATIONDATE_AFTER_PACKAGEDATE, $companyService->getTranslator());
+//            return false;
+//        }
         return true;
     }
 
