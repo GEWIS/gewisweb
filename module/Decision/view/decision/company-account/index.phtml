@@ -144,7 +144,7 @@ if ($companyInfo[0]->getHighLightCredits() <= 0){
                        <?php if ($highlightActive): ?>href="<?= $this->url('companyaccount/highlight') ?>"<?php endif; ?>>
 
                         <div class="big-icon fas fa-check"></div>
-                        <div class="panel-heading"><?= $this->translate('Highlight') ?></div>
+                        <div class="panel-heading"><?= $this->translate("Highlight vacancies") ?></div>
                     </a>
                         <?php if (!$highlightActive): ?>
                             <div class="panel-warning"><div class="panel-warning-text"><?= $this->translate("Disabled, no more highlight days left.") ?></div></div>

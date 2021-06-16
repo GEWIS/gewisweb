@@ -39,7 +39,7 @@ class EditPackage extends Form
                 'value' => $this->setTomorrow()
             ],
             'options' => [
-                'label' => $translate->translate('Start date *'),
+                'label' => $translate->translate("Start date *"),
             ],
         ]);
 
@@ -53,7 +53,7 @@ class EditPackage extends Form
                 'value' => $this->setDayInterval(14)
             ],
             'options' => [
-                'label' => $translate->translate('Expiration date *'),
+                'label' => $translate->translate("Expiration date *"),
             ],
         ]);
 
@@ -104,7 +104,7 @@ class EditPackage extends Form
                     'type' => 'file',
                 ],
                 'options' => [
-                    'label' => $translate->translate('Banner *'),
+                    'label' => $translate->translate("Banner *"),
                 ],
             ]);
         }
@@ -115,7 +115,7 @@ class EditPackage extends Form
                 'required' => true,
                 'type' => '\Zend\Form\Element\Select',
                 'options' => [
-                    'label' => $translate->translate('Select Vacancy *'),
+                    'label' => $translate->translate("Select Vacancy *"),
                 ],
             ]);
         }

@@ -2,12 +2,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Add banner</h1>
+                <h1><?= $this->translate("Add banner") ?></h1>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h3><? echo "You have currently got " . $company->getBannerCredits() . " days left to place a banner."; ?></h3>
+                <h3><?= sprintf($this->translate("You have currently got %s days left to place a banner."), $company->getBannerCredits()) ?></h3>
             </div>
         </div>
         <?php

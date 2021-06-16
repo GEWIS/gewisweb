@@ -2,12 +2,12 @@
     <section class="section">
         <div class="row">
             <div class="col-md-12">
-                <h1>Add highlight</h1>
+                <h1><?= $this->translate("Highlight a vacancy") ?></h1>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h3><? echo "You have currently got " . $company->getHighlightCredits() . " days left to highlight a vacancy."; ?></h3>
+                <h3><?= sprintf($this->translate("You have currently got %s days left to highlight a vacancy."), $company->getHighlightCredits()) ?></h3>
             </div>
         </div>
         <?php
@@ -51,7 +51,7 @@
                                                "packageId" => $highlight['id'],
                                            ]
                                        ); ?>">
-                                        <?= $this->translate('edit'); ?>
+                                        <?= $this->translate('Edit'); ?>
                                     </a>
                                     <a class="btn btn-xs btn-primary"
                                        href="<?= $this->url("companyaccount/highlight/delete",
@@ -59,7 +59,7 @@
                                                "packageId" => $highlight['id'],
                                            ]
                                        ); ?>">
-                                        <?= $this->translate('delete'); ?>
+                                        <?= $this->translate('Delete'); ?>
                                     </a>
                                 </td>
                             </tr>

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-15 12:19+0200\n"
-"PO-Revision-Date: 2021-06-15 12:30+0200\n"
+"PO-Revision-Date: 2021-06-15 20:09+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -16,9 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 3.0\n"
 
-#: module/Photo/view/photo/photo/weekly.phtml:2 module/Photo/view/photo/photo/weekly.phtml:5
+#: module/Photo/view/photo/photo/weekly.phtml:2
+#: module/Photo/view/photo/photo/weekly.phtml:5
 msgid "Picture of the week"
 msgstr "Picture of the week"
 
@@ -34,19 +35,30 @@ msgstr "Old pictures of the week"
 msgid "Week"
 msgstr "Week"
 
-#: module/Photo/view/photo/photo/index.phtml:3 module/Photo/view/photo/photo/view.phtml:15 module/Photo/view/photo/photo/view.phtml:29
-#: module/Photo/view/photo/photo/view.phtml:50 module/Photo/view/photo/album/index.phtml:9 module/Photo/view/photo/album/index.phtml:20
-#: module/Photo/view/photo/album/index-new.phtml:9 module/Photo/view/photo/album/index-new.phtml:29 module/Application/view/partial/admin-nav.phtml:81
-#: module/Application/view/partial/main-nav.phtml:293 module/Application/view/partial/main-nav.phtml:297 module/Application/view/partial/main-nav.phtml:301
+#: module/Photo/view/photo/photo/index.phtml:3
+#: module/Photo/view/photo/photo/view.phtml:15
+#: module/Photo/view/photo/photo/view.phtml:29
+#: module/Photo/view/photo/photo/view.phtml:50
+#: module/Photo/view/photo/album/index.phtml:9
+#: module/Photo/view/photo/album/index.phtml:20
+#: module/Photo/view/photo/album/index-new.phtml:9
+#: module/Photo/view/photo/album/index-new.phtml:29
+#: module/Application/view/partial/admin-nav.phtml:81
+#: module/Application/view/partial/main-nav.phtml:293
+#: module/Application/view/partial/main-nav.phtml:297
+#: module/Application/view/partial/main-nav.phtml:301
 #: module/Application/view/partial/main-nav.phtml:308
 msgid "Photos"
 msgstr "Photos"
 
-#: module/Photo/view/photo/photo/index.phtml:22 module/Activity/view/activity/activity/archive.phtml:7
+#: module/Photo/view/photo/photo/index.phtml:22
+#: module/Activity/view/activity/activity/archive.phtml:7
 msgid "Older"
 msgstr "Older"
 
-#: module/Photo/view/photo/photo/view.phtml:3 module/Photo/view/photo/photo/view.phtml:40 module/Photo/view/photo/photo/view.phtml:88
+#: module/Photo/view/photo/photo/view.phtml:3
+#: module/Photo/view/photo/photo/view.phtml:40
+#: module/Photo/view/photo/photo/view.phtml:88
 msgid "Photo"
 msgstr "Photo"
 
@@ -54,7 +66,8 @@ msgstr "Photo"
 msgid "From album"
 msgstr "From album"
 
-#: module/Photo/view/photo/photo/view.phtml:101 module/Photo/view/photo/photo/view.phtml:113
+#: module/Photo/view/photo/photo/view.phtml:101
+#: module/Photo/view/photo/photo/view.phtml:113
 msgid "Return to album"
 msgstr "Return to album"
 
@@ -63,15 +76,19 @@ msgstr "Return to album"
 msgid "View album %s"
 msgstr "View album %s"
 
-#: module/Photo/view/photo/photo/view.phtml:151 module/Application/view/partial/main-nav.phtml:312 module/Frontpage/view/frontpage/frontpage/home.phtml:138
+#: module/Photo/view/photo/photo/view.phtml:151
+#: module/Application/view/partial/main-nav.phtml:312
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:138
 msgid "Photo of the week"
 msgstr "Photo of the week"
 
-#: module/Photo/view/photo/photo/view.phtml:169 module/Application/view/partial/paginator.phtml:8
+#: module/Photo/view/photo/photo/view.phtml:169
+#: module/Application/view/partial/paginator.phtml:8
 msgid "Previous"
 msgstr "Previous"
 
-#: module/Photo/view/photo/photo/view.phtml:185 module/Application/view/partial/paginator.phtml:22
+#: module/Photo/view/photo/photo/view.phtml:185
+#: module/Application/view/partial/paginator.phtml:22
 msgid "Next"
 msgstr "Next"
 
@@ -83,11 +100,13 @@ msgstr "Set this picture as your profile picture"
 msgid "Your preference will be stored for one year."
 msgstr "Your preference will be stored for one year."
 
-#: module/Photo/view/photo/photo/view.phtml:198 module/Decision/view/decision/member/self.phtml:164
+#: module/Photo/view/photo/photo/view.phtml:198
+#: module/Decision/view/decision/member/self.phtml:164
 msgid "Remove this picture as your profile picture"
 msgstr "Remove this picture as your profile picture"
 
-#: module/Photo/view/photo/photo/view.phtml:200 module/Decision/view/decision/member/self.phtml:166
+#: module/Photo/view/photo/photo/view.phtml:200
+#: module/Decision/view/decision/member/self.phtml:166
 msgid "Your profile picture will be chosen automatically instead."
 msgstr "Your profile picture will be chosen automatically instead."
 
@@ -95,7 +114,8 @@ msgstr "Your profile picture will be chosen automatically instead."
 msgid "Full resolution"
 msgstr "Full resolution"
 
-#: module/Photo/view/photo/album-admin/index.phtml:29 module/Photo/view/photo/photo-admin/index.phtml:16
+#: module/Photo/view/photo/album-admin/index.phtml:29
+#: module/Photo/view/photo/photo-admin/index.phtml:16
 msgid "Photo admin"
 msgstr "Photo admin"
 
@@ -127,7 +147,8 @@ msgstr "Move %i photos"
 msgid "Regenerate album cover"
 msgstr "Regenerate album cover"
 
-#: module/Photo/view/photo/album-admin/index.phtml:105 module/Photo/view/photo/album-admin/index.phtml:196
+#: module/Photo/view/photo/album-admin/index.phtml:105
+#: module/Photo/view/photo/album-admin/index.phtml:196
 msgid "Delete album"
 msgstr "Delete album"
 
@@ -159,14 +180,21 @@ msgstr "Select a new parent for the album"
 msgid "The album has been moved"
 msgstr "The album has been moved"
 
-#: module/Photo/view/photo/album-admin/index.phtml:165 module/Photo/view/photo/album-admin/index.phtml:256 module/Photo/view/photo/photo-admin/index.phtml:87
+#: module/Photo/view/photo/album-admin/index.phtml:165
+#: module/Photo/view/photo/album-admin/index.phtml:256
+#: module/Photo/view/photo/photo-admin/index.phtml:87
 msgid "Move"
 msgstr "Move"
 
-#: module/Photo/view/photo/album-admin/index.phtml:178 module/Photo/view/photo/album-admin/index.phtml:210 module/Photo/view/photo/photo-admin/index.phtml:100
-#: module/Decision/view/decision/company-account/vacancies.phtml:138 module/Company/view/company/admin/edit-company.phtml:141
-#: module/Company/view/company/admin/edit-package.phtml:100 module/Company/view/company/admin/index.phtml:232
-#: module/Company/view/company/admin/edit-highlight.phtml:72 module/Frontpage/view/frontpage/poll-admin/list.phtml:156
+#: module/Photo/view/photo/album-admin/index.phtml:178
+#: module/Photo/view/photo/album-admin/index.phtml:210
+#: module/Photo/view/photo/photo-admin/index.phtml:100
+#: module/Decision/view/decision/company-account/vacancies.phtml:138
+#: module/Company/view/company/admin/edit-company.phtml:141
+#: module/Company/view/company/admin/edit-package.phtml:100
+#: module/Company/view/company/admin/index.phtml:232
+#: module/Company/view/company/admin/edit-highlight.phtml:72
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:156
 msgid "Delete confirmation"
 msgstr "Delete confirmation"
 
@@ -182,12 +210,19 @@ msgstr "Please wait while the album is being deleted."
 msgid "The album has been deleted"
 msgstr "The album has been deleted"
 
-#: module/Photo/view/photo/album-admin/index.phtml:197 module/Photo/view/photo/album-admin/index.phtml:229 module/Photo/view/photo/photo-admin/index.phtml:119
-#: module/Decision/view/decision/company-account/vacancies.phtml:149 module/Decision/view/decision/decision/authorizations.phtml:120
-#: module/Company/view/company/admin/edit-company.phtml:152 module/Company/view/company/admin/edit-package.phtml:111
-#: module/Company/view/company/admin/index.phtml:245 module/Company/view/company/admin/edit-highlight.phtml:83
-#: module/Activity/view/activity/activity-calendar/index.phtml:134 module/Activity/view/activity/activity-calendar/index.phtml:158
-#: module/Frontpage/view/frontpage/poll-admin/list.phtml:167 module/Frontpage/view/frontpage/poll-admin/list.phtml:213
+#: module/Photo/view/photo/album-admin/index.phtml:197
+#: module/Photo/view/photo/album-admin/index.phtml:229
+#: module/Photo/view/photo/photo-admin/index.phtml:119
+#: module/Decision/view/decision/company-account/vacancies.phtml:149
+#: module/Decision/view/decision/decision/authorizations.phtml:120
+#: module/Company/view/company/admin/edit-company.phtml:152
+#: module/Company/view/company/admin/edit-package.phtml:111
+#: module/Company/view/company/admin/index.phtml:245
+#: module/Company/view/company/admin/edit-highlight.phtml:83
+#: module/Activity/view/activity/activity-calendar/index.phtml:134
+#: module/Activity/view/activity/activity-calendar/index.phtml:158
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:167
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:213
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -211,7 +246,8 @@ msgstr "Delete photos"
 msgid "Move the photos to another album"
 msgstr "Move the photos to another album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:247 module/Photo/view/photo/photo-admin/index.phtml:78
+#: module/Photo/view/photo/album-admin/index.phtml:247
+#: module/Photo/view/photo/photo-admin/index.phtml:78
 msgid "Select a new parent album"
 msgstr "Select a new parent album"
 
@@ -224,7 +260,9 @@ msgstr "The photos have been moved"
 msgid "Uploading photos to %s"
 msgstr "Uploading photos to %s"
 
-#: module/Photo/view/photo/album-admin/create.phtml:12 module/Photo/src/Photo/Form/EditAlbum.php:20 module/Photo/src/Photo/Form/CreateAlbum.php:20
+#: module/Photo/view/photo/album-admin/create.phtml:12
+#: module/Photo/src/Photo/Form/EditAlbum.php:20
+#: module/Photo/src/Photo/Form/CreateAlbum.php:20
 msgid "Album title"
 msgstr "Album title"
 
@@ -236,7 +274,8 @@ msgstr "Create album"
 msgid "Move photo"
 msgstr "Move photo"
 
-#: module/Photo/view/photo/photo-admin/index.phtml:52 module/Photo/view/photo/photo-admin/index.phtml:118
+#: module/Photo/view/photo/photo-admin/index.phtml:52
+#: module/Photo/view/photo/photo-admin/index.phtml:118
 msgid "Delete photo"
 msgstr "Delete photo"
 
@@ -264,12 +303,14 @@ msgstr "The photo has been deleted"
 msgid "Do you want to help test new features of the website?"
 msgstr "Do you want to help test new features of the website?"
 
-#: module/Photo/view/photo/album/index.phtml:75 module/Photo/view/photo/album/index.phtml:77
+#: module/Photo/view/photo/album/index.phtml:75
+#: module/Photo/view/photo/album/index.phtml:77
 #, php-format
 msgid "Then try the new photo viewer %sHERE%s!"
 msgstr "Then try the new photo viewer %sHERE%s!"
 
-#: module/Photo/view/photo/album/index.phtml:86 module/Photo/view/photo/album/index-new.phtml:85
+#: module/Photo/view/photo/album/index.phtml:86
+#: module/Photo/view/photo/album/index-new.phtml:85
 msgid "View user profile"
 msgstr "View user profile"
 
@@ -289,7 +330,8 @@ msgstr "Metadata"
 msgid "People in this photo"
 msgstr "People in this photo"
 
-#: module/Photo/view/partial/tags.phtml:29 module/Photo/view/partial/tags-new.phtml:35
+#: module/Photo/view/partial/tags.phtml:29
+#: module/Photo/view/partial/tags-new.phtml:35
 msgid "Tag someone"
 msgstr "Tag someone"
 
@@ -297,9 +339,14 @@ msgstr "Tag someone"
 msgid "Artist"
 msgstr "Artist"
 
-#: module/Photo/view/partial/metadata.phtml:9 module/Photo/view/partial/metadata.phtml:16 module/Photo/view/partial/metadata.phtml:37
-#: module/Photo/view/partial/metadata.phtml:44 module/Photo/view/partial/metadata.phtml:51 module/Photo/view/partial/metadata.phtml:58
-#: module/Photo/view/partial/metadata.phtml:65 module/Photo/view/partial/metadata.phtml:74
+#: module/Photo/view/partial/metadata.phtml:9
+#: module/Photo/view/partial/metadata.phtml:16
+#: module/Photo/view/partial/metadata.phtml:37
+#: module/Photo/view/partial/metadata.phtml:44
+#: module/Photo/view/partial/metadata.phtml:51
+#: module/Photo/view/partial/metadata.phtml:58
+#: module/Photo/view/partial/metadata.phtml:65
+#: module/Photo/view/partial/metadata.phtml:74
 msgid "Unknown"
 msgstr "Unknown"
 
@@ -315,21 +362,33 @@ msgstr "Date/time"
 msgid "Flash"
 msgstr "Flash"
 
-#: module/Photo/view/partial/metadata.phtml:30 module/Decision/view/decision/company-account/vacancies.phtml:65
-#: module/Company/view/company/admin/index.phtml:196 module/Activity/view/activity/admin-approval/view-proposal.phtml:72
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:73 module/Activity/view/activity/admin-approval/view-proposal.phtml:79
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:80 module/Activity/view/activity/admin-approval/view.phtml:42
-#: module/Activity/view/activity/admin-approval/view.phtml:47 module/Activity/view/activity/activity/touch.phtml:274
-#: module/Activity/view/activity/admin/participantsTable.phtml:51 module/Application/language/additional-strings:12
+#: module/Photo/view/partial/metadata.phtml:30
+#: module/Decision/view/decision/company-account/vacancies.phtml:65
+#: module/Company/view/company/admin/index.phtml:196
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:72
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:73
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:79
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:80
+#: module/Activity/view/activity/admin-approval/view.phtml:42
+#: module/Activity/view/activity/admin-approval/view.phtml:47
+#: module/Activity/view/activity/activity/touch.phtml:274
+#: module/Activity/view/activity/admin/participantsTable.phtml:51
+#: module/Application/language/additional-strings:12
 msgid "Yes"
 msgstr "Yes"
 
-#: module/Photo/view/partial/metadata.phtml:30 module/Decision/view/decision/company-account/vacancies.phtml:65
-#: module/Company/view/company/admin/index.phtml:196 module/Activity/view/activity/admin-approval/view-proposal.phtml:72
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:73 module/Activity/view/activity/admin-approval/view-proposal.phtml:79
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:80 module/Activity/view/activity/admin-approval/view.phtml:42
-#: module/Activity/view/activity/admin-approval/view.phtml:47 module/Activity/view/activity/activity/touch.phtml:278
-#: module/Activity/view/activity/admin/participantsTable.phtml:53 module/Application/language/additional-strings:13
+#: module/Photo/view/partial/metadata.phtml:30
+#: module/Decision/view/decision/company-account/vacancies.phtml:65
+#: module/Company/view/company/admin/index.phtml:196
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:72
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:73
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:79
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:80
+#: module/Activity/view/activity/admin-approval/view.phtml:42
+#: module/Activity/view/activity/admin-approval/view.phtml:47
+#: module/Activity/view/activity/activity/touch.phtml:278
+#: module/Activity/view/activity/admin/participantsTable.phtml:53
+#: module/Application/language/additional-strings:13
 msgid "No"
 msgstr "No"
 
@@ -353,10 +412,15 @@ msgstr "Aperture"
 msgid "ISO"
 msgstr "ISO"
 
-#: module/Photo/view/partial/metadata.phtml:70 module/Activity/view/partial/create.phtml:97 module/Activity/view/partial/create.phtml:153
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:57 module/Activity/view/activity/admin-approval/view.phtml:31
-#: module/Activity/view/activity/activity/touch.phtml:222 module/Activity/view/activity/activity/list.phtml:46
-#: module/Activity/view/activity/activity/view.phtml:59 module/Company/src/Company/Form/EditCompany.php:85
+#: module/Photo/view/partial/metadata.phtml:70
+#: module/Activity/view/partial/create.phtml:97
+#: module/Activity/view/partial/create.phtml:153
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:57
+#: module/Activity/view/activity/admin-approval/view.phtml:31
+#: module/Activity/view/activity/activity/touch.phtml:222
+#: module/Activity/view/activity/activity/list.phtml:46
+#: module/Activity/view/activity/activity/view.phtml:59
+#: module/Company/src/Company/Form/EditCompany.php:85
 #: module/Company/src/Company/Form/EditJobCompany.php:130
 msgid "Location"
 msgstr "Location"
@@ -373,7 +437,8 @@ msgstr ", in this photo:"
 msgid "GEWIS Website"
 msgstr "GEWIS Website"
 
-#: module/Application/view/partial/footer.phtml:11 module/Frontpage/view/frontpage/frontpage/home.phtml:158
+#: module/Application/view/partial/footer.phtml:11
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:158
 msgid "Infima"
 msgstr "Infima"
 
@@ -385,25 +450,39 @@ msgstr "by WebCommissie GEWIS."
 msgid "All rights reserved."
 msgstr "All rights reserved."
 
-#: module/Application/view/partial/footer.phtml:21 module/Application/view/partial/main-nav.phtml:169 module/Company/view/company/company/jobs.phtml:65
-#: module/Company/view/company/company/companyStory.phtml:24 module/Company/view/partial/company/company/list/company.phtml:17
+#: module/Application/view/partial/footer.phtml:21
+#: module/Application/view/partial/main-nav.phtml:169
+#: module/Company/view/company/company/jobs.phtml:65
+#: module/Company/view/company/company/companyStory.phtml:24
+#: module/Company/view/partial/company/company/list/company.phtml:17
 msgid "Contact"
 msgstr "Contact"
 
-#: module/Application/view/partial/admin-nav.phtml:12 module/Application/view/partial/main-nav.phtml:248 module/Application/view/partial/main-nav.phtml:252
-#: module/Application/view/partial/main-nav.phtml:257 module/Decision/view/decision/company-account/index.phtml:122
-#: module/Decision/view/decision/member/index.phtml:153 module/Activity/view/activity/activity/index.phtml:2
-#: module/Activity/view/activity/activity/index.phtml:8 module/Activity/view/activity/activity/view.phtml:5
+#: module/Application/view/partial/admin-nav.phtml:12
+#: module/Application/view/partial/main-nav.phtml:248
+#: module/Application/view/partial/main-nav.phtml:252
+#: module/Application/view/partial/main-nav.phtml:257
+#: module/Decision/view/decision/company-account/index.phtml:122
+#: module/Decision/view/decision/member/index.phtml:153
+#: module/Activity/view/activity/activity/index.phtml:2
+#: module/Activity/view/activity/activity/index.phtml:8
+#: module/Activity/view/activity/activity/view.phtml:5
 #: module/Activity/view/activity/activity/view.phtml:14
 msgid "Activities"
 msgstr "Activities"
 
-#: module/Application/view/partial/admin-nav.phtml:19 module/Application/view/partial/main-nav.phtml:180 module/Application/view/partial/main-nav.phtml:184
-#: module/Application/view/partial/main-nav.phtml:189 module/Company/view/company/company/index.phtml:3 module/Company/view/company/company/index.phtml:17
+#: module/Application/view/partial/admin-nav.phtml:19
+#: module/Application/view/partial/main-nav.phtml:180
+#: module/Application/view/partial/main-nav.phtml:184
+#: module/Application/view/partial/main-nav.phtml:189
+#: module/Company/view/company/company/index.phtml:3
+#: module/Company/view/company/company/index.phtml:17
 msgid "Career"
 msgstr "Career"
 
-#: module/Application/view/partial/admin-nav.phtml:27 module/Decision/view/decision/member/index.phtml:80 module/Decision/view/decision/decision/index.phtml:3
+#: module/Application/view/partial/admin-nav.phtml:27
+#: module/Decision/view/decision/member/index.phtml:80
+#: module/Decision/view/decision/decision/index.phtml:3
 msgid "Meetings"
 msgstr "Meetings"
 
@@ -411,30 +490,38 @@ msgstr "Meetings"
 msgid "Notes"
 msgstr "Notes"
 
-#: module/Application/view/partial/admin-nav.phtml:34 module/Decision/view/decision/decision/view.phtml:12
+#: module/Application/view/partial/admin-nav.phtml:34
+#: module/Decision/view/decision/decision/view.phtml:12
 msgid "Documents"
 msgstr "Documents"
 
-#: module/Application/view/partial/admin-nav.phtml:37 module/Decision/view/decision/member/index.phtml:44
-#: module/Decision/view/decision/decision/authorizations.phtml:3 module/Decision/view/decision/decision/authorizations.phtml:8
+#: module/Application/view/partial/admin-nav.phtml:37
+#: module/Decision/view/decision/member/index.phtml:44
+#: module/Decision/view/decision/decision/authorizations.phtml:3
+#: module/Decision/view/decision/decision/authorizations.phtml:8
 msgid "Authorizations"
 msgstr "Authorizations"
 
-#: module/Application/view/partial/admin-nav.phtml:45 module/Decision/view/decision/member/index.phtml:55
+#: module/Application/view/partial/admin-nav.phtml:45
+#: module/Decision/view/decision/member/index.phtml:55
 msgid "Organs"
 msgstr "Organs"
 
-#: module/Application/view/partial/admin-nav.phtml:53 module/Application/view/partial/main-nav.phtml:241
-#: module/Education/view/education/education/course.phtml:4 module/Education/view/education/education/index.phtml:3
+#: module/Application/view/partial/admin-nav.phtml:53
+#: module/Application/view/partial/main-nav.phtml:241
+#: module/Education/view/education/education/course.phtml:4
+#: module/Education/view/education/education/index.phtml:3
 #: module/Education/view/education/education/index.phtml:18
 msgid "Education"
 msgstr "Education"
 
-#: module/Application/view/partial/admin-nav.phtml:57 module/Education/view/education/admin/bulk-exam.phtml:8
+#: module/Application/view/partial/admin-nav.phtml:57
+#: module/Education/view/education/admin/bulk-exam.phtml:8
 msgid "Upload exams"
 msgstr "Upload exams"
 
-#: module/Application/view/partial/admin-nav.phtml:58 module/Education/view/education/admin/bulk-summary.phtml:8
+#: module/Application/view/partial/admin-nav.phtml:58
+#: module/Education/view/education/admin/bulk-summary.phtml:8
 msgid "Upload summaries"
 msgstr "Upload summaries"
 
@@ -446,11 +533,13 @@ msgstr "Add courses"
 msgid "Polls"
 msgstr "Polls"
 
-#: module/Application/view/partial/admin-nav.phtml:71 module/Frontpage/view/frontpage/page-admin/index.phtml:5
+#: module/Application/view/partial/admin-nav.phtml:71
+#: module/Frontpage/view/frontpage/page-admin/index.phtml:5
 msgid "Pages"
 msgstr "Pages"
 
-#: module/Application/view/partial/admin-nav.phtml:76 module/Frontpage/view/frontpage/frontpage/home.phtml:16
+#: module/Application/view/partial/admin-nav.phtml:76
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:16
 msgid "News"
 msgstr "News"
 
@@ -466,9 +555,14 @@ msgstr "API Users"
 msgid "Language settings"
 msgstr "Language settings"
 
-#: module/Application/view/partial/main-nav.phtml:43 module/User/view/user/user/index.phtml:2 module/User/view/partial/login.phtml:13
-#: module/Activity/view/activity/activity/touch.phtml:82 module/Activity/view/activity/activity/touch.phtml:125
-#: module/Activity/view/activity/activity/touch.phtml:323 module/User/src/User/Form/CompanyLogin.php:39 module/User/src/User/Form/Login.php:39
+#: module/Application/view/partial/main-nav.phtml:43
+#: module/User/view/user/user/index.phtml:2
+#: module/User/view/partial/login.phtml:13
+#: module/Activity/view/activity/activity/touch.phtml:82
+#: module/Activity/view/activity/activity/touch.phtml:125
+#: module/Activity/view/activity/activity/touch.phtml:323
+#: module/User/src/User/Form/CompanyLogin.php:39
+#: module/User/src/User/Form/Login.php:39
 msgid "Login"
 msgstr "Login"
 
@@ -476,16 +570,23 @@ msgstr "Login"
 msgid "Dashboard"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:65 module/Application/view/partial/main-nav.phtml:89
-#: module/Decision/view/decision/company-account/index.phtml:84 module/Decision/view/decision/member/index.phtml:7
-#: module/Decision/view/decision/member/index.phtml:31 module/User/view/user/user/password-company.phtml:2
-#: module/User/view/user/user/password-company.phtml:32 module/User/view/user/user/password.phtml:2 module/User/view/user/user/password.phtml:23
+#: module/Application/view/partial/main-nav.phtml:65
+#: module/Application/view/partial/main-nav.phtml:89
+#: module/Decision/view/decision/company-account/index.phtml:84
+#: module/Decision/view/decision/member/index.phtml:7
+#: module/Decision/view/decision/member/index.phtml:31
+#: module/User/view/user/user/password-company.phtml:2
+#: module/User/view/user/user/password-company.phtml:32
+#: module/User/view/user/user/password.phtml:2
+#: module/User/view/user/user/password.phtml:23
 #: module/User/src/User/Form/Password.php:44
 msgid "Change password"
 msgstr "Change password"
 
-#: module/Application/view/partial/main-nav.phtml:69 module/Application/view/partial/main-nav.phtml:96
-#: module/Decision/view/decision/company-account/index.phtml:90 module/Activity/view/activity/activity/touch.phtml:63
+#: module/Application/view/partial/main-nav.phtml:69
+#: module/Application/view/partial/main-nav.phtml:96
+#: module/Decision/view/decision/company-account/index.phtml:90
+#: module/Activity/view/activity/activity/touch.phtml:63
 msgid "Logout"
 msgstr "Logout"
 
@@ -493,7 +594,8 @@ msgstr "Logout"
 msgid "My information"
 msgstr "My information"
 
-#: module/Application/view/partial/main-nav.phtml:86 module/Decision/view/decision/member/index.phtml:40
+#: module/Application/view/partial/main-nav.phtml:86
+#: module/Decision/view/decision/member/index.phtml:40
 msgid "SuSOS"
 msgstr "SuSOS"
 
@@ -505,7 +607,9 @@ msgstr "Admin"
 msgid "Toggle navigation"
 msgstr "Toggle navigation"
 
-#: module/Application/view/partial/main-nav.phtml:117 module/Application/view/partial/main-nav.phtml:122 module/Application/view/partial/main-nav.phtml:127
+#: module/Application/view/partial/main-nav.phtml:117
+#: module/Application/view/partial/main-nav.phtml:122
+#: module/Application/view/partial/main-nav.phtml:127
 #: module/Decision/view/decision/member/index.phtml:51
 msgid "Association"
 msgstr "Association"
@@ -514,13 +618,17 @@ msgstr "Association"
 msgid "Board 2015/2016"
 msgstr "Board"
 
-#: module/Application/view/partial/main-nav.phtml:133 module/Frontpage/view/frontpage/organ/organ.phtml:45
-#: module/Frontpage/view/frontpage/organ/committee-list.phtml:3 module/Frontpage/view/frontpage/organ/committee-list.phtml:9
+#: module/Application/view/partial/main-nav.phtml:133
+#: module/Frontpage/view/frontpage/organ/organ.phtml:45
+#: module/Frontpage/view/frontpage/organ/committee-list.phtml:3
+#: module/Frontpage/view/frontpage/organ/committee-list.phtml:9
 msgid "Committees"
 msgstr "Committees"
 
-#: module/Application/view/partial/main-nav.phtml:136 module/Frontpage/view/frontpage/organ/organ.phtml:41
-#: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:3 module/Frontpage/view/frontpage/organ/fraternity-list.phtml:7
+#: module/Application/view/partial/main-nav.phtml:136
+#: module/Frontpage/view/frontpage/organ/organ.phtml:41
+#: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:3
+#: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:7
 msgid "Fraternities"
 msgstr "Fraternities"
 
@@ -528,16 +636,19 @@ msgstr "Fraternities"
 msgid "GEWIS song"
 msgstr "GEWIS song"
 
-#: module/Application/view/partial/main-nav.phtml:142 module/Decision/view/decision/member/index.phtml:176
+#: module/Application/view/partial/main-nav.phtml:142
+#: module/Decision/view/decision/member/index.phtml:176
 msgid "Regulations"
 msgstr "Regulations"
 
-#: module/Application/view/partial/main-nav.phtml:148 module/Application/view/partial/main-nav.phtml:153
+#: module/Application/view/partial/main-nav.phtml:148
+#: module/Application/view/partial/main-nav.phtml:153
 #, fuzzy
 msgid "Useful Information"
 msgstr "My information"
 
-#: module/Application/view/partial/main-nav.phtml:158 module/Decision/view/decision/member/index.phtml:73
+#: module/Application/view/partial/main-nav.phtml:158
+#: module/Decision/view/decision/member/index.phtml:73
 msgid "Links"
 msgstr "Links"
 
@@ -549,13 +660,19 @@ msgstr ""
 msgid "FAQ"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:195 module/Company/view/company/company/job-list.phtml:20 module/Company/view/company/company/index.phtml:23
-#: module/Company/view/company/company/jobs.phtml:17 module/Company/view/company/company/spotlight.phtml:18 module/Company/view/company/company/show.phtml:7
-#: module/Company/view/company/company/show.phtml:15 module/Company/view/company/company/list.phtml:7
+#: module/Application/view/partial/main-nav.phtml:195
+#: module/Company/view/company/company/job-list.phtml:20
+#: module/Company/view/company/company/index.phtml:23
+#: module/Company/view/company/company/jobs.phtml:17
+#: module/Company/view/company/company/spotlight.phtml:18
+#: module/Company/view/company/company/show.phtml:7
+#: module/Company/view/company/company/show.phtml:15
+#: module/Company/view/company/company/list.phtml:7
 msgid "Companies"
 msgstr "Companies"
 
-#: module/Application/view/partial/main-nav.phtml:201 module/Application/view/partial/main-nav.phtml:208
+#: module/Application/view/partial/main-nav.phtml:201
+#: module/Application/view/partial/main-nav.phtml:208
 #: module/Decision/view/decision/company-account/index.phtml:110
 #, fuzzy
 msgid "Vacancies"
@@ -569,7 +686,8 @@ msgstr "My activities"
 msgid "Activity Archive"
 msgstr "Activity Archive"
 
-#: module/Application/view/partial/main-nav.phtml:271 module/Activity/view/activity/activity/create.phtml:18
+#: module/Application/view/partial/main-nav.phtml:271
+#: module/Activity/view/activity/activity/create.phtml:18
 msgid "Create an activity"
 msgstr "Create an activity"
 
@@ -590,44 +708,58 @@ msgstr ""
 msgid "Career related"
 msgstr "Career related"
 
-#: module/Application/view/partial/main-nav.phtml:317 module/Decision/view/decision/member/index.phtml:36
+#: module/Application/view/partial/main-nav.phtml:317
+#: module/Decision/view/decision/member/index.phtml:36
 msgid "My photo's"
 msgstr "My photos"
 
-#: module/Application/view/partial/main-nav.phtml:329 module/Decision/view/decision/member/birthdays.phtml:4
-#: module/Decision/view/decision/member/search.phtml:4 module/Decision/view/decision/member/index.phtml:3 module/Decision/view/decision/member/index.phtml:17
+#: module/Application/view/partial/main-nav.phtml:329
+#: module/Decision/view/decision/member/birthdays.phtml:4
+#: module/Decision/view/decision/member/search.phtml:4
+#: module/Decision/view/decision/member/index.phtml:3
+#: module/Decision/view/decision/member/index.phtml:17
 #: module/Decision/view/decision/member/view.phtml:4
 msgid "Members"
 msgstr "Members"
 
-#: module/Application/view/error/debug/500.phtml:3 module/Application/view/error/500.phtml:3
+#: module/Application/view/error/debug/500.phtml:3
+#: module/Application/view/error/500.phtml:3
 msgid "An error occurred"
 msgstr "An error occurred"
 
-#: module/Application/view/error/debug/500.phtml:10 module/Application/view/error/debug/404.phtml:55
+#: module/Application/view/error/debug/500.phtml:10
+#: module/Application/view/error/debug/404.phtml:55
 msgid "Additional information"
 msgstr "Additional information"
 
-#: module/Application/view/error/debug/500.phtml:13 module/Application/view/error/debug/500.phtml:40 module/Application/view/error/debug/404.phtml:58
+#: module/Application/view/error/debug/500.phtml:13
+#: module/Application/view/error/debug/500.phtml:40
+#: module/Application/view/error/debug/404.phtml:58
 #: module/Application/view/error/debug/404.phtml:83
 msgid "File"
 msgstr "File"
 
-#: module/Application/view/error/debug/500.phtml:18 module/Application/view/error/debug/500.phtml:45 module/Application/view/error/debug/404.phtml:63
+#: module/Application/view/error/debug/500.phtml:18
+#: module/Application/view/error/debug/500.phtml:45
+#: module/Application/view/error/debug/404.phtml:63
 #: module/Application/view/error/debug/404.phtml:88
 msgid "Message"
 msgstr "Message"
 
-#: module/Application/view/error/debug/500.phtml:23 module/Application/view/error/debug/500.phtml:50 module/Application/view/error/debug/404.phtml:67
+#: module/Application/view/error/debug/500.phtml:23
+#: module/Application/view/error/debug/500.phtml:50
+#: module/Application/view/error/debug/404.phtml:67
 #: module/Application/view/error/debug/404.phtml:92
 msgid "Stack trace"
 msgstr "Stack trace"
 
-#: module/Application/view/error/debug/500.phtml:34 module/Application/view/error/debug/404.phtml:77
+#: module/Application/view/error/debug/500.phtml:34
+#: module/Application/view/error/debug/404.phtml:77
 msgid "Previous exceptions"
 msgstr "Previous exceptions"
 
-#: module/Application/view/error/debug/500.phtml:66 module/Application/view/error/debug/404.phtml:107
+#: module/Application/view/error/debug/500.phtml:66
+#: module/Application/view/error/debug/404.phtml:107
 msgid "No Exception available"
 msgstr "No Exception available"
 
@@ -635,7 +767,8 @@ msgstr "No Exception available"
 msgid "403 Forbidden"
 msgstr "403 Forbidden"
 
-#: module/Application/view/error/debug/404.phtml:3 module/Application/view/error/404.phtml:3
+#: module/Application/view/error/debug/404.phtml:3
+#: module/Application/view/error/404.phtml:3
 msgid "A 404 error occurred"
 msgstr "A 404 error occurred"
 
@@ -680,43 +813,67 @@ msgstr "You do not have the required privileges to view this page"
 msgid "You might be able to view this page by logging in below"
 msgstr "You might be able to view this page by logging in below"
 
-#: module/Decision/view/decision/company-account/vacancies.phtml:14 module/Decision/view/decision/company-account/create-vacancy.phtml:23
+#: module/Decision/view/decision/company-account/vacancies.phtml:14
+#: module/Decision/view/decision/company-account/create-vacancy.phtml:23
 #: module/Decision/view/decision/company-account/edit-vacancy.phtml:23
 msgid "Vacancies Overview"
 msgstr "Vacancies Overview"
 
-#: module/Decision/view/decision/company-account/vacancies.phtml:19 module/Decision/view/decision/company-account/create-vacancy.phtml:28
+#: module/Decision/view/decision/company-account/vacancies.phtml:19
+#: module/Decision/view/decision/company-account/create-vacancy.phtml:28
 #: module/Decision/view/decision/company-account/edit-vacancy.phtml:28
 msgid "Create new Vacancy"
 msgstr "Create new Vacancy"
 
-#: module/Decision/view/decision/company-account/vacancies.phtml:30 module/Company/view/company/admin/edit-package.phtml:31
-#: module/Company/view/company/admin/index.phtml:150 module/Company/view/company/admin/index.phtml:214 module/Company/src/Company/Mapper/Category.php:76
+#: module/Decision/view/decision/company-account/vacancies.phtml:30
+#: module/Company/view/company/admin/edit-package.phtml:31
+#: module/Company/view/company/admin/index.phtml:150
+#: module/Company/view/company/admin/index.phtml:214
+#: module/Company/src/Company/Mapper/Category.php:76
 msgid "Jobs"
 msgstr "Vacancies"
 
-#: module/Decision/view/decision/company-account/vacancies.phtml:36 module/Decision/view/decision/company-account/vacancies.phtml:102
-#: module/Decision/view/decision/company-account/highlight.phtml:29 module/Decision/view/decision/organ-admin/index.phtml:8
-#: module/Decision/view/decision/admin/document.phtml:34 module/Decision/view/decision/member/birthdays.phtml:12
-#: module/Decision/view/decision/organ/index.phtml:14 module/Company/view/company/company/job-list.phtml:60
-#: module/Company/view/company/admin/edit-package.phtml:46 module/Company/view/company/admin/index.phtml:144 module/Company/view/company/admin/index.phtml:213
-#: module/User/view/user/api-admin/index.phtml:6 module/User/view/user/api-admin/add.phtml:40 module/Activity/view/partial/create.phtml:84
-#: module/Activity/view/partial/create.phtml:140 module/Activity/view/activity/admin-approval/view-proposal.phtml:36
-#: module/Activity/view/activity/admin-approval/view.phtml:16 module/Activity/view/activity/activity-calendar/index.phtml:75
-#: module/Activity/view/activity/activity-calendar/create.phtml:111 module/Activity/view/activity/activity/view.phtml:190
-#: module/Activity/view/activity/admin/participantsTable.phtml:6 module/Company/src/Company/Form/JobFieldset.php:41
-#: module/Education/src/Education/Form/AddCourse.php:42 module/User/src/User/Form/ApiToken.php:20
+#: module/Decision/view/decision/company-account/vacancies.phtml:36
+#: module/Decision/view/decision/company-account/vacancies.phtml:102
+#: module/Decision/view/decision/company-account/highlight.phtml:29
+#: module/Decision/view/decision/organ-admin/index.phtml:8
+#: module/Decision/view/decision/admin/document.phtml:34
+#: module/Decision/view/decision/member/birthdays.phtml:12
+#: module/Decision/view/decision/organ/index.phtml:14
+#: module/Company/view/company/company/job-list.phtml:60
+#: module/Company/view/company/admin/edit-package.phtml:46
+#: module/Company/view/company/admin/index.phtml:144
+#: module/Company/view/company/admin/index.phtml:213
+#: module/User/view/user/api-admin/index.phtml:6
+#: module/User/view/user/api-admin/add.phtml:40
+#: module/Activity/view/partial/create.phtml:84
+#: module/Activity/view/partial/create.phtml:140
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:36
+#: module/Activity/view/activity/admin-approval/view.phtml:16
+#: module/Activity/view/activity/activity-calendar/index.phtml:75
+#: module/Activity/view/activity/activity-calendar/create.phtml:111
+#: module/Activity/view/activity/activity/view.phtml:190
+#: module/Activity/view/activity/admin/participantsTable.phtml:6
+#: module/Company/src/Company/Form/JobFieldset.php:41
+#: module/Education/src/Education/Form/AddCourse.php:42
+#: module/User/src/User/Form/ApiToken.php:20
 msgid "Name"
 msgstr "Name"
 
-#: module/Decision/view/decision/company-account/vacancies.phtml:39 module/Company/view/company/admin/edit-company.phtml:77
-#: module/Company/view/company/admin/edit-package.phtml:49 module/Company/src/Company/Form/JobFieldset.php:59
+#: module/Decision/view/decision/company-account/vacancies.phtml:39
+#: module/Company/view/company/admin/edit-company.phtml:77
+#: module/Company/view/company/admin/edit-package.phtml:49
+#: module/Company/src/Company/Form/JobFieldset.php:59
 msgid "Active"
 msgstr "Active"
 
-#: module/Decision/view/decision/company-account/vacancies.phtml:44 module/Company/view/company/admin/edit-company.phtml:89
-#: module/Company/view/company/admin/edit-package.phtml:52 module/Company/view/company/admin/index.phtml:180 module/Company/view/company/admin/index.phtml:219
-#: module/Company/view/company/admin/approval-page.phtml:23 module/Company/view/company/admin/approval-page.phtml:76
+#: module/Decision/view/decision/company-account/vacancies.phtml:44
+#: module/Company/view/company/admin/edit-company.phtml:89
+#: module/Company/view/company/admin/edit-package.phtml:52
+#: module/Company/view/company/admin/index.phtml:180
+#: module/Company/view/company/admin/index.phtml:219
+#: module/Company/view/company/admin/approval-page.phtml:23
+#: module/Company/view/company/admin/approval-page.phtml:76
 msgid "Actions"
 msgstr "Actions"
 
@@ -730,9 +887,13 @@ msgstr "inactive"
 msgid "Set to active"
 msgstr "Banner active"
 
-#: module/Decision/view/decision/company-account/vacancies.phtml:85 module/Company/view/company/admin/edit-company.phtml:123
-#: module/Company/view/company/admin/edit-package.phtml:81 module/Company/view/company/admin/index.phtml:50 module/Company/view/company/admin/index.phtml:83
-#: module/Company/view/company/admin/index.phtml:114 module/Company/view/company/admin/edit-highlight.phtml:53
+#: module/Decision/view/decision/company-account/vacancies.phtml:85
+#: module/Company/view/company/admin/edit-company.phtml:123
+#: module/Company/view/company/admin/edit-package.phtml:81
+#: module/Company/view/company/admin/index.phtml:50
+#: module/Company/view/company/admin/index.phtml:83
+#: module/Company/view/company/admin/index.phtml:114
+#: module/Company/view/company/admin/edit-highlight.phtml:53
 msgid "edit"
 msgstr "edit"
 
@@ -745,7 +906,8 @@ msgstr "Polls awaiting approval"
 msgid "Status"
 msgstr ""
 
-#: module/Decision/view/decision/company-account/vacancies.phtml:126 module/Company/view/company/admin/approval-page.phtml:39
+#: module/Decision/view/decision/company-account/vacancies.phtml:126
+#: module/Company/view/company/admin/approval-page.phtml:39
 msgid "Rejected"
 msgstr ""
 
@@ -754,41 +916,60 @@ msgstr ""
 msgid "Awaiting Approval"
 msgstr "Polls awaiting approval"
 
-#: module/Decision/view/decision/company-account/vacancies.phtml:141 module/Company/view/company/admin/edit-package.phtml:103
+#: module/Decision/view/decision/company-account/vacancies.phtml:141
+#: module/Company/view/company/admin/edit-package.phtml:103
 msgid "Are you sure you want to delete this job?"
 msgstr "Are you sure you want to delete this job?"
 
-#: module/Decision/view/decision/company-account/vacancies.phtml:147 module/Company/view/company/admin/edit-package.phtml:109
+#: module/Decision/view/decision/company-account/vacancies.phtml:147
+#: module/Company/view/company/admin/edit-package.phtml:109
 msgid "Delete job"
 msgstr "Delete job"
 
-#: module/Decision/view/decision/company-account/create-vacancy.phtml:2 module/Decision/view/decision/company-account/edit-vacancy.phtml:2
-#: module/Company/view/company/admin/approval-vacancy.phtml:2 module/Company/view/company/admin/edit-job.phtml:2
+#: module/Decision/view/decision/company-account/create-vacancy.phtml:2
+#: module/Decision/view/decision/company-account/edit-vacancy.phtml:2
+#: module/Company/view/company/admin/approval-vacancy.phtml:2
+#: module/Company/view/company/admin/edit-job.phtml:2
 #, fuzzy
 msgid "Create Vacancy"
 msgstr "Create new Vacancy"
 
-#: module/Decision/view/decision/company-account/create-vacancy.phtml:142 module/Decision/view/decision/company-account/edit-vacancy.phtml:142
-#: module/Company/view/company/admin/approval-vacancy.phtml:129 module/Company/view/company/admin/edit-job.phtml:118
+#: module/Decision/view/decision/company-account/create-vacancy.phtml:142
+#: module/Decision/view/decision/company-account/edit-vacancy.phtml:142
+#: module/Company/view/company/admin/approval-vacancy.phtml:129
+#: module/Company/view/company/admin/edit-job.phtml:118
 msgid "Current attachment"
 msgstr "Current attachment"
 
-#: module/Decision/view/decision/company-account/create-vacancy.phtml:146 module/Decision/view/decision/company-account/edit-vacancy.phtml:146
-#: module/Company/view/company/admin/approval-vacancy.phtml:133 module/Company/view/company/admin/edit-job.phtml:122
+#: module/Decision/view/decision/company-account/create-vacancy.phtml:146
+#: module/Decision/view/decision/company-account/edit-vacancy.phtml:146
+#: module/Company/view/company/admin/approval-vacancy.phtml:133
+#: module/Company/view/company/admin/edit-job.phtml:122
 msgid "View attachment"
 msgstr "View attachment"
 
-#: module/Decision/view/decision/company-account/create-vacancy.phtml:276 module/Decision/view/decision/company-account/edit-vacancy.phtml:276
-#: module/Decision/view/decision/company-account/profile.phtml:37 module/Decision/view/decision/organ-admin/edit.phtml:139
-#: module/Company/view/company/admin/edit-company.phtml:64 module/Company/view/company/admin/approval-profile.phtml:47
-#: module/Company/view/company/admin/approval-vacancy.phtml:249 module/Company/view/company/admin/add-company.phtml:8
-#: module/Company/view/company/admin/edit-job.phtml:238 module/Company/view/company/admin/add-category.phtml:8
-#: module/Company/view/company/admin/edit-category.phtml:8 module/Company/view/company/admin/add-label.phtml:8
-#: module/Company/view/company/admin/edit-label.phtml:8 module/Company/view/company/admin/add-sector.phtml:8
-#: module/Company/view/company/admin/edit-sector.phtml:8 module/Company/view/partial/company/company/editors/package.phtml:79
-#: module/Company/view/partial/company/admin/editors/package.phtml:110 module/Frontpage/view/frontpage/page-admin/edit.phtml:108
-#: module/Frontpage/view/frontpage/news-admin/edit.phtml:74 module/Photo/src/Photo/Form/EditAlbum.php:44
-#: module/Decision/src/Decision/Form/OrganInformation.php:88 module/Frontpage/src/Frontpage/Form/NewsItem.php:60
+#: module/Decision/view/decision/company-account/create-vacancy.phtml:276
+#: module/Decision/view/decision/company-account/edit-vacancy.phtml:276
+#: module/Decision/view/decision/company-account/profile.phtml:37
+#: module/Decision/view/decision/organ-admin/edit.phtml:139
+#: module/Company/view/company/admin/edit-company.phtml:64
+#: module/Company/view/company/admin/approval-profile.phtml:47
+#: module/Company/view/company/admin/approval-vacancy.phtml:249
+#: module/Company/view/company/admin/add-company.phtml:8
+#: module/Company/view/company/admin/edit-job.phtml:238
+#: module/Company/view/company/admin/add-category.phtml:8
+#: module/Company/view/company/admin/edit-category.phtml:8
+#: module/Company/view/company/admin/add-label.phtml:8
+#: module/Company/view/company/admin/edit-label.phtml:8
+#: module/Company/view/company/admin/add-sector.phtml:8
+#: module/Company/view/company/admin/edit-sector.phtml:8
+#: module/Company/view/partial/company/company/editors/package.phtml:79
+#: module/Company/view/partial/company/admin/editors/package.phtml:110
+#: module/Frontpage/view/frontpage/page-admin/edit.phtml:108
+#: module/Frontpage/view/frontpage/news-admin/edit.phtml:74
+#: module/Photo/src/Photo/Form/EditAlbum.php:44
+#: module/Decision/src/Decision/Form/OrganInformation.php:88
+#: module/Frontpage/src/Frontpage/Form/NewsItem.php:60
 #: module/Frontpage/src/Frontpage/Form/Page.php:75
 msgid "Save"
 msgstr "Save"
@@ -798,30 +979,38 @@ msgstr "Save"
 msgid "Company Account"
 msgstr "Company Logo"
 
-#: module/Decision/view/decision/company-account/index.phtml:47 module/Decision/view/decision/company-account/settings.phtml:35
+#: module/Decision/view/decision/company-account/index.phtml:47
+#: module/Decision/view/decision/company-account/settings.phtml:35
 msgid "Vacancy package will expire within one month!"
 msgstr ""
 
-#: module/Decision/view/decision/company-account/index.phtml:58 module/Decision/view/decision/company-account/settings.phtml:45
+#: module/Decision/view/decision/company-account/index.phtml:58
+#: module/Decision/view/decision/company-account/settings.phtml:45
 #, fuzzy
 msgid "Vacancy package has expired, please contact an administrator."
 msgstr "Vacancy package has expired, please contact an administrator."
 
-#: module/Decision/view/decision/company-account/index.phtml:65 module/Company/view/company/company/job-list.phtml:83
-#: module/Company/view/company/company/list.phtml:42 module/Company/view/company/admin/edit-highlight.phtml:18 module/User/view/user/user/company.phtml:16
+#: module/Decision/view/decision/company-account/index.phtml:65
+#: module/Company/view/company/company/job-list.phtml:83
+#: module/Company/view/company/company/list.phtml:42
+#: module/Company/view/company/admin/edit-highlight.phtml:18
+#: module/User/view/user/user/company.phtml:16
 msgid "Company"
 msgstr "Company"
 
-#: module/Decision/view/decision/company-account/index.phtml:70 module/Decision/view/decision/member/index.phtml:6
+#: module/Decision/view/decision/company-account/index.phtml:70
+#: module/Decision/view/decision/member/index.phtml:6
 #: module/Decision/view/decision/member/index.phtml:22
 msgid "Personal"
 msgstr "Personal"
 
-#: module/Decision/view/decision/company-account/index.phtml:77 module/Decision/view/decision/member/index.phtml:26
+#: module/Decision/view/decision/company-account/index.phtml:77
+#: module/Decision/view/decision/member/index.phtml:26
 msgid "Profile"
 msgstr "Profile"
 
-#: module/Decision/view/decision/company-account/index.phtml:95 module/Decision/view/decision/company-account/settings.phtml:3
+#: module/Decision/view/decision/company-account/index.phtml:95
+#: module/Decision/view/decision/company-account/settings.phtml:3
 #, fuzzy
 msgid "Settings"
 msgstr "Meetings"
@@ -831,11 +1020,13 @@ msgstr "Meetings"
 msgid "Company content"
 msgstr "Company Logo"
 
-#: module/Decision/view/decision/company-account/index.phtml:113 module/Decision/view/decision/company-account/index.phtml:126
+#: module/Decision/view/decision/company-account/index.phtml:113
+#: module/Decision/view/decision/company-account/index.phtml:126
 msgid "Disabled, vacancy package has expired."
 msgstr ""
 
-#: module/Decision/view/decision/company-account/index.phtml:135 module/Decision/view/decision/company-account/settings.phtml:290
+#: module/Decision/view/decision/company-account/index.phtml:135
+#: module/Decision/view/decision/company-account/settings.phtml:290
 #: module/Company/view/company/admin/edit-package.phtml:10
 msgid "Banner"
 msgstr "Banner"
@@ -844,7 +1035,8 @@ msgstr "Banner"
 msgid "Disabled, no more banner days left."
 msgstr ""
 
-#: module/Decision/view/decision/company-account/index.phtml:147 module/Decision/view/decision/company-account/settings.phtml:304
+#: module/Decision/view/decision/company-account/index.phtml:147
+#: module/Decision/view/decision/company-account/settings.phtml:304
 #, fuzzy
 msgid "Highlight"
 msgstr "highlight"
@@ -882,12 +1074,14 @@ msgstr "Personal information (double click to edit)"
 msgid "Contact email"
 msgstr "Contact email"
 
-#: module/Decision/view/decision/company-account/settings.phtml:60 module/Decision/view/decision/member/self.phtml:137
+#: module/Decision/view/decision/company-account/settings.phtml:60
+#: module/Decision/view/decision/member/self.phtml:137
 #: module/Decision/view/decision/member/view.phtml:90
 msgid "Street and number"
 msgstr "Street and number"
 
-#: module/Decision/view/decision/company-account/settings.phtml:64 module/Decision/view/decision/member/self.phtml:145
+#: module/Decision/view/decision/company-account/settings.phtml:64
+#: module/Decision/view/decision/member/self.phtml:145
 msgid "Phone number"
 msgstr "Phone number"
 
@@ -896,12 +1090,14 @@ msgstr "Phone number"
 msgid "Email subscription"
 msgstr "Enable subscriptions"
 
-#: module/Decision/view/decision/company-account/settings.phtml:71 module/Decision/view/decision/company-account/settings.phtml:269
+#: module/Decision/view/decision/company-account/settings.phtml:71
+#: module/Decision/view/decision/company-account/settings.phtml:269
 #, fuzzy
 msgid "active"
 msgstr "Active"
 
-#: module/Decision/view/decision/company-account/settings.phtml:73 module/Decision/view/decision/company-account/settings.phtml:265
+#: module/Decision/view/decision/company-account/settings.phtml:73
+#: module/Decision/view/decision/company-account/settings.phtml:265
 #, fuzzy
 msgid "inactive"
 msgstr "inactive"
@@ -924,7 +1120,8 @@ msgstr ""
 msgid "Please enter a valid phone number!"
 msgstr ""
 
-#: module/Decision/view/decision/company-account/settings.phtml:259 module/Decision/view/decision/company-account/settings.phtml:262
+#: module/Decision/view/decision/company-account/settings.phtml:259
+#: module/Decision/view/decision/company-account/settings.phtml:262
 msgid "Account status"
 msgstr "Account status"
 
@@ -933,7 +1130,8 @@ msgstr "Account status"
 msgid "Start date of membership"
 msgstr "End date of membership"
 
-#: module/Decision/view/decision/company-account/settings.phtml:280 module/Decision/view/decision/member/self.phtml:93
+#: module/Decision/view/decision/company-account/settings.phtml:280
+#: module/Decision/view/decision/member/self.phtml:93
 msgid "End date of membership"
 msgstr "End date of membership"
 
@@ -942,11 +1140,13 @@ msgstr "End date of membership"
 msgid "Contract number vacancy package"
 msgstr "Contract number vacancy package"
 
-#: module/Decision/view/decision/company-account/settings.phtml:296 module/Decision/view/decision/company-account/settings.phtml:310
+#: module/Decision/view/decision/company-account/settings.phtml:296
+#: module/Decision/view/decision/company-account/settings.phtml:310
 msgid "day left"
 msgstr ""
 
-#: module/Decision/view/decision/company-account/settings.phtml:298 module/Decision/view/decision/company-account/settings.phtml:312
+#: module/Decision/view/decision/company-account/settings.phtml:298
+#: module/Decision/view/decision/company-account/settings.phtml:312
 msgid "days left"
 msgstr ""
 
@@ -955,22 +1155,26 @@ msgstr ""
 msgid "Edit Profile"
 msgstr "Profile"
 
-#: module/Decision/view/decision/company-account/profile.phtml:11 module/Company/view/company/admin/edit-company.phtml:41
+#: module/Decision/view/decision/company-account/profile.phtml:11
+#: module/Company/view/company/admin/edit-company.phtml:41
 #: module/Company/view/company/admin/approval-profile.phtml:15
 msgid "Dutch logo"
 msgstr "Dutch logo"
 
-#: module/Decision/view/decision/company-account/profile.phtml:18 module/Company/view/company/admin/edit-company.phtml:48
+#: module/Decision/view/decision/company-account/profile.phtml:18
+#: module/Company/view/company/admin/edit-company.phtml:48
 #: module/Company/view/company/admin/approval-profile.phtml:22
 msgid "English logo"
 msgstr "English logo"
 
-#: module/Decision/view/decision/company-account/highlight.phtml:23 module/Company/view/company/admin/index.phtml:128
+#: module/Decision/view/decision/company-account/highlight.phtml:23
+#: module/Company/view/company/admin/index.phtml:128
 #, fuzzy
 msgid "Active highlights"
 msgstr "highlight"
 
-#: module/Decision/view/decision/company-account/highlight.phtml:32 module/Company/view/company/admin/edit-company.phtml:83
+#: module/Decision/view/decision/company-account/highlight.phtml:32
+#: module/Company/view/company/admin/edit-company.phtml:83
 #: module/Company/view/company/admin/edit-highlight.phtml:27
 msgid "Expiration date"
 msgstr "Expiration date"
@@ -984,11 +1188,13 @@ msgstr "Currently there are no active vacancies, "
 msgid "Select an organ to edit its information. Changes will not be displayed until they have been approved."
 msgstr "Select an organ to edit its information. Changes will not be displayed until they have been approved."
 
-#: module/Decision/view/decision/organ-admin/index.phtml:7 module/Decision/view/decision/organ/index.phtml:13
+#: module/Decision/view/decision/organ-admin/index.phtml:7
+#: module/Decision/view/decision/organ/index.phtml:13
 msgid "Abbreviation"
 msgstr "Abbreviation"
 
-#: module/Decision/view/decision/organ-admin/index.phtml:9 module/Company/view/company/admin/approval-page.phtml:20
+#: module/Decision/view/decision/organ-admin/index.phtml:9
+#: module/Company/view/company/admin/approval-page.phtml:20
 #: module/Company/view/company/admin/approval-page.phtml:75
 msgid "Approval status"
 msgstr "Approval status"
@@ -1005,8 +1211,10 @@ msgstr "To optimally display your image on the overview page, please crop it bel
 msgid "To optimally display your image your page, please crop it below"
 msgstr "To optimally display your image on your page, please crop it below"
 
-#: module/Decision/view/decision/organ-admin/edit.phtml:138 module/Activity/view/activity/admin-approval/view.phtml:60
-#: module/Activity/view/activity/activity-calendar/index.phtml:107 module/Activity/view/activity/activity-calendar/index.phtml:160
+#: module/Decision/view/decision/organ-admin/edit.phtml:138
+#: module/Activity/view/activity/admin-approval/view.phtml:60
+#: module/Activity/view/activity/activity-calendar/index.phtml:107
+#: module/Activity/view/activity/activity-calendar/index.phtml:160
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:63
 msgid "Approve"
 msgstr "Approve"
@@ -1015,11 +1223,14 @@ msgstr "Approve"
 msgid "Meeting notes uploaded"
 msgstr "Meeting notes uploaded"
 
-#: module/Decision/view/decision/admin/notes.phtml:19 module/Decision/src/Decision/Form/Notes.php:37 module/Decision/src/Decision/Form/Document.php:23
+#: module/Decision/view/decision/admin/notes.phtml:19
+#: module/Decision/src/Decision/Form/Notes.php:37
+#: module/Decision/src/Decision/Form/Document.php:23
 msgid "Meeting"
 msgstr "Meeting"
 
-#: module/Decision/view/decision/admin/notes.phtml:43 module/Education/view/education/admin/summary.phtml:81
+#: module/Decision/view/decision/admin/notes.phtml:43
+#: module/Education/view/education/admin/summary.phtml:81
 msgid "Upload"
 msgstr "Upload"
 
@@ -1048,11 +1259,16 @@ msgstr "Meeting document uploaded"
 msgid "Documents for this meeting"
 msgstr "Documents for this meeting"
 
-#: module/Decision/view/decision/admin/document.phtml:98 module/Company/view/company/admin/edit-company.phtml:128
-#: module/Company/view/company/admin/edit-package.phtml:86 module/Company/view/company/admin/index.phtml:205
-#: module/Company/view/company/admin/edit-highlight.phtml:58 module/Education/view/education/admin/edit-summary.phtml:35
-#: module/Education/view/education/admin/edit-exam.phtml:35 module/Activity/view/activity/activity-calendar/index.phtml:102
-#: module/Activity/view/activity/activity-calendar/index.phtml:136 module/Frontpage/view/frontpage/poll-admin/list.phtml:68
+#: module/Decision/view/decision/admin/document.phtml:98
+#: module/Company/view/company/admin/edit-company.phtml:128
+#: module/Company/view/company/admin/edit-package.phtml:86
+#: module/Company/view/company/admin/index.phtml:205
+#: module/Company/view/company/admin/edit-highlight.phtml:58
+#: module/Education/view/education/admin/edit-summary.phtml:35
+#: module/Education/view/education/admin/edit-exam.phtml:35
+#: module/Activity/view/activity/activity-calendar/index.phtml:102
+#: module/Activity/view/activity/activity-calendar/index.phtml:136
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:68
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:139
 msgid "Delete"
 msgstr "Delete"
@@ -1061,8 +1277,10 @@ msgstr "Delete"
 msgid "Birthdays"
 msgstr "Birthdays"
 
-#: module/Decision/view/decision/member/birthdays.phtml:11 module/Decision/view/decision/decision/index.phtml:11
-#: module/Frontpage/view/frontpage/poll-admin/list.phtml:19 module/Frontpage/view/frontpage/poll-admin/list.phtml:94
+#: module/Decision/view/decision/member/birthdays.phtml:11
+#: module/Decision/view/decision/decision/index.phtml:11
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:19
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:94
 msgid "Date"
 msgstr "Date"
 
@@ -1074,7 +1292,8 @@ msgstr "Age"
 msgid "years"
 msgstr "years"
 
-#: module/Decision/view/decision/member/search.phtml:3 module/Decision/view/decision/member/search.phtml:9
+#: module/Decision/view/decision/member/search.phtml:3
+#: module/Decision/view/decision/member/search.phtml:9
 msgid "Zoeken op lid"
 msgstr "Search for a member"
 
@@ -1102,7 +1321,8 @@ msgstr "Public archive"
 msgid "Find a member"
 msgstr "Find a member"
 
-#: module/Decision/view/decision/member/index.phtml:68 module/Education/view/education/education/index.phtml:151
+#: module/Decision/view/decision/member/index.phtml:68
+#: module/Education/view/education/education/index.phtml:151
 msgid "Microsoft Imagine"
 msgstr "Microsoft Imagine"
 
@@ -1118,8 +1338,7 @@ msgstr "The next meeting is %s%s %s%s on %s."
 #: module/Decision/view/decision/member/index.phtml:102
 #, php-format
 msgid "If you aren't able to attend the meeting in person but you want your voice to be heard, consider %sauthorizing another member%s to act on your behalf."
-msgstr ""
-"If you aren't able to attend the meeting in person but you want your voice to be heard, consider %sauthorizing another member%s to act on your behalf."
+msgstr "If you aren't able to attend the meeting in person but you want your voice to be heard, consider %sauthorizing another member%s to act on your behalf."
 
 #: module/Decision/view/decision/member/index.phtml:110
 msgid "Search through the list of decisions accumulated from past meetings:"
@@ -1129,8 +1348,10 @@ msgstr "Search through the list of decisions accumulated from past meetings:"
 msgid "Search by keyword or meeting number"
 msgstr "Search by keyword or meeting number"
 
-#: module/Decision/view/decision/member/index.phtml:115 module/Decision/view/decision/decision/search.phtml:30
-#: module/Education/view/education/education/index.phtml:47 module/Decision/src/Decision/Form/SearchDecision.php:28
+#: module/Decision/view/decision/member/index.phtml:115
+#: module/Decision/view/decision/decision/search.phtml:30
+#: module/Education/view/education/education/index.phtml:47
+#: module/Decision/src/Decision/Form/SearchDecision.php:28
 #: module/Decision/src/Decision/Form/SearchDecision.php:29
 msgid "Search"
 msgstr "Search"
@@ -1161,7 +1382,8 @@ msgstr "A list of helpful resources for active members."
 msgid "Info"
 msgstr "Info"
 
-#: module/Decision/view/decision/member/index.phtml:157 module/Activity/view/activity/activity-calendar/index.phtml:15
+#: module/Decision/view/decision/member/index.phtml:157
+#: module/Activity/view/activity/activity-calendar/index.phtml:15
 #: module/Activity/view/activity/activity-calendar/create.phtml:53
 msgid "Option calendar"
 msgstr "Option calendar"
@@ -1178,7 +1400,8 @@ msgstr "Webmail"
 msgid "Administrator"
 msgstr "Administrator"
 
-#: module/Decision/view/decision/member/index.phtml:180 module/Activity/view/partial/signupForm.phtml:69
+#: module/Decision/view/decision/member/index.phtml:180
+#: module/Activity/view/partial/signupForm.phtml:69
 msgid "Activity Policy"
 msgstr "Activity Policy"
 
@@ -1198,7 +1421,8 @@ msgstr "Posters"
 msgid "Sleutelbeleid"
 msgstr "Keys"
 
-#: module/Decision/view/decision/member/self.phtml:19 module/User/src/User/Form/Register.php:27
+#: module/Decision/view/decision/member/self.phtml:19
+#: module/User/src/User/Form/Register.php:27
 msgid "Membership number"
 msgstr "Membership number"
 
@@ -1218,34 +1442,43 @@ msgstr "Middle name"
 msgid "Last name"
 msgstr "Last name"
 
-#: module/Decision/view/decision/member/self.phtml:39 module/Decision/view/decision/member/view.phtml:22
+#: module/Decision/view/decision/member/self.phtml:39
+#: module/Decision/view/decision/member/view.phtml:22
 msgid "Gender"
 msgstr "Gender"
 
-#: module/Decision/view/decision/member/self.phtml:43 module/Decision/view/decision/member/view.phtml:26
+#: module/Decision/view/decision/member/self.phtml:43
+#: module/Decision/view/decision/member/view.phtml:26
 msgid "Male"
 msgstr "Male"
 
-#: module/Decision/view/decision/member/self.phtml:46 module/Decision/view/decision/member/view.phtml:29
+#: module/Decision/view/decision/member/self.phtml:46
+#: module/Decision/view/decision/member/view.phtml:29
 msgid "Female"
 msgstr "Female"
 
-#: module/Decision/view/decision/member/self.phtml:49 module/Decision/view/decision/member/view.phtml:32
+#: module/Decision/view/decision/member/self.phtml:49
+#: module/Decision/view/decision/member/view.phtml:32
 #: module/Education/src/Education/Form/Fieldset/Exam.php:48
 msgid "Other"
 msgstr "Other"
 
-#: module/Decision/view/decision/member/self.phtml:55 module/Decision/view/decision/member/view.phtml:39
-#: module/Activity/view/activity/admin/participantsTable.phtml:7 module/Frontpage/view/frontpage/organ/organ.phtml:72
-#: module/Decision/src/Decision/Form/OrganInformation.php:19 module/Company/src/Company/Form/EditJobCompany.php:99
+#: module/Decision/view/decision/member/self.phtml:55
+#: module/Decision/view/decision/member/view.phtml:39
+#: module/Activity/view/activity/admin/participantsTable.phtml:7
+#: module/Frontpage/view/frontpage/organ/organ.phtml:72
+#: module/Decision/src/Decision/Form/OrganInformation.php:19
+#: module/Company/src/Company/Form/EditJobCompany.php:99
 msgid "Email"
 msgstr "Email"
 
-#: module/Decision/view/decision/member/self.phtml:59 module/Decision/view/decision/member/view.phtml:46
+#: module/Decision/view/decision/member/self.phtml:59
+#: module/Decision/view/decision/member/view.phtml:46
 msgid "Birth date"
 msgstr "Birth date"
 
-#: module/Decision/view/decision/member/self.phtml:63 module/Decision/view/decision/member/view.phtml:50
+#: module/Decision/view/decision/member/self.phtml:63
+#: module/Decision/view/decision/member/view.phtml:50
 msgid "Generation"
 msgstr "Generation"
 
@@ -1261,7 +1494,8 @@ msgstr "Ordinary"
 msgid "Prolonged"
 msgstr "Prolonged"
 
-#: module/Decision/view/decision/member/self.phtml:77 module/Activity/view/activity/admin/participantsTable.phtml:28
+#: module/Decision/view/decision/member/self.phtml:77
+#: module/Activity/view/activity/admin/participantsTable.phtml:28
 msgid "External"
 msgstr "External"
 
@@ -1293,31 +1527,38 @@ msgstr "Email the secretary of GEWIS"
 msgid "the secretary of GEWIS"
 msgstr "the secretary of GEWIS"
 
-#: module/Decision/view/decision/member/self.phtml:106 module/Decision/view/decision/member/view.phtml:54
+#: module/Decision/view/decision/member/self.phtml:106
+#: module/Decision/view/decision/member/view.phtml:54
 msgid "Membership of committees and fraternities"
 msgstr "Membership of committees and fraternities"
 
-#: module/Decision/view/decision/member/self.phtml:116 module/Decision/view/decision/member/view.phtml:69
+#: module/Decision/view/decision/member/self.phtml:116
+#: module/Decision/view/decision/member/view.phtml:69
 msgid "Adresses"
 msgstr "Adresses"
 
-#: module/Decision/view/decision/member/self.phtml:121 module/Decision/view/decision/member/view.phtml:74
+#: module/Decision/view/decision/member/self.phtml:121
+#: module/Decision/view/decision/member/view.phtml:74
 msgid "Home address (parents)"
 msgstr "Home address (parents)"
 
-#: module/Decision/view/decision/member/self.phtml:124 module/Decision/view/decision/member/view.phtml:77
+#: module/Decision/view/decision/member/self.phtml:124
+#: module/Decision/view/decision/member/view.phtml:77
 msgid "Student address"
 msgstr "Student address"
 
-#: module/Decision/view/decision/member/self.phtml:127 module/Decision/view/decision/member/view.phtml:80
+#: module/Decision/view/decision/member/self.phtml:127
+#: module/Decision/view/decision/member/view.phtml:80
 msgid "Mail address"
 msgstr "Mail address"
 
-#: module/Decision/view/decision/member/self.phtml:133 module/Decision/view/decision/member/view.phtml:86
+#: module/Decision/view/decision/member/self.phtml:133
+#: module/Decision/view/decision/member/view.phtml:86
 msgid "Country"
 msgstr "Country"
 
-#: module/Decision/view/decision/member/self.phtml:141 module/Decision/view/decision/member/view.phtml:94
+#: module/Decision/view/decision/member/self.phtml:141
+#: module/Decision/view/decision/member/view.phtml:94
 msgid "City and postal code"
 msgstr "City and postal code"
 
@@ -1334,13 +1575,17 @@ msgstr "Photos of %s"
 msgid "Search for decision"
 msgstr "Search for decision"
 
-#: module/Decision/view/decision/decision/search.phtml:21 module/Decision/src/Decision/Form/SearchDecision.php:20
+#: module/Decision/view/decision/decision/search.phtml:21
+#: module/Decision/src/Decision/Form/SearchDecision.php:20
 #: module/Education/src/Education/Form/SearchCourse.php:19
 msgid "Search query"
 msgstr "Search query"
 
-#: module/Decision/view/decision/decision/index.phtml:9 module/Decision/view/decision/organ/index.phtml:15 module/Activity/view/partial/option.phtml:10
-#: module/Activity/view/activity/activity-calendar/index.phtml:76 module/Activity/view/activity/admin/participantsTable.phtml:8
+#: module/Decision/view/decision/decision/index.phtml:9
+#: module/Decision/view/decision/organ/index.phtml:15
+#: module/Activity/view/partial/option.phtml:10
+#: module/Activity/view/activity/activity-calendar/index.phtml:76
+#: module/Activity/view/activity/admin/participantsTable.phtml:8
 #: module/Education/src/Education/Form/Fieldset/Exam.php:43
 msgid "Type"
 msgstr "Type"
@@ -1388,7 +1633,8 @@ msgstr "Terms"
 msgid "I, %s am fully aware that by filling in this form I authorize the person in this form to represent me at General Meeting %s of s.v. GEWIS"
 msgstr "I, %s am fully aware that by filling in this form I authorize the person in this form to represent me at General Meeting %s of s.v. GEWIS"
 
-#: module/Decision/view/decision/decision/authorizations.phtml:67 module/Decision/view/decision/decision/authorizations.phtml:72
+#: module/Decision/view/decision/decision/authorizations.phtml:67
+#: module/Decision/view/decision/decision/authorizations.phtml:72
 #: module/Decision/src/Decision/Form/Authorization.php:32
 msgid "Authorize"
 msgstr "Authorize"
@@ -1410,8 +1656,10 @@ msgstr "Confirm authorization"
 msgid "Are you sure you would like to authorize %s"
 msgstr "Are you Are you sure you would like to authorize %s"
 
-#: module/Decision/view/decision/decision/files.phtml:14 module/Decision/view/decision/decision/files.phtml:16
-#: module/Decision/view/decision/decision/files.phtml:34 module/Decision/view/decision/decision/files.phtml:38
+#: module/Decision/view/decision/decision/files.phtml:14
+#: module/Decision/view/decision/decision/files.phtml:16
+#: module/Decision/view/decision/decision/files.phtml:34
+#: module/Decision/view/decision/decision/files.phtml:38
 msgid "Root"
 msgstr "Root"
 
@@ -1480,7 +1728,8 @@ msgstr "Audit Committee"
 msgid "Advisory Board"
 msgstr "Advisory Board"
 
-#: module/Decision/view/decision/organ/show.phtml:9 module/Frontpage/view/frontpage/organ/organ.phtml:118
+#: module/Decision/view/decision/organ/show.phtml:9
+#: module/Frontpage/view/frontpage/organ/organ.phtml:118
 msgid "Current members"
 msgstr "Current members"
 
@@ -1492,15 +1741,18 @@ msgstr "Previous members"
 msgid "Organ mutations"
 msgstr "Organ mutations"
 
-#: module/Company/view/company/company/job-list.phtml:53 module/Company/view/company/company/list.phtml:21
+#: module/Company/view/company/company/job-list.phtml:53
+#: module/Company/view/company/company/list.phtml:21
 msgid "What are you looking for?"
 msgstr "What are you looking for?"
 
-#: module/Company/view/company/company/job-list.phtml:56 module/Company/view/company/company/list.phtml:24
+#: module/Company/view/company/company/job-list.phtml:56
+#: module/Company/view/company/company/list.phtml:24
 msgid "Sort on"
 msgstr "Sort on"
 
-#: module/Company/view/company/company/job-list.phtml:58 module/Company/view/company/company/list.phtml:26
+#: module/Company/view/company/company/job-list.phtml:58
+#: module/Company/view/company/company/list.phtml:26
 msgid "Random"
 msgstr "Random"
 
@@ -1509,15 +1761,18 @@ msgstr "Random"
 msgid "Sector"
 msgstr "Sectors"
 
-#: module/Company/view/company/company/job-list.phtml:61 module/Company/src/Company/Form/EditJobCompany.php:142
+#: module/Company/view/company/company/job-list.phtml:61
+#: module/Company/src/Company/Form/EditJobCompany.php:142
 msgid "Starting Date"
 msgstr "Starting Date"
 
-#: module/Company/view/company/company/job-list.phtml:65 module/Company/src/Company/Form/EditJobCompany.php:150
+#: module/Company/view/company/company/job-list.phtml:65
+#: module/Company/src/Company/Form/EditJobCompany.php:150
 msgid "Hours"
 msgstr "Hours"
 
-#: module/Company/view/company/company/job-list.phtml:67 module/Company/view/company/company/job-list.phtml:75
+#: module/Company/view/company/company/job-list.phtml:67
+#: module/Company/view/company/company/job-list.phtml:75
 #: module/Company/view/company/company/list.phtml:34
 msgid "All"
 msgstr ""
@@ -1532,8 +1787,12 @@ msgstr "Start time"
 msgid "Full Time"
 msgstr "Full name:"
 
-#: module/Company/view/company/company/job-list.phtml:73 module/Company/view/company/company/list.phtml:32 module/Company/view/company/admin/index.phtml:71
-#: module/Company/view/company/admin/index.phtml:90 module/Company/src/Company/Form/EditCompany.php:301 module/Company/src/Company/Form/EditJobCompany.php:75
+#: module/Company/view/company/company/job-list.phtml:73
+#: module/Company/view/company/company/list.phtml:32
+#: module/Company/view/company/admin/index.phtml:71
+#: module/Company/view/company/admin/index.phtml:90
+#: module/Company/src/Company/Form/EditCompany.php:301
+#: module/Company/src/Company/Form/EditJobCompany.php:75
 msgid "Sectors"
 msgstr "Sectors"
 
@@ -1542,7 +1801,9 @@ msgstr "Sectors"
 msgid "Unfortunately, there aren't any %s at the moment."
 msgstr "Unfortunately, there aren't any %s at the moment."
 
-#: module/Company/view/company/company/job-list.phtml:151 module/Company/view/company/company/jobs.phtml:76 module/Company/view/company/company/jobs.phtml:82
+#: module/Company/view/company/company/job-list.phtml:151
+#: module/Company/view/company/company/jobs.phtml:76
+#: module/Company/view/company/company/jobs.phtml:82
 msgid "View"
 msgstr "View"
 
@@ -1613,7 +1874,9 @@ msgstr "Furthermore interesting events and job opportunities from companies are 
 msgid "You can sign up for the Career Newsletter %shere%s."
 msgstr "You can sign up for the Career Newsletter %shere%s."
 
-#: module/Company/view/company/company/index.phtml:84 module/Company/view/company/company/index.phtml:95 module/Company/view/company/company/index.phtml:115
+#: module/Company/view/company/company/index.phtml:84
+#: module/Company/view/company/company/index.phtml:95
+#: module/Company/view/company/company/index.phtml:115
 msgid "MyFuture"
 msgstr ""
 
@@ -1622,12 +1885,8 @@ msgid "MyFuture provides an overview of the activities, organized by all TU/e af
 msgstr "MyFuture provides an overview of the activities, organized by all TU/e affiliated parties, that best suit your needs and ambitions."
 
 #: module/Company/view/company/company/index.phtml:90
-msgid ""
-"These range from lunch lectures to case contests to company visits and are aimed at giving you as a student a clear overview of where you can work and what "
-"you can do when you are finished with your studies."
-msgstr ""
-"These range from lunch lectures to case contests to company visits and are aimed at giving you as a student a clear overview of where you can work and what "
-"you can do when you are finished with your studies."
+msgid "These range from lunch lectures to case contests to company visits and are aimed at giving you as a student a clear overview of where you can work and what you can do when you are finished with your studies."
+msgstr "These range from lunch lectures to case contests to company visits and are aimed at giving you as a student a clear overview of where you can work and what you can do when you are finished with your studies."
 
 #: module/Company/view/company/company/index.phtml:103
 msgid "MyFuture Activities"
@@ -1645,19 +1904,17 @@ msgstr "The MyFuture Activities kick-off with the first-year excursion, which is
 msgid "The remaining five can be obtained by participating in MyFuture Activities of your own choice."
 msgstr "The remaining five can be obtained by participating in MyFuture Activities of your own choice."
 
-#: module/Company/view/company/company/index.phtml:124 module/Company/view/company/company/index.phtml:139
+#: module/Company/view/company/company/index.phtml:124
+#: module/Company/view/company/company/index.phtml:139
 msgid "Wervingsdagen"
 msgstr ""
 
 #: module/Company/view/company/company/index.phtml:129
-msgid ""
-"Wervingsdagen is a colaborative initiative from 10 study associations of the TU/e, including GEWIS. Every year, Wervingsdagen hosts 3 main events: the "
-"Skill Sessions, Career Expo and Interviewing Days."
-msgstr ""
-"Wervingsdagen is a colaborative initiative from 10 study associations of the TU/e, including GEWIS. Every year, Wervingsdagen hosts 3 main events: the "
-"Skill Sessions, Career Expo and Interviewing Days."
+msgid "Wervingsdagen is a colaborative initiative from 10 study associations of the TU/e, including GEWIS. Every year, Wervingsdagen hosts 3 main events: the Skill Sessions, Career Expo and Interviewing Days."
+msgstr "Wervingsdagen is a colaborative initiative from 10 study associations of the TU/e, including GEWIS. Every year, Wervingsdagen hosts 3 main events: the Skill Sessions, Career Expo and Interviewing Days."
 
-#: module/Company/view/company/company/index.phtml:146 module/Company/view/company/company/index.phtml:157
+#: module/Company/view/company/company/index.phtml:146
+#: module/Company/view/company/company/index.phtml:157
 #, fuzzy
 msgid "Career Academy"
 msgstr "Career Activities"
@@ -1674,21 +1931,28 @@ msgstr "Career Academy offers career workshops and activities, individual career
 msgid "job_at_company"
 msgstr "at"
 
-#: module/Company/view/company/company/jobs.phtml:54 module/Company/view/company/company/list.phtml:77
-#: module/Company/view/company/company/companyStory.phtml:21 module/Company/view/partial/company/company/grid/company.phtml:17
+#: module/Company/view/company/company/jobs.phtml:54
+#: module/Company/view/company/company/list.phtml:77
+#: module/Company/view/company/company/companyStory.phtml:21
+#: module/Company/view/partial/company/company/grid/company.phtml:17
 #: module/Company/view/partial/company/company/list/company.phtml:14
 msgid "Logo of"
 msgstr "Logo of"
 
-#: module/Company/view/company/company/jobs.phtml:87 module/Activity/view/activity/activity-calendar/create.phtml:82
+#: module/Company/view/company/company/jobs.phtml:87
+#: module/Activity/view/activity/activity-calendar/create.phtml:82
 #: module/Activity/view/activity/admin/list.phtml:51
 msgid "Details"
 msgstr "Details"
 
-#: module/Company/view/company/company/jobs.phtml:95 module/Company/view/partial/company/company/list/company.phtml:60
-#: module/Activity/view/partial/create.phtml:124 module/Activity/view/partial/create.phtml:180
-#: module/Activity/view/activity/activity-calendar/create.phtml:128 module/Company/src/Company/Form/EditCompany.php:217
-#: module/Company/src/Company/Form/EditCompany.php:228 module/Company/src/Company/Form/JobFieldset.php:83
+#: module/Company/view/company/company/jobs.phtml:95
+#: module/Company/view/partial/company/company/list/company.phtml:60
+#: module/Activity/view/partial/create.phtml:124
+#: module/Activity/view/partial/create.phtml:180
+#: module/Activity/view/activity/activity-calendar/create.phtml:128
+#: module/Company/src/Company/Form/EditCompany.php:217
+#: module/Company/src/Company/Form/EditCompany.php:228
+#: module/Company/src/Company/Form/JobFieldset.php:83
 msgid "Description"
 msgstr "Description"
 
@@ -1713,7 +1977,8 @@ msgstr ""
 msgid "Unfortunately, there aren't any companies to be shown at the moment."
 msgstr "Unfortunately, there aren't any %s at the moment."
 
-#: module/Company/view/company/company/companyStory.phtml:72 module/Company/src/Company/Form/EditPackage.php:79
+#: module/Company/view/company/company/companyStory.phtml:72
+#: module/Company/src/Company/Form/EditPackage.php:79
 msgid "Article"
 msgstr "Article"
 
@@ -1728,7 +1993,7 @@ msgstr "Add vacancy package"
 #: module/Company/view/company/admin/edit-company.phtml:27
 #, fuzzy
 msgid "Add highlight package"
-msgstr "Add spotlight package"
+msgstr "Add highlight package"
 
 #: module/Company/view/company/admin/edit-company.phtml:36
 msgid "Add Banner package"
@@ -1738,7 +2003,9 @@ msgstr "Add Banner package"
 msgid "Packages"
 msgstr "Packages"
 
-#: module/Company/view/company/admin/edit-company.phtml:80 module/Activity/view/activity/admin/list.phtml:15 module/Activity/view/activity/admin/view.phtml:59
+#: module/Company/view/company/admin/edit-company.phtml:80
+#: module/Activity/view/activity/admin/list.phtml:15
+#: module/Activity/view/activity/admin/view.phtml:59
 #: module/Photo/src/Photo/Form/EditAlbum.php:28
 msgid "Start date"
 msgstr "Start date"
@@ -1756,16 +2023,19 @@ msgstr "Banner package"
 msgid "Highlight package"
 msgstr "Add spotlight package"
 
-#: module/Company/view/company/admin/edit-company.phtml:110 module/Company/view/company/admin/index.phtml:273
+#: module/Company/view/company/admin/edit-company.phtml:110
+#: module/Company/view/company/admin/index.phtml:273
 #: module/Company/view/company/admin/index.phtml:305
 msgid "Featured Package"
 msgstr "Featured Package"
 
-#: module/Company/view/company/admin/edit-company.phtml:144 module/Company/view/company/admin/edit-highlight.phtml:75
+#: module/Company/view/company/admin/edit-company.phtml:144
+#: module/Company/view/company/admin/edit-highlight.phtml:75
 msgid "Are you sure you want to delete this package?"
 msgstr "Are you sure you want to delete this package?"
 
-#: module/Company/view/company/admin/edit-company.phtml:150 module/Company/view/company/admin/edit-highlight.phtml:81
+#: module/Company/view/company/admin/edit-company.phtml:150
+#: module/Company/view/company/admin/edit-highlight.phtml:81
 msgid "Delete package"
 msgstr "Delete package"
 
@@ -1774,11 +2044,13 @@ msgstr "Delete package"
 msgid "Approve profile"
 msgstr "Approve poll"
 
-#: module/Company/view/company/admin/approval-profile.phtml:55 module/Company/view/company/admin/approval-vacancy.phtml:255
+#: module/Company/view/company/admin/approval-profile.phtml:55
+#: module/Company/view/company/admin/approval-vacancy.phtml:255
 msgid "Reject"
 msgstr ""
 
-#: module/Company/view/company/admin/add-company.phtml:1 module/Company/view/company/admin/index.phtml:23
+#: module/Company/view/company/admin/add-company.phtml:1
+#: module/Company/view/company/admin/index.phtml:23
 msgid "Add Company"
 msgstr "Add Company"
 
@@ -1790,7 +2062,8 @@ msgstr "Company Logo"
 msgid "Add job"
 msgstr "Add vacancy"
 
-#: module/Company/view/company/admin/add-category.phtml:1 module/Company/view/company/admin/index.phtml:32
+#: module/Company/view/company/admin/add-category.phtml:1
+#: module/Company/view/company/admin/index.phtml:32
 msgid "Add Category"
 msgstr "Add Category"
 
@@ -1798,20 +2071,24 @@ msgstr "Add Category"
 msgid "Edit Category"
 msgstr "Edit Category"
 
-#: module/Company/view/company/admin/add-label.phtml:1 module/Company/view/company/admin/index.phtml:97
+#: module/Company/view/company/admin/add-label.phtml:1
+#: module/Company/view/company/admin/index.phtml:97
 msgid "Add Label"
 msgstr "Add Label"
 
-#: module/Company/view/company/admin/index.phtml:38 module/Company/view/company/admin/index.phtml:57
+#: module/Company/view/company/admin/index.phtml:38
+#: module/Company/view/company/admin/index.phtml:57
 msgid "Categories"
 msgstr "Categories"
 
-#: module/Company/view/company/admin/index.phtml:65 module/Company/view/company/admin/add-sector.phtml:1
+#: module/Company/view/company/admin/index.phtml:65
+#: module/Company/view/company/admin/add-sector.phtml:1
 #, fuzzy
 msgid "Add Sector"
 msgstr "Sectors"
 
-#: module/Company/view/company/admin/index.phtml:103 module/Company/view/company/admin/index.phtml:121
+#: module/Company/view/company/admin/index.phtml:103
+#: module/Company/view/company/admin/index.phtml:121
 msgid "Labels"
 msgstr ""
 
@@ -1820,19 +2097,23 @@ msgstr ""
 msgid "Pending approvals"
 msgstr "Polls awaiting approval"
 
-#: module/Company/view/company/admin/index.phtml:156 module/Company/view/company/admin/index.phtml:215
+#: module/Company/view/company/admin/index.phtml:156
+#: module/Company/view/company/admin/index.phtml:215
 msgid "Active jobs"
 msgstr "Active vacancies"
 
-#: module/Company/view/company/admin/index.phtml:162 module/Company/view/company/admin/index.phtml:216
+#: module/Company/view/company/admin/index.phtml:162
+#: module/Company/view/company/admin/index.phtml:216
 msgid "Banner active"
 msgstr "Banner active"
 
-#: module/Company/view/company/admin/index.phtml:168 module/Company/view/company/admin/index.phtml:217
+#: module/Company/view/company/admin/index.phtml:168
+#: module/Company/view/company/admin/index.phtml:217
 msgid "Featured in language"
 msgstr "Featured in language"
 
-#: module/Company/view/company/admin/index.phtml:174 module/Company/view/company/admin/index.phtml:218
+#: module/Company/view/company/admin/index.phtml:174
+#: module/Company/view/company/admin/index.phtml:218
 msgid "Expired packages"
 msgstr "Expired packages"
 
@@ -1857,11 +2138,13 @@ msgstr "Delete company"
 msgid "Package changes next month"
 msgstr "Package changes next month"
 
-#: module/Company/view/company/admin/index.phtml:270 module/Company/view/company/admin/index.phtml:302
+#: module/Company/view/company/admin/index.phtml:270
+#: module/Company/view/company/admin/index.phtml:302
 msgid "Banner Package"
 msgstr "Banner Package"
 
-#: module/Company/view/company/admin/index.phtml:276 module/Company/view/company/admin/index.phtml:308
+#: module/Company/view/company/admin/index.phtml:276
+#: module/Company/view/company/admin/index.phtml:308
 #, php-format
 msgid "Job Package(%s active)"
 msgstr "Job Package(%s active)"
@@ -1884,12 +2167,16 @@ msgstr ""
 msgid "There are new changes to be approved:"
 msgstr ""
 
-#: module/Company/view/company/admin/email/vacancy-approval.phtml:6 module/User/view/user/email/reset.phtml:11 module/User/view/user/email/register.phtml:14
+#: module/Company/view/company/admin/email/vacancy-approval.phtml:6
+#: module/User/view/user/email/reset.phtml:11
+#: module/User/view/user/email/register.phtml:14
 #: module/User/view/user/email/resetCompany.phtml:11
 msgid "Best Regards,"
 msgstr "Best Regards,"
 
-#: module/Company/view/company/admin/email/vacancy-approval.phtml:8 module/User/view/user/email/reset.phtml:13 module/User/view/user/email/register.phtml:16
+#: module/Company/view/company/admin/email/vacancy-approval.phtml:8
+#: module/User/view/user/email/reset.phtml:13
+#: module/User/view/user/email/register.phtml:16
 #: module/User/view/user/email/resetCompany.phtml:13
 msgid "WebCommissie GEWIS"
 msgstr "WebCommissie GEWIS"
@@ -1898,12 +2185,14 @@ msgstr "WebCommissie GEWIS"
 msgid "Edit Label"
 msgstr "Edit Label"
 
-#: module/Company/view/company/admin/approval-page.phtml:13 module/Company/view/company/admin/approval-page.phtml:73
+#: module/Company/view/company/admin/approval-page.phtml:13
+#: module/Company/view/company/admin/approval-page.phtml:73
 #, fuzzy
 msgid "Company name"
 msgstr "Company"
 
-#: module/Company/view/company/admin/approval-page.phtml:16 module/Company/view/company/admin/approval-page.phtml:74
+#: module/Company/view/company/admin/approval-page.phtml:16
+#: module/Company/view/company/admin/approval-page.phtml:74
 #, fuzzy
 msgid "Approval type"
 msgstr "Approval status"
@@ -1932,17 +2221,27 @@ msgstr ""
 msgid "Starting date"
 msgstr "Starting Date"
 
-#: module/Company/view/partial/company/admin/editors/company.phtml:177 module/Activity/view/partial/create.phtml:24
-#: module/Activity/view/partial/create.phtml:131 module/Activity/view/activity/admin-approval/view.phtml:6 module/Company/src/Company/Form/EditCompany.php:70
-#: module/Company/src/Company/Form/EditPackage.php:93 module/Education/src/Education/Form/Fieldset/Summary.php:53
-#: module/Education/src/Education/Form/Fieldset/Exam.php:59 module/Education/src/Education/Form/SummaryUpload.php:50
+#: module/Company/view/partial/company/admin/editors/company.phtml:177
+#: module/Activity/view/partial/create.phtml:24
+#: module/Activity/view/partial/create.phtml:131
+#: module/Activity/view/activity/admin-approval/view.phtml:6
+#: module/Company/src/Company/Form/EditCompany.php:70
+#: module/Company/src/Company/Form/EditPackage.php:93
+#: module/Education/src/Education/Form/Fieldset/Summary.php:53
+#: module/Education/src/Education/Form/Fieldset/Exam.php:59
+#: module/Education/src/Education/Form/SummaryUpload.php:50
 msgid "English"
 msgstr "English"
 
-#: module/Company/view/partial/company/admin/editors/company.phtml:228 module/Activity/view/partial/create.phtml:15
-#: module/Activity/view/partial/create.phtml:75 module/Activity/view/activity/admin-approval/view.phtml:5 module/Company/src/Company/Form/EditCompany.php:71
-#: module/Company/src/Company/Form/EditPackage.php:92 module/Education/src/Education/Form/Fieldset/Summary.php:54
-#: module/Education/src/Education/Form/Fieldset/Exam.php:60 module/Education/src/Education/Form/SummaryUpload.php:51
+#: module/Company/view/partial/company/admin/editors/company.phtml:228
+#: module/Activity/view/partial/create.phtml:15
+#: module/Activity/view/partial/create.phtml:75
+#: module/Activity/view/activity/admin-approval/view.phtml:5
+#: module/Company/src/Company/Form/EditCompany.php:71
+#: module/Company/src/Company/Form/EditPackage.php:92
+#: module/Education/src/Education/Form/Fieldset/Summary.php:54
+#: module/Education/src/Education/Form/Fieldset/Exam.php:60
+#: module/Education/src/Education/Form/SummaryUpload.php:51
 msgid "Dutch"
 msgstr "Dutch"
 
@@ -1994,27 +2293,32 @@ msgstr "Course parts"
 msgid "Exams and summaries"
 msgstr "Exams and summaries"
 
-#: module/Education/view/education/education/course.phtml:37 module/Education/view/education/education/course.phtml:66
+#: module/Education/view/education/education/course.phtml:37
+#: module/Education/view/education/education/course.phtml:66
 #, php-format
 msgid "Summary by %s on %s (%s)"
 msgstr "Summary by %s on %s (%s)"
 
-#: module/Education/view/education/education/course.phtml:42 module/Education/view/education/education/course.phtml:71
+#: module/Education/view/education/education/course.phtml:42
+#: module/Education/view/education/education/course.phtml:71
 #, php-format
 msgid "Examination from %s (%s)"
 msgstr "Examination from %s (%s)"
 
-#: module/Education/view/education/education/course.phtml:45 module/Education/view/education/education/course.phtml:74
+#: module/Education/view/education/education/course.phtml:45
+#: module/Education/view/education/education/course.phtml:74
 #, php-format
 msgid "Intermediate test from %s (%s)"
 msgstr "Intermediate test from %s (%s)"
 
-#: module/Education/view/education/education/course.phtml:48 module/Education/view/education/education/course.phtml:77
+#: module/Education/view/education/education/course.phtml:48
+#: module/Education/view/education/education/course.phtml:77
 #, php-format
 msgid "Answers from %s (%s)"
 msgstr "Answers from %s (%s)"
 
-#: module/Education/view/education/education/course.phtml:51 module/Education/view/education/education/course.phtml:80
+#: module/Education/view/education/education/course.phtml:51
+#: module/Education/view/education/education/course.phtml:80
 #, php-format
 msgid "Other exam material from %s (%s)"
 msgstr "Other exam material from %s (%s)"
@@ -2032,8 +2336,10 @@ msgstr "Course code or course description"
 msgid "Found %d course(s) matching your description"
 msgstr "Found %d course(s) matching your description"
 
-#: module/Education/view/education/education/index.phtml:66 module/Education/src/Education/Form/Fieldset/Summary.php:27
-#: module/Education/src/Education/Form/Fieldset/Exam.php:27 module/Education/src/Education/Form/SummaryUpload.php:24
+#: module/Education/view/education/education/index.phtml:66
+#: module/Education/src/Education/Form/Fieldset/Summary.php:27
+#: module/Education/src/Education/Form/Fieldset/Exam.php:27
+#: module/Education/src/Education/Form/SummaryUpload.php:24
 #: module/Education/src/Education/Form/AddCourse.php:28
 msgid "Course code"
 msgstr "Course code"
@@ -2050,19 +2356,19 @@ msgstr "Available documents"
 msgid "View available documents"
 msgstr "View available documents"
 
-#: module/Education/view/education/education/index.phtml:87 module/Activity/view/activity/admin/list.phtml:34
+#: module/Education/view/education/education/index.phtml:87
+#: module/Activity/view/activity/admin/list.phtml:34
 #: module/Activity/view/activity/admin/view.phtml:77
 msgid "None"
 msgstr "None"
 
 #: module/Education/view/education/education/index.phtml:98
 #, php-format
-msgid ""
-"Do you want to contribute to the collection of old exams and summaries? Send them to the %seducation officer%s so that your (future) peers can benefit."
-msgstr ""
-"Do you want to contribute to the collection of old exams and summaries? Send them to the %seducation officer%s so that your (future) peers can benefit."
+msgid "Do you want to contribute to the collection of old exams and summaries? Send them to the %seducation officer%s so that your (future) peers can benefit."
+msgstr "Do you want to contribute to the collection of old exams and summaries? Send them to the %seducation officer%s so that your (future) peers can benefit."
 
-#: module/Education/view/education/education/index.phtml:99 module/Education/view/education/education/index.phtml:176
+#: module/Education/view/education/education/index.phtml:99
+#: module/Education/view/education/education/index.phtml:176
 msgid "Mail the education officer"
 msgstr "Mail the education officer"
 
@@ -2100,8 +2406,7 @@ msgstr "Books"
 
 #: module/Education/view/education/education/index.phtml:137
 msgid "Order your course books via GEWIS to receive a discount. Specific ordering deadlines and pickup dates will be timely communicated to you via an email."
-msgstr ""
-"Order your course books via GEWIS to receive a discount. Specific ordering deadlines and pickup dates will be timely communicated to you via an email."
+msgstr "Order your course books via GEWIS to receive a discount. Specific ordering deadlines and pickup dates will be timely communicated to you via an email."
 
 #: module/Education/view/education/education/index.phtml:140
 msgid "Visit the webshop"
@@ -2153,22 +2458,20 @@ msgid "email to the board of GEWIS"
 msgstr "email to the board of GEWIS"
 
 #: module/Education/view/education/education/index.phtml:194
-msgid ""
-"then this exam will be removed from the website. Using the summaries or exams on this website for commercial goals without the permission of the author is "
-"illegal."
-msgstr ""
-"then this exam will be removed from the website. Using the summaries or exams on this website for commercial goals without the permission of the author is "
-"illegal."
+msgid "then this exam will be removed from the website. Using the summaries or exams on this website for commercial goals without the permission of the author is illegal."
+msgstr "then this exam will be removed from the website. Using the summaries or exams on this website for commercial goals without the permission of the author is illegal."
 
 #: module/User/view/user/api-admin/index.phtml:1
 msgid "API Tokens"
 msgstr "API Tokens"
 
-#: module/User/view/user/api-admin/index.phtml:7 module/User/view/user/api-admin/add.phtml:44
+#: module/User/view/user/api-admin/index.phtml:7
+#: module/User/view/user/api-admin/add.phtml:44
 msgid "Token"
 msgstr "Token"
 
-#: module/User/view/user/api-admin/index.phtml:19 module/Activity/src/Activity/Controller/AdminController.php:57
+#: module/User/view/user/api-admin/index.phtml:19
+#: module/Activity/src/Activity/Controller/AdminController.php:57
 #: module/Activity/src/Activity/Controller/AdminController.php:192
 msgid "Remove"
 msgstr "Remove"
@@ -2181,7 +2484,8 @@ msgstr "Add new Token"
 msgid "Add a token"
 msgstr "Add a token"
 
-#: module/User/view/user/api-admin/add.phtml:28 module/User/src/User/Form/ApiToken.php:28
+#: module/User/view/user/api-admin/add.phtml:28
+#: module/User/src/User/Form/ApiToken.php:28
 msgid "Create API token"
 msgstr "Create API token"
 
@@ -2189,11 +2493,13 @@ msgstr "Create API token"
 msgid "Token was successfully generated"
 msgstr "Token was successfully generated"
 
-#: module/User/view/user/user/password-company.phtml:10 module/User/view/user/user/password.phtml:7
+#: module/User/view/user/user/password-company.phtml:10
+#: module/User/view/user/user/password.phtml:7
 msgid "Password changed successfully"
 msgstr "Password changed successfully"
 
-#: module/User/view/user/user/password-company.phtml:12 module/User/view/user/user/logout.phtml:1
+#: module/User/view/user/user/password-company.phtml:12
+#: module/User/view/user/user/logout.phtml:1
 msgid "You are logged out."
 msgstr "You are logged out."
 
@@ -2202,17 +2508,22 @@ msgstr "You are logged out."
 msgid "Click %shere%s to go to the login page."
 msgstr "Click %shere%s to go to the login page."
 
-#: module/User/view/user/user/company.phtml:64 module/User/view/partial/login.phtml:68
+#: module/User/view/user/user/company.phtml:64
+#: module/User/view/partial/login.phtml:68
 #, php-format
 msgid "If you forgot your password, go to the %sPassword reset page%s"
 msgstr "If you forgot your password, go to the %sPassword reset page%s"
 
-#: module/User/view/user/user/activate-company.phtml:2 module/User/view/user/user/activate-company.phtml:33 module/User/view/user/user/activate.phtml:2
-#: module/User/view/user/user/activate.phtml:23 module/User/src/User/Form/Activate.php:36
+#: module/User/view/user/user/activate-company.phtml:2
+#: module/User/view/user/user/activate-company.phtml:33
+#: module/User/view/user/user/activate.phtml:2
+#: module/User/view/user/user/activate.phtml:23
+#: module/User/src/User/Form/Activate.php:36
 msgid "Activate"
 msgstr "Activate"
 
-#: module/User/view/user/user/activate-company.phtml:10 module/User/view/user/user/activate.phtml:7
+#: module/User/view/user/user/activate-company.phtml:10
+#: module/User/view/user/user/activate.phtml:7
 msgid "Your account has been activated. You are now able to login."
 msgstr "Your account has been activated. You are now able to login."
 
@@ -2229,16 +2540,21 @@ msgstr ""
 msgid "to go to the login page."
 msgstr "Click %shere%s to go to the login page."
 
-#: module/User/view/user/user/activate-company.phtml:44 module/User/view/user/user/activate.phtml:32
+#: module/User/view/user/user/activate-company.phtml:44
+#: module/User/view/user/user/activate.phtml:32
 #, php-format
 msgid "Welcome %s. Create your password for the website and activate your account."
 msgstr "Welcome %s. Create your password for the website and activate your account."
 
-#: module/User/view/user/user/activate-company.phtml:51 module/User/view/user/user/activate.phtml:37 module/User/view/user/user/forget-company.phtml:37
+#: module/User/view/user/user/activate-company.phtml:51
+#: module/User/view/user/user/activate.phtml:37
+#: module/User/view/user/user/forget-company.phtml:37
 msgid "Password"
 msgstr "Password"
 
-#: module/User/view/user/user/activate-company.phtml:69 module/User/view/user/user/activate.phtml:50 module/User/view/user/user/forget-company.phtml:50
+#: module/User/view/user/user/activate-company.phtml:69
+#: module/User/view/user/user/activate.phtml:50
+#: module/User/view/user/user/forget-company.phtml:50
 msgid "Verify password"
 msgstr "Verify password"
 
@@ -2246,8 +2562,12 @@ msgstr "Verify password"
 msgid "You are logged in."
 msgstr "You are logged in."
 
-#: module/User/view/user/user/forget-company.phtml:2 module/User/view/user/user/forget-company.phtml:23 module/User/view/user/user/reset.phtml:2
-#: module/User/view/user/user/reset.phtml:22 module/User/view/user/user/reset.phtml:48 module/User/view/user/user/reset-company.phtml:22
+#: module/User/view/user/user/forget-company.phtml:2
+#: module/User/view/user/user/forget-company.phtml:23
+#: module/User/view/user/user/reset.phtml:2
+#: module/User/view/user/user/reset.phtml:22
+#: module/User/view/user/user/reset.phtml:48
+#: module/User/view/user/user/reset-company.phtml:22
 #: module/User/view/user/user/reset-company.phtml:48
 msgid "Reset password"
 msgstr "Reset password"
@@ -2262,12 +2582,15 @@ msgstr "Your account has been activated. You are now able to login."
 msgid "Welcome %s. Choose a new password for the website and activate your account."
 msgstr "Welcome %s. Create your password for the website and activate your account."
 
-#: module/User/view/user/user/reset.phtml:7 module/User/view/user/user/reset-company.phtml:7
+#: module/User/view/user/user/reset.phtml:7
+#: module/User/view/user/user/reset-company.phtml:7
 #, php-format
 msgid "An email has been sent to %s with instructions for resetting your password."
 msgstr "An email has been sent to %s with instructions for resetting your password."
 
-#: module/User/view/user/user/register.phtml:2 module/User/view/user/user/register.phtml:23 module/User/src/User/Form/Register.php:43
+#: module/User/view/user/user/register.phtml:2
+#: module/User/view/user/user/register.phtml:23
+#: module/User/src/User/Form/Register.php:43
 #: module/User/src/User/Form/CompanyPassword.php:35
 msgid "Register"
 msgstr "Register"
@@ -2282,16 +2605,20 @@ msgstr "You have been registered. An email has been sent to %s for activation."
 msgid "Reset company password"
 msgstr "Reset password"
 
-#: module/User/view/user/email/reset.phtml:1 module/User/view/user/email/register.phtml:1 module/User/view/user/email/resetCompany.phtml:3
+#: module/User/view/user/email/reset.phtml:1
+#: module/User/view/user/email/register.phtml:1
+#: module/User/view/user/email/resetCompany.phtml:3
 #, php-format
 msgid "Dear %s,"
 msgstr "Dear %s,"
 
-#: module/User/view/user/email/reset.phtml:3 module/User/view/user/email/resetCompany.phtml:5
+#: module/User/view/user/email/reset.phtml:3
+#: module/User/view/user/email/resetCompany.phtml:5
 msgid "A password reset was requested for your account."
 msgstr "A password reset was requested for your account."
 
-#: module/User/view/user/email/reset.phtml:5 module/User/view/user/email/resetCompany.phtml:7
+#: module/User/view/user/email/reset.phtml:5
+#: module/User/view/user/email/resetCompany.phtml:7
 msgid "You can reset your password on the following link:"
 msgstr "You can reset your password using the following URL:"
 
@@ -2307,7 +2634,8 @@ msgstr "You have been registered on the website of Study association GEWIS, with
 msgid "Membership number:"
 msgstr "Membership number:"
 
-#: module/User/view/user/email/register.phtml:6 module/Activity/view/partial/signupForm.phtml:58
+#: module/User/view/user/email/register.phtml:6
+#: module/Activity/view/partial/signupForm.phtml:58
 msgid "Email address:"
 msgstr "Email address:"
 
@@ -2352,15 +2680,18 @@ msgstr "If you don't have an account yet, go to the %sRegistration page%s"
 msgid "If you have a company account, go to the %sCompany login page%s"
 msgstr "If you have a company account, go to the %sCompany login page%s"
 
-#: module/Activity/view/partial/option.phtml:23 module/Activity/view/partial/create.phtml:42
+#: module/Activity/view/partial/option.phtml:23
+#: module/Activity/view/partial/create.phtml:42
 msgid "From"
 msgstr "From"
 
-#: module/Activity/view/partial/option.phtml:36 module/Activity/view/partial/create.phtml:52
+#: module/Activity/view/partial/option.phtml:36
+#: module/Activity/view/partial/create.phtml:52
 msgid "Until"
 msgstr "Until"
 
-#: module/Activity/view/partial/signupForm.phtml:14 module/Activity/view/partial/signupForm.phtml:19
+#: module/Activity/view/partial/signupForm.phtml:14
+#: module/Activity/view/partial/signupForm.phtml:19
 msgid "By subscribing to this activity, you agree to the terms outlined in the"
 msgstr "By subscribing to this activity, you agree to the terms outlined in the"
 
@@ -2400,9 +2731,12 @@ msgstr "Time and date"
 msgid "Subscription deadline"
 msgstr "Subscription deadline"
 
-#: module/Activity/view/partial/create.phtml:110 module/Activity/view/partial/create.phtml:166
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:64 module/Activity/view/activity/admin-approval/view.phtml:36
-#: module/Activity/view/activity/activity/touch.phtml:226 module/Activity/view/activity/activity/list.phtml:52
+#: module/Activity/view/partial/create.phtml:110
+#: module/Activity/view/partial/create.phtml:166
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:64
+#: module/Activity/view/activity/admin-approval/view.phtml:36
+#: module/Activity/view/activity/activity/touch.phtml:226
+#: module/Activity/view/activity/activity/list.phtml:52
 #: module/Activity/view/activity/activity/view.phtml:65
 msgid "Costs"
 msgstr "Costs"
@@ -2475,24 +2809,29 @@ msgstr "Orignal English"
 msgid "Updated English"
 msgstr "Updated English"
 
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:29 module/Activity/view/activity/admin-approval/view.phtml:11
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:29
+#: module/Activity/view/activity/admin-approval/view.phtml:11
 msgid "Activity id"
 msgstr "Activity id"
 
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:43 module/Activity/view/activity/admin-approval/view.phtml:21
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:43
+#: module/Activity/view/activity/admin-approval/view.phtml:21
 msgid "Start time"
 msgstr "Start time"
 
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:50 module/Activity/view/activity/admin-approval/view.phtml:26
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:50
+#: module/Activity/view/activity/admin-approval/view.phtml:26
 msgid "End time"
 msgstr "End time"
 
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:71 module/Activity/view/activity/admin-approval/view.phtml:41
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:71
+#: module/Activity/view/activity/admin-approval/view.phtml:41
 #: module/Activity/view/activity/activity/touch.phtml:305
 msgid "Subscribe"
 msgstr "Subscribe"
 
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:78 module/Activity/view/activity/admin-approval/view.phtml:46
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:78
+#: module/Activity/view/activity/admin-approval/view.phtml:46
 msgid "Only GEWIS"
 msgstr "Only GEWIS"
 
@@ -2537,14 +2876,8 @@ msgid "English description"
 msgstr "English description"
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:16
-msgid ""
-"Welcome on the page of the digital Option Calendar. In the calendar below you can place options for GEWIS activities, just like you were used to do in the "
-"paper version of the option calendar before. The red dots indicate activities that are already fixed in the GEWIS agenda, the blue dots are options for "
-"activities. If you insert an option, please give it a clear name, so it is clear what the option is for."
-msgstr ""
-"Welcome on the page of the digital Option Calendar. In the calendar below you can place options for GEWIS activities, just like you were used to do in the "
-"paper version of the option calendar before. The red dots indicate activities that are already fixed in the GEWIS agenda, the blue dots are options for "
-"activities. If you insert an option, please give it a clear name, so it is clear what the option is for."
+msgid "Welcome on the page of the digital Option Calendar. In the calendar below you can place options for GEWIS activities, just like you were used to do in the paper version of the option calendar before. The red dots indicate activities that are already fixed in the GEWIS agenda, the blue dots are options for activities. If you insert an option, please give it a clear name, so it is clear what the option is for."
+msgstr "Welcome on the page of the digital Option Calendar. In the calendar below you can place options for GEWIS activities, just like you were used to do in the paper version of the option calendar before. The red dots indicate activities that are already fixed in the GEWIS agenda, the blue dots are options for activities. If you insert an option, please give it a clear name, so it is clear what the option is for."
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:18
 msgid "There are a few rules:"
@@ -2555,24 +2888,12 @@ msgid "It is not allowed to put more than 3 options for the same activity in the
 msgstr "It is not allowed to put more than 3 options for the same activity in the calendar."
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:21
-msgid ""
-"The first to put an option for an activity on a particular date, has the first dibs to let the activity take place on this date. Five weeks before the "
-"activity takes place, the budget must have been presented to the board. When this has not been done, the option will only stay in the calendar for two more "
-"weeks. In case the entity involved does not present their budget within these two weeks nontheless, the option lapses and the next one in line gets the "
-"chance to use this date for an activity."
-msgstr ""
-"The first to put an option for an activity on a particular date, has the first dibs to let the activity take place on this date. Five weeks before the "
-"activity takes place, the budget must have been presented to the board. When this has not been done, the option will only stay in the calendar for one more "
-"week. In case the entity involved does not present their budget within this week nontheless, the option lapses and the next one in line gets the chance to "
-"use this date for an activity."
+msgid "The first to put an option for an activity on a particular date, has the first dibs to let the activity take place on this date. Five weeks before the activity takes place, the budget must have been presented to the board. When this has not been done, the option will only stay in the calendar for two more weeks. In case the entity involved does not present their budget within these two weeks nontheless, the option lapses and the next one in line gets the chance to use this date for an activity."
+msgstr "The first to put an option for an activity on a particular date, has the first dibs to let the activity take place on this date. Five weeks before the activity takes place, the budget must have been presented to the board. When this has not been done, the option will only stay in the calendar for one more week. In case the entity involved does not present their budget within this week nontheless, the option lapses and the next one in line gets the chance to use this date for an activity."
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:22
-msgid ""
-"The board can always decide to make an exception to the rules written above, for example in case of dependence on a third party, or when it concerns very "
-"big activities or weekends."
-msgstr ""
-"The board can always decide to make an exception to the rules written above, for example in case of dependence on a third party, or when it concerns very "
-"big activities or weekends."
+msgid "The board can always decide to make an exception to the rules written above, for example in case of dependence on a third party, or when it concerns very big activities or weekends."
+msgstr "The board can always decide to make an exception to the rules written above, for example in case of dependence on a third party, or when it concerns very big activities or weekends."
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:28
 msgid "Your option has been added successfully"
@@ -2582,7 +2903,8 @@ msgstr "Your option has been added successfully"
 msgid "Today"
 msgstr "Today"
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:46 module/Education/src/Education/Form/AddCourse.php:56
+#: module/Activity/view/activity/activity-calendar/index.phtml:46
+#: module/Education/src/Education/Form/AddCourse.php:56
 msgid "Year"
 msgstr "Year"
 
@@ -2602,12 +2924,14 @@ msgstr "My options"
 msgid "Creator"
 msgstr "Creator"
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:78 module/Activity/view/activity/activity/list.phtml:41
+#: module/Activity/view/activity/activity-calendar/index.phtml:78
+#: module/Activity/view/activity/activity/list.phtml:41
 #: module/Activity/view/activity/activity/view.phtml:53
 msgid "Start"
 msgstr "Start"
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:79 module/Activity/view/activity/activity/list.phtml:43
+#: module/Activity/view/activity/activity-calendar/index.phtml:79
+#: module/Activity/view/activity/activity/list.phtml:43
 #: module/Activity/view/activity/activity/view.phtml:56
 msgid "End"
 msgstr "End"
@@ -2665,8 +2989,10 @@ msgstr "Add an option"
 msgid "Remove the last option"
 msgstr "Remove the last option"
 
-#: module/Activity/view/activity/activity-calendar/create.phtml:174 module/Decision/src/Decision/Form/Notes.php:56
-#: module/Education/src/Education/Form/SummaryUpload.php:69 module/Frontpage/src/Frontpage/Form/Poll.php:49
+#: module/Activity/view/activity/activity-calendar/create.phtml:174
+#: module/Decision/src/Decision/Form/Notes.php:56
+#: module/Education/src/Education/Form/SummaryUpload.php:69
+#: module/Frontpage/src/Frontpage/Form/Poll.php:49
 msgid "Submit"
 msgstr "Submit"
 
@@ -2690,7 +3016,8 @@ msgstr "Career Activities"
 msgid "My Activities"
 msgstr "My Activities"
 
-#: module/Activity/view/activity/activity/index.phtml:30 module/Activity/view/activity/activity/create.phtml:2
+#: module/Activity/view/activity/activity/index.phtml:30
+#: module/Activity/view/activity/activity/create.phtml:2
 #: module/Activity/view/activity/activity/create.phtml:72
 msgid "Create Activity"
 msgstr "Create Activity"
@@ -2703,7 +3030,8 @@ msgstr "Subscribe for GEWIS activities"
 msgid "Log in"
 msgstr "Log in"
 
-#: module/Activity/view/activity/activity/touch.phtml:78 module/Activity/view/activity/activity/touch.phtml:320
+#: module/Activity/view/activity/activity/touch.phtml:78
+#: module/Activity/view/activity/activity/touch.phtml:320
 msgid "To sign up for an activity you must login using an RFID pass or your SuSOS pincode."
 msgstr "To subscribe for an activity you must login using an RFID pass or your SuSOS pincode."
 
@@ -2752,7 +3080,8 @@ msgstr "Unsubscribe"
 msgid "Activity subscription failed"
 msgstr "Activity subscription failed"
 
-#: module/Activity/view/activity/activity/touch.phtml:313 module/Activity/view/activity/activity/touch.phtml:317
+#: module/Activity/view/activity/activity/touch.phtml:313
+#: module/Activity/view/activity/activity/touch.phtml:317
 msgid "please try again later or use the website."
 msgstr "please try again later or use the website."
 
@@ -2776,7 +3105,8 @@ msgstr "Remove the last field"
 msgid "Add a field"
 msgstr "Add a field"
 
-#: module/Activity/view/activity/activity/list.phtml:15 module/Activity/view/activity/activity/view.phtml:42
+#: module/Activity/view/activity/activity/list.phtml:15
+#: module/Activity/view/activity/activity/view.phtml:42
 msgid "MMM d"
 msgstr "MMM d"
 
@@ -2784,11 +3114,13 @@ msgstr "MMM d"
 msgid "Proposal to update into: "
 msgstr "Proposal to update into: "
 
-#: module/Activity/view/activity/activity/list.phtml:37 module/Frontpage/view/frontpage/frontpage/home.phtml:41
+#: module/Activity/view/activity/activity/list.phtml:37
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:41
 msgid "Continue reading"
 msgstr "Continue reading"
 
-#: module/Activity/view/activity/activity/list.phtml:49 module/Activity/view/activity/activity/view.phtml:62
+#: module/Activity/view/activity/activity/list.phtml:49
+#: module/Activity/view/activity/activity/view.phtml:62
 msgid "Subscribe before"
 msgstr "Subscribe before"
 
@@ -2812,11 +3144,13 @@ msgstr "Subscribe now"
 msgid "Unsubscribe yourself"
 msgstr "Unsubscribe yourself"
 
-#: module/Activity/view/activity/activity/view.phtml:123 module/Activity/src/Activity/Controller/ActivityController.php:310
+#: module/Activity/view/activity/activity/view.phtml:123
+#: module/Activity/src/Activity/Controller/ActivityController.php:310
 msgid "You are not allowed to unsubscribe after the deadline!"
 msgstr "You are not allowed to unsubscribe after the deadline!"
 
-#: module/Activity/view/activity/activity/view.phtml:141 module/Activity/view/activity/activity/view.phtml:158
+#: module/Activity/view/activity/activity/view.phtml:141
+#: module/Activity/view/activity/activity/view.phtml:158
 msgid "Subscribe yourself"
 msgstr "Subscribe yourself"
 
@@ -2830,8 +3164,7 @@ msgstr "Or subscribe without a GEWIS membership: "
 
 #: module/Activity/view/activity/activity/view.phtml:178
 #, php-format
-msgid ""
-"Please contact %s or the board (%s) with any questions, concerns or if you are unable to attend after the deadline for unsubscribing has passed. Have fun!"
+msgid "Please contact %s or the board (%s) with any questions, concerns or if you are unable to attend after the deadline for unsubscribing has passed. Have fun!"
 msgstr ""
 
 #: module/Activity/view/activity/activity/view.phtml:183
@@ -2847,7 +3180,8 @@ msgstr "The number of subscribed members is currently %d."
 msgid "Login to view the subscribed members."
 msgstr "Login to view the subscribed members."
 
-#: module/Activity/view/activity/admin/participants.phtml:5 module/Activity/view/activity/admin/list.phtml:53
+#: module/Activity/view/activity/admin/participants.phtml:5
+#: module/Activity/view/activity/admin/list.phtml:53
 #: module/Activity/view/activity/admin/view.phtml:82
 msgid "Participants"
 msgstr "Participants"
@@ -2868,24 +3202,30 @@ msgstr "Mail everybody"
 msgid "Details for activity"
 msgstr "Details for activity"
 
-#: module/Activity/view/activity/admin/list.phtml:13 module/Activity/view/activity/admin/view.phtml:57
+#: module/Activity/view/activity/admin/list.phtml:13
+#: module/Activity/view/activity/admin/view.phtml:57
 msgid "Dutch name"
 msgstr "Dutch name"
 
-#: module/Activity/view/activity/admin/list.phtml:14 module/Activity/view/activity/admin/view.phtml:58
+#: module/Activity/view/activity/admin/list.phtml:14
+#: module/Activity/view/activity/admin/view.phtml:58
 msgid "English name"
 msgstr "English name"
 
-#: module/Activity/view/activity/admin/list.phtml:16 module/Activity/view/activity/admin/view.phtml:60
+#: module/Activity/view/activity/admin/list.phtml:16
+#: module/Activity/view/activity/admin/view.phtml:60
 msgid "Subscriptions"
 msgstr "Subscriptions"
 
-#: module/Activity/view/activity/admin/list.phtml:17 module/Activity/view/activity/admin/view.phtml:61
+#: module/Activity/view/activity/admin/list.phtml:17
+#: module/Activity/view/activity/admin/view.phtml:61
 msgid "Organ"
 msgstr "Organ"
 
-#: module/Activity/view/activity/admin/list.phtml:18 module/Activity/view/activity/admin/view.phtml:62
-#: module/Frontpage/view/frontpage/poll-admin/list.phtml:20 module/Frontpage/view/frontpage/poll-admin/list.phtml:95
+#: module/Activity/view/activity/admin/list.phtml:18
+#: module/Activity/view/activity/admin/view.phtml:62
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:20
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:95
 msgid "Submitter"
 msgstr "Submitter"
 
@@ -2897,11 +3237,13 @@ msgstr "Update status"
 msgid "Approved"
 msgstr "Approved"
 
-#: module/Activity/view/activity/admin/list.phtml:38 module/Activity/view/activity/admin/list.phtml:40
+#: module/Activity/view/activity/admin/list.phtml:38
+#: module/Activity/view/activity/admin/list.phtml:40
 msgid "Update pending"
 msgstr "Update pending"
 
-#: module/Activity/view/activity/admin/list.phtml:49 module/Activity/view/activity/admin/view.phtml:81
+#: module/Activity/view/activity/admin/list.phtml:49
+#: module/Activity/view/activity/admin/view.phtml:81
 msgid "Edit"
 msgstr "Edit"
 
@@ -2925,7 +3267,8 @@ msgstr "Upcoming Activities"
 msgid "Old activities"
 msgstr "Past activities"
 
-#: module/Activity/view/activity/admin/update.phtml:2 module/Activity/view/activity/admin/update.phtml:27
+#: module/Activity/view/activity/admin/update.phtml:2
+#: module/Activity/view/activity/admin/update.phtml:27
 msgid "Update activity"
 msgstr "Update activity"
 
@@ -2949,13 +3292,17 @@ msgstr "URL options"
 msgid "Make this page available at the following URL. Providing a category is required."
 msgstr "Make this page available at the following URL. Providing a category is required."
 
-#: module/Frontpage/view/frontpage/page-admin/edit.phtml:45 module/Frontpage/view/frontpage/news-admin/edit.phtml:13
-#: module/Frontpage/src/Frontpage/Form/NewsItem.php:43 module/Frontpage/src/Frontpage/Form/Page.php:58
+#: module/Frontpage/view/frontpage/page-admin/edit.phtml:45
+#: module/Frontpage/view/frontpage/news-admin/edit.phtml:13
+#: module/Frontpage/src/Frontpage/Form/NewsItem.php:43
+#: module/Frontpage/src/Frontpage/Form/Page.php:58
 msgid "English content"
 msgstr "English content"
 
-#: module/Frontpage/view/frontpage/page-admin/edit.phtml:69 module/Frontpage/view/frontpage/news-admin/edit.phtml:37
-#: module/Frontpage/src/Frontpage/Form/NewsItem.php:35 module/Frontpage/src/Frontpage/Form/Page.php:50
+#: module/Frontpage/view/frontpage/page-admin/edit.phtml:69
+#: module/Frontpage/view/frontpage/news-admin/edit.phtml:37
+#: module/Frontpage/src/Frontpage/Form/NewsItem.php:35
+#: module/Frontpage/src/Frontpage/Form/Page.php:50
 msgid "Dutch content"
 msgstr "Dutch content"
 
@@ -2972,12 +3319,8 @@ msgid "Studievereniging GEWIS"
 msgstr "Study association GEWIS"
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:11
-msgid ""
-"Welcome to the website of Study association GEWIS, the study association of the department of Mathematics & Computer Science of the Eindhoven University of "
-"Technology."
-msgstr ""
-"Welcome to the website of Study association GEWIS, the study association of the department of Mathematics & Computer Science of the Eindhoven University of "
-"Technology."
+msgid "Welcome to the website of Study association GEWIS, the study association of the department of Mathematics & Computer Science of the Eindhoven University of Technology."
+msgstr "Welcome to the website of Study association GEWIS, the study association of the department of Mathematics & Computer Science of the Eindhoven University of Technology."
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:77
 msgid "Verjaardagen"
@@ -2997,7 +3340,8 @@ msgstr "Agenda"
 msgid "Donderdags is er %sborrel%s van 16.30 tot 19.00 uur."
 msgstr "Thursdays there is a %ssocial drink%s from 16.30 until 19.00."
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:122 module/Frontpage/view/frontpage/organ/organ.phtml:109
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:122
+#: module/Frontpage/view/frontpage/organ/organ.phtml:109
 msgid "Complete agenda"
 msgstr "Complete agenda"
 
@@ -3017,11 +3361,13 @@ msgstr "View the results"
 msgid "There currently is no poll."
 msgstr "There currently is no poll."
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:189 module/Frontpage/view/frontpage/poll/request.phtml:165
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:189
+#: module/Frontpage/view/frontpage/poll/request.phtml:165
 msgid "Request poll"
 msgstr "Request poll"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:192 module/Frontpage/view/frontpage/poll/index.phtml:10
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:192
+#: module/Frontpage/view/frontpage/poll/index.phtml:10
 msgid "Old polls"
 msgstr "Old polls"
 
@@ -3053,27 +3399,34 @@ msgstr "Delete this news item"
 msgid "Polls awaiting approval"
 msgstr "Polls awaiting approval"
 
-#: module/Frontpage/view/frontpage/poll-admin/list.phtml:17 module/Frontpage/view/frontpage/poll-admin/list.phtml:29
-#: module/Frontpage/view/frontpage/poll-admin/list.phtml:92 module/Frontpage/view/frontpage/poll-admin/list.phtml:104
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:17
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:29
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:92
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:104
 #: module/Frontpage/src/Frontpage/Form/Poll.php:20
 msgid "Dutch question"
 msgstr "Dutch question"
 
-#: module/Frontpage/view/frontpage/poll-admin/list.phtml:18 module/Frontpage/view/frontpage/poll-admin/list.phtml:32
-#: module/Frontpage/view/frontpage/poll-admin/list.phtml:93 module/Frontpage/view/frontpage/poll-admin/list.phtml:107
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:18
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:32
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:93
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:107
 #: module/Frontpage/src/Frontpage/Form/Poll.php:28
 msgid "English question"
 msgstr "English question"
 
-#: module/Frontpage/view/frontpage/poll-admin/list.phtml:21 module/Frontpage/view/frontpage/poll-admin/list.phtml:96
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:21
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:96
 msgid "Approver"
 msgstr "Approver"
 
-#: module/Frontpage/view/frontpage/poll-admin/list.phtml:38 module/Frontpage/view/frontpage/poll-admin/list.phtml:113
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:38
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:113
 msgid "Dutch option"
 msgstr "Dutch option"
 
-#: module/Frontpage/view/frontpage/poll-admin/list.phtml:39 module/Frontpage/view/frontpage/poll-admin/list.phtml:114
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:39
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:114
 msgid "English option"
 msgstr "English option"
 
@@ -3089,7 +3442,8 @@ msgstr "Are you sure you want to delete this poll?"
 msgid "Delete poll"
 msgstr "Delete poll"
 
-#: module/Frontpage/view/frontpage/poll-admin/list.phtml:182 module/Frontpage/view/frontpage/poll-admin/list.phtml:209
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:182
+#: module/Frontpage/view/frontpage/poll-admin/list.phtml:209
 #: module/Frontpage/src/Frontpage/Form/PollApproval.php:27
 msgid "Approve poll"
 msgstr "Approve poll"
@@ -3098,7 +3452,8 @@ msgstr "Approve poll"
 msgid "Are you sure that you want to approve this poll?"
 msgstr "Are you sure that you want to approve this poll?"
 
-#: module/Frontpage/view/frontpage/poll/index.phtml:3 module/Frontpage/view/frontpage/poll/index.phtml:15
+#: module/Frontpage/view/frontpage/poll/index.phtml:3
+#: module/Frontpage/view/frontpage/poll/index.phtml:15
 msgid "Current poll"
 msgstr "Current poll"
 
@@ -3127,7 +3482,8 @@ msgstr "Comment on this poll"
 msgid "Poll history"
 msgstr "Poll history"
 
-#: module/Frontpage/view/frontpage/poll/request.phtml:3 module/Frontpage/view/frontpage/poll/request.phtml:7
+#: module/Frontpage/view/frontpage/poll/request.phtml:3
+#: module/Frontpage/view/frontpage/poll/request.phtml:7
 msgid "Request a poll"
 msgstr "Request a poll"
 
@@ -3151,8 +3507,10 @@ msgstr "Welcome to the admin interface of the GEWIS website. If you are experien
 msgid "Recent changes"
 msgstr "Recent changes"
 
-#: module/Frontpage/view/frontpage/organ/organ.phtml:83 module/Decision/src/Decision/Form/OrganInformation.php:27
-#: module/Company/src/Company/Form/EditCompany.php:96 module/Company/src/Company/Form/EditCompany.php:107
+#: module/Frontpage/view/frontpage/organ/organ.phtml:83
+#: module/Decision/src/Decision/Form/OrganInformation.php:27
+#: module/Company/src/Company/Form/EditCompany.php:96
+#: module/Company/src/Company/Form/EditCompany.php:107
 #: module/Company/src/Company/Form/EditJobCompany.php:110
 msgid "Website"
 msgstr "Website"
@@ -3176,12 +3534,8 @@ msgid "Information for committees"
 msgstr "Innovation Sciences"
 
 #: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:8
-msgid ""
-"Study association GEWIS obviously has several fraternities which contribute to the atmosphere at GEWIS and organize fun activities. Some fraternities have "
-"retired, but luckily new fraternities continue to be founded."
-msgstr ""
-"Study association GEWIS obviously has several fraternities which contribute to the atmosphere at GEWIS and organize fun activities. Some fraternities have "
-"retired, but luckily new fraternities continue to be founded."
+msgid "Study association GEWIS obviously has several fraternities which contribute to the atmosphere at GEWIS and organize fun activities. Some fraternities have retired, but luckily new fraternities continue to be founded."
+msgstr "Study association GEWIS obviously has several fraternities which contribute to the atmosphere at GEWIS and organize fun activities. Some fraternities have retired, but luckily new fraternities continue to be founded."
 
 #: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:9
 msgid "The currently active fraternities of GEWIS (in arbitrary order)"
@@ -3195,16 +3549,20 @@ msgstr "Retired fraternities"
 msgid "The following fraternities have retired:"
 msgstr "The following fraternities have retired:"
 
-#: module/Frontpage/view/partial/poll.phtml:41 module/Frontpage/view/partial/poll.phtml:52
+#: module/Frontpage/view/partial/poll.phtml:41
+#: module/Frontpage/view/partial/poll.phtml:52
 msgid "1 vote"
 msgstr "1 vote"
 
-#: module/Frontpage/view/partial/poll.phtml:41 module/Frontpage/view/partial/poll.phtml:52
+#: module/Frontpage/view/partial/poll.phtml:41
+#: module/Frontpage/view/partial/poll.phtml:52
 #, php-format
 msgid "%d votes"
 msgstr "%d votes"
 
-#: module/Photo/src/Photo/Service/Album.php:36 module/Photo/src/Photo/Service/Album.php:74 module/Photo/src/Photo/Service/Album.php:221
+#: module/Photo/src/Photo/Service/Album.php:36
+#: module/Photo/src/Photo/Service/Album.php:74
+#: module/Photo/src/Photo/Service/Album.php:221
 msgid "Not allowed to view albums"
 msgstr "Not allowed to view albums"
 
@@ -3240,8 +3598,11 @@ msgstr "Not allowed to delete albums."
 msgid "Not allowed to generate album covers."
 msgstr "Not allowed to generate album covers."
 
-#: module/Photo/src/Photo/Service/Photo.php:45 module/Photo/src/Photo/Service/Photo.php:97 module/Photo/src/Photo/Service/Photo.php:152
-#: module/Photo/src/Photo/Service/Photo.php:207 module/Photo/src/Photo/Service/Photo.php:228
+#: module/Photo/src/Photo/Service/Photo.php:45
+#: module/Photo/src/Photo/Service/Photo.php:97
+#: module/Photo/src/Photo/Service/Photo.php:152
+#: module/Photo/src/Photo/Service/Photo.php:207
+#: module/Photo/src/Photo/Service/Photo.php:228
 msgid "Not allowed to view photos"
 msgstr "Not allowed to view photos"
 
@@ -3265,7 +3626,8 @@ msgstr "Not allowed to view previous photos of the week"
 msgid "Not allowed to add tags."
 msgstr "Not allowed to add tags."
 
-#: module/Photo/src/Photo/Service/Photo.php:717 module/Photo/src/Photo/Service/Photo.php:819
+#: module/Photo/src/Photo/Service/Photo.php:717
+#: module/Photo/src/Photo/Service/Photo.php:819
 msgid "Not allowed to view tags."
 msgstr "Not allowed to view tags."
 
@@ -3289,7 +3651,8 @@ msgstr "The specified path is not valid"
 msgid "An unknown error occurred during uploading ("
 msgstr "An unknown error occurred during uploading ("
 
-#: module/Photo/src/Photo/Service/Admin.php:176 module/Frontpage/src/Frontpage/Service/Page.php:201
+#: module/Photo/src/Photo/Service/Admin.php:176
+#: module/Frontpage/src/Frontpage/Service/Page.php:201
 msgid "The uploaded file does not have a valid extension"
 msgstr "The uploaded file does not have a valid extension"
 
@@ -3318,7 +3681,8 @@ msgstr "Create"
 msgid "An unknown error occurred during uploading (%i)"
 msgstr "An unknown error occurred during uploading (%i)"
 
-#: module/Decision/src/Decision/Service/Decision.php:31 module/Decision/src/Decision/Service/Decision.php:51
+#: module/Decision/src/Decision/Service/Decision.php:31
+#: module/Decision/src/Decision/Service/Decision.php:51
 #: module/Decision/src/Decision/Service/Decision.php:63
 msgid "You are not allowed to list meetings."
 msgstr "You are not allowed to list meetings."
@@ -3371,7 +3735,8 @@ msgstr ""
 msgid "You are not allowed to view membership info."
 msgstr "You are not allowed to view membership info."
 
-#: module/Decision/src/Decision/Service/Member.php:33 module/Decision/src/Decision/Service/Member.php:114
+#: module/Decision/src/Decision/Service/Member.php:33
+#: module/Decision/src/Decision/Service/Member.php:114
 msgid "You are not allowed to view members."
 msgstr "You are not allowed to view members."
 
@@ -3424,12 +3789,14 @@ msgstr "You are not allowed to approve polls."
 msgid "You are not allowed to view this page"
 msgstr "You are not allowed to view this page."
 
-#: module/Decision/src/Decision/Controller/CompanyAccountController.php:437 module/Decision/src/Decision/Controller/CompanyAccountController.php:511
+#: module/Decision/src/Decision/Controller/CompanyAccountController.php:437
+#: module/Decision/src/Decision/Controller/CompanyAccountController.php:511
 #: module/Decision/src/Decision/Controller/CompanyAccountController.php:648
 msgid "You need a vacancy package to manage your vacancies."
 msgstr ""
 
-#: module/Decision/src/Decision/Controller/CompanyAccountController.php:452 module/Decision/src/Decision/Controller/CompanyAccountController.php:526
+#: module/Decision/src/Decision/Controller/CompanyAccountController.php:452
+#: module/Decision/src/Decision/Controller/CompanyAccountController.php:526
 #: module/Decision/src/Decision/Controller/CompanyAccountController.php:663
 msgid "Your vacancy package has expired, please contact an administrator if you wish to extend your vacancy package."
 msgstr ""
@@ -3470,7 +3837,8 @@ msgstr "Move down"
 msgid "Choose a meeting"
 msgstr "Choose a meeting"
 
-#: module/Decision/src/Decision/Form/Notes.php:47 module/Decision/src/Decision/Form/Notes.php:50
+#: module/Decision/src/Decision/Form/Notes.php:47
+#: module/Decision/src/Decision/Form/Notes.php:50
 msgid "Notes to upload"
 msgstr "Notes to upload"
 
@@ -3498,11 +3866,14 @@ msgstr "You are not allowed to view the banner"
 msgid "You are not allowed to view the featured company"
 msgstr "You are not allowed to view the featured company"
 
-#: module/Company/src/Company/Service/Company.php:108 module/Company/src/Company/Service/Company.php:128
+#: module/Company/src/Company/Service/Company.php:108
+#: module/Company/src/Company/Service/Company.php:128
 msgid "You are not allowed to list the companies"
 msgstr "You are not allowed to list the companies"
 
-#: module/Company/src/Company/Service/Company.php:145 module/Company/src/Company/Service/Company.php:233 module/Company/src/Company/Service/Company.php:396
+#: module/Company/src/Company/Service/Company.php:145
+#: module/Company/src/Company/Service/Company.php:233
+#: module/Company/src/Company/Service/Company.php:396
 msgid "You are not allowed to access the admin interface"
 msgstr "You are not allowed to access the admin interface"
 
@@ -3523,7 +3894,8 @@ msgstr "You are not allowed to insert a job category"
 msgid "You are not allowed to insert a job sector"
 msgstr "You are not allowed to insert a job category"
 
-#: module/Company/src/Company/Service/Company.php:480 module/Company/src/Company/Service/Company.php:515
+#: module/Company/src/Company/Service/Company.php:480
+#: module/Company/src/Company/Service/Company.php:515
 msgid "You are not allowed to edit job categories"
 msgstr "You are not allowed to edit job categories"
 
@@ -3543,8 +3915,11 @@ msgstr "You are not allowed to insert a company"
 msgid "You are not allowed to insert a package"
 msgstr "You are not allowed to insert a package"
 
-#: module/Company/src/Company/Service/Company.php:1004 module/Company/src/Company/Service/Company.php:1124 module/Company/src/Company/Service/Company.php:1468
-#: module/Company/src/Company/Service/Company.php:1688 module/Company/src/Company/Service/Company.php:1701
+#: module/Company/src/Company/Service/Company.php:1004
+#: module/Company/src/Company/Service/Company.php:1124
+#: module/Company/src/Company/Service/Company.php:1468
+#: module/Company/src/Company/Service/Company.php:1688
+#: module/Company/src/Company/Service/Company.php:1701
 msgid "You are not allowed to edit jobs"
 msgstr "You are not allowed to edit vacancies"
 
@@ -3564,7 +3939,9 @@ msgstr "You are not allowed to delete jobs"
 msgid "You are not allowed to delete companies"
 msgstr "You are not allowed to delete companies"
 
-#: module/Company/src/Company/Service/Company.php:1369 module/Company/src/Company/Service/Company.php:1386 module/Company/src/Company/Service/Company.php:1403
+#: module/Company/src/Company/Service/Company.php:1369
+#: module/Company/src/Company/Service/Company.php:1386
+#: module/Company/src/Company/Service/Company.php:1403
 #: module/Company/src/Company/Service/Company.php:1420
 msgid "You are not allowed to edit packages"
 msgstr "You are not allowed to edit packages"
@@ -3586,12 +3963,14 @@ msgstr "You are not allowed to edit categories"
 msgid "You are not allowed to edit labels"
 msgstr "You are not allowed to edit labels"
 
-#: module/Company/src/Company/Form/CategoryFieldset.php:34 module/Company/src/Company/Form/LabelFieldset.php:34
+#: module/Company/src/Company/Form/CategoryFieldset.php:34
+#: module/Company/src/Company/Form/LabelFieldset.php:34
 #: module/Company/src/Company/Form/SectorFieldset.php:34
 msgid "Slug name"
 msgstr "Slug name"
 
-#: module/Company/src/Company/Form/CategoryFieldset.php:45 module/Company/src/Company/Form/LabelFieldset.php:45
+#: module/Company/src/Company/Form/CategoryFieldset.php:45
+#: module/Company/src/Company/Form/LabelFieldset.php:45
 #: module/Company/src/Company/Form/SectorFieldset.php:45
 msgid "Display name"
 msgstr "Display name"
@@ -3600,12 +3979,17 @@ msgstr "Display name"
 msgid "Plural display name"
 msgstr "Plural display name"
 
-#: module/Company/src/Company/Form/CategoryFieldset.php:66 module/Company/src/Company/Form/SectorFieldset.php:54
+#: module/Company/src/Company/Form/CategoryFieldset.php:66
+#: module/Company/src/Company/Form/SectorFieldset.php:54
 msgid "Hidden"
 msgstr "Hidden"
 
-#: module/Company/src/Company/Form/EditLabel.php:41 module/Company/src/Company/Form/EditCompany.php:269 module/Company/src/Company/Form/EditSector.php:41
-#: module/Company/src/Company/Form/EditPackage.php:129 module/Company/src/Company/Form/EditJob.php:62 module/Company/src/Company/Form/EditJobCompany.php:187
+#: module/Company/src/Company/Form/EditLabel.php:41
+#: module/Company/src/Company/Form/EditCompany.php:269
+#: module/Company/src/Company/Form/EditSector.php:41
+#: module/Company/src/Company/Form/EditPackage.php:129
+#: module/Company/src/Company/Form/EditJob.php:62
+#: module/Company/src/Company/Form/EditJobCompany.php:187
 #: module/Company/src/Company/Form/EditCategory.php:41
 msgid "Submit changes"
 msgstr "Submit changes"
@@ -3623,7 +4007,8 @@ msgstr "Name *"
 msgid "Languages"
 msgstr "Languages"
 
-#: module/Company/src/Company/Form/EditCompany.php:117 module/Company/src/Company/Form/EditCompany.php:127
+#: module/Company/src/Company/Form/EditCompany.php:117
+#: module/Company/src/Company/Form/EditCompany.php:127
 msgid "Slogan"
 msgstr "Slogan"
 
@@ -3641,7 +4026,8 @@ msgstr "Public archive"
 msgid "Contact name *"
 msgstr "Contact name *"
 
-#: module/Company/src/Company/Form/EditCompany.php:167 module/Company/src/Company/Form/EditJobCompany.php:165
+#: module/Company/src/Company/Form/EditCompany.php:167
+#: module/Company/src/Company/Form/EditJobCompany.php:165
 msgid "Phone"
 msgstr "Phone"
 
@@ -3655,7 +4041,8 @@ msgstr "highlight"
 msgid "Banner Credits"
 msgstr "Banner"
 
-#: module/Company/src/Company/Form/EditCompany.php:198 module/Company/src/Company/Form/EditCompany.php:209
+#: module/Company/src/Company/Form/EditCompany.php:198
+#: module/Company/src/Company/Form/EditCompany.php:209
 msgid "Logo"
 msgstr "Logo"
 
@@ -3663,7 +4050,8 @@ msgstr "Logo"
 msgid "Hide this company"
 msgstr "Hide this company"
 
-#: module/Company/src/Company/Form/EditCompany.php:251 module/Company/src/Company/Form/EditJobCompany.php:87
+#: module/Company/src/Company/Form/EditCompany.php:251
+#: module/Company/src/Company/Form/EditJobCompany.php:87
 msgid "Send an autogenerated email to the company"
 msgstr ""
 
@@ -3672,16 +4060,21 @@ msgstr ""
 msgid "Email Subscription"
 msgstr "Enable subscriptions"
 
-#: module/Company/src/Company/Form/EditCompany.php:278 module/Company/src/Company/Form/EditJobCompany.php:119
+#: module/Company/src/Company/Form/EditCompany.php:278
+#: module/Company/src/Company/Form/EditJobCompany.php:119
 #, fuzzy
 msgid "Reject approval"
 msgstr "Revoke approval"
 
-#: module/Company/src/Company/Form/EditCompany.php:339 module/Company/src/Company/Form/EditJob.php:103 module/Company/src/Company/Form/EditJobCompany.php:228
+#: module/Company/src/Company/Form/EditCompany.php:339
+#: module/Company/src/Company/Form/EditJob.php:103
+#: module/Company/src/Company/Form/EditJobCompany.php:228
 msgid "This slug is already taken"
 msgstr "This slug is already taken"
 
-#: module/Company/src/Company/Form/EditCompany.php:342 module/Company/src/Company/Form/EditJob.php:106 module/Company/src/Company/Form/EditJobCompany.php:231
+#: module/Company/src/Company/Form/EditCompany.php:342
+#: module/Company/src/Company/Form/EditJob.php:106
+#: module/Company/src/Company/Form/EditJobCompany.php:231
 msgid "This slug contains invalid characters"
 msgstr "This slug contains invalid characters"
 
@@ -3697,7 +4090,8 @@ msgstr "Attachment"
 msgid "Teaser"
 msgstr ""
 
-#: module/Company/src/Company/Form/JobFieldset.php:107 module/Company/src/Company/Form/EditJobCompany.php:54
+#: module/Company/src/Company/Form/JobFieldset.php:107
+#: module/Company/src/Company/Form/EditJobCompany.php:54
 msgid "Category"
 msgstr "Category"
 
@@ -3730,7 +4124,8 @@ msgstr "Banner"
 msgid "Select Vacancy *"
 msgstr "Select an option"
 
-#: module/Company/src/Company/Form/EditJob.php:53 module/Company/src/Company/Form/EditJobCompany.php:66
+#: module/Company/src/Company/Form/EditJob.php:53
+#: module/Company/src/Company/Form/EditJobCompany.php:66
 msgid "What labels apply to this job?"
 msgstr ""
 
@@ -3754,7 +4149,8 @@ msgstr "Course doesn't exist"
 msgid "You are not allowed to delete exams"
 msgstr "You are not allowed to delete exams"
 
-#: module/Education/src/Education/Service/Exam.php:297 module/Education/src/Education/Service/Exam.php:407
+#: module/Education/src/Education/Service/Exam.php:297
+#: module/Education/src/Education/Service/Exam.php:407
 msgid "You are not allowed to upload exams"
 msgstr "You are not allowed to upload exams"
 
@@ -3762,16 +4158,19 @@ msgstr "You are not allowed to upload exams"
 msgid "You are not allowed to add courses"
 msgstr "You are not allowed to add courses"
 
-#: module/Education/src/Education/Form/Fieldset/Summary.php:35 module/Education/src/Education/Form/SummaryUpload.php:32
+#: module/Education/src/Education/Form/Fieldset/Summary.php:35
+#: module/Education/src/Education/Form/SummaryUpload.php:32
 msgid "Summary date"
 msgstr "Summary date"
 
-#: module/Education/src/Education/Form/Fieldset/Summary.php:43 module/Education/src/Education/Form/SummaryUpload.php:40
+#: module/Education/src/Education/Form/Fieldset/Summary.php:43
+#: module/Education/src/Education/Form/SummaryUpload.php:40
 #: module/Frontpage/src/Frontpage/Form/PollComment.php:20
 msgid "Author"
 msgstr "Author"
 
-#: module/Education/src/Education/Form/Fieldset/Summary.php:51 module/Education/src/Education/Form/Fieldset/Exam.php:57
+#: module/Education/src/Education/Form/Fieldset/Summary.php:51
+#: module/Education/src/Education/Form/Fieldset/Exam.php:57
 #: module/Education/src/Education/Form/SummaryUpload.php:48
 msgid "Language"
 msgstr "Language"
@@ -3792,11 +4191,13 @@ msgstr "Intermediate test"
 msgid "Exam answers"
 msgstr "Exam answers"
 
-#: module/Education/src/Education/Form/SummaryUpload.php:60 module/Education/src/Education/Form/SummaryUpload.php:63
+#: module/Education/src/Education/Form/SummaryUpload.php:60
+#: module/Education/src/Education/Form/SummaryUpload.php:63
 msgid "Summary to upload"
 msgstr "Summary to upload"
 
-#: module/Education/src/Education/Form/TempUpload.php:20 module/Education/src/Education/Form/TempUpload.php:23
+#: module/Education/src/Education/Form/TempUpload.php:20
+#: module/Education/src/Education/Form/TempUpload.php:23
 msgid "Exam to upload"
 msgstr "Exam to upload"
 
@@ -3840,7 +4241,8 @@ msgstr "Add course"
 msgid "Finalize uploads"
 msgstr "Finalize uploads"
 
-#: module/User/src/User/Service/ApiUser.php:32 module/User/src/User/Service/ApiUser.php:66
+#: module/User/src/User/Service/ApiUser.php:32
+#: module/User/src/User/Service/ApiUser.php:66
 msgid "You are not allowed to view API tokens"
 msgstr "You are not allowed to view API tokens"
 
@@ -3852,23 +4254,29 @@ msgstr "You are not allowed to remove API tokens"
 msgid "You are not allowed to add API tokens"
 msgstr "You are not allowed to add API tokens"
 
-#: module/User/src/User/Service/Email.php:42 module/User/src/User/Service/CompanyEmail.php:37
+#: module/User/src/User/Service/Email.php:42
+#: module/User/src/User/Service/CompanyEmail.php:37
 msgid "Account activation code for the GEWIS Website"
 msgstr "Account activation code for the GEWIS Website"
 
-#: module/User/src/User/Service/Email.php:69 module/User/src/User/Service/Email.php:96
+#: module/User/src/User/Service/Email.php:69
+#: module/User/src/User/Service/Email.php:96
 msgid "Password reset code for the GEWIS Website"
 msgstr "Password reset code for the GEWIS Website"
 
-#: module/User/src/User/Service/Company.php:72 module/User/src/User/Service/User.php:474 module/User/src/User/Service/User.php:499
+#: module/User/src/User/Service/Company.php:72
+#: module/User/src/User/Service/User.php:474
+#: module/User/src/User/Service/User.php:499
 msgid "You need to log in to perform this action"
 msgstr "You need to log in to perform this action"
 
-#: module/User/src/User/Service/Company.php:186 module/User/src/User/Service/User.php:627
+#: module/User/src/User/Service/Company.php:186
+#: module/User/src/User/Service/User.php:627
 msgid "You are not allowed to change your password"
 msgstr "You are not allowed to change your password"
 
-#: module/User/src/User/Service/User.php:285 module/User/src/User/Service/User.php:333
+#: module/User/src/User/Service/User.php:285
+#: module/User/src/User/Service/User.php:333
 msgid "Password incorrect"
 msgstr "Password incorrect"
 
@@ -3876,27 +4284,34 @@ msgstr "Password incorrect"
 msgid "You are not allowed to login using pin codes"
 msgstr "You are not allowed to login using pin codes"
 
-#: module/User/src/User/Form/Register.php:35 module/User/src/User/Form/CompanyPassword.php:27
+#: module/User/src/User/Form/Register.php:35
+#: module/User/src/User/Form/CompanyPassword.php:27
 msgid "E-mail address"
 msgstr "E-mail address"
 
-#: module/User/src/User/Form/Register.php:61 module/User/src/User/Form/CompanyPassword.php:54
+#: module/User/src/User/Form/Register.php:61
+#: module/User/src/User/Form/CompanyPassword.php:54
 msgid "This email address does not be long to the given member."
 msgstr "This email address does not be long to the given member."
 
-#: module/User/src/User/Form/Register.php:68 module/User/src/User/Form/CompanyPassword.php:61
+#: module/User/src/User/Form/Register.php:68
+#: module/User/src/User/Form/CompanyPassword.php:61
 msgid "There is no member with this membership number."
 msgstr "There is no member with this membership number."
 
-#: module/User/src/User/Form/Register.php:75 module/User/src/User/Form/CompanyPassword.php:68
+#: module/User/src/User/Form/Register.php:75
+#: module/User/src/User/Form/CompanyPassword.php:68
 msgid "You already attempted to register, please check your email or try again after 15 minutes."
 msgstr "You already attempted to register, please check your email or try again after 15 minutes."
 
-#: module/User/src/User/Form/Register.php:82 module/User/src/User/Form/CompanyPassword.php:75
+#: module/User/src/User/Form/Register.php:82
+#: module/User/src/User/Form/CompanyPassword.php:75
 msgid "This member already has an account."
 msgstr "This member already has an account."
 
-#: module/User/src/User/Form/Activate.php:20 module/User/src/User/Form/CompanyLogin.php:31 module/User/src/User/Form/Login.php:31
+#: module/User/src/User/Form/Activate.php:20
+#: module/User/src/User/Form/CompanyLogin.php:31
+#: module/User/src/User/Form/Login.php:31
 msgid "Your password"
 msgstr "Your password"
 
@@ -3909,19 +4324,23 @@ msgstr "Verify your password"
 msgid "Email address"
 msgstr "Email address:"
 
-#: module/User/src/User/Form/CompanyLogin.php:47 module/User/src/User/Form/Login.php:47
+#: module/User/src/User/Form/CompanyLogin.php:47
+#: module/User/src/User/Form/Login.php:47
 msgid "Remember me"
 msgstr "Remember me"
 
-#: module/User/src/User/Form/CompanyLogin.php:78 module/User/src/User/Form/Login.php:77
+#: module/User/src/User/Form/CompanyLogin.php:78
+#: module/User/src/User/Form/Login.php:77
 msgid "This user could not be found."
 msgstr "This user could not be found."
 
-#: module/User/src/User/Form/CompanyLogin.php:85 module/User/src/User/Form/Login.php:84
+#: module/User/src/User/Form/CompanyLogin.php:85
+#: module/User/src/User/Form/Login.php:84
 msgid "Wrong password provided."
 msgstr "Wrong password provided."
 
-#: module/User/src/User/Form/CompanyLogin.php:92 module/User/src/User/Form/Login.php:91
+#: module/User/src/User/Form/CompanyLogin.php:92
+#: module/User/src/User/Form/Login.php:91
 msgid "Too many login attempts, try again later."
 msgstr "Too many login attempts, try again later."
 
@@ -3941,7 +4360,8 @@ msgstr "New password"
 msgid "Verify new password"
 msgstr "Verify new password"
 
-#: module/Activity/src/Activity/Service/Signup.php:50 module/Activity/src/Activity/Service/Signup.php:186
+#: module/Activity/src/Activity/Service/Signup.php:50
+#: module/Activity/src/Activity/Service/Signup.php:186
 msgid "You need to be logged in to sign up for this activity"
 msgstr "You need to be logged in to sign up for this activity"
 
@@ -3957,8 +4377,10 @@ msgstr "You are not allowed to view who is signed up for this activity"
 msgid "You are not allowed to view the sign up data"
 msgstr "You are not allowed to view the sign up data"
 
-#: module/Activity/src/Activity/Service/Signup.php:142 module/Activity/src/Activity/Service/ActivityQuery.php:53
-#: module/Activity/src/Activity/Service/ActivityQuery.php:113 module/Activity/src/Activity/Service/ActivityQuery.php:129
+#: module/Activity/src/Activity/Service/Signup.php:142
+#: module/Activity/src/Activity/Service/ActivityQuery.php:53
+#: module/Activity/src/Activity/Service/ActivityQuery.php:113
+#: module/Activity/src/Activity/Service/ActivityQuery.php:129
 #: module/Activity/src/Activity/Service/ActivityQuery.php:312
 msgid "You are not allowed to view the activities"
 msgstr "You are not allowed to view the activities"
@@ -3967,7 +4389,8 @@ msgstr "You are not allowed to view the activities"
 msgid "You are not allowed to view activities which you signed up for"
 msgstr "You are not allowed to view activities which you signed up for"
 
-#: module/Activity/src/Activity/Service/Signup.php:210 module/Activity/src/Activity/Service/Signup.php:230
+#: module/Activity/src/Activity/Service/Signup.php:210
+#: module/Activity/src/Activity/Service/Signup.php:230
 msgid "You are not allowed to create signups for this activity"
 msgstr "You are not allowed to create signups for this activity"
 
@@ -3979,7 +4402,8 @@ msgstr "You need to be logged in to sign off for this activity"
 msgid "You are not allowed to remove external signups for this activity"
 msgstr "You are not allowed to remove external signups for this activity"
 
-#: module/Activity/src/Activity/Service/Activity.php:48 module/Activity/src/Activity/Service/Activity.php:71
+#: module/Activity/src/Activity/Service/Activity.php:48
+#: module/Activity/src/Activity/Service/Activity.php:71
 msgid "You are not allowed to create an activity"
 msgstr "You are not allowed to create an activity"
 
@@ -3991,7 +4415,8 @@ msgstr "You are not allowed to update this activity"
 msgid "You are not allowed to create an activity for this organ"
 msgstr "You are not allowed to create an activity for this organ"
 
-#: module/Activity/src/Activity/Service/Activity.php:475 module/Activity/src/Activity/Service/Activity.php:494
+#: module/Activity/src/Activity/Service/Activity.php:475
+#: module/Activity/src/Activity/Service/Activity.php:494
 #: module/Activity/src/Activity/Service/Activity.php:514
 msgid "You are not allowed to change the status of the activity"
 msgstr "You are not allowed to change the status of the activity"
@@ -4044,13 +4469,16 @@ msgstr "The activity has been successfully updated."
 msgid "It will become applied after it has been approved by the board."
 msgstr "It will become applied after it has been approved by the board."
 
-#: module/Activity/src/Activity/Controller/AdminController.php:141 module/Activity/src/Activity/Controller/ActivityController.php:172
+#: module/Activity/src/Activity/Controller/AdminController.php:141
+#: module/Activity/src/Activity/Controller/ActivityController.php:172
 #: module/Activity/src/Activity/Controller/ActivityController.php:232
 msgid "Use the form to subscribe"
 msgstr "Use the form to subscribe"
 
-#: module/Activity/src/Activity/Controller/AdminController.php:152 module/Activity/src/Activity/Controller/AdminController.php:197
-#: module/Activity/src/Activity/Controller/ActivityController.php:198 module/Activity/src/Activity/Controller/ActivityController.php:243
+#: module/Activity/src/Activity/Controller/AdminController.php:152
+#: module/Activity/src/Activity/Controller/AdminController.php:197
+#: module/Activity/src/Activity/Controller/ActivityController.php:198
+#: module/Activity/src/Activity/Controller/ActivityController.php:243
 msgid "Invalid form"
 msgstr "Invalid form"
 
@@ -4139,7 +4567,8 @@ msgstr "Multiple days"
 msgid "Select a type"
 msgstr "Select a type"
 
-#: module/Activity/src/Activity/Form/ActivityCalendarOption.php:79 module/Activity/src/Activity/Form/Activity.php:374
+#: module/Activity/src/Activity/Form/ActivityCalendarOption.php:79
+#: module/Activity/src/Activity/Form/Activity.php:374
 msgid "The activity must start before it ends"
 msgstr "The activity must start before it ends"
 
@@ -4227,11 +4656,13 @@ msgstr "The uploaded file is not a valid image"
 msgid "You are not allowed to create new pages."
 msgstr "You are not allowed to create new pages."
 
-#: module/Frontpage/src/Frontpage/Form/NewsItem.php:19 module/Frontpage/src/Frontpage/Form/Page.php:34
+#: module/Frontpage/src/Frontpage/Form/NewsItem.php:19
+#: module/Frontpage/src/Frontpage/Form/Page.php:34
 msgid "Dutch title"
 msgstr "Dutch title"
 
-#: module/Frontpage/src/Frontpage/Form/NewsItem.php:27 module/Frontpage/src/Frontpage/Form/Page.php:42
+#: module/Frontpage/src/Frontpage/Form/NewsItem.php:27
+#: module/Frontpage/src/Frontpage/Form/Page.php:42
 msgid "English title"
 msgstr "English title"
 
@@ -4243,7 +4674,8 @@ msgstr "Expiration date for the poll (YYYY-MM-DD)"
 msgid "Content"
 msgstr "Content"
 
-#: module/Frontpage/src/Frontpage/Form/PollComment.php:36 module/Frontpage/src/Frontpage/Form/PollComment.php:39
+#: module/Frontpage/src/Frontpage/Form/PollComment.php:36
+#: module/Frontpage/src/Frontpage/Form/PollComment.php:39
 msgid "Comment"
 msgstr "Comment"
 
@@ -4564,12 +4996,8 @@ msgstr "Inactive Member"
 #~ msgid "Add featured package"
 #~ msgstr "Add featured package"
 
-#~ msgid ""
-#~ "Do you really want to delete this package? This will delete all containing Jobs. Instead, you can also disable the 'published' option of this package to "
-#~ "just hide it."
-#~ msgstr ""
-#~ "Do you really want to delete this package? This will delete all containing Jobs. Instead, you can also disable the 'published' option of this package to "
-#~ "just hide it."
+#~ msgid "Do you really want to delete this package? This will delete all containing Jobs. Instead, you can also disable the 'published' option of this package to just hide it."
+#~ msgstr "Do you really want to delete this package? This will delete all containing Jobs. Instead, you can also disable the 'published' option of this package to just hide it."
 
 #~ msgid "Commissions"
 #~ msgstr "Commissions"
@@ -4592,12 +5020,8 @@ msgstr "Inactive Member"
 #~ msgid "Import photos"
 #~ msgstr "Import photos"
 
-#~ msgid ""
-#~ "Make sure that the folder permissions on your import folder are set such that the webserver user can read the files inside of it. Please note that "
-#~ "importing a large amount of photos may take a while."
-#~ msgstr ""
-#~ "Make sure that the folder permissions on your import folder are set such that the webserver user can read the files inside of it. Please note that "
-#~ "importing a large amount of photos may take a while."
+#~ msgid "Make sure that the folder permissions on your import folder are set such that the webserver user can read the files inside of it. Please note that importing a large amount of photos may take a while."
+#~ msgstr "Make sure that the folder permissions on your import folder are set such that the webserver user can read the files inside of it. Please note that importing a large amount of photos may take a while."
 
 #~ msgid "Welcome to the website of Study association %sGEWIS%s. This is just a bootstrap thingy for now, until the design is implemented."
 #~ msgstr "Welcome to the website of Study association %sGEWIS%s. This is just a bootstrap thingy for now, until the design is implemented."
@@ -4614,12 +5038,8 @@ msgstr "Inactive Member"
 #~ msgid "Welcome to %sZend Framework 2%s"
 #~ msgstr "Welcome to %sZend Framework 2%s"
 
-#~ msgid ""
-#~ "Congratulations! You have successfully installed the %sZF2 Skeleton Application%s. You are currently running Zend Framework version %s. This skeleton "
-#~ "can serve as a simple starting point for you to begin building your application on ZF2."
-#~ msgstr ""
-#~ "Congratulations! You have successfully installed the %sZF2 Skeleton Application%s. You are currently running Zend Framework version %s. This skeleton "
-#~ "can serve as a simple starting point for you to begin building your application on ZF2."
+#~ msgid "Congratulations! You have successfully installed the %sZF2 Skeleton Application%s. You are currently running Zend Framework version %s. This skeleton can serve as a simple starting point for you to begin building your application on ZF2."
+#~ msgstr "Congratulations! You have successfully installed the %sZF2 Skeleton Application%s. You are currently running Zend Framework version %s. This skeleton can serve as a simple starting point for you to begin building your application on ZF2."
 
 #~ msgid "Fork Zend Framework 2 on GitHub"
 #~ msgstr "Fork Zend Framework 2 on GitHub"
@@ -4627,14 +5047,8 @@ msgstr "Inactive Member"
 #~ msgid "Follow Development"
 #~ msgstr "Follow Development"
 
-#~ msgid ""
-#~ "Zend Framework 2 is under active development. If you are interested in following the development of ZF2, there is a special ZF2 portal on the official "
-#~ "Zend Framework website which provides links to the ZF2 %swiki%s, %sdev blog%s, %sissue tracker%s, and much more. This is a great resource for staying up "
-#~ "to date with the latest developments!"
-#~ msgstr ""
-#~ "Zend Framework 2 is under active development. If you are interested in following the development of ZF2, there is a special ZF2 portal on the official "
-#~ "Zend Framework website which provides links to the ZF2 %swiki%s, %sdev blog%s, %sissue tracker%s, and much more. This is a great resource for staying up "
-#~ "to date with the latest developments!"
+#~ msgid "Zend Framework 2 is under active development. If you are interested in following the development of ZF2, there is a special ZF2 portal on the official Zend Framework website which provides links to the ZF2 %swiki%s, %sdev blog%s, %sissue tracker%s, and much more. This is a great resource for staying up to date with the latest developments!"
+#~ msgstr "Zend Framework 2 is under active development. If you are interested in following the development of ZF2, there is a special ZF2 portal on the official Zend Framework website which provides links to the ZF2 %swiki%s, %sdev blog%s, %sissue tracker%s, and much more. This is a great resource for staying up to date with the latest developments!"
 
 #~ msgid "ZF2 Development Portal"
 #~ msgstr "ZF2 Development Portal"
@@ -4642,12 +5056,8 @@ msgstr "Inactive Member"
 #~ msgid "Discover Modules"
 #~ msgstr "Discover Modules"
 
-#~ msgid ""
-#~ "The community is working on developing a community site to serve as a repository and gallery for ZF2 modules. The project is available %son GitHub%s. "
-#~ "The site is currently live and currently contains a list of some of the modules already available for ZF2."
-#~ msgstr ""
-#~ "The community is working on developing a community site to serve as a repository and gallery for ZF2 modules. The project is available %son GitHub%s. "
-#~ "The site is currently live and currently contains a list of some of the modules already available for ZF2."
+#~ msgid "The community is working on developing a community site to serve as a repository and gallery for ZF2 modules. The project is available %son GitHub%s. The site is currently live and currently contains a list of some of the modules already available for ZF2."
+#~ msgstr "The community is working on developing a community site to serve as a repository and gallery for ZF2 modules. The project is available %son GitHub%s. The site is currently live and currently contains a list of some of the modules already available for ZF2."
 
 #~ msgid "Explore ZF2 Modules"
 #~ msgstr "Explore ZF2 Modules"
@@ -4655,12 +5065,8 @@ msgstr "Inactive Member"
 #~ msgid "Help &amp; Support"
 #~ msgstr "Help &amp; Support"
 
-#~ msgid ""
-#~ "If you need any help or support while developing with ZF2, you may reach us via IRC: %s#zftalk on Freenode%s. We'd love to hear any questions or "
-#~ "feedback you may have regarding the beta releases. Alternatively, you may subscribe and post questions to the %smailing lists%s."
-#~ msgstr ""
-#~ "If you need any help or support while developing with ZF2, you may reach us via IRC: %s#zftalk on Freenode%s. We'd love to hear any questions or "
-#~ "feedback you may have regarding the beta releases. Alternatively, you may subscribe and post questions to the %smailing lists%s."
+#~ msgid "If you need any help or support while developing with ZF2, you may reach us via IRC: %s#zftalk on Freenode%s. We'd love to hear any questions or feedback you may have regarding the beta releases. Alternatively, you may subscribe and post questions to the %smailing lists%s."
+#~ msgstr "If you need any help or support while developing with ZF2, you may reach us via IRC: %s#zftalk on Freenode%s. We'd love to hear any questions or feedback you may have regarding the beta releases. Alternatively, you may subscribe and post questions to the %smailing lists%s."
 
 #~ msgid "Ping us on IRC"
 #~ msgstr "Ping us on IRC"

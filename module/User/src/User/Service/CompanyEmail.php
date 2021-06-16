@@ -6,6 +6,7 @@ use Application\Service\AbstractService;
 
 use Company\Model\Company as CompanyModel;
 
+use phpDocumentor\Reflection\Types\Boolean;
 use User\Model\NewCompany;
 use Zend\Mail\Message;
 use Zend\View\Model\ViewModel;
@@ -39,6 +40,45 @@ class CompanyEmail extends AbstractService
 
         $this->getTransport()->send($message);
 
+    }
+
+
+    /**
+     * Send registration email.
+     *
+     * @param CompanyModel $company
+     * @param mixed $type
+     * @param Bool $rejected
+     */
+    public function sendApprovalResult(CompanyModel $company, Boolean $rejected, $type = null)
+    {
+        $objectName = $type == null ? $company->getName() : $type->getName();
+
+
+        if ($rejected) {
+            $body = $this->render('email/approvalRejection', [
+                'company' => $company,
+                'type' => $objectName,
+            ]);
+        } else {
+            $body = $this->render('email/approvalAcceptance', [
+                'company' => $company,
+                'type' => $objectName,
+            ]);
+        }
+
+        $translator = $this->getServiceManager()->get('translator');
+
+        $message = new Message();
+
+        $config = $this->getConfig();
+
+        $message->addFrom($config['from']);
+        $message->addTo($company->getContactEmail());
+        $message->setSubject($translator->translate($rejected ? $objectName . 'Rejected' : $objectName . 'Accepted'));
+        $message->setBody($body);
+
+        $this->getTransport()->send($message);
     }
 
     /**
