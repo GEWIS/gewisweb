@@ -37,6 +37,17 @@ class Approval extends AbstractAclService
         return $this->getApprovalMapper()->findEditableCompaniesBySlugName($slugName, true);
     }
 
+    public function deletePendingApproval($deletionInfo){
+        //check type
+        if($deletionInfo["type"] === "banner"){
+            $this->getApprovalMapper()->deleteBannerApproval($deletionInfo["approvalId"]);
+        }elseif($deletionInfo["type"] === "vacancy"){
+            $this->getApprovalMapper()->deleteVacancyApproval($deletionInfo["approvalId"], $deletionInfo["packageId"]);
+        }elseif ($deletionInfo["type"] === "profile"){
+            $this->getApprovalMapper()->deleteProfileApproval($deletionInfo["approvalId"], $deletionInfo["companyId"]);
+        }
+    }
+
     public function getApprovalCompanyI18($cId){
         return $this->getApprovalMapper()->findApprovalCompanyI18($cId);
     }
