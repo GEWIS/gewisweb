@@ -103,6 +103,15 @@ class Approval
         $qb->getQuery()->getResult();
     }
 
+    public function findApprovalProfileById($id) {
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('c');
+        $qb->select('c')->where('c.id=:id');
+        $qb->setParameter('id', $id);
+
+        return $qb->getQuery()->getResult();
+    }
+
 
 
     public function acceptBannerApproval($id, $approvalId){

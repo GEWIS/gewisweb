@@ -56,11 +56,13 @@ $test = "d";
                         //determing type
 
                         if($pendingApproval->getType() === "profile") {
-                            $url .= "approval-profile/" . $slugName;
+                            $url .= "approval-profile/" . $pendingApproval->getProfileApproval()->getId();
                             $deleteValue["companyId"] = $pendingApproval->getCompany()->getId();
+                            $deleteValue["profileApprovalId"] = $pendingApproval->getProfileApproval()->getId();
                         }elseif($pendingApproval->getType() === "vacancy"){
                             $url .= "approval-vacancy/" . $vacancyApprovalId;
                             $deleteValue["packageId"] = $pendingApproval->getVacancyApproval()->getPackage()->getId();
+                            $deleteValue["languageNeutralId"] = $pendingApproval->getVacancyApproval()->getLanguageNeutralId();
                         }elseif($pendingApproval->getType() == "banner"){
                             $url .= "approval-banner/" . $pendingApproval->getId();
                         }

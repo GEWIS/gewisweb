@@ -62,7 +62,7 @@ class AdminController extends AbstractActionController
         if (isset($_POST['delete'])) {
             $deleteInfo = json_decode($_POST["delete"], True);
             $approvalService->deletePendingApproval($deleteInfo);
-            //header("Refresh:0");
+            header("Refresh:0");
         }
 
         // Initialize the view
@@ -207,12 +207,12 @@ class AdminController extends AbstractActionController
 
 
         // Get parameter
-        $companyName = $this->params('slugCompanyName');
+        $approvalId = $this->params('slugCompanyName');
 
         // Get the specified company
 
-        $companyList = $approvalService->getEditableCompaniesBySlugName($companyName);
-        $oldCompanyList = $companyService->getEditableCompaniesBySlugName($companyName);
+        $companyList = $approvalService->getApprovalProfileById($approvalId);
+        $oldCompanyList = $companyService->getEditableCompaniesBySlugName($companyList[0]->getSlugName());
         //echo var_dump($companyList);
         //$companyList = $companyService->getEditableCompaniesBySlugName($companyName);
 
