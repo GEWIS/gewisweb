@@ -808,6 +808,11 @@ class Company extends AbstractACLService
                     }
                 }
             }
+            $pending = new ApprovalPending();
+            $pending->setType('profile');
+            $pending->setProfileApproval($profile);
+            $this->getApprovalMapper()->persist($pending);
+
             $this->getApprovalMapper()->save($profile);
             return true;
         }
