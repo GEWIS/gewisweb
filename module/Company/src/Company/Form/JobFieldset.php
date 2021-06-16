@@ -87,7 +87,7 @@ class JobFieldset extends Fieldset
 
         $this->add([
             'name' => 'teaser',
-            'type' => 'Zend\Form\Element\Textarea',
+            'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Teaser'),
                 'required' => false,
