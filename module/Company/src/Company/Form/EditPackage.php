@@ -153,7 +153,7 @@ class EditPackage extends Form
             case self::EXPIRATIONDATE_AFTER_STARTDATE:
                 $this->setMessages([
                     'expirationDate' => [
-                       $translate->translate("Please make sure the expirationdate is after the startingdate.")
+                       $translate->translate("Please make sure the expiration date is after the starting date.")
                     ]
                 ]);
                 break;
@@ -174,14 +174,14 @@ class EditPackage extends Form
             case self::NOT_ENOUGH_CREDITS_HIGHLIGHT:
                 $this->setMessages([
                     'expirationDate' => [
-                        $translate->translate("Unfortunately there are not enough days available to highlight this vacancy")
+                        $translate->translate("Unfortunately there are not enough days available to highlight this vacancy.")
                     ]
                 ]);
                 break;
             case self::NOT_ENOUGH_CREDITS_BANNER:
                 $this->setMessages([
                     'expirationDate' => [
-                        $translate->translate("Unfortunately there are not enough days available to add this banner")
+                        $translate->translate("Unfortunately there are not enough days available to add this banner.")
                     ]
                 ]);
                 break;
