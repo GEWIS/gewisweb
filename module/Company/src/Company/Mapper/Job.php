@@ -106,12 +106,12 @@ class Job
      * Find the same job, but in the given language
      *
      */
-    public function siblingId($languageNeutraLId, $lang)
+    public function siblingId($languageNeutralId, $lang)
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('j')
             ->select('j.id')->where('j.languageNeutralId=:languageNeutralId')->andWhere('j.language=:language')
-            ->setParameter('languageNeutralId', $languageNeutraLId)
+            ->setParameter('languageNeutralId', $languageNeutralId)
             ->setParameter('language', $lang);
 
         $ids = $qb->getQuery()->getResult();
@@ -123,12 +123,12 @@ class Job
      * Find the same job, but in the given language
      *
      */
-    public function siblingJob($languageNeutraLId, $lang)
+    public function siblingJob($languageNeutralId, $lang)
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('j')
             ->select('j')->where('j.languageNeutralId=:languageNeutralId')->andWhere('j.language=:language')
-            ->setParameter('languageNeutralId', $languageNeutraLId)
+            ->setParameter('languageNeutralId', $languageNeutralId)
             ->setParameter('language', $lang);
 
         $ids = $qb->getQuery()->getResult();
