@@ -24,6 +24,7 @@ class AdminController extends AbstractActionController
      */
     public function indexAction()
     {
+        $this->notAdminNotAllowed();
         // Get useful stuff
         $companyService = $this->getCompanyService();
 
@@ -39,7 +40,18 @@ class AdminController extends AbstractActionController
         ]);
     }
 
+    public function notAdminNotAllowed() {
+        if ($this->identity() == null || !in_array('admin', $this->identity()->getRoleNames())) {
+            $translator = $this->getCompanyService()->getTranslator();
+            throw new \User\Permissions\NotAllowedException(
+                $translator->translate('You need to be an administrator to view this page')
+            );
+        }
+    }
+
+
     public function approvalPageAction(){
+        $this->notAdminNotAllowed();
 
         $approvalService = $this->getApprovalService();
 
@@ -74,6 +86,7 @@ class AdminController extends AbstractActionController
 
     public function approvalVacancyAction()
     {
+        $this->notAdminNotAllowed();
         $newVacancy = false;
         // Get useful stuff
         $companyService = $this->getCompanyService();
@@ -176,6 +189,7 @@ class AdminController extends AbstractActionController
     }
 
     public function approvalBannerAction(){
+        $this->notAdminNotAllowed();
         $approvalService = $this->getApprovalService();
 
         //get company
@@ -216,6 +230,7 @@ class AdminController extends AbstractActionController
 
     public function approvalProfileAction()
     {
+        $this->notAdminNotAllowed();
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $approvalService = $this->getApprovalService();
@@ -323,6 +338,7 @@ class AdminController extends AbstractActionController
      */
     public function addCompanyAction()
     {
+        $this->notAdminNotAllowed();
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $companyForm = $companyService->getCompanyForm();
@@ -376,6 +392,7 @@ class AdminController extends AbstractActionController
      */
     public function addPackageAction()
     {
+        $this->notAdminNotAllowed();
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $companyAccountController = $this->getCompanyAccountController();
@@ -448,6 +465,7 @@ class AdminController extends AbstractActionController
      */
     public function addJobAction()
     {
+        $this->notAdminNotAllowed();
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $companyForm = $companyService->getJobFormCompany();
@@ -514,6 +532,7 @@ class AdminController extends AbstractActionController
      */
     public function editCategoryAction()
     {
+        $this->notAdminNotAllowed();
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $categoryForm = $companyService->getCategoryForm();
@@ -570,6 +589,7 @@ class AdminController extends AbstractActionController
      */
     public function editSectorAction()
     {
+        $this->notAdminNotAllowed();
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $sectorForm = $companyService->getSectorForm();
@@ -626,6 +646,7 @@ class AdminController extends AbstractActionController
      */
     public function editLabelAction()
     {
+        $this->notAdminNotAllowed();
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $labelForm = $companyService->getLabelForm();
@@ -694,6 +715,7 @@ class AdminController extends AbstractActionController
      */
     public function editCompanyAction()
     {
+        $this->notAdminNotAllowed();
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $companyForm = $companyService->getCompanyForm();
@@ -761,6 +783,7 @@ class AdminController extends AbstractActionController
      */
     public function editPackageAction()
     {
+        $this->notAdminNotAllowed();
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $companyAccountController = $this->getCompanyAccountController();
@@ -787,7 +810,11 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             if ($companyService->savePackageByData($package, $request->getPost(), $request->getFiles())) {
-                    return $this->redirect()->toRoute('admin_company/editHighlight');
+                    return $this->redirect()->toRoute(
+                        'admin_company/editCompany',
+                        ['slugCompanyName' => $companyName],
+                        [],
+                        false);
                 // TODO: possibly redirect to company
             }
         }
@@ -830,6 +857,7 @@ class AdminController extends AbstractActionController
      */
     public function editJobAction()
     {
+        $this->notAdminNotAllowed();
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $jobForm = $companyService->getJobFormCompany();
@@ -895,6 +923,7 @@ class AdminController extends AbstractActionController
      */
     public function deleteCompanyAction()
     {
+        $this->notAdminNotAllowed();
         // Get useful stuff
         $companyService = $this->getCompanyService();
 
@@ -913,6 +942,7 @@ class AdminController extends AbstractActionController
 
     public function addCategoryAction()
     {
+        $this->notAdminNotAllowed();
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $categoryForm = $companyService->getCategoryForm();
@@ -953,6 +983,7 @@ class AdminController extends AbstractActionController
 
     public function addSectorAction()
     {
+        $this->notAdminNotAllowed();
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $sectorForm = $companyService->getSectorForm();
@@ -993,6 +1024,7 @@ class AdminController extends AbstractActionController
 
     public function addLabelAction()
     {
+        $this->notAdminNotAllowed();
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $labelForm = $companyService->getLabelForm();
@@ -1038,6 +1070,7 @@ class AdminController extends AbstractActionController
      */
     public function deletePackageAction()
     {
+        $this->notAdminNotAllowed();
         // Get useful stuff
         $companyService = $this->getCompanyService();
 
@@ -1063,6 +1096,7 @@ class AdminController extends AbstractActionController
      */
     public function deleteJobAction()
     {
+        $this->notAdminNotAllowed();
         $request = $this->getRequest();
         if (!$request->isPost()) {
             return $this->notFoundAction();
@@ -1090,6 +1124,7 @@ class AdminController extends AbstractActionController
      */
     public function editHighlightAction()
     {
+        $this->notAdminNotAllowed();
         $companyService = $this->getCompanyService();
         $translator = $companyService->getTranslator();
 

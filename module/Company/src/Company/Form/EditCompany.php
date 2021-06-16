@@ -268,6 +268,8 @@ class EditCompany extends Form
                 'type' => 'submit',
                 'value' => $translate->translate('Submit changes'),
                 'id' => 'submitbutton',
+                'data-toggle'=>"modal",
+                'data-target'=>"#changeModal"
             ],
         ]);
 
