@@ -63,14 +63,15 @@ class CompanyAccountController extends AbstractActionController
                     $post,
                     $files['banner'],
                     'banner'
-                ))
-                $email = $this->getDecisionEmail();
-                $email->sendApprovalMail($company);
-                {
+                )){
+                    $companyService->addBannerApproval(3);
+                    $email = $this->getDecisionEmail();
+                    $email->sendApprovalMail($company);
                     return $this->redirect()->toRoute(
                         'companyaccount'
                     );
                 }
+
             } else {
                 echo $this->function_alert($MSG);
                 $packageForm->setData($this->resetInsertedDates($post));

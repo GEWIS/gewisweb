@@ -96,8 +96,7 @@ class AdminController extends AbstractActionController
             $companyService->deleteVacancyApprovals($vacancyApprovals);
 
             if($_POST['sendEmail']) {
-                //TODO: add email sending function
-                print_r('test');
+                $this->getCompanyEmailService()->sendApprovalResult($jobs[0]->getPackage()->getCompany(),$jobs[0], false);
             }
             return $this->redirect()->toRoute(
                 'admin_company/approvalPage'
@@ -109,8 +108,7 @@ class AdminController extends AbstractActionController
             }
 
             if($_POST['sendEmail']) {
-                //TODO: add email sending function
-                print_r('test');
+                $this->getCompanyEmailService()->sendApprovalResult($jobs[0]->getPackage()->getCompany(),$jobs[0], true);
             }
 
             return $this->redirect()->toRoute(
@@ -231,9 +229,10 @@ class AdminController extends AbstractActionController
                 $request->getFiles()
             )) {
                 if($_POST['sendEmail']) {
-                    //TODO: add email sending function
-                    print_r('test');
+                    $this->getCompanyEmailService()->sendApprovalResult($oldCompany, false);
                 }
+
+                $companyService->deleteProfileApprovals($company);
 
                 //$companyName = $request->getPost()['slugName'];
                 /*return $this->redirect()->toRoute(
@@ -252,8 +251,7 @@ class AdminController extends AbstractActionController
             //TODO send email
 
             if($_POST['sendEmail']) {
-                //TODO: add email sending function
-                print_r('test');
+                $this->getCompanyEmailService()->sendApprovalResult($oldCompany, true);
             }
 
             $approvalService->rejectProfileApproval($_POST['id']);

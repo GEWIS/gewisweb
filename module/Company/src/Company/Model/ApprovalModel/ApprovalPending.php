@@ -159,6 +159,14 @@ class ApprovalPending
         $this->type = $type;
     }
 
+    /**
+     * @param String $type
+     */
+    public function setBaner($banner)
+    {
+        $this->BannerApproval = $banner;
+    }
+
     public function getCompany(){
         if(!is_null($this->VacancyApproval)){
             return $this->VacancyApproval->getCompany();
