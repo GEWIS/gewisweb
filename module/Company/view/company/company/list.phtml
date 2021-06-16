@@ -33,7 +33,7 @@ if (isset($this->company)) {
                         <select name="sectors" id="sector-filter" class="form-control">
                             <option value="all" > <?= $this->translate("All")?></option>
                             <?php foreach ($this->jobSectors($locale) as $sector): ?>
-                                <option value="<?= $sector->getName()?>" > <?= $sector->getName()?></option>
+                                <option value="<?= $sector->getLanguageNeutralId()?>" > <?= $sector->getName()?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -89,7 +89,7 @@ if (isset($this->company)) {
                                     <?php endforeach; ?>
                                 </ul>
                                 <span class="label label-default job-sectors"
-                                      data-sectors="<?= $company->getSector()->getName(); ?>" data-toggle="tooltip"></span>
+                                      data-sectors="<?= $company->getSector()->getLanguageNeutralId(); ?>" data-toggle="tooltip"></span>
                                 <div
                                     style="display: none"<span class="card-subtitle text-muted"><?= $company->getName() ?></span>
                             </div>
@@ -181,7 +181,8 @@ if (isset($this->company)) {
             },
             filterBySector: function (sector) {
                 cards.forEach(function (card) {
-                    card.isMatchOn['sectors'] = (card.sectors.indexOf(sector) > -1);
+                    console.log(card);
+                    card.isMatchOn['sectors'] = (card.sectors.indexOf(parseInt(sector)) > -1);
                 });
 
                 updateCardVisibility();
