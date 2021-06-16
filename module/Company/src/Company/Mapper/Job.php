@@ -93,11 +93,13 @@ class Job
     public function findAllActiveJobs($lang)
     {
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j');
-        $qb->where('j.language=:lang');
-        $qb->setParameter('lang', $lang);
+        $qb ->select('j');
+        $qb -> where('j.language=:lang');
+        $qb ->setParameter('lang', $lang);
         return $qb->getQuery()->getResult();
     }
+
+
 
 
     /**
@@ -109,6 +111,23 @@ class Job
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('j')
             ->select('j.id')->where('j.languageNeutralId=:languageNeutralId')->andWhere('j.language=:language')
+            ->setParameter('languageNeutralId', $languageNeutraLId)
+            ->setParameter('language', $lang);
+
+        $ids = $qb->getQuery()->getResult();
+
+        return $ids[0];
+    }
+
+    /**
+     * Find the same job, but in the given language
+     *
+     */
+    public function siblingJob($languageNeutraLId, $lang)
+    {
+        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('j')
+            ->select('j')->where('j.languageNeutralId=:languageNeutralId')->andWhere('j.language=:language')
             ->setParameter('languageNeutralId', $languageNeutraLId)
             ->setParameter('language', $lang);
 
@@ -337,13 +356,19 @@ class Job
      * @return array Company\Model\JobCategory.
      */
     public function getRandomVacancies($highlightIds, $category, $language) {
+        $today = date("Y/m/d");
+
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
 
         $qb = $objectRepository->createQueryBuilder('j');
         $qb -> select('j.id')
+            -> join('j.package', 'h')
             -> where('j.active = 1')
             -> andWhere('j.language = ?1')
-            -> setParameter(1, $language);
+            -> andWhere('h.expires >= ?2')
+            -> andWhere('h.published = 1')
+            -> setParameter(1, $language)
+            -> setParameter(2, $today);
         if ($category!=NULL) {
             $qb -> andWhere('IDENTITY(j.category) = (?5)')
                 ->setParameter(5, $category);
@@ -352,7 +377,6 @@ class Job
             $qb -> andWhere('j.id NOT IN (?4)')
                 -> setParameter(4, $highlightIds);
         }
-
 
         return $qb->getQuery()->getResult();
     }

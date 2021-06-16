@@ -74,6 +74,7 @@ class AdminController extends AbstractActionController
 
     public function approvalVacancyAction()
     {
+        $newVacancy = false;
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $approvalService = $this->getApprovalService();
@@ -90,7 +91,8 @@ class AdminController extends AbstractActionController
 
         // Check the job is found. If not, throw 404
         if (empty($jobs)) {
-            return $this->notFoundAction();
+            $newVacancy = true;
+//            return $this->notFoundAction();
         }
 
         // Handle incoming form results
@@ -100,11 +102,24 @@ class AdminController extends AbstractActionController
             $post = $request->getPost();
             $jobDict = [];
 
-            foreach ($jobs as $job) {
+
+            foreach ($vacancyApprovals as $job) {
                 $jobDict[$job->getLanguage()] = $job;
             }
+            if (!$newVacancy) {
+                $jobDict = [];
+//                print_r($post);
+                foreach ($jobs as $job) {
+                    $jobDict[$job->getLanguage()] = $job;
+//                    $post[$job->getLanguage()]['id'] = $job->getId();
+                }
+            }
 
-            $companyService->saveJobData($languageNeutralId, $jobDict, $post, $files);
+            if ($newVacancy) {
+                $companyService->createJob($vacancyApprovals[0]->getPackage()->getId(), $post, $files);
+            } else {
+                $companyService->saveJobData($languageNeutralId, $jobDict, $post, $files);
+            }
             $companyService->deleteVacancyApprovals($vacancyApprovals);
 
             if($_POST['sendEmail']) {
@@ -136,17 +151,19 @@ class AdminController extends AbstractActionController
         $languages = array_keys($jobDict);
         $jobForm->setLanguages($languages);
 
-        $labels = $jobs[0]->getLabels();
 
         $mapper = $companyService->getLabelMapper();
-        $actualLabels = [];
-        foreach ($labels as $label) {
-            $actualLabel = $label->getLabel();
-            $actualLabels[] = $mapper->siblingLabel($actualLabel, 'en');
-            $actualLabels[] = $mapper->siblingLabel($actualLabel, 'nl');
+        if(!$newVacancy) {
+            $labels = $jobs[0]->getLabels();
+            $actualLabels = [];
+            foreach ($labels as $label) {
+                $actualLabel = $label->getLabel();
+                $actualLabels[] = $mapper->siblingLabel($actualLabel, 'en');
+                $actualLabels[] = $mapper->siblingLabel($actualLabel, 'nl');
+            }
+            $jobForm->setLabels($actualLabels);
         }
-        $jobForm->setLabels($actualLabels);
-        $jobForm->setData($jobs[0]->getArrayCopy());
+        $jobForm->setData($vacancyApprovals[0]->getArrayCopy());
         $jobForm->bind($jobDict);
 
         // Initialize the view

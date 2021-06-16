@@ -34,6 +34,13 @@ class ApprovalVacancy implements ApprovalAbstract
     protected $id;
 
     /**
+     * The
+     *
+     * @ORM\ManyToOne(targetEntity="\Company\Model\Job")
+     */
+    protected $vacancy;
+
+    /**
      * The job's display name.
      *
      * @ORM\Column(type="string")
@@ -46,6 +53,14 @@ class ApprovalVacancy implements ApprovalAbstract
      * @ORM\Column(type="string")
      */
     protected $slugName;
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
     /**
      * The job's status.
      *
@@ -189,6 +204,23 @@ class ApprovalVacancy implements ApprovalAbstract
      * @ORM\ManyToOne(targetEntity="\Company\Model\JobSector")@ORM\ManyToOne(targetEntity="\Company\Model\JobSector")
      */
     protected $sectors;
+
+    /**
+     * @return mixed
+     */
+    public function getVacancy()
+    {
+        return $this->vacancy;
+    }
+
+    /**
+     * @param mixed $vacancy
+     */
+    public function setVacancy($vacancy)
+    {
+        $this->vacancy = $vacancy;
+    }
+
 
     /**
      * Get the approval's approval status.

@@ -67,6 +67,7 @@ $element->setAttribute('class', 'form-control');
     <?= $this->formInput($element) ?>
     <?= $this->formElementErrors($element) ?>
 </div>
+<?php } ?>
 
 <?php
 $element = $form->get('email');
@@ -80,7 +81,12 @@ $element->setAttribute('class', 'form-control');
     <?= $this->formElementErrors($element) ?>
 </div>
 
-<?php $element = $form->get('emailSubscription'); ?>
+
+<?php
+// Show certain fields only to admins, not to companies editing their own profile
+// Companies can edit this field in settings
+if ($this->identity() !== null && in_array('admin', $this->identity()->getRoleNames())) {
+$element = $form->get('emailSubscription'); ?>
     <div class="checkbox">
         <label>
             <?= $this->formCheckbox($element) ?>

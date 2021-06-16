@@ -1167,6 +1167,11 @@ class Company extends AbstractACLService
             $approvalJob->setPackage($package);
             $approvalJob->setLanguage($lang);
 
+            if($languageNeutralId != "") {
+                $job = $this->getJobMapper()->siblingJob($languageNeutralId, $lang);
+                $approvalJob->setVacancy($job);
+            }
+
             $approvalJobs[$lang] = $approvalJob;
         }
 
