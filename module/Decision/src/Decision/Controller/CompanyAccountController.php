@@ -424,10 +424,10 @@ class CompanyAccountController extends AbstractActionController
             $company->setName($companyName);
 //            $companyService->saveCompany();
 
+            sleep(5);
             return $this->redirect()->toRoute(
-                'companyaccount/profile',
+                'companyaccount/index',
                 [
-                    'action' => 'edit',
                     'slugCompanyName' => $companyName,
                 ],
                 [],
