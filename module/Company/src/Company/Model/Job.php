@@ -641,6 +641,19 @@ class Job
     }
 
     /**
+     * Updates this object with values in the form of getArrayCopy()
+     *
+     */
+    public function exchangeLanguageArray($data)
+    {
+        $this->setName($this->updateIfSet($data['name'], ''));
+        $this->setSlugName($this->updateIfSet($data['slugName'], ''));
+        $this->setDescription($this->updateIfSet($data['description'], ''));
+        $this->setTeaser($this->updateIfSet($data['teaser'], ''));
+        $this->setActive($this->updateIfSet($data['active'], null));
+    }
+
+    /**
      * Returns an array copy with varName=> var for all variables except the
      * translation.
      *

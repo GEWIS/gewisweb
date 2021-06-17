@@ -103,9 +103,8 @@ class AdminController extends AbstractActionController
         $vacancyApprovals = $approvalService->getEditableVacanciesByLanguageNeutralId($languageNeutralId);
 
         // Check the job is found. If not, throw 404
-        if (empty($jobs)) {
+        if (empty($jobs) || $jobs[0]->getPackage()->getId() != $vacancyApprovals[0]->getPackage()->getId()) {
             $newVacancy = true;
-//            return $this->notFoundAction();
         }
 
         // Handle incoming form results
@@ -116,12 +115,12 @@ class AdminController extends AbstractActionController
             $jobDict = [];
 
 
-            foreach ($vacancyApprovals as $job) {
+            foreach ($jobs as $job) {
                 $jobDict[$job->getLanguage()] = $job;
             }
-            if (!$newVacancy) {
+            if ($newVacancy) {
                 $jobDict = [];
-                foreach ($jobs as $job) {
+                foreach ($vacancyApprovals as $job) {
                     $jobDict[$job->getLanguage()] = $job;
                 }
             }
@@ -180,7 +179,9 @@ class AdminController extends AbstractActionController
             }
             $jobForm->setLabels($actualLabels);
         }
-        $jobForm->setData($vacancyApprovals[0]->getArrayCopy());
+        foreach ($vacancyApprovals as $approval) {
+            $jobForm->setData($approval->getArrayCopy());
+        }
         $jobForm->bind($jobDict);
 
         // Initialize the view
@@ -282,7 +283,6 @@ class AdminController extends AbstractActionController
                 $company->getArrayCopy()['nl_logo']
             )) {
                 if($_POST['sendEmail']) {
-
                     $name = $oldCompany->getName();
                     $route = '/career/company/' . $oldCompany->getSlugName();
                     $this->getCompanyEmailService()->sendApprovalResult($oldCompany, false, $name, $route);
@@ -290,15 +290,6 @@ class AdminController extends AbstractActionController
 
                 $companyService->deleteProfileApprovals($company);
 
-                //$companyName = $request->getPost()['slugName'];
-                /*return $this->redirect()->toRoute(
-                    '/admin/company/approval-page',
-                    [
-                        'action' => 'approvalPage'
-                    ],
-                    [],
-                    false
-                );*/
                 return $this->redirect()->toRoute(
                     'admin_company/approvalPage'
                 );

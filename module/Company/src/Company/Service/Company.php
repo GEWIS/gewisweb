@@ -1073,6 +1073,9 @@ class Company extends AbstractACLService
                 $this->getTranslator()->translate('You are not allowed to edit jobs')
             );
         }
+        foreach($jobs as $job) {
+            $job->exchangeLanguageArray($data['jobs'][$job->getLanguage()]);
+        }
 
         $jobForm = $this->getJobFormCompany();
         $mergedData = array_merge_recursive(
@@ -1114,6 +1117,7 @@ class Company extends AbstractACLService
             }
 
             $job->setTimeStamp(new \DateTime());
+
 
             $id = $this->setLanguageNeutralJobId($id, $job, $languageNeutralId, $this->getJobMapper());
             $this->getJobMapper()->persist($job);
@@ -1242,7 +1246,6 @@ class Company extends AbstractACLService
             }
 
             $job->setTimeStamp(new \DateTime());
-
             $id = $this->setLanguageNeutralJobId($id, $job, $languageNeutralId, $this->getApprovalMapper());
             $this->getApprovalMapper()->persist($job);
 
@@ -1274,9 +1277,13 @@ class Company extends AbstractACLService
             $id = $approval->getId();
             $pending = $this->getApprovalMapper()->findPendingVacancyApprovalById($id)[0];
 
+//            print_r(get_class($approval));
+//            echo "\n";
+//            print_r(get_class($pending));
+//            echo "\n";
             // Delete the approvals
-            $this->getApprovalMapper()->removeApproval($pending);
-            $this->getApprovalMapper()->removeApproval($approval);
+//            $this->getApprovalMapper()->removeApproval($pending);
+//            $this->getApprovalMapper()->removeApproval($approval);
         }
     }
 
@@ -1290,10 +1297,16 @@ class Company extends AbstractACLService
 
         // Delete the approvals
         foreach ($languages as $lang) {
-            $this->getApprovalMapper()->removeApproval($lang);
+            print_r(get_class($lang));
+            echo "\n";
+//            $this->getApprovalMapper()->removeApproval($lang);
         }
-        $this->getApprovalMapper()->removeApproval($pending);
-        $this->getApprovalMapper()->removeApproval($profileApproval);
+
+        print_r(get_class($profileApproval));
+        echo "\n";
+        print_r(get_class($pending));
+//        $this->getApprovalMapper()->removeApproval($pending);
+//        $this->getApprovalMapper()->removeApproval($profileApproval);
     }
 
 
