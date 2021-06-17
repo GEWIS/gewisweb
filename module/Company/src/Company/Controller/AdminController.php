@@ -216,12 +216,20 @@ class AdminController extends AbstractActionController
                 'admin_company/approvalPage'
             );
 
-        }elseif(isset($_POST['reject'])){
-            $approvalService->rejectBannerApproval($approvalId);
+            if (isset($_POST['email'])) {
+                //check mail
+            }
 
-            return $this->redirect()->toRoute(
-                'admin_company/approvalPage'
-            );
+        }elseif(isset($_POST['reject'])){
+            //$approvalService->rejectBannerApproval($approvalId);
+
+            if (isset($_POST['email'])) {
+                //check mail
+            }
+
+//            return $this->redirect()->toRoute(
+//                'admin_company/approvalPage'
+//            );
         }
 
 

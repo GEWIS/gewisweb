@@ -19,6 +19,8 @@ $this->headScript()->prependFile($this->basePath() . '/js/photo.js')
 
 <div class="form-group">
     <form action='' method="post">
+    <input type="checkbox" id="email" name="email" checked>
+        <label for="email"><?= $this->translate('Send mail') ?></label>
     <button type="submit" class="btn btn-primary pull-left" name="accept">
         <?= $this->translate('Accept') ?>
     </button>
