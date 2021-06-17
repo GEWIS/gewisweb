@@ -18,6 +18,11 @@ class Approval extends AbstractAclService
         return $this->getApprovalMapper()->findPendingApprovals();
     }
 
+    public function getPendingApprovalByProfile($id){
+        return $this->getApprovalMapper()->findPendingApprovalByProfile($id);
+    }
+
+
     /**
      * Returns all companies with a given $slugName and makes them persistent
      *

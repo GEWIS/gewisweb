@@ -244,6 +244,19 @@ class Approval
         return $qb->getQuery()->getResult();
     }
 
+    public function findPendingApprovalByProfile($id)
+    {
+        $builder = new ResultSetMappingBuilder($this->em);
+        $builder->addRootEntityFromClassMetadata('Company\Model\ApprovalModel\ApprovalPending', 'ap');
+
+        $select = $builder->generateSelectClause(['ap' => 't1']);
+        $sql = "SELECT $select FROM ApprovalPending AS t1".
+        " WHERE t1.ProfileApproval_id = $id";
+        $query = $this->em->createNativeQuery($sql, $builder);
+
+        return $query->getResult();
+    }
+
     /**
      * Find the Profile approval with the given id.
      *

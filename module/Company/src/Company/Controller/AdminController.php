@@ -72,6 +72,7 @@ class AdminController extends AbstractActionController
         }
 
         if (isset($_POST['delete'])) {
+
             $deleteInfo = json_decode($_POST["delete"], True);
             $approvalService->deletePendingApproval($deleteInfo);
             header("Refresh:0");
@@ -245,6 +246,8 @@ class AdminController extends AbstractActionController
 
         // Get parameter
         $approvalId = $this->params('slugCompanyName');
+        $pendingApprovalId = $approvalService->getPendingApprovalByProfile($approvalId)[0]->getId();
+
 
         // Get the specified company
 
@@ -288,7 +291,13 @@ class AdminController extends AbstractActionController
                     $this->getCompanyEmailService()->sendApprovalResult($oldCompany, false, $name, $route);
                 }
 
-                $companyService->deleteProfileApprovals($company);
+
+                $deleteInfo = ["type" => "profile", "approvalId" => $pendingApprovalId,
+                    "companyId"=>$company->getId(),
+                    "profileApprovalId"=>$approvalId];
+
+                $approvalService->deletePendingApproval($deleteInfo);
+                //$companyService->deleteProfileApprovals($company);
 
                 return $this->redirect()->toRoute(
                     'admin_company/approvalPage'
