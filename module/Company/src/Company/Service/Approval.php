@@ -88,7 +88,7 @@ class Approval extends AbstractAclService
             $this->getApprovalMapper()->removeApproval($lang);
         }
         $this->getApprovalMapper()->removeApproval($pending);
-        $this->getApprovalMapper()->removeApproval($profileApproval);
+        //$this->getApprovalMapper()->removeApproval($profileApproval);
     }
 
     public function getApprovalCompanyI18($cId){
