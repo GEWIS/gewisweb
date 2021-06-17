@@ -23,7 +23,7 @@ class ApprovalProfile implements ApprovalAbstract{
     /**
      * The profile approvals company
      *
-     * @ORM\ManyToOne(targetEntity="\Company\Model\Company", inversedBy="translations", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="\Company\Model\Company")
      */
     protected $company;
 
