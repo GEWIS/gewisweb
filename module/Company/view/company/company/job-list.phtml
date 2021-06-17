@@ -110,59 +110,72 @@ $this->headTitle($all ? 'All Vacancies' : $this->category->getPluralName());
         <div class="row">
             <div class="col-md-12">
                 <div class="highlight-grid">
-                    <?php foreach ($highlights as $index => $job): ?>
-                        <?php
-                        $company = $job->getPackage()->getCompany();
+<!--                    <div class="slideshow-container">-->
+                        <?php foreach ($highlights as $index => $job): ?>
+                        <div class="mySlides">
+                            <?php
+                            $company = $job->getPackage()->getCompany();
 
-                        $jobUrl = $this->url('company/companyItem/joblist/job_item', [
-                            'slugCompanyName' => $company->getSlugName(),
-                            'slugJobName' => $job->getSlugName(),
-                            'category' => $job->getCategory()->getSlug(),
-                        ]);
-                        ?>
-                        <a href="<?= $jobUrl ?>" class="<?= "highlighted" ?>" data-index="<?= $index ?>"
-                           data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>"
-                           data-sector="<?= $job->getSectors()->getName() ?>"
-                           data-name="<?= $job->getName() ?>"
-                           data-starts="<?= $job->getStartingDate()->format(DateTime::ATOM) ?>">
-                            <div class="card-img">
-                                <img
-                                src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
-                                alt="<?= $this->escapeHtmlAttr($company->getName()) ?>"/>
-                            </div>
-                            <div class="text">
-                                <h2 class="card-title"><?= $job->getName() ?></h2>
-                                <p class="card-subtitle text-muted"><?= $company->getName() ?></p>
-                                <div>
-                                    <?php foreach ($job->getLabels() as $labelAsg): ?>
-                                        <?php $label = $labelAsg->getLabel(); ?>
-                                        <span class="label label-default job-label"
-                                              data-label="<?= $label->getSlug(); ?>" data-toggle="tooltip"
-                                              title="<?= $label->getName(); ?>"><?= $label->getSlug(); ?></span>
-                                    <?php endforeach; ?>
+                            $jobUrl = $this->url('company/companyItem/joblist/job_item', [
+                                'slugCompanyName' => $company->getSlugName(),
+                                'slugJobName' => $job->getSlugName(),
+                                'category' => $job->getCategory()->getSlug(),
+                            ]);
+                            ?>
+                            <a href="<?= $jobUrl ?>" class="<?= "highlighted" ?>" data-index="<?= $index ?>"
+                               data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>"
+                               data-sector="<?= $job->getSectors()->getName() ?>"
+                               data-name="<?= $job->getName() ?>"
+                               data-starts="<?= $job->getStartingDate()->format(DateTime::ATOM) ?>">
+                                <div class="card-img">
+                                    <img
+                                    src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
+                                    alt="<?= $this->escapeHtmlAttr($company->getName()) ?>"/>
                                 </div>
-                                <div>
-                                    <br>
-                                    <?php if ($job->getTeaser() != null) : ?>
-                                        <p class="card-subtitle text-muted"><?= $job->getTeaser() ?></p>
-                                    <?php endif; ?>
+                                <div class="text">
+                                    <h2 class="card-title"><?= $job->getName() ?></h2>
+                                    <p class="card-subtitle text-muted"><?= $company->getName() ?></p>
+                                    <div>
+                                        <?php foreach ($job->getLabels() as $labelAsg): ?>
+                                            <?php $label = $labelAsg->getLabel(); ?>
+                                            <span class="label label-default job-label"
+                                                  data-label="<?= $label->getSlug(); ?>" data-toggle="tooltip"
+                                                  title="<?= $label->getName(); ?>"><?= $label->getSlug(); ?></span>
+                                        <?php endforeach; ?>
+                                    </div>
+                                    <div>
+                                        <br>
+                                        <?php if ($job->getTeaser() != null) : ?>
+                                            <p class="card-subtitle text-muted"><?= $job->getTeaser() ?></p>
+                                        <?php endif; ?>
+                                    </div>
+                                    <span class="label label-default job-hours"
+                                          data-hours="<?= $job->getHours(); ?>" data-toggle="tooltip"></span>
+                                    <span class="label label-default job-sectors"
+                                          data-sectors="<?= $job->getSectors()->getLanguageNeutralId(); ?>"
+                                          data-toggle="tooltip"></span>
                                 </div>
-                                <span class="label label-default job-hours"
-                                      data-hours="<?= $job->getHours(); ?>" data-toggle="tooltip"></span>
-                                <span class="label label-default job-sectors"
-                                      data-sectors="<?= $job->getSectors()->getLanguageNeutralId(); ?>"
-                                      data-toggle="tooltip"></span>
                                 <div class="card-footer">
-                                    <button class="btn btn-link"><?= $this->translate('View') ?></button>
                                     <span class="small">
-                                    <?php if (!is_null($job->getLocation())): ?>
-                                        <p class="job-location"><?= $job->getLocation() ?></p>
-                                    <?php endif; ?>
-                                    </span>
+                                        <?php if (!is_null($job->getLocation())): ?>
+                                            <p class="job-location"><?= $job->getLocation() ?></p>
+                                        <?php endif; ?>
+                                        </span>
+                                    <button class="btn btn-link"><?= $this->translate('View') ?></button>
                                 </div>
-                            </div>
-                        </a>
-                    <?php endforeach; ?>
+                            </a>
+                        </div>
+                        <?php endforeach; ?>
+                        <!-- Next and previous buttons -->
+                        <div class="prev" onclick="plusSlides(-1)">&#10094;</div>
+                        <div class="next" onclick="plusSlides(1)">&#10095;</div>
+                    </div>
+                </div>
+                <!-- The dots/circles -->
+                <div style="text-align:center;">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
                 </div>
             </div>
         </div>
@@ -475,4 +488,34 @@ $this->headTitle($all ? 'All Vacancies' : $this->category->getPluralName());
     $('[data-toggle="tooltip"]').tooltip({
         viewport: {"selector": ".card-grid"}
     });
+
+
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    // Next/previous controls
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" activeDot", "");
+        }
+        slides[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " activeDot";
+    }
 </script>
