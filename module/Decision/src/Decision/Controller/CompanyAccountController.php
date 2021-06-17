@@ -34,18 +34,19 @@ class CompanyAccountController extends AbstractActionController
         $vacancies = empty($companyPackageInfo) ? [] : $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getID(), $locale);
 
 
-//        foreach($companyInfo as $info){
-//            if($info->getType() === "job"){
-//                $companyInfo = $info;
-//                break;
-//            }
-//        }
+
+        foreach($companyPackageInfo as $info){
+            if(!is_null($info->getContractNumber())){
+                $companyPackageInfo = $info;
+                break;
+            }
+        }
 
        // echo var_dump($companyPackageInfo);
         return new ViewModel([
             //fetch the active vacancies of the logged in company
             'vacancies' => $vacancies,
-            'companyPackageInfo' => $companyPackageInfo,
+            'companyPackageInfo' => [$companyPackageInfo],
             'companyInfo'  => $companyInfo
         ]);
     }
@@ -310,6 +311,15 @@ class CompanyAccountController extends AbstractActionController
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
         $companyId = $company->getId();
         $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyId);
+
+        foreach($companyPackageInfo as $info){
+            if(!is_null($info->getContractNumber())){
+                $companyPackageInfo = [$info];
+                break;
+            }
+        }
+
+
         $date = $companyPackageInfo[0]->getExpirationDate();
 
         if ($post['expirationDate'] >= $date) {
@@ -475,8 +485,15 @@ class CompanyAccountController extends AbstractActionController
         $companyInfo = $this->getSettingsService()->getCompanyInfo($companyId);
         $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyId);
 
+        foreach($companyPackageInfo as $info){
+            if(!is_null($info->getContractNumber())){
+                $companyPackageInfo = $info;
+                break;
+            }
+        }
+
         return new ViewModel([
-            'companyPackageInfo' => $companyPackageInfo,
+            'companyPackageInfo' => [$companyPackageInfo],
             'companyInfo'  => $companyInfo,
             'settingsService' => $this->getSettingsService()
         ]);

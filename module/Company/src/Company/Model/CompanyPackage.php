@@ -106,6 +106,8 @@ abstract class CompanyPackage
         $this->starts = $starts;
     }
 
+
+
     /**
      * Get the package's expiration date.
      *
