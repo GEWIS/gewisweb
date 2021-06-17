@@ -52,18 +52,16 @@ class CompanyEmail extends AbstractService
      */
     public function sendApprovalResult(CompanyModel $company, $rejected, $name, $route)
     {
-
-
         if ($rejected) {
             $body = $this->render('email/approvalRejection', [
                 'company' => $company,
                 'name' => $name,
-                'route' => $route,
             ]);
         } else {
             $body = $this->render('email/approvalAcceptance', [
                 'company' => $company,
                 'name' => $name,
+                'route' => $route,
             ]);
         }
 

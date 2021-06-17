@@ -136,7 +136,7 @@ class AdminController extends AbstractActionController
             if($_POST['sendEmail']) {
                 $company = $vacancyApprovals[0]->getPackage()->getCompany();
                 $name = $vacancyApprovals[0]->getName();
-                $route = 'career/company/' . $company->getSlugName() . "/" . $vacancyApprovals[0]->getCategory()->getSlug() . "/" . $vacancyApprovals[0]->getSlugName();
+                $route = '/career/company/' . $company->getSlugName() . "/" . $vacancyApprovals[0]->getCategory()->getSlug() . "/" . $vacancyApprovals[0]->getSlugName();
                 $this->getCompanyEmailService()->sendApprovalResult($company, false, $name, $route);
             }
             return $this->redirect()->toRoute(
@@ -284,7 +284,7 @@ class AdminController extends AbstractActionController
                 if($_POST['sendEmail']) {
 
                     $name = $oldCompany->getName();
-                    $route = 'career/company/' . $oldCompany->getSlugName();
+                    $route = '/career/company/' . $oldCompany->getSlugName();
                     $this->getCompanyEmailService()->sendApprovalResult($oldCompany, false, $name, $route);
                 }
 
