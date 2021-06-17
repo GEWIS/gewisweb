@@ -132,7 +132,6 @@ class Job
             ->setParameter('language', $lang);
 
         $ids = $qb->getQuery()->getResult();
-
         return $ids[0];
     }
 
