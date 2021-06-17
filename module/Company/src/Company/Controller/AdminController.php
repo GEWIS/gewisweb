@@ -210,26 +210,33 @@ class AdminController extends AbstractActionController
         if (isset($_POST['accept'])) {
             $id = $bannerApproval[0]->getBannerApproval()->getId();
 
+
+
+            if (isset($_POST['email'])) {
+                $company = $bannerApproval[0]->getCompany();
+                $name = "banner";
+                $route = "";
+                $this->getCompanyEmailService()->sendApprovalResult($company, false, $name, $route);
+            }
+
             $approvalService->acceptBannerApproval($id, $approvalId);
 
             return $this->redirect()->toRoute(
                 'admin_company/approvalPage'
             );
-
-            if (isset($_POST['email'])) {
-                //check mail
-            }
-
         }elseif(isset($_POST['reject'])){
-            //$approvalService->rejectBannerApproval($approvalId);
+            $approvalService->rejectBannerApproval($approvalId);
 
             if (isset($_POST['email'])) {
-                //check mail
+                $company = $bannerApproval[0]->getCompany();
+                $name = "banner";
+                $route = "";
+                $this->getCompanyEmailService()->sendApprovalResult($company, true, $name, $route);
             }
 
-//            return $this->redirect()->toRoute(
-//                'admin_company/approvalPage'
-//            );
+            return $this->redirect()->toRoute(
+                'admin_company/approvalPage'
+            );
         }
 
 
