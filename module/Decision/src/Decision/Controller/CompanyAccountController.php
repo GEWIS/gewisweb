@@ -33,6 +33,15 @@ class CompanyAccountController extends AbstractActionController
 
         $vacancies = empty($companyPackageInfo) ? [] : $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getID(), $locale);
 
+
+//        foreach($companyInfo as $info){
+//            if($info->getType() === "job"){
+//                $companyInfo = $info;
+//                break;
+//            }
+//        }
+
+       // echo var_dump($companyPackageInfo);
         return new ViewModel([
             //fetch the active vacancies of the logged in company
             'vacancies' => $vacancies,

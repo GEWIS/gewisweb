@@ -1,4 +1,5 @@
 <?php
+$this->headTitle($this->translate('Approve profile'));
 $this->headScript()
     ->prependFile($this->basePath() . '/js/company-admin.js');
 $this->scriptUrl()->requireUrls(
@@ -7,8 +8,6 @@ $this->scriptUrl()->requireUrls(
     ],
     ['slugCompanyName', 'packageId']
 );
-
-
 
 ?>
 <h1><?= $this->translate("Approve profile"); ?></h1>
@@ -47,7 +46,7 @@ $this->scriptUrl()->requireUrls(
 <br>
 <?php
 $submit = $form->get('submit');
-$submit->setLabel($this->translate('Save'));
+$submit->setLabel($this->translate('Accept'));
 $submit->setAttribute('class', 'btn btn-primary pull-right');
 
 

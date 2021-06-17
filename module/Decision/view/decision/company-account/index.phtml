@@ -135,7 +135,15 @@ if ($companyInfo[0]->getHighLightCredits() <= 0 || !$accountActive){
                         <div class="panel-heading"><?= $this->translate('Banner') ?></div>
                     </a>
                         <?php if (!$bannerActive || !$accountActive): ?>
-                            <div class="panel-warning"><div class="panel-warning-text"><?= $this->translate("Disabled, no more banner days left.") ?></div></div>
+                            <div class="panel-warning">
+                                <div class="panel-warning-text">
+                                    <?php if (!$bannerActive && $accountActive){
+                                        echo $this->translate("Disabled, no more banner days left.");
+                                    }elseif(!$accountActive){
+                                        echo $this->translate("Disabled, vacancy package has expired.");
+                                    } ?>
+                                </div>
+                            </div>
                         <?php endif; ?>
                     </div>
 
@@ -147,7 +155,15 @@ if ($companyInfo[0]->getHighLightCredits() <= 0 || !$accountActive){
                         <div class="panel-heading"><?= $this->translate("Highlight vacancies") ?></div>
                     </a>
                         <?php if (!$highlightActive || !$accountActive): ?>
-                            <div class="panel-warning"><div class="panel-warning-text"><?= $this->translate("Disabled, no more highlight days left.") ?></div></div>
+                            <div class="panel-warning">
+                                <div class="panel-warning-text">
+                                    <?php if (!$highlightActive && $accountActive){
+                                        echo $this->translate("Disabled, no more highlight days left.");
+                                    }elseif(!$accountActive){
+                                        echo $this->translate("Disabled, vacancy package has expired.");
+                                    } ?>
+                                </div>
+                            </div>
                         <?php endif; ?>
                     </div>
 
