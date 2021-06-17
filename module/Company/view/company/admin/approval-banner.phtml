@@ -1,9 +1,11 @@
 <?php
+$this->headTitle($this->translate('Approve banner'));
 $companyName = $bannerApproval->getCompany()->getName();
 
 $this->headScript()->prependFile($this->basePath() . '/js/photo.js')
     ->prependFile($this->basePath() . '/js/masonry.pkgd.min.js')
     ->prependFile($this->basePath() . '/js/imagesloaded.pkgd.min.js');
+
 ?>
 <h1><?= $this->translate("Approve banner"); ?></h1>
 <p>Approve the banner of <?= "$companyName"  ?></p>

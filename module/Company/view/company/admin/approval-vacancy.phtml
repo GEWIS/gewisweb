@@ -1,5 +1,5 @@
 <?php
-$this->headTitle($this->translate('Create Vacancy'));
+$this->headTitle($this->translate('Approve vacancy'));
 $this->headLink()
     ->prependStylesheet($this->basePath() . '/css/bootstrap-markdown.min.css')
     ->prependStylesheet($this->basePath() . '/css/jquery.datetimepicker.css');
@@ -10,6 +10,7 @@ $this->headScript()
 
 $form->setAttribute('class', 'form-horizontal');
 $form->prepare();
+
 ?>
 
 <?= $this->form()->openTag($form) ?>
@@ -248,7 +249,7 @@ $form->prepare();
 
     <?php
     $submit = $form->get('submit');
-    $submit->setLabel($this->translate('Save'));
+    $submit->setLabel($this->translate('Accept'));
     $submit->setAttribute('class', 'btn btn-primary pull-right');
     ?>
     <div class="form-group">
