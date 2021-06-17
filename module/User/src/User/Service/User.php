@@ -232,7 +232,7 @@ class User extends AbstractAclService
 
         #check if the member has a corresponding user.
         if (null === $company) {
-            $form->setError(CompanyPasswordForm::ERROR_MEMBER_NOT_EXISTS);
+            $form->setError(CompanyPasswordForm::ERROR_COMPANY_NOT_EXISTS);
             return null;
         }
 

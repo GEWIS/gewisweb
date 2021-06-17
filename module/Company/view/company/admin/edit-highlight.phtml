@@ -32,7 +32,7 @@ foreach ($categoryList as $category):?>
                 </tr>
                 </thead>
                 <?php foreach ($highlightList as $highlight): ?>
-                <?php if ($highlight['languageNeutralId'] == $category->getLanguageNeutralId()): ?>
+                <?php if ($highlight['jobCategoryLnId'] == $category->getLanguageNeutralId()): ?>
                 <tr>
                     <th>
                         <?= $highlight['name'] ?>

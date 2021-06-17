@@ -48,22 +48,20 @@ class CompanyEmail extends AbstractService
      *
      * @param CompanyModel $company
      * @param mixed $type
-     * @param Bool $rejected
+     * @param boolean $rejected
      */
-    public function sendApprovalResult(CompanyModel $company, Boolean $rejected, $type = null)
+    public function sendApprovalResult(CompanyModel $company, $rejected, $name, $route)
     {
-        $objectName = $type == null ? $company->getName() : $type->getName();
-
-
         if ($rejected) {
             $body = $this->render('email/approvalRejection', [
                 'company' => $company,
-                'type' => $objectName,
+                'name' => $name,
             ]);
         } else {
             $body = $this->render('email/approvalAcceptance', [
                 'company' => $company,
-                'type' => $objectName,
+                'name' => $name,
+                'route' => $route,
             ]);
         }
 
@@ -75,7 +73,7 @@ class CompanyEmail extends AbstractService
 
         $message->addFrom($config['from']);
         $message->addTo($company->getContactEmail());
-        $message->setSubject($translator->translate($rejected ? $objectName . 'Rejected' : $objectName . 'Accepted'));
+        $message->setSubject($translator->translate($rejected ? $name . 'Rejected' : $name . 'Accepted'));
         $message->setBody($body);
 
         $this->getTransport()->send($message);

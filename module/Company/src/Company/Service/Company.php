@@ -372,8 +372,9 @@ class Company extends AbstractACLService
     {
         $highlightPackages = $this->getHighlightPackageMapper()->findAllActiveHighlightsList();
         foreach($highlightPackages as &$package) {
-            $package['vacancy_name'] = $this->getJobMapper()->findJobById($this->getJobMapper()->siblingId($package[1], $lang)['id'])->getName();
+            $package['vacancy_name'] = $this->getJobMapper()->siblingJob($package['jobLnId'], $lang)->getName();
         }
+
         return $highlightPackages;
 
     }
