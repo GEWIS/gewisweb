@@ -181,9 +181,17 @@ if ($companyInfo[0]->getHighLightCredits() <= 0 || !$accountActive){
                         <?php foreach ($vacancies as &$vacancy): ?>
                             <div class="panel-heading">
                                 <strong><?= $this->translate($vacancy->getName()) ?></strong>
+                                <div align="right">
+                                <?php if ($approved[$vacancy->getId()]) {
+                                    echo $this->translate("Approved");
+                                } else {
+                                    echo $this->translate("Awaiting Approval");
+                                }?>
+                                </div>
                             </div>
                             <div class="panel-body">
-                                <?= $this->translate($vacancy->getDescription()) ?>
+
+<!--                                --><?//= $this->translate($vacancy->getDescription()) ?>
                                 <a href="<?= $this->url("companyaccount/vacancies/editvacancy",
                                     [
                                         "slugCompanyName" => $vacancy->getCompany()->getSlugName(),

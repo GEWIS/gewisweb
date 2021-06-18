@@ -52,12 +52,12 @@ class Module
                 'decision_service_organ' => 'Decision\Service\Organ',
                 'decision_service_decision' => 'Decision\Service\Decision',
                 'decision_service_member' => 'Decision\Service\Member',
-
                 'decision_service_companyaccount' => 'Decision\Service\CompanyAccount',
                 'company_model_company' => 'Company\Model\Company',
                 'user_service_email' => 'User\Service\Email',
                 'decision_service_decisionEmail' => 'Decision\Service\DecisionEmail',
                 'decision_service_settings' => 'Decision\Service\Settings',
+                'company_serice_approval' => 'Company\Service\Approval'
 
             ],
             'factories' => [

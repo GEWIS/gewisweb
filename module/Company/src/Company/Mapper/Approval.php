@@ -210,6 +210,30 @@ class Approval
     }
 
     /**
+     * Find if a vacancy has been approved
+     *
+     * @param Int $id The vacancy id of the pending approval to get.
+     *
+     * @return Array An array containing the pending approvals with the given vacancy id.
+     */
+    public function findApprovedByVacancyId($vacancyId)
+    {
+        $objectRepository = $this->getPendingRepository(); // From clause is integrated in this statement
+        $qb = $objectRepository->createQueryBuilder('c');
+        $qb->select('c')
+            ->where('c.VacancyApproval=:id')
+            ->setParameter('id', $vacancyId);
+
+        $vacancy = $qb->getQuery()->getResult();
+
+        if (empty($vacancy)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Find the Profile approval with the given profile approval id.
      *
      * @param Int $id The profile id of the pending approval to get.

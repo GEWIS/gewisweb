@@ -135,6 +135,10 @@ class Approval extends AbstractAclService
         return $this->getApprovalMapper()->acceptBannerApproval($id, $approvalId);
     }
 
+    public function getApprovedByVacancyId($vacancyId) {
+        return $this->getApprovalMapper()->findApprovedByVacancyId($vacancyId);
+    }
+
     /**
      * Get the default resource ID.
      *

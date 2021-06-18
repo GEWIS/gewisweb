@@ -2,6 +2,7 @@
 
 namespace Decision\Controller;
 
+use Company\Service\Approval;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
@@ -33,7 +34,9 @@ class CompanyAccountController extends AbstractActionController
 
         $vacancies = empty($companyPackageInfo) ? [] : $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getID(), $locale);
 
-
+        foreach ($vacancies as $vacancy) {
+            $approved[$vacancy->getId()] = $this->getApprovalService()->getApprovedByVacancyId($vacancy->getId());
+        }
 
         foreach($companyPackageInfo as $info){
             if(!is_null($info->getContractNumber())){
@@ -42,12 +45,14 @@ class CompanyAccountController extends AbstractActionController
             }
         }
 
+
        // echo var_dump($companyPackageInfo);
         return new ViewModel([
             //fetch the active vacancies of the logged in company
             'vacancies' => $vacancies,
             'companyPackageInfo' => [$companyPackageInfo],
-            'companyInfo'  => $companyInfo
+            'companyInfo'  => $companyInfo,
+            'approved' => $approved
         ]);
     }
 
@@ -822,5 +827,15 @@ class CompanyAccountController extends AbstractActionController
     protected function getDecisionEmail()
     {
         return $this->getServiceLocator()->get('decision_service_decisionEmail');
+    }
+
+    /**
+     * Method that returns the service object for the approval module.
+     *
+     * @return Approval
+     */
+    protected function getApprovalService()
+    {
+        return $this->getServiceLocator()->get('company_service_approval');
     }
 }
