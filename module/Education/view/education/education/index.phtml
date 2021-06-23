@@ -1,5 +1,5 @@
-<?php echo $this->headScript()
-    ->prependFile($this->basePath() . '/js/etc.js');
+<?php echo $this->inlineScript()
+    ->appendFile($this->basePath() . '/js/etc.js');
 $this->headTitle($this->translate('Education'));
 ?>
 <style>
