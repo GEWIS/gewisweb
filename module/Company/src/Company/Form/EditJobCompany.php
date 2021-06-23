@@ -268,7 +268,7 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
                         'name' => 'string_length',
                         'options' => [
                             'min' => 2,
-                            'max' => 1000,
+                            'max' => 600,
                         ],
                     ],
                 ],
