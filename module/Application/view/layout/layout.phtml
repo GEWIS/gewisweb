@@ -7,22 +7,17 @@
 
     <?= $this->headMeta()
         ->appendName('viewport', 'width=device-width, initial-scale=1.0')
-        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
     ?>
 
     <!-- Le styles -->
-    <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+    <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->basePath() . '/img/favicon.ico'])
         ->prependStylesheet('https://fonts.googleapis.com/css?family=Raleway:600,500,400|Lato:400,700,400italic')
-        ->prependStylesheet($this->basePath() . '/css/gewis-theme.css?v=1.4.1') ?>
+        ->prependStylesheet($this->basePath() . '/css/gewis-theme.css') ?>
 
     <!-- Scripts -->
     <?= $this->headScript()
-        ->prependFile($this->basePath() . '/js/bootstrap.min.js')
         ->prependFile($this->basePath() . '/js/jquery.min.js')
-        ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', ['conditional' => 'lt IE 9',])
-        ->prependFile($this->basePath() . '/js/html5shiv.js', 'text/javascript', ['conditional' => 'lt IE 9',])
         ->prependFile($this->basePath() . '/js/url-helper.js'); ?>
-
 </head>
 <body>
 <?= $this->partial('partial/main-nav.phtml') ?>
@@ -39,7 +34,10 @@
 
 <?= $this->partial('partial/footer.phtml') ?>
 
-<?= $this->inlineScript() ?>
+<!-- Scripts -->
+<?= $this->inlineScript()
+    ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+    ->prependFile($this->basePath() . '/js/navbar-submenu.js'); ?>
 <script>
     <?php foreach($this->scriptUrl()->getUrls() as $name => $url): ?>
     URLHelper.addUrl('<?= $name ?>', '<?= urldecode($url) ?>');

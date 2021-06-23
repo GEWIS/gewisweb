@@ -273,7 +273,7 @@ msgstr "Subscribe"
 #: module/Activity/view/activity/admin/participantsTable.phtml:51
 #: module/Photo/view/partial/metadata.phtml:30
 #: module/Company/view/company/admin/index.phtml:138
-#: module/Application/language/additional-strings:11
+#: module/Application/language/additional-strings:12
 msgid "Yes"
 msgstr "Yes"
 
@@ -287,7 +287,7 @@ msgstr "Yes"
 #: module/Activity/view/activity/admin/participantsTable.phtml:53
 #: module/Photo/view/partial/metadata.phtml:30
 #: module/Company/view/company/admin/index.phtml:138
-#: module/Application/language/additional-strings:12
+#: module/Application/language/additional-strings:13
 msgid "No"
 msgstr "No"
 

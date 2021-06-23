@@ -1,12 +1,12 @@
 <?php
 $this->headTitle($action);
 $this->headLink()
-    ->prependStylesheet($this->basePath() . '/css/bootstrap-markdown.min.css')
-    ->prependStylesheet($this->basePath() . '/css/jquery.datetimepicker.css');
-$this->headScript()
-    ->prependFile($this->basePath() . '/js/bootstrap-markdown.js')
-    ->prependFile($this->basePath() . '/js/activity-create.js')
-    ->prependFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js');
+    ->appendStylesheet($this->basePath() . '/css/jquery.datetimepicker.css')
+    ->appendStylesheet($this->basePath() . '/css/bootstrap-markdown.min.css');
+$this->inlineScript()
+    ->appendFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js')
+    ->appendFile($this->basePath() . '/js/activity-create.js')
+    ->appendFile($this->basePath() . '/js/bootstrap-markdown.js');
 
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 

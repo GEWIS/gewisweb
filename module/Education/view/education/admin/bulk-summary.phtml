@@ -1,7 +1,8 @@
 <?php
-$this->headScript()
-    ->prependFile($this->basePath() . '/js/dropzone.js');
-$this->headLink()->prependStylesheet($this->basePath() . '/css/dropzone.css');
+$this->inlineScript()
+    ->appendFile($this->basePath() . '/js/dropzone.js');
+$this->headLink()
+    ->appendStylesheet($this->basePath() . '/css/dropzone.css');
 ?>
 <div class="row">
     <div class="col-md-12">

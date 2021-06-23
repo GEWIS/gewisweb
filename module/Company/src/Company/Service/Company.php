@@ -1045,19 +1045,12 @@ class Company extends AbstractACLService
             foreach ($jobs as $job) {
                 $job->setCategory($this->getCategoryMapper()
                     ->createNullCategory($translator->getLocale(), $translator));
-
-                // TODO: This is a hotfix for some ORM issues:
-                $job->setLabels($this->getLabelAssignmentMapper()->findAssignmentsByJobId($job->getId()));
             }
             return $jobs;
         }
         $locale = $translator->getLocale();
         $dict["language"] = $locale;
         $jobs = $this->getJobMapper()->findJob($dict);
-        foreach ($jobs as $job) {
-            // TODO: This is a hotfix for some ORM issues:
-            $job->setLabels($this->getLabelAssignmentMapper()->findAssignmentsByJobId($job->getId()));
-        }
 
         return $jobs;
     }
