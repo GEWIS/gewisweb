@@ -36,8 +36,8 @@
 
 <!-- Scripts -->
 <?= $this->inlineScript()
-    ->prependFile($this->basePath() . '/js/bootstrap.min.js'); ?>
-
+    ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+    ->prependFile($this->basePath() . '/js/navbar-submenu.js'); ?>
 <script>
     <?php foreach($this->scriptUrl()->getUrls() as $name => $url): ?>
     URLHelper.addUrl('<?= $name ?>', '<?= urldecode($url) ?>');

@@ -276,7 +276,7 @@ msgstr "Inschrijven"
 #: module/Activity/view/activity/admin/participantsTable.phtml:51
 #: module/Photo/view/partial/metadata.phtml:30
 #: module/Company/view/company/admin/index.phtml:138
-#: module/Application/language/additional-strings:11
+#: module/Application/language/additional-strings:12
 msgid "Yes"
 msgstr "Ja"
 
@@ -290,7 +290,7 @@ msgstr "Ja"
 #: module/Activity/view/activity/admin/participantsTable.phtml:53
 #: module/Photo/view/partial/metadata.phtml:30
 #: module/Company/view/company/admin/index.phtml:138
-#: module/Application/language/additional-strings:12
+#: module/Application/language/additional-strings:13
 msgid "No"
 msgstr "Nee"
 
@@ -4189,6 +4189,10 @@ msgstr "Tafelvoetbalcoordinator"
 #: module/Application/language/additional-strings:10
 msgid "Inkoper"
 msgstr "Inkoper"
+
+#: module/Application/language/additional-strings:11
+msgid "Inactief Lid"
+msgstr "Inactief Lid"
 
 #~ msgid "Create activity"
 #~ msgstr "Create activity"
