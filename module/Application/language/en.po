@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-24 08:46+0200\n"
-"PO-Revision-Date: 2021-06-24 08:46+0200\n"
+"POT-Creation-Date: 2021-06-24 08:52+0200\n"
+"PO-Revision-Date: 2021-06-24 09:00+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4\n"
+"X-Generator: Poedit 3.0\n"
 
 #: module/Company/view/partial/company/admin/editors/package.phtml:81
 #: module/Company/view/company/admin/add-category.phtml:8
@@ -114,9 +114,8 @@ msgstr "Add Category"
 #: module/Company/view/company/admin/index.phtml:38
 #: module/Company/view/company/admin/index.phtml:57
 #: module/Application/view/partial/admin-nav.phtml:23
-#, fuzzy
 msgid "Categories"
-msgstr "Category"
+msgstr "Categories"
 
 #: module/Company/view/company/admin/index.phtml:50
 #: module/Company/view/company/admin/index.phtml:81
@@ -133,7 +132,7 @@ msgstr "Add Label"
 #: module/Company/view/company/admin/index.phtml:70
 #: module/Company/view/company/admin/index.phtml:88
 msgid "Labels"
-msgstr ""
+msgstr "Labels"
 
 #: module/Company/view/company/admin/index.phtml:100
 #: module/Company/view/company/admin/index.phtml:169
@@ -313,17 +312,17 @@ msgstr "Featured Package"
 #: module/Company/view/company/admin/index.phtml:264
 #, php-format
 msgid "Job Package(%s active)"
-msgstr ""
+msgstr "Job Package(%s active)"
 
 #: module/Company/view/company/admin/index.phtml:240
 #, php-format
 msgid "%s for company %s will start at %s"
-msgstr ""
+msgstr "%s for company %s will start at %s"
 
 #: module/Company/view/company/admin/index.phtml:272
 #, php-format
 msgid "%s for company %s will expire at %s"
-msgstr ""
+msgstr "%s for company %s will expire at %s"
 
 #: module/Company/view/company/admin/edit-package.phtml:10
 #: module/Company/src/Company/Form/EditPackage.php:93
@@ -357,34 +356,28 @@ msgid "Edit Company"
 msgstr "Edit Company"
 
 #: module/Company/view/company/admin/edit-company.phtml:18
-#, fuzzy
 msgid "Add Job package"
-msgstr "Add featured package"
+msgstr "Add Job package"
 
 #: module/Company/view/company/admin/edit-company.phtml:27
-#, fuzzy
 msgid "Add spotlight package"
-msgstr "Add featured package"
+msgstr "Add spotlight package"
 
 #: module/Company/view/company/admin/edit-company.phtml:36
-#, fuzzy
 msgid "Add Banner package"
-msgstr "Banner Package"
+msgstr "Add Banner package"
 
 #: module/Company/view/company/admin/edit-company.phtml:40
-#, fuzzy
 msgid "Dutch logo"
-msgstr "Dutch option"
+msgstr "Dutch logo"
 
 #: module/Company/view/company/admin/edit-company.phtml:47
-#, fuzzy
 msgid "English logo"
-msgstr "English option"
+msgstr "English logo"
 
 #: module/Company/view/company/admin/edit-company.phtml:71
-#, fuzzy
 msgid "Packages"
-msgstr "Package"
+msgstr "Packages"
 
 #: module/Company/view/company/admin/edit-company.phtml:79
 #: module/Activity/view/activity/admin/list.phtml:15
@@ -396,37 +389,32 @@ msgstr "Start date"
 
 #: module/Company/view/company/admin/edit-company.phtml:82
 #: module/Company/src/Company/Form/EditPackage.php:43
-#, fuzzy
 msgid "Expiration date"
-msgstr "Exam date"
+msgstr "Expiration date"
 
 #: module/Company/view/company/admin/edit-company.phtml:85
 msgid "Jobs / Type"
-msgstr ""
+msgstr "Jobs / Type"
 
 #: module/Company/view/company/admin/edit-company.phtml:105
-#, fuzzy
 msgid "Banner package"
-msgstr "Banner Package"
+msgstr "Banner package"
 
 #: module/Company/view/company/admin/edit-company.phtml:142
-#, fuzzy
 msgid "Are you sure you want to delete this package?"
-msgstr "Are you sure you want to delete this poll?"
+msgstr "Are you sure you want to delete this package?"
 
 #: module/Company/view/company/admin/edit-company.phtml:148
-#, fuzzy
 msgid "Delete package"
-msgstr "Delete this page"
+msgstr "Delete package"
 
 #: module/Company/view/company/admin/edit-job.phtml:163
 msgid "Current attachment"
 msgstr "Current attachment"
 
 #: module/Company/view/company/admin/edit-job.phtml:167
-#, fuzzy
 msgid "View attachment"
-msgstr "Current attachment"
+msgstr "View attachment"
 
 #: module/Company/view/company/admin/edit-category.phtml:1
 msgid "Edit Category"
@@ -516,24 +504,21 @@ msgstr "Featured company"
 
 #: module/Activity/view/partial/signuplist.phtml:12
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:24
-#, fuzzy
 msgid "Open date and time"
-msgstr "Date / time"
+msgstr "Open date and time"
 
 #: module/Activity/view/partial/signuplist.phtml:26
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:35
-#, fuzzy
 msgid "Close date and time"
-msgstr "Date / time"
+msgstr "Close date and time"
 
 #: module/Activity/view/partial/signuplist.phtml:75
 msgid "Only allow GEWIS members"
-msgstr ""
+msgstr "Only allow GEWIS members"
 
 #: module/Activity/view/partial/signuplist.phtml:77
-#, fuzzy
 msgid "Deselect this to allow people without a GEWIS account to subscribe."
-msgstr "Select this to allow people without a GEWIS account to subscribe."
+msgstr "Deselect this to allow people without a GEWIS account to subscribe."
 
 #: module/Activity/view/partial/signuplist.phtml:90
 msgid "Display number of subscribed members"
@@ -548,29 +533,28 @@ msgstr ""
 "visitors."
 
 #: module/Activity/view/partial/signuplist.phtml:123
-#, fuzzy
 msgid "Remove the last sign-up list field"
-msgstr "Remove the last field"
+msgstr "Remove the last sign-up list field"
 
 #: module/Activity/view/partial/signuplist.phtml:128
-#, fuzzy
 msgid "Add a sign-up list field"
-msgstr "Additional signup fields"
+msgstr "Add a sign-up list field"
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:46
-#, fuzzy
 msgid "GEWIS members only"
-msgstr "GEWIS song"
+msgstr "GEWIS members only"
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:57
 msgid "Display GEWIS member count"
-msgstr ""
+msgstr "Display GEWIS member count"
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:69
 msgid ""
 "This sign-up list contains additional fields which require input from "
 "subscribers, they are shown below."
 msgstr ""
+"This sign-up list contains additional fields which require input from "
+"subscribers, they are shown below."
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:97
 #: module/Activity/view/partial/option.phtml:10
@@ -586,33 +570,32 @@ msgstr "Type"
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:104
 #: module/Activity/src/Activity/Form/SignupListField.php:52
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:107
 #: module/Activity/src/Activity/Form/SignupListField.php:53
 msgid "Yes/No"
-msgstr ""
+msgstr "Yes/No"
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:110
 #: module/Activity/src/Activity/Form/SignupListField.php:54
-#, fuzzy
 msgid "Number"
-msgstr "Member"
+msgstr "Number"
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:113
 #: module/Activity/src/Activity/Form/SignupListField.php:55
 msgid "Choice"
-msgstr ""
+msgstr "Choice"
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:123
 #: module/Activity/src/Activity/Form/SignupListField.php:67
 msgid "Min. value"
-msgstr ""
+msgstr "Min. value"
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:133
 #: module/Activity/src/Activity/Form/SignupListField.php:77
 msgid "Max. value"
-msgstr ""
+msgstr "Max. value"
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:145
 #: module/Activity/view/partial/create.phtml:159
@@ -669,25 +652,26 @@ msgstr "Activity Policy"
 #: module/Activity/view/partial/signuplist-fields.phtml:85
 msgid "Please note that numbers are not dependant on the selected language(s)."
 msgstr ""
+"Please note that numbers are not dependant on the selected language(s)."
 
 #: module/Activity/view/partial/create.phtml:3
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:33
 #: module/Activity/view/activity/admin-approval/view.phtml:12
-#, fuzzy
 msgid "Information"
-msgstr "My information"
+msgstr "Information"
 
 #: module/Activity/view/partial/create.phtml:4
 msgid ""
 "What is this activity about? Fill in the blanks below, please note that at "
 "least one language must be used."
 msgstr ""
+"What is this activity about? Fill in the blanks below, please note that at "
+"least one language must be used."
 
 #: module/Activity/view/partial/create.phtml:15
 #: module/Activity/view/activity/admin-category/add.phtml:26
-#, fuzzy
 msgid "Enable Dutch translation"
-msgstr "Enable subscriptions"
+msgstr "Enable Dutch translation"
 
 #: module/Activity/view/partial/create.phtml:46
 #: module/Activity/view/partial/create.phtml:121
@@ -719,13 +703,12 @@ msgstr "Costs"
 
 #: module/Activity/view/partial/create.phtml:90
 #: module/Activity/view/activity/admin-category/add.phtml:64
-#, fuzzy
 msgid "Enable English translation"
-msgstr "Original English description"
+msgstr "Enable English translation"
 
 #: module/Activity/view/partial/create.phtml:160
 msgid "Choose which options are applicable to this activity."
-msgstr ""
+msgstr "Choose which options are applicable to this activity."
 
 #: module/Activity/view/partial/create.phtml:170
 msgid "This is a career related activity"
@@ -772,14 +755,19 @@ msgid ""
 "up list(s) and the new sign-up list(s) are shown. There might not be "
 "difference between the two!"
 msgstr ""
+"Changes in activity attributes are shown like this: %s. If there are no "
+"changes to a certain attribute, you will see the existing data. Sign-up list "
+"differences are <strong>not</strong> shown with colours, both the old sign-"
+"up list(s) and the new sign-up list(s) are shown. There might not be "
+"difference between the two!"
 
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:38
 msgid "old"
-msgstr ""
+msgstr "old"
 
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:38
 msgid "new"
-msgstr ""
+msgstr "new"
 
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:71
 #: module/Activity/view/activity/admin-approval/view.phtml:29
@@ -788,49 +776,46 @@ msgid ""
 "This is activity <b>#%d</b>, organised by <b>%s</b>, and it will start on <b>"
 "%s</b> and end on <b>%s</b>."
 msgstr ""
+"This is activity <b>#%d</b>, organised by <b>%s</b>, and it will start on <b>"
+"%s</b> and end on <b>%s</b>."
 
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:84
 #: module/Activity/view/activity/admin-approval/view.phtml:36
 msgid "More information about this activity is available below."
-msgstr ""
+msgstr "More information about this activity is available below."
 
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:221
-#, fuzzy
 msgid "View details of the old activity"
-msgstr "View details of updated activity"
+msgstr "View details of the old activity"
 
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:226
-#, fuzzy
 msgid "View details of the new activity"
-msgstr "View details of updated activity"
+msgstr "View details of the new activity"
 
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:234
 #: module/Activity/view/activity/admin-approval/view.phtml:141
 #: module/Activity/view/activity/admin-category/index.phtml:2
 #: module/Activity/view/activity/admin-category/index.phtml:9
 #: module/Activity/view/activity/activity/create.phtml:108
-#, fuzzy
 msgid "Activity Categories"
-msgstr "Activities"
+msgstr "Activity Categories"
 
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:261
 #: module/Activity/view/activity/admin-approval/view.phtml:155
 #: module/Activity/view/activity/activity/view.phtml:112
 #: module/Activity/view/activity/activity/create.phtml:155
 msgid "Sign-up Lists"
-msgstr ""
+msgstr "Sign-up Lists"
 
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:285
 #: module/Activity/view/activity/admin-approval/view.phtml:8
 #: module/Activity/view/activity/admin-approval/view.phtml:174
-#, fuzzy
 msgid "Approval"
-msgstr "Approve"
+msgstr "Approval"
 
 #: module/Activity/view/activity/admin-approval/view.phtml:133
-#, fuzzy
 msgid "View details / subscriptions"
-msgstr "View details / subscriptions of old activity"
+msgstr "View details / subscriptions"
 
 #: module/Activity/view/activity/admin-approval/view.phtml:184
 #: module/Activity/view/activity/activity-calendar/index.phtml:105
@@ -915,7 +900,7 @@ msgstr "Email"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:10
 msgid "Sign-up List"
-msgstr ""
+msgstr "Sign-up List"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:44
 #: module/Activity/src/Activity/Service/Signup.php:163
@@ -929,9 +914,8 @@ msgid "External"
 msgstr "External"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:101
-#, fuzzy
 msgid "Additional actions"
-msgstr "Additional information"
+msgstr "Additional actions"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:105
 #: module/Activity/view/activity/admin/participantsTable.phtml:107
@@ -943,9 +927,8 @@ msgid "Mail everybody"
 msgstr "Mail everybody"
 
 #: module/Activity/view/activity/admin/participants.phtml:26
-#, fuzzy
 msgid "General"
-msgstr "Generation"
+msgstr "General"
 
 #: module/Activity/view/activity/admin/participants.phtml:40
 msgid ""
@@ -954,6 +937,10 @@ msgid ""
 "lists of this activity. From there you can remove external participants and "
 "(when supplied) view additional signup information from each participant."
 msgstr ""
+"Here you can find everyone who signed up for this activity (may contain "
+"duplicates). Using the tabs above you can navigate to the different sign-up "
+"lists of this activity. From there you can remove external participants and "
+"(when supplied) view additional signup information from each participant."
 
 #: module/Activity/view/activity/admin/participants.phtml:42
 msgid ""
@@ -961,6 +948,9 @@ msgid ""
 "add or remove external participants and view detailed information regarding "
 "the signup of all participants."
 msgstr ""
+"Here you can find everyone who signed up to this sign-up list. Here you can "
+"add or remove external participants and view detailed information regarding "
+"the signup of all participants."
 
 #: module/Activity/view/activity/admin/view.phtml:12
 msgid "Unapproved Activities"
@@ -992,22 +982,21 @@ msgid ""
 "Here you can add, edit, or remove activity categories. Click on 'Add "
 "Category' to add a new category or click on a category to edit/remove it."
 msgstr ""
+"Here you can add, edit, or remove activity categories. Click on 'Add "
+"Category' to add a new category or click on a category to edit/remove it."
 
 #: module/Activity/view/activity/admin-category/index.phtml:14
 #: module/Activity/view/activity/activity/create.phtml:129
-#, fuzzy
 msgid "There are currently no activity categories..."
-msgstr "You are not allowed to view activity categories"
+msgstr "There are currently no activity categories..."
 
 #: module/Activity/view/activity/admin-category/index.phtml:46
-#, fuzzy
 msgid "Are you sure you want to delete this activity category?"
-msgstr "Are you sure you want to delete this option?"
+msgstr "Are you sure you want to delete this activity category?"
 
 #: module/Activity/view/activity/admin-category/index.phtml:52
-#, fuzzy
 msgid "Delete Activity Category"
-msgstr "Create Activity"
+msgstr "Delete Activity Category"
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:15
 #: module/Activity/view/activity/activity-calendar/create.phtml:53
@@ -1227,12 +1216,16 @@ msgid ""
 "are unable to attend after the deadline for unsubscribing has passed. Have "
 "fun!"
 msgstr ""
+"Please contact %s or the board (%s) with any questions, concerns or if you "
+"are unable to attend after the deadline for unsubscribing has passed. Have "
+"fun!"
 
 #: module/Activity/view/activity/activity/view.phtml:146
 #, php-format
 msgid ""
 "This sign-up list is open from <strong>%s</strong> till <strong>%s</strong>."
 msgstr ""
+"This sign-up list is open from <strong>%s</strong> till <strong>%s</strong>."
 
 #: module/Activity/view/activity/activity/view.phtml:158
 msgid "Already subscribed"
@@ -1281,40 +1274,40 @@ msgid "Login to view the subscribed members."
 msgstr "Login to view the subscribed members."
 
 #: module/Activity/view/activity/activity/create.phtml:29
-#, fuzzy
 msgid "Organizer"
-msgstr "Organ"
+msgstr "Organizer"
 
 #: module/Activity/view/activity/activity/create.phtml:30
 msgid ""
 "Select whether an organ (committee, fraternity, etc.) or a company is "
 "responsible for this activity, or both."
 msgstr ""
+"Select whether an organ (committee, fraternity, etc.) or a company is "
+"responsible for this activity, or both."
 
 #: module/Activity/view/activity/activity/create.phtml:65
-#, fuzzy
 msgid "Date and time"
-msgstr "Date / time"
+msgstr "Date and time"
 
 #: module/Activity/view/activity/activity/create.phtml:66
 msgid "Enter the start and end date and time of this activity."
-msgstr ""
+msgstr "Enter the start and end date and time of this activity."
 
 #: module/Activity/view/activity/activity/create.phtml:79
-#, fuzzy
 msgid "Start date and time"
-msgstr "Start date"
+msgstr "Start date and time"
 
 #: module/Activity/view/activity/activity/create.phtml:94
-#, fuzzy
 msgid "End date and time"
-msgstr "Date / time"
+msgstr "End date and time"
 
 #: module/Activity/view/activity/activity/create.phtml:109
 msgid ""
 "Add activity categories to your activity to give potential subscribers a "
 "better understanding of the activity."
 msgstr ""
+"Add activity categories to your activity to give potential subscribers a "
+"better understanding of the activity."
 
 #: module/Activity/view/activity/activity/create.phtml:156
 msgid ""
@@ -1322,16 +1315,17 @@ msgid ""
 "can have optional fields to collect specific information from the "
 "participants."
 msgstr ""
+"Add sign-up lists to allow people to sign up for this activity. Each list "
+"can have optional fields to collect specific information from the "
+"participants."
 
 #: module/Activity/view/activity/activity/create.phtml:196
-#, fuzzy
 msgid "Remove the last sign-up list"
-msgstr "Remove the last field"
+msgstr "Remove the last sign-up list"
 
 #: module/Activity/view/activity/activity/create.phtml:201
-#, fuzzy
 msgid "Add a sign-up list"
-msgstr "Additional signup fields"
+msgstr "Add a sign-up list"
 
 #: module/Education/view/education/education/index.phtml:3
 #: module/Education/view/education/education/index.phtml:18
@@ -1632,7 +1626,7 @@ msgstr "Change password"
 
 #: module/Decision/view/decision/member/index.phtml:26
 msgid "Profile"
-msgstr ""
+msgstr "Profile"
 
 #: module/Decision/view/decision/member/index.phtml:36
 #: module/Application/view/partial/main-nav.phtml:252
@@ -1668,9 +1662,8 @@ msgid "Public archive"
 msgstr "Public archive"
 
 #: module/Decision/view/decision/member/index.phtml:64
-#, fuzzy
 msgid "Find a member"
-msgstr "Previous members"
+msgstr "Find a member"
 
 #: module/Decision/view/decision/member/index.phtml:73
 #: module/Application/view/partial/main-nav.phtml:126
@@ -1690,7 +1683,7 @@ msgstr "Upcoming meeting"
 #: module/Decision/view/decision/member/index.phtml:89
 #, php-format
 msgid "The next meeting is %s%s %s%s on %s."
-msgstr ""
+msgstr "The next meeting is %s%s %s%s on %s."
 
 #: module/Decision/view/decision/member/index.phtml:102
 #, php-format
@@ -1703,11 +1696,11 @@ msgstr ""
 
 #: module/Decision/view/decision/member/index.phtml:110
 msgid "Search through the list of decisions accumulated from past meetings:"
-msgstr ""
+msgstr "Search through the list of decisions accumulated from past meetings:"
 
 #: module/Decision/view/decision/member/index.phtml:113
 msgid "Search by keyword or meeting number"
-msgstr ""
+msgstr "Search by keyword or meeting number"
 
 #: module/Decision/view/decision/member/index.phtml:120
 #, php-format
@@ -1720,9 +1713,8 @@ msgid "%s %s on %s"
 msgstr "%s %s on %s"
 
 #: module/Decision/view/decision/member/index.phtml:139
-#, fuzzy
 msgid "View all meetings"
-msgstr "Choose a meeting"
+msgstr "View all meetings"
 
 #: module/Decision/view/decision/member/index.phtml:144
 msgid "Active members"
@@ -1730,11 +1722,11 @@ msgstr "Active members"
 
 #: module/Decision/view/decision/member/index.phtml:145
 msgid "A list of helpful resources for active members."
-msgstr ""
+msgstr "A list of helpful resources for active members."
 
 #: module/Decision/view/decision/member/index.phtml:149
 msgid "Info"
-msgstr ""
+msgstr "Info"
 
 #: module/Decision/view/decision/member/index.phtml:161
 msgid "Corporate Identity"
@@ -1762,9 +1754,8 @@ msgid "Computerreglement"
 msgstr "Computer Usage"
 
 #: module/Decision/view/decision/member/index.phtml:195
-#, fuzzy
 msgid "Posterreglement"
-msgstr "Computer Usage"
+msgstr "Posters"
 
 #: module/Decision/view/decision/member/index.phtml:200
 msgid "Sleutelbeleid"
@@ -1948,9 +1939,9 @@ msgid "years"
 msgstr "years"
 
 #: module/Decision/view/decision/member/view.phtml:120
-#, fuzzy, php-format
+#, php-format
 msgid "Photo's of %s"
-msgstr "Photos"
+msgstr "Photo's of %s"
 
 #: module/Decision/view/decision/member/search.phtml:3
 #: module/Decision/view/decision/member/search.phtml:9
@@ -2013,9 +2004,8 @@ msgid "Meeting"
 msgstr "Meeting"
 
 #: module/Decision/view/decision/organ/index.phtml:6
-#, fuzzy
 msgid "Organ list"
-msgstr "Organs"
+msgstr "Organ list"
 
 #: module/Decision/view/decision/organ/index.phtml:13
 #: module/Decision/view/decision/organ-admin/index.phtml:7
@@ -2027,14 +2017,12 @@ msgid "Committee"
 msgstr "Committee"
 
 #: module/Decision/view/decision/organ/index.phtml:32
-#, fuzzy
 msgid "AV Committee"
-msgstr "Committee"
+msgstr "AV Committee"
 
 #: module/Decision/view/decision/organ/index.phtml:35
-#, fuzzy
 msgid "Fraternity"
-msgstr "Fraternities"
+msgstr "Fraternity"
 
 #: module/Decision/view/decision/organ/index.phtml:38
 msgid "GM Task Force"
@@ -2058,9 +2046,8 @@ msgid "Old members"
 msgstr "Previous members"
 
 #: module/Decision/view/decision/organ/show.phtml:31
-#, fuzzy
 msgid "Organ mutations"
-msgstr "Regulations"
+msgstr "Organ mutations"
 
 #: module/Decision/view/decision/organ-admin/index.phtml:2
 msgid ""
@@ -2243,7 +2230,7 @@ msgstr "Next"
 
 #: module/Application/view/partial/admin-nav.phtml:19
 msgid "Overview"
-msgstr ""
+msgstr "Overview"
 
 #: module/Application/view/partial/admin-nav.phtml:32
 msgid "Career"
@@ -2353,17 +2340,16 @@ msgstr "GEWIS song"
 
 #: module/Application/view/partial/main-nav.phtml:116
 #: module/Application/view/partial/main-nav.phtml:121
-#, fuzzy
 msgid "Useful Information"
-msgstr "My information"
+msgstr "Useful Information"
 
 #: module/Application/view/partial/main-nav.phtml:129
 msgid "Well-being"
-msgstr ""
+msgstr "Well-being"
 
 #: module/Application/view/partial/main-nav.phtml:132
 msgid "FAQ"
-msgstr ""
+msgstr "FAQ"
 
 #: module/Application/view/partial/main-nav.phtml:160
 msgid "Featured"
@@ -2382,9 +2368,8 @@ msgid "Create an activity"
 msgstr "Create an activity"
 
 #: module/Application/view/partial/main-nav.phtml:212
-#, fuzzy
 msgid "Activity Information COVID-19"
-msgstr "Activity options"
+msgstr "Activity Information COVID-19"
 
 #: module/Application/view/partial/main-nav.phtml:216
 msgid ""
@@ -2654,9 +2639,8 @@ msgid "GEWIS has many different committees, learn more about them below!"
 msgstr "GEWIS has many different committees, learn more about them below!"
 
 #: module/Frontpage/view/frontpage/organ/committee-list.phtml:15
-#, fuzzy
 msgid "Information for committees"
-msgstr "Innovation Sciences"
+msgstr "Information for committees"
 
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:12
 msgid "Polls awaiting approval"
@@ -3336,7 +3320,7 @@ msgstr "This slug contains invalid characters"
 
 #: module/Company/src/Company/Form/EditJob.php:53
 msgid "What labels apply to this job?"
-msgstr ""
+msgstr "What labels apply to this job?"
 
 #: module/Company/src/Company/Form/CategoryFieldset.php:57
 msgid "Plural display name"
@@ -3443,25 +3427,25 @@ msgid "You are not allowed to edit labels"
 msgstr "You are not allowed to edit labels"
 
 #: module/Activity/src/Activity/Controller/AdminApprovalController.php:31
-#, fuzzy
 msgid "You are not allowed to view the approval of this activity"
-msgstr "You are not allowed to view this activity"
+msgstr "You are not allowed to view the approval of this activity"
 
 #: module/Activity/src/Activity/Controller/AdminController.php:40
 #: module/Activity/src/Activity/Service/Activity.php:387
-#, fuzzy
 msgid "You are not allowed to update this activity"
-msgstr "You are not allowed to view this activity"
+msgstr "You are not allowed to update this activity"
 
 #: module/Activity/src/Activity/Controller/AdminController.php:54
 msgid ""
 "Activities that have sign-up lists which are open or approved cannot be "
 "updated."
 msgstr ""
+"Activities that have sign-up lists which are open or approved cannot be "
+"updated."
 
 #: module/Activity/src/Activity/Controller/AdminController.php:63
 msgid "This activity has already started/ended and can no longer be updated."
-msgstr ""
+msgstr "This activity has already started/ended and can no longer be updated."
 
 #: module/Activity/src/Activity/Controller/AdminController.php:74
 msgid ""
@@ -3470,28 +3454,28 @@ msgid ""
 "been approved by the board. Otherwise, the update has already been applied "
 "to the activity."
 msgstr ""
+"You have successfully created an update proposal for the activity! If the "
+"activity was already approved, the proposal will be applied after it has "
+"been approved by the board. Otherwise, the update has already been applied "
+"to the activity."
 
 #: module/Activity/src/Activity/Controller/AdminController.php:104
-#, fuzzy
 msgid "Update Activity"
-msgstr "Update activity"
+msgstr "Update Activity"
 
 #: module/Activity/src/Activity/Controller/AdminController.php:141
-#, fuzzy
 msgid "You are not allowed to export the participants of this activity"
-msgstr "You are not allowed to create signups for this activity"
+msgstr "You are not allowed to export the participants of this activity"
 
 #: module/Activity/src/Activity/Controller/AdminController.php:181
 #: module/Activity/src/Activity/Controller/AdminController.php:195
-#, fuzzy
 msgid "You are not allowed to view the participants of this activity"
-msgstr "You are not allowed to view this activity"
+msgstr "You are not allowed to view the participants of this activity"
 
 #: module/Activity/src/Activity/Controller/AdminController.php:264
 #: module/Activity/src/Activity/Controller/AdminController.php:343
-#, fuzzy
 msgid "You are not allowed to use this form"
-msgstr "You are not allowed to view this page."
+msgstr "You are not allowed to use this form"
 
 #: module/Activity/src/Activity/Controller/AdminController.php:279
 #: module/Activity/src/Activity/Controller/AdminController.php:356
@@ -3519,14 +3503,12 @@ msgid "Use the form to unsubscribe an external participant"
 msgstr "Use the form to unsubscribe an external participant"
 
 #: module/Activity/src/Activity/Controller/AdminController.php:399
-#, fuzzy
 msgid "You are not allowed to administer activities"
-msgstr "You are not allowed to view activities"
+msgstr "You are not allowed to administer activities"
 
 #: module/Activity/src/Activity/Controller/ApiController.php:23
-#, fuzzy
 msgid "You are not allowed to access the activities through the API"
-msgstr "You are not allowed to view the activities"
+msgstr "You are not allowed to access the activities through the API"
 
 #: module/Activity/src/Activity/Controller/ActivityController.php:227
 #: module/Activity/src/Activity/Controller/ActivityController.php:317
@@ -3535,9 +3517,8 @@ msgstr "You need to log in to subscribe"
 
 #: module/Activity/src/Activity/Controller/ActivityController.php:235
 #: module/Activity/src/Activity/Controller/ActivityController.php:325
-#, fuzzy
 msgid "You cannot subscribe to this activity at this moment in time"
-msgstr "You can not subscribe to this activity at this moment"
+msgstr "You cannot subscribe to this activity at this moment in time"
 
 #: module/Activity/src/Activity/Controller/ActivityController.php:245
 msgid "You have already been subscribed for this activity"
@@ -3560,14 +3541,12 @@ msgid "You have to be logged in to subscribe for this activity"
 msgstr "You have to be logged in to subscribe for this activity"
 
 #: module/Activity/src/Activity/Controller/ActivityController.php:386
-#, fuzzy
 msgid "You cannot unsubscribe from this activity at this moment in time"
-msgstr "You can not subscribe to this activity at this moment"
+msgstr "You cannot unsubscribe from this activity at this moment in time"
 
 #: module/Activity/src/Activity/Controller/ActivityController.php:396
-#, fuzzy
 msgid "You are not subscribed to this activity!"
-msgstr "You are not subscribed for this activity!"
+msgstr "You are not subscribed to this activity!"
 
 #: module/Activity/src/Activity/Controller/ActivityController.php:402
 msgid "Successfully unsubscribed"
@@ -3578,24 +3557,20 @@ msgid "Use the form to unsubscribe"
 msgstr "Use the form to unsubscribe"
 
 #: module/Activity/src/Activity/Controller/AdminCategoryController.php:33
-#, fuzzy
 msgid "The activity category was created successfully!"
-msgstr "The activity has been successfully created."
+msgstr "The activity category was created successfully!"
 
 #: module/Activity/src/Activity/Controller/AdminCategoryController.php:41
-#, fuzzy
 msgid "Create Activity Category"
-msgstr "Create Activity"
+msgstr "Create Activity Category"
 
 #: module/Activity/src/Activity/Controller/AdminCategoryController.php:97
-#, fuzzy
 msgid "The activity category was successfully updated!"
-msgstr "The activity has been successfully updated."
+msgstr "The activity category was successfully updated!"
 
 #: module/Activity/src/Activity/Controller/AdminCategoryController.php:110
-#, fuzzy
 msgid "Update Activity Category"
-msgstr "Update activity"
+msgstr "Update Activity Category"
 
 #: module/Activity/src/Activity/Form/ActivityCalendarProposal.php:44
 msgid "Select an option"
@@ -3652,43 +3627,40 @@ msgstr "The activity must be within the given period"
 #: module/Activity/src/Activity/Form/SignupListField.php:84
 #: module/Activity/src/Activity/Form/SignupListField.php:95
 msgid "Option 1, Option 2, ..."
-msgstr ""
+msgstr "Option 1, Option 2, ..."
 
 #: module/Activity/src/Activity/Form/SignupList.php:179
 msgid ""
 "The sign-up list opening date and time must be before the sign-up list "
 "closes."
 msgstr ""
+"The sign-up list opening date and time must be before the sign-up list "
+"closes."
 
 #: module/Activity/src/Activity/Form/Activity.php:31
 msgid "No organ"
 msgstr "No organ"
 
 #: module/Activity/src/Activity/Form/Activity.php:36
-#, fuzzy
 msgid "No Company"
-msgstr "Company"
+msgstr "No Company"
 
 #: module/Activity/src/Activity/Form/Activity.php:332
-#, fuzzy
 msgid "The activity must start before it ends."
-msgstr "The activity must start before it ends"
+msgstr "The activity must start before it ends."
 
 #: module/Activity/src/Activity/Service/Signup.php:43
 #: module/Activity/src/Activity/Service/Signup.php:229
-#, fuzzy
 msgid "You need to be logged in to sign up for this activity"
-msgstr "You need to be logged in to sign off for this activity"
+msgstr "You need to be logged in to sign up for this activity"
 
 #: module/Activity/src/Activity/Service/Signup.php:58
-#, fuzzy
 msgid "You are not allowed to use the external admin signup"
-msgstr "You are not allowed to subscribe an external user to this sign-up list"
+msgstr "You are not allowed to use the external admin signup"
 
 #: module/Activity/src/Activity/Service/Signup.php:73
-#, fuzzy
 msgid "You are not allowed to use the external signup"
-msgstr "You are not allowed to view the sign up data"
+msgstr "You are not allowed to use the external signup"
 
 #: module/Activity/src/Activity/Service/Signup.php:95
 msgid "You are not allowed to view who is signed up for this activity"
@@ -3787,14 +3759,9 @@ msgid "You are not allowed to delete this option"
 msgstr "You are not allowed to delete this option"
 
 #: module/Activity/src/Activity/Service/SignupListQuery.php:28
-#, fuzzy
-msgid "You are not allowed to view sign-up lists"
-msgstr "You are not allowed to view the sign up data"
-
 #: module/Activity/src/Activity/Service/SignupListQuery.php:42
-#, fuzzy
-msgid "You are not allowed to view sign-up lists."
-msgstr "You are not allowed to view the sign up data"
+msgid "You are not allowed to view sign-up lists"
+msgstr "You are not allowed to view sign-up lists"
 
 #: module/Activity/src/Activity/Service/Activity.php:59
 #: module/Activity/src/Activity/Service/Activity.php:111
@@ -3802,16 +3769,14 @@ msgid "You are not allowed to create an activity"
 msgstr "You are not allowed to create an activity"
 
 #: module/Activity/src/Activity/Service/Activity.php:134
-#, fuzzy
 msgid "You are not allowed to create an activity for this organ"
-msgstr "You are not allowed to create options for this organ"
+msgstr "You are not allowed to create an activity for this organ"
 
 #: module/Activity/src/Activity/Service/Activity.php:700
 #: module/Activity/src/Activity/Service/Activity.php:719
 #: module/Activity/src/Activity/Service/Activity.php:739
-#, fuzzy
 msgid "You are not allowed to change the status of the activity"
-msgstr "You are not allowed to create signups for this activity"
+msgstr "You are not allowed to change the status of the activity"
 
 #: module/Education/src/Education/Form/TempUpload.php:20
 #: module/Education/src/Education/Form/TempUpload.php:23
@@ -3979,24 +3944,20 @@ msgid "Upload document"
 msgstr "Upload document"
 
 #: module/Decision/src/Decision/Service/Organ.php:26
-#, fuzzy
 msgid "Not allowed to view the list of organs."
-msgstr "You are not allowed to view the list of pages."
+msgstr "Not allowed to view the list of organs."
 
 #: module/Decision/src/Decision/Service/Organ.php:44
-#, fuzzy
 msgid "Not allowed to view organ information"
-msgstr "Not allowed to view photos"
+msgstr "Not allowed to view organ information"
 
 #: module/Decision/src/Decision/Service/Organ.php:60
-#, fuzzy
 msgid "You are not allowed to edit organ information"
-msgstr "You are not allowed to edit companies"
+msgstr "You are not allowed to edit organ information"
 
 #: module/Decision/src/Decision/Service/Organ.php:261
-#, fuzzy
 msgid "You are not allowed to edit this organ's information"
-msgstr "You are not allowed to delete this option"
+msgstr "You are not allowed to edit this organ's information"
 
 #: module/Decision/src/Decision/Service/Member.php:28
 msgid "You are not allowed to view membership info."
@@ -4429,7 +4390,10 @@ msgstr "Purchaser"
 
 #: module/Application/language/additional-strings:11
 msgid "Inactief Lid"
-msgstr ""
+msgstr "Inactive Member"
+
+#~ msgid "You are not allowed to view sign-up lists."
+#~ msgstr "You are not allowed to view sign-up lists."
 
 #~ msgid "Display languages"
 #~ msgstr "Display languages"

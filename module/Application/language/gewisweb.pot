@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-24 08:46+0200\n"
-"PO-Revision-Date: 2021-06-24 08:46+0200\n"
+"POT-Creation-Date: 2021-06-24 08:52+0200\n"
+"PO-Revision-Date: 2021-06-24 08:52+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -3634,11 +3634,8 @@ msgid "You are not allowed to delete this option"
 msgstr ""
 
 #: module/Activity/src/Activity/Service/SignupListQuery.php:28
-msgid "You are not allowed to view sign-up lists"
-msgstr ""
-
 #: module/Activity/src/Activity/Service/SignupListQuery.php:42
-msgid "You are not allowed to view sign-up lists."
+msgid "You are not allowed to view sign-up lists"
 msgstr ""
 
 #: module/Activity/src/Activity/Service/Activity.php:59

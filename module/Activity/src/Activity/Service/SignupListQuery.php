@@ -39,7 +39,7 @@ class SignupListQuery extends AbstractAclService implements ServiceManagerAwareI
         if (!$this->isAllowed('view', 'signupList')) {
             $translator = $this->getTranslator();
             throw new NotAllowedException(
-                $translator->translate('You are not allowed to view sign-up lists.')
+                $translator->translate('You are not allowed to view sign-up lists')
             );
         }
 
