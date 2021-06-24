@@ -25,14 +25,14 @@ class LocalisedText
     /**
      * English text
      *
-     * @Orm\Column(type="string", nullable=true)
+     * @Orm\Column(type="text", nullable=true)
      */
     protected $valueEN;
 
     /**
      * Dutch text
      *
-     * @Orm\Column(type="string", nullable=true)
+     * @Orm\Column(type="text", nullable=true)
      */
     protected $valueNL;
 
