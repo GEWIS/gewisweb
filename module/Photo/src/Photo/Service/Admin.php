@@ -3,6 +3,7 @@
 namespace Photo\Service;
 
 use Application\Service\AbstractAclService;
+use http\Exception\InvalidArgumentException;
 use Photo\Model\Photo as PhotoModel;
 use Imagick;
 
@@ -65,7 +66,7 @@ class Admin extends AbstractAclService
                 $mapper->persist($photo);
                 $mapper->flush();
                 $mapper->getConnection()->commit();
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 // Rollback if anything went wrong
                 $mapper->getConnection()->rollBack();
                 $this->getPhotoService()->deletePhotoFiles($photo);
@@ -137,7 +138,7 @@ class Admin extends AbstractAclService
             closedir($handle);
         } else {
             $translator = $this->getTranslator();
-            throw new \Exception(
+            throw new InvalidArgumentException(
                 $translator->translate('The specified path is not valid')
             );
         }
@@ -172,12 +173,12 @@ class Admin extends AbstractAclService
             if ($extensionValidator->isValid($path)) {
                 $this->storeUploadedPhoto($path, $album, true);
             } else {
-                throw new \Exception(
+                throw new \InvalidArgumentException(
                     $translator->translate('The uploaded file does not have a valid extension')
                 );
             }
         } else {
-            throw new \Exception(
+            throw new \InvalidArgumentException(
                 sprintf(
                     $translator->translate("The uploaded file is not a valid image \nError: %s"),
                     implode(',', array_values($imageValidator->getMessages()))

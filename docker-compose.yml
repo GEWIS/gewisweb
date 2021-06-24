@@ -1,52 +1,89 @@
-version: '2'
-services:
-    web:
-        build: docker
-        volumes:
-            - .:/code
-            - ./docker/php.ini:/usr/local/etc/php/conf.d/default.ini
-            #- ./docker/php-fpm.conf:/usr/local/etc/php-fpm.conf
-        environment:
-            APP_ENV: development
-        networks:
-            - gewisweb
+version: '3.5'
 
+services:
     nginx:
-        image: nginx:1.10
-        volumes:
-            - .:/code
-            - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
+        image: web.docker-registry.gewis.nl/gewisweb_nginx:latest
+        env_file:
+            - .env
+        #        environment:
+        #            - NGINX_REQUIRE_AUTH=
         depends_on:
             - web
-        networks:
-            - gewisweb
-
-    webmysql:
-        image: mysql:5.5
+            - glide
         volumes:
-            - .mysql/dev:/var/lib/mysql
-        environment:
-            MYSQL_ROOT_PASSWORD: gewis
-            MYSQL_DATABASE: gewis
-            MYSQL_USER: gewis
-            MYSQL_PASSWORD: gewis
-            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+            - gewisweb_public:/code/public:ro
+            - gewisweb_glide_public:/glide/public:ro
+            - gewisweb_logs:/etc/nginx/logs:rw
         networks:
-            - gewisweb
-
-    myadmin:
-        image: phpmyadmin/phpmyadmin
-        depends_on:
-            - webmysql
-        environment:
-            PMA_HOST: webmysql
-            PMA_USER: gewis
-            PMA_PASSWORD: gewis
+            - gewisweb_network
+        ports:
+            - "9200:9200"
+            - "9201:9201"
+        restart: unless-stopped
+    web:
+        image: web.docker-registry.gewis.nl/gewisweb_web:production
+        env_file:
+            - .env
+#        environment:
+#            - APP_ENV=
+#            - GLIDE_HOST=
+#            - GLIDE_KEY=
+#            - DOCKER_GOOGLE_API_KEY=
+#            - DOCKER_GOOGLE_CALENDAR_KEY=
+#            - DOCKER_DB_HOST=
+#            - DOCKER_DB_PORT=
+#            - DOCKER_DB_USERNAME=
+#            - DOCKER_DB_PASSWORD=
+#            - DOCKER_DB_DATABASE=
+#            - DOCKER_DB2_HOST=
+#            - DOCKER_DB2_PORT=
+#            - DOCKER_DB2_USERNAME=
+#            - DOCKER_DB2_PASSWORD=
+#            - DOCKER_DB2_DATABASE=
         volumes:
-            - /sessions
+            - gewisweb_data:/code/data:rw
+            - gewisweb_public:/code/public:rw
         networks:
-            - gewisweb
+            - gewisweb_network
+        restart: unless-stopped
+    glide:
+        image: web.docker-registry.gewis.nl/gewisweb_glide:latest
+        env_file:
+            - .env
+#        environment:
+#            - GLIDE_HOST=
+#            - GLIDE_KEY=
+        volumes:
+            - gewisweb_glide_public:/glide/public:rw
+            - gewisweb_public:/code/public:rw
+        networks:
+            - gewisweb_network
+        restart: unless-stopped
+    postfix:
+        image: juanluisbaptiste/postfix
+        env_file:
+            - .env
+#        environment:
+#            - SMTP_SERVER=
+#            - SMTP_PORT=
+#            - SMTP_USERNAME=
+#            - SMTP_PASSWORD=
+#            - SERVER_HOSTNAME=
+        networks:
+            - gewisweb_network
+        restart: unless-stopped
+    memcached:
+        image: memcached
+        entrypoint: ['memcached', '-m 256']
+        networks:
+            - gewisweb_network
+        restart: unless-stopped
+
+volumes:
+    gewisweb_data:
+    gewisweb_public:
+    gewisweb_glide_public:
+    gewisweb_logs:
 
 networks:
-    gewisweb:
-        driver: bridge
+    gewisweb_network:

@@ -19,13 +19,13 @@ class LocalFileReader implements FileReader
      * The location in the local filesystem that is considered the 'root' for this browser
      * @var string
      */
-    private static $root;
+    private $root;
 
     /**
      * A regex pattern matching all valid filepaths.
      * @var string
      */
-    private static $validFilepath;
+    private $validFilepath;
 
     public function __construct($root, $validFilepath)
     {
@@ -47,8 +47,9 @@ class LocalFileReader implements FileReader
         $response->setStream(fopen('file://' . $fullPath, 'r'));
         $response->setStatusCode(200);
         $headers = new \Zend\Http\Headers();
+        $array = explode('/', $fullPath);
         $headers->addHeaderLine('Content-Type', $contentType)
-            ->addHeaderLine('Content-Disposition', 'filename="' . end(explode('/', $fullPath)) . '"')
+            ->addHeaderLine('Content-Disposition', 'filename="' . end($array) . '"')
             ->addHeaderLine('Content-Length', filesize($fullPath));
         $response->setHeaders($headers);
         return $response;

@@ -25,11 +25,11 @@ return [
                 'configuration' => 'orm_default',
                 'eventmanager'  => 'orm_default',
                 'params' => [
-                    'host'     => 'webmysql',
-                    'port'     => '3306',
-                    'user'     => 'gewis',
-                    'password' => 'gewis',
-                    'dbname'   => 'gewis',
+                    'host'     => getenv('DOCKER_DB_HOST'),
+                    'port'     => getenv('DOCKER_DB_PORT'),
+                    'user'     => getenv('DOCKER_DB_USERNAME'),
+                    'password' => getenv('DOCKER_DB_PASSWORD'),
+                    'dbname'   => getenv('DOCKER_DB_DATABASE'),
                 ]
             ],
         ],

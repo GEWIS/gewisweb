@@ -4,7 +4,7 @@ namespace Education\Form\Fieldset;
 
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
-use zend\I18n\Translator\TranslatorInterface as Translator;
+use Zend\Mvc\I18n\Translator;
 use Education\Model\Exam as ExamModel;
 
 class Exam extends Fieldset implements InputFilterProviderInterface

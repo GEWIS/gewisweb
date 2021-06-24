@@ -1,0 +1,20 @@
+{
+    "name": "gewis/glide",
+    "description": "The Glide image server for the gewisweb project",
+    "license": "GPL-3.0",
+    "keywords": [
+        "website",
+        "gewis",
+        "glide",
+        "image"
+    ],
+    "homepage": "https://gewis.nl/",
+    "require": {
+        "php": ">=5.6.0",
+        "ext-gd": "*",
+        "ext-imagick": ">=3.1",
+        "ext-fileinfo": "*",
+        "ext-zip": ">=1.12.5",
+        "league/glide": "^1.5"
+    }
+}

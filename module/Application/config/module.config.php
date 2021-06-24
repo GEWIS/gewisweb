@@ -45,6 +45,15 @@ return [
         'aliases' => [
             'translator' => 'MvcTranslator',
         ],
+        'factories' => array(
+            'doctrine.cache.my_memcached' => function ($sm) {
+                $cache = new \Doctrine\Common\Cache\MemcachedCache();
+                $memcached = new \Memcached();
+                $memcached->addServer('memcached', 11211);
+                $cache->setMemcached($memcached);
+                return $cache;
+            },
+        ),
     ],
     'translator' => [
         'locale' => 'nl',

@@ -16,26 +16,11 @@
  * most users, however, feel free to configure autoloading however you'd like.
  */
 
-if (APP_ENV === 'production') {
-    require_once 'vendor/zendframework/zendframework/library/Zend/Loader/AutoloaderFactory.php';
-    require_once 'vendor/zendframework/zendframework/library/Zend/Loader/ClassMapAutoloader.php';
-    if (!file_exists('vendor/composer/autoload_classmap.php')) {
-        throw new RuntimeException('Unable to load vendor classmap. Run `php composer.phar install -o`.');
-    }
-
-    Zend\Loader\AutoloaderFactory::factory([
-        'Zend\Loader\ClassMapAutoloader' => [
-            'Composer' => 'vendor/composer/autoload_classmap.php',
-        ]
-    ]);
-} else {
-    // Composer autoloading
-    if (file_exists('vendor/autoload.php')) {
-        $loader = include 'vendor/autoload.php';
-    }
+// Composer autoloading
+if (file_exists('vendor/autoload.php')) {
+   $loader = include 'vendor/autoload.php';
 }
 
 if (!class_exists('Zend\Loader\AutoloaderFactory')) {
     throw new RuntimeException('Unable to load dependencies. Run `php composer.phar install`.');
 }
-

@@ -20,7 +20,7 @@ class AssociationYear
      *
      * AssociationYear constructor.
      */
-    private function __construct()
+    private final function __construct()
     {
         // never used
     }
