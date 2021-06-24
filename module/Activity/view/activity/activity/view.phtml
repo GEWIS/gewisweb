@@ -1,254 +1,296 @@
 <?php $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
 // set title
-$this->headTitle($this->escapeHtml($activity->getName()));
+$this->headTitle($this->escapeHtml($activity->getName()->getText($lang)));
 $this->headTitle($this->translate('Activities')); ?>
 
-
 <?php if (!isset($breadcrumb)): // only show breadcrumbs if they were not yet shown ?>
-<section class="section section-breadcrumb">
-    <div class="container">
-        <ol class="breadcrumb">
-            <li>
-                <a href="<?= $this->url('activity') ?>">
-                    <?= $this->translate('Activities') ?>
-                </a>
-            </li>
-            <li class="active">
-                <?= $this->escapeHtml($activity->getName()) ?>
-            </li>
-        </ol>
-    </div>
-</section>
-<?php endif; ?>
-
-<?php if (isset($success)): // Display the signup/signoff message. ?>
-    <div class="<?= $success ? 'alert alert-success' : 'alert alert-danger'; ?>" role="alert">
+    <section class="section section-breadcrumb">
         <div class="container">
-            <span class="fas <?= $success ? 'fa-check' : 'fa-times'; ?>"></span>&nbsp;<?= $message ?>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="<?= $this->url('activity') ?>">
+                        <?= $this->translate('Activities') ?>
+                    </a>
+                </li>
+                <?php if (!isset($signupList)): ?>
+                    <li class="active">
+                        <?= $this->escapeHtml($activity->getName()->getText($lang)) ?>
+                    </li>
+                <?php else: ?>
+                    <li>
+                        <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
+                            <?= $this->escapeHtml($activity->getName()->getText($lang)) ?>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <?= $this->escapeHtml($signupList->getName()->getText($lang)) ?>
+                    </li>
+                <?php endif; ?>
+            </ol>
         </div>
-    </div>
+    </section>
 <?php endif; ?>
 
 <section class="section">
     <div class="container">
-        <h1><?= $this->escapeHtml($activity->getName()) ?></h1>
-        <ul class="list-group">
-            <li class="list-group-item agenda-item">
-                <div class="row">
-                    <div class="agenda-item-heading col-md-2">
-                        <span class="badge badge-large">
-                            <span class="small">
-                                <?= strtr($this->dateFormat($activity->getBeginTime(), IntlDateFormatter::MEDIUM, IntlDateFormatter::NONE, null, $this->translate('MMM d')), array(' ' => '<br>')); ?>
-                            </span>
-                        </span>
-                    </div>
-                    <div class="agenda-item-body col-md-10">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <p><?= $this->markdown($activity->getDescription()) ?></p>
-                            </div>
-                            <div class="col-md-4">
-                                <dl>
-                                    <dt><?= $this->translate('Start') ?></dt>
-                                    <dd><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT); ?></dd>
-
-                                    <dt><?= $this->translate('End') ?></dt>
-                                    <dd><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT); ?></dd>
-
-                                    <dt><?= $this->translate('Location') ?></dt>
-                                    <dd><?= $this->escapeHtml($activity->getLocation()) ?></dd>
-                                    <?php if ($activity->getSubscriptionDeadline() != $activity->getEndTime()) : ?>
-                                        <dt><?= $this->translate('Subscribe before') ?></dt>
-                                        <dd><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT); ?></dd>
-                                    <?php endif; ?>
-                                    <dt><?= $this->translate('Costs') ?></dt>
-                                    <dd><?= $this->escapeHtml($activity->getCosts()) ?></dd>
-                                    <?php if ($activity->getIsMyFuture()): ?>
-                                        <a href="https://myfuture.tue.nl/">
-                                            <img
-                                                class="img-responsive"
-                                                style="max-width: 125px;"
-                                                src="/img/myfuture.png"
-                                            />
-                                        </a>
-                                    <?php endif ?>
-
-                                    <?php
-                                        $begin = $activity->getBeginTime()->format('Ymd\THis');
-                                        $end = $activity->getEndTime()->format('Ymd\THis');
-                                        $link = 'https://calendar.google.com/calendar/render?action=TEMPLATE&';
-                                        $link .= http_build_query([
-                                            'text' =>  $activity->getName(),
-                                            'dates' => $begin . '/' . $end,
-                                            'location' => $activity->getLocation(),
-                                        ]);
-                                    ?>
-
-                                     <a class="btn btn-default" target="_blank" href= "<?php echo $link ?>"> Google Calendar </a>
-
-                                </dl>
-                            </div>
+        <div class="row">
+            <?php if (isset($success)): // Display the signup/signoff message. ?>
+                <div class="col-md-12">
+                    <div class="<?= $success ? 'alert alert-success' : 'alert alert-danger'; ?>" role="alert">
+                        <div class="container">
+                            <span class="fas <?= $success ? 'fa-check' : 'fa-times'; ?>"></span>&nbsp;<?= $message ?>
                         </div>
                     </div>
                 </div>
-            </li>
-        </ul>
+            <?php endif; ?>
+            <div class="col-md-12">
+                <h1><?= $this->escapeHtml($activity->getName()->getText($lang)) ?></h1>
+            </div>
+            <div class="col-md-12">
+                <?php foreach ($activity->getCategories() as $category): ?>
+                    <div class="chip chip-small chip-outlined">
+                                    <span class="chip-label">
+                                        <?= $this->escapeHtml($category->getName()->getText($lang)) ?>
+                                    </span>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <div class="col-md-12">
+                <div class="row agenda-item">
+                    <div class="col-md-9">
+                        <div class="agenda-item-body">
+                            <p><?= $this->markdown($activity->getDescription()->getText($lang)) ?></p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="agenda-item-details">
+                            <dl>
+                                <dt><?= $this->translate('Start') ?></dt>
+                                <dd><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT); ?></dd>
 
-        <?php if ($isSignedUp) : ?>
-            <button class="btn btn-default btn-lg agenda-subscription-button" type="button" data-toggle="collapse" data-target="#subscriptionForm"
-                    aria-expanded="false" aria-controls="subscriptionForm">
-                <?= $this->translate('Already subscribed') ?>
-            </button>
-        <?php elseif (!$signupOpen || $subscriptionDeadLinePassed): ?>
-            <button class="btn btn-default btn-lg agenda-subscription-button" type="button" data-toggle="collapse" data-target="#subscriptionForm"
-                    aria-expanded="false" disabled="disabled"
-                    aria-controls="subscriptionForm">
-                <?= $this->translate('Subscription closed') ?>
-            </button>
-        <?php else: ?>
-            <button class="btn btn-primary btn-lg agenda-subscription-button collapsed" type="button" data-toggle="collapse" data-target="#subscriptionForm" aria-expanded="false" aria-controls="subscriptionForm">
-                <span class="fas fa-chevron-right"></span> <?= $this->translate('Subscribe now') ?>
-            </button>
-        <?php endif; ?>
-    <div class="container row collapse activity-subscription-form"
-         id="subscriptionForm">
-        <div class="well col-md-6">
-            <?php if ($isSignedUp) :?>
-                <h2>
-                    <?= $this->translate('Unsubscribe yourself') ?>
-                </h2>
-                <?php if ($subscriptionDeadLinePassed) : ?>
-                    <div>
-                        <?= $this->translate('You are not allowed to unsubscribe after the deadline!') ?>
+                                <dt><?= $this->translate('End') ?></dt>
+                                <dd><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT); ?></dd>
+
+                                <dt><?= $this->translate('Location') ?></dt>
+                                <dd><?= $this->escapeHtml($activity->getLocation()->getText($lang)) ?></dd>
+
+                                <dt><?= $this->translate('Costs') ?></dt>
+                                <dd><?= $this->escapeHtml($activity->getCosts()->getText($lang)) ?></dd>
+                                <?php if ($activity->getIsMyFuture()): ?>
+                                    <a href="https://myfuture.tue.nl/">
+                                        <img
+                                            class="img-responsive"
+                                            style="max-width: 125px;"
+                                            src="/img/myfuture.png"
+                                        />
+                                    </a>
+                                <?php endif ?>
+
+                                <?php
+                                $begin = $activity->getBeginTime()->format('Ymd\THis');
+                                $end = $activity->getEndTime()->format('Ymd\THis');
+                                $link = 'https://calendar.google.com/calendar/render?action=TEMPLATE&';
+                                $link .= http_build_query([
+                                    'text' => $activity->getName()->getText($lang),
+                                    'dates' => $begin . '/' . $end,
+                                    'location' => $activity->getLocation()->getText($lang),
+                                ]);
+                                ?>
+
+                                <a class="btn btn-default" target="_blank" href="<?php echo $link ?>"> Google
+                                    Calendar </a>
+                            </dl>
+                        </div>
                     </div>
-                <?php else : ?>
-                    <div>
-                        <?php $signoffForm->setAttribute('action', $this->url('activity/signoff', ['id' => $activity->getId()]));
-                        $signoffForm->prepare();
-                        echo $this->form()->openTag($signoffForm);
-                        echo $this->formElement($signoffForm->get('security'));
-                        $submit = $signoffForm->get('submit');
-                        $submit->setAttribute('class', 'btn btn-default');
-                        echo $this->formSubmit($submit);
-                        echo $this->form()->closeTag();
-                        ?>
-                    </div>
-                <?php endif; ?>
-            <?php endif; ?>
-            <?php if ($signupOpen && !$isAllowedToSubscribe): ?>
-                <h2>
-                    <?= $this->translate('Subscribe yourself') ?>
-                </h2>
-                <a href="<?= $this->url('user') ?>">
-                    <?= $this->translate('Login to subscribe') ?>
-                </a>
-                <?php if(!$activity->getOnlyGEWIS() && !is_null($form)): ?>
-                    <br/>
-                    <?= $this->translate('Or subscribe without a GEWIS membership: ') ?>
-                    <?= $this->partial('partial/signupForm', [
-                        'form' => $form,
-                        'activity' => $activity,
-                    ])
-                    ?>
-                <?php endif; ?>
-            <?php endif; ?>
-            <?php if (!is_null($form) && $signupOpen && !$isSignedUp && $isAllowedToSubscribe): //display the form ?>
-                <h2>
-                    <?= $this->translate('Subscribe yourself') ?>
-                </h2>
-                <?= $this->partial('partial/signupForm', [
-                    'form' => $form,
-                    'activity' => $activity,
-                ])
-                ?>
-            <?php endif; ?>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <?php
-        $organString = "the organizing party";
-        $organ = $activity->getOrgan();
-
-        if (!is_null($organ)) {
-            $organString = "<a href='" . $this->url('home/organ', ['abbr' => $organ->getAbbr(), 'type' => $organ->getType()]) . "''>" . $this->escapeHtml($organ->getName()) . "</a>";
-        }
-    ?>
-    <p>
-        <?= sprintf($this->translate("Please contact %s or the board (%s) with any questions, concerns or if you are unable to attend after the deadline for unsubscribing has passed. Have fun!"), $organString, "<a href='mailto:cib@gewis.nl'>cib@gewis.nl</a>") ?>
-    </p>
-
-    <?php if ($activity->getCanSignUp()): ?>
-        <h2>
-            <?= $this->translate('Current subscriptions') ?>
-        </h2>
-        <div class="table-responsive agenda-subscriptions">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th><?= $this->translate('Name') ?> </th>
-                        <?php foreach ($fields as $field): ?>
-                            <th><?= $this->escapeHtml($field->getName()) ?></th>
+        <?php if (isset($signupLists)): ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2><?= $this->translate('Sign-up Lists') ?></h2>
+                </div>
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs">
+                        <?php foreach ($signupLists as $list): ?>
+                            <li role="presentation" <?= isset($signupList) ? ($signupList->getId() === $list['id'] ? 'class="active"' : '') : '' ?>>
+                                <a href="<?= $this->url('activity/view/signuplist', ['id' => $activity->getId(), 'signupList' => $list['id']]) ?>"><?= $this->escapeHtml($list['name']->getText($lang)) ?></a>
+                            </li>
                         <?php endforeach; ?>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php $i = 1; ?>
-                <?php if (!$this->acl('activity_acl')->isAllowed('activitySignup', 'view')): ?>
-                    <tr>
-                        <td align="center" colspan="<?= count($fields) + 2 ?>">
-                            <?php if ($activity->getDisplaySubscribedNumber()) {
-                                echo sprintf($this->translate('The number of subscribed members is currently %d.'), $memberSignups) . '<br/>';
-                            } ?>
-                            <a href="<?= $this->url('user') ?>">
-                                <?= $this->translate('Login to view the subscribed members.') ?>
-                            </a>
-                        </td>
-                    </tr>
-                <?php endif; ?>
-                <?php if (!$isArchived || $this->acl('activity_acl')->isAllowed('activitySignup', 'view')): ?>
-                    <?php foreach ($activity->getSignUps() as $signup): ?>
-                        <?php if (($signup instanceof Activity\Model\ExternalActivitySignup) || $this->acl('activity_acl')->isAllowed('activitySignup', 'view')): ?>
-                            <tr>
-                                <td><?= $this->acl('activity_acl')->isAllowed('activitySignup', 'view') || $activity->getDisplaySubscribedNumber() ? $i : '' ?></td>
-                                <td><?= $this->escapeHtml($signup->getFullName()) ?></td>
-                                <?php foreach ($fields as $field): ?>
-                                    <?php foreach ($signup->getFieldValues() as $fieldValue): ?>
-                                        <?php if ($fieldValue->getField()->getId() === $field->getId()): ?>
-                                            <td>
-                                                <?php
-                                                switch ($field->getType()) {
-                                                    case 0:
-                                                        echo $this->escapeHtml($fieldValue->getValue());
-                                                        break;
-                                                    case 1:
-                                                        echo $this->translate($fieldValue->getValue());
-                                                        break;
-                                                    case 2:
-                                                        echo $fieldValue->getValue();
-                                                        break;
-                                                    case 3:
-                                                        if ($lang === 'nl') {
-                                                            echo $fieldValue->getOption()->getValue();
-                                                        } else {
-                                                            echo $fieldValue->getOption()->getValueEn();
-                                                        }
-                                                        break;
-                                                }
-                                                ?>
-                                            </td>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                <?php endforeach; ?>
-                            </tr>
-                            <?php $i = $i + 1; ?>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-    <?php endif; ?>
+                    </ul>
+                </div>
+            </div>
+        <?php endif; ?>
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                $organString = "the organizing party";
+                $organ = $activity->getOrgan();
 
+                if (!is_null($organ)) {
+                    $organString = "<a href='" . $this->url('home/organ', ['abbr' => $organ->getAbbr(), 'type' => $organ->getType()]) . "''>" . $this->escapeHtml($organ->getName()) . "</a>";
+                }
+                ?>
+                <p>
+                    <?= sprintf($this->translate("Please contact %s or the board (%s) with any questions, concerns or if you are unable to attend after the deadline for unsubscribing has passed. Have fun!"), $organString, "<a href='mailto:cib@gewis.nl'>cib@gewis.nl</a>") ?>
+                </p>
+            </div>
+        </div>
+        <?php if (isset($signupList)): ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <p>
+                        <?=
+                        sprintf(
+                            $this->translate('This sign-up list is open from <strong>%s</strong> till <strong>%s</strong>.'),
+                            $this->dateFormat($signupList->getOpenDate(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
+                            $this->dateFormat($signupList->getCloseDate(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT)
+                        )
+                        ?>
+                    </p>
+                </div>
+                <div class="col-md-12">
+                    <?php if ($isSignedUp) : ?>
+                        <button class="btn btn-default btn-lg agenda-subscription-button" type="button"
+                                data-toggle="collapse" data-target="#subscriptionForm"
+                                aria-expanded="false" aria-controls="subscriptionForm">
+                            <?= $this->translate('Already subscribed') ?>
+                        </button>
+                    <?php elseif (!$signupOpen): ?>
+                        <button class="btn btn-default btn-lg agenda-subscription-button" type="button"
+                                data-toggle="collapse" data-target="#subscriptionForm"
+                                aria-expanded="false" disabled="disabled"
+                                aria-controls="subscriptionForm">
+                            <?= $this->translate('Subscription closed') ?>
+                        </button>
+                    <?php else: ?>
+                        <button class="btn btn-primary btn-lg agenda-subscription-button collapsed" type="button"
+                                data-toggle="collapse" data-target="#subscriptionForm" aria-expanded="false"
+                                aria-controls="subscriptionForm">
+                            <span class="fas fa-chevron-right"></span> <?= $this->translate('Subscribe now') ?>
+                        </button>
+                    <?php endif; ?>
+                </div>
+                <div class="col-md-6 collapse activity-subscription-form" id="subscriptionForm">
+                    <div class="well">
+                        <?php if ($isSignedUp) : ?>
+                            <h2><?= $this->translate('Unsubscribe yourself') ?></h2>
+                            <?php if ($subscriptionCloseDatePassed) : ?>
+                                <div>
+                                    <?= $this->translate('You are not allowed to unsubscribe after the deadline!') ?>
+                                </div>
+                            <?php else : ?>
+                                <div>
+                                    <?php
+                                    $signoffForm->setAttribute('action', $this->url('activity/signoff', ['id' => $activity->getId(), 'signupList' => $signupList->getId()]));
+                                    $signoffForm->prepare();
+                                    echo $this->form()->openTag($signoffForm);
+                                    echo $this->formElement($signoffForm->get('security'));
+                                    $submit = $signoffForm->get('submit');
+                                    $submit->setAttribute('class', 'btn btn-default');
+                                    echo $this->formSubmit($submit);
+                                    echo $this->form()->closeTag();
+                                    ?>
+                                </div>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                        <?php if ($signupOpen && !$isAllowedToSubscribe): ?>
+                            <h2>
+                                <?= $this->translate('Subscribe yourself') ?>
+                            </h2>
+                            <a href="<?= $this->url('user') ?>">
+                                <?= $this->translate('Login to subscribe') ?>
+                            </a>
+                            <?php if (!$signupList->getOnlyGEWIS() && !is_null($form)): ?>
+                                <br/>
+                                <?= $this->translate('Or subscribe without a GEWIS membership: ') ?>
+                                <?= $this->partial('partial/signupForm', [
+                                    'form' => $form,
+                                    'signupList' => $signupList,
+                                ])
+                                ?>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                        <?php if (!is_null($form) && $signupOpen && !$isSignedUp && $isAllowedToSubscribe): //display the form ?>
+                            <h2>
+                                <?= $this->translate('Subscribe yourself') ?>
+                            </h2>
+                            <?= $this->partial('partial/signupForm', [
+                                'form' => $form,
+                                'signupList' => $signupList,
+                            ])
+                            ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="col-md-12 table-responsive agenda-subscriptions">
+                    <h2><?= $this->translate('Current subscriptions') ?></h2>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th><?= $this->translate('Name') ?> </th>
+                            <?php foreach ($fields as $field): ?>
+                                <th><?= $this->escapeHtml($field->getName()->getText($lang)) ?></th>
+                            <?php endforeach; ?>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php $i = 1; ?>
+                        <?php if (!$this->acl('activity_acl')->isAllowed('signupList', 'viewDetails')): ?>
+                            <tr>
+                                <td align="center" colspan="<?= count($fields) + 2 ?>">
+                                    <?php
+                                    if ($signupList->getDisplaySubscribedNumber()) {
+                                        echo sprintf($this->translate('The number of subscribed members is currently %d.'), $memberSignups) . '<br/>';
+                                    }
+                                    ?>
+                                    <a href="<?= $this->url('user') ?>">
+                                        <?= $this->translate('Login to view the subscribed members.') ?>
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                        <?php if (!$isArchived || $this->acl('activity_acl')->isAllowed('signupList', 'viewDetails')): ?>
+                            <?php foreach ($signupList->getSignUps() as $signup): ?>
+                                <?php if (($signup instanceof Activity\Model\ExternalSignup) || $this->acl('activity_acl')->isAllowed('signupList', 'viewDetails')): ?>
+                                    <tr>
+                                        <td><?= $this->acl('activity_acl')->isAllowed('signupList', 'view') || $signupList->getDisplaySubscribedNumber() ? $i : '' ?></td>
+                                        <td><?= $this->escapeHtml($signup->getFullName()) ?></td>
+                                        <?php foreach ($fields as $field): ?>
+                                            <?php foreach ($signup->getFieldValues() as $fieldValue): ?>
+                                                <?php if ($fieldValue->getField()->getId() === $field->getId()): ?>
+                                                    <td>
+                                                        <?php
+                                                        switch ($field->getType()) {
+                                                            case 0:
+                                                                echo $this->escapeHtml($fieldValue->getValue());
+                                                                break;
+                                                            case 1:
+                                                                echo $this->translate($fieldValue->getValue());
+                                                                break;
+                                                            case 2:
+                                                                echo $fieldValue->getValue();
+                                                                break;
+                                                            case 3:
+                                                                echo $fieldValue->getOption()->getValue()->getText($lang);
+                                                                break;
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        <?php endforeach; ?>
+                                    </tr>
+                                    <?php $i = $i + 1; ?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
 </section>

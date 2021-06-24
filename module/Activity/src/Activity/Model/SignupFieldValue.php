@@ -5,11 +5,11 @@ namespace Activity\Model;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Activity model.
+ * SignupFieldValue model.
  *
  * @ORM\Entity
  */
-class ActivityFieldValue
+class SignupFieldValue
 {
     /**
      * ID for the field value.
@@ -23,15 +23,15 @@ class ActivityFieldValue
     /**
      * Field which the value belongs to.
      *
-     * @ORM\ManyToOne(targetEntity="ActivityField")
-     * @ORM\JoinColumn(name="field_id",referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="SignupField")
+     * @ORM\JoinColumn(name="field_id", referencedColumnName="id")
      */
     protected $field;
 
     /**
      * Signup which the value belongs to.
      *
-     * @ORM\ManyToOne(targetEntity="ActivitySignup", inversedBy="fieldValues")
+     * @ORM\ManyToOne(targetEntity="Signup", inversedBy="fieldValues")
      * @ORM\JoinColumn(name="signup_id", referencedColumnName="id")
      */
     protected $signup;
@@ -39,24 +39,32 @@ class ActivityFieldValue
     /**
      * The value of the assoctiated field, is not an option.
      *
-     * @ORM\Column(type="string",nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $value;
 
     /**
      * The option chosen.
      *
-     * @ORM\ManyToOne(targetEntity="ActivityOption")
+     * @ORM\ManyToOne(targetEntity="SignupOption")
      * @ORM\JoinColumn(name="option_id", referencedColumnName="id")
      */
     protected $option;
 
     /**
+     * @return SignupField
+     */
+    public function getField()
+    {
+        return $this->field;
+    }
+
+    /**
      * Set the field.
      *
-     * @param \Activity\Model\Activity\Model\ActivityField $field
+     * @param SignupField $field
      */
-    public function setField(\Activity\Model\ActivityField $field)
+    public function setField(SignupField $field)
     {
         $this->field = $field;
     }
@@ -64,11 +72,19 @@ class ActivityFieldValue
     /**
      * Set the signup.
      *
-     * @param \Activity\Model\Activity\Model\ActivitySignup $signup
+     * @param Signup $signup
      */
-    public function setSignup(\Activity\Model\ActivitySignup $signup)
+    public function setSignup(Signup $signup)
     {
         $this->signup = $signup;
+    }
+
+    /**
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 
     /**
@@ -81,23 +97,19 @@ class ActivityFieldValue
         $this->value = $value;
     }
 
+    /**
+     * @return SignupOption
+     */
     public function getOption()
     {
         return $this->option;
     }
 
+    /**
+     * @param SignupOption
+     */
     public function setOption($option)
     {
         $this->option = $option;
-    }
-
-    public function getField()
-    {
-        return $this->field;
-    }
-
-    public function getValue()
-    {
-        return $this->value;
     }
 }

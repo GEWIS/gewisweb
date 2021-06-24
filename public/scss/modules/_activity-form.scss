@@ -1,0 +1,62 @@
+.form-activity {
+    .signup-lists-header {
+        display: none;
+
+        @media (max-width: $screen-sm-max) {
+            display: none !important;
+        }
+    }
+
+    .signup-lists,
+    .signup-list-fields {
+        @media (max-width: $screen-md-max) {
+            .flag-icon-en,
+            .flag-icon-nl {
+                display: inline-block;
+            }
+        }
+
+        @media (min-width: $screen-md-min) {
+            .flag-icon-en,
+            .flag-icon-nl {
+                display: none;
+            }
+        }
+    }
+
+    .field,
+    .signup-list {
+        margin-bottom: 2rem;
+    }
+    
+    & > .row:last-child {
+        margin-top: 2rem;
+    }
+
+    h1 {
+        margin-bottom: 0;
+    }
+
+    h2 {
+        margin-top: 2rem;
+        margin-bottom: 0;
+    }
+
+    hr {
+        margin: 0.5rem 0;
+    }
+
+    .label-required::after {
+        content: " *";
+        color: $brand-primary;
+    }
+
+    .language-control {
+        margin-right: 0.5rem;
+        vertical-align: top;
+    }
+}
+
+.container > section {
+    padding: 0;
+}

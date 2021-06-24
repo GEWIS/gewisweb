@@ -1,135 +1,226 @@
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <td></td>
-        <td><?= $this->translate('Dutch') ?></td>
-        <td><?= $this->translate('English') ?></td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td><?php echo $this->translate('Activity id'); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getId()); ?></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><?php echo $this->translate('Name'); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getName()); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getNameEn()); ?></td>
-    </tr>
-    <tr>
-        <td><?php echo $this->translate('Start time'); ?></td>
-        <td><?php echo $activity->getBeginTime()->format('Y-m-d H:i') ?></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><?php echo $this->translate('End time'); ?></td>
-        <td><?php echo $activity->getEndTime()->format('Y-m-d H:i') ?></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><?php echo $this->translate('Location'); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getLocation()); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getLocationEn()); ?></td>
-    </tr>
-    <tr>
-        <td><?php echo $this->translate('Costs'); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getCosts()); ?></td>
-        <td><?php echo $this->escapeHtml($activity->getCostsEn()); ?></td>
-    </tr>
-    <tr>
-        <td><?php echo $this->translate('Subscribe'); ?></td>
-        <td><?php echo $activity->getCanSignUp() ? $this->translate("Yes") : $this->translate("No"); ?></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><?php echo $this->translate('Only GEWIS'); ?></td>
-        <td><?php echo $activity->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No"); ?></td>
-        <td></td>
-    </tr>
+<?php
 
-    <?php if ($activity->getStatus() === \Activity\Model\Activity::STATUS_TO_APPROVE): ?>
-        <tr>
-            <td>
-                <?php $approvalForm->setAttribute('action', $this->url('activity_admin_approval/approve', ['id' => $activity->getId()]));
-                $approvalForm->prepare();
-                echo $this->form()->openTag($approvalForm);
-                echo $this->formElement($approvalForm->get('security'));
-                $submit = $approvalForm->get('submit');
-                $submit->setAttribute('class', 'btn btn-default');
-                $submit->setAttribute('value', $this->translate('Approve'));
-                echo $this->formSubmit($submit);
-                echo $this->form()->closeTag();
-                ?>
-            </td>
-            <td>
-                <?php $disapprovalForm->setAttribute('action', $this->url('activity_admin_approval/disapprove', ['id' => $activity->getId()]));
-                $disapprovalForm->prepare();
-                echo $this->form()->openTag($disapprovalForm);
-                echo $this->formElement($disapprovalForm->get('security'));
-                $submit = $disapprovalForm->get('submit');
-                $submit->setAttribute('class', 'btn btn-default');
-                $submit->setAttribute('value', $this->translate('Disapprove'));
-                echo $this->formSubmit($submit);
-                echo $this->form()->closeTag();
-                ?>
-            </td>
-            <td></td>
-        </tr>
+use Activity\Model\Activity;
 
-    <?php elseif ($activity->getStatus() === \Activity\Model\Activity::STATUS_APPROVED): ?>
-        <tr>
-            <td>
-            </td>
-            <td>
-                <?php $resetForm->setAttribute('action', $this->url('activity_admin_approval/reset', ['id' => $activity->getId()]));
-                $resetForm->prepare();
-                echo $this->form()->openTag($resetForm);
-                echo $this->formElement($resetForm->get('security'));
-                $submit = $resetForm->get('submit');
-                $submit->setAttribute('class', 'btn btn-default');
-                echo $this->formSubmit($submit);
-                echo $this->form()->closeTag();
-                ?>
-            </td>
-            <td></td>
-        </tr>
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
 
-    <?php elseif ($activity->getStatus() === \Activity\Model\Activity::STATUS_DISAPPROVED): ?>
-        <tr>
-            <td>
-            </td>
-            <td>
-                <?php $resetForm->setAttribute('action', $this->url('activity_admin_approval/reset', ['id' => $activity->getId()]));
-                $resetForm->prepare();
-                echo $this->form()->openTag($resetForm);
-                echo $this->formElement($resetForm->get('security'));
-                $submit = $resetForm->get('submit');
-                $submit->setAttribute('class', 'btn btn-default');
-                echo $this->formSubmit($submit);
-                echo $this->form()->closeTag();
-                ?>
-            </td>
-            <td></td>
-        </tr>
+$this->headTitle($this->escapeHtml($activity->getName()->getText($lang)));
+$this->headTitle($this->translate('Approval'));
+?>
+<div class="row admin-activity admin-activity-overview">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Information') ?></h2>
+        <p>
+            <?php
+            $organisingParty = "";
+            if (!is_null($activity->getOrgan()) && !is_null($activity->getCompany())) {
+                $organisingParty = $this->escapeHtml($activity->getOrgan()->getName()) . ' ';
+                $organisingParty .= $this->translate('and') . ' ';
+                $organisingParty .= $this->escapeHtml($activity->getCompany()->getName());
+            } else if (!is_null($activity->getOrgan())) {
+                $organisingParty = $this->escapeHtml($activity->getOrgan()->getName());
+            } else if (!is_null($activity->getCompany())) {
+                $organisingParty = $this->escapeHtml($activity->getCompany()->getName());
+            } else {
+                $organisingParty = $this->escapeHtml($activity->getCreator()->getMember()->getFullName());
+            }
+
+            echo sprintf(
+                $this->translate('This is activity <b>#%d</b>, organised by <b>%s</b>, and it will start on <b>%s</b> and end on <b>%s</b>.'),
+                $activity->getId(),
+                $organisingParty,
+                $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
+                $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT)
+            );
+            ?>
+            <?= $this->translate('More information about this activity is available below.') ?>
+        </p>
+    </div>
+    <div class="col-md-10 col-md-offset-2 overview-header">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="flag-icon flag-icon-nl"></span>
+                <b><?= $this->translate('Dutch') ?></b>
+                <hr>
+            </div>
+            <div class="col-md-6">
+                <span class="flag-icon flag-icon-en"></span>
+                <b><?= $this->translate('English') ?></b>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-2 overview-sidebar">
+                <b><?= $this->translate('Name') ?></b>
+            </div>
+            <div class="col-md-5">
+                <span class="activity-property">
+                    <span class="flag-icon flag-icon-nl"></span>
+                    <b><?= $this->translate('Name') ?>:</b>
+                </span>
+                <?= $this->escapeHtml($activity->getName()->getValueNL()) ?>
+            </div>
+            <div class="col-md-5">
+                <span class="activity-property">
+                    <span class="flag-icon flag-icon-en"></span>
+                    <b><?= $this->translate('Name') ?>:</b>
+                </span>
+                <?= $this->escapeHtml($activity->getName()->getValueEN()) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 overview-sidebar">
+                <b><?= $this->translate('Location') ?></b>
+            </div>
+            <div class="col-md-5">
+                <span class="activity-property">
+                    <span class="flag-icon flag-icon-nl"></span>
+                    <b><?= $this->translate('Location') ?>:</b>
+                </span>
+                <?= $this->escapeHtml($activity->getLocation()->getValueNL()) ?>
+            </div>
+            <div class="col-md-5">
+                <span class="activity-property">
+                    <span class="flag-icon flag-icon-en"></span>
+                    <b><?= $this->translate('Location') ?>:</b>
+                </span>
+                <?= $this->escapeHtml($activity->getLocation()->getValueEN()) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 overview-sidebar">
+                <b><?= $this->translate('Costs') ?></b>
+            </div>
+            <div class="col-md-5">
+                <span class="activity-property">
+                    <span class="flag-icon flag-icon-nl"></span>
+                    <b><?= $this->translate('Costs') ?>:</b>
+                </span>
+                <?= $this->escapeHtml($activity->getCosts()->getValueNL()) ?>
+            </div>
+            <div class="col-md-5">
+                <span class="activity-property">
+                    <span class="flag-icon flag-icon-en"></span>
+                    <b><?= $this->translate('Costs') ?>:</b>
+                </span>
+                <?= $this->escapeHtml($activity->getCosts()->getValueEN()) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 overview-sidebar">
+                <b><?= $this->translate('Description') ?></b>
+            </div>
+            <div class="col-md-5">
+                <span class="activity-property">
+                    <span class="flag-icon flag-icon-nl"></span>
+                    <b><?= $this->translate('Description') ?>:</b>
+                </span>
+                <?= $this->escapeHtml($activity->getDescription()->getValueNL()) ?>
+            </div>
+            <div class="col-md-5">
+                <span class="activity-property">
+                    <span class="flag-icon flag-icon-en"></span>
+                    <b><?= $this->translate('Description') ?>:</b>
+                </span>
+                <?= $this->escapeHtml($activity->getDescription()->getValueEN()) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
+                    <?= $this->translate('View details / subscriptions') ?>
+                </a>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <?php if ($activity->getCategories()->count() > 0): ?>
+        <div class="col-md-12">
+            <h2><?= $this->translate('Activity Categories') ?></h2>
+        </div>
+        <div class="col-md-12">
+            <?php foreach ($activity->getCategories() as $category): ?>
+                <div class="chip">
+                <span class="chip-label">
+                    <?= $this->escapeHtml($category->getName()->getText($lang)) ?>
+                </span>
+                </div>
+            <?php endforeach; ?>
+        </div>
     <?php endif; ?>
-    <tr>
-        <td>
-            <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
-                <?= $this->translate('View details / subscriptions') ?>
-            </a>
-        </td>
-        <td></td>
-        <td></td>
-    </tr>
-    </tbody>
-</table>
-
-<div class="col-md-8">
-    <?= $this->translate('Dutch description') ?>
-    <p><?= nl2br($this->escapeHtml($activity->getDescription())) ?></p>
-</div>
-<div class="col-md-8">
-    <?= $this->translate('English description') ?>
-    <p><?= nl2br($this->escapeHtml($activity->getDescriptionEn())) ?></p>
+    <?php if ($activity->getSignupLists()->count() > 0): ?>
+        <div class="col-md-12">
+            <h2><?= $this->translate('Sign-up Lists') ?></h2>
+        </div>
+        <div class="col-md-10 col-md-offset-2 overview-header">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="flag-icon flag-icon-nl"></span>
+                    <b><?= $this->translate('Dutch') ?></b>
+                    <hr>
+                </div>
+                <div class="col-md-6">
+                    <span class="flag-icon flag-icon-en"></span>
+                    <b><?= $this->translate('English') ?></b>
+                    <hr>
+                </div>
+            </div>
+        </div>
+        <?= $this->partial('partial/admin-approval/signuplists', ['activity' => $activity]) ?>
+    <?php endif; ?>
+    <div class="col-md-12">
+        <h2><?= $this->translate('Approval') ?></h2>
+    </div>
+    <?php if ($activity->getStatus() === Activity::STATUS_TO_APPROVE): ?>
+        <div class="col-md-2">
+            <?php $approvalForm->setAttribute('action', $this->url('activity_admin_approval/approve', ['id' => $activity->getId()]));
+            $approvalForm->prepare();
+            echo $this->form()->openTag($approvalForm);
+            echo $this->formElement($approvalForm->get('security'));
+            $submit = $approvalForm->get('submit');
+            $submit->setAttribute('class', 'btn btn-default');
+            $submit->setAttribute('value', $this->translate('Approve'));
+            echo $this->formSubmit($submit);
+            echo $this->form()->closeTag();
+            ?>
+        </div>
+        <div class="col-md-2">
+            <?php $disapprovalForm->setAttribute('action', $this->url('activity_admin_approval/disapprove', ['id' => $activity->getId()]));
+            $disapprovalForm->prepare();
+            echo $this->form()->openTag($disapprovalForm);
+            echo $this->formElement($disapprovalForm->get('security'));
+            $submit = $disapprovalForm->get('submit');
+            $submit->setAttribute('class', 'btn btn-default');
+            $submit->setAttribute('value', $this->translate('Disapprove'));
+            echo $this->formSubmit($submit);
+            echo $this->form()->closeTag();
+            ?>
+        </div>
+    <?php elseif ($activity->getStatus() === Activity::STATUS_APPROVED): ?>
+        <div class="col-md-2">
+            <?php $resetForm->setAttribute('action', $this->url('activity_admin_approval/reset', ['id' => $activity->getId()]));
+            $resetForm->prepare();
+            echo $this->form()->openTag($resetForm);
+            echo $this->formElement($resetForm->get('security'));
+            $submit = $resetForm->get('submit');
+            $submit->setAttribute('class', 'btn btn-default');
+            echo $this->formSubmit($submit);
+            echo $this->form()->closeTag();
+            ?>
+        </div>
+    <?php elseif ($activity->getStatus() === Activity::STATUS_DISAPPROVED): ?>
+        <div class="col-md-2">
+            <?php $resetForm->setAttribute('action', $this->url('activity_admin_approval/reset', ['id' => $activity->getId()]));
+            $resetForm->prepare();
+            echo $this->form()->openTag($resetForm);
+            echo $this->formElement($resetForm->get('security'));
+            $submit = $resetForm->get('submit');
+            $submit->setAttribute('class', 'btn btn-default');
+            echo $this->formSubmit($submit);
+            echo $this->form()->closeTag();
+            ?>
+        </div>
+    <?php endif; ?>
 </div>

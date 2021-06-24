@@ -1,9 +1,9 @@
 <?php
-$this->headScript()
-    ->prependFile($this->basePath() . '/js/photo-admin.js')
-    ->prependFile($this->basePath() . '/js/photo.js')
-    ->prependFile($this->basePath() . '/js/dropzone.js');
-$this->headLink()->prependStylesheet($this->basePath() . '/css/dropzone.css')
+$this->inlineScript()
+    ->appendFile($this->basePath() . '/js/dropzone.js')
+    ->appendFile($this->basePath() . '/js/photo.js')
+    ->appendFile($this->basePath() . '/js/photo-admin.js');
+$this->headLink()->appendStylesheet($this->basePath() . '/css/dropzone.css')
 ?>
 <h1><?= sprintf($this->translate('Uploading photos to %s'), $album->getName()) ?></h1>
 <hr>

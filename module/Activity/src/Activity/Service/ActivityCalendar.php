@@ -21,7 +21,6 @@ use Zend\Permissions\Acl\Acl;
 
 class ActivityCalendar extends AbstractAclService
 {
-
     /**
      * Gets all future options
      *
@@ -77,8 +76,12 @@ class ActivityCalendar extends AbstractAclService
         $date->sub(new DateInterval('P3W'));
         $oldOptions = $this->getActivityCalendarOptionMapper()->getPastOptions($date);
         if (!empty($oldOptions)) {
-            $this->getEmailService()->sendEmail('activity_calendar', 'email/options-overdue',
-                'Activiteiten kalender opties verlopen | Activity calendar options expired', ['options' => $oldOptions]);
+            $this->getEmailService()->sendEmail(
+                'activity_calendar',
+                'email/options-overdue',
+                'Activiteiten kalender opties verlopen | Activity calendar options expired',
+                ['options' => $oldOptions]
+            );
         }
     }
 
@@ -199,27 +202,20 @@ class ActivityCalendar extends AbstractAclService
             return true;
         }
 
-        if (!$this->isAllowed('create')) {
-            return false;
-        }
-
         $period = $this->getCurrentPeriod();
-        if ($period == null) {
-            return false;
-        }
 
-        if ($organId == null) {
+        if (
+            $period == null
+            || !$this->isAllowed('create')
+            || $organId == null
+        ) {
             return false;
         }
 
         $max = $this->getMaxActivities($organId, $period->getId());
         $count = $this->getCurrentProposalCount($period, $organId);
 
-        if ($count >= $max) {
-            return false;
-        }
-
-        return true;
+        return ($count < $max);
     }
 
     /**
@@ -316,14 +312,7 @@ class ActivityCalendar extends AbstractAclService
      */
     public function createOption($data, $proposal)
     {
-//        $form = $this->getCreateOptionForm();
         $option = new OptionModel();
-//        $form->setData($data);
-//
-//        if (!$form->isValid()) {
-//            return false;
-//        }
-//        $validatedData = $form->getData();
         $validatedData = $data;
 
         $em = $this->getEntityManager();
@@ -372,6 +361,31 @@ class ActivityCalendar extends AbstractAclService
         }
     }
 
+    public function canApproveOption()
+    {
+        if ($this->isAllowed('approve_all')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function deleteOption($id)
+    {
+        $mapper = $this->getActivityCalendarOptionMapper();
+        $option = $mapper->find($id);
+        if (!$this->canDeleteOption($option)) {
+            throw new NotAllowedException(
+                $this->getTranslator()->translate('You are not allowed to delete this option')
+            );
+        }
+
+        $em = $this->getEntityManager();
+        $option->setModifiedBy($this->sm->get('user_service_user')->getIdentity());
+        $option->setStatus('deleted');
+        $em->flush();
+    }
+
     protected function canDeleteOption($option)
     {
         if ($this->isAllowed('delete_all')) {
@@ -396,15 +410,6 @@ class ActivityCalendar extends AbstractAclService
         return false;
     }
 
-    public function canApproveOption()
-    {
-        if ($this->isAllowed('approve_all')) {
-            return true;
-        }
-
-        return false;
-    }
-
     /**
      * Get the organ service
      *
@@ -413,22 +418,6 @@ class ActivityCalendar extends AbstractAclService
     public function getOrganService()
     {
         return $this->sm->get('decision_service_organ');
-    }
-
-    public function deleteOption($id)
-    {
-        $mapper = $this->getActivityCalendarOptionMapper();
-        $option = $mapper->find($id);
-        if (!$this->canDeleteOption($option)) {
-            throw new NotAllowedException(
-                $this->getTranslator()->translate('You are not allowed to delete this option')
-            );
-        }
-
-        $em = $this->getEntityManager();
-        $option->setModifiedBy($this->sm->get('user_service_user')->getIdentity());
-        $option->setStatus('deleted');
-        $em->flush();
     }
 
     /**
@@ -448,10 +437,7 @@ class ActivityCalendar extends AbstractAclService
         $begin = $period->getBeginOptionTime();
         $end = $period->getEndOptionTime();
 
-        if ($begin > $beginTime) {
-            return false;
-        }
-        if ($beginTime > $end) {
+        if ($begin > $beginTime || $beginTime > $end) {
             return false;
         }
 
@@ -480,7 +466,7 @@ class ActivityCalendar extends AbstractAclService
     public function getEditableOrgans()
     {
         $allOrgans = $this->getOrganService()->getEditableOrgans();
-        $organs = array();
+        $organs = [];
         foreach ($allOrgans as $organ) {
             $organId = $organ->getId();
             if ($this->canOrganCreateProposal($organId)) {

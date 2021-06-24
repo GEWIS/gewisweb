@@ -104,6 +104,7 @@ return [
         'invokables' => [
             'featuredCompanyPackage' => 'Application\View\Helper\FeaturedCompanyPackage',
             'bootstrapElementError' => 'Application\View\Helper\BootstrapElementError',
+            'localisedTextElement' => 'Application\View\Helper\LocalisedTextElement',
         ],
     ],
 ];

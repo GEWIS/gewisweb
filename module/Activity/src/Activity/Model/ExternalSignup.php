@@ -5,11 +5,11 @@ namespace Activity\Model;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ActivitySignup model.
+ * ExternalSignup model.
  *
  * @ORM\Entity
  */
-class ExternalActivitySignup extends ActivitySignup
+class ExternalSignup extends Signup
 {
     /**
      * The full name of the external subscriber.
@@ -26,7 +26,7 @@ class ExternalActivitySignup extends ActivitySignup
     protected $email;
 
     /**
-     * Get the full name of the user whom signed up for the activity.
+     * Gets the full name of the user who signed up for the activity.
      *
      * @return string
      */
@@ -36,7 +36,17 @@ class ExternalActivitySignup extends ActivitySignup
     }
 
     /**
-     * Get the email address of the user whom signed up for the activity.
+     * Sets the full name of the user who signed up for the activity.
+     *
+     * @param string $fullName
+     */
+    public function setFullName($fullName)
+    {
+        $this->fullName = $fullName;
+    }
+
+    /**
+     * Get the email address of the user who signed up for the activity.
      *
      * @return string
      */
@@ -45,11 +55,11 @@ class ExternalActivitySignup extends ActivitySignup
         return $this->email;
     }
 
-    public function setFullName($fullName)
-    {
-        $this->fullName = $fullName;
-    }
-
+    /**
+     * Sets the e-mail address of the user who signed up for the activity.
+     *
+     * @param string $email
+     */
     public function setEmail($email)
     {
         $this->email = $email;

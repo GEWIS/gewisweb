@@ -1,12 +1,12 @@
 For English, see below.
 
-L.s.<br /><br />
+L.s.<br/><br/>
 
 Er is een nieuwe activiteit aangemaakt op de GEWIS website.
 
-<h3><?= $this->escapeHtml($activity->getName()) ?></h3>
+<h3><?= $this->escapeHtml($activity->getName()->getText("nl")) ?></h3>
 
-<p><?= $this->escapeHtml($activity->getDescription()) ?></p>
+<p><?= $this->escapeHtml($activity->getDescription()->getText("nl")) ?></p>
 
 <table>
     <tr>
@@ -19,34 +19,29 @@ Er is een nieuwe activiteit aangemaakt op de GEWIS website.
     </tr>
     <tr>
         <td><b>Locatie:</b></td>
-        <td><?= $this->escapeHtml($activity->getLocation()) ?></td>
+        <td><?= $this->escapeHtml($activity->getLocation()->getText("nl")) ?></td>
     </tr>
-    <?php if ($activity->getSubscriptionDeadline() != $activity->getEndTime()) : ?>
     <tr>
-        <td><b>Inschrijfdeadline:</b></td>
-        <td><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, 'nl'); ?></td>
-    </tr>
-    <?php endif; ?>
-     <tr>
         <td><b>Kosten:</b></td>
-        <td><?=$this->escapeHtml($activity->getCosts()) ?></td>
+        <td><?= $this->escapeHtml($activity->getCosts()->getText("nl")) ?></td>
     </tr>
 </table>
 <br/>
-Klik <a href="<?= $this->serverUrl($this->url('activity_admin_approval/view', ['id' => $activity->getId()])) ?>">hier</a> om deze activiteit goed/af te keuren.
+Klik <a
+    href="<?= $this->serverUrl($this->url('activity_admin_approval/view', ['id' => $activity->getId()])) ?>">hier</a> om deze activiteit goed/af te keuren.
 <br/><br/>
 
-Met vriendelijke groeten,<br />
+Met vriendelijke groeten,<br/>
 De Web Commissie
-<hr />
+<hr/>
 
-L.s.<br /><br />
+L.s.<br/><br/>
 
 A new activity was created at the GEWIS website. See below for details.
 
-<h1><?= $this->escapeHtml($activity->getNameEn()) ?></h1>
+<h1><?= $this->escapeHtml($activity->getName()->getText("en")) ?></h1>
 
-<p><?= $this->escapeHtml($activity->getDescriptionEn()) ?></p>
+<p><?= $this->escapeHtml($activity->getDescription()->getText("en")) ?></p>
 
 <table>
     <tr>
@@ -59,22 +54,17 @@ A new activity was created at the GEWIS website. See below for details.
     </tr>
     <tr>
         <td><b>Location:</b></td>
-        <td><?= $this->escapeHtml($activity->getLocationEn()) ?></td>
+        <td><?= $this->escapeHtml($activity->getLocation()->getText("en")) ?></td>
     </tr>
-    <?php if ($activity->getSubscriptionDeadline() != $activity->getEndTime()) : ?>
     <tr>
-        <td><b>Subscription deadline:</b></td>
-        <td><?= $this->dateFormat($activity->getSubscriptionDeadline(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, 'en'); ?></td>
-    </tr>
-    <?php endif; ?>
-     <tr>
         <td><b>Costs:</b></td>
-        <td><?=$this->escapeHtml($activity->getCostsEn()) ?></td>
+        <td><?= $this->escapeHtml($activity->getCosts()->getText("en")) ?></td>
     </tr>
 </table>
 <br/>
-Click <a href="<?= $this->serverUrl($this->url('activity_admin_approval/view', ['id' => $activity->getId()])) ?>">here</a> to approve/disapprove this activity.
+Click <a
+    href="<?= $this->serverUrl($this->url('activity_admin_approval/view', ['id' => $activity->getId()])) ?>">here</a> to approve/disapprove this activity.
 <br/><br/>
 
-Kind Regards, <br />
+Kind Regards, <br/>
 The Web Committee

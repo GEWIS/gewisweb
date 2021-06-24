@@ -1,143 +1,309 @@
-<!-- This probably isn't very cosher, but I cannot into css. 
-     Someone who can: feel free to clean up -->
+<?php
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
+
+$old = $proposal->getOld();
+$new = $proposal->getNew();
+
+$this->headTitle($this->escapeHtml($old->getName()->getText($lang)));
+$this->headTitle($this->translate('Update Proposal'));
+
+function diff($oldValue, $newValue)
+{
+    if ($oldValue === $newValue) {
+        return $oldValue;
+    } else {
+        return '<span class="diff-old">' . $oldValue . '</span> <span class="diff-new">' . $newValue . '</span>';
+    }
+}
+
+?>
 <style>
-    .modified{
-        background-color: #ffff99;
+    .diff-old {
+        background: rgb(255, 224, 224);
+        padding: 0 0.375rem;
+    }
+
+    .diff-new {
+        background: rgb(224, 255, 224);
+        padding: 0 0.375rem;
     }
 </style>
-<?php 
-    $new = $proposal->getNew();
-    $old = $proposal->getOld();
-    function updateTd($new, $old, $context){
-        return ($old==$new ? 
-            '<td>' . $context->escapeHtml($new) :
-            '<td class=\'modified\'>' . $context->escapeHtml($new)) . '</td>';
-    }
-?>
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <td></td>
-        <td><?= $this->translate('Original Dutch') ?></td>
-        <td><?= $this->translate('Updated Dutch') ?></td>        
-        <td><?= $this->translate('Orignal English') ?></td>
-        <td><?= $this->translate('Updated English') ?></td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td><?= $this->translate('Activity id'); ?></td>
-        <td><?= $this->escapeHtml($old->getId()); ?></td>
-        <td></td>
-        <td></td>
-        <td></td>        
-    </tr>
-    <tr>
-        <td><?= $this->translate('Name'); ?></td>
-        <td><?= $this->escapeHtml($old->getName()); ?></td>
-        <?= updateTd($new->getName(), $old->getName(), $this) ?>
-        <td><?= $this->escapeHtml($old->getNameEn(), $this); ?></td>
-        <?= updateTd($new->getNameEn(), $old->getNameEn(), $this) ?>
-    </tr>
-    <tr>
-        <td><?= $this->translate('Start time'); ?></td>
-        <td><?= $old->getBeginTime()->format('Y-m-d H:i') ?></td>
-        <?= updateTd($new->getBeginTime()->format('Y-m-d H:i') , $old->getBeginTime()->format('Y-m-d H:i'), $this) ?>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><?= $this->translate('End time'); ?></td>
-        <td><?= $old->getEndTime()->format('Y-m-d H:i') ?></td>
-        <?= updateTd($new->getEndTime()->format('Y-m-d H:i') , $old->getEndTime()->format('Y-m-d H:i'), $this) ?>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><?= $this->translate('Location'); ?></td>
-        <td><?= $this->escapeHtml($old->getLocation()); ?></td>
-        <?= updateTd($new->getLocation(), $old->getLocation(), $this) ?>
-        <td><?= $this->escapeHtml($old->getLocationEn()); ?></td>
-        <?= updateTd($new->getLocationEn(), $old->getLocationEn(), $this) ?>
-    </tr>
-    <tr>
-        <td><?= $this->translate('Costs'); ?></td>
-        <td><?= $this->escapeHtml($old->getCosts()); ?></td>
-        <?= updateTd($new->getCosts(), $old->getCosts(), $this) ?>
-        <td><?= $this->escapeHtml($old->getCostsEn()); ?></td>
-        <?= updateTd($new->getCostsEn(), $old->getCostsEn(), $this) ?>
-    </tr>
-    <tr>
-        <td><?= $this->translate('Subscribe'); ?></td>
-        <td><?= $old->getCanSignUp() ? $this->translate("Yes") : $this->translate("No"); ?></td>
-        <td><?= $new->getCanSignUp() ? $this->translate("Yes") : $this->translate("No"); ?></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td><?= $this->translate('Only GEWIS'); ?></td>
-        <td><?= $old->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No"); ?></td>
-        <td><?= $new->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No"); ?></td>
-        <td></td>
-        <td></td>
-    </tr>
+<div class="row admin-activity admin-activity-overview">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Information') ?></h2>
+        <p>
+            <?=
+            sprintf(
+                $this->translate('Changes in activity attributes are shown like this: %s. If there are no changes to a certain attribute, you will see the existing data. Sign-up list differences are <strong>not</strong> shown with colours, both the old sign-up list(s) and the new sign-up list(s) are shown. There might not be difference between the two!'),
+                diff($this->translate('old'), $this->translate('new'))
+            )
+            ?>
+        </p>
+        <p>
+            <?php
+            $oldOrganisingParty = "";
+            if (!is_null($old->getOrgan()) && !is_null($old->getCompany())) {
+                $oldOrganisingParty = $this->escapeHtml($old->getOrgan()->getName()) . ' ';
+                $oldOrganisingParty .= $this->translate('and') . ' ';
+                $oldOrganisingParty .= $this->escapeHtml($old->getCompany()->getName());
+            } else if (!is_null($old->getOrgan())) {
+                $oldOrganisingParty = $this->escapeHtml($old->getOrgan()->getName());
+            } else if (!is_null($old->getCompany())) {
+                $oldOrganisingParty = $this->escapeHtml($old->getCompany()->getName());
+            } else {
+                $oldOrganisingParty = $this->escapeHtml($old->getCreator()->getMember()->getFullName());
+            }
 
-    <tr>
-        <td>
-            <?php $proposalApplyForm->setAttribute('action', $this->url('activity_admin_approval/apply_proposal', ['id' => $proposal->getId()]));
-            $proposalApplyForm->prepare();
-            echo $this->form()->openTag($proposalApplyForm);
-            echo $this->formElement($proposalApplyForm->get('security'));
-            $submit = $proposalApplyForm->get('submit');
-            $submit->setAttribute('class', 'btn btn-default');
-            echo $this->formSubmit($submit);
-            echo $this->form()->closeTag();
-            ?>                                            
-        </td>
-        <td>
-            <?php $proposalRevokeForm->setAttribute('action', $this->url('activity_admin_approval/revoke_proposal', ['id' => $proposal->getId()]));
-            $proposalRevokeForm->prepare();
-            echo $this->form()->openTag($proposalRevokeForm);
-            echo $this->formElement($proposalRevokeForm->get('security'));
-            $submit = $proposalRevokeForm->get('submit');
-            $submit->setAttribute('class', 'btn btn-default');
-            echo $this->formSubmit($submit);
-            echo $this->form()->closeTag();
-            ?>                                            
-        </td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>
-            <a href="<?= $this->url('activity/view', ['id' => $old->getId()]) ?>">
-                <?= $this->translate('View details / subscriptions of old activity') ?>
-            </a>
-        </td>
-        <td>
-            <a href="<?= $this->url('activity/view', ['id' => $new->getId()]) ?>">
-                <?= $this->translate('View details of updated activity') ?>
-        </td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    </tbody>
-</table>
-<div class="col-md-8">
-    <?= $this->translate('Original Dutch description') ?>
-    <p><?= nl2br($this->escapeHtml($old->getDescription())) ?></p>
-</div>
-<div class="col-md-8">
-    <?= $this->translate('Updated Dutch description') ?>
-    <p><?= nl2br($this->escapeHtml($new->getDescription())) ?></p>
-</div>
-<div class="col-md-8">
-    <?= $this->translate('Original English description') ?>
-    <p><?= nl2br($this->escapeHtml($old->getDescriptionEn())) ?></p>
-</div>
-<div class="col-md-8">
-    <?= $this->translate('Updated English description') ?>
-    <p><?= nl2br($this->escapeHtml($new->getDescriptionEn())) ?></p>
+            $newOrganisingParty = "";
+            if (!is_null($new->getOrgan()) && !is_null($new->getCompany())) {
+                $newOrganisingParty = $this->escapeHtml($new->getOrgan()->getName()) . ' ';
+                $newOrganisingParty .= $this->translate('and') . ' ';
+                $newOrganisingParty .= $this->escapeHtml($new->getCompany()->getName());
+            } else if (!is_null($old->getOrgan())) {
+                $newOrganisingParty = $this->escapeHtml($new->getOrgan()->getName());
+            } else if (!is_null($old->getCompany())) {
+                $newOrganisingParty = $this->escapeHtml($new->getCompany()->getName());
+            } else {
+                $newOrganisingParty = $this->escapeHtml($new->getCreator()->getMember()->getFullName());
+            }
+
+            echo sprintf(
+                $this->translate('This is activity <b>#%d</b>, organised by <b>%s</b>, and it will start on <b>%s</b> and end on <b>%s</b>.'),
+                $old->getId(),
+                diff($oldOrganisingParty, $newOrganisingParty),
+                diff(
+                    $this->dateFormat($old->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
+                    $this->dateFormat($new->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT)
+                ),
+                diff(
+                    $this->dateFormat($old->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
+                    $this->dateFormat($new->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT)
+                )
+            );
+            ?>
+            <?= $this->translate('More information about this activity is available below.') ?>
+        </p>
+    </div>
+    <div class="col-md-10 col-md-offset-2 overview-header">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="flag-icon flag-icon-nl"></span>
+                <b><?= $this->translate('Dutch') ?></b>
+                <hr>
+            </div>
+            <div class="col-md-6">
+                <span class="flag-icon flag-icon-en"></span>
+                <b><?= $this->translate('English') ?></b>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-2 overview-sidebar">
+                <b><?= $this->translate('Name') ?></b>
+            </div>
+            <div class="col-md-5">
+                <span class="activity-property">
+                    <span class="flag-icon flag-icon-nl"></span>
+                    <b><?= $this->translate('Name') ?>:</b>
+                </span>
+                <?=
+                diff(
+                    $this->escapeHtml($old->getName()->getValueNL()),
+                    $this->escapeHtml($new->getName()->getValueNL())
+                )
+                ?>
+            </div>
+            <div class="col-md-5">
+                <span class="activity-property">
+                    <span class="flag-icon flag-icon-en"></span>
+                    <b><?= $this->translate('Name') ?>:</b>
+                </span>
+                <?=
+                diff(
+                    $this->escapeHtml($old->getName()->getValueEN()),
+                    $this->escapeHtml($new->getName()->getValueEN())
+                )
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 overview-sidebar">
+                <b><?= $this->translate('Location') ?></b>
+            </div>
+            <div class="col-md-5">
+                <span class="activity-property">
+                    <span class="flag-icon flag-icon-nl"></span>
+                    <b><?= $this->translate('Location') ?>:</b>
+                </span>
+                <?=
+                diff(
+                    $this->escapeHtml($old->getLocation()->getValueNL()),
+                    $this->escapeHtml($new->getLocation()->getValueNL())
+                )
+                ?>
+            </div>
+            <div class="col-md-5">
+                <span class="activity-property">
+                    <span class="flag-icon flag-icon-en"></span>
+                    <b><?= $this->translate('Location') ?>:</b>
+                </span>
+                <?=
+                diff(
+                    $this->escapeHtml($old->getLocation()->getValueEN()),
+                    $this->escapeHtml($new->getLocation()->getValueEN())
+                )
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 overview-sidebar">
+                <b><?= $this->translate('Costs') ?></b>
+            </div>
+            <div class="col-md-5">
+                <span class="activity-property">
+                    <span class="flag-icon flag-icon-nl"></span>
+                    <b><?= $this->translate('Costs') ?>:</b>
+                </span>
+                <?=
+                diff(
+                    $this->escapeHtml($old->getCosts()->getValueNL()),
+                    $this->escapeHtml($new->getCosts()->getValueNL())
+                )
+                ?>
+            </div>
+            <div class="col-md-5">
+                <span class="activity-property">
+                    <span class="flag-icon flag-icon-en"></span>
+                    <b><?= $this->translate('Costs') ?>:</b>
+                </span>
+                <?=
+                diff(
+                    $this->escapeHtml($old->getCosts()->getValueEN()),
+                    $this->escapeHtml($new->getCosts()->getValueEN())
+                )
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 overview-sidebar">
+                <b><?= $this->translate('Description') ?></b>
+            </div>
+            <div class="col-md-5">
+                <span class="activity-property">
+                    <span class="flag-icon flag-icon-nl"></span>
+                    <b><?= $this->translate('Description') ?>:</b>
+                </span>
+                <?=
+                diff(
+                    $this->escapeHtml($old->getDescription()->getValueNL()),
+                    $this->escapeHtml($new->getDescription()->getValueNL())
+                )
+                ?>
+            </div>
+            <div class="col-md-5">
+                <span class="activity-property">
+                    <span class="flag-icon flag-icon-en"></span>
+                    <b><?= $this->translate('Description') ?>:</b>
+                </span>
+                <?=
+                diff(
+                    $this->escapeHtml($old->getDescription()->getValueEN()),
+                    $this->escapeHtml($new->getDescription()->getValueEN())
+                )
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <a href="<?= $this->url('activity/view', ['id' => $old->getId()]) ?>">
+                    <?= $this->translate('View details of the old activity') ?>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="<?= $this->url('activity/view', ['id' => $new->getId()]) ?>">
+                    <?= $this->translate('View details of the new activity') ?>
+                </a>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <?php if ($old->getCategories()->count() !== 0 || $new->getCategories()->count() !== 0): ?>
+        <div class="col-md-12">
+            <h2><?= $this->translate('Activity Categories') ?></h2>
+        </div>
+        <div class="col-md-12">
+            <?php
+            $oldCategories = $old->getCategories()->toArray();
+            $newCategories = $new->getCategories()->toArray();
+            ?>
+            <?php foreach ($old->getCategories() as $category): ?>
+                <div class="chip <?= (in_array($category, $newCategories)) ? '' : 'diff-old' ?>">
+                    <span class="chip-label">
+                        <?= $this->escapeHtml($category->getName()->getText($lang)) ?>
+                    </span>
+                </div>
+            <?php endforeach; ?>
+            <?php foreach ($new->getCategories() as $category): ?>
+                <?php if (!in_array($category, $oldCategories)): ?>
+                    <div class="chip diff-new">
+                        <span class="chip-label">
+                            <?= $this->escapeHtml($category->getName()->getText($lang)) ?>
+                        </span>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+    <?php if ($old->getSignupLists()->count() !== 0 || $new->getSignupLists()->count() !== 0): ?>
+        <div class="col-md-12">
+            <h2><?= $this->translate('Sign-up Lists') ?></h2>
+        </div>
+        <?php foreach (['Old' => $old, 'New' => $new] as $key => $activity): ?>
+            <div class="col-md-2">
+                <h3><?= $this->translate($key) ?></h3>
+            </div>
+            <div class="col-md-10 overview-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        <span class="flag-icon flag-icon-nl"></span>
+                        <b><?= $this->translate('Dutch') ?></b>
+                        <hr>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="flag-icon flag-icon-en"></span>
+                        <b><?= $this->translate('English') ?></b>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <?= $this->partial('partial/admin-approval/signuplists', ['activity' => $activity]) ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
+    <div class="col-md-12">
+        <h2><?= $this->translate('Approval') ?></h2>
+    </div>
+    <div class="col-md-2">
+        <?php $proposalApplyForm->setAttribute('action', $this->url('activity_admin_approval/apply_proposal', ['id' => $proposal->getId()]));
+        $proposalApplyForm->prepare();
+        echo $this->form()->openTag($proposalApplyForm);
+        echo $this->formElement($proposalApplyForm->get('security'));
+        $submit = $proposalApplyForm->get('submit');
+        $submit->setAttribute('class', 'btn btn-default');
+        echo $this->formSubmit($submit);
+        echo $this->form()->closeTag();
+        ?>
+    </div>
+    <div class="col-md-2">
+        <?php $proposalRevokeForm->setAttribute('action', $this->url('activity_admin_approval/revoke_proposal', ['id' => $proposal->getId()]));
+        $proposalRevokeForm->prepare();
+        echo $this->form()->openTag($proposalRevokeForm);
+        echo $this->formElement($proposalRevokeForm->get('security'));
+        $submit = $proposalRevokeForm->get('submit');
+        $submit->setAttribute('class', 'btn btn-default');
+        echo $this->formSubmit($submit);
+        echo $this->form()->closeTag();
+        ?>
+    </div>
 </div>

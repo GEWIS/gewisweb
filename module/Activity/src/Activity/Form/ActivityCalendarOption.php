@@ -99,7 +99,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                         'name' => 'callback',
                         'options' => [
                             'messages' => [
-                                \Zend\Validator\Callback::INVALID_VALUE =>
+                                Callback::INVALID_VALUE =>
                                     $this->translator->translate('The activity must be within the given period'),
                             ],
                             'callback' => function ($value, $context = []) {

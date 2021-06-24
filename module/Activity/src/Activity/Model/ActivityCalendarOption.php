@@ -145,22 +145,6 @@ class ActivityCalendarOption
     }
 
     /**
-     * @return ActivityOptionProposal
-     */
-    public function getProposal()
-    {
-        return $this->proposal;
-    }
-
-    /**
-     * @param ActivityOptionProposal $proposal
-     */
-    public function setProposal($proposal)
-    {
-        $this->proposal = $proposal;
-    }
-
-    /**
      * Returns the string identifier of the Resource
      *
      * @return string
@@ -189,5 +173,21 @@ class ActivityCalendarOption
     public function getCreatorAlt()
     {
         return $this->getProposal()->getCreatorAlt();
+    }
+
+    /**
+     * @return ActivityOptionProposal
+     */
+    public function getProposal()
+    {
+        return $this->proposal;
+    }
+
+    /**
+     * @param ActivityOptionProposal $proposal
+     */
+    public function setProposal($proposal)
+    {
+        $this->proposal = $proposal;
     }
 }
