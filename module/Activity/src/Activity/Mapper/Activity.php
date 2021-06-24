@@ -2,11 +2,14 @@
 
 namespace Activity\Mapper;
 
+use Activity\Model\Activity as ActivityModel;
+use DateTime;
+use Decision\Model\Organ;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManager;
-use \Activity\Model\Activity as ActivityModel;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
+use User\Model\User;
 
 class Activity
 {
@@ -75,11 +78,11 @@ class Activity
             ->andWhere('a.status = :status')
             ->orderBy('a.beginTime', 'ASC');
 
-        if(!is_null($count)) {
+        if (!is_null($count)) {
             $qb->setMaxResults($count);
         }
 
-        if(!is_null($organ)) {
+        if (!is_null($organ)) {
             $qb->andWhere('a.organ = :organ')
                 ->setParameter('organ', $organ);
         }
@@ -88,7 +91,7 @@ class Activity
         if ($category === 'career') {
             $qb->andWhere('a.isMyFuture = 1');
         }
-        $qb->setParameter('now', new \DateTime());
+        $qb->setParameter('now', new DateTime());
         $qb->setParameter('status', ActivityModel::STATUS_APPROVED);
 
         return $qb->getQuery()->getResult();
@@ -97,7 +100,7 @@ class Activity
     /**
      * Get upcoming activities sorted by date for member
      *
-     * @param \User\Model\User $user Option user that should relate to activity
+     * @param User $user Option user that should relate to activity
      *
      * @return array
      */
@@ -125,10 +128,12 @@ class Activity
 
         for ($i = 0; $i < $size; $i++) {
             for ($j = $i + 1; $j < $size; $j++) {
-                if (array_key_exists($i, $result) && array_key_exists($j, $result)) {
-                    if ($result[$i]->getId() == $result[$j]->getId()) {
-                        unset($result[$j]);
-                    }
+                if (
+                    array_key_exists($i, $result)
+                    && array_key_exists($j, $result)
+                    && $result[$i]->getId() == $result[$j]->getId()
+                ) {
+                    unset($result[$j]);
                 }
             }
         }
@@ -139,7 +144,7 @@ class Activity
     /**
      * Get upcoming activities sorted by date that a user is subscribed to
      *
-     * @param \User\Model\User $user Option user that should relate to activity
+     * @param User $user Option user that should relate to activity
      *
      * @return array
      */
@@ -148,22 +153,24 @@ class Activity
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
-            ->from('Activity\Model\UserActivitySignup', 'b')
+            ->from('Activity\Model\SignupList', 'b')
+            ->from('Activity\Model\UserSignup', 'c')
             ->where('a.endTime > :now')
-            ->setParameter('now', new \DateTime())
+            ->setParameter('now', new DateTime())
             ->andWhere('a.status = :status')
             ->setParameter('status', ActivityModel::STATUS_APPROVED)
             ->andWhere('a = b.activity')
-            ->andWhere('b.user = :user')
+            ->andWhere('b = c.signupList')
+            ->andWhere('c.user = :user')
             ->setParameter('user', $user);
-        $result = $qb->getQuery()->getResult();
-        return $result;
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
      * Get upcoming activities sorted by date that a user created
      *
-     * @param \User\Model\User $user Option user that should relate to activity
+     * @param User $user Option user that should relate to activity
      *
      * @return array
      */
@@ -173,17 +180,17 @@ class Activity
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
             ->where('a.endTime > :now')
-            ->setParameter('now', new \DateTime())
+            ->setParameter('now', new DateTime())
             ->andWhere('a.creator = :user')
             ->setParameter('user', $user);
-        $result = $qb->getQuery()->getResult();
-        return $result;
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
      * Get upcoming activities sorted by date that a organ created
      *
-     * @param \Decision\Model\Organ $organ Option organ that should relate to activity
+     * @param Organ $organ Option organ that should relate to activity
      *
      * @return array
      */
@@ -193,11 +200,11 @@ class Activity
         $qb->select('a')
             ->from('Activity\Model\Activity', 'a')
             ->where('a.endTime > :now')
-            ->setParameter('now', new \DateTime())
+            ->setParameter('now', new DateTime())
             ->andWhere('a.organ = :organ')
             ->setParameter('organ', $organ->getId());
-        $result = $qb->getQuery()->getResult();
-        return $result;
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -218,6 +225,40 @@ class Activity
         );
 
         return $qb->getQuery()->getResult();
+    }
+
+    protected function activityByOrganizerQuery($filter, $organs, $userid, $status)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('a')
+            ->from('Activity\Model\Activity', 'a');
+        if (!is_null($status)) {
+            $qb->where('a.status = :status')
+                ->setParameter('status', $status);
+        } else {
+            $qb->where('a.status <> :status')
+                ->setParameter('status', ActivityModel::STATUS_UPDATE);
+        }
+
+        if (!is_null($filter)) {
+            $qb->andWhere($filter)
+                ->setParameter('now', new DateTime());
+        }
+
+        $qb->join('a.creator', 'u');
+
+        if (!is_null($organs) && !is_null($userid)) {
+            $qb->andWhere($qb->expr()->orX(
+                $qb->expr()->in('a.organ', ':organs'),
+                'u.lidnr = :userid'
+            ))
+                ->setParameter('organs', $organs)
+                ->setParameter('userid', $userid);
+        }
+
+        $qb->orderBy('a.beginTime', 'DESC');
+
+        return $qb;
     }
 
     /**
@@ -241,44 +282,10 @@ class Activity
         return new DoctrineAdapter(new ORMPaginator($qb));
     }
 
-    protected function activityByOrganizerQuery($filter, $organs, $userid, $status)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\Activity', 'a');
-        if (!is_null($status)) {
-            $qb->where('a.status = :status')
-                ->setParameter('status', $status);
-        } else {
-            $qb->where('a.status <> :status')
-                ->setParameter('status', ActivityModel::STATUS_UPDATE);
-        }
-
-        if (!is_null($filter)) {
-            $qb->andWhere($filter)
-                ->setParameter('now', new \DateTime());
-        }
-
-        $qb->join('a.creator', 'u');
-
-        if (!is_null($organs) && !is_null($userid)) {
-            $qb->andWhere($qb->expr()->orX(
-                $qb->expr()->in('a.organ', ':organs'),
-                'u.lidnr = :userid'
-            ))
-                ->setParameter('organs', $organs)
-                ->setParameter('userid', $userid);
-        }
-
-        $qb->orderBy('a.beginTime', 'DESC');
-
-        return $qb;
-    }
-
     /**
      * Returns the newest activity that has taken place
      *
-     * @return \Activity\Model\Activity
+     * @return ActivityModel
      */
     public function getNewestActivity()
     {
@@ -294,9 +301,30 @@ class Activity
     }
 
     /**
+     * Create a query that is restricted to finished activities which are displayed in the activity.
+     *
+     * Finished activities do have the following constaints (1) The begin time is less than the current time and
+     * (2) it must have been approved before
+     *
+     * @return QueryBuilder
+     */
+    protected function getArchivedActivityQueryBuilder()
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        $qb->select('a')
+            ->from('Activity\Model\Activity', 'a')
+            ->andWhere('a.status = :status')
+            ->andWhere('a.beginTime IS NOT NULL');
+        $qb->setParameter('status', ActivityModel::STATUS_APPROVED);
+
+        return $qb;
+    }
+
+    /**
      * Returns the oldest activity that has taken place
      *
-     * @return \Activity\Model\Activity
+     * @return ActivityModel
      */
     public function getOldestActivity()
     {
@@ -323,26 +351,5 @@ class Activity
             ->orderBy('a.beginTime', 'ASC');
 
         return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Create a query that is restricted to finished activities which are displayed in the activity.
-     *
-     * Finished activities do have the following constaints (1) The begin time is less than the current time and
-     * (2) it must have been approved before
-     *
-     * @return QueryBuilder
-     */
-    protected function getArchivedActivityQueryBuilder()
-    {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from('Activity\Model\Activity', 'a')
-            ->andWhere('a.status = :status')
-            ->andWhere('a.beginTime IS NOT NULL');
-        $qb->setParameter('status', ActivityModel::STATUS_APPROVED);
-
-        return $qb;
     }
 }

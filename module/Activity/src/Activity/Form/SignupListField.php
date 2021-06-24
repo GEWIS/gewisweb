@@ -2,28 +2,46 @@
 
 namespace Activity\Form;
 
-use Activity\Model\ActivityField;
+use Activity\Model\SignupField;
 use Zend\Form\Fieldset;
-use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
-use Doctrine\Common\Persistence\ObjectManager;
-use Zend\Validator\NotEmpty;
 use Zend\InputFilter\InputFilterProviderInterface;
+use Zend\Mvc\I18n\Translator;
+use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Zend\Validator\Callback;
+use Zend\Validator\NotEmpty;
 
-class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInterface
+class SignupListField extends Fieldset implements InputFilterProviderInterface
 {
-    public function __construct(ObjectManager $objectManager) {
+    /**
+     * @var Translator
+     */
+    protected $translator;
 
-        parent::__construct('activityfield');
+    public function __construct(Translator $translator)
+    {
+        parent::__construct('signupfield');
+        $this->translator = $translator;
         $this->setHydrator(new ClassMethodsHydrator(false))
-              ->setObject(new ActivityField());
+            ->setObject(new SignupField());
+
         $this->add([
             'name' => 'name',
-            'options' => ['label' => 'Name'],
+            'attributes' => [
+                'type' => 'text',
+            ],
+            'options' => [
+                'label' => $translator->translate('Name'),
+            ],
         ]);
 
         $this->add([
             'name' => 'nameEn',
-            'options' => ['label' => 'Name(English)'],
+            'attributes' => [
+                'type' => 'text',
+            ],
+            'options' => [
+                'label' => $translator->translate('Name'),
+            ],
         ]);
 
         $this->add([
@@ -31,50 +49,63 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
             'type' => 'Zend\Form\Element\Select',
             'options' => [
                 'value_options' => [
-                    '0' => 'Text',
-                    '1' => 'Yes/No',
-                    '2' => 'Number',
-                    '3' => 'Choice'
+                    '0' => $translator->translate('Text'),
+                    '1' => $translator->translate('Yes/No'),
+                    '2' => $translator->translate('Number'),
+                    '3' => $translator->translate('Choice'),
                 ],
-                'label' => 'Type'
+                'label' => $translator->translate('Type'),
             ]
         ]);
 
         $this->add([
-            'name' => 'min. value',
+            'name' => 'minimumValue',
+            'attributes' => [
+                'type' => 'number',
+            ],
             'options' => [
-                'label' => 'Min. value'
-            ]
+                'label' => $translator->translate('Min. value'),
+            ],
         ]);
 
         $this->add([
-            'name' => 'max. value',
+            'name' => 'maximumValue',
+            'attributes' => [
+                'type' => 'number',
+            ],
             'options' => [
-                'label' => 'Max. value'
-            ]
+                'label' => $translator->translate('Max. value'),
+            ],
         ]);
 
         $this->add([
             'name' => 'options',
+            'attributes' => [
+                'placeholder' => $translator->translate('Option 1, Option 2, ...'),
+                'type' => 'text',
+            ],
             'options' => [
-                'label' => 'Options'
-            ]
+                'label' => $translator->translate('Options'),
+            ],
         ]);
 
         $this->add([
             'name' => 'optionsEn',
+            'attributes' => [
+                'placeholder' => $translator->translate('Option 1, Option 2, ...'),
+                'type' => 'text',
+            ],
             'options' => [
-                'label' => 'Options (English)'
-            ]
+                'label' => $translator->translate('Options'),
+            ],
         ]);
     }
-
 
     /**
      * @return array
      */
-    public function getInputFilterSpecification() {
-
+    public function getInputFilterSpecification()
+    {
         return [
             'name' => [
                 'required' => false,
@@ -117,24 +148,24 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                         'name' => 'Callback',
                         'options' => [
                             'messages' => [
-                            \Zend\Validator\Callback::INVALID_VALUE =>
-                                'Some of the required fields for this type are empty'
+                                Callback::INVALID_VALUE =>
+                                    'Some of the required fields for this type are empty'
                             ],
-                            'callback' => function($value, $context=null) {
-                                return $this->fieldDependantRequired($value, $context, 'min. value', '2') &&
-                                       $this->fieldDependantRequired($value, $context, 'max. value', '2');
+                            'callback' => function ($value, $context = null) {
+                                return $this->fieldDependantRequired($value, $context, 'minimumValue', '2') &&
+                                    $this->fieldDependantRequired($value, $context, 'maximumValue', '2');
                             }
                         ]
                     ]
                 ]
             ],
-            'min. value' => [
+            'minimumValue' => [
                 'required' => false,
                 'validators' => [
                     ['name' => 'IsInt']
                 ]
             ],
-            'max. value' => [
+            'maximumValue' => [
                 'required' => false,
                 'validators' => [
                     ['name' => 'IsInt']
@@ -147,12 +178,13 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
                         'name' => 'Callback',
                         'options' => [
                             'messages' => [
-                                \Zend\Validator\Callback::INVALID_VALUE =>
+                                Callback::INVALID_VALUE =>
                                     'The number of English options must equal the number of Dutch options'
                             ],
-                            'callback' => function ($value, $context=null) {
+                            'callback' => function ($value, $context = null) {
                                 return !((new NotEmpty())->isValid($context['nameEn']))
-                                    || substr_count($context['options'],",") === substr_count($value,",");
+                                    || !((new NotEmpty())->isValid($context['name']))
+                                    || substr_count($context['options'], ",") === substr_count($value, ",");
                             }
                         ]
                     ]
@@ -171,9 +203,9 @@ class ActivityFieldFieldset extends Fieldset implements InputFilterProviderInter
      * @param string $testvalue
      * @return boolean
      */
-    protected function fieldDependantRequired($value, $context, $child, $testvalue) {
-
-        if ($value === $testvalue){
+    protected function fieldDependantRequired($value, $context, $child, $testvalue)
+    {
+        if ($value === $testvalue) {
             return (new NotEmpty())->isValid($context[$child]);
         }
 

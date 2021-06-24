@@ -1,0 +1,68 @@
+For English, see below.
+
+L.s.<br/><br/>
+
+Er is een voorstel gedaan om een activiteit aan te passen op de GEWIS website.
+
+<h3><?= $this->escapeHtml($activity->getName()->getText("nl")) ?></h3>
+
+<p><?= $this->escapeHtml($activity->getDescription()->getText("nl")) ?></p>
+
+<table>
+    <tr>
+        <td><b>Starttijd:</b></td>
+        <td><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, 'nl'); ?></td>
+    </tr>
+    <tr>
+        <td><b>Eindtijd</b></td>
+        <td><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT), 'nl'; ?></td>
+    </tr>
+    <tr>
+        <td><b>Locatie:</b></td>
+        <td><?= $this->escapeHtml($activity->getLocation()->getText("nl")) ?></td>
+    </tr>
+    <tr>
+        <td><b>Kosten:</b></td>
+        <td><?= $this->escapeHtml($activity->getCosts()->getText("nl")) ?></td>
+    </tr>
+</table>
+<br/>
+Klik <a href="<?= $this->serverUrl($this->url('activity_admin_approval/proposal', ['id' => $proposal->getId()])) ?>">hier</a> om dit voorstel goed/af te keuren.
+<br/><br/>
+
+Met vriendelijke groeten,<br/>
+De Web Commissie
+<hr/>
+
+L.s.<br/><br/>
+
+An update proposal was made for an activity on the GEWIS website. See below for details.
+
+<h1><?= $this->escapeHtml($activity->getName()->getText("en")) ?></h1>
+
+<p><?= $this->escapeHtml($activity->getDescription()->getText("en")) ?></p>
+
+<table>
+    <tr>
+        <td><b>Starting time:</b></td>
+        <td><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, 'en'); ?></td>
+    </tr>
+    <tr>
+        <td><b>Ending time:</b></td>
+        <td><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, 'en'); ?></td>
+    </tr>
+    <tr>
+        <td><b>Location:</b></td>
+        <td><?= $this->escapeHtml($activity->getLocation()->getText("en")) ?></td>
+    </tr>
+    <tr>
+        <td><b>Costs:</b></td>
+        <td><?= $this->escapeHtml($activity->getCosts()->getText("en")) ?></td>
+    </tr>
+</table>
+<br/>
+Click <a href="<?= $this->serverUrl($this->url('activity_admin_approval/proposal', ['id' => $proposal->getId()])) ?>">here</a> to approve/disapprove this update proposal.
+<br/><br/>
+
+Kind Regards, <br/>
+The Web Committee

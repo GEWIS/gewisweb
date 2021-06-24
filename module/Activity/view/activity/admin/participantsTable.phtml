@@ -1,90 +1,115 @@
 <?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
 <table class="table table-bordered" style="width: 100%" border="1">
     <thead>
-        <tr>
-            <th></th>
-            <th><?= $this->translate('Name') ?></th>
-            <th><?= $this->translate('Email') ?></th>
-            <th><?= $this->translate('Type') ?></th>
-            <?php foreach ($activity->getFields() as $field): ?>
-                <th><?= $this->escapeHtml($field->getName()) ?></th>
+    <tr>
+        <th>#</th>
+        <th><?= $this->translate('Name') ?></th>
+        <th><?= $this->translate('Email') ?></th>
+        <th><?= $this->translate('Type') ?></th>
+        <?php if (!isset($signupList)): ?>
+            <th><?= $this->translate('Sign-up List') ?></th>
+        <?php endif; ?>
+        <?php if (isset($detailed) && isset($signupList)): ?>
+            <?php foreach ($signupList->getFields() as $field): ?>
+                <th><?= $this->escapeHtml($field->getName()->getText($lang)) ?></th>
             <?php endforeach; ?>
-        </tr>
+        <?php endif; ?>
+    </tr>
     </thead>
-    <?php $i = 1; $mailAllString = ''; ?>
-    <?php foreach($activity->getSignUps() as $signup): ?>
+    <?php $i = 1;
+    $allEmailAddresses = []; ?>
+    <?php if (!isset($signupList)) {
+        $iterator = [];
+        foreach ($activity->getSignupLists() as $list) {
+            foreach ($list->getSignups() as $signup) {
+                $iterator[] = $signup;
+            }
+        }
+    } else {
+        $iterator = $signupList->getSignUps();
+    } ?>
+    <?php foreach ($iterator as $signup): ?>
         <tr>
-            <td><?php echo $i; $i = $i + 1; $email = $this->escapeHtml($signup->getEmail()); $mailAllString .= $email . '; '; ?></td>
+            <td><?php echo $i;
+                $i = $i + 1;
+                $email = $this->escapeHtml($signup->getEmail());
+                $allEmailAddresses[] = $email; ?></td>
             <td><?= $this->escapeHtml($signup->getFullName()) ?></td>
             <td>
                 <a href="mailto:<?= $email ?>">
                     <?= $email ?>
                 </a>
             </td>
-            <?php if ($signup instanceof Activity\Model\UserActivitySignup): ?>
-            <td><?= $this->translate('User')?></td>
+            <?php if ($signup instanceof Activity\Model\UserSignup): ?>
+                <td><?= $this->translate('User') ?></td>
             <?php else: ?>
-            <td>
-                <?= $this->translate('External')?>
-                <?php $externalSignoffForm->setAttribute('action', $this->url('activity_admin/externalSignoff', ['id' => $signup->getId()]));
-                $externalSignoffForm->prepare();
-                echo $this->form()->openTag($externalSignoffForm);
-                echo $this->formElement($externalSignoffForm->get('security'));
-                $submit = $externalSignoffForm->get('submit');
-                $submit->setAttribute('class', 'btn btn-primary btn-xs');
-                echo $this->formSubmit($submit);
-                echo $this->form()->closeTag();
-                ?>
-            </td>
-            <?php endif; ?>
-            <?php foreach ($activity->getFields() as $field): ?>
-                <?php foreach($signup->getFieldValues() as $fieldValue):?>
-                    <?php if ($fieldValue->getField()->getId() === $field->getId()): ?>
-                        <td>
-                            <?php
-                            switch ($field->getType()) {
-                                case 0:
-                                    echo $this->escapeHtml($fieldValue->getValue());
-                                    break;
-                                case 1:
-                                    if ($fieldValue->getValue() === "Yes") {
-                                        echo $this->translate('Yes');
-                                    } else {
-                                        echo $this->translate('No');
-                                    }
-                                    break;
-                                case 2:
-                                    echo $fieldValue->getValue();
-                                    break;
-                                case 3:
-                                    if ($lang === 'nl') {
-                                        echo $fieldValue->getOption()->getValue();
-                                    } else {
-                                        echo $fieldValue->getOption()->getValueEn();
-                                    }
-                                    break;
-                            }
-                            ?>
-                        </td>
+                <td>
+                    <?= $this->translate('External') ?>
+                    <?php if (isset($externalSignoffForm)): ?>
+                        <?php $externalSignoffForm->setAttribute('action', $this->url('activity_admin/externalSignoff', ['id' => $signup->getId()]));
+                        $externalSignoffForm->prepare();
+                        echo $this->form()->openTag($externalSignoffForm);
+                        echo $this->formElement($externalSignoffForm->get('security'));
+                        $submit = $externalSignoffForm->get('submit');
+                        $submit->setAttribute('class', 'btn btn-primary btn-xs');
+                        echo $this->formSubmit($submit);
+                        echo $this->form()->closeTag();
+                        ?>
                     <?php endif; ?>
-                <?php endforeach;?>
-            <?php endforeach; ?>
+                </td>
+            <?php endif; ?>
+            <?php if (!isset($signupList)): ?>
+                <td><?= $this->escapeHtml($signup->getSignupList()->getName()->getText($lang)) ?></td>
+            <?php endif; ?>
+            <?php if (isset($detailed)): ?>
+                <?php foreach ($signupList->getFields() as $field): ?>
+                    <?php foreach ($signup->getFieldValues() as $fieldValue): ?>
+                        <?php if ($fieldValue->getField()->getId() === $field->getId()): ?>
+                            <td>
+                                <?php
+                                switch ($field->getType()) {
+                                    case 0:
+                                        echo $this->escapeHtml($fieldValue->getValue());
+                                        break;
+                                    case 1:
+                                        if ($fieldValue->getValue() === "Yes") {
+                                            echo $this->translate('Yes');
+                                        } else {
+                                            echo $this->translate('No');
+                                        }
+                                        break;
+                                    case 2:
+                                        echo $fieldValue->getValue();
+                                        break;
+                                    case 3:
+                                        echo $fieldValue->getOption()->getValue()->getText($lang);
+                                        break;
+                                }
+                                ?>
+                            </td>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </tr>
-    <?php endforeach;?>
+    <?php endforeach; ?>
     </tbody>
-   <tfoot>
-       <tr>
-        <td></td>
-        <td></td>
-        <td>
-            <a href="mailto:?bcc=<?= substr($mailAllString, 0, -2) ?>">
+</table>
+<?php if (!isset($pdf)): ?>
+    <div class="row">
+        <div class="col-md-12">
+            <h2><?= $this->translate('Additional actions') ?></h2>
+        </div>
+        <div class="col-md-12">
+            <?php if (isset($signupList)): ?>
+                <a href="<?= $this->url('activity_admin/exportpdf', ['id' => $activity->getId(), 'signupList' => $signupList->getId()]) ?>"><?= $this->translate('Download as pdf'); ?></a>
+            <?php else: ?>
+                <a href="<?= $this->url('activity_admin/exportpdf', ['id' => $activity->getId()]) ?>"><?= $this->translate('Download as pdf'); ?></a>
+            <?php endif; ?>
+            <br>
+            <a href="mailto:?bcc=<?= implode(array_unique($allEmailAddresses), '; ') ?>">
                 <?= $this->translate('Mail everybody') ?>
             </a>
-        </td>
-        <td></td>
-        <?php foreach ($activity->getFields() as $field): ?>
-            <td></td>
-        <?php endforeach; ?>
-        </tr>
-    </tfoot>
-</table>
+        </div>
+    </div>
+<?php endif; ?>

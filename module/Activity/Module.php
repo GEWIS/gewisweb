@@ -2,23 +2,26 @@
 
 namespace Activity;
 
-use Activity\Form\ActivityFieldFieldSet;
+use Activity\Form\ActivityCategory as CategoryForm;
+use Activity\Form\SignupList as SignupListForm;
+use Activity\Form\SignupListField;
 use Activity\Mapper\Activity;
 use Activity\Mapper\ActivityCalendarOption;
-use Activity\Mapper\ActivityFieldValue;
-use Activity\Mapper\ActivityOption;
+use Activity\Mapper\ActivityCategory;
 use Activity\Mapper\ActivityOptionCreationPeriod;
 use Activity\Mapper\ActivityOptionProposal;
 use Activity\Mapper\MaxActivities;
 use Activity\Mapper\Proposal;
 use Activity\Mapper\Signup;
+use Activity\Mapper\SignupFieldValue;
+use Activity\Mapper\SignupList as SignupListMapper;
+use Activity\Mapper\SignupOption;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
-use User\Permissions\Assertion\IsCreator;
-use User\Permissions\Assertion\IsOrganMember;
+use User\Permissions\Assertion\IsCreatorOrOrganMember;
+use User\Permissions\NotAllowedException;
 
 class Module
 {
-
     /**
      * Get the autoloader configuration.
      *
@@ -64,7 +67,8 @@ class Module
             'invokables' => [
                 'activity_service_activity' => 'Activity\Service\Activity',
                 'activity_service_activityQuery' => 'Activity\Service\ActivityQuery',
-                'activity_service_activityTranslator' => 'Activity\Service\ActivityTranslator',
+                'activity_service_category' => 'Activity\Service\ActivityCategory',
+                'activity_service_signupListQuery' => 'Activity\Service\SignupListQuery',
                 'activity_form_activity_signup' => 'Activity\Form\ActivitySignup'
             ],
             'factories' => [
@@ -73,29 +77,45 @@ class Module
                 'activity_doctrine_em' => function ($sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 },
-                'activity_form_activityfield_fieldset' => function ($sm) {
-                    $form = new ActivityFieldFieldSet();
+                'activity_form_signuplist' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    $form = new SignupListForm($translator);
+                    $form->setHydrator($sm->get('activity_hydrator'));
+                    return $form;
+                },
+                'activity_form_signuplist_fields' => function ($sm) {
+                    $form = new SignupListField();
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },
                 'activity_form_activity' => function ($sm) {
                     $organService = $sm->get('decision_service_organ');
                     $organs = $organService->getEditableOrgans();
+                    $companyService = $sm->get('company_service_company');
+                    try {
+                        $companies = $companyService->getHiddenCompanyList();
+                    } catch (NotAllowedException $e) {
+                        $companies = [];
+                    }
+                    $categoryService = $sm->get('activity_service_category');
+                    $categories = $categoryService->getAllCategories();
                     $translator = $sm->get('translator');
-                    $form = new \Activity\Form\Activity($organs, $translator, $sm->get('activity_doctrine_em'));
+                    $form = new Form\Activity($organs, $companies, $categories, $translator);
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },
                 'activity_form_calendar_proposal' => function ($sm) {
                     $calendarService = $sm->get('activity_service_calendar');
-                    $form = new Form\ActivityCalendarProposal($sm->get('translator'), $calendarService);
-                    return $form;
+                    return new Form\ActivityCalendarProposal($sm->get('translator'), $calendarService);
                 },
                 'activity_form_calendar_option' => function ($sm) {
                     $translator = $sm->get('translator');
                     $calendarService = $sm->get('activity_service_calendar');
-                    $form = new Form\ActivityCalendarOption($translator, $calendarService);
-                    return $form;
+                    return new Form\ActivityCalendarOption($translator, $calendarService);
+                },
+                'activity_form_category' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    return new CategoryForm($translator);
                 },
                 'activity_hydrator' => function ($sm) {
                     return new DoctrineObject(
@@ -125,6 +145,11 @@ class Module
                         $sm->get('activity_doctrine_em')
                     );
                 },
+                'activity_mapper_category' => function ($sm) {
+                    return new ActivityCategory(
+                        $sm->get('activity_doctrine_em')
+                    );
+                },
                 'activity_mapper_period' => function ($sm) {
                     return new ActivityOptionCreationPeriod(
                         $sm->get('activity_doctrine_em')
@@ -135,13 +160,18 @@ class Module
                         $sm->get('activity_doctrine_em')
                     );
                 },
-                'activity_mapper_activity_field_value' => function ($sm) {
-                    return new ActivityFieldValue(
+                'activity_mapper_signuplist' => function ($sm) {
+                    return new SignupListMapper(
                         $sm->get('activity_doctrine_em')
                     );
                 },
-                'activity_mapper_activity_option' => function ($sm) {
-                    return new ActivityOption(
+                'activity_mapper_signup_field_value' => function ($sm) {
+                    return new SignupFieldValue(
+                        $sm->get('activity_doctrine_em')
+                    );
+                },
+                'activity_mapper_signup_option' => function ($sm) {
+                    return new SignupOption(
                         $sm->get('activity_doctrine_em')
                     );
                 },
@@ -170,34 +200,42 @@ class Module
                     $acl->addResource('activity');
                     $acl->addResource('activityApi');
                     $acl->addResource('myActivities');
-                    $acl->addResource('activitySignup');
                     $acl->addResource('model');
                     $acl->addResource('activity_calendar_proposal');
+                    $acl->addResource('signupList');
 
-                    $acl->allow('guest', 'activity', 'view');
+                    $acl->allow('guest', 'activity', ['view', 'viewCategory']);
+                    $acl->allow('guest', 'signupList', ['view', 'externalSignup']);
 
-                    $acl->allow('guest', 'activitySignup', 'externalSignup');
+                    $acl->allow('user', 'activity_calendar_proposal', ['create', 'delete_own']);
+                    $acl->allow('admin', 'activity_calendar_proposal', ['create_always', 'delete_all', 'approve']);
 
-                    $acl->allow('user', 'activity', 'create');
                     $acl->allow('user', 'myActivities', 'view');
-                    $acl->allow('user', 'activitySignup', ['view', 'signup', 'signoff', 'checkUserSignedUp']);
+                    $acl->allow(
+                        'user',
+                        'signupList',
+                        ['view', 'viewDetails', 'signup', 'signoff', 'checkUserSignedUp']
+                    );
 
-                    $acl->allow('admin', 'activity', ['update', 'viewDetails', 'adminSignup']);
-                    $acl->allow('user', 'activity', ['update', 'viewDetails', 'adminSignup'], new IsCreator());
+                    $acl->allow('active_member', 'activity', ['create', 'viewAdmin', 'listCategories']);
                     $acl->allow(
                         'active_member',
                         'activity',
-                        ['update', 'viewDetails', 'adminSignup'],
-                        new IsOrganMember()
+                        ['update', 'viewDetails', 'adminSignup', 'viewParticipants', 'exportParticipants'],
+                        new IsCreatorOrOrganMember()
+                    );
+                    $acl->allow(
+                        'active_member',
+                        'signupList',
+                        ['adminSignup', 'viewParticipants', 'exportParticipants'],
+                        new IsCreatorOrOrganMember()
                     );
 
-                    $acl->allow('sosuser', 'activitySignup', ['signup', 'signoff', 'checkUserSignedUp']);
+                    $acl->allow('sosuser', 'signupList', ['signup', 'signoff', 'checkUserSignedUp']);
 
                     $acl->allow('user', 'activityApi', 'list');
                     $acl->allow('apiuser', 'activityApi', 'list');
 
-                    $acl->allow('user', 'activity_calendar_proposal', ['create', 'delete_own']);
-                    $acl->allow('admin', 'activity_calendar_proposal', ['create_always', 'delete_all', 'approve']);
                     return $acl;
                 },
             ]

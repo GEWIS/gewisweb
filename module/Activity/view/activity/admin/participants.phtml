@@ -1,34 +1,72 @@
 <?php $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
 // set title
-$this->headTitle($this->escapeHtml($activity->getName()));
+$this->headTitle($this->escapeHtml($activity->getName()->getText($lang)));
 $this->headTitle($this->translate('Participants')); ?>
 
-<?php if (isset($success)): // Display the signup/signoff message. ?>
-    <div class="<?= $success ? 'alert alert-success' : 'alert alert-danger'; ?>" role="alert">
-        <div class="container">
-            <span class="fas <?= $success ? 'fa-check' : 'fa-times'; ?>"></span>&nbsp;<?= $message ?>
+<div class="row admin-activity">
+    <?php if (isset($success)): // Display the signup/signoff message. ?>
+        <div class="col-md-12">
+            <div class="<?= $success ? 'alert alert-success' : 'alert alert-danger'; ?>" role="alert">
+                <div class="container">
+                    <span class="fas <?= $success ? 'fa-check' : 'fa-times'; ?>"></span>&nbsp;<?= $message ?>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+    <div class="col-md-12">
+        <h1><?= $this->escapeHtml($activity->getName()->getText($lang)) ?></h1>
+    </div>
+</div>
+<?php if (isset($signupLists)): ?>
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs">
+                <li role="presentation" <?= isset($signupList) ? '' : 'class="active"' ?>>
+                    <a href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId()]) ?>"><?= $this->translate('General') ?></a>
+                </li>
+                <?php foreach ($signupLists as $list): ?>
+                    <li role="presentation" <?= isset($signupList) ? ($signupList->getId() === $list['id'] ? 'class="active"' : '') : '' ?>>
+                        <a href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId(), 'signupList' => $list['id']]) ?>"><?= $this->escapeHtml($list['name']->getText($lang)) ?></a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
         </div>
     </div>
 <?php endif; ?>
-
-<section class="section">
-    <div class="container">
-        <?= $this->partial('activity/admin/participantsTable.phtml', [
-            'activity' => $activity,
-            'signupData' => $signupData,
-            'externalSignoffForm' => $externalSignoffForm,
-        ]); ?>
-
-        <a href="<?= $this->url('activity_admin/exportpdf', ['id' => $activity->getId()]) ?>"><?= $this->translate('Download as pdf'); ?></a>
-
-        <?php if (!is_null($externalSignupForm)): //display the external signup form ?>
+<div class="row">
+    <div class="col-md-12">
+        <?php if (!isset($signupList)): ?>
+            <p><?= $this->translate('Here you can find everyone who signed up for this activity (may contain duplicates). Using the tabs above you can navigate to the different sign-up lists of this activity. From there you can remove external participants and (when supplied) view additional signup information from each participant.') ?></p>
+        <?php else: ?>
+            <p><?= $this->translate('Here you can find everyone who signed up to this sign-up list. Here you can add or remove external participants and view detailed information regarding the signup of all participants.') ?></p>
+        <?php endif; ?>
+    </div>
+    <div class="col-md-12">
+        <h2><?= $this->translate('Participants') ?></h2>
+    </div>
+    <div class="col-md-12">
+        <?php if (isset($signupList)): ?>
+            <?= $this->partial('activity/admin/participantsTable.phtml', [
+                'activity' => $activity,
+                'signupList' => $signupList,
+                'detailed' => true,
+                'externalSignoffForm' => $externalSignoffForm,
+            ]); ?>
+        <?php else: ?>
+            <?= $this->partial('activity/admin/participantsTable.phtml', [
+                'activity' => $activity,
+            ]); ?>
+        <?php endif; ?>
+    </div>
+    <div class="col-md-12">
+        <?php if (isset($externalSignupForm)): //display the external signup form ?>
             <?= $this->partial('partial/signupForm', [
                 'form' => $externalSignupForm,
                 'activity' => $activity,
+                'signupList' => $signupList,
             ])
             ?>
         <?php endif; ?>
-
     </div>
-</section>
+</div>

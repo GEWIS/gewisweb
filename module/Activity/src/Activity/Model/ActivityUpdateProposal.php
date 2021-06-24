@@ -3,7 +3,6 @@
 namespace Activity\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Activity\Model\Activity;
 
 /**
  * Update prop model.
@@ -12,7 +11,6 @@ use Activity\Model\Activity;
  */
 class ActivityUpdateProposal
 {
-
     /**
      * ID for the proposal
      *
@@ -38,7 +36,6 @@ class ActivityUpdateProposal
      */
     protected $new;
 
-
     public function getId()
     {
         return $this->id;
@@ -49,14 +46,14 @@ class ActivityUpdateProposal
         return $this->old;
     }
 
-    public function getNew()
-    {
-        return $this->new;
-    }
-
     public function setOld(Activity $old)
     {
         $this->old = $old;
+    }
+
+    public function getNew()
+    {
+        return $this->new;
     }
 
     public function setNew(Activity $new)

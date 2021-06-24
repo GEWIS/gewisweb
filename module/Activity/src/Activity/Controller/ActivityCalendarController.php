@@ -8,7 +8,6 @@ use Zend\View\Model\ViewModel;
 
 class ActivityCalendarController extends AbstractActionController
 {
-
     public function indexAction()
     {
         $service = $this->getActivityCalendarService();
@@ -39,6 +38,7 @@ class ActivityCalendarController extends AbstractActionController
     {
         $service = $this->getActivityCalendarService();
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $service->deleteOption($request->getPost()['option_id']);
             $this->redirect()->toRoute('activity_calendar');
@@ -49,6 +49,7 @@ class ActivityCalendarController extends AbstractActionController
     {
         $service = $this->getActivityCalendarService();
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $service->approveOption($request->getPost()['option_id']);
             $this->redirect()->toRoute('activity_calendar');
@@ -58,12 +59,12 @@ class ActivityCalendarController extends AbstractActionController
     public function createAction()
     {
         $service = $this->getActivityCalendarService();
-
         $form = $service->getCreateProposalForm();
 
         if ($this->getRequest()->isPost()) {
             $postData = $this->getRequest()->getPost();
             $success = $service->createProposal($postData);
+
             if ($success === false) {
                 $this->getResponse()->setStatusCode(400);
                 $form->setData($postData);

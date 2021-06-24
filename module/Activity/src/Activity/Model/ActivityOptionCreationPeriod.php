@@ -21,46 +21,34 @@ class ActivityOptionCreationPeriod
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
     /**
      * The date and time the planning period starts.
      *
      * @ORM\Column(type="datetime")
      */
     protected $beginPlanningTime;
+
     /**
      * The date and time the planning period ends.
      *
      * @ORM\Column(type="datetime")
      */
     protected $endPlanningTime;
+
     /**
      * The date and time the period for which options can be created starts.
      *
      * @ORM\Column(type="datetime")
      */
     protected $beginOptionTime;
+
     /**
      * The date and time the period for which options can be created ends.
      *
      * @ORM\Column(type="datetime")
      */
     protected $endOptionTime;
-
-    /**
-     * Returns an associative array representation of this object.
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        return [
-            'id' => $this->getId(),
-            'beginPlanningTime' => $this->getBeginPlanningTime(),
-            'endPlanningTime' => $this->getEndPlanningTime(),
-            'beginOptionTime' => $this->getBeginOptionTime(),
-            'endOptionTime' => $this->getEndOptionTime(),
-        ];
-    }
 
     public function getId()
     {
@@ -129,5 +117,21 @@ class ActivityOptionCreationPeriod
     public function setEndOptionTime($endOptionTime)
     {
         $this->endOptionTime = $endOptionTime;
+    }
+
+    /**
+     * Returns an associative array representation of this object.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'beginPlanningTime' => $this->getBeginPlanningTime(),
+            'endPlanningTime' => $this->getEndPlanningTime(),
+            'beginOptionTime' => $this->getBeginOptionTime(),
+            'endOptionTime' => $this->getEndOptionTime(),
+        ];
     }
 }

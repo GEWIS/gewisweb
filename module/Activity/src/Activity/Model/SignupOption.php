@@ -5,12 +5,12 @@ namespace Activity\Model;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Activity option model.
+ * SignupOption model.
  * Contains the possible options of a field of type ``option''.
  *
  * @ORM\Entity
  */
-class ActivityOption
+class SignupOption
 {
     /**
      * ID for the field.
@@ -24,7 +24,7 @@ class ActivityOption
     /**
      * Field that the option belongs to.
      *
-     * @ORM\ManyToOne(targetEntity="ActivityField", inversedBy="options", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Activity\Model\SignupField", inversedBy="options", cascade={"persist"})
      * @ORM\JoinColumn(name="field_id",referencedColumnName="id")
      */
     protected $field;
@@ -32,21 +32,22 @@ class ActivityOption
     /**
      * The value of the option.
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist"})
      */
     protected $value;
 
     /**
-     * The value of the option, in English.
-     *
-     * @ORM\Column(type="string", nullable=true)
+     * @return SignupField
      */
-    protected $valueEn;
+    public function getField()
+    {
+        return $this->field;
+    }
 
     /**
      * Set the field the option belongs to.
      *
-     * @param Activity\Model\ActivityField $field
+     * @param SignupField $field
      */
     public function setField($field)
     {
@@ -54,39 +55,29 @@ class ActivityOption
     }
 
     /**
-     * Set the value of the option.
-     *
-     * @param string $value
+     * @return integer
      */
-    public function setValue($value)
-    {
-        $this->value = $value;
-    }
-
-    public function setValueEn($valueEn)
-    {
-        $this->valueEn = $valueEn;
-    }
-
-
     public function getId()
     {
         return $this->id;
     }
 
-    public function getField()
-    {
-        return $this->field;
-    }
-
+    /**
+     * @return LocalisedText
+     */
     public function getValue()
     {
         return $this->value;
     }
 
-    public function getValueEn()
+    /**
+     * Set the value of the option.
+     *
+     * @param LocalisedText $value
+     */
+    public function setValue($value)
     {
-        return $this->valueEn;
+        $this->value = $value->copy();
     }
 
     /**
@@ -98,8 +89,8 @@ class ActivityOption
     {
         return [
             'id' => $this->getId(),
-            'value' => $this->getValue(),
-            'valueEn' => $this->getValueEn()
+            'value' => $this->getValue()->getValueNL(),
+            'valueEn' => $this->getValue()->getValueEN(),
         ];
     }
 }

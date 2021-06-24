@@ -2,12 +2,13 @@
 
 namespace Activity\Model;
 
+use DateTime;
 use Decision\Model\Organ;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use \DateTime;
 use User\Model\User;
-use User\Permissions\Resource\OrganResourceInterface;
 use User\Permissions\Resource\CreatorResourceInterface;
+use User\Permissions\Resource\OrganResourceInterface;
 
 /**
  * Activity model.
@@ -22,7 +23,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     const STATUS_TO_APPROVE = 1; // Activity needs to be approved
     const STATUS_APPROVED = 2;  // The activity is approved
     const STATUS_DISAPPROVED = 3; // The board disapproved the activity
-    const STATUS_UPDATE = 4; //This activity is an update for some activity
+    const STATUS_UPDATE = 4; // This activity is an update for some activity
 
     /**
      * ID for the activity.
@@ -36,16 +37,9 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Name for the activity.
      *
-     * @Orm\Column(type="string", nullable=true)
+     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist", "remove"})
      */
     protected $name;
-
-    /**
-     * English name for the activity
-     *
-     * @Orm\Column(type="string", nullable=true)
-     */
-    protected $nameEn;
 
     /**
      * The date and time the activity starts.
@@ -61,64 +55,19 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      */
     protected $endTime;
 
-
-    /**
-     * The date and time the activity ends.
-     *
-     * @ORM\Column(type="datetime")
-     */
-    protected $subscriptionDeadline;
-
     /**
      * The location the activity is held at.
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist", "remove"})
      */
     protected $location;
 
     /**
-     * English string to denote what location the activity is held on
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $locationEn;
-
-    /**
      * How much does it cost.
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist", "remove"})
      */
     protected $costs;
-
-    /**
-     * English string to denote how much the activity cost
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $costsEn;
-
-    /**
-     * Are people able to sign up for this activity?
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $canSignUp;
-
-    /**
-     * Are people outside of GEWIS allowed to sign up
-     * N.b. if $canSignUp is false, this column does not matter.
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $onlyGEWIS;
-
-    /**
-     * Should the number of subscribed members be displayed
-     * when the user is NOT logged in?
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $displaySubscribedNumber;
 
     /**
      * Who did approve this activity.
@@ -132,7 +81,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      * Who created this activity.
      *
      * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(referencedColumnName="lidnr",nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="lidnr", nullable=false)
      */
     protected $creator;
 
@@ -153,39 +102,40 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Activity description.
      *
-     * @Orm\Column(type="text", nullable=true)
+     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist", "remove"})
      */
     protected $description;
 
     /**
-     * Activity description.
+     * All additional Categories belonging to this activity.
      *
-     * @Orm\Column(type="text", nullable=true)
+     * @ORM\ManyToMany(targetEntity="Activity\Model\ActivityCategory", inversedBy="activities", cascade={"persist"})
+     * @ORM\JoinTable(name="ActivityCategoryAssignment")
      */
-    protected $descriptionEn;
+    protected $categories;
 
     /**
-     * all the people who signed up for this activity
+     * All additional SignupLists belonging to this activity.
      *
-     * @ORM\OneToMany(targetEntity="ActivitySignup", mappedBy="activity")
-     * @ORM\OrderBy({"id" = "ASC"})
+     * @ORM\OneToMany(targetEntity="Activity\Model\SignupList", mappedBy="activity", cascade={"remove"})
      */
-    protected $signUps;
+    protected $signupLists;
 
     /**
-     * All additional fields belonging to the activity.
-     *
-     * @ORM\OneToMany(targetEntity="ActivityField", mappedBy="activity")
-     */
-    protected $fields;
-
-    /**
-     * Who created this activity.
+     * Which organ organises this activity.
      *
      * @ORM\ManyToOne(targetEntity="Decision\Model\Organ")
-     * @ORM\JoinColumn(referencedColumnName="id",nullable=true)
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=true)
      */
     protected $organ;
+
+    /**
+     * Which company organises this activity.
+     *
+     * @ORM\ManyToOne(targetEntity="Company\Model\Company")
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=true)
+     */
+    protected $company;
 
     /**
      * Is this a My Future related activity
@@ -201,16 +151,156 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      */
     protected $requireGEFLITST;
 
-    /**
-     * Is this a food subscription list
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $isFood;
-
     public function __construct()
     {
-        $this->fields = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->signupLists = new ArrayCollection();
+    }
+
+    /**
+     * @return User
+     */
+    public function getApprover()
+    {
+        return $this->approver;
+    }
+
+    /**
+     * @param User $approver
+     */
+    public function setApprover(User $approver)
+    {
+        $this->approver = $approver;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param integer $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return Activity\Model\ActivityUpdateProposal
+     */
+    public function getUpdateProposal()
+    {
+        return $this->updateProposal;
+    }
+
+    /**
+     * @param array $categories
+     */
+    public function addCategories($categories)
+    {
+        foreach ($categories as $category) {
+            $this->addCategory($category);
+        }
+    }
+
+    /**
+     * @param ActivityCategory $category
+     */
+    public function addCategory($category)
+    {
+        if ($this->categories->contains($category)) {
+            return;
+        }
+
+        $this->categories->add($category);
+        $category->addActivity($this);
+    }
+
+    /**
+     * @param array $categories
+     */
+    public function removeCategories($categories)
+    {
+        foreach ($categories as $category) {
+            $this->removeCategory($category);
+        }
+    }
+
+    /**
+     * @param ActivityCategory $category
+     */
+    public function removeCategory($category)
+    {
+        if (!$this->categories->contains($category)) {
+            return;
+        }
+
+        $this->categories->removeElement($category);
+        $category->removeActivity($this);
+    }
+
+    /**
+     * Adds SignupLists to this activity.
+     *
+     * @param array $signupLists
+     */
+    public function addSignupLists($signupLists)
+    {
+        foreach ($signupLists as $signupList) {
+            $this->addSignupList($signupList);
+        }
+    }
+
+    /**
+     * @param SignupList $signupList
+     */
+    public function addSignupList($signupList)
+    {
+        if ($this->signupLists->contains($signupList)) {
+            return;
+        }
+
+        $this->signupLists->add($signupList);
+        $signupList->setActivity($this);
+    }
+
+    /**
+     * Removes SignupLists from this activity.
+     *
+     * @param array $signupLists
+     */
+    public function removeSignupLists($signupLists)
+    {
+        foreach ($signupLists as $signupList) {
+            $this->removeSignupList($signupList);
+        }
+    }
+
+    /**
+     * @param SignupList $category
+     */
+    public function removeSignupList($signupList)
+    {
+        if (!$this->signupLists->contains($signupList)) {
+            return;
+        }
+
+        $this->signupLists->removeElement($signupList);
+        $signupList->setActivity(null);
+    }
+
+    /**
+     * Returns an ArrayCollection of SignupLists associated with this activity.
+     *
+     * @return ArrayCollection
+     */
+    public function getSignupLists()
+    {
+        return $this->signupLists;
     }
 
     /**
@@ -222,7 +312,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return string
+     * @return LocalisedText
      */
     public function getName()
     {
@@ -230,27 +320,11 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @param string $name
+     * @param LocalisedText $name
      */
     public function setName($name)
     {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getNameEn()
-    {
-        return $this->nameEn;
-    }
-
-    /**
-     * @param string $nameEn
-     */
-    public function setNameEn($nameEn)
-    {
-        $this->nameEn = $nameEn;
+        $this->name = $name->copy();
     }
 
     /**
@@ -286,24 +360,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return mixed
-     */
-    public function getSubscriptionDeadline()
-    {
-        return $this->subscriptionDeadline;
-    }
-
-    /**
-     * @param mixed $subscriptionDeadline
-     */
-    public function setSubscriptionDeadline($subscriptionDeadline)
-    {
-        $this->subscriptionDeadline = $subscriptionDeadline;
-    }
-
-
-    /**
-     * @return string
+     * @return LocalisedText
      */
     public function getLocation()
     {
@@ -311,33 +368,15 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @param string $location
+     * @param LocalisedText $location
      */
     public function setLocation($location)
     {
-        {
-            $this->location = $location;
-        }
+        $this->location = $location->copy();
     }
 
     /**
-     * @return string
-     */
-    public function getLocationEn()
-    {
-        return $this->locationEn;
-    }
-
-    /**
-     * @param string $locationEn
-     */
-    public function setLocationEn($locationEn)
-    {
-        $this->locationEn = $locationEn;
-    }
-
-    /**
-     * @return string
+     * @return LocalisedText
      */
     public function getCosts()
     {
@@ -345,134 +384,15 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @param string $costs
+     * @param LocalisedText $costs
      */
     public function setCosts($costs)
     {
-        $this->costs = $costs;
+        $this->costs = $costs->copy();
     }
 
     /**
-     * @return string
-     */
-    public function getCostsEn()
-    {
-        return $this->costsEn;
-    }
-
-    /**
-     * @param string $costsEn
-     */
-    public function setCostsEn($costsEn)
-    {
-        $this->costsEn = $costsEn;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getCanSignUp()
-    {
-        return $this->canSignUp;
-    }
-
-    /**
-     * @param boolean $canSignUp
-     */
-    public function setCanSignUp($canSignUp)
-    {
-        $this->canSignUp = $canSignUp;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getOnlyGEWIS()
-    {
-        return $this->onlyGEWIS;
-    }
-
-    /**
-     * @param boolean $onlyGEWIS
-     */
-    public function setOnlyGEWIS($onlyGEWIS)
-    {
-        $this->onlyGEWIS = $onlyGEWIS;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getDisplaySubscribedNumber()
-    {
-        return $this->displaySubscribedNumber;
-    }
-
-    /**
-     * @param boolean $displaySubscribedNumber
-     */
-    public function setDisplaySubscribedNumber($displaySubscribedNumber)
-    {
-        $this->displaySubscribedNumber = $displaySubscribedNumber;
-    }
-
-    /**
-     * @return User
-     */
-    public function getApprover()
-    {
-        return $this->approver;
-    }
-
-    /**
-     * @param User $approver
-     */
-    public function setApprover(User $approver)
-    {
-        $this->approver = $approver;
-    }
-
-    /**
-     * @return User
-     */
-    public function getCreator()
-    {
-        return $this->creator;
-    }
-
-    /**
-     * @param User $creator
-     */
-    public function setCreator(User $creator)
-    {
-        $this->creator = $creator;
-    }
-
-    /**
-     * @return integer
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * @param integer $status
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    /**
-     * @return Activity\Model\ActivityUpdateProposal
-     */
-    public function getUpdateProposal()
-    {
-        return $this->updateProposal;
-    }
-    /**
-     * @return string
+     * @return LocalisedText
      */
     public function getDescription()
     {
@@ -480,43 +400,11 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @param string $description
+     * @param LocalisedText $description
      */
     public function setDescription($description)
     {
-        $this->description = $description;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescriptionEn()
-    {
-        return $this->descriptionEn;
-    }
-
-    /**
-     * @param string $descriptionEn
-     */
-    public function setDescriptionEn($descriptionEn)
-    {
-        $this->descriptionEn = $descriptionEn;
-    }
-
-    /**
-     * @return array
-     */
-    public function getSignUps()
-    {
-        return $this->signUps;
-    }
-
-    /**
-     * @param array $signUps
-     */
-    public function setSignUps($signUps)
-    {
-        $this->signUps = $signUps;
+        $this->description = $description->copy();
     }
 
     /**
@@ -538,6 +426,22 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * @return mixed
      */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param mixed $organ
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getIsMyFuture()
     {
         return $this->isMyFuture;
@@ -554,42 +458,41 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * @return mixed
      */
-    public function getIsFood()
+    public function getRequireGEFLITST()
     {
-        return $this->isFood;
+        return $this->requireGEFLITST;
     }
 
     /**
-     * @param mixed $isFood
+     * @param mixed $requireGEFLITST
      */
-    public function setIsFood($isFood)
+    public function setRequireGEFLITST($requireGEFLITST)
     {
-        $this->isFood = $isFood;
+        $this->requireGEFLITST = $requireGEFLITST;
     }
-
 
     /**
-     * @return array
+     * @return ArrayCollection
      */
-    public function getFields()
+    public function getCategories()
     {
-        return $this->fields;
+        return $this->categories;
     }
 
-    public function removeFields($fields)
+    /**
+     * @return User
+     */
+    public function getCreator()
     {
-        foreach ($fields as $field) {
-            $field->setActivity(null);
-            $this->fields->removeElement($field);
-        }
+        return $this->creator;
     }
 
-    public function addFields($fields)
+    /**
+     * @param User $creator
+     */
+    public function setCreator(User $creator)
     {
-        foreach ($fields as $field) {
-            $field->setActivity($this);
-            $this->fields->add($field);
-        }
+        $this->creator = $creator;
     }
 
     /**
@@ -599,48 +502,35 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      */
     public function toArray()
     {
-        $fields = [];
-        foreach ($this->getFields() as $field) {
-            $fields[] = $field->toArray();
+        $signupLists = [];
+        foreach ($this->getSignupLists() as $signupList) {
+            $signupLists[] = $signupList->toArray();
         }
 
-        $attendees = [];
-        foreach ($this->getSignUps() as $signup) {
-            $attendees[] = $signup->getFullName();
+        $categories = [];
+        foreach ($this->getCategories() as $category) {
+            $categories[] = $category->toArray();
         }
 
         return [
             'id' => $this->getId(),
-            'name' => $this->getName(),
-            'nameEn' => $this->getNameEn(),
+            'name' => $this->getName()->getValueNL(),
+            'nameEn' => $this->getName()->getValueEN(),
             'beginTime' => $this->getBeginTime(),
             'endTime' => $this->getEndTime(),
-            'subscriptionDeadline' => $this->getSubscriptionDeadline(),
-            'location' => $this->getLocation(),
-            'LocationEn' => $this->getLocationEn(),
-            'costs' => $this->getCosts(),
-            'costsEn' => $this->getCostsEn(),
-            'description' => $this->getDescription(),
-            'descriptionEn' => $this->getDescriptionEn(),
-            'canSignUp' => $this->getCanSignUp(),
-            'isFood' => $this->getIsFood(),
+            'location' => $this->getLocation()->getValueNL(),
+            'locationEn' => $this->getLocation()->getValueEN(),
+            'costs' => $this->getCosts()->getValueNL(),
+            'costsEn' => $this->getCosts()->getValueEN(),
+            'description' => $this->getDescription()->getValueNL(),
+            'descriptionEn' => $this->getDescription()->getValueEN(),
+            'organ' => $this->getOrgan(),
+            'company' => $this->getCompany(),
             'isMyFuture' => $this->getIsMyFuture(),
             'requireGEFLITST' => $this->getRequireGEFLITST(),
-            'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
-            'attendees' => $attendees,
-            'fields' => $fields,
+            'categories' => $categories,
+            'signupLists' => $signupLists,
         ];
-    }
-
-    // Permission to link the resource to an organ
-    /**
-     * Get the organ of this resource.
-     *
-     * @return Organ
-     */
-    public function getResourceOrgan()
-    {
-        return $this->getOrgan();
     }
 
     /**
@@ -654,26 +544,22 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
+     * Get the organ of this resource.
+     *
+     * @return Organ
+     */
+    public function getResourceOrgan()
+    {
+        return $this->getOrgan();
+    }
+
+    /**
      * Get the creator of this resource
+     *
+     * @return User
      */
     public function getResourceCreator()
     {
         return $this->getCreator();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRequireGEFLITST()
-    {
-        return $this->requireGEFLITST;
-    }
-
-    /**
-     * @param mixed $requireGEFLITST
-     */
-    public function setRequireGEFLITST($requireGEFLITST)
-    {
-        $this->requireGEFLITST = $requireGEFLITST;
     }
 }

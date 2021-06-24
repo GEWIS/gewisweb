@@ -74,7 +74,6 @@ $this->headLink()
                     <th><?= $this->translate('Creator') ?></th>
                     <th><?= $this->translate('Name') ?></th>
                     <th><?= $this->translate('Type') ?></th>
-                    <!--                    <th>--><? //= $this->translate('Created at') ?><!--</th>-->
                     <th><?= $this->translate('Start') ?></th>
                     <th><?= $this->translate('End') ?></th>
                     <th></th>
@@ -83,7 +82,8 @@ $this->headLink()
                 <tbody>
                 <?php foreach ($editableOptions as $option): ?>
                     <tr<?= $option->getStatus() === 'deleted' ? ' class="danger"' : '' ?> <?= $option->getStatus() === 'approved' ? ' class="success"' : '' ?>
-                        data-toggle="tooltip" data-placement="right" title="<?= $this->escapeHtml($option->getProposal()->getDescription()) ?>">
+                        data-toggle="tooltip" data-placement="right"
+                        title="<?= $this->escapeHtml($option->getProposal()->getDescription()) ?>">
                         <td>
                             <?= $option->getCreatorAlt() ?>
                         </td>
@@ -91,8 +91,6 @@ $this->headLink()
                             <?= $this->escapeHtml($option->getProposal()->getName()) ?>
                         </td>
                         <td><?= $this->escapeHtml($this->translate($option->getType())) ?></td>
-                        <!--                        <td>-->
-                        <? //= $option->getProposal()->getCreationTime()->format('d-m-Y') ?><!--</td>-->
                         <td><?= $option->getBeginTime()->format('d-m-Y') ?></td>
                         <td><?= $option->getEndTime()->format('d-m-Y') ?></td>
                         <td>
@@ -175,19 +173,19 @@ $this->headLink()
     timeMinString = timeMin.toISOString();
     var calendarItems = [
         <?php foreach($options as $option): ?>
-            <?php if($option->getStatus() !== 'deleted'): ?>
-            {
-                "isPlanned": <?= $option->getStatus() === 'approved' ? 'true' : 'false' ?>,
-                "isOwner": <?= in_array($option, $editableOptions) ? 'true' : 'false' ?>,
-                "id": "<?= $option->getId() ?>",
-                "title": "<?= $this->escapeHtml($option->getProposal()->getName()) ?>",
-                "organizer": "<?= $option->getCreatorAlt()?>",
-                "url": "#",
-                "class": "event-info",
-                "start": <?= $option->getBeginTime()->getTimestamp() * 1000 ?>,
-                "end": <?= $option->getEndTime()->getTimestamp() * 1000 ?>
-            },
-            <?php endif ?>
+        <?php if($option->getStatus() !== 'deleted'): ?>
+        {
+            "isPlanned": <?= $option->getStatus() === 'approved' ? 'true' : 'false' ?>,
+            "isOwner": <?= in_array($option, $editableOptions) ? 'true' : 'false' ?>,
+            "id": "<?= $option->getId() ?>",
+            "title": "<?= $this->escapeHtml($option->getProposal()->getName()) ?>",
+            "organizer": "<?= $option->getCreatorAlt()?>",
+            "url": "#",
+            "class": "event-info",
+            "start": <?= $option->getBeginTime()->getTimestamp() * 1000 ?>,
+            "end": <?= $option->getEndTime()->getTimestamp() * 1000 ?>
+        },
+        <?php endif ?>
         <?php endforeach ?>
     ];
     $.getJSON('https://www.googleapis.com/calendar/v3/calendars/<?= $calendarKey ?>@group.calendar.google.com/events?key=<?= $APIKey ?>&maxResults=2500&showDeleted=false&timeMin=' + timeMinString, function (data) {

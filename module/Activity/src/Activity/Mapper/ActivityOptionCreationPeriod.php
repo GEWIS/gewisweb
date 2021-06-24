@@ -86,6 +86,7 @@ class ActivityOptionCreationPeriod
             ->orderBy('x.beginPlanningTime', 'ASC')
             ->setParameter('today', $today)
             ->setMaxResults(1);
+
         return $qb->getQuery()->getOneOrNullResult();
     }
 }

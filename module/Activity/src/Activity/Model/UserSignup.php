@@ -3,14 +3,14 @@
 namespace Activity\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use \User\Model\User;
+use User\Model\User;
 
 /**
- * ActivitySignup model.
+ * Signup model.
  *
  * @ORM\Entity
  */
-class UserActivitySignup extends ActivitySignup
+class UserSignup extends Signup
 {
     /**
      * Who is subscribed.
@@ -21,13 +21,13 @@ class UserActivitySignup extends ActivitySignup
     protected $user;
 
     /**
-     * Set the user for the activity signup.
+     * Get the full name of the user whom signed up for the activity.
      *
-     * @param User $user
+     * @return string
      */
-    public function setUser(User $user)
+    public function getFullName()
     {
-        $this->user = $user;
+        return is_null($this->getUser()) ? null : $this->getUser()->getMember()->getFullName();
     }
 
     /**
@@ -41,13 +41,13 @@ class UserActivitySignup extends ActivitySignup
     }
 
     /**
-     * Get the full name of the user whom signed up for the activity.
+     * Set the user for the activity signup.
      *
-     * @return string
+     * @param User $user
      */
-    public function getFullName()
+    public function setUser(User $user)
     {
-        return is_null($this->getUser()) ? null : $this->getUser()->getMember()->getFullName();
+        $this->user = $user;
     }
 
     /**

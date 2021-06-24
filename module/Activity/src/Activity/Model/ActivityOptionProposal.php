@@ -101,22 +101,6 @@ class ActivityOptionProposal implements OrganResourceInterface
     /**
      * @return mixed
      */
-    public function getCreator()
-    {
-        return $this->creator;
-    }
-
-    /**
-     * @param mixed $creator
-     */
-    public function setCreator($creator)
-    {
-        $this->creator = $creator;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getCreationTime()
     {
         return $this->creationTime;
@@ -149,11 +133,11 @@ class ActivityOptionProposal implements OrganResourceInterface
     }
 
     /**
-     * @return string
+     * @param mixed $organ
      */
-    public function getOrganAlt()
+    public function setOrgan($organ)
     {
-        return $this->organAlt;
+        $this->organ = $organ;
     }
 
     /**
@@ -165,22 +149,6 @@ class ActivityOptionProposal implements OrganResourceInterface
             return $this->organ;
         }
         return $this->organAlt;
-    }
-
-    /**
-     * @param mixed $organ
-     */
-    public function setOrgan($organ)
-    {
-        $this->organ = $organ;
-    }
-
-    /**
-     * @param string $organAlt
-     */
-    public function setOrganAlt($organAlt)
-    {
-        $this->organAlt = $organAlt;
     }
 
     /**
@@ -211,12 +179,46 @@ class ActivityOptionProposal implements OrganResourceInterface
      */
     public function getCreatorAlt()
     {
-        if ($this->getOrgan() !== null) {
-            return  $this->getOrgan()->getAbbr();
+        if (!is_null($this->getOrgan())) {
+            return $this->getOrgan()->getAbbr();
         }
-        if ($this->getOrganAlt() !== null) {
+
+        if (!is_null($this->getOrganAlt())) {
             return $this->getOrganAlt();
         }
+
         return $this->getCreator()->getMember()->getFullName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrganAlt()
+    {
+        return $this->organAlt;
+    }
+
+    /**
+     * @param string $organAlt
+     */
+    public function setOrganAlt($organAlt)
+    {
+        $this->organAlt = $organAlt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreator()
+    {
+        return $this->creator;
+    }
+
+    /**
+     * @param mixed $creator
+     */
+    public function setCreator($creator)
+    {
+        $this->creator = $creator;
     }
 }

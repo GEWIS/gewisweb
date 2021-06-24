@@ -3,8 +3,9 @@
 namespace Activity\Mapper;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
-class ActivityOption
+class SignupOption
 {
     /**
      * Doctrine entity manager.
@@ -22,26 +23,25 @@ class ActivityOption
     {
         $this->em = $em;
     }
-    
+
     /**
      * Finds the option of with the given id.
-     * 
+     *
      * @param int $id
-     * @return \Activity\Model\ActivityOption
+     * @return \Activity\Model\SignupOption
      */
     public function getOptionById($id)
     {
         return $this->getRepository()->find($id);
     }
-    
-    
+
     /**
      * Get the repository for this mapper.
      *
-     * @return \Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Activity\Model\ActivityOption');
+        return $this->em->getRepository('Activity\Model\SignupOption');
     }
 }
