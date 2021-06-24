@@ -10,7 +10,7 @@ class JobSectors extends AbstractHelper implements ServiceLocatorAwareInterface
     use \Zend\ServiceManager\ServiceLocatorAwareTrait;
 
     /**
-     * Returns all visible categories
+     * Returns all visible sectors
      *
      */
     public function __invoke($lang)
