@@ -24,6 +24,8 @@ RUN apt-get update \
         libpq-dev \
         libxml2-dev \
         libzip-dev \
+        rsync \
+        sshpass \
         unzip \
     && apt-get upgrade -y
 

@@ -50,7 +50,7 @@ return [
 	/*
      * Path to folder in local filesystem available for browsing
      */
-    'filebrowser_folder' => getcwd() . '/public/',
+    'filebrowser_folder' => getcwd() . '/',
 
     'glide' => [
         'base_url' => getenv('GLIDE_HOST'),

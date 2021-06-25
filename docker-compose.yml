@@ -40,6 +40,8 @@ services:
 #            - DOCKER_DB2_USERNAME=
 #            - DOCKER_DB2_PASSWORD=
 #            - DOCKER_DB2_DATABASE=
+#            - SSH_USERNAME=
+#            - SSH_PASSWORD=
         volumes:
             - gewisweb_data:/code/data:rw
             - gewisweb_public:/code/public:rw
