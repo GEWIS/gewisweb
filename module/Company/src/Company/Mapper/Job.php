@@ -3,6 +3,8 @@
 namespace Company\Mapper;
 
 use Company\Model\Job as JobModel;
+use Company\Model\JobCategory;
+use Company\Model\JobSector;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -239,7 +241,14 @@ class Job
         return $this->em->getRepository('Company\Model\Job');
     }
 
-    // TODO: decide if we should make a separate mapper for this
+
+    //TODO: move to sector mapper
+    /**
+     * Find sector by its id
+     *
+     * @param $id Int id of the to be found jobSector
+     * @return JobSector
+     */
     public function findSectorsById($id)
     {
         $objectRepository = $this->getSectorsRepository(); // From clause is integrated in this statement
@@ -253,12 +262,22 @@ class Job
         return null;
     }
 
+    /**
+     * Get the JobSector repository.
+     *
+     * @return Doctrine\ORM\EntityRepository
+     */
     public function getSectorsRepository()
     {
         return $this->em->getRepository('Company\Model\JobSector');
     }
 
-    // TODO: decide if we should make a separate mapper for this
+    /**
+     * Find category by its id
+     *
+     * @param $id Int id of the to be found jobCategory
+     * @return JobCategory
+     */
     public function findCategoryById($id)
     {
         $objectRepository = $this->getCategoryRepository(); // From clause is integrated in this statement

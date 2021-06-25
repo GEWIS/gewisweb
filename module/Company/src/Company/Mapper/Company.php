@@ -3,6 +3,7 @@
 namespace Company\Mapper;
 
 use Company\Model\Company as CompanyModel;
+use Company\Model\JobSector;
 use User\Model\NewCompany as NewCompanyModel;
 use Company\Model\CompanyI18n;
 use Doctrine\ORM\EntityManager;
@@ -174,6 +175,14 @@ class Company
         $this->em->flush();
     }
 
+    /**
+     * @param $targetClass
+     * @param $property
+     * @param $label
+     * @param $name
+     * @param $locale
+     * @return array
+     */
     public function createObjectSelectConfig($targetClass, $property, $label, $name, $locale)
     {
         return [
@@ -200,7 +209,14 @@ class Company
         ];
     }
 
-    // TODO: decide if we should make a separate mapper for this
+
+    // TODO: check if this is actually still being used.
+    /**
+     * Find sector by its id
+     *
+     * @param $id Int id of the to be found jobsector
+     * @return JobSector
+     */
     public function findSectorByNeutralId($id)
     {
         $objectRepository = $this->getSectorsRepository(); // From clause is integrated in this statement
@@ -214,6 +230,11 @@ class Company
         return null;
     }
 
+    /**
+     * Get the JobSector repository.
+     *
+     * @return Doctrine\ORM\EntityRepository
+     */
     public function getSectorsRepository()
     {
         return $this->em->getRepository('Company\Model\JobSector');

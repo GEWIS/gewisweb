@@ -4,6 +4,8 @@
 namespace Company\Service;
 
 use Application\Service\AbstractAclService;
+use Company\Model\ApprovalModel\ApprovalPending;
+use Company\Model\ApprovalModel\ApprovalProfile;
 
 
 class Approval extends AbstractAclService
@@ -18,6 +20,12 @@ class Approval extends AbstractAclService
         return $this->getApprovalMapper()->findPendingApprovals();
     }
 
+    /**
+     * Get all pendingApprovals with the given profile id
+     *
+     * @param $id Int
+     * @return mixed
+     */
     public function getPendingApprovalByProfile($id){
         return $this->getApprovalMapper()->findPendingApprovalByProfile($id);
     }
@@ -42,10 +50,21 @@ class Approval extends AbstractAclService
         return $this->getApprovalMapper()->findEditableCompaniesBySlugName($slugName, true);
     }
 
+    /**
+     * Find the approvalProfile for the given id
+     *
+     * @param $id Int id of the to be found approvalProfile
+     * @return ApprovalProfile
+     */
     public function getApprovalProfileById($id) {
         return $this->getApprovalMapper()->findApprovalProfileById($id);
     }
 
+    /**
+     * Delete a pending approval model and the corresponding approval models.
+     *
+     * @param $deletionInfo array containing info of the pending approval model to be deleted
+     */
     public function deletePendingApproval($deletionInfo){
         //check type
         if($deletionInfo["type"] === "banner"){
@@ -62,6 +81,11 @@ class Approval extends AbstractAclService
     }
 
 
+    /**
+     * Delete a list of approvalVacancies and the corresponding approvalPending entries
+     *
+     * @param $vacancyApprovals array of the approvalVacancies which need to be deleted
+     */
     public function deleteVacancyApprovals($vacancyApprovals) {
         // Remove ApprovalVacancyEntries
         foreach ($vacancyApprovals as $approval) {
@@ -75,6 +99,11 @@ class Approval extends AbstractAclService
         }
     }
 
+    /**
+     * Delete an approvalProfile and the corresponding approvalPending and approvalCompanyI18n entries
+     *
+     * @param $profileApproval ApprovalProfile to be deleted
+     */
     public function deleteProfileApprovals($profileApproval) {
         // Get ApprovalPending entry for the VacancyApproval
         $id = $profileApproval->getId();
@@ -91,10 +120,21 @@ class Approval extends AbstractAclService
         //$this->getApprovalMapper()->removeApproval($profileApproval);
     }
 
+    /**
+     * Get companyI18 models for the given company id
+     *
+     * @param $cId Int company id
+     * @return mixed
+     */
     public function getApprovalCompanyI18($cId){
         return $this->getApprovalMapper()->findApprovalCompanyI18($cId);
     }
 
+    /**
+     * Set Profile approval and corresponding Pending approval to rejected
+     *
+     * @param $pId Int profile approval id
+     */
     public function rejectProfileApproval($pId){
         $profileApproval = $this->getApprovalMapper()->findProfileApprovalById($pId)[0];
         $profileApproval->setRejected(true);
@@ -107,6 +147,11 @@ class Approval extends AbstractAclService
         $this->getApprovalMapper()->save();
     }
 
+    /**
+     * Set Vacancy approval and corresponding Pending approval to rejected
+     *
+     * @param $vId Int vacancy approval id
+     */
     public function rejectVacancyApproval($vId){
         $vacancyApproval = $this->getApprovalMapper()->findVacancyApprovalById($vId)[0];
         $vacancyApproval->setRejected(true);
@@ -119,22 +164,57 @@ class Approval extends AbstractAclService
         $this->getApprovalMapper()->save();
     }
 
+    /**
+     * Get Vacancy Approvals by language neutral id
+     *
+     * @param $languageNeutralId Int language neutral ids of the to be found vacancies
+     * @return array of vacancies with the given language neutral id
+     */
     public function getEditableVacanciesByLanguageNeutralId($languageNeutralId) {
         return $this->getApprovalMapper()->findVacanciesByLanguageNeutralId($languageNeutralId);
     }
 
+    /**
+     * Get banner by id
+     *
+     * @param $id Int banner Id
+     * @return array containing the banner approval
+     */
     public function getBannerApprovalById($id){
         return $this->getApprovalMapper()->findBannerApprovalById($id);
     }
 
+    /**
+     * Reject banner Approval
+     *
+     * @param $id Int banner Id
+     * @return void
+     */
     public function rejectBannerApproval($id){
+        //This doesn't actually return anything right? so can't return be removed?
+        //TODO: whoever made this function look at this
         return $this->getApprovalMapper()->rejectBannerApproval($id);
     }
 
+    /**
+     * Accept banner approval
+     *
+     * @param $id Int banner id
+     * @param $approvalId Int pending approval Id
+     * @return mixed
+     */
     public function acceptBannerApproval($id, $approvalId){
+        //This doesn't actually return anything right? so can't return be removed?
+        //TODO: whoever made this function look at this
         return $this->getApprovalMapper()->acceptBannerApproval($id, $approvalId);
     }
 
+    /**
+     * Return if a vacancy has been approved
+     *
+     * @param $vacancyId Int vacancy Id
+     * @return boolean
+     */
     public function getApprovedByVacancyId($vacancyId) {
         return $this->getApprovalMapper()->findApprovedByVacancyId($vacancyId);
     }

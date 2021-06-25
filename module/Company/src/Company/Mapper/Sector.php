@@ -2,6 +2,7 @@
 
 namespace Company\Mapper;
 
+use Company\Model\JobSector;
 use Company\Model\JobSector as SectorModel;
 use Doctrine\ORM\EntityManager;
 
@@ -28,9 +29,15 @@ class Sector
         $this->em = $em;
     }
 
-    public function persist($label)
+    /**
+     * persist a given sector
+     *
+     * @param $sector JobSector to persist
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function persist($sector)
     {
-        $this->em->persist($label);
+        $this->em->persist($sector);
         $this->em->flush();
     }
 
