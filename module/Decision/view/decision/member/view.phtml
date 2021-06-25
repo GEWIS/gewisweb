@@ -2,7 +2,7 @@
 // set title
 $this->headTitle($member->getFullName());
 $this->headTitle($this->translate('Members')); ?>
-<?php $this->inlineScript()
+<?php $this->headScript()
     ->appendFile($this->basePath() . '/js/imagesloaded.pkgd.min.js')
     ->appendFile($this->basePath() . '/js/masonry.pkgd.min.js')
     ->appendFile($this->basePath() . '/js/photo.js');

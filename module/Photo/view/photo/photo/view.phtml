@@ -15,7 +15,7 @@ if (isset($memberAlbum)) {
 $this->headTitle($this->translate('Photos'));
 ?>
 <?php
-$this->inlineScript()
+$this->headScript()
     ->appendFile($this->basePath() . '/js/jquery.autocomplete.js')
     ->appendFile($this->basePath() . '/js/photo.js');
 $this->scriptUrl()->requireUrl('member/search');

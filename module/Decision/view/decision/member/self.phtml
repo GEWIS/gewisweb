@@ -5,7 +5,7 @@ use Decision\Model\Address;
 
 $this->headTitle($member->getFullName());
 ?>
-<?php $this->inlineScript()
+<?php $this->headScript()
     ->appendFile($this->basePath() . '/js/imagesloaded.pkgd.min.js')
     ->appendFile($this->basePath() . '/js/masonry.pkgd.min.js')
     ->appendFile($this->basePath() . '/js/photo.js');
