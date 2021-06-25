@@ -39,9 +39,9 @@ getvendordir: rundev
 		@docker-compose down
 
 replenish: rundev
-		@docker cp ./public "$(shell docker-compose ps -q web)":/code
+		@docker cp ./public gewisweb_web_1:/code
 		@docker-compose exec web chown -R www-data:www-data /code/public
-		@docker cp ./data "$(shell docker-compose ps -q web)":/code
+		@docker cp ./data gewisweb_web_1/code
 		@docker-compose exec web chown -R www-data:www-data /code/data
 		@docker-compose down
 
@@ -50,26 +50,26 @@ update: rundev updatecomposer updatepackage updatecss updateglide
 
 updatecomposer:
 		@docker-compose exec web php composer.phar selfupdate
-		@docker-compose exec -T web cat composer.phar > composer.phar
+		@docker cp gewisweb_web_1:/code/composer.phar composer.phar
 		@docker-compose exec web php composer.phar update
-		@docker-compose exec -T web cat composer.lock > composer.lock
+		@docker cp gewisweb_web_1:/code/composer.lock composer.lock
 
 updatepackage:
 		@docker-compose exec web npm update
-		@docker-compose exec -T web cat package-lock.json > package-lock.json
+		@docker cp gewisweb_web_1:/code/package-lock.json package-lock.json
 
 updatecss:
 		@docker-compose exec web npm run scss
-		@docker-compose exec -T web cat public/css/gewis-theme.css > public/css/gewis-theme.css
+		@docker cp gewisweb_web_1:/code/public/css/gewis-theme.css public/css/gewis-theme.css
 
 updateglide:
 		@docker-compose exec glide php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 		@docker-compose exec glide php composer-setup.php
 		@docker-compose exec glide php -r "unlink('composer-setup.php');"
-		@docker-compose exec web php composer.phar selfupdate
-		@docker-compose exec -T web cat composer.phar > composer.phar
+		@docker-compose exec glide php composer.phar selfupdate
+		@docker cp gewisweb_glide_1:/glide/composer.phar composer.phar
 		@docker-compose exec glide php composer.phar update
-		@docker-compose exec -T glide cat composer.lock > docker/glide/composer.lock
+		@docker cp gewisweb_glide_1:/glide/composer.phar composer.phar
 
 all: build login push
 
