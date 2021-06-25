@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "513a783402daeaf2aa9f44e98cd9807d",
+    "content-hash": "98d914d81b1f43b0a666ff4ddc9c97a7",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -770,16 +770,16 @@
         },
         {
             "name": "doctrine/doctrine-orm-module",
-            "version": "1.1.7",
+            "version": "1.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineORMModule.git",
-                "reference": "2205a3ccaf25dc5d9793bf5b7295bb7eb1a861c3"
+                "reference": "d0ff7aaa1c4eabf4bab2a6ae73317c34330467c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineORMModule/zipball/2205a3ccaf25dc5d9793bf5b7295bb7eb1a861c3",
-                "reference": "2205a3ccaf25dc5d9793bf5b7295bb7eb1a861c3",
+                "url": "https://api.github.com/repos/doctrine/DoctrineORMModule/zipball/d0ff7aaa1c4eabf4bab2a6ae73317c34330467c3",
+                "reference": "d0ff7aaa1c4eabf4bab2a6ae73317c34330467c3",
                 "shasum": ""
             },
             "require": {
@@ -856,9 +856,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/DoctrineORMModule/issues",
-                "source": "https://github.com/doctrine/DoctrineORMModule/tree/master"
+                "source": "https://github.com/doctrine/DoctrineORMModule/tree/1.1.8"
             },
-            "time": "2018-03-27T21:02:52+00:00"
+            "time": "2018-04-15T22:58:02+00:00"
         },
         {
             "name": "doctrine/event-manager",
