@@ -43,7 +43,7 @@ class Approval
     }
 
     /**
-     * Flush.
+     * Flush changes
      */
     public function flush()
     {
@@ -51,7 +51,7 @@ class Approval
     }
 
     /**
-     * Saves all modified entities that are marked persistant
+     * Saves all modified entities that are marked persistent
      *
      */
     public function save()
@@ -89,9 +89,9 @@ class Approval
     }
 
     /**
-     * Find the banner with the given Id
+     * Find the banner approval pending model with the given Id
      *
-     * @param $id Int Banner Id
+     * @param $id Int Banner approval pending model Id
      * @return array containing the resulting banner
      */
     public function findBannerApprovalById($id){
@@ -109,7 +109,7 @@ class Approval
     /**
      * Set the banner with the given Id to rejected
      *
-     * @param $id Int Banner Id
+     * @param $id Int Banner approval pending model Id
      */
     public function rejectBannerApproval($id){
         $qb = $this->em->createQueryBuilder();
@@ -123,7 +123,7 @@ class Approval
     /**
      * Find approval profile with the given Id
      *
-     * @param $id
+     * @param $id Int approval profile model Id
      * @return array containing the resulting profile approval model
      */
     public function findApprovalProfileById($id) {
@@ -154,8 +154,6 @@ class Approval
         $qb->delete("Company\Model\ApprovalModel\ApprovalPending", "ap");
         $qb->where("ap.id = $approvalId");
         $qb->getQuery()->getResult();
-
-
     }
 
     /**
@@ -170,6 +168,10 @@ class Approval
         $qb->getQuery()->getResult();
     }
 
+
+    // What's the point of this function? could you not just call deletePendingApproval Directly?
+    // TODO: decide what to do with this
+    // TODO: update SDD based on what is exactly filled in here
     /**
      * Delete the approval pending model for the given Id
      *
@@ -179,6 +181,9 @@ class Approval
         $this->deletePendingApproval($approvalId);
     }
 
+    // is this even still being used anywhere?
+    // TODO: decide if this needs to go away
+    // TODO: update SDD based on what is exactly filled in here
     public function deleteProfileApproval($approvalId, $companyId){
         //$this->deletePendingApproval($approvalId);
 
@@ -196,6 +201,9 @@ class Approval
 
     }
 
+    // is this even still being used anywhere?
+    // TODO: decide if this needs to go away
+    // TODO: update SDD based on what is exactly filled in here
     public function deleteVacancyApproval($approvalId, $packageId){
         $this->deletePendingApproval($approvalId);
 
@@ -210,8 +218,8 @@ class Approval
     /**
      * Find the company with the given slugName.
      *
-     * @param slugName The 'username' of the company to get.
-     * @param asObject if yes, returns the company as an object in an array, otherwise returns the company as an array of an array
+     * @param $slugName String The 'username' of the company to get.
+     * @param $asObject boolean if true, returns the company as an object in an array, otherwise returns the company as an array of an array
      *
      * @return An array of companies with the given slugName.
      */
@@ -230,11 +238,11 @@ class Approval
     }
 
     /**
-     * Find the Pending approval with the given vacancy approval id.
+     * Find the Pending approval with the given vacancy approval id
      *
      * @param Int $id The vacancy id of the pending approval to get.
      *
-     * @return Array An array containing the pending approvals with the given vacancy id.
+     * @return array An array containing the pending approvals with the given vacancy id.
      */
     public function findPendingVacancyApprovalById($id)
     {
@@ -251,7 +259,7 @@ class Approval
      *
      * @param Int $id The vacancy id of the pending approval to get.
      *
-     * @return Array An array containing the pending approvals with the given vacancy id.
+     * @return bool False if vacancy has an approval model
      */
     public function findApprovedByVacancyId($vacancyId)
     {
@@ -275,7 +283,7 @@ class Approval
      *
      * @param Int $id The profile id of the pending approval to get.
      *
-     * @return Array An array containing the pending approvals with the given profile id.
+     * @return array An array containing the pending approvals with the given profile id.
      */
     public function findPendingProfileApprovalById($id)
     {
@@ -292,7 +300,7 @@ class Approval
      *
      * @param Int $id The id of the pending approval to get.
      *
-     * @return Array An array containing the pending approvals with the given id.
+     * @return array An array containing the pending approvals with the given id.
      */
     public function findPendingApprovalById($id)
     {
@@ -307,6 +315,8 @@ class Approval
 
     /**
      * TODO: add good explanation of what exactly happens here
+     * TODO: check if this is not just a duplicate of findPendingProfileByID()
+     * TODO: update SDD based on what is exactly filled in here
      *
      * @param $id Int
      * @return array
@@ -327,9 +337,9 @@ class Approval
     /**
      * Find the Profile approval with the given id.
      *
-     * @param Int $id The profile id
+     * @param Int $id The profile approval id
      *
-     * @return Array An array containing the profile approvals with the given id.
+     * @return array An array containing the profile approvals with the given id.
      */
     public function findProfileApprovalById($id)
     {
@@ -344,9 +354,9 @@ class Approval
     /**
      * Find the Vacancy approval with the given id.
      *
-     * @param Int $id The vacancy id
+     * @param Int $id The vacancy approval id
      *
-     * @return Array An array containing the vacancy approvals with the given id.
+     * @return array An array containing the vacancy approvals with the given id.
      */
     public function findVacancyApprovalById($id)
     {
@@ -360,12 +370,14 @@ class Approval
 
 
     /**
+     * TODO: decide which one needs to be used as there already exists another of these functions
+     * TODO: update the SDD accordingly, for now this is left out of the SDD
      * Find the company with the given slugName.
      *
-     * @param slugName The 'username' of the company to get.
-     * @param asObject if yes, returns the company as an object in an array, otherwise returns the company as an array of an array
+     * @param String slugName The 'username' of the company to get.
+     * @param boolean asObject if yes, returns the company as an object in an array, otherwise returns the company as an array of an array
      *
-     * @return An array of companies with the given slugName.
+     * @return array An array of companies with the given slugName.
      */
     public function findEditableCompaniesBySlugName2($slugName, $asObject)
     {
@@ -383,6 +395,7 @@ class Approval
 
     /**
      * TODO: add appropriate explanation
+     * TODO: update the SDD accordingly, for now this is left out of the SDD
      *
      * @param $cId
      * @return array|int|string
@@ -400,7 +413,7 @@ class Approval
     }
 
     /**
-     * Get the repository for this mapper.
+     * Get the profile approval repository for this mapper.
      *
      * @return Doctrine\ORM\EntityRepository
      */
@@ -410,7 +423,7 @@ class Approval
     }
 
     /**
-     * Get the repository for this mapper.
+     * Get the vacancy approval repository for this mapper.
      *
      * @return Doctrine\ORM\EntityRepository
      */
@@ -420,7 +433,7 @@ class Approval
     }
 
     /**
-     * Get the repository for this mapper.
+     * Get the pending approval repository for this mapper.
      *
      * @return Doctrine\ORM\EntityRepository
      */
@@ -430,8 +443,9 @@ class Approval
     }
 
     /**
-     * Get the a job by it's id
+     * Get a vacancy by it's language neutral id
      *
+     * @param Int $vacancy_id Language neutral id for the to be found vacancies
      * @return ApprovalVacancy
      */
     public function findVacanciesByLanguageNeutralId($vacancy_id) {
@@ -443,10 +457,10 @@ class Approval
     }
 
     /**
-     * Inserts a company into the datebase, and initializes the given
-     * translations as empty translations for them
+     * Inserts a company into the database, and initializes the given
+     * translations as empty translations for it
      *
-     * @param mixed $languages
+     * @param array $languages Languages for the company
      */
     public function insert($languages)
     {
