@@ -82,6 +82,12 @@ class Approval
         return $query->getResult();
     }
 
+    /**
+     * Find the banner with the given Id
+     *
+     * @param $id Int Banner Id
+     * @return array containing the resulting banner
+     */
     public function findBannerApprovalById($id){
         $builder = new ResultSetMappingBuilder($this->em);
         $builder->addRootEntityFromClassMetadata('Company\Model\ApprovalModel\ApprovalPending', 'ap');
@@ -94,6 +100,11 @@ class Approval
         return $query->getResult();
     }
 
+    /**
+     * Set the banner with the given Id to rejected
+     *
+     * @param $id Int Banner Id
+     */
     public function rejectBannerApproval($id){
         $qb = $this->em->createQueryBuilder();
         $qb->update("Company\Model\ApprovalModel\ApprovalPending", "ap");
@@ -103,6 +114,12 @@ class Approval
         $qb->getQuery()->getResult();
     }
 
+    /**
+     * Find approval profile with the given Id
+     *
+     * @param $id
+     * @return array containing the resulting profile approval model
+     */
     public function findApprovalProfileById($id) {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('c');
@@ -113,7 +130,12 @@ class Approval
     }
 
 
-
+    /**
+     * Set the banner with the given Id to published and delete the corresponding pending approval entry
+     *
+     * @param $id Int Id of the banner
+     * @param $approvalId Int Id of the approval pending model
+     */
     public function acceptBannerApproval($id, $approvalId){
         $qb = $this->em->createQueryBuilder();
         $qb->update("Company\Model\CompanyPackage", "cp");
@@ -130,6 +152,11 @@ class Approval
 
     }
 
+    /**
+     * Delete the approval pending model with the given Id
+     *
+     * @param $approvalId Int Id of the approval pending model
+     */
     public function deletePendingApproval($approvalId){
         $qb = $this->em->createQueryBuilder();
         $qb->delete("Company\Model\ApprovalModel\ApprovalPending", "ap");
@@ -137,6 +164,11 @@ class Approval
         $qb->getQuery()->getResult();
     }
 
+    /**
+     * Delete the approval pending model for the given Id
+     *
+     * @param $approvalId Int Id of the approval pending model
+     */
     public function deleteBannerApproval($approvalId){
         $this->deletePendingApproval($approvalId);
     }
@@ -169,7 +201,7 @@ class Approval
     }
 
 
-        /**
+    /**
      * Find the company with the given slugName.
      *
      * @param slugName The 'username' of the company to get.
@@ -179,7 +211,6 @@ class Approval
      */
     public function findEditableCompaniesBySlugName($slugName, $asObject)
     {
-
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('c');
         $qb->select('c')->where('c.slugName=:slugCompanyName');
@@ -268,6 +299,12 @@ class Approval
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * TODO: add good explanation of what exactly happens here
+     *
+     * @param $id Int
+     * @return array
+     */
     public function findPendingApprovalByProfile($id)
     {
         $builder = new ResultSetMappingBuilder($this->em);
@@ -338,6 +375,12 @@ class Approval
         return $query->getResult();
     }
 
+    /**
+     * TODO: add appropriate explanation
+     *
+     * @param $cId
+     * @return array|int|string
+     */
     public function findApprovalCompanyI18($cId){
         $builder = new ResultSetMappingBuilder($this->em);
         $builder->addRootEntityFromClassMetadata('Company\Model\ApprovalModel\ApprovalCompanyI18n', 'ci');
@@ -416,8 +459,4 @@ class Approval
 
         return $company;
     }
-
-
-
-
 }
