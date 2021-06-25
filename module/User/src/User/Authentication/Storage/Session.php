@@ -153,7 +153,7 @@ class Session extends Storage\Session
      */
     protected function saveCookie($jwt)
     {
-        $sessionToken = new SetCookie('SESSTOKEN', $jwt, strtotime('+2 weeks'), '/');
+        $sessionToken = new SetCookie('GEWISSESSTOKEN', $jwt, strtotime('+2 weeks'), '/');
         // Use secure cookies in production
         if (APP_ENV === 'production') {
             $sessionToken->setSecure(true)->setHttponly(true);
