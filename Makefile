@@ -34,8 +34,8 @@ rundev: builddev
 		@docker-compose up -d --force-recreate --remove-orphans
 
 getvendordir: rundev
-		@rm -Rf vendor
-		@docker cp "$(shell docker-compose ps -q web)":/code/vendor ./vendor
+		@rm -Rf ./vendor
+		@docker cp gewisweb_web_1:/code/vendor ./vendor
 		@docker-compose down
 
 replenish: rundev
@@ -50,26 +50,26 @@ update: rundev updatecomposer updatepackage updatecss updateglide
 
 updatecomposer:
 		@docker-compose exec web php composer.phar selfupdate
-		@docker cp gewisweb_web_1:/code/composer.phar composer.phar
+		@docker cp gewisweb_web_1:/code/composer.phar ./composer.phar
 		@docker-compose exec web php composer.phar update
-		@docker cp gewisweb_web_1:/code/composer.lock composer.lock
+		@docker cp gewisweb_web_1:/code/composer.lock ./composer.lock
 
 updatepackage:
 		@docker-compose exec web npm update
-		@docker cp gewisweb_web_1:/code/package-lock.json package-lock.json
+		@docker cp gewisweb_web_1:/code/package-lock.json ./package-lock.json
 
 updatecss:
 		@docker-compose exec web npm run scss
-		@docker cp gewisweb_web_1:/code/public/css/gewis-theme.css public/css/gewis-theme.css
+		@docker cp gewisweb_web_1:/code/public/css/gewis-theme.css ./public/css/gewis-theme.css
 
 updateglide:
 		@docker-compose exec glide php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 		@docker-compose exec glide php composer-setup.php
 		@docker-compose exec glide php -r "unlink('composer-setup.php');"
 		@docker-compose exec glide php composer.phar selfupdate
-		@docker cp gewisweb_glide_1:/glide/composer.phar composer.phar
+		@docker cp gewisweb_glide_1:/glide/composer.phar ./docker/glide/composer.phar
 		@docker-compose exec glide php composer.phar update
-		@docker cp gewisweb_glide_1:/glide/composer.phar composer.phar
+		@docker cp gewisweb_glide_1:/glide/composer.lock ./docker/glide/composer.lock
 
 all: build login push
 
