@@ -3,7 +3,7 @@ $this->headTitle($action);
 $this->headLink()
     ->appendStylesheet($this->basePath() . '/css/jquery.datetimepicker.css')
     ->appendStylesheet($this->basePath() . '/css/bootstrap-markdown.min.css');
-$this->inlineScript()
+$this->headScript()
     ->appendFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js')
     ->appendFile($this->basePath() . '/js/activity-create.js')
     ->appendFile($this->basePath() . '/js/bootstrap-markdown.js');
