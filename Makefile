@@ -41,7 +41,7 @@ getvendordir: rundev
 replenish: rundev
 		@docker cp ./public gewisweb_web_1:/code
 		@docker-compose exec web chown -R www-data:www-data /code/public
-		@docker cp ./data gewisweb_web_1/code
+		@docker cp ./data gewisweb_web_1:/code
 		@docker-compose exec web chown -R www-data:www-data /code/data
 		@docker-compose down
 
