@@ -30,9 +30,15 @@ class Approval
         $this->em = $em;
     }
 
-    public function persist($job)
+    /**
+     * Persist given model
+     *
+     * @param $model mixed Given model to persist
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function persist($model)
     {
-        $this->em->persist($job);
+        $this->em->persist($model);
         $this->em->flush();
     }
 
