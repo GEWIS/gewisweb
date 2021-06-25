@@ -50,6 +50,11 @@ class AdminController extends AbstractActionController
     }
 
 
+    /**
+     * Generate the general approval overview page
+     *
+     * @return ViewModel
+     */
     public function approvalPageAction(){
         $this->notAdminNotAllowed();
 
@@ -84,7 +89,12 @@ class AdminController extends AbstractActionController
         ]);
     }
 
-
+    /**
+     * Generate vacancy approval page
+     *
+     * @return \Zend\Http\Response|ViewModel
+     * @throws \Exception
+     */
     public function approvalVacancyAction()
     {
         $this->notAdminNotAllowed();
@@ -198,6 +208,12 @@ class AdminController extends AbstractActionController
 
     }
 
+    /**
+     * Generate banner approval page
+     *
+     * @return \Zend\Http\Response|ViewModel
+     * @throws \Exception
+     */
     public function approvalBannerAction(){
         $this->notAdminNotAllowed();
         $approvalService = $this->getApprovalService();
@@ -257,6 +273,12 @@ class AdminController extends AbstractActionController
 
     }
 
+    /**
+     * Generate profile approval page
+     *
+     * @return \Zend\Http\Response|ViewModel
+     * @throws \Exception
+     */
     public function approvalProfileAction()
     {
         $this->notAdminNotAllowed();
