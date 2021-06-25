@@ -52,7 +52,7 @@ class JobLabel
     /**
      * The Assignments this Label belongs to.
      *
-     * @ORM\ManyToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="label", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="label", cascade={"persist"})
      */
     protected $assignments;
 
