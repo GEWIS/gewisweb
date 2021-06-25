@@ -70,6 +70,8 @@ RUN chmod 0775 ./docker-entrypoint.sh
 
 COPY --chown=www-data:www-data . /code
 
+RUN ./genclassmap.sh
+
 VOLUME ["/code/data", "/code/public"]
 
 ENTRYPOINT ["/bin/sh", "/code/docker-entrypoint.sh"]
