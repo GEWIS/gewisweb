@@ -504,6 +504,11 @@ class CompanyAccountController extends AbstractActionController
         ]);
     }
 
+    /**
+     * Generate the vacancies overview page
+     *
+     * @return ViewModel
+     */
     public function vacanciesAction(){
 
         // Get useful stuff
@@ -674,6 +679,11 @@ class CompanyAccountController extends AbstractActionController
 
     }
 
+    /**
+     * Switch a vacancy between active and inactive status
+     *
+     * @return array|\Zend\Http\Response
+     */
     public function switchActiveAction() {
 
         $companyService = $this->getCompanyService();

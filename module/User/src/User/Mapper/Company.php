@@ -40,9 +40,9 @@ class Company extends Mapper
         return $this->getRepository()->findOneBy(['id' => $id]);
     }
 
-    public function findByLidnr($id) {
-        return $this->getRepository()->findOneBy(['id' => $id]);
-    }
+//    public function findByLidnr($id) {
+//        return $this->getRepository()->findOneBy(['id' => $id]);
+//    }
 
     /**
      * Find a user by its login.
