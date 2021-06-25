@@ -8,6 +8,9 @@ $company = $job->getPackage()->getCompany();
 $this->headTitle($job->getName());
 $this->headTitle($category->getPluralName());
 
+$this->headScript()
+    ->appendFile($this->basePath() . '/js/bootstrap/tooltip.js');
+
 ?>
 <section class="section section-breadcrumb">
     <div class="container">

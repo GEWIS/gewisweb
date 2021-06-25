@@ -8,6 +8,8 @@ if (isset($this->company)) {
 }
 $this->headTitle($this->category->getPluralName());
 
+$this->headScript()
+    ->appendFile($this->basePath() . '/js/bootstrap/tooltip.js');
 
 ?>
 <section class="section section-breadcrumb">
