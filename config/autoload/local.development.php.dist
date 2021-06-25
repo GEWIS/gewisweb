@@ -31,11 +31,11 @@ return [
         ],
         'from' => 'web@gewis.nl',
         'to' => [
-            'activity_creation' => 'secr@gewis.nl',
-            'activity_calendar' => 'vvz@gewis.nl',
-            'poll_creation' => 'secr@gewis.nl',
-            'organ_update' => 'cib@gewis.nl',
-            'activity_creation_require_GEFLITST' => 'geflitst@gewis.nl'
+            'activity_creation' => 'web@gewis.nl',
+            'activity_calendar' => 'web@gewis.nl',
+            'poll_creation' => 'web@gewis.nl',
+            'organ_update' => 'web@gewis.nl',
+            'activity_creation_require_GEFLITST' => 'web@gewis.nl'
         ]
     ],
     'cookie_domain' => 'test.gewis.nl',

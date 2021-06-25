@@ -16,6 +16,7 @@ use Zend\View\Model\ViewModel;
 use Activity\Model\Activity as ActivityModel;
 use Zend\Mime\Part as MimePart;
 use Zend\Mime\Message as MimeMessage;
+use Zend\View\Renderer\PhpRenderer;
 
 /**
  * This service is used for sending emails.
@@ -161,7 +162,7 @@ class Email extends AbstractService
      */
     public function getRenderer()
     {
-        return $this->sm->get('view_manager')->getRenderer();
+        return $this->sm->get('ViewRenderer');
     }
 
     /**
