@@ -1,10 +1,8 @@
 <?php
-$this->inlineScript()
+$this->headScript()
     ->appendFile($this->basePath() . '/js/jquery.autocomplete.js')
     ->appendFile($this->basePath() . '/js/photo.js')
     ->appendFile($this->basePath() . '/js/photo-admin.js');
-$this->headLink()
-    ->appendStylesheet($this->basePath() . '/css/photo-admin.css');
 
 $this->scriptUrl()->requireUrls(
     ['admin_photo/photo_index', 'admin_photo/photo_delete', 'admin_photo/photo_move'],

@@ -1,9 +1,8 @@
 <?php
-$this->inlineScript()
+$this->headScript()
     ->appendFile($this->basePath() . '/js/photo.js')
     ->appendFile($this->basePath() . '/js/photo-admin.js');
 $this->headLink()
-    ->appendStylesheet($this->basePath() . '/css/photo-admin.css')
     ->appendStylesheet($this->basePath() . '/css/tree.css');
 
 $this->scriptUrl()->requireUrl('admin_photo/album_page', ['album_id', 'page'])
