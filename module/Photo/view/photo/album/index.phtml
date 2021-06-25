@@ -8,7 +8,7 @@ while(!is_null($currentAlbum->getParent())) {
 }
 $this->headTitle($this->translate('Photos'));
 ?>
-<?php $this->inlineScript()
+<?php $this->headScript()
     ->appendFile($this->basePath() . '/js/imagesloaded.pkgd.min.js')
     ->appendFile($this->basePath() . '/js/masonry.pkgd.min.js')
     ->appendFile($this->basePath() . '/js/photo.js');
