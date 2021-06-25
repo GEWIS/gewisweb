@@ -7,6 +7,8 @@ $this->headScript()
     ->appendFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js')
     ->appendFile($this->basePath() . '/js/activity-create.js')
     ->appendFile($this->basePath() . '/js/bootstrap-markdown.js');
+$this->headScript()
+    ->appendFile($this->basePath() . '/js/bootstrap/tooltip.js');
 
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
