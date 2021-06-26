@@ -15,15 +15,19 @@ class CompanyAccountController extends AbstractActionController
 
     public function IndexAction()
     {
+        //Evaluate permissions
         if (!$this->getCompanyAccountService()->isAllowed('view')) {
             $translator = $this->getCompanyAccountService()->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to view this page')
             );
         }
+
+        //Get CompanyAccount information
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
         $companyId = $company->getId();
-        //obtain company package information
+
+        //Obtain company package information
         $companyInfo = $this->getSettingsService()->getCompanyInfo($companyId);
         $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyId);
 
@@ -32,6 +36,7 @@ class CompanyAccountController extends AbstractActionController
         $translator = $companyService->getTranslator();
         $locale = $translator->getLocale();
 
+        //Obtain vacancies to display in feed
         $vacancies = empty($companyPackageInfo) ? [] : $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getID(), $locale);
 
         foreach ($vacancies as $vacancy) {
@@ -45,10 +50,7 @@ class CompanyAccountController extends AbstractActionController
             }
         }
 
-
-       // echo var_dump($companyPackageInfo);
         return new ViewModel([
-            //fetch the active vacancies of the logged in company
             'vacancies' => $vacancies,
             'companyPackageInfo' => [$companyPackageInfo],
             'companyInfo'  => $companyInfo,
@@ -490,6 +492,7 @@ class CompanyAccountController extends AbstractActionController
         $companyInfo = $this->getSettingsService()->getCompanyInfo($companyId);
         $companyPackageInfo = $this->getSettingsService()->getCompanyPackageInfo($companyId);
 
+        //Select correct company package
         foreach($companyPackageInfo as $info){
             if(!is_null($info->getContractNumber())){
                 $companyPackageInfo = $info;

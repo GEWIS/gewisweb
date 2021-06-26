@@ -104,9 +104,6 @@ class Settings
      * @return null
      */
     public function setCompanyData($collumns, $values, $id){
-
-        //TODO sql injection protection
-
         //update Company table
         $qb = $this->em->createQueryBuilder();
         $qb->update("Company\Model\Company", "c");

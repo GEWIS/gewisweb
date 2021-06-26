@@ -29,7 +29,16 @@ $this->headTitle($this->translate('Approval page'));
                         <?= $pendingApproval->getCompany()->getName() ?>
                     </th>
                     <th>
-                        <?= $pendingApproval->getType() ?>
+                        <?php
+                        if($pendingApproval->getType() === "vacancy"){
+                            echo $this->translate("Vacancy, name: ") . $pendingApproval->getVacancyApproval()->getName();
+
+                        }else if($pendingApproval->getType() === "banner"){
+                            echo $this->translate("Banner");
+                        }else if($pendingApproval->getType() === "profile"){
+                            echo $this->translate("Profile");
+                        }
+                        ?>
                     </th>
                     <th>
                         <?php

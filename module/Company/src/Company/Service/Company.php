@@ -738,6 +738,8 @@ class Company extends AbstractACLService
      *
      * @param mixed $company
      * @param mixed $data
+     * @param string $logo_en   english company logo
+     * @param string $logo_nl   dutch company logo
      */
     public function saveCompanyByData($company, $data, $files, $logo_en = "", $logo_nl = "")
     {
@@ -757,24 +759,19 @@ class Company extends AbstractACLService
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
 
-
-
                 if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
                     if ($file['error'] !== UPLOAD_ERR_OK) {
                         return false;
                     }
                     $oldPath = $translation->getLogo();
                     $newPath = $this->getFileStorageService()->storeUploadedFile($file);
-                    //echo var_dump($newPath);
-
-
-
 
                     $translation->setLogo($newPath);
                     if ($oldPath !== '' && $oldPath != $newPath) {
                         $this->getFileStorageService()->removeFile($oldPath);
                     }
-                }else{
+                }else{  //if no new logo was uploaded set path to the current one
+
                     if($logo_en != "" && $translation->getLanguage() === "en"){
                         $newPath = $logo_en;
                         $translation->setLogo($newPath);
@@ -784,9 +781,6 @@ class Company extends AbstractACLService
                         $newPath = $logo_nl;
                         $translation->setLogo($newPath);
                     }
-
-
-
                 }
             }
             $this->saveCompany();
@@ -794,6 +788,14 @@ class Company extends AbstractACLService
         }
     }
 
+    /**
+     * Checks if the data is valid, and if it is, saves the Company (profile) approval
+     *
+     * @param mixed $company
+     * @param mixed $data
+     * @param string $logo_en   english company logo
+     * @param string $logo_nl   dutch company logo
+     */
     public function saveCompanyApprovalByData($company, $data, $files, $logo_en = "", $logo_nl = "") {
 
         $profile = new ApprovalProfile();
@@ -815,8 +817,6 @@ class Company extends AbstractACLService
             $files->toArray()
         );
         $companyForm->setData($mergedData);
-//        print_r(var_dump($companyForm->isValid()));
-//print_r($data);
 
         if ($companyForm->isValid()) {
             $profile = $this->getApprovalMapper()->insert($data['languages']);
@@ -836,7 +836,8 @@ class Company extends AbstractACLService
                     if ($oldPath !== '' && $oldPath != $newPath) {
                         $this->getFileStorageService()->removeFile($oldPath);
                     }
-                }else{
+                }else{  //if no new logo was uploaded set path to the current one
+
                     if($logo_en != "" && $translation->getLanguage() === "en"){
                         $newPath = $logo_en;
                         $translation->setLogo($newPath);
@@ -846,15 +847,10 @@ class Company extends AbstractACLService
                         $newPath = $logo_nl;
                         $translation->setLogo($newPath);
                     }
-
-
-
                 }
-
-
-
-
             }
+
+            //create new pending approval
             $pending = new ApprovalPending();
             $pending->setType('profile');
             $pending->setProfileApproval($profile);

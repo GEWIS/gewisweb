@@ -16,15 +16,21 @@ class companyAccount extends AbstractAclService
      *
      * @param integer $packageID the package id of the company who's active
      * vacancies will be fetched.
+     * @param $locale the language
      *
      * @return array Job model.
      */
 
     public function getActiveVacancies($packageID, $locale){
-        return $this->getcompanyAccountMapper()->findactiveVacancies($packageID, $locale);
+        return $this->getcompanyAccountMapper()->findActiveVacancies($packageID, $locale);
 
     }
 
+    /**
+     * Get company role
+     *
+     * @return company role
+     */
     public function getCompanyInfo($id = null) {
         if (null === $id) {
             $id = $this->getRole();
@@ -43,6 +49,11 @@ class companyAccount extends AbstractAclService
         return $this->getcompanyAccountMapper()->findCompanyPackageInfo($id);
     }
 
+    /**
+     * Get company idenity
+     *
+     * @return company idenity
+     */
     public function getCompany() {
         $companyservice = $this->sm->get('company_auth_service');
         return $companyservice->getIdentity();
@@ -59,7 +70,11 @@ class companyAccount extends AbstractAclService
     }
 
 
-
+    /**
+     * Get company contact email
+     *
+     * @return company contact email
+     */
     public function getCompanyContactEmail() {
         return $this->getCompany()->getContactEmail();
     }
