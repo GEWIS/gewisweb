@@ -752,6 +752,7 @@ class Company extends AbstractACLService
 
         if ($companyForm->isValid()) {
             $company->exchangeArray($data);
+            $company->setSector($this->getJobMapper()->findSectorsById($data['sector']));
 
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
@@ -822,6 +823,7 @@ class Company extends AbstractACLService
             $profile->setSector($this->getJobMapper()->findSectorsById($data['sector']));
             $profile->setCompany($company);
             $profile->exchangeArray($data);
+            $profile->setSector($this->getJobMapper()->findSectorsById($data['sector']));
             foreach ($profile->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
                 if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
@@ -1296,7 +1298,7 @@ class Company extends AbstractACLService
         foreach ($languages as $lang) {
             $this->getApprovalMapper()->removeApproval($lang);
         }
-        
+
         $this->getApprovalMapper()->removeApproval($pending);
         $this->getApprovalMapper()->removeApproval($profileApproval);
     }
