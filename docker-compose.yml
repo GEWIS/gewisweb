@@ -44,6 +44,9 @@ services:
 #            - DOCKER_DB2_DATABASE=
 #            - SSH_USERNAME=
 #            - SSH_PASSWORD=
+        depends_on:
+            - memcached
+            - postfix
         volumes:
             - gewisweb_data:/code/data:rw
             - gewisweb_public:/code/public:rw
@@ -87,7 +90,11 @@ services:
         env_file:
             - .env
 #        environment:
-#            - NGINX_REQUIRE_AUTH=
+#            - MATOMO_DATABASE_HOST=
+#            - MATOMO_DATABASE_PORT=
+#            - MATOMO_DATABASE_USERNAME=
+#            - MATOMO_DATABASE_PASSWORD=
+#            - MATOMO_DATABASE_DBNAME=
         networks:
             - gewisweb_network
         restart: unless-stopped
@@ -96,7 +103,6 @@ volumes:
     gewisweb_data:
     gewisweb_public:
     gewisweb_glide_public:
-    gewisweb_matomo:
     gewisweb_logs:
 
 networks:

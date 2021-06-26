@@ -103,7 +103,7 @@ buildnginx:
 login:
 		@docker login web.docker-registry.gewis.nl
 
-push: pushweb pushglide pushmatomo ushnginx
+push: pushweb pushglide pushmatomo pushnginx
 
 pushprod: pushwebprod pushglide pushmatomo pushnginx
 
