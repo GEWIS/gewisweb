@@ -10,6 +10,7 @@ services:
         depends_on:
             - web
             - glide
+            - matomo
         volumes:
             - gewisweb_public:/code/public:ro
             - gewisweb_glide_public:/glide/public:ro
@@ -19,6 +20,7 @@ services:
         ports:
             - "9200:9200"
             - "9201:9201"
+            - "9202:9202"
         restart: unless-stopped
     web:
         image: web.docker-registry.gewis.nl/gewisweb_web:production
@@ -80,11 +82,21 @@ services:
         networks:
             - gewisweb_network
         restart: unless-stopped
+    matomo:
+        image: web.docker-registry.gewis.nl/gewisweb_matomo:latest
+        env_file:
+            - .env
+#        environment:
+#            - NGINX_REQUIRE_AUTH=
+        networks:
+            - gewisweb_network
+        restart: unless-stopped
 
 volumes:
     gewisweb_data:
     gewisweb_public:
     gewisweb_glide_public:
+    gewisweb_matomo:
     gewisweb_logs:
 
 networks:

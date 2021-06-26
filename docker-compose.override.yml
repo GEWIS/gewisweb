@@ -26,6 +26,7 @@ services:
         ports:
             - "80:9200"
             - "81:9201"
+            - "82:9202"
     web:
         image: web.docker-registry.gewis.nl/gewisweb_web:development
         build:
@@ -35,6 +36,10 @@ services:
             - mysql
     glide:
         build: docker/glide
+    matomo:
+        build: docker/matomo
+        depends_on:
+            - mysql
 
 volumes:
     gewisweb_mysql:
