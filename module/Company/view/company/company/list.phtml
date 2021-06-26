@@ -89,7 +89,7 @@ if (isset($this->company)) {
                                     <?php endforeach; ?>
                                 </ul>
                                 <span class="label label-default job-sectors"
-                                      data-sectors="<?= $company->getSector()->getLanguageNeutralId(); ?>" data-toggle="tooltip"></span>
+                                      data-sectors="<?= ($company->getSector() != null) ? $company->getSector()->getLanguageNeutralId()  : null ; ?>" data-toggle="tooltip"></span>
                                 <div
                                     style="display: none"<span class="card-subtitle text-muted"><?= $company->getName() ?></span>
                             </div>
