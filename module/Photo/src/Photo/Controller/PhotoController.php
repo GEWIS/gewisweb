@@ -129,7 +129,7 @@ class PhotoController extends AbstractActionController
         $photoId = $this->params()->fromRoute('photo_id');
         $this->getPhotoService()->setProfilePhoto($photoId);
 
-        $this->redirect()->toRoute('photo/photo', [
+        return $this->redirect()->toRoute('photo/photo', [
             'photo_id' => $photoId,
         ]);
     }
@@ -143,12 +143,12 @@ class PhotoController extends AbstractActionController
         $this->getPhotoService()->removeProfilePhoto();
 
         if ($photoId != null) {
-            $this->redirect()->toRoute('photo/photo', [
+            return $this->redirect()->toRoute('photo/photo', [
                 'photo_id' => $photoId,
             ]);
-        } else {
-            $this->redirect()->toRoute('member/self');
         }
+
+        return $this->redirect()->toRoute('member/self');
     }
 
     /**
@@ -162,6 +162,8 @@ class PhotoController extends AbstractActionController
             $this->getPhotoService()->countVote($photoId);
             return new JsonModel(['success' => true]);
         }
+
+        return $this->getResponse();
     }
     
 }
