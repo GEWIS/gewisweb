@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-15 12:19+0200\n"
-"PO-Revision-Date: 2021-06-17 10:26+0200\n"
+"PO-Revision-Date: 2021-06-27 22:54+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -960,7 +960,7 @@ msgstr "Vacature pakket verloopt binnen een maand!"
 #: module/Decision/view/decision/company-account/index.phtml:58
 #: module/Decision/view/decision/company-account/settings.phtml:45
 msgid "Vacancy package has expired, please contact an administrator."
-msgstr "Vacature pakket is verlopen, neemt alstublieft contact op met een administrator."
+msgstr "Vacature pakket is verlopen, neem alstublieft contact op met een administrator."
 
 #: module/Decision/view/decision/company-account/index.phtml:65
 #: module/Company/view/company/company/job-list.phtml:83
@@ -3787,7 +3787,7 @@ msgstr ""
 #: module/Decision/src/Decision/Controller/CompanyAccountController.php:663
 #, fuzzy
 msgid "Your vacancy package has expired, please contact an administrator if you wish to extend your vacancy package."
-msgstr "Vacature pakket is verlopen, neemt alstublieft contact op met een administrator."
+msgstr "Vacature pakket is verlopen, neem alstublieft contact op met een administrator."
 
 #: module/Decision/src/Decision/Form/OrganInformation.php:35
 msgid "Short dutch description"
