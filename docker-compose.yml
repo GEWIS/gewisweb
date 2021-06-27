@@ -10,6 +10,7 @@ services:
         depends_on:
             - web
             - glide
+            - matomo
         volumes:
             - gewisweb_public:/code/public:ro
             - gewisweb_glide_public:/glide/public:ro
@@ -19,6 +20,7 @@ services:
         ports:
             - "9200:9200"
             - "9201:9201"
+            - "9202:9202"
         restart: unless-stopped
     web:
         image: web.docker-registry.gewis.nl/gewisweb_web:production
@@ -42,6 +44,9 @@ services:
 #            - DOCKER_DB2_DATABASE=
 #            - SSH_USERNAME=
 #            - SSH_PASSWORD=
+        depends_on:
+            - memcached
+            - postfix
         volumes:
             - gewisweb_data:/code/data:rw
             - gewisweb_public:/code/public:rw
@@ -77,6 +82,19 @@ services:
     memcached:
         image: memcached
         entrypoint: ['memcached', '-m 256']
+        networks:
+            - gewisweb_network
+        restart: unless-stopped
+    matomo:
+        image: web.docker-registry.gewis.nl/gewisweb_matomo:latest
+        env_file:
+            - .env
+#        environment:
+#            - MATOMO_DATABASE_HOST=
+#            - MATOMO_DATABASE_PORT=
+#            - MATOMO_DATABASE_USERNAME=
+#            - MATOMO_DATABASE_PASSWORD=
+#            - MATOMO_DATABASE_DBNAME=
         networks:
             - gewisweb_network
         restart: unless-stopped

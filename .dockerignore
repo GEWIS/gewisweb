@@ -38,6 +38,7 @@ data/logs/*
 data/mail/*
 docker/glide/
 docker/nginx/
+docker/matomo
 Dockerfile
 docker-compose.*
 gewisweb-vagrant/

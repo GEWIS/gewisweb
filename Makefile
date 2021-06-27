@@ -77,11 +77,11 @@ prod: buildprod login pushprod
 
 dev: builddev login pushdev
 
-build: buildweb buildglide buildnginx
+build: buildweb buildglide buildmatomo buildnginx
 
-buildprod: buildwebprod buildglide buildnginx
+buildprod: buildwebprod buildglide buildmatomo buildnginx
 
-builddev: buildwebdev buildglide buildnginx
+builddev: buildwebdev buildglide buildmatomo buildnginx
 
 buildweb: buildwebprod buildwebdev
 
@@ -94,17 +94,20 @@ buildwebdev:
 buildglide:
 		@docker build -t web.docker-registry.gewis.nl/gewisweb_glide:latest -f docker/glide/Dockerfile docker/glide
 
+buildmatomo:
+		@docker build -t web.docker-registry.gewis.nl/gewisweb_matomo:latest -f docker/matomo/Dockerfile docker/matomo
+
 buildnginx:
 		@docker build -t web.docker-registry.gewis.nl/gewisweb_nginx:latest -f docker/nginx/Dockerfile docker/nginx
 
 login:
 		@docker login web.docker-registry.gewis.nl
 
-push: pushweb pushglide pushnginx
+push: pushweb pushglide pushmatomo pushnginx
 
-pushprod: pushwebprod pushglide pushnginx
+pushprod: pushwebprod pushglide pushmatomo pushnginx
 
-pushdev: pushwebdev pushglide pushnginx
+pushdev: pushwebdev pushglide pushmatomo pushnginx
 
 pushweb: pushwebprod pushwebdev
 
@@ -116,6 +119,9 @@ pushwebdev:
 
 pushglide:
 		@docker push web.docker-registry.gewis.nl/gewisweb_glide:latest
+
+pushmatomo:
+		@docker push web.docker-registry.gewis.nl/gewisweb_matomo:latest
 
 pushnginx:
 		@docker push web.docker-registry.gewis.nl/gewisweb_nginx:latest
