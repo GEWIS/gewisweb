@@ -92,7 +92,7 @@ class Email extends AbstractService
      */
     public function getRenderer()
     {
-        return $this->sm->get('view_manager')->getRenderer();
+        return $this->sm->get('ViewRenderer');
     }
 
     /**
