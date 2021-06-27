@@ -22,7 +22,6 @@ class CompanyAccountController extends AbstractActionController
                 $translator->translate('You are not allowed to view this page')
             );
         }
-
         //Get CompanyAccount information
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
         $companyId = $company->getId();
@@ -39,6 +38,7 @@ class CompanyAccountController extends AbstractActionController
         //Obtain vacancies to display in feed
         $vacancies = empty($companyPackageInfo) ? [] : $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getID(), $locale);
 
+        $approved = [];
         foreach ($vacancies as $vacancy) {
             $approved[$vacancy->getId()] = $this->getApprovalService()->getApprovedByVacancyId($vacancy->getId());
         }
