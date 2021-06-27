@@ -27,19 +27,17 @@ class companyAccount
         $this->em = $em;
     }
 
-    // Code Review Pim:
-    // Change to function name to findActiveVacancies() (start every word past the first with a capital letter)
+
     /**
      * Find all active vacancies of selected company.
      *
      * @param integer $packageID the package id of the company who's active
      * vacancies will be fetched.
+     * @param $locale the language
      *
      * @return array Job model.
      */
-
-
-    public function findactiveVacancies($packageID, $locale)
+    public function findActiveVacancies($packageID, $locale)
     {
         $builder = new ResultSetMappingBuilder($this->em);
         $builder->addRootEntityFromClassMetadata('Company\Model\Job', 'j');

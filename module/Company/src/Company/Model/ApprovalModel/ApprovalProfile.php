@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Company\Model\Company;
 
 /**
- * VacancyApproval model.
+ * ApprovalProfile model.
  *
  *
  * @ORM\Entity
@@ -17,8 +17,6 @@ use Company\Model\Company;
  *
  */
 class ApprovalProfile implements ApprovalAbstract{
-
-
 
     /**
      * The profile approvals company
@@ -28,6 +26,8 @@ class ApprovalProfile implements ApprovalAbstract{
     protected $company;
 
     /**
+     * get the approval's company
+     *
      * @return mixed
      */
     public function getCompany()
@@ -445,7 +445,6 @@ class ApprovalProfile implements ApprovalAbstract{
      * Return true if the company should not be visible to the user, and false if it should be visible to the user
      *
      */
-
     public function isHidden()
     {
         $visible = false;

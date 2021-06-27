@@ -26,8 +26,6 @@ class ApprovalBanner implements ApprovalAbstract
      */
     protected $rejected = false;
 
-
-    // TODO add other profile variables
     /**
      * The company id.
      *
@@ -74,16 +72,31 @@ class ApprovalBanner implements ApprovalAbstract
         $this->contractNumber = $contractNumber;
     }
 
+    /**
+     * Get the package's id.
+     *
+     * @return integer
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * Get the package's company.
+     *
+     * @return company
+     */
     public function getCompany()
     {
         return $this->company;
     }
 
+    /**
+     * Get the package's approval status.
+     *
+     * @return boolean
+     */
     public function getRejected()
     {
         return $this->rejected;
@@ -102,7 +115,7 @@ class ApprovalBanner implements ApprovalAbstract
     /**
      * Set the package's starting date.
      *
-     * @param date $starts
+     * @param date
      */
     public function setStartingDate($starts)
     {
@@ -122,7 +135,7 @@ class ApprovalBanner implements ApprovalAbstract
     /**
      * Set the package's expiration date.
      *
-     * @param date $expires
+     * @param date
      */
     public function setExpirationDate($expires)
     {
@@ -199,6 +212,11 @@ class ApprovalBanner implements ApprovalAbstract
         return $this->contractNumber;
     }
 
+    /**
+     * @param $now
+     *
+     * @return bool
+     */
     public function isExpired($now)
     {
         if ($now > $this->getExpirationDate()) {
@@ -208,6 +226,9 @@ class ApprovalBanner implements ApprovalAbstract
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function isActive()
     {
         $now = new DateTime();
@@ -226,6 +247,12 @@ class ApprovalBanner implements ApprovalAbstract
     }
 
     // For zend2 forms
+
+    /**
+     * Return banner approval data as array
+     *
+     * @return array
+     */
     public function getArrayCopy()
     {
         return ['id' => $this->id,
@@ -235,6 +262,11 @@ class ApprovalBanner implements ApprovalAbstract
             'contractNumber' => $this->getContractNumber()];
     }
 
+    /**
+     * Set banner approval properties
+     *
+     * @param $data
+     */
     public function exchangeArray($data)
     {
         $this->id = (isset($data['id'])) ? $data['id'] : $this->getId();

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Company\Model\Job;
 
 /**
- * VacancyApproval modsel.
+ * VacancyApproval model.
  *
  * @ORM\Entity
  */
@@ -283,10 +283,6 @@ class ApprovalVacancy implements ApprovalAbstract
         return $this->sectors;
     }
 
-    public function findSectorsById() {
-
-    }
-
     /**
      * @param mixed $sectors
      */
@@ -397,6 +393,9 @@ class ApprovalVacancy implements ApprovalAbstract
         return $this->active;
     }
 
+    /**
+     * @return bool
+     */
     public function isActive()
     {
         return $this->getActive() && $this->getPackage()->isActive() && !$this->getPackage()->getCompany()->isHidden();

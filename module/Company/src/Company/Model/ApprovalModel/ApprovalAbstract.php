@@ -1,9 +1,6 @@
 <?php
-
-
 namespace Company\Model\ApprovalModel;
 use Doctrine\ORM\Mapping as ORM;
-
 
 interface ApprovalAbstract
 {

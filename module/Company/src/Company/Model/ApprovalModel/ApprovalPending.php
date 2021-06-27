@@ -21,15 +21,16 @@ class ApprovalPending
     protected $id;
 
     /**
-     * The profile approvals approved status
+     * The approvals approved status
      *
      * @ORM\Column(type="boolean")
      */
     protected $rejected = false;
 
 
-
     /**
+     * Set pending approval to rejected status
+     *
      * @param bool $rejected
      */
     public function setRejected($rejected)
@@ -38,7 +39,7 @@ class ApprovalPending
     }
 
     /**
-     * The approval
+     * The vacancy approval model
      *
      * @ORM\OneToOne(targetEntity="\Company\Model\ApprovalModel\ApprovalVacancy")
      * @var ApprovalAbstract
@@ -46,7 +47,7 @@ class ApprovalPending
     protected $VacancyApproval;
 
     /**
-     * The approval
+     * The banner approval model
      *
      * @ORM\ManyToOne(targetEntity="\Company\Model\CompanyPackage")
      * @var ApprovalAbstract
@@ -54,7 +55,7 @@ class ApprovalPending
     protected $BannerApproval;
 
     /**
-     * The approval
+     * The profile approval model
      *
      * @ORM\ManyToOne(targetEntity="\Company\Model\ApprovalModel\ApprovalProfile")
      * @var ApprovalAbstract
@@ -79,6 +80,8 @@ class ApprovalPending
     }
 
     /**
+     * Get the approval's status
+     *
      * @return bool
      */
     public function getRejected()
@@ -167,6 +170,11 @@ class ApprovalPending
         $this->BannerApproval = $banner;
     }
 
+    /**
+     * Get the approval's company
+     *
+     * @return Company
+     */
     public function getCompany(){
         if(!is_null($this->VacancyApproval)){
             return $this->VacancyApproval->getCompany();
@@ -183,6 +191,11 @@ class ApprovalPending
         }
     }
 
+    /**
+     * Get the approval's status
+     *
+     * @return bool
+     */
     public function getStatus(){
         if(!is_null($this->VacancyApproval)){
             return $this->VacancyApproval->getRejected();

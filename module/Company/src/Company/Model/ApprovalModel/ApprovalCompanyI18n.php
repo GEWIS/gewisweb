@@ -8,11 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Company\Model\ApprovalModel\Company;
 
 /**
- * VacancyApproval model.
- *
+ * ApprovalCompanyl18 model.
  *
  * @ORM\Entity
- *
  *
  */
 class ApprovalCompanyI18n implements ApprovalAbstract
@@ -80,6 +78,11 @@ class ApprovalCompanyI18n implements ApprovalAbstract
         return $this->id;
     }
 
+    /**
+     * Get the package's approval status.
+     *
+     * @return boolean
+     */
     public function getRejected()
     {
         return $this->rejected;
@@ -212,11 +215,17 @@ class ApprovalCompanyI18n implements ApprovalAbstract
         $this->language = $language;
     }
 
+
     public function remove()
     {
         $this->company = null;
     }
 
+    /**
+     * Return Companyl18n approval data as array
+     *
+     * @return array
+     */
     public function getArrayCopy()
     {
         $arraycopy = [];
