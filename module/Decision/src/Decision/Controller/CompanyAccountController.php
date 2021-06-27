@@ -358,8 +358,7 @@ class CompanyAccountController extends AbstractActionController
     }
 
     public function deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type) {
-        $credits_owned = $credits_owned - $days_scheduled;            //deduct banner credits based on days scheduled
-
+        $credits_owned = $credits_owned - $days_scheduled;  //deduct banner credits based on days scheduled
 
         if ($type === "banner"){
             $company->setBannerCredits($credits_owned);

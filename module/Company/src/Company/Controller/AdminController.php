@@ -146,7 +146,7 @@ class AdminController extends AbstractActionController
                 $company = $vacancyApprovals[0]->getPackage()->getCompany();
                 $name = $vacancyApprovals[0]->getName();
                 $route = '/career/company/' . $company->getSlugName() . "/" . $vacancyApprovals[0]->getCategory()->getSlug() . "/" . $vacancyApprovals[0]->getSlugName();
-                if ($company->getEmailSubscription) {
+                if ($company->getEmailSubscription()) {
                     $this->getCompanyEmailService()->sendApprovalResult($company, false, $name, $route);
                 }
             }
@@ -163,7 +163,7 @@ class AdminController extends AbstractActionController
                 $company = $vacancyApprovals[0]->getPackage()->getCompany();
                 $name = $vacancyApprovals[0]->getName();
                 $route = "";
-                if ($company->getEmailSubscription) {
+                if ($company->getEmailSubscription()) {
                     $this->getCompanyEmailService()->sendApprovalResult($company, true, $name, $route);
                 }
             }
@@ -231,7 +231,7 @@ class AdminController extends AbstractActionController
                 $company = $bannerApproval[0]->getCompany();
                 $name = "banner";
                 $route = "";
-                if ($company->getEmailSubscription) {
+                if ($company->getEmailSubscription()) {
                     $this->getCompanyEmailService()->sendApprovalResult($company, false, $name, $route);
                 }
             }
@@ -248,7 +248,7 @@ class AdminController extends AbstractActionController
                 $company = $bannerApproval[0]->getCompany();
                 $name = "banner";
                 $route = "";
-                if ($company->getEmailSubscription) {
+                if ($company->getEmailSubscription()) {
                     $this->getCompanyEmailService()->sendApprovalResult($company, true, $name, $route);
                 }
             }
@@ -319,7 +319,7 @@ class AdminController extends AbstractActionController
                 if($_POST['sendEmail']) {
                     $name = $oldCompany->getName();
                     $route = '/career/company/' . $oldCompany->getSlugName();
-                    if ($company->getEmailSubscription) {
+                    if ($company->getEmailSubscription()) {
                         $this->getCompanyEmailService()->sendApprovalResult($oldCompany, false, $name, $route);
                     }
                 }
@@ -340,7 +340,7 @@ class AdminController extends AbstractActionController
             if($_POST['sendEmail']) {
                 $name = $oldCompany->getName();
                 $route = "";
-                if ($company->getEmailSubscription) {
+                if ($company->getEmailSubscription()) {
                     $this->getCompanyEmailService()->sendApprovalResult($oldCompany, true, $name, $route);
                 }
             }
