@@ -314,7 +314,7 @@ class Approval
     }
 
     /**
-     * TODO: add good explanation of what exactly happens here
+     * Retrieve al pending approvals of any type of a certain company based on its id
      * TODO: check if this is not just a duplicate of findPendingProfileByID()
      * TODO: update SDD based on what is exactly filled in here
      *
@@ -394,7 +394,7 @@ class Approval
     }
 
     /**
-     * TODO: add appropriate explanation
+     * Retrieve the translations corresponding to a company's profile with id $cID
      * TODO: update the SDD accordingly, for now this is left out of the SDD
      *
      * @param $cId

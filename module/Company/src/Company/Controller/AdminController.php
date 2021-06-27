@@ -76,8 +76,7 @@ class AdminController extends AbstractActionController
             }
         }
 
-        if (isset($_POST['delete'])) {
-
+        if (isset($_POST['delete'])) {  //delete approval when delete button is pressed
             $deleteInfo = json_decode($_POST["delete"], True);
             $approvalService->deletePendingApproval($deleteInfo);
             header("Refresh:0");
@@ -120,7 +119,7 @@ class AdminController extends AbstractActionController
 
         // Handle incoming form results
         $request = $this->getRequest();
-        if ($request->isPost()  && !isset($_POST['reject'])) {
+        if ($request->isPost()  && !isset($_POST['reject'])) {  //acception behavior
             $files = $request->getFiles();
             $post = $request->getPost();
             $jobDict = [];
@@ -155,7 +154,7 @@ class AdminController extends AbstractActionController
                 'admin_company/approvalPage'
             );
 
-        } elseif (isset($_POST['reject'])){
+        } elseif (isset($_POST['reject'])){ //rejection behavior
             foreach($vacancyApprovals as $approval) {
                 $approvalService->rejectVacancyApproval($approval->getId());
             }
@@ -221,16 +220,12 @@ class AdminController extends AbstractActionController
         //get company
         $approvalId = intval($this->params('slugCompanyName'));
 
-
-
         //get banner
         $bannerApproval = $approvalService->getBannerApprovalById($approvalId);
 
 
-        if (isset($_POST['accept'])) {
+        if (isset($_POST['accept'])) {  //acception behavior
             $id = $bannerApproval[0]->getBannerApproval()->getId();
-
-
 
             if (isset($_POST['email'])) {
                 $company = $bannerApproval[0]->getCompany();
@@ -246,7 +241,7 @@ class AdminController extends AbstractActionController
             return $this->redirect()->toRoute(
                 'admin_company/approvalPage'
             );
-        }elseif(isset($_POST['reject'])){
+        }elseif(isset($_POST['reject'])){   //rejection behavior
             $approvalService->rejectBannerApproval($approvalId);
 
             if (isset($_POST['email'])) {
@@ -287,18 +282,13 @@ class AdminController extends AbstractActionController
         $approvalService = $this->getApprovalService();
         $companyForm = $companyService->getCompanyForm();
 
-
-
         // Get parameter
         $approvalId = $this->params('slugCompanyName');
         $pendingApprovalId = $approvalService->getPendingApprovalByProfile($approvalId)[0]->getId();
 
-
         // Get the specified company
-
         $companyList = $approvalService->getApprovalProfileById($approvalId);
         $oldCompanyList = $companyService->getEditableCompaniesBySlugName($companyList[0]->getSlugName());
-        //echo var_dump($companyList);
         //$companyList = $companyService->getEditableCompaniesBySlugName($companyName);
 
         // If the company is not found, throw 404
@@ -307,21 +297,17 @@ class AdminController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-
         $company = $companyList[0];
         $oldCompany = $oldCompanyList[0];
         $companyl18 = $approvalService->getApprovalCompanyI18($company->getCompany()->getId());
-        //echo var_dump($companyl18);
-
-
 
         // Handle incoming form data
         $request = $this->getRequest();
-        if ($request->isPost() && !isset($_POST['reject'])) {
+        if ($request->isPost() && !isset($_POST['reject'])) {   //acception behavior
             $post = $request->getPost();
             $post['id'] = $oldCompany->getId();
             //$post['en_logo'] = $company->getArrayCopy()['en_logo'];
-            //echo var_dump($post);
+
 
             if ($companyService->saveCompanyByData(
                 $oldCompany,
@@ -338,7 +324,6 @@ class AdminController extends AbstractActionController
                     }
                 }
 
-
                 $deleteInfo = ["type" => "profile", "approvalId" => $pendingApprovalId,
                     "companyId"=>$company->getId(),
                     "profileApprovalId"=>$approvalId];
@@ -350,7 +335,7 @@ class AdminController extends AbstractActionController
                     'admin_company/approvalPage'
                 );
             }
-        }elseif (isset($_POST['reject'])){
+        }elseif (isset($_POST['reject'])){  //rejection behavior
 
             if($_POST['sendEmail']) {
                 $name = $oldCompany->getName();
@@ -377,7 +362,6 @@ class AdminController extends AbstractActionController
 //            $i++;
 //            $companyArray = $companyArray + $language->getArrayCopy();
 //        }
-        //echo var_dump($companyArray);
 
         $companyForm->setData($companyArray);
         $companyForm->get('languages')->setValue($companyArray['languages']);
