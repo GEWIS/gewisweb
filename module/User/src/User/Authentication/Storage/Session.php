@@ -168,7 +168,7 @@ class Session extends Storage\Session
 
     protected function clearCookie()
     {
-        $sessionToken = new SetCookie('SESSTOKEN', 'deleted', strtotime('-1 Year'), '/');
+        $sessionToken = new SetCookie('GEWISSESSTOKEN', 'deleted', strtotime('-1 Year'), '/');
         $sessionToken->setSecure(true)->setHttponly(true);
         $response = $this->sm->get('Response');
         $response->getHeaders()->addHeader($sessionToken);
