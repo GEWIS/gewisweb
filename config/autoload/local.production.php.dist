@@ -52,7 +52,7 @@ return [
 	/*
      * Path to folder in local filesystem available for browsing
      */
-    'filebrowser_folder' => getcwd() . '/publicarchive/',
+    'filebrowser_folder' => getcwd() . '/public/publicarchive/',
 
     'glide' => [
         'base_url' => getenv('GLIDE_HOST'),
