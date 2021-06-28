@@ -56,6 +56,7 @@
         "zendframework/zend-validator": "^2.11.1",
         "zendframework/zend-view": "^2.11.4",
         "doctrine/doctrine-orm-module": "^1.1.8",
+        "maglnet/magl-markdown": "^1.4",
         "twbs/bootstrap-sass": "^3.3",
         "firebase/php-jwt": "^5.0",
         "paragonie/random_compat": "^2.0",
