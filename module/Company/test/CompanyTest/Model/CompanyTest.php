@@ -32,17 +32,42 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testExchangeArrayDefaultCredits() {
+    public function testBannerCredits() {
         $company = new Company();
 
-        $data["name"] = "Test Company";
-        $data["id"] = 1;
-        $data["languages"]["en"] = [];
-        $data["languages"]["nl"] = [];
+        $this->assertNull($company->getBannerCredits());
+        $company->setBannerCredits(0);
+        $this->assertEquals(0, $company->getBannerCredits());
+        $company->setBannerCredits(10);
+        $this->assertEquals(10, $company->getBannerCredits());
+        $company->setBannerCredits(99999);
+        $this->assertEquals(99999, $company->getBannerCredits());
+        $company->setBannerCredits(null);
+        $this->assertNull($company->getBannerCredits());
+    }
 
+    public function testHighlightCredits() {
+        $company = new Company();
 
-        $company->ExchangeArray($data);
+        $this->assertNull($company->getHighlightCredits());
+        $company->setHighlightCredits(0);
+        $this->assertEquals(0, $company->getHighlightCredits());
+        $company->setHighlightCredits(10);
+        $this->assertEquals(10, $company->getHighlightCredits());
+        $company->setHighlightCredits(99999);
+        $this->assertEquals(99999, $company->getHighlightCredits());
+        $company->setHighlightCredits(null);
+        $this->assertNull($company->getHighlightCredits());
+    }
 
+    public function testContactEmail() {
+        $company = new Company();
+
+        $this->assertNull($company->getContactEmail());
+        $company->setContactEmail("test@email.com");
+        $this->assertEquals("test@email.com", $company->getContactEmail());
+        $company->setContactEmail(null);
+        $this->assertNull($company->getContactEmail());
     }
 
 }

@@ -215,6 +215,22 @@ class ApprovalCompanyI18n implements ApprovalAbstract
         $this->language = $language;
     }
 
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @param bool $rejected
+     */
+    public function setRejected($rejected)
+    {
+        $this->rejected = $rejected;
+    }
+
 
     public function remove()
     {

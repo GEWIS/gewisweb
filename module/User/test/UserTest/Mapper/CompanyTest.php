@@ -39,6 +39,7 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
         $companyUser->setContactEmail("test@email.com");
         $companyUser->setPassword("password");
 
+
         $this->assertNull($this->companyService->getCompanyMapper()->findByLogin("test@email.com"));
 
     }

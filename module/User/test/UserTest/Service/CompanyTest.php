@@ -19,7 +19,7 @@ class CompanyTest extends PHPUnit_Framework_TestCase
     protected $sm;
 
     /**
-     * Construct an organ service with mock objects.
+     * Construct a company service with mock objects.
      */
     public function setUp()
     {
@@ -106,29 +106,29 @@ class CompanyTest extends PHPUnit_Framework_TestCase
         $this->companyService->getIdentity();
     }
 
-    public function testCompanyLogin() {
-        $companyAccount = new Company();
-        $companyAccount->setContactEmail("test@email.com");
-        $companyAccount->setId(1);
+//    public function testCompanyLogin() {
+//        $companyAccount = new Company();
+//        $companyAccount->setContactEmail("test@email.com");
+//        $companyAccount->setId(1);
+//
+//        $companyUser = new CompanyUser();
+//        $companyUser->setId(1);
+//        $companyUser->setContactEmail("test@email.com");
+//        $companyUser->setPassword("testPassword");
+//        $companyUser->setCompanyAccount($companyAccount);
+//
+//        $data = [
+//            "login" => "test@email.com",
+//            "password" => "password",
+//            "remember" => 1,
+//            "submit" => "Login",
+//            "security" => $this->companyService->companyLogin()->get('security')->getValue(),
+//        ];
+//
+//        $this->assertInstanceOf('User\Model\CompanyUser', $this->companyService->companyLogin($data));
+//    }
 
-        $companyUser = new CompanyUser();
-        $companyUser->setId(1);
-        $companyUser->setContactEmail("test@email.com");
-        $companyUser->setPassword("testPassword");
-        $companyUser->setCompanyAccount($companyAccount);
-
-        $data = [
-            "login" => "test@email.com",
-            "password" => "password",
-            "remember" => 1,
-            "submit" => "Login",
-            "security" => $this->companyService->companyLogin()->get('security')->getValue(),
-        ];
-
-        $this->assertInstanceOf('User\Model\CompanyUser', $this->companyService->companyLogin($data));
-    }
-
-    public function testFormValid() {
+    public function testCompanyLoginFormValid() {
 
         $form = new CompanyLogin($this->sm->get('translator'));
 

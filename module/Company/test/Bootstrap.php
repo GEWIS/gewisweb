@@ -1,6 +1,6 @@
 <?php
 
-namespace DecisionTest;
+namespace CompanTest;
 
 use Zend\Loader\AutoloaderFactory;
 use Zend\Mvc\Service\ServiceManagerConfig;

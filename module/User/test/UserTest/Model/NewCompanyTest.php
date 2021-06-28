@@ -13,6 +13,7 @@ class NewCompanyTest extends \PHPUnit_Framework_TestCase
         $newCompany = new NewCompany();
         $this->assertNull($newCompany->getContactEmail());
         $this->assertNull($newCompany->getId());
+        $this->assertNull($newCompany->getCode());
     }
 
     public function testCreatedNewCompanyInitialState()
@@ -22,7 +23,7 @@ class NewCompanyTest extends \PHPUnit_Framework_TestCase
         $companyAccount->setId(1);
 
         $newCompany = new NewCompany($companyAccount);
-        $this->assertEquals("test@email.com", $newCompany->getContactEmail());
-        $this->assertEquals(1, $newCompany->getId());
+        $this->assertEquals($companyAccount, $newCompany->getCompany());
+        $this->assertNotNull($newCompany->getCode());
     }
 }
