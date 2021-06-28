@@ -202,20 +202,6 @@ return [
                             ]
                         ]
                     ],
-                    'exportpdf' => [
-                        'type' => 'Segment',
-                        'options' => [
-                            'route' => '/export/:id[/:signupList]/pdf',
-                            'constraints' => [
-                                'id' => '\d+',
-                                'signupList' => '\d+',
-                            ],
-                            'defaults' => [
-                                'controller' => 'admin',
-                                'action' => 'exportpdf',
-                            ]
-                        ]
-                    ],
                     'update' => [
                         'type' => 'Segment',
                         'options' => [

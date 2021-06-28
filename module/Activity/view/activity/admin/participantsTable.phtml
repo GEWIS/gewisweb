@@ -101,12 +101,6 @@
             <h2><?= $this->translate('Additional actions') ?></h2>
         </div>
         <div class="col-md-12">
-            <?php if (isset($signupList)): ?>
-                <a href="<?= $this->url('activity_admin/exportpdf', ['id' => $activity->getId(), 'signupList' => $signupList->getId()]) ?>"><?= $this->translate('Download as pdf'); ?></a>
-            <?php else: ?>
-                <a href="<?= $this->url('activity_admin/exportpdf', ['id' => $activity->getId()]) ?>"><?= $this->translate('Download as pdf'); ?></a>
-            <?php endif; ?>
-            <br>
             <a href="mailto:?bcc=<?= implode(array_unique($allEmailAddresses), '; ') ?>">
                 <?= $this->translate('Mail everybody') ?>
             </a>
