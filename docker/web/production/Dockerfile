@@ -77,7 +77,7 @@ COPY --chown=www-data:www-data --from=composer-build /code/vendor /code/vendor
 
 COPY --chown=www-data:www-data . /code
 
-RUN ./genclassmap.sh
+RUN php composer.phar dump-autoload -o --no-dev
 
 COPY --chown=www-data:www-data --from=node-build /code/public/css/gewis-theme.css /code/public/css/gewis-theme.css
 

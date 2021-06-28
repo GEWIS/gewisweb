@@ -8,7 +8,12 @@ define('APP_ENV', getenv('APP_ENV') ?: 'production');
 chdir(dirname(__DIR__));
 
 // Setup autoloading
-require 'init_autoloader.php';
+if (file_exists('vendor/autoload.php')) {
+    $loader = include 'vendor/autoload.php';
+} else {
+    throw new RuntimeException('Unable to load dependencies. Run `php composer.phar install`.');
+}
+
 
 // Run the application!
-Zend\Mvc\Application::init(require 'config/application.config.' . APP_ENV .'.php')->run();
+Zend\Mvc\Application::init(require 'config/application.config.' . APP_ENV . '.php')->run();

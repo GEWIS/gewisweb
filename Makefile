@@ -51,7 +51,7 @@ update: rundev updatecomposer updatepackage updatecss updateglide
 updatecomposer:
 		@docker-compose exec web php composer.phar selfupdate
 		@docker cp gewisweb_web_1:/code/composer.phar ./composer.phar
-		@docker-compose exec web php composer.phar update
+		@docker-compose exec web php composer.phar update -W
 		@docker cp gewisweb_web_1:/code/composer.lock ./composer.lock
 
 updatepackage:
@@ -68,7 +68,7 @@ updateglide:
 		@docker-compose exec glide php -r "unlink('composer-setup.php');"
 		@docker-compose exec glide php composer.phar selfupdate
 		@docker cp gewisweb_glide_1:/glide/composer.phar ./docker/glide/composer.phar
-		@docker-compose exec glide php composer.phar update
+		@docker-compose exec glide php composer.phar update -W
 		@docker cp gewisweb_glide_1:/glide/composer.lock ./docker/glide/composer.lock
 
 all: build login push
