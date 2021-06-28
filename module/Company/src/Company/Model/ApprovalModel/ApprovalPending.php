@@ -155,6 +155,14 @@ class ApprovalPending
     }
 
     /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
      * @param String $type
      */
     public function setType($type)

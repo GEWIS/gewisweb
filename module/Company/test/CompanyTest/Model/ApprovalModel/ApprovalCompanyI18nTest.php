@@ -7,7 +7,7 @@ use Company\Model\Company;
 
 class ApprovalCompanyI18nTest extends \PHPUnit_Framework_TestCase
 {
-    public function testCompanyInitialState()
+    public function testApprovalCompanyI18nInitialState()
     {
         $profile = new ApprovalProfile();
         $locale = 'nl';

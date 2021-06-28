@@ -6,7 +6,7 @@ namespace Company\Model\ApprovalModel;
 class ApprovalProfileTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testCompanyInitialState()
+    public function testApprovalProfileInitialState()
     {
         $profile = new ApprovalProfile();
 

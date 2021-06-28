@@ -9,7 +9,7 @@ use Company\Model\JobSector;
 class ApprovalVacancyTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testCompanyInitialState()
+    public function testApprovalVacancyInitialState()
     {
         $vacancy = new ApprovalVacancy();
 
