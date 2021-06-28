@@ -77,7 +77,7 @@ class CompanyAccountController extends AbstractActionController
             if ($this->bannerPostCorrect($post, $files, $packageForm)) {
                 // Upload the banner to database and redirect to Companypanel
                 if ($companyService->insertPackageForCompanySlugNameByData(
-                    $company->getName(),
+                    $company->getSlugName(),
                     $post,
                     $files['banner'],
                     'banner',
@@ -235,7 +235,7 @@ class CompanyAccountController extends AbstractActionController
 
             if ($this->highlightPostCorrect($post, $packageForm)) {
                 if ($companyService->insertPackageForCompanySlugNameByData(
-                    $company->getName(),
+                    $company->getSlugName(),
                     $post,
                     NULL, //There are no files to be passed
                     'highlight'
@@ -445,6 +445,9 @@ class CompanyAccountController extends AbstractActionController
                 $company->getArrayCopy()['nl_logo']
             );
 
+            $email = $this->getDecisionEmail();
+            $email->sendApprovalMail($company);
+
             $company->setSlugName($companySlugName);
             $company->setName($companyName);
 //            $companyService->saveCompany();
@@ -474,9 +477,6 @@ class CompanyAccountController extends AbstractActionController
                 ]
             )
         );
-
-        $email = $this->getDecisionEmail();
-        $email->sendApprovalMail($company);
 
         return new ViewModel([
             'company' => $company,
