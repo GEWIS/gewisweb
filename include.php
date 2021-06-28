@@ -14,7 +14,11 @@ $requestUri = $_SERVER['REQUEST_URI'];
 $_SERVER['REQUEST_URI'] = '/external/';
 
 // Setup autoloading
-require 'init_autoloader.php';
+if (file_exists('vendor/autoload.php')) {
+    $loader = include 'vendor/autoload.php';
+} else {
+    throw new RuntimeException('Unable to load dependencies. Run `php composer.phar install`.');
+}
 
 $config = require 'config/application.config.' . APP_ENV .'.php';
 
