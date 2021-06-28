@@ -96,5 +96,17 @@
                  "Fix issues with SubDecisions.": "https://raw.githubusercontent.com/GEWIS/orm/2.7/1-to-1-multiple-join-columns.patch"
              }
         }
+    },
+    "autoload": {
+        "psr-0": {
+            "Activity\\": "module/Activity/src",
+            "Application\\": "module/Application/src",
+            "Company\\": "module/Company/src",
+            "Decision\\": "module/Decision/src",
+            "Education\\": "module/Education/src",
+            "Frontpage\\": "module/Frontpage/src",
+            "Photo\\": "module/Photo/src",
+            "User\\": "module/User/src"
+        }
     }
 }
