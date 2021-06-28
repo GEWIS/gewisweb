@@ -12,5 +12,5 @@ cp -R -u gewisweb-master/data/* /code/data/
 chown -R  www-data:www-data /code/data
 rm -R /tmp/gewisweb-master
 cd /code
-./genclassmap.sh
+php composer.phar dump-autoload -o --no-dev
 ./web orm:generate-proxies
