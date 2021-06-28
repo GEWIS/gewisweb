@@ -147,6 +147,7 @@ class HighlightPackage extends Package
             ->where('h.expires >= ?1')
             ->setParameter(1, $today)
             ->andWhere('j.language = ?2')
+            ->andWhere('j.active = 1')
             ->setParameter(2, $language)
             ->andWhere('h.published = 1');
         if ($category!=NULL) {
