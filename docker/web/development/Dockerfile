@@ -72,7 +72,7 @@ RUN chmod 0775 ./docker-entrypoint.sh
 
 COPY --chown=www-data:www-data . /code
 
-RUN ./genclassmap.sh
+RUN php composer.phar dump-autoload --dev
 
 VOLUME ["/code/data", "/code/public"]
 

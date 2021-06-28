@@ -48,7 +48,7 @@ RUN pecl install -o imagick \
     && pecl install -o memcached \
     && docker-php-ext-enable memcached
 
-FROM php-target as composer-build
+FROM php-target as gewisweb_web_production
 WORKDIR /code
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
@@ -57,9 +57,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 
 COPY ./composer.json ./composer.lock ./
 RUN php composer.phar install -o --no-dev
-
-FROM php-target as gewisweb_web_production
-WORKDIR /code
 
 COPY --chown=www-data:www-data ./docker/web/production/php.ini /usr/local/etc/php/conf.d/default.ini
 COPY --chown=www-data:www-data ./docker/web/production/php-fpm.conf /usr/local/etc/php-fpm.d/php-fpm.conf
@@ -73,11 +70,9 @@ RUN chmod 0644 /etc/cron.d/crontab && crontab /etc/cron.d/crontab
 COPY --chown=www-data:www-data ./docker/web/production/docker-entrypoint.sh ./docker-entrypoint.sh
 RUN chmod 0775 ./docker-entrypoint.sh
 
-COPY --chown=www-data:www-data --from=composer-build /code/vendor /code/vendor
-
 COPY --chown=www-data:www-data . /code
 
-RUN ./genclassmap.sh
+RUN php composer.phar dump-autoload -o --no-dev
 
 COPY --chown=www-data:www-data --from=node-build /code/public/css/gewis-theme.css /code/public/css/gewis-theme.css
 
