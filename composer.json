@@ -64,12 +64,19 @@
         "league/glide-zend": "^1.0",
         "nesbot/carbon": "^1.39",
         "fortawesome/font-awesome": "^5.15.3",
-        "slowprog/composer-copy-file": "^0.3"
+        "slowprog/composer-copy-file": "^0.3",
+        "cweagans/composer-patches": "^1.7.1"
     },
     "require-dev": {
         "ext-xdebug": ">=2.4.1",
         "zendframework/zend-developer-tools": "^2.0.0",
         "jszanto/gewisweb-test-data": "dev-master"
+    },
+    "config": {
+        "preferred-install": {
+             "doctrine/orm": "source",
+             "*": "dist"
+         }
     },
     "scripts": {
         "post-install-cmd": [
@@ -83,6 +90,11 @@
         "copy-file": {
             "vendor/fortawesome/font-awesome/scss/": "public/scss/fontawesome/",
             "vendor/fortawesome/font-awesome/webfonts/": "public/fonts/fontawesome/"
+        },
+        "patches": {
+            "doctrine/orm": {
+                 "Fix issues with SubDecisions.": "https://raw.githubusercontent.com/GEWIS/orm/2.7/1-to-1-multiple-join-columns.patch"
+             }
         }
     }
 }
