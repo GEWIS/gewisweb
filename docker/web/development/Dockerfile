@@ -43,13 +43,13 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');"
 
-COPY --chown=www-data:www-data ./composer.json ./
-RUN php composer.phar update
-
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
     && apt-get update \
     && apt-get install -y \
         nodejs
+
+COPY --chown=www-data:www-data ./composer.json ./
+RUN php composer.phar update
 
 COPY --chown=www-data:www-data ./package.json ./package-lock.json ./
 RUN npm install
