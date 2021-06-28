@@ -5,7 +5,6 @@ namespace Activity\Controller;
 use Activity\Form\ModifyRequest as RequestForm;
 use Activity\Model\Activity;
 use DateTime;
-use DOMPDFModule\View\Model\PdfModel;
 use User\Permissions\NotAllowedException;
 use Zend\Form\FormInterface;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -125,27 +124,6 @@ class AdminController extends AbstractActionController
         $activityAdminSession->success = $success;
         $activityAdminSession->message = $message;
         $this->redirect()->toRoute('activity_admin');
-    }
-
-    public function exportPdfAction()
-    {
-        $variables = $this->participantsAction();
-
-        $acl = $this->getAcl();
-        $identity = $this->getIdentity();
-
-        $resource = isset($variables['signupList']) ? $variables['signupList'] : $variables['activity'];
-        if (!$acl->isAllowed($identity, $resource, 'exportParticipants')) {
-            $translator = $this->getServiceLocator()->get('translator');
-            throw new NotAllowedException(
-                $translator->translate('You are not allowed to export the participants of this activity')
-            );
-        }
-
-        $pdf = new PdfModel();
-        $pdf->setVariables($variables);
-
-        return $pdf;
     }
 
     /**
