@@ -77,7 +77,7 @@ class CompanyAccountController extends AbstractActionController
             if ($this->bannerPostCorrect($post, $files, $packageForm)) {
                 // Upload the banner to database and redirect to Companypanel
                 if ($companyService->insertPackageForCompanySlugNameByData(
-                    $company->getName(),
+                    $company->getSlugName(),
                     $post,
                     $files['banner'],
                     'banner',
@@ -235,7 +235,7 @@ class CompanyAccountController extends AbstractActionController
 
             if ($this->highlightPostCorrect($post, $packageForm)) {
                 if ($companyService->insertPackageForCompanySlugNameByData(
-                    $company->getName(),
+                    $company->getSlugName(),
                     $post,
                     NULL, //There are no files to be passed
                     'highlight'
