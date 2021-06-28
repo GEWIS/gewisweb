@@ -644,6 +644,10 @@ class CompanyAccountController extends AbstractActionController
 
 //            $companyService->saveJobData($languageNeutralId, $jobDict, $post, $files);
             $companyService->createJobApproval($packageId, $post, $files, $languageNeutralId);
+
+            //Send approval email to admin
+            $email = $this->getDecisionEmail();
+            $email->sendApprovalMail($company);
         }
 
         // Initialize the form
