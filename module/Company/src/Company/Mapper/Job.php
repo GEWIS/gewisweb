@@ -383,6 +383,7 @@ class Job
             -> join('j.package', 'h')
             -> where('j.active = 1')
             -> andWhere('j.language = ?1')
+            -> andWhere('j.active = 1')
             -> andWhere('h.expires >= ?2')
             -> andWhere('h.published = 1')
             -> setParameter(1, $language)
