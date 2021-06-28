@@ -7,7 +7,7 @@ use Activity\Model\UserSignup;
 use Zend\Captcha\Image as ImageCaptcha;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Zend\Hydrator\ClassMethods as ClassMethodsHydrator;
 
 //input filter
 

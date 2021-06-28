@@ -4,7 +4,7 @@ namespace Frontpage\Form;
 
 use Frontpage\Model\PollOption as PollOptionModel;
 use Zend\Form\Fieldset;
-use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Zend\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
 

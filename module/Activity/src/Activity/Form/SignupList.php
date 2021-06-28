@@ -7,7 +7,7 @@ use Exception;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Mvc\I18n\Translator;
-use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Zend\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\Validator\Callback;
 
 class SignupList extends Fieldset implements InputFilterProviderInterface

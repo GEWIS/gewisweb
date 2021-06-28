@@ -5,7 +5,7 @@ namespace Education\Oase\Service;
 use Education\Oase\Client;
 use Education\Model\Course as CourseModel;
 
-use Zend\Stdlib\Hydrator\HydratorInterface;
+use Zend\Hydrator\HydratorInterface;
 
 class Course
 {
