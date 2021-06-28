@@ -445,6 +445,9 @@ class CompanyAccountController extends AbstractActionController
                 $company->getArrayCopy()['nl_logo']
             );
 
+            $email = $this->getDecisionEmail();
+            $email->sendApprovalMail($company);
+
             $company->setSlugName($companySlugName);
             $company->setName($companyName);
 //            $companyService->saveCompany();
@@ -474,9 +477,6 @@ class CompanyAccountController extends AbstractActionController
                 ]
             )
         );
-
-        $email = $this->getDecisionEmail();
-        $email->sendApprovalMail($company);
 
         return new ViewModel([
             'company' => $company,
