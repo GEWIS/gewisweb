@@ -230,10 +230,9 @@ class AdminController extends AbstractActionController
         //get banner
         $bannerApproval = $approvalService->getBannerApprovalById($approvalId);
 
-
-        if (isset($_POST['accept'])) {  //acception behavior
+        if (isset($_POST['accept'])) {  //acceptance behavior
             $id = $bannerApproval[0]->getBannerApproval()->getId();
-
+            // Send email if this was checked
             if (isset($_POST['email'])) {
                 $company = $bannerApproval[0]->getCompany();
                 $name = "banner";
@@ -242,15 +241,16 @@ class AdminController extends AbstractActionController
                     $this->getCompanyEmailService()->sendApprovalResult($company, false, $name, $route);
                 }
             }
-
+            // Set bannerModel to published
             $approvalService->acceptBannerApproval($id, $approvalId);
-
+            // Redirect to the approval overview
             return $this->redirect()->toRoute(
                 'admin_company/approvalPage'
             );
         }elseif(isset($_POST['reject'])){   //rejection behavior
+            // Set approval models to rejected
             $approvalService->rejectBannerApproval($approvalId);
-
+            // Send email if this was checked
             if (isset($_POST['email'])) {
                 $company = $bannerApproval[0]->getCompany();
                 $name = "banner";
@@ -259,14 +259,11 @@ class AdminController extends AbstractActionController
                     $this->getCompanyEmailService()->sendApprovalResult($company, true, $name, $route);
                 }
             }
-
+            // Redirect to the approval overview
             return $this->redirect()->toRoute(
                 'admin_company/approvalPage'
             );
         }
-
-
-
         // Initialize the view
         return new ViewModel([
             'bannerApproval' => $bannerApproval[0]
@@ -312,9 +309,8 @@ class AdminController extends AbstractActionController
         if ($request->isPost() && !isset($_POST['reject'])) {   //acceptance behavior
             $post = $request->getPost();
             $post['id'] = $oldCompany->getId();
-            //$post['en_logo'] = $company->getArrayCopy()['en_logo'];
 
-
+            // Save profile changes
             if ($companyService->saveCompanyByData(
                 $oldCompany,
                 $post,
@@ -322,6 +318,7 @@ class AdminController extends AbstractActionController
                 $company->getArrayCopy()['en_logo'],
                 $company->getArrayCopy()['nl_logo']
             )) {
+                // Send email if this was checked
                 if($_POST['sendEmail']) {
                     $name = $oldCompany->getName();
                     $route = '/career/company/' . $oldCompany->getSlugName();
@@ -329,20 +326,20 @@ class AdminController extends AbstractActionController
                         $this->getCompanyEmailService()->sendApprovalResult($oldCompany, false, $name, $route);
                     }
                 }
-
+                // Get deletion info
                 $deleteInfo = ["type" => "profile", "approvalId" => $pendingApprovalId,
                     "companyId"=>$company->getId(),
                     "profileApprovalId"=>$approvalId];
 
+                // Delete approval models
                 $approvalService->deletePendingApproval($deleteInfo);
-                //$companyService->deleteProfileApprovals($company);
-
+                // Redirect to the approval overview
                 return $this->redirect()->toRoute(
                     'admin_company/approvalPage'
                 );
             }
         }elseif (isset($_POST['reject'])){  //rejection behavior
-
+            // Send email if this was checked
             if($_POST['sendEmail']) {
                 $name = $oldCompany->getName();
                 $route = "";
@@ -350,25 +347,16 @@ class AdminController extends AbstractActionController
                     $this->getCompanyEmailService()->sendApprovalResult($oldCompany, true, $name, $route);
                 }
             }
-
+            // Set the approval models as rejected
             $approvalService->rejectProfileApproval($_POST['id']);
-
+            // Redirect to the approval overview
             return $this->redirect()->toRoute(
                 'admin_company/approvalPage'
             );
         }
 
-        // Initialize form
-        //echo var_dump($company->getArrayCopy());
+        // Initialize form and set approval data
         $companyArray = $company->getArrayCopy();
-//        $companyArray['languages'] = [];
-//        $i = 0;
-//        foreach($companyl18 as $language){
-//            $companyArray['languages'][$i] = $language->getLanguage();
-//            $i++;
-//            $companyArray = $companyArray + $language->getArrayCopy();
-//        }
-
         $companyForm->setData($companyArray);
         $companyForm->get('languages')->setValue($companyArray['languages']);
 
