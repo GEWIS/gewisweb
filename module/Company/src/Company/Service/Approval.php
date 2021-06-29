@@ -38,15 +38,6 @@ class Approval extends AbstractAclService
      */
     public function getEditableCompaniesBySlugName($slugName)
     {
-
-//        if (!$this->isAllowed('edit')) {
-//
-//            $translator = $this->getTranslator();
-//            throw new \User\Permissions\NotAllowedException(
-//                $translator->translate('You are not allowed to edit companies')
-//            );
-//        }
-//
         return $this->getApprovalMapper()->findEditableCompaniesBySlugName($slugName, true);
     }
 
@@ -68,15 +59,13 @@ class Approval extends AbstractAclService
     public function deletePendingApproval($deletionInfo){
         //check type
         if($deletionInfo["type"] === "banner"){
-            $this->getApprovalMapper()->deleteBannerApproval($deletionInfo["approvalId"]);
+            $this->getApprovalMapper()->deletePendingApproval($deletionInfo["approvalId"]);
         }elseif($deletionInfo["type"] === "vacancy"){
             $vacancyApprovals = $this->getEditableVacanciesByLanguageNeutralId($deletionInfo["languageNeutralId"]);
             $this->deleteVacancyApprovals($vacancyApprovals);
-            //$this->getApprovalMapper()->deleteVacancyApproval($deletionInfo["approvalId"], $deletionInfo["packageId"]);
         }elseif ($deletionInfo["type"] === "profile"){
             $profileApproval = $this->getApprovalProfileById($deletionInfo["profileApprovalId"])[0];
             $this->deleteProfileApprovals($profileApproval);
-            //$this->getApprovalMapper()->deleteProfileApproval($deletionInfo["approvalId"], $deletionInfo["companyId"]);
         }
     }
 
@@ -201,12 +190,9 @@ class Approval extends AbstractAclService
      *
      * @param $id Int banner id
      * @param $approvalId Int pending approval Id
-     * @return mixed
      */
     public function acceptBannerApproval($id, $approvalId){
-        //This doesn't actually return anything right? so can't return be removed?
-        //TODO: whoever made this function look at this
-        return $this->getApprovalMapper()->acceptBannerApproval($id, $approvalId);
+        $this->getApprovalMapper()->acceptBannerApproval($id, $approvalId);
     }
 
     /**

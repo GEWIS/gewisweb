@@ -113,20 +113,6 @@ if ($companyInfo[0]->getHighLightCredits() <= 0 || !$accountActive){
                             <div class="panel-warning"><div class="panel-warning-text"><?= $this->translate("Disabled, vacancy package has expired.") ?></div></div>
                         <?php endif; ?>
                     </div>
-
-                    <div class="panel-disabled">
-                    <a class="<?= "panel $accountStyle align-middle" ?>"
-                       <?php if ($accountActive): ?>href="<?= $this->url('companyaccount/dummy') ?>"<?php endif; ?>>
-
-                        <div class="big-icon fas fa-list"></div>
-                        <div class="panel-heading"><?= $this->translate('Activities') ?></div>
-
-                    </a>
-                        <?php if (!$accountActive): ?>
-                            <div class="panel-warning"><div class="panel-warning-text"><?= $this->translate("Disabled, vacancy package has expired.") ?></div></div>
-                        <?php endif; ?>
-                    </div>
-
                     <div class="panel-disabled">
                     <a  class="<?= "panel $bannerStyle align-middle" ?>"
                        <?php if ($bannerActive && $accountActive): ?>href="<?= $this->url('companyaccount/bannerupload') ?>"<?php endif; ?>>

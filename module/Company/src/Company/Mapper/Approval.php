@@ -169,52 +169,6 @@ class Approval
     }
 
 
-    // What's the point of this function? could you not just call deletePendingApproval Directly?
-    // TODO: decide what to do with this
-    // TODO: update SDD based on what is exactly filled in here
-    /**
-     * Delete the approval pending model for the given Id
-     *
-     * @param $approvalId Int Id of the approval pending model
-     */
-    public function deleteBannerApproval($approvalId){
-        $this->deletePendingApproval($approvalId);
-    }
-
-    // is this even still being used anywhere?
-    // TODO: decide if this needs to go away
-    // TODO: update SDD based on what is exactly filled in here
-    public function deleteProfileApproval($approvalId, $companyId){
-        //$this->deletePendingApproval($approvalId);
-
-        $qb = $this->em->createQueryBuilder();
-        $qb->delete("Company\Model\ApprovalModel\ApprovalCompanyI18n", "ac");
-        $qb->where("ac.company = $companyId");
-        $qb->getQuery()->getResult();
-
-//        $qb = $this->em->createQueryBuilder();
-//        $qb->delete("Company\Model\ApprovalModel\ApprovalProfile", "ap");
-//        $qb->where("ap.company = $companyId");
-//        $qb->getQuery()->getResult();
-
-
-
-    }
-
-    // is this even still being used anywhere?
-    // TODO: decide if this needs to go away
-    // TODO: update SDD based on what is exactly filled in here
-    public function deleteVacancyApproval($approvalId, $packageId){
-        $this->deletePendingApproval($approvalId);
-
-        $qb = $this->em->createQueryBuilder();
-        $qb->delete("Company\Model\ApprovalModel\ApprovalVacancy", "av");
-        $qb->where("av.package = $packageId");
-        $qb->getQuery()->getResult();
-
-    }
-
-
     /**
      * Find the company with the given slugName.
      *
@@ -314,9 +268,7 @@ class Approval
     }
 
     /**
-     * Retrieve al pending approvals of any type of a certain company based on its id
-     * TODO: check if this is not just a duplicate of findPendingProfileByID()
-     * TODO: update SDD based on what is exactly filled in here
+     * Retrieve al pending profile approvals based on its id
      *
      * @param $id Int
      * @return array
@@ -370,32 +322,7 @@ class Approval
 
 
     /**
-     * TODO: decide which one needs to be used as there already exists another of these functions
-     * TODO: update the SDD accordingly, for now this is left out of the SDD
-     * Find the company with the given slugName.
-     *
-     * @param String slugName The 'username' of the company to get.
-     * @param boolean asObject if yes, returns the company as an object in an array, otherwise returns the company as an array of an array
-     *
-     * @return array An array of companies with the given slugName.
-     */
-    public function findEditableCompaniesBySlugName2($slugName, $asObject)
-    {
-
-        $builder = new ResultSetMappingBuilder($this->em);
-        $builder->addRootEntityFromClassMetadata('Company\Model\ApprovalModel\ApprovalProfile', 'ci');
-
-        $select = $builder->generateSelectClause(['ci' => 't1']);
-        $sql = "SELECT $select FROM ApprovalProfile AS t1".
-            " WHERE t1.slugName = '$slugName'";
-
-        $query = $this->em->createNativeQuery($sql, $builder);
-        return $query->getResult();
-    }
-
-    /**
      * Retrieve the translations corresponding to a company's profile with id $cID
-     * TODO: update the SDD accordingly, for now this is left out of the SDD
      *
      * @param $cId
      * @return array|int|string
