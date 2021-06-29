@@ -104,7 +104,6 @@ class AdminController extends AbstractActionController
         $jobForm = $companyService->getJobFormCompany();
 
         // Get the parameters
-        // TODO: make sure this doesn't need to be called 'slugCompanyName'
         $languageNeutralId = $this->params('slugCompanyName');
 
 
@@ -119,15 +118,16 @@ class AdminController extends AbstractActionController
 
         // Handle incoming form results
         $request = $this->getRequest();
-        if ($request->isPost()  && !isset($_POST['reject'])) {  //acception behavior
+        if ($request->isPost()  && !isset($_POST['reject'])) {  //acceptance behavior
             $files = $request->getFiles();
             $post = $request->getPost();
             $jobDict = [];
 
-
+            // Set the data to adjust a job
             foreach ($jobs as $job) {
                 $jobDict[$job->getLanguage()] = $job;
             }
+            // Set the data to create a new job
             if ($newVacancy) {
                 $jobDict = [];
                 foreach ($vacancyApprovals as $job) {
@@ -136,12 +136,16 @@ class AdminController extends AbstractActionController
             }
 
             if ($newVacancy) {
+                // Create a new Job
                 $companyService->createJob($vacancyApprovals[0]->getPackage()->getId(), $post, $files);
             } else {
+                // Adjust an existing Job
                 $companyService->saveJobData($languageNeutralId, $jobDict, $post, $files);
             }
+            // Delete the approval models
             $companyService->deleteVacancyApprovals($vacancyApprovals);
 
+            // Send email if this was checked
             if($_POST['sendEmail']) {
                 $company = $vacancyApprovals[0]->getPackage()->getCompany();
                 $name = $vacancyApprovals[0]->getName();
@@ -150,15 +154,17 @@ class AdminController extends AbstractActionController
                     $this->getCompanyEmailService()->sendApprovalResult($company, false, $name, $route);
                 }
             }
+            // Redirect to the approval overview
             return $this->redirect()->toRoute(
                 'admin_company/approvalPage'
             );
 
         } elseif (isset($_POST['reject'])){ //rejection behavior
+            // set the approval models to rejected
             foreach($vacancyApprovals as $approval) {
                 $approvalService->rejectVacancyApproval($approval->getId());
             }
-
+            // Send email if this was checked
             if($_POST['sendEmail']) {
                 $company = $vacancyApprovals[0]->getPackage()->getCompany();
                 $name = $vacancyApprovals[0]->getName();
@@ -167,7 +173,7 @@ class AdminController extends AbstractActionController
                     $this->getCompanyEmailService()->sendApprovalResult($company, true, $name, $route);
                 }
             }
-
+            // Redirect to the approval overview
             return $this->redirect()->toRoute(
                 'admin_company/approvalPage'
             );
@@ -181,7 +187,7 @@ class AdminController extends AbstractActionController
         $languages = array_keys($jobDict);
         $jobForm->setLanguages($languages);
 
-
+        // Initialize the labels
         $mapper = $companyService->getLabelMapper();
         if(!$newVacancy) {
             $labels = $jobs[0]->getLabels();
@@ -193,6 +199,7 @@ class AdminController extends AbstractActionController
             }
             $jobForm->setLabels($actualLabels);
         }
+        // Set data of the approval models in the form
         foreach ($vacancyApprovals as $approval) {
             $jobForm->setData($approval->getArrayCopy());
         }
