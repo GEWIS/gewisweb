@@ -55,7 +55,7 @@ return [
         'check_dependencies' => false,
 
         // We use composer autoloading now
-        'use_zend_loader' => false,
+        'use_zend_loader' => true,
     ],
     // Used to create an own service manager. May contain one or more child arrays.
     //'service_listener_options' => array(

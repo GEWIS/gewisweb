@@ -29,7 +29,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -r "unlink('composer-setup.php');"
 
 COPY ./composer.json ./composer.lock ./
-RUN php composer.phar install -o --no-dev
+RUN php composer.phar install -o --no-dev --no-cache
 
 FROM php-target as glide
 WORKDIR /glide

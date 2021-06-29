@@ -56,7 +56,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -r "unlink('composer-setup.php');"
 
 COPY ./composer.json ./composer.lock ./
-RUN php composer.phar install -o --no-dev
+RUN php composer.phar install -o --no-dev --no-cache
 
 COPY --chown=www-data:www-data ./docker/web/production/php.ini /usr/local/etc/php/conf.d/default.ini
 COPY --chown=www-data:www-data ./docker/web/production/php-fpm.conf /usr/local/etc/php-fpm.d/php-fpm.conf
