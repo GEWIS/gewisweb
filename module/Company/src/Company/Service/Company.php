@@ -1142,15 +1142,20 @@ class Company extends AbstractACLService
      * @param array $data The (new) data to save
      */
     public function setCentralJobData($jobs, $data) {
-        $x = 0;
         foreach ($jobs as $job) {
             $job->setEmail($data['email']);
             $job->setWebsite($data['website']);
             $job->setHours($data['hours']);
 
-            $job->setSectors($this->getJobMapper()->findSectorsById($data['sectors'] + $x));
-            $job->setCategory($this->getJobMapper()->findCategoryById($data['category'] +$x));
-            $x++;
+            // get sector for the correct language based on the id
+            $sector = $this->getJobMapper()->findSectorsById($data['sectors']);
+            $siblingSector = $this->getSectorMapper()->siblingSector($sector, $job->getLanguage());
+            $job->setSectors($siblingSector);
+
+            // get category for the correct language based on the id
+            $category = $this->getJobMapper()->findCategoryById($data['category']);
+            $siblingCategory = $this->getCategoryMapper()->siblingCategory($category, $job->getLanguage());
+            $job->setCategory($siblingCategory);
 
             $job->setLocation($data['location']);
             $job->setContactName($data['contactName']);

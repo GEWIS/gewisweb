@@ -289,7 +289,6 @@ class AdminController extends AbstractActionController
         // Get the specified company
         $companyList = $approvalService->getApprovalProfileById($approvalId);
         $oldCompanyList = $companyService->getEditableCompaniesBySlugName($companyList[0]->getSlugName());
-        //$companyList = $companyService->getEditableCompaniesBySlugName($companyName);
 
         // If the company is not found, throw 404
         if (empty($companyList)) {
@@ -303,7 +302,7 @@ class AdminController extends AbstractActionController
 
         // Handle incoming form data
         $request = $this->getRequest();
-        if ($request->isPost() && !isset($_POST['reject'])) {   //acception behavior
+        if ($request->isPost() && !isset($_POST['reject'])) {   //acceptance behavior
             $post = $request->getPost();
             $post['id'] = $oldCompany->getId();
             //$post['en_logo'] = $company->getArrayCopy()['en_logo'];
