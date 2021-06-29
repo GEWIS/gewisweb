@@ -1,7 +1,7 @@
 {
     "name": "gewis/gewisweb",
     "description": "GEWIS Website",
-    "license": "GPL-3.0",
+    "license": "GPL-3.0-only",
     "keywords": [
         "website",
         "gewis"
@@ -71,7 +71,7 @@
     "require-dev": {
         "ext-xdebug": ">=2.4.1",
         "zendframework/zend-developer-tools": "^2.0.0",
-        "jszanto/gewisweb-test-data": "dev-master"
+        "jszanto/gewisweb-test-data": "@dev"
     },
     "config": {
         "preferred-install": {

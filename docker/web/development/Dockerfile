@@ -49,7 +49,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
         nodejs
 
 COPY --chown=www-data:www-data ./composer.json ./
-RUN php composer.phar update
+RUN php composer.phar install
 
 COPY --chown=www-data:www-data ./package.json ./package-lock.json ./
 RUN npm install
@@ -72,7 +72,7 @@ RUN chmod 0775 ./docker-entrypoint.sh
 
 COPY --chown=www-data:www-data . /code
 
-RUN php composer.phar dump-autoload --dev
+RUN php composer.phar dump-autoload
 
 VOLUME ["/code/data", "/code/public"]
 
