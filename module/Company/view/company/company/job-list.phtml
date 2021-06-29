@@ -126,7 +126,7 @@ $this->headTitle($all ? 'All Vacancies' : $this->category->getPluralName());
                                data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>"
                                data-sector="<?= $job->getSectors()->getName() ?>"
                                data-name="<?= $job->getName() ?>"
-                               data-starts="<?= $job->getStartingDate()->format(DateTime::ATOM) ?>">
+                               data-starts="<?= ($job->getStartingDate()!= null) ? $job->getStartingDate()->format(DateTime::ATOM) : "Continuous" ?>">
                                 <div class="card-img">
                                     <img
                                     src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
@@ -205,7 +205,7 @@ $this->headTitle($all ? 'All Vacancies' : $this->category->getPluralName());
                            data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>"
                            data-sector="<?= $job->getSectors()->getName() ?>"
                            data-name="<?= $job->getName() ?>"
-                           data-starts="<?= $job->getStartingDate()->format(DateTime::ATOM) ?>">
+                           data-starts="<?= ($job->getStartingDate()!= null) ? $job->getStartingDate()->format(DateTime::ATOM) : "Continuous"  ?>">
                             <div class="card-img">
                                 <img
                                 src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
