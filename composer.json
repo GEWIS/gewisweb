@@ -45,6 +45,7 @@
         "zendframework/zend-log": "^2.12.0",
         "zendframework/zend-mail": "^2.10.0",
         "zendframework/zend-mime": "^2.7.2",
+        "zendframework/zend-modulemanager": "^2.8.4",
         "zendframework/zend-mvc": "^2.7.15",
         "zendframework/zend-paginator": "^2.8.2",
         "zendframework/zend-permissions-acl": "^2.7.1",

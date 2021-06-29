@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eff1b39107bc3a5b653e684d56edbc66",
+    "content-hash": "63b70fc2faf59094f0787c92d7ed30de",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -1444,6 +1444,107 @@
             "time": "2020-10-27T21:46:55+00:00"
         },
         {
+            "name": "erusev/parsedown",
+            "version": "1.7.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erusev/parsedown.git",
+                "reference": "cb17b6477dfff935958ba01325f2e8a2bfa6dab3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/cb17b6477dfff935958ba01325f2e8a2bfa6dab3",
+                "reference": "cb17b6477dfff935958ba01325f2e8a2bfa6dab3",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Parsedown": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emanuil Rusev",
+                    "email": "hello@erusev.com",
+                    "homepage": "http://erusev.com"
+                }
+            ],
+            "description": "Parser for Markdown.",
+            "homepage": "http://parsedown.org",
+            "keywords": [
+                "markdown",
+                "parser"
+            ],
+            "support": {
+                "issues": "https://github.com/erusev/parsedown/issues",
+                "source": "https://github.com/erusev/parsedown/tree/1.7.x"
+            },
+            "time": "2019-12-30T22:54:17+00:00"
+        },
+        {
+            "name": "erusev/parsedown-extra",
+            "version": "0.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erusev/parsedown-extra.git",
+                "reference": "91ac3ff98f0cea243bdccc688df43810f044dcef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erusev/parsedown-extra/zipball/91ac3ff98f0cea243bdccc688df43810f044dcef",
+                "reference": "91ac3ff98f0cea243bdccc688df43810f044dcef",
+                "shasum": ""
+            },
+            "require": {
+                "erusev/parsedown": "^1.7.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ParsedownExtra": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emanuil Rusev",
+                    "email": "hello@erusev.com",
+                    "homepage": "http://erusev.com"
+                }
+            ],
+            "description": "An extension of Parsedown that adds support for Markdown Extra.",
+            "homepage": "https://github.com/erusev/parsedown-extra",
+            "keywords": [
+                "markdown",
+                "markdown extra",
+                "parsedown",
+                "parser"
+            ],
+            "support": {
+                "issues": "https://github.com/erusev/parsedown-extra/issues",
+                "source": "https://github.com/erusev/parsedown-extra/tree/0.8.x"
+            },
+            "time": "2019-12-30T23:20:37+00:00"
+        },
+        {
             "name": "firebase/php-jwt",
             "version": "v5.4.0",
             "source": {
@@ -1782,6 +1883,82 @@
             "time": "2020-04-07T20:44:10+00:00"
         },
         {
+            "name": "league/commonmark",
+            "version": "0.19.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/commonmark.git",
+                "reference": "c6ecea928b432ae417fa9942840bbfd8c332448c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/c6ecea928b432ae417fa9942840bbfd8c332448c",
+                "reference": "c6ecea928b432ae417fa9942840bbfd8c332448c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": "^7.1"
+            },
+            "replace": {
+                "colinodell/commonmark-php": "*"
+            },
+            "require-dev": {
+                "cebe/markdown": "~1.0",
+                "commonmark/commonmark.js": "0.29.0",
+                "erusev/parsedown": "~1.0",
+                "michelf/php-markdown": "~1.4",
+                "mikehaertl/php-shellcommand": "^1.4",
+                "phpstan/phpstan-shim": "^0.11.5",
+                "phpunit/phpunit": "^7.5",
+                "scrutinizer/ocular": "^1.5",
+                "symfony/finder": "^4.2"
+            },
+            "suggest": {
+                "league/commonmark-extras": "Library of useful extensions including smart punctuation"
+            },
+            "bin": [
+                "bin/commonmark"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.20-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\CommonMark\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Colin O'Dell",
+                    "email": "colinodell@gmail.com",
+                    "homepage": "https://www.colinodell.com",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "PHP Markdown parser based on the CommonMark spec",
+            "homepage": "https://commonmark.thephpleague.com",
+            "keywords": [
+                "commonmark",
+                "markdown",
+                "parser"
+            ],
+            "support": {
+                "docs": "https://commonmark.thephpleague.com/",
+                "issues": "https://github.com/thephpleague/commonmark/issues",
+                "rss": "https://github.com/thephpleague/commonmark/releases.atom",
+                "source": "https://github.com/thephpleague/commonmark"
+            },
+            "time": "2019-06-18T18:29:15+00:00"
+        },
+        {
             "name": "league/flysystem",
             "version": "1.0.70",
             "source": {
@@ -1985,6 +2162,130 @@
                 "source": "https://github.com/thephpleague/glide-zend/tree/1.1.0"
             },
             "time": "2019-06-25T11:37:31+00:00"
+        },
+        {
+            "name": "maglnet/magl-markdown",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maglnet/MaglMarkdown.git",
+                "reference": "fbc0a540d81b8de0e797bb88824fba7907ad7457"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maglnet/MaglMarkdown/zipball/fbc0a540d81b8de0e797bb88824fba7907ad7457",
+                "reference": "fbc0a540d81b8de0e797bb88824fba7907ad7457",
+                "shasum": ""
+            },
+            "require": {
+                "container-interop/container-interop": "^1.1",
+                "erusev/parsedown": "^1.6",
+                "erusev/parsedown-extra": "~0.5",
+                "ext-curl": "*",
+                "league/commonmark": "~0.5",
+                "michelf/php-markdown": "^1.4",
+                "php": "^5.3 || ^7.0",
+                "zendframework/zend-cache": "^2.4",
+                "zendframework/zend-eventmanager": "^2.4 || ^3.0",
+                "zendframework/zend-http": "^2.4",
+                "zendframework/zend-modulemanager": "^2.4",
+                "zendframework/zend-mvc": "^2.4 || ^3.0",
+                "zendframework/zend-servicemanager": "^2.4 || ^3.1.1",
+                "zendframework/zend-stdlib": "^2.4 || ^3.0",
+                "zendframework/zend-view": "^2.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8",
+                "zendframework/zend-console": "^2.4",
+                "zendframework/zend-i18n": "^2.4",
+                "zendframework/zend-log": "^2.4",
+                "zendframework/zend-serializer": "^2.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MaglMarkdown\\": "src/MaglMarkdown/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Glaub",
+                    "email": "magl@magl.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Provides a ZF2 View Helper to render markdown syntax. It uses third-party libraries for the rendering and you can switch between different renderers.",
+            "homepage": "https://github.com/maglnet/MaglMarkdown",
+            "keywords": [
+                "Zend Framework",
+                "gfm",
+                "github flavoured markdown",
+                "markdown",
+                "parsedown",
+                "zf2"
+            ],
+            "support": {
+                "issues": "https://github.com/maglnet/MaglMarkdown/issues",
+                "source": "https://github.com/maglnet/MaglMarkdown"
+            },
+            "time": "2017-05-30T14:03:43+00:00"
+        },
+        {
+            "name": "michelf/php-markdown",
+            "version": "1.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/michelf/php-markdown.git",
+                "reference": "c83178d49e372ca967d1a8c77ae4e051b3a3c75c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/michelf/php-markdown/zipball/c83178d49e372ca967d1a8c77ae4e051b3a3c75c",
+                "reference": "c83178d49e372ca967d1a8c77ae4e051b3a3c75c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=4.3 <5.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Michelf\\": "Michelf/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Michel Fortin",
+                    "email": "michel.fortin@michelf.ca",
+                    "homepage": "https://michelf.ca/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "John Gruber",
+                    "homepage": "https://daringfireball.net/"
+                }
+            ],
+            "description": "PHP Markdown",
+            "homepage": "https://michelf.ca/projects/php-markdown/",
+            "keywords": [
+                "markdown"
+            ],
+            "support": {
+                "issues": "https://github.com/michelf/php-markdown/issues",
+                "source": "https://github.com/michelf/php-markdown/tree/1.9.0"
+            },
+            "time": "2019-12-02T02:32:27+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3420,6 +3721,75 @@
             "time": "2016-04-20T17:26:42+00:00"
         },
         {
+            "name": "zendframework/zend-config",
+            "version": "3.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-config.git",
+                "reference": "012341361ae3cc97a99959e7cb7c9ebd04d49572"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-config/zipball/012341361ae3cc97a99959e7cb7c9ebd04d49572",
+                "reference": "012341361ae3cc97a99959e7cb7c9ebd04d49572",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^5.6 || ^7.0",
+                "psr/container": "^1.0",
+                "zendframework/zend-stdlib": "^2.7.7 || ^3.1"
+            },
+            "conflict": {
+                "container-interop/container-interop": "<1.2.0"
+            },
+            "require-dev": {
+                "malukenho/docheader": "^0.1.6",
+                "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.2",
+                "zendframework/zend-coding-standard": "~1.0.0",
+                "zendframework/zend-filter": "^2.7.2",
+                "zendframework/zend-i18n": "^2.7.4",
+                "zendframework/zend-servicemanager": "^2.7.8 || ^3.3"
+            },
+            "suggest": {
+                "zendframework/zend-filter": "^2.7.2; install if you want to use the Filter processor",
+                "zendframework/zend-i18n": "^2.7.4; install if you want to use the Translator processor",
+                "zendframework/zend-servicemanager": "^2.7.8 || ^3.3; if you need an extensible plugin manager for use with the Config Factory"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.3.x-dev",
+                    "dev-develop": "3.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\Config\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "provides a nested object property based user interface for accessing this configuration data within application code",
+            "keywords": [
+                "ZendFramework",
+                "config",
+                "zf"
+            ],
+            "support": {
+                "chat": "https://zendframework-slack.herokuapp.com",
+                "docs": "https://docs.zendframework.com/zend-config/",
+                "forum": "https://discourse.zendframework.com/c/questions/components",
+                "issues": "https://github.com/zendframework/zend-config/issues",
+                "rss": "https://github.com/zendframework/zend-config/releases.atom",
+                "source": "https://github.com/zendframework/zend-config"
+            },
+            "abandoned": "laminas/laminas-config",
+            "time": "2019-06-08T18:58:54+00:00"
+        },
+        {
             "name": "zendframework/zend-console",
             "version": "2.7.0",
             "source": {
@@ -4527,6 +4897,74 @@
             },
             "abandoned": "laminas/laminas-mime",
             "time": "2019-10-16T19:30:37+00:00"
+        },
+        {
+            "name": "zendframework/zend-modulemanager",
+            "version": "2.8.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-modulemanager.git",
+                "reference": "b2596d24b9a4e36a3cd114d35d3ad0918db9a243"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-modulemanager/zipball/b2596d24b9a4e36a3cd114d35d3ad0918db9a243",
+                "reference": "b2596d24b9a4e36a3cd114d35d3ad0918db9a243",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || ^7.0",
+                "zendframework/zend-config": "^3.1 || ^2.6",
+                "zendframework/zend-eventmanager": "^3.2 || ^2.6.3",
+                "zendframework/zend-stdlib": "^3.1 || ^2.7"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7.27 || ^6.5.14 || ^7.5.16",
+                "zendframework/zend-coding-standard": "~1.0.0",
+                "zendframework/zend-console": "^2.6",
+                "zendframework/zend-di": "^2.6",
+                "zendframework/zend-loader": "^2.5",
+                "zendframework/zend-mvc": "^3.0 || ^2.7",
+                "zendframework/zend-servicemanager": "^3.0.3 || ^2.7.5"
+            },
+            "suggest": {
+                "zendframework/zend-console": "Zend\\Console component",
+                "zendframework/zend-loader": "Zend\\Loader component if you are not using Composer autoloading for your modules",
+                "zendframework/zend-mvc": "Zend\\Mvc component",
+                "zendframework/zend-servicemanager": "Zend\\ServiceManager component"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.8.x-dev",
+                    "dev-develop": "2.9.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\ModuleManager\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Modular application system for zend-mvc applications",
+            "keywords": [
+                "ZendFramework",
+                "modulemanager",
+                "zf"
+            ],
+            "support": {
+                "chat": "https://zendframework-slack.herokuapp.com",
+                "docs": "https://docs.zendframework.com/zend-modulemanager/",
+                "forum": "https://discourse.zendframework.com/c/questions/components",
+                "issues": "https://github.com/zendframework/zend-modulemanager/issues",
+                "rss": "https://github.com/zendframework/zend-modulemanager/releases.atom",
+                "source": "https://github.com/zendframework/zend-modulemanager"
+            },
+            "abandoned": "laminas/laminas-modulemanager",
+            "time": "2019-10-28T13:29:38+00:00"
         },
         {
             "name": "zendframework/zend-mvc",
@@ -5676,75 +6114,6 @@
             "time": "2021-05-27T09:48:32+00:00"
         },
         {
-            "name": "zendframework/zend-config",
-            "version": "3.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-config.git",
-                "reference": "012341361ae3cc97a99959e7cb7c9ebd04d49572"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-config/zipball/012341361ae3cc97a99959e7cb7c9ebd04d49572",
-                "reference": "012341361ae3cc97a99959e7cb7c9ebd04d49572",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "php": "^5.6 || ^7.0",
-                "psr/container": "^1.0",
-                "zendframework/zend-stdlib": "^2.7.7 || ^3.1"
-            },
-            "conflict": {
-                "container-interop/container-interop": "<1.2.0"
-            },
-            "require-dev": {
-                "malukenho/docheader": "^0.1.6",
-                "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.2",
-                "zendframework/zend-coding-standard": "~1.0.0",
-                "zendframework/zend-filter": "^2.7.2",
-                "zendframework/zend-i18n": "^2.7.4",
-                "zendframework/zend-servicemanager": "^2.7.8 || ^3.3"
-            },
-            "suggest": {
-                "zendframework/zend-filter": "^2.7.2; install if you want to use the Filter processor",
-                "zendframework/zend-i18n": "^2.7.4; install if you want to use the Translator processor",
-                "zendframework/zend-servicemanager": "^2.7.8 || ^3.3; if you need an extensible plugin manager for use with the Config Factory"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.3.x-dev",
-                    "dev-develop": "3.4.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\Config\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "provides a nested object property based user interface for accessing this configuration data within application code",
-            "keywords": [
-                "ZendFramework",
-                "config",
-                "zf"
-            ],
-            "support": {
-                "chat": "https://zendframework-slack.herokuapp.com",
-                "docs": "https://docs.zendframework.com/zend-config/",
-                "forum": "https://discourse.zendframework.com/c/questions/components",
-                "issues": "https://github.com/zendframework/zend-config/issues",
-                "rss": "https://github.com/zendframework/zend-config/releases.atom",
-                "source": "https://github.com/zendframework/zend-config"
-            },
-            "abandoned": "laminas/laminas-config",
-            "time": "2019-06-08T18:58:54+00:00"
-        },
-        {
             "name": "zendframework/zend-developer-tools",
             "version": "2.0.0",
             "source": {
@@ -5828,74 +6197,6 @@
             },
             "abandoned": "laminas/laminas-developer-tools",
             "time": "2019-12-26T21:58:02+00:00"
-        },
-        {
-            "name": "zendframework/zend-modulemanager",
-            "version": "2.8.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-modulemanager.git",
-                "reference": "b2596d24b9a4e36a3cd114d35d3ad0918db9a243"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-modulemanager/zipball/b2596d24b9a4e36a3cd114d35d3ad0918db9a243",
-                "reference": "b2596d24b9a4e36a3cd114d35d3ad0918db9a243",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.6 || ^7.0",
-                "zendframework/zend-config": "^3.1 || ^2.6",
-                "zendframework/zend-eventmanager": "^3.2 || ^2.6.3",
-                "zendframework/zend-stdlib": "^3.1 || ^2.7"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^5.7.27 || ^6.5.14 || ^7.5.16",
-                "zendframework/zend-coding-standard": "~1.0.0",
-                "zendframework/zend-console": "^2.6",
-                "zendframework/zend-di": "^2.6",
-                "zendframework/zend-loader": "^2.5",
-                "zendframework/zend-mvc": "^3.0 || ^2.7",
-                "zendframework/zend-servicemanager": "^3.0.3 || ^2.7.5"
-            },
-            "suggest": {
-                "zendframework/zend-console": "Zend\\Console component",
-                "zendframework/zend-loader": "Zend\\Loader component if you are not using Composer autoloading for your modules",
-                "zendframework/zend-mvc": "Zend\\Mvc component",
-                "zendframework/zend-servicemanager": "Zend\\ServiceManager component"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.8.x-dev",
-                    "dev-develop": "2.9.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\ModuleManager\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Modular application system for zend-mvc applications",
-            "keywords": [
-                "ZendFramework",
-                "modulemanager",
-                "zf"
-            ],
-            "support": {
-                "chat": "https://zendframework-slack.herokuapp.com",
-                "docs": "https://docs.zendframework.com/zend-modulemanager/",
-                "forum": "https://discourse.zendframework.com/c/questions/components",
-                "issues": "https://github.com/zendframework/zend-modulemanager/issues",
-                "rss": "https://github.com/zendframework/zend-modulemanager/releases.atom",
-                "source": "https://github.com/zendframework/zend-modulemanager"
-            },
-            "abandoned": "laminas/laminas-modulemanager",
-            "time": "2019-10-28T13:29:38+00:00"
         }
     ],
     "aliases": [],
