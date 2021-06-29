@@ -1,12 +1,28 @@
+<?= "--- Dutch version below ---\n\n" ?>
+
 <?= "Dear ". $this->escapeHtml($company->getContactName()) .", \n"?>
 
 <?= "The changes to the item " . $name . " have just been approved and uploaded by an administrator to the GEWIS website. "?>
 
 <?= "You can find the item here: " . $this->serverUrl($route) . ".\n"?>
 
-<?="This is an automated email. For any questions, please contact the external affairs officer at ceb@gewis.nl .\n"?>
+<?="This is an automated email. For any questions, please contact the external affairs officer at ceb@gewis.nl.\n"?>
 
 <?= "With kind regards\n\n"?>
 <?="Study Association GEWIS\n\n\n"?>
+
+<?= "--- Dutch version ---\n\n" ?>
+
+<?= "Beste " .  $company->getContactName() . ",\n" ?>
+
+<?= "De aanpassingen aan het item " . $name . " zijn goedgekeurt en geupload naar de GEWIS website door een administrator. "?>
+
+<?= "Je kunt het item hier vinden: " . $this->serverUrl($route) . ".\n"?>
+
+<?="Dit is een automatisch gegenereerde email. Voor vragen, neem alstublieft contact op met de external affairs officer op ceb@gewis.nl.\n"?>
+
+<?= "Met vriendelijke groet,\n" ?>
+
+<?= "Studie Vereniging GEWIS\n\n\n" ?>
 
 
