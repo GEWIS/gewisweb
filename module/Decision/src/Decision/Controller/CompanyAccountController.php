@@ -357,6 +357,13 @@ class CompanyAccountController extends AbstractActionController
         return $this->getcompanyAccountService()->getActiveVacancies($companyPackageInfo[0]->getId(), $locale);
     }
 
+    /**
+     * @param $company
+     * @param $companyService
+     * @param $days_scheduled
+     * @param $credits_owned
+     * @param $type
+     */
     public function deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type) {
         $credits_owned = $credits_owned - $days_scheduled;  //deduct banner credits based on days scheduled
 
@@ -368,6 +375,13 @@ class CompanyAccountController extends AbstractActionController
         $companyService->saveCompany();
     }
 
+    /**
+     * @param $post
+     * @param $company
+     * @param $companyService
+     * @param $type
+     * @return bool
+     */
     public function checkCredits($post, $company, $companyService, $type) {
         $start_date = new \DateTime($post['startDate']);
         $end_date = new \DateTime($post['expirationDate']);
