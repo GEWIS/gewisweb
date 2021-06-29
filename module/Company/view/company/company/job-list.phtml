@@ -36,11 +36,6 @@ $this->headTitle($all ? 'All Vacancies' : $this->category->getPluralName());
 
 <section class="section">
     <div class="container">
-        <!--        <div class="row">-->
-        <!--            <div class="col-md-12">-->
-        <!--                <h1>--><? //= $all ? 'All Vacancies' : $category->getPluralName() ?><!--</h1>-->
-        <!--            </div>-->
-        <!--        </div>-->
         <div class="row">
             <div class="col-md-12">
                 <div class="filter-bar">
@@ -110,7 +105,6 @@ $this->headTitle($all ? 'All Vacancies' : $this->category->getPluralName());
         <div class="row">
             <div class="col-md-12">
                 <div class="highlight-grid">
-<!--                    <div class="slideshow-container">-->
                         <?php foreach ($highlights as $index => $job): ?>
                         <div class="mySlides">
                             <?php
