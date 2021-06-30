@@ -1,10 +1,12 @@
 <?php
 
 $locale = $this->translator->getLocale();
+// get current category
 $cat = NULL;
 if (!$all) {
     $cat = $this->category->getId();
 }
+// get highlighted vacancies
 $highlights = $this->highlightedIds($cat, $locale);
 // set title
 if (isset($this->company)) {
@@ -267,6 +269,7 @@ $this->headTitle($all ? 'All Vacancies' : $this->category->getPluralName());
         <?php endif; ?>
     </div>
 </section>
+
 <script type="text/javascript">
     var CardGrid = function ($grid, searchElements) {
         // Pre-compute card details
