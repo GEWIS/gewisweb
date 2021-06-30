@@ -14,6 +14,7 @@ class ApprovalVacancyTest extends \PHPUnit_Framework_TestCase
         $vacancy = new ApprovalVacancy();
 
         $this->assertNull($vacancy->getId());
+        $this->assertNull($vacancy->getName());
         $this->assertNull($vacancy->getSlugName());
         $this->assertNull($vacancy->getCategory());
         $this->assertNull($vacancy->getContactName());
@@ -38,6 +39,16 @@ class ApprovalVacancyTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(99999, $vacancy->getId());
         $vacancy->setId(null);
         $this->assertNull($vacancy->getId());
+    }
+
+    public function testName() {
+        $vacancy = new ApprovalVacancy();
+
+        $this->assertNull($vacancy->getName());
+        $vacancy->setName("testName");
+        $this->assertEquals("testName", $vacancy->getName());
+        $vacancy->setName(null);
+        $this->assertNull($vacancy->getName());
     }
 
     public function testSlugName() {

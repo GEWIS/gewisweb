@@ -70,4 +70,14 @@ class CompanyTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($company->getContactEmail());
     }
 
+    public function testContactName() {
+        $company = new Company();
+
+        $this->assertNull($company->getContactName());
+        $company->setContactName("testName");
+        $this->assertEquals("testName", $company->getContactName());
+        $company->setContactName(null);
+        $this->assertNull($company->getContactName());
+    }
+
 }

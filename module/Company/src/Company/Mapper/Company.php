@@ -208,27 +208,7 @@ class Company
             //]
         ];
     }
-
-
-    // TODO: check if this is actually still being used.
-    /**
-     * Find sector by its id
-     *
-     * @param $id Int id of the to be found jobsector
-     * @return JobSector
-     */
-    public function findSectorByNeutralId($id)
-    {
-        $objectRepository = $this->getSectorsRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('c')
-            ->select('c')->where('c.id=:Id')
-            ->setParameter('Id', $id);
-
-        if ($qb->getQuery()->getResult()!= null) {
-            return $qb->getQuery()->getResult()[0];
-        }
-        return null;
-    }
+    
 
     /**
      * Get the JobSector repository.

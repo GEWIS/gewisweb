@@ -42,7 +42,7 @@ class JobSectorTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($jobSector->getName());
     }
 
-    public function testSlug() {
+    public function testSlugName() {
         $jobSector = new JobSector();
 
         $this->assertNull($jobSector->getSlug());
