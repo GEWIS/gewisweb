@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-15 12:19+0200\n"
-"PO-Revision-Date: 2021-06-17 10:12+0200\n"
+"PO-Revision-Date: 2021-06-30 11:56+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -4726,6 +4726,85 @@ msgstr "Purchaser"
 #: module/Application/language/additional-strings:11
 msgid "Inactief Lid"
 msgstr "Inactive Member"
+
+#: module/Company/view/company/admin/approval-page.phtml:2
+msgid "Goedkeuringspagina"
+msgstr "Approval page"
+
+#: module/Company/view/company/admin/approval-page.phtml:12
+#: module/Company/view/company/admin/approval-page.phtml:87
+msgid "Bedrijfsnaam"
+msgstr "Company name"
+
+#: module/Company/view/company/admin/approval-page.phtml:15
+#: module/Company/view/company/admin/approval-page.phtml:88
+msgid "Goedkeuringstype"
+msgstr "Approval type"
+
+#: module/Company/view/company/admin/approval-page.phtml:37
+msgid "Afgewezen"
+msgstr "Rejected"
+
+#: module/Company/view/company/admin/approval-page.phtml:39
+msgid "Wacht op goedkeuring"
+msgstr "Waiting for approval"
+
+#: module/Company/view/company/admin/approval-page.phtml:75
+msgid "Bekijk verzoek"
+msgstr "View request"
+
+#: module/Company/view/company/admin/approval-page.phtml:78
+msgid "Verwijder verzoek"
+msgstr "Delete request"
+
+#: module/Company/view/company/admin/approval-page.phtml:34
+msgid "Vacature, naam: "
+msgstr "Vacancy, name: "
+
+#: module/Company/view/company/admin/approval-vacancy.phtml:2
+msgid "Keur vacature goed"
+msgstr "Approve vacancy"
+
+#: module/Company/view/company/admin/approval-vacancy.phtml:130
+msgid "Huidige bijlage"
+msgstr "Current attachment"
+
+#: module/Company/view/company/admin/approval-vacancy.phtml:134
+msgid "Bekijk bijlage"
+msgstr "View attachment"
+
+#: module/Company/view/company/admin/approval-vacancy.phtml:250
+#: module/Company/view/company/admin/approval-banner.phtml:23
+#: module/Company/view/company/admin/approval-profile.phtml:49
+msgid "Accepteren"
+msgstr "Accept"
+
+#: module/Company/view/company/admin/approval-vacancy.phtml:256
+#: module/Company/view/company/admin/approval-profile.phtml:57
+#: module/Company/view/company/admin/approval-banner.phtml:26
+msgid "Afwijzen"
+msgstr "Reject"
+
+#: module/Company/view/company/admin/approval-profile.phtml:2
+#: module/Company/view/company/admin/approval-profile.phtml:13
+msgid "Profiel goedkeuren"
+msgstr "Approve profile"
+
+#: module/Company/view/company/admin/approval-profile.phtml:17
+msgid "Nederlands logo"
+msgstr "Dutch logo"
+
+#: module/Company/view/company/admin/approval-profile.phtml:24
+msgid "Engels logo"
+msgstr "English logo"
+
+#: module/Company/view/company/admin/approval-banner.phtml:2
+#: module/Company/view/company/admin/approval-banner.phtml:10
+msgid "Banner goedkeuren"
+msgstr "Approve Banner"
+
+msgid "Klik %shier%s om naar de login pagina te gaan."
+msgstr "Click %shere%s to go to the login page."
 
 #~ msgid "Most recent"
 #~ msgstr "Most recent"

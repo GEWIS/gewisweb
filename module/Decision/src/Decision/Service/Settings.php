@@ -21,7 +21,7 @@ class Settings extends AbstractAclService
      * @return array CompanyUser model
      */
     public function getCompanyUser($id){
-        echo var_dump($this->getcompanyAccountMapper()->findCompanyUser($id));
+        echo var_dump($this->getSettingsMapper()->findCompanyUser($id));
     }
 
 
@@ -34,7 +34,7 @@ class Settings extends AbstractAclService
      * @return array Company model
      */
     public function getCompanyInfo($id){
-        return $this->getcompanyAccountMapper()->findCompanyInfo($id);
+        return $this->getSettingsMapper()->findCompanyInfo($id);
     }
 
     /**
@@ -46,7 +46,7 @@ class Settings extends AbstractAclService
      * @return array package Information of company
      */
     public function getCompanyPackageInfo($id){
-        return $this->getcompanyAccountMapper()->findCompanyPackageInfo($id);
+        return $this->getSettingsMapper()->findCompanyPackageInfo($id);
     }
 
     /**
@@ -62,7 +62,7 @@ class Settings extends AbstractAclService
      * @return null
      */
     public function updateCompanyData($collumns, $values, $id){
-        $this->getcompanyAccountMapper()->setCompanyData($collumns, $values, $id);
+        $this->getSettingsMapper()->setCompanyData($collumns, $values, $id);
     }
 
     /**
@@ -90,7 +90,7 @@ class Settings extends AbstractAclService
      *
      * @return \Decision\Mapper\CompanyAccount
      */
-    public function getcompanyAccountMapper()
+    public function getSettingsMapper()
     {
         return $this->sm->get('decision_mapper_settings');
     }

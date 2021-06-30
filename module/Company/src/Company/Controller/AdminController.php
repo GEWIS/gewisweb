@@ -53,13 +53,14 @@ class AdminController extends AbstractActionController
     /**
      * Generate the general approval overview page
      *
-     * @return ViewModel
+     * @return \Zend\Http\Response|ViewModel
      */
     public function approvalPageAction(){
         $this->notAdminNotAllowed();
 
         $approvalService = $this->getApprovalService();
 
+        // Retrieve approvals
         $pendingApprovals = $approvalService->getPendingApprovals();
         $companyService = $this->getCompanyService();
         $translator = $companyService->getTranslator();
@@ -98,7 +99,7 @@ class AdminController extends AbstractActionController
     {
         $this->notAdminNotAllowed();
         $newVacancy = false;
-        // Get useful stuff
+        // Get services and form
         $companyService = $this->getCompanyService();
         $approvalService = $this->getApprovalService();
         $jobForm = $companyService->getJobFormCompany();
@@ -258,14 +259,10 @@ class AdminController extends AbstractActionController
             );
         }
 
-
-
         // Initialize the view
         return new ViewModel([
             'bannerApproval' => $bannerApproval[0]
         ]);
-
-
     }
 
     /**
@@ -277,7 +274,7 @@ class AdminController extends AbstractActionController
     public function approvalProfileAction()
     {
         $this->notAdminNotAllowed();
-        // Get useful stuff
+        // Get services and form
         $companyService = $this->getCompanyService();
         $approvalService = $this->getApprovalService();
         $companyForm = $companyService->getCompanyForm();
@@ -355,6 +352,7 @@ class AdminController extends AbstractActionController
         // Initialize form
         //echo var_dump($company->getArrayCopy());
         $companyArray = $company->getArrayCopy();
+        //TODO Can this code be removed?
 //        $companyArray['languages'] = [];
 //        $i = 0;
 //        foreach($companyl18 as $language){

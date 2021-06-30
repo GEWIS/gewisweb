@@ -12,7 +12,11 @@ use Company\Form\EditPackage as EditPackageForm;
 
 class CompanyAccountController extends AbstractActionController
 {
-
+    /**
+     * Generate company panel (index) viewmodel
+     *
+     * @return \Zend\Http\Response|ViewModel
+     */
     public function IndexAction()
     {
         //Evaluate permissions
@@ -484,6 +488,11 @@ class CompanyAccountController extends AbstractActionController
         ]);
     }
 
+    /**
+     * Generate settings viewmodel
+     *
+     * @return \Zend\Http\Response|ViewModel
+     */
     public function settingsAction() {
         //Obtain company and company package information
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
