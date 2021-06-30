@@ -300,21 +300,18 @@ class Company extends AbstractACLService
         $highlights = $this->getHighlightPackageMapper()->getHighlightedVacancies($category, $language);
 
         $highlightIDs = [];
-        //$highlightNames = [];
 
         // If we already have at least 3 vacancies to highlight, we will pick a random selection of 3
         if (count($highlights)>=3) {
             $numbers = range(0, count($highlights)-1);
             shuffle($numbers);
             for ($x = 0; $x < 3; $x++){
-                //array_push($highlightNames, $this->getJobMapper()->findJobById($highlights[$numbers[$x]][1])->getName());
                 array_push($highlightIDs, $highlights[$numbers[$x]][1]);
             }
             //If we don't have 3 vacancies to highlight we will pick some random vacancies
         } else {
             // Update the array with vacancies first
             for ($x = 0; $x < count($highlights); $x++){
-                //array_push($highlightNames, $this->getJobMapper()->findJobById($highlights[$x][1])->getName());
                 array_push($highlightIDs, $highlights[$x][1]);
             }
 
@@ -331,16 +328,15 @@ class Company extends AbstractACLService
                     return $highlights;
                 }
                 $random = rand(0,count($extra)-1);
-                //array_push($highlightNames, $this->getJobMapper()->findJobById($extra[$random]['id'])->getName());
                 array_push($highlightIDs, $extra[$random]['id']);
             }
         }
-//        print_r($highlightIDs);
+        // get vacancies to return from their id
         $highlights = [];
         foreach ($highlightIDs as $id) {
             array_push($highlights, $this->getJobMapper()->findJobById($id));
         }
-        return $highlights;//$highlightNames;
+        return $highlights;
     }
 
     /**
@@ -1142,15 +1138,20 @@ class Company extends AbstractACLService
      * @param array $data The (new) data to save
      */
     public function setCentralJobData($jobs, $data) {
-        $x = 0;
         foreach ($jobs as $job) {
             $job->setEmail($data['email']);
             $job->setWebsite($data['website']);
             $job->setHours($data['hours']);
 
-            $job->setSectors($this->getJobMapper()->findSectorsById($data['sectors'] + $x));
-            $job->setCategory($this->getJobMapper()->findCategoryById($data['category'] +$x));
-            $x++;
+            // get sector for the correct language based on the id
+            $sector = $this->getJobMapper()->findSectorsById($data['sectors']);
+            $siblingSector = $this->getSectorMapper()->siblingSector($sector, $job->getLanguage());
+            $job->setSectors($siblingSector);
+
+            // get category for the correct language based on the id
+            $category = $this->getJobMapper()->findCategoryById($data['category']);
+            $siblingCategory = $this->getCategoryMapper()->siblingCategory($category, $job->getLanguage());
+            $job->setCategory($siblingCategory);
 
             $job->setLocation($data['location']);
             $job->setContactName($data['contactName']);

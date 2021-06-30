@@ -53,7 +53,7 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
                 'name',
                 $this->translator->translate('Category'),
                 'category',
-                'nl'
+                $this->translator->getLocale()
             )
         );
 
@@ -74,7 +74,7 @@ class EditJobCompany extends CollectionBaseFieldsetAwareForm
                 'name',
                 $this->translator->translate('Sectors'),
                 'sectors',
-                'nl'
+                $this->translator->getLocale()
             )
         );
 

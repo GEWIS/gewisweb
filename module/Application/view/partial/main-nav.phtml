@@ -56,7 +56,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         </a>
                         <!-- Content of dropdown menu -->
                         <ul class="dropdown-menu">
-                            <!-- Button to company pannel -->
+                            <!-- Button to company panel -->
                             <li><a href="<?= $this->url('companyAccount') ?>"><?= $this->translate('Dashboard') ?></a>
                             </li>
                             <!-- Button to go to change password page -->
@@ -71,7 +71,6 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     </li>
                 <!-- To show if a user is logged in -->
                 <?php else: ?>
-<!--                 --><?php //$company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount(); ?>
                     <?php $member = $this->identity()->getMember() ?>
                     <li class="dropdown pull-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -202,33 +201,18 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 <span class="caret"></span>
                             </a>
                             <!-- Sub-menu for vacancies -->
-                            <!-- TODO: add right url once implemented -->
                             <a href="<?= $this->url('company/jobList', ['category' => 'all']) ?>" role="button"
                                class="hidden-sm hidden-xs">
                                 <?= $this->translate('Vacancies') ?>
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-
-<!--                             Hardcoded version (for testing purpose) -->
-<!--                            --><?php
-//                            $arr = ['Jobs', 'Student jobs', 'Internships', 'Traineeships', 'Graduation projects'] ?>
-<!--                                --><?php //foreach ($arr as $category):
-//                                    $url = str_replace(' ', '', strtolower($category))
-//                                    ?>
-<!--                                        <li>-->
-<!--                                            <a href="--><?//= $this->url('company/jobList', ['category' => $url]) ?><!--">--><?//= $category ?><!--</a>-->
-<!--                                        </li>-->
-<!--                                --><?php //endforeach ?>
-
-                                <!-- Final version -->
                                 <!-- Get all job categories to use in submenu -->
                                 <!-- Only shows created categories when there are active vacancies in the category -->
                                 <?php foreach ($this->jobCategories() as $category): ?>
                                     <li>
                                         <!-- Use url with slugname of category for the page with specific category -->
                                         <!-- Use plural name for category in menu bar -->
-
                                         <a href="<?= $this->url('company/jobList', ['category' => $category->getSlug()]) ?>"><?= $category->getPluralName() ?></a>
                                     </li>
                                 <?php endforeach ?>

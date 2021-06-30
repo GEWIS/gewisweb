@@ -2,33 +2,41 @@
     ->prependFile($this->basePath() . '/js/etc.js');
 $this->headTitle($this->translate('Career'));
 ?>
+<!-- style change for just this file -->
 <style>
     .row-spacing-top {
         margin-top: 2rem;
     }
 </style>
 
+<!-- Use section and divs to position the content of the page correctly -->
 <div class="container">
     <section class="section">
         <div class="row">
 
+            <!-- title -->
             <div class="row row-spacing-top">
                 <div class="col-md-12">
                     <h1><?= $this->translate("Career") ?></h1>
                 </div>
             </div>
 
+            <!-- companies part -->
             <div class="row row-spacing-top">
+                <!-- heading -->
                 <div class="col-md-12">
                     <h2><?= $this->translate("Companies") ?></h2>
                 </div>
+                <!-- text content -->
                 <div class="col-md-12">
                     <p>
                         <?=
                         $this->translate("GEWIS collaborates with different companies from the industry to help you out with your career orientation!") . ' ',
-                            $this->translate("For example by hosting business cases, in-house days, and weekly lunch lectures.") . ' ', sprintf(
-                            $this->translate("You can find a full overview of career events on %sthis%s page."), '<a href="/activity/career" title="' . '">',
-                            '</a>')
+                            $this->translate("For example by hosting business cases, in-house days, and weekly lunch lectures.") . ' ',
+                            // includes link to career activities in text
+                            sprintf($this->translate("You can find a full overview of career events on %sthis%s page."),
+                                '<a href="/activity/career" title="' . '">',
+                                '</a>')
                         ?>
                     </p>
                     <p>
@@ -38,6 +46,7 @@ $this->headTitle($this->translate('Career'));
                     </p>
                     <p>
                         <?=
+                        // includes link to send an email
                         $this->translate("If you are a company and interested in setting up a collaboration with GEWIS, please send out an "),
                             '<a href="mailto:ceb@gewis.nl" title="' . '">' . $this->translate("email to the ceb@gewis.nl") . '</a>'
                         ?>
@@ -45,15 +54,19 @@ $this->headTitle($this->translate('Career'));
                 </div>
             </div>
 
+            <!-- internships etc part -->
             <div class="row row-spacing-top">
+                <!-- heading -->
                 <div class="col-md-12">
                     <h2><?= $this->translate("Internship, graduation project or student job?") ?></h2>
                 </div>
+                <!-- text cocntent -->
                 <div class="col-md-12">
                     <p>
                         <?=
                         $this->translate("GEWIS has many contacts with different companies.") . ' ',
                             $this->translate("We can easily help you out if you want to get in touch with a company for an internship, graduation project or student job.") . ' ',
+                        // includes link to send an email
                         $this->translate("If you want GEWIS to help out with finding interesting opportunities, you can "),
                             '<a href="mailto:ceb@gewis.nl" title="' . '">' . $this->translate("reach out to ceb@gewis.nl") . '</a>', '!'
                         ?>
@@ -61,47 +74,60 @@ $this->headTitle($this->translate('Career'));
                 </div>
             </div>
 
+            <!-- newsletter part -->
             <div class="row row-spacing-top">
+                <!-- heading -->
                 <div class="col-md-12">
                     <h2><?= $this->translate("Career Newsletter") ?></h2>
                 </div>
+                <!-- text content -->
                 <div class="col-md-12">
                     <p>
                         <?=
                         $this->translate("Via the monthly Career Newsletter, you can find all GEWIS career events, from lunch lectures to business cases.") . ' ',
                             $this->translate("Furthermore interesting events and job opportunities from companies are shared.") . ' ',
-                        sprintf(
-                            $this->translate("You can sign up for the Career Newsletter %shere%s."), '<a href="https://lists.gewis.nl" title="' . '">',
-                            '</a>')
+                            // includes link for subscribing to newsletter
+                            sprintf($this->translate("You can sign up for the Career Newsletter %shere%s."),
+                                '<a href="https://lists.gewis.nl" title="' . '">',
+                                '</a>')
                         ?>
                     </p>
                 </div>
             </div>
-        <hr/>
 
+            <!-- separation line -->
+            <hr/>
+
+            <!-- myfuture part -->
             <div class="row row-spacing-top">
+                <!-- heading -->
                 <div class="col-md-12">
                     <h2><?= $this->translate("MyFuture") ?></h2>
                 </div>
+                <!-- text content -->
                 <div class="col-md-12">
                     <p>
                         <?=
                         $this->translate("MyFuture provides an overview of the activities, organized by all TU/e affiliated parties, that best suit your needs and ambitions.") . ' ',
                         $this->translate("These range from lunch lectures to case contests to company visits and are aimed at giving you as a student a clear overview of where you can work and what you can do when you are finished with your studies.")
                         ?>
+                        <!-- myfuture logo which is also a link to the myfuture website -->
                         <a href="https://myfuture.tue.nl/activities" style="margin-bottom: 0 !important;">
                             <img class="img-responsive"
                                  src="/img/myfuture2.png"
                                  alt="<?= $this->translate("MyFuture") ?>">
                         </a>
-                </p>
+                    </p>
                 </div>
             </div>
 
+            <!-- myfuture activities part -->
             <div class="row row-spacing-top">
+                <!-- heading -->
                 <div class="col-md-12">
                     <h2><?= $this->translate("MyFuture Activities") ?></h2>
                 </div>
+                <!-- text content -->
                 <div class="col-md-12">
                     <p>
                         <?=
@@ -109,6 +135,7 @@ $this->headTitle($this->translate('Career'));
                             $this->translate("The MyFuture Activities kick-off with the first-year excursion, which is valued as 2 MyFuture Activities.") . ' ',
                         $this->translate("The remaining five can be obtained by participating in MyFuture Activities of your own choice.")
                         ?>
+                        <!-- myfuture logo which is also a link to the myfuture activities website -->
                         <a href="https://myfuture.tue.nl/myfuture-activities" style="margin-bottom: 0 !important;">
                             <img class="img-responsive"
                                  src="/img/myfuture2.png"
@@ -117,40 +144,49 @@ $this->headTitle($this->translate('Career'));
                     </p>
                 </div>
             </div>
+
+            <!-- separation line -->
             <hr/>
 
+            <!-- wervingsdagen part -->
             <div class="row row-spacing-top">
+                <!-- heading -->
                 <div class="col-md-12">
                     <h2><?= $this->translate("Wervingsdagen") ?></h2>
                 </div>
+                <!-- text content -->
                 <div class="col-md-12">
                     <p>
                         <?=
                         $this->translate("Wervingsdagen is a colaborative initiative from 10 study associations of the TU/e, including GEWIS. Every year, Wervingsdagen hosts 3 main events: the Skill Sessions, Career Expo and Interviewing Days.")
                         ?>
-
                     </p>
+                    <!-- wervingsdagen logo which is also a link to the wervingsdagen website -->
+                    <a class="" href="https://wervingsdagen.nl/index/" style="margin-bottom: 0 !important;">
+                        <img class="img-responsive"
+                            src="/img/wervingsdagen.png"
+                            alt="<?= $this->translate("Wervingsdagen") ?>">
+                    </a>
                 </div>
+            </div>
 
-            <div class="col-md-12">
-                <a class="" href="https://wervingsdagen.nl/index/" style="margin-bottom: 0 !important;">
-                    <img class="img-responsive"
-                         src="/img/wervingsdagen.png"
-                         alt="<?= $this->translate("Wervingsdagen") ?>">
-                </a>
-            </div</div>
+            <!-- separation line -->
             <hr/>
 
+            <!-- career academy part -->
             <div class="row row-spacing-top">
+                <!-- heading -->
                 <div class="col-md-12">
                     <h2><?= $this->translate("Career Academy") ?></h2>
                 </div>
+                <!-- text content -->
                 <div class="col-md-12">
                     <p>
                         <?=
                         $this->translate("The TU/e Career Academy supports students in awareness and development of what kind of an engineer they want to be.") . ' ',
                          $this->translate("Career Academy offers career workshops and activities, individual career coaching, and CV, cover letter and LinkedIn checks!")
                         ?>
+                        <!-- career academy logo which is also a link to the career academy website -->
                         <a href="https://www.tue.nl/universiteit/community/career-academy/" style="margin-bottom: 0 !important;">
                             <img class="img-responsive"
                                  src="/img/careeracademy.jpg"
@@ -159,6 +195,7 @@ $this->headTitle($this->translate('Career'));
                     </p>
                 </div>
             </div>
+
         </div>
     </section>
 </div>

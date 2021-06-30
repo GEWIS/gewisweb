@@ -147,6 +147,7 @@ class UserController extends AbstractActionController
      */
     public function passwordCompanyAction()
     {
+        // get useful stuff
         $userService = $this->getUserService();
         $request = $this->getRequest();
 

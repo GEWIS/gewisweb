@@ -53,14 +53,13 @@ class AdminController extends AbstractActionController
     /**
      * Generate the general approval overview page
      *
-     * @return \Zend\Http\Response|ViewModel
+     * @return ViewModel
      */
     public function approvalPageAction(){
         $this->notAdminNotAllowed();
 
         $approvalService = $this->getApprovalService();
 
-        // Retrieve approvals
         $pendingApprovals = $approvalService->getPendingApprovals();
         $companyService = $this->getCompanyService();
         $translator = $companyService->getTranslator();
@@ -99,13 +98,12 @@ class AdminController extends AbstractActionController
     {
         $this->notAdminNotAllowed();
         $newVacancy = false;
-        // Get services and form
+        // Get useful stuff
         $companyService = $this->getCompanyService();
         $approvalService = $this->getApprovalService();
         $jobForm = $companyService->getJobFormCompany();
 
         // Get the parameters
-        // TODO: make sure this doesn't need to be called 'slugCompanyName'
         $languageNeutralId = $this->params('slugCompanyName');
 
 
@@ -120,15 +118,16 @@ class AdminController extends AbstractActionController
 
         // Handle incoming form results
         $request = $this->getRequest();
-        if ($request->isPost()  && !isset($_POST['reject'])) {  //acception behavior
+        if ($request->isPost()  && !isset($_POST['reject'])) {  //acceptance behavior
             $files = $request->getFiles();
             $post = $request->getPost();
             $jobDict = [];
 
-
+            // Set the data to adjust a job
             foreach ($jobs as $job) {
                 $jobDict[$job->getLanguage()] = $job;
             }
+            // Set the data to create a new job
             if ($newVacancy) {
                 $jobDict = [];
                 foreach ($vacancyApprovals as $job) {
@@ -137,12 +136,16 @@ class AdminController extends AbstractActionController
             }
 
             if ($newVacancy) {
+                // Create a new Job
                 $companyService->createJob($vacancyApprovals[0]->getPackage()->getId(), $post, $files);
             } else {
+                // Adjust an existing Job
                 $companyService->saveJobData($languageNeutralId, $jobDict, $post, $files);
             }
+            // Delete the approval models
             $companyService->deleteVacancyApprovals($vacancyApprovals);
 
+            // Send email if this was checked
             if($_POST['sendEmail']) {
                 $company = $vacancyApprovals[0]->getPackage()->getCompany();
                 $name = $vacancyApprovals[0]->getName();
@@ -151,15 +154,17 @@ class AdminController extends AbstractActionController
                     $this->getCompanyEmailService()->sendApprovalResult($company, false, $name, $route);
                 }
             }
+            // Redirect to the approval overview
             return $this->redirect()->toRoute(
                 'admin_company/approvalPage'
             );
 
         } elseif (isset($_POST['reject'])){ //rejection behavior
+            // set the approval models to rejected
             foreach($vacancyApprovals as $approval) {
                 $approvalService->rejectVacancyApproval($approval->getId());
             }
-
+            // Send email if this was checked
             if($_POST['sendEmail']) {
                 $company = $vacancyApprovals[0]->getPackage()->getCompany();
                 $name = $vacancyApprovals[0]->getName();
@@ -168,7 +173,7 @@ class AdminController extends AbstractActionController
                     $this->getCompanyEmailService()->sendApprovalResult($company, true, $name, $route);
                 }
             }
-
+            // Redirect to the approval overview
             return $this->redirect()->toRoute(
                 'admin_company/approvalPage'
             );
@@ -182,7 +187,7 @@ class AdminController extends AbstractActionController
         $languages = array_keys($jobDict);
         $jobForm->setLanguages($languages);
 
-
+        // Initialize the labels
         $mapper = $companyService->getLabelMapper();
         if(!$newVacancy) {
             $labels = $jobs[0]->getLabels();
@@ -194,6 +199,7 @@ class AdminController extends AbstractActionController
             }
             $jobForm->setLabels($actualLabels);
         }
+        // Set data of the approval models in the form
         foreach ($vacancyApprovals as $approval) {
             $jobForm->setData($approval->getArrayCopy());
         }
@@ -224,10 +230,9 @@ class AdminController extends AbstractActionController
         //get banner
         $bannerApproval = $approvalService->getBannerApprovalById($approvalId);
 
-
-        if (isset($_POST['accept'])) {  //acception behavior
+        if (isset($_POST['accept'])) {  //acceptance behavior
             $id = $bannerApproval[0]->getBannerApproval()->getId();
-
+            // Send email if this was checked
             if (isset($_POST['email'])) {
                 $company = $bannerApproval[0]->getCompany();
                 $name = "banner";
@@ -236,15 +241,16 @@ class AdminController extends AbstractActionController
                     $this->getCompanyEmailService()->sendApprovalResult($company, false, $name, $route);
                 }
             }
-
+            // Set bannerModel to published
             $approvalService->acceptBannerApproval($id, $approvalId);
-
+            // Redirect to the approval overview
             return $this->redirect()->toRoute(
                 'admin_company/approvalPage'
             );
         }elseif(isset($_POST['reject'])){   //rejection behavior
+            // Set approval models to rejected
             $approvalService->rejectBannerApproval($approvalId);
-
+            // Send email if this was checked
             if (isset($_POST['email'])) {
                 $company = $bannerApproval[0]->getCompany();
                 $name = "banner";
@@ -253,16 +259,17 @@ class AdminController extends AbstractActionController
                     $this->getCompanyEmailService()->sendApprovalResult($company, true, $name, $route);
                 }
             }
-
+            // Redirect to the approval overview
             return $this->redirect()->toRoute(
                 'admin_company/approvalPage'
             );
         }
-
         // Initialize the view
         return new ViewModel([
             'bannerApproval' => $bannerApproval[0]
         ]);
+
+
     }
 
     /**
@@ -274,7 +281,7 @@ class AdminController extends AbstractActionController
     public function approvalProfileAction()
     {
         $this->notAdminNotAllowed();
-        // Get services and form
+        // Get useful stuff
         $companyService = $this->getCompanyService();
         $approvalService = $this->getApprovalService();
         $companyForm = $companyService->getCompanyForm();
@@ -286,7 +293,6 @@ class AdminController extends AbstractActionController
         // Get the specified company
         $companyList = $approvalService->getApprovalProfileById($approvalId);
         $oldCompanyList = $companyService->getEditableCompaniesBySlugName($companyList[0]->getSlugName());
-        //$companyList = $companyService->getEditableCompaniesBySlugName($companyName);
 
         // If the company is not found, throw 404
         if (empty($companyList)) {
@@ -300,12 +306,11 @@ class AdminController extends AbstractActionController
 
         // Handle incoming form data
         $request = $this->getRequest();
-        if ($request->isPost() && !isset($_POST['reject'])) {   //acception behavior
+        if ($request->isPost() && !isset($_POST['reject'])) {   //acceptance behavior
             $post = $request->getPost();
             $post['id'] = $oldCompany->getId();
-            //$post['en_logo'] = $company->getArrayCopy()['en_logo'];
 
-
+            // Save profile changes
             if ($companyService->saveCompanyByData(
                 $oldCompany,
                 $post,
@@ -313,6 +318,7 @@ class AdminController extends AbstractActionController
                 $company->getArrayCopy()['en_logo'],
                 $company->getArrayCopy()['nl_logo']
             )) {
+                // Send email if this was checked
                 if($_POST['sendEmail']) {
                     $name = $oldCompany->getName();
                     $route = '/career/company/' . $oldCompany->getSlugName();
@@ -320,20 +326,20 @@ class AdminController extends AbstractActionController
                         $this->getCompanyEmailService()->sendApprovalResult($oldCompany, false, $name, $route);
                     }
                 }
-
+                // Get deletion info
                 $deleteInfo = ["type" => "profile", "approvalId" => $pendingApprovalId,
                     "companyId"=>$company->getId(),
                     "profileApprovalId"=>$approvalId];
 
+                // Delete approval models
                 $approvalService->deletePendingApproval($deleteInfo);
-                //$companyService->deleteProfileApprovals($company);
-
+                // Redirect to the approval overview
                 return $this->redirect()->toRoute(
                     'admin_company/approvalPage'
                 );
             }
         }elseif (isset($_POST['reject'])){  //rejection behavior
-
+            // Send email if this was checked
             if($_POST['sendEmail']) {
                 $name = $oldCompany->getName();
                 $route = "";
@@ -341,26 +347,16 @@ class AdminController extends AbstractActionController
                     $this->getCompanyEmailService()->sendApprovalResult($oldCompany, true, $name, $route);
                 }
             }
-
+            // Set the approval models as rejected
             $approvalService->rejectProfileApproval($_POST['id']);
-
+            // Redirect to the approval overview
             return $this->redirect()->toRoute(
                 'admin_company/approvalPage'
             );
         }
 
-        // Initialize form
-        //echo var_dump($company->getArrayCopy());
+        // Initialize form and set approval data
         $companyArray = $company->getArrayCopy();
-        //TODO Can this code be removed?
-//        $companyArray['languages'] = [];
-//        $i = 0;
-//        foreach($companyl18 as $language){
-//            $companyArray['languages'][$i] = $language->getLanguage();
-//            $i++;
-//            $companyArray = $companyArray + $language->getArrayCopy();
-//        }
-
         $companyForm->setData($companyArray);
         $companyForm->get('languages')->setValue($companyArray['languages']);
 

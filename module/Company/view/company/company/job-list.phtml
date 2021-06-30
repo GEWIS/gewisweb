@@ -1,10 +1,12 @@
 <?php
 
 $locale = $this->translator->getLocale();
+// get current category
 $cat = NULL;
 if (!$all) {
     $cat = $this->category->getId();
 }
+// get highlighted vacancies
 $highlights = $this->highlightedIds($cat, $locale);
 // set title
 if (isset($this->company)) {
@@ -36,11 +38,6 @@ $this->headTitle($all ? 'All Vacancies' : $this->category->getPluralName());
 
 <section class="section">
     <div class="container">
-        <!--        <div class="row">-->
-        <!--            <div class="col-md-12">-->
-        <!--                <h1>--><? //= $all ? 'All Vacancies' : $category->getPluralName() ?><!--</h1>-->
-        <!--            </div>-->
-        <!--        </div>-->
         <div class="row">
             <div class="col-md-12">
                 <div class="filter-bar">
@@ -110,7 +107,6 @@ $this->headTitle($all ? 'All Vacancies' : $this->category->getPluralName());
         <div class="row">
             <div class="col-md-12">
                 <div class="highlight-grid">
-<!--                    <div class="slideshow-container">-->
                         <?php foreach ($highlights as $index => $job): ?>
                         <div class="mySlides">
                             <?php
@@ -126,7 +122,7 @@ $this->headTitle($all ? 'All Vacancies' : $this->category->getPluralName());
                                data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>"
                                data-sector="<?= $job->getSectors()->getName() ?>"
                                data-name="<?= $job->getName() ?>"
-                               data-starts="<?= $job->getStartingDate()->format(DateTime::ATOM) ?>">
+                               data-starts="<?= ($job->getStartingDate()!= null) ? $job->getStartingDate()->format(DateTime::ATOM) : "Continuous" ?>">
                                 <div class="card-img">
                                     <img
                                     src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
@@ -205,7 +201,7 @@ $this->headTitle($all ? 'All Vacancies' : $this->category->getPluralName());
                            data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>"
                            data-sector="<?= $job->getSectors()->getName() ?>"
                            data-name="<?= $job->getName() ?>"
-                           data-starts="<?= $job->getStartingDate()->format(DateTime::ATOM) ?>">
+                           data-starts="<?= ($job->getStartingDate()!= null) ? $job->getStartingDate()->format(DateTime::ATOM) : "Continuous"  ?>">
                             <div class="card-img">
                                 <img
                                 src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
@@ -273,6 +269,7 @@ $this->headTitle($all ? 'All Vacancies' : $this->category->getPluralName());
         <?php endif; ?>
     </div>
 </section>
+
 <script type="text/javascript">
     var CardGrid = function ($grid, searchElements) {
         // Pre-compute card details
