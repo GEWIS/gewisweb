@@ -300,21 +300,18 @@ class Company extends AbstractACLService
         $highlights = $this->getHighlightPackageMapper()->getHighlightedVacancies($category, $language);
 
         $highlightIDs = [];
-        //$highlightNames = [];
 
         // If we already have at least 3 vacancies to highlight, we will pick a random selection of 3
         if (count($highlights)>=3) {
             $numbers = range(0, count($highlights)-1);
             shuffle($numbers);
             for ($x = 0; $x < 3; $x++){
-                //array_push($highlightNames, $this->getJobMapper()->findJobById($highlights[$numbers[$x]][1])->getName());
                 array_push($highlightIDs, $highlights[$numbers[$x]][1]);
             }
             //If we don't have 3 vacancies to highlight we will pick some random vacancies
         } else {
             // Update the array with vacancies first
             for ($x = 0; $x < count($highlights); $x++){
-                //array_push($highlightNames, $this->getJobMapper()->findJobById($highlights[$x][1])->getName());
                 array_push($highlightIDs, $highlights[$x][1]);
             }
 
@@ -331,16 +328,15 @@ class Company extends AbstractACLService
                     return $highlights;
                 }
                 $random = rand(0,count($extra)-1);
-                //array_push($highlightNames, $this->getJobMapper()->findJobById($extra[$random]['id'])->getName());
                 array_push($highlightIDs, $extra[$random]['id']);
             }
         }
-//        print_r($highlightIDs);
+        // get vacancies to return from their id
         $highlights = [];
         foreach ($highlightIDs as $id) {
             array_push($highlights, $this->getJobMapper()->findJobById($id));
         }
-        return $highlights;//$highlightNames;
+        return $highlights;
     }
 
     /**

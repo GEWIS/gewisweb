@@ -212,6 +212,7 @@ a.card {
     border-radius: 0.4em;
 }
 
+/* Highlighted vacancy takes up full row and one column */
 .highlight-grid {
     display: grid;
     column-gap: 2em;
@@ -285,7 +286,7 @@ a.card {
     background-color: #717171;
 }
 
-
+/* Design of highlighted vacancies */
 .highlighted {
     margin-top: 0;
     padding: 1em;
@@ -296,6 +297,7 @@ a.card {
     text-align: center;
     width: 100%;
 
+    /* lay-out of the image (logo) */
     .card-img {
         float: left;
         margin: 0 0 1em;
@@ -320,6 +322,7 @@ a.card {
         }
     }
 
+    /* all textual content */
     .text {
         float: right;
         width: 50%;

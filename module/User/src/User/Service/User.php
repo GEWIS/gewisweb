@@ -305,13 +305,13 @@ class User extends AbstractAclService
     /**
      * Change the password of a company.
      *
-     * @param array $data Password change date
+     * @param array $data Password change data
      *
      * @return boolean
      */
     public function changeCompanyPassword($data)
     {
-        // get form
+        // Get form
         $form = $this->getPasswordForm();
         $form->setData($data);
 
@@ -321,7 +321,7 @@ class User extends AbstractAclService
 
         $data = $form->getData();
 
-        // Get current company
+        // Get currently logged in company
         $auth = $this->getServiceManager()->get('company_auth_service');
         $adapter = $auth->getAdapter();
         $company = $auth->getIdentity();
@@ -337,11 +337,12 @@ class User extends AbstractAclService
             return false;
         }
 
+        // get mapper
         $mapper = $this->getCompanyMapper();
         // get hashing
         $bcrypt = $this->sm->get('user_bcrypt');
 
-        // get the company
+        // get the company by its id
         $actCompany = $mapper->findById($company->getLidnr());
 
         // save hashed password

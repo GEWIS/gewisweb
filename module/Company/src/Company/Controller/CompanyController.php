@@ -206,6 +206,11 @@ class CompanyController extends AbstractActionController
         ]);
     }
 
+    /**
+     * Action to display the general career page
+     *
+     * @return ViewModel
+     */
     public function indexAction()
     {
         return new ViewModel();

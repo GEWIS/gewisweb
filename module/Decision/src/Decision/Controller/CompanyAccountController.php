@@ -12,7 +12,11 @@ use Company\Form\EditPackage as EditPackageForm;
 
 class CompanyAccountController extends AbstractActionController
 {
-
+    /**
+     * Generate company panel (index) viewmodel
+     *
+     * @return \Zend\Http\Response|ViewModel
+     */
     public function IndexAction()
     {
         //Evaluate permissions
@@ -358,15 +362,16 @@ class CompanyAccountController extends AbstractActionController
     }
 
     /**
-     * @param $company
-     * @param $companyService
-     * @param $days_scheduled
-     * @param $credits_owned
-     * @param $type
+     * Reduces a companies banner/highlight credits equivalent to
+     *  how many banner/highlight days have been scheduled
+     * @param $company              The company class
+     * @param $companyService       The company service class
+     * @param $days_scheduled       The number of days that a banner/highlight have been scheduled
+     * @param $credits_owned        The number of credits owned
+     * @param $type                 Type represents whether a "banner" or "highlight" was scheduled
      */
     public function deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type) {
         $credits_owned = $credits_owned - $days_scheduled;  //deduct banner credits based on days scheduled
-
         if ($type === "banner"){
             $company->setBannerCredits($credits_owned);
         } elseif ($type === "highlight"){
@@ -376,11 +381,11 @@ class CompanyAccountController extends AbstractActionController
     }
 
     /**
-     * @param $post
-     * @param $company
-     * @param $companyService
-     * @param $type
-     * @return bool
+     * @param $post                 The submitted banner or highlight request form
+     * @param $company              The company class
+     * @param $companyService       The company service class
+     * @param $type                 Type represents whether a "banner" or "highlight" was scheduled
+     * @return bool                 Whether the function was able to invoke deductCredits() (True) or not (False)
      */
     public function checkCredits($post, $company, $companyService, $type) {
         $start_date = new \DateTime($post['startDate']);
@@ -393,7 +398,6 @@ class CompanyAccountController extends AbstractActionController
             $credits_owned = $company->getHighlightCredits();
         }
         if ($credits_owned >= $days_scheduled ){
-            //TODO: Make sure this line is only run after the banner/highlight has actually been uploaded
             $this->deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type);
             return true;
         }
@@ -450,7 +454,7 @@ class CompanyAccountController extends AbstractActionController
         if ($request->isPost()) {
 
             $post = $request->getPost();
-            // Save the company
+            // Save the company approval
             $companyService->saveCompanyApprovalByData(
                 $company,
                 $post,
@@ -459,14 +463,16 @@ class CompanyAccountController extends AbstractActionController
                 $company->getArrayCopy()['nl_logo']
             );
 
+            // send email to admin about change
             $email = $this->getDecisionEmail();
             $email->sendApprovalMail($company);
 
             $company->setSlugName($companySlugName);
             $company->setName($companyName);
-//            $companyService->saveCompany();
 
+            // wait 5 seconds (in which time pop-up message is shown)
             sleep(5);
+            // redirect to company panel
             return $this->redirect()->toRoute(
                 'companyaccount/index',
                 [
@@ -498,6 +504,11 @@ class CompanyAccountController extends AbstractActionController
         ]);
     }
 
+    /**
+     * Generate settings viewmodel
+     *
+     * @return \Zend\Http\Response|ViewModel
+     */
     public function settingsAction() {
         //Obtain company and company package information
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
