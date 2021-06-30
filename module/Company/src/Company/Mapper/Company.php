@@ -158,6 +158,12 @@ class Company
         return empty($result) ? null : $result[0];
     }
 
+    /**
+     * Return the company with the given contactEmail
+     *
+     * @param $contactEmail the contactEmail of the company
+     * @return \Company\Model\Company
+     */
     public function findByEmail($contactEmail)
     {
         return $this->getRepository()->findOneBy(['contactEmail' => $contactEmail]);
@@ -208,7 +214,7 @@ class Company
             //]
         ];
     }
-    
+
 
     /**
      * Get the JobSector repository.

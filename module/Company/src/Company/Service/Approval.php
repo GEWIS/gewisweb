@@ -113,7 +113,7 @@ class Approval extends AbstractAclService
      * Get companyI18 models for the given company id
      *
      * @param $cId Int company id
-     * @return mixed
+     * @return array of ApprovalCompanyI18s
      */
     public function getApprovalCompanyI18($cId){
         return $this->getApprovalMapper()->findApprovalCompanyI18($cId);
@@ -177,12 +177,9 @@ class Approval extends AbstractAclService
      * Reject banner Approval
      *
      * @param $id Int banner Id
-     * @return void
      */
     public function rejectBannerApproval($id){
-        //This doesn't actually return anything right? so can't return be removed?
-        //TODO: whoever made this function look at this
-        return $this->getApprovalMapper()->rejectBannerApproval($id);
+        $this->getApprovalMapper()->rejectBannerApproval($id);
     }
 
     /**

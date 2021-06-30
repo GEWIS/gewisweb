@@ -36,7 +36,6 @@ class EditCompany extends Form
                 'type' => 'hidden',
             ],
         ]);
-
         $this->add([
             'name' => 'slugName',
             'attributes' => [

@@ -60,6 +60,12 @@ class Sector
         return $this->getRepository()->findOneBy(['id' => $sectorId]);
     }
 
+    /**
+     * Finds all sectors in the given language
+     *
+     * @param $sectorLanguage
+     * @return array of JobSectors
+     */
     public function findAllSectorsByLanguage($sectorLanguage)
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
@@ -72,11 +78,12 @@ class Sector
         return $qb->getQuery()->getResult();
     }
 
-
-
     /**
      * Find the same sector, but in the given language
      *
+     * @param $sector the sector we want to find the sibling from
+     * @param $lang the language in which the sector should be given
+     * @return JobSector
      */
     public function siblingSector($sector, $lang)
     {
@@ -94,8 +101,8 @@ class Sector
     /**
      * Find all sectors with the given language neutral Id.
      *
-     * @param $sectorId
-     * @return mixed
+     * @param $sectorId the languageNeutralId of which we want to find the sectors
+     * @return array of JobSectors
      */
     public function findAllSectorsById($sectorId)
     {
@@ -134,9 +141,9 @@ class Sector
     }
 
     /**
-     * Find all Categories.
+     * Find all Sectors.
      *
-     * @return array
+     * @return array of JobSectors
      */
     public function findAll()
     {
