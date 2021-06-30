@@ -37,20 +37,20 @@
         $submit->setLabel($this->translate('Save'));
         $submit->setAttribute('class', 'btn btn-primary pull-right');
         ?>
-
         <div class="form-group">
             <?= $this->formButton($submit) ?>
         </div>
         <?= $this->form()->closeTag(); ?>
 
+        <!-- pop-up message to appear when clicking save -->
         <div class="modal fade" id="changeModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
+                    <!-- pop-up header/ title -->
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><?= $this->translate('Changes submitted') ?></h4>
                     </div>
+                    <!-- pop-up text -->
                     <div class="modal-body">
                         <p><?= $this->translate('Your changes have successfully been submitted and are now awaiting approval.') ?> </p>
                         <p><?= $this->translate('You will be redirected in 5 seconds.') ?> </p>
@@ -60,7 +60,8 @@
                 </div>
             </div>
         </div>
-</section>
+
+    </section>
 </div>
 
 

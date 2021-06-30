@@ -450,7 +450,7 @@ class CompanyAccountController extends AbstractActionController
         if ($request->isPost()) {
 
             $post = $request->getPost();
-            // Save the company
+            // Save the company approval
             $companyService->saveCompanyApprovalByData(
                 $company,
                 $post,
@@ -459,14 +459,16 @@ class CompanyAccountController extends AbstractActionController
                 $company->getArrayCopy()['nl_logo']
             );
 
+            // send email to admin about change
             $email = $this->getDecisionEmail();
             $email->sendApprovalMail($company);
 
             $company->setSlugName($companySlugName);
             $company->setName($companyName);
-//            $companyService->saveCompany();
 
+            // wait 5 seconds (in which time pop-up message is shown)
             sleep(5);
+            // redirect to company panel
             return $this->redirect()->toRoute(
                 'companyaccount/index',
                 [
