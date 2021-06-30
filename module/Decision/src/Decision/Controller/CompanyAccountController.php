@@ -358,8 +358,11 @@ class CompanyAccountController extends AbstractActionController
     }
 
     /**
-     * Reduces a companies banner/highlight credits equivalent to how many banner/highlight days
-     * they have scheduled
+     * @param $company
+     * @param $companyService
+     * @param $days_scheduled
+     * @param $credits_owned
+     * @param $type
      */
     public function deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type) {
         $credits_owned = $credits_owned - $days_scheduled;  //deduct banner credits based on days scheduled
@@ -373,10 +376,11 @@ class CompanyAccountController extends AbstractActionController
     }
 
     /**
-     * Calculates the number of banner/highlight days/credits (1 scheduled day == 1 credit of
-     * the appropriate type; banner/highlight) they have scheduled
-     * Then invokes deductCredits() based on the $company, $companyService, $type, $credits_owned and $days_scheduled
-     * @return FALSE if deductCredits() doesn't succeed else @return TRUE
+     * @param $post
+     * @param $company
+     * @param $companyService
+     * @param $type
+     * @return bool
      */
     public function checkCredits($post, $company, $companyService, $type) {
         $start_date = new \DateTime($post['startDate']);
@@ -389,6 +393,7 @@ class CompanyAccountController extends AbstractActionController
             $credits_owned = $company->getHighlightCredits();
         }
         if ($credits_owned >= $days_scheduled ){
+            //TODO: Make sure this line is only run after the banner/highlight has actually been uploaded
             $this->deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type);
             return true;
         }

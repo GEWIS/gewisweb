@@ -83,8 +83,10 @@ $form->prepare();
         <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
             <label for="<?= $element->getAttribute('id') ?>" class="control-label col-sm-2" style="margin-top:10px">
             </label>
-            <?= $this->formRow($element) ?>
-            <?= $this->formElementErrors($element) ?>
+            <div class="col-sm-10">
+                <?= $this->formRow($element) ?>
+                <?= $this->formElementErrors($element) ?>
+            </div>
         </div>
         <?php
         $element = $fieldset->get('teaser');
@@ -135,7 +137,7 @@ $form->prepare();
     $element->setAttribute('class', 'form-control');
     ?>
     <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-1">
             <?= $element->getOption('label') ?>
         </label>
         <div class="col-sm-10">
@@ -148,7 +150,7 @@ $form->prepare();
     $element->setAttribute('class', 'form-control');
     ?>
     <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-1">
             <?= $element->getOption('label') ?>
         </label>
         <div class="col-sm-10">
@@ -161,7 +163,7 @@ $form->prepare();
     $element->setAttribute('class', 'form-control');
     ?>
     <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-1">
             <?= $element->getOption('label') ?>
         </label>
         <div class="col-sm-10">
@@ -174,7 +176,7 @@ $form->prepare();
     $element->setAttribute('class', 'form-control');
     ?>
     <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-1">
             <?= $element->getOption('label') ?>
         </label>
         <div class="col-sm-10">
@@ -187,7 +189,7 @@ $form->prepare();
     $element->setAttribute('class', 'form-control');
     ?>
     <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-1">
             <?= $element->getOption('label') ?>
         </label>
         <div class="col-sm-10">
@@ -200,7 +202,7 @@ $form->prepare();
     $element->setAttribute('class', 'form-control');
     ?>
     <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-1">
             <?= $element->getOption('label') ?>
         </label>
         <div class="col-sm-10">
@@ -213,7 +215,7 @@ $form->prepare();
     $element->setAttribute('class', 'form-control');
     ?>
     <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-1">
             <?= $element->getOption('label') ?>
         </label>
         <div class="col-sm-10">
@@ -226,7 +228,7 @@ $form->prepare();
     $element->setAttribute('class', 'form-control');
     ?>
     <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-        <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+        <label for="<?= $element->getName() ?>" class="control-label col-sm-1">
             <?= $element->getOption('label') ?>
         </label>
         <div class="col-sm-10">

@@ -85,10 +85,10 @@ $this->headTitle($category->getPluralName());
                         </div>
                         <div class="">
                             <h4><?= $this->translate('Details') ?></h4>
-                            <p class="job-Location"><?= $job->getLocation() ?></p>
                             <p class="job-hours"><?= ($job->getHours()) == 0 ? "Part Time" : "Full Time" ?></p>
-                            <p class="job-sector"><?= $job->getSectors()->getName() ?></p>
-                            <p class="job-startingDate"><?= $job->getStartingDate()->format('Y-m-d') ?></p>
+                            <p class="job-Location"><?= $this->translate("Location") . ": " . $job->getLocation() ?></p>
+                            <p class="job-sector"><?= $this->translate("Sector") . ": " . $job->getSectors()->getName() ?></p>
+                            <p class="job-startingDate"><?= $this->translate("Starting Date") . ": " . (($job->getStartingDate()!= null) ? $job->getStartingDate()->format('Y-m-d') : "Continuous") ?></p>
                         </div>
                     </div>
                     <div class="col-md-9">
