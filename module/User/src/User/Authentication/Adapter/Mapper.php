@@ -62,6 +62,8 @@ class Mapper implements AdapterInterface
      * Constructor.
      *
      * @param Bcrypt $bcrypt
+     * @param LegacyService $legacyService
+     * @param AbstractAclService $accountService
      */
     public function __construct(Bcrypt $bcrypt, LegacyService $legacyService, AbstractAclService $accountService)
     {

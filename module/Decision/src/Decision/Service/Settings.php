@@ -56,7 +56,7 @@ class Settings extends AbstractAclService
      *
      * @param string $values the new values for the to be altered collumns
      *
-     * @param string $id the id of the company who's company information
+     * @param integer $id the id of the company who's company information
      * will be altered.
      *
      * @return null
