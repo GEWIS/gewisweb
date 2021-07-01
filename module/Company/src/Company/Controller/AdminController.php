@@ -24,7 +24,9 @@ class AdminController extends AbstractActionController
      */
     public function indexAction()
     {
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
         // Get useful stuff
         $companyService = $this->getCompanyService();
 
@@ -56,17 +58,26 @@ class AdminController extends AbstractActionController
      * @return ViewModel
      */
     public function approvalPageAction(){
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
 
+        //Get the approval service
         $approvalService = $this->getApprovalService();
 
+        //Get the pending approvals
         $pendingApprovals = $approvalService->getPendingApprovals();
+
+        //Get the company service
         $companyService = $this->getCompanyService();
+
+        //Get the translator
         $translator = $companyService->getTranslator();
 
         // Filter out vacancy approvals with non-locale languages
         $singleLanguageApprovals = [];
+        //For each approval that is pending
         foreach ($pendingApprovals as $approval) {
+            //If the approval type is a vacancy
             if ($approval->getType() === "vacancy") {
                 if ($approval->getVacancyApproval()->getLanguage() == $translator->getLocale()) {
                     array_push($singleLanguageApprovals, $approval);
@@ -76,7 +87,8 @@ class AdminController extends AbstractActionController
             }
         }
 
-        if (isset($_POST['delete'])) {  //delete approval when delete button is pressed
+        //Delete approval when delete button is pressed
+        if (isset($_POST['delete'])) {
             $deleteInfo = json_decode($_POST["delete"], True);
             $approvalService->deletePendingApproval($deleteInfo);
             header("Refresh:0");
@@ -89,14 +101,16 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * Generate vacancy approval page
+     * Generate vacancy approval page, where an admin can edit, accept or reject a vacancy
      *
      * @return \Zend\Http\Response|ViewModel
      * @throws \Exception
      */
     public function approvalVacancyAction()
     {
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
         $newVacancy = false;
         // Get useful stuff
         $companyService = $this->getCompanyService();
@@ -105,7 +119,6 @@ class AdminController extends AbstractActionController
 
         // Get the parameters
         $languageNeutralId = $this->params('slugCompanyName');
-
 
         // Find the specified jobs
         $jobs = $companyService->getEditableJobsByLanguageNeutralId($languageNeutralId);
@@ -164,7 +177,7 @@ class AdminController extends AbstractActionController
             foreach($vacancyApprovals as $approval) {
                 $approvalService->rejectVacancyApproval($approval->getId());
             }
-            // Send email if this was checked
+            // Send email if the send email  checkbox was checked
             if($_POST['sendEmail']) {
                 $company = $vacancyApprovals[0]->getPackage()->getCompany();
                 $name = $vacancyApprovals[0]->getName();
@@ -221,18 +234,22 @@ class AdminController extends AbstractActionController
      * @throws \Exception
      */
     public function approvalBannerAction(){
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
+        //Get the approval service
         $approvalService = $this->getApprovalService();
 
         //get company
+        //TODO: Why is the company saved in $approvalId ?
         $approvalId = intval($this->params('slugCompanyName'));
 
-        //get banner
+        //Get the banner to be approved
         $bannerApproval = $approvalService->getBannerApprovalById($approvalId);
 
-        if (isset($_POST['accept'])) {  //acceptance behavior
+        if (isset($_POST['accept'])) {  //Acceptance behavior
             $id = $bannerApproval[0]->getBannerApproval()->getId();
-            // Send email if this was checked
+            // Send email if the send email  checkbox was checked
             if (isset($_POST['email'])) {
                 $company = $bannerApproval[0]->getCompany();
                 $name = "banner";
@@ -250,7 +267,7 @@ class AdminController extends AbstractActionController
         }elseif(isset($_POST['reject'])){   //rejection behavior
             // Set approval models to rejected
             $approvalService->rejectBannerApproval($approvalId);
-            // Send email if this was checked
+            // Send email if the send email  checkbox was checked
             if (isset($_POST['email'])) {
                 $company = $bannerApproval[0]->getCompany();
                 $name = "banner";
@@ -273,14 +290,16 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * Generate profile approval page
+     * Generate profile approval page, where an admin can edit, accept or reject a profile approval
      *
      * @return \Zend\Http\Response|ViewModel
      * @throws \Exception
      */
     public function approvalProfileAction()
     {
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $approvalService = $this->getApprovalService();
@@ -300,6 +319,7 @@ class AdminController extends AbstractActionController
             return $this->notFoundAction();
         }
 
+        //Get company of which the profile has to be approved
         $company = $companyList[0];
         $oldCompany = $oldCompanyList[0];
         $companyl18 = $approvalService->getApprovalCompanyI18($company->getCompany()->getId());
@@ -318,7 +338,7 @@ class AdminController extends AbstractActionController
                 $company->getArrayCopy()['en_logo'],
                 $company->getArrayCopy()['nl_logo']
             )) {
-                // Send email if this was checked
+                // Send email if the send email  checkbox was checked
                 if($_POST['sendEmail']) {
                     $name = $oldCompany->getName();
                     $route = '/career/company/' . $oldCompany->getSlugName();
@@ -339,7 +359,7 @@ class AdminController extends AbstractActionController
                 );
             }
         }elseif (isset($_POST['reject'])){  //rejection behavior
-            // Send email if this was checked
+            // Send email if the send email  checkbox was checked
             if($_POST['sendEmail']) {
                 $name = $oldCompany->getName();
                 $route = "";
@@ -373,7 +393,9 @@ class AdminController extends AbstractActionController
      */
     public function addCompanyAction()
     {
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $companyForm = $companyService->getCompanyForm();
@@ -381,8 +403,9 @@ class AdminController extends AbstractActionController
         // Handle incoming form results
         $request = $this->getRequest();
 
-        // Check if data is valid, and insert when it is
+        // Check if data is valid
         if ($request->isPost()) {
+            //Insert the data as a new company
             $companies = $companyService->insertCompanyByData(
                 $request->getPost(),
                 $request->getFiles()
@@ -427,7 +450,9 @@ class AdminController extends AbstractActionController
      */
     public function addPackageAction()
     {
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $companyAccountController = $this->getCompanyAccountController();
@@ -497,10 +522,13 @@ class AdminController extends AbstractActionController
      * Action that allows adding a job
      *
      *
+     * @return ViewModel
      */
     public function addJobAction()
     {
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $companyForm = $companyService->getJobFormCompany();
@@ -509,7 +537,7 @@ class AdminController extends AbstractActionController
         $companyName = $this->params('slugCompanyName');
         $packageId = $this->params('packageId');
 
-        //get company
+        //Get company
         $companyMapper = $this->getCompanyMapper();
         $company = $companyMapper->findCompanyBySlugName($companyName);
 
@@ -536,6 +564,7 @@ class AdminController extends AbstractActionController
         }
 
         // The form was not valid, or we did not get data back
+        //TODO: ?
 
         // Initialize the form
         $companyForm->setAttribute(
@@ -567,7 +596,9 @@ class AdminController extends AbstractActionController
      */
     public function editCategoryAction()
     {
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $categoryForm = $companyService->getCategoryForm();
@@ -621,10 +652,13 @@ class AdminController extends AbstractActionController
      * Action that displays a form for editing a sector
      *
      *
+     * @return ViewModel
      */
     public function editSectorAction()
     {
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $sectorForm = $companyService->getSectorForm();
@@ -651,6 +685,7 @@ class AdminController extends AbstractActionController
             $sectorDict = [];
 
             foreach ($sectors as $sector) {
+                //TODO: what is categoryDict used for?
                 $categoryDict[$sector->getLanguage()] = $sector;
             }
 
@@ -663,6 +698,7 @@ class AdminController extends AbstractActionController
             $sectorDict[$sector->getLanguage()] = $sector;
         }
 
+        //TODO: what does this do?
         $languages = array_keys($sectorDict);
         $sectorForm->setLanguages($languages);
         $sectorForm->bind($sectorDict);
@@ -681,7 +717,9 @@ class AdminController extends AbstractActionController
      */
     public function editLabelAction()
     {
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $labelForm = $companyService->getLabelForm();
@@ -750,7 +788,9 @@ class AdminController extends AbstractActionController
      */
     public function editCompanyAction()
     {
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $companyForm = $companyService->getCompanyForm();
@@ -818,7 +858,9 @@ class AdminController extends AbstractActionController
      */
     public function editPackageAction()
     {
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $companyAccountController = $this->getCompanyAccountController();
@@ -892,7 +934,9 @@ class AdminController extends AbstractActionController
      */
     public function editJobAction()
     {
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $jobForm = $companyService->getJobFormCompany();
@@ -958,7 +1002,9 @@ class AdminController extends AbstractActionController
      */
     public function deleteCompanyAction()
     {
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
         // Get useful stuff
         $companyService = $this->getCompanyService();
 
@@ -977,7 +1023,9 @@ class AdminController extends AbstractActionController
 
     public function addCategoryAction()
     {
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $categoryForm = $companyService->getCategoryForm();
@@ -1016,9 +1064,16 @@ class AdminController extends AbstractActionController
         ]);
     }
 
+    /** Action that allows adding a sector
+     *
+     *
+     * @return ViewModel
+     */
     public function addSectorAction()
     {
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $sectorForm = $companyService->getSectorForm();
@@ -1041,6 +1096,7 @@ class AdminController extends AbstractActionController
         }
 
         // The form was not valid, or we did not get data back
+        //TODO: does this still need to be implemented?
 
         // Initialize the form
         $sectorForm->setAttribute(
@@ -1059,7 +1115,9 @@ class AdminController extends AbstractActionController
 
     public function addLabelAction()
     {
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $labelForm = $companyService->getLabelForm();
@@ -1105,7 +1163,9 @@ class AdminController extends AbstractActionController
      */
     public function deletePackageAction()
     {
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
         // Get useful stuff
         $companyService = $this->getCompanyService();
 
@@ -1131,7 +1191,9 @@ class AdminController extends AbstractActionController
      */
     public function deleteJobAction()
     {
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
         $request = $this->getRequest();
         if (!$request->isPost()) {
             return $this->notFoundAction();
@@ -1159,7 +1221,9 @@ class AdminController extends AbstractActionController
      */
     public function editHighlightAction()
     {
+        //Check if the user is logged in as an admin, otherwise he/she is not allowed to view the page
         $this->notAdminNotAllowed();
+
         $companyService = $this->getCompanyService();
         $translator = $companyService->getTranslator();
 

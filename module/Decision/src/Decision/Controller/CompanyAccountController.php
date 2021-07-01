@@ -2,7 +2,10 @@
 
 namespace Decision\Controller;
 
+use Company\Form\EditPackage;
+use Company\Model\Company;
 use Company\Service\Approval;
+use phpDocumentor\Reflection\Types\String_;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
@@ -66,7 +69,6 @@ class CompanyAccountController extends AbstractActionController
         // Get useful stuff
         $companyService = $this->getCompanyService();
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
-        global $MSG;
 
         // Get form
         $packageForm = $companyService->getPackageForm('banner');
@@ -95,7 +97,6 @@ class CompanyAccountController extends AbstractActionController
                 }
 
             } else {
-                //echo $this->function_alert($MSG);
                 $packageForm->setData($this->resetInsertedDates($post));
             }
         }
@@ -115,6 +116,14 @@ class CompanyAccountController extends AbstractActionController
     }
 
 
+    /**
+     * Checks if all data in the banner form is filled correctly
+     *
+     * @param $post array data that was filled into the form
+     * @param $files array filet that were uploaded in the form
+     * @param $packageForm EditPackage The banner form
+     * @return bool
+     */
     public function bannerPostCorrect($post, $files, &$packageForm) {
         // Get Zend validator
         $image_validator = new IsImage();
@@ -148,6 +157,11 @@ class CompanyAccountController extends AbstractActionController
         return true;
     }
 
+    /**
+     * Action to delete a highlight package
+     *
+     * @return \Zend\Http\Response
+     */
     public function deleteHighlightAction() {
         //Call function to delete
         $this->getCompanyService()->getHighlightPackageMapper()->delete($this->params('packageId'));
@@ -158,6 +172,11 @@ class CompanyAccountController extends AbstractActionController
         );
     }
 
+    /**
+     * Action to edit a highlight package
+     *
+     * @return \Zend\Http\Response|ViewModel
+     */
     public function editHighlightAction() {
         $companyService = $this->getCompanyService();
 
@@ -212,10 +231,9 @@ class CompanyAccountController extends AbstractActionController
     /**
      * Shows the highlighting page and processes the form when submit has been clicked
      *
-     *
+     * @return \Zend\Http\Response|ViewModel
      */
     public function highlightAction(){
-        global $MSG;
         //Get usefull stuff
         $companyService = $this->getCompanyService();
         $company = $this->getCompanyAccountService()->getCompany()->getCompanyAccount();
@@ -271,6 +289,13 @@ class CompanyAccountController extends AbstractActionController
     }
 
 
+    /**
+     * Checks if all data in the banner form is filled correctly
+     *
+     * @param $post array data that was filled into the form
+     * @param $packageForm EditPackage The banner form
+     * @return bool
+     */
     public function highlightPostCorrect($post, &$packageForm) {
         //Get usefull stuff
         $companyService = $this->getCompanyService();
@@ -301,6 +326,13 @@ class CompanyAccountController extends AbstractActionController
         return true;
     }
 
+    /**
+     * Checks if a valid timespan is selected
+     *
+     * @param $post array the values put into the form
+     * @param $packageForm EditPackage The actual form
+     * @return bool
+     */
     public function checkDates($post, &$packageForm) {
         //Get usefull stuff
         $companyService = $this->getCompanyService();
@@ -343,7 +375,7 @@ class CompanyAccountController extends AbstractActionController
     /**
      * Gets all active vacancies for a certain company
      *
-     * @return all active vacancies for a certain company
+     * @return array all active vacancies for a certain company
      */
     public function getVacancies() {
         $companyService = $this->getCompanyService();
@@ -364,11 +396,11 @@ class CompanyAccountController extends AbstractActionController
     /**
      * Reduces a companies banner/highlight credits equivalent to
      *  how many banner/highlight days have been scheduled
-     * @param $company              The company class
-     * @param $companyService       The company service class
-     * @param $days_scheduled       The number of days that a banner/highlight have been scheduled
-     * @param $credits_owned        The number of credits owned
-     * @param $type                 Type represents whether a "banner" or "highlight" was scheduled
+     * @param $company Company The company class
+     * @param $companyService \Company\Service\Company The company service class
+     * @param $days_scheduled int The number of days that a banner/highlight have been scheduled
+     * @param $credits_owned int The number of credits owned
+     * @param $type string Type represents whether a "banner" or "highlight" was scheduled
      */
     public function deductCredits($company, $companyService, $days_scheduled, $credits_owned, $type) {
         $credits_owned = $credits_owned - $days_scheduled;  //deduct banner credits based on days scheduled
@@ -381,11 +413,11 @@ class CompanyAccountController extends AbstractActionController
     }
 
     /**
-     * @param $post                 The submitted banner or highlight request form
-     * @param $company              The company class
-     * @param $companyService       The company service class
-     * @param $type                 Type represents whether a "banner" or "highlight" was scheduled
-     * @return bool                 Whether the function was able to invoke deductCredits() (True) or not (False)
+     * @param $post array The submitted banner or highlight request form
+     * @param $company Company The company class
+     * @param $companyService \Company\Service\Company The company service class
+     * @param $type string Type represents whether a "banner" or "highlight" was scheduled
+     * @return bool Whether the function was able to invoke deductCredits() (True) or not (False)
      */
     public function checkCredits($post, $company, $companyService, $type) {
         $start_date = new \DateTime($post['startDate']);
@@ -404,20 +436,18 @@ class CompanyAccountController extends AbstractActionController
         return false;
     }
 
-    public function function_alert($msg){
-        echo "<script type='text/javascript'>alert('$msg');</script>";
-    }
-
+    /**
+     * Sets the form dates to previously inserted dates
+     *
+     * @param $post array the data filled into the form
+     * @return array the dates filled into the form
+     */
     public function resetInsertedDates($post) {
         $insertedDates = [];
         $insertedDates['startDate'] = $post['startDate'];
         $insertedDates['expirationDate'] = $post['expirationDate'];
         return $insertedDates;
     }
-
-
-
-
 
     public function dummyAction(){
         return new ViewModel();
@@ -426,7 +456,7 @@ class CompanyAccountController extends AbstractActionController
     /**
      * Action that displays a form for editing a company
      *
-     *
+     * @return array|\Zend\Http\Response|ViewModel
      */
     public function profileAction()
     {
@@ -505,9 +535,9 @@ class CompanyAccountController extends AbstractActionController
     }
 
     /**
-     * Generate settings viewmodel
+     * Action that displays a form for editing settings
      *
-     * @return \Zend\Http\Response|ViewModel
+     * @return ViewModel
      */
     public function settingsAction() {
         //Obtain company and company package information
@@ -611,6 +641,11 @@ class CompanyAccountController extends AbstractActionController
         ]);
     }
 
+    /**
+     * Action that allows accessing the page where companies can edit vacancies
+     *
+     * @return array|ViewModel
+     */
     public function editVacancyAction()
     {
         // Get useful stuff
@@ -739,10 +774,10 @@ class CompanyAccountController extends AbstractActionController
         );
     }
 
-
     /**
-     * Action that allows adding a job
+     * Action that allows accessing the add vacancy page and adding a vacancy
      *
+     * @return \Zend\Http\Response|ViewModel
      */
     public function createVacancyAction()
     {
@@ -817,6 +852,9 @@ class CompanyAccountController extends AbstractActionController
         return $vm;
     }
 
+    /**
+     * @return array
+     */
     private function getLanguageDescriptions()
     {
         $companyService = $this->getCompanyService();

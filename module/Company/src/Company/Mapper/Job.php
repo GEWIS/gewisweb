@@ -343,7 +343,7 @@ class Job
      * @param array $alreadyHighlighted array of languageNeutralIds of categories where a company has a highlighted vacancy
      * @param string $locale the current language of the website
      *
-     * @return array Company\Model\JobCategory.
+     * @return array Company\Model\Job.
      */
     public function findHighlightableVacancies($companyId, $alreadyHighlighted, $locale)
     {

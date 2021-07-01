@@ -4,6 +4,8 @@ namespace Company\Service;
 
 //use Application\Service\AbstractService;
 use Application\Service\AbstractAclService;
+use Company\Form\EditCompany;
+use Company\Form\EditJob;
 use Company\Model\ApprovalModel\ApprovalPending;
 use Company\Model\ApprovalModel\ApprovalVacancy;
 use Company\Model\Job as JobModel;
@@ -46,6 +48,9 @@ class Company extends AbstractACLService
 
     }
 
+    /**
+     * @return mixed
+     */
     public function getCompanyIdentity() {
         $companyservice = $this->sm->get('company_auth_service');
         return $companyservice->getIdentity();
@@ -273,7 +278,7 @@ class Company extends AbstractACLService
      * Returns all sectors for the given language
      *
      * @param $lang
-     * @return array
+     * @return array JobSector
      */
     public function getSectorList($lang)
     {
@@ -291,9 +296,10 @@ class Company extends AbstractACLService
     /**
      * Pick the vacancies that are visible as highlighted
      *
-     * @param string $filter The current filter applied
+     * @param $category string the category in which the vacancies need to be picked
+     * @param $language string the language of the vacancies to be picked
      *
-     * @return array Company\Model\JobCategory.
+     * @return array Company\Model\Job.
      */
     public function pickVacancies($category, $language){
         // Get all vacancyID's of highlighted vacancies
@@ -340,10 +346,10 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Returns all highlights for the given language
+     * Returns all highlight ids for the given language
      *
-     *
-     * @return array
+     * @param $lang string the language in which the highlights should be returned
+     * @return array of highlight ids
      */
     public function getHighlightsList($lang)
     {
@@ -359,10 +365,10 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Returns all sectors for the given language
+     * Returns all highlighted vacancies for the given language
      *
-     *
-     * @return array
+     * @param $lang string the language in which the highlights should be displayed
+     * @return array of vacancies that are highlighted
      */
     public function getHighlightsListAll($lang)
     {
@@ -376,10 +382,11 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Returns all vacancies for a company
+     * Returns all highlighted vacancies for a company in the given language
      *
-     *
-     * @return array
+     * @param $companyId int the id of the company whose highlighted vacancies should be returned
+     * @param $lang string the language in which the highlights should be displayed
+     * @return array of names and ids of vacancies that are highlighted by a company
      */
     public function getHighlightsForCompany($companyId, $lang)
     {
@@ -736,6 +743,8 @@ class Company extends AbstractACLService
      * @param mixed $data
      * @param string $logo_en   english company logo
      * @param string $logo_nl   dutch company logo
+     *
+     * @return boolean
      */
     public function saveCompanyByData($company, $data, $files, $logo_en = "", $logo_nl = "")
     {
@@ -916,6 +925,7 @@ class Company extends AbstractACLService
      * all data
      *
      * @param mixed $data
+     * @return mixed
      */
     public function insertCompanyByData($data, $files)
     {
@@ -1471,6 +1481,7 @@ class Company extends AbstractACLService
      * Returns a persistent sector
      *
      * @param int $sectorId
+     * @return JobSector
      */
     public function getAllSectorsById($sectorId)
     {
@@ -1607,13 +1618,13 @@ class Company extends AbstractACLService
     }
 
     /**
-     *
+     * Get all vacancies that a company is allowed to highlight
      *
      * @param integer $companyId the id of the company who's
      * categories will be fetched.
      * @param string $locale The current language of the website
      *
-     * @return array Company\Model\JobCategory.
+     * @return array Company\Model\Job.
      */
     public function getHighlightableVacancies($companyId, $locale){
         return $this->getJobMapper()->findHighlightableVacancies(
@@ -1628,7 +1639,7 @@ class Company extends AbstractACLService
      * @param integer $companyId the id of the company who's
      * categories will be fetched.
      * @param string $locale The current language of the website
-     * @param int the languageNeutralId of the category in which the currently highlighted vacancy lies
+     * @param int $currentCategory the languageNeutralId of the category in which the currently highlighted vacancy lies
      *
      * @return array Company\Model\JobCategory.
      */
@@ -1649,10 +1660,12 @@ class Company extends AbstractACLService
     }
 
     /**
-     * Gets an array with the names from all vacancies in a vacancy object
+     * Gets an array with the names of all vacancies in a vacancy object
      * where the location in the array is the vacancy id
      *
-     *
+     * @param $companyId int the id of the company of which the vacancies should be returned
+     * @param $currentCategory string the category of which the vacancies should be returned
+     * @return array of names and ids of vacancies
      */
     public function getEditVacancyNames($companyId, $currentCategory) {
         //Get current language
@@ -1672,7 +1685,8 @@ class Company extends AbstractACLService
      * Gets an array with the names from all vacancies in a vacancy object
      * where the location in the array is the vacancy id
      *
-     *
+     * @param $companyId int the id of the company of which the vacancies should be returned
+     * @return array of names and ids of vacancies
      */
     public function getVacancyNames($companyId) {
         //Get current language
@@ -1744,7 +1758,7 @@ class Company extends AbstractACLService
     /**
      * Get the Company Edit form.
      *
-     * @return Company Edit form
+     * @return EditCompany
      */
     public function getCompanyForm()
     {
@@ -1836,7 +1850,9 @@ class Company extends AbstractACLService
         return $this->sm->get('company_admin_edit_job_form');
     }
 
-
+    /**
+     * @return EditJob
+     */
     public function getJobFormCompany()
     {
         if (!$this->isAllowed('edit')) {

@@ -103,13 +103,15 @@ class CompanyController extends AbstractActionController
 
     /**
      *
-     * Action that displays a list of all jobs (facaturebank) or a list of jobs for a company
+     * Action that displays a list of all jobs or a list of jobs for a company
      *
      */
     public function jobListAction()
     {
+        //Get useful stuff
         $companyService = $this->getCompanyService();
         $translator = $companyService->getTranslator();
+
         if($this->params('category') == 'all') {
             // Retrieve all published jobs
             $jobs = $companyService->getAllJobs();

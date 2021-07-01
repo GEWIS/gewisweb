@@ -63,7 +63,7 @@ class Approval
      * Delete the given Approval Model
      *
      * @param mixed $approval approval model to be removed
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\OptimisticLockindException
      */
     public function removeApproval($approval)
     {
@@ -373,7 +373,7 @@ class Approval
      * Get a vacancy by it's language neutral id
      *
      * @param Int $vacancy_id Language neutral id for the to be found vacancies
-     * @return ApprovalVacancy
+     * @return Array of job models
      */
     public function findVacanciesByLanguageNeutralId($vacancy_id) {
         $qb = $this->getVacancyRepository()->createQueryBuilder('j');
