@@ -217,6 +217,15 @@ class User extends AbstractAclService
         return $user;
     }
 
+    /**
+     * Request a password reset for a company.
+     *
+     * Will also send an email to the company.
+     *
+     * @param array $data Reset data
+     *
+     * @return CompanyModel User. Null when the password could not be reset.
+     */
     public function resetCompany($data)
     {
         $form = $this->getCompanyPasswordResetForm();
@@ -467,6 +476,12 @@ class User extends AbstractAclService
         $auth->clearIdentity();
     }
 
+    /**
+     * Gets the company identity, or gives a 403 if the user is not logged in
+     *
+     * @return Company the current logged in user
+     * @throws NotAllowedException if no user is logged in
+     */
     public function getCompanyIdentity() {
         $authService = $this->getServiceManager()->get('company_auth_service');
         if (!$authService->hasCompanyIdentity()) {
@@ -478,6 +493,11 @@ class User extends AbstractAclService
         return $authService->getIdentity();
     }
 
+    /**
+     * Checks whether the company is logged in
+     *
+     * @return Bool true if the company is logged in, false otherwise
+     */
     public function hasCompanyIdentity()
     {
         $authService = $this->getServiceManager()->get('company_auth_service');

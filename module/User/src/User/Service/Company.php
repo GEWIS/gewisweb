@@ -64,6 +64,11 @@ class Company extends AbstractAclService
         $auth->clearIdentity();
     }
 
+    /**
+     * Returns the identity of a company
+     *
+     * @return mixed
+     */
     public function getIdentity() {
         $authService = $this->getServiceManager()->get('company_auth_service');
         if (!$authService->hasIdentity()) {
@@ -82,20 +87,25 @@ class Company extends AbstractAclService
     }
 
 
-
-
+    /**
+     * Flushes the entity manager during login.
+     *
+     * @param $company
+     * @return CompanyUser
+     */
     public function detachUser($company)
     {
-        /*
-         * Yes, this is some sort of horrible hack to make the entity manager happy again. If anyone wants to waste
-         * their day figuring out what kind of dark magic is upsetting the entity manager here, be my guest.
-         * This hack only is needed when we want to flush the entity manager during login.
-         */
         $this->sm->get('user_doctrine_em')->clear();
 
         return $this->getCompanyMapper()->findById($company->getLidnr());
     }
 
+    /**
+     * Persists a failed login attempt.
+     *
+     * @param $user
+     * @param $type
+     */
     public function logFailedLogin($user, $type)
     {
         $attempt = new LoginAttemptModel();
@@ -107,6 +117,15 @@ class Company extends AbstractAclService
         $this->getLoginAttemptMapper()->persist($attempt);
     }
 
+    /**
+     * Checks if the number of login attempts exceed the maximum amount.
+     *
+     * @param $type
+     * @param $user
+     * @return bool
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function loginAttemptsExceeded($type, $user)
     {
         $config = $this->getRateLimitConfig();
