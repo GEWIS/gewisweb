@@ -8,6 +8,12 @@ class CompanyAuthenticationService extends ZendAuthService
 {
     protected $identity = null;
 
+    /**
+     * Gets the identity of a company
+     *
+     * @return identity
+     */
+
     public function getIdentity()
     {
         if ($this->identity !== null) {

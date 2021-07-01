@@ -188,6 +188,11 @@ class UserController extends AbstractActionController
         ]);
     }
 
+    /**
+     * Action to reset company password.
+     *
+     * @return ViewModel
+     */
     public function resetCompanyAction()
     {
         $userService = $this->getUserService();
@@ -242,6 +247,8 @@ class UserController extends AbstractActionController
     }
 
     /**
+     * @return Redirect | ViewModel
+     *
      * Company activation action.
      */
     public function activateCompanyAction()

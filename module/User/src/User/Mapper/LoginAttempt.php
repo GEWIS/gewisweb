@@ -42,6 +42,18 @@ class LoginAttempt
         return $qb->getQuery()->getSingleScalarResult();
     }
 
+
+    /**
+     * Counts the number of failed login attempts by a company.
+     *
+     * @param $since
+     * @param $type
+     * @param $ip
+     * @param null $company
+     * @return int
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function getCompanyFailedAttemptCount($since, $type, $ip, $company = null)
     {
         $qb = $this->em->createQueryBuilder();

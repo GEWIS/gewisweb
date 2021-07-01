@@ -37,6 +37,8 @@ class CompanySession extends Storage\Session
 
     /**
      * Ensure that this session is no longer remembered.
+     *
+     * @return bool
      */
     public function forgetMe()
     {
@@ -168,6 +170,11 @@ class CompanySession extends Storage\Session
         $response->getHeaders()->addHeader($sessionToken);
     }
 
+    /**
+     * Clear cookies
+     *
+     * @return void
+     */
     protected function clearCookie()
     {
         $sessionToken = new SetCookie('SESSTOKEN', 'deleted', strtotime('-1 Year'), '/');
@@ -176,6 +183,11 @@ class CompanySession extends Storage\Session
         $response->getHeaders()->addHeader($sessionToken);
     }
 
+    /**
+     * CompanySession constructor.
+     *
+     * @param $sm
+     */
     public function __construct($sm)
     {
         $this->sm = $sm;
