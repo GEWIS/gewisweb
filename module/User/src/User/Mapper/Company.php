@@ -39,7 +39,7 @@ class Company extends Mapper
     {
         return $this->getRepository()->findOneBy(['id' => $id]);
     }
-    
+
 
     /**
      * Find a user by its login.

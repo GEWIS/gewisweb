@@ -9,13 +9,14 @@ use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayUtils;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
+
+// Attempted Zend testing, Does not work
 class UserControllerTest extends AbstractHttpControllerTestCase
 {
 
     protected $sm;
 
     protected $companyEmailTable;
-
 
     public function configureServiceManager(ServiceManager $services)
     {
