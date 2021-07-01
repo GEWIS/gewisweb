@@ -105,3 +105,4 @@ PluginsInstalled[] = Intl
 
 PluginsInstalled[] = "LogViewer"
 PluginsInstalled[] = "SecurityInfo"
+PluginsInstalled[] = "TrackingOptOut"
