@@ -1,5 +1,8 @@
 <?php
 
+use Interop\Container\ContainerInterface;
+use Zend\ServiceManager\Factory\InvokableFactory;
+
 return [
     'router' => [
         'routes' => [
@@ -428,18 +431,42 @@ return [
         ],
     ],
     'controllers' => [
-        'invokables' => [
-            'Photo\Controller\Photo' => 'Photo\Controller\PhotoController',
-            'Photo\Controller\Album' => 'Photo\Controller\AlbumController',
-            'Photo\Controller\AlbumAdmin' => 'Photo\Controller\AlbumAdminController',
-            'Photo\Controller\PhotoAdmin' => 'Photo\Controller\PhotoAdminController',
-            'Photo\Controller\Tag' => 'Photo\Controller\TagController',
-            'Photo\Controller\Api' => 'Photo\Controller\ApiController',
+        'factories' => [
+            'Photo\Controller\Photo' => function (ContainerInterface $serviceManager) {
+                $photoService = $serviceManager->getServiceLocator()->get("photo_service_photo");
+                $albumService = $serviceManager->getServiceLocator()->get("photo_service_album");
+                return new \Photo\Controller\PhotoController($photoService, $albumService);
+            },
+            'Photo\Controller\Tag' => function (ContainerInterface $serviceManager) {
+                $photoService = $serviceManager->getServiceLocator()->get("photo_service_photo");
+                return new \Photo\Controller\TagController($photoService);
+            },
+            'Photo\Controller\AlbumAdmin' => function (ContainerInterface $serviceManager) {
+                $adminService = $serviceManager->getServiceLocator()->get("photo_service_admin");
+                $albumService = $serviceManager->getServiceLocator()->get("photo_service_album");
+                return new \Photo\Controller\AlbumAdminController($adminService, $albumService);
+            },
+            'Photo\Controller\Album' => function (ContainerInterface $serviceManager) {
+                $albumService = $serviceManager->getServiceLocator()->get("photo_service_album");
+                $pageCache = $this->getServiceLocator()->get('album_page_cache');
+                $photoConfig = $this->getServiceLocator()->get('config')['photo'];
+                return new \Photo\Controller\AlbumController($albumService, $pageCache, $photoConfig);
+            },
+            'Photo\Controller\PhotoAdmin' => function (ContainerInterface $serviceManager) {
+                $photoService = $serviceManager->getServiceLocator()->get("photo_service_photo");
+                $entityManager = $serviceManager->getServiceLocator()->get('photo_doctrine_em');
+                return new \Photo\Controller\PhotoAdminController($photoService, $entityManager);
+            },
+            'Photo\Controller\Api' => InvokableFactory::class
         ]
     ],
     'controller_plugins' => [
-        'invokables' => [
-            'AlbumPlugin' => 'Photo\Controller\Plugin\AlbumPlugin',
+        'factories' => [
+            'AlbumPlugin' => function (ContainerInterface $serviceManager) {
+                $photoService = $serviceManager->getServiceLocator()->get("photo_service_photo");
+                $albumService = $serviceManager->getServiceLocator()->get("photo_service_album");
+                return new \Photo\Controller\Plugin\AlbumPlugin($photoService, $albumService);
+            }
         ]
     ],
     'view_manager' => [

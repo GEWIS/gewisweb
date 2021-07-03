@@ -8,11 +8,26 @@ use Zend\View\Model\ViewModel;
 
 class PhotoController extends AbstractActionController
 {
+    /**
+     * @var \Photo\Service\Photo
+     */
+    private $photoService;
+
+    /**
+     * @var \Photo\Service\Album
+     */
+    private $albumService;
+
+    function __construct(\Photo\Service\Photo $photoService, \Photo\Service\Album $albumService)
+    {
+        $this->photoService = $photoService;
+        $this->albumService = $albumService;
+    }
 
     public function indexAction()
     {
         //add any other special behavior which is required for the main photo page here later
-        $years = $this->getAlbumService()->getAlbumYears();
+        $years = $this->albumService->getAlbumYears();
         $year = $this->params()->fromRoute('year');
         // If no year is supplied, use the latest year.
         if (is_null($year)) {
@@ -20,23 +35,13 @@ class PhotoController extends AbstractActionController
         } else {
             $year = (int)$year;
         }
-        $albums = $this->getAlbumService()->getAlbumsByYear($year);
+        $albums = $this->albumService->getAlbumsByYear($year);
 
         return new ViewModel([
             'activeYear' => $year,
-            'years'      => $years,
-            'albums'     => $albums
+            'years' => $years,
+            'albums' => $albums
         ]);
-    }
-
-    /**
-     * Gets the album service.
-     *
-     * @return \Photo\Service\Album
-     */
-    public function getAlbumService()
-    {
-        return $this->getServiceLocator()->get("photo_service_album");
     }
 
     /**
@@ -46,25 +51,15 @@ class PhotoController extends AbstractActionController
     public function viewAction()
     {
         $photoId = $this->params()->fromRoute('photo_id');
-        $photoData = $this->getPhotoService()->getPhotoData($photoId);
+        $photoData = $this->photoService->getPhotoData($photoId);
 
         if (is_null($photoData)) {
             return $this->notFoundAction();
         }
 
-        $this->getPhotoService()->countHit($photoData['photo']);
+        $this->photoService->countHit($photoData['photo']);
 
         return new ViewModel($photoData);
-    }
-
-    /**
-     * Gets the photo service.
-     *
-     * @return \Photo\Service\Photo
-     */
-    public function getPhotoService()
-    {
-        return $this->getServiceLocator()->get("photo_service_photo");
     }
 
     /**
@@ -78,11 +73,11 @@ class PhotoController extends AbstractActionController
         $page = $this->params()->fromRoute('page');
         $photoId = $this->params()->fromRoute('photo_id');
         try {
-            $memberAlbum = $this->getAlbumService()->getAlbum($lidnr, 'member');
+            $memberAlbum = $this->albumService->getAlbum($lidnr, 'member');
         } catch (\Exception $e) {
             return $this->notFoundAction();
         }
-        $photoData = $this->getPhotoService()->getPhotoData($photoId,
+        $photoData = $this->photoService->getPhotoData($photoId,
             $memberAlbum);
 
         if (is_null($photoData)) {
@@ -90,11 +85,11 @@ class PhotoController extends AbstractActionController
         }
 
         $photoData = array_merge($photoData, [
-            'memberAlbum'     => $memberAlbum,
+            'memberAlbum' => $memberAlbum,
             'memberAlbumPage' => $page,
         ]);
 
-        $this->getPhotoService()->countHit($photoData['photo']);
+        $this->photoService->countHit($photoData['photo']);
 
         $vm = new ViewModel($photoData);
         $vm->setTemplate('photo/view');
@@ -106,7 +101,7 @@ class PhotoController extends AbstractActionController
     {
         $photoId = $this->params()->fromRoute('photo_id');
 
-        return $this->getPhotoService()->getPhotoDownload($photoId);
+        return $this->photoService->getPhotoDownload($photoId);
     }
 
     /**
@@ -114,7 +109,7 @@ class PhotoController extends AbstractActionController
      */
     public function weeklyAction()
     {
-        $weeklyPhotos = $this->getPhotoService()->getPhotosOfTheWeek();
+        $weeklyPhotos = $this->photoService->getPhotosOfTheWeek();
 
         return new ViewModel([
             'weeklyPhotos' => $weeklyPhotos
@@ -127,7 +122,7 @@ class PhotoController extends AbstractActionController
     public function setProfilePhotoAction()
     {
         $photoId = $this->params()->fromRoute('photo_id');
-        $this->getPhotoService()->setProfilePhoto($photoId);
+        $this->photoService->setProfilePhoto($photoId);
 
         return $this->redirect()->toRoute('photo/photo', [
             'photo_id' => $photoId,
@@ -140,7 +135,7 @@ class PhotoController extends AbstractActionController
     public function removeProfilePhotoAction()
     {
         $photoId = $this->params()->fromRoute('photo_id', null);
-        $this->getPhotoService()->removeProfilePhoto();
+        $this->photoService->removeProfilePhoto();
 
         if ($photoId != null) {
             return $this->redirect()->toRoute('photo/photo', [
@@ -159,11 +154,11 @@ class PhotoController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
-            $this->getPhotoService()->countVote($photoId);
+            $this->photoService->countVote($photoId);
             return new JsonModel(['success' => true]);
         }
 
         return $this->getResponse();
     }
-    
+
 }

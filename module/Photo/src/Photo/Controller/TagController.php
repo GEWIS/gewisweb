@@ -7,6 +7,16 @@ use Zend\View\Model\JsonModel;
 
 class TagController extends AbstractActionController
 {
+    /**
+     * @var \Photo\Service\Photo
+     */
+    private $photoService;
+
+    function __construct(\Photo\Service\Photo $photoService)
+    {
+        $this->photoService = $photoService;
+    }
+
     public function addAction()
     {
         $request = $this->getRequest();
@@ -14,7 +24,7 @@ class TagController extends AbstractActionController
         if ($request->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
             $lidnr = $this->params()->fromRoute('lidnr');
-            $tag = $this->getPhotoService()->addTag($photoId, $lidnr);
+            $tag = $this->photoService->addTag($photoId, $lidnr);
             if (is_null($tag)) {
                 $result['success'] = false;
             } else {
@@ -33,19 +43,9 @@ class TagController extends AbstractActionController
         if ($request->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
             $lidnr = $this->params()->fromRoute('lidnr');
-            $result['success'] = $this->getPhotoService()->removeTag($photoId, $lidnr);
+            $result['success'] = $this->photoService->removeTag($photoId, $lidnr);
         }
 
         return new JsonModel($result);
-    }
-
-    /**
-     * Gets the photo service.
-     *
-     * @return \Photo\Service\Photo
-     */
-    public function getPhotoService()
-    {
-        return $this->getServiceLocator()->get("photo_service_photo");
     }
 }

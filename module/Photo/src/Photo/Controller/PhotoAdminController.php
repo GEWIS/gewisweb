@@ -2,6 +2,7 @@
 
 namespace Photo\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
@@ -10,12 +11,28 @@ class PhotoAdminController extends AbstractActionController
 {
 
     /**
+     * @var \Photo\Service\Photo
+     */
+    private $photoService;
+
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
+    function __construct(\Photo\Service\Photo $photoService, EntityManager $entityManager)
+    {
+        $this->photoService = $photoService;
+        $this->entityManager = $entityManager;
+    }
+
+    /**
      * Shows an admin page for the specified photo
      */
     public function indexAction()
     {
         $photoId = $this->params()->fromRoute('photo_id');
-        $data = $this->getPhotoService()->getPhotoData($photoId);
+        $data = $this->photoService->getPhotoData($photoId);
         if (is_null($data)) {
             return $this->notFoundAction();
         }
@@ -39,7 +56,7 @@ class PhotoAdminController extends AbstractActionController
         if ($request->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
             $albumId = $request->getPost()['album_id'];
-            $result['success'] = $this->getPhotoService()->movePhoto($photoId, $albumId);
+            $result['success'] = $this->photoService->movePhoto($photoId, $albumId);
         }
 
         return new JsonModel($result);
@@ -54,7 +71,7 @@ class PhotoAdminController extends AbstractActionController
         $result = [];
         if ($request->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
-            $result['success'] = $this->getPhotoService()->deletePhoto($photoId);
+            $result['success'] = $this->photoService->deletePhoto($photoId);
         }
 
         return new JsonModel($result);
@@ -62,7 +79,7 @@ class PhotoAdminController extends AbstractActionController
 
     public function weeklyPhotoAction()
     {
-        $weeklyPhoto = $this->getPhotoService()->generatePhotoOfTheWeek();
+        $weeklyPhoto = $this->photoService->generatePhotoOfTheWeek();
 
         if (is_null($weeklyPhoto)) {
             echo "No photo of the week chosen, were any photos viewed?\n";
@@ -77,7 +94,7 @@ class PhotoAdminController extends AbstractActionController
     public function migrateAspectRatiosAction()
     {
         printf("Migrating aspect ratios\n");
-        $em = $this->getServiceLocator()->get('photo_doctrine_em');
+        $em = $this->entityManager;
         $qb = $em->createQueryBuilder();
 
         $qb->select('a')
@@ -86,7 +103,7 @@ class PhotoAdminController extends AbstractActionController
             ->orderBy('a.dateTime', 'DESC');
 
         $photos = $qb->getQuery()->getResult();
-        $i=0;
+        $i = 0;
         foreach ($photos as $photo) {
             $i++;
             $ratio = 0;
@@ -105,25 +122,4 @@ class PhotoAdminController extends AbstractActionController
         }
         $em->flush();
     }
-
-    /**
-     * Get the photo service.
-     *
-     * @return \Photo\Service\Photo
-     */
-    public function getPhotoService()
-    {
-        return $this->getServiceLocator()->get('photo_service_photo');
-    }
-
-    /**
-     * Get the photo admin service.
-     *
-     * @return \Photo\Service\Admin
-     */
-    public function getAdminService()
-    {
-        return $this->getServiceLocator()->get("photo_service_admin");
-    }
-
 }

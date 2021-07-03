@@ -8,6 +8,28 @@ use Zend\View\Model\ViewModel;
 class AlbumController extends AbstractActionController
 {
     /**
+     * @var \Photo\Service\Album
+     */
+    private $albumService;
+
+    /**
+     * @var \Zend\Cache\Storage
+     */
+    private $pageCache;
+
+    /**
+     * @var array
+     */
+    private $photoConfig;
+
+    function __construct(\Photo\Service\Album $albumService, \Zend\Cache\Storage $pageCache, array $photoConfig)
+    {
+        $this->albumService = $albumService;
+        $this->pageCache = $pageCache;
+        $this->photoConfig = $photoConfig;
+    }
+
+    /**
      * Shows a page from the album, or a 404 if this page does not exist
      *
      * @return array|ViewModel
@@ -35,18 +57,17 @@ class AlbumController extends AbstractActionController
     {
         $albumId = $this->params()->fromRoute('album_id');
         $albumType = $this->params()->fromRoute('album_type');
-        $albumService = $this->getServiceLocator()->get('photo_service_album');
 
-        $album = $albumService->getAlbum($albumId, $albumType);
+        $album = $this->albumService->getAlbum($albumId, $albumType);
         if (is_null($album)) {
             return $this->notFoundAction();
         }
 
         return new ViewModel([
-            'cache' => $this->getServiceLocator()->get('album_page_cache'),
+            'cache' => $this->pageCache,
             'album' => $album,
             'basedir' => '/',
-            'config' => $this->getServiceLocator()->get('config')['photo'],
+            'config' => $this->photoConfig,
         ]);
     }
 
@@ -62,14 +83,14 @@ class AlbumController extends AbstractActionController
         $activePage = (int)$this->params()->fromRoute('page');
         $albumPage = $this->AlbumPlugin()->getAlbumPage($lidnr, $activePage,
             'member');
-        
+
         if (is_null($albumPage)) {
             return $this->notFoundAction();
         }
-        
+
         $vm = new ViewModel($albumPage);
         $vm->setTemplate('photo/album/index');
-        
+
         return $vm;
     }
 }

@@ -8,14 +8,28 @@ use Zend\View\Model\JsonModel;
 
 class AlbumAdminController extends AbstractActionController
 {
+    /**
+     * @var \Photo\Service\Admin
+     */
+    private $adminService;
+
+    /**
+     * @var \Photo\Service\Album
+     */
+    private $albumService;
+
+    function __construct(\Photo\Service\Admin $adminService, \Photo\Service\Album $albumService)
+    {
+        $this->adminService = $adminService;
+        $this->albumService = $albumService;
+    }
 
     /**
      * Retrieves the main photo admin index page.
      */
     public function indexAction()
     {
-        $albumService = $this->getAlbumService();
-        $years = $albumService->getAlbumYears();
+        $years = $this->albumService->getAlbumYears();
         $albumsByYear = [];
         foreach ($years as $year) {
             $albumsByYear[$year] = $albumService->getAlbumsByYear($year);
@@ -34,16 +48,15 @@ class AlbumAdminController extends AbstractActionController
      */
     public function createAction()
     {
-        $albumService = $this->getAlbumService();
         $request = $this->getRequest();
         if ($request->isPost()) {
             $albumId = $this->params()->fromRoute('album_id');
-            $album = $albumService->createAlbum($albumId, $request->getPost());
+            $album = $this->albumService->createAlbum($albumId, $request->getPost());
             if ($album) {
                 $this->redirect()->toUrl($this->url()->fromRoute('admin_photo') . '#' . $album->getId());
             }
         }
-        $form = $albumService->getCreateAlbumForm();
+        $form = $this->albumService->getCreateAlbumForm();
 
         return new ViewModel([
             'form' => $form,
@@ -70,15 +83,14 @@ class AlbumAdminController extends AbstractActionController
      */
     public function editAction()
     {
-        $albumService = $this->getAlbumService();
         $request = $this->getRequest();
         $albumId = $this->params()->fromRoute('album_id');
         if ($request->isPost()) {
-            if ($albumService->updateAlbum($albumId, $request->getPost())) {
+            if ($this->albumService->updateAlbum($albumId, $request->getPost())) {
                 $this->redirect()->toUrl($this->url()->fromRoute('admin_photo') . '#' . $albumId);
             }
         }
-        $form = $albumService->getEditAlbumForm($albumId);
+        $form = $this->albumService->getEditAlbumForm($albumId);
 
         return new ViewModel([
             'form' => $form,
@@ -87,10 +99,10 @@ class AlbumAdminController extends AbstractActionController
 
     public function addAction()
     {
-        $this->getAdminService()->checkUploadAllowed();
+        $this->adminService->checkUploadAllowed();
 
         $albumId = $this->params()->fromRoute('album_id');
-        $album = $this->getAlbumService()->getAlbum($albumId);
+        $album = $this->albumService->getAlbum($albumId);
 
         return new ViewModel([
             'album' => $album
@@ -107,10 +119,10 @@ class AlbumAdminController extends AbstractActionController
         $result['success'] = false;
         if ($request->isPost()) {
             $albumId = $this->params()->fromRoute('album_id');
-            $album = $this->getAlbumService()->getAlbum($albumId);
+            $album = $this->albumService->getAlbum($albumId);
 
             try {
-                $this->getAdminService()->upload($request->getFiles(), $album);
+                $this->adminService->upload($request->getFiles(), $album);
                 $result['success'] = true;
             } catch (\Exception $e) {
                 $this->getResponse()->setStatusCode(500);
@@ -131,9 +143,9 @@ class AlbumAdminController extends AbstractActionController
         $result['success'] = false;
         if ($request->isPost()) {
             $albumId = $this->params()->fromRoute('album_id');
-            $album = $this->getAlbumService()->getAlbum($albumId);
+            $album = $this->albumService->getAlbum($albumId);
             try {
-                $this->getAdminService()->storeUploadedDirectory($request->getPost()['folder_path'], $album);
+                $this->adminService->storeUploadedDirectory($request->getPost()['folder_path'], $album);
                 $result['success'] = true;
             } catch (\Exception $e) {
                 $this->getResponse()->setStatusCode(500);
@@ -154,7 +166,7 @@ class AlbumAdminController extends AbstractActionController
         if ($request->isPost()) {
             $albumId = $this->params()->fromRoute('album_id');
             $parentId = $request->getPost()['parent_id'];
-            $result['success'] = $this->getAlbumService()->moveAlbum($albumId, $parentId);
+            $result['success'] = $this->albumService->moveAlbum($albumId, $parentId);
         }
 
         return new JsonModel($result);
@@ -168,7 +180,7 @@ class AlbumAdminController extends AbstractActionController
         $request = $this->getRequest();
         $albumId = $this->params()->fromRoute('album_id');
         if ($request->isPost()) {
-            $this->getAlbumService()->deleteAlbum($albumId);
+            $this->albumService->deleteAlbum($albumId);
         }
 
         return new JsonModel([]);
@@ -181,29 +193,9 @@ class AlbumAdminController extends AbstractActionController
     {
         if ($this->getRequest()->isPost()) {
             $albumId = $this->params()->fromRoute('album_id');
-            $this->getAlbumService()->generateAlbumCover($albumId);
+            $this->albumService->generateAlbumCover($albumId);
         }
 
         return new JsonModel([]);
-    }
-
-    /**
-     * Get the album service.
-     *
-     * @return \Photo\Service\Album
-     */
-    public function getAlbumService()
-    {
-        return $this->getServiceLocator()->get('photo_service_album');
-    }
-
-    /**
-     * Get the photo admin service.
-     *
-     * @return \Photo\Service\Admin
-     */
-    public function getAdminService()
-    {
-        return $this->getServiceLocator()->get("photo_service_admin");
     }
 }
