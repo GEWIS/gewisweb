@@ -8,7 +8,7 @@
 # │ │ │ │ │
 # * * * * *  command to execute
 # Don't remove the empty line at the end of this file. It is required to run the cron job
-0 0 * * 1 /code/web photo weeklyphoto >> /code/data/cron-weeklyphoto.log
-58 1 * * * php /code/importdb.php >> /code/data/cron-importdb.log
-0 23 * * * /code/web activity calendar notify >> /code/data/cron-activitycalendar.log
-0 * * * * /code/publicarchive.sh >> /code/data/cron-publicarchive.log
+0 0 * * 1 /code/web photo weeklyphoto >> /code/data/cron-weeklyphoto.log 2>&1
+58 1 * * * php /code/importdb.php >> /code/data/cron-importdb.log 2>&1
+0 23 * * * /code/web activity calendar notify >> /code/data/cron-activitycalendar.log 2>&1
+0 * * * * /code/publicarchive.sh >> /code/data/cron-publicarchive.log 2>&1
