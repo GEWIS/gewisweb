@@ -199,6 +199,16 @@ $this->headTitle($this->translate('Approval'));
             ?>
         </div>
     <?php elseif ($activity->getStatus() === Activity::STATUS_APPROVED): ?>
+        <div class="col-md-12">
+            <p>
+                <?php
+                echo sprintf(
+                    $this->translate('This activity was approved by <strong>%s</strong>.'),
+                    $this->escapeHtml($activity->getApprover()->getMember()->getFullName())
+                );
+                ?>
+            </p>
+        </div>
         <div class="col-md-2">
             <?php $resetForm->setAttribute('action', $this->url('activity_admin_approval/reset', ['id' => $activity->getId()]));
             $resetForm->prepare();
@@ -211,6 +221,16 @@ $this->headTitle($this->translate('Approval'));
             ?>
         </div>
     <?php elseif ($activity->getStatus() === Activity::STATUS_DISAPPROVED): ?>
+        <div class="col-md-12">
+            <p>
+                <?php
+                echo sprintf(
+                    $this->translate('This activity was disapproved by <strong>%s</strong>.'),
+                    $this->escapeHtml($activity->getApprover()->getMember()->getFullName())
+                );
+                ?>
+            </p>
+        </div>
         <div class="col-md-2">
             <?php $resetForm->setAttribute('action', $this->url('activity_admin_approval/reset', ['id' => $activity->getId()]));
             $resetForm->prepare();
