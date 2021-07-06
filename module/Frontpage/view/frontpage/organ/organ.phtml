@@ -99,7 +99,7 @@ function getOrganDescription($organInformation, $lang)
                             <a class="list-group-item"
                                href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
 
-                                <h4 class="list-group-item-heading"><?= $activity->getName() ?></h4>
+                                <h4 class="list-group-item-heading"><?= $this->escapeHtml($activity->getName()->getText($lang)) ?></h4>
                                 <p class="list-group-item-text text-muted"><?= ucfirst($this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT)); ?></p>
                             </a>
                         <?php endforeach; ?>
