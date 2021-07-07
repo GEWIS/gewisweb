@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-24 08:52+0200\n"
-"PO-Revision-Date: 2021-06-24 09:00+0200\n"
+"POT-Creation-Date: 2021-07-07 15:54+0200\n"
+"PO-Revision-Date: 2021-07-07 15:56+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -43,7 +43,7 @@ msgstr "Save"
 #: module/Activity/view/activity/admin-approval/view.phtml:48
 #: module/Activity/view/activity/admin-approval/view.phtml:166
 #: module/Activity/view/activity/admin-category/add.phtml:67
-#: module/Activity/view/activity/activity/create.phtml:167
+#: module/Activity/view/activity/activity/create.phtml:169
 #: module/Company/src/Company/Form/EditCompany.php:70
 #: module/Company/src/Company/Form/EditPackage.php:79
 #: module/Education/src/Education/Form/Fieldset/Exam.php:59
@@ -59,7 +59,7 @@ msgstr "English"
 #: module/Activity/view/activity/admin-approval/view.phtml:43
 #: module/Activity/view/activity/admin-approval/view.phtml:161
 #: module/Activity/view/activity/admin-category/add.phtml:29
-#: module/Activity/view/activity/activity/create.phtml:162
+#: module/Activity/view/activity/activity/create.phtml:164
 #: module/Company/src/Company/Form/EditCompany.php:71
 #: module/Company/src/Company/Form/EditPackage.php:78
 #: module/Education/src/Education/Form/Fieldset/Exam.php:60
@@ -70,13 +70,13 @@ msgstr "Dutch"
 
 #: module/Company/view/partial/company/company/grid/company.phtml:17
 #: module/Company/view/partial/company/company/list/company.phtml:14
-#: module/Company/view/company/company/jobs.phtml:54
+#: module/Company/view/company/company/jobs.phtml:57
 #: module/Company/view/company/company/companyStory.phtml:21
 msgid "Logo of"
 msgstr "Logo of"
 
 #: module/Company/view/partial/company/company/list/company.phtml:17
-#: module/Company/view/company/company/jobs.phtml:65
+#: module/Company/view/company/company/jobs.phtml:68
 #: module/Company/view/company/company/companyStory.phtml:24
 #: module/Application/view/partial/footer.phtml:21
 #: module/Application/view/partial/main-nav.phtml:137
@@ -84,7 +84,7 @@ msgid "Contact"
 msgstr "Contact"
 
 #: module/Company/view/partial/company/company/list/company.phtml:60
-#: module/Company/view/company/company/jobs.phtml:88
+#: module/Company/view/company/company/jobs.phtml:91
 #: module/Activity/view/partial/create.phtml:75
 #: module/Activity/view/partial/create.phtml:150
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:191
@@ -263,9 +263,9 @@ msgstr "Delete"
 #: module/Company/view/company/admin/edit-company.phtml:139
 #: module/Activity/view/activity/admin-category/index.phtml:43
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:156
-#: module/Photo/view/photo/album-admin/index.phtml:178
-#: module/Photo/view/photo/album-admin/index.phtml:210
-#: module/Photo/view/photo/photo-admin/index.phtml:100
+#: module/Photo/view/photo/album-admin/index.phtml:177
+#: module/Photo/view/photo/album-admin/index.phtml:209
+#: module/Photo/view/photo/photo-admin/index.phtml:98
 msgid "Delete confirmation"
 msgstr "Delete confirmation"
 
@@ -287,9 +287,9 @@ msgstr "Delete company"
 #: module/Decision/view/decision/decision/authorizations.phtml:121
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:167
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:213
-#: module/Photo/view/photo/album-admin/index.phtml:197
-#: module/Photo/view/photo/album-admin/index.phtml:229
-#: module/Photo/view/photo/photo-admin/index.phtml:119
+#: module/Photo/view/photo/album-admin/index.phtml:196
+#: module/Photo/view/photo/album-admin/index.phtml:228
+#: module/Photo/view/photo/photo-admin/index.phtml:117
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -425,8 +425,8 @@ msgid "Edit Label"
 msgstr "Edit Label"
 
 #: module/Company/view/company/company/list.phtml:6
-#: module/Company/view/company/company/jobs.phtml:17
-#: module/Company/view/company/company/job-list.phtml:18
+#: module/Company/view/company/company/jobs.phtml:20
+#: module/Company/view/company/company/job-list.phtml:20
 #: module/Company/view/company/company/show.phtml:7
 #: module/Company/view/company/company/show.phtml:15
 #: module/Company/view/company/company/spotlight.phtml:15
@@ -441,54 +441,54 @@ msgstr "Companies"
 msgid "in the spotlight"
 msgstr "in the spotlight"
 
-#: module/Company/view/company/company/jobs.phtml:44
+#: module/Company/view/company/company/jobs.phtml:47
 msgid "job_at_company"
 msgstr "at"
 
-#: module/Company/view/company/company/jobs.phtml:76
-#: module/Company/view/company/company/jobs.phtml:82
-#: module/Company/view/company/company/job-list.phtml:117
+#: module/Company/view/company/company/jobs.phtml:79
+#: module/Company/view/company/company/jobs.phtml:85
+#: module/Company/view/company/company/job-list.phtml:119
 msgid "View"
 msgstr "View"
 
-#: module/Company/view/company/company/job-list.phtml:51
+#: module/Company/view/company/company/job-list.phtml:53
 msgid "What are you looking for?"
 msgstr "What are you looking for?"
 
-#: module/Company/view/company/company/job-list.phtml:54
+#: module/Company/view/company/company/job-list.phtml:56
 msgid "Sort on"
 msgstr "Sort on"
 
-#: module/Company/view/company/company/job-list.phtml:56
+#: module/Company/view/company/company/job-list.phtml:58
 msgid "Random"
 msgstr "Random"
 
-#: module/Company/view/company/company/job-list.phtml:57
+#: module/Company/view/company/company/job-list.phtml:59
 msgid "Most recent"
 msgstr "Most recent"
 
-#: module/Company/view/company/company/job-list.phtml:62
+#: module/Company/view/company/company/job-list.phtml:64
 #: module/Activity/view/activity/admin/list.phtml:17
 #: module/Activity/view/activity/admin/view.phtml:61
-#: module/Activity/view/activity/activity/create.phtml:54
+#: module/Activity/view/activity/activity/create.phtml:56
 msgid "Company"
 msgstr "Company"
 
-#: module/Company/view/company/company/job-list.phtml:79
+#: module/Company/view/company/company/job-list.phtml:81
 #, php-format
 msgid "Unfortunately, there aren't any %s at the moment."
 msgstr "Unfortunately, there aren't any %s at the moment."
 
-#: module/Company/view/company/company/job-list.phtml:120
+#: module/Company/view/company/company/job-list.phtml:122
 msgid "Posted today"
 msgstr "Posted today"
 
-#: module/Company/view/company/company/job-list.phtml:122
+#: module/Company/view/company/company/job-list.phtml:124
 #, php-format
 msgid "Posted %s"
 msgstr "Posted %s"
 
-#: module/Company/view/company/company/job-list.phtml:155
+#: module/Company/view/company/company/job-list.phtml:157
 #, php-format
 msgid "Still haven't found what you're looking for? Take a look at %s."
 msgstr "Still haven't found what you're looking for? Take a look at %s."
@@ -796,14 +796,14 @@ msgstr "View details of the new activity"
 #: module/Activity/view/activity/admin-approval/view.phtml:141
 #: module/Activity/view/activity/admin-category/index.phtml:2
 #: module/Activity/view/activity/admin-category/index.phtml:9
-#: module/Activity/view/activity/activity/create.phtml:108
+#: module/Activity/view/activity/activity/create.phtml:110
 msgid "Activity Categories"
 msgstr "Activity Categories"
 
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:261
 #: module/Activity/view/activity/admin-approval/view.phtml:155
 #: module/Activity/view/activity/activity/view.phtml:112
-#: module/Activity/view/activity/activity/create.phtml:155
+#: module/Activity/view/activity/activity/create.phtml:157
 msgid "Sign-up Lists"
 msgstr "Sign-up Lists"
 
@@ -828,6 +828,16 @@ msgstr "Approve"
 #: module/Activity/view/activity/admin-approval/view.phtml:196
 msgid "Disapprove"
 msgstr "Disapprove"
+
+#: module/Activity/view/activity/admin-approval/view.phtml:206
+#, php-format
+msgid "This activity was approved by <strong>%s</strong>."
+msgstr "This activity was approved by <strong>%s</strong>."
+
+#: module/Activity/view/activity/admin-approval/view.phtml:228
+#, php-format
+msgid "This activity was disapproved by <strong>%s</strong>."
+msgstr "This activity was disapproved by <strong>%s</strong>."
 
 #: module/Activity/view/activity/admin/list.phtml:13
 #: module/Activity/view/activity/admin/view.phtml:57
@@ -863,7 +873,7 @@ msgstr "Approved"
 #: module/Activity/view/activity/admin/list.phtml:38
 #: module/Activity/view/activity/admin/view.phtml:80
 #: module/Activity/view/activity/admin/view.phtml:81
-#: module/Education/view/education/education/index.phtml:87
+#: module/Education/view/education/education/index.phtml:86
 msgid "None"
 msgstr "None"
 
@@ -918,11 +928,6 @@ msgid "Additional actions"
 msgstr "Additional actions"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:105
-#: module/Activity/view/activity/admin/participantsTable.phtml:107
-msgid "Download as pdf"
-msgstr "Download as pdf"
-
-#: module/Activity/view/activity/admin/participantsTable.phtml:111
 msgid "Mail everybody"
 msgstr "Mail everybody"
 
@@ -972,11 +977,6 @@ msgstr "Upcoming Activities"
 msgid "Old activities"
 msgstr "Past activities"
 
-#: module/Activity/view/activity/admin/exportpdf.phtml:5
-#: module/Activity/view/activity/admin/exportpdf.phtml:7
-msgid "Details for activity"
-msgstr "Details for activity"
-
 #: module/Activity/view/activity/admin-category/index.phtml:10
 msgid ""
 "Here you can add, edit, or remove activity categories. Click on 'Add "
@@ -986,7 +986,7 @@ msgstr ""
 "Category' to add a new category or click on a category to edit/remove it."
 
 #: module/Activity/view/activity/admin-category/index.phtml:14
-#: module/Activity/view/activity/activity/create.phtml:129
+#: module/Activity/view/activity/activity/create.phtml:131
 msgid "There are currently no activity categories..."
 msgstr "There are currently no activity categories..."
 
@@ -1139,7 +1139,7 @@ msgid "The activity could not be saved. Check and correct your input data."
 msgstr "The activity could not be saved. Check and correct your input data."
 
 #: module/Activity/view/activity/activity-calendar/create.phtml:94
-#: module/Activity/view/activity/activity/create.phtml:40
+#: module/Activity/view/activity/activity/create.phtml:42
 msgid "Committee / fraternity"
 msgstr "Committee / fraternity"
 
@@ -1273,11 +1273,11 @@ msgstr "The number of subscribed members is currently %d."
 msgid "Login to view the subscribed members."
 msgstr "Login to view the subscribed members."
 
-#: module/Activity/view/activity/activity/create.phtml:29
+#: module/Activity/view/activity/activity/create.phtml:31
 msgid "Organizer"
 msgstr "Organizer"
 
-#: module/Activity/view/activity/activity/create.phtml:30
+#: module/Activity/view/activity/activity/create.phtml:32
 msgid ""
 "Select whether an organ (committee, fraternity, etc.) or a company is "
 "responsible for this activity, or both."
@@ -1285,23 +1285,23 @@ msgstr ""
 "Select whether an organ (committee, fraternity, etc.) or a company is "
 "responsible for this activity, or both."
 
-#: module/Activity/view/activity/activity/create.phtml:65
+#: module/Activity/view/activity/activity/create.phtml:67
 msgid "Date and time"
 msgstr "Date and time"
 
-#: module/Activity/view/activity/activity/create.phtml:66
+#: module/Activity/view/activity/activity/create.phtml:68
 msgid "Enter the start and end date and time of this activity."
 msgstr "Enter the start and end date and time of this activity."
 
-#: module/Activity/view/activity/activity/create.phtml:79
+#: module/Activity/view/activity/activity/create.phtml:81
 msgid "Start date and time"
 msgstr "Start date and time"
 
-#: module/Activity/view/activity/activity/create.phtml:94
+#: module/Activity/view/activity/activity/create.phtml:96
 msgid "End date and time"
 msgstr "End date and time"
 
-#: module/Activity/view/activity/activity/create.phtml:109
+#: module/Activity/view/activity/activity/create.phtml:111
 msgid ""
 "Add activity categories to your activity to give potential subscribers a "
 "better understanding of the activity."
@@ -1309,7 +1309,7 @@ msgstr ""
 "Add activity categories to your activity to give potential subscribers a "
 "better understanding of the activity."
 
-#: module/Activity/view/activity/activity/create.phtml:156
+#: module/Activity/view/activity/activity/create.phtml:158
 msgid ""
 "Add sign-up lists to allow people to sign up for this activity. Each list "
 "can have optional fields to collect specific information from the "
@@ -1319,31 +1319,31 @@ msgstr ""
 "can have optional fields to collect specific information from the "
 "participants."
 
-#: module/Activity/view/activity/activity/create.phtml:196
+#: module/Activity/view/activity/activity/create.phtml:198
 msgid "Remove the last sign-up list"
 msgstr "Remove the last sign-up list"
 
-#: module/Activity/view/activity/activity/create.phtml:201
+#: module/Activity/view/activity/activity/create.phtml:203
 msgid "Add a sign-up list"
 msgstr "Add a sign-up list"
 
-#: module/Education/view/education/education/index.phtml:3
-#: module/Education/view/education/education/index.phtml:18
+#: module/Education/view/education/education/index.phtml:2
+#: module/Education/view/education/education/index.phtml:17
 #: module/Education/view/education/education/course.phtml:4
 #: module/Application/view/partial/admin-nav.phtml:68
 #: module/Application/view/partial/main-nav.phtml:178
 msgid "Education"
 msgstr "Education"
 
-#: module/Education/view/education/education/index.phtml:23
+#: module/Education/view/education/education/index.phtml:22
 msgid "Exams"
 msgstr "Exams"
 
-#: module/Education/view/education/education/index.phtml:42
+#: module/Education/view/education/education/index.phtml:41
 msgid "Course code or course description"
 msgstr "Course code or course description"
 
-#: module/Education/view/education/education/index.phtml:47
+#: module/Education/view/education/education/index.phtml:46
 #: module/Decision/view/decision/member/index.phtml:115
 #: module/Decision/view/decision/decision/search.phtml:30
 #: module/Decision/src/Decision/Form/SearchDecision.php:28
@@ -1351,12 +1351,12 @@ msgstr "Course code or course description"
 msgid "Search"
 msgstr "Search"
 
-#: module/Education/view/education/education/index.phtml:59
+#: module/Education/view/education/education/index.phtml:58
 #, php-format
 msgid "Found %d course(s) matching your description"
 msgstr "Found %d course(s) matching your description"
 
-#: module/Education/view/education/education/index.phtml:66
+#: module/Education/view/education/education/index.phtml:65
 #: module/Education/src/Education/Form/Fieldset/Exam.php:27
 #: module/Education/src/Education/Form/Fieldset/Summary.php:27
 #: module/Education/src/Education/Form/AddCourse.php:28
@@ -1364,19 +1364,19 @@ msgstr "Found %d course(s) matching your description"
 msgid "Course code"
 msgstr "Course code"
 
-#: module/Education/view/education/education/index.phtml:67
+#: module/Education/view/education/education/index.phtml:66
 msgid "Course name"
 msgstr "Course name"
 
-#: module/Education/view/education/education/index.phtml:68
+#: module/Education/view/education/education/index.phtml:67
 msgid "Available documents"
 msgstr "Available documents"
 
-#: module/Education/view/education/education/index.phtml:79
+#: module/Education/view/education/education/index.phtml:78
 msgid "View available documents"
 msgstr "View available documents"
 
-#: module/Education/view/education/education/index.phtml:98
+#: module/Education/view/education/education/index.phtml:97
 #, php-format
 msgid ""
 "Do you want to contribute to the collection of old exams and summaries? Send "
@@ -1385,44 +1385,44 @@ msgstr ""
 "Do you want to contribute to the collection of old exams and summaries? Send "
 "them to the %seducation officer%s so that your (future) peers can benefit."
 
-#: module/Education/view/education/education/index.phtml:99
-#: module/Education/view/education/education/index.phtml:176
+#: module/Education/view/education/education/index.phtml:98
+#: module/Education/view/education/education/index.phtml:175
 msgid "Mail the education officer"
 msgstr "Mail the education officer"
 
-#: module/Education/view/education/education/index.phtml:107
+#: module/Education/view/education/education/index.phtml:106
 msgid "For old exams of minor courses, you can also look at:"
 msgstr "For old exams of minor courses, you can also look at:"
 
-#: module/Education/view/education/education/index.phtml:110
+#: module/Education/view/education/education/index.phtml:109
 msgid "Applied Physics"
 msgstr "Applied Physics"
 
-#: module/Education/view/education/education/index.phtml:113
+#: module/Education/view/education/education/index.phtml:112
 msgid "Biomedical Engineering"
 msgstr "Biomedical Engineering"
 
-#: module/Education/view/education/education/index.phtml:116
+#: module/Education/view/education/education/index.phtml:115
 msgid "Electrical Engineering"
 msgstr "Electrical Engineering"
 
-#: module/Education/view/education/education/index.phtml:119
+#: module/Education/view/education/education/index.phtml:118
 msgid "Chemical Engineering"
 msgstr "Chemical Engineering"
 
-#: module/Education/view/education/education/index.phtml:122
+#: module/Education/view/education/education/index.phtml:121
 msgid "Innovation Sciences"
 msgstr "Innovation Sciences"
 
-#: module/Education/view/education/education/index.phtml:129
+#: module/Education/view/education/education/index.phtml:128
 msgid "Useful links"
 msgstr "Useful links"
 
-#: module/Education/view/education/education/index.phtml:134
+#: module/Education/view/education/education/index.phtml:133
 msgid "Books"
 msgstr "Books"
 
-#: module/Education/view/education/education/index.phtml:137
+#: module/Education/view/education/education/index.phtml:136
 msgid ""
 "Order your course books via GEWIS to receive a discount. Specific ordering "
 "deadlines and pickup dates will be timely communicated to you via an email."
@@ -1430,20 +1430,20 @@ msgstr ""
 "Order your course books via GEWIS to receive a discount. Specific ordering "
 "deadlines and pickup dates will be timely communicated to you via an email."
 
-#: module/Education/view/education/education/index.phtml:140
+#: module/Education/view/education/education/index.phtml:139
 msgid "Visit the webshop"
 msgstr "Visit the webshop"
 
-#: module/Education/view/education/education/index.phtml:142
+#: module/Education/view/education/education/index.phtml:141
 msgid "Visit webshop"
 msgstr "Visit webshop"
 
-#: module/Education/view/education/education/index.phtml:151
+#: module/Education/view/education/education/index.phtml:150
 #: module/Decision/view/decision/member/index.phtml:68
 msgid "Microsoft Imagine"
 msgstr "Microsoft Imagine"
 
-#: module/Education/view/education/education/index.phtml:154
+#: module/Education/view/education/education/index.phtml:153
 msgid ""
 "Through Microsoft Imagine you have access to a vast variety of Microsoft "
 "products at no cost. The only requirement is that you are a member of GEWIS."
@@ -1451,19 +1451,19 @@ msgstr ""
 "Through Microsoft Imagine you have access to a vast variety of Microsoft "
 "products at no cost. The only requirement is that you are a member of GEWIS."
 
-#: module/Education/view/education/education/index.phtml:158
+#: module/Education/view/education/education/index.phtml:157
 msgid "Visit the Microsoft Imagine portal"
 msgstr "Visit the Microsoft Imagine portal"
 
-#: module/Education/view/education/education/index.phtml:160
+#: module/Education/view/education/education/index.phtml:159
 msgid "Visit portal"
 msgstr "Visit portal"
 
-#: module/Education/view/education/education/index.phtml:169
+#: module/Education/view/education/education/index.phtml:168
 msgid "Complaint or suggestion about TU/e education?"
 msgstr "Complaint or suggestion about TU/e education?"
 
-#: module/Education/view/education/education/index.phtml:175
+#: module/Education/view/education/education/index.phtml:174
 #, php-format
 msgid ""
 "Do you have a complaint or suggestion concerning the education at the TU/e? "
@@ -1472,35 +1472,35 @@ msgstr ""
 "Do you have a complaint or suggestion concerning the education at the TU/e? "
 "Contact the %seducation officer%s to share your ideas."
 
-#: module/Education/view/education/education/index.phtml:186
+#: module/Education/view/education/education/index.phtml:185
 msgid "Disclaimer on educational content"
 msgstr "Disclaimer on educational content"
 
+#: module/Education/view/education/education/index.phtml:190
+msgid ""
+"The exams on the website of GEWIS are provided by Education & Student "
+"Affairs of the department of Mathematics and Computer Science of the TU/e."
+msgstr ""
+"The exams on the website of GEWIS are provided by Education & Student "
+"Affairs of the department of Mathematics and Computer Science of the TU/e."
+
 #: module/Education/view/education/education/index.phtml:191
 msgid ""
-"The exams on the website of GEWIS are provided by Education & Student "
-"Affairs of the department of Mathematics and Computer Science of the TU/e."
+"If an exam has been put online without the intention of the author, please "
+"let the board of GEWIS know by sending an"
 msgstr ""
-"The exams on the website of GEWIS are provided by Education & Student "
-"Affairs of the department of Mathematics and Computer Science of the TU/e."
+"If an exam has been put online without the intention of the author, please "
+"let the board of GEWIS know by sending an"
 
 #: module/Education/view/education/education/index.phtml:192
-msgid ""
-"If an exam has been put online without the intention of the author, please "
-"let the board of GEWIS know by sending an"
-msgstr ""
-"If an exam has been put online without the intention of the author, please "
-"let the board of GEWIS know by sending an"
-
-#: module/Education/view/education/education/index.phtml:193
 msgid "Email the board of GEWIS"
 msgstr "Email the board of GEWIS"
 
-#: module/Education/view/education/education/index.phtml:193
+#: module/Education/view/education/education/index.phtml:192
 msgid "email to the board of GEWIS"
 msgstr "email to the board of GEWIS"
 
-#: module/Education/view/education/education/index.phtml:194
+#: module/Education/view/education/education/index.phtml:193
 msgid ""
 "then this exam will be removed from the website. Using the summaries or "
 "exams on this website for commercial goals without the permission of the "
@@ -1999,7 +1999,7 @@ msgstr "Meeting notes uploaded"
 
 #: module/Decision/view/decision/admin/notes.phtml:19
 #: module/Decision/src/Decision/Form/Notes.php:37
-#: module/Decision/src/Decision/Form/Document.php:23
+#: module/Decision/src/Decision/Form/Document.php:28
 msgid "Meeting"
 msgstr "Meeting"
 
@@ -2085,28 +2085,28 @@ msgstr "# Decisions"
 
 #: module/Decision/view/decision/decision/files.phtml:14
 #: module/Decision/view/decision/decision/files.phtml:16
-#: module/Decision/view/decision/decision/files.phtml:34
-#: module/Decision/view/decision/decision/files.phtml:38
+#: module/Decision/view/decision/decision/files.phtml:35
+#: module/Decision/view/decision/decision/files.phtml:39
 msgid "Root"
 msgstr "Root"
 
-#: module/Decision/view/decision/decision/files.phtml:34
+#: module/Decision/view/decision/decision/files.phtml:35
 msgid "Public Archive"
 msgstr "Public Archive"
 
-#: module/Decision/view/decision/decision/files.phtml:38
+#: module/Decision/view/decision/decision/files.phtml:39
 msgid "Browsing directory: "
 msgstr "Browsing directory: "
 
-#: module/Decision/view/decision/decision/files.phtml:65
+#: module/Decision/view/decision/decision/files.phtml:66
 msgid "Filename"
 msgstr "Filename"
 
-#: module/Decision/view/decision/decision/files.phtml:79
+#: module/Decision/view/decision/decision/files.phtml:80
 msgid ".. Move up a folder"
 msgstr ".. Move up a folder"
 
-#: module/Decision/view/decision/decision/files.phtml:88
+#: module/Decision/view/decision/decision/files.phtml:89
 msgid "Empty folder"
 msgstr "Empty folder"
 
@@ -2849,79 +2849,79 @@ msgstr "ISO"
 msgid "View on map"
 msgstr "View on map"
 
-#: module/Photo/view/photo/album-admin/index.phtml:29
-#: module/Photo/view/photo/photo-admin/index.phtml:16
+#: module/Photo/view/photo/album-admin/index.phtml:28
+#: module/Photo/view/photo/photo-admin/index.phtml:14
 msgid "Photo admin"
 msgstr "Photo admin"
 
-#: module/Photo/view/photo/album-admin/index.phtml:73
+#: module/Photo/view/photo/album-admin/index.phtml:72
 msgid "Other albums"
 msgstr "Other albums"
 
-#: module/Photo/view/photo/album-admin/index.phtml:86
+#: module/Photo/view/photo/album-admin/index.phtml:85
 msgid "Create new album"
 msgstr "Create new album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:90
+#: module/Photo/view/photo/album-admin/index.phtml:89
 msgid "Edit album"
 msgstr "Edit album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:93
+#: module/Photo/view/photo/album-admin/index.phtml:92
 msgid "Add photos"
 msgstr "Add photos"
 
-#: module/Photo/view/photo/album-admin/index.phtml:95
+#: module/Photo/view/photo/album-admin/index.phtml:94
 msgid "Move album"
 msgstr "Move album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:98
+#: module/Photo/view/photo/album-admin/index.phtml:97
 msgid "Move %i photos"
 msgstr "Move %i photos"
 
-#: module/Photo/view/photo/album-admin/index.phtml:101
+#: module/Photo/view/photo/album-admin/index.phtml:100
 msgid "Regenerate album cover"
 msgstr "Regenerate album cover"
 
-#: module/Photo/view/photo/album-admin/index.phtml:105
-#: module/Photo/view/photo/album-admin/index.phtml:196
+#: module/Photo/view/photo/album-admin/index.phtml:104
+#: module/Photo/view/photo/album-admin/index.phtml:195
 msgid "Delete album"
 msgstr "Delete album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:108
+#: module/Photo/view/photo/album-admin/index.phtml:107
 msgid "Delete %i photos"
 msgstr "Delete %i photos"
 
-#: module/Photo/view/photo/album-admin/index.phtml:126
+#: module/Photo/view/photo/album-admin/index.phtml:125
 msgid "Generate a new cover photo"
 msgstr "Generate a new cover photo"
 
-#: module/Photo/view/photo/album-admin/index.phtml:136
+#: module/Photo/view/photo/album-admin/index.phtml:135
 msgid "Regenerate"
 msgstr "Regenerate"
 
-#: module/Photo/view/photo/album-admin/index.phtml:138
+#: module/Photo/view/photo/album-admin/index.phtml:137
 msgid "Close"
 msgstr "Close"
 
-#: module/Photo/view/photo/album-admin/index.phtml:151
+#: module/Photo/view/photo/album-admin/index.phtml:150
 msgid "Move the album"
 msgstr "Move the album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:156
+#: module/Photo/view/photo/album-admin/index.phtml:155
 msgid "Select a new parent for the album"
 msgstr "Select a new parent for the album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:160
+#: module/Photo/view/photo/album-admin/index.phtml:159
 msgid "The album has been moved"
 msgstr "The album has been moved"
 
-#: module/Photo/view/photo/album-admin/index.phtml:165
-#: module/Photo/view/photo/album-admin/index.phtml:256
-#: module/Photo/view/photo/photo-admin/index.phtml:87
+#: module/Photo/view/photo/album-admin/index.phtml:164
+#: module/Photo/view/photo/album-admin/index.phtml:255
+#: module/Photo/view/photo/photo-admin/index.phtml:85
 msgid "Move"
 msgstr "Move"
 
-#: module/Photo/view/photo/album-admin/index.phtml:182
+#: module/Photo/view/photo/album-admin/index.phtml:181
 msgid ""
 "Are you sure you want to delete this album including all photos inside of "
 "it? <b>This action can not be reverted.</b>"
@@ -2929,15 +2929,15 @@ msgstr ""
 "Are you sure you want to delete this album including all photos inside of "
 "it? <b>This action can not be reverted.</b>"
 
-#: module/Photo/view/photo/album-admin/index.phtml:185
+#: module/Photo/view/photo/album-admin/index.phtml:184
 msgid "Please wait while the album is being deleted."
 msgstr "Please wait while the album is being deleted."
 
-#: module/Photo/view/photo/album-admin/index.phtml:191
+#: module/Photo/view/photo/album-admin/index.phtml:190
 msgid "The album has been deleted"
 msgstr "The album has been deleted"
 
-#: module/Photo/view/photo/album-admin/index.phtml:214
+#: module/Photo/view/photo/album-admin/index.phtml:213
 msgid ""
 "Are you sure you want to delete the selected items? <b>This action can not "
 "be reverted.</b>"
@@ -2945,28 +2945,28 @@ msgstr ""
 "Are you sure you want to delete the selected items? <b>This action can not "
 "be reverted.</b>"
 
-#: module/Photo/view/photo/album-admin/index.phtml:217
+#: module/Photo/view/photo/album-admin/index.phtml:216
 msgid "Please wait while the photos are being deleted."
 msgstr "Please wait while the photos are being deleted."
 
-#: module/Photo/view/photo/album-admin/index.phtml:223
+#: module/Photo/view/photo/album-admin/index.phtml:222
 msgid "The photos have been been deleted"
 msgstr "The photos have been been deleted"
 
-#: module/Photo/view/photo/album-admin/index.phtml:228
+#: module/Photo/view/photo/album-admin/index.phtml:227
 msgid "Delete photos"
 msgstr "Delete photos"
 
-#: module/Photo/view/photo/album-admin/index.phtml:242
+#: module/Photo/view/photo/album-admin/index.phtml:241
 msgid "Move the photos to another album"
 msgstr "Move the photos to another album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:247
-#: module/Photo/view/photo/photo-admin/index.phtml:78
+#: module/Photo/view/photo/album-admin/index.phtml:246
+#: module/Photo/view/photo/photo-admin/index.phtml:76
 msgid "Select a new parent album"
 msgstr "Select a new parent album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:251
+#: module/Photo/view/photo/album-admin/index.phtml:250
 msgid "The photos have been moved"
 msgstr "The photos have been moved"
 
@@ -3012,24 +3012,24 @@ msgstr "Vote for photo of the week"
 msgid "Metadata"
 msgstr "Metadata"
 
-#: module/Photo/view/photo/photo-admin/index.phtml:50
+#: module/Photo/view/photo/photo-admin/index.phtml:48
 msgid "Move photo"
 msgstr "Move photo"
 
-#: module/Photo/view/photo/photo-admin/index.phtml:52
-#: module/Photo/view/photo/photo-admin/index.phtml:118
+#: module/Photo/view/photo/photo-admin/index.phtml:50
+#: module/Photo/view/photo/photo-admin/index.phtml:116
 msgid "Delete photo"
 msgstr "Delete photo"
 
-#: module/Photo/view/photo/photo-admin/index.phtml:73
+#: module/Photo/view/photo/photo-admin/index.phtml:71
 msgid "Move the photo to another album"
 msgstr "Move the photo to another album"
 
-#: module/Photo/view/photo/photo-admin/index.phtml:82
+#: module/Photo/view/photo/photo-admin/index.phtml:80
 msgid "The photo has been moved"
 msgstr "The photo has been moved"
 
-#: module/Photo/view/photo/photo-admin/index.phtml:104
+#: module/Photo/view/photo/photo-admin/index.phtml:102
 msgid ""
 "Are you sure you want to delete this photo? <b>This action can not be "
 "reverted.</b>"
@@ -3037,11 +3037,11 @@ msgstr ""
 "Are you sure you want to delete this photo? <b>This action can not be "
 "reverted.</b>"
 
-#: module/Photo/view/photo/photo-admin/index.phtml:107
+#: module/Photo/view/photo/photo-admin/index.phtml:105
 msgid "Please wait while your photo is being deleted."
 msgstr "Please wait while your photo is being deleted."
 
-#: module/Photo/view/photo/photo-admin/index.phtml:113
+#: module/Photo/view/photo/photo-admin/index.phtml:111
 msgid "The photo has been deleted"
 msgstr "The photo has been deleted"
 
@@ -3162,8 +3162,8 @@ msgid "Token"
 msgstr "Token"
 
 #: module/User/view/user/api-admin/index.phtml:19
-#: module/Activity/src/Activity/Controller/AdminController.php:221
-#: module/Activity/src/Activity/Controller/AdminController.php:351
+#: module/Activity/src/Activity/Controller/AdminController.php:199
+#: module/Activity/src/Activity/Controller/AdminController.php:329
 msgid "Remove"
 msgstr "Remove"
 
@@ -3430,12 +3430,12 @@ msgstr "You are not allowed to edit labels"
 msgid "You are not allowed to view the approval of this activity"
 msgstr "You are not allowed to view the approval of this activity"
 
-#: module/Activity/src/Activity/Controller/AdminController.php:40
+#: module/Activity/src/Activity/Controller/AdminController.php:39
 #: module/Activity/src/Activity/Service/Activity.php:387
 msgid "You are not allowed to update this activity"
 msgstr "You are not allowed to update this activity"
 
-#: module/Activity/src/Activity/Controller/AdminController.php:54
+#: module/Activity/src/Activity/Controller/AdminController.php:53
 msgid ""
 "Activities that have sign-up lists which are open or approved cannot be "
 "updated."
@@ -3443,11 +3443,11 @@ msgstr ""
 "Activities that have sign-up lists which are open or approved cannot be "
 "updated."
 
-#: module/Activity/src/Activity/Controller/AdminController.php:63
+#: module/Activity/src/Activity/Controller/AdminController.php:62
 msgid "This activity has already started/ended and can no longer be updated."
 msgstr "This activity has already started/ended and can no longer be updated."
 
-#: module/Activity/src/Activity/Controller/AdminController.php:74
+#: module/Activity/src/Activity/Controller/AdminController.php:73
 msgid ""
 "You have successfully created an update proposal for the activity! If the "
 "activity was already approved, the proposal will be applied after it has "
@@ -3459,50 +3459,46 @@ msgstr ""
 "been approved by the board. Otherwise, the update has already been applied "
 "to the activity."
 
-#: module/Activity/src/Activity/Controller/AdminController.php:104
+#: module/Activity/src/Activity/Controller/AdminController.php:103
 msgid "Update Activity"
 msgstr "Update Activity"
 
-#: module/Activity/src/Activity/Controller/AdminController.php:141
-msgid "You are not allowed to export the participants of this activity"
-msgstr "You are not allowed to export the participants of this activity"
-
-#: module/Activity/src/Activity/Controller/AdminController.php:181
-#: module/Activity/src/Activity/Controller/AdminController.php:195
+#: module/Activity/src/Activity/Controller/AdminController.php:159
+#: module/Activity/src/Activity/Controller/AdminController.php:173
 msgid "You are not allowed to view the participants of this activity"
 msgstr "You are not allowed to view the participants of this activity"
 
-#: module/Activity/src/Activity/Controller/AdminController.php:264
-#: module/Activity/src/Activity/Controller/AdminController.php:343
+#: module/Activity/src/Activity/Controller/AdminController.php:242
+#: module/Activity/src/Activity/Controller/AdminController.php:321
 msgid "You are not allowed to use this form"
 msgstr "You are not allowed to use this form"
 
-#: module/Activity/src/Activity/Controller/AdminController.php:279
-#: module/Activity/src/Activity/Controller/AdminController.php:356
+#: module/Activity/src/Activity/Controller/AdminController.php:257
+#: module/Activity/src/Activity/Controller/AdminController.php:334
 #: module/Activity/src/Activity/Controller/ActivityController.php:218
 #: module/Activity/src/Activity/Controller/ActivityController.php:308
 msgid "Invalid form"
 msgstr "Invalid form"
 
-#: module/Activity/src/Activity/Controller/AdminController.php:292
+#: module/Activity/src/Activity/Controller/AdminController.php:270
 msgid "Successfully subscribed external participant"
 msgstr "Successfully subscribed external participant"
 
-#: module/Activity/src/Activity/Controller/AdminController.php:297
+#: module/Activity/src/Activity/Controller/AdminController.php:275
 #: module/Activity/src/Activity/Controller/ActivityController.php:256
 #: module/Activity/src/Activity/Controller/ActivityController.php:341
 msgid "Use the form to subscribe"
 msgstr "Use the form to subscribe"
 
-#: module/Activity/src/Activity/Controller/AdminController.php:367
+#: module/Activity/src/Activity/Controller/AdminController.php:345
 msgid "Successfully removed external participant"
 msgstr "Successfully removed external participant"
 
-#: module/Activity/src/Activity/Controller/AdminController.php:377
+#: module/Activity/src/Activity/Controller/AdminController.php:355
 msgid "Use the form to unsubscribe an external participant"
 msgstr "Use the form to unsubscribe an external participant"
 
-#: module/Activity/src/Activity/Controller/AdminController.php:399
+#: module/Activity/src/Activity/Controller/AdminController.php:377
 msgid "You are not allowed to administer activities"
 msgstr "You are not allowed to administer activities"
 
@@ -3931,15 +3927,15 @@ msgstr "Move up"
 msgid "Move down"
 msgstr "Move down"
 
-#: module/Decision/src/Decision/Form/Document.php:31
+#: module/Decision/src/Decision/Form/Document.php:36
 msgid "Document name"
 msgstr "Document name"
 
-#: module/Decision/src/Decision/Form/Document.php:37
+#: module/Decision/src/Decision/Form/Document.php:42
 msgid "Document to upload"
 msgstr "Document to upload"
 
-#: module/Decision/src/Decision/Form/Document.php:43
+#: module/Decision/src/Decision/Form/Document.php:48
 msgid "Upload document"
 msgstr "Upload document"
 
@@ -4098,7 +4094,7 @@ msgid "You are not allowed to edit pages."
 msgstr "You are not allowed to edit pages."
 
 #: module/Frontpage/src/Frontpage/Service/Page.php:201
-#: module/Photo/src/Photo/Service/Admin.php:176
+#: module/Photo/src/Photo/Service/Admin.php:177
 msgid "The uploaded file does not have a valid extension"
 msgstr "The uploaded file does not have a valid extension"
 
@@ -4179,23 +4175,23 @@ msgstr "Not allowed to view tags."
 msgid "Not allowed to remove tags."
 msgstr "Not allowed to remove tags."
 
-#: module/Photo/src/Photo/Service/Admin.php:29
+#: module/Photo/src/Photo/Service/Admin.php:30
 msgid "Not allowed to add photos."
 msgstr "Not allowed to add photos."
 
-#: module/Photo/src/Photo/Service/Admin.php:117
+#: module/Photo/src/Photo/Service/Admin.php:118
 msgid "Not allowed to import photos."
 msgstr "Not allowed to import photos."
 
-#: module/Photo/src/Photo/Service/Admin.php:141
+#: module/Photo/src/Photo/Service/Admin.php:142
 msgid "The specified path is not valid"
 msgstr "The specified path is not valid"
 
-#: module/Photo/src/Photo/Service/Admin.php:160
+#: module/Photo/src/Photo/Service/Admin.php:161
 msgid "An unknown error occurred during uploading ("
 msgstr "An unknown error occurred during uploading ("
 
-#: module/Photo/src/Photo/Service/Admin.php:182
+#: module/Photo/src/Photo/Service/Admin.php:183
 #, php-format
 msgid ""
 "The uploaded file is not a valid image \n"
@@ -4204,7 +4200,7 @@ msgstr ""
 "The uploaded file is not a valid image \n"
 "Error: %s"
 
-#: module/Photo/src/Photo/Service/Admin.php:196
+#: module/Photo/src/Photo/Service/Admin.php:197
 msgid "Not allowed to upload photos."
 msgstr "Not allowed to upload photos."
 
@@ -4391,6 +4387,15 @@ msgstr "Purchaser"
 #: module/Application/language/additional-strings:11
 msgid "Inactief Lid"
 msgstr "Inactive Member"
+
+#~ msgid "Download as pdf"
+#~ msgstr "Download as pdf"
+
+#~ msgid "Details for activity"
+#~ msgstr "Details for activity"
+
+#~ msgid "You are not allowed to export the participants of this activity"
+#~ msgstr "You are not allowed to export the participants of this activity"
 
 #~ msgid "You are not allowed to view sign-up lists."
 #~ msgstr "You are not allowed to view sign-up lists."
