@@ -33,7 +33,7 @@ class PhotoController extends AbstractActionController
         if (is_null($year)) {
             $year = max($years);
         } else {
-            $year = (int)$year;
+            $year = (int) $year;
         }
         $albums = $this->albumService->getAlbumsByYear($year);
 

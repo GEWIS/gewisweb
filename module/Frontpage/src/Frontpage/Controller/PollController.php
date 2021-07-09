@@ -59,7 +59,7 @@ class PollController extends AbstractActionController
      */
     public function voteAction()
     {
-        $pollId = (int)$this->params('poll_id');
+        $pollId = (int) $this->params('poll_id');
         $request = $this->getRequest();
 
         if ($request->isPost()) {
