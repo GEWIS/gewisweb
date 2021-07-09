@@ -2,15 +2,16 @@
 
 namespace Photo\Service;
 
-use Application\Service\AbstractService;
+
+use Zend\ServiceManager\ServiceManager;
+use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 /**
  * Metadata service. This service implements all functionality related to
  * gathering metadata about photos.
  */
-class Metadata extends AbstractService
+class Metadata
 {
-
     /**
      * Populates the metadata of a photo based on the EXIF data of the photo
      *

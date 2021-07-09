@@ -2,12 +2,14 @@
 
 namespace User\Service;
 
-use Application\Service\AbstractService;
+
 use Firebase\JWT\JWT;
 use User\Mapper\ApiApp as ApiAppMapper;
 use User\Model\User as UserModel;
+use Zend\ServiceManager\ServiceManager;
+use Zend\ServiceManager\ServiceManagerAwareInterface;
 
-class ApiApp extends AbstractService
+class ApiApp
 {
     /**
      * @var ApiAppMapper

@@ -2,14 +2,33 @@
 
 namespace Photo\Service;
 
-use Application\Service\AbstractService;
+
+use Zend\ServiceManager\ServiceManager;
+use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 /**
  * Album cover services. Used for (re)generating album covers.
  *
  */
-class AlbumCover extends AbstractService
+class AlbumCover implements ServiceManagerAwareInterface
 {
+    /**
+     * Service manager.
+     *
+     * @var ServiceManager
+     */
+    protected $sm;
+
+    /**
+     * Set the service manager.
+     *
+     * @param ServiceManager $sm
+     */
+    public function setServiceManager(ServiceManager $sm)
+    {
+        $this->sm = $sm;
+    }
+
     /**
      * Creates, stores and returns the path to a cover image, a mozaic generated from
      * a random selection of photos in the album or sub-albums.

@@ -4,8 +4,10 @@ namespace Application\Service;
 
 use User\Model\User;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
+use Zend\ServiceManager\ServiceManager;
+use Zend\ServiceManager\ServiceManagerAwareInterface;
 
-abstract class AbstractAclService extends AbstractService
+abstract class AbstractAclService implements ServiceManagerAwareInterface
 {
     /**
      * Get the ACL.
@@ -55,5 +57,43 @@ abstract class AbstractAclService extends AbstractService
             $resource,
             $operation
         );
+    }
+
+    /**
+     * Service manager.
+     *
+     * @var ServiceManager
+     */
+    protected $sm;
+
+    /**
+     * Set the service manager.
+     *
+     * @param ServiceManager $sm
+     */
+    public function setServiceManager(ServiceManager $sm)
+    {
+        $this->sm = $sm;
+    }
+
+    /**
+     * Get the service manager.
+     *
+     * @return ServiceManager
+     */
+    public function getServiceManager()
+    {
+        return $this->sm;
+    }
+
+    /**
+     * Get the translator.
+     *
+     * @return Zend\Mvc\I18n\Translator
+     */
+    public function getTranslator()
+    {
+        // TODO: Review whether this method is neccessary and preferably remove it
+        return $this->getServiceManager()->get('translator');
     }
 }

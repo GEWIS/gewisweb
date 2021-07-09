@@ -88,11 +88,14 @@ class Module
     {
         return [
             'invokables' => [
-                'application_service_storage' => 'Application\Service\FileStorage',
                 'application_service_legacy' => 'Application\Service\Legacy',
                 'application_service_email' => 'Application\Service\Email'
             ],
             'factories' => [
+                'application_service_storage' => function ($sm) {
+                    $storageConfig = $sm->get('config')['storage'];
+                    return new \Application\Service\FileStorage($storageConfig);
+                },
                 'application_get_languages' => function ($sm) {
                     return ['nl', 'en'];
                 },

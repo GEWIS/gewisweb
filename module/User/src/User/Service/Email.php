@@ -2,17 +2,47 @@
 
 namespace User\Service;
 
-use Application\Service\AbstractService;
+
 
 use User\Model\NewUser as NewUserModel;
 
 use Decision\Model\Member as MemberModel;
 
 use Zend\Mail\Message;
+use Zend\ServiceManager\ServiceManager;
+use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\View\Model\ViewModel;
 
-class Email extends AbstractService
+class Email implements ServiceManagerAwareInterface
 {
+    /**
+     * Service manager.
+     *
+     * @var ServiceManager
+     */
+    protected $sm;
+
+    /**
+     * Set the service manager.
+     *
+     * @param ServiceManager $sm
+     */
+    public function setServiceManager(ServiceManager $sm)
+    {
+        $this->sm = $sm;
+    }
+
+    /**
+     * Get the translator.
+     *
+     * @return Zend\Mvc\I18n\Translator
+     */
+    public function getTranslator()
+    {
+        // TODO: Review whether this method is neccessary and preferably remove it
+        return $this->getServiceManager()->get('translator');
+    }
+
     /**
      * Send registration email.
      *

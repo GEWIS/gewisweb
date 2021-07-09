@@ -2,14 +2,38 @@
 
 namespace Application\Service;
 
+use Zend\ServiceManager\ServiceManager;
+use Zend\ServiceManager\ServiceManagerAwareInterface;
+
 /**
  * File storage service. This service can be used to safely store files without
  * having to worry about file names.
  *
  * @package Application\Service
  */
-class FileStorage extends AbstractService
+class FileStorage
 {
+    /**
+     * @var array
+     */
+    private $storageConfig;
+
+    public function __construct(array $storageConfig)
+    {
+        $this->storageConfig = $storageConfig;
+    }
+
+    /**
+     * Get the translator.
+     *
+     * @return Zend\Mvc\I18n\Translator
+     */
+    public function getTranslator()
+    {
+        // TODO: Review whether this method is neccessary and preferably remove it
+        return $this->getServiceManager()->get('translator');
+    }
+
     /**
      * Generates CFS paths
      *
@@ -19,7 +43,7 @@ class FileStorage extends AbstractService
      */
     public function generateStoragePath($path)
     {
-        $config = $this->getConfig();
+        $config = $this->storageConfig;
         $hash = sha1_file($path);
         /**
          * the hash is split to obtain a path
@@ -30,9 +54,7 @@ class FileStorage extends AbstractService
             mkdir($config['storage_dir'] . '/' . $directory, $config['dir_mode']);
         }
 
-        $storagePath = $directory . '/' . substr($hash, 2);
-
-        return $storagePath;
+        return $directory . '/' . substr($hash, 2);
     }
 
     /**
@@ -45,7 +67,7 @@ class FileStorage extends AbstractService
      */
     public function storeUploadedFile($file)
     {
-        $config = $this->getConfig();
+        $config = $this->storageConfig;
         if ($file['error'] !== 0) {
             throw new \RuntimeException(
                 sprintf(
@@ -77,7 +99,7 @@ class FileStorage extends AbstractService
      */
     public function storeFile($source, $move = true)
     {
-        $config = $this->getConfig();
+        $config = $this->storageConfig;
         $extension = pathinfo($source, PATHINFO_EXTENSION);
         $storagePath = $this->generateStoragePath($source) . '.' . $extension;
         $destination = $config['storage_dir'] . '/' . $storagePath;
@@ -103,7 +125,7 @@ class FileStorage extends AbstractService
      */
     public function removeFile($path)
     {
-        $config = $this->getConfig();
+        $config = $this->storageConfig;
         $fullPath = $config['storage_dir'] . '/' . $path;
 
         if (file_exists($fullPath)) {
@@ -125,7 +147,7 @@ class FileStorage extends AbstractService
      */
     public function downloadFile($path, $fileName)
     {
-        $config = $this->getConfig();
+        $config = $this->storageConfig;
 
         $file = $config['storage_dir'] . '/' . $path;
 
@@ -155,17 +177,5 @@ class FileStorage extends AbstractService
         $response->setHeaders($headers);
 
         return $response;
-    }
-
-    /**
-     * Get the storage config, as used by this service.
-     *
-     * @return array containing the config for the module
-     */
-    public function getConfig()
-    {
-        $config = $this->sm->get('config');
-
-        return $config['storage'];
     }
 }

@@ -2,12 +2,18 @@
 
 namespace Application\Service;
 
+use Exception;
+use Zend\ServiceManager\ServiceManager;
+use Zend\ServiceManager\ServiceManagerAwareInterface;
+
 /**
  * This service contains all bindings to legacy systems such as SuSOS and the old website.
  * Hopefully this service will no longer be needed in the future. For that reason ugly code is
  * tolerated inside this service.
+ *
+ * TODO: Verify whether we still need this class or not and remove it
  */
-class Legacy extends AbstractService
+class Legacy
 {
     /**
      * Checks if a SuSOS pincode is correct.
@@ -21,7 +27,7 @@ class Legacy extends AbstractService
      */
     public function checkPincode($user, $pincode)
     {
-        return false;
+        throw new Exception("This operation is not supported.");
     }
 
     /**
@@ -37,7 +43,7 @@ class Legacy extends AbstractService
      */
     public function checkPassword($user, $password, $bcrypt)
     {
-        return false;
+        throw new Exception("This operation is not supported.");
     }
 
     /**

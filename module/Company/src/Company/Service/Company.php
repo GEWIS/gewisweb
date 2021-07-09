@@ -2,7 +2,7 @@
 
 namespace Company\Service;
 
-//use Application\Service\AbstractService;
+//
 use Application\Service\AbstractAclService;
 use Company\Model\Job as JobModel;
 use Company\Model\JobCategory as CategoryModel;
