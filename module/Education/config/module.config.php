@@ -144,7 +144,7 @@ return [
         'factories' => [
             'Education\Controller\Education' => function (ContainerInterface $serviceManager) {
                 $examService = $serviceManager->getServiceLocator()->get('education_service_exam');
-                return new \Education\Controller\AdminController($examService);
+                return new \Education\Controller\EducationController($examService);
             },
             'Education\Controller\Admin' => function (ContainerInterface $serviceManager) {
                 $examService = $serviceManager->getServiceLocator()->get('education_service_exam');
