@@ -347,12 +347,18 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            'Decision\Controller\Decision' => 'Decision\Controller\DecisionController',
+            'Decision\Controller\Decision' => function (ContainerInterface $serviceManager) {
+                $decisionService = $serviceManager->getServiceLocator()->get('decision_service_decision');
+                return new \Decision\Controller\DecisionController($decisionService);
+            },
             'Decision\Controller\Organ' => function (ContainerInterface $serviceManager) {
                 $organService = $serviceManager->getServiceLocator()->get('decision_service_organ');
                 return new \Decision\Controller\OrganController($organService);
             },
-            'Decision\Controller\Admin' => 'Decision\Controller\AdminController',
+            'Decision\Controller\Admin' => function (ContainerInterface $serviceManager) {
+                $decisionService = $serviceManager->getServiceLocator()->get('decision_service_decision');
+                return new \Decision\Controller\AdminController($decisionService);
+            },
             'Decision\Controller\OrganAdmin' => function (ContainerInterface $serviceManager) {
                 $organService = $serviceManager->getServiceLocator()->get('decision_service_organ');
                 return new \Decision\Controller\OrganAdminController($organService);
