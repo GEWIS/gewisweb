@@ -1,5 +1,8 @@
 <?php
 
+use Interop\Container\ContainerInterface;
+use Zend\ServiceManager\Factory\InvokableFactory;
+
 return [
     'router' => [
         'routes' => [
@@ -138,9 +141,17 @@ return [
         ]
     ],
     'controllers' => [
+        'factories' => [
+            'Education\Controller\Education' => function (ContainerInterface $serviceManager) {
+                $examService = $serviceManager->getServiceLocator()->get('education_service_exam');
+                return new \Education\Controller\AdminController($examService);
+            },
+            'Education\Controller\Admin' => function (ContainerInterface $serviceManager) {
+                $examService = $serviceManager->getServiceLocator()->get('education_service_exam');
+                return new \Education\Controller\AdminController($examService);
+            },
+        ],
         'invokables' => [
-            'Education\Controller\Education' => 'Education\Controller\EducationController',
-            'Education\Controller\Admin' => 'Education\Controller\AdminController',
             'Education\Controller\Oase' => 'Education\Controller\OaseController'
         ]
     ],

@@ -7,33 +7,43 @@ use Zend\View\Model\ViewModel;
 
 class EducationController extends AbstractActionController
 {
+
+    /**
+     * @var \Education\Service\Exam
+     */
+    private $examService;
+
+    public function __construct(\Education\Service\Exam $examService)
+    {
+        $this->examService = $examService;
+    }
+
     public function indexAction()
     {
-        $service = $this->getExamService();
         $request = $this->getRequest();
 
         $query = $request->getQuery();
 
         if (isset($query['query'])) {
-            $courses = $service->searchCourse($query);
+            $courses = $this->examService->searchCourse($query);
 
             if (null !== $courses) {
                 return new ViewModel([
-                    'form' => $service->getSearchCourseForm(),
+                    'form' => $this->examService->getSearchCourseForm(),
                     'courses' => $courses
                 ]);
             }
         }
 
         return new ViewModel([
-            'form' => $service->getSearchCourseForm()
+            'form' => $this->examService->getSearchCourseForm()
         ]);
     }
 
     public function courseAction()
     {
         $code = $this->params()->fromRoute('code');
-        $course = $this->getExamService()->getCourse($code);
+        $course = $this->examService->getCourse($code);
 
         // if the course did not exist, trigger 404
         if (is_null($course)) {
@@ -59,14 +69,6 @@ class EducationController extends AbstractActionController
     {
         $id = $this->params()->fromRoute('id');
 
-        return $this->getExamService()->getExamDownload($id);
-    }
-
-    /**
-     * Get the exam service.
-     */
-    public function getExamService()
-    {
-        return $this->getServiceLocator()->get('education_service_exam');
+        return $this->examService->getExamDownload($id);
     }
 }

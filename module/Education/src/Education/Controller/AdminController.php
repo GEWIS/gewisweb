@@ -8,44 +8,53 @@ use Zend\View\Model\ViewModel;
 
 class AdminController extends AbstractActionController
 {
+
+    /**
+     * @var \Education\Service\Exam
+     */
+    private $examService;
+
+    public function __construct(\Education\Service\Exam $examService)
+    {
+        $this->examService = $examService;
+    }
+
     public function indexAction()
     {
     }
 
     public function addCourseAction()
     {
-        $service = $this->getExamService();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
             // try uploading
-            if ($service->addCourse($request->getPost())) {
+            if ($this->examService->addCourse($request->getPost())) {
                 $this->getResponse()->setStatusCode(200);
                 return new ViewModel([
-                    'form' => $service->getAddCourseForm(),
+                    'form' => $this->examService->getAddCourseForm(),
                     'success' => true
                 ]);
             }
             $this->getResponse()->setStatusCode(400);
             return new ViewModel([
-                'form' => $service->getAddCourseForm(),
+                'form' => $this->examService->getAddCourseForm(),
                 'success' => false
             ]);
         }
 
         return new ViewModel([
-            'form' => $service->getAddCourseForm()
+            'form' => $this->examService->getAddCourseForm()
         ]);
     }
 
     public function bulkExamAction()
     {
-        $service = $this->getExamService();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
             // try uploading
-            if ($service->tempExamUpload($request->getPost(), $request->getFiles())) {
+            if ($this->examService->tempExamUpload($request->getPost(), $request->getFiles())) {
                 return new ViewModel([
                     'success' => true
                 ]);
@@ -58,18 +67,17 @@ class AdminController extends AbstractActionController
         }
 
         return new ViewModel([
-            'form' => $service->getTempUploadForm()
+            'form' => $this->examService->getTempUploadForm()
         ]);
     }
 
     public function bulkSummaryAction()
     {
-        $service = $this->getExamService();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
             // try uploading
-            if ($service->tempSummaryUpload($request->getPost(), $request->getFiles())) {
+            if ($this->examService->tempSummaryUpload($request->getPost(), $request->getFiles())) {
                 return new ViewModel([
                     'success' => true
                 ]);
@@ -82,7 +90,7 @@ class AdminController extends AbstractActionController
         }
 
         return new ViewModel([
-            'form' => $service->getTempUploadForm()
+            'form' => $this->examService->getTempUploadForm()
         ]);
     }
 
@@ -91,10 +99,9 @@ class AdminController extends AbstractActionController
      */
     public function editExamAction()
     {
-        $service = $this->getExamService();
         $request = $this->getRequest();
 
-        if ($request->isPost() && $service->bulkExamEdit($request->getPost())) {
+        if ($request->isPost() && $this->examService->bulkExamEdit($request->getPost())) {
             return new ViewModel([
                 'success' => true
             ]);
@@ -104,7 +111,7 @@ class AdminController extends AbstractActionController
         $config = $config['education_temp'];
 
         return new ViewModel([
-            'form' => $service->getBulkExamForm(),
+            'form' => $this->examService->getBulkExamForm(),
             'config' => $config
         ]);
     }
@@ -114,10 +121,9 @@ class AdminController extends AbstractActionController
      */
     public function editSummaryAction()
     {
-        $service = $this->getExamService();
         $request = $this->getRequest();
 
-        if ($request->isPost() && $service->bulkSummaryEdit($request->getPost())) {
+        if ($request->isPost() && $this->examService->bulkSummaryEdit($request->getPost())) {
             return new ViewModel([
                 'success' => true
             ]);
@@ -127,19 +133,18 @@ class AdminController extends AbstractActionController
         $config = $config['education_temp'];
 
         return new ViewModel([
-            'form' => $service->getBulkSummaryForm(),
+            'form' => $this->examService->getBulkSummaryForm(),
             'config' => $config
         ]);
     }
 
     public function summaryAction()
     {
-        $service = $this->getExamService();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
             // try uploading
-            if ($service->uploadSummary($request->getPost(), $request->getFiles())) {
+            if ($this->examService->uploadSummary($request->getPost(), $request->getFiles())) {
                 return new ViewModel([
                     'success' => true
                 ]);
@@ -147,26 +152,17 @@ class AdminController extends AbstractActionController
         }
 
         return new ViewModel([
-            'form' => $service->getSummaryUploadForm()
+            'form' => $this->examService->getSummaryUploadForm()
         ]);
     }
 
     public function deleteTempAction()
     {
-        $service = $this->getExamService();
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $service->deleteTempExam($this->params()->fromRoute('filename'), $this->params()->fromRoute('type'));
+            $this->examService->deleteTempExam($this->params()->fromRoute('filename'), $this->params()->fromRoute('type'));
             return new JsonModel(['success' => 'true']);
         }
         return $this->notFoundAction();
-    }
-
-    /**
-     * Get the exam service.
-     */
-    public function getExamService()
-    {
-        return $this->getServiceLocator()->get('education_service_exam');
     }
 }
