@@ -149,12 +149,6 @@ class Module
                     $helper = new \Application\View\Helper\FileUrl();
                     $helper->setServiceLocator($locator);
                     return $helper;
-                },
-                'infima' => function ($sm) {
-                    $locator = $sm->getServiceLocator();
-                    $helper = new \Application\View\Helper\Infima();
-                    $helper->setLegacyService($locator->get('application_service_legacy'));
-                    return $helper;
                 }
             ]
         ];

@@ -9,9 +9,12 @@
                     <div class="col-sm-8">
                         <?php if ($this->acl('decision_acl')->isAllowed('member', 'birthdays')): ?>
                             <h3><?= $this->translate('Infima') ?></h3>
-                            <p>
-                                <?= $this->infima() ?>
-                            </p>
+                            <p id="infima-footer"></p>
+                            <script>
+                                $.getJSON("https://supremum.gewis.nl/api/random", function(data) {
+                                    $("#infima-footer")[0].textContent = data['content'];
+                                });
+                            </script>
                         <?php endif ?>
                         <p>&copy; 2013
                             - <?php echo date('Y') ?> <?= $this->translate("by WebCommissie GEWIS.") ?> <?php echo $this->translate('All rights reserved.') ?></p>
