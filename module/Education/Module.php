@@ -33,7 +33,6 @@ class Module
         return [
             'invokables' => [
                 'education_service_exam' => 'Education\Service\Exam',
-                'education_service_oase' => 'Education\Service\Oase'
             ],
             'factories' => [
                 'education_form_tempupload' => function ($sm) {
@@ -125,39 +124,6 @@ class Module
                         $sm->get('education_doctrine_em'),
                         'Education\Model\Exam'
                     );
-                },
-                'education_oase_soapclient' => function ($sm) {
-                    $config = $sm->get('config');
-                    $config = $config['oase']['soap'];
-                    return new \Zend\Soap\Client(
-                        $config['wsdl'],
-                        $config['options']
-                    );
-                },
-                'education_oase_client' => function ($sm) {
-                    return new \Education\Oase\Client(
-                        $sm->get('education_oase_soapclient')
-                    );
-                },
-                'education_oase_service_course' => function ($sm) {
-                    $service = new \Education\Oase\Service\Course(
-                        $sm->get('education_oase_client')
-                    );
-                    $service->setHydrator($sm->get('education_hydrator_course'));
-                    return $service;
-                },
-                'education_oase_service_study' => function ($sm) {
-                    $service = new \Education\Oase\Service\Study(
-                        $sm->get('education_oase_client')
-                    );
-                    $config = $sm->get('config');
-                    $config = $config['oase']['studies'];
-                    $service->setKeywords($config['keywords']);
-                    $service->setNegativeKeywords($config['negative_keywords']);
-                    $service->setGroupIds($config['group_ids']);
-                    $service->setEducationTypes($config['education_types']);
-                    $service->setHydrator($sm->get('education_hydrator_study'));
-                    return $service;
                 },
                 'education_acl' => function ($sm) {
                     $acl = $sm->get('acl');

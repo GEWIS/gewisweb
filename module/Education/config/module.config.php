@@ -151,9 +151,6 @@ return [
                 return new \Education\Controller\AdminController($examService);
             },
         ],
-        'invokables' => [
-            'Education\Controller\Oase' => 'Education\Controller\OaseController'
-        ]
     ],
     'view_manager' => [
         'template_path_stack' => [
@@ -171,41 +168,6 @@ return [
                 'drivers' => [
                     'Education\Model' => 'education_entities'
                 ]
-            ]
-        ]
-    ],
-    // console routes
-    'console' => [
-        'router' => [
-            'routes' => [
-                'oase' => [
-                    'options' => [
-                        'route' => 'oase update',
-                        'defaults' => [
-                            'controller' => 'Education\Controller\Oase',
-                            'action' => 'index'
-                        ]
-                    ]
-                ],
-                'oase-show-studies' => [
-                    'options' => [
-                        'route' => 'oase show studies',
-                        'defaults' => [
-                            'controller' => 'Education\Controller\Oase',
-                            'action' => 'studies'
-                        ]
-                    ]
-                ],
-                'oase-show-course' => [
-                    'options' => [
-                        'route' => 'oase show course <code>',
-                        'defaults' => [
-                            'controller' => 'Education\Controller\Oase',
-                            'action' => 'course'
-                        ]
-                    ]
-                ]
-
             ]
         ]
     ]
