@@ -8,62 +8,59 @@ use Zend\View\Model\ViewModel;
 
 class ActivityCalendarController extends AbstractActionController
 {
+
+    /**
+     * @var \Activity\Service\Calendar
+     */
+    private $calendarService;
+
+    public function __construct(\Activity\Service\Calendar $calendarService)
+    {
+        $this->calendarService = $calendarService;
+    }
+
     public function indexAction()
     {
-        $service = $this->getActivityCalendarService();
-        $config = $service->getConfig();
+        $config = $this->calendarService->getConfig();
 
         return new ViewModel([
-            'options' => $service->getUpcomingOptions(),
-            'editableOptions' => $service->getEditableUpcomingOptions(),
+            'options' => $this->calendarService->getUpcomingOptions(),
+            'editableOptions' => $this->calendarService->getEditableUpcomingOptions(),
             'APIKey' => $config['google_api_key'],
             'calendarKey' => $config['google_calendar_key'],
             'success' => $this->getRequest()->getQuery('success', false),
-            'canCreate' => $service->canCreateProposal(),
-            'canApprove' => $service->canApproveOption()
+            'canCreate' => $this->calendarService->canCreateProposal(),
+            'canApprove' => $this->calendarService->canApproveOption()
         ]);
-    }
-
-    /**
-     * Get the activity calendar service
-     *
-     * @return ActivityCalendar
-     */
-    private function getActivityCalendarService()
-    {
-        return $this->getServiceLocator()->get('activity_service_calendar');
     }
 
     public function deleteAction()
     {
-        $service = $this->getActivityCalendarService();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $service->deleteOption($request->getPost()['option_id']);
+            $this->calendarService->deleteOption($request->getPost()['option_id']);
             $this->redirect()->toRoute('activity_calendar');
         }
     }
 
     public function approveAction()
     {
-        $service = $this->getActivityCalendarService();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $service->approveOption($request->getPost()['option_id']);
+            $this->calendarService->approveOption($request->getPost()['option_id']);
             $this->redirect()->toRoute('activity_calendar');
         }
     }
 
     public function createAction()
     {
-        $service = $this->getActivityCalendarService();
-        $form = $service->getCreateProposalForm();
+        $form = $this->calendarService->getCreateProposalForm();
 
         if ($this->getRequest()->isPost()) {
             $postData = $this->getRequest()->getPost();
-            $success = $service->createProposal($postData);
+            $success = $this->calendarService->createProposal($postData);
 
             if ($success === false) {
                 $this->getResponse()->setStatusCode(400);
@@ -73,7 +70,7 @@ class ActivityCalendarController extends AbstractActionController
             }
         }
 
-        $period = $service->getCurrentPeriod();
+        $period = $this->calendarService->getCurrentPeriod();
 
         return new ViewModel([
             'period' => $period,
@@ -83,6 +80,6 @@ class ActivityCalendarController extends AbstractActionController
 
     public function sendNotificationsAction()
     {
-        $this->getActivityCalendarService()->sendOverdueNotifications();
+        $this->calendarService->sendOverdueNotifications();
     }
 }

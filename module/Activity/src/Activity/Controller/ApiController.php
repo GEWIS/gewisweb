@@ -11,20 +11,36 @@ use Zend\View\Model\JsonModel;
 
 class ApiController extends AbstractActionController
 {
+
+    /**
+     * @var \Activity\Service\ActivityQuery
+     */
+    private $activityQueryService;
+
+    /**
+     * @var Signup
+     */
+    private $signupService;
+
+    public function __construct(\Activity\Service\ActivityQuery $activityQueryService, \Activity\Service\Signup $signupService)
+    {
+        $this->activityQueryService = $activityQueryService;
+        $this->signupService = $signupService;
+    }
+
     /**
      * List all activities.
      */
     public function listAction()
     {
-        $activityService = $this->getActivityService();
-        if (!$activityService->isAllowed('list', 'activityApi')) {
-            $translator = $activityService->getTranslator();
+        if (!$this->activityQueryService->isAllowed('list', 'activityApi')) {
+            $translator = $this->activityQueryService->getTranslator();
             throw new NotAllowedException(
                 $translator->translate('You are not allowed to access the activities through the API')
             );
         }
 
-        $activities = $activityService->getUpcomingActivities();
+        $activities = $this->activityQueryService->getUpcomingActivities();
         $activitiesArray = [];
 
         foreach ($activities as $activity) {
@@ -35,50 +51,27 @@ class ApiController extends AbstractActionController
     }
 
     /**
-     * Get the activity service
-     *
-     * @return Activity
-     */
-    private function getActivityService()
-    {
-        return $this->getServiceLocator()->get('activity_service_activityQuery');
-    }
-
-    /**
      * Signup for a activity.
      */
     public function signupAction()
     {
         $id = (int) $this->params('id');
 
-        $activityService = $this->getActivityService();
-        $signupService = $this->getSignupService();
-
         $params = [];
         $params['success'] = false;
         //Assure the form is used
-        if ($this->getRequest()->isPost() && $signupService->isAllowedToSubscribe()) {
-            $activity = $activityService->getActivity($id);
-            $form = $signupService->getForm($activity->getFields());
+        if ($this->getRequest()->isPost() && $this->signupService->isAllowedToSubscribe()) {
+            $activity = $this->activityQueryService->getActivity($id);
+            $form = $this->signupService->getForm($activity->getFields());
             $form->setData($this->getRequest()->getPost());
 
             if ($activity->getCanSignup() && $form->isValid()) {
-                $signupService->signUp($activity, $form->getData(FormInterface::VALUES_AS_ARRAY));
+                $this->signupService->signUp($activity, $form->getData(FormInterface::VALUES_AS_ARRAY));
                 $params['success'] = true;
             }
         }
 
         return new JsonModel($params);
-    }
-
-    /**
-     * Get the signup service
-     *
-     * @return Signup
-     */
-    private function getSignupService()
-    {
-        return $this->getServiceLocator()->get('activity_service_signup');
     }
 
     /**
@@ -88,18 +81,15 @@ class ApiController extends AbstractActionController
     {
         $id = (int) $this->params('id');
 
-        $activityService = $this->getActivityService();
-        $signupService = $this->getSignupService();
-
         $params = [];
         $params['success'] = false;
 
         $identity = $this->getServiceLocator()->get('user_service_user')->getIdentity();
         $user = $identity->getMember();
-        if ($this->getRequest()->isPost() && $signupService->isAllowedToSubscribe()) {
-            $activity = $activityService->getActivity($id);
-            if ($signupService->isSignedUp($activity, $user)) {
-                $signupService->signOff($activity, $user);
+        if ($this->getRequest()->isPost() && $this->signupService->isAllowedToSubscribe()) {
+            $activity = $this->activityQueryService->getActivity($id);
+            if ($this->signupService->isSignedUp($activity, $user)) {
+                $this->signupService->signOff($activity, $user);
                 $params['success'] = true;
             }
         }
@@ -112,7 +102,7 @@ class ApiController extends AbstractActionController
      */
     public function signedupAction()
     {
-        $activities = $this->getSignupService()->getSignedUpActivityIds();
+        $activities = $this->signupService->getSignedUpActivityIds();
 
         return new JsonModel([
             'activities' => $activities

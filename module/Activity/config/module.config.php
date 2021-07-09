@@ -1,5 +1,7 @@
 <?php
 
+use Interop\Container\ContainerInterface;
+
 return [
     'router' => [
         'routes' => [
@@ -466,20 +468,38 @@ return [
         ],
     ],
     'controllers' => [
-        'invokables' => [
-            'Activity\Controller\Activity' => 'Activity\Controller\ActivityController',
-            'Activity\Controller\AdminApproval' => 'Activity\Controller\AdminApprovalController',
-            'Activity\Controller\AdminCategory' => 'Activity\Controller\AdminCategoryController',
-            'Activity\Controller\Api' => 'Activity\Controller\ApiController',
-            'Activity\Controller\Admin' => 'Activity\Controller\AdminController',
-            'Activity\Controller\ActivityCalendar' => 'Activity\Controller\ActivityCalendarController',
-        ],
         'factories' => [
-            'Activity\Controller\Activity' => function ($sm) {
-                $controller = new Activity\Controller\ActivityController();
-                $activity = $sm->getServiceLocator()->get('activity_service');
-                $controller->setActivity($activity);
-                return $controller;
+            'Activity\Controller\Activity' => function (ContainerInterface $serviceManager) {
+                $activityService = $serviceManager->getServiceLocator()->get('activity_service_activity');
+                $activityQueryService = $serviceManager->getServiceLocator()->get('activity_service_activityQuery');
+                $signupService = $serviceManager->getServiceLocator()->get('activity_service_signup');
+                $signupListQueryService = $serviceManager->getServiceLocator()->get('activity_service_signupListQuery');
+                return new Activity\Controller\ActivityController($activityService, $activityQueryService, $signupService, $signupListQueryService);
+            },
+            'Activity\Controller\AdminApproval' => function (ContainerInterface $serviceManager) {
+                $activityService = $serviceManager->getServiceLocator()->get('activity_service_activity');
+                $activityQueryService = $serviceManager->getServiceLocator()->get('activity_service_activityQuery');
+                return new Activity\Controller\AdminApprovalController($activityService, $activityQueryService);
+            },
+            'Activity\Controller\AdminCategory' => function (ContainerInterface $serviceManager) {
+                $categoryService = $serviceManager->getServiceLocator()->get('activity_service_category');
+                return new \Activity\Controller\AdminCategoryController($categoryService);
+            },
+            'Activity\Controller\Api' => function (ContainerInterface $serviceManager) {
+                $activityQueryService = $serviceManager->getServiceLocator()->get('activity_service_activityQuery');
+                $signupService = $serviceManager->getServiceLocator()->get('activity_service_signup');
+                return new Activity\Controller\ApiController($activityQueryService, $signupService);
+            },
+            'Activity\Controller\Admin' => function (ContainerInterface $serviceManager) {
+                $activityService = $serviceManager->getServiceLocator()->get('activity_service_activity');
+                $activityQueryService = $serviceManager->getServiceLocator()->get('activity_service_activityQuery');
+                $signupService = $serviceManager->getServiceLocator()->get('activity_service_signup');
+                $signupListQueryService = $serviceManager->getServiceLocator()->get('activity_service_signupListQuery');
+                return new Activity\Controller\AdminController($activityService, $activityQueryService, $signupService, $signupListQueryService);
+            },
+            'Activity\Controller\ActivityCalendar' => function (ContainerInterface $serviceManager) {
+                $calendarService = $serviceManager->getServiceLocator()->get('activity_service_calendar');
+                return new \Activity\Controller\ActivityCalendarController($calendarService);
             },
         ]
     ],

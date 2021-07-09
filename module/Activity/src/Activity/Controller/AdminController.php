@@ -19,12 +19,39 @@ use Zend\View\Model\ViewModel;
  */
 class AdminController extends AbstractActionController
 {
+    /**
+     * @var \Activity\Service\Activity
+     */
+    private $activityService;
+
+    /**
+     * @var \Activity\Service\ActivityQuery
+     */
+    private $activityQueryService;
+
+    /**
+     * @var \Activity\Service\Signup
+     */
+    private $signupService;
+
+    /**
+     * @var \Activity\Service\SignupListQuery
+     */
+    private $signupListQueryService;
+
+    public function __construct(\Activity\Service\Activity $activityService, \Activity\Service\ActivityQuery $activityQueryService, \Activity\Service\Signup $signupService, \Activity\Service\SignupListQuery $signupListQueryService)
+    {
+        $this->activityService = $activityService;
+        $this->activityQueryService = $activityQueryService;
+        $this->signupService = $signupService;
+        $this->signupListQueryService = $signupListQueryService;
+    }
+
     public function updateAction()
     {
         $activityId = (int) $this->params('id');
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
 
-        $activity = $queryService->getActivityWithDetails($activityId);
+        $activity = $this->activityQueryService->getActivityWithDetails($activityId);
         $translator = $this->getServiceLocator()->get('translator');
 
         if (is_null($activity)) {
@@ -64,12 +91,11 @@ class AdminController extends AbstractActionController
             $this->redirectActivityAdmin(false, $message);
         }
 
-        $activityService = $this->getServiceLocator()->get('activity_service_activity');
-        $form = $activityService->getActivityForm();
+        $form = $this->activityService->getActivityForm();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            if ($activityService->createUpdateProposal($activity, $request->getPost())) {
+            if ($this->activityService->createUpdateProposal($activity, $request->getPost())) {
                 $message = $translator->translate('You have successfully created an update proposal for the activity! If the activity was already approved, the proposal will be applied after it has been approved by the board. Otherwise, the update has already been applied to the activity.');
 
                 $this->redirectActivityAdmin(true, $message);
@@ -86,7 +112,7 @@ class AdminController extends AbstractActionController
         $activityData = $activity->toArray();
         unset($activityData['id']);
 
-        $languages = $queryService->getAvailableLanguages($activity);
+        $languages = $this->activityQueryService->getAvailableLanguages($activity);
         $activityData['language_dutch'] = $languages['nl'];
         $activityData['language_english'] = $languages['en'];
 
@@ -135,13 +161,12 @@ class AdminController extends AbstractActionController
     {
         $activityId = (int) $this->params('id');
         $signupListId = (int) $this->params('signupList');
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
 
         $acl = $this->getAcl();
         $identity = $this->getIdentity();
 
         if ($signupListId === 0) {
-            $activity = $queryService->getActivity($activityId);
+            $activity = $this->activityQueryService->getActivity($activityId);
 
             if (is_null($activity)) {
                 return $this->notFoundAction();
@@ -160,8 +185,7 @@ class AdminController extends AbstractActionController
                 );
             }
         } else {
-            $signupListQueryService = $this->getServiceLocator()->get('activity_service_signupListQuery');
-            $signupList = $signupListQueryService->getSignupListByActivity($signupListId, $activityId);
+            $signupList = $this->signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
             if (is_null($signupList)) {
                 return $this->notFoundAction();
@@ -174,7 +198,7 @@ class AdminController extends AbstractActionController
                 );
             }
 
-            $activity = $queryService->getActivity($activityId);
+            $activity = $this->activityQueryService->getActivity($activityId);
         }
 
         $result = [
@@ -184,8 +208,7 @@ class AdminController extends AbstractActionController
         if (isset($signupList)) {
             $result['signupList'] = $signupList;
             $activityAdminSession = new SessionContainer('activityAdminRequest');
-            $signupService = $this->getServiceLocator()->get('activity_service_signup');
-            $externalSignupForm = $signupService->getExternalAdminForm($signupList);
+            $externalSignupForm = $this->signupService->getExternalAdminForm($signupList);
 
             if (isset($activityAdminSession->signupData)) {
                 $externalSignupForm->setData(new Parameters($activityAdminSession->signupData));
@@ -226,8 +249,7 @@ class AdminController extends AbstractActionController
     {
         $activityId = (int) $this->params('id');
         $signupListId = (int) $this->params('signupList');
-        $signupListQueryService = $this->getServiceLocator()->get('activity_service_signupListQuery');
-        $signupList = $signupListQueryService->getSignupListByActivity($signupListId, $activityId);
+        $signupList = $this->signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
         if (is_null($signupList)) {
             return $this->notFoundAction();
@@ -246,9 +268,7 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $signupService = $this->getServiceLocator()->get('activity_service_signup');
-
-            $form = $signupService->getExternalAdminForm($signupList);
+            $form = $this->signupService->getExternalAdminForm($signupList);
             $postData = $request->getPost();
             $form->setData($postData);
 
@@ -266,7 +286,7 @@ class AdminController extends AbstractActionController
             unset($formData['fullName']);
             $email = $formData['email'];
             unset($formData['email']);
-            $signupService->adminSignUp($signupList, $fullName, $email, $formData);
+            $this->signupService->adminSignUp($signupList, $fullName, $email, $formData);
             $message = $translator->translate('Successfully subscribed external participant');
             $this->redirectActivityAdminRequest($activityId, $signupListId, true, $message);
             return $this->getResponse();
@@ -302,7 +322,6 @@ class AdminController extends AbstractActionController
     public function externalSignoffAction()
     {
         $signupId = (int) $this->params('id');
-        $signupService = $this->getServiceLocator()->get('activity_service_signup');
         $signupMapper = $this->getServiceLocator()->get('activity_mapper_signup');
 
         $signup = $signupMapper->getSignupById($signupId);
@@ -341,7 +360,7 @@ class AdminController extends AbstractActionController
                 return $this->getResponse();
             }
 
-            $signupService->externalSignOff($signup);
+            $this->signupService->externalSignOff($signup);
             $message = $translator->translate('Successfully removed external participant');
             $this->redirectActivityAdminRequest(
                 $signupList->getActivity()->getId(),
@@ -378,19 +397,18 @@ class AdminController extends AbstractActionController
             );
         }
 
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
         $disapprovedActivities = null;
         $unapprovedActivities = null;
         $approvedActivities = null;
 
         if ($acl->isAllowed($identity, 'activity', 'approval')) {
             $admin = true;
-            $disapprovedActivities = $queryService->getDisapprovedActivities();
-            $unapprovedActivities = $queryService->getUnapprovedActivities();
-            $approvedActivities = $queryService->getApprovedActivities();
+            $disapprovedActivities = $this->activityQueryService->getDisapprovedActivities();
+            $unapprovedActivities = $this->activityQueryService->getUnapprovedActivities();
+            $approvedActivities = $this->activityQueryService->getApprovedActivities();
         }
 
-        $paginator = new Paginator($queryService->getOldCreatedActivitiesPaginator($identity));
+        $paginator = new Paginator($this->activityQueryService->getOldCreatedActivitiesPaginator($identity));
         $paginator->setDefaultItemCountPerPage(15);
         $page = $this->params()->fromRoute('page');
         if ($page && $paginator->count() !== 0) {
@@ -398,7 +416,7 @@ class AdminController extends AbstractActionController
         }
 
         $result = [
-            'upcomingActivities' => $queryService->getUpcomingCreatedActivities($identity),
+            'upcomingActivities' => $this->activityQueryService->getUpcomingCreatedActivities($identity),
             'disapprovedActivities' => $disapprovedActivities,
             'unapprovedActivities' => $unapprovedActivities,
             'approvedActivities' => $approvedActivities,

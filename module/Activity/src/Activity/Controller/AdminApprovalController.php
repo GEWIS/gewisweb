@@ -14,13 +14,29 @@ use Zend\Mvc\Controller\AbstractActionController;
  */
 class AdminApprovalController extends AbstractActionController
 {
+
+    /**
+     * @var \Activity\Service\Activity
+     */
+    private $activityService;
+
+    /**
+     * @var \Activity\Service\ActivityQuery
+     */
+    private $activityQueryService;
+
+    public function __construct(\Activity\Service\Activity $activityService, \Activity\Service\ActivityQuery $activityQueryService)
+    {
+        $this->activityService = $activityService;
+        $this->activityQueryService = $activityQueryService;
+    }
+
     /**
      * View one activity.
      */
     public function viewAction()
     {
         $id = (int) $this->params('id');
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
 
         $acl = $this->getServiceLocator()->get('activity_acl');
         $identity = $this->getServiceLocator()->get('user_role');
@@ -33,7 +49,7 @@ class AdminApprovalController extends AbstractActionController
         }
 
         /** @var $activity Activity */
-        $activity = $queryService->getActivity($id);
+        $activity = $this->activityQueryService->getActivity($id);
 
         if (is_null($activity)) {
             return $this->notFoundAction();
@@ -64,11 +80,9 @@ class AdminApprovalController extends AbstractActionController
     protected function setApprovalStatus($status)
     {
         $id = (int) $this->params('id');
-        $activityService = $this->getServiceLocator()->get('activity_service_activity');
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
 
         /** @var $activity Activity */
-        $activity = $queryService->getActivity($id);
+        $activity = $this->activityQueryService->getActivity($id);
 
         //Assure the form is used
         if (!$this->getRequest()->isPost()) {
@@ -85,13 +99,13 @@ class AdminApprovalController extends AbstractActionController
 
         switch ($status) {
             case 'approve':
-                $activityService->approve($activity);
+                $this->activityService->approve($activity);
                 break;
             case 'disapprove':
-                $activityService->disapprove($activity);
+                $this->activityService->disapprove($activity);
                 break;
             case 'reset':
-                $activityService->reset($activity);
+                $this->activityService->reset($activity);
                 break;
             default:
                 throw new InvalidArgumentException('No such status ' . $status);
@@ -123,9 +137,8 @@ class AdminApprovalController extends AbstractActionController
     public function viewProposalAction()
     {
         $id = (int) $this->params('id');
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
 
-        $proposal = $queryService->getProposal($id);
+        $proposal = $this->activityQueryService->getProposal($id);
 
         if (is_null($proposal)) {
             return $this->notFoundAction();
@@ -144,8 +157,6 @@ class AdminApprovalController extends AbstractActionController
     public function applyProposalAction()
     {
         $id = (int) $this->params('id');
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-        $activityService = $this->getServiceLocator()->get('activity_service_activity');
 
         //Assure the form is used
         if (!$this->getRequest()->isPost()) {
@@ -160,12 +171,12 @@ class AdminApprovalController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        $proposal = $queryService->getProposal($id);
+        $proposal = $this->activityQueryService->getProposal($id);
         if (is_null($proposal)) {
             return $this->notFoundAction();
         }
         $newId = $proposal->getNew()->getId();
-        $activityService->updateActivity($proposal);
+        $this->activityService->updateActivity($proposal);
 
         $this->redirect()->toRoute('activity_admin_approval/view', [
             'id' => $newId,
@@ -178,8 +189,6 @@ class AdminApprovalController extends AbstractActionController
     public function revokeProposalAction()
     {
         $id = (int) $this->params('id');
-        $queryService = $this->getServiceLocator()->get('activity_service_activityQuery');
-        $activityService = $this->getServiceLocator()->get('activity_service_activity');
         //Assure the form is used
         if (!$this->getRequest()->isPost()) {
             return $this->notFoundAction();
@@ -193,13 +202,13 @@ class AdminApprovalController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        $proposal = $queryService->getProposal($id);
+        $proposal = $this->activityQueryService->getProposal($id);
         if (is_null($proposal)) {
             return $this->notFoundAction();
         }
 
         $oldId = $proposal->getOld()->getId();
-        $activityService->revokeUpdateProposal($proposal);
+        $this->activityService->revokeUpdateProposal($proposal);
 
         $this->redirect()->toRoute('activity_admin_approval/view', [
             'id' => $oldId,

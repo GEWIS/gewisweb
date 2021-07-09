@@ -8,13 +8,23 @@ use Zend\View\Model\ViewModel;
 
 class AdminCategoryController extends AbstractActionController
 {
+
+    /**
+     * @var \Activity\Service\ActivityCategory
+     */
+    private $categoryService;
+
+    public function __construct(\Activity\Service\ActivityCategory $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
     /**
      * View all Categories.
      */
     public function indexAction()
     {
-        $categoryService = $this->getServiceLocator()->get('activity_service_category');
-        $categories = $categoryService->getAllCategories();
+        $categories = $this->categoryService->getAllCategories();
 
         return ['categories' => $categories];
     }
@@ -24,12 +34,11 @@ class AdminCategoryController extends AbstractActionController
      */
     public function addAction()
     {
-        $categoryService = $this->getServiceLocator()->get('activity_service_category');
         $request = $this->getRequest();
         $translator = $this->getServiceLocator()->get('translator');
 
         if ($request->isPost()) {
-            if ($categoryService->createCategory($request->getPost())) {
+            if ($this->categoryService->createCategory($request->getPost())) {
                 $message = $translator->translate('The activity category was created successfully!');
 
                 return $this->redirectWithNotice(true, $message);
@@ -37,7 +46,7 @@ class AdminCategoryController extends AbstractActionController
         }
 
         return [
-            'form' => $categoryService->getCategoryForm(),
+            'form' => $this->categoryService->getCategoryForm(),
             'action' => $translator->translate('Create Activity Category'),
         ];
     }
@@ -60,14 +69,13 @@ class AdminCategoryController extends AbstractActionController
 
         if ($request->isPost()) {
             $categoryId = (int) $this->params('id');
-            $categoryService = $this->getServiceLocator()->get('activity_service_category');
 
-            $category = $categoryService->getCategoryById($categoryId);
+            $category = $this->categoryService->getCategoryById($categoryId);
             if (is_null($category)) {
                 return $this->notFoundAction();
             }
 
-            $categoryService->deleteCategory($category);
+            $this->categoryService->deleteCategory($category);
             return $this->redirect()->toRoute('activity_admin_categories');
         }
 
@@ -80,20 +88,18 @@ class AdminCategoryController extends AbstractActionController
     public function editAction()
     {
         $categoryId = (int) $this->params('id');
-        $categoryService = $this->getServiceLocator()->get('activity_service_category');
 
-        $category = $categoryService->getCategoryById($categoryId);
+        $category = $this->categoryService->getCategoryById($categoryId);
         if (is_null($category)) {
             return $this->notFoundAction();
         }
 
-        $categoryService = $this->getServiceLocator()->get('activity_service_category');
-        $form = $categoryService->getCategoryForm();
+        $form = $this->categoryService->getCategoryForm();
         $request = $this->getRequest();
         $translator = $this->getServiceLocator()->get('translator');
 
         if ($request->isPost()) {
-            if ($categoryService->updateCategory($category, $request->getPost())) {
+            if ($this->categoryService->updateCategory($category, $request->getPost())) {
                 $message = $translator->translate('The activity category was successfully updated!');
 
                 return $this->redirectWithNotice(true, $message);
