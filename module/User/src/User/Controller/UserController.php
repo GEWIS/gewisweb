@@ -8,18 +8,28 @@ use Zend\View\Model\JsonModel;
 
 class UserController extends AbstractActionController
 {
+
+    /**
+     * @var \User\Service\User
+     */
+    private $userService;
+
+    public function __construct(\User\Service\User $userService)
+    {
+        $this->userService = $userService;
+    }
+
     /**
      * User login action.
      */
     public function indexAction()
     {
-        $userService = $this->getUserService();
         $referer = $this->getRequest()->getServer('HTTP_REFERER');
 
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             // try to login
-            $login = $userService->login($data);
+            $login = $this->userService->login($data);
             if (!is_null($login)) {
                 if (is_null($data['redirect']) || empty($data['redirect'])) {
                     return $this->redirect()->toUrl($referer);
@@ -28,7 +38,7 @@ class UserController extends AbstractActionController
             }
         }
 
-        $form = $this->handleRedirect($userService, $referer);
+        $form = $this->handleRedirect($this->userService, $referer);
 
         return new ViewModel([
             'form' => $form
@@ -55,12 +65,10 @@ class UserController extends AbstractActionController
 
     public function pinLoginAction()
     {
-        $userService = $this->getUserService();
-
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             // try to login
-            $login = $userService->pinLogin($data);
+            $login = $this->userService->pinLogin($data);
 
             if (null !== $login) {
                 return new JsonModel([
@@ -79,7 +87,7 @@ class UserController extends AbstractActionController
      */
     public function logoutAction()
     {
-        $this->getUserService()->logout();
+        $this->userService->logout();
 
         if (isset($_SERVER['HTTP_REFERER'])) {
             return $this->redirect()->toUrl($_SERVER['HTTP_REFERER']);
@@ -93,10 +101,8 @@ class UserController extends AbstractActionController
      */
     public function registerAction()
     {
-        $userService = $this->getUserService();
-
         if ($this->getRequest()->isPost()) {
-            $newUser = $userService->register($this->getRequest()->getPost());
+            $newUser = $this->userService->register($this->getRequest()->getPost());
             if (null !== $newUser) {
                 return new ViewModel([
                     'registered' => true,
@@ -107,7 +113,7 @@ class UserController extends AbstractActionController
 
         // show form
         return new ViewModel([
-            'form' => $userService->getRegisterForm()
+            'form' => $this->userService->getRegisterForm()
         ]);
     }
 
@@ -116,17 +122,16 @@ class UserController extends AbstractActionController
      */
     public function passwordAction()
     {
-        $userService = $this->getUserService();
         $request = $this->getRequest();
 
-        if ($request->isPost() && $userService->changePassword($request->getPost())) {
+        if ($request->isPost() && $this->userService->changePassword($request->getPost())) {
             return new ViewModel([
                 'success' => true
             ]);
         }
 
         return new ViewModel([
-            'form' => $this->getUserService()->getPasswordForm()
+            'form' => $this->userService->getPasswordForm()
         ]);
     }
 
@@ -135,11 +140,10 @@ class UserController extends AbstractActionController
      */
     public function resetAction()
     {
-        $userService = $this->getUserService();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $newUser = $userService->reset($request->getPost());
+            $newUser = $this->userService->reset($request->getPost());
             if (null !== $newUser) {
                 return new ViewModel([
                     'reset' => true,
@@ -149,7 +153,7 @@ class UserController extends AbstractActionController
         }
 
         return new ViewModel([
-            'form' => $userService->getPasswordResetForm()
+            'form' => $this->userService->getPasswordResetForm()
         ]);
     }
 
@@ -158,8 +162,6 @@ class UserController extends AbstractActionController
      */
     public function activateAction()
     {
-        $userService = $this->getUserService();
-
         $code = $this->params()->fromRoute('code');
 
         if (empty($code)) {
@@ -168,31 +170,21 @@ class UserController extends AbstractActionController
         }
 
         // get the new user
-        $newUser = $userService->getNewUser($code);
+        $newUser = $this->userService->getNewUser($code);
 
         if (null === $newUser) {
             return $this->redirect()->toRoute('home');
         }
 
-        if ($this->getRequest()->isPost() && $userService->activate($this->getRequest()->getPost(), $newUser)) {
+        if ($this->getRequest()->isPost() && $this->userService->activate($this->getRequest()->getPost(), $newUser)) {
             return new ViewModel([
                 'activated' => true
             ]);
         }
 
         return new ViewModel([
-            'form' => $userService->getActivateForm(),
+            'form' => $this->userService->getActivateForm(),
             'user' => $newUser
         ]);
-    }
-
-    /**
-     * Get a user service.
-     *
-     * @return \User\Service\User
-     */
-    protected function getUserService()
-    {
-        return $this->getServiceLocator()->get('user_service_user');
     }
 }

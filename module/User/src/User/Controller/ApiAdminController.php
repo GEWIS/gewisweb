@@ -7,6 +7,17 @@ use Zend\View\Model\ViewModel;
 
 class ApiAdminController extends AbstractActionController
 {
+
+    /**
+     * @var \User\Service\User
+     */
+    private $apiUserService;
+
+    public function __construct(\User\Service\User $apiUserService)
+    {
+        $this->apiUserService = $apiUserService;
+    }
+
     /**
      * API token view.
      *
@@ -15,7 +26,7 @@ class ApiAdminController extends AbstractActionController
     public function indexAction()
     {
         return new ViewModel([
-            'tokens' => $this->getApiUserService()->getTokens()
+            'tokens' => $this->apiUserService->getTokens()
         ]);
     }
 
@@ -24,7 +35,7 @@ class ApiAdminController extends AbstractActionController
      */
     public function addAction()
     {
-        $service = $this->getApiUserService();
+        $service = $this->apiUserService;
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -48,7 +59,7 @@ class ApiAdminController extends AbstractActionController
     public function removeAction()
     {
         $id = $this->params()->fromRoute('id');
-        $service = $this->getApiUserService();
+        $service = $this->apiUserService;
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -61,15 +72,5 @@ class ApiAdminController extends AbstractActionController
         return new ViewModel([
             'token' => $service->getToken($id)
         ]);
-    }
-
-    /**
-     * Get the API user service.
-     *
-     * @return User\Service\ApiUser
-     */
-    protected function getApiUserService()
-    {
-        return $this->getServiceLocator()->get('user_service_apiuser');
     }
 }

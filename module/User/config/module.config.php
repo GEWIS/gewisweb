@@ -2,6 +2,8 @@
 
 use User\Controller\ApiAuthenticationController;
 use User\Controller\Factory\ApiAuthenticationControllerFactory;
+use Interop\Container\ContainerInterface;
+use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'router' => [
@@ -153,11 +155,21 @@ return [
     ],
     'controllers' => [
         'invokables' => [
-            'User\Controller\User' => 'User\Controller\UserController',
-            'User\Controller\Api' => 'User\Controller\ApiController',
-            'User\Controller\ApiAdmin' => 'User\Controller\ApiAdminController',
         ],
         'factories' => [
+            'User\Controller\User' => function (ContainerInterface $serviceManager) {
+                $userService = $serviceManager->getServiceLocator()->get("user_service_user");
+                return new \User\Controller\UserController($userService);
+            },
+            'User\Controller\Api' => function (ContainerInterface $serviceManager) {
+                $userService = $serviceManager->getServiceLocator()->get("user_service_user");
+                $memberService = $serviceManager->getServiceLocator()->get("decision_service_member");
+                return new \User\Controller\ApiController($userService, $memberService);
+            },
+            'User\Controller\ApiAdmin' => function (ContainerInterface $serviceManager) {
+                $apiUserService = $serviceManager->getServiceLocator()->get("user_service_apiuser");
+                return new \User\Controller\ApiAdminController($apiUserService);
+            },
             ApiAuthenticationController::class => ApiAuthenticationControllerFactory::class,
         ]
     ],

@@ -14,11 +14,28 @@ use Zend\Session\Container as SessionContainer;
 
 class ApiController extends AbstractActionController
 {
+
+    /**
+     * @var \User\Service\User
+     */
+    private $userService;
+
+    /**
+     * @var \Decision\Service\Member
+     */
+    private $memberService;
+
+
+    public function __construct(\User\Service\User $userService, \Decision\Service\Member $memberService)
+    {
+        $this->userService = $userService;
+        $this->memberService = $memberService;
+    }
+
     public function validateAction()
     {
-        $userService = $this->getUserService();
-        if ($userService->hasIdentity()) {
-            $identity = $userService->getIdentity();
+        if ($this->userService->hasIdentity()) {
+            $identity = $this->userService->getIdentity();
             $response = $this->getResponse();
             $response->setStatusCode(200);
             $headers = $response->getHeaders();
@@ -28,7 +45,7 @@ class ApiController extends AbstractActionController
                 $name = $member->getFullName();
                 $headers->addHeaderLine('GEWIS-MemberName', $name);
                 $headers->addHeaderLine('GEWIS-MemberEmail', $member->getEmail());
-                $memberships = $this->getMemberService()->getOrganMemberships($member);
+                $memberships = $this->memberService->getOrganMemberships($member);
                 $headers->addHeaderLine('GEWIS-MemberGroups', implode(',', array_keys($memberships)));
                 return $response;
             }
@@ -38,25 +55,5 @@ class ApiController extends AbstractActionController
         $response = $this->getResponse();
         $response->setStatusCode(401);
         return $response;
-    }
-
-    /**
-     * Get a user service.
-     *
-     * @return \User\Service\User
-     */
-    protected function getUserService()
-    {
-        return $this->getServiceLocator()->get('user_service_user');
-    }
-
-    /**
-     * Get the member service.
-     *
-     * @return Decision\Service\Member
-     */
-    public function getMemberService()
-    {
-        return $this->getServiceLocator()->get('decision_service_member');
     }
 }
