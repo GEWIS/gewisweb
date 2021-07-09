@@ -17,6 +17,7 @@
         "php": "^7.0.0",
         "ext-calendar": "*",
         "ext-exif": "*",
+        "ext-fileinfo": "*",
         "ext-gd": "*",
         "ext-intl": ">=1.1.0",
         "ext-imagick": ">=3.1",
