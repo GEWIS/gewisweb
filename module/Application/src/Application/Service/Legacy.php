@@ -39,14 +39,4 @@ class Legacy extends AbstractService
     {
         return false;
     }
-
-    /**
-     * Gets the infima.
-     *
-     * @return string
-     */
-    public function getInfima()
-    {
-        return 'Not implemented';
-    }
 }

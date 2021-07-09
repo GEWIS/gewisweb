@@ -158,7 +158,12 @@
                             <h3><?= $this->translate('Infima') ?></h3>
                         </div>
                         <div class="panel-body">
-                            <?= $this->infima() ?>
+                            <p id="infima"></p>
+                            <script>
+                                $.getJSON("https://supremum.gewis.nl/api/random", function(data) {
+                                    $("#infima")[0].textContent = data['content'];
+                                });
+                            </script>
                         </div>
                     </div>
                 <?php endif ?>
