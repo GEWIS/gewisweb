@@ -23,7 +23,7 @@ class OrganController extends AbstractActionController
     private $activityQueryService;
 
 
-    public function __construct(Frontpage $organService, ActivityQuery $activityQueryService)
+    public function __construct(\Decision\Service\Organ $organService, ActivityQuery $activityQueryService)
     {
         $this->organService = $organService;
         $this->activityQueryService = $activityQueryService;
