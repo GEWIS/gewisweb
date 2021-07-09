@@ -26,7 +26,7 @@ class Email extends AbstractService
             'member' => $member
         ]);
 
-        $translator = $this->getServiceManager()->get('translator');
+        $translator = $this->getTranslator();
 
         $message = new Message();
 
@@ -53,7 +53,7 @@ class Email extends AbstractService
             'member' => $member
         ]);
 
-        $translator = $this->getServiceManager()->get('translator');
+        $translator = $this->getTranslator();
 
         $message = new Message();
 
