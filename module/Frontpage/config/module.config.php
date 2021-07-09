@@ -1,5 +1,6 @@
 <?php
 
+use Frontpage\Controller\AdminController;
 use Frontpage\Controller\FrontpageController;
 use Frontpage\Controller\NewsAdminController;
 use Frontpage\Controller\OrganController;
@@ -41,7 +42,9 @@ return [
                 $newsService = $serviceManager->getServiceLocator()->get('frontpage_service_news');
                 return new NewsAdminController($newsService);
             },
-            'Frontpage\Controller\Admin' => 'Frontpage\Controller\AdminController',]
+            'Frontpage\Controller\Admin' => function () {
+                return new AdminController();
+            }]
     ],
     'router' => [
         'routes' => [
