@@ -2,6 +2,7 @@
 
 namespace User\Model;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -61,7 +62,7 @@ class LoginAttempt
     }
 
     /**
-     * @return \User\Model\User
+     * @return User
      */
     public function getUser()
     {
@@ -69,7 +70,7 @@ class LoginAttempt
     }
 
     /**
-     * @param \User\Model\User $user
+     * @param User $user
      */
     public function setUser($user)
     {
@@ -109,7 +110,7 @@ class LoginAttempt
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getTime()
     {
@@ -117,7 +118,7 @@ class LoginAttempt
     }
 
     /**
-     * @param \DateTime $time
+     * @param DateTime $time
      */
     public function setTime($time)
     {

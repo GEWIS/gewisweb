@@ -15,6 +15,11 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
     protected $translator;
 
     /**
+     * @var ActivityCalendar
+     */
+    private $calendarService;
+
+    /**
      * ActivityCalendarOption constructor.
      *
      * @param Translator $translator

@@ -2,6 +2,7 @@
 
 namespace Activity\Controller;
 
+use Activity\Service\ActivityCategory;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container as SessionContainer;
 use Zend\View\Model\ViewModel;
@@ -10,11 +11,11 @@ class AdminCategoryController extends AbstractActionController
 {
 
     /**
-     * @var \Activity\Service\ActivityCategory
+     * @var ActivityCategory
      */
     private $categoryService;
 
-    public function __construct(\Activity\Service\ActivityCategory $categoryService)
+    public function __construct(ActivityCategory $categoryService)
     {
         $this->categoryService = $categoryService;
     }

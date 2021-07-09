@@ -3,9 +3,6 @@
 namespace User\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Zend\Permissions\Acl\Role\RoleInterface;
-use Zend\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * User role model.

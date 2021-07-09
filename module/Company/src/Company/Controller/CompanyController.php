@@ -2,6 +2,7 @@
 
 namespace Company\Controller;
 
+use Company\Service\Company;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -9,11 +10,11 @@ class CompanyController extends AbstractActionController
 {
 
     /**
-     * @var \Company\Service\Company
+     * @var Company
      */
     private $companyService;
 
-    public function __construct(\Company\Service\Company $companyService)
+    public function __construct(Company $companyService)
     {
         $this->companyService = $companyService;
     }
@@ -43,7 +44,6 @@ class CompanyController extends AbstractActionController
 
     public function showAction()
     {
-        $this->companyService = $this->getCompanyService();
         $companyName = $this->params('slugCompanyName');
         $company = $this->companyService->getCompanyBySlugName($companyName);
 

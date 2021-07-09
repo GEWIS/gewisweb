@@ -2,6 +2,8 @@
 
 namespace Decision\Controller;
 
+use Decision\Service\Decision;
+use Decision\Service\Member;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
@@ -10,12 +12,12 @@ class MemberController extends AbstractActionController
 {
 
     /**
-     * @var \Decision\Service\Member
+     * @var Member
      */
     private $memberService;
 
     /**
-     * @var \Decision\Service\Decision
+     * @var Decision
      */
     private $decisionService;
 
@@ -24,7 +26,7 @@ class MemberController extends AbstractActionController
      */
     private $regulationsConfig;
 
-    public function __construct(\Decision\Service\Member $memberService, \Decision\Service\Decision $decisionService, array $regulationsConfig)
+    public function __construct(Member $memberService, Decision $decisionService, array $regulationsConfig)
     {
         $this->memberService = $memberService;
         $this->decisionService = $decisionService;

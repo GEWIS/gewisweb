@@ -5,8 +5,8 @@ namespace Activity\Mapper;
 use Activity\Model\Activity as ActivityModel;
 use DateTime;
 use Decision\Model\Organ;
-use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use User\Model\User;
@@ -65,7 +65,7 @@ class Activity
      * Get upcoming activities sorted by date
      *
      * @param integer $count Optional number of activities to retrieve.
-     * @param \Organ\Model\Organ $organ Option organ by whom the activities are organized.
+     * @param Organ $organ Option organ by whom the activities are organized.
      *
      * @return array
      */

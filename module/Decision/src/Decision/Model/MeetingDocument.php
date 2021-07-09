@@ -3,7 +3,6 @@
 namespace Decision\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Meeting document model.

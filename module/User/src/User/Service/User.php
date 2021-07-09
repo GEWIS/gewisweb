@@ -528,7 +528,7 @@ class User extends AbstractAclService
     /**
      * Get the email service.
      *
-     * @return EmailService
+     * @return Email
      */
     public function getEmailService()
     {

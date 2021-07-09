@@ -2,6 +2,7 @@
 
 namespace Frontpage\Controller;
 
+use Frontpage\Service\News;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Paginator\Paginator;
@@ -10,11 +11,11 @@ class NewsAdminController extends AbstractActionController
 {
 
     /**
-     * @var \Frontpage\Service\News
+     * @var News
      */
     private $newsService;
 
-    public function __construct(\Frontpage\Service\News $newsService)
+    public function __construct(News $newsService)
     {
         $this->newsService = $newsService;
     }

@@ -2,6 +2,8 @@
 
 namespace User\Permissions;
 
-class NotAllowedException extends \RuntimeException
+use RuntimeException;
+
+class NotAllowedException extends RuntimeException
 {
 }

@@ -2,6 +2,8 @@
 
 namespace Photo\Listener;
 
+use Photo\Model\Album;
+use Photo\Model\Photo;
 use Zend\ServiceManager\ServiceManager;
 
 /**
@@ -21,9 +23,9 @@ class Remove
     public function preRemove($eventArgs)
     {
         $entity = $eventArgs->getEntity();
-        if ($entity instanceof \Photo\Model\Album) {
+        if ($entity instanceof Album) {
             $this->albumRemoved($entity);
-        } elseif ($entity instanceof \Photo\Model\Photo) {
+        } elseif ($entity instanceof Photo) {
             $this->photoRemoved($entity);
         }
     }

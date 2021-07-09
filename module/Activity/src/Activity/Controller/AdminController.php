@@ -4,6 +4,9 @@ namespace Activity\Controller;
 
 use Activity\Form\ModifyRequest as RequestForm;
 use Activity\Model\Activity;
+use Activity\Service\ActivityQuery;
+use Activity\Service\Signup;
+use Activity\Service\SignupListQuery;
 use DateTime;
 use User\Permissions\NotAllowedException;
 use Zend\Form\FormInterface;
@@ -25,21 +28,21 @@ class AdminController extends AbstractActionController
     private $activityService;
 
     /**
-     * @var \Activity\Service\ActivityQuery
+     * @var ActivityQuery
      */
     private $activityQueryService;
 
     /**
-     * @var \Activity\Service\Signup
+     * @var Signup
      */
     private $signupService;
 
     /**
-     * @var \Activity\Service\SignupListQuery
+     * @var SignupListQuery
      */
     private $signupListQueryService;
 
-    public function __construct(\Activity\Service\Activity $activityService, \Activity\Service\ActivityQuery $activityQueryService, \Activity\Service\Signup $signupService, \Activity\Service\SignupListQuery $signupListQueryService)
+    public function __construct(\Activity\Service\Activity $activityService, ActivityQuery $activityQueryService, Signup $signupService, SignupListQuery $signupListQueryService)
     {
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;

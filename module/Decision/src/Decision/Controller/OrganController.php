@@ -2,6 +2,8 @@
 
 namespace Decision\Controller;
 
+use Decision\Service\Organ;
+use Doctrine\ORM\NoResultException;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -9,11 +11,11 @@ class OrganController extends AbstractActionController
 {
 
     /**
-     * @var \Decision\Service\Organ
+     * @var Organ
      */
     private $organService;
 
-    public function __construct(\Decision\Service\Organ $organService)
+    public function __construct(Organ $organService)
     {
         $this->organService = $organService;
     }
@@ -40,7 +42,7 @@ class OrganController extends AbstractActionController
             return new ViewModel(array_merge([
                 'organ' => $organ
             ], $organMemberInformation));
-        } catch (\Doctrine\ORM\NoResultException $e) {
+        } catch (NoResultException $e) {
             return $this->notFoundAction();
         }
     }

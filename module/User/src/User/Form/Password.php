@@ -5,7 +5,6 @@ namespace User\Form;
 use Zend\Form\Form;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
 use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Authentication\Result;
 
 class Password extends Form implements InputFilterProviderInterface
 {

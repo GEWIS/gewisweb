@@ -4,7 +4,6 @@ namespace User\Model;
 
 use DateTime;
 use Decision\Model\Member;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

@@ -2,6 +2,7 @@
 
 namespace User\Permissions\Assertion;
 
+use DateTime;
 use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Role\RoleInterface;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
@@ -63,7 +64,7 @@ class IsOrganMember implements AssertionInterface
      */
     protected function isCurrentMember(OrganMember $organMember)
     {
-        $now = new \DateTime();
+        $now = new DateTime();
         return $organMember->getInstallDate() <= $now &&
             (null === $organMember->getDischargeDate() || $organMember->getDischargeDate() >= $now);
     }

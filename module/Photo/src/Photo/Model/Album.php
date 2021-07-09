@@ -2,6 +2,8 @@
 
 namespace Photo\Model;
 
+use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 
@@ -84,8 +86,8 @@ class Album implements ResourceInterface
 
     public function __construct()
     {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new ArrayCollection();
+        $this->photos = new ArrayCollection();
     }
 
     /**
@@ -111,7 +113,7 @@ class Album implements ResourceInterface
     /**
      * Add a photo to an album.
      *
-     * @param \Photo\Model\Photo $photo
+     * @param Photo $photo
      */
     public function addPhoto($photo)
     {
@@ -122,7 +124,7 @@ class Album implements ResourceInterface
     /**
      * Add a sub album to an album.
      *
-     * @param \Photo\Model\Album $album
+     * @param Album $album
      */
     public function addAlbum($album)
     {
@@ -186,7 +188,7 @@ class Album implements ResourceInterface
     /**
      * Get the start date.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getStartDateTime()
     {
@@ -196,9 +198,9 @@ class Album implements ResourceInterface
     /**
      * Set the start date.
      *
-     * @param \DateTime $startDateTime
+     * @param DateTime $startDateTime
      */
-    public function setStartDateTime(\DateTime $startDateTime)
+    public function setStartDateTime(DateTime $startDateTime)
     {
         $this->startDateTime = $startDateTime;
     }
@@ -206,7 +208,7 @@ class Album implements ResourceInterface
     /**
      * Get the end date.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getEndDateTime()
     {
@@ -216,9 +218,9 @@ class Album implements ResourceInterface
     /**
      * Set the end date.
      *
-     * @param \DateTime $endDateTime
+     * @param DateTime $endDateTime
      */
-    public function setEndDateTime(\DateTime $endDateTime)
+    public function setEndDateTime(DateTime $endDateTime)
     {
         $this->endDateTime = $endDateTime;
     }
@@ -246,7 +248,7 @@ class Album implements ResourceInterface
     /**
      * Get the parent album.
      *
-     * @return \Photo\Model\Album $parent
+     * @return Album $parent
      */
     public function getParent()
     {

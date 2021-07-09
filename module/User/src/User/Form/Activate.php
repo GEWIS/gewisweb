@@ -5,7 +5,6 @@ namespace User\Form;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
-use Zend\Authentication\Result;
 
 class Activate extends Form implements InputFilterProviderInterface
 {

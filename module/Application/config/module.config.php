@@ -7,6 +7,12 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
+use Application\Controller\IndexController;
+use Application\View\Helper\BootstrapElementError;
+use Application\View\Helper\FeaturedCompanyPackage;
+use Application\View\Helper\LocalisedTextElement;
+use Doctrine\Common\Cache\MemcachedCache;
+
 return [
     'router' => [
         'routes' => [
@@ -47,8 +53,8 @@ return [
         ],
         'factories' => array(
             'doctrine.cache.my_memcached' => function ($sm) {
-                $cache = new \Doctrine\Common\Cache\MemcachedCache();
-                $memcached = new \Memcached();
+                $cache = new MemcachedCache();
+                $memcached = new Memcached();
                 $memcached->addServer('memcached', 11211);
                 $cache->setMemcached($memcached);
                 return $cache;
@@ -75,7 +81,7 @@ return [
     'controllers' => [
         'factories' => [
             'Application\Controller\Index' => function () {
-                return new \Application\Controller\IndexController();
+                return new IndexController();
             },
         ],
     ],
@@ -105,13 +111,13 @@ return [
     'view_helpers' => [
         'factories' => [
             'featuredCompanyPackage' => function () {
-                return new \Application\View\Helper\FeaturedCompanyPackage();
+                return new FeaturedCompanyPackage();
             },
             'bootstrapElementError' => function () {
-                return new \Application\View\Helper\BootstrapElementError();
+                return new BootstrapElementError();
             },
             'localisedTextElement' => function () {
-                return new \Application\View\Helper\LocalisedTextElement();
+                return new LocalisedTextElement();
             },
         ],
     ],

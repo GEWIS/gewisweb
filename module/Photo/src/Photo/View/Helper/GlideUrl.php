@@ -2,6 +2,7 @@
 
 namespace Photo\View\Helper;
 
+use League\Glide\Urls\UrlBuilder;
 use Zend\View\Helper\AbstractHelper;
 
 /**
@@ -16,7 +17,7 @@ class GlideUrl extends AbstractHelper
     protected $urlBuilder;
 
     /**
-     * @return \Photo\View\Helper\GlideUrl
+     * @return GlideUrl
      */
     public function __invoke()
     {
@@ -37,7 +38,7 @@ class GlideUrl extends AbstractHelper
     /**
      * Set the url builder
      *
-     * @param \League\Glide\Urls\UrlBuilder $urlBuilder
+     * @param UrlBuilder $urlBuilder
      */
     public function setUrlBuilder($urlBuilder)
     {

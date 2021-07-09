@@ -3,11 +3,10 @@
 namespace User\Service;
 
 
+use DateTime;
 use Firebase\JWT\JWT;
 use User\Mapper\ApiApp as ApiAppMapper;
 use User\Model\User as UserModel;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 class ApiApp
 {
@@ -39,8 +38,8 @@ class ApiApp
         $token = [
             'iss' => 'https://gewis.nl/',
             'lidnr' => $user->getLidnr(),
-            'exp' => (new \DateTime('+5 min'))->getTimestamp(),
-            'iat' => (new \DateTime())->getTimestamp(),
+            'exp' => (new DateTime('+5 min'))->getTimestamp(),
+            'iat' => (new DateTime())->getTimestamp(),
             'nonce' => bin2hex(openssl_random_pseudo_bytes(16))
         ];
 

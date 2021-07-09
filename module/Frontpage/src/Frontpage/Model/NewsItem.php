@@ -2,6 +2,7 @@
 
 namespace Frontpage\Model;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 
@@ -89,7 +90,7 @@ class NewsItem implements ResourceInterface
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDate()
     {
@@ -129,7 +130,7 @@ class NewsItem implements ResourceInterface
     }
 
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
      */
     public function setDate($date)
     {

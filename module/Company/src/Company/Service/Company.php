@@ -625,7 +625,7 @@ class Company extends AbstractACLService
      * Checks if the data is valid, and if it is, inserts the company, and sets
      * all data
      *
-     * @param mixed $data
+     * @param \Company\Model\Company $data
      */
     public function insertCompanyByData($data, $files)
     {

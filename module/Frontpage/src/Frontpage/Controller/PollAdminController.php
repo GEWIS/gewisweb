@@ -2,8 +2,8 @@
 
 namespace Frontpage\Controller;
 
+use Frontpage\Service\Poll;
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Session\Container as SessionContainer;
 use Zend\Paginator\Paginator;
 use Zend\View\Model\ViewModel;
 
@@ -11,11 +11,11 @@ class PollAdminController extends AbstractActionController
 {
 
     /**
-     * @var \Frontpage\Service\Poll
+     * @var Poll
      */
     private $pollService;
 
-    public function __construct(\Frontpage\Service\Poll $pollService)
+    public function __construct(Poll $pollService)
     {
         $this->pollService = $pollService;
     }
@@ -53,9 +53,8 @@ class PollAdminController extends AbstractActionController
     {
         if ($this->getRequest()->isPost()) {
             $pollId = $this->params()->fromRoute('poll_id');
-            $pollService = $this->getPollService();
-            $poll = $pollService->getPoll($pollId);
-            $pollService->approvePoll($poll, $this->getRequest()->getPost());
+            $poll = $this->pollService->getPoll($pollId);
+            $this->pollService->approvePoll($poll, $this->getRequest()->getPost());
 
             return $this->redirect()->toRoute('admin_poll');
         }

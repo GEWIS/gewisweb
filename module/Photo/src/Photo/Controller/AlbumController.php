@@ -2,18 +2,19 @@
 
 namespace Photo\Controller;
 
+use Photo\Service\Album;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 class AlbumController extends AbstractActionController
 {
     /**
-     * @var \Photo\Service\Album
+     * @var Album
      */
     private $albumService;
 
     /**
-     * @var \Zend\Cache\Storage
+     * @var Storage
      */
     private $pageCache;
 
@@ -22,7 +23,7 @@ class AlbumController extends AbstractActionController
      */
     private $photoConfig;
 
-    public function __construct(\Photo\Service\Album $albumService, \Zend\Cache\Storage $pageCache, array $photoConfig)
+    public function __construct(Album $albumService, Storage $pageCache, array $photoConfig)
     {
         $this->albumService = $albumService;
         $this->pageCache = $pageCache;

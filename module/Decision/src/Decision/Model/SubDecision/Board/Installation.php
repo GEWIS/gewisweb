@@ -2,6 +2,7 @@
 
 namespace Decision\Model\SubDecision\Board;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 use Decision\Model\SubDecision;
@@ -106,7 +107,7 @@ class Installation extends SubDecision
     /**
      * Get the date.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDate()
     {
@@ -116,7 +117,7 @@ class Installation extends SubDecision
     /**
      * Set the date.
      *
-     * @param \DateTime $date
+     * @param DateTime $date
      */
     public function setDate($date)
     {

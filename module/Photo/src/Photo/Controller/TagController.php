@@ -2,17 +2,18 @@
 
 namespace Photo\Controller;
 
+use Photo\Service\Photo;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 
 class TagController extends AbstractActionController
 {
     /**
-     * @var \Photo\Service\Photo
+     * @var Photo
      */
     private $photoService;
 
-    public function __construct(\Photo\Service\Photo $photoService)
+    public function __construct(Photo $photoService)
     {
         $this->photoService = $photoService;
     }

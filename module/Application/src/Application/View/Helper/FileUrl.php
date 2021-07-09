@@ -2,6 +2,7 @@
 
 namespace Application\View\Helper;
 
+use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Helper\AbstractHelper;
 
 class FileUrl extends AbstractHelper
@@ -9,7 +10,7 @@ class FileUrl extends AbstractHelper
     /**
      * Service locator
      *
-     * @var \Zend\ServiceManager\ServiceLocatorInterface
+     * @var ServiceLocatorInterface
      */
     protected $locator;
 
@@ -30,7 +31,7 @@ class FileUrl extends AbstractHelper
     /**
      * Get the service locator.
      *
-     * @return \Zend\ServiceManager\ServiceLocatorInterface
+     * @return ServiceLocatorInterface
      */
     public function getServiceLocator()
     {
@@ -40,7 +41,7 @@ class FileUrl extends AbstractHelper
     /**
      * Set the service locator
      *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface
+     * @param ServiceLocatorInterface
      */
     public function setServiceLocator($locator)
     {

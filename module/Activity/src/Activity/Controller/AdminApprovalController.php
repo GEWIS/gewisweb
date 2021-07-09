@@ -4,6 +4,7 @@ namespace Activity\Controller;
 
 use Activity\Form\ModifyRequest as RequestForm;
 use Activity\Model\Activity;
+use Activity\Service\ActivityQuery;
 use InvalidArgumentException;
 use User\Permissions\NotAllowedException;
 use Zend\Http\Response;
@@ -21,11 +22,11 @@ class AdminApprovalController extends AbstractActionController
     private $activityService;
 
     /**
-     * @var \Activity\Service\ActivityQuery
+     * @var ActivityQuery
      */
     private $activityQueryService;
 
-    public function __construct(\Activity\Service\Activity $activityService, \Activity\Service\ActivityQuery $activityQueryService)
+    public function __construct(\Activity\Service\Activity $activityService, ActivityQuery $activityQueryService)
     {
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;

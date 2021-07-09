@@ -3,7 +3,6 @@
 namespace Application\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use Zend\View\Exception;
 
 /**
  * Url view helper for use inside javascript code.
@@ -21,7 +20,7 @@ class ScriptUrl extends AbstractHelper
     protected $urls = [];
 
     /**
-     * @return \Application\View\Helper\ScriptUrl
+     * @return ScriptUrl
      */
     public function __invoke()
     {
@@ -34,7 +33,7 @@ class ScriptUrl extends AbstractHelper
      * @param string $name Name of the route.
      * @param array $params List of route parameters to make available.
      *
-     * @return \Application\View\Helper\ScriptUrl
+     * @return ScriptUrl
      */
     public function requireUrl($name, $params = [])
     {
@@ -57,7 +56,7 @@ class ScriptUrl extends AbstractHelper
      * @param array $names List of route names.
      * @param array $params List of route parameters to make available.
      *
-     * @return \Application\View\Helper\ScriptUrl
+     * @return ScriptUrl
      */
     public function requireUrls($names, $params)
     {

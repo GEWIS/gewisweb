@@ -1,5 +1,7 @@
 <?php
 
+use Education\Controller\AdminController;
+use Education\Controller\EducationController;
 use Interop\Container\ContainerInterface;
 
 return [
@@ -143,11 +145,11 @@ return [
         'factories' => [
             'Education\Controller\Education' => function (ContainerInterface $serviceManager) {
                 $examService = $serviceManager->getServiceLocator()->get('education_service_exam');
-                return new \Education\Controller\EducationController($examService);
+                return new EducationController($examService);
             },
             'Education\Controller\Admin' => function (ContainerInterface $serviceManager) {
                 $examService = $serviceManager->getServiceLocator()->get('education_service_exam');
-                return new \Education\Controller\AdminController($examService);
+                return new AdminController($examService);
             },
         ],
     ],

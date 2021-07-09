@@ -2,6 +2,7 @@
 
 namespace Education\Controller;
 
+use Education\Service\Exam;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
@@ -10,11 +11,11 @@ class AdminController extends AbstractActionController
 {
 
     /**
-     * @var \Education\Service\Exam
+     * @var Exam
      */
     private $examService;
 
-    public function __construct(\Education\Service\Exam $examService)
+    public function __construct(Exam $examService)
     {
         $this->examService = $examService;
     }

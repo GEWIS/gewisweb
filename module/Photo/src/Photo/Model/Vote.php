@@ -2,6 +2,8 @@
 
 namespace Photo\Model;
 
+use DateTime;
+use Decision\Model\Member;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 
@@ -48,11 +50,11 @@ class Vote implements ResourceInterface
 
     /**
      * Vote constructor.
-     * @param \Decision\Model\Member $member The member whom voted
+     * @param Member $member The member whom voted
      */
     public function __construct($photo, $member)
     {
-        $this->dateTime = new \DateTime();
+        $this->dateTime = new DateTime();
         $this->member = $member;
         $this->photo = $photo;
     }

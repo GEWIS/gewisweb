@@ -2,9 +2,11 @@
 
 namespace Photo\Controller\Plugin;
 
+use Exception;
+use Photo\Service\Album;
+use Photo\Service\Photo;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\Paginator;
-use Zend\View\Helper;
 
 /**
  * This plugin helps with rendering the pages doing album related stuff.
@@ -13,16 +15,16 @@ class AlbumPlugin extends AbstractPlugin
 {
 
     /**
-     * @var \Photo\Service\Photo
+     * @var Photo
      */
     private $photoService;
 
     /**
-     * @var \Photo\Service\Album
+     * @var Album
      */
     private $albumService;
 
-    public function __construct(\Photo\Service\Photo $photoService, \Photo\Service\Album $albumService)
+    public function __construct(Photo $photoService, Album $albumService)
     {
         $this->photoService = $photoService;
         $this->albumService = $albumService;
@@ -34,7 +36,7 @@ class AlbumPlugin extends AbstractPlugin
      * @param int $albumId the id of the album
      *
      * @return array|null Array with data or null if the page does not exist
-     * @throws \Exception
+     * @throws Exception
      */
     public function getAlbumAsArray($albumId)
     {
@@ -67,7 +69,7 @@ class AlbumPlugin extends AbstractPlugin
      * @param int $activePage the page of the album
      *
      * @return array|null Array with data or null if the page does not exist
-     * @throws \Exception
+     * @throws Exception
      */
     public function getAlbumPageAsArray($albumId, $activePage)
     {
@@ -104,7 +106,7 @@ class AlbumPlugin extends AbstractPlugin
      * @param string $type "album"|"member"|"year"
      *
      * @return array|null Array with data or null if the page does not exist
-     * @throws \Exception
+     * @throws Exception
      */
     public function getAlbumPage($albumId, $activePage, $type = 'album')
     {

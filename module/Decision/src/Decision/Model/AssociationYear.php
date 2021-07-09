@@ -2,6 +2,9 @@
 
 namespace Decision\Model;
 
+use DateInterval;
+use DateTime;
+
 class AssociationYear
 {
     /**
@@ -41,10 +44,10 @@ class AssociationYear
     /**
      * Returns an instance of AssociationYear.
      *
-     * @param \DateTime $dateTime date to find the AssociationYear for
+     * @param DateTime $dateTime date to find the AssociationYear for
      * @return static
      */
-    public static function fromDate(\DateTime $dateTime)
+    public static function fromDate(DateTime $dateTime)
     {
         $inst = new static();
         if ($dateTime->format('n') < self::ASSOCIATION_YEAR_START_MONTH
@@ -78,11 +81,11 @@ class AssociationYear
     /**
      * Returns the first day of the association year.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getStartDate()
     {
-        return \DateTime::createFromFormat(
+        return DateTime::createFromFormat(
             'j-m-Y',
             sprintf('%d-%d-%d', self::ASSOCIATION_YEAR_START_DAY, self::ASSOCIATION_YEAR_START_MONTH, $this->firstYear)
         );
@@ -91,13 +94,13 @@ class AssociationYear
     /**
      * Returns the last day of the association year.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getEndDate()
     {
-        return \DateTime::createFromFormat(
+        return DateTime::createFromFormat(
             'j-m-Y',
             sprintf('%d-%d-%d', self::ASSOCIATION_YEAR_START_DAY, self::ASSOCIATION_YEAR_START_MONTH, $this->firstYear + 1)
-        )->sub(new \DateInterval('P1D'));
+        )->sub(new DateInterval('P1D'));
     }
 }

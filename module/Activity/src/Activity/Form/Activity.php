@@ -237,7 +237,7 @@ class Activity extends Form implements InputFilterProviderInterface
      * Validate the form
      *
      * @return bool
-     * @throws Exception\DomainException
+     * @throws DomainException
      */
     public function isValid()
     {

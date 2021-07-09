@@ -10,11 +10,11 @@ class ActivityCalendarController extends AbstractActionController
 {
 
     /**
-     * @var \Activity\Service\Calendar
+     * @var ActivityCalendar
      */
     private $calendarService;
 
-    public function __construct(\Activity\Service\Calendar $calendarService)
+    public function __construct(ActivityCalendar $calendarService)
     {
         $this->calendarService = $calendarService;
     }

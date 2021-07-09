@@ -2,8 +2,8 @@
 
 namespace Frontpage\Controller;
 
+use Frontpage\Service\Poll;
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Session\Container as SessionContainer;
 use Zend\Paginator\Paginator;
 use Zend\View\Model\ViewModel;
 
@@ -11,11 +11,11 @@ class PollController extends AbstractActionController
 {
 
     /**
-     * @var \Frontpage\Service\Poll
+     * @var Poll
      */
     private $pollService;
 
-    public function __construct(\Frontpage\Service\Poll $pollService)
+    public function __construct(Poll $pollService)
     {
         $this->pollService = $pollService;
     }

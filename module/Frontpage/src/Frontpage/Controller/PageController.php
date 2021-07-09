@@ -2,18 +2,18 @@
 
 namespace Frontpage\Controller;
 
+use Frontpage\Service\Page;
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Session\Container as SessionContainer;
 use Zend\View\Model\ViewModel;
 
 class PageController extends AbstractActionController
 {
     /**
-     * @var \Frontpage\Service\Page
+     * @var Page
      */
     private $pageService;
 
-    public function __construct(\Frontpage\Service\Page $pageService)
+    public function __construct(Page $pageService)
     {
         $this->pageService = $pageService;
     }

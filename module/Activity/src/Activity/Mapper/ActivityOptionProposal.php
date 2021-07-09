@@ -5,7 +5,7 @@ namespace Activity\Mapper;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use Option\Model\ActivityOptionProposal as ActivityOptionProposalModel;
+use Activity\Model\ActivityOptionProposal as ActivityOptionProposalModel;
 
 class ActivityOptionProposal
 {

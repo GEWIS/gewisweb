@@ -6,7 +6,6 @@ use Frontpage\Model\PollOption as PollOptionModel;
 use Zend\Form\Fieldset;
 use Zend\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\I18n\Translator\TranslatorInterface as Translator;
 
 class PollOption extends Fieldset implements InputFilterProviderInterface
 {

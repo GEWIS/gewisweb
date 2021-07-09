@@ -14,6 +14,16 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
     protected $translator;
 
     /**
+     * @var ActivityCalendar
+     */
+    private $calendarService;
+
+    /**
+     * @var int
+     */
+    private $maxOptions;
+
+    /**
      * @param Translator $translator
      * @param ActivityCalendar $calendarService
      * @throws Exception

@@ -1,6 +1,13 @@
 <?php
 
 use Interop\Container\ContainerInterface;
+use Photo\Controller\AlbumAdminController;
+use Photo\Controller\AlbumController;
+use Photo\Controller\ApiController;
+use Photo\Controller\PhotoAdminController;
+use Photo\Controller\PhotoController;
+use Photo\Controller\Plugin\AlbumPlugin;
+use Photo\Controller\TagController;
 
 return [
     'router' => [
@@ -434,30 +441,30 @@ return [
             'Photo\Controller\Photo' => function (ContainerInterface $serviceManager) {
                 $photoService = $serviceManager->getServiceLocator()->get("photo_service_photo");
                 $albumService = $serviceManager->getServiceLocator()->get("photo_service_album");
-                return new \Photo\Controller\PhotoController($photoService, $albumService);
+                return new PhotoController($photoService, $albumService);
             },
             'Photo\Controller\Tag' => function (ContainerInterface $serviceManager) {
                 $photoService = $serviceManager->getServiceLocator()->get("photo_service_photo");
-                return new \Photo\Controller\TagController($photoService);
+                return new TagController($photoService);
             },
             'Photo\Controller\AlbumAdmin' => function (ContainerInterface $serviceManager) {
                 $adminService = $serviceManager->getServiceLocator()->get("photo_service_admin");
                 $albumService = $serviceManager->getServiceLocator()->get("photo_service_album");
-                return new \Photo\Controller\AlbumAdminController($adminService, $albumService);
+                return new AlbumAdminController($adminService, $albumService);
             },
             'Photo\Controller\Album' => function (ContainerInterface $serviceManager) {
                 $albumService = $serviceManager->getServiceLocator()->get("photo_service_album");
                 $pageCache = $this->getServiceLocator()->get('album_page_cache');
                 $photoConfig = $this->getServiceLocator()->get('config')['photo'];
-                return new \Photo\Controller\AlbumController($albumService, $pageCache, $photoConfig);
+                return new AlbumController($albumService, $pageCache, $photoConfig);
             },
             'Photo\Controller\PhotoAdmin' => function (ContainerInterface $serviceManager) {
                 $photoService = $serviceManager->getServiceLocator()->get("photo_service_photo");
                 $entityManager = $serviceManager->getServiceLocator()->get('photo_doctrine_em');
-                return new \Photo\Controller\PhotoAdminController($photoService, $entityManager);
+                return new PhotoAdminController($photoService, $entityManager);
             },
             'Photo\Controller\Api' => function () {
-                return new \Photo\Controller\ApiController();
+                return new ApiController();
             },
         ]
     ],
@@ -466,7 +473,7 @@ return [
             'AlbumPlugin' => function (ContainerInterface $serviceManager) {
                 $photoService = $serviceManager->getServiceLocator()->get("photo_service_photo");
                 $albumService = $serviceManager->getServiceLocator()->get("photo_service_album");
-                return new \Photo\Controller\Plugin\AlbumPlugin($photoService, $albumService);
+                return new AlbumPlugin($photoService, $albumService);
             }
         ]
     ],

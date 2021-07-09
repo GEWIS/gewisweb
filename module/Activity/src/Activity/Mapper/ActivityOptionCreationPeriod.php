@@ -6,7 +6,7 @@ use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Exception;
-use Option\Model\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodModel;
+use Activity\Model\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodModel;
 
 class ActivityOptionCreationPeriod
 {

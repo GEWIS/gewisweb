@@ -2,10 +2,9 @@
 
 namespace Company\Form;
 
+use InvalidArgumentException;
 use Zend\Form\Form;
 use Zend\Form\Element\Collection;
-use Zend\InputFilter\InputFilter;
-use Zend\Mvc\I18n\Translator;
 use Zend\Form\FormInterface;
 
 class CollectionBaseFieldsetAwareForm extends Form
@@ -16,7 +15,7 @@ class CollectionBaseFieldsetAwareForm extends Form
     public function bind($object, $flags = FormInterface::VALUES_NORMALIZED)
     {
         if (!in_array($flags, array(FormInterface::VALUES_NORMALIZED, FormInterface::VALUES_RAW))) {
-            throw new Exception\InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 '%s expects the $flags argument to be one of "%s" or "%s"; received "%s"',
                 __METHOD__,
                 'Zend\Form\FormInterface::VALUES_NORMALIZED',

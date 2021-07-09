@@ -3,6 +3,7 @@
 namespace Photo\Mapper;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for WeeklyPhoto.
@@ -27,10 +28,10 @@ class WeeklyPhoto
     {
         $this->em = $em;
     }
-    
+
     /**
      * Check whether the given photo has been a photo of the week.
-     * 
+     *
      * @param \Photo\Model\Photo $photo
      * @return boolean
      */
@@ -78,7 +79,7 @@ class WeeklyPhoto
     {
         $this->em->persist($weeklyPhoto);
     }
-    
+
     /**
      * Flush.
      */
@@ -90,7 +91,7 @@ class WeeklyPhoto
     /**
      * Get the repository for this mapper.
      *
-     * @return \Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {

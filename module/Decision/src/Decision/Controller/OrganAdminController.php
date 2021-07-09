@@ -2,6 +2,7 @@
 
 namespace Decision\Controller;
 
+use Decision\Service\Organ;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -9,11 +10,11 @@ class OrganAdminController extends AbstractActionController
 {
 
     /**
-     * @var \Decision\Service\Organ
+     * @var Organ
      */
     private $organService;
 
-    public function __construct(\Decision\Service\Organ $organService)
+    public function __construct(Organ $organService)
     {
         $this->organService = $organService;
     }

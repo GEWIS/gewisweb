@@ -37,6 +37,16 @@ class Decision extends AbstractAclService
     }
 
     /**
+     * Get the translator.
+     *
+     * @return Translator
+     */
+    public function getTranslator()
+    {
+        return $this->translator;
+    }
+
+    /**
      * Get all meetings.
      *
      * @param int|null $limit The amount of meetings to retrieve, default is all

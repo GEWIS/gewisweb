@@ -2,22 +2,21 @@
 
 namespace Decision\Controller;
 
-use Doctrine\ORM\EntityManager;
+use Decision\Service\Decision;
 use Zend\Http\Response;
 use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Zend\Console\Request as ConsoleRequest;
 
 class AdminController extends AbstractActionController
 {
 
     /**
-     * @var \Decision\Service\Decision
+     * @var Decision
      */
     private $decisionService;
 
-    public function __construct(\Decision\Service\Decision $decisionService)
+    public function __construct(Decision $decisionService)
     {
         $this->decisionService = $decisionService;
     }
@@ -62,7 +61,7 @@ class AdminController extends AbstractActionController
                 $success = true;
             }
         }
-        $meeting = $this->getDecisionService()->getMeeting($type, $number);
+        $meeting = $this->decisionService->getMeeting($type, $number);
 
         return new ViewModel([
             'form' => $this->decisionService->getDocumentForm(),

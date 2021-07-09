@@ -4,6 +4,10 @@ namespace Activity\Controller;
 
 use Activity\Form\ModifyRequest as RequestForm;
 use Activity\Model\Activity;
+use Activity\Model\SignupList;
+use Activity\Service\ActivityQuery;
+use Activity\Service\Signup;
+use Activity\Service\SignupListQuery;
 use DateTime;
 use Zend\Form\FormInterface;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -19,21 +23,21 @@ class ActivityController extends AbstractActionController
     private $activityService;
 
     /**
-     * @var \Activity\Service\ActivityQuery
+     * @var ActivityQuery
      */
     private $activityQueryService;
 
     /**
-     * @var \Activity\Service\Signup
+     * @var Signup
      */
     private $signupService;
 
     /**
-     * @var \Activity\Service\SignupListQuery
+     * @var SignupListQuery
      */
     private $signupListQueryService;
 
-    public function __construct(\Activity\Service\Activity $activityService, \Activity\Service\ActivityQuery $activityQueryService, \Activity\Service\Signup $signupService, \Activity\Service\SignupListQuery $signupListQueryService)
+    public function __construct(\Activity\Service\Activity $activityService, ActivityQuery $activityQueryService, Signup $signupService, SignupListQuery $signupListQueryService)
     {
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;
@@ -151,9 +155,9 @@ class ActivityController extends AbstractActionController
     /**
      * Get the appropriate signup form.
      *
-     * @param type $fields
-     * @param type $activitySession
-     * @return type $form
+     * @param SignupList $fields
+     * @param SessionContainer $activitySession
+     * @return \Activity\Form\Signup $form
      */
     protected function prepareSignupForm($signupList, &$activitySession)
     {

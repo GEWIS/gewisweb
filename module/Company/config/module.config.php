@@ -1,5 +1,10 @@
 <?php
 
+use Application\View\Helper\Truncate;
+use Company\Controller\AdminController;
+use Company\Controller\CompanyController;
+use Interop\Container\ContainerInterface;
+
 return [
     'router' => [
         'routes' => [
@@ -296,11 +301,11 @@ return [
         'factories' => [
             'Company\Controller\Company' => function (ContainerInterface $serviceManager) {
                 $companyService = $serviceManager->getServiceLocator()->get('company_service_company');
-                return new \Company\Controller\CompanyController($companyService);
+                return new CompanyController($companyService);
             },
             'Company\Controller\Admin' => function (ContainerInterface $serviceManager) {
                 $companyService = $serviceManager->getServiceLocator()->get('company_service_company');
-                return new \Company\Controller\AdminController($companyService);
+                return new AdminController($companyService);
             },
         ],
     ],
@@ -326,7 +331,7 @@ return [
     'view_helpers' => [
         'factories' => [
             'truncate' => function () {
-                return new \Application\View\Helper\Truncate();
+                return new Truncate();
             },
         ],
     ],

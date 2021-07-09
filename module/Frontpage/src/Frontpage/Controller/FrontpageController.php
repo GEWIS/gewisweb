@@ -2,19 +2,19 @@
 
 namespace Frontpage\Controller;
 
+use Frontpage\Service\Frontpage;
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Session\Container as SessionContainer;
 use Zend\View\Model\ViewModel;
 
 class FrontpageController extends AbstractActionController
 {
 
     /**
-     * @var \Frontpage\Service\Frontpage
+     * @var Frontpage
      */
     private $frontpageService;
 
-    public function __construct(\Frontpage\Service\Frontpage $frontpageService)
+    public function __construct(Frontpage $frontpageService)
     {
         $this->frontpageService = $frontpageService;
     }

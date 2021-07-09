@@ -2,6 +2,7 @@
 
 namespace Frontpage\Model;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use User\Model\User;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
@@ -152,7 +153,7 @@ class PollComment implements ResourceInterface
     /**
      * Get the creation date.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCreatedOn()
     {
@@ -164,7 +165,7 @@ class PollComment implements ResourceInterface
      *
      * @param string $createdOn
      */
-    public function setCreatedOn(\DateTime $createdOn)
+    public function setCreatedOn(DateTime $createdOn)
     {
         $this->createdOn = $createdOn;
     }

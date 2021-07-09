@@ -4,7 +4,6 @@ namespace Company\Model;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * CompanyPackage model.

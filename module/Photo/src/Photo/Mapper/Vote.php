@@ -2,7 +2,9 @@
 
 namespace Photo\Mapper;
 
+use DateTime;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for Vote.
@@ -27,26 +29,26 @@ class Vote
     {
         $this->em = $em;
     }
-    
+
     /**
      * Get the amount of votes of all photos that have been visited
      * in the specified time range
      *
-     * @param \DateTime $startDate
-     * @param \DateTime $enddate
+     * @param DateTime $startDate
+     * @param DateTime $enddate
      * @return array of array of string
      */
     public function getVotesInRange($startDate, $endDate)
     {
         $qb = $this->em->createQueryBuilder();
-        
+
         $qb->select('IDENTITY(vote.photo)', 'Count(vote.photo)')
            ->from('Photo\Model\Vote', 'vote')
            ->where('vote.dateTime BETWEEN ?1 AND ?2')
            ->groupBy('vote.photo')
            ->setParameter(1, $startDate)
            ->setParameter(2, $endDate);
-        
+
         return $qb->getQuery()->getResult();
     }
 
@@ -64,7 +66,7 @@ class Vote
             'member' => $lidnr
         ]);
     }
-            
+
     /**
      * Flush.
      */
@@ -81,7 +83,7 @@ class Vote
     /**
      * Get the repository for this mapper.
      *
-     * @return \Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {

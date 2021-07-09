@@ -12,11 +12,11 @@ class AdminController extends AbstractActionController
 {
 
     /**
-     * @var \Company\Service\Company
+     * @var CompanyService
      */
     private $companyService;
 
-    public function __construct(\Company\Service\Company $companyService)
+    public function __construct(CompanyService $companyService)
     {
         $this->companyService = $companyService;
     }
@@ -336,7 +336,6 @@ class AdminController extends AbstractActionController
 
         // If the company is not found, throw 404
         if (empty($companyList)) {
-            $company = null;
             return $this->notFoundAction();
         }
 

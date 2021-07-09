@@ -70,7 +70,7 @@ class Company
      */
     public function insert($languages)
     {
-        $company = new CompanyModel($this->em);
+        $company = new CompanyModel();
 
         foreach ($languages as $language) {
             $translation = new CompanyI18n($language, $company);

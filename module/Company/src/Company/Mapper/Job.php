@@ -74,7 +74,7 @@ class Job
      */
     public function insertIntoPackage($package, $lang, $languageNeutralId)
     {
-        $job = new JobModel($this->em);
+        $job = new JobModel();
         $job->setLanguage($lang);
         $job->setLanguageNeutralId($languageNeutralId);
         $job->setPackage($package);

@@ -2,6 +2,8 @@
 
 namespace User\Controller;
 
+use User\Service\ApiUser;
+use User\Service\User;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -9,11 +11,11 @@ class ApiAdminController extends AbstractActionController
 {
 
     /**
-     * @var \User\Service\User
+     * @var ApiUser
      */
     private $apiUserService;
 
-    public function __construct(\User\Service\User $apiUserService)
+    public function __construct(User $apiUserService)
     {
         $this->apiUserService = $apiUserService;
     }

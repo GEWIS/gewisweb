@@ -3,7 +3,6 @@
 namespace Frontpage\Form;
 
 use Zend\Form\Form;
-use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
 
@@ -41,7 +40,7 @@ class PollComment extends Form implements InputFilterProviderInterface
 
     /**
      * Should return an array specification compatible with
-     * {@link Zend\InputFilter\Factory::createInputFilter()}.
+     * {@link \Zend\InputFilter\Factory::createInputFilter()}.
      *
      * @return array
      */

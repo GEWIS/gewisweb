@@ -121,7 +121,7 @@ class Session
     }
 
     /**
-     * @return \User\Model\User
+     * @return User
      */
     public function getUser()
     {
@@ -129,7 +129,7 @@ class Session
     }
 
     /**
-     * @param \User\Model\User $user
+     * @param User $user
      */
     public function setUser($user)
     {

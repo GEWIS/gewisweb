@@ -2,6 +2,9 @@
 
 namespace Frontpage\Controller;
 
+use Activity\Service\ActivityQuery;
+use Doctrine\ORM\NoResultException;
+use Frontpage\Service\Frontpage;
 use Zend\Mvc\Controller\AbstractActionController;
 use Decision\Model\Organ;
 use Zend\View\Model\ViewModel;
@@ -10,17 +13,17 @@ class OrganController extends AbstractActionController
 {
 
     /**
-     * @var \Frontpage\Service\Frontpage
+     * @var \Decision\Service\Organ
      */
     private $organService;
 
     /**
-     * @var \Activity\Service\ActivityQuery
+     * @var ActivityQuery
      */
     private $activityQueryService;
 
 
-    public function __construct(\Frontpage\Service\Frontpage $organService, \Activity\Service\ActivityQuery $activityQueryService)
+    public function __construct(Frontpage $organService, ActivityQuery $activityQueryService)
     {
         $this->organService = $organService;
         $this->activityQueryService = $activityQueryService;
@@ -61,7 +64,7 @@ class OrganController extends AbstractActionController
                 'organ' => $organ,
                 'activities' => $activities
             ], $organMemberInformation));
-        } catch (\Doctrine\ORM\NoResultException $e) {
+        } catch (NoResultException $e) {
             return $this->notFoundAction();
         }
     }

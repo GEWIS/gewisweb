@@ -5,6 +5,7 @@ namespace Company\Model;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use Exception;
 
 /**
  * Company model.
@@ -426,7 +427,7 @@ class Company // implements ArrayHydrator (for zend2 form)
             return $this->getTranslations()[$companyLanguages->indexOf($locale)];
         }
 
-        throw new \Exception(
+        throw new Exception(
             sprintf(
                 'Requested non-existent translation for locale %s of company with language neutral id %d',
                 $locale,

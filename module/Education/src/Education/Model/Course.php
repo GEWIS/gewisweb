@@ -4,6 +4,7 @@ namespace Education\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use InvalidArgumentException;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 
 /**
@@ -299,7 +300,7 @@ class Course implements ResourceInterface
             self::QUARTILE_Q4,
             self::QUARTILE_INTERIM
         ])) {
-            throw new \InvalidArgumentException("Invalid argument supplied, must be a valid quartile.");
+            throw new InvalidArgumentException("Invalid argument supplied, must be a valid quartile.");
         }
         $this->quartile = $quartile;
     }
@@ -307,7 +308,7 @@ class Course implements ResourceInterface
     /**
      * Get the parent course.
      *
-     * @return Child
+     * @return Course
      */
     public function getParent()
     {

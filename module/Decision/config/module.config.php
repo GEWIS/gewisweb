@@ -1,5 +1,11 @@
 <?php
 
+use Decision\Controller\AdminController;
+use Decision\Controller\DecisionController;
+use Decision\Controller\MemberApiController;
+use Decision\Controller\MemberController;
+use Decision\Controller\OrganAdminController;
+use Decision\Controller\OrganController;
 use Interop\Container\ContainerInterface;
 
 return [
@@ -348,29 +354,29 @@ return [
         'factories' => [
             'Decision\Controller\Decision' => function (ContainerInterface $serviceManager) {
                 $decisionService = $serviceManager->getServiceLocator()->get('decision_service_decision');
-                return new \Decision\Controller\DecisionController($decisionService);
+                return new DecisionController($decisionService);
             },
             'Decision\Controller\Organ' => function (ContainerInterface $serviceManager) {
                 $organService = $serviceManager->getServiceLocator()->get('decision_service_organ');
-                return new \Decision\Controller\OrganController($organService);
+                return new OrganController($organService);
             },
             'Decision\Controller\Admin' => function (ContainerInterface $serviceManager) {
                 $decisionService = $serviceManager->getServiceLocator()->get('decision_service_decision');
-                return new \Decision\Controller\AdminController($decisionService);
+                return new AdminController($decisionService);
             },
             'Decision\Controller\OrganAdmin' => function (ContainerInterface $serviceManager) {
                 $organService = $serviceManager->getServiceLocator()->get('decision_service_organ');
-                return new \Decision\Controller\OrganAdminController($organService);
+                return new OrganAdminController($organService);
             },
             'Decision\Controller\Member' => function (ContainerInterface $serviceManager) {
                 $memberService = $serviceManager->getServiceLocator()->get('decision_service_member');
                 $decisionService = $serviceManager->getServiceLocator()->get('decision_service_decision');
                 $regulationsConfig = $this->getServiceLocator()->get('config')['regulations'];
-                return new \Decision\Controller\MemberController($memberService, $decisionService, $regulationsConfig);
+                return new MemberController($memberService, $decisionService, $regulationsConfig);
             },
             'Decision\Controller\MemberApi' => function (ContainerInterface $serviceManager) {
                 $memberService = $serviceManager->getServiceLocator()->get('decision_service_member');
-                return new \Decision\Controller\MemberApiController($memberService);
+                return new MemberApiController($memberService);
             },
         ]
     ],

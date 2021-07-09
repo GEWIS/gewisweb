@@ -1,8 +1,11 @@
 <?php
 
+use User\Controller\ApiAdminController;
 use User\Controller\ApiAuthenticationController;
+use User\Controller\ApiController;
 use User\Controller\Factory\ApiAuthenticationControllerFactory;
 use Interop\Container\ContainerInterface;
+use User\Controller\UserController;
 
 return [
     'router' => [
@@ -156,16 +159,16 @@ return [
         'factories' => [
             'User\Controller\User' => function (ContainerInterface $serviceManager) {
                 $userService = $serviceManager->getServiceLocator()->get("user_service_user");
-                return new \User\Controller\UserController($userService);
+                return new UserController($userService);
             },
             'User\Controller\Api' => function (ContainerInterface $serviceManager) {
                 $userService = $serviceManager->getServiceLocator()->get("user_service_user");
                 $memberService = $serviceManager->getServiceLocator()->get("decision_service_member");
-                return new \User\Controller\ApiController($userService, $memberService);
+                return new ApiController($userService, $memberService);
             },
             'User\Controller\ApiAdmin' => function (ContainerInterface $serviceManager) {
                 $apiUserService = $serviceManager->getServiceLocator()->get("user_service_apiuser");
-                return new \User\Controller\ApiAdminController($apiUserService);
+                return new ApiAdminController($apiUserService);
             },
             ApiAuthenticationController::class => ApiAuthenticationControllerFactory::class,
         ]

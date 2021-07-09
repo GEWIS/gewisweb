@@ -2,15 +2,12 @@
 
 namespace Company\Form;
 
-use Zend\Form\Form;
-use Zend\Form\Element\Collection;
-use Zend\InputFilter\InputFilter;
 use Zend\Mvc\I18n\Translator;
-use Zend\Form\FormInterface;
 
 class EditLabel extends CollectionBaseFieldsetAwareForm
 {
     private $languages;
+    private $mapper;
 
     public function __construct($mapper, Translator $translate, $languages, $hydrator)
     {

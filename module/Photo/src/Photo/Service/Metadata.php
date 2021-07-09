@@ -3,8 +3,7 @@
 namespace Photo\Service;
 
 
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
+use DateTime;
 
 /**
  * Metadata service. This service implements all functionality related to
@@ -27,7 +26,7 @@ class Metadata
         if ($exif) {
             $photo->setArtist($exif['Artist']);
             $photo->setCamera($exif['Model']);
-            $photo->setDateTime(new \DateTime($exif['DateTimeOriginal']));
+            $photo->setDateTime(new DateTime($exif['DateTimeOriginal']));
             $photo->setFlash($exif['Flash'] != 0);
             $photo->setFocalLength($this->frac2dec($exif['FocalLength']));
             $photo->setExposureTime($this->frac2dec($exif['ExposureTime']));
@@ -43,7 +42,7 @@ class Metadata
         } else {
             // We must have a date/time for a photo
             // Since no date is known, we use the current one
-            $photo->setDateTime(new \DateTime());
+            $photo->setDateTime(new DateTime());
         }
 
         return $photo;

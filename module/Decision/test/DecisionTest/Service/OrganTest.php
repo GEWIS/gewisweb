@@ -3,6 +3,9 @@
 namespace DecisionTest\Service;
 
 use PHPUnit_Framework_TestCase;
+use User\Permissions\NotAllowedException;
+use Zend\I18n\Translator\Translator;
+use Zend\Permissions\Acl\Acl;
 use Zend\ServiceManager\ServiceManager;
 
 class OrganTest extends PHPUnit_Framework_TestCase
@@ -20,8 +23,8 @@ class OrganTest extends PHPUnit_Framework_TestCase
 
         $this->sm->setInvokableClass('decision_service_organ', 'Decision\Service\Organ');
 
-        $this->sm->setService('translator', new \Zend\I18n\Translator\Translator());
-        $this->sm->setService('decision_acl', new \Zend\Permissions\Acl\Acl());
+        $this->sm->setService('translator', new Translator());
+        $this->sm->setService('decision_acl', new Acl());
         $this->sm->setService('user_role', 'guest');
         $mapperMock = $this->getMockBuilder('Decision\Mapper\Organ')
             ->disableOriginalConstructor()
@@ -43,7 +46,7 @@ class OrganTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \User\Permissions\NotAllowedException
+     * @expectedException NotAllowedException
      */
     public function testGetOrgansThrowsNotAllowedExceptionOnGuest()
     {

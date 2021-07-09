@@ -168,14 +168,14 @@ class Package
     private function createPackage($type)
     {
         if ($type === "job") {
-            return new PackageModel($this->em);
+            return new PackageModel();
         }
 
         if ($type === "featured") {
-            return new FeaturedPackageModel($this->em);
+            return new FeaturedPackageModel();
         }
 
-        return new BannerPackageModel($this->em);
+        return new BannerPackageModel();
     }
 
     /**

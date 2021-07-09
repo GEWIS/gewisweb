@@ -3,6 +3,7 @@
 namespace User\Mapper;
 
 use Decision\Model\Member;
+use Doctrine\ORM\EntityRepository;
 use User\Model\NewUser as NewUserModel;
 use Doctrine\ORM\EntityManager;
 
@@ -96,7 +97,7 @@ class NewUser
     /**
      * Get the repository for this mapper.
      *
-     * @return \Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {

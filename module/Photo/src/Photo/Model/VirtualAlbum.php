@@ -2,6 +2,9 @@
 
 namespace Photo\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
+
 /**
  * VirtualAlbum.
  * Album that will never be stored in the database as such.
@@ -13,29 +16,29 @@ class VirtualAlbum extends Album
         parent::__construct();
         $this->id = $id;
     }
-    
+
     /**
      * Get the parent album.
      *
-     * @return \Photo\Model\Album $parent
+     * @return Album $parent
      */
     public function getParent()
     {
         return null;
     }
-    
+
     /**
      * Set the parent of the album
      *
      * @param album $parent
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function setParent($parent)
     {
-        throw new \Exception("Method is not implemented");
+        throw new Exception("Method is not implemented");
     }
-    
+
     /**
      * Gets an array of all child albums
      *
@@ -45,41 +48,41 @@ class VirtualAlbum extends Album
     {
         return [];
     }
-    
+
     public function getPhotos()
     {
         return $this->photos->toArray();
     }
-    
+
     /**
      * Add a photo to an album.
      *
-     * @param \Photo\Model\Photo $photo
+     * @param Photo $photo
      */
     public function addPhoto($photo)
     {
         $this->photos[] = $photo;
     }
-    
+
     public function addPhotos(array $photos)
     {
         $this->photos
-            = new \Doctrine\Common\Collections\ArrayCollection(array_merge($this->photos->toArray(),
+            = new ArrayCollection(array_merge($this->photos->toArray(),
             $photos));
     }
-    
+
     /**
      * Add a sub album to an album.
      *
-     * @param \Photo\Model\Album $album
+     * @param Album $album
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function addAlbum($album)
     {
-        throw new \Exception("Method is not implemented");
+        throw new Exception("Method is not implemented");
     }
-    
+
     /**
      * Returns an associative array representation of this object
      * including all child objects
@@ -92,13 +95,14 @@ class VirtualAlbum extends Album
         foreach ($this->photos as $photo) {
             $array['photos'][] = $photo->toArray();
         }
+        // TODO: The code below probably never was finished
         foreach ($this->children as $album) {
             $array['children'][] = [];
         }
-        
+
         return $array;
     }
-    
+
     /**
      * Returns an associative array representation of this object.
      *
@@ -118,10 +122,10 @@ class VirtualAlbum extends Album
             'photoCount'    => $this->getPhotoCount(),
             'albumCount'    => $this->getAlbumCount()
         ];
-        
+
         return $array;
     }
-    
+
     /**
      * Get the amount of photos in the album
      *
@@ -132,7 +136,7 @@ class VirtualAlbum extends Album
         $count = $this->photos->count();
         return $count;
     }
-    
+
     /**
      * Get the amount of subalbums in the album
      *
@@ -142,5 +146,5 @@ class VirtualAlbum extends Album
     {
         return 0;
     }
-    
+
 }

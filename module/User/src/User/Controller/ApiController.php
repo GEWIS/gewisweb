@@ -9,24 +9,25 @@
 
 namespace User\Controller;
 
+use Decision\Service\Member;
+use User\Service\User;
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Session\Container as SessionContainer;
 
 class ApiController extends AbstractActionController
 {
 
     /**
-     * @var \User\Service\User
+     * @var User
      */
     private $userService;
 
     /**
-     * @var \Decision\Service\Member
+     * @var Member
      */
     private $memberService;
 
 
-    public function __construct(\User\Service\User $userService, \Decision\Service\Member $memberService)
+    public function __construct(User $userService, Member $memberService)
     {
         $this->userService = $userService;
         $this->memberService = $memberService;

@@ -2,6 +2,7 @@
 
 namespace Decision\Model;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 use Decision\Model\SubDecision\Board\Installation;
@@ -80,7 +81,7 @@ class BoardMember
     /**
      * Get the member.
      *
-     * @return \Decision\Model\Member
+     * @return Member
      */
     public function getMember()
     {
@@ -90,7 +91,7 @@ class BoardMember
     /**
      * Set the member.
      *
-     * @param \Decision\Model\Member $member
+     * @param Member $member
      */
     public function setMember($member)
     {
@@ -120,7 +121,7 @@ class BoardMember
     /**
      * Get the installation date.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getInstallDate()
     {
@@ -130,7 +131,7 @@ class BoardMember
     /**
      * Set the installation date.
      *
-     * @param \DateTime $installDate
+     * @param DateTime $installDate
      */
     public function setInstallDate($installDate)
     {
@@ -160,7 +161,7 @@ class BoardMember
     /**
      * Get the discharge date.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDischargeDate()
     {
@@ -170,7 +171,7 @@ class BoardMember
     /**
      * Set the discharge date.
      *
-     * @param \DateTime $dischargeDate
+     * @param DateTime $dischargeDate
      */
     public function setDischargeDate($dischargeDate)
     {

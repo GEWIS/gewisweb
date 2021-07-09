@@ -1,5 +1,7 @@
 <?php
 
+use Activity\Controller\ActivityCalendarController;
+use Activity\Controller\AdminCategoryController;
 use Interop\Container\ContainerInterface;
 
 return [
@@ -483,7 +485,7 @@ return [
             },
             'Activity\Controller\AdminCategory' => function (ContainerInterface $serviceManager) {
                 $categoryService = $serviceManager->getServiceLocator()->get('activity_service_category');
-                return new \Activity\Controller\AdminCategoryController($categoryService);
+                return new AdminCategoryController($categoryService);
             },
             'Activity\Controller\Api' => function (ContainerInterface $serviceManager) {
                 $activityQueryService = $serviceManager->getServiceLocator()->get('activity_service_activityQuery');
@@ -499,7 +501,7 @@ return [
             },
             'Activity\Controller\ActivityCalendar' => function (ContainerInterface $serviceManager) {
                 $calendarService = $serviceManager->getServiceLocator()->get('activity_service_calendar');
-                return new \Activity\Controller\ActivityCalendarController($calendarService);
+                return new ActivityCalendarController($calendarService);
             },
         ]
     ],

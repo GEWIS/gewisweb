@@ -3,6 +3,7 @@
 namespace Photo\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Photo\Service\Photo;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
@@ -11,7 +12,7 @@ class PhotoAdminController extends AbstractActionController
 {
 
     /**
-     * @var \Photo\Service\Photo
+     * @var Photo
      */
     private $photoService;
 
@@ -20,7 +21,7 @@ class PhotoAdminController extends AbstractActionController
      */
     private $entityManager;
 
-    public function __construct(\Photo\Service\Photo $photoService, EntityManager $entityManager)
+    public function __construct(Photo $photoService, EntityManager $entityManager)
     {
         $this->photoService = $photoService;
         $this->entityManager = $entityManager;

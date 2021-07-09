@@ -2,19 +2,21 @@
 
 namespace Decision\Controller;
 
+use Decision\Service\Decision;
+use Doctrine\ORM\NoResultException;
+use User\Permissions\NotAllowedException;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Decision\Controller\FileBrowser\LocalFileReader as LocalFileReader;
 
 class DecisionController extends AbstractActionController
 {
 
     /**
-     * @var \Decision\Service\Decision
+     * @var Decision
      */
     private $decisionService;
 
-    public function __construct(\Decision\Service\Decision $decisionService)
+    public function __construct(Decision $decisionService)
     {
         $this->decisionService = $decisionService;
     }
@@ -45,7 +47,7 @@ class DecisionController extends AbstractActionController
             }
 
             return $response;
-        } catch (\Doctrine\ORM\NoResultException $e) {
+        } catch (NoResultException $e) {
             return $this->notFoundAction();
         }
     }
@@ -62,7 +64,7 @@ class DecisionController extends AbstractActionController
             }
 
             return $response;
-        } catch (\Doctrine\ORM\NoResultException $e) {
+        } catch (NoResultException $e) {
             return $this->notFoundAction();
         }
     }
@@ -81,7 +83,7 @@ class DecisionController extends AbstractActionController
             return new ViewModel([
                 'meeting' => $meeting
             ]);
-        } catch (\Doctrine\ORM\NoResultException $e) {
+        } catch (NoResultException $e) {
             return $this->notFoundAction();
         }
     }
@@ -144,7 +146,7 @@ class DecisionController extends AbstractActionController
     {
         if (!$this->decisionService->isAllowedToBrowseFiles()) {
             $translator = $this->decisionService->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
+            throw new NotAllowedException(
                 $translator->translate('You are not allowed to browse files.')
             );
         }

@@ -3,6 +3,7 @@
 namespace Frontpage\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use User\Model\User;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 
 /**
@@ -41,7 +42,7 @@ class PollVote implements ResourceInterface
     protected $respondent;
 
     /**
-     * @return \Frontpage\Model\PollOption
+     * @return PollOption
      */
     public function getPollOption()
     {
@@ -49,7 +50,7 @@ class PollVote implements ResourceInterface
     }
 
     /**
-     * @param \Frontpage\Model\Poll $poll
+     * @param Poll $poll
      */
     public function setPoll($poll)
     {
@@ -57,7 +58,7 @@ class PollVote implements ResourceInterface
     }
 
     /**
-     * @param \Frontpage\Model\PollOption $pollOption
+     * @param PollOption $pollOption
      */
     public function setPollOption($pollOption)
     {
@@ -65,7 +66,7 @@ class PollVote implements ResourceInterface
     }
 
     /**
-     * @param \User\Model\User $respondent
+     * @param User $respondent
      */
     public function setRespondent($respondent)
     {

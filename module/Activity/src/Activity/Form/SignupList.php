@@ -16,6 +16,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
      * @var Translator
      */
     protected $translator;
+    private $isValid;
 
     public function __construct(Translator $translator)
     {
@@ -218,10 +219,11 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
      * Validate the form
      *
      * @return bool
-     * @throws Exception\DomainException
+     * @throws DomainException
      */
     public function isValid()
     {
+        // TODO: isValid is not found
         $valid = parent::isValid();
         $this->isValid = $valid;
 

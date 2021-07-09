@@ -3,6 +3,7 @@
 namespace Frontpage\Mapper;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 
@@ -101,7 +102,7 @@ class NewsItem
     /**
      * Get the repository for this mapper.
      *
-     * @return \Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {

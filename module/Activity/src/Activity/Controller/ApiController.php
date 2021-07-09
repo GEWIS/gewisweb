@@ -2,7 +2,7 @@
 
 namespace Activity\Controller;
 
-use Activity\Service\Activity;
+use Activity\Service\ActivityQuery;
 use Activity\Service\Signup;
 use User\Permissions\NotAllowedException;
 use Zend\Form\FormInterface;
@@ -13,7 +13,7 @@ class ApiController extends AbstractActionController
 {
 
     /**
-     * @var \Activity\Service\ActivityQuery
+     * @var ActivityQuery
      */
     private $activityQueryService;
 
@@ -22,7 +22,7 @@ class ApiController extends AbstractActionController
      */
     private $signupService;
 
-    public function __construct(\Activity\Service\ActivityQuery $activityQueryService, \Activity\Service\Signup $signupService)
+    public function __construct(ActivityQuery $activityQueryService, Signup $signupService)
     {
         $this->activityQueryService = $activityQueryService;
         $this->signupService = $signupService;

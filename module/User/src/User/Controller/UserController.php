@@ -2,6 +2,7 @@
 
 namespace User\Controller;
 
+use User\Service\User;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
@@ -10,11 +11,11 @@ class UserController extends AbstractActionController
 {
 
     /**
-     * @var \User\Service\User
+     * @var User
      */
     private $userService;
 
-    public function __construct(\User\Service\User $userService)
+    public function __construct(User $userService)
     {
         $this->userService = $userService;
     }

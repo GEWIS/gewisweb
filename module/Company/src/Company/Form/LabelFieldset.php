@@ -2,10 +2,8 @@
 
 namespace Company\Form;
 
-use Zend\Form\Form;
+use Company\Model\JobLabel;
 use Zend\Form\Fieldset;
-use Zend\InputFilter\InputFilter;
-use Zend\Mvc\I18n\Translator;
 
 /**
  *
@@ -58,7 +56,7 @@ class LabelFieldset extends Fieldset
 
     public function setLanguage($lang)
     {
-        $jc = new \Company\Model\JobLabel();
+        $jc = new JobLabel();
         $jc->setLanguage($lang);
         $this->setObject($jc);
     }

@@ -2,9 +2,15 @@
 
 namespace Decision\Form;
 
+use Zend\Filter\ToInt;
+use Zend\Filter\ToNull;
+use Zend\Form\Element\Hidden;
+use Zend\Form\Element\Radio;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Mvc\I18n\Translator;
+use Zend\Validator\InArray;
+use Zend\Validator\NotEmpty;
 
 class ReorderDocument extends Form implements InputFilterProviderInterface
 {
@@ -23,7 +29,7 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
     public function setupElements()
     {
         $this->add([
-            'type' => \Zend\Form\Element\Radio::class,
+            'type' => Radio::class,
             'name' => 'direction',
             'options' => [
                 'label' => 'Label',
@@ -41,7 +47,7 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'type' => \Zend\Form\Element\Hidden::class,
+            'type' => Hidden::class,
             'name' => 'document',
             'attributes' => [
                 'value' => null, // Value should be populated in the view
@@ -57,17 +63,17 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
             'direction' => [
                 'required' => true,
                 'validators' => [
-                    (new \Zend\Validator\InArray())->setHaystack(['up', 'down']),
+                    (new InArray())->setHaystack(['up', 'down']),
                 ],
             ],
             'document' => [
                 'required' => true,
                 'filters' => [
-                    ['name' => \Zend\Filter\ToNull::class],
-                    ['name' => \Zend\Filter\ToInt::class]
+                    ['name' => ToNull::class],
+                    ['name' => ToInt::class]
                 ],
                 'validators' => [
-                    ['name' => \Zend\Validator\NotEmpty::class]
+                    ['name' => NotEmpty::class]
                 ],
             ]
         ];

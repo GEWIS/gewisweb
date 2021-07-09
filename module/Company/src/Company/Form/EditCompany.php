@@ -5,9 +5,13 @@ namespace Company\Form;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\Mvc\I18n\Translator;
+use Zend\Validator\Callback;
+use Zend\Validator\Regex;
 
 class EditCompany extends Form
 {
+    private $mapper;
+
     public function __construct($mapper, Translator $translate)
     {
         // we want to ignore the name passed
@@ -248,11 +252,11 @@ class EditCompany extends Form
             'name' => 'slugName',
             'required' => true,
             'validators' => [
-                new \Zend\Validator\Callback([
+                new Callback([
                     'callback' => [$this, 'slugNameUnique'],
                     'message' => $translate->translate('This slug is already taken'),
                 ]),
-                new \Zend\Validator\Regex([
+                new Regex([
                     'message' => $translate->translate('This slug contains invalid characters'),
                     'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
                 ]),

@@ -2,6 +2,9 @@
 
 namespace Photo\Mapper;
 
+use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityRepository;
+use Photo\Model\MemberAlbum;
 use Photo\Model\Photo as PhotoModel;
 use Doctrine\ORM\EntityManager;
 
@@ -11,14 +14,14 @@ use Doctrine\ORM\EntityManager;
  */
 class Photo
 {
-    
+
     /**
      * Doctrine entity manager.
      *
      * @var EntityManager
      */
     protected $em;
-    
+
     /**
      * Constructor
      *
@@ -28,7 +31,7 @@ class Photo
     {
         $this->em = $em;
     }
-    
+
     /**
      * Returns all the photos in an album.
      *
@@ -45,12 +48,12 @@ class Photo
         $start = 0,
         $maxResults = null
     ) {
-        
+
         $qb = $this->em->createQueryBuilder();
-        
+
         $qb->select('a')
             ->from('Photo\Model\Photo', 'a');
-        if ($album instanceof \Photo\Model\MemberAlbum) {
+        if ($album instanceof MemberAlbum) {
             $qb->innerJoin('a.tags', 't')
                 ->where('t.member = ?1')
                 ->setParameter(1, $album->getMember());
@@ -67,16 +70,16 @@ class Photo
         if (!is_null($maxResults)) {
             $qb->setMaxResults($maxResults);
         }
-        
+
         return $qb->getQuery()->getResult();
     }
-    
+
     /**
      * Retrieves some random photos from the specified album. If the amount of
      * available photos is smaller than the requested count, less photos
      * will be returned.
      *
-     * @param int $album
+     * @param \Photo\Model\Album|int $album
      * @param int $maxResults
      *
      * @return array of Photo\Model\Photo
@@ -84,7 +87,7 @@ class Photo
     public function getRandomAlbumPhotos($album, $maxResults)
     {
         $qb = $this->em->createQueryBuilder();
-        
+
         $qb->select('a')
             ->from('Photo\Model\Photo', 'a')
             ->where('a.album = ?1')
@@ -92,28 +95,28 @@ class Photo
             ->addSelect('RAND() as HIDDEN rand')
             ->orderBy('rand');
         $qb->setMaxResults($maxResults);
-        
+
         return $qb->getQuery()->getResult();
     }
-    
+
     /**
      * Returns the next photo in the album to display
      *
-     * @param \Photo\Model\Photo $photo
+     * @param PhotoModel $photo
      * @param \Photo\Model\Album $album
      *
-     * @return \Photo\Model\Photo|null Photo if there is a next
+     * @return PhotoModel|null Photo if there is a next
      * photo, null otherwise
      */
     public function getNextPhoto(
-        \Photo\Model\Photo $photo,
+        PhotoModel $photo,
         \Photo\Model\Album $album
     ) {
         $qb = $this->em->createQueryBuilder();
-        
+
         $qb->select('a')
             ->from('Photo\Model\Photo', 'a');
-        if ($album instanceof \Photo\Model\MemberAlbum) {
+        if ($album instanceof MemberAlbum) {
             $qb->innerJoin('a.tags', 't')
                 ->where('t.member = ?1 AND a.dateTime > ?2')
                 ->setParameter(1, $album->getMember())
@@ -123,31 +126,31 @@ class Photo
                 ->setParameter(1, $photo->getDateTime())
                 ->setParameter(2, $photo->getAlbum());
         }
-        
+
         $qb->orderBy('a.dateTime', 'ASC')
             ->setMaxResults(1);
         $res = $qb->getQuery()->getResult();
-        
+
         return empty($res) ? null : $res[0];
     }
-    
+
     /**
      * Returns the previous photo in the album to display
      *
-     * @param \Photo\Model\Photo $photo
+     * @param PhotoModel $photo
      *
-     * @return \Photo\Model\Photo|null Photo if there is a previous
+     * @return PhotoModel|null Photo if there is a previous
      * photo, null otherwise
      */
     public function getPreviousPhoto(
-        \Photo\Model\Photo $photo,
+        PhotoModel $photo,
         \Photo\Model\Album $album
     ) {
         $qb = $this->em->createQueryBuilder();
-        
+
         $qb->select('a')
             ->from('Photo\Model\Photo', 'a');
-        if ($album instanceof \Photo\Model\MemberAlbum) {
+        if ($album instanceof MemberAlbum) {
             $qb->innerJoin('a.tags', 't')
                 ->where('t.member = ?1 AND a.dateTime < ?2')
                 ->setParameter(1, $album->getMember())
@@ -157,14 +160,14 @@ class Photo
                 ->setParameter(1, $photo->getDateTime())
                 ->setParameter(2, $photo->getAlbum());
         }
-        
+
         $qb->orderBy('a.dateTime', 'DESC')
             ->setMaxResults(1);
         $res = $qb->getQuery()->getResult();
-        
+
         return empty($res) ? null : $res[0];
     }
-    
+
     /**
      * Checks if the specified photo exists in the database already and returns
      * it if it does.
@@ -172,7 +175,7 @@ class Photo
      * @param string             $path  The storage path of the photo
      * @param \Photo\Model\Album $album the album the photo is in
      *
-     * @return \Photo\Model\Photo|null
+     * @return PhotoModel|null
      */
     public function getPhotoByData($path, $album)
     {
@@ -181,49 +184,49 @@ class Photo
             'album' => $album->getId()
         ]);
     }
-    
+
     /**
      * Get the repository for this mapper.
      *
-     * @return \Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {
         return $this->em->getRepository('Photo\Model\Photo');
     }
-    
+
     /**
      * Retrieves a photo by id from the database.
      *
      * @param integer $photoId the id of the photo
      *
-     * @return \Photo\Model\Photo
+     * @return PhotoModel
      */
     public function getPhotoById($photoId)
     {
         return $this->getRepository()->find($photoId);
     }
-    
+
     /**
      * Removes a photo
      *
-     * @param \Photo\Model\Photo $photo
+     * @param PhotoModel $photo
      */
     public function remove(PhotoModel $photo)
     {
         $this->em->remove($photo);
     }
-    
+
     /**
      * Persist photo
      *
-     * @param \Photo\Model\Photo $photo
+     * @param PhotoModel $photo
      */
     public function persist(PhotoModel $photo)
     {
         $this->em->persist($photo);
     }
-    
+
     /**
      * Flush.
      */
@@ -231,15 +234,15 @@ class Photo
     {
         $this->em->flush();
     }
-    
+
     /**
      * Get the entity manager connection.
      *
-     * @return \Doctrine\DBAL\Connection
+     * @return Connection
      */
     public function getConnection()
     {
         return $this->em->getConnection();
     }
-    
+
 }

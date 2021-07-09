@@ -2,6 +2,7 @@
 
 namespace User\Permissions\Assertion;
 
+use DateTime;
 use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Role\RoleInterface;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
@@ -54,7 +55,7 @@ class IsBoardMember implements AssertionInterface
      */
     protected function isCurrentBoard(BoardMember $boardMember)
     {
-        $now = new \DateTime();
+        $now = new DateTime();
         return $boardMember->getInstallDate() <= $now &&
             (null === $boardMember->getDischargeDate() || $boardMember->getDischargeDate() >= $now);
     }

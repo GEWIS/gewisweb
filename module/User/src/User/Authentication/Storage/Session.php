@@ -2,7 +2,10 @@
 
 namespace User\Authentication\Storage;
 
+use Zend\ServiceManager\ServiceManager;
+use DateTime;
 use Firebase\JWT\JWT;
+use UnexpectedValueException;
 use Zend\Authentication\Storage;
 use User\Model\Session as SessionModel;
 use Zend\Http\Header\SetCookie;
@@ -10,7 +13,7 @@ use Zend\Http\Header\SetCookie;
 class Session extends Storage\Session
 {
     /**
-     * @var The service manager
+     * @var ServiceManager The service manager
      */
     protected $sm;
 
@@ -74,7 +77,7 @@ class Session extends Storage\Session
         }
         try {
             $session = JWT::decode($cookies->SESSTOKEN, $key, ['RS256']);
-        } catch (\UnexpectedValueException $e) {
+        } catch (UnexpectedValueException $e) {
             return false;
         }
 
@@ -125,8 +128,8 @@ class Session extends Storage\Session
         $token = [
             'iss' => 'https://gewis.nl/',
             'lidnr' => $lidnr,
-            'exp' => (new \DateTime('+2 weeks'))->getTimestamp(),
-            'iat' => (new \DateTime())->getTimestamp(),
+            'exp' => (new DateTime('+2 weeks'))->getTimestamp(),
+            'iat' => (new DateTime())->getTimestamp(),
             'nonce' => bin2hex(openssl_random_pseudo_bytes(16))
         ];
 

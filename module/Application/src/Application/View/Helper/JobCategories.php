@@ -2,17 +2,19 @@
 
 namespace Application\View\Helper;
 
+use Company\Model\CompanyFeaturedPackage;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\View\Helper\AbstractHelper;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
 class JobCategories extends AbstractHelper implements ServiceLocatorAwareInterface
 {
-    use \Zend\ServiceManager\ServiceLocatorAwareTrait;
+    use ServiceLocatorAwareTrait;
 
     /**
      * Returns all visible categories
      *
-     * @return \Company\Model\CompanyFeaturedPackage
+     * @return CompanyFeaturedPackage
      */
     public function __invoke()
     {
