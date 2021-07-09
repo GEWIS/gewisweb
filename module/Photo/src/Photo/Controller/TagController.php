@@ -12,7 +12,7 @@ class TagController extends AbstractActionController
      */
     private $photoService;
 
-    function __construct(\Photo\Service\Photo $photoService)
+    public function __construct(\Photo\Service\Photo $photoService)
     {
         $this->photoService = $photoService;
     }

@@ -18,7 +18,7 @@ class AlbumAdminController extends AbstractActionController
      */
     private $albumService;
 
-    function __construct(\Photo\Service\Admin $adminService, \Photo\Service\Album $albumService)
+    public function __construct(\Photo\Service\Admin $adminService, \Photo\Service\Album $albumService)
     {
         $this->adminService = $adminService;
         $this->albumService = $albumService;
@@ -32,10 +32,10 @@ class AlbumAdminController extends AbstractActionController
         $years = $this->albumService->getAlbumYears();
         $albumsByYear = [];
         foreach ($years as $year) {
-            $albumsByYear[$year] = $albumService->getAlbumsByYear($year);
+            $albumsByYear[$year] = $this->albumService->getAlbumsByYear($year);
         }
 
-        $albumsWithoutDate = $albumService->getAlbumsWithoutDate();
+        $albumsWithoutDate = $this->albumService->getAlbumsWithoutDate();
 
         return new ViewModel([
             'albumsByYear' => $albumsByYear,

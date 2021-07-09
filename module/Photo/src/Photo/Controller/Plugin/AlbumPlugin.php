@@ -22,7 +22,7 @@ class AlbumPlugin extends AbstractPlugin
      */
     private $albumService;
 
-    function __construct(\Photo\Service\Photo $photoService, \Photo\Service\Album $albumService)
+    public function __construct(\Photo\Service\Photo $photoService, \Photo\Service\Album $albumService)
     {
         $this->photoService = $photoService;
         $this->albumService = $albumService;

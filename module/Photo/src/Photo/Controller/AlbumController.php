@@ -22,7 +22,7 @@ class AlbumController extends AbstractActionController
      */
     private $photoConfig;
 
-    function __construct(\Photo\Service\Album $albumService, \Zend\Cache\Storage $pageCache, array $photoConfig)
+    public function __construct(\Photo\Service\Album $albumService, \Zend\Cache\Storage $pageCache, array $photoConfig)
     {
         $this->albumService = $albumService;
         $this->pageCache = $pageCache;

@@ -20,7 +20,7 @@ class PhotoAdminController extends AbstractActionController
      */
     private $entityManager;
 
-    function __construct(\Photo\Service\Photo $photoService, EntityManager $entityManager)
+    public function __construct(\Photo\Service\Photo $photoService, EntityManager $entityManager)
     {
         $this->photoService = $photoService;
         $this->entityManager = $entityManager;

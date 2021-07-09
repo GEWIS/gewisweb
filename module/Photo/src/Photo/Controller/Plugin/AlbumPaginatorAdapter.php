@@ -62,12 +62,9 @@ class AlbumPaginatorAdapter implements \Zend\Paginator\Adapter\AdapterInterface
 
         $photoCount = $itemCountPerPage - count($albums);
         $photoStart = max($offset - $this->album->getAlbumCount(), 0);
-        $photos = $this->photoService->getPhotos($this->album, $photoStart,
-            $photoCount);
+        $photos = $this->photoService->getPhotos($this->album, $photoStart, $photoCount);
 
-        $items = array_merge($albums, $photos);
-
-        return $items;
+        return array_merge($albums, $photos);
     }
 
     /**

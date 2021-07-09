@@ -18,7 +18,7 @@ class PhotoController extends AbstractActionController
      */
     private $albumService;
 
-    function __construct(\Photo\Service\Photo $photoService, \Photo\Service\Album $albumService)
+    public function __construct(\Photo\Service\Photo $photoService, \Photo\Service\Album $albumService)
     {
         $this->photoService = $photoService;
         $this->albumService = $albumService;
@@ -77,8 +77,7 @@ class PhotoController extends AbstractActionController
         } catch (\Exception $e) {
             return $this->notFoundAction();
         }
-        $photoData = $this->photoService->getPhotoData($photoId,
-            $memberAlbum);
+        $photoData = $this->photoService->getPhotoData($photoId, $memberAlbum);
 
         if (is_null($photoData)) {
             return $this->notFoundAction();
