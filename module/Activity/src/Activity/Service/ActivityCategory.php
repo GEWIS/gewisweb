@@ -7,11 +7,22 @@ use Activity\Model\ActivityCategory as CategoryModel;
 use Activity\Model\LocalisedText;
 use Application\Service\AbstractAclService;
 use User\Permissions\NotAllowedException;
+use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 class ActivityCategory extends AbstractAclService implements ServiceManagerAwareInterface
 {
+    /**
+     * @var Translator
+     */
+    private $translator;
+
+    public function __construct(Translator $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      * Get the ACL.
      *
@@ -19,7 +30,7 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
      */
     public function getAcl()
     {
-        return $this->getServiceManager()->get('activity_acl');
+        return $this->sm->get('activity_acl');
     }
 
     /**
@@ -31,9 +42,9 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
     public function getCategoryById($id)
     {
         if (!$this->isAllowed('listCategories', 'activity')) {
-            $translator = $this->getTranslator();
+
             throw new NotAllowedException(
-                $translator->translate('You are not allowed to view activity categories')
+                $this->translator->translate('You are not allowed to view activity categories')
             );
         }
 
@@ -48,7 +59,7 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
      */
     public function getCategoryMapper()
     {
-        return $this->getServiceManager()->get('activity_mapper_category');
+        return $this->sm->get('activity_mapper_category');
     }
 
     /**
@@ -59,9 +70,8 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
     public function getAllCategories()
     {
         if (!$this->isAllowed('listCategories', 'activity')) {
-            $translator = $this->getTranslator();
             throw new NotAllowedException(
-                $translator->translate('You are not allowed to view activity categories')
+                $this->translator->translate('You are not allowed to view activity categories')
             );
         }
 
@@ -72,9 +82,8 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
     public function createCategory($data)
     {
         if (!$this->isAllowed('addCategory', 'activity')) {
-            $translator = $this->getTranslator();
             throw new NotAllowedException(
-                $translator->translate('You are not allowed to create an activity category')
+                $this->translator->translate('You are not allowed to create an activity category')
             );
         }
 
@@ -88,7 +97,7 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
         $category = new CategoryModel();
         $category->setName(new LocalisedText($data['nameEn'], $data['name']));
 
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $em = $this->sm->get('Doctrine\ORM\EntityManager');
         $em->persist($category);
         $em->flush();
 
@@ -103,21 +112,19 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
     public function getCategoryForm()
     {
         if (!$this->isAllowed('addCategory', 'activity')) {
-            $translator = $this->getTranslator();
             throw new NotAllowedException(
-                $translator->translate('You are not allowed to create an activity category')
+                $this->translator->translate('You are not allowed to create an activity category')
             );
         }
 
-        return $this->getServiceManager()->get('activity_form_category');
+        return $this->sm->get('activity_form_category');
     }
 
     public function updateCategory($category, $data)
     {
         if (!$this->isAllowed('editCategory', 'activity')) {
-            $translator = $this->getTranslator();
             throw new NotAllowedException(
-                $translator->translate('You are not allowed to edit an activity category')
+                $this->translator->translate('You are not allowed to edit an activity category')
             );
         }
 
@@ -131,7 +138,7 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
         $name = $category->getName();
         $name->updatevalues($data['nameEn'], $data['name']);
 
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $em = $this->sm->get('Doctrine\ORM\EntityManager');
         $em->persist($name);
         $em->persist($category);
         $em->flush();
@@ -142,13 +149,13 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
     public function deleteCategory($category)
     {
         if (!$this->isAllowed('deleteCategory', 'activity')) {
-            $translator = $this->getTranslator();
+
             throw new NotAllowedException(
-                $translator->translate('You are not allowed to delete an activity category')
+                $this->translator->translate('You are not allowed to delete an activity category')
             );
         }
 
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $em = $this->sm->get('Doctrine\ORM\EntityManager');
         $em->remove($category);
         $em->flush();
     }

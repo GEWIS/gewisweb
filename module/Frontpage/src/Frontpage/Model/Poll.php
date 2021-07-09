@@ -2,7 +2,10 @@
 
 namespace Frontpage\Model;
 
+use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use User\Model\User;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 
 /**
@@ -78,8 +81,8 @@ class Poll implements ResourceInterface
      */
     public function __construct()
     {
-        $this->options = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->options = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -131,7 +134,7 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @return \User\Model\User
+     * @return User
      */
     public function getApprover()
     {
@@ -139,7 +142,7 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @return \User\Model\User
+     * @return User
      */
     public function getCreator()
     {
@@ -147,7 +150,7 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @param \DateTime $expiryDate
+     * @param DateTime $expiryDate
      */
     public function setExpiryDate($expiryDate)
     {
@@ -184,7 +187,7 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @param \User\Model\User $approver
+     * @param User $approver
      */
     public function setApprover($approver)
     {
@@ -192,7 +195,7 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @param \User\Model\User $creator
+     * @param User $creator
      */
     public function setCreator($creator)
     {
@@ -260,6 +263,6 @@ class Poll implements ResourceInterface
      */
     public function isActive()
     {
-        return $this->getExpiryDate() > new \DateTime();
+        return $this->getExpiryDate() > new DateTime();
     }
 }

@@ -5,6 +5,7 @@ namespace Company\Mapper;
 use Company\Model\Company as CompanyModel;
 use Company\Model\CompanyI18n;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
 /**
@@ -154,7 +155,7 @@ class Company
      *
      * @param string $slugName the slugname to find
      *
-     * @return \Company\Model\Company | null
+     * @return CompanyModel | null
      */
     public function findCompanyBySlugName($slugName)
     {
@@ -177,7 +178,7 @@ class Company
     /**
      * Get the repository for this mapper.
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {

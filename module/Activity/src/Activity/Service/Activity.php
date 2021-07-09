@@ -4,7 +4,6 @@ namespace Activity\Service;
 
 use Activity\Form\Activity as ActivityForm;
 use Activity\Model\Activity as ActivityModel;
-use Activity\Model\ActivityField;
 use Activity\Model\ActivityUpdateProposal as ActivityProposalModel;
 use Activity\Model\LocalisedText;
 use Activity\Model\SignupField as SignupFieldModel;
@@ -16,6 +15,7 @@ use DateTime;
 use Decision\Model\Organ;
 use User\Model\User;
 use User\Permissions\NotAllowedException;
+use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\Stdlib\Parameters;
@@ -23,23 +23,33 @@ use Zend\Stdlib\Parameters;
 class Activity extends AbstractAclService implements ServiceManagerAwareInterface
 {
     /**
+     * @var Translator
+     */
+    private $translator;
+
+    public function __construct(Translator $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    /**
      * Get the ACL.
      *
      * @return Acl
      */
     public function getAcl()
     {
-        return $this->getServiceManager()->get('activity_acl');
+        return $this->sm->get('activity_acl');
     }
 
     public function getSignupListForm()
     {
-        return $this->getServiceManager()->get('activity_form_signuplist');
+        return $this->sm->get('activity_form_signuplist');
     }
 
     public function getSignupListFieldsForm()
     {
-        return $this->getServiceManager()->get('activity_form_signuplist_fields');
+        return $this->sm->get('activity_form_signuplist_fields');
     }
 
     /**
@@ -54,9 +64,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     public function createActivity($data)
     {
         if (!$this->isAllowed('create', 'activity')) {
-            $translator = $this->getTranslator();
             throw new NotAllowedException(
-                $translator->translate('You are not allowed to create an activity')
+                $this->translator->translate('You are not allowed to create an activity')
             );
         }
 
@@ -68,7 +77,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         }
 
         // Find the creator
-        $user = $this->getServiceManager()->get('user_service_user')->getIdentity();
+        $user = $this->sm->get('user_service_user')->getIdentity();
 
         // Find the organ the activity belongs to, and see if the user has permission to create an activity
         // for this organ. If the id is 0, the activity belongs to no organ.
@@ -84,7 +93,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $company = null;
 
         if ($companyId !== 0) {
-            $companyService = $this->getServiceManager()->get('company_service_company');
+            $companyService = $this->sm->get('company_service_company');
             $company = $companyService->getCompanyById($companyId);
         }
 
@@ -106,13 +115,12 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     public function getActivityForm()
     {
         if (!$this->isAllowed('create', 'activity')) {
-            $translator = $this->getTranslator();
             throw new NotAllowedException(
-                $translator->translate('You are not allowed to create an activity')
+                $this->translator->translate('You are not allowed to create an activity')
             );
         }
 
-        return $this->getServiceManager()->get('activity_form_activity');
+        return $this->sm->get('activity_form_activity');
     }
 
     /**
@@ -125,13 +133,12 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     protected function findOrgan($organId)
     {
-        $organService = $this->getServiceManager()->get('decision_service_organ');
+        $organService = $this->sm->get('decision_service_organ');
         $organ = $organService->getOrgan($organId);
 
         if (!$organService->canEditOrgan($organ)) {
-            $translator = $this->getTranslator();
             throw new NotAllowedException(
-                $translator->translate('You are not allowed to create an activity for this organ')
+                $this->translator->translate('You are not allowed to create an activity for this organ')
             );
         }
 
@@ -170,10 +177,10 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $activity->setCompany($company);
         $activity->setStatus($status);
 
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $em = $this->sm->get('Doctrine\ORM\EntityManager');
 
         if (isset($data['categories'])) {
-            $categoryService = $this->getServiceManager()->get('activity_service_category');
+            $categoryService = $this->sm->get('activity_service_category');
 
             foreach ($data['categories'] as $category) {
                 $category = $categoryService->getCategoryById($category);
@@ -214,7 +221,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     /**
      * Creates a SignupList for the specified Activity.
      *
-     * @param array $data
+     * @param array|Parameters $data
      * @param ActivityModel $activity
      * @return SignupListModel
      */
@@ -231,7 +238,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $signupList->setDisplaySubscribedNumber($data['displaySubscribedNumber']);
 
         if (isset($data['fields'])) {
-            $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+            $em = $this->sm->get('Doctrine\ORM\EntityManager');
 
             foreach ($data['fields'] as $field) {
                 // Zend\Stdlib\Parameters is required to prevent undefined indices.
@@ -249,7 +256,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      *
      * @pre $data is valid data of Activity\Form\SignupListFields
      *
-     * @param array $data Parameters for the new field.
+     * @param array|Parameters $data Parameters for the new field.
      * @param SignupListModel $activity The SignupList the field belongs to.
      *
      * @return ActivityField The new field.
@@ -286,7 +293,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     protected function createSignupOption($data, $field)
     {
         $numOptions = 0;
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $em = $this->sm->get('Doctrine\ORM\EntityManager');
 
         if (isset($data['options'])) {
             $options = explode(',', $data['options']);
@@ -382,9 +389,8 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     public function createUpdateProposal(ActivityModel $currentActivity, Parameters $data)
     {
         if (!$this->isAllowed('update', $currentActivity)) {
-            $translator = $this->getTranslator();
             throw new NotAllowedException(
-                $translator->translate('You are not allowed to update this activity')
+                $this->translator->translate('You are not allowed to update this activity')
             );
         }
 
@@ -396,7 +402,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         }
 
         // Find the creator
-        $user = $this->getServiceManager()->get('user_service_user')->getIdentity();
+        $user = $this->sm->get('user_service_user')->getIdentity();
 
         // Find the organ the activity belongs to, and see if the user has permission to create an activity
         // for this organ. If the id is 0, the activity belongs to no organ.
@@ -412,7 +418,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $company = null;
 
         if ($companyId !== 0) {
-            $companyService = $this->getServiceManager()->get('company_service_company');
+            $companyService = $this->sm->get('company_service_company');
             $company = $companyService->getCompanyById($companyId);
         }
 
@@ -434,8 +440,9 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             ActivityModel::STATUS_UPDATE
         );
 
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $em = $this->sm->get('Doctrine\ORM\EntityManager');
 
+        // TODO: ->count and ->unwrap are undefined
         if ($currentActivity->getUpdateProposal()->count() !== 0) {
             $proposal = $currentActivity->getUpdateProposal()->unwrap()->first();
             //Remove old update proposal
@@ -660,7 +667,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $new->setStatus(ActivityModel::STATUS_APPROVED);
         }
 
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $em = $this->sm->get('Doctrine\ORM\EntityManager');
 
         // The proposal association is no longer needed and can safely be
         // removed. The old Activity is also removed, as we would otherwise have
@@ -680,7 +687,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function revokeUpdateProposal(ActivityProposalModel $proposal)
     {
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $em = $this->sm->get('Doctrine\ORM\EntityManager');
         $new = $proposal->getNew();
         $em->remove($proposal);
         $em->remove($new);
@@ -695,13 +702,13 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     public function approve(ActivityModel $activity)
     {
         if (!$this->isAllowed('approve', 'activity')) {
-            $translator = $this->getTranslator();
+
             throw new NotAllowedException(
-                $translator->translate('You are not allowed to change the status of the activity')
+                $this->translator->translate('You are not allowed to change the status of the activity')
             );
         }
         $activity->setStatus(ActivityModel::STATUS_APPROVED);
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $em = $this->sm->get('Doctrine\ORM\EntityManager');
         $em->persist($activity);
         $em->flush();
     }
@@ -714,14 +721,13 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     public function reset(ActivityModel $activity)
     {
         if (!$this->isAllowed('reset', 'activity')) {
-            $translator = $this->getTranslator();
             throw new NotAllowedException(
-                $translator->translate('You are not allowed to change the status of the activity')
+                $this->translator->translate('You are not allowed to change the status of the activity')
             );
         }
 
         $activity->setStatus(ActivityModel::STATUS_TO_APPROVE);
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $em = $this->sm->get('Doctrine\ORM\EntityManager');
         $em->persist($activity);
         $em->flush();
     }
@@ -734,14 +740,14 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     public function disapprove(ActivityModel $activity)
     {
         if (!$this->isAllowed('disapprove', 'activity')) {
-            $translator = $this->getTranslator();
+
             throw new NotAllowedException(
-                $translator->translate('You are not allowed to change the status of the activity')
+                $this->translator->translate('You are not allowed to change the status of the activity')
             );
         }
 
         $activity->setStatus(ActivityModel::STATUS_DISAPPROVED);
-        $em = $this->getServiceManager()->get('Doctrine\ORM\EntityManager');
+        $em = $this->sm->get('Doctrine\ORM\EntityManager');
         $em->persist($activity);
         $em->flush();
     }

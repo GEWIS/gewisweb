@@ -4,6 +4,7 @@ namespace Company\Mapper;
 
 use Company\Model\JobLabelAssignment as LabelAssignmentModel;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for labels assignments
@@ -100,7 +101,7 @@ class LabelAssignment
     /**
      * Get the repository for this mapper.
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {

@@ -2,6 +2,8 @@
 
 namespace Education\Mapper;
 
+use Closure;
+use Doctrine\ORM\EntityRepository;
 use Education\Model\Exam as ExamModel;
 use Doctrine\ORM\EntityManager;
 
@@ -35,7 +37,7 @@ class Exam
      *
      * @param Closure $func
      */
-    public function transactional(\Closure $func)
+    public function transactional(Closure $func)
     {
         return $this->em->transactional(function ($em) use ($func) {
             return $func($this);
@@ -46,6 +48,7 @@ class Exam
      * Find an exam
      *
      * @param int $id
+     * @return ExamModel
      */
     public function find($id)
     {
@@ -66,7 +69,7 @@ class Exam
     /**
      * Get the repository for this mapper.
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {

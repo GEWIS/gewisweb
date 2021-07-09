@@ -2,6 +2,8 @@
 
 namespace Photo\Model;
 
+use DateTime;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 
@@ -171,7 +173,7 @@ class Photo implements ResourceInterface
     /**
      * Get the date.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDateTime()
     {
@@ -319,7 +321,7 @@ class Photo implements ResourceInterface
     }
 
     /**
-     * @return \Photo\Model\Tag
+     * @return Collection
      */
     public function getTags()
     {
@@ -343,7 +345,7 @@ class Photo implements ResourceInterface
     }
 
     /**
-     * @return \Photo\Model\WeeklyPhoto|null
+     * @return WeeklyPhoto|null
      */
     public function getWeeklyPhoto()
     {
@@ -365,9 +367,9 @@ class Photo implements ResourceInterface
     /**
      * Set the dateTime.
      *
-     * @param \DateTime $dateTime
+     * @param DateTime $dateTime
      */
-    public function setDateTime(\DateTime $dateTime)
+    public function setDateTime(DateTime $dateTime)
     {
         $this->dateTime = $dateTime;
     }
@@ -525,7 +527,7 @@ class Photo implements ResourceInterface
     /**
      * Add a hit to a photo
      *
-     * @param \Photo\Model\Hit $hit
+     * @param Hit $hit
      */
     public function addHit($hit)
     {
@@ -536,7 +538,7 @@ class Photo implements ResourceInterface
     /**
      * Add a tag to a photo.
      *
-     * @param \Photo\Model\Tag $tag
+     * @param Tag $tag
      */
     public function addTag($tag)
     {

@@ -2,14 +2,24 @@
 
 namespace Decision;
 
+use Decision\Controller\FileBrowser\LocalFileReader;
+use Decision\Form\Authorization;
+use Decision\Form\Document;
+use Decision\Form\Notes;
+use Decision\Form\OrganInformation;
+use Decision\Form\ReorderDocument;
+use Decision\Form\SearchDecision;
+use Decision\Mapper\Decision;
+use Decision\Mapper\Meeting;
+use Decision\Mapper\Member;
+use Decision\Mapper\Organ;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use Zend\ServiceManager\ServiceManager;
 
 class Module
 {
     /**
      * Get the autoloader configuration.
-     *
-     * @return array Autoloader config
      */
     public function getAutoloaderConfig()
     {
@@ -29,69 +39,73 @@ class Module
      * Get service configuration.
      *
      * @return array Service configuration
+     * @noinspection PhpParamsInspection
      */
     public function getServiceConfig()
     {
         return [
             'factories' => [
-                'decision_service_organ' => function () {
-                    return new \Decision\Service\Organ();
+                'decision_service_organ' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    return new Service\Organ($translator);
                 },
-                'decision_service_decision' => function () {
-                    return new \Decision\Service\Decision();
+                'decision_service_decision' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    return new Service\Decision($translator);
                 },
-                'decision_service_member' => function () {
-                    return new \Decision\Service\Member();
+                'decision_service_member' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    return new Service\Member($translator);
                 },
                 'decision_mapper_member' => function ($sm) {
-                    return new \Decision\Mapper\Member(
+                    return new Member(
                         $sm->get('decision_doctrine_em')
                     );
                 },
                 'decision_mapper_organ' => function ($sm) {
-                    return new \Decision\Mapper\Organ(
+                    return new Organ(
                         $sm->get('decision_doctrine_em')
                     );
                 },
                 'decision_mapper_meeting' => function ($sm) {
-                    return new \Decision\Mapper\Meeting(
+                    return new Meeting(
                         $sm->get('decision_doctrine_em')
                     );
                 },
                 'decision_mapper_decision' => function ($sm) {
-                    return new \Decision\Mapper\Decision(
+                    return new Decision(
                         $sm->get('decision_doctrine_em')
                     );
                 },
                 'decision_mapper_authorization' => function ($sm) {
-                    return new \Decision\Mapper\Authorization(
+                    return new Mapper\Authorization(
                         $sm->get('decision_doctrine_em')
                     );
                 },
                 'decision_form_searchdecision' => function ($sm) {
-                    return new \Decision\Form\SearchDecision(
+                    return new SearchDecision(
                         $sm->get('translator')
                     );
                 },
                 'decision_form_document' => function ($sm) {
-                    return new \Decision\Form\Document(
+                    return new Document(
                         $sm->get('translator'),
                         $sm->get('decision_mapper_meeting')
                     );
                 },
                 'decision_form_notes' => function ($sm) {
-                    return new \Decision\Form\Notes(
+                    return new Notes(
                         $sm->get('translator'),
                         $sm->get('decision_mapper_meeting')
                     );
                 },
                 'decision_form_authorization' => function ($sm) {
-                    return new \Decision\Form\Authorization(
+                    return new Authorization(
                         $sm->get('translator')
                     );
                 },
                 'decision_form_organ_information' => function ($sm) {
-                    $form = new \Decision\Form\OrganInformation(
+                    $form = new OrganInformation(
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('decision_hydrator'));
@@ -100,12 +114,12 @@ class Module
                 'decision_form_reorder_document' => function (ServiceManager $sm) {
                     $translator = $sm->get('translator');
 
-                    return (new \Decision\Form\ReorderDocument())
+                    return (new ReorderDocument())
                         ->setTranslator($translator)
                         ->setupElements();
                 },
                 'decision_hydrator' => function ($sm) {
-                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                    return new DoctrineObject(
                         $sm->get('decision_doctrine_em')
                     );
                 },
@@ -113,7 +127,7 @@ class Module
                     //NB: The returned object should implement the FileReader Interface.
                     $config = $sm->get('config');
                     $validFile = $this->getServiceConfig()['filebrowser_valid_file'];
-                    return new \Decision\Controller\FileBrowser\LocalFileReader(
+                    return new LocalFileReader(
                         $config['filebrowser_folder'],
                         $validFile
                     );

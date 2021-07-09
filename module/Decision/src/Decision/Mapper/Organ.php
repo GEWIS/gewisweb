@@ -2,8 +2,9 @@
 
 namespace Decision\Mapper;
 
-use Decision\Model\Organ as OrganModel;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 
 /**
  * Mappers for organs.
@@ -83,7 +84,7 @@ class Organ
      *
      * @param int $id
      *
-     * @return Decision\Model\Organ
+     * @return \Decision\Model\Organ
      */
     public function find($id)
     {
@@ -132,7 +133,7 @@ class Organ
 
             if (empty($queryResult)) {
                 // the query did not return any records
-                throw new \Doctrine\ORM\NoResultException('no organ found');
+                throw new NoResultException();
             }
 
             // the query returned at least 1 record, use first (= latest) record
@@ -145,7 +146,7 @@ class Organ
     /**
      * Get the repository for this mapper.
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {

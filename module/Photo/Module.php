@@ -2,7 +2,17 @@
 
 namespace Photo;
 
+use Doctrine\ORM\Events;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Exception;
 use League\Glide\Urls\UrlBuilderFactory;
+use Photo\Service\Admin;
+use Photo\Service\Album;
+use Photo\Service\AlbumCover;
+use Photo\Service\Metadata;
+use Photo\Service\Photo;
+use Photo\View\Helper\GlideUrl;
+use Zend\Cache\StorageFactory;
 use Zend\Mvc\MvcEvent;
 use Photo\Listener\AlbumDate as AlbumDateListener;
 use Photo\Listener\Remove as RemoveListener;
@@ -14,14 +24,12 @@ class Module
         $sm = $e->getApplication()->getServiceManager();
         $em = $sm->get('photo_doctrine_em');
         $dem = $em->getEventManager();
-        $dem->addEventListener([\Doctrine\ORM\Events::prePersist], new AlbumDateListener());
-        $dem->addEventListener([\Doctrine\ORM\Events::preRemove], new RemoveListener($sm));
+        $dem->addEventListener([Events::prePersist], new AlbumDateListener());
+        $dem->addEventListener([Events::preRemove], new RemoveListener($sm));
     }
 
     /**
      * Get the autoloader configuration.
-     *
-     * @return array Autoloader config
      */
     public function getAutoloaderConfig()
     {
@@ -46,20 +54,23 @@ class Module
     {
         return [
             'factories' => [
-                'photo_service_album' => function () {
-                    return new \Photo\Service\Album();
+                'photo_service_album' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    return new Album($translator);
                 },
                 'photo_service_metadata' => function () {
-                    return new \Photo\Service\Metadata();
+                    return new Metadata();
                 },
-                'photo_service_photo' => function () {
-                    return new \Photo\Service\Photo();
+                'photo_service_photo' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    return new Photo($translator);
                 },
                 'photo_service_album_cover' => function () {
-                    return new \Photo\Service\AlbumCover();
+                    return new AlbumCover();
                 },
-                'photo_service_admin' => function () {
-                    return new \Photo\Service\Admin();
+                'photo_service_admin' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    return new Admin($translator);
                 },
                 'photo_form_album_edit' => function ($sm) {
                     $form = new Form\EditAlbum(
@@ -78,7 +89,7 @@ class Module
                     return $form;
                 },
                 'photo_hydrator_album' => function ($sm) {
-                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                    return new DoctrineObject(
                         $sm->get('photo_doctrine_em'), 'Photo\Model\Album'
                     );
                 },
@@ -151,7 +162,7 @@ class Module
                     return $sm->get('doctrine.entitymanager.orm_default');
                 },
                 'album_page_cache' => function () {
-                    return \Zend\Cache\StorageFactory::factory(
+                    return StorageFactory::factory(
                         array(
                             'adapter' => array(
                                 'name' => 'filesystem',
@@ -176,11 +187,11 @@ class Module
         return [
             'factories' => [
                 'glideUrl' => function ($sm) {
-                    $helper = new \Photo\View\Helper\GlideUrl();
+                    $helper = new GlideUrl();
                     $config = $sm->getServiceLocator()->get('config');
                     if (!isset($config['glide']) || !isset($config['glide']['base_url'])
                         || !isset($config['glide']['signing_key'])) {
-                        throw new \Exception('Invalid glide configuration');
+                        throw new Exception('Invalid glide configuration');
                     }
 
                     $urlBuilder = UrlBuilderFactory::create(

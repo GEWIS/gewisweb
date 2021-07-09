@@ -2,8 +2,11 @@
 
 namespace Application\Service;
 
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
+use Exception;
+use RuntimeException;
+use Zend\Http\Headers;
+use Zend\Http\Response\Stream;
+use Zend\Mvc\I18n\Translator;
 
 /**
  * File storage service. This service can be used to safely store files without
@@ -14,24 +17,19 @@ use Zend\ServiceManager\ServiceManagerAwareInterface;
 class FileStorage
 {
     /**
+     * @var Translator
+     */
+    private $translator;
+
+    /**
      * @var array
      */
     private $storageConfig;
 
-    public function __construct(array $storageConfig)
+    public function __construct(Translator $translator, array $storageConfig)
     {
+        $this->translator = $translator;
         $this->storageConfig = $storageConfig;
-    }
-
-    /**
-     * Get the translator.
-     *
-     * @return Zend\Mvc\I18n\Translator
-     */
-    public function getTranslator()
-    {
-        // TODO: Review whether this method is neccessary and preferably remove it
-        return $this->getServiceManager()->get('translator');
     }
 
     /**
@@ -63,15 +61,15 @@ class FileStorage
      * @param array $file
      *
      * @return string The CFS path at which the file was stored
-     * @throws \Exception
+     * @throws Exception
      */
     public function storeUploadedFile($file)
     {
         $config = $this->storageConfig;
         if ($file['error'] !== 0) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 sprintf(
-                    $this->getTranslator()->translate('An unknown error occurred during uploading (%i)'),
+                    $this->translator->translate('An unknown error occurred during uploading (%i)'),
                     $file['error']
                 )
             );
@@ -143,7 +141,7 @@ class FileStorage
      * @param string $path The CFS path of the file to download
      * @param string $fileName The file name to give the downloaded file
      *
-     * @return \Zend\Http\Response\|null If the given file is not found, null is returned
+     * @return |null If the given file is not found, null is returned
      */
     public function downloadFile($path, $fileName)
     {
@@ -159,11 +157,11 @@ class FileStorage
         $type = finfo_file($finfo, $file);
         finfo_close($finfo);
 
-        $response = new \Zend\Http\Response\Stream();
+        $response = new Stream();
         $response->setStream(fopen($file, 'r'));
         $response->setStatusCode(200);
         $response->setStreamName($fileName);
-        $headers = new \Zend\Http\Headers();
+        $headers = new Headers();
         $headers->addHeaders([
             // Suggests to the browser to display the file instead of saving
             'Content-Disposition' => 'inline; filename="' . $fileName . '"',

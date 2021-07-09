@@ -4,6 +4,7 @@ namespace Company\Mapper;
 
 use Company\Model\Job as JobModel;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for jobs.
@@ -174,7 +175,7 @@ class Job
     /**
      * Get the repository for this mapper.
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {

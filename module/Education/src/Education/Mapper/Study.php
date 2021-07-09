@@ -2,7 +2,7 @@
 
 namespace Education\Mapper;
 
-use Education\Model\Study as StudyModel;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -53,7 +53,7 @@ class Study
     /**
      * Get the repository for this mapper.
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {

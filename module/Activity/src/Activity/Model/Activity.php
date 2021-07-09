@@ -190,7 +190,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return Activity\Model\ActivityUpdateProposal
+     * @return ActivityUpdateProposal
      */
     public function getUpdateProposal()
     {

@@ -3,20 +3,41 @@
 namespace Photo\Service;
 
 use Application\Service\AbstractAclService;
+use Application\Service\FileStorage;
+use DateInterval;
+use DateTime;
+use Decision\Service\Member;
+use Exception;
+use Photo\Form\CreateAlbum;
+use Photo\Form\EditAlbum;
 use Photo\Model\Album as AlbumModel;
+use Photo\Model\MemberAlbum;
+use Photo\Model\VirtualAlbum;
+use User\Permissions\NotAllowedException;
+use Zend\Mvc\I18n\Translator;
+use Zend\Permissions\Acl\Acl;
 
 /**
  * Album service.
  */
 class Album extends AbstractAclService
 {
-    
+    /**
+     * @var Translator
+     */
+    private $translator;
+
+    public function __construct(Translator $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      * A GEWIS association year starts 01-07
      */
     const ASSOCIATION_YEAR_START_MONTH = 7;
     const ASSOCIATION_YEAR_START_DAY = 1;
-    
+
     /**
      * Retrieves all the albums in the root directory or in the specified
      * album.
@@ -24,7 +45,7 @@ class Album extends AbstractAclService
      * @param integer            $start      the result to start at
      * @param integer            $maxResults max amount of results to return,
      *                                       null for infinite
-     * @param \Photo\Model\Album $album      The album to retrieve sub-albums
+     * @param AlbumModel $album      The album to retrieve sub-albums
      *                                       of
      *
      * @return array of albums
@@ -32,20 +53,20 @@ class Album extends AbstractAclService
     public function getAlbums($album = null, $start = 0, $maxResults = null)
     {
         if (!$this->isAllowed('view')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to view albums')
+            throw new NotAllowedException(
+                $this->translator->translate('Not allowed to view albums')
             );
         }
         if ($album == null) {
             return $this->getAlbumMapper()->getRootAlbums();
-        } elseif ($album instanceof \Photo\Model\VirtualAlbum) {
+        } elseif ($album instanceof VirtualAlbum) {
             return [];
         } else {
             return $this->getAlbumMapper()->getSubAlbums($album, $start,
                 $maxResults);
         }
     }
-    
+
     /**
      * Get the album mapper.
      *
@@ -55,7 +76,7 @@ class Album extends AbstractAclService
     {
         return $this->sm->get('photo_mapper_album');
     }
-    
+
     /**
      * Returns all albums for a given association year.
      * In this context an association year is defined as the year which contains
@@ -70,25 +91,25 @@ class Album extends AbstractAclService
     public function getAlbumsByYear($year)
     {
         if (!$this->isAllowed('view')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to view albums')
+            throw new NotAllowedException(
+                $this->translator->translate('Not allowed to view albums')
             );
         }
         if (!is_int($year)) {
             return [];
         }
-        
-        $start = \DateTime::createFromFormat(
+
+        $start = DateTime::createFromFormat(
             'Y-m-d H:i:s',
             $year . '-' . self::ASSOCIATION_YEAR_START_MONTH . '-'
             . self::ASSOCIATION_YEAR_START_DAY . ' 0:00:00'
         );
         $end = clone $start;
-        $end->add(new \DateInterval('P1Y'));
-        
+        $end->add(new DateInterval('P1Y'));
+
         return $this->getAlbumMapper()->getAlbumsInDateRange($start, $end);
     }
-    
+
     /**
      * Retrieves all root albums which do not have a startDateTime specified.
      * This is in most cases analogous to returning all empty albums.
@@ -98,15 +119,15 @@ class Album extends AbstractAclService
     public function getAlbumsWithoutDate()
     {
         if (!$this->isAllowed('nodate')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()
+            throw new NotAllowedException(
+                $this->translator
                     ->translate('Not allowed to view albums without dates')
             );
         }
-        
+
         return $this->getAlbumMapper()->getAlbumsWithoutDate();
     }
-    
+
     /**
      * Gets a list of all association years of which photos are available.
      * In this context an association year is defined as the year which contains
@@ -126,14 +147,14 @@ class Album extends AbstractAclService
         ) {
             return [null];
         }
-        
+
         $startYear = $this->getAssociationYear($oldest->getStartDateTime());
         $endYear = $this->getAssociationYear($newest->getEndDateTime());
-        
+
         // We make the reasonable assumption that at least one photo is taken every year
         return range($startYear, $endYear);
     }
-    
+
     /**
      * Returns the association year to which a certain date belongs
      * In this context an association year is defined as the year which contains
@@ -141,7 +162,7 @@ class Album extends AbstractAclService
      *
      * Example: A value of 2010 would represent the association year 2010/2011
      *
-     * @param \DateTime $date
+     * @param DateTime $date
      *
      * @return int representing an association year.
      */
@@ -153,21 +174,21 @@ class Album extends AbstractAclService
             return $date->format('Y');
         }
     }
-    
+
     /**
      * Creates a new album.
      *
      * @param int   $parentId the id of the parent album
      * @param array $data     The post data to use for the album
      *
-     * @return \Photo\Model\Album|boolean
-     * @throws \Exception
+     * @return AlbumModel|boolean
+     * @throws Exception
      */
     public function createAlbum($parentId, $data)
     {
         if (!$this->isAllowed('create')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()
+            throw new NotAllowedException(
+                $this->translator
                     ->translate('Not allowed to create albums')
             );
         }
@@ -175,7 +196,7 @@ class Album extends AbstractAclService
         $album = new AlbumModel();
         $form->bind($album);
         $form->setData($data);
-        
+
         if (!$form->isValid()) {
             return false;
         }
@@ -184,41 +205,41 @@ class Album extends AbstractAclService
         }
         $this->getAlbumMapper()->persist($album);
         $this->getAlbumMapper()->flush();
-        
+
         return $album;
     }
-    
+
     /**
      * Retrieves the form for creating a new album.
      *
-     * @return \Photo\Form\CreateAlbum
+     * @return CreateAlbum
      */
     public function getCreateAlbumForm()
     {
         if (!$this->isAllowed('create')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()
+            throw new NotAllowedException(
+                $this->translator
                     ->translate('Not allowed to create albums.')
             );
         }
-        
+
         return $this->sm->get('photo_form_album_create');
     }
-    
+
     /**
      * Gets an album using the album id.
      *
      * @param integer $albumId the id of the album
      * @param string  $type    "album"|"member"|"year"
      *
-     * @return \Photo\Model\Album album matching the given id
-     * @throws \Exception If there are not sufficient permissions
+     * @return AlbumModel album matching the given id
+     * @throws Exception If there are not sufficient permissions
      */
     public function getAlbum($albumId, $type = 'album')
     {
         if (!$this->isAllowed('view')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to view albums')
+            throw new NotAllowedException(
+                $this->translator->translate('Not allowed to view albums')
             );
         }
         $album = null;
@@ -230,47 +251,47 @@ class Album extends AbstractAclService
                 $album = $this->getMemberAlbum($albumId);
                 break;
             default:
-                throw new \Exception("Album type not allowed");
+                throw new Exception("Album type not allowed");
         }
-        
+
         return $album;
     }
-    
+
     public function getMemberAlbum($lidNr)
     {
         $member = $this->getMemberService()->findMemberByLidnr($lidNr);
         if ($member == null) {
             return null;
         }
-        $album = new \Photo\Model\MemberAlbum($lidNr, $member);
+        $album = new MemberAlbum($lidNr, $member);
         $album->setName($member->getFullName());
         $album->setStartDateTime($member->getBirth()); // ugly fix
-        $album->setEndDateTime(new \DateTime());
+        $album->setEndDateTime(new DateTime());
         $album->addPhotos($this->getPhotoService()->getPhotos($album));
-        
+
         return $album;
     }
-    
+
     /**
      * Get the member service.
      *
-     * @return \Decision\Service\Member
+     * @return Member
      */
     public function getMemberService()
     {
         return $this->sm->get('decision_service_member');
     }
-    
+
     /**
      * Gets the photo service.
      *
-     * @return \Photo\Service\Photo
+     * @return Photo
      */
     public function getPhotoService()
     {
         return $this->sm->get("photo_service_photo");
     }
-    
+
     /**
      * Updates the metadata of an album using post data
      *
@@ -282,43 +303,43 @@ class Album extends AbstractAclService
     public function updateAlbum($albumId, $data)
     {
         if (!$this->isAllowed('edit')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to edit albums')
+            throw new NotAllowedException(
+                $this->translator->translate('Not allowed to edit albums')
             );
         }
         $form = $this->getEditAlbumForm($albumId);
         $form->setData($data);
-        
+
         if (!$form->isValid()) {
             return false;
         }
-        
+
         $this->getAlbumMapper()->flush();
-        
+
         return true;
     }
-    
+
     /**
      * Retrieves the form for editing the specified album.
      *
      * @param integer $albumId of the album
      *
-     * @return \Photo\Form\EditAlbum
+     * @return EditAlbum
      */
     public function getEditAlbumForm($albumId)
     {
         if (!$this->isAllowed('edit')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to edit albums.')
+            throw new NotAllowedException(
+                $this->translator->translate('Not allowed to edit albums.')
             );
         }
         $form = $this->sm->get('photo_form_album_edit');
         $album = $this->getAlbum($albumId);
         $form->bind($album);
-        
+
         return $form;
     }
-    
+
     /**
      * Moves an album to new parent album
      *
@@ -326,13 +347,13 @@ class Album extends AbstractAclService
      * @param int $parentId the id of the new parent
      *
      * @return boolean indicating if the move was successful
-     * @throws \Exception
+     * @throws Exception
      */
     public function moveAlbum($albumId, $parentId)
     {
         if (!$this->isAllowed('move')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to move albums')
+            throw new NotAllowedException(
+                $this->translator->translate('Not allowed to move albums')
             );
         }
         $album = $this->getAlbum($albumId);
@@ -340,25 +361,25 @@ class Album extends AbstractAclService
         if (is_null($album) || $albumId == $parentId) {
             return false;
         }
-        
+
         $album->setParent($parent);
         $this->getAlbumMapper()->flush();
-        
+
         return true;
     }
-    
+
     /**
      * Removes an album and all subalbums recursively, including all photos.
      *
      * @param int $albumId the id of the album to remove.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function deleteAlbum($albumId)
     {
         if (!$this->isAllowed('delete')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()
+            throw new NotAllowedException(
+                $this->translator
                     ->translate('Not allowed to delete albums.')
             );
         }
@@ -368,23 +389,22 @@ class Album extends AbstractAclService
             $this->getAlbumMapper()->flush();
         }
     }
-    
+
     /**
      * Updates the given album with a newly generated cover photo.
      *
      * @param int $albumId
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function generateAlbumCover($albumId)
     {
         if (!$this->isAllowed('edit')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()
+            throw new NotAllowedException(
+                $this->translator
                     ->translate('Not allowed to generate album covers.')
             );
         }
-        $config = $this->getConfig();
         $album = $this->getAlbum($albumId);
         //if an existing cover photo was generated earlier, delete it.
         $coverPath = $this->getAlbumCoverService()->createCover($album);
@@ -394,7 +414,7 @@ class Album extends AbstractAclService
         $album->setCoverPath($coverPath);
         $this->getAlbumMapper()->flush();
     }
-    
+
     /**
      * Get the photo config
      *
@@ -403,40 +423,40 @@ class Album extends AbstractAclService
     public function getConfig()
     {
         $config = $this->sm->get('config');
-        
+
         return $config['photo'];
     }
-    
+
     /**
      * Gets the album cover service.
      *
-     * @return \Photo\Service\AlbumCover
+     * @return AlbumCover
      */
     public function getAlbumCoverService()
     {
         return $this->sm->get("photo_service_album_cover");
     }
-    
+
     /**
      * Gets the storage service.
      *
-     * @return \Application\Service\Storage
+     * @return FileStorage
      */
     public function getFileStorageService()
     {
         return $this->sm->get('application_service_storage');
     }
-    
+
     /**
      * Deletes the file belonging to the album cover for an album.
      *
-     * @param \Photo\Model\Album $album
+     * @param AlbumModel $album
      */
     public function deleteAlbumCover($album)
     {
         $this->getPhotoService()->deletePhotoFile($album->getCoverPath());
     }
-    
+
     /**
      * Get the photo mapper.
      *
@@ -446,17 +466,17 @@ class Album extends AbstractAclService
     {
         return $this->sm->get('photo_mapper_photo');
     }
-    
+
     /**
      * Get the Acl.
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {
         return $this->sm->get('photo_acl');
     }
-    
+
     /**
      * Get the default resource ID.
      *
@@ -466,5 +486,5 @@ class Album extends AbstractAclService
     {
         return 'album';
     }
-    
+
 }

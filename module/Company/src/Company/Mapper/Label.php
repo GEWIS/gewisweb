@@ -4,6 +4,7 @@ namespace Company\Mapper;
 
 use Company\Model\JobLabel as LabelModel;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for labels.
@@ -112,21 +113,6 @@ class Label
     }
 
     /**
-     * Deletes the given label
-     *
-     * @param int $labelId
-     */
-    public function deleteById($labelId)
-    {
-        $label = $this->findEditableLabel($labelId);
-        if (is_null($label)) {
-            return;
-        }
-
-        $this->delete($label);
-    }
-
-    /**
      * Find all Labels.
      *
      * @return array
@@ -139,7 +125,7 @@ class Label
     /**
      * Get the repository for this mapper.
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {

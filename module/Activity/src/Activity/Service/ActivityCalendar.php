@@ -17,10 +17,21 @@ use Decision\Mapper\Member;
 use Decision\Service\Organ;
 use Exception;
 use User\Permissions\NotAllowedException;
+use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
 
 class ActivityCalendar extends AbstractAclService
 {
+    /**
+     * @var Translator
+     */
+    private $translator;
+
+    public function __construct(Translator $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      * Gets all future options
      *
@@ -116,7 +127,7 @@ class ActivityCalendar extends AbstractAclService
     {
         if (!$this->isAllowed('create')) {
             throw new NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to create activity options.')
+                $this->translator->translate('Not allowed to create activity options.')
             );
         }
 
@@ -182,7 +193,7 @@ class ActivityCalendar extends AbstractAclService
     {
         if (!$this->isAllowed('create')) {
             throw new NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to create activity proposals.')
+                $this->translator->translate('Not allowed to create activity proposals.')
             );
         }
 
@@ -338,7 +349,7 @@ class ActivityCalendar extends AbstractAclService
     {
         if (!$this->canApproveOption()) {
             throw new NotAllowedException(
-                $this->getTranslator()->translate('You are not allowed to approve this option')
+                $this->translator->translate('You are not allowed to approve this option')
             );
         }
 
@@ -376,7 +387,7 @@ class ActivityCalendar extends AbstractAclService
         $option = $mapper->find($id);
         if (!$this->canDeleteOption($option)) {
             throw new NotAllowedException(
-                $this->getTranslator()->translate('You are not allowed to delete this option')
+                $this->translator->translate('You are not allowed to delete this option')
             );
         }
 

@@ -6,16 +6,12 @@ namespace Application\Service;
 
 use Decision\Model\Member;
 use Decision\Model\OrganInformation;
-use User\Model\NewUser as NewUserModel;
-
-use Decision\Model\Member as MemberModel;
-
 use User\Model\User;
 use Zend\Mail\Message;
+use Zend\Mail\Transport\TransportInterface;
 use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\View\Model\ViewModel;
-use Activity\Model\Activity as ActivityModel;
 use Zend\Mime\Part as MimePart;
 use Zend\Mime\Message as MimeMessage;
 use Zend\View\Renderer\PhpRenderer;
@@ -41,17 +37,6 @@ class Email implements ServiceManagerAwareInterface
     public function setServiceManager(ServiceManager $sm)
     {
         $this->sm = $sm;
-    }
-
-    /**
-     * Get the translator.
-     *
-     * @return Zend\Mvc\I18n\Translator
-     */
-    public function getTranslator()
-    {
-        // TODO: Review whether this method is neccessary and preferably remove it
-        return $this->getServiceManager()->get('translator');
     }
 
     /**
@@ -198,7 +183,7 @@ class Email implements ServiceManagerAwareInterface
     /**
      * Get the email transport.
      *
-     * @return \Zend\Mail\Transport\TransportInterface
+     * @return TransportInterface
      */
     public function getTransport()
     {

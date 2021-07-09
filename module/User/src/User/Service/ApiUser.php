@@ -4,14 +4,38 @@ namespace User\Service;
 
 use Application\Service\AbstractAclService;
 
+use User\Form\ApiToken;
 use User\Model\ApiUser as ApiUserModel;
 use User\Mapper\ApiUser as ApiUserMapper;
+use User\Permissions\NotAllowedException;
+use Zend\Mvc\I18n\Translator;
+use Zend\Permissions\Acl\Acl;
 
 /**
  * API User service.
  */
 class ApiUser extends AbstractAclService
 {
+    /**
+     * @var Translator
+     */
+    private $translator;
+
+    public function __construct(Translator $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    /**
+     * Get the translator.
+     *
+     * @return Translator
+     */
+    public function getTranslator()
+    {
+        return $this->translator;
+    }
+
     /**
      * Identity storage.
      *
@@ -27,9 +51,9 @@ class ApiUser extends AbstractAclService
     public function getTokens()
     {
         if (!$this->isAllowed('list')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to view API tokens')
+
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view API tokens')
             );
         }
         return $this->getApiUserMapper()->findAll();
@@ -43,9 +67,9 @@ class ApiUser extends AbstractAclService
     public function removeToken($id)
     {
         if (!$this->isAllowed('remove')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to remove API tokens')
+
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to remove API tokens')
             );
         }
         $this->getApiUserMapper()->remove($id);
@@ -56,14 +80,14 @@ class ApiUser extends AbstractAclService
      *
      * @param int $id
      *
-     * @return User\Model\ApiUser Token
+     * @return ApiUserModel Token
      */
     public function getToken($id)
     {
         if (!$this->isAllowed('view')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to view API tokens')
+
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view API tokens')
             );
         }
         return $this->getApiUserMapper()->find($id);
@@ -129,17 +153,17 @@ class ApiUser extends AbstractAclService
     /**
      * Get the API token form
      *
-     * @return \User\Form\ApiToken
+     * @return ApiToken
      */
     public function getApiTokenForm()
     {
         if (!$this->isAllowed('add')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to add API tokens')
+
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to add API tokens')
             );
         }
-        return $this->getServiceManager()->get('user_form_apitoken');
+        return $this->sm->get('user_form_apitoken');
     }
 
     /**
@@ -149,17 +173,17 @@ class ApiUser extends AbstractAclService
      */
     public function getApiUserMapper()
     {
-        return $this->getServiceManager()->get('user_mapper_apiuser');
+        return $this->sm->get('user_mapper_apiuser');
     }
 
     /**
      * Get the user ACL.
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {
-        return $this->getServiceManager()->get('acl');
+        return $this->sm->get('acl');
     }
 
     /**

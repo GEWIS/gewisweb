@@ -2,9 +2,13 @@
 
 namespace Decision\Mapper;
 
+use DateInterval;
+use DateTime;
 use Decision\Model\Meeting as MeetingModel;
 use Decision\Model\MeetingDocument;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
+use InvalidArgumentException;
 
 class Meeting
 {
@@ -79,8 +83,8 @@ class Meeting
         $qb = $this->em->createQueryBuilder();
 
         // Use yesterday because a meeting might still take place later on the day
-        $date = new \DateTime();
-        $date->add(\DateInterval::createFromDateString('yesterday'));
+        $date = new DateTime();
+        $date->add(DateInterval::createFromDateString('yesterday'));
 
         $qb->select('m, COUNT(d)')
             ->from('Decision\Model\Meeting', 'm')
@@ -107,7 +111,7 @@ class Meeting
      * Note that if multiple AVs are planned, the one that is planned furthest
      * away is returned.
      *
-     * @return \Decision\Model\Meeting|null
+     * @return MeetingModel|null
      */
     public function findLatestAV()
     {
@@ -117,7 +121,7 @@ class Meeting
     /**
      * Returns the closest upcoming AV
      *
-     * @return \Decision\Model\Meeting|null
+     * @return MeetingModel|null
      */
     public function findUpcomingMeeting()
     {
@@ -161,14 +165,14 @@ class Meeting
      *
      * @param int $id Document ID
      * @return MeetingDocument
-     * @throws \InvalidArgumentException If the document does not exist
+     * @throws InvalidArgumentException If the document does not exist
      */
     public function findDocumentOrFail($id)
     {
         $document = $this->findDocument($id);
 
         if (is_null($document)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf("A document with the provided ID '%d' does not exist.", $id)
             );
         }
@@ -234,7 +238,7 @@ class Meeting
     /**
      * Get the repository for this mapper.
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {
@@ -246,14 +250,14 @@ class Meeting
      *
      * @param string $order Order of the future AV's
      * @param bool $vvs If VV's are included in this
-     * @return \Decision\Model\Meeting|null
+     * @return MeetingModel|null
      */
     private function findFutureMeeting($order, $vvs = false)
     {
         $qb = $this->em->createQueryBuilder();
 
-        $today = new \DateTime();
-        $maxDate = $today->sub(new \DateInterval('P1D'));
+        $today = new DateTime();
+        $maxDate = $today->sub(new DateInterval('P1D'));
 
         $qb->select('m')
             ->from('Decision\Model\Meeting', 'm')

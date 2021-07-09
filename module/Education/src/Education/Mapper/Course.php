@@ -2,6 +2,7 @@
 
 namespace Education\Mapper;
 
+use Doctrine\ORM\EntityRepository;
 use Education\Model\Course as CourseModel;
 use Doctrine\ORM\EntityManager;
 
@@ -45,7 +46,7 @@ class Course
     /**
      * Persist course
      *
-     * @param array $course of CourseModel
+     * @param CourseModel $course of CourseModel
      */
     public function persist($course)
     {
@@ -109,7 +110,7 @@ class Course
     /**
      * Get the repository for this mapper.
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {

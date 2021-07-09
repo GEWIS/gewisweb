@@ -3,7 +3,16 @@
 namespace Frontpage\Service;
 
 use Application\Service\AbstractAclService;
+use Application\Service\FileStorage;
+use Exception;
 use Frontpage\Model\Page as PageModel;
+use InvalidArgumentException;
+use User\Model\User;
+use User\Permissions\NotAllowedException;
+use Zend\Mvc\I18n\Translator;
+use Zend\Permissions\Acl\Acl;
+use Zend\Validator\File\Extension;
+use Zend\Validator\File\IsImage;
 
 /**
  * Page service, used for content management.
@@ -11,19 +20,39 @@ use Frontpage\Model\Page as PageModel;
 class Page extends AbstractAclService
 {
     /**
+     * @var Translator
+     */
+    private $translator;
+
+    public function __construct(Translator $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    /**
+     * Get the translator.
+     *
+     * @return Translator
+     */
+    public function getTranslator()
+    {
+        return $this->translator;
+    }
+
+    /**
      * Returns a single page
      *
      * @param string $category
      * @param string $subCategory
      * @param string $name
-     * @return \Frontpage\Model\Page|null
+     * @return PageModel|null
      */
     public function getPage($category, $subCategory, $name)
     {
         $page = $this->getPageMapper()->findPage($category, $subCategory, $name);
         if (!(is_null($page) || $this->isPageAllowed($page))) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('You are not allowed to view this page.')
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view this page.')
             );
         }
 
@@ -33,7 +62,7 @@ class Page extends AbstractAclService
     /**
      * Returns the parent pages of a page if those exist.
      *
-     * @param \Frontpage\Model\Page $page
+     * @param PageModel $page
      * @return array
      */
     public function getPageParents($page)
@@ -54,7 +83,7 @@ class Page extends AbstractAclService
      * Returns a single page by its id
      *
      * @param integer $pageId
-     * @return \Frontpage\Model\Page|null
+     * @return PageModel|null
      */
     public function getPageById($pageId)
     {
@@ -64,7 +93,7 @@ class Page extends AbstractAclService
     /**
      * Checks if the current user is allowed to view the given page
      *
-     * @param \Frontpage\Model\Page $page
+     * @param PageModel $page
      *
      * @return bool
      */
@@ -87,8 +116,8 @@ class Page extends AbstractAclService
     public function getPages()
     {
         if (!$this->isAllowed('list')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('You are not allowed to view the list of pages.')
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view the list of pages.')
             );
         }
         $pages = $this->getPageMapper()->getAllPages();
@@ -145,8 +174,8 @@ class Page extends AbstractAclService
     public function updatePage($pageId, $data)
     {
         if (!$this->isAllowed('edit')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('You are not allowed to edit pages.')
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to edit pages.')
             );
         }
         $form = $this->getPageForm($pageId);
@@ -179,15 +208,15 @@ class Page extends AbstractAclService
      * @param array $files
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function uploadImage($files)
     {
-        $imageValidator = new \Zend\Validator\File\IsImage(
+        $imageValidator = new IsImage(
             ['magicFile' => false]
         );
 
-        $extensionValidator = new \Zend\Validator\File\Extension(
+        $extensionValidator = new Extension(
             ['JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG']
         );
 
@@ -197,12 +226,12 @@ class Page extends AbstractAclService
                 $fileName = $this->getFileStorageService()->storeUploadedFile($files['upload']);
                 return $config['public_dir'] . '/' . $fileName;
             }
-            throw new \InvalidArgumentException(
-                $this->getTranslator()->translate('The uploaded file does not have a valid extension')
+            throw new InvalidArgumentException(
+                $this->translator->translate('The uploaded file does not have a valid extension')
             );
         }
-        throw new \InvalidArgumentException(
-            $this->getTranslator()->translate('The uploaded file is not a valid image')
+        throw new InvalidArgumentException(
+            $this->translator->translate('The uploaded file is not a valid image')
         );
     }
 
@@ -216,8 +245,8 @@ class Page extends AbstractAclService
     public function getPageForm($pageId = null)
     {
         if (!$this->isAllowed('create')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('You are not allowed to create new pages.')
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to create new pages.')
             );
         }
         $form = $this->sm->get('frontpage_form_page');
@@ -233,7 +262,7 @@ class Page extends AbstractAclService
     /**
      * Get the role of the current user.
      *
-     * @return \User\Model\User|string
+     * @return User|string
      */
     public function getRole()
     {
@@ -264,7 +293,7 @@ class Page extends AbstractAclService
     /**
      * Gets the storage service.
      *
-     * @return \Application\Service\Storage
+     * @return FileStorage
      */
     public function getFileStorageService()
     {
@@ -274,11 +303,11 @@ class Page extends AbstractAclService
     /**
      * Get the Acl.
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {
-        return $this->getServiceManager()->get('frontpage_acl');
+        return $this->sm->get('frontpage_acl');
     }
 
     /**

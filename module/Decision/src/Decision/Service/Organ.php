@@ -4,16 +4,31 @@ namespace Decision\Service;
 
 use Application\Service\AbstractAclService;
 
+use Application\Service\Email;
+use Application\Service\FileStorage;
 use Decision\Model\Organ as OrganModel;
 use Decision\Mapper\Organ as OrganMapper;
 use Decision\Model\OrganInformation;
 use Imagick;
+use User\Permissions\NotAllowedException;
+use Zend\Mvc\I18n\Translator;
+use Zend\Permissions\Acl\Acl;
 
 /**
  * User service.
  */
 class Organ extends AbstractAclService
 {
+    /**
+     * @var Translator
+     */
+    private $translator;
+
+    public function __construct(Translator $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      * Get organs.
      *
@@ -22,8 +37,8 @@ class Organ extends AbstractAclService
     public function getOrgans()
     {
         if (!$this->isAllowed('list')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to view the list of organs.')
+            throw new NotAllowedException(
+                $this->translator->translate('Not allowed to view the list of organs.')
             );
         }
 
@@ -40,8 +55,8 @@ class Organ extends AbstractAclService
     public function getOrgan($id)
     {
         if (!$this->isAllowed('view')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to view organ information')
+            throw new NotAllowedException(
+                $this->translator->translate('Not allowed to view organ information')
             );
         }
 
@@ -56,8 +71,8 @@ class Organ extends AbstractAclService
     public function getEditableOrgans()
     {
         if (!$this->isAllowed('edit')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('You are not allowed to edit organ information')
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to edit organ information')
             );
         }
 
@@ -250,15 +265,15 @@ class Organ extends AbstractAclService
     /**
      * Get the OrganInformation form.
      *
-     * @param \Decision\Model\OrganInformation $organInformation
+     * @param OrganInformation $organInformation
      *
      * @return \Decision\Form\OrganInformation|bool
      */
     public function getOrganInformationForm($organInformation)
     {
         if (!$this->canEditOrgan($organInformation->getOrgan())) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('You are not allowed to edit this organ\'s information')
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to edit this organ\'s information')
             );
         }
 
@@ -285,8 +300,10 @@ class Organ extends AbstractAclService
 
         if (is_null($organInformation)) {
             $organInformation = new OrganInformation();
+            // TODO: ->setOrgan is undefined
             $organInformation->setOrgan($organ);
             $em->persist($organInformation);
+            // TODO: ->add is undefined
             $organ->getOrganInformation()->add($organInformation);
 
             return $organInformation;
@@ -299,6 +316,7 @@ class Organ extends AbstractAclService
         $organInformation->setApprover(null);
         $em->detach($organInformation);
         $em->persist($organInformation);
+        // TODO: ->add is undefined
         $organ->getOrganInformation()->add($organInformation);
 
         return $organInformation;
@@ -325,7 +343,7 @@ class Organ extends AbstractAclService
                     ];
                 }
                 if ($install->getFunction() != 'Lid') {
-                    $function = $this->getTranslator()->translate($install->getFunction());
+                    $function = $this->translator->translate($install->getFunction());
                     $currentMembers[$install->getMember()->getLidnr()]['functions'][] = $function;
                 }
             } else {
@@ -381,7 +399,7 @@ class Organ extends AbstractAclService
     /**
      * Gets the file storage service.
      *
-     * @return \Application\Service\FileStorage
+     * @return FileStorage
      */
     public function getFileStorageService()
     {
@@ -421,7 +439,7 @@ class Organ extends AbstractAclService
     /**
      * Get the Acl.
      *
-     * @return Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {
@@ -431,7 +449,7 @@ class Organ extends AbstractAclService
     /**
      * Get the email service.
      *
-     * @return \Application\Service\Email
+     * @return Email
      */
     public function getEmailService()
     {

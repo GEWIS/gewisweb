@@ -9,7 +9,17 @@
 
 namespace Application;
 
+use Application\Service\Email;
+use Application\Service\FileStorage;
+use Application\Service\Legacy;
+use Application\View\Helper\Acl;
+use Application\View\Helper\FileUrl;
+use Application\View\Helper\Infima;
+use Application\View\Helper\JobCategories;
+use Application\View\Helper\ModuleIsActive;
+use Application\View\Helper\ScriptUrl;
 use Carbon\Carbon;
+use Locale;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 use Zend\Mvc\ModuleRouteListener;
@@ -32,7 +42,7 @@ class Module
         $translator->setlocale($locale);
 
         Carbon::setLocale($locale);
-        \Locale::setDefault($locale);
+        Locale::setDefault($locale);
 
         $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'logError']);
         $eventManager->attach(MvCEvent::EVENT_RENDER_ERROR, [$this, 'logError']);
@@ -89,14 +99,15 @@ class Module
         return [
             'factories' => [
                 'application_service_legacy' => function () {
-                    return new \Application\Service\Legacy();
+                    return new Legacy();
                 },
                 'application_service_email' => function () {
-                    return new \Application\Service\Email();
+                    return new Email();
                 },
                 'application_service_storage' => function ($sm) {
+                    $translator = $sm->get('translator');
                     $storageConfig = $sm->get('config')['storage'];
-                    return new \Application\Service\FileStorage($storageConfig);
+                    return new FileStorage($translator, $storageConfig);
                 },
                 'application_get_languages' => function ($sm) {
                     return ['nl', 'en'];
@@ -129,35 +140,35 @@ class Module
             'factories' => [
                 'acl' => function ($sm) {
                     $locator = $sm->getServiceLocator();
-                    $helper = new \Application\View\Helper\Acl();
+                    $helper = new Acl();
                     $helper->setServiceLocator($locator);
                     return $helper;
                 },
                 'scriptUrl' => function ($sm) {
-                    $helper = new \Application\View\Helper\ScriptUrl();
+                    $helper = new ScriptUrl();
                     return $helper;
                 },
                 'moduleIsActive' => function ($sm) {
                     $locator = $sm->getServiceLocator();
-                    $helper = new \Application\View\Helper\ModuleIsActive();
+                    $helper = new ModuleIsActive();
                     $helper->setServiceLocator($locator);
                     return $helper;
                 },
                 'jobCategories' => function ($sm) {
                     $locator = $sm->getServiceLocator();
-                    $helper = new \Application\View\Helper\JobCategories();
+                    $helper = new JobCategories();
                     $helper->setServiceLocator($locator);
                     return $helper;
                 },
                 'fileUrl' => function ($sm) {
                     $locator = $sm->getServiceLocator();
-                    $helper = new \Application\View\Helper\FileUrl();
+                    $helper = new FileUrl();
                     $helper->setServiceLocator($locator);
                     return $helper;
                 },
                 'infima' => function ($sm) {
                     $locator = $sm->getServiceLocator();
-                    $helper = new \Application\View\Helper\Infima();
+                    $helper = new Infima();
                     $helper->setLegacyService($locator->get('application_service_legacy'));
                     return $helper;
                 }

@@ -4,6 +4,7 @@ namespace Company\Mapper;
 
 use Company\Model\JobCategory as CategoryModel;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for cateogry.
@@ -117,21 +118,6 @@ class Category
     }
 
     /**
-     * Deletes the given category
-     *
-     * @param int $categoryId
-     */
-    public function deleteById($categoryId)
-    {
-        $category = $this->findEditableCategory($categoryId);
-        if (is_null($category)) {
-            return;
-        }
-
-        $this->delete($category);
-    }
-
-    /**
      * Find all Categories.
      *
      * @return array
@@ -144,7 +130,7 @@ class Category
     /**
      * Get the repository for this mapper.
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {

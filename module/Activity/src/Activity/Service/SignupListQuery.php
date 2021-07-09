@@ -5,11 +5,22 @@ namespace Activity\Service;
 use Activity\Mapper\SignupList;
 use Application\Service\AbstractAclService;
 use User\Permissions\NotAllowedException;
+use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 class SignupListQuery extends AbstractAclService implements ServiceManagerAwareInterface
 {
+    /**
+     * @var Translator
+     */
+    private $translator;
+
+    public function __construct(Translator $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      * Get the ACL.
      *
@@ -17,19 +28,19 @@ class SignupListQuery extends AbstractAclService implements ServiceManagerAwareI
      */
     public function getAcl()
     {
-        return $this->getServiceManager()->get('activity_acl');
+        return $this->sm->get('activity_acl');
     }
 
     public function getSignupListByActivity($signupListId, $activityId)
     {
         if (!$this->isAllowed('view', 'signupList')) {
-            $translator = $this->getTranslator();
+
             throw new NotAllowedException(
-                $translator->translate('You are not allowed to view sign-up lists')
+                $this->translator->translate('You are not allowed to view sign-up lists')
             );
         }
 
-        $signupListMapper = $this->getServiceManager()->get('activity_mapper_signuplist');
+        $signupListMapper = $this->sm->get('activity_mapper_signuplist');
 
         return $signupListMapper->getSignupListByIdAndActivity($signupListId, $activityId);
     }
@@ -37,13 +48,13 @@ class SignupListQuery extends AbstractAclService implements ServiceManagerAwareI
     public function getSignupListsOfActivity($activityId)
     {
         if (!$this->isAllowed('view', 'signupList')) {
-            $translator = $this->getTranslator();
+
             throw new NotAllowedException(
-                $translator->translate('You are not allowed to view sign-up lists')
+                $this->translator->translate('You are not allowed to view sign-up lists')
             );
         }
 
-        $signupListMapper = $this->getServiceManager()->get('activity_mapper_signuplist');
+        $signupListMapper = $this->sm->get('activity_mapper_signuplist');
 
         return $signupListMapper->getSignupListsOfActivity($activityId);
     }

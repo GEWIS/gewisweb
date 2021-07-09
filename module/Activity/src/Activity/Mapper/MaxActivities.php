@@ -5,7 +5,7 @@ namespace Activity\Mapper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
-use Option\Model\MaxActivityOptions as MaxActivityOptionsModel;
+use Activity\Model\MaxActivities as MaxActivitiesModel;
 
 class MaxActivities
 {
@@ -30,7 +30,7 @@ class MaxActivities
      * Finds the MaxActivityOptions model with the given id.
      *
      * @param int $id
-     * @return MaxActivityOptionsModel
+     * @return MaxActivitiesModel
      */
     public function getMaxActivityOptionsById($id)
     {
@@ -52,7 +52,7 @@ class MaxActivities
      *
      * @param int $organId
      * @param int $periodId
-     * @return MaxActivityOptionsModel
+     * @return MaxActivitiesModel
      * @throws NonUniqueResultException
      */
     public function getMaxActivityOptionsByOrganPeriod($organId, $periodId)

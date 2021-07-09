@@ -4,6 +4,7 @@ namespace Decision\Mapper;
 
 use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 class Member
@@ -126,7 +127,7 @@ class Member
     /**
      * Get the repository for this mapper.
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {

@@ -2,7 +2,6 @@
 
 namespace Photo\Mapper;
 
-use DateTime;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityRepository;
 use Exception;
@@ -39,7 +38,7 @@ class ProfilePhoto
      *
      * @param int $lidnr The Id of the user to which the photo is assigned
      *
-     * @return Photo\Model\ProfilePhoto|null
+     * @return ProfilePhotoModel|null
      * @throws Exception
      */
     public function getProfilePhotoByLidnr($lidnr)
@@ -63,7 +62,7 @@ class ProfilePhoto
     /**
      * Removes a photo
      *
-     * @param Photo\Model\ProfilePhoto $profilePhoto
+     * @param ProfilePhotoModel $profilePhoto
      */
     public function remove(ProfilePhotoModel $profilePhoto)
     {
@@ -73,7 +72,7 @@ class ProfilePhoto
     /**
      * Persist photo
      *
-     * @param Photo\Model\ProfilePhoto $profilePhoto
+     * @param ProfilePhotoModel $profilePhoto
      */
     public function persist(ProfilePhotoModel $profilePhoto)
     {

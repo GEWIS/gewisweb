@@ -2,12 +2,19 @@
 
 namespace Frontpage;
 
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Frontpage\Form\NewsItem;
+use Frontpage\Form\Page;
+use Frontpage\Form\Poll;
+use Frontpage\Form\PollApproval;
+use Frontpage\Form\PollComment;
+use Frontpage\Service\Frontpage;
+use Frontpage\Service\News;
+
 class Module
 {
     /**
      * Get the autoloader configuration.
-     *
-     * @return array Autoloader config
      */
     public function getAutoloaderConfig()
     {
@@ -32,20 +39,24 @@ class Module
     {
         return [
             'factories' => [
-                'frontpage_service_frontpage' => function () {
-                    return new \Frontpage\Service\Frontpage();
+                'frontpage_service_frontpage' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    return new Frontpage($translator);
                 },
-                'frontpage_service_page' => function () {
-                    return new \Frontpage\Service\Page();
+                'frontpage_service_page' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    return new Service\Page($translator);
                 },
-                'frontpage_service_poll' => function () {
-                    return new \Frontpage\Service\Poll();
+                'frontpage_service_poll' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    return new Service\Poll($translator);
                 },
-                'frontpage_service_news' => function () {
-                    return new \Frontpage\Service\News();
+                'frontpage_service_news' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    return new News($translator);
                 },
                 'frontpage_form_page' => function ($sm) {
-                    $form = new \Frontpage\Form\Page(
+                    $form = new Page(
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('frontpage_hydrator'));
@@ -53,7 +64,7 @@ class Module
                     return $form;
                 },
                 'frontpage_form_poll' => function ($sm) {
-                    $form = new \Frontpage\Form\Poll(
+                    $form = new Poll(
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('frontpage_hydrator'));
@@ -61,14 +72,14 @@ class Module
                     return $form;
                 },
                 'frontpage_form_poll_comment' => function ($sm) {
-                    $form = new \Frontpage\Form\PollComment(
+                    $form = new PollComment(
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('frontpage_hydrator'));
                     return $form;
                 },
                 'frontpage_form_poll_approval' => function ($sm) {
-                    $form = new \Frontpage\Form\PollApproval(
+                    $form = new PollApproval(
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('frontpage_hydrator'));
@@ -76,7 +87,7 @@ class Module
                     return $form;
                 },
                 'frontpage_form_news_item' => function ($sm) {
-                    $form = new \Frontpage\Form\NewsItem(
+                    $form = new NewsItem(
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('frontpage_hydrator'));
@@ -84,7 +95,7 @@ class Module
                     return $form;
                 },
                 'frontpage_hydrator' => function ($sm) {
-                    return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                    return new DoctrineObject(
                         $sm->get('frontpage_doctrine_em')
                     );
                 },

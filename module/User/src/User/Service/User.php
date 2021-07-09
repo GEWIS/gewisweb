@@ -5,18 +5,35 @@ namespace User\Service;
 use Application\Service\AbstractAclService;
 use DateInterval;
 use DateTime;
+use Decision\Mapper\Member;
+use User\Form\Activate;
+use User\Form\Password;
 use User\Form\Register as RegisterForm;
-use User\Mapper\User as UserMapper;
+use User\Mapper\LoginAttempt;
+use User\Mapper\NewUser;
+use User\Mapper\Session;
 use User\Model\LoginAttempt as LoginAttemptModel;
 use User\Model\NewUser as NewUserModel;
 use User\Model\User as UserModel;
 use User\Permissions\NotAllowedException;
+use Zend\Mvc\I18n\Translator;
+use Zend\Permissions\Acl\Acl;
 
 /**
  * User service.
  */
 class User extends AbstractAclService
 {
+    /**
+     * @var Translator
+     */
+    private $translator;
+
+    public function __construct(Translator $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      * Activate a user.
      *
@@ -192,7 +209,7 @@ class User extends AbstractAclService
         $data = $form->getData();
 
         // check the password
-        $auth = $this->getServiceManager()->get('user_auth_service');
+        $auth = $this->sm->get('user_auth_service');
         $adapter = $auth->getAdapter();
 
         $user = $auth->getIdentity();
@@ -200,7 +217,7 @@ class User extends AbstractAclService
         if (!$adapter->verifyPassword($data['old_password'], $user->getPassword())) {
             $form->setMessages([
                 'old_password' => [
-                    $this->getTranslator()->translate("Password incorrect")
+                    $this->translator->translate("Password incorrect")
                 ]
             ]);
 
@@ -238,7 +255,7 @@ class User extends AbstractAclService
         }
 
         // try to authenticate
-        $auth = $this->getServiceManager()->get('user_auth_service');
+        $auth = $this->sm->get('user_auth_service');
         $authAdapter = $auth->getAdapter();
 
         $authAdapter->setCredentials($form->getData());
@@ -267,12 +284,12 @@ class User extends AbstractAclService
     public function pinLogin($data)
     {
         if (!$this->isAllowed('pin_login')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate('You are not allowed to login using pin codes')
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to login using pin codes')
             );
         }
         // try to authenticate
-        $auth = $this->getServiceManager()->get('user_pin_auth_service');
+        $auth = $this->sm->get('user_pin_auth_service');
         $authAdapter = $auth->getAdapter();
 
         $authAdapter->setCredentials($data['lidnr'], $data['pincode']);
@@ -293,7 +310,7 @@ class User extends AbstractAclService
     public function logout()
     {
         // clear the user identity
-        $auth = $this->getServiceManager()->get('user_auth_service');
+        $auth = $this->sm->get('user_auth_service');
         $auth->clearIdentity();
     }
 
@@ -305,11 +322,11 @@ class User extends AbstractAclService
      */
     public function getIdentity()
     {
-        $authService = $this->getServiceManager()->get('user_auth_service');
+        $authService = $this->sm->get('user_auth_service');
         if (!$authService->hasIdentity()) {
-            $translator = $this->getTranslator();
+
             throw new NotAllowedException(
-                $translator->translate('You need to log in to perform this action')
+                $this->translator->translate('You need to log in to perform this action')
             );
         }
         return $authService->getIdentity();
@@ -322,7 +339,7 @@ class User extends AbstractAclService
      */
     public function hasIdentity()
     {
-        $authService = $this->getServiceManager()->get('user_auth_service');
+        $authService = $this->sm->get('user_auth_service');
         return $authService->hasIdentity();
     }
 
@@ -342,7 +359,7 @@ class User extends AbstractAclService
     {
         $attempt = new LoginAttemptModel();
         $attempt->setIp($this->sm->get('user_remoteaddress'));
-        $attempt->setTime(new \DateTime());
+        $attempt->setTime(new DateTime());
         $attempt->setType($type);
         $user = $this->detachUser($user);
         $attempt->setUser($user);
@@ -353,7 +370,7 @@ class User extends AbstractAclService
     {
         $config = $this->getRateLimitConfig();
         $ip = $this->sm->get('user_remoteaddress');
-        $since = (new \DateTime())->sub(new \DateInterval('PT' . $config[$type]['lockout_time'] . 'M'));
+        $since = (new DateTime())->sub(new DateInterval('PT' . $config[$type]['lockout_time'] . 'M'));
         $loginAttemptMapper = $this->getLoginAttemptMapper();
         if ($loginAttemptMapper->getFailedAttemptCount($since, $type, $ip) > $config[$type]['ip']) {
             return true;
@@ -399,7 +416,7 @@ class User extends AbstractAclService
     /**
      * Get the activate form.
      *
-     * @return ActivateForm Activate form
+     * @return Activate Activate form
      */
     public function getActivateForm()
     {
@@ -419,13 +436,13 @@ class User extends AbstractAclService
     /**
      * Get the password form.
      *
-     * @return User\Form\Password Password change form
+     * @return Password Password change form
      */
     public function getPasswordForm()
     {
         if (!$this->isAllowed('password_change')) {
-            throw new \User\Permissions\NotAllowedException(
-                $this->getTranslator()->translate("You are not allowed to change your password")
+            throw new NotAllowedException(
+                $this->translator->translate("You are not allowed to change your password")
             );
         }
 
@@ -461,7 +478,7 @@ class User extends AbstractAclService
     /**
      * Get the member mapper.
      *
-     * @return MemberMapper
+     * @return Member
      */
     public function getMemberMapper()
     {
@@ -471,7 +488,7 @@ class User extends AbstractAclService
     /**
      * Get the new user mapper.
      *
-     * @return NewUserMapper
+     * @return NewUser
      */
     public function getNewUserMapper()
     {
@@ -481,7 +498,7 @@ class User extends AbstractAclService
     /**
      * Get the user mapper.
      *
-     * @return UserMapper
+     * @return \User\Mapper\User
      */
     public function getUserMapper()
     {
@@ -491,7 +508,7 @@ class User extends AbstractAclService
     /**
      * Get the session mapper.
      *
-     * @return \User\Mapper\Session
+     * @return Session
      */
     public function getSessionMapper()
     {
@@ -501,7 +518,7 @@ class User extends AbstractAclService
     /**
      * Get the login attempt mapper.
      *
-     * @return \User\Mapper\LoginAttempt
+     * @return LoginAttempt
      */
     public function getLoginAttemptMapper()
     {
@@ -521,7 +538,7 @@ class User extends AbstractAclService
     /**
      * Get the auth storage.
      *
-     * @return User\Authentication\Storage
+     * @return \User\Authentication\Storage\Session
      */
     public function getAuthStorage()
     {
@@ -543,7 +560,7 @@ class User extends AbstractAclService
     /**
      * Get the ACL.
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {

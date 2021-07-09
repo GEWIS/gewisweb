@@ -2,12 +2,25 @@
 
 namespace Company;
 
+use Company\Form\EditCategory;
+use Company\Form\EditCompany;
+use Company\Form\EditJob;
+use Company\Form\EditLabel;
+use Company\Form\EditPackage;
+use Company\Mapper\BannerPackage;
+use Company\Mapper\Category;
+use Company\Mapper\FeaturedPackage;
+use Company\Mapper\Job;
+use Company\Mapper\Label;
+use Company\Mapper\LabelAssignment;
+use Company\Mapper\Package;
+use Company\Service\Company;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+
 class Module
 {
     /**
      * Get the autoloader configuration.
-     *
-     * @return array Autoloader config
      */
     public function getAutoloaderConfig()
     {
@@ -27,19 +40,19 @@ class Module
     {
         return [
             'company_admin_edit_package_form' => function ($sm) {
-                return new \Company\Form\EditPackage(
+                return new EditPackage(
                     $sm->get('translator'),
                     "job"
                 );
             },
             'company_admin_edit_featuredpackage_form' => function ($sm) {
-                return new \Company\Form\EditPackage(
+                return new EditPackage(
                     $sm->get('translator'),
                     "featured"
                 );
             },
             'company_admin_edit_category_form' => function ($sm) {
-                return new \Company\Form\EditCategory(
+                return new EditCategory(
                     $sm->get('company_mapper_category'),
                     $sm->get('translator'),
                     $sm->get('application_get_languages'),
@@ -47,7 +60,7 @@ class Module
                 );
             },
             'company_admin_edit_label_form' => function ($sm) {
-                return new \Company\Form\EditLabel(
+                return new EditLabel(
                     $sm->get('company_mapper_label'),
                     $sm->get('translator'),
                     $sm->get('application_get_languages'),
@@ -55,19 +68,19 @@ class Module
                 );
             },
             'company_admin_edit_bannerpackage_form' => function ($sm) {
-                return new \Company\Form\EditPackage(
+                return new EditPackage(
                     $sm->get('translator'),
                     "banner"
                 );
             },
             'company_admin_edit_company_form' => function ($sm) {
-                return new \Company\Form\EditCompany(
+                return new EditCompany(
                     $sm->get('company_mapper_company'),
                     $sm->get('translator')
                 );
             },
             'company_admin_edit_job_form' => function ($sm) {
-                $form = new \Company\Form\EditJob(
+                $form = new EditJob(
                     $sm->get('company_mapper_job'),
                     $sm->get('translator'),
                     $sm->get('application_get_languages'),
@@ -84,42 +97,42 @@ class Module
     {
         return [
             'company_mapper_company' => function ($sm) {
-                return new \Company\Mapper\Company(
+                return new Mapper\Company(
                     $sm->get('company_doctrine_em')
                 );
             },
             'company_mapper_job' => function ($sm) {
-                return new \Company\Mapper\Job(
+                return new Job(
                     $sm->get('company_doctrine_em')
                 );
             },
             'company_mapper_package' => function ($sm) {
-                return new \Company\Mapper\Package(
+                return new Package(
                     $sm->get('company_doctrine_em')
                 );
             },
             'company_mapper_featuredpackage' => function ($sm) {
-                return new \Company\Mapper\FeaturedPackage(
+                return new FeaturedPackage(
                     $sm->get('company_doctrine_em')
                 );
             },
             'company_mapper_category' => function ($sm) {
-                return new \Company\Mapper\Category(
+                return new Category(
                     $sm->get('company_doctrine_em')
                 );
             },
             'company_mapper_label' => function ($sm) {
-                return new \Company\Mapper\Label(
+                return new Label(
                     $sm->get('company_doctrine_em')
                 );
             },
             'company_mapper_label_assignment' => function ($sm) {
-                return new \Company\Mapper\LabelAssignment(
+                return new LabelAssignment(
                     $sm->get('company_doctrine_em')
                 );
             },
             'company_mapper_bannerpackage' => function ($sm) {
-                return new \Company\Mapper\BannerPackage(
+                return new BannerPackage(
                     $sm->get('company_doctrine_em')
                 );
             },
@@ -136,7 +149,7 @@ class Module
                 return $sm->get('translator');
             },
             'company_hydrator' => function ($sm) {
-                return new \DoctrineModule\Stdlib\Hydrator\DoctrineObject(
+                return new DoctrineObject(
                     $sm->get('company_doctrine_em')
                 );
             },
@@ -168,8 +181,9 @@ class Module
     public function getServiceConfig()
     {
         $serviceFactories = [
-            'company_service_company' => function () {
-                return new \Company\Service\Company();
+            'company_service_company' => function ($sm) {
+                $translator = $sm->get('translator');
+                return new Company($translator);
             },
         ];
         $factories = array_merge($serviceFactories, $this->getMapperFactories(), $this->getOtherFactories(), $this->getFormFactories());

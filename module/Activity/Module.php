@@ -16,6 +16,8 @@ use Activity\Mapper\Signup;
 use Activity\Mapper\SignupFieldValue;
 use Activity\Mapper\SignupList as SignupListMapper;
 use Activity\Mapper\SignupOption;
+use Activity\Service\ActivityQuery;
+use Activity\Service\SignupListQuery;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use User\Permissions\Assertion\IsCreatorOrOrganMember;
 use User\Permissions\NotAllowedException;
@@ -24,8 +26,6 @@ class Module
 {
     /**
      * Get the autoloader configuration.
-     *
-     * @return array Autoloader config
      */
     public function getAutoloaderConfig()
     {
@@ -50,20 +50,24 @@ class Module
     {
         return [
             'factories' => [
-                'activity_service_activity' => function () {
-                    return new \Activity\Service\Activity();
+                'activity_service_activity' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    return new Service\Activity($translator);
                 },
-                'activity_service_activityQuery' => function () {
-                    return new \Activity\Service\ActivityQuery();
+                'activity_service_activityQuery' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    return new ActivityQuery($translator);
                 },
-                'activity_service_category' => function () {
-                    return new \Activity\Service\ActivityCategory();
+                'activity_service_category' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    return new Service\ActivityCategory($translator);
                 },
-                'activity_service_signupListQuery' => function () {
-                    return new \Activity\Service\SignupListQuery();
+                'activity_service_signupListQuery' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    return new SignupListQuery($translator);
                 },
                 'activity_form_activity_signup' => function () {
-                    return new \Activity\Form\Signup();
+                    return new Form\Signup();
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
@@ -77,7 +81,8 @@ class Module
                     return $form;
                 },
                 'activity_form_signuplist_fields' => function ($sm) {
-                    $form = new SignupListField();
+                    $translator = $sm->get('translator');
+                    $form = new SignupListField($translator);
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },
@@ -116,19 +121,15 @@ class Module
                     );
                 },
                 'activity_service_signup' => function ($sm) {
-                    $ac = new Service\Signup();
-                    $ac->setServiceManager($sm);
-
-                    return $ac;
-                },
-                'activity_service_signoff' => function ($sm) {
-                    $ac = new Service\Signup();
+                    $translator = $sm->get('translator');
+                    $ac = new Service\Signup($translator);
                     $ac->setServiceManager($sm);
 
                     return $ac;
                 },
                 'activity_service_calendar' => function ($sm) {
-                    $ac = new Service\ActivityCalendar();
+                    $translator = $sm->get('translator');
+                    $ac = new Service\ActivityCalendar($translator);
                     $ac->setServiceManager($sm);
 
                     return $ac;

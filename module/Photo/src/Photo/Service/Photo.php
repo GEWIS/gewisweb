@@ -3,11 +3,12 @@
 namespace Photo\Service;
 
 use Application\Service\AbstractAclService;
-use Application\Service\Storage;
+use Application\Service\FileStorage;
 use DateTime;
 use DateInterval;
 use Decision\Model\Member;
 use Exception;
+use Photo\Mapper\Vote;
 use Photo\Model\Hit as HitModel;
 use Photo\Model\Vote as VoteModel;
 use Photo\Model\Tag as TagModel;
@@ -21,6 +22,7 @@ use Photo\Model\Album as AlbumModel;
 use User\Permissions\NotAllowedException;
 use Zend\Http\Response\Stream;
 use Zend\I18n\Filter\Alnum;
+use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
 
 /**
@@ -28,6 +30,15 @@ use Zend\Permissions\Acl\Acl;
  */
 class Photo extends AbstractAclService
 {
+    /**
+     * @var Translator
+     */
+    private $translator;
+
+    public function __construct(Translator $translator)
+    {
+        $this->translator = $translator;
+    }
     /**
      * Get all photos in an album
      *
@@ -42,7 +53,7 @@ class Photo extends AbstractAclService
     {
         if (!$this->isAllowed('view')) {
             throw new NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to view photos')
+                $this->translator->translate('Not allowed to view photos')
             );
         }
 
@@ -71,7 +82,7 @@ class Photo extends AbstractAclService
     {
         if (!$this->isAllowed('download')) {
             throw new NotAllowedException(
-                $this->getTranslator()
+                $this->translator
                     ->translate('Not allowed to download photos')
             );
         }
@@ -94,7 +105,7 @@ class Photo extends AbstractAclService
     {
         if (!$this->isAllowed('view')) {
             throw new NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to view photos')
+                $this->translator->translate('Not allowed to view photos')
             );
         }
 
@@ -128,7 +139,7 @@ class Photo extends AbstractAclService
     /**
      * Gets the storage service.
      *
-     * @return Storage
+     * @return FileStorage
      */
     public function getFileStorageService()
     {
@@ -149,7 +160,7 @@ class Photo extends AbstractAclService
     {
         if (!$this->isAllowed('view')) {
             throw new NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to view photos')
+                $this->translator->translate('Not allowed to view photos')
             );
         }
 
@@ -204,7 +215,7 @@ class Photo extends AbstractAclService
     ) {
         if (!$this->isAllowed('view')) {
             throw new NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to view photos')
+                $this->translator->translate('Not allowed to view photos')
             );
         }
 
@@ -225,7 +236,7 @@ class Photo extends AbstractAclService
     ) {
         if (!$this->isAllowed('view')) {
             throw new NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to view photos')
+                $this->translator->translate('Not allowed to view photos')
             );
         }
 
@@ -244,7 +255,7 @@ class Photo extends AbstractAclService
     {
         if (!$this->isAllowed('delete')) {
             throw new NotAllowedException(
-                $this->getTranslator()
+                $this->translator
                     ->translate('Not allowed to delete photos.')
             );
         }
@@ -298,7 +309,7 @@ class Photo extends AbstractAclService
     {
         if (!$this->isAllowed('move')) {
             throw new NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to move photos')
+                $this->translator->translate('Not allowed to move photos')
             );
         }
 
@@ -318,7 +329,7 @@ class Photo extends AbstractAclService
     /**
      * Gets the album service.
      *
-     * @return Photo\Service\Album
+     * @return Album
      */
     public function getAlbumService()
     {
@@ -624,7 +635,7 @@ class Photo extends AbstractAclService
     {
         if (!$this->isAllowed('view')) {
             throw new NotAllowedException(
-                $this->getTranslator()
+                $this->translator
                     ->translate('Not allowed to view previous photos of the week')
             );
         }
@@ -676,13 +687,13 @@ class Photo extends AbstractAclService
      * @param integer $photoId
      * @param integer $lidnr
      *
-     * @return Photo\Model\Tag|null
+     * @return TagModel|null
      */
     public function addTag($photoId, $lidnr)
     {
         if (!$this->isAllowed('add', 'tag')) {
             throw new NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to add tags.')
+                $this->translator->translate('Not allowed to add tags.')
             );
         }
 
@@ -708,13 +719,13 @@ class Photo extends AbstractAclService
      * @param integer $photoId
      * @param integer $lidnr
      *
-     * @return Photo\Model\Tag|null
+     * @return TagModel|null
      */
     public function findTag($photoId, $lidnr)
     {
         if (!$this->isAllowed('view', 'tag')) {
             throw new NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to view tags.')
+                $this->translator->translate('Not allowed to view tags.')
             );
         }
 
@@ -762,7 +773,7 @@ class Photo extends AbstractAclService
     /**
      * Get the vote mapper.
      *
-     * @return \Photo\Mapper\Vote
+     * @return Vote
      */
     public function getVoteMapper()
     {
@@ -791,7 +802,7 @@ class Photo extends AbstractAclService
     {
         if (!$this->isAllowed('remove', 'tag')) {
             throw new NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to remove tags.')
+                $this->translator->translate('Not allowed to remove tags.')
             );
         }
 
@@ -816,7 +827,7 @@ class Photo extends AbstractAclService
     {
         if (!$this->isAllowed('view', 'tag')) {
             throw new NotAllowedException(
-                $this->getTranslator()->translate('Not allowed to view tags.')
+                $this->translator->translate('Not allowed to view tags.')
             );
         }
 
@@ -862,7 +873,7 @@ class Photo extends AbstractAclService
     /**
      * Gets the metadata service.
      *
-     * @return Photo\Service\Metadata
+     * @return Metadata
      */
     public function getMetadataService()
     {

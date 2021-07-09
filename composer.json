@@ -19,7 +19,6 @@
         "ext-exif": "*",
         "ext-fileinfo": "*",
         "ext-gd": "*",
-        "ext-http": "*",
         "ext-intl": ">=1.1.0",
         "ext-imagick": ">=3.1",
         "ext-mbstring": "*",

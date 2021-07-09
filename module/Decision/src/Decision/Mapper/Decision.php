@@ -2,8 +2,9 @@
 
 namespace Decision\Mapper;
 
-use Decision\Model\Decision as DecisionModel;
+use Decision\Model\MeetingNotes;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 class Decision
 {
@@ -49,7 +50,7 @@ class Decision
     /**
      * Persist an entity.
      *
-     * @param $entity to persist.
+     * @param MeetingNotes to persist.
      */
     public function persist($entity)
     {
@@ -60,7 +61,7 @@ class Decision
     /**
      * Get the repository for this mapper.
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {

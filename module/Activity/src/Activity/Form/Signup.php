@@ -67,7 +67,7 @@ class Signup extends Form implements InputFilterProviderInterface
      * Initialize the form for external subscriptions by admin, i.e. set the language and the fields
      * Add every field in $signupList to the form.
      *
-     * @param SignupList $signupList
+     * @param \Activity\Model\SignupList $signupList
      */
     public function initialiseExternalAdminForm($signupList)
     {
@@ -87,7 +87,7 @@ class Signup extends Form implements InputFilterProviderInterface
      * Initialize the form, i.e. set the language and the fields
      * Add every field in $signupList to the form.
      *
-     * @param SignupList $signupList
+     * @param \Activity\Model\SignupList $signupList
      */
     public function initialiseForm($signupList)
     {

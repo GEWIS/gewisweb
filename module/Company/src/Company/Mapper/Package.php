@@ -6,6 +6,7 @@ use Company\Model\CompanyJobPackage as PackageModel;
 use Company\Model\CompanyBannerPackage as BannerPackageModel;
 use Company\Model\CompanyFeaturedPackage as FeaturedPackageModel;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for package.
@@ -145,7 +146,7 @@ class Package
     /**
      * Find all packages, and returns an editable version of them.
      *
-     * @return array
+     * @return PackageModel
      */
     public function findEditablePackage($packageId)
     {
@@ -193,7 +194,7 @@ class Package
     /**
      * Get the repository for this mapper.
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {

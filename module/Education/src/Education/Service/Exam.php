@@ -4,11 +4,20 @@ namespace Education\Service;
 
 use Application\Service\AbstractAclService;
 
+use Application\Service\FileStorage;
+use DateTime;
+use DirectoryIterator;
+use Education\Form\AddCourse;
+use Education\Form\Bulk;
+use Education\Form\SearchCourse;
+use Education\Form\TempUpload;
+use Education\Mapper\Course;
 use Education\Model\Course as CourseModel;
 use Education\Model\Exam as ExamModel;
 use Education\Model\Summary as SummaryModel;
-
-use Zend\Form\FormInterface;
+use User\Permissions\NotAllowedException;
+use Zend\Mvc\I18n\Translator;
+use Zend\Permissions\Acl\Acl;
 
 /**
  * Exam service.
@@ -16,9 +25,19 @@ use Zend\Form\FormInterface;
 class Exam extends AbstractAclService
 {
     /**
+     * @var Translator
+     */
+    private $translator;
+
+    public function __construct(Translator $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    /**
      * Bulk form.
      *
-     * @var \Education\Form\Bulk
+     * @var Bulk
      */
     protected $bulkForm;
 
@@ -66,9 +85,8 @@ class Exam extends AbstractAclService
     public function getExamDownload($id)
     {
         if (!$this->isAllowed('download')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to download exams')
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to download exams')
             );
         }
 
@@ -107,7 +125,7 @@ class Exam extends AbstractAclService
             if (is_null($this->getCourse($examData['course']))) {
                 // course doesn't exist
                 $messages['exams'][$key] = [
-                    'course' => [$this->getTranslator()->translate("Course doesn't exist")]
+                    'course' => [$this->translator->translate("Course doesn't exist")]
                 ];
             }
         }
@@ -135,7 +153,7 @@ class Exam extends AbstractAclService
                     $exam = new SummaryModel();
                 }
 
-                $exam->setDate(new \DateTime($examData['date']));
+                $exam->setDate(new DateTime($examData['date']));
                 $exam->setCourse($this->getCourse($examData['course']));
                 if ($type === 'summary') {
                     $exam->setAuthor($examData['author']);
@@ -272,9 +290,9 @@ class Exam extends AbstractAclService
     public function deleteTempExam($filename, $type = 'exam')
     {
         if (!$this->isAllowed('delete')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to delete exams')
+
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to delete exams')
             );
         }
         $config = $this->getConfig('education_temp');
@@ -285,16 +303,16 @@ class Exam extends AbstractAclService
     /**
      * Get the bulk edit form.
      *
-     * @return \Education\Form\Bulk
+     * @return Bulk
      *
-     * @throws \User\Permissions\NotAllowedException When not allowed to upload
+     * @throws NotAllowedException When not allowed to upload
      */
     protected function getBulkForm($type)
     {
         if (!$this->isAllowed('upload')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to upload exams')
+
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to upload exams')
             );
         }
         if (null !== $this->bulkForm) {
@@ -306,7 +324,7 @@ class Exam extends AbstractAclService
 
         $config = $this->getConfig('education_temp');
 
-        $dir = new \DirectoryIterator($config['upload_' . $type . '_dir']);
+        $dir = new DirectoryIterator($config['upload_' . $type . '_dir']);
         $data = [];
 
         foreach ($dir as $file) {
@@ -328,7 +346,7 @@ class Exam extends AbstractAclService
     /**
      * Get the bulk summary edit form
      *
-     * @return \Education\Form\Bulk
+     * @return Bulk
      */
     public function getBulkSummaryForm()
     {
@@ -356,7 +374,7 @@ class Exam extends AbstractAclService
         $course = preg_match('/\d[a-zA-Z][0-9a-zA-Z]{3,4}/', $filename, $matches) ? $matches[0] : '';
         $filename = str_replace($course, '', $filename);
 
-        $today = new \DateTime();
+        $today = new DateTime();
         $year = preg_match('/20\d{2}/', $filename, $matches) ? $matches[0] : $today->format('Y');
         $filename = str_replace($year, '', $filename);
         $month = preg_match_all('/[01]\d/', $filename, $matches) ? $matches[0][0] : $today->format('m');
@@ -395,16 +413,16 @@ class Exam extends AbstractAclService
     /**
      * Get the Temporary Upload form.
      *
-     * @return \Education\Form\TempUpload
+     * @return TempUpload
      *
-     * @throws \User\Permissions\NotAllowedException When not allowed to upload
+     * @throws NotAllowedException When not allowed to upload
      */
     public function getTempUploadForm()
     {
         if (!$this->isAllowed('upload')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to upload exams')
+
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to upload exams')
             );
         }
         return $this->sm->get('education_form_tempupload');
@@ -413,16 +431,16 @@ class Exam extends AbstractAclService
     /**
      * Get the add course form.
      *
-     * @return \Education\Form\AddCourse
+     * @return AddCourse
      *
-     * @throws \User\Permissions\NotAllowedException When not allowed to upload
+     * @throws NotAllowedException When not allowed to upload
      */
     public function getAddCourseForm()
     {
         if (!$this->isAllowed('upload')) {
-            $translator = $this->getTranslator();
-            throw new \User\Permissions\NotAllowedException(
-                $translator->translate('You are not allowed to add courses')
+
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to add courses')
             );
         }
         return $this->sm->get('education_form_add_course');
@@ -462,7 +480,7 @@ class Exam extends AbstractAclService
         }
 
         // save the data
-        $newCourse = new CourseModel($this->getCourseMapper());
+        $newCourse = new CourseModel();
         $newCourse->setCode($data['code']);
         $newCourse->setName($data['name']);
         if (strlen($data['parent']) > 0) {
@@ -480,7 +498,7 @@ class Exam extends AbstractAclService
     /**
      * Get the storage service.
      *
-     * @return \Application\Service\FileStorage
+     * @return FileStorage
      */
     public function getFileStorageService()
     {
@@ -490,7 +508,7 @@ class Exam extends AbstractAclService
     /**
      * Get the SearchExam form.
      *
-     * @return \Education\Form\SearchCourse
+     * @return SearchCourse
      */
     public function getSearchCourseForm()
     {
@@ -500,11 +518,11 @@ class Exam extends AbstractAclService
     /**
      * Get the course mapper.
      *
-     * @return \Education\Mapper\Course
+     * @return Course
      */
     public function getCourseMapper()
     {
-        return $this->getServiceManager()->get('education_mapper_course');
+        return $this->sm->get('education_mapper_course');
     }
 
     /**
@@ -520,11 +538,11 @@ class Exam extends AbstractAclService
     /**
      * Get the Acl.
      *
-     * @return Zend\Permissions\Acl\Acl
+     * @return Acl
      */
     public function getAcl()
     {
-        return $this->getServiceManager()->get('education_acl');
+        return $this->sm->get('education_acl');
     }
 
     /**

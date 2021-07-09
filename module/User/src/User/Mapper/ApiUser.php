@@ -2,6 +2,7 @@
 
 namespace User\Mapper;
 
+use Doctrine\ORM\EntityRepository;
 use User\Model\ApiUser as ApiUserModel;
 use Doctrine\ORM\EntityManager;
 
@@ -84,7 +85,7 @@ class ApiUser
     /**
      * Get the repository for this mapper.
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {
