@@ -9,14 +9,23 @@ use Zend\View\Model\ViewModel;
 
 class PollAdminController extends AbstractActionController
 {
+
+    /**
+     * @var \Frontpage\Service\Poll
+     */
+    private $pollService;
+
+    public function __construct(\Frontpage\Service\Poll $pollService)
+    {
+        $this->pollService = $pollService;
+    }
+
     /**
      * List all approved and unapproved polls
      */
     public function listAction()
     {
-        $pollService = $this->getPollService();
-
-        $adapter = $pollService->getPaginatorAdapter();
+        $adapter = $this->pollService->getPaginatorAdapter();
         $paginator = new Paginator($adapter);
         $paginator->setDefaultItemCountPerPage(15);
 
@@ -26,9 +35,9 @@ class PollAdminController extends AbstractActionController
             $paginator->setCurrentPageNumber($page);
         }
 
-        $unapprovedPolls = $pollService->getUnapprovedPolls();
+        $unapprovedPolls = $this->pollService->getUnapprovedPolls();
 
-        $approvalForm = $pollService->getPollApprovalForm();
+        $approvalForm = $this->pollService->getPollApprovalForm();
 
         return new ViewModel([
             'unapprovedPolls' => $unapprovedPolls,
@@ -59,21 +68,10 @@ class PollAdminController extends AbstractActionController
     {
         if ($this->getRequest()->isPost()) {
             $pollId = $this->params()->fromRoute('poll_id');
-            $pollService = $this->getPollService();
-            $poll = $pollService->getPoll($pollId);
-            $pollService->deletePoll($poll);
+            $poll = $this->pollService->getPoll($pollId);
+            $this->pollService->deletePoll($poll);
 
             return $this->redirect()->toRoute('admin_poll');
         }
-    }
-
-    /**
-     * Get the poll service.
-     *
-     * @return \Frontpage\Service\Poll
-     */
-    protected function getPollService()
-    {
-        return $this->getServiceLocator()->get('frontpage_service_poll');
     }
 }

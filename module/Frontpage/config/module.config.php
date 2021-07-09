@@ -12,6 +12,37 @@ return [
             'Frontpage\Controller\NewsAdmin' => 'Frontpage\Controller\NewsAdminController',
             'Frontpage\Controller\Admin' => 'Frontpage\Controller\AdminController',
         ],
+        'factories' => [
+            'Frontpage\Controller\Frontpage' => function (ContainerInterface $serviceManager) {
+                $frontpageService = $serviceManager->getServiceLocator()->get('frontpage_service_frontpage');
+                return new \Frontpage\Controller\FrontpageController($frontpageService);
+            },
+            'Frontpage\Controller\Organ' => function (ContainerInterface $serviceManager) {
+                $organService = $serviceManager->getServiceLocator()->get('decision_service_organ');
+                $activityQueryService = $serviceManager->getServiceLocator()->get('activity_service_activityQuery');
+                return new \Frontpage\Controller\OrganController($organService, $activityQueryService);
+            },
+            'Frontpage\Controller\Page' => function (ContainerInterface $serviceManager) {
+                $pageService = $serviceManager->getServiceLocator()->get('frontpage_service_page');
+                return new \Frontpage\Controller\PageController($pageService);
+            },
+            'Frontpage\Controller\PageAdmin' => function (ContainerInterface $serviceManager) {
+                $pageService = $serviceManager->getServiceLocator()->get('frontpage_service_page');
+                return new \Frontpage\Controller\PageAdminController($pageService);
+            },
+            'Frontpage\Controller\Poll' => function (ContainerInterface $serviceManager) {
+                $pollService = $serviceManager->getServiceLocator()->get('frontpage_service_poll');
+                return new \Frontpage\Controller\PollController($pollService);
+            },
+            'Frontpage\Controller\PollAdmin' => function (ContainerInterface $serviceManager) {
+                $pollService = $serviceManager->getServiceLocator()->get('frontpage_service_poll');
+                return new \Frontpage\Controller\PollAdminController($pollService);
+            },
+            'Frontpage\Controller\NewsAdmin' => function (ContainerInterface $serviceManager) {
+                $newsService = $serviceManager->getServiceLocator()->get('frontpage_service_news');
+                return new \Frontpage\Controller\NewsAdminController($newsService);
+            },
+            'Frontpage\Controller\Admin' => 'Frontpage\Controller\AdminController',]
     ],
     'router' => [
         'routes' => [

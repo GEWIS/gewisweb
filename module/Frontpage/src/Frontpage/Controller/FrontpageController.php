@@ -8,19 +8,20 @@ use Zend\View\Model\ViewModel;
 
 class FrontpageController extends AbstractActionController
 {
-    public function homeAction()
-    {
-        $homePageData = $this->getFrontpageService()->getHomepageData();
-        return new ViewModel($homePageData);
-    }
 
     /**
-     * Get the frontpage service.
-     *
-     * @return \Frontpage\Service\Frontpage
+     * @var \Frontpage\Service\Frontpage
      */
-    protected function getFrontpageService()
+    private $frontpageService;
+
+    public function __construct(\Frontpage\Service\Frontpage $frontpageService)
     {
-        return $this->getServiceLocator()->get('frontpage_service_frontpage');
+        $this->frontpageService = $frontpageService;
+    }
+
+    public function homeAction()
+    {
+        $homePageData = $this->frontpageService->getHomepageData();
+        return new ViewModel($homePageData);
     }
 }

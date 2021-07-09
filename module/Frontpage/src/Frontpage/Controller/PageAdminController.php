@@ -8,9 +8,19 @@ use Zend\View\Model\JsonModel;
 
 class PageAdminController extends AbstractActionController
 {
+    /**
+     * @var \Frontpage\Service\Page
+     */
+    private $pageService;
+
+    public function __construct(\Frontpage\Service\Page $pageService)
+    {
+        $this->pageService = $pageService;
+    }
+
     public function indexAction()
     {
-        $pages = $this->getPageService()->getPages();
+        $pages = $this->pageService->getPages();
 
         return new ViewModel([
             'pages' => $pages
@@ -19,15 +29,14 @@ class PageAdminController extends AbstractActionController
 
     public function createAction()
     {
-        $pageService = $this->getPageService();
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($pageService->createPage($request->getPost())) {
+            if ($this->pageService->createPage($request->getPost())) {
                 $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));
             }
         }
 
-        $form = $pageService->getPageForm();
+        $form = $this->pageService->getPageForm();
 
         $view = new ViewModel([
             'form' => $form,
@@ -42,16 +51,15 @@ class PageAdminController extends AbstractActionController
 
     public function editAction()
     {
-        $pageService = $this->getPageService();
         $pageId = $this->params()->fromRoute('page_id');
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($pageService->updatePage($pageId, $request->getPost())) {
+            if ($this->pageService->updatePage($pageId, $request->getPost())) {
                 $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));
             }
         }
 
-        $form = $pageService->getPageForm($pageId);
+        $form = $this->pageService->getPageForm($pageId);
 
         return new ViewModel([
             'form' => $form,
@@ -63,7 +71,7 @@ class PageAdminController extends AbstractActionController
     public function deleteAction()
     {
         $pageId = $this->params()->fromRoute('page_id');
-        $this->getPageService()->deletePage($pageId);
+        $this->pageService->deletePage($pageId);
         $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));
     }
 
@@ -74,7 +82,7 @@ class PageAdminController extends AbstractActionController
         $result['uploaded'] = 0;
         if ($request->isPost()) {
             try {
-                $path = $this->getPageService()->uploadImage($request->getFiles());
+                $path = $this->pageService->uploadImage($request->getFiles());
                 $result['url'] = $request->getBasePath() . '/' . $path;
                 $result['fileName'] = $path;
                 $result['uploaded'] = 1;
@@ -84,15 +92,5 @@ class PageAdminController extends AbstractActionController
         }
 
         return new JsonModel($result);
-    }
-
-    /**
-     * Get the Page service.
-     *
-     * @return \Frontpage\Service\Page
-     */
-    protected function getPageService()
-    {
-        return $this->getServiceLocator()->get('frontpage_service_page');
     }
 }

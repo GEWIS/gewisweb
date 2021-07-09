@@ -8,9 +8,27 @@ use Zend\View\Model\ViewModel;
 
 class OrganController extends AbstractActionController
 {
+
+    /**
+     * @var \Frontpage\Service\Frontpage
+     */
+    private $organService;
+
+    /**
+     * @var \Activity\Service\ActivityQuery
+     */
+    private $activityQueryService;
+
+
+    public function __construct(\Frontpage\Service\Frontpage $organService, \Activity\Service\ActivityQuery $activityQueryService)
+    {
+        $this->organService = $organService;
+        $this->activityQueryService = $activityQueryService;
+    }
+
     public function committeeListAction()
     {
-        $committees = $this->getOrganService()->findActiveOrgansByType(Organ::ORGAN_TYPE_COMMITTEE);
+        $committees = $this->organService->findActiveOrgansByType(Organ::ORGAN_TYPE_COMMITTEE);
 
         return new ViewModel([
             'committees' => $committees
@@ -19,8 +37,8 @@ class OrganController extends AbstractActionController
 
     public function fraternityListAction()
     {
-        $activeFraternities = $this->getOrganService()->findActiveOrgansByType(Organ::ORGAN_TYPE_FRATERNITY);
-        $abrogatedFraternities = $this->getOrganService()->findAbrogatedOrgansByType(Organ::ORGAN_TYPE_FRATERNITY);
+        $activeFraternities = $this->organService->findActiveOrgansByType(Organ::ORGAN_TYPE_FRATERNITY);
+        $abrogatedFraternities = $this->organService->findAbrogatedOrgansByType(Organ::ORGAN_TYPE_FRATERNITY);
 
         return new ViewModel([
             'activeFraternities' => $activeFraternities,
@@ -32,12 +50,12 @@ class OrganController extends AbstractActionController
     {
         $type = $this->params()->fromRoute('type');
         $abbr = $this->params()->fromRoute('abbr');
-        $organService = $this->getOrganService();
+        $organService = $this->organService;
         try {
             $organ = $organService->findOrganByAbbr($abbr, $type, true);
             $organMemberInformation = $organService->getOrganMemberInformation($organ);
 
-            $activities = $this->getActivityQueryService()->getOrganActivities($organ, 3);
+            $activities = $this->activityQueryService->getOrganActivities($organ, 3);
 
             return new ViewModel(array_merge([
                 'organ' => $organ,
@@ -46,21 +64,5 @@ class OrganController extends AbstractActionController
         } catch (\Doctrine\ORM\NoResultException $e) {
             return $this->notFoundAction();
         }
-    }
-
-    /**
-     * Get the organ service.
-     */
-    public function getOrganService()
-    {
-        return $this->getServiceLocator()->get('decision_service_organ');
-    }
-
-    /**
-     * Get the activity service.
-     */
-    public function getActivityQueryService()
-    {
-        return $this->getServiceLocator()->get('activity_service_activityQuery');
     }
 }

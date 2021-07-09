@@ -8,11 +8,20 @@ use Zend\Paginator\Paginator;
 
 class NewsAdminController extends AbstractActionController
 {
+
+    /**
+     * @var \Frontpage\Service\News
+     */
+    private $newsService;
+
+    public function __construct(\Frontpage\Service\News $newsService)
+    {
+        $this->newsService = $newsService;
+    }
+
     public function listAction()
     {
-        $newsService = $this->getNewsService();
-
-        $adapter = $newsService->getPaginatorAdapter();
+        $adapter = $this->newsService->getPaginatorAdapter();
         $paginator = new Paginator($adapter);
         $paginator->setDefaultItemCountPerPage(15);
 
@@ -32,15 +41,14 @@ class NewsAdminController extends AbstractActionController
      */
     public function createAction()
     {
-        $newsService = $this->getNewsService();
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($newsService->createNewsItem($request->getPost())) {
+            if ($this->newsService->createNewsItem($request->getPost())) {
                 $this->redirect()->toUrl($this->url()->fromRoute('admin_news'));
             }
         }
 
-        $form = $newsService->getNewsItemForm();
+        $form = $this->newsService->getNewsItemForm();
 
         $view = new ViewModel([
             'form' => $form,
@@ -58,16 +66,15 @@ class NewsAdminController extends AbstractActionController
      */
     public function editAction()
     {
-        $newsService = $this->getNewsService();
         $newsItemId = $this->params()->fromRoute('item_id');
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($newsService->updateNewsItem($newsItemId, $request->getPost())) {
+            if ($this->newsService->updateNewsItem($newsItemId, $request->getPost())) {
                 $this->redirect()->toUrl($this->url()->fromRoute('admin_news'));
             }
         }
 
-        $form = $newsService->getNewsItemForm($newsItemId);
+        $form = $this->newsService->getNewsItemForm($newsItemId);
 
         return new ViewModel([
             'form' => $form,
@@ -83,17 +90,7 @@ class NewsAdminController extends AbstractActionController
     public function deleteAction()
     {
         $newsItemId = $this->params()->fromRoute('item_id');
-        $this->getNewsService()->deleteNewsItem($newsItemId);
+        $this->newsService->deleteNewsItem($newsItemId);
         $this->redirect()->toUrl($this->url()->fromRoute('admin_news'));
-    }
-
-    /**
-     * Get the News service.
-     *
-     * @return \Frontpage\Service\News
-     */
-    protected function getNewsService()
-    {
-        return $this->getServiceLocator()->get('frontpage_service_news');
     }
 }
