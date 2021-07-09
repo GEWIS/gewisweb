@@ -3,7 +3,6 @@
 use User\Controller\ApiAuthenticationController;
 use User\Controller\Factory\ApiAuthenticationControllerFactory;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'router' => [

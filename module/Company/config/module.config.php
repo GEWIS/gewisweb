@@ -324,8 +324,10 @@ return [
         ],
     ],
     'view_helpers' => [
-        'invokables' => [
-            'truncate' => 'Application\View\Helper\Truncate'
+        'factories' => [
+            'truncate' => function () {
+                return new \Application\View\Helper\Truncate();
+            },
         ],
     ],
 ];

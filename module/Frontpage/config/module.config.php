@@ -1,7 +1,6 @@
 <?php
 
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'controllers' => [

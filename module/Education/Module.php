@@ -31,10 +31,10 @@ class Module
     public function getServiceConfig()
     {
         return [
-            'invokables' => [
-                'education_service_exam' => 'Education\Service\Exam',
-            ],
             'factories' => [
+                'education_service_exam' => function () {
+                    return new \Education\Service\Exam();
+                },
                 'education_form_tempupload' => function ($sm) {
                     return new \Education\Form\TempUpload(
                         $sm->get('translator')

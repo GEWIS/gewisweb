@@ -1,7 +1,6 @@
 <?php
 
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'router' => [
@@ -457,7 +456,9 @@ return [
                 $entityManager = $serviceManager->getServiceLocator()->get('photo_doctrine_em');
                 return new \Photo\Controller\PhotoAdminController($photoService, $entityManager);
             },
-            'Photo\Controller\Api' => InvokableFactory::class
+            'Photo\Controller\Api' => function () {
+                return new \Photo\Controller\ApiController();
+            },
         ]
     ],
     'controller_plugins' => [

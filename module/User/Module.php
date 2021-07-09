@@ -85,13 +85,16 @@ class Module
                 'Zend\Authentication\AuthenticationService' => 'user_auth_service'
             ],
 
-            'invokables' => [
-                'user_service_user' => 'User\Service\User',
-                'user_service_apiuser' => 'User\Service\ApiUser',
-                'user_service_email' => 'User\Service\Email',
-            ],
-
             'factories' => [
+                'user_service_user' => function () {
+                    return new \User\Service\User();
+                },
+                'user_service_apiuser' => function () {
+                    return new \User\Service\ApiUser();
+                },
+                'user_service_email' => function () {
+                    return new \User\Service\Email();
+                },
                 ApiApp::class => ApiAppFactory::class,
                 \User\Mapper\ApiApp::class => \User\Mapper\Factory\ApiAppFactory::class,
                 'user_auth_storage' => function ($sm) {

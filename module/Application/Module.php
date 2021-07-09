@@ -87,11 +87,13 @@ class Module
     public function getServiceConfig()
     {
         return [
-            'invokables' => [
-                'application_service_legacy' => 'Application\Service\Legacy',
-                'application_service_email' => 'Application\Service\Email'
-            ],
             'factories' => [
+                'application_service_legacy' => function () {
+                    return new \Application\Service\Legacy();
+                },
+                'application_service_email' => function () {
+                    return new \Application\Service\Email();
+                },
                 'application_service_storage' => function ($sm) {
                     $storageConfig = $sm->get('config')['storage'];
                     return new \Application\Service\FileStorage($storageConfig);

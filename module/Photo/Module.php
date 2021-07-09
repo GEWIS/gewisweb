@@ -45,14 +45,22 @@ class Module
     public function getServiceConfig()
     {
         return [
-            'invokables' => [
-                'photo_service_album' => 'Photo\Service\Album',
-                'photo_service_metadata' => 'Photo\Service\Metadata',
-                'photo_service_photo' => 'Photo\Service\Photo',
-                'photo_service_album_cover' => 'Photo\Service\AlbumCover',
-                'photo_service_admin' => 'Photo\Service\Admin'
-            ],
             'factories' => [
+                'photo_service_album' => function () {
+                    return new \Photo\Service\Album();
+                },
+                'photo_service_metadata' => function () {
+                    return new \Photo\Service\Metadata();
+                },
+                'photo_service_photo' => function () {
+                    return new \Photo\Service\Photo();
+                },
+                'photo_service_album_cover' => function () {
+                    return new \Photo\Service\AlbumCover();
+                },
+                'photo_service_admin' => function () {
+                    return new \Photo\Service\Admin();
+                },
                 'photo_form_album_edit' => function ($sm) {
                     $form = new Form\EditAlbum(
                         $sm->get('translator')

@@ -33,12 +33,16 @@ class Module
     public function getServiceConfig()
     {
         return [
-            'invokables' => [
-                'decision_service_organ' => 'Decision\Service\Organ',
-                'decision_service_decision' => 'Decision\Service\Decision',
-                'decision_service_member' => 'Decision\Service\Member'
-            ],
             'factories' => [
+                'decision_service_organ' => function () {
+                    return new \Decision\Service\Organ();
+                },
+                'decision_service_decision' => function () {
+                    return new \Decision\Service\Decision();
+                },
+                'decision_service_member' => function () {
+                    return new \Decision\Service\Member();
+                },
                 'decision_mapper_member' => function ($sm) {
                     return new \Decision\Mapper\Member(
                         $sm->get('decision_doctrine_em')

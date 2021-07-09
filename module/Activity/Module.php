@@ -49,14 +49,22 @@ class Module
     public function getServiceConfig()
     {
         return [
-            'invokables' => [
-                'activity_service_activity' => 'Activity\Service\Activity',
-                'activity_service_activityQuery' => 'Activity\Service\ActivityQuery',
-                'activity_service_category' => 'Activity\Service\ActivityCategory',
-                'activity_service_signupListQuery' => 'Activity\Service\SignupListQuery',
-                'activity_form_activity_signup' => 'Activity\Form\ActivitySignup'
-            ],
             'factories' => [
+                'activity_service_activity' => function () {
+                    return new \Activity\Service\Activity();
+                },
+                'activity_service_activityQuery' => function () {
+                    return new \Activity\Service\ActivityQuery();
+                },
+                'activity_service_category' => function () {
+                    return new \Activity\Service\ActivityCategory();
+                },
+                'activity_service_signupListQuery' => function () {
+                    return new \Activity\Service\SignupListQuery();
+                },
+                'activity_form_activity_signup' => function () {
+                    return new \Activity\Form\Signup();
+                },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
                 'activity_doctrine_em' => function ($sm) {

@@ -7,8 +7,6 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-use Zend\ServiceManager\Factory\InvokableFactory;
-
 return [
     'router' => [
         'routes' => [
@@ -76,7 +74,9 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            'Application\Controller\Index' => InvokableFactory::class
+            'Application\Controller\Index' => function () {
+                return new \Application\Controller\IndexController();
+            },
         ],
     ],
     'view_manager' => [
@@ -103,10 +103,16 @@ return [
         ],
     ],
     'view_helpers' => [
-        'invokables' => [
-            'featuredCompanyPackage' => 'Application\View\Helper\FeaturedCompanyPackage',
-            'bootstrapElementError' => 'Application\View\Helper\BootstrapElementError',
-            'localisedTextElement' => 'Application\View\Helper\LocalisedTextElement',
+        'factories' => [
+            'featuredCompanyPackage' => function () {
+                return new \Application\View\Helper\FeaturedCompanyPackage();
+            },
+            'bootstrapElementError' => function () {
+                return new \Application\View\Helper\BootstrapElementError();
+            },
+            'localisedTextElement' => function () {
+                return new \Application\View\Helper\LocalisedTextElement();
+            },
         ],
     ],
 ];

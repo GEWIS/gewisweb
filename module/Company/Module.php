@@ -167,11 +167,13 @@ class Module
      */
     public function getServiceConfig()
     {
-        $factories = array_merge($this->getMapperFactories(), $this->getOtherFactories(), $this->getFormFactories());
+        $serviceFactories = [
+            'company_service_company' => function () {
+                return new \Company\Service\Company();
+            },
+        ];
+        $factories = array_merge($serviceFactories, $this->getMapperFactories(), $this->getOtherFactories(), $this->getFormFactories());
         return [
-            'invokables' => [
-                'company_service_company' => 'Company\Service\Company',
-            ],
             'factories' => $factories,
         ];
     }

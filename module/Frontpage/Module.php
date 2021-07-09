@@ -31,13 +31,19 @@ class Module
     public function getServiceConfig()
     {
         return [
-            'invokables' => [
-                'frontpage_service_frontpage' => 'Frontpage\Service\Frontpage',
-                'frontpage_service_page' => 'Frontpage\Service\Page',
-                'frontpage_service_poll' => 'Frontpage\Service\Poll',
-                'frontpage_service_news' => 'Frontpage\Service\News'
-            ],
             'factories' => [
+                'frontpage_service_frontpage' => function () {
+                    return new \Frontpage\Service\Frontpage();
+                },
+                'frontpage_service_page' => function () {
+                    return new \Frontpage\Service\Page();
+                },
+                'frontpage_service_poll' => function () {
+                    return new \Frontpage\Service\Poll();
+                },
+                'frontpage_service_news' => function () {
+                    return new \Frontpage\Service\News();
+                },
                 'frontpage_form_page' => function ($sm) {
                     $form = new \Frontpage\Form\Page(
                         $sm->get('translator')
