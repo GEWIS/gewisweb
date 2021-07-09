@@ -7,6 +7,8 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
+use Zend\ServiceManager\Factory\InvokableFactory;
+
 return [
     'router' => [
         'routes' => [
@@ -73,8 +75,8 @@ return [
         ],
     ],
     'controllers' => [
-        'invokables' => [
-            'Application\Controller\Index' => 'Application\Controller\IndexController'
+        'factories' => [
+            'Application\Controller\Index' => InvokableFactory::class
         ],
     ],
     'view_manager' => [
