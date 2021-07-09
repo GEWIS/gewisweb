@@ -454,8 +454,8 @@ return [
             },
             'Photo\Controller\Album' => function (ContainerInterface $serviceManager) {
                 $albumService = $serviceManager->getServiceLocator()->get("photo_service_album");
-                $pageCache = $this->getServiceLocator()->get('album_page_cache');
-                $photoConfig = $this->getServiceLocator()->get('config')['photo'];
+                $pageCache = $serviceManager->getServiceLocator()->get('album_page_cache');
+                $photoConfig = $serviceManager->getServiceLocator()->get('config')['photo'];
                 return new AlbumController($albumService, $pageCache, $photoConfig);
             },
             'Photo\Controller\PhotoAdmin' => function (ContainerInterface $serviceManager) {

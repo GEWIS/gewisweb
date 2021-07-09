@@ -371,7 +371,7 @@ return [
             'Decision\Controller\Member' => function (ContainerInterface $serviceManager) {
                 $memberService = $serviceManager->getServiceLocator()->get('decision_service_member');
                 $decisionService = $serviceManager->getServiceLocator()->get('decision_service_decision');
-                $regulationsConfig = $this->getServiceLocator()->get('config')['regulations'];
+                $regulationsConfig = $serviceManager->getServiceLocator()->get('config')['regulations'];
                 return new MemberController($memberService, $decisionService, $regulationsConfig);
             },
             'Decision\Controller\MemberApi' => function (ContainerInterface $serviceManager) {
