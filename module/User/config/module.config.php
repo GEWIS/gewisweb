@@ -154,8 +154,6 @@ return [
         ],
     ],
     'controllers' => [
-        'invokables' => [
-        ],
         'factories' => [
             'User\Controller\User' => function (ContainerInterface $serviceManager) {
                 $userService = $serviceManager->getServiceLocator()->get("user_service_user");

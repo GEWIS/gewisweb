@@ -2,16 +2,6 @@
 
 return [
     'controllers' => [
-        'invokables' => [
-            'Frontpage\Controller\Frontpage' => 'Frontpage\Controller\FrontpageController',
-            'Frontpage\Controller\Organ' => 'Frontpage\Controller\OrganController',
-            'Frontpage\Controller\Page' => 'Frontpage\Controller\PageController',
-            'Frontpage\Controller\PageAdmin' => 'Frontpage\Controller\PageAdminController',
-            'Frontpage\Controller\Poll' => 'Frontpage\Controller\PollController',
-            'Frontpage\Controller\PollAdmin' => 'Frontpage\Controller\PollAdminController',
-            'Frontpage\Controller\NewsAdmin' => 'Frontpage\Controller\NewsAdminController',
-            'Frontpage\Controller\Admin' => 'Frontpage\Controller\AdminController',
-        ],
         'factories' => [
             'Frontpage\Controller\Frontpage' => function (ContainerInterface $serviceManager) {
                 $frontpageService = $serviceManager->getServiceLocator()->get('frontpage_service_frontpage');
