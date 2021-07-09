@@ -7,13 +7,24 @@ use Zend\View\Model\ViewModel;
 
 class OrganAdminController extends AbstractActionController
 {
+
+    /**
+     * @var \Decision\Service\Organ
+     */
+    private $organService;
+
+    public function __construct(\Decision\Service\Organ $organService)
+    {
+        $this->organService = $organService;
+    }
+
     /**
      * Index action, shows all active organs.
      */
     public function indexAction()
     {
         return new ViewModel([
-            'organs' => $this->getOrganService()->getEditableOrgans()
+            'organs' => $this->organService->getEditableOrgans()
         ]);
     }
 
@@ -22,28 +33,19 @@ class OrganAdminController extends AbstractActionController
      */
     public function editAction()
     {
-        $organService = $this->getOrganService();
         $organId = $this->params()->fromRoute('organ_id');
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($organService->updateOrganInformation($organId, $request->getPost(), $request->getFiles())) {
+            if ($this->organService->updateOrganInformation($organId, $request->getPost(), $request->getFiles())) {
                 $this->redirect()->toUrl($this->url()->fromRoute('admin_organ'));
             }
         }
 
-        $organInformation = $organService->getEditableOrganInformation($organId);
-        $form = $organService->getOrganInformationForm($organInformation);
+        $organInformation = $this->organService->getEditableOrganInformation($organId);
+        $form = $this->organService->getOrganInformationForm($organInformation);
 
         return new ViewModel([
             'form' => $form
         ]);
-    }
-
-    /**
-     * Get the organ service.
-     */
-    public function getOrganService()
-    {
-        return $this->getServiceLocator()->get('decision_service_organ');
     }
 }

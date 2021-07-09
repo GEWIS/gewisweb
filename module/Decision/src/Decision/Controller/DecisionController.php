@@ -8,13 +8,24 @@ use Decision\Controller\FileBrowser\LocalFileReader as LocalFileReader;
 
 class DecisionController extends AbstractActionController
 {
+
+    /**
+     * @var \Decision\Service\Decision
+     */
+    private $decisionService;
+
+    public function __construct(\Decision\Service\Decision $decisionService)
+    {
+        $this->decisionService = $decisionService;
+    }
+
     /**
      * Index action, shows meetings.
      */
     public function indexAction()
     {
         return new ViewModel([
-            'meetings' => $this->getDecisionService()->getMeetings()
+            'meetings' => $this->decisionService->getMeetings()
         ]);
     }
 
@@ -27,8 +38,8 @@ class DecisionController extends AbstractActionController
         $number = $this->params()->fromRoute('number');
 
         try {
-            $meeting = $this->getDecisionService()->getMeeting($type, $number);
-            $response = $this->getDecisionService()->getMeetingNotesDownload($meeting);
+            $meeting = $this->decisionService->getMeeting($type, $number);
+            $response = $this->decisionService->getMeetingNotesDownload($meeting);
             if (is_null($response)) {
                 return $this->notFoundAction();
             }
@@ -44,8 +55,8 @@ class DecisionController extends AbstractActionController
         $id = $this->params()->fromRoute('id');
 
         try {
-            $meetingDocument = $this->getDecisionService()->getMeetingDocument($id);
-            $response = $this->getDecisionService()->getMeetingDocumentDownload($meetingDocument);
+            $meetingDocument = $this->decisionService->getMeetingDocument($id);
+            $response = $this->decisionService->getMeetingDocumentDownload($meetingDocument);
             if (is_null($response)) {
                 return $this->notFoundAction();
             }
@@ -63,10 +74,9 @@ class DecisionController extends AbstractActionController
     {
         $type = $this->params()->fromRoute('type');
         $number = $this->params()->fromRoute('number');
-        $service = $this->getDecisionService();
 
         try {
-            $meeting = $service->getMeeting($type, $number);
+            $meeting = $this->decisionService->getMeeting($type, $number);
 
             return new ViewModel([
                 'meeting' => $meeting
@@ -81,36 +91,35 @@ class DecisionController extends AbstractActionController
      */
     public function searchAction()
     {
-        $service = $this->getDecisionService();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $result = $service->search($request->getPost());
+            $result = $this->decisionService->search($request->getPost());
 
             if (null !== $result) {
                 return new ViewModel([
                     'result' => $result,
-                    'form' => $service->getSearchDecisionForm()
+                    'form' => $this->decisionService->getSearchDecisionForm()
                 ]);
             }
         }
 
         return new ViewModel([
-            'form' => $service->getSearchDecisionForm()
+            'form' => $this->decisionService->getSearchDecisionForm()
         ]);
     }
 
     public function authorizationsAction()
     {
-        $meeting = $this->getDecisionService()->getLatestAV();
+        $meeting = $this->decisionService->getLatestAV();
         $authorization = null;
         if (!is_null($meeting)) {
-            $authorization = $this->getDecisionService()->getUserAuthorization($meeting->getNumber());
+            $authorization = $this->decisionService->getUserAuthorization($meeting->getNumber());
         }
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $authorization = $this->getDecisionService()->createAuthorization($request->getPost());
+            $authorization = $this->decisionService->createAuthorization($request->getPost());
             if ($authorization) {
                 return new ViewModel([
                     'meeting' => $meeting,
@@ -119,7 +128,7 @@ class DecisionController extends AbstractActionController
             }
         }
 
-        $form = $this->getDecisionService()->getAuthorizationForm();
+        $form = $this->decisionService->getAuthorizationForm();
 
         return new ViewModel([
             'meeting' => $meeting,
@@ -133,8 +142,8 @@ class DecisionController extends AbstractActionController
      */
     public function filesAction()
     {
-        if (!$this->getDecisionService()->isAllowedToBrowseFiles()) {
-            $translator = $this->getDecisionService()->getTranslator();
+        if (!$this->decisionService->isAllowedToBrowseFiles()) {
+            $translator = $this->decisionService->getTranslator();
             throw new \User\Permissions\NotAllowedException(
                 $translator->translate('You are not allowed to browse files.')
             );
@@ -169,13 +178,5 @@ class DecisionController extends AbstractActionController
         //download the file
         $result = $fileReader->downloadFile($path);
         return is_null($result) ? $this->notFoundAction() : $result;
-    }
-
-    /**
-     * Get the decision service.
-     */
-    public function getDecisionService()
-    {
-        return $this->getServiceLocator()->get('decision_service_decision');
     }
 }

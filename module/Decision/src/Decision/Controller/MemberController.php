@@ -8,23 +8,44 @@ use Zend\View\Model\JsonModel;
 
 class MemberController extends AbstractActionController
 {
+
+    /**
+     * @var \Decision\Service\Member
+     */
+    private $memberService;
+
+    /**
+     * @var \Decision\Service\Decision
+     */
+    private $decisionService;
+
+    /**
+     * @var array
+     */
+    private $regulationsConfig;
+
+    public function __construct(\Decision\Service\Member $memberService, \Decision\Service\Decision $decisionService, array $regulationsConfig)
+    {
+        $this->memberService = $memberService;
+        $this->decisionService = $decisionService;
+        $this->regulationsConfig = $regulationsConfig;
+    }
+
     public function indexAction()
     {
-        $decisionService = $this->getServiceLocator()->get('decision_service_decision');
-
         // Get the latest 3 meetings of each type and flatten result
         $meetingsCollection = [
-            'AV' => array_column($decisionService->getPastMeetings(3, 'AV'), 0),
-            'BV' => array_column($decisionService->getPastMeetings(3, 'BV'), 0),
-            'VV' => array_column($decisionService->getPastMeetings(3, 'VV'), 0),
+            'AV' => array_column($this->decisionService->getPastMeetings(3, 'AV'), 0),
+            'BV' => array_column($this->decisionService->getPastMeetings(3, 'BV'), 0),
+            'VV' => array_column($this->decisionService->getPastMeetings(3, 'VV'), 0),
         ];
 
         $member = $this->identity()->getMember();
 
         return new ViewModel([
             'member' => $member,
-            'isActive' => $this->getMemberService()->isActiveMember(),
-            'upcoming' => $decisionService->getUpcomingMeeting(),
+            'isActive' => $this->memberService->isActiveMember(),
+            'upcoming' => $this->decisionService->getUpcomingMeeting(),
             'meetingsCollection' => $meetingsCollection,
         ]);
     }
@@ -34,7 +55,7 @@ class MemberController extends AbstractActionController
      */
     public function selfAction()
     {
-        return new ViewModel($this->getMemberService()->getMembershipInfo());
+        return new ViewModel($this->memberService->getMembershipInfo());
     }
 
     /**
@@ -42,7 +63,7 @@ class MemberController extends AbstractActionController
      */
     public function viewAction()
     {
-        $info = $this->getMemberService()->getMembershipInfo($this->params()->fromRoute('lidnr'));
+        $info = $this->memberService->getMembershipInfo($this->params()->fromRoute('lidnr'));
 
         if (null === $info) {
             return $this->notFoundAction();
@@ -60,7 +81,7 @@ class MemberController extends AbstractActionController
 
         if (!empty($name)) {
             $members = [];
-            foreach ($this->getMemberService()->searchMembersByName($name) as $member) {
+            foreach ($this->memberService->searchMembersByName($name) as $member) {
                 $members[] = [
                     'lidnr' => $member->getLidnr(),
                     'fullName' => $member->getFullname(),
@@ -82,11 +103,11 @@ class MemberController extends AbstractActionController
     public function canAuthorizeAction()
     {
         $lidnr = $this->params()->fromQuery('q');
-        $meeting = $this->getDecisionService()->getLatestAV();
+        $meeting = $this->decisionService->getLatestAV();
 
         if (!empty($lidnr) && !empty($meeting)) {
-            $member = $this->getMemberService()->findMemberByLidNr($lidnr);
-            $canAuthorize = $this->getMemberService()->canAuthorize($member, $meeting);
+            $member = $this->memberService->findMemberByLidNr($lidnr);
+            $canAuthorize = $this->memberService->canAuthorize($member, $meeting);
 
             if ($canAuthorize) {
                 return new JsonModel([
@@ -107,7 +128,7 @@ class MemberController extends AbstractActionController
     public function birthdaysAction()
     {
         return new ViewModel([
-            'members' => $this->getMemberService()->getBirthdayMembers(7)
+            'members' => $this->memberService->getBirthdayMembers(7)
         ]);
     }
 
@@ -116,7 +137,7 @@ class MemberController extends AbstractActionController
      */
     public function dreamsparkAction()
     {
-        $url = $this->getMemberService()->getDreamsparkUrl();
+        $url = $this->memberService->getDreamsparkUrl();
 
         return $this->redirect()->toUrl($url);
     }
@@ -127,30 +148,11 @@ class MemberController extends AbstractActionController
     public function downloadRegulationAction()
     {
         $regulation = $this->params("regulation");
-        $config = $this->getServiceLocator()->get('config')['regulations'];
-        if (isset($config['regulation'])) {
+        if (isset($this->regulationsConfig['regulation'])) {
             $this->getResponse()->setStatusCode(404);
         }
-        $path = $config[$regulation];
+        $path = $this->regulationsConfig[$regulation];
 
         return $this->redirect()->toUrl($this->url()->fromRoute('decision/files', ['path' => '']) . $path);
-    }
-
-    /**
-     * Get the member service.
-     *
-     * @return Decision\Service\Member
-     */
-    public function getMemberService()
-    {
-        return $this->getServiceLocator()->get('decision_service_member');
-    }
-
-    /**
-     * Get the decision service.
-     */
-    public function getDecisionService()
-    {
-        return $this->getServiceLocator()->get('decision_service_decision');
     }
 }

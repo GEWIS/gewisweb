@@ -11,16 +11,26 @@ use Zend\Console\Request as ConsoleRequest;
 
 class AdminController extends AbstractActionController
 {
+
+    /**
+     * @var \Decision\Service\Decision
+     */
+    private $decisionService;
+
+    public function __construct(\Decision\Service\Decision $decisionService)
+    {
+        $this->decisionService = $decisionService;
+    }
+
     /**
      * Notes upload action.
      */
     public function notesAction()
     {
-        $service = $this->getDecisionService();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            if ($service->uploadNotes($request->getPost(), $request->getFiles())) {
+            if ($this->decisionService->uploadNotes($request->getPost(), $request->getFiles())) {
                 return new ViewModel([
                     'success' => true
                 ]);
@@ -28,7 +38,7 @@ class AdminController extends AbstractActionController
         }
 
         return new ViewModel([
-            'form' => $service->getNotesForm()
+            'form' => $this->decisionService->getNotesForm()
         ]);
     }
 
@@ -37,11 +47,10 @@ class AdminController extends AbstractActionController
      */
     public function documentAction()
     {
-        $service = $this->getDecisionService();
         $type = $this->params()->fromRoute('type');
         $number = $this->params()->fromRoute('number');
-        $meetings = $service->getMeetingsByType('AV');
-        $meetings = array_merge($meetings, $service->getMeetingsByType('VV'));
+        $meetings = $this->decisionService->getMeetingsByType('AV');
+        $meetings = array_merge($meetings, $this->decisionService->getMeetingsByType('VV'));
         if (is_null($number) && !empty($meetings)) {
             $number = $meetings[0]->getNumber();
             $type = $meetings[0]->getType();
@@ -49,25 +58,25 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         $success = false;
         if ($request->isPost()) {
-            if ($service->uploadDocument($request->getPost(), $request->getFiles())) {
+            if ($this->decisionService->uploadDocument($request->getPost(), $request->getFiles())) {
                 $success = true;
             }
         }
         $meeting = $this->getDecisionService()->getMeeting($type, $number);
 
         return new ViewModel([
-            'form' => $service->getDocumentForm(),
+            'form' => $this->decisionService->getDocumentForm(),
             'meetings' => $meetings,
             'meeting' => $meeting,
             'number' => $number,
             'success' => $success,
-            'reorderDocumentForm' => $service->getReorderDocumentForm(),
+            'reorderDocumentForm' => $this->decisionService->getReorderDocumentForm(),
         ]);
     }
 
     public function deleteDocumentAction()
     {
-        $this->getDecisionService()->deleteDocument($this->getRequest()->getPost());
+        $this->decisionService->deleteDocument($this->getRequest()->getPost());
         return $this->redirect()->toRoute('admin_decision/document');
     }
 
@@ -77,7 +86,7 @@ class AdminController extends AbstractActionController
             return $this->getResponse()->setStatusCode(Response::STATUS_CODE_405); // Method Not Allowed
         }
 
-        $form = $this->getDecisionService()->getReorderDocumentForm()
+        $form = $this->decisionService->getReorderDocumentForm()
             ->setData($this->getRequest()->getPost());
 
         if (!$form->isValid()) {
@@ -91,14 +100,14 @@ class AdminController extends AbstractActionController
         $moveDown = ($data['direction'] === 'down') ? true : false;
 
         // Update ordering document
-        $this->getDecisionService()->changePositionDocument($id, $moveDown);
+        $this->decisionService->changePositionDocument($id, $moveDown);
 
         return $this->getResponse()->setStatusCode(Response::STATUS_CODE_204); // No Content (OK)
     }
 
     public function authorizationsAction()
     {
-        $meetings = $this->getDecisionService()->getMeetingsByType('AV');
+        $meetings = $this->decisionService->getMeetingsByType('AV');
         $number = $this->params()->fromRoute('number');
         $authorizations = [];
         if (is_null($number) && !empty($meetings)) {
@@ -106,7 +115,7 @@ class AdminController extends AbstractActionController
         }
 
         if (!is_null($number)) {
-            $authorizations = $this->getDecisionService()->getAllAuthorizations($number);
+            $authorizations = $this->decisionService->getAllAuthorizations($number);
         }
 
         return new ViewModel([
@@ -170,13 +179,5 @@ class AdminController extends AbstractActionController
         $entityManager->flush();
 
         print('Done.' . PHP_EOL);
-    }
-
-    /**
-     * Get the decision service.
-     */
-    public function getDecisionService()
-    {
-        return $this->getServiceLocator()->get('decision_service_decision');
     }
 }

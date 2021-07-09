@@ -7,13 +7,24 @@ use Zend\View\Model\ViewModel;
 
 class OrganController extends AbstractActionController
 {
+
+    /**
+     * @var \Decision\Service\Organ
+     */
+    private $organService;
+
+    public function __construct(\Decision\Service\Organ $organService)
+    {
+        $this->organService = $organService;
+    }
+
     /**
      * Index action, shows all active organs.
      */
     public function indexAction()
     {
         return new ViewModel([
-            'organs' => $this->getOrganService()->getOrgans()
+            'organs' => $this->organService->getOrgans()
         ]);
     }
 
@@ -23,23 +34,14 @@ class OrganController extends AbstractActionController
     public function showAction()
     {
         $organId = $this->params()->fromRoute('organ');
-        $organService = $this->getOrganService();
         try {
-            $organ = $organService->getOrgan($organId);
-            $organMemberInformation = $organService->getOrganMemberInformation($organ);
+            $organ = $this->organService->getOrgan($organId);
+            $organMemberInformation = $this->organService->getOrganMemberInformation($organ);
             return new ViewModel(array_merge([
                 'organ' => $organ
             ], $organMemberInformation));
         } catch (\Doctrine\ORM\NoResultException $e) {
             return $this->notFoundAction();
         }
-    }
-
-    /**
-     * Get the organ service.
-     */
-    public function getOrganService()
-    {
-        return $this->getServiceLocator()->get('decision_service_organ');
     }
 }

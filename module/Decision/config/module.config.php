@@ -1,5 +1,8 @@
 <?php
 
+use Interop\Container\ContainerInterface;
+use Zend\ServiceManager\Factory\InvokableFactory;
+
 return [
     'router' => [
         'routes' => [
@@ -343,13 +346,27 @@ return [
         ],
     ],
     'controllers' => [
-        'invokables' => [
+        'factories' => [
             'Decision\Controller\Decision' => 'Decision\Controller\DecisionController',
-            'Decision\Controller\Organ' => 'Decision\Controller\OrganController',
+            'Decision\Controller\Organ' => function (ContainerInterface $serviceManager) {
+                $organService = $serviceManager->getServiceLocator()->get('decision_service_organ');
+                return new \Decision\Controller\OrganController($organService);
+            },
             'Decision\Controller\Admin' => 'Decision\Controller\AdminController',
-            'Decision\Controller\OrganAdmin' => 'Decision\Controller\OrganAdminController',
-            'Decision\Controller\Member' => 'Decision\Controller\MemberController',
-            'Decision\Controller\MemberApi' => 'Decision\Controller\MemberApiController',
+            'Decision\Controller\OrganAdmin' => function (ContainerInterface $serviceManager) {
+                $organService = $serviceManager->getServiceLocator()->get('decision_service_organ');
+                return new \Decision\Controller\OrganAdminController($organService);
+            },
+            'Decision\Controller\Member' => function (ContainerInterface $serviceManager) {
+                $memberService = $serviceManager->getServiceLocator()->get('decision_service_member');
+                $decisionService = $serviceManager->getServiceLocator()->get('decision_service_decision');
+                $regulationsConfig = $this->getServiceLocator()->get('config')['regulations'];
+                return new \Decision\Controller\MemberController($memberService, $decisionService, $regulationsConfig);
+            },
+            'Decision\Controller\MemberApi' => function (ContainerInterface $serviceManager) {
+                $memberService = $serviceManager->getServiceLocator()->get('decision_service_member');
+                return new \Decision\Controller\MemberApiController($memberService);
+            },
         ]
     ],
     'view_manager' => [
