@@ -293,9 +293,15 @@ return [
         ],
     ],
     'controllers' => [
-        'invokables' => [
-            'Company\Controller\Company' => 'Company\Controller\CompanyController',
-            'Company\Controller\Admin' => 'Company\Controller\AdminController',
+        'factories' => [
+            'Company\Controller\Company' => function (ContainerInterface $serviceManager) {
+                $companyService = $serviceManager->getServiceLocator()->get('company_service_company');
+                return new \Company\Controller\CompanyController($companyService);
+            },
+            'Company\Controller\Admin' => function (ContainerInterface $serviceManager) {
+                $companyService = $serviceManager->getServiceLocator()->get('company_service_company');
+                return new \Company\Controller\AdminController($companyService);
+            },
         ],
     ],
     'view_manager' => [

@@ -7,6 +7,17 @@ use Zend\View\Model\ViewModel;
 
 class CompanyController extends AbstractActionController
 {
+
+    /**
+     * @var \Company\Service\Company
+     */
+    private $companyService;
+
+    public function __construct(\Company\Service\Company $companyService)
+    {
+        $this->companyService = $companyService;
+    }
+
     /**
      *
      * Action to display a list of all nonhidden companies
@@ -14,18 +25,17 @@ class CompanyController extends AbstractActionController
      */
     public function listAction()
     {
-        $companyService = $this->getCompanyService();
-        $featuredPackage = $companyService->getFeaturedPackage();
+        $featuredPackage = $this->companyService->getFeaturedPackage();
         if ($featuredPackage === null) {
             return new ViewModel([
-                'companyList' => $companyService->getCompanyList(),
-                'translator' => $companyService->getTranslator(),
+                'companyList' => $this->companyService->getCompanyList(),
+                'translator' => $this->companyService->getTranslator(),
             ]);
         }
 
         return new ViewModel([
-            'companyList' => $companyService->getCompanyList(),
-            'translator' => $companyService->getTranslator(),
+            'companyList' => $this->companyService->getCompanyList(),
+            'translator' => $this->companyService->getTranslator(),
             'featuredCompany' => $featuredPackage->getCompany(),
             'featuredPackage' => $featuredPackage,
         ]);
@@ -33,15 +43,15 @@ class CompanyController extends AbstractActionController
 
     public function showAction()
     {
-        $companyService = $this->getCompanyService();
+        $this->companyService = $this->getCompanyService();
         $companyName = $this->params('slugCompanyName');
-        $company = $companyService->getCompanyBySlugName($companyName);
+        $company = $this->companyService->getCompanyBySlugName($companyName);
 
         if (!is_null($company)) {
             if (!$company->isHidden()) {
                 return new ViewModel([
                     'company' => $company,
-                    'translator' => $companyService->getTranslator(),
+                    'translator' => $this->companyService->getTranslator(),
                 ]);
             }
         }
@@ -56,10 +66,9 @@ class CompanyController extends AbstractActionController
      */
     public function spotlightAction()
     {
-        $companyService = $this->getCompanyService();
-        $translator = $companyService->getTranslator();
+        $translator = $this->companyService->getTranslator();
 
-        $featuredPackage = $companyService->getFeaturedPackage();
+        $featuredPackage = $this->companyService->getFeaturedPackage();
         if (!is_null($featuredPackage)) {
             // jobs for a single company
             return new ViewModel([
@@ -80,8 +89,7 @@ class CompanyController extends AbstractActionController
      */
     public function jobListAction()
     {
-        $companyService = $this->getCompanyService();
-        $category = $companyService->categoryForSlug($this->params('category'));
+        $category = $this->companyService->categoryForSlug($this->params('category'));
 
         if (is_null($category)) {
             return $this->notFoundAction();
@@ -89,7 +97,7 @@ class CompanyController extends AbstractActionController
 
         $viewModel = new ViewModel([
             'category' => $category,
-            'translator' => $companyService->getTranslator(),
+            'translator' => $this->companyService->getTranslator(),
         ]);
 
         // A job can be a thesis/internship/etc.
@@ -97,19 +105,19 @@ class CompanyController extends AbstractActionController
 
         if ($companyName = $this->params('slugCompanyName', null)) {
             // Retrieve published jobs for one specific company
-            $jobs = $companyService->getActiveJobList([
+            $jobs = $this->companyService->getActiveJobList([
                 'jobCategory' => $jobCategory,
                 'companySlugName' => $companyName,
             ]);
 
             return $viewModel->setVariables([
                 'jobList' => $jobs,
-                'company' => $companyService->getCompanyBySlugName($companyName)
+                'company' => $this->companyService->getCompanyBySlugName($companyName)
             ]);
         }
 
         // Retrieve all published jobs
-        $jobs = $companyService->getActiveJobList([
+        $jobs = $this->companyService->getActiveJobList([
             'jobCategory' => $jobCategory,
         ]);
 
@@ -128,12 +136,11 @@ class CompanyController extends AbstractActionController
      */
     public function jobsAction()
     {
-        $companyService = $this->getCompanyService();
         $jobName = $this->params('slugJobName');
         $companyName = $this->params('slugCompanyName');
-        $category = $companyService->categoryForSlug($this->params('category'));
+        $category = $this->companyService->categoryForSlug($this->params('category'));
         if ($jobName !== null) {
-            $jobs = $companyService->getJobs([
+            $jobs = $this->companyService->getJobs([
                 'companySlugName' => $companyName,
                 'jobSlug' => $jobName,
                 'jobCategory' => ($category->getLanguageNeutralId() !== null) ? $category->getSlug() : null
@@ -142,7 +149,7 @@ class CompanyController extends AbstractActionController
                 if ($jobs[0]->isActive()) {
                     return new ViewModel([
                         'job' => $jobs[0],
-                        'translator' => $companyService->getTranslator(),
+                        'translator' => $this->companyService->getTranslator(),
                         'category' => $category,
                     ]);
                 }
@@ -152,18 +159,8 @@ class CompanyController extends AbstractActionController
         }
 
         return new ViewModel([
-            'activeJobList' => $companyService->getActiveJobList(),
-            'translator' => $companyService->getTranslator(),
+            'activeJobList' => $this->companyService->getActiveJobList(),
+            'translator' => $this->companyService->getTranslator(),
         ]);
-    }
-
-    /**
-     * Method that returns the service object for the company module.
-     *
-     *
-     */
-    protected function getCompanyService()
-    {
-        return $this->getServiceLocator()->get('company_service_company');
     }
 }
