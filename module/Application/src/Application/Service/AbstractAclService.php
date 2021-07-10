@@ -6,9 +6,8 @@ use User\Model\User;
 use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
-abstract class AbstractAclService implements ServiceManagerAwareInterface
+abstract class AbstractAclService
 {
     /**
      * Get the ACL.
@@ -31,10 +30,7 @@ abstract class AbstractAclService implements ServiceManagerAwareInterface
      *
      * @return User|string
      */
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
+    abstract public function getRole();
 
     /**
      * Check if a operation is allowed for the current role.
@@ -58,22 +54,5 @@ abstract class AbstractAclService implements ServiceManagerAwareInterface
             $resource,
             $operation
         );
-    }
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
     }
 }

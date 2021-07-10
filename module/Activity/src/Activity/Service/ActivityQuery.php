@@ -12,10 +12,33 @@ use User\Permissions\NotAllowedException;
 use User\Service\User;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
+use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInterface
 {
+
+    /**
+     * Service manager.
+     *
+     * @var ServiceManager
+     */
+    protected $sm;
+
+    /**
+     * Set the service manager.
+     *
+     * @param ServiceManager $sm
+     */
+    public function setServiceManager(ServiceManager $sm)
+    {
+        $this->sm = $sm;
+    }
+
+    public function getRole()
+    {
+        return $this->sm->get('user_role');
+    }
     /**
      * @var Translator
      */
