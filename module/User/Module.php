@@ -111,7 +111,10 @@ class Module
                 },
                 'user_service_email' => function ($sm) {
                     $translator = $sm->get('translator');
-                    return new Email($translator);
+                    $renderer = $sm->get('ViewRenderer');
+                    $transport = $sm->get('user_mail_transport');
+                    $emailConfig = $sm->get('config')['email'];
+                    return new Email($translator, $renderer, $transport, $emailConfig);
                 },
                 ApiApp::class => ApiAppFactory::class,
                 'user_auth_storage' => function ($sm) {

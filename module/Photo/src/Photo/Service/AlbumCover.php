@@ -3,31 +3,47 @@
 namespace Photo\Service;
 
 
+use Application\Service\FileStorage;
 use Imagick;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 /**
  * Album cover services. Used for (re)generating album covers.
  *
  */
-class AlbumCover implements ServiceManagerAwareInterface
+class AlbumCover
 {
     /**
-     * Service manager.
-     *
-     * @var ServiceManager
+     * @var \Photo\Mapper\Photo
      */
-    protected $sm;
+    private $photoMapper;
 
     /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
+     * @var \Photo\Mapper\Album
      */
-    public function setServiceManager(ServiceManager $sm)
+    private $albumMapper;
+
+    /**
+     * @var FileStorage
+     */
+    private $storage;
+
+    /**
+     * @var array
+     */
+    private $photoConfig;
+
+    /**
+     * @var array
+     */
+    private $storageConfig;
+
+    public function __construct(\Photo\Mapper\Photo $photoMapper, \Photo\Mapper\Album $albumMapper, FileStorage $storage, array $photoConfig, array $storageConfig)
     {
-        $this->sm = $sm;
+        $this->photoMapper = $photoMapper;
+        $this->albumMapper = $albumMapper;
+        $this->storage = $storage;
+        $this->photoConfig = $photoConfig;
+        $this->storageConfig = $storageConfig;
     }
 
     /**
@@ -43,7 +59,7 @@ class AlbumCover implements ServiceManagerAwareInterface
         $cover = $this->generateCover($album);
         $tempFileName = sys_get_temp_dir() . '/CoverImage' . rand() . '.png';
         $cover->writeImage($tempFileName);
-        return $this->getFileStorageService()->storeFile($tempFileName, false);
+        return $this->storage->storeFile($tempFileName, false);
     }
 
     /**
@@ -55,9 +71,8 @@ class AlbumCover implements ServiceManagerAwareInterface
      */
     protected function generateCover($album)
     {
-        $config = $this->getConfig();
-        $columns = $config['album_cover']['cols'];
-        $rows = $config['album_cover']['rows'];
+        $columns = $this->photoConfig['album_cover']['cols'];
+        $rows = $this->photoConfig['album_cover']['rows'];
         $count = $columns * $rows;
         $images = $this->getImages($album, $count);
         /*
@@ -75,9 +90,9 @@ class AlbumCover implements ServiceManagerAwareInterface
         // Make a blank canvas
         $target = new Imagick();
         $target->newImage(
-            $config['album_cover']['width'],
-            $config['album_cover']['height'],
-            $config['album_cover']['background']
+            $this->photoConfig['album_cover']['width'],
+            $this->photoConfig['album_cover']['height'],
+            $this->photoConfig['album_cover']['background']
         );
 
         if (count($images) > 0) {
@@ -98,19 +113,16 @@ class AlbumCover implements ServiceManagerAwareInterface
      */
     protected function getImages($album, $count)
     {
-        $albumMapper = $this->getAlbumMapper();
-        $photoMapper = $this->getPhotoMapper();
-        $storageConfig = $this->getStorageConfig();
-        $photos = $photoMapper->getRandomAlbumPhotos($album, $count);
+        $photos = $this->photoMapper->getRandomAlbumPhotos($album, $count);
         //retrieve more photo's from subalbums
-        foreach ($albumMapper->getSubAlbums($album) as $subAlbum) {
+        foreach ($this->albumMapper->getSubAlbums($album) as $subAlbum) {
             $needed = $count - count($photos);
-            $photos = array_merge($photos, $photoMapper->getRandomAlbumPhotos($subAlbum, $needed));
+            $photos = array_merge($photos, $this->photoMapper->getRandomAlbumPhotos($subAlbum, $needed));
         }
         //convert the photo objects to Imagick objects
         $images = [];
         foreach ($photos as $photo) {
-            $imagePath = $storageConfig['storage_dir'] . '/' . $photo->getSmallThumbPath();
+            $imagePath = $this->storageConfig['storage_dir'] . '/' . $photo->getSmallThumbPath();
             $images[] = new Imagick($imagePath);
         }
 
@@ -127,13 +139,12 @@ class AlbumCover implements ServiceManagerAwareInterface
      */
     protected function drawComposition($target, $columns, $rows, $images)
     {
-        $config = $this->getConfig();
-        $innerBorder = $config['album_cover']['inner_border'];
-        $outerBorder = $config['album_cover']['inner_border'];
+        $innerBorder = $this->photoConfig['album_cover']['inner_border'];
+        $outerBorder = $this->photoConfig['album_cover']['inner_border'];
 
         //calculate the total size of all images inside the outer border
-        $innerWidth = $config['album_cover']['width'] - 2 * $outerBorder;
-        $innerHeight = $config['album_cover']['height'] - 2 * $outerBorder;
+        $innerWidth = $this->photoConfig['album_cover']['width'] - 2 * $outerBorder;
+        $innerHeight = $this->photoConfig['album_cover']['height'] - 2 * $outerBorder;
 
         $innerBorderWidth = ($columns - 1) * $innerBorder;
         $innerBorderHeight = ($rows - 1) * $innerBorder;
@@ -189,75 +200,4 @@ class AlbumCover implements ServiceManagerAwareInterface
 
         return $image;
     }
-
-
-    /**
-     * Get the album mapper.
-     *
-     * @return \Photo\Mapper\Album
-     */
-    public function getAlbumMapper()
-    {
-        return $this->sm->get('photo_mapper_album');
-    }
-
-    /**
-     * Get the photo mapper.
-     *
-     * @return \Photo\Mapper\Photo
-     */
-    public function getPhotoMapper()
-    {
-        return $this->sm->get('photo_mapper_photo');
-    }
-
-    /**
-     * Gets the photo service.
-     *
-     * @return Photo
-     */
-    public function getPhotoService()
-    {
-        return $this->sm->get("photo_service_photo");
-    }
-
-    /**
-     * Gets the photo admin service.
-     *
-     * @return Admin
-     */
-    public function getAdminService()
-    {
-        return $this->sm->get("photo_service_admin");
-    }
-
-    /**
-     * Gets the storage service.
-     *
-     * @return FileStorage
-     */
-    public function getFileStorageService()
-    {
-        return $this->sm->get('application_service_storage');
-    }
-
-    /**
-     * Get the photo config, as used by this service.
-     *
-     * @return array containing the config for the module
-     */
-    public function getConfig()
-    {
-        $config = $this->sm->get('config');
-
-        return $config['photo'];
-    }
-
-    public function getStorageConfig()
-    {
-        $config = $this->sm->get('config');
-
-        return $config['storage'];
-    }
-
 }

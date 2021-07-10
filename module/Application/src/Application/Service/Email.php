@@ -3,14 +3,11 @@
 namespace Application\Service;
 
 
-
 use Decision\Model\Member;
 use Decision\Model\OrganInformation;
 use User\Model\User;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\TransportInterface;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\View\Model\ViewModel;
 use Zend\Mime\Part as MimePart;
 use Zend\Mime\Message as MimeMessage;
@@ -20,23 +17,29 @@ use Zend\View\Renderer\PhpRenderer;
  * This service is used for sending emails.
  * @package Application\Service
  */
-class Email implements ServiceManagerAwareInterface
+class Email
 {
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
 
     /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
+     * @var PhpRenderer
      */
-    public function setServiceManager(ServiceManager $sm)
+    private $renderer;
+
+    /**
+     * @var TransportInterface
+     */
+    private $transport;
+
+    /**
+     * @var array
+     */
+    private $emailConfig;
+
+    public function __construct(PhpRenderer $renderer, TransportInterface $transport, array $emailConfig)
     {
-        $this->sm = $sm;
+        $this->renderer = $renderer;
+        $this->transport = $transport;
+        $this->emailConfig = $emailConfig;
     }
 
     /**
@@ -51,13 +54,11 @@ class Email implements ServiceManagerAwareInterface
     {
         $message = $this->createMessageFromView($view, $data);
 
-        $config = $this->getConfig();
-
-        $message->addFrom($config['from']);
-        $message->addTo($config['to'][$type]);
+        $message->addFrom($this->emailConfig['from']);
+        $message->addTo($this->emailConfig['to'][$type]);
         $message->setSubject($subject);
 
-        $this->getTransport()->send($message);
+        $this->transport->send($message);
     }
 
     /**
@@ -73,14 +74,12 @@ class Email implements ServiceManagerAwareInterface
     {
         $message = $this->createMessageFromView($view, $data);
 
-        $config = $this->getConfig();
-
-        $message->addFrom($config['from']);
-        $message->addTo($config['to'][$type]);
+        $message->addFrom($this->emailConfig['from']);
+        $message->addTo($this->emailConfig['to'][$type]);
         $message->setSubject($subject);
         $message->setReplyTo($user->getEmail());
 
-        $this->getTransport()->send($message);
+        $this->transport->send($message);
     }
 
     /**
@@ -96,14 +95,12 @@ class Email implements ServiceManagerAwareInterface
     {
         $message = $this->createMessageFromView($view, $data);
 
-        $config = $this->getConfig();
-
-        $message->addFrom($config['from']);
+        $message->addFrom($this->emailConfig['from']);
         $message->addTo($recipient->getEmail());
         $message->setSubject($subject);
         $message->setReplyTo($user->getEmail());
 
-        $this->getTransport()->send($message);
+        $this->transport->send($message);
     }
 
     /**
@@ -119,14 +116,12 @@ class Email implements ServiceManagerAwareInterface
     {
         $message = $this->createMessageFromView($view, $data);
 
-        $config = $this->getConfig();
-
-        $message->addFrom($config['from']);
-        $message->addTo($config['to'][$type]);
+        $message->addFrom($this->emailConfig['from']);
+        $message->addTo($this->emailConfig['to'][$type]);
         $message->setSubject($subject);
         $message->setReplyTo($organ->getEmail());
 
-        $this->getTransport()->send($message);
+        $this->transport->send($message);
     }
 
     /**
@@ -162,42 +157,9 @@ class Email implements ServiceManagerAwareInterface
      */
     public function render($template, $vars)
     {
-        $renderer = $this->getRenderer();
-
         $model = new ViewModel($vars);
         $model->setTemplate($template);
 
-        return $renderer->render($model);
-    }
-
-    /**
-     * Get the renderer for the email.
-     *
-     * @return PhpRenderer
-     */
-    public function getRenderer()
-    {
-        return $this->sm->get('ViewRenderer');
-    }
-
-    /**
-     * Get the email transport.
-     *
-     * @return TransportInterface
-     */
-    public function getTransport()
-    {
-        return $this->sm->get('user_mail_transport');
-    }
-
-    /**
-     * Get email configuration.
-     *
-     * @return array
-     */
-    public function getConfig()
-    {
-        $config = $this->sm->get('config');
-        return $config['email'];
+        return $this->renderer->render($model);
     }
 }

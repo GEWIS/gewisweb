@@ -65,8 +65,13 @@ class Module
                     $translator = $sm->get('translator');
                     return new Photo($translator);
                 },
-                'photo_service_album_cover' => function () {
-                    return new AlbumCover();
+                'photo_service_album_cover' => function ($sm) {
+                    $photoMapper = $sm->get('photo_mapper_photo');
+                    $albumMapper = $sm->get('photo_mapper_album');
+                    $storage = $sm->get('application_service_storage');
+                    $photoConfig = $sm->get('config')['photo'];
+                    $storageConfig = $sm->get('config')['storage'];
+                    return new AlbumCover($photoMapper, $albumMapper, $storage, $photoConfig, $storageConfig);
                 },
                 'photo_service_admin' => function ($sm) {
                     $translator = $sm->get('translator');

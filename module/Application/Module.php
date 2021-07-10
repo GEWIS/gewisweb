@@ -101,8 +101,11 @@ class Module
                 'application_service_legacy' => function () {
                     return new Legacy();
                 },
-                'application_service_email' => function () {
-                    return new Email();
+                'application_service_email' => function ($sm) {
+                    $renderer = $sm->get('ViewRenderer');
+                    $transport = $sm->get('user_mail_transport');
+                    $emailConfig = $sm->get('config')['email'];
+                    return new Email($renderer, $transport, $emailConfig);
                 },
                 'application_service_storage' => function ($sm) {
                     $translator = $sm->get('translator');
