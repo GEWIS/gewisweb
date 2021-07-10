@@ -62,10 +62,12 @@ class ApiController extends AbstractActionController
         //Assure the form is used
         if ($this->getRequest()->isPost() && $this->signupService->isAllowedToSubscribe()) {
             $activity = $this->activityQueryService->getActivity($id);
+            // TODO: ->getFields is undefined
             $form = $this->signupService->getForm($activity->getFields());
             $form->setData($this->getRequest()->getPost());
-
+            // TODO: ->getCanSignup() is undefined
             if ($activity->getCanSignup() && $form->isValid()) {
+                // TODO: -> signOff expects a signupList instead of an activity
                 $this->signupService->signUp($activity, $form->getData(FormInterface::VALUES_AS_ARRAY));
                 $params['success'] = true;
             }
@@ -89,6 +91,7 @@ class ApiController extends AbstractActionController
         if ($this->getRequest()->isPost() && $this->signupService->isAllowedToSubscribe()) {
             $activity = $this->activityQueryService->getActivity($id);
             if ($this->signupService->isSignedUp($activity, $user)) {
+                // TODO: -> signOff expects a signupList instead of an activity
                 $this->signupService->signOff($activity, $user);
                 $params['success'] = true;
             }

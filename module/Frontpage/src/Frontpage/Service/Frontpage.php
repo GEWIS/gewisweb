@@ -2,6 +2,7 @@
 
 namespace Frontpage\Service;
 
+use Activity\Model\Activity;
 use Application\Service\AbstractAclService;
 use Company\Service\Company;
 use DateTime;
@@ -9,50 +10,104 @@ use Decision\Service\Member;
 use Doctrine\Common\Proxy\Exception\InvalidArgumentException;
 use Doctrine\ORM\NoResultException;
 use Frontpage\Model\NewsItem;
-use Activity\Model\Activity;
 use Photo\Mapper\Tag;
 use Photo\Service\Photo;
+use User\Model\User;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 /**
  * Frontpage service.
  */
-class Frontpage extends AbstractAclService implements ServiceManagerAwareInterface
+class Frontpage extends AbstractAclService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
     /**
      * @var Translator
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var User|string
+     */
+    private $userRole;
+
+    /**
+     * @var Acl
+     */
+    private $acl;
+
+    /**
+     * @var Poll
+     */
+    private $pollService;
+
+    /**
+     * @var News
+     */
+    private $newsService;
+
+    /**
+     * @var Member
+     */
+    private $memberService;
+
+    /**
+     * @var Company
+     */
+    private $companyService;
+
+    /**
+     * @var Photo
+     */
+    private $photoService;
+
+    /**
+     * @var Tag
+     */
+    private $tagMapper;
+
+    /**
+     * @var \Activity\Mapper\Activity
+     */
+    private $activityMapper;
+
+    /**
+     * @var array
+     */
+    private $frontpageConfig;
+
+    public function __construct(
+        Translator $translator,
+        $userRole,
+        Acl $acl,
+        Poll $pollService,
+        News $newsService,
+        Member $memberService,
+        Company $companyService,
+        Photo $photoService,
+        Tag $tagMapper,
+        \Activity\Mapper\Activity $activityMapper,
+        array $frontpageConfig
+    )
     {
         $this->translator = $translator;
+        $this->userRole = $userRole;
+        $this->acl = $acl;
+        $this->pollService = $pollService;
+        $this->newsService = $newsService;
+        $this->memberService = $memberService;
+        $this->companyService = $companyService;
+        $this->photoService = $photoService;
+        $this->tagMapper = $tagMapper;
+        $this->activityMapper = $activityMapper;
+        $this->frontpageConfig = $frontpageConfig;
     }
+
+    public function getRole()
+    {
+        return $this->userRole;
+    }
+
     /**
      * Get the translator.
      *
@@ -70,13 +125,12 @@ class Frontpage extends AbstractAclService implements ServiceManagerAwareInterfa
     {
         $birthdayInfo = $this->getBirthdayInfo();
         $activities = $this->getUpcomingActivities();
-        $weeklyPhoto = $this->getPhotoService()->getCurrentPhotoOfTheWeek();
-        $pollService = $this->getPollService();
-        $poll = $pollService->getNewestPoll();
-        $pollDetails = $pollService->getPollDetails($poll);
+        $weeklyPhoto = $this->photoService->getCurrentPhotoOfTheWeek();
+        $poll = $this->pollService->getNewestPoll();
+        $pollDetails = $this->pollService->getPollDetails($poll);
         $pollDetails['poll'] = $poll;
         $news = $this->getNewsItems();
-        $companyBanner = $this->getCompanyService()->getCurrentBanner();
+        $companyBanner = $this->companyService->getCurrentBanner();
 
         return [
             'birthdays' => $birthdayInfo['birthdays'],
@@ -97,7 +151,7 @@ class Frontpage extends AbstractAclService implements ServiceManagerAwareInterfa
      */
     public function getBirthdayInfo()
     {
-        $birthdayMembers = $this->getMemberService()->getBirthdayMembers();
+        $birthdayMembers = $this->memberService->getBirthdayMembers();
         $today = new DateTime();
         $birthdays = [];
         $members = [];
@@ -109,7 +163,7 @@ class Frontpage extends AbstractAclService implements ServiceManagerAwareInterfa
         }
 
         try {
-            $tag = $this->getTagMapper()->getMostActiveMemberTag($members);
+            $tag = $this->tagMapper->getMostActiveMemberTag($members);
         } catch (NoResultException $e) {
             $tag = null;
         }
@@ -128,9 +182,9 @@ class Frontpage extends AbstractAclService implements ServiceManagerAwareInterfa
      */
     public function getNewsItems()
     {
-        $count = $this->getConfig()['news_count'];
+        $count = $this->frontpageConfig['news_count'];
         $activities = $this->getUpcomingActivities();
-        $newsItems = $this->getNewsService()->getLatestNewsItems($count);
+        $newsItems = $this->newsService->getLatestNewsItems($count);
         $news = array_merge($activities, $newsItems);
         usort($news, function ($a, $b) {
             if (($a instanceof NewsItem) && ($b instanceof NewsItem)) {
@@ -173,90 +227,8 @@ class Frontpage extends AbstractAclService implements ServiceManagerAwareInterfa
 
     public function getUpcomingActivities()
     {
-        $count = $this->getConfig()['activity_count'];
-        return $this->getActivityMapper()->getUpcomingActivities($count);
-    }
-
-    /**
-     * Get the frontpage config, as used by this service.
-     *
-     * @return array
-     */
-    public function getConfig()
-    {
-        $config = $this->sm->get('config');
-
-        return $config['frontpage'];
-    }
-
-    /**
-     * Get the photo module's tag mapper.
-     *
-     * @return Tag
-     */
-    public function getTagMapper()
-    {
-        return $this->sm->get('photo_mapper_tag');
-    }
-
-    /**
-     * Get the activity module's activity mapper.
-     *
-     * @return \Activity\Mapper\Activity
-     */
-    public function getActivityMapper()
-    {
-        return $this->sm->get('activity_mapper_activity');
-    }
-
-    /**
-     * Get the photo service.
-     *
-     * @return Photo
-     */
-    public function getPhotoService()
-    {
-        return $this->sm->get('photo_service_photo');
-    }
-
-    /**
-     * Get the member service.
-     *
-     * @return Member
-     */
-    public function getMemberService()
-    {
-        return $this->sm->get('Decision_service_member');
-    }
-
-    /**
-     * Get the poll service.
-     *
-     * @return Poll
-     */
-    public function getPollService()
-    {
-        return $this->sm->get('frontpage_service_poll');
-    }
-
-    /**
-     * Get the news service.
-     *
-     * @return News
-     */
-    public function getNewsService()
-    {
-        return $this->sm->get('frontpage_service_news');
-    }
-
-    /**
-     * Get the company service.
-     *
-     * @return Company
-     */
-    public function getCompanyService()
-    {
-        return $this->sm->get('company_service_company');
+        $count = $this->frontpageConfig['activity_count'];
+        return $this->activityMapper->getUpcomingActivities($count);
     }
 
     /**
@@ -266,7 +238,7 @@ class Frontpage extends AbstractAclService implements ServiceManagerAwareInterfa
      */
     public function getAcl()
     {
-        return $this->sm->get('frontpage_acl');
+        return $this->acl;
     }
 
     /**

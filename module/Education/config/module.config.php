@@ -145,11 +145,13 @@ return [
         'factories' => [
             'Education\Controller\Education' => function (ContainerInterface $serviceManager) {
                 $examService = $serviceManager->getServiceLocator()->get('education_service_exam');
-                return new EducationController($examService);
+                $searchCourseForm = $serviceManager->getServiceLocator()->get('company_form_searchcourse');
+                return new EducationController($examService, $searchCourseForm);
             },
             'Education\Controller\Admin' => function (ContainerInterface $serviceManager) {
                 $examService = $serviceManager->getServiceLocator()->get('education_service_exam');
-                return new AdminController($examService);
+                $uploadSummaryForm = $serviceManager->getServiceLocator()->get('education_form_summaryupload');
+                return new AdminController($examService, $uploadSummaryForm);
             },
         ],
     ],

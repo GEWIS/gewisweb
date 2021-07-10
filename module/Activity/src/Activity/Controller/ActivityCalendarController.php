@@ -14,14 +14,20 @@ class ActivityCalendarController extends AbstractActionController
      */
     private $calendarService;
 
-    public function __construct(ActivityCalendar $calendarService)
+    /**
+     * @var array
+     */
+    private $calendarConfig;
+
+    public function __construct(ActivityCalendar $calendarService, array $calendarConfig)
     {
         $this->calendarService = $calendarService;
+        $this->calendarConfig = $calendarConfig;
     }
 
     public function indexAction()
     {
-        $config = $this->calendarService->getConfig();
+        $config = $this->calendarConfig;
 
         return new ViewModel([
             'options' => $this->calendarService->getUpcomingOptions(),

@@ -32,7 +32,8 @@ return [
             },
             'Frontpage\Controller\Poll' => function (ContainerInterface $serviceManager) {
                 $pollService = $serviceManager->getServiceLocator()->get('frontpage_service_poll');
-                return new PollController($pollService);
+                $pollCommentForm = $serviceManager->getServiceLocator()->get('frontpage_form_poll_comment');
+                return new PollController($pollService, $pollCommentForm);
             },
             'Frontpage\Controller\PollAdmin' => function (ContainerInterface $serviceManager) {
                 $pollService = $serviceManager->getServiceLocator()->get('frontpage_service_poll');

@@ -3,61 +3,142 @@
 namespace Decision\Service;
 
 use Application\Service\AbstractAclService;
-
 use Application\Service\Email;
 use Application\Service\FileStorage;
+use Decision\Form\Authorization;
 use Decision\Form\Document;
 use Decision\Form\Notes;
+use Decision\Form\ReorderDocument;
 use Decision\Form\SearchDecision;
-use Decision\Mapper\Authorization;
-use Decision\Mapper\Meeting;
 use Decision\Model\Authorization as AuthorizationModel;
-use Decision\Model\MeetingNotes as NotesModel;
-
+use Decision\Model\Meeting;
 use Decision\Model\MeetingDocument;
+use Decision\Model\MeetingNotes as NotesModel;
 use Doctrine\ORM\PersistentCollection;
 use InvalidArgumentException;
 use User\Permissions\NotAllowedException;
+use User\Service\User;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 /**
  * Decision service.
  */
-class Decision extends AbstractAclService implements ServiceManagerAwareInterface
+class Decision extends AbstractAclService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
     /**
      * @var Translator
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var \User\Model\User|string
+     */
+    private $userRole;
+
+    /**
+     * @var Acl
+     */
+    private $acl;
+
+    /**
+     * @var User
+     */
+    private $userService;
+
+    /**
+     * @var FileStorage
+     */
+    private $storageService;
+
+    /**
+     * @var Email
+     */
+    private $emailService;
+
+    /**
+     * @var \Decision\Mapper\Member
+     */
+    private $memberMapper;
+
+    /**
+     * @var \Decision\Mapper\Meeting
+     */
+    private $meetingMapper;
+
+    /**
+     * @var \Decision\Mapper\Decision
+     */
+    private $decisionMapper;
+
+    /**
+     * @var \Decision\Mapper\Authorization
+     */
+    private $authorizationMapper;
+
+    /**
+     * @var Notes
+     */
+    private $notesForm;
+
+    /**
+     * @var Document
+     */
+    private $documentForm;
+
+    /**
+     * @var ReorderDocument
+     */
+    private $reorderDocumentForm;
+
+    /**
+     * @var SearchDecision
+     */
+    private $searchDecisionForm;
+
+    /**
+     * @var Authorization
+     */
+    private $authorizationForm;
+
+    public function __construct(
+        Translator $translator,
+        $userRole,
+        Acl $acl,
+        User $userService,
+        FileStorage $storageService,
+        Email $emailService,
+        \Decision\Mapper\Member $memberMapper,
+        \Decision\Mapper\Meeting $meetingMapper,
+        \Decision\Mapper\Decision $decisionMapper,
+        \Decision\Mapper\Authorization $authorizationMapper,
+        Notes $notesForm,
+        Document $documentForm,
+        ReorderDocument $reorderDocumentForm,
+        SearchDecision $searchDecisionForm,
+        Authorization $authorizationForm
+    )
     {
         $this->translator = $translator;
+        $this->userRole = $userRole;
+        $this->acl = $acl;
+        $this->userService = $userService;
+        $this->storageService = $storageService;
+        $this->emailService = $emailService;
+        $this->memberMapper = $memberMapper;
+        $this->meetingMapper = $meetingMapper;
+        $this->decisionMapper = $decisionMapper;
+        $this->authorizationMapper = $authorizationMapper;
+        $this->notesForm = $notesForm;
+        $this->documentForm = $documentForm;
+        $this->reorderDocumentForm = $reorderDocumentForm;
+        $this->searchDecisionForm = $searchDecisionForm;
+        $this->authorizationForm = $authorizationForm;
+    }
+
+    public function getRole()
+    {
+        return $this->userRole;
     }
 
     /**
@@ -86,7 +167,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
             );
         }
 
-        return $this->getMeetingMapper()->findAll($limit);
+        return $this->meetingMapper->findAll($limit);
     }
 
     /**
@@ -106,7 +187,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
             );
         }
 
-        return $this->getMeetingMapper()->findPast($limit, $type);
+        return $this->meetingMapper->findPast($limit, $type);
     }
 
     public function getMeetingsByType($type)
@@ -118,7 +199,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
             );
         }
 
-        return $this->getMeetingMapper()->findByType($type);
+        return $this->meetingMapper->findByType($type);
     }
 
     /**
@@ -127,7 +208,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
      * @param string $type
      * @param int $number
      *
-     * @return \Decision\Model\Meeting
+     * @return Meeting
      */
     public function getMeeting($type, $number)
     {
@@ -138,27 +219,27 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
             );
         }
 
-        return $this->getMeetingMapper()->find($type, $number);
+        return $this->meetingMapper->find($type, $number);
     }
 
     /**
      * Returns the latest upcoming AV or null if there is none.
      *
-     * @return \Decision\Model\Meeting|null
+     * @return Meeting|null
      */
     public function getLatestAV()
     {
-        return $this->getMeetingMapper()->findLatestAV();
+        return $this->meetingMapper->findLatestAV();
     }
 
     /**
      * Returns the closest upcoming meeting for members
      *
-     * @return \Decision\Model\Meeting|null
+     * @return Meeting|null
      */
     public function getUpcomingMeeting()
     {
-        return $this->getMeetingMapper()->findUpcomingMeeting();
+        return $this->meetingMapper->findUpcomingMeeting();
     }
 
     /**
@@ -169,7 +250,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function getMeetingDocument($id)
     {
-        return $this->getMeetingMapper()->findDocument($id);
+        return $this->meetingMapper->findDocument($id);
     }
 
     /**
@@ -196,17 +277,17 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
         $extension = pathinfo($path, PATHINFO_EXTENSION);
         $fileName = $meetingDocument->getName() . '.' . $extension;
 
-        return $this->getFileStorageService()->downloadFile($path, $fileName);
+        return $this->storageService->downloadFile($path, $fileName);
     }
 
     /**
      * Returns a download for meeting notes
      *
-     * @param \Decision\Model\Meeting $meeting
+     * @param Meeting $meeting
      *
      * @return response|null
      */
-    public function getMeetingNotesDownload(\Decision\Model\Meeting $meeting)
+    public function getMeetingNotesDownload(Meeting $meeting)
     {
         if (!$this->isAllowed('view_notes', 'meeting')) {
 
@@ -222,7 +303,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
         $path = $meeting->getNotes()->getPath();
         $fileName = $meeting->getType() . '-' . $meeting->getNumber() . '.pdf';
 
-        return $this->getFileStorageService()->downloadFile($path, $fileName);
+        return $this->storageService->downloadFile($path, $fileName);
     }
 
     /**
@@ -248,7 +329,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
         $data = $form->getData();
         $parts = explode('/', $data['meeting']);
         $meeting = $this->getMeeting($parts[0], $parts[1]);
-        $path = $this->getFileStorageService()->storeUploadedFile($data['upload']);
+        $path = $this->storageService->storeUploadedFile($data['upload']);
 
         $meetingNotes = $meeting->getNotes();
         if (is_null($meetingNotes)) {
@@ -257,7 +338,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
         }
         $meetingNotes->setPath($path);
 
-        $mapper = $this->getDecisionMapper();
+        $mapper = $this->decisionMapper;
         $mapper->persist($meetingNotes);
 
         return true;
@@ -285,7 +366,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
 
         $data = $form->getData();
 
-        $path = $this->getFileStorageService()->storeUploadedFile($data['upload']);
+        $path = $this->storageService->storeUploadedFile($data['upload']);
 
         $meeting = explode('/', $data['meeting']);
         $meeting = $this->getMeeting($meeting[0], $meeting[1]);
@@ -296,12 +377,12 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
         $document->setMeeting($meeting);
 
         // Determine document's position in ordering
-        $maxPosition = $this->getMeetingMapper()->findMaxDocumentPosition($meeting);
+        $maxPosition = $this->meetingMapper->findMaxDocumentPosition($meeting);
         $position = is_null($maxPosition) ? 0 : ++$maxPosition; // NULL if meeting doesn't have documents yet
 
         $document->setDisplayPosition($position);
 
-        $this->getMeetingMapper()->persistDocument($document);
+        $this->meetingMapper->persistDocument($document);
         return true;
     }
 
@@ -315,7 +396,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
         }
         $id = $post->toArray()['document'];
         $document = $this->getMeetingDocument($id);
-        $this->getMeetingMapper()->remove($document);
+        $this->meetingMapper->remove($document);
     }
 
     /**
@@ -343,7 +424,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
 
         // Documents are ordered because of @OrderBy annotation on the relation
         /** @var PersistentCollection $documents */
-        $documents = $this->getMeetingMapper()
+        $documents = $this->meetingMapper
             ->findDocumentOrFail($id)
             ->getMeeting()
             ->getDocuments();
@@ -372,7 +453,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
 
             $document->setDisplayPosition($position);
 
-            $this->getMeetingMapper()->persistDocument($document);
+            $this->meetingMapper->persistDocument($document);
         });
     }
 
@@ -402,7 +483,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
 
         $data = $form->getData();
 
-        return $this->getDecisionMapper()->search($data['query']);
+        return $this->decisionMapper->search($data['query']);
     }
 
     /**
@@ -421,7 +502,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
             );
         }
 
-        return $this->getAuthorizationMapper()->find($meetingNumber);
+        return $this->authorizationMapper->find($meetingNumber);
     }
 
     /**
@@ -440,9 +521,9 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
             );
         }
 
-        $lidnr = $this->sm->get('user_service_user')->getIdentity()->getLidnr();
+        $lidnr = $this->userService->getIdentity()->getLidnr();
 
-        return $this->getAuthorizationMapper()->findUserAuthorization($meetingNumber, $lidnr);
+        return $this->authorizationMapper->findUserAuthorization($meetingNumber, $lidnr);
     }
 
     public function createAuthorization($data)
@@ -454,9 +535,9 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
         if (!$form->isValid()) {
             return false;
         }
-        $user = $this->sm->get('user_service_user')->getIdentity();
+        $user = $this->userService->getIdentity();
         $authorizer = $user->getMember();
-        $recipient = $this->getMemberMapper()->findByLidnr($data['recipient']);
+        $recipient = $this->memberMapper->findByLidnr($data['recipient']);
         if (is_null($recipient) || $recipient->getLidnr() === $authorizer->getLidnr()) {
             return false;
         }
@@ -469,10 +550,10 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
         $authorization->setAuthorizer($authorizer);
         $authorization->setRecipient($recipient);
         $authorization->setMeetingNumber($meeting->getNumber());
-        $this->getAuthorizationMapper()->persist($authorization);
+        $this->authorizationMapper->persist($authorization);
 
         // Send an email to the recipient
-        $this->getEmailService()->sendEmailAsUserToUser(
+        $this->emailService->sendEmailAsUserToUser(
             $recipient,
             'email/authorization_received',
             'Machtiging ontvangen | Authorization received',
@@ -481,7 +562,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
         );
 
         // Send a confirmation email to the authorizing member
-        $this->getEmailService()->sendEmailAsUserToUser(
+        $this->emailService->sendEmailAsUserToUser(
             $authorizer,
             'email/authorization_sent',
             'Machtiging verstuurd | Authorization sent',
@@ -506,7 +587,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
             );
         }
 
-        return $this->sm->get('decision_form_notes');
+        return $this->notesForm;
     }
 
     /**
@@ -523,7 +604,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
             );
         }
 
-        return $this->sm->get('decision_form_document');
+        return $this->documentForm;
     }
 
     public function getReorderDocumentForm()
@@ -532,7 +613,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
 
         $this->isAllowedOrFail('upload_document', 'meeting', $errorMessage);
 
-        return $this->sm->get('decision_form_reorder_document');
+        return $this->reorderDocumentForm;
     }
 
     /**
@@ -542,13 +623,13 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function getSearchDecisionForm()
     {
-        return $this->sm->get('decision_form_searchdecision');
+        return $this->searchDecisionForm;
     }
 
     /**
      * Get the Authorization form.
      *
-     * @return \Decision\Form\Authorization
+     * @return Authorization
      */
     public function getAuthorizationForm()
     {
@@ -559,67 +640,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
             );
         }
 
-        return $this->sm->get('decision_form_authorization');
-    }
-
-    /**
-     * Get the meeting mapper.
-     *
-     * @return Meeting
-     */
-    public function getMeetingMapper()
-    {
-        return $this->sm->get('decision_mapper_meeting');
-    }
-
-    /**
-     * Get the decision mapper.
-     *
-     * @return \Decision\Mapper\Decision
-     */
-    public function getDecisionMapper()
-    {
-        return $this->sm->get('decision_mapper_decision');
-    }
-
-    /**
-     * Get the authorization mapper.
-     *
-     * @return Authorization
-     */
-    public function getAuthorizationMapper()
-    {
-        return $this->sm->get('decision_mapper_authorization');
-    }
-
-    /**
-     * Get the email service.
-     *
-     * @return Email
-     */
-    public function getEmailService()
-    {
-        return $this->sm->get('application_service_email');
-    }
-
-    /**
-     * Gets the storage service.
-     *
-     * @return FileStorage
-     */
-    public function getFileStorageService()
-    {
-        return $this->sm->get('application_service_storage');
-    }
-
-    /**
-     * Get the member mapper.
-     *
-     * @return \Decision\Mapper\Member
-     */
-    public function getMemberMapper()
-    {
-        return $this->sm->get('decision_mapper_member');
+        return $this->authorizationForm;
     }
 
     /**
@@ -639,7 +660,7 @@ class Decision extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function getAcl()
     {
-        return $this->sm->get('decision_acl');
+        return $this->acl;
     }
 
     /**

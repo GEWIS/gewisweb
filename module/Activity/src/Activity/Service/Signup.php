@@ -2,6 +2,8 @@
 
 namespace Activity\Service;
 
+use Activity\Mapper\SignupFieldValue;
+use Activity\Mapper\SignupOption;
 use Activity\Model\Activity as ActivityModel;
 use Activity\Model\ExternalSignup as ExternalSignupModel;
 use Activity\Model\Signup as SignupModel;
@@ -11,44 +13,78 @@ use Activity\Model\UserSignup as UserSignupModel;
 use Application\Service\AbstractAclService;
 use DateTime;
 use Decision\Model\Member;
+use Doctrine\ORM\EntityManager;
+use User\Model\User;
 use User\Permissions\NotAllowedException;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
-class Signup extends AbstractAclService implements ServiceManagerAwareInterface
+class Signup extends AbstractAclService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
     /**
      * @var Translator
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var User|string
+     */
+    private $userRole;
+
+    /**
+     * @var Acl
+     */
+    private $acl;
+
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
+    /**
+     * @var \User\Service\User
+     */
+    private $userService;
+
+    /**
+     * @var \Activity\Mapper\Signup
+     */
+    private $signupMapper;
+
+    /**
+     * @var SignupOption
+     */
+    private $signupOptionMapper;
+
+    /**
+     * @var SignupFieldValue
+     */
+    private $signupFieldValueMapper;
+
+    public function __construct(
+        Translator $translator,
+        $userRole,
+        Acl $acl,
+        EntityManager $entityManager,
+        \User\Service\User $userService,
+        \Activity\Mapper\Signup $signupMapper,
+        SignupOption $signupOptionMapper,
+        SignupFieldValue $signupFieldValueMapper
+    )
     {
         $this->translator = $translator;
+        $this->userRole = $userRole;
+        $this->acl = $acl;
+        $this->entityManager = $entityManager;
+        $this->userService = $userService;
+        $this->signupMapper = $signupMapper;
+        $this->signupOptionMapper = $signupOptionMapper;
+        $this->signupFieldValueMapper = $signupFieldValueMapper;
+    }
+
+    public function getRole()
+    {
+        return $this->userRole;
     }
 
     /**
@@ -58,7 +94,7 @@ class Signup extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getAcl()
     {
-        return $this->sm->get('activity_acl');
+        return $this->acl;
     }
 
     /**
@@ -130,8 +166,9 @@ class Signup extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        $signUpMapper = $this->sm->get('activity_mapper_signup');
+        $signUpMapper = $this->signupMapper;
 
+        // TODO: ->getSignedUp is not defined
         return $signUpMapper->getSignedUp($activity->getId());
     }
 
@@ -149,7 +186,7 @@ class Signup extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        $fieldValueMapper = $this->sm->get('activity_mapper_signup_field_value');
+        $fieldValueMapper = $this->signupFieldValueMapper;
         $result = [];
 
         foreach ($signupList->getSignUps() as $signup) {
@@ -220,7 +257,7 @@ class Signup extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        $signUpMapper = $this->sm->get('activity_mapper_signup');
+        $signUpMapper = $this->signupMapper;
 
         return $signUpMapper->isSignedUp($activity->getId(), $user->getLidnr());
     }
@@ -238,8 +275,8 @@ class Signup extends AbstractAclService implements ServiceManagerAwareInterface
                 $this->translator->translate('You are not allowed to view activities which you signed up for')
             );
         }
-        $user = $this->sm->get('user_service_user')->getIdentity();
-        $activitySignups = $this->sm->get('activity_mapper_signup')->getSignedUpActivities(
+        $user = $this->userService->getIdentity();
+        $activitySignups = $this->signupMapper->getSignedUpActivities(
             $user->getLidnr()
         );
         $activities = [];
@@ -264,7 +301,7 @@ class Signup extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        $user = $this->sm->get('user_service_user')->getIdentity();
+        $user = $this->userService->getIdentity();
         $signup = new UserSignupModel();
         $signup->setUser($user);
         $this->createSignup($signup, $signupList, $fieldResults);
@@ -282,8 +319,8 @@ class Signup extends AbstractAclService implements ServiceManagerAwareInterface
     protected function createSignup(SignupModel $signup, SignupListModel $signupList, array $fieldResults)
     {
         $signup->setSignupList($signupList);
-        $optionMapper = $this->sm->get('activity_mapper_signup_option');
-        $em = $this->sm->get('Doctrine\ORM\EntityManager');
+        $optionMapper = $this->signupOptionMapper;
+        $em = $this->entityManager;
         foreach ($signupList->getFields() as $field) {
             $fieldValue = new SignupFieldValueModel();
             $fieldValue->setField($field);
@@ -299,7 +336,7 @@ class Signup extends AbstractAclService implements ServiceManagerAwareInterface
                     $fieldValue->setValue(($value) ? 'Yes' : 'No');
                     break;
                 case 3://'Choice'
-                    $fieldValue->setOption($optionMapper->getOptionById((int) $value));
+                    $fieldValue->setOption($optionMapper->getOptionById((int)$value));
                     break;
             }
             $fieldValue->setSignup($signup);
@@ -386,7 +423,7 @@ class Signup extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        $signUpMapper = $this->sm->get('activity_mapper_signup');
+        $signUpMapper = $this->signupMapper;
         $signUp = $signUpMapper->getSignUp($signupList->getId(), $user->getLidnr());
 
         // If the user was not signed up, no need to signoff anyway
@@ -399,14 +436,14 @@ class Signup extends AbstractAclService implements ServiceManagerAwareInterface
 
     protected function removeSignUp(SignupModel $signup)
     {
-        $em = $this->sm->get('Doctrine\ORM\EntityManager');
+        $em = $this->entityManager;
         $em->remove($signup);
         $em->flush();
     }
 
     public function getNumberOfSubscribedMembers(SignupListModel $signupList)
     {
-        return $this->sm->get('activity_mapper_signup')
+        return $this->signupMapper
             ->getNumberOfSignedUpMembers($signupList->getId())[1];
     }
 
@@ -457,14 +494,6 @@ class Signup extends AbstractAclService implements ServiceManagerAwareInterface
     public function isAllowedToInternalSubscribe()
     {
         return $this->isAllowed('signup', 'signupList');
-    }
-
-    /**
-     * @return ActivityFieldValue
-     */
-    public function getActivityFieldValueMapper()
-    {
-        return $this->sm->get('activity_mapper_activity_field_value');
     }
 
     /**

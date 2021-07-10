@@ -109,7 +109,7 @@ class OrganInformation
     }
 
     /**
-     * @param string $organ
+     * @param string|Organ $organ
      */
     public function setOrgan($organ)
     {

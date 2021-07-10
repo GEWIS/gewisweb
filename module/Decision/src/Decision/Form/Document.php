@@ -6,8 +6,6 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
 
-use Decision\Mapper\Meeting as MeetingMapper;
-
 class Document extends Form implements InputFilterProviderInterface
 {
     /**
@@ -15,7 +13,7 @@ class Document extends Form implements InputFilterProviderInterface
      */
     private $translator;
 
-    public function __construct(Translator $translator, MeetingMapper $mapper)
+    public function __construct(Translator $translator)
     {
         parent::__construct();
         $this->translator = $translator;

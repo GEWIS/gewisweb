@@ -41,19 +41,75 @@ class Module
             'factories' => [
                 'frontpage_service_frontpage' => function ($sm) {
                     $translator = $sm->get('translator');
-                    return new Frontpage($translator);
+                    $userRole = $sm->get('user_role');
+                    $acl = $sm->get('frontpage_acl');
+                    $pollService = $sm->get('frontpage_service_poll');
+                    $newsService = $sm->get('frontpage_service_news');
+                    $memberService = $sm->get('decision_service_member');
+                    $companyService = $sm->get('company_service_company');
+                    $photoService = $sm->get('photo_service_photo');
+                    $tagMapper = $sm->get('photo_mapper_tag');
+                    $activityMapper = $sm->get('activity_mapper_activity');
+                    $frontpageConfig = $sm->get('config')['frontpage'];
+                    return new Frontpage(
+                        $translator,
+                        $userRole,
+                        $acl,
+                        $pollService,
+                        $newsService,
+                        $memberService,
+                        $companyService,
+                        $photoService,
+                        $tagMapper,
+                        $activityMapper,
+                        $frontpageConfig
+                    );
                 },
                 'frontpage_service_page' => function ($sm) {
                     $translator = $sm->get('translator');
-                    return new Service\Page($translator);
+                    $userRole = $sm->get('user_role');
+                    $acl = $sm->get('frontpage_acl');
+                    $storageService = $sm->get('application_service_storage');
+                    $pageMapper = $sm->get('frontpage_mapper_page');
+                    $pageForm = $sm->get('frontpage_form_page');
+                    $storageConfig = $sm->get('config')['storage'];
+                    return new Service\Page(
+                        $translator,
+                        $userRole,
+                        $acl,
+                        $storageService,
+                        $pageMapper,
+                        $pageForm,
+                        $storageConfig
+                    );
                 },
                 'frontpage_service_poll' => function ($sm) {
                     $translator = $sm->get('translator');
-                    return new Service\Poll($translator);
+                    $userRole = $sm->get('user_role');
+                    $acl = $sm->get('frontpage_acl');
+                    $emailService = $sm->get('application_service_email');
+                    $pollMapper = $sm->get('frontpage_mapper_poll');
+                    $pollForm = $sm->get('frontpage_form_poll');
+                    $pollCommentForm = $sm->get('frontpage_form_poll_comment');
+                    $pollApprovalForm = $sm->get('frontpage_form_poll_approval');
+                    return new Service\Poll(
+                        $translator,
+                        $userRole,
+                        $acl,
+                        $emailService,
+                        $pollMapper,
+                        $pollForm,
+                        $pollCommentForm,
+                        $pollApprovalForm
+                    );
                 },
                 'frontpage_service_news' => function ($sm) {
                     $translator = $sm->get('translator');
-                    return new News($translator);
+                    $userRole = $sm->get('user_role');
+                    $acl = $sm->get('frontpage_acl');
+                    $newsItemMapper = $sm->get('frontpage_mapper_news_item');
+                    $newsItemForm = $sm->get('frontpage_form_news_item');
+                    return new News($translator, $userRole, $acl, $newsItemMapper, $newsItemForm);
                 },
                 'frontpage_form_page' => function ($sm) {
                     $form = new Page(

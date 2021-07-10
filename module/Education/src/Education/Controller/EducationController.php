@@ -2,6 +2,7 @@
 
 namespace Education\Controller;
 
+use Education\Form\SearchCourse;
 use Education\Service\Exam;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -14,9 +15,15 @@ class EducationController extends AbstractActionController
      */
     private $examService;
 
-    public function __construct(Exam $examService)
+    /**
+     * @var SearchCourse
+     */
+    private $searchCourseForm;
+
+    public function __construct(Exam $examService, SearchCourse $searchCourseForm)
     {
         $this->examService = $examService;
+        $this->searchCourseForm = $searchCourseForm;
     }
 
     public function indexAction()
@@ -30,14 +37,14 @@ class EducationController extends AbstractActionController
 
             if (null !== $courses) {
                 return new ViewModel([
-                    'form' => $this->examService->getSearchCourseForm(),
+                    'form' => $this->searchCourseForm,
                     'courses' => $courses
                 ]);
             }
         }
 
         return new ViewModel([
-            'form' => $this->examService->getSearchCourseForm()
+            'form' => $this->searchCourseForm
         ]);
     }
 

@@ -112,7 +112,7 @@ class Module
                     $storageConfig = $sm->get('config')['storage'];
                     return new FileStorage($translator, $storageConfig);
                 },
-                'application_get_languages' => function ($sm) {
+                'application_get_languages' => function () {
                     return ['nl', 'en'];
                 },
                 'logger' => function ($sm) {
@@ -147,7 +147,7 @@ class Module
                     $helper->setServiceLocator($locator);
                     return $helper;
                 },
-                'scriptUrl' => function ($sm) {
+                'scriptUrl' => function () {
                     $helper = new ScriptUrl();
                     return $helper;
                 },

@@ -11,48 +11,88 @@ use Activity\Model\SignupList as SignupListModel;
 use Activity\Model\SignupOption as SignupOptionModel;
 use Application\Service\AbstractAclService;
 use Application\Service\Email;
+use Company\Service\Company;
 use DateTime;
 use Decision\Model\Organ;
+use Doctrine\ORM\EntityManager;
 use User\Model\User;
 use User\Permissions\NotAllowedException;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\Stdlib\Parameters;
 
-class Activity extends AbstractAclService implements ServiceManagerAwareInterface
+class Activity extends AbstractAclService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
     /**
      * @var Translator
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var User|string
+     */
+    private $userRole;
+    /**
+     * @var Acl
+     */
+    private $acl;
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
+    /**
+     * @var ActivityCategory
+     */
+    private $categoryService;
+    /**
+     * @var \User\Service\User
+     */
+    private $userService;
+    /**
+     * @var \Decision\Service\Organ
+     */
+    private $organService;
+    /**
+     * @var Company
+     */
+    private $companyService;
+    /**
+     * @var Email
+     */
+    private $emailService;
+    /**
+     * @var ActivityForm
+     */
+    private $activityForm;
+
+    public function __construct(
+        Translator $translator,
+        $userRole,
+        Acl $acl,
+        EntityManager $entityManager,
+        ActivityCategory $categoryService,
+        \User\Service\User $userService,
+        \Decision\Service\Organ $organService,
+        Company $companyService,
+        Email $emailService,
+        ActivityForm $activityForm
+    )
     {
         $this->translator = $translator;
+        $this->userRole = $userRole;
+        $this->acl = $acl;
+        $this->entityManager = $entityManager;
+        $this->categoryService = $categoryService;
+        $this->userService = $userService;
+        $this->organService = $organService;
+        $this->companyService = $companyService;
+        $this->emailService = $emailService;
+        $this->activityForm = $activityForm;
     }
 
     public function getRole()
     {
-        return $this->sm->get('user_role');
+        return $this->userRole;
     }
 
     /**
@@ -62,17 +102,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function getAcl()
     {
-        return $this->sm->get('activity_acl');
-    }
-
-    public function getSignupListForm()
-    {
-        return $this->sm->get('activity_form_signuplist');
-    }
-
-    public function getSignupListFieldsForm()
-    {
-        return $this->sm->get('activity_form_signuplist_fields');
+        return $this->acl;
     }
 
     /**
@@ -100,7 +130,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         }
 
         // Find the creator
-        $user = $this->sm->get('user_service_user')->getIdentity();
+        $user = $this->userService->getIdentity();
 
         // Find the organ the activity belongs to, and see if the user has permission to create an activity
         // for this organ. If the id is 0, the activity belongs to no organ.
@@ -116,8 +146,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $company = null;
 
         if ($companyId !== 0) {
-            $companyService = $this->sm->get('company_service_company');
-            $company = $companyService->getCompanyById($companyId);
+            $company = $this->companyService->getCompanyById($companyId);
         }
 
         $activity = $this->saveActivityData($data, $user, $organ, $company, ActivityModel::STATUS_TO_APPROVE);
@@ -143,7 +172,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             );
         }
 
-        return $this->sm->get('activity_form_activity');
+        return $this->activityForm;
     }
 
     /**
@@ -156,10 +185,9 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     protected function findOrgan($organId)
     {
-        $organService = $this->sm->get('decision_service_organ');
-        $organ = $organService->getOrgan($organId);
+        $organ = $this->organService->getOrgan($organId);
 
-        if (!$organService->canEditOrgan($organ)) {
+        if (!$this->organService->canEditOrgan($organ)) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to create an activity for this organ')
             );
@@ -200,13 +228,11 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $activity->setCompany($company);
         $activity->setStatus($status);
 
-        $em = $this->sm->get('Doctrine\ORM\EntityManager');
+        $em = $this->entityManager;
 
         if (isset($data['categories'])) {
-            $categoryService = $this->sm->get('activity_service_category');
-
             foreach ($data['categories'] as $category) {
-                $category = $categoryService->getCategoryById($category);
+                $category = $this->categoryService->getCategoryById($category);
 
                 if (!is_null($category)) {
                     $activity->addCategory($category);
@@ -230,7 +256,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         // when an activity is updated. This e-mail is handled in
         // `$this->createUpdateProposal()`.
         if ($status !== ActivityModel::STATUS_UPDATE) {
-            $this->getEmailService()->sendEmail(
+            $this->emailService->sendEmail(
                 'activity_creation',
                 'email/activity',
                 'Nieuwe activiteit aangemaakt op de GEWIS website | New activity was created on the GEWIS website',
@@ -261,7 +287,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $signupList->setDisplaySubscribedNumber($data['displaySubscribedNumber']);
 
         if (isset($data['fields'])) {
-            $em = $this->sm->get('Doctrine\ORM\EntityManager');
+            $em = $this->entityManager;
 
             foreach ($data['fields'] as $field) {
                 // Zend\Stdlib\Parameters is required to prevent undefined indices.
@@ -316,7 +342,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     protected function createSignupOption($data, $field)
     {
         $numOptions = 0;
-        $em = $this->sm->get('Doctrine\ORM\EntityManager');
+        $em = $this->entityManager;
 
         if (isset($data['options'])) {
             $options = explode(',', $data['options']);
@@ -344,16 +370,6 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
     }
 
     /**
-     * Get the email service.
-     *
-     * @return Email
-     */
-    public function getEmailService()
-    {
-        return $this->sm->get('application_service_email');
-    }
-
-    /**
      * @param $activity ActivityModel
      * @param $user User
      * @param $organ Organ
@@ -372,7 +388,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
 
             $organInfo = $organ->getApprovedOrganInformation();
             if ($organInfo != null && $organInfo->getEmail() != null) {
-                $this->getEmailService()->sendEmailAsOrgan(
+                $this->emailService->sendEmailAsOrgan(
                     $type,
                     $view,
                     $subject,
@@ -381,7 +397,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
                 );
             } else {
                 // The organ did not fill in it's email address, so send the email as the requested user.
-                $this->getEmailService()->sendEmailAsUser(
+                $this->emailService->sendEmailAsUser(
                     $type,
                     $view,
                     $subject,
@@ -392,7 +408,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         } else {
             $subject = sprintf('Member Initiative: %s on %s', $activityTitle, $activityTime);
 
-            $this->getEmailService()->sendEmailAsUser(
+            $this->emailService->sendEmailAsUser(
                 $type,
                 $view,
                 $subject,
@@ -425,7 +441,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         }
 
         // Find the creator
-        $user = $this->sm->get('user_service_user')->getIdentity();
+        $user = $this->userService->getIdentity();
 
         // Find the organ the activity belongs to, and see if the user has permission to create an activity
         // for this organ. If the id is 0, the activity belongs to no organ.
@@ -441,8 +457,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         $company = null;
 
         if ($companyId !== 0) {
-            $companyService = $this->sm->get('company_service_company');
-            $company = $companyService->getCompanyById($companyId);
+            $company = $this->companyService->getCompanyById($companyId);
         }
 
         $currentActivityArray = $currentActivity->toArray();
@@ -463,7 +478,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             ActivityModel::STATUS_UPDATE
         );
 
-        $em = $this->sm->get('Doctrine\ORM\EntityManager');
+        $em = $this->entityManager;
 
         // TODO: ->count and ->unwrap are undefined
         if ($currentActivity->getUpdateProposal()->count() !== 0) {
@@ -486,7 +501,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $this->updateActivity($proposal);
 
             // Send an e-mail stating that the activity was updated.
-            $this->getEmailService()->sendEmail(
+            $this->emailService->sendEmail(
                 'activity_creation',
                 'email/activity-updated',
                 'Activiteit aangepast op de GEWIS website | Activity was updated on the GEWIS website',
@@ -497,7 +512,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         }
 
         // Send an e-mail stating that an activity update proposal has been made.
-        $this->getEmailService()->sendEmail(
+        $this->emailService->sendEmail(
             'activity_creation',
             'email/activity-update-proposed',
             'Activiteit aanpassingsvoorstel op de GEWIS website | Activity update proposed on the GEWIS website',
@@ -690,7 +705,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             $new->setStatus(ActivityModel::STATUS_APPROVED);
         }
 
-        $em = $this->sm->get('Doctrine\ORM\EntityManager');
+        $em = $this->entityManager;
 
         // The proposal association is no longer needed and can safely be
         // removed. The old Activity is also removed, as we would otherwise have
@@ -710,7 +725,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
      */
     public function revokeUpdateProposal(ActivityProposalModel $proposal)
     {
-        $em = $this->sm->get('Doctrine\ORM\EntityManager');
+        $em = $this->entityManager;
         $new = $proposal->getNew();
         $em->remove($proposal);
         $em->remove($new);
@@ -731,7 +746,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
             );
         }
         $activity->setStatus(ActivityModel::STATUS_APPROVED);
-        $em = $this->sm->get('Doctrine\ORM\EntityManager');
+        $em = $this->entityManager;
         $em->persist($activity);
         $em->flush();
     }
@@ -750,7 +765,7 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         }
 
         $activity->setStatus(ActivityModel::STATUS_TO_APPROVE);
-        $em = $this->sm->get('Doctrine\ORM\EntityManager');
+        $em = $this->entityManager;
         $em->persist($activity);
         $em->flush();
     }
@@ -770,19 +785,9 @@ class Activity extends AbstractAclService implements ServiceManagerAwareInterfac
         }
 
         $activity->setStatus(ActivityModel::STATUS_DISAPPROVED);
-        $em = $this->sm->get('Doctrine\ORM\EntityManager');
+        $em = $this->entityManager;
         $em->persist($activity);
         $em->flush();
-    }
-
-    /**
-     * Get the activity mapper.
-     *
-     * @return \Activity\Mapper\Activity
-     */
-    public function getActivityMapper()
-    {
-        return $this->sm->get('activity_mapper_activity');
     }
 
     /**

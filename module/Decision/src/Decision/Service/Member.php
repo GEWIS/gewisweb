@@ -3,55 +3,85 @@
 namespace Decision\Service;
 
 use Application\Service\AbstractAclService;
-
-use Application\Service\FileStorage;
 use Decision\Mapper\Authorization;
 use Decision\Model\Member as MemberModel;
-
 use Photo\Service\Photo;
 use User\Permissions\NotAllowedException;
+use User\Service\User;
 use Zend\Code\Exception\InvalidArgumentException;
 use Zend\Http\Client as HttpClient;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 /**
  * Member service.
  */
-class Member extends AbstractAclService implements ServiceManagerAwareInterface
+class Member extends AbstractAclService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
     /**
      * @var Translator
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var \User\Model\User|string
+     */
+    private $userRole;
+
+    /**
+     * @var Acl
+     */
+    private $acl;
+
+    /**
+     * @var User
+     */
+    private $userService;
+
+    /**
+     * @var Photo
+     */
+    private $photoService;
+
+    /**
+     * @var \Decision\Mapper\Member
+     */
+    private $memberMapper;
+
+    /**
+     * @var Authorization
+     */
+    private $authorizationMapper;
+
+    /**
+     * @var array
+     */
+    private $config;
+
+    public function __construct(
+        Translator $translator,
+        $userRole,
+        Acl $acl,
+        User $userService,
+        Photo $photoService,
+        \Decision\Mapper\Member $memberMapper,
+        Authorization $authorizationMapper,
+        array $config
+    )
     {
         $this->translator = $translator;
+        $this->userRole = $userRole;
+        $this->acl = $acl;
+        $this->userService = $userService;
+        $this->photoService = $photoService;
+        $this->memberMapper = $memberMapper;
+        $this->authorizationMapper = $authorizationMapper;
+        $this->config = $config;
+    }
+
+    public function getRole()
+    {
+        return $this->userRole;
     }
 
     const MIN_SEARCH_QUERY_LENGTH = 2;
@@ -79,7 +109,7 @@ class Member extends AbstractAclService implements ServiceManagerAwareInterface
             $lidnr = $this->getRole()->getLidnr();
         }
 
-        $member = $this->getMemberMapper()->findByLidnr($lidnr);
+        $member = $this->memberMapper->findByLidnr($lidnr);
 
         if (null === $member) {
             return null;
@@ -87,14 +117,13 @@ class Member extends AbstractAclService implements ServiceManagerAwareInterface
 
         $memberships = $this->getOrganMemberships($member);
 
-        $tags = $this->getPhotoService()->getTagsForMember($member);
+        $tags = $this->photoService->getTagsForMember($member);
 
         // Base directory for retrieving photos
-        $basedir = $this->getPhotoService()->getBaseDirectory();
+        $basedir = $this->photoService->getBaseDirectory();
 
-        $photoService = $this->getPhotoService();
-        $profilePhoto = $photoService->getProfilePhoto($lidnr);
-        $isExplicitProfilePhoto = $photoService->hasExplicitProfilePhoto($lidnr);
+        $profilePhoto = $this->photoService->getProfilePhoto($lidnr);
+        $isExplicitProfilePhoto = $this->photoService->hasExplicitProfilePhoto($lidnr);
 
         return [
             'member' => $member,
@@ -156,7 +185,7 @@ class Member extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getMemberMapper()->findByLidnr($lidnr);
+        return $this->memberMapper->findByLidnr($lidnr);
     }
 
     /**
@@ -171,11 +200,10 @@ class Member extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        $user = $this->sm->get('user_service_user')->getIdentity();
+        $user = $this->userService->getIdentity();
 
-        $config = $this->sm->get('config');
-        $sslcapath = $config['sslcapath'];
-        $config = $config['dreamspark'];
+        $sslcapath = $this->config['sslcapath'];
+        $config = $this->config['dreamspark'];
 
         // determine groups for dreamspark
         $groups = [];
@@ -234,7 +262,7 @@ class Member extends AbstractAclService implements ServiceManagerAwareInterface
                 $this->translator->translate('You are not allowed to view the list of birthdays.')
             );
         }
-        return $this->getMemberMapper()->findBirthdayMembers($days);
+        return $this->memberMapper->findBirthdayMembers($days);
     }
 
     /**
@@ -246,7 +274,7 @@ class Member extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getOrgans(MemberModel $member)
     {
-        return $this->getMemberMapper()->findOrgans($member);
+        return $this->memberMapper->findOrgans($member);
     }
 
     /**
@@ -271,7 +299,7 @@ class Member extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getMemberMapper()->searchByName($query);
+        return $this->memberMapper->searchByName($query);
     }
 
     /**
@@ -286,45 +314,14 @@ class Member extends AbstractAclService implements ServiceManagerAwareInterface
     {
         $maxAuthorizations = 2;
 
-        $authorizationMapper = $this->getAuthorizationMapper();
         $meetingNumber = $meeting->getNumber();
         $lidnr = $member->getLidnr();
-        $authorizations = $authorizationMapper->findRecipientAuthorization($meetingNumber, $lidnr);
+        $authorizations = $this->authorizationMapper->findRecipientAuthorization($meetingNumber, $lidnr);
 
         if (count($authorizations) < $maxAuthorizations) {
             return true;
         }
         return false;
-    }
-
-    /**
-     * Get the member mapper.
-     *
-     * @return \Decision\Mapper\Member
-     */
-    public function getMemberMapper()
-    {
-        return $this->sm->get('decision_mapper_member');
-    }
-
-    /**
-     * Get the photo service.
-     *
-     * @return Photo
-     */
-    public function getPhotoService()
-    {
-        return $this->sm->get('photo_service_photo');
-    }
-
-    /**
-     * Get the photo service.
-     *
-     * @return FileStorage
-     */
-    public function getFileStorageService()
-    {
-        return $this->sm->get('application_service_storage');
     }
 
     /**
@@ -344,16 +341,6 @@ class Member extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getAcl()
     {
-        return $this->sm->get('decision_acl');
-    }
-
-    /**
-     * Get the authorization mapper.
-     *
-     * @return Authorization
-     */
-    public function getAuthorizationMapper()
-    {
-        return $this->sm->get('decision_mapper_authorization');
+        return $this->acl;
     }
 }

@@ -27,7 +27,7 @@ class SignupList
      * @param $signupListId
      * @param $activityId
      *
-     * @return array
+     * @return \Activity\Model\SignupList|null
      */
     public function getSignupListByIdAndActivity($signupListId, $activityId)
     {

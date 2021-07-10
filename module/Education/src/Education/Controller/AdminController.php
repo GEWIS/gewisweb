@@ -2,6 +2,7 @@
 
 namespace Education\Controller;
 
+use Education\Form\SummaryUpload;
 use Education\Service\Exam;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
@@ -15,9 +16,15 @@ class AdminController extends AbstractActionController
      */
     private $examService;
 
-    public function __construct(Exam $examService)
+    /**
+     * @var SummaryUpload
+     */
+    private $summaryUploadForm;
+
+    public function __construct(Exam $examService, SummaryUpload $summaryUploadForm)
     {
         $this->examService = $examService;
+        $this->summaryUploadForm = $summaryUploadForm;
     }
 
     public function indexAction()
@@ -145,6 +152,7 @@ class AdminController extends AbstractActionController
 
         if ($request->isPost()) {
             // try uploading
+            // TODO: -> uploadSummary is undefined
             if ($this->examService->uploadSummary($request->getPost(), $request->getFiles())) {
                 return new ViewModel([
                     'success' => true
@@ -153,7 +161,7 @@ class AdminController extends AbstractActionController
         }
 
         return new ViewModel([
-            'form' => $this->examService->getSummaryUploadForm()
+            'form' => $this->summaryUploadForm
         ]);
     }
 

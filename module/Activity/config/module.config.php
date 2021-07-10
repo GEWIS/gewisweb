@@ -501,7 +501,8 @@ return [
             },
             'Activity\Controller\ActivityCalendar' => function (ContainerInterface $serviceManager) {
                 $calendarService = $serviceManager->getServiceLocator()->get('activity_service_calendar');
-                return new ActivityCalendarController($calendarService);
+                $calendarConfig = $serviceManager->getServiceLocator()->get('config')['calendar'];
+                return new ActivityCalendarController($calendarService, $calendarConfig);
             },
         ]
     ],

@@ -4,7 +4,6 @@ namespace Photo\Listener;
 
 use Photo\Model\Album;
 use Photo\Model\Photo;
-use Zend\ServiceManager\ServiceManager;
 
 /**
  * Doctrine event listener class for Album and Photo entities.
@@ -12,12 +11,20 @@ use Zend\ServiceManager\ServiceManager;
  */
 class Remove
 {
+    /**
+     * @var \Photo\Service\Photo
+     */
+    private $photoService;
 
-    protected $sm;
+    /**
+     * @var \Photo\Service\Album
+     */
+    private $albumService;
 
-    public function __construct(ServiceManager $sm)
+    public function __construct(\Photo\Service\Photo $photoService, \Photo\Service\Album $albumService)
     {
-        $this->sm = $sm;
+        $this->photoService = $photoService;
+        $this->albumService = $albumService;
     }
 
     public function preRemove($eventArgs)
@@ -32,11 +39,11 @@ class Remove
 
     protected function photoRemoved($photo)
     {
-        $this->sm->get('photo_service_photo')->deletePhotoFiles($photo);
+        $this->photoService->deletePhotoFiles($photo);
     }
 
     protected function albumRemoved($album)
     {
-        $this->sm->get('photo_service_album')->deleteAlbumCover($album);
+        $this->albumService->deleteAlbumCover($album);
     }
 }

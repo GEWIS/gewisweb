@@ -4,7 +4,6 @@ namespace Frontpage\Controller;
 
 use Activity\Service\ActivityQuery;
 use Doctrine\ORM\NoResultException;
-use Frontpage\Service\Frontpage;
 use Zend\Mvc\Controller\AbstractActionController;
 use Decision\Model\Organ;
 use Zend\View\Model\ViewModel;

@@ -47,15 +47,83 @@ class Module
             'factories' => [
                 'decision_service_organ' => function ($sm) {
                     $translator = $sm->get('translator');
-                    return new Service\Organ($translator);
+                    $userRole = $sm->get('user_role');
+                    $acl = $sm->get('decision_acl');
+                    $entityManager = $sm->get('doctrine.entitymanager.orm_default');
+                    $userService = $sm->get('user_service_user');
+                    $storageService = $sm->get('application_service_storage');
+                    $emailService = $sm->get('application_service_email');
+                    $memberMapper = $sm->get('decision_mapper_member');
+                    $organMapper = $sm->get('decision_mapper_organ');
+                    $organInformationForm = $sm->get('decision_form_organ_information');
+                    $organInformationConfig = $sm->get('config')['organ_information'];
+                    return new Service\Organ(
+                        $translator,
+                        $userRole,
+                        $acl,
+                        $entityManager,
+                        $userService,
+                        $storageService,
+                        $emailService,
+                        $memberMapper,
+                        $organMapper,
+                        $organInformationForm,
+                        $organInformationConfig
+                    );
                 },
                 'decision_service_decision' => function ($sm) {
                     $translator = $sm->get('translator');
-                    return new Service\Decision($translator);
+                    $userRole = $sm->get('user_role');
+                    $acl = $sm->get('decision_acl');
+                    $userService = $sm->get('user_service_user');
+                    $storageService = $sm->get('application_service_storage');
+                    $emailService = $sm->get('application_service_email');
+                    $memberMapper = $sm->get('decision_mapper_member');
+                    $meetingMapper = $sm->get('decision_mapper_meeting');
+                    $decisionMapper = $sm->get('decision_mapper_decision');
+                    $authorizationMapper = $sm->get('decision_mapper_authorization');
+                    $notesForm = $sm->get('decision_form_notes');
+                    $documentForm = $sm->get('decision_form_document');
+                    $reorderDocumentForm = $sm->get('decision_form_reorder_document');
+                    $searchDecisionForm = $sm->get('decision_form_searchdecision');
+                    $authorizationForm = $sm->get('decision_form_authorization');
+                    return new Service\Decision(
+                        $translator,
+                        $userRole,
+                        $acl,
+                        $userService,
+                        $storageService,
+                        $emailService,
+                        $memberMapper,
+                        $meetingMapper,
+                        $decisionMapper,
+                        $authorizationMapper,
+                        $notesForm,
+                        $documentForm,
+                        $reorderDocumentForm,
+                        $searchDecisionForm,
+                        $authorizationForm
+                    );
                 },
                 'decision_service_member' => function ($sm) {
                     $translator = $sm->get('translator');
-                    return new Service\Member($translator);
+                    $userRole = $sm->get('user_role');
+                    $acl = $sm->get('decision_acl');
+                    $userService = $sm->get('user_service_user');
+                    $photoService = $sm->get('photo_service_photo');
+                    $memberMapper = $sm->get('decision_mapper_member');
+                    $authorizationMapper = $sm->get('decision_mapper_authorization');
+                    $config = $sm->get('config');
+                    return new Service\Member(
+                        $translator,
+                        $userRole,
+                        $acl,
+                        $userService,
+                        $photoService,
+                        $memberMapper,
+                        $authorizationMapper,
+                        $config
+                    );
                 },
                 'decision_mapper_member' => function ($sm) {
                     return new Member(
@@ -89,8 +157,7 @@ class Module
                 },
                 'decision_form_document' => function ($sm) {
                     return new Document(
-                        $sm->get('translator'),
-                        $sm->get('decision_mapper_meeting')
+                        $sm->get('translator')
                     );
                 },
                 'decision_form_notes' => function ($sm) {

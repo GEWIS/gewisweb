@@ -7,47 +7,53 @@ use DateTime;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
 use Frontpage\Mapper\NewsItem;
 use Frontpage\Model\NewsItem as NewsItemModel;
+use User\Model\User;
 use User\Permissions\NotAllowedException;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 /**
  * News service
  */
-class News extends AbstractAclService implements ServiceManagerAwareInterface
+class News extends AbstractAclService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
     /**
      * @var Translator
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var User|string
+     */
+    private $userRole;
+
+    /**
+     * @var Acl
+     */
+    private $acl;
+
+    /**
+     * @var NewsItem
+     */
+    private $newsItemMapper;
+
+    /**
+     * @var \Frontpage\Form\NewsItem
+     */
+    private $newsItemForm;
+
+    public function __construct(Translator $translator, $userRole, Acl $acl, NewsItem $newsItemMapper, \Frontpage\Form\NewsItem $newsItemForm)
     {
         $this->translator = $translator;
+        $this->userRole = $userRole;
+        $this->acl = $acl;
+        $this->newsItemMapper = $newsItemMapper;
+        $this->newsItemForm = $newsItemForm;
+    }
+
+    public function getRole()
+    {
+        return $this->userRole;
     }
 
     /**
@@ -68,7 +74,7 @@ class News extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getNewsItemById($newsItem)
     {
-        return $this->getNewsItemMapper()->findNewsItemById($newsItem);
+        return $this->newsItemMapper->findNewsItemById($newsItem);
     }
 
     /**
@@ -84,7 +90,7 @@ class News extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getNewsItemMapper()->getPaginatorAdapter();
+        return $this->newsItemMapper->getPaginatorAdapter();
     }
 
     /**
@@ -96,7 +102,7 @@ class News extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getLatestNewsItems($count)
     {
-        return $this->getNewsItemMapper()->getLatestNewsItems($count);
+        return $this->newsItemMapper->getLatestNewsItems($count);
     }
 
     /**
@@ -117,8 +123,8 @@ class News extends AbstractAclService implements ServiceManagerAwareInterface
         }
 
         $newsItem->setDate(new DateTime());
-        $this->getNewsItemMapper()->persist($newsItem);
-        $this->getNewsItemMapper()->flush();
+        $this->newsItemMapper->persist($newsItem);
+        $this->newsItemMapper->flush();
 
         return $newsItem;
     }
@@ -142,7 +148,7 @@ class News extends AbstractAclService implements ServiceManagerAwareInterface
             return false;
         }
 
-        $this->getNewsItemMapper()->flush();
+        $this->newsItemMapper->flush();
 
         return true;
     }
@@ -155,8 +161,8 @@ class News extends AbstractAclService implements ServiceManagerAwareInterface
     public function deleteNewsItem($newsItemId)
     {
         $newsItem = $this->getNewsItemById($newsItemId);
-        $this->getNewsItemMapper()->remove($newsItem);
-        $this->getNewsItemMapper()->flush();
+        $this->newsItemMapper->remove($newsItem);
+        $this->newsItemMapper->flush();
     }
 
     /**
@@ -173,7 +179,7 @@ class News extends AbstractAclService implements ServiceManagerAwareInterface
                 $this->translator->translate('You are not allowed to create news items.')
             );
         }
-        $form = $this->sm->get('frontpage_form_news_item');
+        $form = $this->newsItemForm;
 
         if (!is_null($newsItemId)) {
             $newsItem = $this->getNewsItemById($newsItemId);
@@ -184,23 +190,13 @@ class News extends AbstractAclService implements ServiceManagerAwareInterface
     }
 
     /**
-     * Get the news item mapper.
-     *
-     * @return NewsItem
-     */
-    public function getNewsItemMapper()
-    {
-        return $this->sm->get('frontpage_mapper_news_item');
-    }
-
-    /**
      * Get the Acl.
      *
      * @return Acl
      */
     public function getAcl()
     {
-        return $this->sm->get('frontpage_acl');
+        return $this->acl;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Frontpage\Controller;
 
+use Frontpage\Form\PollComment;
 use Frontpage\Service\Poll;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Paginator\Paginator;
@@ -15,9 +16,15 @@ class PollController extends AbstractActionController
      */
     private $pollService;
 
-    public function __construct(Poll $pollService)
+    /**
+     * @var PollComment
+     */
+    private $pollCommentForm;
+
+    public function __construct(Poll $pollService, PollComment $pollCommentForm)
     {
         $this->pollService = $pollService;
+        $this->pollCommentForm = $pollCommentForm;
     }
 
     /**
@@ -32,7 +39,7 @@ class PollController extends AbstractActionController
 
             return new ViewModel(array_merge($details, [
                 'poll' => $poll,
-                'commentForm' => $this->pollService->getCommentForm()
+                'commentForm' => $this->pollCommentForm
             ]));
         }
 
@@ -59,7 +66,7 @@ class PollController extends AbstractActionController
      */
     public function voteAction()
     {
-        $pollId = (int) $this->params('poll_id');
+        $pollId = (int)$this->params('poll_id');
         $request = $this->getRequest();
 
         if ($request->isPost()) {

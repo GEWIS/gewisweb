@@ -3,7 +3,6 @@
 namespace Education\Service;
 
 use Application\Service\AbstractAclService;
-
 use Application\Service\FileStorage;
 use DateTime;
 use DirectoryIterator;
@@ -15,47 +14,109 @@ use Education\Mapper\Course;
 use Education\Model\Course as CourseModel;
 use Education\Model\Exam as ExamModel;
 use Education\Model\Summary as SummaryModel;
+use Exception;
+use User\Model\User;
 use User\Permissions\NotAllowedException;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 /**
  * Exam service.
  */
-class Exam extends AbstractAclService implements ServiceManagerAwareInterface
+class Exam extends AbstractAclService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
     /**
      * @var Translator
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var User|string
+     */
+    private $userRole;
+
+    /**
+     * @var Acl
+     */
+    private $acl;
+
+    /**
+     * @var FileStorage
+     */
+    private $storageService;
+
+    /**
+     * @var Course
+     */
+    private $courseMapper;
+
+    /**
+     * @var \Education\Mapper\Exam
+     */
+    private $examMapper;
+
+    /**
+     * @var AddCourse
+     */
+    private $addCourseForm;
+
+    /**
+     * @var SearchCourse
+     */
+    private $searchCourseForm;
+
+    /**
+     * @var TempUpload
+     */
+    private $tempUploadForm;
+
+    /**
+     * @var Bulk
+     */
+    private $bulkSummaryForm;
+
+    /**
+     * @var Bulk
+     */
+    private $bulkExamForm;
+
+    /**
+     * @var array
+     */
+    private $config;
+
+    public function __construct(
+        Translator $translator,
+        $userRole,
+        Acl $acl,
+        FileStorage $storageService,
+        Course $courseMapper,
+        \Education\Mapper\Exam $examMapper,
+        AddCourse $addCourseForm,
+        SearchCourse $searchCourseForm,
+        TempUpload $tempUploadForm,
+        Bulk $bulkSummaryForm,
+        Bulk $bulkExamForm,
+        array $config
+    )
     {
         $this->translator = $translator;
+        $this->userRole = $userRole;
+        $this->acl = $acl;
+        $this->storageService = $storageService;
+        $this->courseMapper = $courseMapper;
+        $this->examMapper = $examMapper;
+        $this->addCourseForm = $addCourseForm;
+        $this->searchCourseForm = $searchCourseForm;
+        $this->tempUploadForm = $tempUploadForm;
+        $this->bulkSummaryForm = $bulkSummaryForm;
+        $this->bulkExamForm = $bulkExamForm;
+        $this->config = $config;
+    }
+
+    public function getRole()
+    {
+        return $this->userRole;
     }
 
     /**
@@ -74,7 +135,7 @@ class Exam extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function searchCourse($data)
     {
-        $form = $this->getSearchCourseForm();
+        $form = $this->searchCourseForm;
         $form->setData($data);
 
         if (!$form->isValid()) {
@@ -84,7 +145,7 @@ class Exam extends AbstractAclService implements ServiceManagerAwareInterface
         $data = $form->getData();
         $query = $data['query'];
 
-        return $this->getCourseMapper()->search($query);
+        return $this->courseMapper->search($query);
     }
 
     /**
@@ -96,7 +157,7 @@ class Exam extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getCourse($code)
     {
-        return $this->getCourseMapper()->findByCode($code);
+        return $this->courseMapper->findByCode($code);
     }
 
     /**
@@ -114,10 +175,9 @@ class Exam extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        $exam = $this->getExamMapper()->find($id);
+        $exam = $this->examMapper->find($id);
 
-        return $this->getFileStorageService()
-            ->downloadFile($exam->getFilename(), $this->examToFilename($exam));
+        return $this->storageService->downloadFile($exam->getFilename(), $this->examToFilename($exam));
     }
 
     /**
@@ -139,7 +199,6 @@ class Exam extends AbstractAclService implements ServiceManagerAwareInterface
 
         $data = $form->getData();
 
-        $storageService = $this->getFileStorageService();
         $config = $this->getConfig('education_temp');
 
         $messages = [];
@@ -168,8 +227,8 @@ class Exam extends AbstractAclService implements ServiceManagerAwareInterface
          * to process the upload. This does allow us to get the ID of the
          * exam, which we need in the upload process.
          */
-
-        $this->getExamMapper()->transactional(function ($mapper) use ($data, $type, $config, $storageService) {
+        $storageService = $this->storageService;
+        $this->examMapper->transactional(function ($mapper) use ($data, $type, $config, $storageService) {
             foreach ($data['exams'] as $examData) {
                 // finalize exam upload
                 $exam = new ExamModel();
@@ -301,7 +360,7 @@ class Exam extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getConfig($key = 'education')
     {
-        $config = $this->sm->get('config');
+        $config = $this->config;
         return $config[$key];
     }
 
@@ -344,7 +403,13 @@ class Exam extends AbstractAclService implements ServiceManagerAwareInterface
         }
 
         // fully load the bulk form
-        $this->bulkForm = $this->sm->get('education_form_bulk_' . $type);
+        if ($type === 'summary') {
+            $this->bulkForm = $this->bulkSummaryForm;
+        } elseif ($type === 'exam') {
+            $this->bulkForm = $this->bulkExamForm;
+        } else {
+            throw new Exception('Unsupported bulk form type');
+        }
 
         $config = $this->getConfig('education_temp');
 
@@ -449,7 +514,7 @@ class Exam extends AbstractAclService implements ServiceManagerAwareInterface
                 $this->translator->translate('You are not allowed to upload exams')
             );
         }
-        return $this->sm->get('education_form_tempupload');
+        return $this->tempUploadForm;
     }
 
     /**
@@ -467,7 +532,7 @@ class Exam extends AbstractAclService implements ServiceManagerAwareInterface
                 $this->translator->translate('You are not allowed to add courses')
             );
         }
-        return $this->sm->get('education_form_add_course');
+        return $this->addCourseForm;
     }
 
     /**
@@ -514,49 +579,9 @@ class Exam extends AbstractAclService implements ServiceManagerAwareInterface
         $newCourse->setYear($data['year']);
         $newCourse->setQuartile($data['quartile']);
 
-        $this->getCourseMapper()->persist($newCourse);
+        $this->courseMapper->persist($newCourse);
 
         return $newCourse;
-    }
-
-    /**
-     * Get the storage service.
-     *
-     * @return FileStorage
-     */
-    public function getFileStorageService()
-    {
-        return $this->sm->get('application_service_storage');
-    }
-
-    /**
-     * Get the SearchExam form.
-     *
-     * @return SearchCourse
-     */
-    public function getSearchCourseForm()
-    {
-        return $this->sm->get('education_form_searchcourse');
-    }
-
-    /**
-     * Get the course mapper.
-     *
-     * @return Course
-     */
-    public function getCourseMapper()
-    {
-        return $this->sm->get('education_mapper_course');
-    }
-
-    /**
-     * Get the exam mapper.
-     *
-     * @return \Education\Mapper\Exam
-     */
-    public function getExamMapper()
-    {
-        return $this->sm->get('education_mapper_exam');
     }
 
     /**
@@ -566,7 +591,7 @@ class Exam extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getAcl()
     {
-        return $this->sm->get('education_acl');
+        return $this->acl;
     }
 
     /**

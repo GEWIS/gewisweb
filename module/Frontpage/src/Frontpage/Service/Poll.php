@@ -7,52 +7,84 @@ use Application\Service\Email;
 use DateTime;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
 use Frontpage\Form\PollApproval;
+use Frontpage\Model\Poll as PollModel;
+use Frontpage\Model\PollComment;
 use Frontpage\Model\PollOption;
 use Frontpage\Model\PollVote as PollVoteModel;
-use Frontpage\Model\PollComment;
-use Frontpage\Model\Poll as PollModel;
 use User\Model\User;
 use User\Permissions\NotAllowedException;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 /**
  * Poll service.
  */
-class Poll extends AbstractAclService implements ServiceManagerAwareInterface
+class Poll extends AbstractAclService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
     /**
      * @var Translator
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var User|string
+     */
+    private $userRole;
+
+    /**
+     * @var Acl
+     */
+    private $acl;
+
+    /**
+     * @var Email
+     */
+    private $emailService;
+
+    /**
+     * @var \Frontpage\Mapper\Poll
+     */
+    private $pollMapper;
+
+    /**
+     * @var \Frontpage\Form\Poll
+     */
+    private $pollForm;
+
+    /**
+     * @var \Frontpage\Form\PollComment
+     */
+    private $pollCommentForm;
+
+    /**
+     * @var PollApproval
+     */
+    private $pollApprovalForm;
+
+    public function __construct(
+        Translator $translator,
+        $userRole,
+        Acl $acl,
+        Email $emailService,
+        \Frontpage\Mapper\Poll $pollMapper,
+        \Frontpage\Form\Poll $pollForm,
+        \Frontpage\Form\PollComment $pollCommentForm,
+        PollApproval $pollApprovalForm
+    )
     {
         $this->translator = $translator;
+        $this->userRole = $userRole;
+        $this->acl = $acl;
+        $this->emailService = $emailService;
+        $this->pollMapper = $pollMapper;
+        $this->pollForm = $pollForm;
+        $this->pollCommentForm = $pollCommentForm;
+        $this->pollApprovalForm = $pollApprovalForm;
+    }
+
+    public function getRole()
+    {
+        return $this->userRole;
     }
 
     /**
@@ -61,7 +93,7 @@ class Poll extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getNewestPoll()
     {
-        return $this->getPollMapper()->getNewestPoll();
+        return $this->pollMapper->getNewestPoll();
     }
 
     /**
@@ -73,7 +105,7 @@ class Poll extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getPoll($pollId)
     {
-        $poll = $this->getPollMapper()->findPollById($pollId);
+        $poll = $this->pollMapper->findPollById($pollId);
         if (is_null($poll->getApprover()) && !$this->isAllowed('view_unapproved')) {
 
             throw new NotAllowedException(
@@ -90,7 +122,7 @@ class Poll extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getPollOption($optionId)
     {
-        return $this->getPollMapper()->findPollOptionById($optionId);
+        return $this->pollMapper->findPollOptionById($optionId);
     }
 
     /**
@@ -100,7 +132,7 @@ class Poll extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getPaginatorAdapter()
     {
-        return $this->getPollMapper()->getPaginatorAdapter();
+        return $this->pollMapper->getPaginatorAdapter();
     }
 
     /**
@@ -110,7 +142,7 @@ class Poll extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getUnapprovedPolls()
     {
-        return $this->getPollMapper()->getUnapprovedPolls();
+        return $this->pollMapper->getUnapprovedPolls();
     }
 
     /**
@@ -169,9 +201,9 @@ class Poll extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getVote($poll)
     {
-        $user = $this->getUser();
+        $user = $this->userRole;
         if ($user instanceof User) {
-            return $this->getPollMapper()->findVote($poll->getId(), $user->getLidnr());
+            return $this->pollMapper->findVote($poll->getId(), $user->getLidnr());
         }
 
         return null;
@@ -197,12 +229,11 @@ class Poll extends AbstractAclService implements ServiceManagerAwareInterface
         }
 
         $pollVote = new PollVoteModel();
-        $pollVote->setRespondent($this->getUser());
+        $pollVote->setRespondent($this->userRole);
         $pollVote->setPoll($poll);
         $pollOption->addVote($pollVote);
-        $pollMapper = $this->getPollMapper();
-        $pollMapper->persist($pollOption);
-        $pollMapper->flush();
+        $this->pollMapper->persist($pollOption);
+        $this->pollMapper->flush();
     }
 
     /**
@@ -222,7 +253,7 @@ class Poll extends AbstractAclService implements ServiceManagerAwareInterface
 
         $poll = $this->getPoll($pollId);
 
-        $form = $this->getCommentForm();
+        $form = $this->pollCommentForm;
 
         $form->bind(new PollComment());
         $form->setData($data);
@@ -232,13 +263,13 @@ class Poll extends AbstractAclService implements ServiceManagerAwareInterface
         }
 
         $comment = $form->getData();
-        $comment->setUser($this->getUser());
+        $comment->setUser($this->userRole);
         $comment->setCreatedOn(new DateTime());
 
         $poll->addComment($comment);
 
-        $this->getPollMapper()->persist($poll);
-        $this->getPollMapper()->flush();
+        $this->pollMapper->persist($poll);
+        $this->pollMapper->flush();
 
         // reset the form
         $form->setData(['author' => '', 'content' => '']);
@@ -261,12 +292,11 @@ class Poll extends AbstractAclService implements ServiceManagerAwareInterface
         }
 
         $poll->setExpiryDate(new DateTime());
-        $poll->setCreator($this->getUser());
-        $pollMapper = $this->getPollMapper();
-        $pollMapper->persist($poll);
-        $pollMapper->flush();
+        $poll->setCreator($this->userRole);
+        $this->pollMapper->persist($poll);
+        $this->pollMapper->flush();
 
-        $this->getEmailService()->sendEmail(
+        $this->emailService->sendEmail(
             'poll_creation',
             'email/poll',
             'Er is een nieuwe poll aangevraagd | A new poll has been requested',
@@ -290,17 +320,7 @@ class Poll extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->sm->get('frontpage_form_poll');
-    }
-
-    /**
-     * Get the comment form.
-     *
-     * @return \Frontpage\Form\PollComment
-     */
-    public function getCommentForm()
-    {
-        return $this->sm->get('frontpage_form_poll_comment');
+        return $this->pollForm;
     }
 
     /**
@@ -317,19 +337,17 @@ class Poll extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        $pollMapper = $this->getPollMapper();
-
         // Check to see if poll is approved
         if ($poll->isApproved()) {
             // Instead of removing, set expiry date to 'now' to hide poll.
             $poll->setExpiryDate(new DateTime());
         } else {
             // If not approved, just remove the junk from the database.
-            $pollMapper->remove($poll);
+            $this->pollMapper->remove($poll);
         }
 
 
-        $pollMapper->flush();
+        $this->pollMapper->flush();
     }
 
     /**
@@ -348,8 +366,8 @@ class Poll extends AbstractAclService implements ServiceManagerAwareInterface
             return false;
         }
 
-        $poll->setApprover($this->getUser());
-        $this->getPollMapper()->flush();
+        $poll->setApprover($this->userRole);
+        $this->pollMapper->flush();
     }
 
     /**
@@ -366,27 +384,7 @@ class Poll extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->sm->get('frontpage_form_poll_approval');
-    }
-
-    /**
-     * Get the poll mapper.
-     *
-     * @return \Frontpage\Mapper\Poll
-     */
-    public function getPollMapper()
-    {
-        return $this->sm->get('frontpage_mapper_poll');
-    }
-
-    /**
-     * Retrieves the currently logged in user.
-     *
-     * @return User|string
-     */
-    public function getUser()
-    {
-        return $this->sm->get('user_role');
+        return $this->pollApprovalForm;
     }
 
     /**
@@ -396,7 +394,7 @@ class Poll extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getAcl()
     {
-        return $this->sm->get('frontpage_acl');
+        return $this->acl;
     }
 
     /**
@@ -407,15 +405,5 @@ class Poll extends AbstractAclService implements ServiceManagerAwareInterface
     protected function getDefaultResourceId()
     {
         return 'poll';
-    }
-
-    /**
-     * Get the email service
-     *
-     * @return Email
-     */
-    public function getEmailService()
-    {
-        return $this->sm->get('application_service_email');
     }
 }

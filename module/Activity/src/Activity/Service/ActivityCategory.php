@@ -6,44 +6,64 @@ use Activity\Form\ActivityCategory as CategoryForm;
 use Activity\Model\ActivityCategory as CategoryModel;
 use Activity\Model\LocalisedText;
 use Application\Service\AbstractAclService;
+use Doctrine\ORM\EntityManager;
+use User\Model\User;
 use User\Permissions\NotAllowedException;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
-class ActivityCategory extends AbstractAclService implements ServiceManagerAwareInterface
+class ActivityCategory extends AbstractAclService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
     /**
      * @var Translator
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var User|string
+     */
+    private $userRole;
+
+    /**
+     * @var Acl
+     */
+    private $acl;
+
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
+    /**
+     * @var \Activity\Mapper\ActivityCategory
+     */
+    private $categoryMapper;
+
+    /**
+     * @var CategoryForm
+     */
+    private $categoryForm;
+
+    public function __construct(
+        Translator $translator,
+        $userRole,
+        Acl $acl,
+        EntityManager $entityManager,
+        \Activity\Mapper\ActivityCategory $categoryMapper,
+        CategoryForm $categoryForm
+    )
     {
         $this->translator = $translator;
+        $this->userRole = $userRole;
+        $this->acl = $acl;
+        $this->entityManager = $entityManager;
+        $this->categoryMapper = $categoryMapper;
+        $this->categoryForm = $categoryForm;
+    }
+
+    public function getRole()
+    {
+        return $this->userRole;
     }
 
     /**
@@ -53,7 +73,7 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
      */
     public function getAcl()
     {
-        return $this->sm->get('activity_acl');
+        return $this->acl;
     }
 
     /**
@@ -71,18 +91,7 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
             );
         }
 
-        $categoryMapper = $this->getCategoryMapper();
-        return $categoryMapper->getCategoryById($id);
-    }
-
-    /**
-     * Get the activity mapper.
-     *
-     * @return \Activity\Mapper\ActivityCategory
-     */
-    public function getCategoryMapper()
-    {
-        return $this->sm->get('activity_mapper_category');
+        return $this->categoryMapper->getCategoryById($id);
     }
 
     /**
@@ -98,8 +107,7 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
             );
         }
 
-        $categoryMapper = $this->getCategoryMapper();
-        return $categoryMapper->getAllCategories();
+        return $this->categoryMapper->getAllCategories();
     }
 
     public function createCategory($data)
@@ -120,7 +128,7 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
         $category = new CategoryModel();
         $category->setName(new LocalisedText($data['nameEn'], $data['name']));
 
-        $em = $this->sm->get('Doctrine\ORM\EntityManager');
+        $em = $this->entityManager;
         $em->persist($category);
         $em->flush();
 
@@ -140,7 +148,7 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
             );
         }
 
-        return $this->sm->get('activity_form_category');
+        return $this->categoryForm;
     }
 
     public function updateCategory($category, $data)
@@ -161,7 +169,7 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
         $name = $category->getName();
         $name->updatevalues($data['nameEn'], $data['name']);
 
-        $em = $this->sm->get('Doctrine\ORM\EntityManager');
+        $em = $this->entityManager;
         $em->persist($name);
         $em->persist($category);
         $em->flush();
@@ -178,7 +186,7 @@ class ActivityCategory extends AbstractAclService implements ServiceManagerAware
             );
         }
 
-        $em = $this->sm->get('Doctrine\ORM\EntityManager');
+        $em = $this->entityManager;
         $em->remove($category);
         $em->flush();
     }

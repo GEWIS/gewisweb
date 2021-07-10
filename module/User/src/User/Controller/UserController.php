@@ -154,7 +154,7 @@ class UserController extends AbstractActionController
         }
 
         return new ViewModel([
-            'form' => $this->userService->getPasswordResetForm()
+            'form' => $this->userService->getPasswordForm()
         ]);
     }
 

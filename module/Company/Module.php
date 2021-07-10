@@ -183,7 +183,47 @@ class Module
         $serviceFactories = [
             'company_service_company' => function ($sm) {
                 $translator = $sm->get('translator');
-                return new Company($translator);
+                $userRole = $sm->get('user_role');
+                $acl = $sm->get('company_acl');
+                $storageService = $sm->get('application_service_storage');
+                $companyMapper = $sm->get('company_mapper_company');
+                $packageMapper = $sm->get('company_mapper_package');
+                $bannerPackageMapper = $sm->get('company_mapper_bannerpackage');
+                $featuredPackageMapper = $sm->get('company_mapper_featuredpackage');
+                $jobMapper = $sm->get('company_mapper_job');
+                $categoryMapper = $sm->get('company_mapper_category');
+                $labelMapper = $sm->get('company_mapper_label');
+                $labelAssignmentMapper = $sm->get('company_mapper_label_assignment');
+                $editCompanyForm = $sm->get('company_admin_edit_company_form');
+                $editPackageForm = $sm->get('company_admin_edit_package_form');
+                $editBannerPackageForm = $sm->get('company_admin_edit_bannerpackage_form');
+                $editFeaturedPackageForm = $sm->get('company_admin_edit_featuredpackage_form');
+                $editJobForm = $sm->get('company_admin_edit_job_form');
+                $editCategoryForm = $sm->get('company_admin_edit_category_form');
+                $editLabelForm = $sm->get('company_admin_edit_label_form');
+                $languages = $sm->get('application_get_languages');
+                return new Company(
+                    $translator,
+                    $userRole,
+                    $acl,
+                    $storageService,
+                    $companyMapper,
+                    $packageMapper,
+                    $bannerPackageMapper,
+                    $featuredPackageMapper,
+                    $jobMapper,
+                    $categoryMapper,
+                    $labelMapper,
+                    $labelAssignmentMapper,
+                    $editCompanyForm,
+                    $editPackageForm,
+                    $editBannerPackageForm,
+                    $editFeaturedPackageForm,
+                    $editJobForm,
+                    $editCategoryForm,
+                    $editLabelForm,
+                    $languages
+                );
             },
         ];
         $factories = array_merge($serviceFactories, $this->getMapperFactories(), $this->getOtherFactories(), $this->getFormFactories());

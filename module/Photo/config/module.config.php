@@ -473,7 +473,8 @@ return [
             'AlbumPlugin' => function (ContainerInterface $serviceManager) {
                 $photoService = $serviceManager->getServiceLocator()->get("photo_service_photo");
                 $albumService = $serviceManager->getServiceLocator()->get("photo_service_album");
-                return new AlbumPlugin($photoService, $albumService);
+                $photoConfig = $serviceManager->getServiceLocator()->get('config')['photo'];
+                return new AlbumPlugin($photoService, $albumService, $photoConfig);
             }
         ]
     ],

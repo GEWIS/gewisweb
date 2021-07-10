@@ -2,6 +2,8 @@
 
 namespace Company\Controller;
 
+use Company\Form\EditCompany;
+use Company\Mapper\Label;
 use DateInterval;
 use DateTime;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -15,10 +17,25 @@ class AdminController extends AbstractActionController
      * @var CompanyService
      */
     private $companyService;
+    /**
+     * @var Label
+     */
+    private $labelMapper;
+    /**
+     * @var EditCompany
+     */
+    private $companyForm;
+    /**
+     * @var array
+     */
+    private $languages;
 
-    public function __construct(CompanyService $companyService)
+    public function __construct(CompanyService $companyService, Label $labelMapper, EditCompany $companyForm, array $languages)
     {
         $this->companyService = $companyService;
+        $this->labelMapper = $labelMapper;
+        $this->companyForm = $companyForm;
+        $this->languages = $languages;
     }
 
     /**
@@ -45,7 +62,7 @@ class AdminController extends AbstractActionController
     public function addCompanyAction()
     {
         // Get useful stuff
-        $companyForm = $this->companyService->getCompanyForm();
+        $companyForm = $this->companyService->companyForm;
 
         // Handle incoming form results
         $request = $this->getRequest();
@@ -309,7 +326,7 @@ class AdminController extends AbstractActionController
 
     private function getLanguageDescriptions()
     {
-        $languages = $this->companyService->getLanguages();
+        $languages = $this->languages;
         $languageDictionary = [];
         foreach ($languages as $key) {
             $languageDictionary[$key] = $this->companyService->getLanguageDescription($key);
@@ -326,7 +343,7 @@ class AdminController extends AbstractActionController
     public function editCompanyAction()
     {
         // Get useful stuff
-        $companyForm = $this->companyService->getCompanyForm();
+        $companyForm = $this->companyService->companyForm;
 
         // Get parameter
         $companyName = $this->params('slugCompanyName');
@@ -477,7 +494,7 @@ class AdminController extends AbstractActionController
 
         $labels = $jobs[0]->getLabels();
 
-        $mapper = $this->companyService->getLabelMapper();
+        $mapper = $this->labelMapper;
         $actualLabels = [];
         foreach ($labels as $label) {
             $actualLabel = $label->getLabel();

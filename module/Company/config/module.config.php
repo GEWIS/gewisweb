@@ -305,7 +305,10 @@ return [
             },
             'Company\Controller\Admin' => function (ContainerInterface $serviceManager) {
                 $companyService = $serviceManager->getServiceLocator()->get('company_service_company');
-                return new AdminController($companyService);
+                $labelMapper = $serviceManager->getServiceLocator()->get('company_mapper_label');
+                $companyForm = $serviceManager->getServiceLocator()->get('company_form_company');
+                $languages = $serviceManager->getServiceLocator()->get('languages');
+                return new AdminController($companyService, $labelMapper, $companyForm, $languages);
             },
         ],
     ],

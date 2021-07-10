@@ -6,6 +6,8 @@ use Doctrine\ORM\Events;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use Exception;
 use League\Glide\Urls\UrlBuilderFactory;
+use Photo\Listener\AlbumDate as AlbumDateListener;
+use Photo\Listener\Remove as RemoveListener;
 use Photo\Service\Admin;
 use Photo\Service\Album;
 use Photo\Service\AlbumCover;
@@ -14,8 +16,6 @@ use Photo\Service\Photo;
 use Photo\View\Helper\GlideUrl;
 use Zend\Cache\StorageFactory;
 use Zend\Mvc\MvcEvent;
-use Photo\Listener\AlbumDate as AlbumDateListener;
-use Photo\Listener\Remove as RemoveListener;
 
 class Module
 {
@@ -25,7 +25,9 @@ class Module
         $em = $sm->get('photo_doctrine_em');
         $dem = $em->getEventManager();
         $dem->addEventListener([Events::prePersist], new AlbumDateListener());
-        $dem->addEventListener([Events::preRemove], new RemoveListener($sm));
+        $photoService = $sm->get('photo_service_photo');
+        $albumService = $sm->get('photo_service_album');
+        $dem->addEventListener([Events::preRemove], new RemoveListener($photoService, $albumService));
     }
 
     /**
@@ -56,14 +58,62 @@ class Module
             'factories' => [
                 'photo_service_album' => function ($sm) {
                     $translator = $sm->get('translator');
-                    return new Album($translator);
+                    $userRole = $sm->get('user_role');
+                    $acl = $sm->get('photo_acl');
+                    $photoService = $sm->get('photo_service_photo');
+                    $albumCoverService = $sm->get('photo_service_album_cover');
+                    $memberService = $sm->get('decision_service_member');
+                    $storageService = $sm->get('application_service_storage');
+                    $albumMapper = $sm->get('photo_mapper_album');
+                    $createAlbumForm = $sm->get('photo_form_album_create');
+                    $editAlbumForm = $sm->get('photo_form_album_edit');
+                    return new Album(
+                        $translator,
+                        $userRole,
+                        $acl,
+                        $photoService,
+                        $albumCoverService,
+                        $memberService,
+                        $storageService,
+                        $albumMapper,
+                        $createAlbumForm,
+                        $editAlbumForm
+                    );
                 },
                 'photo_service_metadata' => function () {
                     return new Metadata();
                 },
                 'photo_service_photo' => function ($sm) {
                     $translator = $sm->get('translator');
-                    return new Photo($translator);
+                    $userRole = $sm->get('user_role');
+                    $acl = $sm->get('photo_acl');
+                    $albumService = $sm->get('photo_service_album');
+                    $memberService = $sm->get('decision_service_member');
+                    $storageService = $sm->get('application_service_storage');
+                    $photoMapper = $sm->get('photo_mapper_photo');
+                    $albumMapper = $sm->get('photo_mapper_album');
+                    $tagMapper = $sm->get('photo_mapper_tag');
+                    $hitMapper = $sm->get('photo_mapper_hit');
+                    $voteMapper = $sm->get('photo_mapper_vote');
+                    $weeklyPhotoMapper = $sm->get('photo_mapper_weekly_photo');
+                    $profilePhotoMapper = $sm->get('photo_mapper_profile_photo');
+                    $photoConfig = $sm->get('config')['photo'];
+                    return new Photo(
+                        $translator,
+                        $userRole,
+                        $acl,
+                        $albumService,
+                        $memberService,
+                        $storageService,
+                        $photoMapper,
+                        $albumMapper,
+                        $tagMapper,
+                        $hitMapper,
+                        $voteMapper,
+                        $weeklyPhotoMapper,
+                        $profilePhotoMapper,
+                        $photoConfig
+                    );
                 },
                 'photo_service_album_cover' => function ($sm) {
                     $photoMapper = $sm->get('photo_mapper_photo');
@@ -75,7 +125,25 @@ class Module
                 },
                 'photo_service_admin' => function ($sm) {
                     $translator = $sm->get('translator');
-                    return new Admin($translator);
+                    $userRole = $sm->get('user_role');
+                    $acl = $sm->get('photo_acl');
+                    $photoService = $sm->get('photo_service_photo');
+                    $albumService = $sm->get('photo_service_album');
+                    $metadataService = $sm->get('photo_service_metadata');
+                    $storageService = $sm->get('application_service_storage');
+                    $photoMapper = $sm->get('photo_mapper_photo');
+                    $photoConfig = $sm->get('config')['photo'];
+                    return new Admin(
+                        $translator,
+                        $userRole,
+                        $acl,
+                        $photoService,
+                        $albumService,
+                        $metadataService,
+                        $storageService,
+                        $photoMapper,
+                        $photoConfig
+                    );
                 },
                 'photo_form_album_edit' => function ($sm) {
                     $form = new Form\EditAlbum(

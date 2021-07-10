@@ -44,7 +44,31 @@ class Module
             'factories' => [
                 'education_service_exam' => function ($sm) {
                     $translator = $sm->get('translator');
-                    return new Service\Exam($translator);
+                    $userRole = $sm->get('user_role');
+                    $acl = $sm->get('education_acl');
+                    $storageService = $sm->get('application_service_storage');
+                    $courseMapper = $sm->get('company_mapper_course');
+                    $examMapper = $sm->get('company_mapper_exam');
+                    $addCourseForm = $sm->get('company_form_add_course');
+                    $searchCourseForm = $sm->get('company_form_searchcourse');
+                    $tempUploadForm = $sm->get('company_form_tempupload');
+                    $bulkSummaryForm = $sm->get('company_form_bulk_summary');
+                    $bulkExamForm = $sm->get('company_form_bulk_exam');
+                    $config = $sm->get('config');
+                    return new Service\Exam(
+                        $translator,
+                        $userRole,
+                        $acl,
+                        $storageService,
+                        $courseMapper,
+                        $examMapper,
+                        $addCourseForm,
+                        $searchCourseForm,
+                        $tempUploadForm,
+                        $bulkSummaryForm,
+                        $bulkExamForm,
+                        $config
+                    );
                 },
                 'education_form_tempupload' => function ($sm) {
                     return new TempUpload(

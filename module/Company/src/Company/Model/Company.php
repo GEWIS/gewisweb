@@ -87,6 +87,8 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     protected $packages;
 
+    private $languageNeutralId;
+
     /**
      * Constructor.
      */

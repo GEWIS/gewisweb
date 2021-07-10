@@ -15,45 +15,109 @@ use DateInterval;
 use DateTime;
 use Decision\Mapper\Member;
 use Decision\Service\Organ;
+use Doctrine\ORM\EntityManager;
 use Exception;
 use User\Permissions\NotAllowedException;
+use User\Service\User;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
-class ActivityCalendar extends AbstractAclService implements ServiceManagerAwareInterface
+class ActivityCalendar extends AbstractAclService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
     /**
      * @var Translator
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var \User\Model\User|string
+     */
+    private $userRole;
+    /**
+     * @var Acl
+     */
+    private $acl;
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
+    /**
+     * @var User
+     */
+    private $userService;
+    /**
+     * @var Organ
+     */
+    private $organService;
+    /**
+     * @var Email
+     */
+    private $emailService;
+    /**
+     * @var \Activity\Mapper\ActivityCalendarOption
+     */
+    private $calendarOptionMapper;
+    /**
+     * @var ActivityOptionProposal
+     */
+    private $optionProposalMapper;
+    /**
+     * @var \Activity\Mapper\ActivityOptionCreationPeriod
+     */
+    private $periodMapper;
+    /**
+     * @var MaxActivities
+     */
+    private $maxActivitiesMapper;
+    /**
+     * @var Member
+     */
+    private $memberMapper;
+    /**
+     * @var ActivityCalendarOption
+     */
+    private $calendarOptionForm;
+    /**
+     * @var ActivityCalendarProposal
+     */
+    private $calendarProposalForm;
+
+    public function __construct(
+        Translator $translator,
+        $userRole,
+        Acl $acl,
+        EntityManager $entityManager,
+        User $userService,
+        Organ $organService,
+        Email $emailService,
+        \Activity\Mapper\ActivityCalendarOption $calendarOptionMapper,
+        ActivityOptionProposal $optionProposalMapper,
+        \Activity\Mapper\ActivityOptionCreationPeriod $periodMapper,
+        MaxActivities $maxActivitiesMapper,
+        Member $memberMapper,
+        ActivityCalendarOption $calendarOptionForm,
+        ActivityCalendarProposal $calendarProposalForm
+    )
     {
         $this->translator = $translator;
+        $this->userRole = $userRole;
+        $this->acl = $acl;
+        $this->entityManager = $entityManager;
+        $this->userService = $userService;
+        $this->organService = $organService;
+        $this->emailService = $emailService;
+        $this->calendarOptionMapper = $calendarOptionMapper;
+        $this->optionProposalMapper = $optionProposalMapper;
+        $this->periodMapper = $periodMapper;
+        $this->maxActivitiesMapper = $maxActivitiesMapper;
+        $this->memberMapper = $memberMapper;
+        $this->calendarOptionForm = $calendarOptionForm;
+        $this->calendarProposalForm = $calendarProposalForm;
+    }
+
+    public function getRole()
+    {
+        return $this->userRole;
     }
 
     /**
@@ -62,17 +126,7 @@ class ActivityCalendar extends AbstractAclService implements ServiceManagerAware
      */
     public function getUpcomingOptions()
     {
-        return $this->getActivityCalendarOptionMapper()->getUpcomingOptions(false);
-    }
-
-    /**
-     * Get the activity calendar option mapper.
-     *
-     * @return \Activity\Mapper\ActivityCalendarOption
-     */
-    public function getActivityCalendarOptionMapper()
-    {
-        return $this->sm->get('activity_mapper_calendar_option');
+        return $this->calendarOptionMapper->getUpcomingOptions(false);
     }
 
     /**
@@ -86,60 +140,28 @@ class ActivityCalendar extends AbstractAclService implements ServiceManagerAware
         }
         if ($this->isAllowed('delete_all')) {
             // Return all
-            return $this->getActivityCalendarOptionMapper()->getUpcomingOptions(true);
+            return $this->calendarOptionMapper->getUpcomingOptions(true);
         }
-        $user = $this->sm->get('user_service_user')->getIdentity();
+        $user = $this->userService->getIdentity();
 
-        return $this->getActivityCalendarOptionMapper()->getUpcomingOptionsByOrgans(
-            $this->getMemberMapper()->findOrgans($user->getMember())
+        return $this->calendarOptionMapper->getUpcomingOptionsByOrgans(
+            $this->memberMapper->findOrgans($user->getMember())
         );
-    }
-
-    /**
-     * Get the member mapper.
-     *
-     * @return Member
-     */
-    public function getMemberMapper()
-    {
-        return $this->sm->get('decision_mapper_member');
     }
 
     public function sendOverdueNotifications()
     {
         $date = new DateTime();
         $date->sub(new DateInterval('P3W'));
-        $oldOptions = $this->getActivityCalendarOptionMapper()->getPastOptions($date);
+        $oldOptions = $this->calendarOptionMapper->getPastOptions($date);
         if (!empty($oldOptions)) {
-            $this->getEmailService()->sendEmail(
+            $this->emailService->sendEmail(
                 'activity_calendar',
                 'email/options-overdue',
                 'Activiteiten kalender opties verlopen | Activity calendar options expired',
                 ['options' => $oldOptions]
             );
         }
-    }
-
-    /**
-     * Get the email service
-     *
-     * @return Email
-     */
-    public function getEmailService()
-    {
-        return $this->sm->get('application_service_email');
-    }
-
-    /**
-     * Get calendar configuration.
-     *
-     * @return array
-     */
-    public function getConfig()
-    {
-        $config = $this->sm->get('config');
-
-        return $config['calendar'];
     }
 
     /**
@@ -155,7 +177,7 @@ class ActivityCalendar extends AbstractAclService implements ServiceManagerAware
             );
         }
 
-        return $this->sm->get('activity_form_calendar_option');
+        return $this->calendarOptionForm;
     }
 
     /**
@@ -180,15 +202,15 @@ class ActivityCalendar extends AbstractAclService implements ServiceManagerAware
         }
 
         $proposal->setCreationTime(new DateTime());
-        $em = $this->getEntityManager();
-        $proposal->setCreator($this->sm->get('user_service_user')->getIdentity());
+        $em = $this->entityManager;
+        $proposal->setCreator($this->userService->getIdentity());
         $name = $validatedData['name'];
         $proposal->setName($name);
         $description = $validatedData['description'];
         $proposal->setDescription($description);
 //        See /Activity/Form/ActivityCalendarProposal for more details on the definition of these options
         if ($organ > -1) {
-            $proposal->setOrgan($this->sm->get('decision_service_organ')->getOrgan($organ));
+            $proposal->setOrgan($this->organService->getOrgan($organ));
         } elseif ($organ == -1) {
             $proposal->setOrganAlt("Board");
         } elseif ($organ == -2) {
@@ -221,7 +243,7 @@ class ActivityCalendar extends AbstractAclService implements ServiceManagerAware
             );
         }
 
-        return $this->sm->get('activity_form_calendar_proposal');
+        return $this->calendarProposalForm;
     }
 
     /**
@@ -261,18 +283,8 @@ class ActivityCalendar extends AbstractAclService implements ServiceManagerAware
      */
     public function getCurrentPeriod()
     {
-        $mapper = $this->getActivityOptionCreationPeriodMapper();
+        $mapper = $this->periodMapper;
         return $mapper->getCurrentActivityOptionCreationPeriod();
-    }
-
-    /**
-     * Get the period mapper
-     *
-     * @return \Activity\Mapper\ActivityOptionCreationPeriod
-     */
-    public function getActivityOptionCreationPeriodMapper()
-    {
-        return $this->sm->get('activity_mapper_period');
     }
 
     /**
@@ -285,7 +297,7 @@ class ActivityCalendar extends AbstractAclService implements ServiceManagerAware
      */
     protected function getMaxActivities($organId, $periodId)
     {
-        $mapper = $this->getMaxActivitiesMapper();
+        $mapper = $this->maxActivitiesMapper;
         $maxActivities = $mapper->getMaxActivityOptionsByOrganPeriod($organId, $periodId);
         // TODO: The initial value of $max below represents a default value for when no appropriate MaxActivities instance exists.
         $max = 2;
@@ -293,16 +305,6 @@ class ActivityCalendar extends AbstractAclService implements ServiceManagerAware
             $max = $maxActivities->getValue();
         }
         return $max;
-    }
-
-    /**
-     * Get the max activities mapper
-     *
-     * @return MaxActivities
-     */
-    public function getMaxActivitiesMapper()
-    {
-        return $this->sm->get('activity_mapper_max_activities');
     }
 
     /**
@@ -314,29 +316,11 @@ class ActivityCalendar extends AbstractAclService implements ServiceManagerAware
      */
     protected function getCurrentProposalCount($period, $organId)
     {
-        $mapper = $this->getActivityOptionProposalMapper();
+        $mapper = $this->optionProposalMapper;
         $begin = $period->getBeginPlanningTime();
         $end = $period->getEndPlanningTime();
         $options = $mapper->getNonClosedProposalsWithinPeriodAndOrgan($begin, $end, $organId);
         return count($options);
-    }
-
-    /**
-     * Get the period mapper
-     *
-     * @return ActivityOptionProposal
-     */
-    public function getActivityOptionProposalMapper()
-    {
-        return $this->sm->get('activity_mapper_option_proposal');
-    }
-
-    /**
-     * Get the entity manager
-     */
-    public function getEntityManager()
-    {
-        return $this->sm->get('doctrine.entitymanager.orm_default');
     }
 
     /**
@@ -350,7 +334,7 @@ class ActivityCalendar extends AbstractAclService implements ServiceManagerAware
         $option = new OptionModel();
         $validatedData = $data;
 
-        $em = $this->getEntityManager();
+        $em = $this->entityManager;
         $option->setProposal($proposal);
         $beginTime = $this->toDateTime($validatedData['beginTime']);
         $option->setBeginTime($beginTime);
@@ -377,11 +361,11 @@ class ActivityCalendar extends AbstractAclService implements ServiceManagerAware
             );
         }
 
-        $mapper = $this->getActivityCalendarOptionMapper();
+        $mapper = $this->calendarOptionMapper;
         $option = $mapper->find($id);
 
-        $em = $this->getEntityManager();
-        $option->setModifiedBy($this->sm->get('user_service_user')->getIdentity());
+        $em = $this->entityManager;
+        $option->setModifiedBy($this->userService->getIdentity());
         $option->setStatus('approved');
         $em->flush();
 
@@ -407,7 +391,7 @@ class ActivityCalendar extends AbstractAclService implements ServiceManagerAware
 
     public function deleteOption($id)
     {
-        $mapper = $this->getActivityCalendarOptionMapper();
+        $mapper = $this->calendarOptionMapper;
         $option = $mapper->find($id);
         if (!$this->canDeleteOption($option)) {
             throw new NotAllowedException(
@@ -415,8 +399,8 @@ class ActivityCalendar extends AbstractAclService implements ServiceManagerAware
             );
         }
 
-        $em = $this->getEntityManager();
-        $option->setModifiedBy($this->sm->get('user_service_user')->getIdentity());
+        $em = $this->entityManager;
+        $option->setModifiedBy($this->userService->getIdentity());
         $option->setStatus('deleted');
         $em->flush();
     }
@@ -432,27 +416,17 @@ class ActivityCalendar extends AbstractAclService implements ServiceManagerAware
         }
 
         if ($option->getProposal()->getOrgan() === null
-            && $option->getProposal()->getCreator()->getLidnr() === $this->sm->get('user_service_user')->getIdentity()->getLidnr()
+            && $option->getProposal()->getCreator()->getLidnr() === $this->userService->getIdentity()->getLidnr()
         ) {
             return true;
         }
 
         $organ = $option->getProposal()->getOrgan();
-        if ($organ !== null && $this->getOrganService()->canEditOrgan($organ)) {
+        if ($organ !== null && $this->organService->canEditOrgan($organ)) {
             return true;
         }
 
         return false;
-    }
-
-    /**
-     * Get the organ service
-     *
-     * @return Organ
-     */
-    public function getOrganService()
-    {
-        return $this->sm->get('decision_service_organ');
     }
 
     /**
@@ -500,7 +474,7 @@ class ActivityCalendar extends AbstractAclService implements ServiceManagerAware
      */
     public function getEditableOrgans()
     {
-        $allOrgans = $this->getOrganService()->getEditableOrgans();
+        $allOrgans = $this->organService->getEditableOrgans();
         $organs = [];
         foreach ($allOrgans as $organ) {
             $organId = $organ->getId();
@@ -518,7 +492,7 @@ class ActivityCalendar extends AbstractAclService implements ServiceManagerAware
      */
     public function getAcl()
     {
-        return $this->sm->get('activity_acl');
+        return $this->acl;
     }
 
     /**
@@ -530,7 +504,7 @@ class ActivityCalendar extends AbstractAclService implements ServiceManagerAware
      */
     protected function getCurrentProposalOptionCount($proposalId, $organId)
     {
-        $mapper = $this->getActivityCalendarOptionMapper();
+        $mapper = $this->calendarOptionMapper;
         $options = $mapper->findOptionsByProposalAndOrgan($proposalId, $organId);
         return count($options);
     }

@@ -10,55 +10,178 @@ use Company\Form\EditCompany;
 use Company\Form\EditJob;
 use Company\Form\EditLabel;
 use Company\Form\EditPackage;
+use Company\Mapper\BannerPackage;
+use Company\Mapper\Category;
+use Company\Mapper\FeaturedPackage;
+use Company\Mapper\Label;
+use Company\Mapper\LabelAssignment;
+use Company\Mapper\Package;
+use Company\Model\Job;
 use Company\Model\Job as JobModel;
 use Company\Model\JobCategory as CategoryModel;
 use Company\Model\JobLabel as LabelModel;
-use Company\Model\Job;
 use Company\Model\JobLabelAssignment;
 use DateTime;
 use Exception;
 use InvalidArgumentException;
+use User\Model\User;
 use User\Permissions\NotAllowedException;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 /**
  * Company service.
  */
-class Company extends AbstractACLService implements ServiceManagerAwareInterface
+class Company extends AbstractACLService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
     /**
      * @var Translator
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var User|string
+     */
+    private $userRole;
+
+    /**
+     * @var Acl
+     */
+    private $acl;
+
+    /**
+     * @var FileStorage
+     */
+    private $storageService;
+
+    /**
+     * @var \Company\Mapper\Company
+     */
+    private $companyMapper;
+
+    /**
+     * @var Package
+     */
+    private $packageMapper;
+
+    /**
+     * @var BannerPackage
+     */
+    private $bannerPackageMapper;
+
+    /**
+     * @var FeaturedPackage
+     */
+    private $featuredPackageMapper;
+
+    /**
+     * @var \Company\Mapper\Job
+     */
+    private $jobMapper;
+
+    /**
+     * @var Category
+     */
+    private $categoryMapper;
+
+    /**
+     * @var Label
+     */
+    private $labelMapper;
+
+    /**
+     * @var LabelAssignment
+     */
+    private $labelAssignmentMapper;
+
+    /**
+     * @var EditCompany
+     */
+    private $editCompanyForm;
+
+    /**
+     * @var EditPackage
+     */
+    private $editPackageForm;
+
+    /**
+     * @var EditPackage
+     */
+    private $editBannerPackageForm;
+
+    /**
+     * @var EditPackage
+     */
+    private $editFeaturedPackageForm;
+
+    /**
+     * @var EditJob
+     */
+    private $editJobForm;
+
+    /**
+     * @var EditCategory
+     */
+    private $editCategoryForm;
+
+    /**
+     * @var EditLabel
+     */
+    private $editLabelForm;
+
+    /**
+     * @var array
+     */
+    private $languages;
+
+    public function __construct(
+        Translator $translator,
+        $userRole,
+        Acl $acl,
+        FileStorage $storageService,
+        \Company\Mapper\Company $companyMapper,
+        Package $packageMapper,
+        BannerPackage $bannerPackageMapper,
+        FeaturedPackage $featuredPackageMapper,
+        \Company\Mapper\Job $jobMapper,
+        Category $categoryMapper,
+        Label $labelMapper,
+        LabelAssignment $labelAssignmentMapper,
+        EditCompany $editCompanyForm,
+        EditPackage $editPackageForm,
+        EditPackage $editBannerPackageForm,
+        EditPackage $editFeaturedPackageForm,
+        EditJob $editJobForm,
+        EditCategory $editCategoryForm,
+        EditLabel $editLabelForm,
+        array $languages
+    )
     {
         $this->translator = $translator;
+        $this->userRole = $userRole;
+        $this->acl = $acl;
+        $this->storageService = $storageService;
+        $this->companyMapper = $companyMapper;
+        $this->packageMapper = $packageMapper;
+        $this->bannerPackageMapper = $bannerPackageMapper;
+        $this->featuredPackageMapper = $featuredPackageMapper;
+        $this->jobMapper = $jobMapper;
+        $this->categoryMapper = $categoryMapper;
+        $this->labelMapper = $labelMapper;
+        $this->labelAssignmentMapper = $labelAssignmentMapper;
+        $this->editCompanyForm = $editCompanyForm;
+        $this->editPackageForm = $editPackageForm;
+        $this->editBannerPackageForm = $editBannerPackageForm;
+        $this->editFeaturedPackageForm = $editFeaturedPackageForm;
+        $this->editJobForm = $editJobForm;
+        $this->editCategoryForm = $editCategoryForm;
+        $this->editLabelForm = $editLabelForm;
+        $this->languages = $languages;
+    }
+
+    public function getRole()
+    {
+        return $this->userRole;
     }
 
     /**
@@ -84,7 +207,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getBannerPackageMapper()->getBannerPackage();
+        return $this->bannerPackageMapper->getBannerPackage();
     }
 
     public function getFeaturedPackage()
@@ -96,15 +219,15 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getFeaturedPackageMapper()->getFeaturedPackage($this->translator->getLocale());
+        return $this->featuredPackageMapper->getFeaturedPackage($this->translator->getLocale());
     }
 
     private function getFuturePackageStartsBeforeDate($date)
     {
         $startPackages = array_merge(
-            $this->getPackageMapper()->findFuturePackageStartsBeforeDate($date),
-            $this->getBannerPackageMapper()->findFuturePackageStartsBeforeDate($date),
-            $this->getFeaturedPackageMapper()->findFuturePackageStartsBeforeDate($date)
+            $this->packageMapper->findFuturePackageStartsBeforeDate($date),
+            $this->bannerPackageMapper->findFuturePackageStartsBeforeDate($date),
+            $this->featuredPackageMapper->findFuturePackageStartsBeforeDate($date)
         );
 
         usort($startPackages, function ($a, $b) {
@@ -122,9 +245,9 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
     private function getFuturePackageExpiresBeforeDate($date)
     {
         $expirePackages = array_merge(
-            $this->getPackageMapper()->findFuturePackageExpirationsBeforeDate($date),
-            $this->getBannerPackageMapper()->findFuturePackageExpirationsBeforeDate($date),
-            $this->getFeaturedPackageMapper()->findFuturePackageExpirationsBeforeDate($date)
+            $this->packageMapper->findFuturePackageExpirationsBeforeDate($date),
+            $this->bannerPackageMapper->findFuturePackageExpirationsBeforeDate($date),
+            $this->featuredPackageMapper->findFuturePackageExpirationsBeforeDate($date)
         );
 
         usort($expirePackages, function ($a, $b) {
@@ -175,7 +298,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getCompanyMapper()->findPublicByLocale($this->translator->getLocale());
+        return $this->companyMapper->findPublicByLocale($this->translator->getLocale());
     }
     // Company list for admin interface
 
@@ -192,7 +315,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getCompanyMapper()->findAll();
+        return $this->companyMapper->findAll();
     }
 
     /**
@@ -210,13 +333,13 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getCompanyMapper()->findById($id);
+        return $this->companyMapper->findById($id);
     }
 
     public function categoryForSlug($slug)
     {
 
-        $mapper = $this->getCategoryMapper();
+        $mapper = $this->categoryMapper;
         $category = $mapper->findCategory($slug);
         $locale = $this->translator->getLocale();
 
@@ -297,7 +420,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
                     $this->translator->translate('You are not allowed to access the admin interface')
                 );
             }
-            $results = $this->getCategoryMapper()->findAll();
+            $results = $this->categoryMapper->findAll();
             return $this->getUniqueInArray($results, function ($a) {
                 return $a->getLanguageNeutralId();
             });
@@ -308,15 +431,15 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
             );
         }
 
-        $categories = $this->getCategoryMapper()->findVisibleCategoryByLanguage($this->translator->getLocale());
-        $jobsWithoutCategory = $this->getJobMapper()->findJobsWithoutCategory($this->translator->getLocale());
+        $categories = $this->categoryMapper->findVisibleCategoryByLanguage($this->translator->getLocale());
+        $jobsWithoutCategory = $this->jobMapper->findJobsWithoutCategory($this->translator->getLocale());
         $filteredCategories = $this->filterCategories($categories);
         $noVacancyCategory = count(array_filter($filteredCategories, function ($el) {
             return $el->getSlug() == "jobs";
         }));
 
         if (count($jobsWithoutCategory) > 0 && $noVacancyCategory == 0) {
-            $filteredCategories[] = $this->getCategoryMapper()
+            $filteredCategories[] = $this->categoryMapper
                 ->createNullCategory($this->translator->getLocale(), $this->translator);
         }
 
@@ -338,7 +461,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
                     $this->translator->translate('You are not allowed to access the admin interface')
                 );
             }
-            $results = $this->getLabelMapper()->findAll();
+            $results = $this->labelMapper->findAll();
             return $this->getUniqueInArray($results, function ($a) {
                 return $a->getLanguageNeutralId();
             });
@@ -349,7 +472,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
             );
         }
 
-        $labels = $this->getLabelMapper()->findVisibleLabelByLanguage($this->translator->getLocale());
+        $labels = $this->labelMapper->findVisibleLabelByLanguage($this->translator->getLocale());
 
         return $this->filterLabels($labels);
     }
@@ -371,7 +494,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
         }
 
         $categoryDict = [];
-        foreach ($this->getLanguages() as $lang) {
+        foreach ($this->languages as $lang) {
             $category = new CategoryModel();
             $category->setLanguage($lang);
             $categoryDict[$lang] = $category;
@@ -408,7 +531,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
         $id = -1;
         foreach ($categories as $category) {
             $id = $this->setLanguageNeutralCategoryId($id, $category, $languageNeutralId);
-            $this->getCategoryMapper()->persist($category);
+            $this->categoryMapper->persist($category);
             $this->saveCategory();
         }
 
@@ -428,7 +551,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
     {
         if ($languageNeutralId == "") {
             $category->setLanguageNeutralId($id);
-            $this->getCategoryMapper()->persist($category);
+            $this->categoryMapper->persist($category);
             $this->saveCategory();
 
             if ($id == -1) {
@@ -461,7 +584,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
         }
 
         $labelDict = [];
-        foreach ($this->getLanguages() as $lang) {
+        foreach ($this->languages as $lang) {
             $label = new LabelModel();
             $label->setLanguage($lang);
             $labelDict[$lang] = $label;
@@ -498,7 +621,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
         $id = -1;
         foreach ($labels as $label) {
             $id = $this->setLanguageNeutralLabelId($id, $label, $languageNeutralId);
-            $this->getLabelMapper()->persist($label);
+            $this->labelMapper->persist($label);
             $this->saveLabel();
         }
 
@@ -518,7 +641,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
     {
         if ($languageNeutralId == "") {
             $label->setLanguageNeutralId($id);
-            $this->getLabelMapper()->persist($label);
+            $this->labelMapper->persist($label);
             $this->saveLabel();
 
             if ($id == -1) {
@@ -553,10 +676,10 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
                         return false;
                     }
                     $oldPath = $package->getImage();
-                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                    $newPath = $this->storageService->storeUploadedFile($file);
                     $package->setImage($newPath);
                     if ($oldPath != '' && $oldPath != $newPath) {
-                        $this->getFileStorageService()->removeFile($oldPath);
+                        $this->storageService->removeFile($oldPath);
                     }
                 }
             }
@@ -573,7 +696,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
      */
     public function saveCompanyByData($company, $data, $files)
     {
-        $companyForm = $this->getCompanyForm();
+        $companyForm = $this->editCompanyForm;
         $mergedData = array_merge_recursive(
             $data->toArray(),
             $files->toArray()
@@ -588,10 +711,10 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
                         return false;
                     }
                     $oldPath = $translation->getLogo();
-                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                    $newPath = $this->storageService->storeUploadedFile($file);
                     $translation->setLogo($newPath);
                     if ($oldPath !== '' && $oldPath != $newPath) {
-                        $this->getFileStorageService()->removeFile($oldPath);
+                        $this->storageService->removeFile($oldPath);
                     }
                 }
             }
@@ -606,7 +729,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
      */
     public function saveCategory()
     {
-        $this->getCategoryMapper()->save();
+        $this->categoryMapper->save();
     }
 
     /**
@@ -615,7 +738,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
      */
     public function saveLabel()
     {
-        $this->getLabelMapper()->save();
+        $this->labelMapper->save();
     }
 
     /**
@@ -624,7 +747,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
      */
     public function saveJob()
     {
-        $this->getJobMapper()->save();
+        $this->jobMapper->save();
     }
 
     /**
@@ -633,7 +756,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
      */
     public function saveCompany()
     {
-        $this->getCompanyMapper()->save();
+        $this->companyMapper->save();
     }
 
     /**
@@ -642,7 +765,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
      */
     public function savePackage()
     {
-        $this->getPackageMapper()->save();
+        $this->packageMapper->save();
     }
 
     /**
@@ -653,7 +776,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
      */
     public function insertCompanyByData($data, $files)
     {
-        $companyForm = $this->getCompanyForm();
+        $companyForm = $this->editCompanyForm;
         $mergedData = array_merge_recursive(
             $data->toArray(),
             $files->toArray()
@@ -669,7 +792,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
                     if ($file['error'] !== UPLOAD_ERR_OK) {
                         return false;
                     }
-                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                    $newPath = $this->storageService->storeUploadedFile($file);
                     $translation->setLogo($newPath);
                 }
             }
@@ -694,7 +817,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getCompanyMapper()->insert($languages);
+        return $this->companyMapper->insert($languages);
     }
 
     /**
@@ -710,7 +833,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
         if ($packageForm->isValid()) {
             $package = $this->insertPackageForCompanySlugName($companySlugName, $type);
             if ($type === 'banner') {
-                $newPath = $this->getFileStorageService()->storeUploadedFile($files);
+                $newPath = $this->storageService->storeUploadedFile($files);
                 $package->setImage($newPath);
             }
             $package->exchangeArray($data);
@@ -738,7 +861,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
         $companies = $this->getEditableCompaniesBySlugName($companySlugName);
         $company = $companies[0];
 
-        return $this->getPackageMapper()->insertPackageIntoCompany($company, $type);
+        return $this->packageMapper->insertPackageIntoCompany($company, $type);
     }
 
     /**
@@ -751,10 +874,10 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
      */
     public function createJob($packageId, $data, $files)
     {
-        $package = $this->getPackageMapper()->findPackage($packageId);
+        $package = $this->packageMapper->findPackage($packageId);
         $jobs = [];
 
-        foreach ($this->getLanguages() as $lang) {
+        foreach ($this->languages as $lang) {
             $job = new JobModel();
             $job->setPackage($package);
             $job->setLanguage($lang);
@@ -809,13 +932,13 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
                 $oldPath = $job->getAttachment();
 
                 try {
-                    $newPath = $this->getFileStorageService()->storeUploadedFile($file);
+                    $newPath = $this->storageService->storeUploadedFile($file);
                 } catch (Exception $e) {
                     return false;
                 }
 
                 if (!is_null($oldPath) && $oldPath != $newPath) {
-                    $this->getFileStorageService()->removeFile($oldPath);
+                    $this->storageService->removeFile($oldPath);
                 }
 
                 $job->setAttachment($newPath);
@@ -823,10 +946,10 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
 
             $job->setTimeStamp(new DateTime());
             $id = $this->setLanguageNeutralJobId($id, $job, $languageNeutralId);
-            $this->getJobMapper()->persist($job);
+            $this->jobMapper->persist($job);
             $this->saveJob();
 
-            $mapper = $this->getLabelMapper();
+            $mapper = $this->labelMapper;
             $lang = $job->getLanguage();
             // Contains language specific labels
             $labelsLangBased = [];
@@ -846,7 +969,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
      */
     private function setLabelsForJob($job, $labels)
     {
-        $mapper = $this->getLabelAssignmentMapper();
+        $mapper = $this->labelAssignmentMapper;
         $currentAssignments = $mapper->findAssignmentsByJobId($job->getId());
         $currentLabels = [];
         foreach ($currentAssignments as $labelAsg) {
@@ -866,9 +989,9 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
      */
     private function addLabelsToJob($job, $labels)
     {
-        $mapperLabel = $this->getLabelMapper();
-        $mapperLabelAssignment = $this->getLabelAssignmentMapper();
-        $mapperJob = $this->getJobMapper();
+        $mapperLabel = $this->labelMapper;
+        $mapperLabelAssignment = $this->labelAssignmentMapper;
+        $mapperJob = $this->jobMapper;
         foreach ($labels as $label) {
             $jobLabelAssignment = new JobLabelAssignment();
             $labelModel = $mapperLabel->findLabelById($label);
@@ -885,7 +1008,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
      */
     private function removeLabelsFromJob($job, $labels)
     {
-        $mapper = $this->getLabelAssignmentMapper();
+        $mapper = $this->labelAssignmentMapper;
         foreach ($labels as $label) {
             $toRemove = $mapper->findAssignmentByJobIdAndLabelId($job->getId(), $label);
             $mapper->delete($toRemove);
@@ -896,7 +1019,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
     {
         if ($languageNeutralId == "") {
             $job->setLanguageNeutralId($id);
-            $this->getJobMapper()->persist($job);
+            $this->jobMapper->persist($job);
             $this->saveJob();
 
             if ($id == -1) {
@@ -925,7 +1048,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
         }
         $package = $this->getEditablePackage($packageId);
 
-        return $this->getJobMapper()->insertIntoPackage($package, $lang, $languageNeutralId);
+        return $this->jobMapper->insertIntoPackage($package, $lang, $languageNeutralId);
     }
 
     /**
@@ -941,8 +1064,8 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
                 $this->translator->translate('You are not allowed to delete packages')
             );
         }
-        $this->getPackageMapper()->delete($packageId);
-        $this->getBannerPackageMapper()->delete($packageId);
+        $this->packageMapper->delete($packageId);
+        $this->bannerPackageMapper->delete($packageId);
     }
 
     /**
@@ -958,7 +1081,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
                 $this->translator->translate('You are not allowed to delete jobs')
             );
         }
-        $this->getJobMapper()->deleteByLanguageNeutralId($jobId);
+        $this->jobMapper->deleteByLanguageNeutralId($jobId);
     }
 
     /**
@@ -975,7 +1098,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
             );
         }
         $company = $this->getCompanyBySlugName($slug);
-        $this->getCompanyMapper()->remove($company);
+        $this->companyMapper->remove($company);
     }
 
     /**
@@ -985,7 +1108,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
      */
     public function getCompanyBySlugName($slugName)
     {
-        return $this->getCompanyMapper()->findCompanyBySlugName($slugName);
+        return $this->companyMapper->findCompanyBySlugName($slugName);
     }
 
     /**
@@ -1002,7 +1125,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getCategoryMapper()->findAllCategoriesById($categoryId);
+        return $this->categoryMapper->findAllCategoriesById($categoryId);
     }
 
     /**
@@ -1019,7 +1142,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getLabelMapper()->findAllLabelsById($labelId);
+        return $this->labelMapper->findAllLabelsById($labelId);
     }
 
     /**
@@ -1038,12 +1161,12 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
         if (is_null($packageId)) {
             throw new InvalidArgumentException('Invalid argument');
         }
-        $package = $this->getPackageMapper()->findEditablePackage($packageId);
+        $package = $this->packageMapper->findEditablePackage($packageId);
         if (is_null($package)) {
-            $package = $this->getBannerPackageMapper()->findEditablePackage($packageId);
+            $package = $this->bannerPackageMapper->findEditablePackage($packageId);
         }
         if (is_null($package)) {
-            $package = $this->getFeaturedPackageMapper()->findEditablePackage($packageId);
+            $package = $this->featuredPackageMapper->findEditablePackage($packageId);
         }
 
         return $package;
@@ -1063,7 +1186,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getCompanyMapper()->findEditableCompaniesBySlugName($slugName, true);
+        return $this->companyMapper->findEditableCompaniesBySlugName($slugName, true);
     }
 
     /**
@@ -1082,7 +1205,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getJobMapper()->findJob(['languageNeutralId' => $languageNeutralId]);
+        return $this->jobMapper->findJob(['languageNeutralId' => $languageNeutralId]);
     }
 
     /**
@@ -1097,28 +1220,17 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
     {
 
         if (array_key_exists("jobCategory", $dict) && $dict["jobCategory"] === null) {
-            $jobs = $this->getJobMapper()->findJobsWithoutCategory($this->translator->getLocale());
+            $jobs = $this->jobMapper->findJobsWithoutCategory($this->translator->getLocale());
             foreach ($jobs as $job) {
-                $job->setCategory($this->getCategoryMapper()
+                $job->setCategory($this->categoryMapper
                     ->createNullCategory($this->translator->getLocale(), $this->translator));
             }
             return $jobs;
         }
         $locale = $this->translator->getLocale();
         $dict["language"] = $locale;
-        $jobs = $this->getJobMapper()->findJob($dict);
 
-        return $jobs;
-    }
-
-    /**
-     * Get the Company Edit form.
-     *
-     * @return EditCompany Edit form
-     */
-    public function getCompanyForm()
-    {
-        return $this->sm->get('company_admin_edit_company_form');
+        return $this->jobMapper->findJob($dict);
     }
 
     /**
@@ -1134,7 +1246,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
                 $this->translator->translate('You are not allowed to edit categories')
             );
         }
-        return $this->sm->get('company_admin_edit_category_form');
+        return $this->editCategoryForm;
     }
 
     /**
@@ -1151,7 +1263,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->sm->get('company_admin_edit_label_form');
+        return $this->editLabelForm;
     }
 
     /**
@@ -1162,13 +1274,13 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
     public function getPackageForm($type = 'job')
     {
         if ($type === 'banner') {
-            return $this->sm->get('company_admin_edit_bannerpackage_form');
+            return $this->editBannerPackageForm;
         }
         if ($type === 'featured') {
-            return $this->sm->get('company_admin_edit_featuredpackage_form');
+            return $this->editFeaturedPackageForm;
         }
 
-        return $this->sm->get('company_admin_edit_package_form');
+        return $this->editPackageForm;
     }
 
     /**
@@ -1185,7 +1297,7 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->sm->get('company_admin_edit_job_form');
+        return $this->editJobForm;
     }
 
     /**
@@ -1207,85 +1319,13 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
     }
 
     /**
-     * Returns the companyMapper
-     *
-     */
-    private function getCompanyMapper()
-    {
-        return $this->sm->get('company_mapper_company');
-    }
-
-    /**
-     * Returns the packageMapper
-     *
-     */
-    private function getPackageMapper()
-    {
-        return $this->sm->get('company_mapper_package');
-    }
-
-    /**
-     * Returns the packageMapper
-     *
-     */
-    private function getBannerPackageMapper()
-    {
-        return $this->sm->get('company_mapper_bannerpackage');
-    }
-
-    /**
-     * Returns the packageMapper
-     *
-     */
-    public function getFeaturedPackageMapper()
-    {
-        return $this->sm->get('company_mapper_featuredpackage');
-    }
-
-    /**
-     * Returns the jobMapper
-     *
-     */
-    public function getJobMapper()
-    {
-        return $this->sm->get('company_mapper_job');
-    }
-
-    /**
-     * Returns the category mapper
-     *
-     */
-    public function getCategoryMapper()
-    {
-        return $this->sm->get('company_mapper_category');
-    }
-
-    /**
-     * Returns the label mapper
-     *
-     */
-    public function getLabelMapper()
-    {
-        return $this->sm->get('company_mapper_label');
-    }
-
-    /**
-     * Returns the label assignment mapper
-     *
-     */
-    public function getLabelAssignmentMapper()
-    {
-        return $this->sm->get('company_mapper_label_assignment');
-    }
-
-    /**
      * Get the Acl.
      *
      * @return Acl
      */
     public function getAcl()
     {
-        return $this->sm->get('company_acl');
+        return $this->acl;
     }
 
     /**
@@ -1296,26 +1336,6 @@ class Company extends AbstractACLService implements ServiceManagerAwareInterface
     protected function getDefaultResourceId()
     {
         return 'company';
-    }
-
-    /**
-     * Gets the storage service.
-     *
-     * @return FileStorage
-     */
-    public function getFileStorageService()
-    {
-        return $this->sm->get('application_service_storage');
-    }
-
-    /**
-     * Gets the storage service.
-     *
-     * @return Storage
-     */
-    public function getLanguages()
-    {
-        return $this->sm->get('application_get_languages');
     }
 
     public function getLanguageDescription($lang)

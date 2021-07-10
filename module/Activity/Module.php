@@ -52,19 +52,73 @@ class Module
             'factories' => [
                 'activity_service_activity' => function ($sm) {
                     $translator = $sm->get('translator');
-                    return new Service\Activity($translator);
+                    $userRole = $sm->get('user_role');
+                    $acl = $sm->get('activity_acl');
+                    $entityManager = $sm->get('Doctrine\ORM\EntityManager');
+                    $categoryService = $sm->get('activity_service_category');
+                    $userService = $sm->get('user_service_user');
+                    $organService = $sm->get('decision_service_organ');
+                    $companyService = $sm->get('company_service_company');
+                    $emailService = $sm->get('application_service_email');
+                    $activityForm = $sm->get('activity_form_activity');
+                    return new Service\Activity(
+                        $translator,
+                        $userRole,
+                        $acl,
+                        $entityManager,
+                        $categoryService,
+                        $userService,
+                        $organService,
+                        $companyService,
+                        $emailService,
+                        $activityForm
+                    );
                 },
                 'activity_service_activityQuery' => function ($sm) {
                     $translator = $sm->get('translator');
-                    return new ActivityQuery($translator);
+                    $userRole = $sm->get('user_role');
+                    $acl = $sm->get('activity_acl');
+                    $userService = $sm->get('user_service_user');
+                    $organService = $sm->get('decision_service_organ');
+                    $activityMapper = $sm->get('activity_mapper_activity');
+                    $proposalMapper = $sm->get('activity_mapper_proposal');
+                    return new ActivityQuery(
+                        $translator,
+                        $userRole,
+                        $acl,
+                        $userService,
+                        $organService,
+                        $activityMapper,
+                        $proposalMapper
+                    );
                 },
                 'activity_service_category' => function ($sm) {
                     $translator = $sm->get('translator');
-                    return new Service\ActivityCategory($translator);
+                    $userRole = $sm->get('user_role');
+                    $acl = $sm->get('activity_acl');
+                    $entityManager = $sm->get('Doctrine\ORM\EntityManager');
+                    $categoryMapper = $sm->get('activity_mapper_category');
+                    $categoryForm = $sm->get('activity_form_category');
+                    return new Service\ActivityCategory(
+                        $translator,
+                        $userRole,
+                        $acl,
+                        $entityManager,
+                        $categoryMapper,
+                        $categoryForm
+                    );
                 },
                 'activity_service_signupListQuery' => function ($sm) {
                     $translator = $sm->get('translator');
-                    return new SignupListQuery($translator);
+                    $userRole = $sm->get('user_role');
+                    $acl = $sm->get('activity_acl');
+                    $signupListMapper = $sm->get('activity_mapper_signuplist');
+                    return new SignupListQuery(
+                        $translator,
+                        $userRole,
+                        $acl,
+                        $signupListMapper
+                    );
                 },
                 'activity_form_activity_signup' => function () {
                     return new Form\Signup();
@@ -122,17 +176,55 @@ class Module
                 },
                 'activity_service_signup' => function ($sm) {
                     $translator = $sm->get('translator');
-                    $ac = new Service\Signup($translator);
-                    $ac->setServiceManager($sm);
-
-                    return $ac;
+                    $userRole = $sm->get('user_role');
+                    $acl = $sm->get('activity_acl');
+                    $entityManager = $sm->get('Doctrine\ORM\EntityManager');
+                    $userService = $sm->get('user_service_user');
+                    $signupMapper = $sm->get('activity_mapper_signup');
+                    $signupOptionMapper = $sm->get('activity_mapper_signup_option');
+                    $signupFieldValueMapper = $sm->get('activity_mapper_signup_field_value');
+                    return new Service\Signup(
+                        $translator,
+                        $userRole,
+                        $acl,
+                        $entityManager,
+                        $userService,
+                        $signupMapper,
+                        $signupOptionMapper,
+                        $signupFieldValueMapper
+                    );
                 },
                 'activity_service_calendar' => function ($sm) {
                     $translator = $sm->get('translator');
-                    $ac = new Service\ActivityCalendar($translator);
-                    $ac->setServiceManager($sm);
-
-                    return $ac;
+                    $userRole = $sm->get('user_role');
+                    $acl = $sm->get('activity_acl');
+                    $entityManager = $sm->get('Doctrine\ORM\EntityManager');
+                    $userService = $sm->get('user_service_user');
+                    $organService = $sm->get('decision_service_organ');
+                    $emailService = $sm->get('application_service_email');
+                    $calendarOptionMapper = $sm->get('activity_mapper_calendar_option');
+                    $optionProposalMapper = $sm->get('activity_mapper_option_proposal');
+                    $periodMapper = $sm->get('activity_mapper_period');
+                    $maxActivitiesMapper = $sm->get('activity_mapper_max_activities');
+                    $memberMapper = $sm->get('decision_mapper_member');
+                    $calendarOptionForm = $sm->get('activity_form_calendar_option');
+                    $calendarProposalForm = $sm->get('activity_form_calendar_proposal');
+                    return new Service\ActivityCalendar(
+                        $translator,
+                        $userRole,
+                        $acl,
+                        $entityManager,
+                        $userService,
+                        $organService,
+                        $emailService,
+                        $calendarOptionMapper,
+                        $optionProposalMapper,
+                        $periodMapper,
+                        $maxActivitiesMapper,
+                        $memberMapper,
+                        $calendarOptionForm,
+                        $calendarProposalForm
+                    );
                 },
                 'activity_mapper_activity' => function ($sm) {
                     return new Activity(

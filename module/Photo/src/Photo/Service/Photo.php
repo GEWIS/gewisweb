@@ -4,65 +4,143 @@ namespace Photo\Service;
 
 use Application\Service\AbstractAclService;
 use Application\Service\FileStorage;
-use DateTime;
 use DateInterval;
+use DateTime;
 use Decision\Model\Member;
 use Exception;
-use Photo\Mapper\Vote;
-use Photo\Model\Hit as HitModel;
-use Photo\Model\Vote as VoteModel;
-use Photo\Model\Tag as TagModel;
-use Photo\Mapper\Tag as TagMapper;
-use Photo\Model\Photo as PhotoModel;
-use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
-use Photo\Mapper\WeeklyPhoto as WeeklyPhotoMapper;
-use Photo\Model\ProfilePhoto as ProfilePhotoModel;
+use Photo\Mapper\Hit;
 use Photo\Mapper\ProfilePhoto as ProfilePhotoMapper;
+use Photo\Mapper\Tag;
+use Photo\Mapper\Tag as TagMapper;
+use Photo\Mapper\Vote;
+use Photo\Mapper\WeeklyPhoto as WeeklyPhotoMapper;
 use Photo\Model\Album as AlbumModel;
+use Photo\Model\Hit as HitModel;
+use Photo\Model\Photo as PhotoModel;
+use Photo\Model\ProfilePhoto as ProfilePhotoModel;
+use Photo\Model\Tag as TagModel;
+use Photo\Model\Vote as VoteModel;
+use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
+use User\Model\User;
 use User\Permissions\NotAllowedException;
 use Zend\Http\Response\Stream;
 use Zend\I18n\Filter\Alnum;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 /**
  * Photo service.
  */
-class Photo extends AbstractAclService implements ServiceManagerAwareInterface
+class Photo extends AbstractAclService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
     /**
      * @var Translator
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var User|string
+     */
+    private $userRole;
+
+    /**
+     * @var Acl
+     */
+    private $acl;
+
+    /**
+     * @var Album
+     */
+    private $albumService;
+
+    /**
+     * @var \Decision\Service\Member
+     */
+    private $memberService;
+
+    /**
+     * @var FileStorage
+     */
+    private $storageService;
+
+    /**
+     * @var \Photo\Mapper\Photo
+     */
+    private $photoMapper;
+
+    /**
+     * @var \Photo\Mapper\Album
+     */
+    private $albumMapper;
+
+    /**
+     * @var TagMapper
+     */
+    private $tagMapper;
+
+    /**
+     * @var Hit
+     */
+    private $hitMapper;
+
+    /**
+     * @var Vote
+     */
+    private $voteMapper;
+
+    /**
+     * @var WeeklyPhotoMapper
+     */
+    private $weeklyPhotoMapper;
+
+    /**
+     * @var ProfilePhotoMapper
+     */
+    private $profilePhotoMapper;
+
+    /**
+     * @var array
+     */
+    private $photoConfig;
+
+    public function __construct(
+        Translator $translator,
+        $userRole,
+        Acl $acl,
+        Album $albumService,
+        Member $memberService,
+        FileStorage $storageService,
+        \Photo\Mapper\Photo $photoMapper,
+        \Photo\Mapper\Album $albumMapper,
+        Tag $tagMapper,
+        Hit $hitMapper,
+        Vote $voteMapper,
+        WeeklyPhotoMapper $weeklyPhotoMapper,
+        ProfilePhotoMapper $profilePhotoMapper,
+        array $photoConfig
+    )
     {
         $this->translator = $translator;
+        $this->userRole = $userRole;
+        $this->acl = $acl;
+        $this->albumService = $albumService;
+        $this->memberService = $memberService;
+        $this->storageService = $storageService;
+        $this->photoMapper = $photoMapper;
+        $this->albumMapper = $albumMapper;
+        $this->tagMapper = $tagMapper;
+        $this->hitMapper = $hitMapper;
+        $this->voteMapper = $voteMapper;
+        $this->weeklyPhotoMapper = $weeklyPhotoMapper;
+        $this->profilePhotoMapper = $profilePhotoMapper;
+        $this->photoConfig = $photoConfig;
     }
+
+    public function getRole()
+    {
+        return $this->userRole;
+    }
+
     /**
      * Get all photos in an album
      *
@@ -81,18 +159,8 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getPhotoMapper()->getAlbumPhotos($album, $start,
+        return $this->photoMapper->getAlbumPhotos($album, $start,
             $maxResults);
-    }
-
-    /**
-     * Get the photo mapper.
-     *
-     * @return \Photo\Mapper\Photo
-     */
-    public function getPhotoMapper()
-    {
-        return $this->sm->get('photo_mapper_photo');
     }
 
     /**
@@ -115,7 +183,7 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
         $path = $photo->getPath();
         $fileName = $this->getPhotoFileName($photo);
 
-        return $this->getFileStorageService()->downloadFile($path, $fileName);
+        return $this->storageService->downloadFile($path, $fileName);
     }
 
     /**
@@ -133,7 +201,7 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getPhotoMapper()->getPhotoById($id);
+        return $this->photoMapper->getPhotoById($id);
     }
 
     /**
@@ -154,20 +222,8 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
 
         $extension = substr($photo->getPath(), strpos($photo->getPath(), '.'));
 
-        $photoName = $albumName . '-' . $photo->getDateTime()->format('Y') . '-'
+        return $albumName . '-' . $photo->getDateTime()->format('Y') . '-'
             . $photo->getId() . $extension;
-
-        return $photoName;
-    }
-
-    /**
-     * Gets the storage service.
-     *
-     * @return FileStorage
-     */
-    public function getFileStorageService()
-    {
-        return $this->sm->get('application_service_storage');
     }
 
     /**
@@ -203,7 +259,7 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
         $next = $this->getNextPhoto($photo, $album);
         $previous = $this->getPreviousPhoto($photo, $album);
 
-        $lidnr = $this->getMemberService()->getRole()->getLidnr();
+        $lidnr = $this->memberService->getRole()->getLidnr();
         $isTagged = $this->isTaggedIn($photoId, $lidnr);
         $profilePhoto = $this->getStoredProfilePhoto($lidnr);
         $isProfilePhoto = false;
@@ -236,14 +292,15 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
     public function getNextPhoto(
         PhotoModel $photo,
         AlbumModel $album
-    ) {
+    )
+    {
         if (!$this->isAllowed('view')) {
             throw new NotAllowedException(
                 $this->translator->translate('Not allowed to view photos')
             );
         }
 
-        return $this->getPhotoMapper()->getNextPhoto($photo, $album);
+        return $this->photoMapper->getNextPhoto($photo, $album);
     }
 
     /**
@@ -257,14 +314,15 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
     public function getPreviousPhoto(
         PhotoModel $photo,
         AlbumModel $album
-    ) {
+    )
+    {
         if (!$this->isAllowed('view')) {
             throw new NotAllowedException(
                 $this->translator->translate('Not allowed to view photos')
             );
         }
 
-        return $this->getPhotoMapper()->getPreviousPhoto($photo, $album);
+        return $this->photoMapper->getPreviousPhoto($photo, $album);
     }
 
     /**
@@ -288,8 +346,8 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
         if (is_null($photo)) {
             return false;
         }
-        $this->getPhotoMapper()->remove($photo);
-        $this->getPhotoMapper()->flush();
+        $this->photoMapper->remove($photo);
+        $this->photoMapper->flush();
 
         return true;
 
@@ -316,7 +374,7 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function deletePhotoFile($path)
     {
-        return $this->getFileStorageService()->removeFile($path);
+        return $this->storageService->removeFile($path);
 
     }
 
@@ -338,36 +396,16 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
         }
 
         $photo = $this->getPhoto($photoId);
-        $album = $this->getAlbumService()->getAlbum($albumId);
+        $album = $this->albumService->getAlbum($albumId);
         if (is_null($photo) || is_null($album)) {
             return false;
         }
 
         $photo->setAlbum($album);
-        $this->getAlbumMapper()->flush();
+        $this->albumMapper->flush();
 
         return true;
 
-    }
-
-    /**
-     * Gets the album service.
-     *
-     * @return Album
-     */
-    public function getAlbumService()
-    {
-        return $this->sm->get('photo_service_album');
-    }
-
-    /**
-     * Get the album mapper.
-     *
-     * @return \Photo\Mapper\Album
-     */
-    public function getAlbumMapper()
-    {
-        return $this->sm->get('photo_mapper_album');
     }
 
     /**
@@ -393,7 +431,7 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
         $weeklyPhoto = new WeeklyPhotoModel();
         $weeklyPhoto->setPhoto($bestPhoto);
         $weeklyPhoto->setWeek($begindate);
-        $mapper = $this->getWeeklyPhotoMapper();
+        $mapper = $this->weeklyPhotoMapper;
         $mapper->persist($weeklyPhoto);
         $mapper->flush();
 
@@ -410,16 +448,16 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function determinePhotoOfTheWeek($begindate, $enddate)
     {
-        $results = $this->getHitMapper()->getHitsInRange($begindate, $enddate);
+        $results = $this->hitMapper->getHitsInRange($begindate, $enddate);
         if (empty($results)) {
             return null;
         }
         $bestRating = -1;
         $bestPhoto = null;
         foreach ($results as $res) {
-            $photo = $this->getPhotoMapper()->getPhotoById($res[1]);
+            $photo = $this->photoMapper->getPhotoById($res[1]);
             $rating = $this->ratePhoto($photo, $res[2]);
-            if (!$this->getWeeklyPhotoMapper()->hasBeenPhotoOfTheWeek($photo)
+            if (!$this->weeklyPhotoMapper->hasBeenPhotoOfTheWeek($photo)
                 && $rating > $bestRating
             ) {
                 $bestPhoto = $photo;
@@ -458,7 +496,7 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
      */
     private function getStoredProfilePhoto($lidnr)
     {
-        $profilePhoto = $this->getProfilePhotoMapper()->getProfilePhotoByLidnr($lidnr);
+        $profilePhoto = $this->profilePhotoMapper->getProfilePhotoByLidnr($lidnr);
         if ($profilePhoto != null) {
             if ($profilePhoto->getDateTime() < new DateTime()) {
                 $this->removeProfilePhoto($profilePhoto);
@@ -481,12 +519,12 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
     public function removeProfilePhoto(ProfilePhotoModel $profilePhoto = null)
     {
         if ($profilePhoto == null) {
-            $member = $this->getMemberService()->getRole()->getMember();
+            $member = $this->memberService->getRole()->getMember();
             $lidnr = $member->getLidnr();
             $profilePhoto = $this->getStoredProfilePhoto($lidnr);
         }
         if ($profilePhoto != null) {
-            $mapper = $this->getProfilePhotoMapper();
+            $mapper = $this->profilePhotoMapper;
             $mapper->remove($profilePhoto);
             $mapper->flush();
         }
@@ -499,7 +537,7 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
      */
     private function determineProfilePhoto($lidnr)
     {
-        $results = $this->getTagMapper()->getTagsByLidnr($lidnr);
+        $results = $this->tagMapper->getTagsByLidnr($lidnr);
 
         if (empty($results)) {
             return null;
@@ -529,7 +567,7 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
      */
     private function cacheProfilePhoto($lidnr, PhotoModel $photo)
     {
-        $member = $this->getMemberService()->findMemberByLidnr($lidnr);
+        $member = $this->memberService->findMemberByLidnr($lidnr);
         $now = new DateTime();
         if ($member->isActive()) {
             $dateTime = $now->add(new DateInterval('P1D'));
@@ -556,7 +594,7 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
         $profilePhotoModel->setPhoto($photo);
         $profilePhotoModel->setDatetime($dateTime);
         $profilePhotoModel->setExplicit($explicit);
-        $mapper = $this->getProfilePhotoMapper();
+        $mapper = $this->profilePhotoMapper;
         $mapper->persist($profilePhotoModel);
         $mapper->flush();
     }
@@ -568,7 +606,7 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
     public function setProfilePhoto($photoId)
     {
         $photo = $this->getPhoto($photoId);
-        $member = $this->getMemberService()->getRole()->getMember();
+        $member = $this->memberService->getRole()->getMember();
         $lidnr = $member->getLidnr();
         $profilePhoto = $this->getStoredProfilePhoto($lidnr);
         if ($profilePhoto != null) {
@@ -590,11 +628,6 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
             return $profilePhoto->isExplicit();
         }
         return false;
-    }
-
-    public function getHitMapper()
-    {
-        return $this->sm->get('photo_mapper_hit');
     }
 
     /**
@@ -641,16 +674,6 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
     }
 
     /**
-     * Get the weekly photo mapper.
-     *
-     * @return WeeklyPhotoMapper
-     */
-    public function getWeeklyPhotoMapper()
-    {
-        return $this->sm->get('photo_mapper_weekly_photo');
-    }
-
-    /**
      * Retrieves all WeeklyPhotos
      *
      * @return array
@@ -664,12 +687,12 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getWeeklyPhotoMapper()->getPhotosOfTheWeek();
+        return $this->weeklyPhotoMapper->getPhotosOfTheWeek();
     }
 
     public function getCurrentPhotoOfTheWeek()
     {
-        return $this->getWeeklyPhotoMapper()->getCurrentPhotoOfTheWeek();
+        return $this->weeklyPhotoMapper->getCurrentPhotoOfTheWeek();
     }
 
     /**
@@ -684,7 +707,7 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
         $hit->setDateTime(new DateTime());
         $photo->addHit($hit);
 
-        $this->getPhotoMapper()->flush();
+        $this->photoMapper->flush();
     }
 
     /**
@@ -694,15 +717,15 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function countVote($photoId)
     {
-        $member = $this->sm->get('user_role')->getMember();
-        if ($this->getVoteMapper()->findVote($photoId, $member->getLidnr()) !== null) {
+        $member = $this->userRole->getMember();
+        if ($this->voteMapper->findVote($photoId, $member->getLidnr()) !== null) {
             // Already voted
             return;
         }
         $photo = $this->getPhoto($photoId);
         $vote = new VoteModel($photo, $member);
-        $this->getVoteMapper()->persist($vote);
-        $this->getVoteMapper()->flush();
+        $this->voteMapper->persist($vote);
+        $this->voteMapper->flush();
     }
 
     /**
@@ -723,12 +746,12 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
 
         if (is_null($this->findTag($photoId, $lidnr))) {
             $photo = $this->getPhoto($photoId);
-            $member = $this->getMemberService()->findMemberByLidnr($lidnr);
+            $member = $this->memberService->findMemberByLidnr($lidnr);
             $tag = new TagModel();
             $tag->setMember($member);
             $photo->addTag($tag);
 
-            $this->getPhotoMapper()->flush();
+            $this->photoMapper->flush();
 
             return $tag;
         } else {
@@ -753,7 +776,7 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getTagMapper()->findTag($photoId, $lidnr);
+        return $this->tagMapper->findTag($photoId, $lidnr);
     }
 
 
@@ -775,46 +798,6 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
     }
 
     /**
-     * Get the tag mapper.
-     *
-     * @return TagMapper
-     */
-    public function getTagMapper()
-    {
-        return $this->sm->get('photo_mapper_tag');
-    }
-
-    /**
-     * Get the tag mapper.
-     *
-     * @return ProfilePhotoMapper
-     */
-    public function getProfilePhotoMapper()
-    {
-        return $this->sm->get('photo_mapper_profile_photo');
-    }
-
-    /**
-     * Get the vote mapper.
-     *
-     * @return Vote
-     */
-    public function getVoteMapper()
-    {
-        return $this->sm->get('photo_mapper_vote');
-    }
-
-    /**
-     * Get the member service.
-     *
-     * @return \Decision\Service\Member
-     */
-    public function getMemberService()
-    {
-        return $this->sm->get('decision_service_member');
-    }
-
-    /**
      * Removes a tag
      *
      * @param integer $photoId
@@ -832,8 +815,8 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
 
         $tag = $this->findTag($photoId, $lidnr);
         if (!is_null($tag)) {
-            $this->getTagMapper()->remove($tag);
-            $this->getTagMapper()->flush();
+            $this->tagMapper->remove($tag);
+            $this->tagMapper->flush();
             return true;
         } else {
             return false;
@@ -855,7 +838,7 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getTagMapper()->getTagsByLidnr($member->getLidnr());
+        return $this->tagMapper->getTagsByLidnr($member->getLidnr());
     }
 
     /**
@@ -865,43 +848,7 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getBaseDirectory()
     {
-        $config = $this->getConfig();
-
-        return str_replace('public', '', $config['upload_dir']);
-    }
-
-    /**
-     * Get the photo config, as used by this service.
-     *
-     * @return array containing the config for the module
-     */
-    public function getConfig()
-    {
-        $config = $this->sm->get('config');
-
-        return $config['photo'];
-    }
-
-    /**
-     * Get the storage config, as used by this service.
-     *
-     * @return array containing the config for the module
-     */
-    public function getStorageConfig()
-    {
-        $config = $this->sm->get('config');
-
-        return $config['storage'];
-    }
-
-    /**
-     * Gets the metadata service.
-     *
-     * @return Metadata
-     */
-    public function getMetadataService()
-    {
-        return $this->sm->get('photo_service_metadata');
+        return str_replace('public', '', $this->photoConfig['upload_dir']);
     }
 
     /**
@@ -911,7 +858,7 @@ class Photo extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getAcl()
     {
-        return $this->sm->get('photo_acl');
+        return $this->acl;
     }
 
     /**

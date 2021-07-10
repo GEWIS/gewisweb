@@ -6,56 +6,170 @@ use Application\Service\AbstractAclService;
 use DateInterval;
 use DateTime;
 use Decision\Mapper\Member;
+use Doctrine\ORM\EntityManager;
+use User\Authentication\Adapter\PinMapper;
+use User\Authentication\AuthenticationService;
+use User\Authentication\Storage\Session;
 use User\Form\Activate;
+use User\Form\Login;
 use User\Form\Password;
 use User\Form\Register as RegisterForm;
 use User\Mapper\LoginAttempt;
 use User\Mapper\NewUser;
-use User\Mapper\Session;
 use User\Model\LoginAttempt as LoginAttemptModel;
 use User\Model\NewUser as NewUserModel;
 use User\Model\User as UserModel;
 use User\Permissions\NotAllowedException;
+use Zend\Crypt\Password\Bcrypt;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 /**
  * User service.
  */
-class User extends AbstractAclService implements ServiceManagerAwareInterface
+class User extends AbstractAclService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
     /**
      * @var Translator
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var UserModel|string
+     */
+    private $userRole;
+
+    /**
+     * @var Bcrypt
+     */
+    private $bcrypt;
+
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
+    /**
+     * @var AuthenticationService
+     */
+    private $authService;
+
+    /**
+     * @var PinMapper
+     */
+    private $pinMapper;
+
+    /**
+     * @var Session
+     */
+    private $authStorage;
+
+    /**
+     * @var Email
+     */
+    private $emailService;
+
+    /**
+     * @var string
+     */
+    private $remoteAddress;
+
+    /**
+     * @var Acl
+     */
+    private $acl;
+
+    /**
+     * @var array
+     */
+    private $rateLimitConfig;
+
+    /**
+     * @var \User\Mapper\User
+     */
+    private $userMapper;
+
+    /**
+     * @var NewUser
+     */
+    private $newUserMapper;
+
+    /**
+     * @var LoginAttempt
+     */
+    private $loginAttemptMapper;
+
+    /**
+     * @var Member
+     */
+    private $memberMapper;
+
+    /**
+     * @var RegisterForm
+     */
+    private $registerForm;
+
+    /**
+     * @var Activate
+     */
+    private $activateForm;
+
+    /**
+     * @var Login
+     */
+    private $loginForm;
+
+    /**
+     * @var Password
+     */
+    private $passwordForm;
+
+    public function __construct(
+        Translator $translator,
+        $userRole,
+        Bcrypt $bcrypt,
+        EntityManager $entityManager,
+        AuthenticationService $authService,
+        PinMapper $pinMapper,
+        Session $authStorage,
+        Email $emailService,
+        string $remoteAddress,
+        Acl $acl,
+        array $rateLimitConfig,
+        \User\Mapper\User $userMapper,
+        NewUser $newUserMapper,
+        LoginAttempt $loginAttemptMapper,
+        Member $memberMapper,
+        RegisterForm $registerForm,
+        Activate $activateForm,
+        Login $loginForm,
+        Password $passwordForm
+    )
     {
         $this->translator = $translator;
+        $this->userRole = $userRole;
+        $this->bcrypt = $bcrypt;
+        $this->entityManager = $entityManager;
+        $this->authService = $authService;
+        $this->pinMapper = $pinMapper;
+        $this->authStorage = $authStorage;
+        $this->emailService = $emailService;
+        $this->remoteAddress = $remoteAddress;
+        $this->acl = $acl;
+        $this->rateLimitConfig = $rateLimitConfig;
+        $this->userMapper = $userMapper;
+        $this->newUserMapper = $newUserMapper;
+        $this->loginAttemptMapper = $loginAttemptMapper;
+        $this->memberMapper = $memberMapper;
+        $this->registerForm = $registerForm;
+        $this->activateForm = $activateForm;
+        $this->loginForm = $loginForm;
+        $this->passwordForm = $passwordForm;
+    }
+
+    public function getRole()
+    {
+        return $this->userRole;
     }
 
     /**
@@ -68,7 +182,7 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function activate($data, NewUserModel $newUser)
     {
-        $form = $this->getActivateForm();
+        $form = $this->activateForm;
 
         $form->setData($data);
 
@@ -78,19 +192,17 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
 
         $data = $form->getData();
 
-        $bcrypt = $this->sm->get('user_bcrypt');
-
         // first try to obtain the user
-        $user = $this->getUserMapper()->findByLidnr($newUser->getLidnr());
+        $user = $this->userMapper->findByLidnr($newUser->getLidnr());
         if (null === $user) {
             // create a new user from this data, and insert it into the database
             $user = new UserModel($newUser);
         }
 
-        $user->setPassword($bcrypt->create($data['password']));
+        $user->setPassword($this->bcrypt->create($data['password']));
 
         // this will also save a user with a lost password
-        $this->getUserMapper()->createUser($user, $newUser);
+        $this->userMapper->createUser($user, $newUser);
 
         return true;
     }
@@ -106,7 +218,7 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function register($data)
     {
-        $form = $this->getRegisterForm();
+        $form = $this->registerForm;
         $form->setData($data);
 
         if (!$form->isValid()) {
@@ -115,7 +227,7 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
 
         // get the member
         $data = $form->getData();
-        $member = $this->getMemberMapper()->findByLidnr($data['lidnr']);
+        $member = $this->memberMapper->findByLidnr($data['lidnr']);
 
         if (null === $member) {
             $form->setError(RegisterForm::ERROR_MEMBER_NOT_EXISTS);
@@ -131,14 +243,14 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
         }
 
         // check if the member already has a corresponding user.
-        $user = $this->getUserMapper()->findByLidnr($member->getLidnr());
+        $user = $this->userMapper->findByLidnr($member->getLidnr());
         if (null !== $user) {
             $form->setError(RegisterForm::ERROR_USER_ALREADY_EXISTS);
 
             return null;
         }
 
-        $newUser = $this->getNewUserMapper()->getByLidnr($data['lidnr']);
+        $newUser = $this->newUserMapper->getByLidnr($data['lidnr']);
         if (null !== $newUser) {
             $time = $newUser->getTime();
             $requiredInterval = (new DateTime())->sub(new DateInterval('PT900S'));
@@ -147,7 +259,7 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
 
                 return null;
             }
-            $this->getNewUserMapper()->deleteByMember($member);
+            $this->newUserMapper->deleteByMember($member);
         }
 
         // save the data, and send email
@@ -155,9 +267,9 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
         $newUser->setCode($this->generateCode());
         $newUser->setTime(new DateTime());
 
-        $this->getNewUserMapper()->persist($newUser);
+        $this->newUserMapper->persist($newUser);
 
-        $this->getEmailService()->sendRegisterEmail($newUser, $member);
+        $this->emailService->sendRegisterEmail($newUser, $member);
 
         return $newUser;
     }
@@ -173,7 +285,7 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function reset($data)
     {
-        $form = $this->getPasswordResetForm();
+        $form = $this->registerForm;
         $form->setData($data);
 
         if (!$form->isValid()) {
@@ -182,10 +294,10 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
 
         // get the member
         $data = $form->getData();
-        $member = $this->getMemberMapper()->findByLidnr($data['lidnr']);
+        $member = $this->memberMapper->findByLidnr($data['lidnr']);
 
         // check if the member has a corresponding user.
-        $user = $this->getUserMapper()->findByLidnr($member->getLidnr());
+        $user = $this->userMapper->findByLidnr($member->getLidnr());
         if (null === $user) {
             $form->setError(RegisterForm::ERROR_MEMBER_NOT_EXISTS);
 
@@ -200,15 +312,15 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
 
         // Invalidate all previous password reset codes
         // Makes sure that no double password reset codes are present in the database
-        $this->getNewUserMapper()->deleteByMember($member);
+        $this->newUserMapper->deleteByMember($member);
 
         // create new activation
         $newUser = new NewUserModel($member);
         $newUser->setCode($this->generateCode());
 
-        $this->getNewUserMapper()->persist($newUser);
+        $this->newUserMapper->persist($newUser);
 
-        $this->getEmailService()->sendPasswordLostMail($newUser, $member);
+        $this->emailService->sendPasswordLostMail($newUser, $member);
 
         return $user;
     }
@@ -233,10 +345,9 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
         $data = $form->getData();
 
         // check the password
-        $auth = $this->sm->get('user_auth_service');
-        $adapter = $auth->getAdapter();
+        $adapter = $this->authService->getAdapter();
 
-        $user = $auth->getIdentity();
+        $user = $this->authService->getIdentity();
 
         if (!$adapter->verifyPassword($data['old_password'], $user->getPassword())) {
             $form->setMessages([
@@ -248,13 +359,12 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
             return false;
         }
 
-        $mapper = $this->getUserMapper();
-        $bcrypt = $this->sm->get('user_bcrypt');
+        $mapper = $this->userMapper;
 
         // get the actual user and save
         $actUser = $mapper->findByLidnr($user->getLidnr());
 
-        $actUser->setPassword($bcrypt->create($data['password']));
+        $actUser->setPassword($this->bcrypt->create($data['password']));
 
         $mapper->persist($actUser);
 
@@ -270,7 +380,7 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function login($data)
     {
-        $form = $this->getLoginForm();
+        $form = $this->loginForm;
 
         $form->setData($data);
 
@@ -279,12 +389,11 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
         }
 
         // try to authenticate
-        $auth = $this->sm->get('user_auth_service');
-        $authAdapter = $auth->getAdapter();
+        $authAdapter = $this->authService->getAdapter();
 
         $authAdapter->setCredentials($form->getData());
 
-        $result = $auth->authenticate();
+        $result = $this->authService->authenticate();
 
         // process the result
         if (!$result->isValid()) {
@@ -293,10 +402,9 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
             return null;
         }
 
-        $this->getAuthStorage()->setRememberMe($data['remember']);
-        $user = $auth->getIdentity();
+        $this->authStorage->setRememberMe($data['remember']);
 
-        return $user;
+        return $this->authService->getIdentity();
     }
 
     /**
@@ -313,19 +421,18 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
         // try to authenticate
-        $auth = $this->sm->get('user_pin_auth_service');
-        $authAdapter = $auth->getAdapter();
+        $authAdapter = $this->authService->getAdapter();
 
         $authAdapter->setCredentials($data['lidnr'], $data['pincode']);
 
-        $result = $auth->authenticate();
+        $result = $this->pinMapper->authenticate();
 
         // process the result
         if (!$result->isValid()) {
             return null;
         }
 
-        return $auth->getIdentity();
+        return $this->authService->getIdentity();
     }
 
     /**
@@ -334,26 +441,24 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
     public function logout()
     {
         // clear the user identity
-        $auth = $this->sm->get('user_auth_service');
-        $auth->clearIdentity();
+        $this->authService->clearIdentity();
     }
 
     /**
      * Gets the user identity, or gives a 403 if the user is not logged in
      *
-     * @return User the current logged in user
+     * @return UserModel the current logged in user
      * @throws NotAllowedException if no user is logged in
      */
     public function getIdentity()
     {
-        $authService = $this->sm->get('user_auth_service');
-        if (!$authService->hasIdentity()) {
+        if (!$this->authService->hasIdentity()) {
 
             throw new NotAllowedException(
                 $this->translator->translate('You need to log in to perform this action')
             );
         }
-        return $authService->getIdentity();
+        return $this->authService->getIdentity();
     }
 
     /**
@@ -363,43 +468,42 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function hasIdentity()
     {
-        $authService = $this->sm->get('user_auth_service');
-        return $authService->hasIdentity();
+        return $this->authService->hasIdentity();
     }
 
     public function detachUser($user)
     {
         /*
+         * TODO: This probably shouldn't be neccessary
          * Yes, this is some sort of horrible hack to make the entity manager happy again. If anyone wants to waste
          * their day figuring out what kind of dark magic is upsetting the entity manager here, be my guest.
          * This hack only is needed when we want to flush the entity manager during login.
          */
-        $this->sm->get('user_doctrine_em')->clear();
+        $this->entityManager->clear();
 
-        return $this->getUserMapper()->findByLidnr($user->getLidnr());
+        return $this->userMapper->findByLidnr($user->getLidnr());
     }
 
     public function logFailedLogin($user, $type)
     {
         $attempt = new LoginAttemptModel();
-        $attempt->setIp($this->sm->get('user_remoteaddress'));
+        $attempt->setIp($this->remoteAddress);
         $attempt->setTime(new DateTime());
         $attempt->setType($type);
         $user = $this->detachUser($user);
         $attempt->setUser($user);
-        $this->getLoginAttemptMapper()->persist($attempt);
+        $this->loginAttemptMapper->persist($attempt);
     }
 
     public function loginAttemptsExceeded($type, $user)
     {
-        $config = $this->getRateLimitConfig();
-        $ip = $this->sm->get('user_remoteaddress');
-        $since = (new DateTime())->sub(new DateInterval('PT' . $config[$type]['lockout_time'] . 'M'));
-        $loginAttemptMapper = $this->getLoginAttemptMapper();
-        if ($loginAttemptMapper->getFailedAttemptCount($since, $type, $ip) > $config[$type]['ip']) {
+        $ip = $this->remoteAddress;
+        $since = (new DateTime())->sub(new DateInterval('PT' . $this->rateLimitConfig[$type]['lockout_time'] . 'M'));
+        $loginAttemptMapper = $this->loginAttemptMapper;
+        if ($loginAttemptMapper->getFailedAttemptCount($since, $type, $ip) > $this->rateLimitConfig[$type]['ip']) {
             return true;
         }
-        if ($loginAttemptMapper->getFailedAttemptCount($since, $type, $ip, $user) > $config[$type]['user']) {
+        if ($loginAttemptMapper->getFailedAttemptCount($since, $type, $ip, $user) > $this->rateLimitConfig[$type]['user']) {
             return true;
         }
 
@@ -415,7 +519,7 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getNewUser($code)
     {
-        return $this->getNewUserMapper()->getByCode($code);
+        return $this->newUserMapper->getByCode($code);
     }
 
     /**
@@ -444,7 +548,7 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getActivateForm()
     {
-        return $this->sm->get('user_form_activate');
+        return $this->activateForm;
     }
 
     /**
@@ -454,7 +558,7 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getRegisterForm()
     {
-        return $this->sm->get('user_form_register');
+        return $this->registerForm;
     }
 
     /**
@@ -470,115 +574,7 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->sm->get('user_form_password');
-    }
-
-    /**
-     * Get the password reset form.
-     */
-    public function getPasswordResetForm()
-    {
-        return $this->sm->get('user_form_passwordreset');
-    }
-
-    /**
-     * Get the password activate form.
-     */
-    public function getPasswordActivateForm()
-    {
-        return $this->sm->get('user_form_passwordactivate');
-    }
-
-    /**
-     * Get the login form.
-     *
-     * @return LoginForm Login form
-     */
-    public function getLoginForm()
-    {
-        return $this->sm->get('user_form_login');
-    }
-
-    /**
-     * Get the member mapper.
-     *
-     * @return Member
-     */
-    public function getMemberMapper()
-    {
-        return $this->sm->get('decision_mapper_member');
-    }
-
-    /**
-     * Get the new user mapper.
-     *
-     * @return NewUser
-     */
-    public function getNewUserMapper()
-    {
-        return $this->sm->get('user_mapper_newuser');
-    }
-
-    /**
-     * Get the user mapper.
-     *
-     * @return \User\Mapper\User
-     */
-    public function getUserMapper()
-    {
-        return $this->sm->get('user_mapper_user');
-    }
-
-    /**
-     * Get the session mapper.
-     *
-     * @return Session
-     */
-    public function getSessionMapper()
-    {
-        return $this->sm->get('user_mapper_session');
-    }
-
-    /**
-     * Get the login attempt mapper.
-     *
-     * @return LoginAttempt
-     */
-    public function getLoginAttemptMapper()
-    {
-        return $this->sm->get('user_mapper_loginattempt');
-    }
-
-    /**
-     * Get the email service.
-     *
-     * @return Email
-     */
-    public function getEmailService()
-    {
-        return $this->sm->get('user_service_email');
-    }
-
-    /**
-     * Get the auth storage.
-     *
-     * @return \User\Authentication\Storage\Session
-     */
-    public function getAuthStorage()
-    {
-        return $this->sm->get('user_auth_storage');
-    }
-
-    /**
-     * Get the rate limit config
-     *
-     * @return array containing the config
-     */
-    public function getRateLimitConfig()
-    {
-        $config = $this->sm->get('config');
-
-        return $config['login_rate_limits'];
+        return $this->passwordForm;
     }
 
     /**
@@ -588,7 +584,7 @@ class User extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getAcl()
     {
-        return $this->sm->get('acl');
+        return $this->acl;
     }
 
     /**

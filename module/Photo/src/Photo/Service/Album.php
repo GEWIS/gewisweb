@@ -13,47 +13,94 @@ use Photo\Form\EditAlbum;
 use Photo\Model\Album as AlbumModel;
 use Photo\Model\MemberAlbum;
 use Photo\Model\VirtualAlbum;
+use User\Model\User;
 use User\Permissions\NotAllowedException;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 /**
  * Album service.
  */
-class Album extends AbstractAclService implements ServiceManagerAwareInterface
+class Album extends AbstractAclService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
     /**
      * @var Translator
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var User|string
+     */
+    private $userRole;
+
+    /**
+     * @var Acl
+     */
+    private $acl;
+
+    /**
+     * @var Photo
+     */
+    private $photoService;
+
+    /**
+     * @var AlbumCover
+     */
+    private $albumCoverService;
+
+    /**
+     * @var Member
+     */
+    private $memberService;
+
+    /**
+     * @var FileStorage
+     */
+    private $storageService;
+
+    /**
+     * @var \Photo\Mapper\Album
+     */
+    private $albumMapper;
+
+    /**
+     * @var CreateAlbum
+     */
+    private $createAlbumForm;
+
+    /**
+     * @var EditAlbum
+     */
+    private $editAlbumForm;
+
+    public function __construct(
+        Translator $translator,
+        $userRole,
+        Acl $acl,
+        Photo $photoService,
+        AlbumCover $albumCoverService,
+        Member $memberService,
+        FileStorage $storageService,
+        \Photo\Mapper\Album $albumMapper,
+        CreateAlbum $createAlbumForm,
+        EditAlbum $editAlbumForm
+    )
     {
         $this->translator = $translator;
+        $this->userRole = $userRole;
+        $this->acl = $acl;
+        $this->photoService = $photoService;
+        $this->albumCoverService = $albumCoverService;
+        $this->memberService = $memberService;
+        $this->storageService = $storageService;
+        $this->albumMapper = $albumMapper;
+        $this->createAlbumForm = $createAlbumForm;
+        $this->editAlbumForm = $editAlbumForm;
+    }
+
+    public function getRole()
+    {
+        return $this->userRole;
     }
 
     /**
@@ -66,10 +113,10 @@ class Album extends AbstractAclService implements ServiceManagerAwareInterface
      * Retrieves all the albums in the root directory or in the specified
      * album.
      *
-     * @param integer            $start      the result to start at
-     * @param integer            $maxResults max amount of results to return,
+     * @param integer $start the result to start at
+     * @param integer $maxResults max amount of results to return,
      *                                       null for infinite
-     * @param AlbumModel $album      The album to retrieve sub-albums
+     * @param AlbumModel $album The album to retrieve sub-albums
      *                                       of
      *
      * @return array of albums
@@ -82,23 +129,13 @@ class Album extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
         if ($album == null) {
-            return $this->getAlbumMapper()->getRootAlbums();
+            return $this->albumMapper->getRootAlbums();
         } elseif ($album instanceof VirtualAlbum) {
             return [];
         } else {
-            return $this->getAlbumMapper()->getSubAlbums($album, $start,
+            return $this->albumMapper->getSubAlbums($album, $start,
                 $maxResults);
         }
-    }
-
-    /**
-     * Get the album mapper.
-     *
-     * @return \Photo\Mapper\Album
-     */
-    public function getAlbumMapper()
-    {
-        return $this->sm->get('photo_mapper_album');
     }
 
     /**
@@ -131,7 +168,7 @@ class Album extends AbstractAclService implements ServiceManagerAwareInterface
         $end = clone $start;
         $end->add(new DateInterval('P1Y'));
 
-        return $this->getAlbumMapper()->getAlbumsInDateRange($start, $end);
+        return $this->albumMapper->getAlbumsInDateRange($start, $end);
     }
 
     /**
@@ -149,7 +186,7 @@ class Album extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getAlbumMapper()->getAlbumsWithoutDate();
+        return $this->albumMapper->getAlbumsWithoutDate();
     }
 
     /**
@@ -163,8 +200,8 @@ class Album extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getAlbumYears()
     {
-        $oldest = $this->getAlbumMapper()->getOldestAlbum();
-        $newest = $this->getAlbumMapper()->getNewestAlbum();
+        $oldest = $this->albumMapper->getOldestAlbum();
+        $newest = $this->albumMapper->getNewestAlbum();
         if (is_null($oldest) || is_null($newest)
             || is_null($oldest->getStartDateTime())
             || is_null($newest->getEndDateTime())
@@ -202,8 +239,8 @@ class Album extends AbstractAclService implements ServiceManagerAwareInterface
     /**
      * Creates a new album.
      *
-     * @param int   $parentId the id of the parent album
-     * @param array $data     The post data to use for the album
+     * @param int $parentId the id of the parent album
+     * @param array $data The post data to use for the album
      *
      * @return AlbumModel|boolean
      * @throws Exception
@@ -227,8 +264,8 @@ class Album extends AbstractAclService implements ServiceManagerAwareInterface
         if (!is_null($parentId)) {
             $album->setParent($this->getAlbum($parentId));
         }
-        $this->getAlbumMapper()->persist($album);
-        $this->getAlbumMapper()->flush();
+        $this->albumMapper->persist($album);
+        $this->albumMapper->flush();
 
         return $album;
     }
@@ -247,14 +284,14 @@ class Album extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->sm->get('photo_form_album_create');
+        return $this->createAlbumForm;
     }
 
     /**
      * Gets an album using the album id.
      *
      * @param integer $albumId the id of the album
-     * @param string  $type    "album"|"member"|"year"
+     * @param string $type "album"|"member"|"year"
      *
      * @return AlbumModel album matching the given id
      * @throws Exception If there are not sufficient permissions
@@ -269,7 +306,7 @@ class Album extends AbstractAclService implements ServiceManagerAwareInterface
         $album = null;
         switch ($type) {
             case 'album':
-                $album = $this->getAlbumMapper()->getAlbumById($albumId);
+                $album = $this->albumMapper->getAlbumById($albumId);
                 break;
             case 'member':
                 $album = $this->getMemberAlbum($albumId);
@@ -283,7 +320,7 @@ class Album extends AbstractAclService implements ServiceManagerAwareInterface
 
     public function getMemberAlbum($lidNr)
     {
-        $member = $this->getMemberService()->findMemberByLidnr($lidNr);
+        $member = $this->memberService->findMemberByLidnr($lidNr);
         if ($member == null) {
             return null;
         }
@@ -291,36 +328,16 @@ class Album extends AbstractAclService implements ServiceManagerAwareInterface
         $album->setName($member->getFullName());
         $album->setStartDateTime($member->getBirth()); // ugly fix
         $album->setEndDateTime(new DateTime());
-        $album->addPhotos($this->getPhotoService()->getPhotos($album));
+        $album->addPhotos($this->photoService->getPhotos($album));
 
         return $album;
     }
 
     /**
-     * Get the member service.
-     *
-     * @return Member
-     */
-    public function getMemberService()
-    {
-        return $this->sm->get('decision_service_member');
-    }
-
-    /**
-     * Gets the photo service.
-     *
-     * @return Photo
-     */
-    public function getPhotoService()
-    {
-        return $this->sm->get("photo_service_photo");
-    }
-
-    /**
      * Updates the metadata of an album using post data
      *
-     * @param int   $albumId the id of the album to modify
-     * @param array $data    The post data to update
+     * @param int $albumId the id of the album to modify
+     * @param array $data The post data to update
      *
      * @return boolean indicating if the update was successful
      */
@@ -338,7 +355,7 @@ class Album extends AbstractAclService implements ServiceManagerAwareInterface
             return false;
         }
 
-        $this->getAlbumMapper()->flush();
+        $this->albumMapper->flush();
 
         return true;
     }
@@ -357,7 +374,7 @@ class Album extends AbstractAclService implements ServiceManagerAwareInterface
                 $this->translator->translate('Not allowed to edit albums.')
             );
         }
-        $form = $this->sm->get('photo_form_album_edit');
+        $form = $this->editAlbumForm;
         $album = $this->getAlbum($albumId);
         $form->bind($album);
 
@@ -367,7 +384,7 @@ class Album extends AbstractAclService implements ServiceManagerAwareInterface
     /**
      * Moves an album to new parent album
      *
-     * @param int $albumId  the id of the album to be moved
+     * @param int $albumId the id of the album to be moved
      * @param int $parentId the id of the new parent
      *
      * @return boolean indicating if the move was successful
@@ -387,7 +404,7 @@ class Album extends AbstractAclService implements ServiceManagerAwareInterface
         }
 
         $album->setParent($parent);
-        $this->getAlbumMapper()->flush();
+        $this->albumMapper->flush();
 
         return true;
     }
@@ -409,8 +426,8 @@ class Album extends AbstractAclService implements ServiceManagerAwareInterface
         }
         $album = $this->getAlbum($albumId);
         if (!is_null($album)) {
-            $this->getAlbumMapper()->remove($album);
-            $this->getAlbumMapper()->flush();
+            $this->albumMapper->remove($album);
+            $this->albumMapper->flush();
         }
     }
 
@@ -431,44 +448,12 @@ class Album extends AbstractAclService implements ServiceManagerAwareInterface
         }
         $album = $this->getAlbum($albumId);
         //if an existing cover photo was generated earlier, delete it.
-        $coverPath = $this->getAlbumCoverService()->createCover($album);
+        $coverPath = $this->albumCoverService->createCover($album);
         if (!is_null($album->getCoverPath())) {
-            $this->getFileStorageService()->removeFile($album->getCoverPath());
+            $this->storageService->removeFile($album->getCoverPath());
         }
         $album->setCoverPath($coverPath);
-        $this->getAlbumMapper()->flush();
-    }
-
-    /**
-     * Get the photo config
-     *
-     * @return array containing the config for the module
-     */
-    public function getConfig()
-    {
-        $config = $this->sm->get('config');
-
-        return $config['photo'];
-    }
-
-    /**
-     * Gets the album cover service.
-     *
-     * @return AlbumCover
-     */
-    public function getAlbumCoverService()
-    {
-        return $this->sm->get("photo_service_album_cover");
-    }
-
-    /**
-     * Gets the storage service.
-     *
-     * @return FileStorage
-     */
-    public function getFileStorageService()
-    {
-        return $this->sm->get('application_service_storage');
+        $this->albumMapper->flush();
     }
 
     /**
@@ -478,17 +463,7 @@ class Album extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function deleteAlbumCover($album)
     {
-        $this->getPhotoService()->deletePhotoFile($album->getCoverPath());
-    }
-
-    /**
-     * Get the photo mapper.
-     *
-     * @return \Photo\Mapper\Photo
-     */
-    public function getPhotoMapper()
-    {
-        return $this->sm->get('photo_mapper_photo');
+        $this->photoService->deletePhotoFile($album->getCoverPath());
     }
 
     /**
@@ -498,7 +473,7 @@ class Album extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getAcl()
     {
-        return $this->sm->get('photo_acl');
+        return $this->acl;
     }
 
     /**

@@ -5,7 +5,6 @@ namespace Application\Service;
 use User\Model\User;
 use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
-use Zend\ServiceManager\ServiceManager;
 
 abstract class AbstractAclService
 {
@@ -30,7 +29,7 @@ abstract class AbstractAclService
      *
      * @return User|string
      */
-    abstract public function getRole();
+    abstract protected function getRole();
 
     /**
      * Check if a operation is allowed for the current role.

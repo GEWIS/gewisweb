@@ -2,13 +2,13 @@
 
 namespace User\Authentication\Storage;
 
-use Zend\ServiceManager\ServiceManager;
 use DateTime;
 use Firebase\JWT\JWT;
 use UnexpectedValueException;
-use Zend\Authentication\Storage;
 use User\Model\Session as SessionModel;
+use Zend\Authentication\Storage;
 use Zend\Http\Header\SetCookie;
+use Zend\ServiceManager\ServiceManager;
 
 class Session extends Storage\Session
 {
@@ -21,6 +21,12 @@ class Session extends Storage\Session
      * @var boolean indicating whether we should remember the user
      */
     protected $rememberMe;
+    private $request;
+    private $response;
+    /**
+     * @var array
+     */
+    private $config;
 
     /**
      * Set whether we should remember this session or not.
@@ -70,8 +76,7 @@ class Session extends Storage\Session
             return false;
         }
 
-        $request = $this->sm->get('Request');
-        $cookies = $request->getHeaders()->get('cookie');
+        $cookies = $this->request->getHeaders()->get('cookie');
         if (!isset($cookies->SESSTOKEN)) {
             return false;
         }
@@ -162,24 +167,23 @@ class Session extends Storage\Session
             $sessionToken->setSecure(true)->setHttponly(true);
         }
 
-        $config = $this->sm->get('config');
-        $sessionToken->setDomain($config['cookie_domain']);
+        $sessionToken->setDomain($this->config['cookie_domain']);
 
-        $response = $this->sm->get('Response');
-        $response->getHeaders()->addHeader($sessionToken);
+        $this->response->getHeaders()->addHeader($sessionToken);
     }
 
     protected function clearCookie()
     {
         $sessionToken = new SetCookie('GEWISSESSTOKEN', 'deleted', strtotime('-1 Year'), '/');
         $sessionToken->setSecure(true)->setHttponly(true);
-        $response = $this->sm->get('Response');
-        $response->getHeaders()->addHeader($sessionToken);
+        $this->response->getHeaders()->addHeader($sessionToken);
     }
 
-    public function __construct($sm)
+    public function __construct($request, $response, array $config)
     {
-        $this->sm = $sm;
+        $this->request = $request;
+        $this->response = $response;
+        $this->config = $config;
         parent::__construct(null, null, null);
     }
 
@@ -189,11 +193,10 @@ class Session extends Storage\Session
      */
     protected function getPrivateKey()
     {
-        $config = $this->sm->get('config');
-        if (!is_readable($config['jwt_key_path'])) {
+        if (!is_readable($this->config['jwt_key_path'])) {
             return false;
         }
-        return file_get_contents($config['jwt_key_path']);
+        return file_get_contents($this->config['jwt_key_path']);
     }
 
     /**
@@ -202,10 +205,9 @@ class Session extends Storage\Session
      */
     protected function getPublicKey()
     {
-        $config = $this->sm->get('config');
-        if (!is_readable($config['jwt_pub_key_path'])) {
+        if (!is_readable($this->config['jwt_pub_key_path'])) {
             return false;
         }
-        return file_get_contents($config['jwt_pub_key_path']);
+        return file_get_contents($this->config['jwt_pub_key_path']);
     }
 }

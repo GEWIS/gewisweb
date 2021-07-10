@@ -3,54 +3,108 @@
 namespace Decision\Service;
 
 use Application\Service\AbstractAclService;
-
 use Application\Service\Email;
 use Application\Service\FileStorage;
-use Decision\Model\Organ as OrganModel;
 use Decision\Mapper\Organ as OrganMapper;
+use Decision\Model\Organ as OrganModel;
 use Decision\Model\OrganInformation;
+use Doctrine\ORM\EntityManager;
 use Imagick;
 use User\Permissions\NotAllowedException;
+use User\Service\User;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 /**
  * User service.
  */
-class Organ extends AbstractAclService implements ServiceManagerAwareInterface
+class Organ extends AbstractAclService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
     /**
      * @var Translator
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var \User\Model\User|string
+     */
+    private $userRole;
+
+    /**
+     * @var Acl
+     */
+    private $acl;
+
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
+    /**
+     * @var User
+     */
+    private $userService;
+
+    /**
+     * @var FileStorage
+     */
+    private $storageService;
+
+    /**
+     * @var Email
+     */
+    private $emailService;
+
+    /**
+     * @var \Decision\Mapper\Member
+     */
+    private $memberMapper;
+
+    /**
+     * @var OrganMapper
+     */
+    private $organMapper;
+
+    /**
+     * @var \Decision\Form\OrganInformation
+     */
+    private $organInformationForm;
+
+    /**
+     * @var array
+     */
+    private $organInformationConfig;
+
+    public function __construct(
+        Translator $translator,
+        $userRole,
+        Acl $acl,
+        EntityManager $entityManager,
+        User $userService,
+        FileStorage $storageService,
+        Email $emailService,
+        \Decision\Mapper\Member $memberMapper,
+        OrganMapper $organMapper,
+        \Decision\Form\OrganInformation $organInformationForm,
+        array $organInformationConfig
+    )
     {
         $this->translator = $translator;
+        $this->userRole = $userRole;
+        $this->acl = $acl;
+        $this->entityManager = $entityManager;
+        $this->userService = $userService;
+        $this->storageService = $storageService;
+        $this->emailService = $emailService;
+        $this->memberMapper = $memberMapper;
+        $this->organMapper = $organMapper;
+        $this->organInformationForm = $organInformationForm;
+        $this->organInformationConfig = $organInformationConfig;
+    }
+
+    public function getRole()
+    {
+        return $this->userRole;
     }
 
     /**
@@ -66,7 +120,7 @@ class Organ extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getOrganMapper()->findActive();
+        return $this->organMapper->findActive();
     }
 
     /**
@@ -84,7 +138,7 @@ class Organ extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        return $this->getOrganMapper()->find($id);
+        return $this->organMapper->find($id);
     }
 
     /**
@@ -111,9 +165,9 @@ class Organ extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        $user = $this->sm->get('user_service_user')->getIdentity();
+        $user = $this->userService->getIdentity();
 
-        return $this->getMemberMapper()->findOrgans($user->getMember());
+        return $this->memberMapper->findOrgans($user->getMember());
     }
 
     /**
@@ -131,9 +185,9 @@ class Organ extends AbstractAclService implements ServiceManagerAwareInterface
             return true;
         }
 
-        $user = $this->sm->get('user_service_user')->getIdentity();
+        $user = $this->userService->getIdentity();
 
-        foreach ($this->getMemberMapper()->findOrgans($user->getMember()) as $memberOrgan) {
+        foreach ($this->memberMapper->findOrgans($user->getMember()) as $memberOrgan) {
             if ($memberOrgan->getId() === $organ->getId()) {
                 return true;
             }
@@ -149,7 +203,7 @@ class Organ extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function findActiveOrgansByType($type)
     {
-        return $this->getOrganMapper()->findActive($type);
+        return $this->organMapper->findActive($type);
     }
 
     /**
@@ -159,7 +213,7 @@ class Organ extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function findAbrogatedOrgansByType($type)
     {
-        return $this->getOrganMapper()->findAbrogated($type);
+        return $this->organMapper->findAbrogated($type);
     }
 
     /**
@@ -176,7 +230,7 @@ class Organ extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function findOrganByAbbr($abbr, $type = null, $latest = false)
     {
-        return $this->getOrganMapper()->findByAbbr($abbr, $type, $latest);
+        return $this->organMapper->findByAbbr($abbr, $type, $latest);
     }
 
     /**
@@ -199,7 +253,7 @@ class Organ extends AbstractAclService implements ServiceManagerAwareInterface
             return false;
         }
 
-        $config = $this->getConfig();
+        $config = $this->organInformationConfig;
         if ($files['cover']['size'] > 0) {
             $coverPath = $this->makeOrganInformationImage(
                 $files['cover']['tmp_name'],
@@ -226,13 +280,13 @@ class Organ extends AbstractAclService implements ServiceManagerAwareInterface
             $organInformation->setThumbnailPath($thumbnailPath);
         }
 
-        $this->getEntityManager()->flush();
+        $this->entityManager->flush();
 
         if ($this->isAllowed('approve')) {
             $this->approveOrganInformation($organInformation);
         }
 
-        $this->getEmailService()->sendEmail(
+        $this->emailService->sendEmail(
             'organ_update',
             'email/organUpdate',
             'Een orgaan heeft een update doorgevoerd | An organ has updated her page',
@@ -271,17 +325,17 @@ class Organ extends AbstractAclService implements ServiceManagerAwareInterface
         $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() . '.jpg';
         $image->writeImage($tempFileName);
 
-        return $this->getFileStorageService()->storeFile($tempFileName);
+        return $this->storageService->storeFile($tempFileName);
     }
 
     public function approveOrganInformation($organInformation)
     {
-        $em = $this->getEntityManager();
+        $em = $this->entityManager;
         $oldInformation = $organInformation->getOrgan()->getApprovedOrganInformation();
         if (!is_null($oldInformation)) {
             $em->remove($oldInformation);
         }
-        $user = $em->merge($this->sm->get('user_service_user')->getIdentity());
+        $user = $em->merge($this->userService->getIdentity());
         $organInformation->setApprover($user);
         $em->flush();
     }
@@ -301,7 +355,7 @@ class Organ extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        $form = $this->sm->get('decision_form_organ_information');
+        $form = $this->organInformationForm;
         $form->bind($organInformation);
 
         return $form;
@@ -313,7 +367,7 @@ class Organ extends AbstractAclService implements ServiceManagerAwareInterface
         if (is_null($organ)) {
             return false;
         }
-        $em = $this->getEntityManager();
+        $em = $this->entityManager;
         $organInformation = null;
         foreach ($organ->getOrganInformation() as $information) {
             if (is_null($information->getApprover())) {
@@ -401,56 +455,6 @@ class Organ extends AbstractAclService implements ServiceManagerAwareInterface
     }
 
     /**
-     * Get the organ mapper.
-     *
-     * @return OrganMapper.
-     */
-    public function getOrganMapper()
-    {
-        return $this->sm->get('decision_mapper_organ');
-    }
-
-    /**
-     * Get the member mapper.
-     *
-     * @return \Decision\Mapper\Member
-     */
-    public function getMemberMapper()
-    {
-        return $this->sm->get('decision_mapper_member');
-    }
-
-    /**
-     * Gets the file storage service.
-     *
-     * @return FileStorage
-     */
-    public function getFileStorageService()
-    {
-        return $this->sm->get('application_service_storage');
-    }
-
-    /**
-     * Get the entity manager
-     */
-    public function getEntityManager()
-    {
-        return $this->sm->get('doctrine.entitymanager.orm_default');
-    }
-
-    /**
-     * Get the organ information config, as used by this service.
-     *
-     * @return array containing the config for the module
-     */
-    public function getConfig()
-    {
-        $config = $this->sm->get('config');
-
-        return $config['organ_information'];
-    }
-
-    /**
      * Get the default resource ID.
      *
      * @return string
@@ -467,16 +471,6 @@ class Organ extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getAcl()
     {
-        return $this->sm->get('decision_acl');
-    }
-
-    /**
-     * Get the email service.
-     *
-     * @return Email
-     */
-    public function getEmailService()
-    {
-        return $this->sm->get('application_service_email');
+        return $this->acl;
     }
 }

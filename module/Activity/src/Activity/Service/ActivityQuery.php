@@ -2,51 +2,72 @@
 
 namespace Activity\Service;
 
+use Activity\Mapper\Proposal;
 use Activity\Model\Activity as ActivityModel;
 use Activity\Model\ActivityUpdateProposal;
 use Application\Service\AbstractAclService;
 use DateTime;
 use Decision\Model\AssociationYear as AssociationYear;
 use Decision\Model\Organ;
+use User\Model\User;
 use User\Permissions\NotAllowedException;
-use User\Service\User;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
-class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInterface
+class ActivityQuery extends AbstractAclService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
     /**
      * @var Translator
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var User|string
+     */
+    private $userRole;
+    /**
+     * @var Acl
+     */
+    private $acl;
+    /**
+     * @var \User\Service\User
+     */
+    private $userService;
+    /**
+     * @var \Decision\Service\Organ
+     */
+    private $organService;
+    /**
+     * @var \Activity\Mapper\Activity
+     */
+    private $activityMapper;
+    /**
+     * @var Proposal
+     */
+    private $proposalMapper;
+
+    public function __construct(
+        Translator $translator,
+        $userRole,
+        Acl $acl,
+        \User\Service\User $userService,
+        \Decision\Service\Organ $organService,
+        \Activity\Mapper\Activity $activityMapper,
+        Proposal $proposalMapper
+    )
     {
         $this->translator = $translator;
+        $this->userRole = $userRole;
+        $this->acl = $acl;
+        $this->userService = $userService;
+        $this->organService = $organService;
+        $this->activityMapper = $activityMapper;
+        $this->proposalMapper = $proposalMapper;
+    }
+
+    public function getRole()
+    {
+        return $this->userRole;
     }
 
     /**
@@ -72,7 +93,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
      */
     public function getAcl()
     {
-        return $this->sm->get('activity_acl');
+        return $this->acl;
     }
 
     /**
@@ -84,7 +105,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
      */
     public function getProposal($id)
     {
-        $proposalMapper = $this->sm->get('activity_mapper_proposal');
+        $proposalMapper = $this->proposalMapper;
 
         return $proposalMapper->getProposalById($id);
     }
@@ -96,7 +117,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
      */
     public function getAllProposals()
     {
-        return $this->sm->get('activity_mapper_proposal')->getAllProposals();
+        return $this->proposalMapper->getAllProposals();
     }
 
     /**
@@ -143,7 +164,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
             );
         }
 
-        $activityMapper = $this->sm->get('activity_mapper_activity');
+        $activityMapper = $this->activityMapper;
 
         return $activityMapper->getActivityById($id);
     }
@@ -162,7 +183,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
             );
         }
 
-        $activityMapper = $this->sm->get('activity_mapper_activity');
+        $activityMapper = $this->activityMapper;
 
         return $activityMapper->getAllActivities();
     }
@@ -181,7 +202,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
             );
         }
 
-        $activityMapper = $this->sm->get('activity_mapper_activity');
+        $activityMapper = $this->activityMapper;
         return $activityMapper->getAllUpcomingActivities(null, null, ActivityModel::STATUS_TO_APPROVE);
     }
 
@@ -199,7 +220,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
             );
         }
 
-        $activityMapper = $this->sm->get('activity_mapper_activity');
+        $activityMapper = $this->activityMapper;
         return $activityMapper->getAllUpcomingActivities(null, null, ActivityModel::STATUS_APPROVED);
     }
 
@@ -223,7 +244,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
      */
     public function getActivityMapper()
     {
-        return $this->sm->get('activity_mapper_activity');
+        return $this->activityMapper;
     }
 
     /**
@@ -240,7 +261,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
             );
         }
 
-        $activityMapper = $this->sm->get('activity_mapper_activity');
+        $activityMapper = $this->activityMapper;
         return $activityMapper->getAllUpcomingActivities(null, null, ActivityModel::STATUS_DISAPPROVED);
     }
 
@@ -260,7 +281,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
             );
         }
 
-        $activityMapper = $this->sm->get('activity_mapper_activity');
+        $activityMapper = $this->activityMapper;
         if ($category === 'my') {
             if (!$this->isAllowed('view', 'myActivities')) {
 
@@ -268,20 +289,10 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
                     $this->translator->translate('You are not allowed to view upcoming activities coupled to a member account')
                 );
             }
-            $user = $this->getUserService()->getIdentity();
+            $user = $this->userService->getIdentity();
             return $activityMapper->getUpcomingActivitiesForMember($user);
         }
         return $activityMapper->getUpcomingActivities(null, null, $category);
-    }
-
-    /**
-     * Gets the user service.
-     *
-     * @return User
-     */
-    public function getUserService()
-    {
-        return $this->sm->get('user_service_user');
     }
 
     /**
@@ -298,7 +309,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
             //Only admins are allowed to unconditionally view activity details
             return $activityMapper->getAllUpcomingActivities();
         }
-        $organs = $this->sm->get('decision_service_organ')->getEditableOrgans();
+        $organs = $this->organService->getEditableOrgans();
         return $activityMapper->getAllUpcomingActivities($organs, $user->getLidnr());
     }
 
@@ -306,7 +317,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
      * Gets a paginator for the old activities created by this user or its organs.
      * Or, when the user is an admin, retrieve all old activities
      *
-     * @param \User\Model\User $user
+     * @param User $user
      * @return array
      */
     public function getOldCreatedActivitiesPaginator($user)
@@ -316,7 +327,7 @@ class ActivityQuery extends AbstractAclService implements ServiceManagerAwareInt
             //Only admins are allowed to unconditionally view activity details
             return $activityMapper->getOldActivityPaginatorAdapterByOrganizer();
         }
-        $organs = $this->sm->get('decision_service_organ')->getEditableOrgans();
+        $organs = $this->organService->getEditableOrgans();
         return $activityMapper->getOldActivityPaginatorAdapterByOrganizer($organs, $user->getLidnr());
     }
 

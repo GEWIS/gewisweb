@@ -24,10 +24,16 @@ class AlbumPlugin extends AbstractPlugin
      */
     private $albumService;
 
-    public function __construct(Photo $photoService, Album $albumService)
+    /**
+     * @var array
+     */
+    private $photoConfig;
+
+    public function __construct(Photo $photoService, Album $albumService, array $photoConfig)
     {
         $this->photoService = $photoService;
         $this->albumService = $albumService;
+        $this->photoConfig = $photoConfig;
     }
 
     /**
@@ -123,8 +129,7 @@ class AlbumPlugin extends AbstractPlugin
         );
         $paginator->setCurrentPageNumber($activePage);
 
-        $config = $this->albumService->getConfig();
-        $paginator->setItemCountPerPage($config['max_photos_page']);
+        $paginator->setItemCountPerPage($this->photoConfig['max_photos_page']);
 
         $basedir = $this->photoService->getBaseDirectory();
 

@@ -4,55 +4,93 @@ namespace Photo\Service;
 
 use Application\Service\AbstractAclService;
 use Application\Service\FileStorage;
-use Decision\Service\Member;
 use Exception;
-use InvalidArgumentException;
-use Photo\Mapper\Tag;
-use Photo\Model\Photo as PhotoModel;
 use Imagick;
+use InvalidArgumentException;
+use Photo\Model\Photo as PhotoModel;
+use User\Model\User;
 use User\Permissions\NotAllowedException;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\Validator\File\Extension;
 use Zend\Validator\File\IsImage;
 
 /**
  * Admin service for all photo admin related functions.
  */
-class Admin extends AbstractAclService implements ServiceManagerAwareInterface
+class Admin extends AbstractAclService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
     /**
      * @var Translator
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var User|string
+     */
+    private $userRole;
+
+    /**
+     * @var Acl
+     */
+    private $acl;
+
+    /**
+     * @var Photo
+     */
+    private $photoService;
+
+    /**
+     * @var Album
+     */
+    private $albumService;
+
+    /**
+     * @var Metadata
+     */
+    private $metadataService;
+
+    /**
+     * @var FileStorage
+     */
+    private $storageService;
+
+    /**
+     * @var \Photo\Mapper\Photo
+     */
+    private $photoMapper;
+
+    /**
+     * @var array
+     */
+    private $photoConfig;
+
+    public function __construct(
+        Translator $translator,
+        $userRole,
+        Acl $acl,
+        Photo $photoService,
+        Album $albumService,
+        Metadata $metadataService,
+        FileStorage $storageService,
+        \Photo\Mapper\Photo $photoMapper,
+        array $photoConfig
+    )
     {
         $this->translator = $translator;
+        $this->userRole = $userRole;
+        $this->acl = $acl;
+        $this->photoService = $photoService;
+        $this->albumService = $albumService;
+        $this->metadataService = $metadataService;
+        $this->storageService = $storageService;
+        $this->photoMapper = $photoMapper;
+        $this->photoConfig = $photoConfig;
+    }
+
+    public function getRole()
+    {
+        return $this->userRole;
     }
 
     /**
@@ -74,18 +112,18 @@ class Admin extends AbstractAclService implements ServiceManagerAwareInterface
             );
         }
 
-        $config = $this->getConfig();
-        $storagePath = $this->getFileStorageService()->storeFile($path, false);
+        $config = $this->photoConfig;
+        $storagePath = $this->storageService->storeFile($path, false);
         //check if photo exists already in the database
-        $photo = $this->getPhotoMapper()->getPhotoByData($storagePath, $targetAlbum);
+        $photo = $this->photoMapper->getPhotoByData($storagePath, $targetAlbum);
         //if the returned object is null, then the photo doesn't exist
         if (is_null($photo)) {
             $photo = new PhotoModel();
             $photo->setAlbum($targetAlbum);
-            $photo = $this->getMetadataService()->populateMetaData($photo, $path);
+            $photo = $this->metadataService->populateMetaData($photo, $path);
             $photo->setPath($storagePath);
 
-            $mapper = $this->getPhotoMapper();
+            $mapper = $this->photoMapper;
             $mapper->getConnection()->beginTransaction();
             try {
                 /*
@@ -112,7 +150,7 @@ class Admin extends AbstractAclService implements ServiceManagerAwareInterface
             } catch (Exception $e) {
                 // Rollback if anything went wrong
                 $mapper->getConnection()->rollBack();
-                $this->getPhotoService()->deletePhotoFiles($photo);
+                $this->photoService->deletePhotoFiles($photo);
                 return false;
             }
         }
@@ -138,9 +176,8 @@ class Admin extends AbstractAclService implements ServiceManagerAwareInterface
         //Tempfile is used to generate sha1, not sure this is the best method
         $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() . '.png';
         $image->writeImage($tempFileName);
-        $newPath = $this->getFileStorageService()->storeFile($tempFileName);
 
-        return $newPath;
+        return $this->storageService->storeFile($tempFileName);
     }
 
     /**
@@ -161,8 +198,6 @@ class Admin extends AbstractAclService implements ServiceManagerAwareInterface
                 $this->translator->translate('Not allowed to import photos.')
             );
         }
-
-        $albumService = $this->getAlbumService();
         $image = new IsImage(['magicFile' => false]);
         if ($handle = opendir($path)) {
             while (false !== ($entry = readdir($handle))) {
@@ -171,7 +206,7 @@ class Admin extends AbstractAclService implements ServiceManagerAwareInterface
                     $subPath = $path . '/' . $entry;
                     if (is_dir($subPath)) {
                         //TODO: this no longer works (probably because of the type of $targetAlbum)
-                        $subAlbum = $albumService->createAlbum($entry, $targetAlbum);
+                        $subAlbum = $this->albumService->createAlbum($entry, $targetAlbum);
                         $this->storeUploadedDirectory($subPath, $subAlbum);
                     } elseif ($image->isValid($subPath)) {
                         $this->storeUploadedPhoto($subPath, $targetAlbum);
@@ -241,98 +276,6 @@ class Admin extends AbstractAclService implements ServiceManagerAwareInterface
     }
 
     /**
-     * Get the photo config, as used by this service.
-     *
-     * @return array containing the config for the module
-     */
-    public function getConfig()
-    {
-        $config = $this->sm->get('config');
-
-        return $config['photo'];
-    }
-
-    /**
-     * Get the photo mapper.
-     *
-     * @return \Photo\Mapper\Photo
-     */
-    public function getPhotoMapper()
-    {
-        return $this->sm->get('photo_mapper_photo');
-    }
-
-    /**
-     * Get the album mapper.
-     *
-     * @return \Photo\Mapper\Album
-     */
-    public function getAlbumMapper()
-    {
-        return $this->sm->get('photo_mapper_album');
-    }
-
-    /**
-     * Get the tag mapper.
-     *
-     * @return Tag
-     */
-    public function getTagMapper()
-    {
-        return $this->sm->get('photo_mapper_tag');
-    }
-
-    /**
-     * Gets the metadata service.
-     *
-     * @return Metadata
-     */
-    public function getMetadataService()
-    {
-        return $this->sm->get('photo_service_metadata');
-    }
-
-    /**
-     * Gets the album service.
-     *
-     * @return Album
-     */
-    public function getAlbumService()
-    {
-        return $this->sm->get('photo_service_album');
-    }
-
-    /**
-     * Get the member service.
-     *
-     * @return Member
-     */
-    public function getMemberService()
-    {
-        return $this->sm->get('decision_service_member');
-    }
-
-    /**
-     * Gets the photo service.
-     *
-     * @return Photo
-     */
-    public function getPhotoService()
-    {
-        return $this->sm->get('photo_service_photo');
-    }
-
-    /**
-     * Gets the storage service.
-     *
-     * @return FileStorage
-     */
-    public function getFileStorageService()
-    {
-        return $this->sm->get('application_service_storage');
-    }
-
-    /**
      * Get the default resource ID.
      *
      * @return string
@@ -349,6 +292,6 @@ class Admin extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getAcl()
     {
-        return $this->sm->get('photo_acl');
+        return $this->acl;
     }
 }

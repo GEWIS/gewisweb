@@ -10,44 +10,49 @@ use User\Mapper\ApiUser as ApiUserMapper;
 use User\Permissions\NotAllowedException;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 /**
  * API User service.
  */
-class ApiUser extends AbstractAclService implements ServiceManagerAwareInterface
+class ApiUser extends AbstractAclService
 {
-
-    /**
-     * Service manager.
-     *
-     * @var ServiceManager
-     */
-    protected $sm;
-
-    /**
-     * Set the service manager.
-     *
-     * @param ServiceManager $sm
-     */
-    public function setServiceManager(ServiceManager $sm)
-    {
-        $this->sm = $sm;
-    }
-
-    public function getRole()
-    {
-        return $this->sm->get('user_role');
-    }
     /**
      * @var Translator
      */
     private $translator;
 
-    public function __construct(Translator $translator)
+    /**
+     * @var \User\Model\User|string
+     */
+    private $userRole;
+
+    /**
+     * @var Acl
+     */
+    private $acl;
+
+    /**
+     * @var ApiUserMapper
+     */
+    private $apiUserMapper;
+
+    /**
+     * @var ApiToken
+     */
+    private $apiTokenForm;
+
+    public function __construct(Translator $translator, $userRole, Acl $acl, ApiUserMapper $apiUserMapper, ApiToken $apiTokenForm)
     {
         $this->translator = $translator;
+        $this->userRole = $userRole;
+        $this->acl = $acl;
+        $this->apiUserMapper = $apiUserMapper;
+        $this->apiTokenForm = $apiTokenForm;
+    }
+
+    public function getRole()
+    {
+        return $this->userRole;
     }
 
     /**
@@ -80,7 +85,7 @@ class ApiUser extends AbstractAclService implements ServiceManagerAwareInterface
                 $this->translator->translate('You are not allowed to view API tokens')
             );
         }
-        return $this->getApiUserMapper()->findAll();
+        return $this->apiUserMapper->findAll();
     }
 
     /**
@@ -96,7 +101,7 @@ class ApiUser extends AbstractAclService implements ServiceManagerAwareInterface
                 $this->translator->translate('You are not allowed to remove API tokens')
             );
         }
-        $this->getApiUserMapper()->remove($id);
+        $this->apiUserMapper->remove($id);
     }
 
     /**
@@ -114,7 +119,7 @@ class ApiUser extends AbstractAclService implements ServiceManagerAwareInterface
                 $this->translator->translate('You are not allowed to view API tokens')
             );
         }
-        return $this->getApiUserMapper()->find($id);
+        return $this->apiUserMapper->find($id);
     }
 
     /**
@@ -137,7 +142,7 @@ class ApiUser extends AbstractAclService implements ServiceManagerAwareInterface
         $apiUser = $form->getData();
         $apiUser->setToken($this->generateToken());
 
-        $this->getApiUserMapper()->persist($apiUser);
+        $this->apiUserMapper->persist($apiUser);
 
         return $apiUser;
     }
@@ -149,7 +154,7 @@ class ApiUser extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function verifyToken($token)
     {
-        $mapper = $this->getApiUserMapper();
+        $mapper = $this->apiUserMapper;
 
         $this->identity = $mapper->findByToken($token);
     }
@@ -187,17 +192,7 @@ class ApiUser extends AbstractAclService implements ServiceManagerAwareInterface
                 $this->translator->translate('You are not allowed to add API tokens')
             );
         }
-        return $this->sm->get('user_form_apitoken');
-    }
-
-    /**
-     * Get the API User mapper.
-     *
-     * @return ApiUserMapper
-     */
-    public function getApiUserMapper()
-    {
-        return $this->sm->get('user_mapper_apiuser');
+        return $this->apiTokenForm;
     }
 
     /**
@@ -207,7 +202,7 @@ class ApiUser extends AbstractAclService implements ServiceManagerAwareInterface
      */
     public function getAcl()
     {
-        return $this->sm->get('acl');
+        return $this->acl;
     }
 
     /**

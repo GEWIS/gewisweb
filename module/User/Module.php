@@ -103,11 +103,53 @@ class Module
             'factories' => [
                 'user_service_user' => function ($sm) {
                     $translator = $sm->get('translator');
-                    return new Service\User($translator);
+                    $userRole = $sm->get('user_role');
+                    $bcrypt = $sm->get('user_bcrypt');
+                    $entityManager = $sm->get('user_doctrine_em');
+                    $authService = $sm->get('user_service_auth');
+                    $pinMapper = $sm->get('user_pin_auth_service');
+                    $authStorage = $sm->get('user_auth_storage');
+                    $emailService = $sm->get('user_service_email');
+                    $remoteAddress = $sm->get('user_remoteaddress');
+                    $acl = $sm->get('acl');
+                    $rateLimitConfig = $sm->get('config')['login_rate_limits'];
+                    $userMapper = $sm->get('mapper_user_user');
+                    $newUserMapper = $sm->get('user_mapper_newuser');
+                    $loginAttemptMapper = $sm->get('user_mapper_loginattempt');
+                    $memberMapper = $sm->get('decision_mapper_member');
+                    $registerForm = $sm->get('user_form_register');
+                    $activateForm = $sm->get('user_form_activate');
+                    $loginForm = $sm->get('user_form_login');
+                    $passwordForm = $sm->get('user_form_password');
+                    return new Service\User(
+                        $translator,
+                        $userRole,
+                        $bcrypt,
+                        $entityManager,
+                        $authService,
+                        $pinMapper,
+                        $authStorage,
+                        $emailService,
+                        $remoteAddress,
+                        $acl,
+                        $rateLimitConfig,
+                        $userMapper,
+                        $newUserMapper,
+                        $loginAttemptMapper,
+                        $memberMapper,
+                        $registerForm,
+                        $activateForm,
+                        $loginForm,
+                        $passwordForm
+                    );
                 },
                 'user_service_apiuser' => function ($sm) {
                     $translator = $sm->get('translator');
-                    return new Service\ApiUser($translator);
+                    $userRole = $sm->get('user_role');
+                    $acl = $sm->get('acl');
+                    $apiUserMapper = $sm->get('user_mapper_apiuser');
+                    $apiTokenForm = $sm->get('user_form_apitoken');
+                    return new Service\ApiUser($translator, $userRole, $acl, $apiUserMapper, $apiTokenForm);
                 },
                 'user_service_email' => function ($sm) {
                     $translator = $sm->get('translator');
@@ -118,8 +160,13 @@ class Module
                 },
                 ApiApp::class => ApiAppFactory::class,
                 'user_auth_storage' => function ($sm) {
+                    $request = $sm->get('Request');
+                    $response = $sm->get('Response');
+                    $config = $sm->get('config');
                     return new Authentication\Storage\Session(
-                        $sm
+                        $request,
+                        $response,
+                        $config
                     );
                 },
                 'user_bcrypt' => function ($sm) {
@@ -151,11 +198,6 @@ class Module
                 },
                 'user_form_password' => function ($sm) {
                     return new Password(
-                        $sm->get('translator')
-                    );
-                },
-                'user_form_passwordreset' => function ($sm) {
-                    return new Register(
                         $sm->get('translator')
                     );
                 },
