@@ -6,17 +6,12 @@ use Application\Service\AbstractAclService;
 use DateInterval;
 use DateTime;
 use Decision\Mapper\Member;
-use Doctrine\ORM\EntityManager;
-use User\Authentication\Adapter\PinMapper;
-use User\Authentication\AuthenticationService;
 use User\Authentication\Storage\Session;
 use User\Form\Activate;
 use User\Form\Login;
 use User\Form\Password;
 use User\Form\Register as RegisterForm;
-use User\Mapper\LoginAttempt;
 use User\Mapper\NewUser;
-use User\Model\LoginAttempt as LoginAttemptModel;
 use User\Model\NewUser as NewUserModel;
 use User\Model\User as UserModel;
 use User\Permissions\NotAllowedException;
@@ -45,14 +40,15 @@ class User extends AbstractAclService
     private $bcrypt;
 
     /**
-     * @var AuthenticationService
+     * @var \Zend\Authentication\AuthenticationService
      */
     private $authService;
 
     /**
-     * @var PinMapper
+     * @var \Zend\Authentication\AuthenticationService
+     * with PinMapper adapter
      */
-    private $pinMapper;
+    private $pinAuthService;
 
     /**
      * @var Session
@@ -108,8 +104,8 @@ class User extends AbstractAclService
         Translator $translator,
         $userRole,
         Bcrypt $bcrypt,
-        AuthenticationService $authService,
-        PinMapper $pinMapper,
+        \Zend\Authentication\AuthenticationService $authService,
+        \Zend\Authentication\AuthenticationService $pinAuthService,
         Session $authStorage,
         Email $emailService,
         Acl $acl,
@@ -126,7 +122,7 @@ class User extends AbstractAclService
         $this->userRole = $userRole;
         $this->bcrypt = $bcrypt;
         $this->authService = $authService;
-        $this->pinMapper = $pinMapper;
+        $this->pinAuthService = $pinAuthService;
         $this->authStorage = $authStorage;
         $this->emailService = $emailService;
         $this->acl = $acl;
@@ -397,7 +393,7 @@ class User extends AbstractAclService
 
         $authAdapter->setCredentials($data['lidnr'], $data['pincode']);
 
-        $result = $this->pinMapper->authenticate();
+        $result = $this->pinAuthService->authenticate();
 
         // process the result
         if (!$result->isValid()) {
