@@ -301,10 +301,12 @@ class Module
                     if ($authService->hasIdentity()) {
                         return $authService->getIdentity();
                     }
-                    $apiService = $sm->get('user_service_apiuser');
-                    if ($apiService->hasIdentity()) {
-                        return 'apiuser';
-                    }
+                    // TODO: Refactor and re-enable the ApiUser service after a circular dependency has been removed.
+                    // Possibly extend the ZendAuthService ?
+//                    $apiService = $sm->get('user_service_apiuser');
+//                    if ($apiService->hasIdentity()) {
+//                        return 'apiuser';
+//                    }
                     $range = $sm->get('config')['tue_range'];
                     if (strpos($sm->get('user_remoteaddress'), $range) === 0) {
                         return 'tueguest';

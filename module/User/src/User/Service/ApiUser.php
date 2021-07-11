@@ -68,7 +68,7 @@ class ApiUser extends AbstractAclService
     /**
      * Identity storage.
      *
-     * @var ApiUserMapper
+     * @var ApiUserModel
      */
     protected $identity;
 
