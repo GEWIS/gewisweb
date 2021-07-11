@@ -163,8 +163,8 @@ return [
             },
             'User\Controller\Api' => function (ContainerInterface $serviceManager) {
                 $userService = $serviceManager->getServiceLocator()->get("user_service_user");
-                $memberService = $serviceManager->getServiceLocator()->get("decision_service_member");
-                return new ApiController($userService, $memberService);
+                $memberInfoService = $serviceManager->getServiceLocator()->get("decision_service_memberinfo");
+                return new ApiController($userService, $memberInfoService);
             },
             'User\Controller\ApiAdmin' => function (ContainerInterface $serviceManager) {
                 $apiUserService = $serviceManager->getServiceLocator()->get("user_service_apiuser");

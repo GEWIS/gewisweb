@@ -110,7 +110,6 @@ class Module
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('decision_acl');
                     $userService = $sm->get('user_service_user');
-                    $photoService = $sm->get('photo_service_photo');
                     $memberMapper = $sm->get('decision_mapper_member');
                     $authorizationMapper = $sm->get('decision_mapper_authorization');
                     $config = $sm->get('config');
@@ -119,10 +118,23 @@ class Module
                         $userRole,
                         $acl,
                         $userService,
-                        $photoService,
                         $memberMapper,
                         $authorizationMapper,
                         $config
+                    );
+                },
+                'decision_service_memberinfo' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    $userRole = $sm->get('user_role');
+                    $acl = $sm->get('decision_acl');
+                    $photoService = $sm->get('photo_service_photo');
+                    $memberMapper = $sm->get('decision_mapper_member');
+                    return new Service\MemberInfo(
+                        $translator,
+                        $userRole,
+                        $acl,
+                        $photoService,
+                        $memberMapper
                     );
                 },
                 'decision_mapper_member' => function ($sm) {

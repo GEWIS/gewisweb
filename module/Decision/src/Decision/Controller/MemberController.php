@@ -4,6 +4,7 @@ namespace Decision\Controller;
 
 use Decision\Service\Decision;
 use Decision\Service\Member;
+use Decision\Service\MemberInfo;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
@@ -17,6 +18,11 @@ class MemberController extends AbstractActionController
     private $memberService;
 
     /**
+     * @var MemberInfo
+     */
+    private $memberInfoService;
+
+    /**
      * @var Decision
      */
     private $decisionService;
@@ -26,9 +32,10 @@ class MemberController extends AbstractActionController
      */
     private $regulationsConfig;
 
-    public function __construct(Member $memberService, Decision $decisionService, array $regulationsConfig)
+    public function __construct(Member $memberService, MemberInfo $memberInfoService, Decision $decisionService, array $regulationsConfig)
     {
         $this->memberService = $memberService;
+        $this->memberInfoService = $memberInfoService;
         $this->decisionService = $decisionService;
         $this->regulationsConfig = $regulationsConfig;
     }
@@ -57,7 +64,7 @@ class MemberController extends AbstractActionController
      */
     public function selfAction()
     {
-        return new ViewModel($this->memberService->getMembershipInfo());
+        return new ViewModel($this->memberInfoService->getMembershipInfo());
     }
 
     /**
@@ -65,7 +72,7 @@ class MemberController extends AbstractActionController
      */
     public function viewAction()
     {
-        $info = $this->memberService->getMembershipInfo($this->params()->fromRoute('lidnr'));
+        $info = $this->memberInfoService->getMembershipInfo($this->params()->fromRoute('lidnr'));
 
         if (null === $info) {
             return $this->notFoundAction();

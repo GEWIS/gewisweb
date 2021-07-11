@@ -9,7 +9,7 @@
 
 namespace User\Controller;
 
-use Decision\Service\Member;
+use Decision\Service\MemberInfo;
 use User\Service\User;
 use Zend\Mvc\Controller\AbstractActionController;
 
@@ -22,15 +22,15 @@ class ApiController extends AbstractActionController
     private $userService;
 
     /**
-     * @var Member
+     * @var MemberInfo
      */
-    private $memberService;
+    private $memberInfoService;
 
 
-    public function __construct(User $userService, Member $memberService)
+    public function __construct(User $userService, MemberInfo $memberInfoService)
     {
         $this->userService = $userService;
-        $this->memberService = $memberService;
+        $this->memberInfoService = $memberInfoService;
     }
 
     public function validateAction()
@@ -46,7 +46,7 @@ class ApiController extends AbstractActionController
                 $name = $member->getFullName();
                 $headers->addHeaderLine('GEWIS-MemberName', $name);
                 $headers->addHeaderLine('GEWIS-MemberEmail', $member->getEmail());
-                $memberships = $this->memberService->getOrganMemberships($member);
+                $memberships = $this->memberInfoService->getOrganMemberships($member);
                 $headers->addHeaderLine('GEWIS-MemberGroups', implode(',', array_keys($memberships)));
                 return $response;
             }

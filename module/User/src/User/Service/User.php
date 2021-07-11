@@ -15,6 +15,7 @@ use User\Mapper\NewUser;
 use User\Model\NewUser as NewUserModel;
 use User\Model\User as UserModel;
 use User\Permissions\NotAllowedException;
+use Zend\Authentication\AuthenticationService;
 use Zend\Crypt\Password\Bcrypt;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
@@ -40,12 +41,12 @@ class User extends AbstractAclService
     private $bcrypt;
 
     /**
-     * @var \Zend\Authentication\AuthenticationService
+     * @var AuthenticationService
      */
     private $authService;
 
     /**
-     * @var \Zend\Authentication\AuthenticationService
+     * @var AuthenticationService
      * with PinMapper adapter
      */
     private $pinAuthService;
@@ -104,8 +105,8 @@ class User extends AbstractAclService
         Translator $translator,
         $userRole,
         Bcrypt $bcrypt,
-        \Zend\Authentication\AuthenticationService $authService,
-        \Zend\Authentication\AuthenticationService $pinAuthService,
+        AuthenticationService $authService,
+        AuthenticationService $pinAuthService,
         Session $authStorage,
         Email $emailService,
         Acl $acl,

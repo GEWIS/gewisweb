@@ -102,7 +102,7 @@ class Photo extends AbstractAclService
         Translator $translator,
         $userRole,
         Acl $acl,
-        Member $memberService,
+        \Decision\Service\Member $memberService,
         FileStorage $storageService,
         \Photo\Mapper\Photo $photoMapper,
         \Photo\Mapper\Album $albumMapper,
