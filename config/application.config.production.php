@@ -2,8 +2,11 @@
 return [
     // This should be an array of module namespaces used in the application.
     'modules' => [
-        'Zend\Router',
+//        'Zend\Session',
         'Zend\Mvc\I18n',
+//        'Zend\Form',
+        'Zend\Router',
+        'Zend\Validator',
         'DoctrineModule',
         'DoctrineORMModule',
         'User',
