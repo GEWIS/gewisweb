@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "php": "^7.0.0",
+        "php": "^7.2.0",
         "ext-calendar": "*",
         "ext-exif": "*",
         "ext-fileinfo": "*",
@@ -38,6 +38,7 @@
         "zendframework/zend-code": "^3.0.0",
         "zendframework/zend-crypt": "^3.0.0",
         "zendframework/zend-escaper": "^2.6.1",
+        "zendframework/zend-eventmanager": "^3.0.0",
         "zendframework/zend-form": "^2.13.0",
         "zendframework/zend-http": "^2.8.4",
         "zendframework/zend-hydrator": "^2.4.2",
@@ -50,7 +51,7 @@
         "zendframework/zend-mime": "^2.7.2",
         "zendframework/zend-modulemanager": "^2.8.4",
         "zendframework/zend-mvc": "^3.0.0",
-        "zendframework/zend-mvc-i18n": "*",
+        "zendframework/zend-mvc-i18n": "^1.1.1",
         "zendframework/zend-paginator": "^2.8.2",
         "zendframework/zend-permissions-acl": "^2.7.1",
         "zendframework/zend-router": "^3.0.0",

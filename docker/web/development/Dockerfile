@@ -1,4 +1,4 @@
-FROM php:7.1-fpm as gewisweb_web_development
+FROM php:7.2-fpm as gewisweb_web_development
 
 RUN apt-get update \
     && apt-get install -y \

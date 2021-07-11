@@ -13,11 +13,6 @@ use Zend\ServiceManager\ServiceManager;
 class Session extends Storage\Session
 {
     /**
-     * @var ServiceManager The service manager
-     */
-    protected $sm;
-
-    /**
      * @var boolean indicating whether we should remember the user
      */
     protected $rememberMe;
