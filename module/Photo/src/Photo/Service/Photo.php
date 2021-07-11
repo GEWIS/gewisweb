@@ -49,11 +49,6 @@ class Photo extends AbstractAclService
     private $acl;
 
     /**
-     * @var Album
-     */
-    private $albumService;
-
-    /**
      * @var \Decision\Service\Member
      */
     private $memberService;
@@ -107,7 +102,6 @@ class Photo extends AbstractAclService
         Translator $translator,
         $userRole,
         Acl $acl,
-        Album $albumService,
         Member $memberService,
         FileStorage $storageService,
         \Photo\Mapper\Photo $photoMapper,
@@ -123,7 +117,6 @@ class Photo extends AbstractAclService
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;
-        $this->albumService = $albumService;
         $this->memberService = $memberService;
         $this->storageService = $storageService;
         $this->photoMapper = $photoMapper;
@@ -375,37 +368,6 @@ class Photo extends AbstractAclService
     public function deletePhotoFile($path)
     {
         return $this->storageService->removeFile($path);
-
-    }
-
-    /**
-     * Moves a photo to a new album.
-     *
-     * @param int $photoId the id of the photo
-     * @param int $albumId the id of the new album
-     *
-     * @return bool indicating whether move was successful
-     * @throws Exception
-     */
-    public function movePhoto($photoId, $albumId)
-    {
-        if (!$this->isAllowed('move')) {
-            throw new NotAllowedException(
-                $this->translator->translate('Not allowed to move photos')
-            );
-        }
-
-        $photo = $this->getPhoto($photoId);
-        $album = $this->albumService->getAlbum($albumId);
-        if (is_null($photo) || is_null($album)) {
-            return false;
-        }
-
-        $photo->setAlbum($album);
-        $this->albumMapper->flush();
-
-        return true;
-
     }
 
     /**

@@ -460,8 +460,9 @@ return [
             },
             'Photo\Controller\PhotoAdmin' => function (ContainerInterface $serviceManager) {
                 $photoService = $serviceManager->getServiceLocator()->get("photo_service_photo");
+                $albumService = $serviceManager->getServiceLocator()->get("photo_service_album");
                 $entityManager = $serviceManager->getServiceLocator()->get('photo_doctrine_em');
-                return new PhotoAdminController($photoService, $entityManager);
+                return new PhotoAdminController($photoService, $albumService, $entityManager);
             },
             'Photo\Controller\Api' => function () {
                 return new ApiController();

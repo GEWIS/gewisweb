@@ -467,6 +467,36 @@ class Album extends AbstractAclService
     }
 
     /**
+     * Moves a photo to a new album.
+     *
+     * @param int $photoId the id of the photo
+     * @param int $albumId the id of the new album
+     *
+     * @return bool indicating whether move was successful
+     * @throws Exception
+     */
+    public function movePhoto($photoId, $albumId)
+    {
+        if (!$this->isAllowed('move')) {
+            throw new NotAllowedException(
+                $this->translator->translate('Not allowed to move photos')
+            );
+        }
+
+        $photo = $this->photoService->getPhoto($photoId);
+        $album = $this->getAlbum($albumId);
+        if (is_null($photo) || is_null($album)) {
+            return false;
+        }
+
+        $photo->setAlbum($album);
+        $this->albumMapper->flush();
+
+        return true;
+
+    }
+
+    /**
      * Get the Acl.
      *
      * @return Acl

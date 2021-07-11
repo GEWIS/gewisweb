@@ -3,6 +3,7 @@
 namespace Photo\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Photo\Service\Album;
 use Photo\Service\Photo;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -21,9 +22,15 @@ class PhotoAdminController extends AbstractActionController
      */
     private $entityManager;
 
-    public function __construct(Photo $photoService, EntityManager $entityManager)
+    /**
+     * @var Album
+     */
+    private $albumService;
+
+    public function __construct(Photo $photoService, Album $albumService, EntityManager $entityManager)
     {
         $this->photoService = $photoService;
+        $this->albumService = $albumService;
         $this->entityManager = $entityManager;
     }
 
@@ -57,7 +64,7 @@ class PhotoAdminController extends AbstractActionController
         if ($request->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
             $albumId = $request->getPost()['album_id'];
-            $result['success'] = $this->photoService->movePhoto($photoId, $albumId);
+            $result['success'] = $this->albumService->movePhoto($photoId, $albumId);
         }
 
         return new JsonModel($result);

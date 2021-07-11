@@ -87,7 +87,6 @@ class Module
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('photo_acl');
-                    $albumService = $sm->get('photo_service_album');
                     $memberService = $sm->get('decision_service_member');
                     $storageService = $sm->get('application_service_storage');
                     $photoMapper = $sm->get('photo_mapper_photo');
@@ -102,7 +101,6 @@ class Module
                         $translator,
                         $userRole,
                         $acl,
-                        $albumService,
                         $memberService,
                         $storageService,
                         $photoMapper,
