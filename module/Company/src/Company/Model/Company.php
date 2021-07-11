@@ -445,7 +445,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      * @param mixed $object
      * @param mixed $default
      */
-    private function updateIfSet($object, $default)
+    private static function updateIfSet($object, $default)
     {
         if (isset($object)) {
             return $object;

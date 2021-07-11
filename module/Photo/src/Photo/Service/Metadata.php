@@ -61,7 +61,7 @@ class Metadata
      *
      * @return float the decimal number, represented as float
      */
-    private function frac2dec($str)
+    private static function frac2dec($str)
     {
         if (strpos($str, '/') === false) {
             return $str;
@@ -117,7 +117,7 @@ class Metadata
      * @param string $hemisphere
      * @return float
      */
-    private function exifGpsToCoordinate($coordinate, $hemisphere)
+    private static function exifGpsToCoordinate($coordinate, $hemisphere)
     {
         if (empty($coordinate)) {
             return null;

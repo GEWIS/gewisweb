@@ -22,9 +22,9 @@ class LocalisedTextElement extends AbstractHelper
                 return $currentValue;
             }
 
-            if ($this->endsWith($currentValue->getAttribute('id'), 'en')) {
+            if (LocalisedTextElement::endsWith($currentValue->getAttribute('id'), 'en')) {
                 return $currentValue->getValueEN();
-            } elseif ($this->endsWith($currentValue->getAttribute('id'), 'nl')) {
+            } elseif (LocalisedTextElement::endsWith($currentValue->getAttribute('id'), 'nl')) {
                 return $currentValue->getValueNL();
             }
         }
@@ -39,7 +39,7 @@ class LocalisedTextElement extends AbstractHelper
      * @param $needle
      * @return boolean
      */
-    private function endsWith(string $haystack, string $needle)
+    private static function endsWith(string $haystack, string $needle)
     {
         return substr_compare($haystack, $needle, -strlen($needle)) === 0;
     }

@@ -34,8 +34,8 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
             'options' => [
                 'label' => 'Label',
                 'value_options' => [
-                    'up' => $this->generateIcon('fa-chevron-up', $this->translator->translate('Move up')),
-                    'down' => $this->generateIcon('fa-chevron-down', $this->translator->translate('Move down')),
+                    'up' => ReorderDocument::generateIcon('fa-chevron-up', $this->translator->translate('Move up')),
+                    'down' => ReorderDocument::generateIcon('fa-chevron-down', $this->translator->translate('Move down')),
                 ],
                 'label_attributes' => [
                     'class' => 'label label-radio-hidden'
@@ -96,7 +96,7 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
      * @param string $title Element title
      * @return string
      */
-    private function generateIcon($className, $title)
+    private static function generateIcon($className, $title)
     {
         return "<span class=\"fa {$className}\" title=\"{$title}\"></span>";
     }

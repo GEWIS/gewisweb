@@ -164,7 +164,7 @@ class ApiUser extends AbstractAclService
      *
      * @return string
      */
-    public function generateToken()
+    public static function generateToken()
     {
         return base64_encode(openssl_random_pseudo_bytes(32));
     }

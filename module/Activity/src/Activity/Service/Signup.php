@@ -460,7 +460,7 @@ class Signup extends AbstractAclService
         $this->removeSignUp($signup);
     }
 
-    public function isInSubscriptionWindow($openDate, $closeDate)
+    public static function isInSubscriptionWindow($openDate, $closeDate)
     {
         $currentTime = new DateTime();
         return $openDate < $currentTime && $currentTime < $closeDate;

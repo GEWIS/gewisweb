@@ -486,7 +486,7 @@ class Exam extends AbstractAclService
      *
      * @return array
      */
-    public function guessSummaryAuthor($filename)
+    public static function guessSummaryAuthor($filename)
     {
         $parts = explode('.', $filename);
         foreach ($parts as $part) {

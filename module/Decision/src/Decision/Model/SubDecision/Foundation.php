@@ -72,7 +72,7 @@ class Foundation extends SubDecision
      *
      * @return array
      */
-    public function getOrganTypes()
+    public static function getOrganTypes()
     {
         return [
             self::ORGAN_TYPE_COMMITTEE,

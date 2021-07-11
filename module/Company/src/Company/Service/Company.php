@@ -390,7 +390,7 @@ class Company extends AbstractACLService
         return $nonemptyLabels;
     }
 
-    private function getUniqueInArray($array, $callback)
+    private static function getUniqueInArray($array, $callback)
     {
         $tempResults = [];
         $resultArray = [];
@@ -1338,7 +1338,7 @@ class Company extends AbstractACLService
         return 'company';
     }
 
-    public function getLanguageDescription($lang)
+    public static function getLanguageDescription($lang)
     {
         if ($lang === 'en') {
             return 'English';

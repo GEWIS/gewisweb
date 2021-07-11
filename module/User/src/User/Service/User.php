@@ -458,7 +458,7 @@ class User extends AbstractAclService
      *
      * @return string
      */
-    public function generateCode($length = 20)
+    public static function generateCode($length = 20)
     {
         $ret = '';
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
