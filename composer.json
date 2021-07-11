@@ -35,31 +35,33 @@
         "zendframework/zend-cache": "^2.8.3",
         "zendframework/zend-captcha": "^2.8.0",
         "zendframework/zend-console": "^2.7.0",
-        "zendframework/zend-code": "^2.6.3 || ^3.0.0",
-        "zendframework/zend-crypt": "^2.6.0 || ^3.0.0",
+        "zendframework/zend-code": "^3.0.0",
+        "zendframework/zend-crypt": "^3.0.0",
         "zendframework/zend-escaper": "^2.6.1",
         "zendframework/zend-form": "^2.13.0",
         "zendframework/zend-http": "^2.8.4",
         "zendframework/zend-hydrator": "^2.4.2",
         "zendframework/zend-i18n": "^2.10.1",
         "zendframework/zend-inputfilter": "^2.10.1",
-        "zendframework/zend-json": "^2.6.1 || ^3.0.0",
+        "zendframework/zend-json": "^3.0.0",
         "zendframework/zend-loader": "^2.6.1",
         "zendframework/zend-log": "^2.12.0",
         "zendframework/zend-mail": "^2.10.0",
         "zendframework/zend-mime": "^2.7.2",
         "zendframework/zend-modulemanager": "^2.8.4",
-        "zendframework/zend-mvc": "^2.7.15",
+        "zendframework/zend-mvc": "^3.0.0",
+        "zendframework/zend-mvc-i18n": "*",
         "zendframework/zend-paginator": "^2.8.2",
         "zendframework/zend-permissions-acl": "^2.7.1",
+        "zendframework/zend-router": "^3.0.0",
         "zendframework/zend-serializer": "^2.9.1",
-        "zendframework/zend-servicemanager": "^2.7.11 || ^3.0.0",
+        "zendframework/zend-servicemanager": "^3.0.0",
         "zendframework/zend-session": "^2.8.7",
         "zendframework/zend-soap": "^2.8.0",
-        "zendframework/zend-stdlib": "^2.7.7 || ^3.0.0",
+        "zendframework/zend-stdlib": "^3.0.0",
         "zendframework/zend-validator": "^2.11.1",
         "zendframework/zend-view": "^2.11.4",
-        "doctrine/doctrine-orm-module": "^1.1.8",
+        "doctrine/doctrine-orm-module": "^1.1.8 || ^2.1.0",
         "maglnet/magl-markdown": "^1.4",
         "twbs/bootstrap-sass": "^3.3",
         "firebase/php-jwt": "^5.0",
@@ -74,7 +76,8 @@
     "require-dev": {
         "ext-xdebug": ">=2.4.1",
         "zendframework/zend-developer-tools": "^2.0.0",
-        "jszanto/gewisweb-test-data": "@dev"
+        "jszanto/gewisweb-test-data": "@dev",
+        "squizlabs/php_codesniffer": "*"
     },
     "config": {
         "preferred-install": {
@@ -83,6 +86,8 @@
          }
     },
     "scripts": {
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
         "post-install-cmd": [
             "SlowProg\\CopyFile\\ScriptHandler::copy"
         ],
