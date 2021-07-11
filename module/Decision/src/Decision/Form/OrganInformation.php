@@ -5,6 +5,7 @@ namespace Decision\Form;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
+use Zend\Validator\StringLength;
 
 class OrganInformation extends Form implements InputFilterProviderInterface
 {
@@ -109,7 +110,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                 'required' => false,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'max' => 150
                         ]
@@ -120,7 +121,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                 'required' => false,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'max' => 150
                         ]
@@ -131,7 +132,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                 'required' => false,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'max' => 10000
                         ]
@@ -142,7 +143,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                 'required' => false,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'max' => 10000
                         ]

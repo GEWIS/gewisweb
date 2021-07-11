@@ -6,7 +6,10 @@ use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Mvc\I18n\Translator;
 use Education\Model\Exam as ExamModel;
+use Zend\Validator\Callback;
 use Zend\Validator\File\Exists;
+use Zend\Validator\Regex;
+use Zend\Validator\StringLength;
 
 class Exam extends Fieldset implements InputFilterProviderInterface
 {
@@ -82,13 +85,13 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'regex',
+                        'name' => Regex::class,
                         'options' => [
                             'pattern' => '/.+\.pdf$/'
                         ]
                     ],
                     [
-                        'name' => 'callback',
+                        'name' => Callback::class,
                         'options' => [
                             'callback' => function ($value) use ($dir) {
                                 $validator = new Exists([
@@ -105,7 +108,7 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 5,
                             'max' => 6

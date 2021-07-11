@@ -5,6 +5,7 @@ namespace Decision\Form;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
+use Zend\Validator\NotEmpty;
 
 class SearchDecision extends Form implements InputFilterProviderInterface
 {
@@ -39,7 +40,7 @@ class SearchDecision extends Form implements InputFilterProviderInterface
             'query' => [
                 'required' => true,
                 'validators' => [
-                    ['name' => 'not_empty']
+                    ['name' => NotEmpty::class]
                 ]
             ]
         ];

@@ -145,7 +145,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                     ],
                     ['name' => 'IsInt'],
                     [
-                        'name' => 'Callback',
+                        'name' => Callback::class,
                         'options' => [
                             'messages' => [
                                 Callback::INVALID_VALUE =>
@@ -175,7 +175,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                 'required' => false,
                 'validators' => [
                     [
-                        'name' => 'Callback',
+                        'name' => Callback::class,
                         'options' => [
                             'messages' => [
                                 Callback::INVALID_VALUE =>

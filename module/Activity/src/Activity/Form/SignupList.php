@@ -162,7 +162,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 //
                 'validators' => [
                     //[
-                    //    'name' => 'callback',
+                    //    'name' => \Zend\Validator\Callback::class,
                     //    'options' => [
                     //        'messages' => [
                     //            \Zend\Validator\Callback::INVALID_VALUE =>
@@ -172,7 +172,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                     //    ],
                     //],
                     [
-                        'name' => 'callback',
+                        'name' => Callback::class,
                         'options' => [
                             'messages' => [
                                 Callback::INVALID_VALUE =>
@@ -201,7 +201,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 //
                 //'validators' => [
                 //    [
-                //        'name' => 'callback',
+                //        'name' => \Zend\Validator\Callback::class,
                 //        'options' => [
                 //            'messages' => [
                 //                \Zend\Validator\Callback::INVALID_VALUE =>

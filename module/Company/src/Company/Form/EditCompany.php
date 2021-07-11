@@ -7,6 +7,7 @@ use Zend\InputFilter\InputFilter;
 use Zend\Mvc\I18n\Translator;
 use Zend\Validator\Callback;
 use Zend\Validator\Regex;
+use Zend\Validator\StringLength;
 
 class EditCompany extends Form
 {
@@ -235,7 +236,7 @@ class EditCompany extends Form
             'required' => true,
             'validators' => [
                 [
-                    'name' => 'string_length',
+                    'name' => StringLength::class,
                     'options' => [
                         'min' => 2,
                         'max' => 127,
@@ -292,7 +293,7 @@ class EditCompany extends Form
             'required' => false,
             'validators' => [
                 [
-                    'name' => 'string_length',
+                    'name' => StringLength::class,
                     'options' => [
                         'min' => 2,
                         'max' => 10000
@@ -306,7 +307,7 @@ class EditCompany extends Form
             'required' => false,
             'validators' => [
                 [
-                    'name' => 'string_length',
+                    'name' => StringLength::class,
                     'options' => [
                         'min' => 2,
                         'max' => 10000
@@ -320,7 +321,7 @@ class EditCompany extends Form
             'required' => false,
             'validators' => [
                 [
-                    'name' => 'string_length',
+                    'name' => StringLength::class,
                     'options' => [
                         'max' => 200,
                     ],

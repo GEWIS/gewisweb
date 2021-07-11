@@ -5,6 +5,7 @@ namespace Photo\Form;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\Mvc\I18n\Translator;
+use Zend\Validator\StringLength;
 
 class CreateAlbum extends Form
 {
@@ -41,7 +42,7 @@ class CreateAlbum extends Form
             'required' => true,
             'validators' => [
                 [
-                    'name' => 'string_length',
+                    'name' => StringLength::class,
                     'options' => [
                         'encoding' => 'UTF-8',
                         'min' => 3,

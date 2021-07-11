@@ -77,7 +77,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'callback',
+                        'name' => Callback::class,
                         'options' => [
                             'messages' => [
                                 Callback::INVALID_VALUE =>
@@ -89,7 +89,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                         ],
                     ],
                     [
-                        'name' => 'callback',
+                        'name' => Callback::class,
                         'options' => [
                             'messages' => [
                                 Callback::INVALID_VALUE =>
@@ -101,7 +101,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                         ],
                     ],
                     [
-                        'name' => 'callback',
+                        'name' => Callback::class,
                         'options' => [
                             'messages' => [
                                 Callback::INVALID_VALUE =>

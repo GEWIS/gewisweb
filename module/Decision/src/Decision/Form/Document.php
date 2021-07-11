@@ -5,6 +5,7 @@ namespace Decision\Form;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
+use Zend\Validator\StringLength;
 
 class Document extends Form implements InputFilterProviderInterface
 {
@@ -57,7 +58,7 @@ class Document extends Form implements InputFilterProviderInterface
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 2,
                             'max' => 128

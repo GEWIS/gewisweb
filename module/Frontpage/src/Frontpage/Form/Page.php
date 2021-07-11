@@ -5,6 +5,7 @@ namespace Frontpage\Form;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
+use Zend\Validator\StringLength;
 
 class Page extends Form implements InputFilterProviderInterface
 {
@@ -90,7 +91,7 @@ class Page extends Form implements InputFilterProviderInterface
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 3,
                             'max' => 25
@@ -106,7 +107,7 @@ class Page extends Form implements InputFilterProviderInterface
                 'required' => false,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 2,
                             'max' => 25
@@ -123,7 +124,7 @@ class Page extends Form implements InputFilterProviderInterface
                 'required' => false,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 2,
                             'max' => 25
@@ -140,7 +141,7 @@ class Page extends Form implements InputFilterProviderInterface
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 3,
                             'max' => 64
@@ -153,7 +154,7 @@ class Page extends Form implements InputFilterProviderInterface
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 3,
                             'max' => 64

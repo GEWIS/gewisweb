@@ -5,6 +5,7 @@ namespace Education\Form;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
+use Zend\Validator\StringLength;
 
 class AddCourse extends Form implements InputFilterProviderInterface
 {
@@ -80,7 +81,7 @@ class AddCourse extends Form implements InputFilterProviderInterface
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 5,
                             'max' => 6

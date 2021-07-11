@@ -6,6 +6,8 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
 use Education\Model\Exam as ExamModel;
+use Zend\Validator\Regex;
+use Zend\Validator\StringLength;
 
 /**
  * Upload a summary
@@ -77,7 +79,7 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 5,
                             'max' => 6
@@ -116,14 +118,14 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 3,
                             'max' => 64
                         ]
                     ],
                     [
-                        'name' => 'regex',
+                        'name' => Regex::class,
                         'options' => [
                             'pattern' => '/[a-zA-Z ]+/'
                         ]

@@ -5,6 +5,7 @@ namespace Photo\Form;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\Mvc\I18n\Translator;
+use Zend\Validator\NotEmpty;
 
 class EditAlbum extends Form
 {
@@ -56,7 +57,7 @@ class EditAlbum extends Form
             'name' => 'name',
             'required' => true,
             'validators' => [
-                ['name' => 'not_empty'],
+                ['name' => NotEmpty::class],
                 [
                     'name' => 'alnum',
                     'options' => [

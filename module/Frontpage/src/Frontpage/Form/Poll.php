@@ -5,6 +5,7 @@ namespace Frontpage\Form;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
+use Zend\Validator\StringLength;
 
 class Poll extends Form implements InputFilterProviderInterface
 {
@@ -63,7 +64,7 @@ class Poll extends Form implements InputFilterProviderInterface
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 5,
                             'max' => 128
@@ -75,7 +76,7 @@ class Poll extends Form implements InputFilterProviderInterface
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 5,
                             'max' => 128

@@ -8,6 +8,7 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Mvc\I18n\Translator;
 use Zend\Validator\Callback;
+use Zend\Validator\StringLength;
 
 class ActivityCalendarProposal extends Form implements InputFilterProviderInterface
 {
@@ -98,7 +99,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 2,
                             'max' => 128
@@ -113,7 +114,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'callback',
+                        'name' => Callback::class,
                         'options' => [
                             'messages' => [
                                 Callback::INVALID_VALUE =>
@@ -125,7 +126,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                         ],
                     ],
                     [
-                        'name' => 'callback',
+                        'name' => Callback::class,
                         'options' => [
                             'messages' => [
                                 Callback::INVALID_VALUE =>

@@ -325,7 +325,7 @@ class Activity extends Form implements InputFilterProviderInterface
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'callback',
+                        'name' => Callback::class,
                         'options' => [
                             'messages' => [
                                 Callback::INVALID_VALUE =>

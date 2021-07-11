@@ -5,6 +5,7 @@ namespace Education\Form;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
+use Zend\Validator\NotEmpty;
 
 class SearchCourse extends Form
 {
@@ -31,7 +32,7 @@ class SearchCourse extends Form
             'name' => 'query',
             'required' => true,
             'validators' => [
-                ['name' => 'not_empty'],
+                ['name' => NotEmpty::class],
             ]
         ]);
 

@@ -5,6 +5,9 @@ namespace User\Form;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
+use Zend\Validator\Digits;
+use Zend\Validator\EmailAddress;
+use Zend\Validator\NotEmpty;
 
 class Register extends Form
 {
@@ -94,8 +97,8 @@ class Register extends Form
             'name' => 'lidnr',
             'required' => true,
             'validators' => [
-                ['name' => 'not_empty'],
-                ['name' => 'digits']
+                ['name' => NotEmpty::class],
+                ['name' => Digits::class]
             ]
         ]);
 
@@ -103,8 +106,8 @@ class Register extends Form
             'name' => 'email',
             'required' => true,
             'validators' => [
-                ['name' => 'not_empty'],
-                ['name' => 'email_address']
+                ['name' => NotEmpty::class],
+                ['name' => EmailAddress::class]
             ]
         ]);
 

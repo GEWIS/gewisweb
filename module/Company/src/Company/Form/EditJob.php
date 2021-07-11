@@ -5,9 +5,11 @@ namespace Company\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\Mvc\I18n\Translator as Translator;
 use Zend\Validator\Callback;
+use Zend\Validator\EmailAddress;
 use Zend\Validator\File\Extension;
 use Zend\Validator\File\MimeType;
 use Zend\Validator\Regex;
+use Zend\Validator\StringLength;
 
 class EditJob extends CollectionBaseFieldsetAwareForm
 {
@@ -89,7 +91,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 2,
                             'max' => 127,
@@ -130,7 +132,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                 'required' => false,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 2,
                             'max' => 10000,
@@ -144,7 +146,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                 'required' => false,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'max' => 200,
                         ],
@@ -156,7 +158,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                 'name' => 'email',
                 'required' => false,
                 'validators' => [
-                    ['name' => 'email_address'],
+                    ['name' => EmailAddress::class],
                 ],
             ]);
 
@@ -175,7 +177,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                 'required' => false,
                 'validators' => [
                     [
-                        'name' => 'Callback',
+                        'name' => Callback::class,
                         'options' => [
                             'callback' => function ($value) {
                                 // If no file is uploaded, we don't care, because it is optional

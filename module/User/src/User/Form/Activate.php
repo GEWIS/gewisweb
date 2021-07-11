@@ -5,6 +5,8 @@ namespace User\Form;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
+use Zend\Validator\NotEmpty;
+use Zend\Validator\StringLength;
 
 class Activate extends Form implements InputFilterProviderInterface
 {
@@ -43,9 +45,9 @@ class Activate extends Form implements InputFilterProviderInterface
             'password' => [
                 'required' => true,
                 'validators' => [
-                    ['name' => 'not_empty'],
+                    ['name' => NotEmpty::class],
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 8
                         ]
@@ -55,9 +57,9 @@ class Activate extends Form implements InputFilterProviderInterface
             'password_verify' => [
                 'required' => true,
                 'validators' => [
-                    ['name' => 'not_empty'],
+                    ['name' => NotEmpty::class],
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 8
                         ]

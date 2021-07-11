@@ -6,6 +6,8 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
 use Zend\Authentication\Result;
+use Zend\Validator\NotEmpty;
+use Zend\Validator\StringLength;
 
 class Login extends Form
 {
@@ -104,7 +106,7 @@ class Login extends Form
             'name' => 'login',
             'required' => true,
             'validators' => [
-                ['name' => 'not_empty']
+                ['name' => NotEmpty::class]
             ]
         ]);
 
@@ -112,9 +114,9 @@ class Login extends Form
             'name' => 'password',
             'required' => true,
             'validators' => [
-                ['name' => 'not_empty'],
+                ['name' => NotEmpty::class],
                 [
-                    'name' => 'string_length',
+                    'name' => StringLength::class,
                     'options' => [
                         'min' => 8
                     ]

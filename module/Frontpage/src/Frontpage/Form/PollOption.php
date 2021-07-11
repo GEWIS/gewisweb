@@ -6,6 +6,7 @@ use Frontpage\Model\PollOption as PollOptionModel;
 use Zend\Form\Fieldset;
 use Zend\Hydrator\ClassMethods as ClassMethodsHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
+use Zend\Validator\StringLength;
 
 class PollOption extends Fieldset implements InputFilterProviderInterface
 {
@@ -43,7 +44,7 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 2,
                             'max' => 128
@@ -55,7 +56,7 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'string_length',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 2,
                             'max' => 128
