@@ -9,7 +9,7 @@ use User\Model\User as UserModel;
 use User\Model\UserRole as UserRoleModel;
 use User\Model\LoginAttempt;
 use Application\Service\Legacy as LegacyService;
-use User\Service\User as UserService;
+use User\Service\LoginAttempt as LoginAttemptService;
 
 class PinMapper implements AdapterInterface
 {
@@ -31,9 +31,9 @@ class PinMapper implements AdapterInterface
      * User Service
      * (for logging failed login attempts)
      *
-     * @var UserService
+     * @var LoginAttemptService
      */
-    protected $userService;
+    protected $loginAttemptService;
 
     /**
      * Lidnr.
@@ -55,10 +55,10 @@ class PinMapper implements AdapterInterface
      *
      * @param LegacyService
      */
-    public function __construct(LegacyService $legacyService, UserService $userService)
+    public function __construct(LegacyService $legacyService, loginAttemptService $loginAttemptService)
     {
         $this->legacyService = $legacyService;
-        $this->userService = $userService;
+        $this->loginAttemptService = $loginAttemptService;
     }
 
     /**
@@ -78,7 +78,7 @@ class PinMapper implements AdapterInterface
             );
         }
 
-        if ($this->userService->loginAttemptsExceeded(LoginAttempt::TYPE_PIN, $user)) {
+        if ($this->loginAttemptService->loginAttemptsExceeded(LoginAttempt::TYPE_PIN, $user)) {
             return new Result(
                 Result::FAILURE,
                 null,
@@ -87,7 +87,7 @@ class PinMapper implements AdapterInterface
         }
 
         if (!$this->verifyPincode($user)) {
-            $this->userService->logFailedLogin($user, LoginAttempt::TYPE_PIN);
+            $this->loginAttemptService->logFailedLogin($user, LoginAttempt::TYPE_PIN);
             return new Result(
                 Result::FAILURE_CREDENTIAL_INVALID,
                 null,

@@ -45,11 +45,6 @@ class User extends AbstractAclService
     private $bcrypt;
 
     /**
-     * @var EntityManager
-     */
-    private $entityManager;
-
-    /**
      * @var AuthenticationService
      */
     private $authService;
@@ -70,19 +65,9 @@ class User extends AbstractAclService
     private $emailService;
 
     /**
-     * @var string
-     */
-    private $remoteAddress;
-
-    /**
      * @var Acl
      */
     private $acl;
-
-    /**
-     * @var array
-     */
-    private $rateLimitConfig;
 
     /**
      * @var \User\Mapper\User
@@ -93,11 +78,6 @@ class User extends AbstractAclService
      * @var NewUser
      */
     private $newUserMapper;
-
-    /**
-     * @var LoginAttempt
-     */
-    private $loginAttemptMapper;
 
     /**
      * @var Member
@@ -128,17 +108,13 @@ class User extends AbstractAclService
         Translator $translator,
         $userRole,
         Bcrypt $bcrypt,
-        EntityManager $entityManager,
         AuthenticationService $authService,
         PinMapper $pinMapper,
         Session $authStorage,
         Email $emailService,
-        string $remoteAddress,
         Acl $acl,
-        array $rateLimitConfig,
         \User\Mapper\User $userMapper,
         NewUser $newUserMapper,
-        LoginAttempt $loginAttemptMapper,
         Member $memberMapper,
         RegisterForm $registerForm,
         Activate $activateForm,
@@ -149,17 +125,13 @@ class User extends AbstractAclService
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->bcrypt = $bcrypt;
-        $this->entityManager = $entityManager;
         $this->authService = $authService;
         $this->pinMapper = $pinMapper;
         $this->authStorage = $authStorage;
         $this->emailService = $emailService;
-        $this->remoteAddress = $remoteAddress;
         $this->acl = $acl;
-        $this->rateLimitConfig = $rateLimitConfig;
         $this->userMapper = $userMapper;
         $this->newUserMapper = $newUserMapper;
-        $this->loginAttemptMapper = $loginAttemptMapper;
         $this->memberMapper = $memberMapper;
         $this->registerForm = $registerForm;
         $this->activateForm = $activateForm;
@@ -469,45 +441,6 @@ class User extends AbstractAclService
     public function hasIdentity()
     {
         return $this->authService->hasIdentity();
-    }
-
-    public function detachUser($user)
-    {
-        /*
-         * TODO: This probably shouldn't be neccessary
-         * Yes, this is some sort of horrible hack to make the entity manager happy again. If anyone wants to waste
-         * their day figuring out what kind of dark magic is upsetting the entity manager here, be my guest.
-         * This hack only is needed when we want to flush the entity manager during login.
-         */
-        $this->entityManager->clear();
-
-        return $this->userMapper->findByLidnr($user->getLidnr());
-    }
-
-    public function logFailedLogin($user, $type)
-    {
-        $attempt = new LoginAttemptModel();
-        $attempt->setIp($this->remoteAddress);
-        $attempt->setTime(new DateTime());
-        $attempt->setType($type);
-        $user = $this->detachUser($user);
-        $attempt->setUser($user);
-        $this->loginAttemptMapper->persist($attempt);
-    }
-
-    public function loginAttemptsExceeded($type, $user)
-    {
-        $ip = $this->remoteAddress;
-        $since = (new DateTime())->sub(new DateInterval('PT' . $this->rateLimitConfig[$type]['lockout_time'] . 'M'));
-        $loginAttemptMapper = $this->loginAttemptMapper;
-        if ($loginAttemptMapper->getFailedAttemptCount($since, $type, $ip) > $this->rateLimitConfig[$type]['ip']) {
-            return true;
-        }
-        if ($loginAttemptMapper->getFailedAttemptCount($since, $type, $ip, $user) > $this->rateLimitConfig[$type]['user']) {
-            return true;
-        }
-
-        return false;
     }
 
     /**

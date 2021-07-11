@@ -105,17 +105,13 @@ class Module
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $bcrypt = $sm->get('user_bcrypt');
-                    $entityManager = $sm->get('user_doctrine_em');
-                    $authService = $sm->get('user_service_auth');
+                    $authService = $sm->get('user_auth_service');
                     $pinMapper = $sm->get('user_pin_auth_service');
                     $authStorage = $sm->get('user_auth_storage');
                     $emailService = $sm->get('user_service_email');
-                    $remoteAddress = $sm->get('user_remoteaddress');
                     $acl = $sm->get('acl');
-                    $rateLimitConfig = $sm->get('config')['login_rate_limits'];
-                    $userMapper = $sm->get('mapper_user_user');
+                    $userMapper = $sm->get('user_mapper_user');
                     $newUserMapper = $sm->get('user_mapper_newuser');
-                    $loginAttemptMapper = $sm->get('user_mapper_loginattempt');
                     $memberMapper = $sm->get('decision_mapper_member');
                     $registerForm = $sm->get('user_form_register');
                     $activateForm = $sm->get('user_form_activate');
@@ -125,22 +121,32 @@ class Module
                         $translator,
                         $userRole,
                         $bcrypt,
-                        $entityManager,
                         $authService,
                         $pinMapper,
                         $authStorage,
                         $emailService,
-                        $remoteAddress,
                         $acl,
-                        $rateLimitConfig,
                         $userMapper,
                         $newUserMapper,
-                        $loginAttemptMapper,
                         $memberMapper,
                         $registerForm,
                         $activateForm,
                         $loginForm,
                         $passwordForm
+                    );
+                },
+                'user_service_loginattempt' => function ($sm) {
+                    $remoteAddress = $sm->get('user_remoteaddress');
+                    $entityManager = $sm->get('user_doctrine_em');
+                    $loginAttemptMapper = $sm->get('user_mapper_loginattempt');
+                    $userMapper = $sm->get('user_mapper_user');
+                    $rateLimitConfig = $sm->get('config')['login_rate_limits'];
+                    return new Service\LoginAttempt(
+                        $remoteAddress,
+                        $entityManager,
+                        $loginAttemptMapper,
+                        $userMapper,
+                        $rateLimitConfig
                     );
                 },
                 'user_service_apiuser' => function ($sm) {
@@ -253,7 +259,7 @@ class Module
                     $adapter = new Mapper(
                         $sm->get('user_bcrypt'),
                         $sm->get('application_service_legacy'),
-                        $sm->get('user_service_user')
+                        $sm->get('user_service_loginattempt')
                     );
                     $adapter->setMapper($sm->get('user_mapper_user'));
                     return $adapter;
@@ -261,7 +267,7 @@ class Module
                 'user_pin_auth_adapter' => function ($sm) {
                     $adapter = new PinMapper(
                         $sm->get('application_service_legacy'),
-                        $sm->get('user_service_user')
+                        $sm->get('user_service_loginattempt')
                     );
                     $adapter->setMapper($sm->get('user_mapper_user'));
                     return $adapter;
