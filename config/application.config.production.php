@@ -3,6 +3,7 @@ return [
     // This should be an array of module namespaces used in the application.
     'modules' => [
 //        'Zend\Session',
+        'Zend\I18n',
         'Zend\Mvc\I18n',
 //        'Zend\Form',
         'Zend\Router',
