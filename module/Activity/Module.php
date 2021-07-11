@@ -21,6 +21,7 @@ use Activity\Service\SignupListQuery;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use User\Permissions\Assertion\IsCreatorOrOrganMember;
 use User\Permissions\NotAllowedException;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 class Module
 {
@@ -50,7 +51,7 @@ class Module
     {
         return [
             'factories' => [
-                'activity_service_activity' => function ($sm) {
+                'activity_service_activity' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('activity_acl');
@@ -74,7 +75,7 @@ class Module
                         $activityForm
                     );
                 },
-                'activity_service_activityQuery' => function ($sm) {
+                'activity_service_activityQuery' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('activity_acl');
@@ -92,7 +93,7 @@ class Module
                         $proposalMapper
                     );
                 },
-                'activity_service_category' => function ($sm) {
+                'activity_service_category' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('activity_acl');
@@ -108,7 +109,7 @@ class Module
                         $categoryForm
                     );
                 },
-                'activity_service_signupListQuery' => function ($sm) {
+                'activity_service_signupListQuery' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('activity_acl');
@@ -125,22 +126,22 @@ class Module
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
-                'activity_doctrine_em' => function ($sm) {
+                'activity_doctrine_em' => function (ServiceLocatorInterface $sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 },
-                'activity_form_signuplist' => function ($sm) {
+                'activity_form_signuplist' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $form = new SignupListForm($translator);
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },
-                'activity_form_signuplist_fields' => function ($sm) {
+                'activity_form_signuplist_fields' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $form = new SignupListField($translator);
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },
-                'activity_form_activity' => function ($sm) {
+                'activity_form_activity' => function (ServiceLocatorInterface $sm) {
                     $organService = $sm->get('decision_service_organ');
                     $organs = $organService->getEditableOrgans();
                     $companyService = $sm->get('company_service_company');
@@ -156,25 +157,25 @@ class Module
                     $form->setHydrator($sm->get('activity_hydrator'));
                     return $form;
                 },
-                'activity_form_calendar_proposal' => function ($sm) {
+                'activity_form_calendar_proposal' => function (ServiceLocatorInterface $sm) {
                     $calendarService = $sm->get('activity_service_calendar');
                     return new Form\ActivityCalendarProposal($sm->get('translator'), $calendarService);
                 },
-                'activity_form_calendar_option' => function ($sm) {
+                'activity_form_calendar_option' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $calendarService = $sm->get('activity_service_calendar');
                     return new Form\ActivityCalendarOption($translator, $calendarService);
                 },
-                'activity_form_category' => function ($sm) {
+                'activity_form_category' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     return new CategoryForm($translator);
                 },
-                'activity_hydrator' => function ($sm) {
+                'activity_hydrator' => function (ServiceLocatorInterface $sm) {
                     return new DoctrineObject(
                         $sm->get('activity_doctrine_em')
                     );
                 },
-                'activity_service_signup' => function ($sm) {
+                'activity_service_signup' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('activity_acl');
@@ -194,7 +195,7 @@ class Module
                         $signupFieldValueMapper
                     );
                 },
-                'activity_service_calendar' => function ($sm) {
+                'activity_service_calendar' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('activity_acl');
@@ -226,62 +227,62 @@ class Module
                         $calendarProposalForm
                     );
                 },
-                'activity_mapper_activity' => function ($sm) {
+                'activity_mapper_activity' => function (ServiceLocatorInterface $sm) {
                     return new Activity(
                         $sm->get('activity_doctrine_em')
                     );
                 },
-                'activity_mapper_category' => function ($sm) {
+                'activity_mapper_category' => function (ServiceLocatorInterface $sm) {
                     return new ActivityCategory(
                         $sm->get('activity_doctrine_em')
                     );
                 },
-                'activity_mapper_period' => function ($sm) {
+                'activity_mapper_period' => function (ServiceLocatorInterface $sm) {
                     return new ActivityOptionCreationPeriod(
                         $sm->get('activity_doctrine_em')
                     );
                 },
-                'activity_mapper_max_activities' => function ($sm) {
+                'activity_mapper_max_activities' => function (ServiceLocatorInterface $sm) {
                     return new MaxActivities(
                         $sm->get('activity_doctrine_em')
                     );
                 },
-                'activity_mapper_signuplist' => function ($sm) {
+                'activity_mapper_signuplist' => function (ServiceLocatorInterface $sm) {
                     return new SignupListMapper(
                         $sm->get('activity_doctrine_em')
                     );
                 },
-                'activity_mapper_signup_field_value' => function ($sm) {
+                'activity_mapper_signup_field_value' => function (ServiceLocatorInterface $sm) {
                     return new SignupFieldValue(
                         $sm->get('activity_doctrine_em')
                     );
                 },
-                'activity_mapper_signup_option' => function ($sm) {
+                'activity_mapper_signup_option' => function (ServiceLocatorInterface $sm) {
                     return new SignupOption(
                         $sm->get('activity_doctrine_em')
                     );
                 },
-                'activity_mapper_proposal' => function ($sm) {
+                'activity_mapper_proposal' => function (ServiceLocatorInterface $sm) {
                     return new Proposal(
                         $sm->get('activity_doctrine_em')
                     );
                 },
-                'activity_mapper_option_proposal' => function ($sm) {
+                'activity_mapper_option_proposal' => function (ServiceLocatorInterface $sm) {
                     return new ActivityOptionProposal(
                         $sm->get('activity_doctrine_em')
                     );
                 },
-                'activity_mapper_signup' => function ($sm) {
+                'activity_mapper_signup' => function (ServiceLocatorInterface $sm) {
                     return new Signup(
                         $sm->get('activity_doctrine_em')
                     );
                 },
-                'activity_mapper_calendar_option' => function ($sm) {
+                'activity_mapper_calendar_option' => function (ServiceLocatorInterface $sm) {
                     return new ActivityCalendarOption(
                         $sm->get('activity_doctrine_em')
                     );
                 },
-                'activity_acl' => function ($sm) {
+                'activity_acl' => function (ServiceLocatorInterface $sm) {
                     $acl = $sm->get('acl');
                     $acl->addResource('activity');
                     $acl->addResource('activityApi');

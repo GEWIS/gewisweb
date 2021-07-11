@@ -3,7 +3,7 @@
 use Application\View\Helper\Truncate;
 use Company\Controller\AdminController;
 use Company\Controller\CompanyController;
-use Interop\Container\ContainerInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 return [
     'router' => [
@@ -299,15 +299,15 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            'Company\Controller\Company' => function (ContainerInterface $serviceManager) {
-                $companyService = $serviceManager->getServiceLocator()->get('company_service_company');
+            'Company\Controller\Company' => function (ServiceLocatorInterface $sm) {
+                $companyService = $sm->get('company_service_company');
                 return new CompanyController($companyService);
             },
-            'Company\Controller\Admin' => function (ContainerInterface $serviceManager) {
-                $companyService = $serviceManager->getServiceLocator()->get('company_service_company');
-                $labelMapper = $serviceManager->getServiceLocator()->get('company_mapper_label');
-                $companyForm = $serviceManager->getServiceLocator()->get('company_form_company');
-                $languages = $serviceManager->getServiceLocator()->get('languages');
+            'Company\Controller\Admin' => function (ServiceLocatorInterface $sm) {
+                $companyService = $sm->get('company_service_company');
+                $labelMapper = $sm->get('company_mapper_label');
+                $companyForm = $sm->get('company_form_company');
+                $languages = $sm->get('languages');
                 return new AdminController($companyService, $labelMapper, $companyForm, $languages);
             },
         ],

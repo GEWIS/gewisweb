@@ -52,7 +52,7 @@ return [
             'translator' => 'MvcTranslator',
         ],
         'factories' => array(
-            'doctrine.cache.my_memcached' => function ($sm) {
+            'doctrine.cache.my_memcached' => function () {
                 $cache = new MemcachedCache();
                 $memcached = new Memcached();
                 $memcached->addServer('memcached', 11211);

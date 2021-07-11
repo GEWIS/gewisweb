@@ -14,6 +14,7 @@ use Decision\Mapper\Meeting;
 use Decision\Mapper\Member;
 use Decision\Mapper\Organ;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\ServiceManager;
 
 class Module
@@ -45,7 +46,7 @@ class Module
     {
         return [
             'factories' => [
-                'decision_service_organ' => function ($sm) {
+                'decision_service_organ' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('decision_acl');
@@ -71,7 +72,7 @@ class Module
                         $organInformationConfig
                     );
                 },
-                'decision_service_decision' => function ($sm) {
+                'decision_service_decision' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('decision_acl');
@@ -105,7 +106,7 @@ class Module
                         $authorizationForm
                     );
                 },
-                'decision_service_member' => function ($sm) {
+                'decision_service_member' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('decision_acl');
@@ -123,7 +124,7 @@ class Module
                         $config
                     );
                 },
-                'decision_service_memberinfo' => function ($sm) {
+                'decision_service_memberinfo' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('decision_acl');
@@ -137,72 +138,72 @@ class Module
                         $memberMapper
                     );
                 },
-                'decision_mapper_member' => function ($sm) {
+                'decision_mapper_member' => function (ServiceLocatorInterface $sm) {
                     return new Member(
                         $sm->get('decision_doctrine_em')
                     );
                 },
-                'decision_mapper_organ' => function ($sm) {
+                'decision_mapper_organ' => function (ServiceLocatorInterface $sm) {
                     return new Organ(
                         $sm->get('decision_doctrine_em')
                     );
                 },
-                'decision_mapper_meeting' => function ($sm) {
+                'decision_mapper_meeting' => function (ServiceLocatorInterface $sm) {
                     return new Meeting(
                         $sm->get('decision_doctrine_em')
                     );
                 },
-                'decision_mapper_decision' => function ($sm) {
+                'decision_mapper_decision' => function (ServiceLocatorInterface $sm) {
                     return new Decision(
                         $sm->get('decision_doctrine_em')
                     );
                 },
-                'decision_mapper_authorization' => function ($sm) {
+                'decision_mapper_authorization' => function (ServiceLocatorInterface $sm) {
                     return new Mapper\Authorization(
                         $sm->get('decision_doctrine_em')
                     );
                 },
-                'decision_form_searchdecision' => function ($sm) {
+                'decision_form_searchdecision' => function (ServiceLocatorInterface $sm) {
                     return new SearchDecision(
                         $sm->get('translator')
                     );
                 },
-                'decision_form_document' => function ($sm) {
+                'decision_form_document' => function (ServiceLocatorInterface $sm) {
                     return new Document(
                         $sm->get('translator')
                     );
                 },
-                'decision_form_notes' => function ($sm) {
+                'decision_form_notes' => function (ServiceLocatorInterface $sm) {
                     return new Notes(
                         $sm->get('translator'),
                         $sm->get('decision_mapper_meeting')
                     );
                 },
-                'decision_form_authorization' => function ($sm) {
+                'decision_form_authorization' => function (ServiceLocatorInterface $sm) {
                     return new Authorization(
                         $sm->get('translator')
                     );
                 },
-                'decision_form_organ_information' => function ($sm) {
+                'decision_form_organ_information' => function (ServiceLocatorInterface $sm) {
                     $form = new OrganInformation(
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('decision_hydrator'));
                     return $form;
                 },
-                'decision_form_reorder_document' => function (ServiceManager $sm) {
+                'decision_form_reorder_document' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
 
                     return (new ReorderDocument())
                         ->setTranslator($translator)
                         ->setupElements();
                 },
-                'decision_hydrator' => function ($sm) {
+                'decision_hydrator' => function (ServiceLocatorInterface $sm) {
                     return new DoctrineObject(
                         $sm->get('decision_doctrine_em')
                     );
                 },
-                'decision_fileReader' => function ($sm) {
+                'decision_fileReader' => function (ServiceLocatorInterface $sm) {
                     //NB: The returned object should implement the FileReader Interface.
                     $config = $sm->get('config');
                     $validFile = $this->getServiceConfig()['filebrowser_valid_file'];
@@ -211,7 +212,7 @@ class Module
                         $validFile
                     );
                 },
-                'decision_acl' => function ($sm) {
+                'decision_acl' => function (ServiceLocatorInterface $sm) {
                     $acl = $sm->get('acl');
 
                     // add resources for this module
@@ -256,7 +257,7 @@ class Module
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
-                'decision_doctrine_em' => function ($sm) {
+                'decision_doctrine_em' => function (ServiceLocatorInterface $sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 }
             ],

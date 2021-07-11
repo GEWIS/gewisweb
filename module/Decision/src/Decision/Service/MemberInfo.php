@@ -5,6 +5,7 @@ namespace Decision\Service;
 use Application\Service\AbstractAclService;
 use Decision\Model\Member as MemberModel;
 use Photo\Service\Photo;
+use User\Model\User;
 use User\Permissions\NotAllowedException;
 use Zend\Mvc\I18n\Translator;
 use Zend\Permissions\Acl\Acl;
@@ -20,7 +21,7 @@ class MemberInfo extends AbstractAclService
     private $translator;
 
     /**
-     * @var \User\Model\User|string
+     * @var User|string
      */
     private $userRole;
 

@@ -8,39 +8,39 @@ use Frontpage\Controller\PageAdminController;
 use Frontpage\Controller\PageController;
 use Frontpage\Controller\PollAdminController;
 use Frontpage\Controller\PollController;
-use Interop\Container\ContainerInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 return [
     'controllers' => [
         'factories' => [
-            'Frontpage\Controller\Frontpage' => function (ContainerInterface $serviceManager) {
-                $frontpageService = $serviceManager->getServiceLocator()->get('frontpage_service_frontpage');
+            'Frontpage\Controller\Frontpage' => function (ServiceLocatorInterface $sm) {
+                $frontpageService = $sm->get('frontpage_service_frontpage');
                 return new FrontpageController($frontpageService);
             },
-            'Frontpage\Controller\Organ' => function (ContainerInterface $serviceManager) {
-                $organService = $serviceManager->getServiceLocator()->get('decision_service_organ');
-                $activityQueryService = $serviceManager->getServiceLocator()->get('activity_service_activityQuery');
+            'Frontpage\Controller\Organ' => function (ServiceLocatorInterface $sm) {
+                $organService = $sm->get('decision_service_organ');
+                $activityQueryService = $sm->get('activity_service_activityQuery');
                 return new OrganController($organService, $activityQueryService);
             },
-            'Frontpage\Controller\Page' => function (ContainerInterface $serviceManager) {
-                $pageService = $serviceManager->getServiceLocator()->get('frontpage_service_page');
+            'Frontpage\Controller\Page' => function (ServiceLocatorInterface $sm) {
+                $pageService = $sm->get('frontpage_service_page');
                 return new PageController($pageService);
             },
-            'Frontpage\Controller\PageAdmin' => function (ContainerInterface $serviceManager) {
-                $pageService = $serviceManager->getServiceLocator()->get('frontpage_service_page');
+            'Frontpage\Controller\PageAdmin' => function (ServiceLocatorInterface $sm) {
+                $pageService = $sm->get('frontpage_service_page');
                 return new PageAdminController($pageService);
             },
-            'Frontpage\Controller\Poll' => function (ContainerInterface $serviceManager) {
-                $pollService = $serviceManager->getServiceLocator()->get('frontpage_service_poll');
-                $pollCommentForm = $serviceManager->getServiceLocator()->get('frontpage_form_poll_comment');
+            'Frontpage\Controller\Poll' => function (ServiceLocatorInterface $sm) {
+                $pollService = $sm->get('frontpage_service_poll');
+                $pollCommentForm = $sm->get('frontpage_form_poll_comment');
                 return new PollController($pollService, $pollCommentForm);
             },
-            'Frontpage\Controller\PollAdmin' => function (ContainerInterface $serviceManager) {
-                $pollService = $serviceManager->getServiceLocator()->get('frontpage_service_poll');
+            'Frontpage\Controller\PollAdmin' => function (ServiceLocatorInterface $sm) {
+                $pollService = $sm->get('frontpage_service_poll');
                 return new PollAdminController($pollService);
             },
-            'Frontpage\Controller\NewsAdmin' => function (ContainerInterface $serviceManager) {
-                $newsService = $serviceManager->getServiceLocator()->get('frontpage_service_news');
+            'Frontpage\Controller\NewsAdmin' => function (ServiceLocatorInterface $sm) {
+                $newsService = $sm->get('frontpage_service_news');
                 return new NewsAdminController($newsService);
             },
             'Frontpage\Controller\Admin' => function () {

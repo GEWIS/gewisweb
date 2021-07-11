@@ -2,7 +2,7 @@
 
 use Education\Controller\AdminController;
 use Education\Controller\EducationController;
-use Interop\Container\ContainerInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 return [
     'router' => [
@@ -143,14 +143,14 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            'Education\Controller\Education' => function (ContainerInterface $serviceManager) {
-                $examService = $serviceManager->getServiceLocator()->get('education_service_exam');
-                $searchCourseForm = $serviceManager->getServiceLocator()->get('company_form_searchcourse');
+            'Education\Controller\Education' => function (ServiceLocatorInterface $sm) {
+                $examService = $sm->get('education_service_exam');
+                $searchCourseForm = $sm->get('company_form_searchcourse');
                 return new EducationController($examService, $searchCourseForm);
             },
-            'Education\Controller\Admin' => function (ContainerInterface $serviceManager) {
-                $examService = $serviceManager->getServiceLocator()->get('education_service_exam');
-                $uploadSummaryForm = $serviceManager->getServiceLocator()->get('education_form_summaryupload');
+            'Education\Controller\Admin' => function (ServiceLocatorInterface $sm) {
+                $examService = $sm->get('education_service_exam');
+                $uploadSummaryForm = $sm->get('education_form_summaryupload');
                 return new AdminController($examService, $uploadSummaryForm);
             },
         ],

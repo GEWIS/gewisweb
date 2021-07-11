@@ -16,6 +16,7 @@ use Photo\Service\Photo;
 use Photo\View\Helper\GlideUrl;
 use Zend\Cache\StorageFactory;
 use Zend\Mvc\MvcEvent;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 class Module
 {
@@ -56,7 +57,7 @@ class Module
     {
         return [
             'factories' => [
-                'photo_service_album' => function ($sm) {
+                'photo_service_album' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('photo_acl');
@@ -83,7 +84,7 @@ class Module
                 'photo_service_metadata' => function () {
                     return new Metadata();
                 },
-                'photo_service_photo' => function ($sm) {
+                'photo_service_photo' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('photo_acl');
@@ -113,7 +114,7 @@ class Module
                         $photoConfig
                     );
                 },
-                'photo_service_album_cover' => function ($sm) {
+                'photo_service_album_cover' => function (ServiceLocatorInterface $sm) {
                     $photoMapper = $sm->get('photo_mapper_photo');
                     $albumMapper = $sm->get('photo_mapper_album');
                     $storage = $sm->get('application_service_storage');
@@ -121,7 +122,7 @@ class Module
                     $storageConfig = $sm->get('config')['storage'];
                     return new AlbumCover($photoMapper, $albumMapper, $storage, $photoConfig, $storageConfig);
                 },
-                'photo_service_admin' => function ($sm) {
+                'photo_service_admin' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('photo_acl');
@@ -143,7 +144,7 @@ class Module
                         $photoConfig
                     );
                 },
-                'photo_form_album_edit' => function ($sm) {
+                'photo_form_album_edit' => function (ServiceLocatorInterface $sm) {
                     $form = new Form\EditAlbum(
                         $sm->get('translator')
                     );
@@ -151,7 +152,7 @@ class Module
 
                     return $form;
                 },
-                'photo_form_album_create' => function ($sm) {
+                'photo_form_album_create' => function (ServiceLocatorInterface $sm) {
                     $form = new Form\CreateAlbum(
                         $sm->get('translator')
                     );
@@ -159,47 +160,47 @@ class Module
 
                     return $form;
                 },
-                'photo_hydrator_album' => function ($sm) {
+                'photo_hydrator_album' => function (ServiceLocatorInterface $sm) {
                     return new DoctrineObject(
                         $sm->get('photo_doctrine_em'), 'Photo\Model\Album'
                     );
                 },
-                'photo_mapper_album' => function ($sm) {
+                'photo_mapper_album' => function (ServiceLocatorInterface $sm) {
                     return new Mapper\Album(
                         $sm->get('photo_doctrine_em')
                     );
                 },
-                'photo_mapper_photo' => function ($sm) {
+                'photo_mapper_photo' => function (ServiceLocatorInterface $sm) {
                     return new Mapper\Photo(
                         $sm->get('photo_doctrine_em')
                     );
                 },
-                'photo_mapper_profile_photo' => function ($sm) {
+                'photo_mapper_profile_photo' => function (ServiceLocatorInterface $sm) {
                     return new Mapper\ProfilePhoto(
                         $sm->get('photo_doctrine_em')
                     );
                 },
-                'photo_mapper_tag' => function ($sm) {
+                'photo_mapper_tag' => function (ServiceLocatorInterface $sm) {
                     return new Mapper\Tag(
                         $sm->get('photo_doctrine_em')
                     );
                 },
-                'photo_mapper_hit' => function ($sm) {
+                'photo_mapper_hit' => function (ServiceLocatorInterface $sm) {
                     return new Mapper\Hit(
                         $sm->get('photo_doctrine_em')
                     );
                 },
-                'photo_mapper_weekly_photo' => function ($sm) {
+                'photo_mapper_weekly_photo' => function (ServiceLocatorInterface $sm) {
                     return new Mapper\WeeklyPhoto(
                         $sm->get('photo_doctrine_em')
                     );
                 },
-                'photo_mapper_vote' => function ($sm) {
+                'photo_mapper_vote' => function (ServiceLocatorInterface $sm) {
                     return new Mapper\Vote(
                         $sm->get('photo_doctrine_em')
                     );
                 },
-                'photo_acl' => function ($sm) {
+                'photo_acl' => function (ServiceLocatorInterface $sm) {
                     $acl = $sm->get('acl');
 
                     // add resources for this module
@@ -229,7 +230,7 @@ class Module
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
                 // reused code from the eduction module
-                'photo_doctrine_em' => function ($sm) {
+                'photo_doctrine_em' => function (ServiceLocatorInterface $sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 },
                 'album_page_cache' => function () {
@@ -257,9 +258,9 @@ class Module
     {
         return [
             'factories' => [
-                'glideUrl' => function ($sm) {
+                'glideUrl' => function (ServiceLocatorInterface $sm) {
                     $helper = new GlideUrl();
-                    $config = $sm->getServiceLocator()->get('config');
+                    $config = $sm->get('config');
                     if (!isset($config['glide']) || !isset($config['glide']['base_url'])
                         || !isset($config['glide']['signing_key'])) {
                         throw new Exception('Invalid glide configuration');

@@ -24,6 +24,7 @@ use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Session\Container as SessionContainer;
 use Zend\Validator\AbstractValidator;
 use User\Permissions\NotAllowedException;
@@ -101,13 +102,13 @@ class Module
                 'application_service_legacy' => function () {
                     return new Legacy();
                 },
-                'application_service_email' => function ($sm) {
+                'application_service_email' => function (ServiceLocatorInterface $sm) {
                     $renderer = $sm->get('ViewRenderer');
                     $transport = $sm->get('user_mail_transport');
                     $emailConfig = $sm->get('config')['email'];
                     return new Email($renderer, $transport, $emailConfig);
                 },
-                'application_service_storage' => function ($sm) {
+                'application_service_storage' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $storageConfig = $sm->get('config')['storage'];
                     return new FileStorage($translator, $storageConfig);
@@ -115,7 +116,7 @@ class Module
                 'application_get_languages' => function () {
                     return ['nl', 'en'];
                 },
-                'logger' => function ($sm) {
+                'logger' => function (ServiceLocatorInterface $sm) {
                     $logger = new Logger("gewisweb");
                     $config = $sm->get('config')['logging'];
 
@@ -141,38 +142,33 @@ class Module
     {
         return [
             'factories' => [
-                'acl' => function ($sm) {
-                    $locator = $sm->getServiceLocator();
+                'acl' => function (ServiceLocatorInterface $sm) {
                     $helper = new Acl();
-                    $helper->setServiceLocator($locator);
+                    $helper->setServiceLocator($sm);
                     return $helper;
                 },
                 'scriptUrl' => function () {
                     $helper = new ScriptUrl();
                     return $helper;
                 },
-                'moduleIsActive' => function ($sm) {
-                    $locator = $sm->getServiceLocator();
+                'moduleIsActive' => function (ServiceLocatorInterface $sm) {
                     $helper = new ModuleIsActive();
-                    $helper->setServiceLocator($locator);
+                    $helper->setServiceLocator($sm);
                     return $helper;
                 },
-                'jobCategories' => function ($sm) {
-                    $locator = $sm->getServiceLocator();
+                'jobCategories' => function (ServiceLocatorInterface $sm) {
                     $helper = new JobCategories();
-                    $helper->setServiceLocator($locator);
+                    $helper->setServiceLocator($sm);
                     return $helper;
                 },
-                'fileUrl' => function ($sm) {
-                    $locator = $sm->getServiceLocator();
+                'fileUrl' => function (ServiceLocatorInterface $sm) {
                     $helper = new FileUrl();
-                    $helper->setServiceLocator($locator);
+                    $helper->setServiceLocator($sm);
                     return $helper;
                 },
-                'infima' => function ($sm) {
-                    $locator = $sm->getServiceLocator();
+                'infima' => function (ServiceLocatorInterface $sm) {
                     $helper = new Infima();
-                    $helper->setLegacyService($locator->get('application_service_legacy'));
+                    $helper->setLegacyService($sm->get('application_service_legacy'));
                     return $helper;
                 }
             ]

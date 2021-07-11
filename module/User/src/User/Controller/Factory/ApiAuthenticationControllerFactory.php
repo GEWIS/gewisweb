@@ -2,20 +2,18 @@
 
 namespace User\Controller\Factory;
 
+use Interop\Container\ContainerInterface;
 use User\Controller\ApiAuthenticationController;
 use User\Service\ApiApp;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
 
 class ApiAuthenticationControllerFactory implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $sl)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $sm = $sl->getServiceLocator();
-
         return new ApiAuthenticationController(
-            $sm->get('user_service_user'),
-            $sm->get(ApiApp::class)
+            $container->get('user_service_user'),
+            $container->get(ApiApp::class)
         );
     }
 }

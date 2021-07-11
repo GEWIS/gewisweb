@@ -10,6 +10,7 @@ use Frontpage\Form\PollApproval;
 use Frontpage\Form\PollComment;
 use Frontpage\Service\Frontpage;
 use Frontpage\Service\News;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 class Module
 {
@@ -39,7 +40,7 @@ class Module
     {
         return [
             'factories' => [
-                'frontpage_service_frontpage' => function ($sm) {
+                'frontpage_service_frontpage' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('frontpage_acl');
@@ -65,7 +66,7 @@ class Module
                         $frontpageConfig
                     );
                 },
-                'frontpage_service_page' => function ($sm) {
+                'frontpage_service_page' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('frontpage_acl');
@@ -83,7 +84,7 @@ class Module
                         $storageConfig
                     );
                 },
-                'frontpage_service_poll' => function ($sm) {
+                'frontpage_service_poll' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('frontpage_acl');
@@ -103,7 +104,7 @@ class Module
                         $pollApprovalForm
                     );
                 },
-                'frontpage_service_news' => function ($sm) {
+                'frontpage_service_news' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('frontpage_acl');
@@ -111,7 +112,7 @@ class Module
                     $newsItemForm = $sm->get('frontpage_form_news_item');
                     return new News($translator, $userRole, $acl, $newsItemMapper, $newsItemForm);
                 },
-                'frontpage_form_page' => function ($sm) {
+                'frontpage_form_page' => function (ServiceLocatorInterface $sm) {
                     $form = new Page(
                         $sm->get('translator')
                     );
@@ -119,7 +120,7 @@ class Module
 
                     return $form;
                 },
-                'frontpage_form_poll' => function ($sm) {
+                'frontpage_form_poll' => function (ServiceLocatorInterface $sm) {
                     $form = new Poll(
                         $sm->get('translator')
                     );
@@ -127,14 +128,14 @@ class Module
 
                     return $form;
                 },
-                'frontpage_form_poll_comment' => function ($sm) {
+                'frontpage_form_poll_comment' => function (ServiceLocatorInterface $sm) {
                     $form = new PollComment(
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('frontpage_hydrator'));
                     return $form;
                 },
-                'frontpage_form_poll_approval' => function ($sm) {
+                'frontpage_form_poll_approval' => function (ServiceLocatorInterface $sm) {
                     $form = new PollApproval(
                         $sm->get('translator')
                     );
@@ -142,7 +143,7 @@ class Module
 
                     return $form;
                 },
-                'frontpage_form_news_item' => function ($sm) {
+                'frontpage_form_news_item' => function (ServiceLocatorInterface $sm) {
                     $form = new NewsItem(
                         $sm->get('translator')
                     );
@@ -150,27 +151,27 @@ class Module
 
                     return $form;
                 },
-                'frontpage_hydrator' => function ($sm) {
+                'frontpage_hydrator' => function (ServiceLocatorInterface $sm) {
                     return new DoctrineObject(
                         $sm->get('frontpage_doctrine_em')
                     );
                 },
-                'frontpage_mapper_page' => function ($sm) {
+                'frontpage_mapper_page' => function (ServiceLocatorInterface $sm) {
                     return new Mapper\Page(
                         $sm->get('frontpage_doctrine_em')
                     );
                 },
-                'frontpage_mapper_poll' => function ($sm) {
+                'frontpage_mapper_poll' => function (ServiceLocatorInterface $sm) {
                     return new Mapper\Poll(
                         $sm->get('frontpage_doctrine_em')
                     );
                 },
-                'frontpage_mapper_news_item' => function ($sm) {
+                'frontpage_mapper_news_item' => function (ServiceLocatorInterface $sm) {
                     return new Mapper\NewsItem(
                         $sm->get('frontpage_doctrine_em')
                     );
                 },
-                'frontpage_acl' => function ($sm) {
+                'frontpage_acl' => function (ServiceLocatorInterface $sm) {
                     $acl = $sm->get('acl');
 
                     $acl->addResource('page');
@@ -186,7 +187,7 @@ class Module
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
                 // reused code from the eduction module
-                'frontpage_doctrine_em' => function ($sm) {
+                'frontpage_doctrine_em' => function (ServiceLocatorInterface $sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 }
             ]

@@ -29,6 +29,7 @@ use Zend\Http\Request as HttpRequest;
 
 use User\Permissions\NotAllowedException;
 use User\Model\User;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 class Module
 {
@@ -101,7 +102,7 @@ class Module
             ],
 
             'factories' => [
-                'user_service_user' => function ($sm) {
+                'user_service_user' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $bcrypt = $sm->get('user_bcrypt');
@@ -135,7 +136,7 @@ class Module
                         $passwordForm
                     );
                 },
-                'user_service_loginattempt' => function ($sm) {
+                'user_service_loginattempt' => function (ServiceLocatorInterface $sm) {
                     $remoteAddress = $sm->get('user_remoteaddress');
                     $entityManager = $sm->get('user_doctrine_em');
                     $loginAttemptMapper = $sm->get('user_mapper_loginattempt');
@@ -149,7 +150,7 @@ class Module
                         $rateLimitConfig
                     );
                 },
-                'user_service_apiuser' => function ($sm) {
+                'user_service_apiuser' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('acl');
@@ -157,7 +158,7 @@ class Module
                     $apiTokenForm = $sm->get('user_form_apitoken');
                     return new Service\ApiUser($translator, $userRole, $acl, $apiUserMapper, $apiTokenForm);
                 },
-                'user_service_email' => function ($sm) {
+                'user_service_email' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $renderer = $sm->get('ViewRenderer');
                     $transport = $sm->get('user_mail_transport');
@@ -165,7 +166,7 @@ class Module
                     return new Email($translator, $renderer, $transport, $emailConfig);
                 },
                 ApiApp::class => ApiAppFactory::class,
-                'user_auth_storage' => function ($sm) {
+                'user_auth_storage' => function (ServiceLocatorInterface $sm) {
                     $request = $sm->get('Request');
                     $response = $sm->get('Response');
                     $config = $sm->get('config');
@@ -175,44 +176,44 @@ class Module
                         $config
                     );
                 },
-                'user_bcrypt' => function ($sm) {
+                'user_bcrypt' => function (ServiceLocatorInterface $sm) {
                     $bcrypt = new Bcrypt();
                     $config = $sm->get('config');
                     $bcrypt->setCost($config['bcrypt_cost']);
                     return $bcrypt;
                 },
 
-                'user_hydrator' => function ($sm) {
+                'user_hydrator' => function (ServiceLocatorInterface $sm) {
                     return new DoctrineObject(
                         $sm->get('user_doctrine_em')
                     );
                 },
-                'user_form_activate' => function ($sm) {
+                'user_form_activate' => function (ServiceLocatorInterface $sm) {
                     return new Activate(
                         $sm->get('translator')
                     );
                 },
-                'user_form_register' => function ($sm) {
+                'user_form_register' => function (ServiceLocatorInterface $sm) {
                     return new Register(
                         $sm->get('translator')
                     );
                 },
-                'user_form_login' => function ($sm) {
+                'user_form_login' => function (ServiceLocatorInterface $sm) {
                     return new Login(
                         $sm->get('translator')
                     );
                 },
-                'user_form_password' => function ($sm) {
+                'user_form_password' => function (ServiceLocatorInterface $sm) {
                     return new Password(
                         $sm->get('translator')
                     );
                 },
-                'user_form_passwordactivate' => function ($sm) {
+                'user_form_passwordactivate' => function (ServiceLocatorInterface $sm) {
                     return new Activate(
                         $sm->get('translator')
                     );
                 },
-                'user_form_apitoken' => function ($sm) {
+                'user_form_apitoken' => function (ServiceLocatorInterface $sm) {
                     $form = new ApiToken(
                         $sm->get('translator')
                     );
@@ -220,33 +221,33 @@ class Module
                     return $form;
                 },
 
-                'user_mapper_user' => function ($sm) {
+                'user_mapper_user' => function (ServiceLocatorInterface $sm) {
                     return new \User\Mapper\User(
                         $sm->get('user_doctrine_em')
                     );
                 },
-                'user_mapper_newuser' => function ($sm) {
+                'user_mapper_newuser' => function (ServiceLocatorInterface $sm) {
                     return new NewUser(
                         $sm->get('user_doctrine_em')
                     );
                 },
-                'user_mapper_apiuser' => function ($sm) {
+                'user_mapper_apiuser' => function (ServiceLocatorInterface $sm) {
                     return new ApiUser(
                         $sm->get('user_doctrine_em')
                     );
                 },
-                'user_mapper_session' => function ($sm) {
+                'user_mapper_session' => function (ServiceLocatorInterface $sm) {
                     return new Session(
                         $sm->get('user_doctrine_em')
                     );
                 },
-                'user_mapper_loginattempt' => function ($sm) {
+                'user_mapper_loginattempt' => function (ServiceLocatorInterface $sm) {
                     return new LoginAttempt(
                         $sm->get('user_doctrine_em')
                     );
                 },
 
-                'user_mail_transport' => function ($sm) {
+                'user_mail_transport' => function (ServiceLocatorInterface $sm) {
                     $config = $sm->get('config');
                     $config = $config['email'];
                     $class = '\Zend\Mail\Transport\\' . $config['transport'];
@@ -255,7 +256,7 @@ class Module
                     $transport->setOptions(new $optionsClass($config['options']));
                     return $transport;
                 },
-                'user_auth_adapter' => function ($sm) {
+                'user_auth_adapter' => function (ServiceLocatorInterface $sm) {
                     $adapter = new Mapper(
                         $sm->get('user_bcrypt'),
                         $sm->get('application_service_legacy'),
@@ -264,7 +265,7 @@ class Module
                     $adapter->setMapper($sm->get('user_mapper_user'));
                     return $adapter;
                 },
-                'user_pin_auth_adapter' => function ($sm) {
+                'user_pin_auth_adapter' => function (ServiceLocatorInterface $sm) {
                     $adapter = new PinMapper(
                         $sm->get('application_service_legacy'),
                         $sm->get('user_service_loginattempt')
@@ -272,19 +273,19 @@ class Module
                     $adapter->setMapper($sm->get('user_mapper_user'));
                     return $adapter;
                 },
-                'user_auth_service' => function ($sm) {
+                'user_auth_service' => function (ServiceLocatorInterface $sm) {
                     return new Authentication\AuthenticationService(
                         $sm->get('user_auth_storage'),
                         $sm->get('user_auth_adapter')
                     );
                 },
-                'user_pin_auth_service' => function ($sm) {
+                'user_pin_auth_service' => function (ServiceLocatorInterface $sm) {
                     return new AuthenticationService(
                         $sm->get('user_auth_storage'),
                         $sm->get('user_pin_auth_adapter')
                     );
                 },
-                'user_remoteaddress' => function ($sm) {
+                'user_remoteaddress' => function (ServiceLocatorInterface $sm) {
                     $remote = new RemoteAddress();
                     $isProxied = $sm->get('config')['proxy']['enabled'];
                     $trustedProxies = $sm->get('config')['proxy']['ip_addresses'];
@@ -296,7 +297,7 @@ class Module
 
                     return $remote->getIpAddress();
                 },
-                'user_role' => function ($sm) {
+                'user_role' => function (ServiceLocatorInterface $sm) {
                     $authService = $sm->get('user_auth_service');
                     if ($authService->hasIdentity()) {
                         return $authService->getIdentity();
@@ -313,7 +314,7 @@ class Module
                     }
                     return 'guest';
                 },
-                'acl' => function ($sm) {
+                'acl' => function (ServiceLocatorInterface $sm) {
                     // initialize the ACL
                     $acl = new Acl();
 
@@ -374,7 +375,7 @@ class Module
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
-                'user_doctrine_em' => function ($sm) {
+                'user_doctrine_em' => function (ServiceLocatorInterface $sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
                 }
             ],

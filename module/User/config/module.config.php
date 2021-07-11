@@ -4,8 +4,8 @@ use User\Controller\ApiAdminController;
 use User\Controller\ApiAuthenticationController;
 use User\Controller\ApiController;
 use User\Controller\Factory\ApiAuthenticationControllerFactory;
-use Interop\Container\ContainerInterface;
 use User\Controller\UserController;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 return [
     'router' => [
@@ -157,17 +157,17 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            'User\Controller\User' => function (ContainerInterface $serviceManager) {
-                $userService = $serviceManager->getServiceLocator()->get("user_service_user");
+            'User\Controller\User' => function (ServiceLocatorInterface $sm) {
+                $userService = $sm->get("user_service_user");
                 return new UserController($userService);
             },
-            'User\Controller\Api' => function (ContainerInterface $serviceManager) {
-                $userService = $serviceManager->getServiceLocator()->get("user_service_user");
-                $memberInfoService = $serviceManager->getServiceLocator()->get("decision_service_memberinfo");
+            'User\Controller\Api' => function (ServiceLocatorInterface $sm) {
+                $userService = $sm->get("user_service_user");
+                $memberInfoService = $sm->get("decision_service_memberinfo");
                 return new ApiController($userService, $memberInfoService);
             },
-            'User\Controller\ApiAdmin' => function (ContainerInterface $serviceManager) {
-                $apiUserService = $serviceManager->getServiceLocator()->get("user_service_apiuser");
+            'User\Controller\ApiAdmin' => function (ServiceLocatorInterface $sm) {
+                $apiUserService = $sm->get("user_service_apiuser");
                 return new ApiAdminController($apiUserService);
             },
             ApiAuthenticationController::class => ApiAuthenticationControllerFactory::class,
