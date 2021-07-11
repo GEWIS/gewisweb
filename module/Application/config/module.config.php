@@ -52,7 +52,8 @@ return [
         'aliases' => [
             'translator' => 'MvcTranslator',
         ],
-        'factories' => array(
+        'factories' => [
+            'Zend\Session\Config\ConfigInterface' => 'Zend\Session\Service\SessionConfigFactory',
             'doctrine.cache.my_memcached' => function () {
                 $cache = new MemcachedCache();
                 $memcached = new Memcached();
@@ -60,7 +61,7 @@ return [
                 $cache->setMemcached($memcached);
                 return $cache;
             },
-        ),
+        ],
     ],
     'translator' => [
         'locale' => 'nl',

@@ -37,7 +37,7 @@ class Session extends Storage\Session
     {
         $this->rememberMe = $rememberMe;
         if ($rememberMe) {
-            $this->saveSession($this->session->{$this->member}->getLidnr());
+            $this->saveSession($this->read()->getLidnr());
         }
     }
 
@@ -56,7 +56,7 @@ class Session extends Storage\Session
      */
     public function isEmpty()
     {
-        if (isset($this->session->{$this->member})) {
+        if (!parent::isEmpty()) {
             return false;
         }
 
@@ -86,20 +86,10 @@ class Session extends Storage\Session
             return false;
         }
 
-        $this->session->{$this->member} = $session->lidnr;
+        parent::write($session->lidnr);
         $this->saveSession($session->lidnr);
 
         return true;
-    }
-
-    /**
-     * Defined by Zend\Authentication\Storage\StorageInterface
-     *
-     * @return mixed
-     */
-    public function read()
-    {
-        return $this->session->{$this->member};
     }
 
     /**
@@ -110,7 +100,7 @@ class Session extends Storage\Session
      */
     public function write($contents)
     {
-        $this->session->{$this->member} = $contents;
+        parent::write($contents);
         if ($this->rememberMe) {
             $this->saveSession($contents);
         }
@@ -151,7 +141,7 @@ class Session extends Storage\Session
     public function clear()
     {
         // Clear the session
-        unset($this->session->{$this->member});
+        parent::clear();
         $this->clearCookie();
     }
 

@@ -11,6 +11,9 @@
  * file.
  */
 
+use Zend\Session\Storage\SessionArrayStorage;
+use Zend\Session\Validator\HttpUserAgent;
+
 return [
     /**
      * Bcrypt cost.
@@ -163,9 +166,22 @@ return [
         'configuration' => [
             'orm_default' => [
                 'numeric_functions' => [
-                    'RAND'  => 'Application\Extensions\Doctrine\Rand'
+                    'RAND' => 'Application\Extensions\Doctrine\Rand'
                 ]
             ]
         ]
-    ]
+    ],
+
+    'session_config' => [],
+
+    'session_storage' => [
+        'type' => SessionArrayStorage::class
+    ],
+
+    'session_manager' => [
+        'validators' => [
+            HttpUserAgent::class,
+        ],
+        'enable_default_container_manager' => true,
+    ],
 ];

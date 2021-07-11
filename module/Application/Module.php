@@ -22,12 +22,16 @@ use Carbon\Carbon;
 use Locale;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
+use User\Permissions\NotAllowedException;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\Session\Config\SessionConfig;
 use Zend\Session\Container as SessionContainer;
+use Zend\Session\SessionManager;
+use Zend\Session\Validator\HttpUserAgent;
+use Zend\Session\Validator\RemoteAddr;
 use Zend\Validator\AbstractValidator;
-use User\Permissions\NotAllowedException;
 
 class Module
 {
