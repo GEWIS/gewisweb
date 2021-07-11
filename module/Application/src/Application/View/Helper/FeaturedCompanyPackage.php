@@ -3,14 +3,20 @@
 namespace Application\View\Helper;
 
 use Company\Model\CompanyFeaturedPackage;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Company\Service\Company;
 use Zend\View\Helper\AbstractHelper;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
-class FeaturedCompanyPackage extends AbstractHelper implements ServiceLocatorAwareInterface
+class FeaturedCompanyPackage extends AbstractHelper
 {
-    use ServiceLocatorAwareTrait;
+    /**
+     * @var Company
+     */
+    private $companyService;
 
+    public function __construct(Company $companyService) {
+
+        $this->companyService = $companyService;
+    }
     /**
      * Returns currently active featurePackage
      *
@@ -18,8 +24,6 @@ class FeaturedCompanyPackage extends AbstractHelper implements ServiceLocatorAwa
      */
     public function __invoke()
     {
-        $companyService = $this->getServiceLocator()->getServiceLocator()->get('Company\Service\Company');
-        $featuredPackage = $companyService->getFeaturedPackage();
-        return $featuredPackage;
+        return $this->companyService->getFeaturedPackage();
     }
 }
