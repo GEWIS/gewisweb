@@ -7,6 +7,8 @@ use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
 
 use Decision\Mapper\Meeting as MeetingMapper;
+use Zend\Validator\File\Extension;
+use Zend\Validator\File\MimeType;
 
 class Notes extends Form implements InputFilterProviderInterface
 {
@@ -81,13 +83,13 @@ class Notes extends Form implements InputFilterProviderInterface
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'File\Extension',
+                        'name' => Extension::class,
                         'options' => [
                             'extension' => 'pdf'
                         ]
                     ],
                     [
-                        'name' => 'File\MimeType',
+                        'name' => MimeType::class,
                         'options' => [
                             'mimeType' => 'application/pdf'
                         ]

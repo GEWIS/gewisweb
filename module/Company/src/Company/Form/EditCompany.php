@@ -6,6 +6,7 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use Zend\Mvc\I18n\Translator;
 use Zend\Validator\Callback;
+use Zend\Validator\File\Extension;
 use Zend\Validator\Regex;
 use Zend\Validator\StringLength;
 
@@ -353,7 +354,7 @@ class EditCompany extends Form
             'required' => false,
             'validators' => [
                 [
-                    'name' => 'File\Extension',
+                    'name' => Extension::class,
                     'options' => [
                         'extension' => ['png', 'jpg', 'gif', 'bmp'],
                     ],
@@ -366,7 +367,7 @@ class EditCompany extends Form
             'required' => false,
             'validators' => [
                 [
-                    'name' => 'File\Extension',
+                    'name' => Extension::class,
                     'options' => [
                         'extension' => ['png', 'jpg', 'gif', 'bmp'],
                     ],

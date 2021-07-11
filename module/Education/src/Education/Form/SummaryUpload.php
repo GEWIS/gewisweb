@@ -6,6 +6,8 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
 use Education\Model\Exam as ExamModel;
+use Zend\Validator\File\Extension;
+use Zend\Validator\File\MimeType;
 use Zend\Validator\Regex;
 use Zend\Validator\StringLength;
 
@@ -100,13 +102,13 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'File\Extension',
+                        'name' => Extension::class,
                         'options' => [
                             'extension' => 'pdf'
                         ]
                     ],
                     [
-                        'name' => 'File\MimeType',
+                        'name' => MimeType::class,
                         'options' => [
                             'mimeType' => 'application/pdf'
                         ]
