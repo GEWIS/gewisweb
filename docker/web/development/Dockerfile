@@ -1,4 +1,4 @@
-FROM php:7.3-fpm as gewisweb_web_development
+FROM php:7.4-fpm as gewisweb_web_development
 
 RUN apt-get update \
     && apt-get install -y \
@@ -21,7 +21,7 @@ RUN apt-get update \
     && apt-get upgrade -y
 
 RUN docker-php-ext-configure \
-        gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+        gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
         calendar \
         exif \
