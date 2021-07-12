@@ -25,7 +25,7 @@ class FixedKeyDictionaryCollection extends Collection
     }
 
     // Return a dictionary instead of an array
-    public function bindValues(array $values = array())
+    public function bindValues(array $values = [], array $validationGroup = null)
     {
         $collection = [];
 
