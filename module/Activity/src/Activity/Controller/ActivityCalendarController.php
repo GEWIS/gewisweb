@@ -29,7 +29,8 @@ class ActivityCalendarController extends AbstractActionController
     {
         $config = $this->calendarConfig;
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'options' => $this->calendarService->getUpcomingOptions(),
             'editableOptions' => $this->calendarService->getEditableUpcomingOptions(),
             'APIKey' => $config['google_api_key'],
@@ -37,7 +38,8 @@ class ActivityCalendarController extends AbstractActionController
             'success' => $this->getRequest()->getQuery('success', false),
             'canCreate' => $this->calendarService->canCreateProposal(),
             'canApprove' => $this->calendarService->canApproveOption()
-        ]);
+            ]
+        );
     }
 
     public function deleteAction()
@@ -78,10 +80,12 @@ class ActivityCalendarController extends AbstractActionController
 
         $period = $this->calendarService->getCurrentPeriod();
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'period' => $period,
             'form' => $form,
-        ]);
+            ]
+        );
     }
 
     public function sendNotificationsAction()

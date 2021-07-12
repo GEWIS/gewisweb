@@ -13,7 +13,8 @@ class FeaturedCompanyPackage extends AbstractHelper
      */
     private $companyService;
 
-    public function __construct(Company $companyService) {
+    public function __construct(Company $companyService)
+    {
 
         $this->companyService = $companyService;
     }

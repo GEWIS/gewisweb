@@ -20,31 +20,38 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
     {
         parent::__construct();
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'course',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Course code')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'date',
             'type' => 'date',
             'options' => [
                 'label' => $translator->translate('Summary date')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'author',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Author')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'type' => 'Zend\Form\Element\Select',
             'name' => 'language',
             'options' => [
@@ -54,24 +61,29 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
                     ExamModel::EXAM_LANGUAGE_DUTCH => $translator->translate('Dutch'),
                 ],
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'upload',
             'type' => 'file',
             'option' => [
                 'label' => $translator->translate('Summary to upload')
             ]
-        ]);
+            ]
+        );
         $this->get('upload')->setLabel($translator->translate('Summary to upload'));
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
                 'value' => $translator->translate('Submit')
             ]
-        ]);
+            ]
+        );
     }
 
     public function getInputFilterSpecification()

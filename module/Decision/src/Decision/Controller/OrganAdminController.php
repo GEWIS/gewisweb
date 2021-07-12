@@ -24,9 +24,11 @@ class OrganAdminController extends AbstractActionController
      */
     public function indexAction()
     {
-        return new ViewModel([
+        return new ViewModel(
+            [
             'organs' => $this->organService->getEditableOrgans()
-        ]);
+            ]
+        );
     }
 
     /**
@@ -45,8 +47,10 @@ class OrganAdminController extends AbstractActionController
         $organInformation = $this->organService->getEditableOrganInformation($organId);
         $form = $this->organService->getOrganInformationForm($organInformation);
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $form
-        ]);
+            ]
+        );
     }
 }

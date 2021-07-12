@@ -64,10 +64,12 @@ class Poll
      */
     public function findVote($pollId, $lidnr)
     {
-        return $this->em->getRepository('Frontpage\Model\PollVote')->findOneBy([
+        return $this->em->getRepository('Frontpage\Model\PollVote')->findOneBy(
+            [
             'poll' => $pollId,
             'respondent' => $lidnr
-        ]);
+            ]
+        );
     }
 
     public function getUnapprovedPolls()

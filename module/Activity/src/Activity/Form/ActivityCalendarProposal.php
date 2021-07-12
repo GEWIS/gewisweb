@@ -47,7 +47,8 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
 
         $this->maxOptions = 3;
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'organ',
             'type' => 'select',
             'options' => [
@@ -58,23 +59,29 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                 ],
                 'value_options' => $organOptions
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'name',
             'attributes' => [
                 'type' => 'text',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'description',
             'attributes' => [
                 'type' => 'text',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'options',
             'type' => 'Zend\Form\Element\Collection',
             'options' => [
@@ -83,7 +90,8 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                 'allow_add' => true,
                 'target_element' => new ActivityCalendarOption($translator, $calendarService)
             ]
-        ]);
+            ]
+        );
     }
 
     /**

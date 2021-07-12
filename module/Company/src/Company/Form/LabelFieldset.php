@@ -15,14 +15,17 @@ class LabelFieldset extends Fieldset
         parent::__construct();
         $this->setHydrator($hydrator);
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'id',
             'attributes' => [
                 'type' => 'hidden',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'slug',
             'attributes' => [
                 'type' => 'text',
@@ -31,9 +34,11 @@ class LabelFieldset extends Fieldset
             'options' => [
                 'label' => $translate->translate('Slug name'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'name',
             'attributes' => [
                 'type' => 'text',
@@ -43,15 +48,18 @@ class LabelFieldset extends Fieldset
                 'label' => $translate->translate('Display name'),
                 'required' => 'required',
             ],
-        ]);
+            ]
+        );
 
         // Hidden language element, because it will only be set at initialization.
-        $this->add([
+        $this->add(
+            [
             'name' => 'language',
             'attributes' => [
                 'type' => 'hidden',
             ],
-        ]);
+            ]
+        );
     }
 
     public function setLanguage($lang)

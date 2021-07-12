@@ -110,7 +110,6 @@ class AdminApprovalController extends AbstractActionController
                 break;
             default:
                 throw new InvalidArgumentException('No such status ' . $status);
-
         }
 
         return $this->redirect()->toRoute('activity_admin');
@@ -179,9 +178,12 @@ class AdminApprovalController extends AbstractActionController
         $newId = $proposal->getNew()->getId();
         $this->activityService->updateActivity($proposal);
 
-        $this->redirect()->toRoute('activity_admin_approval/view', [
+        $this->redirect()->toRoute(
+            'activity_admin_approval/view',
+            [
             'id' => $newId,
-        ]);
+            ]
+        );
     }
 
     /**
@@ -211,8 +213,11 @@ class AdminApprovalController extends AbstractActionController
         $oldId = $proposal->getOld()->getId();
         $this->activityService->revokeUpdateProposal($proposal);
 
-        $this->redirect()->toRoute('activity_admin_approval/view', [
+        $this->redirect()->toRoute(
+            'activity_admin_approval/view',
+            [
             'id' => $oldId,
-        ]);
+            ]
+        );
     }
 }

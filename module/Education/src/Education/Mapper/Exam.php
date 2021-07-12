@@ -39,9 +39,11 @@ class Exam
      */
     public function transactional(Closure $func)
     {
-        return $this->em->transactional(function ($em) use ($func) {
-            return $func($this);
-        });
+        return $this->em->transactional(
+            function ($em) use ($func) {
+                return $func($this);
+            }
+        );
     }
 
     /**

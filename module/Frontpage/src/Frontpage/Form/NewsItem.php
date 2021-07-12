@@ -13,54 +13,66 @@ class NewsItem extends Form implements InputFilterProviderInterface
     {
         parent::__construct();
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'dutchTitle',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Dutch title')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'englishTitle',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('English title')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'dutchContent',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Dutch content')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'englishContent',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('English content')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'pinned',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
                 'checked_value' => 1,
                 'unchecked_value' => 0,
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
                 'value' => $translator->translate('Save')
             ]
-        ]);
+            ]
+        );
     }
 
     /**

@@ -584,5 +584,4 @@ class Photo implements ResourceInterface
     {
         return 'photo';
     }
-
 }

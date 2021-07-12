@@ -23,29 +23,35 @@ class Register extends Form
         parent::__construct();
         $this->translate = $translate;
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'lidnr',
             'type' => 'number',
             'options' => [
                 'label' => $translate->translate('Membership number')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'email',
             'type' => 'email',
             'options' => [
                 'label' => $translate->translate('E-mail address')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
                 'value' => $translate->translate('Register')
             ]
-        ]);
+            ]
+        );
 
         $this->initFilters();
     }
@@ -59,32 +65,40 @@ class Register extends Form
     {
         switch ($error) {
             case self::ERROR_WRONG_EMAIL:
-                $this->setMessages([
+                $this->setMessages(
+                    [
                     'email' => [
                         $this->translate->translate("This email address does not be long to the given member.")
                     ]
-                ]);
+                    ]
+                );
                 break;
             case self::ERROR_MEMBER_NOT_EXISTS:
-                $this->setMessages([
+                $this->setMessages(
+                    [
                     'lidnr' => [
                         $this->translate->translate("There is no member with this membership number.")
                     ]
-                ]);
+                    ]
+                );
                 break;
             case self::ERROR_ALREADY_REGISTERED:
-                $this->setMessages([
+                $this->setMessages(
+                    [
                     'lidnr' => [
                         $this->translate->translate("You already attempted to register, please check your email or try again after 15 minutes.")
                     ]
-                ]);
+                    ]
+                );
                 break;
             case self::ERROR_USER_ALREADY_EXISTS:
-                $this->setMessages([
+                $this->setMessages(
+                    [
                     'lidnr' => [
                         $this->translate->translate("This member already has an account.")
                     ]
-                ]);
+                    ]
+                );
                 break;
         }
     }
@@ -93,23 +107,27 @@ class Register extends Form
     {
         $filter = new InputFilter();
 
-        $filter->add([
+        $filter->add(
+            [
             'name' => 'lidnr',
             'required' => true,
             'validators' => [
                 ['name' => NotEmpty::class],
                 ['name' => Digits::class]
             ]
-        ]);
+            ]
+        );
 
-        $filter->add([
+        $filter->add(
+            [
             'name' => 'email',
             'required' => true,
             'validators' => [
                 ['name' => NotEmpty::class],
                 ['name' => EmailAddress::class]
             ]
-        ]);
+            ]
+        );
 
         $this->setInputFilter($filter);
     }

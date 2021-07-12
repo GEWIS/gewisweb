@@ -41,9 +41,11 @@ class UserController extends AbstractActionController
 
         $form = $this->handleRedirect($this->userService, $referer);
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $form
-        ]);
+            ]
+        );
     }
 
     private function handleRedirect($userService, $referer)
@@ -72,15 +74,19 @@ class UserController extends AbstractActionController
             $login = $this->userService->pinLogin($data);
 
             if (null !== $login) {
-                return new JsonModel([
+                return new JsonModel(
+                    [
                     'login' => true,
                     'user' => $login->toArray()
-                ]);
+                    ]
+                );
             }
         }
-        return new JsonModel([
+        return new JsonModel(
+            [
             'login' => false
-        ]);
+            ]
+        );
     }
 
     /**
@@ -105,17 +111,21 @@ class UserController extends AbstractActionController
         if ($this->getRequest()->isPost()) {
             $newUser = $this->userService->register($this->getRequest()->getPost());
             if (null !== $newUser) {
-                return new ViewModel([
+                return new ViewModel(
+                    [
                     'registered' => true,
                     'user' => $newUser
-                ]);
+                    ]
+                );
             }
         }
 
         // show form
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $this->userService->getRegisterForm()
-        ]);
+            ]
+        );
     }
 
     /**
@@ -126,14 +136,18 @@ class UserController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost() && $this->userService->changePassword($request->getPost())) {
-            return new ViewModel([
+            return new ViewModel(
+                [
                 'success' => true
-            ]);
+                ]
+            );
         }
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $this->userService->getPasswordForm()
-        ]);
+            ]
+        );
     }
 
     /**
@@ -146,16 +160,20 @@ class UserController extends AbstractActionController
         if ($request->isPost()) {
             $newUser = $this->userService->reset($request->getPost());
             if (null !== $newUser) {
-                return new ViewModel([
+                return new ViewModel(
+                    [
                     'reset' => true,
                     'user' => $newUser
-                ]);
+                    ]
+                );
             }
         }
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $this->userService->getPasswordForm()
-        ]);
+            ]
+        );
     }
 
     /**
@@ -178,14 +196,18 @@ class UserController extends AbstractActionController
         }
 
         if ($this->getRequest()->isPost() && $this->userService->activate($this->getRequest()->getPost(), $newUser)) {
-            return new ViewModel([
+            return new ViewModel(
+                [
                 'activated' => true
-            ]);
+                ]
+            );
         }
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $this->userService->getActivateForm(),
             'user' => $newUser
-        ]);
+            ]
+        );
     }
 }

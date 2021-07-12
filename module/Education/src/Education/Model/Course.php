@@ -293,13 +293,16 @@ class Course implements ResourceInterface
      */
     public function setQuartile($quartile)
     {
-        if (!in_array($quartile, [
+        if (!in_array(
+            $quartile,
+            [
             self::QUARTILE_Q1,
             self::QUARTILE_Q2,
             self::QUARTILE_Q3,
             self::QUARTILE_Q4,
             self::QUARTILE_INTERIM
-        ])) {
+            ]
+        )) {
             throw new InvalidArgumentException("Invalid argument supplied, must be a valid quartile.");
         }
         $this->quartile = $quartile;

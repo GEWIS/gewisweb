@@ -12,26 +12,32 @@ class Authorization extends Form implements InputFilterProviderInterface
     {
         parent::__construct();
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'recipient',
             'type' => 'hidden'
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'agree',
             'type' => 'checkbox',
             'options' => [
                 'use_hidden_element' => false
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
                 'label' => $translate->translate('Authorize')
             ]
-        ]);
+            ]
+        );
     }
 
     /**

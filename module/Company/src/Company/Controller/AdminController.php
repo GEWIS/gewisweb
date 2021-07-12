@@ -66,14 +66,18 @@ class AdminController extends AbstractActionController
         }
 
         // Initialize the view
-        return new ViewModel([
+        return new ViewModel(
+            [
             'companyList' => $this->companyService->getHiddenCompanyList(),
             'categoryList' => $this->companyQueryService->getCategoryList(false),
             'labelList' => $this->companyQueryService->getLabelList(false),
-            'packageFuture' => $this->companyService->getPackageChangeEvents((new DateTime())->add(
-                new DateInterval("P1M")
-            )),
-        ]);
+            'packageFuture' => $this->companyService->getPackageChangeEvents(
+                (new DateTime())->add(
+                    new DateInterval("P1M")
+                )
+            ),
+            ]
+        );
     }
 
     /**
@@ -112,9 +116,11 @@ class AdminController extends AbstractActionController
         );
 
         // Initialize the view
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $this->companyForm,
-        ]);
+            ]
+        );
     }
 
     /**
@@ -125,7 +131,6 @@ class AdminController extends AbstractActionController
     public function addPackageAction()
     {
         if (!$this->companyService->isAllowed('edit')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to edit jobs')
             );
@@ -171,10 +176,12 @@ class AdminController extends AbstractActionController
         );
 
         // Initialize the view
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $packageForm,
             'type' => $type,
-        ]);
+            ]
+        );
     }
 
     /**
@@ -228,10 +235,12 @@ class AdminController extends AbstractActionController
         );
 
         // Initialize the view
-        $vm = new ViewModel([
+        $vm = new ViewModel(
+            [
             'form' => $companyForm,
             'languages' => $this->getLanguageDescriptions(),
-        ]);
+            ]
+        );
 
         $vm->setTemplate('company/admin/edit-job');
 
@@ -286,11 +295,13 @@ class AdminController extends AbstractActionController
         $categoryForm->setLanguages($languages);
         $categoryForm->bind($categoryDict);
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $categoryForm,
             'category' => $categories,
             'languages' => $this->getLanguageDescriptions(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -341,11 +352,13 @@ class AdminController extends AbstractActionController
         $labelForm->setLanguages($languages);
         $labelForm->bind($labelDict);
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $labelForm,
             'label' => $labels,
             'languages' => $this->getLanguageDescriptions(),
-        ]);
+            ]
+        );
     }
 
     private function getLanguageDescriptions()
@@ -417,10 +430,12 @@ class AdminController extends AbstractActionController
                 ]
             )
         );
-        return new ViewModel([
+        return new ViewModel(
+            [
             'company' => $company,
             'form' => $companyForm,
-        ]);
+            ]
+        );
     }
 
     /**
@@ -465,12 +480,14 @@ class AdminController extends AbstractActionController
         );
 
         // Initialize the view
-        return new ViewModel([
+        return new ViewModel(
+            [
             'package' => $package,
             'companyName' => $companyName,
             'form' => $packageForm,
             'type' => $type,
-        ]);
+            ]
+        );
     }
 
     /**
@@ -529,11 +546,13 @@ class AdminController extends AbstractActionController
         $jobForm->bind($jobDict);
 
         // Initialize the view
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $jobForm,
             'job' => $job,
             'languages' => $this->getLanguageDescriptions(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -589,10 +608,12 @@ class AdminController extends AbstractActionController
             )
         );
         // Initialize the view
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $categoryForm,
             'languages' => $this->getLanguageDescriptions(),
-        ]);
+            ]
+        );
     }
 
     public function addLabelAction()
@@ -628,10 +649,12 @@ class AdminController extends AbstractActionController
             )
         );
         // Initialize the view
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $labelForm,
             'languages' => $this->getLanguageDescriptions(),
-        ]);
+            ]
+        );
     }
 
     /**

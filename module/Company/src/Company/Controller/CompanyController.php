@@ -41,18 +41,22 @@ class CompanyController extends AbstractActionController
     {
         $featuredPackage = $this->companyService->getFeaturedPackage();
         if ($featuredPackage === null) {
-            return new ViewModel([
+            return new ViewModel(
+                [
                 'companyList' => $this->companyService->getCompanyList(),
                 'translator' => $this->translator,
-            ]);
+                ]
+            );
         }
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'companyList' => $this->companyService->getCompanyList(),
             'translator' => $this->translator,
             'featuredCompany' => $featuredPackage->getCompany(),
             'featuredPackage' => $featuredPackage,
-        ]);
+            ]
+        );
     }
 
     public function showAction()
@@ -62,10 +66,12 @@ class CompanyController extends AbstractActionController
 
         if (!is_null($company)) {
             if (!$company->isHidden()) {
-                return new ViewModel([
+                return new ViewModel(
+                    [
                     'company' => $company,
                     'translator' => $this->translator,
-                ]);
+                    ]
+                );
             }
         }
 
@@ -84,11 +90,13 @@ class CompanyController extends AbstractActionController
         $featuredPackage = $this->companyService->getFeaturedPackage();
         if (!is_null($featuredPackage)) {
             // jobs for a single company
-            return new ViewModel([
+            return new ViewModel(
+                [
                 'company' => $featuredPackage->getCompany(),
                 'featuredPackage' => $featuredPackage,
                 'translator' => $translator,
-            ]);
+                ]
+            );
         }
 
         // There is no company is the spotlight, so throw a 404
@@ -108,38 +116,48 @@ class CompanyController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        $viewModel = new ViewModel([
+        $viewModel = new ViewModel(
+            [
             'category' => $category,
             'translator' => $this->translator,
-        ]);
+            ]
+        );
 
         // A job can be a thesis/internship/etc.
         $jobCategory = ($category->getLanguageNeutralId() != null) ? $category->getSlug() : null;
 
         if ($companyName = $this->params('slugCompanyName', null)) {
             // Retrieve published jobs for one specific company
-            $jobs = $this->companyQueryService->getActiveJobList([
+            $jobs = $this->companyQueryService->getActiveJobList(
+                [
                 'jobCategory' => $jobCategory,
                 'companySlugName' => $companyName,
-            ]);
+                ]
+            );
 
-            return $viewModel->setVariables([
+            return $viewModel->setVariables(
+                [
                 'jobList' => $jobs,
                 'company' => $this->companyService->getCompanyBySlugName($companyName)
-            ]);
+                ]
+            );
         }
 
         // Retrieve all published jobs
-        $jobs = $this->companyQueryService->getActiveJobList([
+        $jobs = $this->companyQueryService->getActiveJobList(
+            [
             'jobCategory' => $jobCategory,
-        ]);
+            ]
+        );
 
         // Shuffle order to avoid bias
         shuffle($jobs);
 
-        return $viewModel->setVariables([
+        return $viewModel->setVariables(
+            [
             'jobList' => $jobs
-        ]);
+            ]
+        );
     }
 
     /**
@@ -153,27 +171,33 @@ class CompanyController extends AbstractActionController
         $companyName = $this->params('slugCompanyName');
         $category = $this->companyService->categoryForSlug($this->params('category'));
         if ($jobName !== null) {
-            $jobs = $this->companyQueryService->getJobs([
+            $jobs = $this->companyQueryService->getJobs(
+                [
                 'companySlugName' => $companyName,
                 'jobSlug' => $jobName,
                 'jobCategory' => ($category->getLanguageNeutralId() !== null) ? $category->getSlug() : null
-            ]);
+                ]
+            );
             if (!empty($jobs)) {
                 if ($jobs[0]->isActive()) {
-                    return new ViewModel([
+                    return new ViewModel(
+                        [
                         'job' => $jobs[0],
                         'translator' => $this->translator,
                         'category' => $category,
-                    ]);
+                        ]
+                    );
                 }
             }
 
             return $this->notFoundAction();
         }
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'activeJobList' => $this->companyQueryService->getActiveJobList(),
             'translator' => $this->translator,
-        ]);
+            ]
+        );
     }
 }

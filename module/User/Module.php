@@ -57,18 +57,21 @@ class Module
 
         // this event listener will turn the request into '403 Forbidden' when
         // there is a NotAllowedException
-        $em->attach(MvcEvent::EVENT_DISPATCH_ERROR, function ($e) {
-            if (
-                $e->getError() == 'error-exception'
+        $em->attach(
+            MvcEvent::EVENT_DISPATCH_ERROR,
+            function ($e) {
+                if ($e->getError() == 'error-exception'
                 && $e->getParam('exception', null) != null
                 && $e->getParam('exception') instanceof NotAllowedException
-            ) {
-                $form = $e->getApplication()->getServiceManager()->get('user_form_login');
-                $e->getResult()->setVariable('form', $form);
-                $e->getResult()->setTemplate((APP_ENV === 'production' ? 'error/403' : 'error/debug/403'));
-                $e->getResponse()->setStatusCode(403);
-            }
-        }, -100);
+                ) {
+                    $form = $e->getApplication()->getServiceManager()->get('user_form_login');
+                    $e->getResult()->setVariable('form', $form);
+                    $e->getResult()->setTemplate((APP_ENV === 'production' ? 'error/403' : 'error/debug/403'));
+                    $e->getResponse()->setStatusCode(403);
+                }
+            },
+            -100
+        );
     }
 
 

@@ -2,7 +2,6 @@
 
 namespace User\Service;
 
-
 use User\Model\NewUser as NewUserModel;
 
 use Decision\Model\Member as MemberModel;
@@ -52,10 +51,13 @@ class Email
      */
     public function sendRegisterEmail(NewUserModel $newUser, MemberModel $member)
     {
-        $body = $this->render('user/email/register', [
+        $body = $this->render(
+            'user/email/register',
+            [
             'user' => $newUser,
             'member' => $member
-        ]);
+            ]
+        );
 
 
         $message = new Message();
@@ -76,10 +78,13 @@ class Email
      */
     public function sendPasswordLostMail(NewUserModel $newUser, MemberModel $member)
     {
-        $body = $this->render('user/email/reset', [
+        $body = $this->render(
+            'user/email/reset',
+            [
             'user' => $newUser,
             'member' => $member
-        ]);
+            ]
+        );
 
 
         $message = new Message();

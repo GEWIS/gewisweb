@@ -43,17 +43,21 @@ class Tag
 
     public function findTag($photoId, $lidnr)
     {
-        return $this->getRepository()->findOneBy([
+        return $this->getRepository()->findOneBy(
+            [
             'photo' => $photoId,
             'member' => $lidnr
-        ]);
+            ]
+        );
     }
 
     public function getTagsByLidnr($lidnr)
     {
-        return $this->getRepository()->findBy([
+        return $this->getRepository()->findBy(
+            [
             'member' => $lidnr
-        ]);
+            ]
+        );
     }
 
     /**
@@ -96,7 +100,6 @@ class Tag
 
             return $qb2->getQuery()->getSingleResult();
         }
-
     }
 
     /**
@@ -127,5 +130,4 @@ class Tag
     {
         return $this->em->getRepository('Photo\Model\Tag');
     }
-
 }

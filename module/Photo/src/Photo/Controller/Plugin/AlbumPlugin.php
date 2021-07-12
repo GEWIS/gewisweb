@@ -139,5 +139,4 @@ class AlbumPlugin extends AbstractPlugin
             'paginator' => $paginator,
         ];
     }
-
 }

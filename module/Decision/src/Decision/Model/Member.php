@@ -558,12 +558,14 @@ class Member
         // Filter out past installations
         $today = new DateTime();
 
-        return $this->getOrganInstallations()->filter(function (OrganMember $organ) use ($today) {
-            $dischargeDate = $organ->getDischargeDate();
+        return $this->getOrganInstallations()->filter(
+            function (OrganMember $organ) use ($today) {
+                $dischargeDate = $organ->getDischargeDate();
 
             // Keep installation if not discharged or discharged in the future
-            return is_null($dischargeDate) || $dischargeDate >= $today;
-        });
+                return is_null($dischargeDate) || $dischargeDate >= $today;
+            }
+        );
     }
 
     /**
@@ -597,12 +599,14 @@ class Member
         // Filter out past board installations
         $today = new DateTime();
 
-        $boards = $this->getBoardInstallations()->filter(function (BoardMember $boardMember) use ($today) {
-            $dischargeDate = $boardMember->getDischargeDate();
+        $boards = $this->getBoardInstallations()->filter(
+            function (BoardMember $boardMember) use ($today) {
+                $dischargeDate = $boardMember->getDischargeDate();
 
             // Keep installation if not discharged or discharged in the future
-            return is_null($dischargeDate) || $dischargeDate >= $today;
-        });
+                return is_null($dischargeDate) || $dischargeDate >= $today;
+            }
+        );
 
         if (empty($boards)) {
             return null;

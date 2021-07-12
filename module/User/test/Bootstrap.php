@@ -83,14 +83,16 @@ class Bootstrap
         }
 
         include $zf2Path . '/Zend/Loader/AutoloaderFactory.php';
-        AutoloaderFactory::factory([
+        AutoloaderFactory::factory(
+            [
             'Zend\Loader\StandardAutoloader' => [
                 'autoregister_zf' => true,
                 'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/' . __NAMESPACE__,
                 ],
             ],
-        ]);
+            ]
+        );
     }
 
     protected static function findParentPath($path)

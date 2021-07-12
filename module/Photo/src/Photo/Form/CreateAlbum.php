@@ -14,21 +14,25 @@ class CreateAlbum extends Form
     {
         parent::__construct();
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'name',
             'type' => 'Zend\Form\Element\Text',
             'options' => [
                 'label' => $translate->translate('Album title')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit',
             'options' => [
                 'label' => $translate->translate('Create')
             ]
-        ]);
+            ]
+        );
 
         $this->initFilters();
     }
@@ -37,7 +41,8 @@ class CreateAlbum extends Form
     {
         $filter = new InputFilter();
 
-        $filter->add([
+        $filter->add(
+            [
             'name' => 'name',
             'required' => true,
             'validators' => [
@@ -50,9 +55,9 @@ class CreateAlbum extends Form
                     ]
                 ]
             ]
-        ]);
+            ]
+        );
 
         $this->setInputFilter($filter);
     }
-
 }

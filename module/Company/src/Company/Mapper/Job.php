@@ -51,11 +51,13 @@ class Job
     public function isSlugNameUnique($companySlug, $slugName, $jid, $category)
     {
         // A slug in unique if there is no other slug of the same category and same language
-        $objects = $this->findJob([
+        $objects = $this->findJob(
+            [
             'companySlugName' => $companySlug,
             'jobSlug' => $slugName,
             'jobCategoryId' => $category,
-        ]);
+            ]
+        );
         foreach ($objects as $job) {
             // If the current job is in the database under the same slug, we can safely skip it
             if ($job->getId() == $jid) {

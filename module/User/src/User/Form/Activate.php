@@ -14,29 +14,35 @@ class Activate extends Form implements InputFilterProviderInterface
     {
         parent::__construct();
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'password',
             'type' => 'password',
             'options' => [
                 'label' => $translate->translate('Your password')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'password_verify',
             'type' => 'password',
             'options' => [
                 'label' => $translate->translate('Verify your password')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
                 'value' => $translate->translate('Activate')
             ]
-        ]);
+            ]
+        );
     }
 
     public function getInputFilterSpecification()

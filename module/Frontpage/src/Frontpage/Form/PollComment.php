@@ -13,29 +13,35 @@ class PollComment extends Form implements InputFilterProviderInterface
     {
         parent::__construct();
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'author',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Author')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'content',
             'type' => 'textarea',
             'options' => [
                 'label' => $translator->translate('Content')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
                 'value' => $translator->translate('Comment')
             ]
-        ]);
+            ]
+        );
         $this->get('submit')->setLabel($translator->translate('Comment'));
     }
 

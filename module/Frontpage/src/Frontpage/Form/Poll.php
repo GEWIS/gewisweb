@@ -13,23 +13,28 @@ class Poll extends Form implements InputFilterProviderInterface
     {
         parent::__construct();
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'dutchQuestion',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Dutch question')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'englishQuestion',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('English question')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'options',
             'type' => 'Zend\Form\Element\Collection',
             'options' => [
@@ -40,15 +45,18 @@ class Poll extends Form implements InputFilterProviderInterface
                     'type' => 'Frontpage\Form\PollOption'
                 ]
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
                 'value' => $translator->translate('Submit')
             ]
-        ]);
+            ]
+        );
     }
 
     /**

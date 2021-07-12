@@ -19,7 +19,8 @@ class EditLabel extends CollectionBaseFieldsetAwareForm
         $this->setAttribute('method', 'post');
         $this->setLanguages($languages);
 
-        $this->add([
+        $this->add(
+            [
             'type' => '\Company\Form\FixedKeyDictionaryCollection',
             'name' => 'labels',
             'hydrator' => $this->getHydrator(),
@@ -29,16 +30,19 @@ class EditLabel extends CollectionBaseFieldsetAwareForm
                 'target_element' => new LabelFieldset($translate, $this->getHydrator()),
                 'items' => $languages,
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'attributes' => [
                 'type' => 'submit',
                 'value' => $translate->translate('Submit changes'),
                 'id' => 'submitbutton',
             ],
-        ]);
+            ]
+        );
     }
 
     public function setLanguages($languages)

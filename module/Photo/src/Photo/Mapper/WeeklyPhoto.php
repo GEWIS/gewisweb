@@ -97,5 +97,4 @@ class WeeklyPhoto
     {
         return $this->em->getRepository('Photo\Model\WeeklyPhoto');
     }
-
 }

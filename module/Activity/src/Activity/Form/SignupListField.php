@@ -24,7 +24,8 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
         $this->setHydrator(new ClassMethodsHydrator(false))
             ->setObject(new SignupField());
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'name',
             'attributes' => [
                 'type' => 'text',
@@ -32,9 +33,11 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => $translator->translate('Name'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'nameEn',
             'attributes' => [
                 'type' => 'text',
@@ -42,9 +45,11 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => $translator->translate('Name'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'type',
             'type' => 'Zend\Form\Element\Select',
             'options' => [
@@ -56,9 +61,11 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                 ],
                 'label' => $translator->translate('Type'),
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'minimumValue',
             'attributes' => [
                 'type' => 'number',
@@ -66,9 +73,11 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => $translator->translate('Min. value'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'maximumValue',
             'attributes' => [
                 'type' => 'number',
@@ -76,9 +85,11 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => $translator->translate('Max. value'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'options',
             'attributes' => [
                 'placeholder' => $translator->translate('Option 1, Option 2, ...'),
@@ -87,9 +98,11 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => $translator->translate('Options'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'optionsEn',
             'attributes' => [
                 'placeholder' => $translator->translate('Option 1, Option 2, ...'),
@@ -98,7 +111,8 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => $translator->translate('Options'),
             ],
-        ]);
+            ]
+        );
     }
 
     /**

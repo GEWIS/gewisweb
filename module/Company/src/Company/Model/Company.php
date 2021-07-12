@@ -361,9 +361,14 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function getNumberOfExpiredPackages()
     {
-        return count(array_filter($this->getPackages()->toArray(), function ($package) {
-            return $package->isExpired(new DateTime());
-        }));
+        return count(
+            array_filter(
+                $this->getPackages()->toArray(),
+                function ($package) {
+                    return $package->isExpired(new DateTime());
+                }
+            )
+        );
     }
 
     /**
@@ -376,9 +381,12 @@ class Company // implements ArrayHydrator (for zend2 form)
             function ($package) {
                 return $package->getLanguage();
             },
-            array_filter($this->getPackages()->toArray(), function ($package) {
-                return $package->getType() === 'featured' && $package->isActive();
-            })
+            array_filter(
+                $this->getPackages()->toArray(),
+                function ($package) {
+                    return $package->getType() === 'featured' && $package->isActive();
+                }
+            )
         );
     }
 
@@ -388,9 +396,12 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function isBannerActive()
     {
-        $banners = array_filter($this->getPackages()->toArray(), function ($package) {
-            return $package->getType() === 'banner' && $package->isActive();
-        });
+        $banners = array_filter(
+            $this->getPackages()->toArray(),
+            function ($package) {
+                return $package->getType() === 'banner' && $package->isActive();
+            }
+        );
 
         return !empty($banners);
     }
@@ -421,9 +432,11 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function getTranslationFromLocale($locale)
     {
-        $companyLanguages = $this->getTranslations()->map(function ($value) {
-            return $value->getLanguage();
-        });
+        $companyLanguages = $this->getTranslations()->map(
+            function ($value) {
+                return $value->getLanguage();
+            }
+        );
 
         if ($companyLanguages->contains($locale)) {
             return $this->getTranslations()[$companyLanguages->indexOf($locale)];

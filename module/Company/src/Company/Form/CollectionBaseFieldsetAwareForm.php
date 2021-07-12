@@ -15,13 +15,15 @@ class CollectionBaseFieldsetAwareForm extends Form
     public function bind($object, $flags = FormInterface::VALUES_NORMALIZED)
     {
         if (!in_array($flags, array(FormInterface::VALUES_NORMALIZED, FormInterface::VALUES_RAW))) {
-            throw new InvalidArgumentException(sprintf(
-                '%s expects the $flags argument to be one of "%s" or "%s"; received "%s"',
-                __METHOD__,
-                'Zend\Form\FormInterface::VALUES_NORMALIZED',
-                'Zend\Form\FormInterface::VALUES_RAW',
-                $flags
-            ));
+            throw new InvalidArgumentException(
+                sprintf(
+                    '%s expects the $flags argument to be one of "%s" or "%s"; received "%s"',
+                    __METHOD__,
+                    'Zend\Form\FormInterface::VALUES_NORMALIZED',
+                    'Zend\Form\FormInterface::VALUES_RAW',
+                    $flags
+                )
+            );
         }
 
         if ($this->baseFieldset !== null) {

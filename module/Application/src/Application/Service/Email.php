@@ -2,7 +2,6 @@
 
 namespace Application\Service;
 
-
 use Decision\Model\Member;
 use Decision\Model\OrganInformation;
 use User\Model\User;

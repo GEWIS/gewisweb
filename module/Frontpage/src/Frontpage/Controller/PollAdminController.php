@@ -39,11 +39,13 @@ class PollAdminController extends AbstractActionController
 
         $approvalForm = $this->pollService->getPollApprovalForm();
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'unapprovedPolls' => $unapprovedPolls,
             'paginator' => $paginator,
             'approvalForm' => $approvalForm
-        ]);
+            ]
+        );
     }
 
     /**

@@ -14,37 +14,45 @@ class EditAlbum extends Form
     {
         parent::__construct();
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'name',
             'type' => 'Zend\Form\Element\Text',
             'options' => [
                 'label' => $translate->translate('Album title')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'startDateTime',
             'type' => 'Zend\Form\Element\DateTime',
             'options' => [
                 'label' => $translate->translate('Start date')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'endDateTime',
             'type' => 'Zend\Form\Element\DateTime',
             'options' => [
                 'label' => $translate->translate('End date')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit',
             'options' => [
                 'label' => $translate->translate('Save')
             ]
-        ]);
+            ]
+        );
 
         $this->initFilters();
     }
@@ -53,7 +61,8 @@ class EditAlbum extends Form
     {
         $filter = new InputFilter();
 
-        $filter->add([
+        $filter->add(
+            [
             'name' => 'name',
             'required' => true,
             'validators' => [
@@ -65,9 +74,9 @@ class EditAlbum extends Form
                     ]
                 ]
             ]
-        ]);
+            ]
+        );
 
         $this->setInputFilter($filter);
     }
-
 }

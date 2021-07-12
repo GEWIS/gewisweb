@@ -28,7 +28,8 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
 
     public function setupElements()
     {
-        $this->add([
+        $this->add(
+            [
             'type' => Radio::class,
             'name' => 'direction',
             'options' => [
@@ -44,15 +45,18 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
                     'disable_html_escape' => true, // Required to render HTML icons
                 ],
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'type' => Hidden::class,
             'name' => 'document',
             'attributes' => [
                 'value' => null, // Value should be populated in the view
             ]
-        ]);
+            ]
+        );
 
         return $this;
     }

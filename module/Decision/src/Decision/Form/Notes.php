@@ -29,7 +29,8 @@ class Notes extends Form implements InputFilterProviderInterface
                 . ' (' . $meeting->getDate()->format('Y-m-d') . ')';
         }
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'meeting',
             'type' => 'select',
             'options' => [
@@ -37,24 +38,29 @@ class Notes extends Form implements InputFilterProviderInterface
                 'empty_option' => $translator->translate('Choose a meeting'),
                 'value_options' => $options
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'upload',
             'type' => 'file',
             'option' => [
                 'label' => $translator->translate('Notes to upload')
             ]
-        ]);
+            ]
+        );
         $this->get('upload')->setLabel($translator->translate('Notes to upload'));
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
                 'value' => $translator->translate('Submit')
             ]
-        ]);
+            ]
+        );
     }
 
     /**
@@ -65,11 +71,13 @@ class Notes extends Form implements InputFilterProviderInterface
     public function setError($error)
     {
         if ($error == self::ERROR_FILE_EXISTS) {
-            $this->setMessages([
+            $this->setMessages(
+                [
                 'meeting' => [
                     $this->translator->translate('There already are notes for this meeting')
                 ]
-            ]);
+                ]
+            );
         }
     }
 

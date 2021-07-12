@@ -127,11 +127,13 @@ class AdminController extends AbstractActionController
 
         $form->setData($activityData);
 
-        $viewModel = new ViewModel([
+        $viewModel = new ViewModel(
+            [
             'form' => $form,
             'action' => $translator->translate('Update Activity'),
             'allowSignupList' => $allowSignupList,
-        ]);
+            ]
+        );
         $viewModel->setTemplate('activity/activity/create.phtml');
 
         return $viewModel;
@@ -316,10 +318,13 @@ class AdminController extends AbstractActionController
         }
         $session->success = $success;
         $session->message = $message;
-        $this->redirect()->toRoute('activity_admin/participants', [
+        $this->redirect()->toRoute(
+            'activity_admin/participants',
+            [
             'id' => $activityId,
             'signupList' => $signupListId,
-        ]);
+            ]
+        );
     }
 
     public function externalSignoffAction()

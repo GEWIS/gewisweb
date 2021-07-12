@@ -22,28 +22,35 @@ class EditCompany extends Form
 
         $this->setAttribute('method', 'post');
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'id',
             'attributes' => [
                 'type' => 'hidden',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'translations',
             'attributes' => [
                 'type' => 'hidden',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'languageNeutralId',
             'attributes' => [
                 'type' => 'hidden',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'slugName',
             'attributes' => [
                 'type' => 'text',
@@ -53,9 +60,11 @@ class EditCompany extends Form
                 'label' => $translate->translate('Permalink'),
                 'required' => 'required',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'name',
             'attributes' => [
                 'type' => 'text',
@@ -65,9 +74,11 @@ class EditCompany extends Form
                 'label' => $translate->translate('Name'),
                 'required' => 'required',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'languages',
             'type' => 'MultiCheckbox',
             'options' => [
@@ -77,9 +88,11 @@ class EditCompany extends Form
                     'nl' => $translate->translate('Dutch'),
                 ],
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'address',
             'type' => 'Zend\Form\Element\Textarea',
             'attributes' => [
@@ -88,10 +101,12 @@ class EditCompany extends Form
             'options' => [
                 'label' => $translate->translate('Location'),
             ],
-        ]);
+            ]
+        );
 
         // English version
-        $this->add([
+        $this->add(
+            [
             'name' => 'en_website',
             'type' => 'Zend\Form\Element\Url',
             'attributes' => [
@@ -99,10 +114,12 @@ class EditCompany extends Form
             'options' => [
                 'label' => $translate->translate('Website'),
             ],
-        ]);
+            ]
+        );
 
         // Dutch version
-        $this->add([
+        $this->add(
+            [
             'name' => 'nl_website',
             'type' => 'Zend\Form\Element\Url',
             'attributes' => [
@@ -110,9 +127,11 @@ class EditCompany extends Form
             'options' => [
                 'label' => $translate->translate('Website'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'en_slogan',
             'attributes' => [
                 'type' => 'text',
@@ -120,9 +139,11 @@ class EditCompany extends Form
             'options' => [
                 'label' => $translate->translate('Slogan'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'nl_slogan',
             'attributes' => [
                 'type' => 'text',
@@ -130,9 +151,11 @@ class EditCompany extends Form
             'options' => [
                 'label' => $translate->translate('Slogan'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'email',
             'type' => 'Zend\Form\Element\Email',
             'attributes' => [
@@ -140,9 +163,11 @@ class EditCompany extends Form
             'options' => [
                 'label' => $translate->translate('Email'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'contactName',
             'attributes' => [
                 'type' => 'text',
@@ -150,9 +175,11 @@ class EditCompany extends Form
             'options' => [
                 'label' => $translate->translate('Contact name'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'phone',
             'attributes' => [
                 'type' => 'text',
@@ -160,9 +187,11 @@ class EditCompany extends Form
             'options' => [
                 'label' => $translate->translate('Phone'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'nl_logo',
             'type' => '\Zend\Form\Element\File',
             'attributes' => [
@@ -171,9 +200,11 @@ class EditCompany extends Form
             'options' => [
                 'label' => $translate->translate('Logo'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'en_logo',
             'type' => '\Zend\Form\Element\File',
             'attributes' => [
@@ -182,9 +213,11 @@ class EditCompany extends Form
             'options' => [
                 'label' => $translate->translate('Logo'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'en_description',
             'type' => 'Zend\Form\Element\Textarea',
             'options' => [
@@ -193,9 +226,11 @@ class EditCompany extends Form
             'attributes' => [
                 'type' => 'textarea',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'nl_description',
             'type' => 'Zend\Form\Element\Textarea',
             'options' => [
@@ -204,9 +239,11 @@ class EditCompany extends Form
             'attributes' => [
                 'type' => 'textarea',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'hidden',
             'type' => 'Zend\Form\Element\Checkbox',
             'attributes' => [
@@ -214,16 +251,19 @@ class EditCompany extends Form
             'options' => [
                 'label' => $translate->translate('Hide this company'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'attributes' => [
                 'type' => 'submit',
                 'value' => $translate->translate('Submit changes'),
                 'id' => 'submitbutton',
             ],
-        ]);
+            ]
+        );
 
         $this->initFilters($translate);
     }
@@ -232,7 +272,8 @@ class EditCompany extends Form
     {
         $filter = new InputFilter();
 
-        $filter->add([
+        $filter->add(
+            [
             'name' => 'name',
             'required' => true,
             'validators' => [
@@ -248,26 +289,34 @@ class EditCompany extends Form
                 ['name' => 'StripTags'],
                 ['name' => 'StringTrim'],
             ],
-        ]);
+            ]
+        );
 
-        $filter->add([
+        $filter->add(
+            [
             'name' => 'slugName',
             'required' => true,
             'validators' => [
-                new Callback([
+                new Callback(
+                    [
                     'callback' => [$this, 'slugNameUnique'],
                     'message' => $translate->translate('This slug is already taken'),
-                ]),
-                new Regex([
+                    ]
+                ),
+                new Regex(
+                    [
                     'message' => $translate->translate('This slug contains invalid characters'),
                     'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
-                ]),
+                    ]
+                ),
             ],
             'filters' => [
             ],
-        ]);
+            ]
+        );
 
-        $filter->add([
+        $filter->add(
+            [
             'name' => 'en_website',
             'required' => false,
             'filters' => [
@@ -276,9 +325,11 @@ class EditCompany extends Form
             ],
             'validators' => [
             ]
-        ]);
+            ]
+        );
 
-        $filter->add([
+        $filter->add(
+            [
             'name' => 'nl_website',
             'required' => false,
             'filters' => [
@@ -287,9 +338,11 @@ class EditCompany extends Form
             ],
             'validators' => [
             ]
-        ]);
+            ]
+        );
 
-        $filter->add([
+        $filter->add(
+            [
             'name' => 'en_description',
             'required' => false,
             'validators' => [
@@ -301,9 +354,11 @@ class EditCompany extends Form
                     ]
                 ]
             ]
-        ]);
+            ]
+        );
 
-        $filter->add([
+        $filter->add(
+            [
             'name' => 'nl_description',
             'required' => false,
             'validators' => [
@@ -315,9 +370,11 @@ class EditCompany extends Form
                     ]
                 ]
             ]
-        ]);
+            ]
+        );
 
-        $filter->add([
+        $filter->add(
+            [
             'name' => 'contactName',
             'required' => false,
             'validators' => [
@@ -328,9 +385,11 @@ class EditCompany extends Form
                     ],
                 ],
             ],
-        ]);
+            ]
+        );
 
-        $filter->add([
+        $filter->add(
+            [
             'name' => 'email',
             'required' => false,
             'validators' => [
@@ -347,9 +406,11 @@ class EditCompany extends Form
                 ['name' => 'StripTags'],
                 ['name' => 'StringTrim'],
             ],
-        ]);
+            ]
+        );
 
-        $filter->add([
+        $filter->add(
+            [
             'name' => 'en_logo',
             'required' => false,
             'validators' => [
@@ -360,9 +421,11 @@ class EditCompany extends Form
                     ],
                 ],
             ],
-        ]);
+            ]
+        );
 
-        $filter->add([
+        $filter->add(
+            [
             'name' => 'nl_logo',
             'required' => false,
             'validators' => [
@@ -373,7 +436,8 @@ class EditCompany extends Form
                     ],
                 ],
             ],
-        ]);
+            ]
+        );
 
         $this->setInputFilter($filter);
     }

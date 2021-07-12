@@ -20,25 +20,30 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
         parent::__construct('category');
         $this->translator = $translator;
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'language_dutch',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
                 'checked_value' => 1,
                 'unchecked_value' => 0,
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'language_english',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
                 'checked_value' => 1,
                 'unchecked_value' => 0,
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'name',
             'attributes' => [
                 'type' => 'text',
@@ -46,9 +51,11 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
             'options' => [
                 'label' => $translator->translate('Name'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'nameEn',
             'attributes' => [
                 'type' => 'text',
@@ -56,15 +63,18 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
             'options' => [
                 'label' => $translator->translate('Name'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'attributes' => [
                 'type' => 'submit',
                 'value' => 'Create',
             ],
-        ]);
+            ]
+        );
     }
 
     /**

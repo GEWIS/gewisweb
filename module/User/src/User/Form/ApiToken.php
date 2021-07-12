@@ -12,21 +12,25 @@ class ApiToken extends Form implements InputFilterProviderInterface
     {
         parent::__construct();
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'name',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Name')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
                 'value' => $translator->translate('Create API token')
             ]
-        ]);
+            ]
+        );
     }
 
     public function getInputFilterSpecification()

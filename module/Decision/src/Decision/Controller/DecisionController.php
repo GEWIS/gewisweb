@@ -26,9 +26,11 @@ class DecisionController extends AbstractActionController
      */
     public function indexAction()
     {
-        return new ViewModel([
+        return new ViewModel(
+            [
             'meetings' => $this->decisionService->getMeetings()
-        ]);
+            ]
+        );
     }
 
     /**
@@ -80,9 +82,11 @@ class DecisionController extends AbstractActionController
         try {
             $meeting = $this->decisionService->getMeeting($type, $number);
 
-            return new ViewModel([
+            return new ViewModel(
+                [
                 'meeting' => $meeting
-            ]);
+                ]
+            );
         } catch (NoResultException $e) {
             return $this->notFoundAction();
         }
@@ -99,16 +103,20 @@ class DecisionController extends AbstractActionController
             $result = $this->decisionService->search($request->getPost());
 
             if (null !== $result) {
-                return new ViewModel([
+                return new ViewModel(
+                    [
                     'result' => $result,
                     'form' => $this->decisionService->getSearchDecisionForm()
-                ]);
+                    ]
+                );
             }
         }
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $this->decisionService->getSearchDecisionForm()
-        ]);
+            ]
+        );
     }
 
     public function authorizationsAction()
@@ -123,20 +131,24 @@ class DecisionController extends AbstractActionController
         if ($request->isPost()) {
             $authorization = $this->decisionService->createAuthorization($request->getPost());
             if ($authorization) {
-                return new ViewModel([
+                return new ViewModel(
+                    [
                     'meeting' => $meeting,
                     'authorization' => $authorization
-                ]);
+                    ]
+                );
             }
         }
 
         $form = $this->decisionService->getAuthorizationForm();
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'meeting' => $meeting,
             'authorization' => $authorization,
             'form' => $form
-        ]);
+            ]
+        );
     }
 
     /**
@@ -170,12 +182,14 @@ class DecisionController extends AbstractActionController
             $trailingSlash = (strlen($path) > 0 && $path[strlen($path) - 1] === '/');
             $array = explode('/', substr($path, 0, -1));
             $array1 = explode('/', $path);
-            return new ViewModel([
+            return new ViewModel(
+                [
                 'folderName' => $trailingSlash ? end($array) : end($array1),
                 'folder' => $folder,
                 'path' => $path,
                 'trailingSlash' => $trailingSlash,
-            ]);
+                ]
+            );
         }
         //download the file
         $result = $fileReader->downloadFile($path);

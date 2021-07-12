@@ -69,11 +69,14 @@ class ActivityController extends AbstractActionController
 
         // If the Activity has a sign-up list always display it by redirecting the request.
         if ($activity->getSignupLists()->count() !== 0) {
-            return $this->forward()->dispatch('Activity\Controller\Activity', [
+            return $this->forward()->dispatch(
+                'Activity\Controller\Activity',
+                [
                 'action' => 'viewSignupList',
                 'id' => $activityId,
                 'signupList' => $activity->getSignupLists()->first()->getId(),
-            ]);
+                ]
+            );
         }
 
         return [
@@ -119,7 +122,8 @@ class ActivityController extends AbstractActionController
         $subscriptionCloseDatePassed = $signupList->getCloseDate() < new DateTime();
         $isArchived = $activity->getEndTime() < new DateTime();
 
-        $view = new ViewModel([
+        $view = new ViewModel(
+            [
             'activity' => $activity,
             'signupLists' => $signupLists,
             'signupList' => $signupList,
@@ -138,7 +142,8 @@ class ActivityController extends AbstractActionController
             'memberSignups' => $this->signupService->getNumberOfSubscribedMembers($signupList),
             'subscriptionOpenDatePassed' => $subscriptionOpenDatePassed,
             'subscriptionCloseDatePassed' => $subscriptionCloseDatePassed,
-        ]);
+            ]
+        );
         $view->setTemplate('activity/activity/view.phtml');
 
         // Retrieve and clear the request status from the session, if it exists.
@@ -298,10 +303,13 @@ class ActivityController extends AbstractActionController
         $session->success = $success;
         $session->message = $message;
 
-        return $this->redirect()->toRoute('activity/view/signuplist', [
+        return $this->redirect()->toRoute(
+            'activity/view/signuplist',
+            [
             'id' => $activityId,
             'signupList' => $signupListId,
-        ]);
+            ]
+        );
     }
 
     public function externalSignupAction()
@@ -440,10 +448,12 @@ class ActivityController extends AbstractActionController
             $year = max($years);
         }
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'activeYear' => $year,
             'years' => $years,
             'activities' => $this->activityQueryService->getFinishedActivitiesByYear($year)
-        ]);
+            ]
+        );
     }
 }

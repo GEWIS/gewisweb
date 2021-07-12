@@ -14,13 +14,15 @@ class TempUpload extends Form implements InputFilterProviderInterface
     {
         parent::__construct();
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'file',
             'type' => 'file',
             'option' => [
                 'label' => $translator->translate('Exam to upload')
             ]
-        ]);
+            ]
+        );
         $this->get('file')->setLabel($translator->translate('Exam to upload'));
     }
 

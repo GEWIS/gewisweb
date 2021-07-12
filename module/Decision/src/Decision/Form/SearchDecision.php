@@ -13,22 +13,26 @@ class SearchDecision extends Form implements InputFilterProviderInterface
     {
         parent::__construct();
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'query',
             'type' => 'text',
             'options' => [
                 'label' => $translate->translate('Search query')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
                 'value' => $translate->translate('Search'),
                 'label' => $translate->translate('Search')
             ]
-        ]);
+            ]
+        );
     }
 
     /**

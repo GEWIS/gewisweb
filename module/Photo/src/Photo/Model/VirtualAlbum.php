@@ -67,8 +67,12 @@ class VirtualAlbum extends Album
     public function addPhotos(array $photos)
     {
         $this->photos
-            = new ArrayCollection(array_merge($this->photos->toArray(),
-            $photos));
+            = new ArrayCollection(
+                array_merge(
+                    $this->photos->toArray(),
+                    $photos
+                )
+            );
     }
 
     /**
@@ -146,5 +150,4 @@ class VirtualAlbum extends Album
     {
         return 0;
     }
-
 }

@@ -18,31 +18,38 @@ class Login extends Form
         parent::__construct();
         $this->translate = $translate;
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'login',
             'type' => 'text',
             'options' => [
                 'label' => $translate->translate('Membership number or email address')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'password',
             'type' => 'password',
             'options' => [
                 'label' => $translate->translate('Your password')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
                 'value' => $translate->translate('Login')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'remember',
             'type' => 'checkbox',
             'options' => [
@@ -51,17 +58,22 @@ class Login extends Form
                 'unchecked_value' => 0,
                 'checked' => true
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'redirect',
             'type' => 'hidden'
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'security',
             'type' => 'Zend\Form\Element\Csrf'
-        ]);
+            ]
+        );
 
         $this->initFilters();
     }
@@ -74,25 +86,31 @@ class Login extends Form
         if (!$result->isValid()) {
             switch ($result->getCode()) {
                 case Result::FAILURE_IDENTITY_NOT_FOUND:
-                    $this->setMessages([
+                    $this->setMessages(
+                        [
                         'login' => [
                             $this->translate->translate('This user could not be found.')
                         ]
-                    ]);
+                        ]
+                    );
                     break;
                 case Result::FAILURE_CREDENTIAL_INVALID:
-                    $this->setMessages([
+                    $this->setMessages(
+                        [
                         'password' => [
                             $this->translate->translate('Wrong password provided.')
                         ]
-                    ]);
+                        ]
+                    );
                     break;
                 case Result::FAILURE:
-                    $this->setMessages([
+                    $this->setMessages(
+                        [
                         'password' => [
                             $this->translate->translate('Too many login attempts, try again later.')
                         ]
-                    ]);
+                        ]
+                    );
                     break;
             }
         }
@@ -102,15 +120,18 @@ class Login extends Form
     {
         $filter = new InputFilter();
 
-        $filter->add([
+        $filter->add(
+            [
             'name' => 'login',
             'required' => true,
             'validators' => [
                 ['name' => NotEmpty::class]
             ]
-        ]);
+            ]
+        );
 
-        $filter->add([
+        $filter->add(
+            [
             'name' => 'password',
             'required' => true,
             'validators' => [
@@ -122,7 +143,8 @@ class Login extends Form
                     ]
                 ]
             ]
-        ]);
+            ]
+        );
 
         $this->setInputFilter($filter);
     }

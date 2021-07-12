@@ -2,7 +2,6 @@
 
 namespace Photo\Service;
 
-
 use DateTime;
 
 /**

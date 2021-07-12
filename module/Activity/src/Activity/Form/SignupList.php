@@ -25,7 +25,8 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
         $this->setHydrator(new ClassMethodsHydrator(false))
             ->setObject(new \Activity\Model\SignupList());
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'name',
             'attributes' => [
                 'type' => 'text',
@@ -33,9 +34,11 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => $translator->translate('Name'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'nameEn',
             'attributes' => [
                 'type' => 'text',
@@ -43,25 +46,31 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => $translator->translate('Name'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'openDate',
             'type' => 'datetime',
             'options' => [
                 'format' => 'Y/m/d H:i'
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'closeDate',
             'type' => 'datetime',
             'options' => [
                 'format' => 'Y/m/d H:i'
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'onlyGEWIS',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
@@ -71,18 +80,22 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
             'attributes' => [
                 'value' => 1,
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'displaySubscribedNumber',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
                 'checked_value' => 1,
                 'unchecked_value' => 0,
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'fields',
             'type' => 'Zend\Form\Element\Collection',
             'options' => [
@@ -92,7 +105,8 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 'allow_add' => true,
                 'target_element' => new SignupListField($translator),
             ],
-        ]);
+            ]
+        );
     }
 
     /**

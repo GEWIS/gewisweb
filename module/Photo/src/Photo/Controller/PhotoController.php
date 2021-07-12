@@ -40,11 +40,13 @@ class PhotoController extends AbstractActionController
         }
         $albums = $this->albumService->getAlbumsByYear($year);
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'activeYear' => $year,
             'years' => $years,
             'albums' => $albums
-        ]);
+            ]
+        );
     }
 
     /**
@@ -86,10 +88,13 @@ class PhotoController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        $photoData = array_merge($photoData, [
+        $photoData = array_merge(
+            $photoData,
+            [
             'memberAlbum' => $memberAlbum,
             'memberAlbumPage' => $page,
-        ]);
+            ]
+        );
 
         $this->photoService->countHit($photoData['photo']);
 
@@ -113,9 +118,11 @@ class PhotoController extends AbstractActionController
     {
         $weeklyPhotos = $this->photoService->getPhotosOfTheWeek();
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'weeklyPhotos' => $weeklyPhotos
-        ]);
+            ]
+        );
     }
 
     /**
@@ -126,9 +133,12 @@ class PhotoController extends AbstractActionController
         $photoId = $this->params()->fromRoute('photo_id');
         $this->photoService->setProfilePhoto($photoId);
 
-        return $this->redirect()->toRoute('photo/photo', [
+        return $this->redirect()->toRoute(
+            'photo/photo',
+            [
             'photo_id' => $photoId,
-        ]);
+            ]
+        );
     }
 
     /**
@@ -140,9 +150,12 @@ class PhotoController extends AbstractActionController
         $this->photoService->removeProfilePhoto();
 
         if ($photoId != null) {
-            return $this->redirect()->toRoute('photo/photo', [
+            return $this->redirect()->toRoute(
+                'photo/photo',
+                [
                 'photo_id' => $photoId,
-            ]);
+                ]
+            );
         }
 
         return $this->redirect()->toRoute('member/self');
@@ -162,5 +175,4 @@ class PhotoController extends AbstractActionController
 
         return $this->getResponse();
     }
-
 }

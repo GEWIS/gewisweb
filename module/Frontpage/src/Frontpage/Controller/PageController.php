@@ -30,9 +30,11 @@ class PageController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'page' => $page,
             'parents' => $parents
-        ]);
+            ]
+        );
     }
 }

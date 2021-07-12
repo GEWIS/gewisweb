@@ -21,33 +21,41 @@ class Document extends Form implements InputFilterProviderInterface
         parent::__construct();
         $this->translator = $translator;
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'meeting',
             'type' => 'hidden',
             'options' => [
                 'label' => $translator->translate('Meeting'),
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'name',
             'type' => 'text',
-        ]);
+            ]
+        );
         $this->get('name')->setLabel($translator->translate('Document name'));
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'upload',
             'type' => 'file',
-        ]);
+            ]
+        );
         $this->get('upload')->setLabel($translator->translate('Document to upload'));
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
                 'value' => $translator->translate('Upload document')
             ]
-        ]);
+            ]
+        );
     }
 
     /**

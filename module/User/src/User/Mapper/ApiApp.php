@@ -27,9 +27,11 @@ class ApiApp
      */
     public function findByAppId($appId)
     {
-        return $this->getRepository()->findOneBy([
+        return $this->getRepository()->findOneBy(
+            [
             'appId' => $appId
-        ]);
+            ]
+        );
     }
 
     /**

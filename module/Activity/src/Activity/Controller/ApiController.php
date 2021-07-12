@@ -107,8 +107,10 @@ class ApiController extends AbstractActionController
     {
         $activities = $this->signupService->getSignedUpActivityIds();
 
-        return new JsonModel([
+        return new JsonModel(
+            [
             'activities' => $activities
-        ]);
+            ]
+        );
     }
 }

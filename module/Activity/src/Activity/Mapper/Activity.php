@@ -118,18 +118,20 @@ class Activity
         }
 
         // Do sorting based on start time
-        usort($result, function ($a, $b) {
-            $beginA = $a->getBeginTime();
-            $beginB = $b->getBeginTime();
-            return $beginA < $beginB ? -1 : 1;
-        });
+        usort(
+            $result,
+            function ($a, $b) {
+                $beginA = $a->getBeginTime();
+                $beginB = $b->getBeginTime();
+                return $beginA < $beginB ? -1 : 1;
+            }
+        );
 
         $size = count($result);
 
         for ($i = 0; $i < $size; $i++) {
             for ($j = $i + 1; $j < $size; $j++) {
-                if (
-                    array_key_exists($i, $result)
+                if (array_key_exists($i, $result)
                     && array_key_exists($j, $result)
                     && $result[$i]->getId() == $result[$j]->getId()
                 ) {
@@ -248,10 +250,12 @@ class Activity
         $qb->join('a.creator', 'u');
 
         if (!is_null($organs) && !is_null($userid)) {
-            $qb->andWhere($qb->expr()->orX(
-                $qb->expr()->in('a.organ', ':organs'),
-                'u.lidnr = :userid'
-            ))
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->in('a.organ', ':organs'),
+                    'u.lidnr = :userid'
+                )
+            )
                 ->setParameter('organs', $organs)
                 ->setParameter('userid', $userid);
         }

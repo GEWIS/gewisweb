@@ -162,7 +162,8 @@ class Module
                 },
                 'photo_hydrator_album' => function (ServiceLocatorInterface $sm) {
                     return new DoctrineObject(
-                        $sm->get('photo_doctrine_em'), 'Photo\Model\Album'
+                        $sm->get('photo_doctrine_em'),
+                        'Photo\Model\Album'
                     );
                 },
                 'photo_mapper_album' => function (ServiceLocatorInterface $sm) {

@@ -61,8 +61,11 @@ class AlbumPaginatorAdapter implements AdapterInterface
      */
     public function getItems($offset, $itemCountPerPage)
     {
-        $albums = $this->albumService->getAlbums($this->album, $offset,
-            $itemCountPerPage);
+        $albums = $this->albumService->getAlbums(
+            $this->album,
+            $offset,
+            $itemCountPerPage
+        );
 
         $photoCount = $itemCountPerPage - count($albums);
         $photoStart = max($offset - $this->album->getAlbumCount(), 0);

@@ -38,11 +38,13 @@ class Page
      */
     public function findPage($category, $subCategory = null, $name = null)
     {
-        return $this->getRepository()->findOneBy([
+        return $this->getRepository()->findOneBy(
+            [
             'category' => $category,
             'subCategory' => $subCategory,
             'name' => $name
-        ]);
+            ]
+        );
     }
 
     /**

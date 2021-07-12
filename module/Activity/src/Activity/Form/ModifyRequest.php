@@ -17,18 +17,22 @@ class ModifyRequest extends Form implements InputFilterProviderInterface
         parent::__construct($name);
         $this->setAttribute('method', 'post');
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'security',
             'type' => 'Zend\Form\Element\Csrf'
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'attributes' => [
                 'type' => 'submit',
                 'value' => $buttonvalue,
             ],
-        ]);
+            ]
+        );
     }
 
     public function getInputFilterSpecification()

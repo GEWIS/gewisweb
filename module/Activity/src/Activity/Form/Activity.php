@@ -43,138 +43,173 @@ class Activity extends Form implements InputFilterProviderInterface
             $categoryOptions[$category->getId()] = $category->getName();
         }
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'organ',
             'type' => 'select',
             'options' => [
                 'value_options' => $organOptions
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'company',
             'type' => 'select',
             'options' => [
                 'value_options' => $companyOptions
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'beginTime',
             'type' => 'datetime',
             'options' => [
                 'format' => 'Y/m/d H:i'
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'endTime',
             'type' => 'datetime',
             'options' => [
                 'format' => 'Y/m/d H:i'
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'language_dutch',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
                 'checked_value' => 1,
                 'unchecked_value' => 0,
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'language_english',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
                 'checked_value' => 1,
                 'unchecked_value' => 0,
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'name',
             'attributes' => [
                 'type' => 'text',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'nameEn',
             'attributes' => [
                 'type' => 'text',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'location',
             'attributes' => [
                 'type' => 'text',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'locationEn',
             'attributes' => [
                 'type' => 'text',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'costs',
             'attributes' => [
                 'type' => 'text',
             ],
-        ]);
-        $this->add([
+            ]
+        );
+        $this->add(
+            [
             'name' => 'costsEn',
             'attributes' => [
                 'type' => 'text',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'description',
             'attributes' => [
                 'type' => 'textarea',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'descriptionEn',
             'attributes' => [
                 'type' => 'textarea',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'isMyFuture',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
                 'checked_value' => 1,
                 'unchecked_value' => 0,
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'requireGEFLITST',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
                 'checked_value' => 1,
                 'unchecked_value' => 0,
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'categories',
             'type' => 'Zend\Form\Element\MultiCheckbox',
             'options' => [
                 'value_options' => $categoryOptions
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'signupLists',
             'type' => 'Zend\Form\Element\Collection',
             'options' => [
@@ -184,15 +219,18 @@ class Activity extends Form implements InputFilterProviderInterface
                 'allow_add' => true,
                 'target_element' => new SignupList($translator),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'attributes' => [
                 'type' => 'submit',
                 'value' => 'Create',
             ],
-        ]);
+            ]
+        );
     }
 
     /**

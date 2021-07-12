@@ -24,14 +24,17 @@ class JobFieldset extends Fieldset
 
     public function addFields($translator)
     {
-        $this->add([
+        $this->add(
+            [
             'name' => 'id',
             'attributes' => [
                 'type' => 'hidden',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'name',
             'attributes' => [
                 'type' => 'text',
@@ -39,9 +42,11 @@ class JobFieldset extends Fieldset
             'options' => [
                 'label' => $translator->translate('Name'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'slugName',
             'attributes' => [
                 'type' => 'text',
@@ -49,9 +54,11 @@ class JobFieldset extends Fieldset
             'options' => [
                 'label' => $translator->translate('Permalink'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'active',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
@@ -60,9 +67,11 @@ class JobFieldset extends Fieldset
                 'checked_value' => '1',
                 'unchecked_value' => '0',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'website',
             'attributes' => [
                 'type' => 'text',
@@ -71,9 +80,11 @@ class JobFieldset extends Fieldset
                 'label' => $translator->translate('Website'),
                 'required' => false,
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'attachment_file',
             'type' => '\Zend\Form\Element\File',
             'attributes' => [
@@ -83,9 +94,11 @@ class JobFieldset extends Fieldset
                 'label' => $translator->translate('Attachment'),
                 'required' => false,
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'email',
             'type' => 'Zend\Form\Element\Email',
             'attributes' => [
@@ -95,9 +108,11 @@ class JobFieldset extends Fieldset
                 'label' => $translator->translate('Email'),
                 'required' => false,
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'contactName',
             'attributes' => [
                 'type' => 'text',
@@ -106,9 +121,11 @@ class JobFieldset extends Fieldset
                 'label' => $translator->translate('Contact name'),
                 'required' => false,
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'phone',
             'attributes' => [
                 'type' => 'text',
@@ -117,16 +134,19 @@ class JobFieldset extends Fieldset
                 'label' => $translator->translate('Phone'),
                 'required' => false,
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'description',
             'type' => 'Zend\Form\Element\Textarea',
             'options' => [
                 'label' => $translator->translate('Description'),
                 'required' => false,
             ],
-        ]);
+            ]
+        );
     }
 
     public function setLanguage($lang)

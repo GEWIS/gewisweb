@@ -162,7 +162,8 @@ class FileStorage
         $response->setStatusCode(200);
         $response->setStreamName($fileName);
         $headers = new Headers();
-        $headers->addHeaders([
+        $headers->addHeaders(
+            [
             // Suggests to the browser to display the file instead of saving
             'Content-Disposition' => 'inline; filename="' . $fileName . '"',
             'Content-Type' => $type,
@@ -171,7 +172,8 @@ class FileStorage
             'Expires' => '+1 year',
             'Cache-Control' => 'public',
             'Pragma' => ''
-        ]);
+            ]
+        );
         $response->setHeaders($headers);
 
         return $response;

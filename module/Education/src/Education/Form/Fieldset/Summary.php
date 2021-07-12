@@ -19,36 +19,45 @@ class Summary extends Fieldset implements InputFilterProviderInterface
     {
         parent::__construct('exam');
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'file',
             'type' => 'hidden'
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'course',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Course code')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'date',
             'type' => 'date',
             'options' => [
                 'label' => $translator->translate('Summary date')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'author',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Author')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'type' => 'Zend\Form\Element\Select',
             'name' => 'language',
             'options' => [
@@ -58,7 +67,8 @@ class Summary extends Fieldset implements InputFilterProviderInterface
                     ExamModel::EXAM_LANGUAGE_DUTCH => $translator->translate('Dutch'),
                 ],
             ],
-        ]);
+            ]
+        );
     }
 
     /**
@@ -89,9 +99,11 @@ class Summary extends Fieldset implements InputFilterProviderInterface
                         'name' => Callback::class,
                         'options' => [
                             'callback' => function ($value) use ($dir) {
-                                $validator = new Exists([
+                                $validator = new Exists(
+                                    [
                                     'directory' => $dir
-                                ]);
+                                    ]
+                                );
 
                                 return $validator->isValid($value);
                             }

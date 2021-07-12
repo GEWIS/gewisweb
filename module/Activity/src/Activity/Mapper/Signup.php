@@ -69,10 +69,12 @@ class Signup
             ->where('u.lidnr = ?1')
             ->join('a.signupList', 'ac')
             ->andWhere('ac.id = ?2')
-            ->setParameters([
+            ->setParameters(
+                [
                 1 => $userId,
                 2 => $signupListId,
-            ]);
+                ]
+            );
         $result = $qb->getQuery()->getResult();
 
         return isset($result[0]) ? $result[0] : null;

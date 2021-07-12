@@ -40,7 +40,8 @@ class EditJob extends CollectionBaseFieldsetAwareForm
         }
 
         $this->setLanguages($languages);
-        $this->add([
+        $this->add(
+            [
             'type' => '\Company\Form\FixedKeyDictionaryCollection',
             'name' => 'jobs',
             'hydrator' => $this->getHydrator(),
@@ -50,25 +51,30 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                 'target_element' => new JobFieldset($mapper, $translator, $this->getHydrator()),
                 'items' => $languages,
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'labels',
             'type' => 'Zend\Form\Element\MultiCheckbox',
             'options' => [
                 'label' => $translator->translate('What labels apply to this job?'),
                 'value_options' => $labelOptions
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'attributes' => [
                 'type' => 'submit',
                 'value' => $translator->translate('Submit changes'),
                 'id' => 'submitbutton',
             ],
-        ]);
+            ]
+        );
 
         $this->initFilters();
     }
@@ -81,12 +87,15 @@ class EditJob extends CollectionBaseFieldsetAwareForm
         foreach ($this->languages as $lang) {
             $filter = new JobInputFilter();
 
-            $filter->add([
+            $filter->add(
+                [
                 'name' => 'id',
                 'required' => false,
-            ]);
+                ]
+            );
 
-            $filter->add([
+            $filter->add(
+                [
                 'name' => 'name',
                 'required' => true,
                 'validators' => [
@@ -98,26 +107,34 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                         ],
                     ],
                 ],
-            ]);
+                ]
+            );
 
-            $filter->add([
+            $filter->add(
+                [
                 'name' => 'slugName',
                 'required' => true,
                 'validators' => [
-                    new Callback([
+                    new Callback(
+                        [
                         'callback' => [$this, 'slugNameUnique'],
                         'message' => $this->translator->translate('This slug is already taken'),
-                    ]),
-                    new Regex([
+                        ]
+                    ),
+                    new Regex(
+                        [
                         'message' => $this->translator->translate('This slug contains invalid characters'),
                         'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
-                    ]),
+                        ]
+                    ),
                 ],
                 'filters' => [
                 ],
-            ]);
+                ]
+            );
 
-            $filter->add([
+            $filter->add(
+                [
                 'name' => 'website',
                 'required' => false,
                 'validators' => [
@@ -125,9 +142,11 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                         'name' => 'uri',
                     ],
                 ],
-            ]);
+                ]
+            );
 
-            $filter->add([
+            $filter->add(
+                [
                 'name' => 'description',
                 'required' => false,
                 'validators' => [
@@ -139,9 +158,11 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                         ],
                     ],
                 ],
-            ]);
+                ]
+            );
 
-            $filter->add([
+            $filter->add(
+                [
                 'name' => 'contactName',
                 'required' => false,
                 'validators' => [
@@ -152,27 +173,35 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                         ],
                     ],
                 ],
-            ]);
+                ]
+            );
 
-            $filter->add([
+            $filter->add(
+                [
                 'name' => 'email',
                 'required' => false,
                 'validators' => [
                     ['name' => EmailAddress::class],
                 ],
-            ]);
+                ]
+            );
 
-            $filter->add([
+            $filter->add(
+                [
                 'name' => 'phone',
                 'required' => false,
-            ]);
+                ]
+            );
 
-            $filter->add([
+            $filter->add(
+                [
                 'name' => 'active',
                 'required' => false,
-            ]);
+                ]
+            );
 
-            $filter->add([
+            $filter->add(
+                [
                 'name' => 'attachment_file',
                 'required' => false,
                 'validators' => [
@@ -194,12 +223,15 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                         ],
                     ],
                 ],
-            ]);
+                ]
+            );
 
-            $filter->add([
+            $filter->add(
+                [
                 'name' => 'category',
                 'required' => false,
-            ]);
+                ]
+            );
 
             $rootFilter->add($filter, $lang);
         }

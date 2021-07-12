@@ -14,37 +14,45 @@ class Password extends Form implements InputFilterProviderInterface
     {
         parent::__construct();
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'old_password',
             'type' => 'password',
             'options' => [
                 'label' => $translate->translate('Old password')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'password',
             'type' => 'password',
             'options' => [
                 'label' => $translate->translate('New password')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'password_verify',
             'type' => 'password',
             'options' => [
                 'label' => $translate->translate('Verify new password')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
                 'value' => $translate->translate('Change password')
             ]
-        ]);
+            ]
+        );
     }
 
     public function getInputFilterSpecification()

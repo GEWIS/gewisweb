@@ -43,9 +43,11 @@ class ProfilePhoto
      */
     public function getProfilePhotoByLidnr($lidnr)
     {
-        $profilePhoto = $this->getRepository()->findOneBy([
+        $profilePhoto = $this->getRepository()->findOneBy(
+            [
             'member' => $lidnr
-        ]);
+            ]
+        );
         return $profilePhoto;
     }
 

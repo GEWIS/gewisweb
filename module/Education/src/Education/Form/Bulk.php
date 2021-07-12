@@ -13,7 +13,8 @@ class Bulk extends Form implements InputFilterProviderInterface
     {
         parent::__construct();
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'exams',
             'type' => 'Collection',
             'options' => [
@@ -22,12 +23,15 @@ class Bulk extends Form implements InputFilterProviderInterface
                 'allow_remove' => true,
                 'target_element' => $exam
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit'
-        ]);
+            ]
+        );
 
         $this->get('submit')->setLabel($translator->translate('Finalize uploads'));
     }

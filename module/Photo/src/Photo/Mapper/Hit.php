@@ -50,7 +50,6 @@ class Hit
            ->setParameter(2, $enddate);
 
         return $qb->getQuery()->getResult();
-
     }
 
     /**
@@ -70,5 +69,4 @@ class Hit
     {
         return $this->em->getRepository('Photo\Model\Hit');
     }
-
 }

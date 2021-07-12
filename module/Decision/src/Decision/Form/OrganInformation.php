@@ -15,82 +15,102 @@ class OrganInformation extends Form implements InputFilterProviderInterface
     {
         parent::__construct();
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'email',
             'type' => 'email',
             'options' => [
                 'label' => $translator->translate('Email')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'website',
             'type' => 'url',
             'options' => [
                 'label' => $translator->translate('Website')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'shortDutchDescription',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Short dutch description')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'shortEnglishDescription',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Short english description')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'dutchDescription',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Long dutch description')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'englishDescription',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Long english description')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'thumbnail',
             'type' => 'file',
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'cover',
             'type' => 'file',
-        ]);
+            ]
+        );
 
         foreach (['cover', 'thumbnail'] as $type) {
             foreach (['X', 'Y', 'Width', 'Height'] as $param) {
-                $this->add([
+                $this->add(
+                    [
                     'name' => $type . 'Crop' . $param,
                     'type' => 'hidden'
-                ]);
+                    ]
+                );
             }
         }
         $this->get('thumbnail')->setLabel($translator->translate('Thumbnail photo to upload'));
         $this->get('cover')->setLabel($translator->translate('Cover photo to upload'));
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
                 'value' => $translator->translate('Save')
             ]
-        ]);
+            ]
+        );
     }
 
     /**

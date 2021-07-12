@@ -21,55 +21,69 @@ class AddCourse extends Form implements InputFilterProviderInterface
 
         parent::__construct();
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'code',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Course code')
             ]
-        ]);
-        $this->add([
+            ]
+        );
+        $this->add(
+            [
             'name' => 'parent',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Parent course code')
             ]
-        ]);
-        $this->add([
+            ]
+        );
+        $this->add(
+            [
             'name' => 'name',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Name')
             ]
-        ]);
-        $this->add([
+            ]
+        );
+        $this->add(
+            [
             'name' => 'url',
             'type' => 'Zend\Form\Element\Url',
             'options' => [
                 'label' => $translator->translate('URL')
             ]
-        ]);
-        $this->add([
+            ]
+        );
+        $this->add(
+            [
             'name' => 'year',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Year'),
                 'value' => date("Y")
             ]
-        ]);
-        $this->add([
+            ]
+        );
+        $this->add(
+            [
             'name' => 'quartile',
             'type' => 'select',
             'options' => [
                 'label' => $translator->translate('Quartile'),
                 'value_options' => $qOptions
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit'
-        ]);
+            ]
+        );
 
         $this->get('submit')->setLabel($translator->translate('Add course'));
     }

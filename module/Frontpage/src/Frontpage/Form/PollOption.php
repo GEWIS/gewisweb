@@ -17,21 +17,25 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
         $this->setHydrator(new ClassMethodsHydrator(false))
             ->setObject(new PollOptionModel());
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'dutchText',
             'type' => 'text',
             'options' => [
                 'label' => 'Dutch option'
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'englishText',
             'type' => 'text',
             'options' => [
                 'label' => 'English option'
             ]
-        ]);
+            ]
+        );
     }
 
     /**

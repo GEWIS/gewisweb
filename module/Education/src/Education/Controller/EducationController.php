@@ -36,16 +36,20 @@ class EducationController extends AbstractActionController
             $courses = $this->examService->searchCourse($query);
 
             if (null !== $courses) {
-                return new ViewModel([
+                return new ViewModel(
+                    [
                     'form' => $this->searchCourseForm,
                     'courses' => $courses
-                ]);
+                    ]
+                );
             }
         }
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $this->searchCourseForm
-        ]);
+            ]
+        );
     }
 
     public function courseAction()
@@ -60,14 +64,19 @@ class EducationController extends AbstractActionController
 
         // when there is a parent course, redirect to that course
         if (!is_null($course->getParent())) {
-            return $this->redirect()->toRoute('education/course', [
+            return $this->redirect()->toRoute(
+                'education/course',
+                [
                 'code' => $course->getParent()->getCode()
-            ]);
+                ]
+            );
         }
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'course' => $course
-        ]);
+            ]
+        );
     }
 
     /**

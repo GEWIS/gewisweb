@@ -51,12 +51,14 @@ class MemberController extends AbstractActionController
 
         $member = $this->identity()->getMember();
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'member' => $member,
             'isActive' => $this->memberService->isActiveMember(),
             'upcoming' => $this->decisionService->getUpcomingMeeting(),
             'meetingsCollection' => $meetingsCollection,
-        ]);
+            ]
+        );
     }
 
     /**
@@ -98,9 +100,11 @@ class MemberController extends AbstractActionController
                 ];
             }
 
-            return new JsonModel([
+            return new JsonModel(
+                [
                 'members' => $members
-            ]);
+                ]
+            );
         }
 
         return new ViewModel([]);
@@ -119,13 +123,17 @@ class MemberController extends AbstractActionController
             $canAuthorize = $this->memberService->canAuthorize($member, $meeting);
 
             if ($canAuthorize) {
-                return new JsonModel([
+                return new JsonModel(
+                    [
                     'value' => true
-                ]);
+                    ]
+                );
             }
-            return new JsonModel([
+            return new JsonModel(
+                [
                 'value' => false
-            ]);
+                ]
+            );
         }
 
         return new ViewModel([]);
@@ -136,9 +144,11 @@ class MemberController extends AbstractActionController
      */
     public function birthdaysAction()
     {
-        return new ViewModel([
+        return new ViewModel(
+            [
             'members' => $this->memberService->getBirthdayMembers(7)
-        ]);
+            ]
+        );
     }
 
     /**

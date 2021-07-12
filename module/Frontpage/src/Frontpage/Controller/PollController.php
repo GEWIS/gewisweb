@@ -37,10 +37,15 @@ class PollController extends AbstractActionController
         if (!is_null($poll)) {
             $details = $this->pollService->getPollDetails($poll);
 
-            return new ViewModel(array_merge($details, [
-                'poll' => $poll,
-                'commentForm' => $this->pollCommentForm
-            ]));
+            return new ViewModel(
+                array_merge(
+                    $details,
+                    [
+                    'poll' => $poll,
+                    'commentForm' => $this->pollCommentForm
+                    ]
+                )
+            );
         }
 
         return new ViewModel();
@@ -112,9 +117,11 @@ class PollController extends AbstractActionController
             $paginator->setCurrentPageNumber($page);
         }
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'paginator' => $paginator
-        ]);
+            ]
+        );
     }
 
     /**
@@ -127,14 +134,18 @@ class PollController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             if ($this->pollService->requestPoll($request->getPost())) {
-                return new ViewModel([
+                return new ViewModel(
+                    [
                     'success' => true,
-                ]);
+                    ]
+                );
             }
         }
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $form,
-        ]);
+            ]
+        );
     }
 }

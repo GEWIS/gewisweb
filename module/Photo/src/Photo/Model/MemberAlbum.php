@@ -36,5 +36,4 @@ class MemberAlbum extends VirtualAlbum
     {
         return $this->member;
     }
-
 }

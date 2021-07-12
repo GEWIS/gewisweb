@@ -40,23 +40,28 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
             'Multiple days' => $translator->translate('Multiple days'),
         ];
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'beginTime',
             'type' => 'datetime',
             'options' => [
                 'format' => 'Y/m/d'
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'endTime',
             'type' => 'datetime',
             'options' => [
                 'format' => 'Y/m/d'
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'type',
             'type' => 'select',
             'options' => [
@@ -67,7 +72,8 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                 ],
                 'value_options' => $typeOptions
             ]
-        ]);
+            ]
+        );
     }
 
     public function getInputFilterSpecification()

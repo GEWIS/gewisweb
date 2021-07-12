@@ -27,9 +27,11 @@ class ApiAdminController extends AbstractActionController
      */
     public function indexAction()
     {
-        return new ViewModel([
+        return new ViewModel(
+            [
             'tokens' => $this->apiUserService->getTokens()
-        ]);
+            ]
+        );
     }
 
     /**
@@ -44,15 +46,19 @@ class ApiAdminController extends AbstractActionController
             $apiUser = $service->addToken($request->getPost());
 
             if (null !== $apiUser) {
-                return new ViewModel([
+                return new ViewModel(
+                    [
                     'apiUser' => $apiUser
-                ]);
+                    ]
+                );
             }
         }
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $service->getApiTokenForm()
-        ]);
+            ]
+        );
     }
 
     /**
@@ -71,8 +77,10 @@ class ApiAdminController extends AbstractActionController
             return $this->redirect()->toRoute('user_admin/api');
         }
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'token' => $service->getToken($id)
-        ]);
+            ]
+        );
     }
 }

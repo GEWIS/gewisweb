@@ -47,7 +47,8 @@ class Photo
         \Photo\Model\Album $album,
         $start = 0,
         $maxResults = null
-    ) {
+    )
+    {
 
         $qb = $this->em->createQueryBuilder();
 
@@ -111,7 +112,8 @@ class Photo
     public function getNextPhoto(
         PhotoModel $photo,
         \Photo\Model\Album $album
-    ) {
+    )
+    {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
@@ -145,7 +147,8 @@ class Photo
     public function getPreviousPhoto(
         PhotoModel $photo,
         \Photo\Model\Album $album
-    ) {
+    )
+    {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
@@ -179,10 +182,12 @@ class Photo
      */
     public function getPhotoByData($path, $album)
     {
-        return $this->getRepository()->findOneBy([
+        return $this->getRepository()->findOneBy(
+            [
             'path'  => $path,
             'album' => $album->getId()
-        ]);
+            ]
+        );
     }
 
     /**
@@ -244,5 +249,4 @@ class Photo
     {
         return $this->em->getConnection();
     }
-
 }

@@ -2,7 +2,6 @@
 
 namespace User\Service;
 
-
 use DateTime;
 use Firebase\JWT\JWT;
 use User\Mapper\ApiApp as ApiAppMapper;

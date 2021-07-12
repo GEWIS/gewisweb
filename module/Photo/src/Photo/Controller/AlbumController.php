@@ -40,8 +40,11 @@ class AlbumController extends AbstractActionController
     {
         $albumId = $this->params()->fromRoute('album_id');
         $activePage = (int) $this->params()->fromRoute('page');
-        $albumPage = $this->AlbumPlugin()->getAlbumPage($albumId, $activePage,
-            'album');
+        $albumPage = $this->AlbumPlugin()->getAlbumPage(
+            $albumId,
+            $activePage,
+            'album'
+        );
         if (is_null($albumPage)) {
             return $this->notFoundAction();
         }
@@ -65,12 +68,14 @@ class AlbumController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'cache' => $this->pageCache,
             'album' => $album,
             'basedir' => '/',
             'config' => $this->photoConfig,
-        ]);
+            ]
+        );
     }
 
     /**
@@ -83,8 +88,11 @@ class AlbumController extends AbstractActionController
     {
         $lidnr = (int) $this->params()->fromRoute('lidnr');
         $activePage = (int) $this->params()->fromRoute('page');
-        $albumPage = $this->AlbumPlugin()->getAlbumPage($lidnr, $activePage,
-            'member');
+        $albumPage = $this->AlbumPlugin()->getAlbumPage(
+            $lidnr,
+            $activePage,
+            'member'
+        );
 
         if (is_null($albumPage)) {
             return $this->notFoundAction();

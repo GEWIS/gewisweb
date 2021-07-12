@@ -80,7 +80,6 @@ class ApiUser extends AbstractAclService
     public function getTokens()
     {
         if (!$this->isAllowed('list')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view API tokens')
             );
@@ -96,7 +95,6 @@ class ApiUser extends AbstractAclService
     public function removeToken($id)
     {
         if (!$this->isAllowed('remove')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to remove API tokens')
             );
@@ -114,7 +112,6 @@ class ApiUser extends AbstractAclService
     public function getToken($id)
     {
         if (!$this->isAllowed('view')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view API tokens')
             );
@@ -187,7 +184,6 @@ class ApiUser extends AbstractAclService
     public function getApiTokenForm()
     {
         if (!$this->isAllowed('add')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to add API tokens')
             );

@@ -40,10 +40,12 @@ class AlbumAdminController extends AbstractActionController
 
         $albumsWithoutDate = $this->albumService->getAlbumsWithoutDate();
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'albumsByYear' => $albumsByYear,
             'albumsWithoutDate' => $albumsWithoutDate
-        ]);
+            ]
+        );
     }
 
     /**
@@ -61,9 +63,11 @@ class AlbumAdminController extends AbstractActionController
         }
         $form = $this->albumService->getCreateAlbumForm();
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $form,
-        ]);
+            ]
+        );
     }
 
     /**
@@ -95,9 +99,11 @@ class AlbumAdminController extends AbstractActionController
         }
         $form = $this->albumService->getEditAlbumForm($albumId);
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $form,
-        ]);
+            ]
+        );
     }
 
     public function addAction()
@@ -107,9 +113,11 @@ class AlbumAdminController extends AbstractActionController
         $albumId = $this->params()->fromRoute('album_id');
         $album = $this->albumService->getAlbum($albumId);
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'album' => $album
-        ]);
+            ]
+        );
     }
 
     /**

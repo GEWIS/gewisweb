@@ -13,13 +13,15 @@ class SearchCourse extends Form
     {
         parent::__construct();
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'query',
             'type' => 'text',
             'options' => [
                 'label' => $translate->translate('Search query')
             ]
-        ]);
+            ]
+        );
 
         $this->initFilters();
     }
@@ -28,13 +30,15 @@ class SearchCourse extends Form
     {
         $filter = new InputFilter();
 
-        $filter->add([
+        $filter->add(
+            [
             'name' => 'query',
             'required' => true,
             'validators' => [
                 ['name' => NotEmpty::class],
             ]
-        ]);
+            ]
+        );
 
         $this->setInputFilter($filter);
     }

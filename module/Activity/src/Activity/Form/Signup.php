@@ -27,18 +27,22 @@ class Signup extends Form implements InputFilterProviderInterface
         $this->setHydrator(new ClassMethodsHydrator(false))
             ->setObject(new UserSignup());
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'security',
             'type' => 'Zend\Form\Element\Csrf'
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'attributes' => [
                 'type' => 'submit',
                 'value' => 'Subscribe',
             ],
-        ]);
+            ]
+        );
     }
 
     public function getType()
@@ -48,17 +52,21 @@ class Signup extends Form implements InputFilterProviderInterface
 
     public function initialiseExternalForm($signupList)
     {
-        $this->add([
+        $this->add(
+            [
             'name' => 'captcha',
             'type' => 'Zend\Form\Element\Captcha',
             'options' => [
-                'captcha' => new ImageCaptcha([
+                'captcha' => new ImageCaptcha(
+                    [
                     'font' => 'public/fonts/bitstream-vera/Vera.ttf',
                     'imgDir' => 'public/img/captcha/',
                     'imgUrl' => '/img/captcha/',
-                ]),
+                    ]
+                ),
             ]
-        ]);
+            ]
+        );
         $this->initialiseExternalAdminForm($signupList);
         $this->type = Signup::EXTERNAL_USER;
     }
@@ -71,14 +79,18 @@ class Signup extends Form implements InputFilterProviderInterface
      */
     public function initialiseExternalAdminForm($signupList)
     {
-        $this->add([
+        $this->add(
+            [
             'name' => 'fullName',
             'type' => 'Text'
-        ]);
-        $this->add([
+            ]
+        );
+        $this->add(
+            [
             'name' => 'email',
             'type' => 'Text'
-        ]);
+            ]
+        );
         $this->initialiseForm($signupList);
         $this->type = Signup::EXTERNAL_ADMIN;
     }

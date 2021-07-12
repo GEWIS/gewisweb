@@ -30,15 +30,19 @@ class AdminController extends AbstractActionController
 
         if ($request->isPost()) {
             if ($this->decisionService->uploadNotes($request->getPost(), $request->getFiles())) {
-                return new ViewModel([
+                return new ViewModel(
+                    [
                     'success' => true
-                ]);
+                    ]
+                );
             }
         }
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $this->decisionService->getNotesForm()
-        ]);
+            ]
+        );
     }
 
     /**
@@ -63,14 +67,16 @@ class AdminController extends AbstractActionController
         }
         $meeting = $this->decisionService->getMeeting($type, $number);
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $this->decisionService->getDocumentForm(),
             'meetings' => $meetings,
             'meeting' => $meeting,
             'number' => $number,
             'success' => $success,
             'reorderDocumentForm' => $this->decisionService->getReorderDocumentForm(),
-        ]);
+            ]
+        );
     }
 
     public function deleteDocumentAction()
@@ -117,10 +123,12 @@ class AdminController extends AbstractActionController
             $authorizations = $this->decisionService->getAllAuthorizations($number);
         }
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'meetings' => $meetings,
             'authorizations' => $authorizations,
             'number' => $number
-        ]);
+            ]
+        );
     }
 }

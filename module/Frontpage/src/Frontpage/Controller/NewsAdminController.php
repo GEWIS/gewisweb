@@ -32,9 +32,11 @@ class NewsAdminController extends AbstractActionController
             $paginator->setCurrentPageNumber($page);
         }
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'paginator' => $paginator,
-        ]);
+            ]
+        );
     }
 
     /**
@@ -51,11 +53,13 @@ class NewsAdminController extends AbstractActionController
 
         $form = $this->newsService->getNewsItemForm();
 
-        $view = new ViewModel([
+        $view = new ViewModel(
+            [
             'form' => $form,
             // Boolean indicating if the view should show an option to delete a news item.
             'canDelete' => false
-        ]);
+            ]
+        );
 
         $view->setTemplate('news-admin/edit');
 
@@ -77,12 +81,14 @@ class NewsAdminController extends AbstractActionController
 
         $form = $this->newsService->getNewsItemForm($newsItemId);
 
-        return new ViewModel([
+        return new ViewModel(
+            [
             'form' => $form,
             // Boolean indicating if the view should show an option to delete a news item.
             'canDelete' => true,
             'newsItemId' => $newsItemId
-        ]);
+            ]
+        );
     }
 
     /**

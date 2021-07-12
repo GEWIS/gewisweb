@@ -208,5 +208,4 @@ class Album
     {
         $this->em->flush();
     }
-
 }

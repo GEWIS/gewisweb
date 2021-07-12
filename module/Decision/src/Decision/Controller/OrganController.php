@@ -25,9 +25,11 @@ class OrganController extends AbstractActionController
      */
     public function indexAction()
     {
-        return new ViewModel([
+        return new ViewModel(
+            [
             'organs' => $this->organService->getOrgans()
-        ]);
+            ]
+        );
     }
 
     /**
@@ -39,9 +41,14 @@ class OrganController extends AbstractActionController
         try {
             $organ = $this->organService->getOrgan($organId);
             $organMemberInformation = $this->organService->getOrganMemberInformation($organ);
-            return new ViewModel(array_merge([
-                'organ' => $organ
-            ], $organMemberInformation));
+            return new ViewModel(
+                array_merge(
+                    [
+                    'organ' => $organ
+                    ],
+                    $organMemberInformation
+                )
+            );
         } catch (NoResultException $e) {
             return $this->notFoundAction();
         }

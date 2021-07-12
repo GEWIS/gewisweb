@@ -13,69 +13,87 @@ class Page extends Form implements InputFilterProviderInterface
     {
         parent::__construct();
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'category',
             'type' => 'text',
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'subCategory',
             'type' => 'text',
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'name',
             'type' => 'text',
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'dutchTitle',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Dutch title')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'englishTitle',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('English title')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'dutchContent',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Dutch content')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'englishContent',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('English content')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'requiredRole',
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Required role'),
                 'value' => 'guest'
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
                 'value' => $translator->translate('Save')
             ]
-        ]);
+            ]
+        );
     }
 
     /**

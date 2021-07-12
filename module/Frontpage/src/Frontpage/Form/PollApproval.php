@@ -12,21 +12,25 @@ class PollApproval extends Form implements InputFilterProviderInterface
     {
         parent::__construct();
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'expiryDate',
             'type' => 'Zend\Form\Element\Date',
             'options' => [
                 'label' => $translator->translate('Expiration date for the poll (YYYY-MM-DD)')
             ]
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'submit',
             'type' => 'submit',
             'options' => [
                 'label' => $translator->translate('Approve poll')
             ]
-        ]);
+            ]
+        );
     }
 
     /**

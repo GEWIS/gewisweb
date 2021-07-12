@@ -61,10 +61,12 @@ class Vote
      */
     public function findVote($photoId, $lidnr)
     {
-        return $this->getRepository()->findOneBy([
+        return $this->getRepository()->findOneBy(
+            [
             'photo' => $photoId,
             'member' => $lidnr
-        ]);
+            ]
+        );
     }
 
     /**

@@ -15,14 +15,17 @@ class CategoryFieldset extends Fieldset
         parent::__construct();
         $this->setHydrator($hydrator);
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'id',
             'attributes' => [
                 'type' => 'hidden',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'slug',
             'attributes' => [
                 'type' => 'text',
@@ -31,9 +34,11 @@ class CategoryFieldset extends Fieldset
             'options' => [
                 'label' => $translate->translate('Slug name'),
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'name',
             'attributes' => [
                 'type' => 'text',
@@ -43,9 +48,11 @@ class CategoryFieldset extends Fieldset
                 'label' => $translate->translate('Display name'),
                 'required' => 'required',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'pluralName',
             'attributes' => [
                 'type' => 'text',
@@ -55,9 +62,11 @@ class CategoryFieldset extends Fieldset
                 'label' => $translate->translate('Plural display name'),
                 'required' => 'required',
             ],
-        ]);
+            ]
+        );
 
-        $this->add([
+        $this->add(
+            [
             'name' => 'hidden',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => [
@@ -66,15 +75,18 @@ class CategoryFieldset extends Fieldset
                 'unchecked_value' => '0',
                 'use_hidden_element' => true,
             ],
-        ]);
+            ]
+        );
 
         // Hidden language element, because it will only be set at initialization.
-        $this->add([
+        $this->add(
+            [
             'name' => 'language',
             'attributes' => [
                 'type' => 'hidden',
             ],
-        ]);
+            ]
+        );
     }
 
     public function setLanguage($lang)
