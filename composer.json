@@ -17,9 +17,9 @@
         "php": "^7.2.0",
         "ext-calendar": "*",
         "ext-exif": "*",
-        "ext-fileinfo": "^1.0.0",
+        "ext-fileinfo": "*",
         "ext-gd": "*",
-        "ext-intl": "^1.1.0",
+        "ext-intl": "*",
         "ext-imagick": "^3.1.0",
         "ext-mbstring": "*",
         "ext-memcached": "^3.0.0",
@@ -78,7 +78,8 @@
         "ext-xdebug": "^3.0.0",
         "zendframework/zend-developer-tools": "^2.0.0",
         "jszanto/gewisweb-test-data": "@dev",
-        "squizlabs/php_codesniffer": "*"
+        "squizlabs/php_codesniffer": "*",
+        "phpstan/phpstan":  "*"
     },
     "config": {
         "preferred-install": {
@@ -87,8 +88,6 @@
          }
     },
     "scripts": {
-        "cs-check": "phpcs",
-        "cs-fix": "phpcbf",
         "post-install-cmd": [
             "SlowProg\\CopyFile\\ScriptHandler::copy"
         ],

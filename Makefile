@@ -9,6 +9,9 @@ help:
 		@echo "updatecss"
 		@echo "updateglide"
 		@echo "getvendordir"
+		@echo "phpstan"
+		@echo "phpcs"
+		@echo "phpcbf"
 		@echo "replenish"
 		@echo "build"
 		@echo "buildprod"
@@ -48,6 +51,19 @@ replenish: rundev
 		@docker-compose down
 
 update: rundev updatecomposer updatepackage updatecss updateglide
+		@docker-compose down
+
+phpstan: rundev
+		@docker-compose exec web /code/vendor/bin/phpstan analyse /code/module
+		@docker-compose down
+
+phpcs: rundev
+		@docker-compose exec web /code/vendor/bin/phpcs -p --standard=PSR1,PSR2,Zend --extensions=php /code/module
+		@docker-compose down
+
+phpcbf: rundev
+		@docker-compose exec web /code/vendor/bin/phpcbf -p --standard=PSR1,PSR2,Zend --extensions=php /code/module
+		@docker cp gewisweb_web_1:/code/module ./module
 		@docker-compose down
 
 updatecomposer:

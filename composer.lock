@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3025b74bc85fcc3622a6143f215bdd55",
+    "content-hash": "042fb7925c0adf97ef3fa9482b9c80a3",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -6704,6 +6704,70 @@
             "time": "2017-12-07T15:14:32+00:00"
         },
         {
+            "name": "phpstan/phpstan",
+            "version": "0.12.92",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan.git",
+                "reference": "64d4c5dc8ea96972bc18432d137a330239a5d2b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/64d4c5dc8ea96972bc18432d137a330239a5d2b2",
+                "reference": "64d4c5dc8ea96972bc18432d137a330239a5d2b2",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8.0"
+            },
+            "conflict": {
+                "phpstan/phpstan-shim": "*"
+            },
+            "bin": [
+                "phpstan",
+                "phpstan.phar"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.12-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan - PHP Static Analysis Tool",
+            "support": {
+                "issues": "https://github.com/phpstan/phpstan/issues",
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.92"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/phpstan",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/phpstan",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-07-10T13:53:49+00:00"
+        },
+        {
             "name": "squizlabs/php_codesniffer",
             "version": "3.6.0",
             "source": {
@@ -6946,21 +7010,21 @@
         "ext-exif": "*",
         "ext-fileinfo": "*",
         "ext-gd": "*",
-        "ext-intl": ">=1.1.0",
-        "ext-imagick": ">=3.1",
+        "ext-intl": "*",
+        "ext-imagick": "^3.1.0",
         "ext-mbstring": "*",
-        "ext-memcached": ">=2.2.0",
+        "ext-memcached": "^3.0.0",
         "ext-openssl": "*",
-        "ext-pdo": ">=1.0.4",
-        "ext-pdo_mysql": ">=1.0.2",
-        "ext-pdo_pgsql": ">=1.0.2",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
+        "ext-pdo_pgsql": "*",
         "ext-pgsql": "*",
         "ext-soap": "*",
-        "ext-zend-opcache": ">=7.0.6",
-        "ext-zip": ">=1.12.5"
+        "ext-zend-opcache": "*",
+        "ext-zip": "^1.12.0"
     },
     "platform-dev": {
-        "ext-xdebug": ">=2.4.1"
+        "ext-xdebug": "^3.0.0"
     },
     "plugin-api-version": "2.1.0"
 }
