@@ -14,8 +14,8 @@ use Decision\Mapper\Meeting;
 use Decision\Mapper\Member;
 use Decision\Mapper\Organ;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceManager;
 
 class Module
 {

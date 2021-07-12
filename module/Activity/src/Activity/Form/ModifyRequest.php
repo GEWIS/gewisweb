@@ -2,8 +2,8 @@
 
 namespace Activity\Form;
 
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilterProviderInterface;
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilterProviderInterface;
 
 /**
  * Specifies a form that is used to let an user do a modification request that
@@ -20,7 +20,7 @@ class ModifyRequest extends Form implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'security',
-            'type' => 'Zend\Form\Element\Csrf'
+            'type' => 'Laminas\Form\Element\Csrf'
             ]
         );
 

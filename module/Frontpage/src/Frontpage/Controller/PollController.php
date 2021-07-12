@@ -4,9 +4,9 @@ namespace Frontpage\Controller;
 
 use Frontpage\Form\PollComment;
 use Frontpage\Service\Poll;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Paginator\Paginator;
-use Zend\View\Model\ViewModel;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Paginator\Paginator;
+use Laminas\View\Model\ViewModel;
 
 class PollController extends AbstractActionController
 {

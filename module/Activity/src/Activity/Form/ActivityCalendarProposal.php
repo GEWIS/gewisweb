@@ -4,11 +4,11 @@ namespace Activity\Form;
 
 use Activity\Service\ActivityCalendar;
 use Exception;
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Mvc\I18n\Translator;
-use Zend\Validator\Callback;
-use Zend\Validator\StringLength;
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\Callback;
+use Laminas\Validator\StringLength;
 
 class ActivityCalendarProposal extends Form implements InputFilterProviderInterface
 {
@@ -83,7 +83,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
         $this->add(
             [
             'name' => 'options',
-            'type' => 'Zend\Form\Element\Collection',
+            'type' => 'Laminas\Form\Element\Collection',
             'options' => [
                 'count' => 1,
                 'should_create_template' => true,

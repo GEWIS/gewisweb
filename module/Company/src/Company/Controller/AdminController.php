@@ -8,10 +8,10 @@ use Company\Service\CompanyQuery;
 use DateInterval;
 use DateTime;
 use User\Permissions\NotAllowedException;
-use Zend\I18n\Translator\Translator;
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\I18n\Translator\Translator;
+use Laminas\Mvc\Controller\AbstractActionController;
 use Company\Service\Company as CompanyService;
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 
 class AdminController extends AbstractActionController
 {

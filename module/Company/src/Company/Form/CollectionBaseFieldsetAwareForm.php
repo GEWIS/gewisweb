@@ -3,9 +3,9 @@
 namespace Company\Form;
 
 use InvalidArgumentException;
-use Zend\Form\Form;
-use Zend\Form\Element\Collection;
-use Zend\Form\FormInterface;
+use Laminas\Form\Form;
+use Laminas\Form\Element\Collection;
+use Laminas\Form\FormInterface;
 
 class CollectionBaseFieldsetAwareForm extends Form
 {
@@ -19,8 +19,8 @@ class CollectionBaseFieldsetAwareForm extends Form
                 sprintf(
                     '%s expects the $flags argument to be one of "%s" or "%s"; received "%s"',
                     __METHOD__,
-                    'Zend\Form\FormInterface::VALUES_NORMALIZED',
-                    'Zend\Form\FormInterface::VALUES_RAW',
+                    'Laminas\Form\FormInterface::VALUES_NORMALIZED',
+                    'Laminas\Form\FormInterface::VALUES_RAW',
                     $flags
                 )
             );

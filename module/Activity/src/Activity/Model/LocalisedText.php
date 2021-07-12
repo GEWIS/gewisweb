@@ -4,7 +4,7 @@ namespace Activity\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
-use Zend\Session\Container as SessionContainer;
+use Laminas\Session\Container as SessionContainer;
 
 /**
  * Class LocalisedText: stores Dutch and English versions of text fields.

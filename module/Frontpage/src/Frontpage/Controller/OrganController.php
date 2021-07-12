@@ -4,9 +4,9 @@ namespace Frontpage\Controller;
 
 use Activity\Service\ActivityQuery;
 use Doctrine\ORM\NoResultException;
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 use Decision\Model\Organ;
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 
 class OrganController extends AbstractActionController
 {

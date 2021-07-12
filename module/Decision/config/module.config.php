@@ -6,7 +6,7 @@ use Decision\Controller\MemberApiController;
 use Decision\Controller\MemberController;
 use Decision\Controller\OrganAdminController;
 use Decision\Controller\OrganController;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 return [
     'router' => [

@@ -2,8 +2,8 @@
 
 namespace User\Authentication\Adapter;
 
-use Zend\Authentication\Adapter\AdapterInterface;
-use Zend\Authentication\Result;
+use Laminas\Authentication\Adapter\AdapterInterface;
+use Laminas\Authentication\Result;
 use User\Mapper\User as UserMapper;
 use User\Model\User as UserModel;
 use User\Model\UserRole as UserRoleModel;

@@ -2,12 +2,12 @@
 
 namespace User\Form;
 
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilter;
-use Zend\I18n\Translator\TranslatorInterface as Translator;
-use Zend\Validator\Digits;
-use Zend\Validator\EmailAddress;
-use Zend\Validator\NotEmpty;
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilter;
+use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\Validator\Digits;
+use Laminas\Validator\EmailAddress;
+use Laminas\Validator\NotEmpty;
 
 class Register extends Form
 {

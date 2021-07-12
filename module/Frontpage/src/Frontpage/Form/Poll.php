@@ -2,10 +2,10 @@
 
 namespace Frontpage\Form;
 
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\I18n\Translator\TranslatorInterface as Translator;
-use Zend\Validator\StringLength;
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\Validator\StringLength;
 
 class Poll extends Form implements InputFilterProviderInterface
 {
@@ -36,7 +36,7 @@ class Poll extends Form implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'options',
-            'type' => 'Zend\Form\Element\Collection',
+            'type' => 'Laminas\Form\Element\Collection',
             'options' => [
                 'count' => 2,
                 'should_create_template' => true,
@@ -61,7 +61,7 @@ class Poll extends Form implements InputFilterProviderInterface
 
     /**
      * Should return an array specification compatible with
-     * {@link \Zend\InputFilter\Factory::createInputFilter()}.
+     * {@link \Laminas\InputFilter\Factory::createInputFilter()}.
      *
      * @return array
      */

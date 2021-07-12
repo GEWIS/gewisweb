@@ -7,8 +7,8 @@ use Activity\Model\Activity;
 use Activity\Service\ActivityQuery;
 use InvalidArgumentException;
 use User\Permissions\NotAllowedException;
-use Zend\Http\Response;
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Http\Response;
+use Laminas\Mvc\Controller\AbstractActionController;
 
 /**
  * Controller for all administrative activity actions

@@ -2,8 +2,8 @@
 
 namespace Photo\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\JsonModel;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\JsonModel;
 
 class ApiController extends AbstractActionController
 {

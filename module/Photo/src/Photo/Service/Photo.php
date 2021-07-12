@@ -23,10 +23,10 @@ use Photo\Model\Vote as VoteModel;
 use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
 use User\Model\User;
 use User\Permissions\NotAllowedException;
-use Zend\Http\Response\Stream;
-use Zend\I18n\Filter\Alnum;
-use Zend\Mvc\I18n\Translator;
-use Zend\Permissions\Acl\Acl;
+use Laminas\Http\Response\Stream;
+use Laminas\I18n\Filter\Alnum;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Permissions\Acl\Acl;
 
 /**
  * Photo service.

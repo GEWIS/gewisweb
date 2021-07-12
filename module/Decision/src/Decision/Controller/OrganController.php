@@ -4,8 +4,8 @@ namespace Decision\Controller;
 
 use Decision\Service\Organ;
 use Doctrine\ORM\NoResultException;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
 
 class OrganController extends AbstractActionController
 {

@@ -9,11 +9,11 @@ use Activity\Service\ActivityQuery;
 use Activity\Service\Signup;
 use Activity\Service\SignupListQuery;
 use DateTime;
-use Zend\Form\FormInterface;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Session\Container as SessionContainer;
-use Zend\Stdlib\Parameters;
-use Zend\View\Model\ViewModel;
+use Laminas\Form\FormInterface;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Session\Container as SessionContainer;
+use Laminas\Stdlib\Parameters;
+use Laminas\View\Model\ViewModel;
 
 class ActivityController extends AbstractActionController
 {

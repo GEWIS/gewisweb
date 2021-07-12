@@ -3,10 +3,10 @@
 namespace Decision\Controller;
 
 use Decision\Service\Decision;
-use Zend\Http\Response;
-use Zend\Json\Json;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Http\Response;
+use Laminas\Json\Json;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
 
 class AdminController extends AbstractActionController
 {

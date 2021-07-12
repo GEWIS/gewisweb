@@ -3,8 +3,8 @@
 namespace User\Mapper\Factory;
 
 use User\Mapper\ApiApp;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class ApiAppFactory implements FactoryInterface
 {

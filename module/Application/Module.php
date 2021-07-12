@@ -24,15 +24,15 @@ use Locale;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 use User\Permissions\NotAllowedException;
-use Zend\Mvc\ModuleRouteListener;
-use Zend\Mvc\MvcEvent;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Session\Config\SessionConfig;
-use Zend\Session\Container as SessionContainer;
-use Zend\Session\SessionManager;
-use Zend\Session\Validator\HttpUserAgent;
-use Zend\Session\Validator\RemoteAddr;
-use Zend\Validator\AbstractValidator;
+use Laminas\Mvc\ModuleRouteListener;
+use Laminas\Mvc\MvcEvent;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Session\Config\SessionConfig;
+use Laminas\Session\Container as SessionContainer;
+use Laminas\Session\SessionManager;
+use Laminas\Session\Validator\HttpUserAgent;
+use Laminas\Session\Validator\RemoteAddr;
+use Laminas\Validator\AbstractValidator;
 
 class Module
 {

@@ -2,9 +2,9 @@
 
 namespace Application\View\Helper;
 
-use Zend\Code\Exception\InvalidArgumentException;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\Code\Exception\InvalidArgumentException;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\Helper\AbstractHelper;
 
 class Acl extends AbstractHelper
 {
@@ -49,7 +49,7 @@ class Acl extends AbstractHelper
     public function __invoke($factory)
     {
         $this->acl = $this->getServiceLocator()->get($factory);
-        if ($this->acl instanceof \Zend\Permissions\Acl\Acl) {
+        if ($this->acl instanceof \Laminas\Permissions\Acl\Acl) {
             return $this;
         } else {
             throw new InvalidArgumentException(

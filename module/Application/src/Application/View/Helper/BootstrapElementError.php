@@ -2,8 +2,8 @@
 
 namespace Application\View\Helper;
 
-use Zend\Form\ElementInterface;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\Form\ElementInterface;
+use Laminas\View\Helper\AbstractHelper;
 
 class BootstrapElementError extends AbstractHelper
 {

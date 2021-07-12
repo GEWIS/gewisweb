@@ -2,7 +2,7 @@
 
 namespace User\Permissions\Resource;
 
-use Zend\Permissions\Acl\Resource\ResourceInterface;
+use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 use Decision\Model\Organ;
 

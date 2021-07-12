@@ -13,7 +13,7 @@ use Education\Mapper\Exam;
 use Education\Mapper\Study;
 use Education\Model\Summary;
 use Education\View\Helper\ExamUrl;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class Module
 {

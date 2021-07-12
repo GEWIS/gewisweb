@@ -8,8 +8,8 @@
 
 namespace Decision\Controller\FileBrowser;
 
-use Zend\Http\Headers;
-use Zend\Http\Response\Stream;
+use Laminas\Http\Headers;
+use Laminas\Http\Response\Stream;
 
 /**
  * Description of LocalFileReader

@@ -15,10 +15,10 @@ use User\Mapper\NewUser;
 use User\Model\NewUser as NewUserModel;
 use User\Model\User as UserModel;
 use User\Permissions\NotAllowedException;
-use Zend\Authentication\AuthenticationService;
-use Zend\Crypt\Password\Bcrypt;
-use Zend\Mvc\I18n\Translator;
-use Zend\Permissions\Acl\Acl;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\Crypt\Password\Bcrypt;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Permissions\Acl\Acl;
 
 /**
  * User service.

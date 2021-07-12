@@ -2,7 +2,7 @@
 
 namespace Education\View\Helper;
 
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 use Education\Model\Exam;
 use Education\Service\Exam as ExamService;

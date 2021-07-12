@@ -5,9 +5,9 @@ namespace Photo\Controller;
 use Exception;
 use Photo\Service\Admin;
 use Photo\Service\Album;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
-use Zend\View\Model\JsonModel;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
+use Laminas\View\Model\JsonModel;
 
 class AlbumAdminController extends AbstractActionController
 {

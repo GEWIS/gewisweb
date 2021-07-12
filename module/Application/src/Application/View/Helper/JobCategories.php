@@ -3,7 +3,7 @@
 namespace Application\View\Helper;
 
 use Company\Service\CompanyQuery;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 class JobCategories extends AbstractHelper
 {

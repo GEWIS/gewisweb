@@ -3,8 +3,8 @@
 namespace Application\Service;
 
 use User\Model\User;
-use Zend\Permissions\Acl\Acl;
-use Zend\Permissions\Acl\Resource\ResourceInterface;
+use Laminas\Permissions\Acl\Acl;
+use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 abstract class AbstractAclService
 {

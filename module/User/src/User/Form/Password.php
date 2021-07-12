@@ -2,11 +2,11 @@
 
 namespace User\Form;
 
-use Zend\Form\Form;
-use Zend\I18n\Translator\TranslatorInterface as Translator;
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Validator\NotEmpty;
-use Zend\Validator\StringLength;
+use Laminas\Form\Form;
+use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Validator\NotEmpty;
+use Laminas\Validator\StringLength;
 
 class Password extends Form implements InputFilterProviderInterface
 {

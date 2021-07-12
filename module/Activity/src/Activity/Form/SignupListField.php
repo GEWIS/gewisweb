@@ -3,12 +3,12 @@
 namespace Activity\Form;
 
 use Activity\Model\SignupField;
-use Zend\Form\Fieldset;
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Mvc\I18n\Translator;
-use Zend\Hydrator\ClassMethods as ClassMethodsHydrator;
-use Zend\Validator\Callback;
-use Zend\Validator\NotEmpty;
+use Laminas\Form\Fieldset;
+use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Laminas\Validator\Callback;
+use Laminas\Validator\NotEmpty;
 
 class SignupListField extends Fieldset implements InputFilterProviderInterface
 {
@@ -51,7 +51,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'type',
-            'type' => 'Zend\Form\Element\Select',
+            'type' => 'Laminas\Form\Element\Select',
             'options' => [
                 'value_options' => [
                     '0' => $translator->translate('Text'),

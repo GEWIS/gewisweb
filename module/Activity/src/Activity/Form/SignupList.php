@@ -4,11 +4,11 @@ namespace Activity\Form;
 
 use DateTime;
 use Exception;
-use Zend\Form\Fieldset;
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Mvc\I18n\Translator;
-use Zend\Hydrator\ClassMethods as ClassMethodsHydrator;
-use Zend\Validator\Callback;
+use Laminas\Form\Fieldset;
+use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Laminas\Validator\Callback;
 
 class SignupList extends Fieldset implements InputFilterProviderInterface
 {
@@ -72,7 +72,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'onlyGEWIS',
-            'type' => 'Zend\Form\Element\Checkbox',
+            'type' => 'Laminas\Form\Element\Checkbox',
             'options' => [
                 'checked_value' => 1,
                 'unchecked_value' => 0,
@@ -86,7 +86,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'displaySubscribedNumber',
-            'type' => 'Zend\Form\Element\Checkbox',
+            'type' => 'Laminas\Form\Element\Checkbox',
             'options' => [
                 'checked_value' => 1,
                 'unchecked_value' => 0,
@@ -97,7 +97,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'fields',
-            'type' => 'Zend\Form\Element\Collection',
+            'type' => 'Laminas\Form\Element\Collection',
             'options' => [
                 'count' => 0,
                 'should_create_template' => true,
@@ -176,10 +176,10 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 //
                 'validators' => [
                     //[
-                    //    'name' => \Zend\Validator\Callback::class,
+                    //    'name' => \Laminas\Validator\Callback::class,
                     //    'options' => [
                     //        'messages' => [
-                    //            \Zend\Validator\Callback::INVALID_VALUE =>
+                    //            \Laminas\Validator\Callback::INVALID_VALUE =>
                     //                $this->translator->translate('The sign-up list opening date and time must be before the activity starts.'),
                     //        ],
                     //        'callback' => ['Activity\Form\Activity', 'beforeBeginTime'],
@@ -215,10 +215,10 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 //
                 //'validators' => [
                 //    [
-                //        'name' => \Zend\Validator\Callback::class,
+                //        'name' => \Laminas\Validator\Callback::class,
                 //        'options' => [
                 //            'messages' => [
-                //                \Zend\Validator\Callback::INVALID_VALUE =>
+                //                \Laminas\Validator\Callback::INVALID_VALUE =>
                 //                    $this->translator->translate('The sign-up list closing date and time must be before the activity starts.'),
                 //            ],
                 //            'callback' => ['Activity\Form\Activity', 'beforeBeginTime'],

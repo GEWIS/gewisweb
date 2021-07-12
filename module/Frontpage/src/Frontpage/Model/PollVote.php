@@ -4,7 +4,7 @@ namespace Frontpage\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use User\Model\User;
-use Zend\Permissions\Acl\Resource\ResourceInterface;
+use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Poll response

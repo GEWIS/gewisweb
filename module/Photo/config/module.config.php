@@ -7,7 +7,7 @@ use Photo\Controller\PhotoAdminController;
 use Photo\Controller\PhotoController;
 use Photo\Controller\Plugin\AlbumPlugin;
 use Photo\Controller\TagController;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 return [
     'router' => [

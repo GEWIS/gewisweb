@@ -2,7 +2,7 @@
 
 use Activity\Controller\ActivityCalendarController;
 use Activity\Controller\AdminCategoryController;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 return [
     'router' => [

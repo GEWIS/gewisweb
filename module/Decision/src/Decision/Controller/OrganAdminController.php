@@ -3,8 +3,8 @@
 namespace Decision\Controller;
 
 use Decision\Service\Organ;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
 
 class OrganAdminController extends AbstractActionController
 {

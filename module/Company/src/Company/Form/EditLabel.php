@@ -2,7 +2,7 @@
 
 namespace Company\Form;
 
-use Zend\Mvc\I18n\Translator;
+use Laminas\Mvc\I18n\Translator;
 
 class EditLabel extends CollectionBaseFieldsetAwareForm
 {

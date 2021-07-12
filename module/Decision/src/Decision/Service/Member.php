@@ -7,10 +7,10 @@ use Decision\Mapper\Authorization;
 use Decision\Model\Member as MemberModel;
 use User\Permissions\NotAllowedException;
 use User\Service\User;
-use Zend\Code\Exception\InvalidArgumentException;
-use Zend\Http\Client as HttpClient;
-use Zend\Mvc\I18n\Translator;
-use Zend\Permissions\Acl\Acl;
+use Laminas\Code\Exception\InvalidArgumentException;
+use Laminas\Http\Client as HttpClient;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Permissions\Acl\Acl;
 
 /**
  * Member service.

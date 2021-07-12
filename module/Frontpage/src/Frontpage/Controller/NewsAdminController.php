@@ -3,9 +3,9 @@
 namespace Frontpage\Controller;
 
 use Frontpage\Service\News;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
-use Zend\Paginator\Paginator;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
+use Laminas\Paginator\Paginator;
 
 class NewsAdminController extends AbstractActionController
 {

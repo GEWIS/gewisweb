@@ -4,10 +4,10 @@ namespace Activity\Form;
 
 use Activity\Model\SignupField;
 use Activity\Model\UserSignup;
-use Zend\Captcha\Image as ImageCaptcha;
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Laminas\Captcha\Image as ImageCaptcha;
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Hydrator\ClassMethods as ClassMethodsHydrator;
 
 //input filter
 
@@ -30,7 +30,7 @@ class Signup extends Form implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'security',
-            'type' => 'Zend\Form\Element\Csrf'
+            'type' => 'Laminas\Form\Element\Csrf'
             ]
         );
 
@@ -55,7 +55,7 @@ class Signup extends Form implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'captcha',
-            'type' => 'Zend\Form\Element\Captcha',
+            'type' => 'Laminas\Form\Element\Captcha',
             'options' => [
                 'captcha' => new ImageCaptcha(
                     [
@@ -128,7 +128,7 @@ class Signup extends Form implements InputFilterProviderInterface
                 $result['type'] = 'Text';
                 break;
             case 1: //'Yes/No'
-                $result['type'] = 'Zend\Form\Element\Radio';
+                $result['type'] = 'Laminas\Form\Element\Radio';
                 $result['options'] = [
                     'value_options' => [
                         '1' => 'Yes',
@@ -137,7 +137,7 @@ class Signup extends Form implements InputFilterProviderInterface
                 ];
                 break;
             case 2: //'Number'
-                $result['type'] = 'Zend\Form\Element\Number';
+                $result['type'] = 'Laminas\Form\Element\Number';
                 $result['attributes'] = [
                     'min' => $field->getMinimumValue(),
                     'max' => $field->getMaximumValue(),
@@ -149,7 +149,7 @@ class Signup extends Form implements InputFilterProviderInterface
                 foreach ($field->getOptions() as $option) {
                     $values[$option->getId()] = $option->getValue()->getText();
                 }
-                $result['type'] = 'Zend\Form\Element\Select';
+                $result['type'] = 'Laminas\Form\Element\Select';
                 $result['options'] = [
                     //'empty_option' => 'Make a choice',
                     'value_options' => $values

@@ -3,7 +3,7 @@
 use Application\View\Helper\Truncate;
 use Company\Controller\AdminController;
 use Company\Controller\CompanyController;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 return [
     'router' => [

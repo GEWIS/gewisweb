@@ -3,9 +3,9 @@
 namespace Activity\Controller;
 
 use Activity\Service\ActivityCategory;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Session\Container as SessionContainer;
-use Zend\View\Model\ViewModel;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Session\Container as SessionContainer;
+use Laminas\View\Model\ViewModel;
 
 class AdminCategoryController extends AbstractActionController
 {

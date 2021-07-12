@@ -2,7 +2,7 @@
 
 namespace Application\View\Helper;
 
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 /**
  * Url view helper for use inside javascript code.

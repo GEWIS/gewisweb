@@ -3,11 +3,11 @@
 namespace User\Authentication\Adapter;
 
 use User\Model\LoginAttempt;
-use Zend\Authentication\Adapter\AdapterInterface;
-use Zend\Authentication\Result;
+use Laminas\Authentication\Adapter\AdapterInterface;
+use Laminas\Authentication\Result;
 use User\Mapper\User as UserMapper;
 use User\Model\User as UserModel;
-use Zend\Crypt\Password\Bcrypt;
+use Laminas\Crypt\Password\Bcrypt;
 use Application\Service\Legacy as LegacyService;
 use User\Service\LoginAttempt as LoginAttemptService;
 

@@ -5,12 +5,12 @@ namespace Application\Service;
 use Decision\Model\Member;
 use Decision\Model\OrganInformation;
 use User\Model\User;
-use Zend\Mail\Message;
-use Zend\Mail\Transport\TransportInterface;
-use Zend\View\Model\ViewModel;
-use Zend\Mime\Part as MimePart;
-use Zend\Mime\Message as MimeMessage;
-use Zend\View\Renderer\PhpRenderer;
+use Laminas\Mail\Message;
+use Laminas\Mail\Transport\TransportInterface;
+use Laminas\View\Model\ViewModel;
+use Laminas\Mime\Part as MimePart;
+use Laminas\Mime\Message as MimeMessage;
+use Laminas\View\Renderer\PhpRenderer;
 
 /**
  * This service is used for sending emails.

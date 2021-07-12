@@ -17,7 +17,7 @@ use Company\Mapper\Package;
 use Company\Service\Company;
 use Company\Service\CompanyQuery;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class Module
 {

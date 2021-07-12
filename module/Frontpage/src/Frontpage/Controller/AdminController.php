@@ -2,7 +2,7 @@
 
 namespace Frontpage\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 
 // TODO: I believe this class is not used anywhere. Is it safe to remove?
 

@@ -2,9 +2,9 @@
 
 namespace Frontpage\Form;
 
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\I18n\Translator\TranslatorInterface as Translator;
 
 class PollApproval extends Form implements InputFilterProviderInterface
 {
@@ -15,7 +15,7 @@ class PollApproval extends Form implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'expiryDate',
-            'type' => 'Zend\Form\Element\Date',
+            'type' => 'Laminas\Form\Element\Date',
             'options' => [
                 'label' => $translator->translate('Expiration date for the poll (YYYY-MM-DD)')
             ]
@@ -35,7 +35,7 @@ class PollApproval extends Form implements InputFilterProviderInterface
 
     /**
      * Should return an array specification compatible with
-     * {@link \Zend\InputFilter\Factory::createInputFilter()}.
+     * {@link \Laminas\InputFilter\Factory::createInputFilter()}.
      *
      * @return array
      */

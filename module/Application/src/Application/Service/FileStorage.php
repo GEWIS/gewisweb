@@ -4,9 +4,9 @@ namespace Application\Service;
 
 use Exception;
 use RuntimeException;
-use Zend\Http\Headers;
-use Zend\Http\Response\Stream;
-use Zend\Mvc\I18n\Translator;
+use Laminas\Http\Headers;
+use Laminas\Http\Response\Stream;
+use Laminas\Mvc\I18n\Translator;
 
 /**
  * File storage service. This service can be used to safely store files without

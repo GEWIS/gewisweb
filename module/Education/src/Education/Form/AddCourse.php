@@ -2,10 +2,10 @@
 
 namespace Education\Form;
 
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\I18n\Translator\TranslatorInterface as Translator;
-use Zend\Validator\StringLength;
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\Validator\StringLength;
 
 class AddCourse extends Form implements InputFilterProviderInterface
 {
@@ -51,7 +51,7 @@ class AddCourse extends Form implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'url',
-            'type' => 'Zend\Form\Element\Url',
+            'type' => 'Laminas\Form\Element\Url',
             'options' => [
                 'label' => $translator->translate('URL')
             ]

@@ -3,9 +3,9 @@
 namespace Photo\Controller;
 
 use Photo\Service\Album;
-use Zend\Cache\Storage\StorageInterface;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Cache\Storage\StorageInterface;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
 
 class AlbumController extends AbstractActionController
 {

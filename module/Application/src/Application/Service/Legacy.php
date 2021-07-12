@@ -4,7 +4,7 @@ namespace Application\Service;
 
 use Exception;
 use User\Model\User;
-use Zend\Crypt\Password\Bcrypt;
+use Laminas\Crypt\Password\Bcrypt;
 
 /**
  * This service contains all bindings to legacy systems such as SuSOS and the old website.

@@ -12,7 +12,7 @@ use Application\View\Helper\BootstrapElementError;
 use Application\View\Helper\FeaturedCompanyPackage;
 use Application\View\Helper\LocalisedTextElement;
 use Doctrine\Common\Cache\MemcachedCache;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 return [
     'router' => [
@@ -46,14 +46,14 @@ return [
     ],
     'service_manager' => [
         'abstract_factories' => [
-            'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
-            'Zend\Log\LoggerAbstractServiceFactory',
+            'Laminas\Cache\Service\StorageCacheAbstractServiceFactory',
+            'Laminas\Log\LoggerAbstractServiceFactory',
         ],
         'aliases' => [
             'translator' => 'MvcTranslator',
         ],
         'factories' => [
-            'Zend\Session\Config\ConfigInterface' => 'Zend\Session\Service\SessionConfigFactory',
+            'Laminas\Session\Config\ConfigInterface' => 'Laminas\Session\Service\SessionConfigFactory',
             'doctrine.cache.my_memcached' => function () {
                 $cache = new MemcachedCache();
                 $memcached = new Memcached();

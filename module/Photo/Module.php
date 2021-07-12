@@ -14,9 +14,9 @@ use Photo\Service\AlbumCover;
 use Photo\Service\Metadata;
 use Photo\Service\Photo;
 use Photo\View\Helper\GlideUrl;
-use Zend\Cache\StorageFactory;
-use Zend\Mvc\MvcEvent;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Cache\StorageFactory;
+use Laminas\Mvc\MvcEvent;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class Module
 {

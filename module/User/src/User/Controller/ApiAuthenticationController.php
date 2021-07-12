@@ -6,7 +6,7 @@ use User\Model\User;
 use User\Permissions\NotAllowedException;
 use User\Service\ApiApp;
 use User\Service\User as UserService;
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 
 class ApiAuthenticationController extends AbstractActionController
 {

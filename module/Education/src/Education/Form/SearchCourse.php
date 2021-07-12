@@ -2,10 +2,10 @@
 
 namespace Education\Form;
 
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilter;
-use Zend\I18n\Translator\TranslatorInterface as Translator;
-use Zend\Validator\NotEmpty;
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilter;
+use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\Validator\NotEmpty;
 
 class SearchCourse extends Form
 {

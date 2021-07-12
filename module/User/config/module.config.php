@@ -5,7 +5,7 @@ use User\Controller\ApiAuthenticationController;
 use User\Controller\ApiController;
 use User\Controller\Factory\ApiAuthenticationControllerFactory;
 use User\Controller\UserController;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 return [
     'router' => [

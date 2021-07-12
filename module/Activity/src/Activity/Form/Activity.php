@@ -5,11 +5,11 @@ namespace Activity\Form;
 use DateTime;
 use Decision\Model\Organ;
 use Exception;
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Mvc\I18n\Translator;
-use Zend\Validator\Callback;
-use Zend\Validator\NotEmpty;
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\Callback;
+use Laminas\Validator\NotEmpty;
 
 class Activity extends Form implements InputFilterProviderInterface
 {
@@ -86,7 +86,7 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'language_dutch',
-            'type' => 'Zend\Form\Element\Checkbox',
+            'type' => 'Laminas\Form\Element\Checkbox',
             'options' => [
                 'checked_value' => 1,
                 'unchecked_value' => 0,
@@ -97,7 +97,7 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'language_english',
-            'type' => 'Zend\Form\Element\Checkbox',
+            'type' => 'Laminas\Form\Element\Checkbox',
             'options' => [
                 'checked_value' => 1,
                 'unchecked_value' => 0,
@@ -179,7 +179,7 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'isMyFuture',
-            'type' => 'Zend\Form\Element\Checkbox',
+            'type' => 'Laminas\Form\Element\Checkbox',
             'options' => [
                 'checked_value' => 1,
                 'unchecked_value' => 0,
@@ -190,7 +190,7 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'requireGEFLITST',
-            'type' => 'Zend\Form\Element\Checkbox',
+            'type' => 'Laminas\Form\Element\Checkbox',
             'options' => [
                 'checked_value' => 1,
                 'unchecked_value' => 0,
@@ -201,7 +201,7 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'categories',
-            'type' => 'Zend\Form\Element\MultiCheckbox',
+            'type' => 'Laminas\Form\Element\MultiCheckbox',
             'options' => [
                 'value_options' => $categoryOptions
             ],
@@ -211,7 +211,7 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'signupLists',
-            'type' => 'Zend\Form\Element\Collection',
+            'type' => 'Laminas\Form\Element\Collection',
             'options' => [
                 'count' => 0,
                 'should_create_template' => true,

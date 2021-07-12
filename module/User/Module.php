@@ -18,18 +18,18 @@ use User\Permissions\Assertion\IsBoardMember;
 use User\Service\ApiApp;
 use User\Service\Email;
 use User\Service\Factory\ApiAppFactory;
-use Zend\Authentication\AuthenticationService;
-use Zend\Crypt\Password\Bcrypt;
-use Zend\Http\PhpEnvironment\RemoteAddress;
-use Zend\Permissions\Acl\Acl;
-use Zend\Permissions\Acl\Role\GenericRole as Role;
-use Zend\Permissions\Acl\Resource\GenericResource as Resource;
-use Zend\Mvc\MvcEvent;
-use Zend\Http\Request as HttpRequest;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\Crypt\Password\Bcrypt;
+use Laminas\Http\PhpEnvironment\RemoteAddress;
+use Laminas\Permissions\Acl\Acl;
+use Laminas\Permissions\Acl\Role\GenericRole as Role;
+use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Http\Request as HttpRequest;
 
 use User\Permissions\NotAllowedException;
 use User\Model\User;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class Module
 {
@@ -101,7 +101,7 @@ class Module
     {
         return [
             'aliases' => [
-                'Zend\Authentication\AuthenticationService' => 'user_auth_service'
+                'Laminas\Authentication\AuthenticationService' => 'user_auth_service'
             ],
 
             'factories' => [
@@ -253,8 +253,8 @@ class Module
                 'user_mail_transport' => function (ServiceLocatorInterface $sm) {
                     $config = $sm->get('config');
                     $config = $config['email'];
-                    $class = '\Zend\Mail\Transport\\' . $config['transport'];
-                    $optionsClass = '\Zend\Mail\Transport\\' . $config['transport'] . 'Options';
+                    $class = '\Laminas\Mail\Transport\\' . $config['transport'];
+                    $optionsClass = '\Laminas\Mail\Transport\\' . $config['transport'] . 'Options';
                     $transport = new $class();
                     $transport->setOptions(new $optionsClass($config['options']));
                     return $transport;

@@ -3,7 +3,7 @@
 namespace Company\Form;
 
 use Company\Model\JobCategory;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 /**
  *
@@ -68,7 +68,7 @@ class CategoryFieldset extends Fieldset
         $this->add(
             [
             'name' => 'hidden',
-            'type' => 'Zend\Form\Element\Checkbox',
+            'type' => 'Laminas\Form\Element\Checkbox',
             'options' => [
                 'label' => $translate->translate('Hidden'),
                 'checked_value' => '1',

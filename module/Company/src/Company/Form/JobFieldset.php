@@ -3,8 +3,8 @@
 namespace Company\Form;
 
 use Company\Model\Job;
-use Zend\Form\Fieldset;
-use Zend\Mvc\I18n\Translator as Translator;
+use Laminas\Form\Fieldset;
+use Laminas\Mvc\I18n\Translator as Translator;
 
 class JobFieldset extends Fieldset
 {
@@ -60,7 +60,7 @@ class JobFieldset extends Fieldset
         $this->add(
             [
             'name' => 'active',
-            'type' => 'Zend\Form\Element\Checkbox',
+            'type' => 'Laminas\Form\Element\Checkbox',
             'options' => [
                 'label' => $translator->translate('Active'),
                 'use_hidden_element' => true,
@@ -86,7 +86,7 @@ class JobFieldset extends Fieldset
         $this->add(
             [
             'name' => 'attachment_file',
-            'type' => '\Zend\Form\Element\File',
+            'type' => '\Laminas\Form\Element\File',
             'attributes' => [
                 'type' => 'file',
             ],
@@ -100,7 +100,7 @@ class JobFieldset extends Fieldset
         $this->add(
             [
             'name' => 'email',
-            'type' => 'Zend\Form\Element\Email',
+            'type' => 'Laminas\Form\Element\Email',
             'attributes' => [
                 'type' => 'text',
             ],
@@ -140,7 +140,7 @@ class JobFieldset extends Fieldset
         $this->add(
             [
             'name' => 'description',
-            'type' => 'Zend\Form\Element\Textarea',
+            'type' => 'Laminas\Form\Element\Textarea',
             'options' => [
                 'label' => $translator->translate('Description'),
                 'required' => false,

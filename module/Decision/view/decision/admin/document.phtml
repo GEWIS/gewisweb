@@ -69,7 +69,7 @@ $element = $form->get('meeting');
             <tr data-id="<?= $document->getId() ?>">
                 <td class="btn-group-move">
                     <?php
-                    /** @var \Zend\Form\Form $form */
+                    /** @var \Laminas\Form\Form $form */
                     $form = $this->reorderDocumentForm;
 
                     $form->setAttributes([

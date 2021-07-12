@@ -2,14 +2,14 @@
 
 namespace Company\Form;
 
-use Zend\InputFilter\InputFilter;
-use Zend\Mvc\I18n\Translator as Translator;
-use Zend\Validator\Callback;
-use Zend\Validator\EmailAddress;
-use Zend\Validator\File\Extension;
-use Zend\Validator\File\MimeType;
-use Zend\Validator\Regex;
-use Zend\Validator\StringLength;
+use Laminas\InputFilter\InputFilter;
+use Laminas\Mvc\I18n\Translator as Translator;
+use Laminas\Validator\Callback;
+use Laminas\Validator\EmailAddress;
+use Laminas\Validator\File\Extension;
+use Laminas\Validator\File\MimeType;
+use Laminas\Validator\Regex;
+use Laminas\Validator\StringLength;
 
 class EditJob extends CollectionBaseFieldsetAwareForm
 {
@@ -57,7 +57,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
         $this->add(
             [
             'name' => 'labels',
-            'type' => 'Zend\Form\Element\MultiCheckbox',
+            'type' => 'Laminas\Form\Element\MultiCheckbox',
             'options' => [
                 'label' => $translator->translate('What labels apply to this job?'),
                 'value_options' => $labelOptions

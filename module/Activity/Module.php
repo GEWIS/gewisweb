@@ -21,7 +21,7 @@ use Activity\Service\SignupListQuery;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use User\Permissions\Assertion\IsCreatorOrOrganMember;
 use User\Permissions\NotAllowedException;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class Module
 {

@@ -8,7 +8,7 @@ use Frontpage\Controller\PageAdminController;
 use Frontpage\Controller\PageController;
 use Frontpage\Controller\PollAdminController;
 use Frontpage\Controller\PollController;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 return [
     'controllers' => [

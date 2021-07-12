@@ -10,10 +10,10 @@ use InvalidArgumentException;
 use Photo\Model\Photo as PhotoModel;
 use User\Model\User;
 use User\Permissions\NotAllowedException;
-use Zend\Mvc\I18n\Translator;
-use Zend\Permissions\Acl\Acl;
-use Zend\Validator\File\Extension;
-use Zend\Validator\File\IsImage;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Permissions\Acl\Acl;
+use Laminas\Validator\File\Extension;
+use Laminas\Validator\File\IsImage;
 
 /**
  * Admin service for all photo admin related functions.

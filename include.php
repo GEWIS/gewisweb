@@ -3,7 +3,7 @@
  * File to include in external pages.
  */
 
-use Zend\Mvc\MvcEvent;
+use Laminas\Mvc\MvcEvent;
 
 define('WEB_DIR', '/var/www/gewisweb');
 define('APP_ENV', getenv('APP_ENV') ?: 'production');
@@ -29,7 +29,7 @@ $config['module_listener_options']['config_glob_paths'] = ['config/autoload/{,*.
 //$config['modules'] = array_diff($config['modules'], ['Photo', 'Activity']);
 
 // Init the application
-$application = Zend\Mvc\Application::init($config);
+$application = Laminas\Mvc\Application::init($config);
 
 /*
  * We add the file which this file is included in as a template to the template map.

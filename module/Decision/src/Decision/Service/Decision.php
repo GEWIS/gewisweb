@@ -18,8 +18,8 @@ use Doctrine\ORM\PersistentCollection;
 use InvalidArgumentException;
 use User\Permissions\NotAllowedException;
 use User\Service\User;
-use Zend\Mvc\I18n\Translator;
-use Zend\Permissions\Acl\Acl;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Permissions\Acl\Acl;
 
 /**
  * Decision service.

@@ -2,13 +2,13 @@
 
 namespace Company\Form;
 
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilter;
-use Zend\Mvc\I18n\Translator;
-use Zend\Validator\Callback;
-use Zend\Validator\File\Extension;
-use Zend\Validator\Regex;
-use Zend\Validator\StringLength;
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilter;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\Callback;
+use Laminas\Validator\File\Extension;
+use Laminas\Validator\Regex;
+use Laminas\Validator\StringLength;
 
 class EditCompany extends Form
 {
@@ -94,7 +94,7 @@ class EditCompany extends Form
         $this->add(
             [
             'name' => 'address',
-            'type' => 'Zend\Form\Element\Textarea',
+            'type' => 'Laminas\Form\Element\Textarea',
             'attributes' => [
                 'type' => 'textarea',
             ],
@@ -108,7 +108,7 @@ class EditCompany extends Form
         $this->add(
             [
             'name' => 'en_website',
-            'type' => 'Zend\Form\Element\Url',
+            'type' => 'Laminas\Form\Element\Url',
             'attributes' => [
             ],
             'options' => [
@@ -121,7 +121,7 @@ class EditCompany extends Form
         $this->add(
             [
             'name' => 'nl_website',
-            'type' => 'Zend\Form\Element\Url',
+            'type' => 'Laminas\Form\Element\Url',
             'attributes' => [
             ],
             'options' => [
@@ -157,7 +157,7 @@ class EditCompany extends Form
         $this->add(
             [
             'name' => 'email',
-            'type' => 'Zend\Form\Element\Email',
+            'type' => 'Laminas\Form\Element\Email',
             'attributes' => [
             ],
             'options' => [
@@ -193,7 +193,7 @@ class EditCompany extends Form
         $this->add(
             [
             'name' => 'nl_logo',
-            'type' => '\Zend\Form\Element\File',
+            'type' => '\Laminas\Form\Element\File',
             'attributes' => [
                 'type' => 'file',
             ],
@@ -206,7 +206,7 @@ class EditCompany extends Form
         $this->add(
             [
             'name' => 'en_logo',
-            'type' => '\Zend\Form\Element\File',
+            'type' => '\Laminas\Form\Element\File',
             'attributes' => [
                 'type' => 'file',
             ],
@@ -219,7 +219,7 @@ class EditCompany extends Form
         $this->add(
             [
             'name' => 'en_description',
-            'type' => 'Zend\Form\Element\Textarea',
+            'type' => 'Laminas\Form\Element\Textarea',
             'options' => [
                 'label' => $translate->translate('Description'),
             ],
@@ -232,7 +232,7 @@ class EditCompany extends Form
         $this->add(
             [
             'name' => 'nl_description',
-            'type' => 'Zend\Form\Element\Textarea',
+            'type' => 'Laminas\Form\Element\Textarea',
             'options' => [
                 'label' => $translate->translate('Description'),
             ],
@@ -245,7 +245,7 @@ class EditCompany extends Form
         $this->add(
             [
             'name' => 'hidden',
-            'type' => 'Zend\Form\Element\Checkbox',
+            'type' => 'Laminas\Form\Element\Checkbox',
             'attributes' => [
             ],
             'options' => [

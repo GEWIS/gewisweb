@@ -4,7 +4,7 @@ namespace Photo\Controller\Plugin;
 
 use Photo\Service\Album;
 use Photo\Service\Photo;
-use Zend\Paginator\Adapter\AdapterInterface;
+use Laminas\Paginator\Adapter\AdapterInterface;
 
 /**
  * Paginator for album pages

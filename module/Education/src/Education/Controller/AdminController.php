@@ -4,9 +4,9 @@ namespace Education\Controller;
 
 use Education\Form\SummaryUpload;
 use Education\Service\Exam;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\JsonModel;
-use Zend\View\Model\ViewModel;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\JsonModel;
+use Laminas\View\Model\ViewModel;
 
 class AdminController extends AbstractActionController
 {

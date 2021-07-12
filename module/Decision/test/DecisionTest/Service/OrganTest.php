@@ -4,9 +4,9 @@ namespace DecisionTest\Service;
 
 use PHPUnit_Framework_TestCase;
 use User\Permissions\NotAllowedException;
-use Zend\I18n\Translator\Translator;
-use Zend\Permissions\Acl\Acl;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\I18n\Translator\Translator;
+use Laminas\Permissions\Acl\Acl;
+use Laminas\ServiceManager\ServiceManager;
 
 class OrganTest extends PHPUnit_Framework_TestCase
 {

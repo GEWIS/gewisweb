@@ -5,7 +5,7 @@ namespace Photo\Model;
 use DateTime;
 use Decision\Model\Member;
 use Doctrine\ORM\Mapping as ORM;
-use Zend\Permissions\Acl\Resource\ResourceInterface;
+use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Vote, represents a vote for a photo of the week.

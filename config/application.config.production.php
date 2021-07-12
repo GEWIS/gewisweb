@@ -2,12 +2,12 @@
 return [
     // This should be an array of module namespaces used in the application.
     'modules' => [
-        'Zend\Session',
-        'Zend\I18n',
-        'Zend\Mvc\I18n',
-//        'Zend\Form',
-        'Zend\Router',
-        'Zend\Validator',
+        'Laminas\Session',
+        'Laminas\I18n',
+        'Laminas\Mvc\I18n',
+//        'Laminas\Form',
+        'Laminas\Router',
+        'Laminas\Validator',
         'DoctrineModule',
         'DoctrineORMModule',
         'User',
@@ -61,7 +61,7 @@ return [
         'check_dependencies' => false,
 
         // We use composer autoloading now
-        'use_zend_loader' => true,
+        'use_laminas_loader' => true,
     ],
     // Used to create an own service manager. May contain one or more child arrays.
     //'service_listener_options' => array(
@@ -74,6 +74,6 @@ return [
     // )
 
     // Initial configuration with which to seed the ServiceManager.
-    // Should be compatible with Zend\ServiceManager\Config.
+    // Should be compatible with Laminas\ServiceManager\Config.
     // 'service_manager' => array(),
 ];

@@ -4,9 +4,9 @@ namespace Company\Controller;
 
 use Company\Service\Company;
 use Company\Service\CompanyQuery;
-use Zend\I18n\Translator\Translator;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\I18n\Translator\Translator;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
 
 class CompanyController extends AbstractActionController
 {

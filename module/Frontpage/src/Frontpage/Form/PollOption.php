@@ -3,10 +3,10 @@
 namespace Frontpage\Form;
 
 use Frontpage\Model\PollOption as PollOptionModel;
-use Zend\Form\Fieldset;
-use Zend\Hydrator\ClassMethods as ClassMethodsHydrator;
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Validator\StringLength;
+use Laminas\Form\Fieldset;
+use Laminas\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Validator\StringLength;
 
 class PollOption extends Fieldset implements InputFilterProviderInterface
 {

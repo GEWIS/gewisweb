@@ -17,9 +17,9 @@ use Decision\Model\Organ;
 use Doctrine\ORM\EntityManager;
 use User\Model\User;
 use User\Permissions\NotAllowedException;
-use Zend\Mvc\I18n\Translator;
-use Zend\Permissions\Acl\Acl;
-use Zend\Stdlib\Parameters;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Permissions\Acl\Acl;
+use Laminas\Stdlib\Parameters;
 
 class Activity extends AbstractAclService
 {
@@ -242,7 +242,7 @@ class Activity extends AbstractAclService
 
         if (isset($data['signupLists'])) {
             foreach ($data['signupLists'] as $signupList) {
-                // Zend\Stdlib\Parameters is required to prevent undefined indices.
+                // Laminas\Stdlib\Parameters is required to prevent undefined indices.
                 $signupList = $this->createSignupList(new Parameters($signupList), $activity);
                 $em->persist($signupList);
             }
@@ -290,7 +290,7 @@ class Activity extends AbstractAclService
             $em = $this->entityManager;
 
             foreach ($data['fields'] as $field) {
-                // Zend\Stdlib\Parameters is required to prevent undefined indices.
+                // Laminas\Stdlib\Parameters is required to prevent undefined indices.
                 $field = $this->createSignupField(new Parameters($field), $signupList);
                 $em->persist($field);
             }

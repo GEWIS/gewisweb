@@ -4,7 +4,7 @@ namespace Application\View\Helper;
 
 use Company\Model\CompanyFeaturedPackage;
 use Company\Service\Company;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 class FeaturedCompanyPackage extends AbstractHelper
 {

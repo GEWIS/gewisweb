@@ -3,7 +3,7 @@
 namespace Company\Form;
 
 use Company\Model\JobLabel;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 /**
  *

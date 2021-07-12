@@ -3,7 +3,7 @@
 namespace Photo\View\Helper;
 
 use League\Glide\Urls\UrlBuilder;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 /**
  * Url view helper for generating (signed) glide url's

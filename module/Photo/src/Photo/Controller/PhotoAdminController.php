@@ -5,9 +5,9 @@ namespace Photo\Controller;
 use Doctrine\ORM\EntityManager;
 use Photo\Service\Album;
 use Photo\Service\Photo;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
-use Zend\View\Model\JsonModel;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
+use Laminas\View\Model\JsonModel;
 
 class PhotoAdminController extends AbstractActionController
 {

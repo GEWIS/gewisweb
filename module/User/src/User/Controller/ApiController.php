@@ -11,7 +11,7 @@ namespace User\Controller;
 
 use Decision\Service\MemberInfo;
 use User\Service\User;
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 
 class ApiController extends AbstractActionController
 {

@@ -2,14 +2,14 @@
 
 namespace Education\Form\Fieldset;
 
-use Zend\Form\Fieldset;
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Mvc\I18n\Translator;
+use Laminas\Form\Fieldset;
+use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Mvc\I18n\Translator;
 use Education\Model\Exam as ExamModel;
-use Zend\Validator\Callback;
-use Zend\Validator\File\Exists;
-use Zend\Validator\Regex;
-use Zend\Validator\StringLength;
+use Laminas\Validator\Callback;
+use Laminas\Validator\File\Exists;
+use Laminas\Validator\Regex;
+use Laminas\Validator\StringLength;
 
 class Exam extends Fieldset implements InputFilterProviderInterface
 {
@@ -49,7 +49,7 @@ class Exam extends Fieldset implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'examType',
-            'type' => 'Zend\Form\Element\Select',
+            'type' => 'Laminas\Form\Element\Select',
             'options' => [
                 'label' => $translator->translate('Type'),
                 'value_options' => [
@@ -64,7 +64,7 @@ class Exam extends Fieldset implements InputFilterProviderInterface
 
         $this->add(
             [
-            'type' => 'Zend\Form\Element\Select',
+            'type' => 'Laminas\Form\Element\Select',
             'name' => 'language',
             'options' => [
                 'label' => $translator->translate('Language'),

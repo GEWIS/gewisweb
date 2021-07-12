@@ -2,7 +2,7 @@
 
 use Education\Controller\AdminController;
 use Education\Controller\EducationController;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 return [
     'router' => [

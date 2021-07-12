@@ -6,9 +6,9 @@ use DateTime;
 use Firebase\JWT\JWT;
 use UnexpectedValueException;
 use User\Model\Session as SessionModel;
-use Zend\Authentication\Storage;
-use Zend\Http\Header\SetCookie;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\Authentication\Storage;
+use Laminas\Http\Header\SetCookie;
+use Laminas\ServiceManager\ServiceManager;
 
 class Session extends Storage\Session
 {
@@ -45,7 +45,7 @@ class Session extends Storage\Session
     }
 
     /**
-     * Defined by Zend\Authentication\Storage\StorageInterface
+     * Defined by Laminas\Authentication\Storage\StorageInterface
      *
      * @return bool
      */
@@ -88,7 +88,7 @@ class Session extends Storage\Session
     }
 
     /**
-     * Defined by Zend\Authentication\Storage\StorageInterface
+     * Defined by Laminas\Authentication\Storage\StorageInterface
      *
      * @param mixed $contents
      * @return void
@@ -129,7 +129,7 @@ class Session extends Storage\Session
     }
 
     /**
-     * Defined by Zend\Authentication\Storage\StorageInterface
+     * Defined by Laminas\Authentication\Storage\StorageInterface
      *
      * @return void
      */

@@ -10,7 +10,7 @@ use Frontpage\Form\PollApproval;
 use Frontpage\Form\PollComment;
 use Frontpage\Service\Frontpage;
 use Frontpage\Service\News;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class Module
 {

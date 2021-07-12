@@ -2,8 +2,8 @@
 
 namespace Application\View\Helper;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\Helper\AbstractHelper;
 
 class ModuleIsActive extends AbstractHelper
 {

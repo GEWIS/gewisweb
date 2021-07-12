@@ -2,10 +2,10 @@
 
 namespace Decision\Form;
 
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\I18n\Translator\TranslatorInterface as Translator;
-use Zend\Validator\NotEmpty;
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\Validator\NotEmpty;
 
 class SearchDecision extends Form implements InputFilterProviderInterface
 {

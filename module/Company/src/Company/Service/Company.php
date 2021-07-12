@@ -26,8 +26,8 @@ use Exception;
 use InvalidArgumentException;
 use User\Model\User;
 use User\Permissions\NotAllowedException;
-use Zend\Mvc\I18n\Translator;
-use Zend\Permissions\Acl\Acl;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Permissions\Acl\Acl;
 
 /**
  * Company service.

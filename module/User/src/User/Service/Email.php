@@ -6,11 +6,11 @@ use User\Model\NewUser as NewUserModel;
 
 use Decision\Model\Member as MemberModel;
 
-use Zend\Mail\Message;
-use Zend\Mail\Transport\TransportInterface;
-use Zend\Mvc\I18n\Translator;
-use Zend\View\Model\ViewModel;
-use Zend\View\Renderer\PhpRenderer;
+use Laminas\Mail\Message;
+use Laminas\Mail\Transport\TransportInterface;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\View\Model\ViewModel;
+use Laminas\View\Renderer\PhpRenderer;
 
 class Email
 {

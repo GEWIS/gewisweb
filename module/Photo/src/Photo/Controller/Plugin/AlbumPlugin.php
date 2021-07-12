@@ -5,8 +5,8 @@ namespace Photo\Controller\Plugin;
 use Exception;
 use Photo\Service\Album;
 use Photo\Service\Photo;
-use Zend\Mvc\Controller\Plugin\AbstractPlugin;
-use Zend\Paginator;
+use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
+use Laminas\Paginator;
 
 /**
  * This plugin helps with rendering the pages doing album related stuff.

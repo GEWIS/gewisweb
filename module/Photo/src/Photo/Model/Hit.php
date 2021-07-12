@@ -4,7 +4,7 @@ namespace Photo\Model;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Zend\Permissions\Acl\Resource\ResourceInterface;
+use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Hit, represents a hit for a photo.

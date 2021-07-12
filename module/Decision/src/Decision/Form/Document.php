@@ -2,12 +2,12 @@
 
 namespace Decision\Form;
 
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\I18n\Translator\TranslatorInterface as Translator;
-use Zend\Validator\File\Extension;
-use Zend\Validator\File\MimeType;
-use Zend\Validator\StringLength;
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\Validator\File\Extension;
+use Laminas\Validator\File\MimeType;
+use Laminas\Validator\StringLength;
 
 class Document extends Form implements InputFilterProviderInterface
 {

@@ -2,10 +2,10 @@
 
 namespace Photo\Form;
 
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilter;
-use Zend\Mvc\I18n\Translator;
-use Zend\Validator\StringLength;
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilter;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\StringLength;
 
 class CreateAlbum extends Form
 {
@@ -17,7 +17,7 @@ class CreateAlbum extends Form
         $this->add(
             [
             'name' => 'name',
-            'type' => 'Zend\Form\Element\Text',
+            'type' => 'Laminas\Form\Element\Text',
             'options' => [
                 'label' => $translate->translate('Album title')
             ]

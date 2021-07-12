@@ -2,10 +2,10 @@
 
 namespace Photo\Form;
 
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilter;
-use Zend\Mvc\I18n\Translator;
-use Zend\Validator\NotEmpty;
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilter;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\NotEmpty;
 
 class EditAlbum extends Form
 {
@@ -17,7 +17,7 @@ class EditAlbum extends Form
         $this->add(
             [
             'name' => 'name',
-            'type' => 'Zend\Form\Element\Text',
+            'type' => 'Laminas\Form\Element\Text',
             'options' => [
                 'label' => $translate->translate('Album title')
             ]
@@ -27,7 +27,7 @@ class EditAlbum extends Form
         $this->add(
             [
             'name' => 'startDateTime',
-            'type' => 'Zend\Form\Element\DateTime',
+            'type' => 'Laminas\Form\Element\DateTime',
             'options' => [
                 'label' => $translate->translate('Start date')
             ]
@@ -37,7 +37,7 @@ class EditAlbum extends Form
         $this->add(
             [
             'name' => 'endDateTime',
-            'type' => 'Zend\Form\Element\DateTime',
+            'type' => 'Laminas\Form\Element\DateTime',
             'options' => [
                 'label' => $translate->translate('End date')
             ]

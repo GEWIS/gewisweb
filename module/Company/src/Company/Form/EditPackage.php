@@ -2,9 +2,9 @@
 
 namespace Company\Form;
 
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilter;
-use Zend\Mvc\I18n\Translator;
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilter;
+use Laminas\Mvc\I18n\Translator;
 
 class EditPackage extends Form
 {
@@ -25,7 +25,7 @@ class EditPackage extends Form
         $this->add(
             [
             'name' => 'startDate',
-            'type' => 'Zend\Form\Element\Date',
+            'type' => 'Laminas\Form\Element\Date',
             'attributes' => [
                 'required' => 'required',
                 'step' => '1',
@@ -39,7 +39,7 @@ class EditPackage extends Form
         $this->add(
             [
             'name' => 'expirationDate',
-            'type' => 'Zend\Form\Element\Date',
+            'type' => 'Laminas\Form\Element\Date',
             'attributes' => [
                 'required' => 'required',
                 'step' => '1',
@@ -53,7 +53,7 @@ class EditPackage extends Form
         $this->add(
             [
             'name' => 'published',
-            'type' => 'Zend\Form\Element\Checkbox',
+            'type' => 'Laminas\Form\Element\Checkbox',
             'attributes' => [
             ],
             'options' => [
@@ -69,7 +69,7 @@ class EditPackage extends Form
             $this->add(
                 [
                 'name' => 'article',
-                'type' => 'Zend\Form\Element\Textarea',
+                'type' => 'Laminas\Form\Element\Textarea',
                 'options' => [
                     'label' => $translate->translate('Article'),
                 ],
@@ -81,7 +81,7 @@ class EditPackage extends Form
 
             $this->add(
                 [
-                'type' => 'Zend\Form\Element\Radio',
+                'type' => 'Laminas\Form\Element\Radio',
                 'name' => 'language',
                 'options' => [
                     'label' => 'Language',
@@ -98,7 +98,7 @@ class EditPackage extends Form
             $this->add(
                 [
                 'name' => 'banner',
-                'type' => '\Zend\Form\Element\File',
+                'type' => '\Laminas\Form\Element\File',
                 'attributes' => [
                     'type' => 'file',
                 ],

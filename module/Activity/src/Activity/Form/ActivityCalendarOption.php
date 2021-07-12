@@ -5,10 +5,10 @@ namespace Activity\Form;
 use Activity\Service\ActivityCalendar;
 use DateTime;
 use Exception;
-use Zend\Form\Fieldset;
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Mvc\I18n\Translator;
-use Zend\Validator\Callback;
+use Laminas\Form\Fieldset;
+use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\Callback;
 
 class ActivityCalendarOption extends Fieldset implements InputFilterProviderInterface
 {

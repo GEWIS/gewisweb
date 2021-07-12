@@ -4,7 +4,7 @@ namespace Frontpage\Model;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Zend\Permissions\Acl\Resource\ResourceInterface;
+use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * News item

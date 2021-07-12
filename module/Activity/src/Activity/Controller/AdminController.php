@@ -9,12 +9,12 @@ use Activity\Service\Signup;
 use Activity\Service\SignupListQuery;
 use DateTime;
 use User\Permissions\NotAllowedException;
-use Zend\Form\FormInterface;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Paginator\Paginator;
-use Zend\Session\Container as SessionContainer;
-use Zend\Stdlib\Parameters;
-use Zend\View\Model\ViewModel;
+use Laminas\Form\FormInterface;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Paginator\Paginator;
+use Laminas\Session\Container as SessionContainer;
+use Laminas\Stdlib\Parameters;
+use Laminas\View\Model\ViewModel;
 
 /**
  * Controller that gives some additional details for activities, such as a list of email adresses

@@ -13,8 +13,8 @@ use Frontpage\Model\NewsItem;
 use Photo\Mapper\Tag;
 use Photo\Service\Photo;
 use User\Model\User;
-use Zend\Mvc\I18n\Translator;
-use Zend\Permissions\Acl\Acl;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Permissions\Acl\Acl;
 
 /**
  * Frontpage service.

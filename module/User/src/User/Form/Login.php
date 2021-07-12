@@ -2,12 +2,12 @@
 
 namespace User\Form;
 
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilter;
-use Zend\I18n\Translator\TranslatorInterface as Translator;
-use Zend\Authentication\Result;
-use Zend\Validator\NotEmpty;
-use Zend\Validator\StringLength;
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilter;
+use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\Authentication\Result;
+use Laminas\Validator\NotEmpty;
+use Laminas\Validator\StringLength;
 
 class Login extends Form
 {
@@ -71,7 +71,7 @@ class Login extends Form
         $this->add(
             [
             'name' => 'security',
-            'type' => 'Zend\Form\Element\Csrf'
+            'type' => 'Laminas\Form\Element\Csrf'
             ]
         );
 

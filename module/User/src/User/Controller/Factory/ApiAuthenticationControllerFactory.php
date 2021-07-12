@@ -5,7 +5,7 @@ namespace User\Controller\Factory;
 use Interop\Container\ContainerInterface;
 use User\Controller\ApiAuthenticationController;
 use User\Service\ApiApp;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class ApiAuthenticationControllerFactory implements FactoryInterface
 {

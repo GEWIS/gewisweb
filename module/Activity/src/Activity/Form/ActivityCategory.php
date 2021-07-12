@@ -2,11 +2,11 @@
 
 namespace Activity\Form;
 
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Mvc\I18n\Translator;
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Mvc\I18n\Translator;
 
-// use Zend\Hydrator\ClassMethods as ClassMethodsHydrator;
+// use Laminas\Hydrator\ClassMethods as ClassMethodsHydrator;
 
 class ActivityCategory extends Form implements InputFilterProviderInterface
 {
@@ -23,7 +23,7 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'language_dutch',
-            'type' => 'Zend\Form\Element\Checkbox',
+            'type' => 'Laminas\Form\Element\Checkbox',
             'options' => [
                 'checked_value' => 1,
                 'unchecked_value' => 0,
@@ -34,7 +34,7 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'language_english',
-            'type' => 'Zend\Form\Element\Checkbox',
+            'type' => 'Laminas\Form\Element\Checkbox',
             'options' => [
                 'checked_value' => 1,
                 'unchecked_value' => 0,
