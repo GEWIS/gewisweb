@@ -20,7 +20,11 @@ if (file_exists('vendor/autoload.php')) {
     throw new RuntimeException('Unable to load dependencies. Run `php composer.phar install`.');
 }
 
-$config = require 'config/application.config.' . APP_ENV .'.php';
+// Config
+$config = include 'config/application.config.php';
+if (APP_ENV === 'development' && file_exists('config/development.config.php')) {
+    $config = Laminas\Stdlib\ArrayUtils::merge($config, include 'config/development.config.php');
+}
 
 // Prevent files from loading which we can't read
 $config['module_listener_options']['config_glob_paths'] = ['config/autoload/{,*.}{external,global}.php'];

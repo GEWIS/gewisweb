@@ -107,6 +107,7 @@ return [
             'paginator/default' => __DIR__ . '/../view/partial/paginator.phtml',
         ],
         'template_path_stack' => [
+            'laminas-developer-tools' => __DIR__ . '/../view',
             __DIR__ . '/../view',
         ],
     ],

@@ -66,7 +66,7 @@ COPY --chown=www-data:www-data ./docker/web/development/php-fpm.conf /usr/local/
 COPY --chown=www-data:www-data ./config/autoload/local.development.php.dist ./config/autoload/local.php
 COPY --chown=www-data:www-data ./config/autoload/doctrine.local.development.php.dist ./config/autoload/doctrine.local.php
 COPY --chown=www-data:www-data ./config/autoload/gewisdb.local.php.dist ./config/autoload/gewisdb.local.php
-COPY --chown=www-data:www-data ./config/autoload/zdt.local.php.dist ./config/autoload/zdt.local.php
+COPY --chown=www-data:www-data ./config/autoload/laminas-developer-tools.local.php.dist ./config/autoload/laminas-developer-tools.local.php
 
 COPY --chown=www-data:www-data ./docker/web/development/crontab /etc/cron.d/crontab
 RUN chmod 0644 /etc/cron.d/crontab && crontab /etc/cron.d/crontab

@@ -14,6 +14,11 @@ if (file_exists('vendor/autoload.php')) {
     throw new RuntimeException('Unable to load dependencies. Run `php composer.phar install`.');
 }
 
+// Config
+$appConfig = include 'config/application.config.php';
+if (APP_ENV === 'development' && file_exists('config/development.config.php')) {
+    $appConfig = Laminas\Stdlib\ArrayUtils::merge($appConfig, include 'config/development.config.php');
+}
 
 // Run the application!
-Laminas\Mvc\Application::init(require 'config/application.config.' . APP_ENV . '.php')->run();
+Laminas\Mvc\Application::init($appConfig)->run();
