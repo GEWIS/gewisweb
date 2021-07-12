@@ -86,6 +86,7 @@ class Module
                     $sm->get('translator'),
                     $sm->get('application_get_languages'),
                     $sm->get('company_hydrator'),
+                    // TODO: This causes is a circular dependency. Remove the below
                     $sm->get('company_service_company')->getLabelList(false)
                 );
                 $form->setHydrator($sm->get('company_hydrator'));

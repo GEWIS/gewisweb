@@ -34,7 +34,7 @@ RUN pecl install imagick \
     && docker-php-ext-enable imagick \
     && pecl install memcached \
     && docker-php-ext-enable memcached \
-    && pecl install xdebug-2.9.8 \
+    && pecl install xdebug \
     && docker-php-ext-enable xdebug
 
 WORKDIR /code
