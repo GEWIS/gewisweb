@@ -13,7 +13,9 @@ RUN apt-get update \
         libpq-dev \
         libxml2-dev \
         libzip-dev \
+        nano \
         unzip \
+        zip \
     && apt-get upgrade -y
 
 RUN docker-php-ext-configure \
@@ -71,6 +73,8 @@ COPY --chown=www-data:www-data ./docker/web/development/docker-entrypoint.sh ./d
 RUN chmod 0775 ./docker-entrypoint.sh
 
 COPY --chown=www-data:www-data . /code
+
+ENV PHP_IDE_CONFIG="serverName=gewis.nl"
 
 RUN php composer.phar dump-autoload
 
