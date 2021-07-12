@@ -13,7 +13,7 @@ use Decision\Mapper\Decision;
 use Decision\Mapper\Meeting;
 use Decision\Mapper\Member;
 use Decision\Mapper\Organ;
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceManager;
 

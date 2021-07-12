@@ -2,7 +2,7 @@
 
 namespace User;
 
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Doctrine\Laminas\Hydrator\DoctrineObject;
 use User\Authentication\Adapter\Mapper;
 use User\Authentication\Adapter\PinMapper;
 use User\Form\Activate;

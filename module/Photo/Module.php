@@ -3,7 +3,7 @@
 namespace Photo;
 
 use Doctrine\ORM\Events;
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Exception;
 use League\Glide\Urls\UrlBuilderFactory;
 use Photo\Listener\AlbumDate as AlbumDateListener;

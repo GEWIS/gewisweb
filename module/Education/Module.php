@@ -2,7 +2,7 @@
 
 namespace Education;
 
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Education\Form\AddCourse;
 use Education\Form\Bulk;
 use Education\Form\SearchCourse;

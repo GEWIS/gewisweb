@@ -18,7 +18,7 @@ use Activity\Mapper\SignupList as SignupListMapper;
 use Activity\Mapper\SignupOption;
 use Activity\Service\ActivityQuery;
 use Activity\Service\SignupListQuery;
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Doctrine\Laminas\Hydrator\DoctrineObject;
 use User\Permissions\Assertion\IsCreatorOrOrganMember;
 use User\Permissions\NotAllowedException;
 use Laminas\ServiceManager\ServiceLocatorInterface;

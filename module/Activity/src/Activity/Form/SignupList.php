@@ -7,7 +7,7 @@ use Exception;
 use Laminas\Form\Fieldset;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Laminas\Hydrator\ClassMethodsHydrator;
 use Laminas\Validator\Callback;
 
 class SignupList extends Fieldset implements InputFilterProviderInterface

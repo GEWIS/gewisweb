@@ -7,7 +7,7 @@ use Activity\Model\UserSignup;
 use Laminas\Captcha\Image as ImageCaptcha;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
-use Laminas\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Laminas\Hydrator\ClassMethodsHydrator;
 
 //input filter
 

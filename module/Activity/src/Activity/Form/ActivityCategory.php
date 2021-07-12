@@ -6,7 +6,7 @@ use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 
-// use Laminas\Hydrator\ClassMethods as ClassMethodsHydrator;
+// use Laminas\Hydrator\ClassMethodsHydrator;
 
 class ActivityCategory extends Form implements InputFilterProviderInterface
 {

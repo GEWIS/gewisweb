@@ -16,7 +16,7 @@ use Company\Mapper\LabelAssignment;
 use Company\Mapper\Package;
 use Company\Service\Company;
 use Company\Service\CompanyQuery;
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class Module

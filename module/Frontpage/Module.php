@@ -2,7 +2,7 @@
 
 namespace Frontpage;
 
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Frontpage\Form\NewsItem;
 use Frontpage\Form\Page;
 use Frontpage\Form\Poll;

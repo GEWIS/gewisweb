@@ -4,7 +4,7 @@ namespace Frontpage\Form;
 
 use Frontpage\Model\PollOption as PollOptionModel;
 use Laminas\Form\Fieldset;
-use Laminas\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Laminas\Hydrator\ClassMethodsHydrator;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator\StringLength;
 

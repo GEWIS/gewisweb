@@ -6,7 +6,7 @@ use Activity\Model\SignupField;
 use Laminas\Form\Fieldset;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Laminas\Hydrator\ClassMethodsHydrator;
 use Laminas\Validator\Callback;
 use Laminas\Validator\NotEmpty;
 
