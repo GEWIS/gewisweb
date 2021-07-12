@@ -5,7 +5,7 @@ return [
         'Laminas\Session',
         'Laminas\I18n',
         'Laminas\Mvc\I18n',
-//        'Laminas\Form',
+        'Laminas\Form',
         'Laminas\Router',
         'Laminas\Validator',
         'DoctrineModule',
