@@ -2,25 +2,28 @@
 
 namespace Application\View\Helper;
 
-use Company\Model\CompanyFeaturedPackage;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Company\Service\CompanyQuery;
 use Zend\View\Helper\AbstractHelper;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
-class JobCategories extends AbstractHelper implements ServiceLocatorAwareInterface
+class JobCategories extends AbstractHelper
 {
-    use ServiceLocatorAwareTrait;
+    /**
+     * @var CompanyQuery
+     */
+    private $companyQueryService;
+
+    public function __construct(CompanyQuery $companyQueryService)
+    {
+        $this->companyQueryService = $companyQueryService;
+    }
 
     /**
      * Returns all visible categories
      *
-     * @return CompanyFeaturedPackage
+     * @return array
      */
     public function __invoke()
     {
-        $pluginManager = $this->getServiceLocator();
-        $companyService = $pluginManager->getServiceLocator()->get('Company\Service\Company');
-        $categories = $companyService->getCategoryList(true);
-        return $categories;
+        return $this->companyQueryService->getCategoryList(true);
     }
 }

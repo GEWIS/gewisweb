@@ -15,6 +15,7 @@ use Company\Mapper\Label;
 use Company\Mapper\LabelAssignment;
 use Company\Mapper\Package;
 use Company\Service\Company;
+use Company\Service\CompanyQuery;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -86,8 +87,7 @@ class Module
                     $sm->get('translator'),
                     $sm->get('application_get_languages'),
                     $sm->get('company_hydrator'),
-                    // TODO: This causes is a circular dependency. Remove the below
-                    $sm->get('company_service_company')->getLabelList(false)
+                    $sm->get('company_service_companyquery')->getLabelList(false)
                 );
                 $form->setHydrator($sm->get('company_hydrator'));
                 return $form;
@@ -225,6 +225,22 @@ class Module
                     $editCategoryForm,
                     $editLabelForm,
                     $languages
+                );
+            },
+            'company_service_companyquery' => function (ServiceLocatorInterface $sm) {
+                $translator = $sm->get('translator');
+                $userRole = $sm->get('user_role');
+                $acl = $sm->get('company_acl');
+                $jobMapper = $sm->get('company_mapper_job');
+                $categoryMapper = $sm->get('company_mapper_category');
+                $labelMapper = $sm->get('company_mapper_label');
+                return new CompanyQuery(
+                    $translator,
+                    $userRole,
+                    $acl,
+                    $jobMapper,
+                    $categoryMapper,
+                    $labelMapper
                 );
             },
         ];

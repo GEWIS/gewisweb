@@ -19,6 +19,7 @@ use Application\View\Helper\JobCategories;
 use Application\View\Helper\ModuleIsActive;
 use Application\View\Helper\ScriptUrl;
 use Carbon\Carbon;
+use Company\Service\CompanyQuery;
 use Locale;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
@@ -161,9 +162,8 @@ class Module
                     return $helper;
                 },
                 'jobCategories' => function (ServiceLocatorInterface $sm) {
-                    $helper = new JobCategories();
-                    $helper->setServiceLocator($sm);
-                    return $helper;
+                    $companyQueryService = $sm->get('company_service_companyquery');
+                    return new JobCategories($companyQueryService);
                 },
                 'fileUrl' => function (ServiceLocatorInterface $sm) {
                     $helper = new FileUrl();

@@ -3,20 +3,33 @@
 namespace Company\Controller;
 
 use Company\Service\Company;
+use Company\Service\CompanyQuery;
+use Zend\I18n\Translator\Translator;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 class CompanyController extends AbstractActionController
 {
+    /**
+     * @var Translator
+     */
+    private $translator;
 
     /**
      * @var Company
      */
     private $companyService;
 
-    public function __construct(Company $companyService)
+    /**
+     * @var Company
+     */
+    private $companyQueryService;
+
+    public function __construct(Translator $translator, Company $companyService, CompanyQuery $companyQueryService)
     {
+        $this->translator = $translator;
         $this->companyService = $companyService;
+        $this->companyQueryService = $companyService;
     }
 
     /**
@@ -30,13 +43,13 @@ class CompanyController extends AbstractActionController
         if ($featuredPackage === null) {
             return new ViewModel([
                 'companyList' => $this->companyService->getCompanyList(),
-                'translator' => $this->companyService->getTranslator(),
+                'translator' => $this->translator,
             ]);
         }
 
         return new ViewModel([
             'companyList' => $this->companyService->getCompanyList(),
-            'translator' => $this->companyService->getTranslator(),
+            'translator' => $this->translator,
             'featuredCompany' => $featuredPackage->getCompany(),
             'featuredPackage' => $featuredPackage,
         ]);
@@ -51,7 +64,7 @@ class CompanyController extends AbstractActionController
             if (!$company->isHidden()) {
                 return new ViewModel([
                     'company' => $company,
-                    'translator' => $this->companyService->getTranslator(),
+                    'translator' => $this->translator,
                 ]);
             }
         }
@@ -66,7 +79,7 @@ class CompanyController extends AbstractActionController
      */
     public function spotlightAction()
     {
-        $translator = $this->companyService->getTranslator();
+        $translator = $this->translator;
 
         $featuredPackage = $this->companyService->getFeaturedPackage();
         if (!is_null($featuredPackage)) {
@@ -97,7 +110,7 @@ class CompanyController extends AbstractActionController
 
         $viewModel = new ViewModel([
             'category' => $category,
-            'translator' => $this->companyService->getTranslator(),
+            'translator' => $this->translator,
         ]);
 
         // A job can be a thesis/internship/etc.
@@ -105,7 +118,7 @@ class CompanyController extends AbstractActionController
 
         if ($companyName = $this->params('slugCompanyName', null)) {
             // Retrieve published jobs for one specific company
-            $jobs = $this->companyService->getActiveJobList([
+            $jobs = $this->companyQueryService->getActiveJobList([
                 'jobCategory' => $jobCategory,
                 'companySlugName' => $companyName,
             ]);
@@ -117,7 +130,7 @@ class CompanyController extends AbstractActionController
         }
 
         // Retrieve all published jobs
-        $jobs = $this->companyService->getActiveJobList([
+        $jobs = $this->companyQueryService->getActiveJobList([
             'jobCategory' => $jobCategory,
         ]);
 
@@ -140,7 +153,7 @@ class CompanyController extends AbstractActionController
         $companyName = $this->params('slugCompanyName');
         $category = $this->companyService->categoryForSlug($this->params('category'));
         if ($jobName !== null) {
-            $jobs = $this->companyService->getJobs([
+            $jobs = $this->companyQueryService->getJobs([
                 'companySlugName' => $companyName,
                 'jobSlug' => $jobName,
                 'jobCategory' => ($category->getLanguageNeutralId() !== null) ? $category->getSlug() : null
@@ -149,7 +162,7 @@ class CompanyController extends AbstractActionController
                 if ($jobs[0]->isActive()) {
                     return new ViewModel([
                         'job' => $jobs[0],
-                        'translator' => $this->companyService->getTranslator(),
+                        'translator' => $this->translator,
                         'category' => $category,
                     ]);
                 }
@@ -159,8 +172,8 @@ class CompanyController extends AbstractActionController
         }
 
         return new ViewModel([
-            'activeJobList' => $this->companyService->getActiveJobList(),
-            'translator' => $this->companyService->getTranslator(),
+            'activeJobList' => $this->companyQueryService->getActiveJobList(),
+            'translator' => $this->translator,
         ]);
     }
 }

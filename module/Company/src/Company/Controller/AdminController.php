@@ -4,14 +4,21 @@ namespace Company\Controller;
 
 use Company\Form\EditCompany;
 use Company\Mapper\Label;
+use Company\Service\CompanyQuery;
 use DateInterval;
 use DateTime;
+use User\Permissions\NotAllowedException;
+use Zend\I18n\Translator\Translator;
 use Zend\Mvc\Controller\AbstractActionController;
 use Company\Service\Company as CompanyService;
 use Zend\View\Model\ViewModel;
 
 class AdminController extends AbstractActionController
 {
+    /**
+     * @var Translator
+     */
+    private $translator;
 
     /**
      * @var CompanyService
@@ -30,9 +37,16 @@ class AdminController extends AbstractActionController
      */
     private $languages;
 
-    public function __construct(CompanyService $companyService, Label $labelMapper, EditCompany $companyForm, array $languages)
+    /**
+     * @var CompanyQuery
+     */
+    private $companyQueryService;
+
+    public function __construct(Translator $translator, CompanyService $companyService, CompanyQuery $companyQueryService, Label $labelMapper, EditCompany $companyForm, array $languages)
     {
+        $this->translator = $translator;
         $this->companyService = $companyService;
+        $this->companyQueryService = $companyQueryService;
         $this->labelMapper = $labelMapper;
         $this->companyForm = $companyForm;
         $this->languages = $languages;
@@ -45,11 +59,17 @@ class AdminController extends AbstractActionController
      */
     public function indexAction()
     {
+        if (!$this->isAllowed('listAllLabels')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to access the admin interface')
+            );
+        }
+
         // Initialize the view
         return new ViewModel([
             'companyList' => $this->companyService->getHiddenCompanyList(),
-            'categoryList' => $this->companyService->getCategoryList(false),
-            'labelList' => $this->companyService->getLabelList(false),
+            'categoryList' => $this->companyQueryService->getCategoryList(false),
+            'labelList' => $this->companyQueryService->getLabelList(false),
             'packageFuture' => $this->companyService->getPackageChangeEvents((new DateTime())->add(
                 new DateInterval("P1M")
             )),
@@ -61,9 +81,6 @@ class AdminController extends AbstractActionController
      */
     public function addCompanyAction()
     {
-        // Get useful stuff
-        $companyForm = $this->companyService->companyForm;
-
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -86,7 +103,7 @@ class AdminController extends AbstractActionController
 
         // The form was not valid, or we did not get data back
         // Initialize the form
-        $companyForm->setAttribute(
+        $this->companyForm->setAttribute(
             'action',
             $this->url()->fromRoute(
                 'admin_company/default',
@@ -96,7 +113,7 @@ class AdminController extends AbstractActionController
 
         // Initialize the view
         return new ViewModel([
-            'form' => $companyForm,
+            'form' => $this->companyForm,
         ]);
     }
 
@@ -107,6 +124,13 @@ class AdminController extends AbstractActionController
      */
     public function addPackageAction()
     {
+        if (!$this->companyService->isAllowed('edit')) {
+
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to edit jobs')
+            );
+        }
+
         // Get parameter
         $companyName = $this->params('slugCompanyName');
         $type = $this->params('type');
