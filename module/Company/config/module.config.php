@@ -306,12 +306,13 @@ return [
                 return new CompanyController($translator, $companyService, $companyQueryService);
             },
             'Company\Controller\Admin' => function (ServiceLocatorInterface $sm) {
+                $translator = $sm->get('translator');
                 $companyService = $sm->get('company_service_company');
                 $companyQueryService = $sm->get('company_service_companyquery');
                 $labelMapper = $sm->get('company_mapper_label');
                 $companyForm = $sm->get('company_form_company');
                 $languages = $sm->get('languages');
-                return new AdminController($companyService, $companyQueryService, $labelMapper, $companyForm, $languages);
+                return new AdminController($translator, $companyService, $companyQueryService, $labelMapper, $companyForm, $languages);
             },
         ],
     ],
