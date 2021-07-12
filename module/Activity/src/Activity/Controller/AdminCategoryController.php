@@ -3,6 +3,7 @@
 namespace Activity\Controller;
 
 use Activity\Service\ActivityCategory;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\View\Model\ViewModel;
@@ -14,10 +15,12 @@ class AdminCategoryController extends AbstractActionController
      * @var ActivityCategory
      */
     private $categoryService;
+    private Translator $translator;
 
-    public function __construct(ActivityCategory $categoryService)
+    public function __construct(Translator $translator, ActivityCategory $categoryService)
     {
         $this->categoryService = $categoryService;
+        $this->translator = $translator;
     }
 
     /**
@@ -36,7 +39,7 @@ class AdminCategoryController extends AbstractActionController
     public function addAction()
     {
         $request = $this->getRequest();
-        $translator = $this->getServiceLocator()->get('translator');
+        $translator = $this->translator;
 
         if ($request->isPost()) {
             if ($this->categoryService->createCategory($request->getPost())) {
@@ -97,7 +100,7 @@ class AdminCategoryController extends AbstractActionController
 
         $form = $this->categoryService->getCategoryForm();
         $request = $this->getRequest();
-        $translator = $this->getServiceLocator()->get('translator');
+        $translator = $this->translator;
 
         if ($request->isPost()) {
             if ($this->categoryService->updateCategory($category, $request->getPost())) {

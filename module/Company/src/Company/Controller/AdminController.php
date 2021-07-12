@@ -8,7 +8,7 @@ use Company\Service\CompanyQuery;
 use DateInterval;
 use DateTime;
 use User\Permissions\NotAllowedException;
-use Laminas\I18n\Translator\Translator;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Company\Service\Company as CompanyService;
 use Laminas\View\Model\ViewModel;
@@ -59,7 +59,7 @@ class AdminController extends AbstractActionController
      */
     public function indexAction()
     {
-        if (!$this->isAllowed('listAllLabels')) {
+        if (!$this->companyService->isAllowed('listAllLabels')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to access the admin interface')
             );
@@ -380,7 +380,7 @@ class AdminController extends AbstractActionController
     public function editCompanyAction()
     {
         // Get useful stuff
-        $companyForm = $this->companyService->companyForm;
+        $companyForm = $this->companyForm;
 
         // Get parameter
         $companyName = $this->params('slugCompanyName');

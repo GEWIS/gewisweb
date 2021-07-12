@@ -8,7 +8,6 @@ use UnexpectedValueException;
 use User\Model\Session as SessionModel;
 use Laminas\Authentication\Storage;
 use Laminas\Http\Header\SetCookie;
-use Laminas\ServiceManager\ServiceManager;
 
 class Session extends Storage\Session
 {

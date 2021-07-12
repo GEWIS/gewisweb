@@ -4,7 +4,7 @@ namespace Company\Form;
 
 use Company\Model\Job;
 use Laminas\Form\Fieldset;
-use Laminas\Mvc\I18n\Translator as Translator;
+use Laminas\Mvc\I18n\Translator;
 
 class JobFieldset extends Fieldset
 {

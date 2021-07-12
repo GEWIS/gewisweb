@@ -4,7 +4,7 @@ namespace DecisionTest\Service;
 
 use PHPUnit_Framework_TestCase;
 use User\Permissions\NotAllowedException;
-use Laminas\I18n\Translator\Translator;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\ServiceManager\ServiceManager;
 

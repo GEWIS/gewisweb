@@ -15,7 +15,6 @@ use Decision\Mapper\Member;
 use Decision\Mapper\Organ;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use Laminas\ServiceManager\ServiceManager;
 
 class Module
 {

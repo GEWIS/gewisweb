@@ -4,7 +4,7 @@ namespace Company\Controller;
 
 use Company\Service\Company;
 use Company\Service\CompanyQuery;
-use Laminas\I18n\Translator\Translator;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
@@ -21,7 +21,7 @@ class CompanyController extends AbstractActionController
     private $companyService;
 
     /**
-     * @var Company
+     * @var CompanyQuery
      */
     private $companyQueryService;
 
@@ -29,7 +29,7 @@ class CompanyController extends AbstractActionController
     {
         $this->translator = $translator;
         $this->companyService = $companyService;
-        $this->companyQueryService = $companyService;
+        $this->companyQueryService = $companyQueryService;
     }
 
     /**

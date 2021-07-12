@@ -4,19 +4,9 @@ namespace Company\Service;
 
 //
 use Application\Service\AbstractAclService;
-use Application\Service\FileStorage;
-use Company\Form\EditCategory;
-use Company\Form\EditCompany;
-use Company\Form\EditJob;
-use Company\Form\EditLabel;
-use Company\Form\EditPackage;
-use Company\Mapper\BannerPackage;
 use Company\Mapper\Category;
-use Company\Mapper\FeaturedPackage;
 use Company\Mapper\Job;
 use Company\Mapper\Label;
-use Company\Mapper\LabelAssignment;
-use Company\Mapper\Package;
 use User\Model\User;
 use User\Permissions\NotAllowedException;
 use Laminas\Mvc\I18n\Translator;

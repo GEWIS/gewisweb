@@ -20,11 +20,13 @@ class AdminController extends AbstractActionController
      * @var SummaryUpload
      */
     private $summaryUploadForm;
+    private array $educationTempConfig;
 
-    public function __construct(Exam $examService, SummaryUpload $summaryUploadForm)
+    public function __construct(Exam $examService, SummaryUpload $summaryUploadForm, array $educationTempConfig)
     {
         $this->examService = $examService;
         $this->summaryUploadForm = $summaryUploadForm;
+        $this->educationTempConfig = $educationTempConfig;
     }
 
     public function indexAction()
@@ -135,8 +137,7 @@ class AdminController extends AbstractActionController
             );
         }
 
-        $config = $this->getServiceLocator()->get('config');
-        $config = $config['education_temp'];
+        $config = $this->educationTempConfig;
 
         return new ViewModel(
             [
@@ -161,8 +162,7 @@ class AdminController extends AbstractActionController
             );
         }
 
-        $config = $this->getServiceLocator()->get('config');
-        $config = $config['education_temp'];
+        $config = $this->educationTempConfig;
 
         return new ViewModel(
             [

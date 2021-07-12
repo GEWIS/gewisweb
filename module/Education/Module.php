@@ -48,7 +48,7 @@ class Module
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('education_acl');
                     $storageService = $sm->get('application_service_storage');
-                    $courseMapper = $sm->get('company_mapper_course');
+                    $courseMapper = $sm->get('education_mapper_course');
                     $examMapper = $sm->get('company_mapper_exam');
                     $addCourseForm = $sm->get('company_form_add_course');
                     $searchCourseForm = $sm->get('company_form_searchcourse');

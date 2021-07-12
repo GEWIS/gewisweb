@@ -3,7 +3,7 @@
 namespace Company\Form;
 
 use Laminas\InputFilter\InputFilter;
-use Laminas\Mvc\I18n\Translator as Translator;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Callback;
 use Laminas\Validator\EmailAddress;
 use Laminas\Validator\File\Extension;

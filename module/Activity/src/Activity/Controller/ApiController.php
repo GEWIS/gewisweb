@@ -8,6 +8,7 @@ use User\Permissions\NotAllowedException;
 use Laminas\Form\FormInterface;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\JsonModel;
+use User\Service\User;
 
 class ApiController extends AbstractActionController
 {
@@ -21,11 +22,13 @@ class ApiController extends AbstractActionController
      * @var Signup
      */
     private $signupService;
+    private User $userService;
 
-    public function __construct(ActivityQuery $activityQueryService, Signup $signupService)
+    public function __construct(ActivityQuery $activityQueryService, Signup $signupService, User $userService)
     {
         $this->activityQueryService = $activityQueryService;
         $this->signupService = $signupService;
+        $this->userService = $userService;
     }
 
     /**
@@ -86,7 +89,7 @@ class ApiController extends AbstractActionController
         $params = [];
         $params['success'] = false;
 
-        $identity = $this->getServiceLocator()->get('user_service_user')->getIdentity();
+        $identity = $this->userService->getIdentity();
         $user = $identity->getMember();
         if ($this->getRequest()->isPost() && $this->signupService->isAllowedToSubscribe()) {
             $activity = $this->activityQueryService->getActivity($id);

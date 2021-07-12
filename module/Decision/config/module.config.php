@@ -354,7 +354,8 @@ return [
         'factories' => [
             'Decision\Controller\Decision' => function (ServiceLocatorInterface $sm) {
                 $decisionService = $sm->get('decision_service_decision');
-                return new DecisionController($decisionService);
+                $fileReader = $sm->get('decision_fileReader');
+                return new DecisionController($decisionService, $fileReader);
             },
             'Decision\Controller\Organ' => function (ServiceLocatorInterface $sm) {
                 $organService = $sm->get('decision_service_organ');

@@ -19,7 +19,6 @@ use Application\View\Helper\JobCategories;
 use Application\View\Helper\ModuleIsActive;
 use Application\View\Helper\ScriptUrl;
 use Carbon\Carbon;
-use Company\Service\CompanyQuery;
 use Locale;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
@@ -27,11 +26,7 @@ use User\Permissions\NotAllowedException;
 use Laminas\Mvc\ModuleRouteListener;
 use Laminas\Mvc\MvcEvent;
 use Laminas\ServiceManager\ServiceLocatorInterface;
-use Laminas\Session\Config\SessionConfig;
 use Laminas\Session\Container as SessionContainer;
-use Laminas\Session\SessionManager;
-use Laminas\Session\Validator\HttpUserAgent;
-use Laminas\Session\Validator\RemoteAddr;
 use Laminas\Validator\AbstractValidator;
 
 class Module

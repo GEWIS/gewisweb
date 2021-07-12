@@ -8,6 +8,7 @@ use Activity\Service\ActivityQuery;
 use Activity\Service\Signup;
 use Activity\Service\SignupListQuery;
 use DateTime;
+use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
 use Laminas\Form\FormInterface;
 use Laminas\Mvc\Controller\AbstractActionController;
@@ -41,13 +42,15 @@ class AdminController extends AbstractActionController
      * @var SignupListQuery
      */
     private $signupListQueryService;
+    private Translator $translator;
 
-    public function __construct(\Activity\Service\Activity $activityService, ActivityQuery $activityQueryService, Signup $signupService, SignupListQuery $signupListQueryService)
+    public function __construct(Translator $translator, \Activity\Service\Activity $activityService, ActivityQuery $activityQueryService, Signup $signupService, SignupListQuery $signupListQueryService)
     {
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;
         $this->signupService = $signupService;
         $this->signupListQueryService = $signupListQueryService;
+        $this->translator = $translator;
     }
 
     public function updateAction()
@@ -55,7 +58,7 @@ class AdminController extends AbstractActionController
         $activityId = (int) $this->params('id');
 
         $activity = $this->activityQueryService->getActivityWithDetails($activityId);
-        $translator = $this->getServiceLocator()->get('translator');
+        $translator = $this->translator;
 
         if (is_null($activity)) {
             return $this->notFoundAction();
@@ -184,7 +187,7 @@ class AdminController extends AbstractActionController
             }
 
             if (!$acl->isAllowed($identity, $activity, 'viewParticipants')) {
-                $translator = $this->getServiceLocator()->get('translator');
+                $translator = $this->translator;
                 throw new NotAllowedException(
                     $translator->translate('You are not allowed to view the participants of this activity')
                 );
@@ -197,7 +200,7 @@ class AdminController extends AbstractActionController
             }
 
             if (!$acl->isAllowed($identity, $signupList, 'viewParticipants')) {
-                $translator = $this->getServiceLocator()->get('translator');
+                $translator = $this->translator;
                 throw new NotAllowedException(
                     $translator->translate('You are not allowed to view the participants of this activity')
                 );
@@ -224,7 +227,7 @@ class AdminController extends AbstractActionController
             $result['externalSignupForm'] = $externalSignupForm;
             $result['externalSignoffForm'] = new RequestForm(
                 'activityExternalSignoff',
-                $this->getServiceLocator()->get('translator')->translate('Remove')
+                $this->translator->translate('Remove')
             );
         }
 
@@ -260,7 +263,7 @@ class AdminController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        $translator = $this->getServiceLocator()->get('translator');
+        $translator = $this->translator;
         $acl = $this->getAcl();
         $identity = $this->getIdentity();
 
@@ -339,7 +342,7 @@ class AdminController extends AbstractActionController
         }
 
         $signupList = $signup->getSignupList();
-        $translator = $this->getServiceLocator()->get('translator');
+        $translator = $this->translator;
         $acl = $this->getAcl();
         $identity = $this->getIdentity();
 
@@ -399,7 +402,7 @@ class AdminController extends AbstractActionController
         $identity = $this->getIdentity();
 
         if (!$acl->isAllowed($identity, 'activity', 'viewAdmin')) {
-            $translator = $this->getServiceLocator()->get('translator');
+            $translator = $this->translator;
             throw new NotAllowedException(
                 $translator->translate('You are not allowed to administer activities')
             );

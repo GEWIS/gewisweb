@@ -151,7 +151,8 @@ return [
             'Education\Controller\Admin' => function (ServiceLocatorInterface $sm) {
                 $examService = $sm->get('education_service_exam');
                 $uploadSummaryForm = $sm->get('education_form_summaryupload');
-                return new AdminController($examService, $uploadSummaryForm);
+                $educationTempConfig = $sm->get('config')['education_temp'];
+                return new AdminController($examService, $uploadSummaryForm, $educationTempConfig);
             },
         ],
     ],

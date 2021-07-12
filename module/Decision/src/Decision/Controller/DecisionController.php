@@ -2,6 +2,7 @@
 
 namespace Decision\Controller;
 
+use Decision\Controller\FileBrowser\FileReader;
 use Decision\Service\Decision;
 use Doctrine\ORM\NoResultException;
 use User\Permissions\NotAllowedException;
@@ -15,10 +16,12 @@ class DecisionController extends AbstractActionController
      * @var Decision
      */
     private $decisionService;
+    private FileReader $fileReader;
 
-    public function __construct(Decision $decisionService)
+    public function __construct(Decision $decisionService, FileReader $fileReader)
     {
         $this->decisionService = $decisionService;
+        $this->fileReader = $fileReader;
     }
 
     /**
@@ -167,7 +170,7 @@ class DecisionController extends AbstractActionController
             $path = '';
         }
 
-        $fileReader = $this->getServiceLocator()->get('decision_fileReader');
+        $fileReader = $this->fileReader;
         if (!$fileReader->isAllowed($path) || preg_match('(\/\.\.\/|\/\.\.$)', $path) === 1) {
             //File location isn't legal or path contains /../ or /.. at the end.
             //This is illegal for security reasons

@@ -6,6 +6,7 @@ use Activity\Form\ModifyRequest as RequestForm;
 use Activity\Model\Activity;
 use Activity\Service\ActivityQuery;
 use InvalidArgumentException;
+use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
@@ -25,11 +26,13 @@ class AdminApprovalController extends AbstractActionController
      * @var ActivityQuery
      */
     private $activityQueryService;
+    private Translator $translator;
 
-    public function __construct(\Activity\Service\Activity $activityService, ActivityQuery $activityQueryService)
+    public function __construct(Translator $translator, \Activity\Service\Activity $activityService, ActivityQuery $activityQueryService)
     {
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;
+        $this->translator = $translator;
     }
 
     /**
@@ -43,7 +46,7 @@ class AdminApprovalController extends AbstractActionController
         $identity = $this->getServiceLocator()->get('user_role');
 
         if (!$acl->isAllowed($identity, 'activity', 'approval')) {
-            $translator = $this->getServiceLocator()->get('translator');
+            $translator = $this->translator;
             throw new NotAllowedException(
                 $translator->translate('You are not allowed to view the approval of this activity')
             );
