@@ -1,4 +1,4 @@
-FROM php:7.2-fpm as gewisweb_web_development
+FROM php:7.3-fpm as gewisweb_web_development
 
 RUN apt-get update \
     && apt-get install -y \
@@ -14,6 +14,8 @@ RUN apt-get update \
         libxml2-dev \
         libzip-dev \
         nano \
+        rsync \
+        sshpass \
         unzip \
         zip \
     && apt-get upgrade -y
