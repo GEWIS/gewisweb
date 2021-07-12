@@ -2,9 +2,9 @@
 
 namespace User\Authentication;
 
-use Laminas\Authentication\AuthenticationService as ZendAuthService;
+use Laminas\Authentication\AuthenticationService as LaminasAuthService;
 
-class AuthenticationService extends ZendAuthService
+class AuthenticationService extends LaminasAuthService
 {
     protected $identity = null;
 

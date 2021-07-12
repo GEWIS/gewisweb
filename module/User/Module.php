@@ -306,7 +306,7 @@ class Module
                         return $authService->getIdentity();
                     }
                     // TODO: Refactor and re-enable the ApiUser service after a circular dependency has been removed.
-                    // Possibly extend the ZendAuthService ?
+                    // Possibly extend the LaminasAuthService ?
 //                    $apiService = $sm->get('user_service_apiuser');
 //                    if ($apiService->hasIdentity()) {
 //                        return 'apiuser';
