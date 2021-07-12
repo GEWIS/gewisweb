@@ -36,8 +36,7 @@ class SignupListQuery extends AbstractAclService
         $userRole,
         Acl $acl,
         SignupList $signupListMapper
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;
@@ -67,7 +66,6 @@ class SignupListQuery extends AbstractAclService
     public function getSignupListByActivity($signupListId, $activityId)
     {
         if (!$this->isAllowed('view', 'signupList')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view sign-up lists')
             );
@@ -79,7 +77,6 @@ class SignupListQuery extends AbstractAclService
     public function getSignupListsOfActivity($activityId)
     {
         if (!$this->isAllowed('view', 'signupList')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view sign-up lists')
             );

@@ -87,8 +87,7 @@ class Organ extends AbstractAclService
         OrganMapper $organMapper,
         \Decision\Form\OrganInformation $organInformationForm,
         array $organInformationConfig
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;

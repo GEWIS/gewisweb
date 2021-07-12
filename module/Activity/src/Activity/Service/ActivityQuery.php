@@ -54,8 +54,7 @@ class ActivityQuery extends AbstractAclService
         \Decision\Service\Organ $organService,
         \Activity\Mapper\Activity $activityMapper,
         Proposal $proposalMapper
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;
@@ -177,7 +176,6 @@ class ActivityQuery extends AbstractAclService
     public function getAllActivities()
     {
         if (!$this->isAllowed('view', 'activity')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view the activities')
             );
@@ -196,7 +194,6 @@ class ActivityQuery extends AbstractAclService
     public function getUnapprovedActivities()
     {
         if (!$this->isAllowed('viewUnapproved', 'activity')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view unapproved activities')
             );
@@ -214,7 +211,6 @@ class ActivityQuery extends AbstractAclService
     public function getApprovedActivities()
     {
         if (!$this->isAllowed('view', 'activity')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view activities')
             );
@@ -255,7 +251,6 @@ class ActivityQuery extends AbstractAclService
     public function getDisapprovedActivities()
     {
         if (!$this->isAllowed('viewDisapproved', 'activity')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view the disapproved activities')
             );
@@ -275,7 +270,6 @@ class ActivityQuery extends AbstractAclService
     public function getUpcomingActivities($category = null)
     {
         if (!$this->isAllowed('view', 'activity')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view upcoming the activities')
             );
@@ -284,7 +278,6 @@ class ActivityQuery extends AbstractAclService
         $activityMapper = $this->activityMapper;
         if ($category === 'my') {
             if (!$this->isAllowed('view', 'myActivities')) {
-
                 throw new NotAllowedException(
                     $this->translator->translate('You are not allowed to view upcoming activities coupled to a member account')
                 );
@@ -359,7 +352,6 @@ class ActivityQuery extends AbstractAclService
     public function getFinishedActivitiesByYear($year)
     {
         if (!$this->isAllowed('view', 'activity')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view the activities')
             );

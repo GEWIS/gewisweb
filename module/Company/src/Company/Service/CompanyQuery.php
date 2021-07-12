@@ -64,8 +64,7 @@ class CompanyQuery extends AbstractACLService
         Job $jobMapper,
         Category $categoryMapper,
         Label $labelMapper
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;

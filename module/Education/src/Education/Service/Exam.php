@@ -98,8 +98,7 @@ class Exam extends AbstractAclService
         Bulk $bulkSummaryForm,
         Bulk $bulkExamForm,
         array $config
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;
@@ -373,7 +372,6 @@ class Exam extends AbstractAclService
     public function deleteTempExam($filename, $type = 'exam')
     {
         if (!$this->isAllowed('delete')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to delete exams')
             );
@@ -393,7 +391,6 @@ class Exam extends AbstractAclService
     protected function getBulkForm($type)
     {
         if (!$this->isAllowed('upload')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to upload exams')
             );
@@ -509,7 +506,6 @@ class Exam extends AbstractAclService
     public function getTempUploadForm()
     {
         if (!$this->isAllowed('upload')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to upload exams')
             );
@@ -527,7 +523,6 @@ class Exam extends AbstractAclService
     public function getAddCourseForm()
     {
         if (!$this->isAllowed('upload')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to add courses')
             );

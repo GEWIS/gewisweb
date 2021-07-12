@@ -84,8 +84,7 @@ class Album extends AbstractAclService
         \Photo\Mapper\Album $albumMapper,
         CreateAlbum $createAlbumForm,
         EditAlbum $editAlbumForm
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;
@@ -133,8 +132,11 @@ class Album extends AbstractAclService
         } elseif ($album instanceof VirtualAlbum) {
             return [];
         } else {
-            return $this->albumMapper->getSubAlbums($album, $start,
-                $maxResults);
+            return $this->albumMapper->getSubAlbums(
+                $album,
+                $start,
+                $maxResults
+            );
         }
     }
 
@@ -493,7 +495,6 @@ class Album extends AbstractAclService
         $this->albumMapper->flush();
 
         return true;
-
     }
 
     /**
@@ -515,5 +516,4 @@ class Album extends AbstractAclService
     {
         return 'album';
     }
-
 }

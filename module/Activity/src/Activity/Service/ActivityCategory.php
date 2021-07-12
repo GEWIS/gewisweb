@@ -51,8 +51,7 @@ class ActivityCategory extends AbstractAclService
         EntityManager $entityManager,
         \Activity\Mapper\ActivityCategory $categoryMapper,
         CategoryForm $categoryForm
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;
@@ -85,7 +84,6 @@ class ActivityCategory extends AbstractAclService
     public function getCategoryById($id)
     {
         if (!$this->isAllowed('listCategories', 'activity')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view activity categories')
             );
@@ -180,7 +178,6 @@ class ActivityCategory extends AbstractAclService
     public function deleteCategory($category)
     {
         if (!$this->isAllowed('deleteCategory', 'activity')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to delete an activity category')
             );

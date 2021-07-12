@@ -117,8 +117,7 @@ class User extends AbstractAclService
         Activate $activateForm,
         Login $loginForm,
         Password $passwordForm
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->bcrypt = $bcrypt;
@@ -422,7 +421,6 @@ class User extends AbstractAclService
     public function getIdentity()
     {
         if (!$this->authService->hasIdentity()) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You need to log in to perform this action')
             );

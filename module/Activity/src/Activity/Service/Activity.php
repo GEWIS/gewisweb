@@ -76,8 +76,7 @@ class Activity extends AbstractAclService
         Company $companyService,
         Email $emailService,
         ActivityForm $activityForm
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;
@@ -740,7 +739,6 @@ class Activity extends AbstractAclService
     public function approve(ActivityModel $activity)
     {
         if (!$this->isAllowed('approve', 'activity')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to change the status of the activity')
             );
@@ -778,7 +776,6 @@ class Activity extends AbstractAclService
     public function disapprove(ActivityModel $activity)
     {
         if (!$this->isAllowed('disapprove', 'activity')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to change the status of the activity')
             );

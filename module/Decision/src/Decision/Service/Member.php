@@ -60,8 +60,7 @@ class Member extends AbstractAclService
         \Decision\Mapper\Member $memberMapper,
         Authorization $authorizationMapper,
         array $config
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;
@@ -96,7 +95,6 @@ class Member extends AbstractAclService
     public function findMemberByLidNr($lidnr)
     {
         if (!$this->isAllowed('view')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view members.')
             );
@@ -111,7 +109,6 @@ class Member extends AbstractAclService
     public function getDreamsparkUrl()
     {
         if (!$this->isAllowed('login', 'dreamspark')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed login into Microsoft Imagine.')
             );
@@ -146,7 +143,6 @@ class Member extends AbstractAclService
         $response = $client->send();
 
         if ($response->getStatusCode() != 200) {
-
             throw new NotAllowedException(
                 $this->translator->translate('Login to Microsoft Imagine failed. If this persists, contact the WebCommittee.')
             );
@@ -167,14 +163,12 @@ class Member extends AbstractAclService
     public function getBirthdayMembers($days = 0)
     {
         if ($days == 0 && !$this->isAllowed('birthdays_today')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view the list of today\'s birthdays.')
             );
         }
 
         if ($days > 0 && !$this->isAllowed('birthdays')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view the list of birthdays.')
             );

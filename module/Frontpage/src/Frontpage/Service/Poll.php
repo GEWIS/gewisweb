@@ -70,8 +70,7 @@ class Poll extends AbstractAclService
         \Frontpage\Form\Poll $pollForm,
         \Frontpage\Form\PollComment $pollCommentForm,
         PollApproval $pollApprovalForm
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;
@@ -107,7 +106,6 @@ class Poll extends AbstractAclService
     {
         $poll = $this->pollMapper->findPollById($pollId);
         if (is_null($poll->getApprover()) && !$this->isAllowed('view_unapproved')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view unnapproved polls')
             );
@@ -245,7 +243,6 @@ class Poll extends AbstractAclService
     public function createComment($pollId, $data)
     {
         if (!$this->isAllowed('create', 'poll_comment')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to create comments on this poll')
             );
@@ -314,7 +311,6 @@ class Poll extends AbstractAclService
     public function getPollForm()
     {
         if (!$this->isAllowed('request')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to request polls')
             );
@@ -331,7 +327,6 @@ class Poll extends AbstractAclService
     public function deletePoll($poll)
     {
         if (!$this->isAllowed('delete')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to delete polls')
             );
@@ -378,7 +373,6 @@ class Poll extends AbstractAclService
     public function getPollApprovalForm()
     {
         if (!$this->isAllowed('approve')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to approve polls')
             );

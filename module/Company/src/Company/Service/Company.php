@@ -155,8 +155,7 @@ class Company extends AbstractACLService
         EditCategory $editCategoryForm,
         EditLabel $editLabelForm,
         array $languages
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;
@@ -299,7 +298,6 @@ class Company extends AbstractACLService
     public function getHiddenCompanyList()
     {
         if (!$this->isAllowed('listall')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to access the admin interface')
             );
@@ -677,7 +675,6 @@ class Company extends AbstractACLService
     public function insertCompany($languages)
     {
         if (!$this->isAllowed('insert')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to insert a company')
             );
@@ -718,7 +715,6 @@ class Company extends AbstractACLService
     public function insertPackageForCompanySlugName($companySlugName, $type = "job")
     {
         if (!$this->isAllowed('insert')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to insert a package')
             );
@@ -907,7 +903,6 @@ class Company extends AbstractACLService
     public function insertJobIntoPackageId($packageId, $lang, $languageNeutralId)
     {
         if (!$this->isAllowed('insert')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to insert a job')
             );
@@ -925,7 +920,6 @@ class Company extends AbstractACLService
     public function deletePackage($packageId)
     {
         if (!$this->isAllowed('delete')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to delete packages')
             );
@@ -942,7 +936,6 @@ class Company extends AbstractACLService
     public function deleteJob($jobId)
     {
         if (!$this->isAllowed('delete')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to delete jobs')
             );
@@ -958,7 +951,6 @@ class Company extends AbstractACLService
     public function deleteCompaniesBySlug($slug)
     {
         if (!$this->isAllowed('delete')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to delete companies')
             );
@@ -985,7 +977,6 @@ class Company extends AbstractACLService
     public function getAllCategoriesById($categoryId)
     {
         if (!$this->isAllowed('edit')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to edit packages')
             );
@@ -1002,7 +993,6 @@ class Company extends AbstractACLService
     public function getAllLabelsById($labelId)
     {
         if (!$this->isAllowed('edit')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to edit packages')
             );
@@ -1019,7 +1009,6 @@ class Company extends AbstractACLService
     public function getEditablePackage($packageId)
     {
         if (!$this->isAllowed('edit')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to edit packages')
             );
@@ -1046,7 +1035,6 @@ class Company extends AbstractACLService
     public function getEditableCompaniesBySlugName($slugName)
     {
         if (!$this->isAllowed('edit')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to edit companies')
             );
@@ -1065,7 +1053,6 @@ class Company extends AbstractACLService
     public function getEditableJobsByLanguageNeutralId($languageNeutralId)
     {
         if (!$this->isAllowed('edit')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to edit jobs')
             );
@@ -1082,7 +1069,6 @@ class Company extends AbstractACLService
     public function getCategoryForm()
     {
         if (!$this->isAllowed('edit')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to edit categories')
             );
@@ -1098,7 +1084,6 @@ class Company extends AbstractACLService
     public function getLabelForm()
     {
         if (!$this->isAllowed('edit')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to edit labels')
             );
@@ -1132,7 +1117,6 @@ class Company extends AbstractACLService
     public function getJobForm()
     {
         if (!$this->isAllowed('edit')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to edit jobs')
             );

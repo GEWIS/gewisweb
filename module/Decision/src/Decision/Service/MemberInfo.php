@@ -46,8 +46,7 @@ class MemberInfo extends AbstractAclService
         Acl $acl,
         Photo $photoService,
         \Decision\Mapper\Member $memberMapper
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;
@@ -68,12 +67,10 @@ class MemberInfo extends AbstractAclService
     public function getMembershipInfo($lidnr = null)
     {
         if (null === $lidnr && !$this->isAllowed('view_self')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view membership info.')
             );
         } elseif (null !== $lidnr && !$this->isAllowed('view')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view members.')
             );

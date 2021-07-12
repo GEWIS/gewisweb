@@ -70,8 +70,7 @@ class Signup extends AbstractAclService
         \Activity\Mapper\Signup $signupMapper,
         SignupOption $signupOptionMapper,
         SignupFieldValue $signupFieldValueMapper
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;
@@ -108,7 +107,6 @@ class Signup extends AbstractAclService
     public function getForm($signupList)
     {
         if (!$this->isAllowed('signup', $signupList)) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You need to be logged in to sign up for this activity')
             );
@@ -123,7 +121,6 @@ class Signup extends AbstractAclService
     public function getExternalAdminForm($signupList)
     {
         if (!$this->isAllowed('adminSignup', $signupList)) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to use the external admin signup')
             );
@@ -138,7 +135,6 @@ class Signup extends AbstractAclService
     public function getExternalForm($signupList)
     {
         if (!$this->isAllowed('externalSignup', $signupList)) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to use the external signup')
             );
@@ -160,7 +156,6 @@ class Signup extends AbstractAclService
     public function getSignedUpUsers($activity)
     {
         if (!$this->isAllowed('view', 'signupList')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view who is signed up for this activity')
             );
@@ -180,7 +175,6 @@ class Signup extends AbstractAclService
     public function getSignedUpData(SignupListModel $signupList)
     {
         if (!$this->isAllowed('view', $signupList)) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view the sign up data')
             );
@@ -215,7 +209,6 @@ class Signup extends AbstractAclService
     public function getSignedUpDataWithoutFields(SignupListModel $signupList)
     {
         if (!$this->isAllowed('view', $signupList)) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view the sign up data')
             );
@@ -251,7 +244,6 @@ class Signup extends AbstractAclService
     public function isSignedUp($activity, Member $user)
     {
         if (!$this->isAllowed('checkUserSignedUp', 'signupList')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view the activities')
             );
@@ -270,7 +262,6 @@ class Signup extends AbstractAclService
     public function getSignedUpActivityIds()
     {
         if (!$this->isAllowed('checkUserSignedUp', 'signupList')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view activities which you signed up for')
             );
@@ -295,7 +286,6 @@ class Signup extends AbstractAclService
     public function signUp(SignupListModel $signupList, array $fieldResults)
     {
         if (!$this->isAllowed('signup', 'signupList')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You need to be logged in to sign up for this activity')
             );
@@ -360,7 +350,6 @@ class Signup extends AbstractAclService
     public function adminSignUp(SignupListModel $signupList, $fullName, $email, array $fieldResults)
     {
         if (!($this->isAllowed('adminSignup', $signupList))) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to subscribe an external user to this sign-up list')
             );
@@ -399,7 +388,6 @@ class Signup extends AbstractAclService
     public function externalSignUp(SignupListModel $signupList, $fullName, $email, array $fieldResults)
     {
         if (!($this->isAllowed('externalSignup', $signupList))) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to subscribe to this sign-up list')
             );
@@ -417,7 +405,6 @@ class Signup extends AbstractAclService
     public function signOff(SignupListModel $signupList, Member $user)
     {
         if (!$this->isAllowed('signoff', 'signupList')) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You need to be logged in to sign off for this activity')
             );
@@ -452,7 +439,6 @@ class Signup extends AbstractAclService
         // TODO: $signup->getActivity() is undefined
         if (!($this->isAllowed('adminSignup', 'activity') ||
             $this->isAllowed('adminSignup', $signup->getActivity()))) {
-
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to remove external signups for this activity')
             );

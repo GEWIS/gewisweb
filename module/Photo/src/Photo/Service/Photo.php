@@ -112,8 +112,7 @@ class Photo extends AbstractAclService
         WeeklyPhotoMapper $weeklyPhotoMapper,
         ProfilePhotoMapper $profilePhotoMapper,
         array $photoConfig
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;
@@ -152,8 +151,11 @@ class Photo extends AbstractAclService
             );
         }
 
-        return $this->photoMapper->getAlbumPhotos($album, $start,
-            $maxResults);
+        return $this->photoMapper->getAlbumPhotos(
+            $album,
+            $start,
+            $maxResults
+        );
     }
 
     /**
@@ -285,8 +287,7 @@ class Photo extends AbstractAclService
     public function getNextPhoto(
         PhotoModel $photo,
         AlbumModel $album
-    )
-    {
+    ) {
         if (!$this->isAllowed('view')) {
             throw new NotAllowedException(
                 $this->translator->translate('Not allowed to view photos')
@@ -307,8 +308,7 @@ class Photo extends AbstractAclService
     public function getPreviousPhoto(
         PhotoModel $photo,
         AlbumModel $album
-    )
-    {
+    ) {
         if (!$this->isAllowed('view')) {
             throw new NotAllowedException(
                 $this->translator->translate('Not allowed to view photos')
@@ -343,7 +343,6 @@ class Photo extends AbstractAclService
         $this->photoMapper->flush();
 
         return true;
-
     }
 
     /**

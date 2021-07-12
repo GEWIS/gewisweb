@@ -49,7 +49,7 @@ return [
         'google_api_key' => getenv('DOCKER_GOOGLE_API_KEY'),
         'google_calendar_key' => getenv('DOCKER_GOOGLE_CALENDAR_KEY')
     ],
-	/*
+    /*
      * Path to folder in local filesystem available for browsing
      */
     'filebrowser_folder' => getcwd() . '/public/publicarchive/',

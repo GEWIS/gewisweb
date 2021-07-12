@@ -75,8 +75,7 @@ class Admin extends AbstractAclService
         FileStorage $storageService,
         \Photo\Mapper\Photo $photoMapper,
         array $photoConfig
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;
@@ -202,7 +201,6 @@ class Admin extends AbstractAclService
         if ($handle = opendir($path)) {
             while (false !== ($entry = readdir($handle))) {
                 if ($entry != "." && $entry != "..") {
-
                     $subPath = $path . '/' . $entry;
                     if (is_dir($subPath)) {
                         //TODO: this no longer works (probably because of the type of $targetAlbum)

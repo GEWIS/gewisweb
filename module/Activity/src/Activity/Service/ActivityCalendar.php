@@ -97,8 +97,7 @@ class ActivityCalendar extends AbstractAclService
         Member $memberMapper,
         ActivityCalendarOption $calendarOptionForm,
         ActivityCalendarProposal $calendarProposalForm
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;
@@ -261,8 +260,7 @@ class ActivityCalendar extends AbstractAclService
 
         $period = $this->getCurrentPeriod();
 
-        if (
-            $period == null
+        if ($period == null
             || !$this->isAllowed('create')
             || $organId == null
         ) {
