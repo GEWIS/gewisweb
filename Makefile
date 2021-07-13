@@ -49,7 +49,7 @@ replenish: rundev
 		@docker cp ./data gewisweb_web_1:/code
 		@docker-compose exec web chown -R www-data:www-data /code/data
 		@docker-compose exec web php composer.phar dump-autoload --dev
-		@docker-compose exec web ./web orm:generate-proxies
+		@docker-compose exec web ./vendor/doctrine/doctrine-module/bin/doctrine-module orm:generate-proxies
 		@docker-compose down
 
 update: rundev updatecomposer updatepackage updatecss updateglide

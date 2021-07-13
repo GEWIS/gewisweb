@@ -1,4 +1,4 @@
 #!/bin/sh
 service cron start
-./web orm:generate-proxies
+./vendor/doctrine/doctrine-module/bin/doctrine-module orm:generate-proxies
 php-fpm -F -O

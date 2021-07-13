@@ -62,7 +62,7 @@
         "laminas/laminas-stdlib": "^3.0.0",
         "laminas/laminas-validator": "^2.11.1",
         "laminas/laminas-view": "^2.11.4",
-        "doctrine/doctrine-module": "^4.0.0",
+        "doctrine/orm": "^2.0.0",
         "doctrine/doctrine-orm-module": "^4.0.0",
         "doctrine/doctrine-laminas-hydrator": "^2.0.0",
         "maglnet/magl-markdown": "^1.4",
