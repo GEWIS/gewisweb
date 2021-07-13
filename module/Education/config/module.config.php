@@ -145,7 +145,7 @@ return [
         'factories' => [
             'Education\Controller\Education' => function (ServiceLocatorInterface $sm) {
                 $examService = $sm->get('education_service_exam');
-                $searchCourseForm = $sm->get('company_form_searchcourse');
+                $searchCourseForm = $sm->get('education_form_searchcourse');
 
                 return new EducationController($examService, $searchCourseForm);
             },

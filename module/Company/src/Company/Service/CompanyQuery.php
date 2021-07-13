@@ -193,9 +193,6 @@ class CompanyQuery extends AbstractACLService
                 return $a->getLanguageNeutralId();
             });
         }
-        if (!$this->isAllowed('listVisibleLabels')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to list all labels'));
-        }
 
         $labels = $this->labelMapper->findVisibleLabelByLanguage($this->translator->getLocale());
 

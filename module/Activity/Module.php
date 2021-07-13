@@ -149,6 +149,11 @@ class Module
                 },
                 'activity_form_activity' => function (ServiceLocatorInterface $sm) {
                     $organService = $sm->get('decision_service_organ');
+                    try {
+                        $organs = $organService->getEditableOrgans();
+                    } catch (NotAllowedException $e) {
+                        $organs = [];
+                    }
                     $organs = $organService->getEditableOrgans();
                     $companyService = $sm->get('company_service_company');
                     try {
