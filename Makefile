@@ -12,6 +12,8 @@ help:
 		@echo "phpstan"
 		@echo "phpcs"
 		@echo "phpcbf"
+		@echo "phpcsfix"
+		@echo "phpcsfixtypes"
 		@echo "replenish"
 		@echo "build"
 		@echo "buildprod"
@@ -68,8 +70,15 @@ phpcbf: rundev
 		@docker-compose down
 
 phpcsfix: rundev
-		@docker-compose exec web /code/vendor/bin/php-cs-fixer fix --rules=@PSR1,-@PSR12 /code/module
-		@docker-compose exec web /code/vendor/bin/php-cs-fixer fix --rules=@PSR1,-@PSR12 /code/config
+		@docker-compose exec web /code/vendor/bin/php-cs-fixer fix --rules=@PSR1,-@PSR12,-@Symfony /code/module
+		@docker-compose exec web /code/vendor/bin/php-cs-fixer fix --rules=@PSR1,-@PSR12,-@Symfony /code/config
+		@docker cp gewisweb_web_1:/code/module ./module
+		@docker cp gewisweb_web_1:/code/config ./config
+		@docker-compose down
+
+phpcsfixtypes: rundev
+		@docker-compose exec web /code/vendor/bin/php-cs-fixer fix --allow-risky=yes --rules=@PSR1,-@PSR12,-@Symfony,-phpdoc_to_param_type,-phpdoc_to_property_type,-phpdoc_to_return_type /code/module
+		@docker-compose exec web /code/vendor/bin/php-cs-fixer fix --allow-risky=yes --rules=@PSR1,-@PSR12,-@Symfony,-phpdoc_to_param_type,-phpdoc_to_property_type,-phpdoc_to_return_type /code/config
 		@docker cp gewisweb_web_1:/code/module ./module
 		@docker cp gewisweb_web_1:/code/config ./config
 		@docker-compose down
