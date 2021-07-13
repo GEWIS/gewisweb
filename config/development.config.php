@@ -4,6 +4,7 @@ return [
     // This should be an array of module namespaces used in the application.
     'modules' => [
         'Laminas\DeveloperTools',
+        'SanSessionToolbar',
         'TestData',
     ],
     'module_listener_options' => [

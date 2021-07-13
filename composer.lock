@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c0043543facda49e67ca7af02d492d5",
+    "content-hash": "836f228c9d7aabcf680ffa3a810ee3b5",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -8669,6 +8669,80 @@
                 "source": "https://github.com/php-fig/event-dispatcher/tree/1.0.0"
             },
             "time": "2019-01-08T18:20:26+00:00"
+        },
+        {
+            "name": "san/san-session-toolbar",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/samsonasik/SanSessionToolbar.git",
+                "reference": "1bc46de72980b751b1e67d32cb4247545486eddb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/samsonasik/SanSessionToolbar/zipball/1bc46de72980b751b1e67d32cb4247545486eddb",
+                "reference": "1bc46de72980b751b1e67d32cb4247545486eddb",
+                "shasum": ""
+            },
+            "require": {
+                "laminas/laminas-json": "^2.5 || ^3.0",
+                "laminas/laminas-mvc": "^3.0",
+                "laminas/laminas-session": "^2.8.4",
+                "php": "^7.3|~8.0"
+            },
+            "conflict": {
+                "laminas/laminas-developer-tools": "<1.3.1 || >=2.0 <2.0.2"
+            },
+            "require-dev": {
+                "laminas/laminas-developer-tools": "^1.3.1 || ^2.0.2",
+                "laminas/laminas-i18n": "^2.5",
+                "laminas/laminas-log": "^2.5",
+                "laminas/laminas-mvc-plugin-flashmessenger": "^1.0",
+                "laminas/laminas-router": "^3.0",
+                "laminas/laminas-serializer": "^2.5",
+                "laminas/laminas-test": "^3.0",
+                "phpspec/prophecy-phpunit": "^2.0"
+            },
+            "suggest": {
+                "ext-xdebug": "For better output format of session data, Xdebug should already installed",
+                "laminas/laminas-mvc-plugin-flashmessenger": "^1.0 for laminas-mvc ^3.0 usage to be able to use flashMessenger"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SanSessionToolbar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Abdul Malik Ikhsan",
+                    "email": "samsonasik@gmail.com",
+                    "homepage": "http://samsonasik.wordpress.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laminas Session Toolbar for Laminas\\DeveloperTools ",
+            "homepage": "https://github.com/samsonasik/SanSessionToolbar",
+            "keywords": [
+                "laminas2",
+                "laminas3",
+                "session"
+            ],
+            "support": {
+                "issues": "https://github.com/samsonasik/SanSessionToolbar/issues",
+                "source": "https://github.com/samsonasik/SanSessionToolbar/tree/4.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://samsonasik.wordpress.com/donate/",
+                    "type": "custom"
+                }
+            ],
+            "time": "2021-01-04T20:41:39+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
