@@ -88,8 +88,7 @@ class Frontpage extends AbstractAclService
         Tag $tagMapper,
         \Activity\Mapper\Activity $activityMapper,
         array $frontpageConfig
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;

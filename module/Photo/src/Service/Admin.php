@@ -75,8 +75,7 @@ class Admin extends AbstractAclService
         FileStorage $storageService,
         \Photo\Mapper\Photo $photoMapper,
         array $photoConfig
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;

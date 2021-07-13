@@ -39,8 +39,7 @@ class LoginAttempt
         \User\Mapper\LoginAttempt $loginAttemptMapper,
         \User\Mapper\User $userMapper,
         array $rateLimitConfig
-    )
-    {
+    ) {
         $this->remoteAddress = $remoteAddress;
         $this->loginAttemptMapper = $loginAttemptMapper;
         $this->rateLimitConfig = $rateLimitConfig;

@@ -84,8 +84,7 @@ class Album extends AbstractAclService
         \Photo\Mapper\Album $albumMapper,
         CreateAlbum $createAlbumForm,
         EditAlbum $editAlbumForm
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;

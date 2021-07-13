@@ -60,8 +60,7 @@ class Member extends AbstractAclService
         \Decision\Mapper\Member $memberMapper,
         Authorization $authorizationMapper,
         array $config
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;

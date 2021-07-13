@@ -54,8 +54,7 @@ class ActivityQuery extends AbstractAclService
         \Decision\Service\Organ $organService,
         \Activity\Mapper\Activity $activityMapper,
         Proposal $proposalMapper
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;

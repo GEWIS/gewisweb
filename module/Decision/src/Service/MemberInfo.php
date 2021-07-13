@@ -46,8 +46,7 @@ class MemberInfo extends AbstractAclService
         Acl $acl,
         Photo $photoService,
         \Decision\Mapper\Member $memberMapper
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;

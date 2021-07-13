@@ -68,11 +68,11 @@ class VirtualAlbum extends Album
     {
         $this->photos
             = new ArrayCollection(
-            array_merge(
-                $this->photos->toArray(),
-                $photos
-            )
-        );
+                array_merge(
+                    $this->photos->toArray(),
+                    $photos
+                )
+            );
     }
 
     /**

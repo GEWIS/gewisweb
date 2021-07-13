@@ -70,8 +70,7 @@ class Signup extends AbstractAclService
         \Activity\Mapper\Signup $signupMapper,
         SignupOption $signupOptionMapper,
         SignupFieldValue $signupFieldValueMapper
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;
@@ -405,7 +404,7 @@ class Signup extends AbstractAclService
     {
         // TODO: $signup->getActivity() is undefined
         if (
-        !($this->isAllowed('adminSignup', 'activity') ||
+            !($this->isAllowed('adminSignup', 'activity') ||
             $this->isAllowed('adminSignup', $signup->getActivity()))
         ) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to remove external signups for this activity'));

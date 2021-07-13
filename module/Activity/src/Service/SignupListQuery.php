@@ -36,8 +36,7 @@ class SignupListQuery extends AbstractAclService
         $userRole,
         Acl $acl,
         SignupList $signupListMapper
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;

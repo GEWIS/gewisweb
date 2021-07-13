@@ -154,8 +154,7 @@ class Company extends AbstractACLService
         EditCategory $editCategoryForm,
         EditLabel $editLabelForm,
         array $languages
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;

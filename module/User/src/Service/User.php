@@ -117,8 +117,7 @@ class User extends AbstractAclService
         Activate $activateForm,
         Login $loginForm,
         Password $passwordForm
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->bcrypt = $bcrypt;

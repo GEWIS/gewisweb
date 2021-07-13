@@ -70,8 +70,7 @@ class Poll extends AbstractAclService
         \Frontpage\Form\Poll $pollForm,
         \Frontpage\Form\PollComment $pollCommentForm,
         PollApproval $pollApprovalForm
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;

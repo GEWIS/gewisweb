@@ -98,8 +98,7 @@ class Exam extends AbstractAclService
         Bulk $bulkSummaryForm,
         Bulk $bulkExamForm,
         array $config
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;

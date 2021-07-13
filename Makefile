@@ -55,33 +55,22 @@ replenish: rundev
 update: rundev updatecomposer updatepackage updatecss updateglide
 		@docker-compose down
 
-phpstan: rundev
-		@docker-compose exec web /code/vendor/bin/phpstan analyse /code/module
-		@docker-compose down
+phpstan:
+		@vendor/bin/phpstan analyse module/Activity/src module/Application/src module/Company/src module/Decision/src module/Education/src module/Frontpage/src module/Photo/src module/User/src
 
-phpcs: rundev
-		@docker-compose exec web /code/vendor/bin/phpcs -p --standard=PSR1,PSR12 --extensions=php,dist /code/module /code/config
-		@docker-compose down
+phpcs:
+		@vendor/bin/phpcs -p --standard=PSR1,PSR12 --extensions=php,dist module config
 
-phpcbf: rundev
-		@docker-compose exec web /code/vendor/bin/phpcbf -p --standard=PSR1,PSR12 --extensions=php,dist /code/module /code/config
-		@docker cp gewisweb_web_1:/code/module ./module
-		@docker cp gewisweb_web_1:/code/config ./config
-		@docker-compose down
+phpcbf:
+		@vendor/bin/phpcbf -p --standard=PSR1,PSR12 --extensions=php,dist module config
 
-phpcsfix: rundev
-		@docker-compose exec web /code/vendor/bin/php-cs-fixer fix --rules=@PSR1,-@PSR12,-@Symfony /code/module
-		@docker-compose exec web /code/vendor/bin/php-cs-fixer fix --rules=@PSR1,-@PSR12,-@Symfony /code/config
-		@docker cp gewisweb_web_1:/code/module ./module
-		@docker cp gewisweb_web_1:/code/config ./config
-		@docker-compose down
+phpcsfix:
+		@vendor/bin/php-cs-fixer fix --rules=@PSR1,-@PSR12,-@Symfony module
+		@vendor/bin/php-cs-fixer fix --rules=@PSR1,-@PSR12,-@Symfony config
 
-phpcsfixtypes: rundev
-		@docker-compose exec web /code/vendor/bin/php-cs-fixer fix --allow-risky=yes --rules=@PSR1,-@PSR12,-@Symfony,-phpdoc_to_param_type,-phpdoc_to_property_type,-phpdoc_to_return_type /code/module
-		@docker-compose exec web /code/vendor/bin/php-cs-fixer fix --allow-risky=yes --rules=@PSR1,-@PSR12,-@Symfony,-phpdoc_to_param_type,-phpdoc_to_property_type,-phpdoc_to_return_type /code/config
-		@docker cp gewisweb_web_1:/code/module ./module
-		@docker cp gewisweb_web_1:/code/config ./config
-		@docker-compose down
+phpcsfixtypes:
+		@vendor/bin/php-cs-fixer fix --allow-risky=yes --rules=@PSR1,-@PSR12,-@Symfony,-phpdoc_to_param_type,-phpdoc_to_property_type,-phpdoc_to_return_type /code/module
+		@vendor/bin/php-cs-fixer fix --allow-risky=yes --rules=@PSR1,-@PSR12,-@Symfony,-phpdoc_to_param_type,-phpdoc_to_property_type,-phpdoc_to_return_type /code/config
 
 updatecomposer:
 		@docker-compose exec web php composer.phar selfupdate

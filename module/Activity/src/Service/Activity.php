@@ -76,8 +76,7 @@ class Activity extends AbstractAclService
         Company $companyService,
         Email $emailService,
         ActivityForm $activityForm
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;

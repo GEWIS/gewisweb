@@ -97,8 +97,7 @@ class ActivityCalendar extends AbstractAclService
         Member $memberMapper,
         ActivityCalendarOption $calendarOptionForm,
         ActivityCalendarProposal $calendarProposalForm
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;

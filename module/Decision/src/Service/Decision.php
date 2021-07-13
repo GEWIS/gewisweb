@@ -117,8 +117,7 @@ class Decision extends AbstractAclService
         ReorderDocument $reorderDocumentForm,
         SearchDecision $searchDecisionForm,
         Authorization $authorizationForm
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;

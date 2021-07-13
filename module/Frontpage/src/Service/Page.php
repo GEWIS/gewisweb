@@ -62,8 +62,7 @@ class Page extends AbstractAclService
         \Frontpage\Mapper\Page $pageMapper,
         \Frontpage\Form\Page $pageForm,
         array $storageConfig
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;

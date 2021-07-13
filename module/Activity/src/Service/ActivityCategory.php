@@ -51,8 +51,7 @@ class ActivityCategory extends AbstractAclService
         EntityManager $entityManager,
         \Activity\Mapper\ActivityCategory $categoryMapper,
         CategoryForm $categoryForm
-    )
-    {
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;
