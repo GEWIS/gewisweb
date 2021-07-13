@@ -16,6 +16,7 @@ use Laminas\Session\Container as SessionContainer;
 use Laminas\Stdlib\Parameters;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
+use User\Service\User;
 
 /**
  * Controller that gives some additional details for activities, such as a list of email adresses
@@ -43,14 +44,18 @@ class AdminController extends AbstractActionController
      */
     private $signupListQueryService;
     private Translator $translator;
+    private User $userService;
+    private \Activity\Mapper\Signup $signupMapper;
 
-    public function __construct(Translator $translator, \Activity\Service\Activity $activityService, ActivityQuery $activityQueryService, Signup $signupService, SignupListQuery $signupListQueryService)
+    public function __construct(Translator $translator, \Activity\Service\Activity $activityService, ActivityQuery $activityQueryService, Signup $signupService, SignupListQuery $signupListQueryService, User $userService, \Activity\Mapper\Signup $signupMapper)
     {
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;
         $this->signupService = $signupService;
         $this->signupListQueryService = $signupListQueryService;
         $this->translator = $translator;
+        $this->userService = $userService;
+        $this->signupMapper = $signupMapper;
     }
 
     public function updateAction()
@@ -58,17 +63,13 @@ class AdminController extends AbstractActionController
         $activityId = (int)$this->params('id');
 
         $activity = $this->activityQueryService->getActivityWithDetails($activityId);
-        $translator = $this->translator;
 
         if (is_null($activity)) {
             return $this->notFoundAction();
         }
 
-        $acl = $this->getAcl();
-        $identity = $this->getIdentity();
-
-        if (!$acl->isAllowed($identity, $activity, 'update')) {
-            throw new NotAllowedException($translator->translate('You are not allowed to update this activity'));
+        if (!$this->activityService->isAllowed($activity, 'update')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to update this activity'));
         }
 
         if (0 !== $activity->getSignupLists()->count()) {
@@ -81,7 +82,7 @@ class AdminController extends AbstractActionController
             }
 
             if (min($openingDates) < new DateTime() || Activity::STATUS_APPROVED === $activity->getStatus()) {
-                $message = $translator->translate('Activities that have sign-up lists which are open or approved cannot be updated.');
+                $message = $this->translator->translate('Activities that have sign-up lists which are open or approved cannot be updated.');
 
                 $this->redirectActivityAdmin(false, $message);
             }
@@ -90,7 +91,7 @@ class AdminController extends AbstractActionController
         // Can also be `elseif` as SignupLists are guaranteed to be before the
         // Activity begin date and time.
         if ($activity->getBeginTime() < new DateTime()) {
-            $message = $translator->translate('This activity has already started/ended and can no longer be updated.');
+            $message = $this->translator->translate('This activity has already started/ended and can no longer be updated.');
 
             $this->redirectActivityAdmin(false, $message);
         }
@@ -100,7 +101,7 @@ class AdminController extends AbstractActionController
 
         if ($request->isPost()) {
             if ($this->activityService->createUpdateProposal($activity, $request->getPost())) {
-                $message = $translator->translate('You have successfully created an update proposal for the activity! If the activity was already approved, the proposal will be applied after it has been approved by the board. Otherwise, the update has already been applied to the activity.');
+                $message = $this->translator->translate('You have successfully created an update proposal for the activity! If the activity was already approved, the proposal will be applied after it has been approved by the board. Otherwise, the update has already been applied to the activity.');
 
                 $this->redirectActivityAdmin(true, $message);
             }
@@ -131,23 +132,13 @@ class AdminController extends AbstractActionController
         $viewModel = new ViewModel(
             [
                 'form' => $form,
-                'action' => $translator->translate('Update Activity'),
+                'action' => $this->translator->translate('Update Activity'),
                 'allowSignupList' => $allowSignupList,
             ]
         );
         $viewModel->setTemplate('activity/activity/create.phtml');
 
         return $viewModel;
-    }
-
-    protected function getAcl()
-    {
-        return $this->getServiceLocator()->get('activity_acl');
-    }
-
-    protected function getIdentity()
-    {
-        return $this->getServiceLocator()->get('user_service_user')->getIdentity();
     }
 
     protected function redirectActivityAdmin($success, $message)
@@ -161,15 +152,12 @@ class AdminController extends AbstractActionController
     /**
      * Return the data of the activity participants.
      *
-     * @return array
+     * @return ViewModel|array
      */
     public function participantsAction()
     {
         $activityId = (int)$this->params('id');
         $signupListId = (int)$this->params('signupList');
-
-        $acl = $this->getAcl();
-        $identity = $this->getIdentity();
 
         if (0 === $signupListId) {
             $activity = $this->activityQueryService->getActivity($activityId);
@@ -184,9 +172,9 @@ class AdminController extends AbstractActionController
                 return $this->notFoundAction();
             }
 
-            if (!$acl->isAllowed($identity, $activity, 'viewParticipants')) {
-                $translator = $this->translator;
-                throw new NotAllowedException($translator->translate('You are not allowed to view the participants of this activity'));
+            if (!$this->activityService->isAllowed($activity, 'viewParticipants')) {
+                $this->translator = $this->translator;
+                throw new NotAllowedException($this->translator->translate('You are not allowed to view the participants of this activity'));
             }
         } else {
             $signupList = $this->signupListQueryService->getSignupListByActivity($signupListId, $activityId);
@@ -195,9 +183,9 @@ class AdminController extends AbstractActionController
                 return $this->notFoundAction();
             }
 
-            if (!$acl->isAllowed($identity, $signupList, 'viewParticipants')) {
-                $translator = $this->translator;
-                throw new NotAllowedException($translator->translate('You are not allowed to view the participants of this activity'));
+            if (!$this->activityService->isAllowed($signupList, 'viewParticipants')) {
+                $this->translator = $this->translator;
+                throw new NotAllowedException($this->translator->translate('You are not allowed to view the participants of this activity'));
             }
 
             $activity = $this->activityQueryService->getActivity($activityId);
@@ -257,12 +245,8 @@ class AdminController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        $translator = $this->translator;
-        $acl = $this->getAcl();
-        $identity = $this->getIdentity();
-
-        if (!$acl->isAllowed($identity, $signupList, 'adminSignup')) {
-            throw new NotAllowedException($translator->translate('You are not allowed to use this form'));
+        if (!$this->activityService->isAllowed($signupList, 'adminSignup')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to use this form'));
         }
 
         $request = $this->getRequest();
@@ -274,7 +258,7 @@ class AdminController extends AbstractActionController
 
             // Check if the form is valid
             if (!$form->isValid()) {
-                $error = $translator->translate('Invalid form');
+                $error = $this->translator->translate('Invalid form');
                 $activityAdminSession = new SessionContainer('activityAdminRequest');
                 $activityAdminSession->signupData = $postData->toArray();
                 $this->redirectActivityAdminRequest($activityId, $signupListId, false, $error, $activityAdminSession);
@@ -288,13 +272,13 @@ class AdminController extends AbstractActionController
             $email = $formData['email'];
             unset($formData['email']);
             $this->signupService->adminSignUp($signupList, $fullName, $email, $formData);
-            $message = $translator->translate('Successfully subscribed external participant');
+            $message = $this->translator->translate('Successfully subscribed external participant');
             $this->redirectActivityAdminRequest($activityId, $signupListId, true, $message);
 
             return $this->getResponse();
         }
 
-        $error = $translator->translate('Use the form to subscribe');
+        $error = $this->translator->translate('Use the form to subscribe');
         $this->redirectActivityAdminRequest($activityId, $signupListId, false, $error);
 
         return $this->getResponse();
@@ -328,7 +312,7 @@ class AdminController extends AbstractActionController
     public function externalSignoffAction()
     {
         $signupId = (int)$this->params('id');
-        $signupMapper = $this->getServiceLocator()->get('activity_mapper_signup');
+        $signupMapper = $this->signupMapper;
 
         $signup = $signupMapper->getSignupById($signupId);
 
@@ -337,24 +321,21 @@ class AdminController extends AbstractActionController
         }
 
         $signupList = $signup->getSignupList();
-        $translator = $this->translator;
-        $acl = $this->getAcl();
-        $identity = $this->getIdentity();
 
-        if (!$acl->isAllowed($identity, $signupList, 'adminSignup')) {
-            throw new NotAllowedException($translator->translate('You are not allowed to use this form'));
+        if (!$this->activityService->isAllowed($signupList, 'adminSignup')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to use this form'));
         }
 
         $request = $this->getRequest();
 
         //Assure a form is used
         if ($request->isPost()) {
-            $form = new RequestForm('activityExternalSignoff', $translator->translate('Remove'));
+            $form = new RequestForm('activityExternalSignoff', $this->translator->translate('Remove'));
             $form->setData($request->getPost());
 
             //Assure the form is valid
             if (!$form->isValid()) {
-                $message = $translator->translate('Invalid form');
+                $message = $this->translator->translate('Invalid form');
                 $this->redirectActivityAdminRequest(
                     $signupList->getActivity()->getId(),
                     $signupList->getId(),
@@ -366,7 +347,7 @@ class AdminController extends AbstractActionController
             }
 
             $this->signupService->externalSignOff($signup);
-            $message = $translator->translate('Successfully removed external participant');
+            $message = $this->translator->translate('Successfully removed external participant');
             $this->redirectActivityAdminRequest(
                 $signupList->getActivity()->getId(),
                 $signupList->getId(),
@@ -377,7 +358,7 @@ class AdminController extends AbstractActionController
             return $this->getResponse();
         }
 
-        $message = $translator->translate('Use the form to unsubscribe an external participant');
+        $message = $this->translator->translate('Use the form to unsubscribe an external participant');
         $this->redirectActivityAdminRequest(
             $signupList->getActivity()->getId(),
             $signupList->getId(),
@@ -394,19 +375,17 @@ class AdminController extends AbstractActionController
     public function viewAction()
     {
         $admin = false;
-        $acl = $this->getAcl();
-        $identity = $this->getIdentity();
+        $identity = $this->userService->getIdentity();
 
-        if (!$acl->isAllowed($identity, 'activity', 'viewAdmin')) {
-            $translator = $this->translator;
-            throw new NotAllowedException($translator->translate('You are not allowed to administer activities'));
+        if (!$this->activityService->isAllowed('viewAdmin')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to administer activities'));
         }
 
         $disapprovedActivities = null;
         $unapprovedActivities = null;
         $approvedActivities = null;
 
-        if ($acl->isAllowed($identity, 'activity', 'approval')) {
+        if ($this->activityService->isAllowed('approval')) {
             $admin = true;
             $disapprovedActivities = $this->activityQueryService->getDisapprovedActivities();
             $unapprovedActivities = $this->activityQueryService->getUnapprovedActivities();

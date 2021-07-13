@@ -1,5 +1,5 @@
 parameters:
-    level: 0
+    level: 1
     bootstrapFiles:
         - bootstrap.php
     paths:
@@ -11,4 +11,5 @@ parameters:
         - module/Frontpage/src
         - module/Photo/src
         - module/User/src
+    reportUnmatchedIgnoredErrors: false
     tmpDir: phpstan

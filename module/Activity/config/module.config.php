@@ -470,12 +470,14 @@ return [
     'controllers' => [
         'factories' => [
             'Activity\Controller\Activity' => function (ContainerInterface $container) {
+                $translator = $container->get('translator');
                 $activityService = $container->get('activity_service_activity');
                 $activityQueryService = $container->get('activity_service_activityQuery');
                 $signupService = $container->get('activity_service_signup');
                 $signupListQueryService = $container->get('activity_service_signupListQuery');
+                $userService = $container->get('user_service_user');
 
-                return new Activity\Controller\ActivityController($activityService, $activityQueryService, $signupService, $signupListQueryService);
+                return new Activity\Controller\ActivityController($translator, $activityService, $activityQueryService, $signupService, $signupListQueryService, $userService);
             },
             'Activity\Controller\AdminApproval' => function (ContainerInterface $container) {
                 $translator = $container->get('translator');
@@ -503,8 +505,10 @@ return [
                 $activityQueryService = $container->get('activity_service_activityQuery');
                 $signupService = $container->get('activity_service_signup');
                 $signupListQueryService = $container->get('activity_service_signupListQuery');
+                $userService = $container->get('user_service_user');
+                $signupMapper = $container->get('activity_mapper_signup');
 
-                return new Activity\Controller\AdminController($translator, $activityService, $activityQueryService, $signupService, $signupListQueryService);
+                return new Activity\Controller\AdminController($translator, $activityService, $activityQueryService, $signupService, $signupListQueryService, $userService, $signupMapper);
             },
             'Activity\Controller\ActivityCalendar' => function (ContainerInterface $container) {
                 $calendarService = $container->get('activity_service_calendar');

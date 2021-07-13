@@ -9,14 +9,19 @@ use Activity\Service\ActivityQuery;
 use Activity\Service\Signup;
 use Activity\Service\SignupListQuery;
 use DateTime;
+use Decision\Service\Member;
 use Laminas\Form\FormInterface;
 use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\Stdlib\Parameters;
 use Laminas\View\Model\ViewModel;
+use User\Service\User;
 
 class ActivityController extends AbstractActionController
 {
+    private Translator $translator;
+
     /**
      * @var \Activity\Service\Activity
      */
@@ -37,12 +42,16 @@ class ActivityController extends AbstractActionController
      */
     private $signupListQueryService;
 
-    public function __construct(\Activity\Service\Activity $activityService, ActivityQuery $activityQueryService, Signup $signupService, SignupListQuery $signupListQueryService)
+    private User $userService;
+
+    public function __construct(Translator $translator, \Activity\Service\Activity $activityService, ActivityQuery $activityQueryService, Signup $signupService, SignupListQuery $signupListQueryService, User $userService)
     {
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;
         $this->signupService = $signupService;
         $this->signupListQueryService = $signupListQueryService;
+        $this->translator = $translator;
+        $this->userService = $userService;
     }
 
     /**
@@ -111,7 +120,7 @@ class ActivityController extends AbstractActionController
         $fields = $signupList->getFields();
         $form = $this->prepareSignupForm($signupList, $activitySession);
 
-        $identity = $this->getServiceLocator()->get('user_role');
+        $identity = $this->userService->getIdentity();
         $isSignedUp = false;
         if ($this->signupService->isAllowedToInternalSubscribe()) {
             $isSignedUp = $isAllowedToSubscribe
@@ -211,11 +220,9 @@ class ActivityController extends AbstractActionController
             }
         }
 
-        $translator = $this->getServiceLocator()->get('translator');
-
         return [
             'form' => $form,
-            'action' => $translator->translate('Create Activity'),
+            'action' => $this->translator->translate('Create Activity'),
             'allowSignupList' => true,
         ];
     }
@@ -233,7 +240,6 @@ class ActivityController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        $translator = $this->getServiceLocator()->get('translator');
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -243,7 +249,7 @@ class ActivityController extends AbstractActionController
 
             // Check if the form is valid
             if (!$form->isValid()) {
-                $error = $translator->translate('Invalid form');
+                $error = $this->translator->translate('Invalid form');
                 $activityRequestSession = new SessionContainer('activityRequest');
                 $activityRequestSession->signupData = $postData->toArray();
 
@@ -252,7 +258,7 @@ class ActivityController extends AbstractActionController
 
             // Ensure the user is allowed to subscribe
             if (!$this->signupService->isAllowedToSubscribe()) {
-                $error = $translator->translate('You need to log in to subscribe');
+                $error = $this->translator->translate('You need to log in to subscribe');
 
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
             }
@@ -262,28 +268,28 @@ class ActivityController extends AbstractActionController
                 !$this->signupService->isInSubscriptionWindow($signupList->getOpenDate(), $signupList->getCloseDate())
                 || Activity::STATUS_APPROVED !== $signupList->getActivity()->getStatus()
             ) {
-                $error = $translator->translate('You cannot subscribe to this activity at this moment in time');
+                $error = $this->translator->translate('You cannot subscribe to this activity at this moment in time');
 
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
             }
 
-            $identity = $this->getServiceLocator()->get('user_service_user')->getIdentity();
+            $identity = $this->userService->getIdentity();
             $user = $identity->getMember();
 
             // Check if the user is not already subscribed
             if ($this->signupService->isSignedUp($signupList, $user)) {
-                $error = $translator->translate('You have already been subscribed for this activity');
+                $error = $this->translator->translate('You have already been subscribed for this activity');
 
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
             }
 
             $this->signupService->signUp($signupList, $form->getData(FormInterface::VALUES_AS_ARRAY));
-            $message = $translator->translate('Successfully subscribed');
+            $message = $this->translator->translate('Successfully subscribed');
 
             return $this->redirectActivityRequest($activityId, $signupListId, true, $message);
         }
 
-        $error = $translator->translate('Use the form to subscribe');
+        $error = $this->translator->translate('Use the form to subscribe');
 
         return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
     }
@@ -325,7 +331,6 @@ class ActivityController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        $translator = $this->getServiceLocator()->get('translator');
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -335,7 +340,7 @@ class ActivityController extends AbstractActionController
 
             // Check if the form is valid
             if (!$form->isValid()) {
-                $error = $translator->translate('Invalid form');
+                $error = $this->translator->translate('Invalid form');
                 $activityRequestSession = new SessionContainer('activityRequest');
                 $activityRequestSession->signupData = $postData->toArray();
 
@@ -344,7 +349,7 @@ class ActivityController extends AbstractActionController
 
             // Ensure the user is allowed to subscribe
             if (!$this->signupService->isAllowedToExternalSubscribe()) {
-                $error = $translator->translate('You need to log in to subscribe');
+                $error = $this->translator->translate('You need to log in to subscribe');
 
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
             }
@@ -354,7 +359,7 @@ class ActivityController extends AbstractActionController
                 !$this->signupService->isInSubscriptionWindow($signupList->getOpenDate(), $signupList->getCloseDate())
                 || Activity::STATUS_APPROVED !== $signupList->getActivity()->getStatus()
             ) {
-                $error = $translator->translate('You cannot subscribe to this activity at this moment in time');
+                $error = $this->translator->translate('You cannot subscribe to this activity at this moment in time');
 
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
             }
@@ -365,12 +370,12 @@ class ActivityController extends AbstractActionController
             $email = $formData['email'];
             unset($formData['email']);
             $this->signupService->externalSignUp($signupList, $fullName, $email, $formData);
-            $message = $translator->translate('Successfully subscribed as external participant');
+            $message = $this->translator->translate('Successfully subscribed as external participant');
 
             return $this->redirectActivityRequest($activityId, $signupListId, true, $message);
         }
 
-        $error = $translator->translate('Use the form to subscribe');
+        $error = $this->translator->translate('Use the form to subscribe');
 
         return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
     }
@@ -419,7 +424,7 @@ class ActivityController extends AbstractActionController
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
             }
 
-            $identity = $this->getServiceLocator()->get('user_service_user')->getIdentity();
+            $identity = $this->userService->getIdentity();
             $user = $identity->getMember();
 
             // Check if the user is subscribed
