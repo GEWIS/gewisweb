@@ -1,5 +1,7 @@
 <?php
 // set title
+use Decision\Model\Meeting;
+
 $this->headTitle($this->translate('Members'));
 
 $sections = [];
@@ -7,7 +9,7 @@ $sections[$this->translate('Personal')] = [
     [$this->translate('Change password'), 'lock', $this->url('user/default', ['action' => 'password'])],
 ];
 
-/** @var \Decision\Model\Meeting[] $meetings */
+/** @var Meeting[] $meetings */
 $meetings = $this->meetings;
 ?>
 <div class="container">

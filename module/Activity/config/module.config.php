@@ -516,7 +516,7 @@ return [
     ],
     'view_manager' => [
         'template_path_stack' => [
-            'activity' => __DIR__.'/../view/',
+            'activity' => __DIR__ . '/../view/',
         ],
     ],
     'console' => [
@@ -539,7 +539,7 @@ return [
             'activity_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__.'/../src/Activity/Model/'],
+                'paths' => [__DIR__ . '/../src/Model/'],
             ],
             'orm_default' => [
                 'drivers' => [

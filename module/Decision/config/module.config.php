@@ -90,7 +90,7 @@ return [
                     'files' => [
                         'type' => 'Regex',
                         'options' => [
-                            'regex' => '/files(?<path>'.$this->getServiceConfig()['filebrowser_valid_file'].')',
+                            'regex' => '/files(?<path>' . $this->getServiceConfig()['filebrowser_valid_file'] . ')',
                             'defaults' => [
                                 'action' => 'files',
                             ],
@@ -389,7 +389,7 @@ return [
     ],
     'view_manager' => [
         'template_path_stack' => [
-            'decision' => __DIR__.'/../view/',
+            'decision' => __DIR__ . '/../view/',
         ],
     ],
     'doctrine' => [
@@ -397,7 +397,7 @@ return [
             'decision_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__.'/../src/Decision/Model/'],
+                'paths' => [__DIR__ . '/../src/Model/'],
             ],
             'orm_default' => [
                 'drivers' => [

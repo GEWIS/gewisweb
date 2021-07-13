@@ -82,11 +82,12 @@ $this->scriptUrl()->requireUrl('admin_photo/album_page', ['album_id', 'page'])
     <div class="col-lg-9">
 
         <a id="btnCreate" class="btn btn-primary" href="<?= $this->url('admin_photo/album_create'); ?>">
-          <i class="fas fa-plus"></i>&nbsp;<?= $this->translate('Create new album') ?></a>
+            <i class="fas fa-plus"></i>&nbsp;<?= $this->translate('Create new album') ?></a>
         <hr>
         <div id="albumControls">
             <ol id="breadcrumb" class="breadcrumb"></ol>
-            <a id="btnEdit" type="button" class="btn btn-primary" href=""><span class="fas fa-edit"></span>&nbsp;<?= $this->translate('Edit album') ?>
+            <a id="btnEdit" type="button" class="btn btn-primary" href=""><span
+                    class="fas fa-edit"></span>&nbsp;<?= $this->translate('Edit album') ?>
             </a>
             <a id="btnAdd" class="btn btn-primary" href=""><span
                     class="fas fa-file-upload"></span>&nbsp;<?= $this->translate('Add photos') ?></a>

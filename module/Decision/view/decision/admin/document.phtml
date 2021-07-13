@@ -1,4 +1,6 @@
-<?php if (isset($success) && $success): ?>
+<?php use Laminas\Form\Form;
+
+if (isset($success) && $success): ?>
     <?= $this->translate('Meeting document uploaded'); ?>
 <?php endif; ?>
 <?php
@@ -69,7 +71,7 @@ $element = $form->get('meeting');
             <tr data-id="<?= $document->getId() ?>">
                 <td class="btn-group-move">
                     <?php
-                    /** @var \Laminas\Form\Form $form */
+                    /** @var Form $form */
                     $form = $this->reorderDocumentForm;
 
                     $form->setAttributes([

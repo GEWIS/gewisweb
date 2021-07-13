@@ -52,7 +52,7 @@ return [
             },
             'Frontpage\Controller\Admin' => function () {
                 return new AdminController();
-            }, ],
+            },],
     ],
     'router' => [
         'routes' => [
@@ -381,13 +381,13 @@ return [
     ],
     'view_manager' => [
         'template_path_stack' => [
-            'Frontpage' => __DIR__.'/../view',
+            'Frontpage' => __DIR__ . '/../view',
         ],
         'template_map' => [
-            'page-admin/edit' => __DIR__.'/../view/frontpage/page-admin/edit.phtml',
-            'news-admin/edit' => __DIR__.'/../view/frontpage/news-admin/edit.phtml',
-            'organ/committee-list' => __DIR__.'/../view/frontpage/organ/committee-list.phtml',
-            'organ/fraternity-list' => __DIR__.'/../view/frontpage/organ/fraternity-list.phtml',
+            'page-admin/edit' => __DIR__ . '/../view/frontpage/page-admin/edit.phtml',
+            'news-admin/edit' => __DIR__ . '/../view/frontpage/news-admin/edit.phtml',
+            'organ/committee-list' => __DIR__ . '/../view/frontpage/organ/committee-list.phtml',
+            'organ/fraternity-list' => __DIR__ . '/../view/frontpage/organ/fraternity-list.phtml',
         ],
     ],
     'doctrine' => [
@@ -395,7 +395,7 @@ return [
             'frontpage_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__.'/../src/Frontpage/Model/'],
+                'paths' => [__DIR__ . '/../src/Model/'],
             ],
             'orm_default' => [
                 'drivers' => [

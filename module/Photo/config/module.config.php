@@ -465,7 +465,7 @@ return [
             'Photo\Controller\PhotoAdmin' => function (ServiceLocatorInterface $sm) {
                 $photoService = $sm->get('photo_service_photo');
                 $albumService = $sm->get('photo_service_album');
-                $entityManager = $sm->get('photo_doctrine_em');
+                $entityManager = $sm->get('doctrine.entitymanager.orm_default');
 
                 return new PhotoAdminController($photoService, $albumService, $entityManager);
             },
@@ -487,7 +487,7 @@ return [
     ],
     'view_manager' => [
         'template_path_stack' => [
-            'photo' => __DIR__.'/../view/',
+            'photo' => __DIR__ . '/../view/',
         ],
         'strategies' => [
             'ViewJsonStrategy',
@@ -498,7 +498,7 @@ return [
             'photo_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__.'/../src/Photo/Model/'],
+                'paths' => [__DIR__ . '/../src/Model/'],
             ],
             'orm_default' => [
                 'drivers' => [

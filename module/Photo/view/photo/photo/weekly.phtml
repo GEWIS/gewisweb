@@ -28,7 +28,7 @@ $this->headTitle($this->translate('Picture of the week')); ?>
                         class="thumbnail"
                         href="<?= $this->url('photo/photo', ['photo_id' => $weeklyPhoto->getPhoto()->getId()]); ?>"
                     >
-                        <img src="<?= $this->fileUrl($weeklyPhoto->getPhoto()->getSmallThumbPath()) ?>" >
+                        <img src="<?= $this->fileUrl($weeklyPhoto->getPhoto()->getSmallThumbPath()) ?>">
                         <div class="caption">
                             <?= $this->translate('Week') ?> <?= $weeklyPhoto->getWeek()->format('W'); ?>
                         </div>

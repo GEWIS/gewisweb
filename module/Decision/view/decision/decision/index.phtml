@@ -24,8 +24,8 @@ $this->headTitle($this->translate('Meetings')); ?>
                     <td><a style="display: block; height: 100%; width: 100%"
                            href="<?= $url ?>"><?= $this->dateFormat(
                             $meeting->getDate(),
-                            \IntlDateFormatter::FULL,
-                            \IntlDateFormatter::NONE
+                            IntlDateFormatter::FULL,
+                            IntlDateFormatter::NONE
                         ) ?></td>
                     <td><a style="display: block; height: 100%; width: 100%"
                            href="<?= $url ?>"><?= $info[1] ?></a></td>

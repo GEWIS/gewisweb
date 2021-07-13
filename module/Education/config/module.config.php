@@ -160,7 +160,7 @@ return [
     ],
     'view_manager' => [
         'template_path_stack' => [
-            'education' => __DIR__.'/../view/',
+            'education' => __DIR__ . '/../view/',
         ],
     ],
     'doctrine' => [
@@ -168,7 +168,7 @@ return [
             'education_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__.'/../src/Education/Model/'],
+                'paths' => [__DIR__ . '/../src/Model/'],
             ],
             'orm_default' => [
                 'drivers' => [

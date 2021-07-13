@@ -1,4 +1,5 @@
-<?php use \Education\Model\Exam;
+<?php use Education\Model\Exam;
+use Education\Model\Summary;
 
 $this->headTitle(sprintf('%s %s', $course->getCode(), $course->getName()));
 $this->headTitle($this->translate('Education'));
@@ -33,7 +34,7 @@ $this->headTitle($this->translate('Education'));
                             'id' => $exam->getId()
                         ]) ?>">
                             <strong>(<?= $child->getCode() ?>)</strong>
-                            <?php if ($exam instanceof \Education\Model\Summary): ?>
+                            <?php if ($exam instanceof Summary): ?>
                                 <?= sprintf($this->translate('Summary by %s on %s (%s)'), $exam->getAuthor(), $exam->getDate()->format('Y-m-d'), $exam->getLanguage()) ?>
                             <?php else: ?>
                                 <?php
@@ -62,7 +63,7 @@ $this->headTitle($this->translate('Education'));
                         'code' => $exam->getCourse()->getCode(),
                         'id' => $exam->getId()
                     ]) ?>">
-                        <?php if ($exam instanceof \Education\Model\Summary): ?>
+                        <?php if ($exam instanceof Summary): ?>
                             <?= sprintf($this->translate('Summary by %s on %s (%s)'), $exam->getAuthor(), $exam->getDate()->format('Y-m-d'), $exam->getLanguage()) ?>
                         <?php else: ?>
                             <?php

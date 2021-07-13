@@ -1,10 +1,11 @@
 <?php
 $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
-                  ->requireUrl('member/view', ['lidnr']);
+    ->requireUrl('member/view', ['lidnr']);
 ?>
-<?php if($this->acl('photo_acl')->isAllowed('tag', 'view')): ?>
+<?php if ($this->acl('photo_acl')->isAllowed('tag', 'view')): ?>
     <strong><?= $this->photo->getAlbum()->getName() ?></strong>
-    <?php $tagCount = $this->photo->getTags()->count(); $i = 1; ?>
+    <?php $tagCount = $this->photo->getTags()->count();
+    $i = 1; ?>
     <?= $tagCount ? $this->translate(', in this photo:') : '' ?>
     <div class="tagList tagList-<?= $this->photo->getId() ?>">
         <?php foreach ($this->photo->getTags() as $tag): ?>
@@ -18,25 +19,25 @@ $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
                     <span class="fas fa-times" aria-hidden="true"></span>
                 </a>
                 <?php
-                    $i++;
-                    if ($i < $tagCount)
-                        echo ',&nbsp';
-                    if ($i == $tagCount)
-                        echo 'and';
+                $i++;
+                if ($i < $tagCount)
+                    echo ',&nbsp';
+                if ($i == $tagCount)
+                    echo 'and';
                 ?>
             </span>
         <?php endforeach; ?>
     </div>
 <?php endif; ?>
-<?php if($this->acl('photo_acl')->isAllowed('tag', 'add')): ?>
-<div>
-    <form class="form-inline tagForm">
-        <div class="form-group">
-            <label for="tagSearch"><i class="fas fa-plus"></i> <?= $this->translate('Tag someone') ?>:</label>
-            <input type="text" data-url="<?= $this->url('photo/photo/tag/add',
-                ['photo_id' => $this->photo->getId(), 'lidnr' => 'lidnr']); ?>" class="tagSearch" name="tagSearch">
-        </div>
-    </form>
-    <br><br><br>
-</div>
+<?php if ($this->acl('photo_acl')->isAllowed('tag', 'add')): ?>
+    <div>
+        <form class="form-inline tagForm">
+            <div class="form-group">
+                <label for="tagSearch"><i class="fas fa-plus"></i> <?= $this->translate('Tag someone') ?>:</label>
+                <input type="text" data-url="<?= $this->url('photo/photo/tag/add',
+                    ['photo_id' => $this->photo->getId(), 'lidnr' => 'lidnr']); ?>" class="tagSearch" name="tagSearch">
+            </div>
+        </form>
+        <br><br><br>
+    </div>
 <?php endif; ?>

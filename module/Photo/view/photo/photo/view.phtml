@@ -1,5 +1,7 @@
 <?php
 // set title
+use Decision\Model\AssociationYear;
+
 $this->headTitle($this->translate('Photo'));
 $album = $photo->getAlbum();
 $currentAlbum = $album;
@@ -24,7 +26,7 @@ $this->scriptUrl()->requireUrl('member/search');
     <section class="section section-breadcrumb">
         <div class="container">
             <ol class="breadcrumb">
-            <?php if (isset($memberAlbum)): ?>
+                <?php if (isset($memberAlbum)): ?>
                 <li>
                     <a href="<?= $this->url('photo') ?>">
                         <?= $this->translate('Photos') ?>
@@ -45,7 +47,7 @@ $this->scriptUrl()->requireUrl('member/search');
                 <li class="note">
                     <?= $this->translate('From album') ?>:
                 </li>
-            <?php endif; ?>
+                <?php endif; ?>
                 <li>
                     <a href="<?= $this->url('photo') ?>">
                         <?= $this->translate('Photos') ?>
@@ -54,7 +56,7 @@ $this->scriptUrl()->requireUrl('member/search');
                 <li>
                     <?php
                     // determine association year
-                    $associationYear = \Decision\Model\AssociationYear::fromDate($photo->getAlbum()->getStartDateTime());
+                    $associationYear = AssociationYear::fromDate($photo->getAlbum()->getStartDateTime());
                     ?>
                     <a href="<?= $this->url('photo/year', ['year' => $associationYear->getYear()]); ?>">
                         <?= $associationYear->getYearString() ?>
@@ -96,24 +98,24 @@ $this->scriptUrl()->requireUrl('member/search');
             <nav>
                 <ul class="pager">
                     <?php if (isset($memberAlbum)): ?>
-                    <li class="previous">
-                        <a href="<?= $this->url('photo/member', ['lidnr' => $memberAlbum->getMember()->getLidnr(), 'page' => $memberAlbumPage]); ?>">
-                            <span aria-hidden="true">&larr;</span>
-                            <?= $this->translate('Return to album') ?>
-                        </a>
-                    </li>
-                    <li class="previous">
-                        <a href="<?= $this->url('photo/album', ['album_id' => $photo->getAlbum()->getId()]); ?>">
-                            <?= sprintf($this->translate('View album %s'), $photo->getAlbum()->getName()) ?>
-                        </a>
-                    </li>
+                        <li class="previous">
+                            <a href="<?= $this->url('photo/member', ['lidnr' => $memberAlbum->getMember()->getLidnr(), 'page' => $memberAlbumPage]); ?>">
+                                <span aria-hidden="true">&larr;</span>
+                                <?= $this->translate('Return to album') ?>
+                            </a>
+                        </li>
+                        <li class="previous">
+                            <a href="<?= $this->url('photo/album', ['album_id' => $photo->getAlbum()->getId()]); ?>">
+                                <?= sprintf($this->translate('View album %s'), $photo->getAlbum()->getName()) ?>
+                            </a>
+                        </li>
                     <?php else: ?>
-                    <li class="previous">
-                        <a href="<?= $this->url('photo/album', ['album_id' => $photo->getAlbum()->getId()]); ?>">
-                            <span aria-hidden="true">&larr;</span>
-                            <?= $this->translate('Return to album') ?>
-                        </a>
-                    </li>
+                        <li class="previous">
+                            <a href="<?= $this->url('photo/album', ['album_id' => $photo->getAlbum()->getId()]); ?>">
+                                <span aria-hidden="true">&larr;</span>
+                                <?= $this->translate('Return to album') ?>
+                            </a>
+                        </li>
                     <?php endif; ?>
                 </ul>
             </nav>
@@ -169,7 +171,7 @@ $this->scriptUrl()->requireUrl('member/search');
                                 ></span>
                                 <span class="sr-only"><?= $this->translate('Previous') ?></span>
                             </a>
-                            <?php
+                        <?php
                         endif;
                         if (!is_null($next)): ?>
                             <a
@@ -188,14 +190,16 @@ $this->scriptUrl()->requireUrl('member/search');
                         <?php endif; ?>
                     </div>
                     <hr>
-                    <?php if ($isTagged && (!$isProfilePhoto ||  !$isExplicitProfilePhoto)): ?>
-                        <a type="button" class="btn btn-primary" href=<?= $this->url('photo/set_profile_photo', ['photo_id' => $photo->getId()]); ?>>
+                    <?php if ($isTagged && (!$isProfilePhoto || !$isExplicitProfilePhoto)): ?>
+                        <a type="button" class="btn btn-primary"
+                           href=<?= $this->url('photo/set_profile_photo', ['photo_id' => $photo->getId()]); ?>>
                             <?= $this->translate('Set this picture as your profile picture') ?>
                         </a>
                         <p><?= $this->translate('Your preference will be stored for one year.') ?></p>
                     <?php endif; ?>
                     <?php if ($isProfilePhoto && $isExplicitProfilePhoto): ?>
-                        <a type="button" class="btn btn-danger" href=<?= $this->url('photo/remove_profile_photo', ['photo_id' => $photo->getId()]); ?>>
+                        <a type="button" class="btn btn-danger"
+                           href=<?= $this->url('photo/remove_profile_photo', ['photo_id' => $photo->getId()]); ?>>
                             <?= $this->translate('Remove this picture as your profile picture') ?>
                         </a>
                         <p><?= $this->translate('Your profile picture will be chosen automatically instead.') ?></p>
@@ -205,7 +209,7 @@ $this->scriptUrl()->requireUrl('member/search');
                     <?= $this->partial('partial/metadata.phtml', ['photo' => $photo]) ?>
                     <?php if ($this->acl('photo_acl')->isAllowed('photo', 'download')): ?>
                         <a
-                                class="btn btn-default" href="<?= $this->url('photo/photo_download',
+                            class="btn btn-default" href="<?= $this->url('photo/photo_download',
                             ['photo_id' => $photo->getId()]); ?>"
                         >
                             <span class="fas fa-download" aria-hidden="true"></span>

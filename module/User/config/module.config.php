@@ -178,10 +178,10 @@ return [
     ],
     'view_manager' => [
         'template_path_stack' => [
-            'user' => __DIR__.'/../view/',
+            'user' => __DIR__ . '/../view/',
         ],
         'template_map' => [
-            'user/login' => __DIR__.'/../view/partial/login.phtml',
+            'user/login' => __DIR__ . '/../view/partial/login.phtml',
         ],
     ],
     'doctrine' => [
@@ -189,7 +189,7 @@ return [
             'user_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__.'/../src/User/Model/'],
+                'paths' => [__DIR__ . '/../src/Model/'],
             ],
             'orm_default' => [
                 'drivers' => [

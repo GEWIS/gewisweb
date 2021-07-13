@@ -11,7 +11,8 @@ $this->headTitle($this->translate('Committees')); ?>
             </div>
             <?php if ($this->acl('decision_acl')->isAllowed('organ', 'view')): ?>
                 <div class="col-md-3">
-                    <a href="<?= $this->url('home/page', ['category' => 'committee', 'sub_category' => 'info']) ?>" class="btn btn-primary pull-right">
+                    <a href="<?= $this->url('home/page', ['category' => 'committee', 'sub_category' => 'info']) ?>"
+                       class="btn btn-primary pull-right">
                         <?= $this->translate('Information for committees') ?>
                     </a>
                 </div>

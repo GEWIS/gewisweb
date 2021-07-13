@@ -23,8 +23,6 @@ return [
             // Configuration for service `doctrine.connection.orm_default` service
             'orm_default' => [
                 'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
-                'configuration' => 'orm_default',
-                'eventmanager'  => 'orm_default',
                 'params' => [
                     'host'     => getenv('DOCKER_DB_HOST'),
                     'port'     => getenv('DOCKER_DB_PORT'),
