@@ -77,10 +77,12 @@
     },
     "require-dev": {
         "ext-xdebug": "^3.0.0",
+        "laminas/laminas-component-installer": "^2.0.0",
         "laminas/laminas-developer-tools": "^2.0.0",
         "jszanto/gewisweb-test-data": "@dev",
-        "squizlabs/php_codesniffer": "*",
-        "phpstan/phpstan": "*"
+        "squizlabs/php_codesniffer": "^3.6.0",
+        "friendsofphp/php-cs-fixer": "^3.0.0",
+        "phpstan/phpstan": "^0.12.92"
     },
     "config": {
         "preferred-install": {

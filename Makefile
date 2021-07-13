@@ -67,6 +67,12 @@ phpcbf: rundev
 		@docker cp gewisweb_web_1:/code/config ./config
 		@docker-compose down
 
+phpcsfix: rundev
+		@docker-compose exec web /code/vendor/bin/phpcs-fixer fix -rules=@PSR1,-@PSR12 /code/module /code/config
+		@docker cp gewisweb_web_1:/code/module ./module
+		@docker cp gewisweb_web_1:/code/config ./config
+		@docker-compose down
+
 updatecomposer:
 		@docker-compose exec web php composer.phar selfupdate
 		@docker cp gewisweb_web_1:/code/composer.phar ./composer.phar
