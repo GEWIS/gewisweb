@@ -64,6 +64,7 @@ phpcs: rundev
 phpcbf: rundev
 		@docker-compose exec web /code/vendor/bin/phpcbf -p --standard=PSR1,PSR12 --extensions=php,dist /code/module /code/config
 		@docker cp gewisweb_web_1:/code/module ./module
+		@docker cp gewisweb_web_1:/code/config ./config
 		@docker-compose down
 
 updatecomposer:
