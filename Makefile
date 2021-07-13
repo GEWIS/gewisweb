@@ -1,4 +1,4 @@
-.PHONY: help runprod rundev updatecomposer updatepackage build buildprod builddev login push pushprod pushdev update all prod dev
+.PHONY: help runprod rundev update updatecomposer updatepackage updateglide getvendordir phpstan phpcs phpcbf phpcsfix phpcsfixtypes build buildprod builddev login push pushprod pushdev update all prod dev
 
 help:
 		@echo "Makefile commands:"
@@ -56,7 +56,7 @@ update: rundev updatecomposer updatepackage updatecss updateglide
 		@docker-compose down
 
 phpstan:
-		@vendor/bin/phpstan analyse -l 1 module/Activity/src module/Application/src module/Company/src module/Decision/src module/Education/src module/Frontpage/src module/Photo/src module/User/src
+		@vendor/bin/phpstan analyse -c phpstan.neon
 
 phpcs:
 		@vendor/bin/phpcs -p --standard=PSR1,PSR12 --extensions=php,dist module config

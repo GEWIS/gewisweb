@@ -1,0 +1,14 @@
+parameters:
+    level: 0
+    bootstrapFiles:
+        - bootstrap.php
+    paths:
+        - module/Activity/src
+        - module/Application/src
+        - module/Company/src
+        - module/Decision/src
+        - module/Education/src
+        - module/Frontpage/src
+        - module/Photo/src
+        - module/User/src
+    tmpDir: phpstan
