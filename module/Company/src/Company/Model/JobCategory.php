@@ -21,35 +21,35 @@ class JobCategory
     protected $id;
 
     /**
-     * The name of the category
+     * The name of the category.
      *
      * @ORM\Column(type="string")
      */
     protected $name;
 
     /**
-     * The name of the category
+     * The name of the category.
      *
      * @ORM\Column(type="string")
      */
     protected $pluralName;
 
     /**
-     * The slug of the category
+     * The slug of the category.
      *
      * @ORM\Column(type="string")
      */
     protected $slug;
 
     /**
-     * The language of the category
+     * The language of the category.
      *
      * @ORM\Column(type="string")
      */
     protected $language;
 
     /**
-     * If the category is hidden
+     * If the category is hidden.
      *
      * @ORM\Column(type="boolean")
      */
@@ -63,7 +63,7 @@ class JobCategory
     protected $languageNeutralId;
 
     /**
-     * Get's the id
+     * Get's the id.
      */
     public function getHidden()
     {
@@ -71,7 +71,7 @@ class JobCategory
     }
 
     /**
-     * Set's the id
+     * Set's the id.
      */
     public function setHidden($hidden)
     {
@@ -86,7 +86,7 @@ class JobCategory
     }
 
     /**
-     * Get's the id
+     * Get's the id.
      */
     public function getLanguageNeutralId()
     {
@@ -94,7 +94,7 @@ class JobCategory
     }
 
     /**
-     * Set's the id
+     * Set's the id.
      */
     public function setLanguageNeutralId($languageNeutralId)
     {
@@ -102,7 +102,7 @@ class JobCategory
     }
 
     /**
-     * Get's the id
+     * Get's the id.
      */
     public function getId()
     {
@@ -110,7 +110,7 @@ class JobCategory
     }
 
     /**
-     * Set's the id
+     * Set's the id.
      */
     public function setId($id)
     {
@@ -118,7 +118,7 @@ class JobCategory
     }
 
     /**
-     * Get's the name
+     * Get's the name.
      */
     public function getName()
     {
@@ -126,7 +126,7 @@ class JobCategory
     }
 
     /**
-     * Get's the plural name
+     * Get's the plural name.
      */
     public function getPluralName()
     {
@@ -134,7 +134,7 @@ class JobCategory
     }
 
     /**
-     * Set's the name
+     * Set's the name.
      */
     public function setPluralName($name)
     {
@@ -142,7 +142,7 @@ class JobCategory
     }
 
     /**
-     * Set's the name
+     * Set's the name.
      */
     public function setName($name)
     {
@@ -150,7 +150,7 @@ class JobCategory
     }
 
     /**
-     * Get's the slug
+     * Get's the slug.
      */
     public function getSlug()
     {
@@ -158,7 +158,7 @@ class JobCategory
     }
 
     /**
-     * Set's the slug
+     * Set's the slug.
      */
     public function setSlug($slug)
     {
@@ -166,7 +166,7 @@ class JobCategory
     }
 
     /**
-     * Get's the language
+     * Get's the language.
      */
     public function getLanguage()
     {
@@ -174,7 +174,7 @@ class JobCategory
     }
 
     /**
-     * Set's the language
+     * Set's the language.
      */
     public function setLanguage($language)
     {

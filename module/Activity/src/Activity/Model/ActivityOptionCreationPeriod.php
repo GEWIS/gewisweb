@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Activity Options Creation Period
- * Contains a period during which options may be created
+ * Contains a period during which options may be created.
  *
  * @ORM\Entity
  */

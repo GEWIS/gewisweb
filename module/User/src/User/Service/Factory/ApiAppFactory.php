@@ -2,14 +2,13 @@
 
 namespace User\Service\Factory;
 
-use User\Service\ApiApp;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use User\Service\ApiApp;
 
 class ApiAppFactory implements FactoryInterface
 {
     /**
-     * @param ServiceLocatorInterface $serviceLocator
      * @return ApiApp
      */
     public function createService(ServiceLocatorInterface $serviceLocator)

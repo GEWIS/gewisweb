@@ -22,7 +22,6 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
     /**
      * ActivityCalendarOption constructor.
      *
-     * @param Translator $translator
      * @param ActivityCalendar $calendarService
      */
     public function __construct(Translator $translator, $calendarService)
@@ -45,7 +44,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
             'name' => 'beginTime',
             'type' => 'datetime',
             'options' => [
-                'format' => 'Y/m/d'
+                'format' => 'Y/m/d',
             ],
             ]
         );
@@ -55,7 +54,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
             'name' => 'endTime',
             'type' => 'datetime',
             'options' => [
-                'format' => 'Y/m/d'
+                'format' => 'Y/m/d',
             ],
             ]
         );
@@ -70,8 +69,8 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                     'selected' => 'selected',
                     'disabled' => 'disabled',
                 ],
-                'value_options' => $typeOptions
-            ]
+                'value_options' => $typeOptions,
+            ],
             ]
         );
     }
@@ -86,55 +85,53 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                         'name' => Callback::class,
                         'options' => [
                             'messages' => [
-                                Callback::INVALID_VALUE =>
-                                    $this->translator->translate('The activity must start before it ends'),
+                                Callback::INVALID_VALUE => $this->translator->translate('The activity must start before it ends'),
                             ],
                             'callback' => function ($value, $context = []) {
                                 return $this->beforeEndTime($value, $context);
-                            }
+                            },
                         ],
                     ],
                     [
                         'name' => Callback::class,
                         'options' => [
                             'messages' => [
-                                Callback::INVALID_VALUE =>
-                                    $this->translator->translate('The activity must start after today'),
+                                Callback::INVALID_VALUE => $this->translator->translate('The activity must start after today'),
                             ],
                             'callback' => function ($value, $context = []) {
                                 return $this->isFutureTime($value, $context);
-                            }
+                            },
                         ],
                     ],
                     [
                         'name' => Callback::class,
                         'options' => [
                             'messages' => [
-                                Callback::INVALID_VALUE =>
-                                    $this->translator->translate('The activity must be within the given period'),
+                                Callback::INVALID_VALUE => $this->translator->translate('The activity must be within the given period'),
                             ],
                             'callback' => function ($value, $context = []) {
                                 return $this->cannotPlanInPeriod($value, $context);
-                            }
+                            },
                         ],
                     ],
-                ]
+                ],
             ],
             'endTime' => [
                 'required' => true,
             ],
 
             'type' => [
-                'required' => true
+                'required' => true,
             ],
         ];
     }
 
     /**
-     * Check if a certain date is before the end date of the option
+     * Check if a certain date is before the end date of the option.
      *
      * @param $value
      * @param array $context
+     *
      * @return bool
      */
     public function beforeEndTime($value, $context = [])
@@ -149,10 +146,11 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
     }
 
     /**
-     * Check if a certain date is in the future
+     * Check if a certain date is in the future.
      *
      * @param $value
      * @param array $context
+     *
      * @return bool
      */
     public function isFutureTime($value, $context = [])
@@ -167,10 +165,11 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
     }
 
     /**
-     * Check if a certain date is within the current planning period
+     * Check if a certain date is within the current planning period.
      *
      * @param $value
      * @param array $context
+     *
      * @return bool
      */
     public function cannotPlanInPeriod($value, $context = [])
@@ -178,6 +177,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
         try {
             $beginTime = $this->calendarService->toDateTime($value);
             $result = $this->calendarService->canCreateOption($beginTime);
+
             return !$result;
         } catch (Exception $e) {
             return false;

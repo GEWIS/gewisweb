@@ -9,10 +9,8 @@ use Photo\Model\Photo;
  * Doctrine event listener class for Album and Photo entities.
  * Do not instantiate this class manually.
  */
-
 class AlbumDate
 {
-
     public function prePersist($eventArgs)
     {
         $entity = $eventArgs->getEntity();

@@ -6,17 +6,17 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * A failed login attempt
+ * A failed login attempt.
  *
  * @ORM\Entity
  */
 class LoginAttempt
 {
-    const TYPE_PIN = 'pin';
-    const TYPE_NORMAL = 'normal';
+    public const TYPE_PIN = 'pin';
+    public const TYPE_NORMAL = 'normal';
 
     /**
-     * Id
+     * Id.
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -33,14 +33,14 @@ class LoginAttempt
     protected $user;
 
     /**
-     * The ip from which the login was attempted
+     * The ip from which the login was attempted.
      *
      * @ORM\Column(type="string")
      */
     protected $ip;
 
     /**
-     * Type of login {pin,normal}
+     * Type of login {pin,normal}.
      *
      * @ORM\Column(type="string")
      */

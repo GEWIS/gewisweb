@@ -3,8 +3,8 @@
 namespace Frontpage\Form;
 
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator\StringLength;
 
 class Page extends Form implements InputFilterProviderInterface
@@ -39,8 +39,8 @@ class Page extends Form implements InputFilterProviderInterface
             'name' => 'dutchTitle',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Dutch title')
-            ]
+                'label' => $translator->translate('Dutch title'),
+            ],
             ]
         );
 
@@ -49,8 +49,8 @@ class Page extends Form implements InputFilterProviderInterface
             'name' => 'englishTitle',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('English title')
-            ]
+                'label' => $translator->translate('English title'),
+            ],
             ]
         );
 
@@ -59,8 +59,8 @@ class Page extends Form implements InputFilterProviderInterface
             'name' => 'dutchContent',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Dutch content')
-            ]
+                'label' => $translator->translate('Dutch content'),
+            ],
             ]
         );
 
@@ -69,8 +69,8 @@ class Page extends Form implements InputFilterProviderInterface
             'name' => 'englishContent',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('English content')
-            ]
+                'label' => $translator->translate('English content'),
+            ],
             ]
         );
 
@@ -80,8 +80,8 @@ class Page extends Form implements InputFilterProviderInterface
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Required role'),
-                'value' => 'guest'
-            ]
+                'value' => 'guest',
+            ],
             ]
         );
 
@@ -90,8 +90,8 @@ class Page extends Form implements InputFilterProviderInterface
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
-                'value' => $translator->translate('Save')
-            ]
+                'value' => $translator->translate('Save'),
+            ],
             ]
         );
     }
@@ -112,13 +112,13 @@ class Page extends Form implements InputFilterProviderInterface
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 3,
-                            'max' => 25
-                        ]
+                            'max' => 25,
+                        ],
                     ],
                 ],
                 'filters' => [
-                    ['name' => 'string_to_lower']
-                ]
+                    ['name' => 'string_to_lower'],
+                ],
             ],
 
             'subCategory' => [
@@ -128,14 +128,14 @@ class Page extends Form implements InputFilterProviderInterface
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 2,
-                            'max' => 25
-                        ]
+                            'max' => 25,
+                        ],
                     ],
                 ],
                 'filters' => [
                     ['name' => 'string_to_lower'],
-                    ['name' => 'to_null']
-                ]
+                    ['name' => 'to_null'],
+                ],
             ],
 
             'name' => [
@@ -145,14 +145,14 @@ class Page extends Form implements InputFilterProviderInterface
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 2,
-                            'max' => 25
-                        ]
+                            'max' => 25,
+                        ],
                     ],
                 ],
                 'filters' => [
                     ['name' => 'string_to_lower'],
-                    ['name' => 'to_null']
-                ]
+                    ['name' => 'to_null'],
+                ],
             ],
 
             'dutchTitle' => [
@@ -162,8 +162,8 @@ class Page extends Form implements InputFilterProviderInterface
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 3,
-                            'max' => 64
-                        ]
+                            'max' => 64,
+                        ],
                     ],
                 ],
             ],
@@ -175,8 +175,8 @@ class Page extends Form implements InputFilterProviderInterface
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 3,
-                            'max' => 64
-                        ]
+                            'max' => 64,
+                        ],
                     ],
                 ],
             ],

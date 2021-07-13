@@ -3,14 +3,13 @@
 namespace Frontpage\Controller;
 
 use Activity\Service\ActivityQuery;
+use Decision\Model\Organ;
 use Doctrine\ORM\NoResultException;
 use Laminas\Mvc\Controller\AbstractActionController;
-use Decision\Model\Organ;
 use Laminas\View\Model\ViewModel;
 
 class OrganController extends AbstractActionController
 {
-
     /**
      * @var \Decision\Service\Organ
      */
@@ -20,7 +19,6 @@ class OrganController extends AbstractActionController
      * @var ActivityQuery
      */
     private $activityQueryService;
-
 
     public function __construct(\Decision\Service\Organ $organService, ActivityQuery $activityQueryService)
     {
@@ -34,7 +32,7 @@ class OrganController extends AbstractActionController
 
         return new ViewModel(
             [
-            'committees' => $committees
+            'committees' => $committees,
             ]
         );
     }
@@ -47,7 +45,7 @@ class OrganController extends AbstractActionController
         return new ViewModel(
             [
             'activeFraternities' => $activeFraternities,
-            'abrogatedFraternities' => $abrogatedFraternities
+            'abrogatedFraternities' => $abrogatedFraternities,
             ]
         );
     }
@@ -67,7 +65,7 @@ class OrganController extends AbstractActionController
                 array_merge(
                     [
                     'organ' => $organ,
-                    'activities' => $activities
+                    'activities' => $activities,
                     ],
                     $organMemberInformation
                 )

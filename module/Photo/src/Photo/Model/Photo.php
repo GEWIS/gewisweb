@@ -12,11 +12,9 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
  *
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
- *
  */
 class Photo implements ResourceInterface
 {
-
     /**
      * Photo ID.
      *
@@ -34,21 +32,21 @@ class Photo implements ResourceInterface
     protected $dateTime;
 
     /**
-     * Artist/author
+     * Artist/author.
      *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $artist;
 
     /**
-     * The type of camera used
+     * The type of camera used.
      *
      * @ORM\Column(type="string", nullable=true))
      */
     protected $camera;
 
     /**
-     * Whether a flash has been used
+     * Whether a flash has been used.
      *
      * @ORM\Column(type="boolean", nullable=true))
      */
@@ -83,7 +81,7 @@ class Photo implements ResourceInterface
     protected $aperture;
 
     /**
-     * Indicates the ISO Speed and ISO Latitude of the camera
+     * Indicates the ISO Speed and ISO Latitude of the camera.
      *
      * @ORM\Column(type="smallint", nullable=true))
      */
@@ -98,7 +96,7 @@ class Photo implements ResourceInterface
     protected $album;
 
     /**
-     * The path where the photo is located relative to the storage directory
+     * The path where the photo is located relative to the storage directory.
      *
      * @ORM\Column(type="string")
      */
@@ -106,7 +104,7 @@ class Photo implements ResourceInterface
 
     /**
      * The path where the small thumbnail of the photo is located relative to
-     * the storage directory
+     * the storage directory.
      *
      * @ORM\Column(type="string")
      */
@@ -114,7 +112,7 @@ class Photo implements ResourceInterface
 
     /**
      * The path where the large thumbnail of the photo is located relative to
-     * the storage directory
+     * the storage directory.
      *
      * @ORM\Column(type="string")
      */
@@ -136,6 +134,7 @@ class Photo implements ResourceInterface
 
     /**
      * All the hits of this photo.
+     *
      * @ORM\OneToMany(targetEntity="Hit", mappedBy="photo", cascade={"persist", "remove"})
      */
     protected $hits;
@@ -148,13 +147,14 @@ class Photo implements ResourceInterface
     protected $tags;
 
     /**
-     * The corresponding WeeklyPhoto entity if this photo has been a weekly photo
+     * The corresponding WeeklyPhoto entity if this photo has been a weekly photo.
+     *
      * @ORM\OneToOne(targetEntity="WeeklyPhoto", mappedBy="photo", cascade={"persist", "remove"})
      */
     protected $weeklyPhoto;
 
     /**
-     * The aspect ratio of the photo width/height
+     * The aspect ratio of the photo width/height.
      *
      * @ORM\Column(type="float", nullable=true)
      */
@@ -203,7 +203,7 @@ class Photo implements ResourceInterface
     /**
      * Get the flash.
      *
-     * @return boolean
+     * @return bool
      */
     public function getFlash()
     {
@@ -253,7 +253,7 @@ class Photo implements ResourceInterface
     /**
      * Get the ISO.
      *
-     * @return integer
+     * @return int
      */
     public function getIso()
     {
@@ -357,17 +357,16 @@ class Photo implements ResourceInterface
      */
     public function getAspectRatio()
     {
-        if ($this->aspectRatio === null) {
-            list($width, $height, $type, $attr) = getimagesize('public/data/' . $this->getSmallThumbPath());
+        if (null === $this->aspectRatio) {
+            list($width, $height, $type, $attr) = getimagesize('public/data/'.$this->getSmallThumbPath());
             $this->aspectRatio = $height / $width;
         }
+
         return $this->aspectRatio;
     }
 
     /**
      * Set the dateTime.
-     *
-     * @param DateTime $dateTime
      */
     public function setDateTime(DateTime $dateTime)
     {
@@ -397,7 +396,7 @@ class Photo implements ResourceInterface
     /**
      * Set the flash.
      *
-     * @param boolean $flash
+     * @param bool $flash
      */
     public function setFlash($flash)
     {
@@ -447,7 +446,7 @@ class Photo implements ResourceInterface
     /**
      * Set the ISO.
      *
-     * @param integer $iso
+     * @param int $iso
      */
     public function setIso($iso)
     {
@@ -455,7 +454,7 @@ class Photo implements ResourceInterface
     }
 
     /**
-     * Set the album
+     * Set the album.
      *
      * @param Album $album
      */
@@ -465,7 +464,7 @@ class Photo implements ResourceInterface
     }
 
     /**
-     * Set the path where the photo is stored
+     * Set the path where the photo is stored.
      *
      * @param string $path
      */
@@ -475,7 +474,7 @@ class Photo implements ResourceInterface
     }
 
     /**
-     * Set the path where the large thumbnail is stored
+     * Set the path where the large thumbnail is stored.
      *
      * @param string $path
      */
@@ -485,7 +484,7 @@ class Photo implements ResourceInterface
     }
 
     /**
-     * Set the path where the small thumbnail is stored
+     * Set the path where the small thumbnail is stored.
      *
      * @param string $path
      */
@@ -515,7 +514,7 @@ class Photo implements ResourceInterface
     }
 
     /**
-     * Sets the aspect ratio
+     * Sets the aspect ratio.
      *
      * @param float $ratio
      */
@@ -525,7 +524,7 @@ class Photo implements ResourceInterface
     }
 
     /**
-     * Add a hit to a photo
+     * Add a hit to a photo.
      *
      * @param Hit $hit
      */
@@ -547,7 +546,7 @@ class Photo implements ResourceInterface
     }
 
     /**
-     * Returns an associative array representation of this object
+     * Returns an associative array representation of this object.
      *
      * @return array
      */

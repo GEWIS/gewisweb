@@ -14,7 +14,6 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
  */
 class Tag implements ResourceInterface
 {
-
     /**
      * Tag ID.
      *
@@ -37,7 +36,7 @@ class Tag implements ResourceInterface
     protected $member;
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -61,7 +60,7 @@ class Tag implements ResourceInterface
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      */
     public function setId($id)
     {
@@ -94,7 +93,7 @@ class Tag implements ResourceInterface
         return [
             'id' => $this->getId(),
             'photo_id' => $this->getPhoto()->getId(),
-            'member_id' => $this->getMember()->getLidnr()
+            'member_id' => $this->getMember()->getLidnr(),
         ];
     }
 

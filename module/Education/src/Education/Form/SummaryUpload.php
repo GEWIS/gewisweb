@@ -2,17 +2,17 @@
 
 namespace Education\Form;
 
-use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilterProviderInterface;
-use Laminas\I18n\Translator\TranslatorInterface as Translator;
 use Education\Model\Exam as ExamModel;
+use Laminas\Form\Form;
+use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\MimeType;
 use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
 
 /**
- * Upload a summary
+ * Upload a summary.
  */
 class SummaryUpload extends Form implements InputFilterProviderInterface
 {
@@ -25,8 +25,8 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
             'name' => 'course',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Course code')
-            ]
+                'label' => $translator->translate('Course code'),
+            ],
             ]
         );
 
@@ -35,8 +35,8 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
             'name' => 'date',
             'type' => 'date',
             'options' => [
-                'label' => $translator->translate('Summary date')
-            ]
+                'label' => $translator->translate('Summary date'),
+            ],
             ]
         );
 
@@ -45,8 +45,8 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
             'name' => 'author',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Author')
-            ]
+                'label' => $translator->translate('Author'),
+            ],
             ]
         );
 
@@ -69,8 +69,8 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
             'name' => 'upload',
             'type' => 'file',
             'option' => [
-                'label' => $translator->translate('Summary to upload')
-            ]
+                'label' => $translator->translate('Summary to upload'),
+            ],
             ]
         );
         $this->get('upload')->setLabel($translator->translate('Summary to upload'));
@@ -80,8 +80,8 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
-                'value' => $translator->translate('Submit')
-            ]
+                'value' => $translator->translate('Submit'),
+            ],
             ]
         );
     }
@@ -96,18 +96,18 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 5,
-                            'max' => 6
-                        ]
+                            'max' => 6,
+                        ],
                     ],
-                    ['name' => 'alnum']
+                    ['name' => 'alnum'],
                 ],
                 'filters' => [
-                    ['name' => 'string_to_upper']
-                ]
+                    ['name' => 'string_to_upper'],
+                ],
             ],
 
             'date' => [
-                'required' => true
+                'required' => true,
             ],
 
             'upload' => [
@@ -116,16 +116,16 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
                     [
                         'name' => Extension::class,
                         'options' => [
-                            'extension' => 'pdf'
-                        ]
+                            'extension' => 'pdf',
+                        ],
                     ],
                     [
                         'name' => MimeType::class,
                         'options' => [
-                            'mimeType' => 'application/pdf'
-                        ]
-                    ]
-                ]
+                            'mimeType' => 'application/pdf',
+                        ],
+                    ],
+                ],
             ],
 
             'author' => [
@@ -135,17 +135,17 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 3,
-                            'max' => 64
-                        ]
+                            'max' => 64,
+                        ],
                     ],
                     [
                         'name' => Regex::class,
                         'options' => [
-                            'pattern' => '/[a-zA-Z ]+/'
-                        ]
-                    ]
-                ]
-            ]
+                            'pattern' => '/[a-zA-Z ]+/',
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 }

@@ -3,9 +3,9 @@
 namespace Decision\Model;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Decision\Model\SubDecision\Foundation;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Organ entity.
@@ -16,12 +16,12 @@ use Decision\Model\SubDecision\Foundation;
  */
 class Organ
 {
-    const ORGAN_TYPE_COMMITTEE = 'committee';
-    const ORGAN_TYPE_AVC = 'avc';
-    const ORGAN_TYPE_FRATERNITY = 'fraternity';
-    const ORGAN_TYPE_AVW = 'avw';
-    const ORGAN_TYPE_KKK = 'kkk';
-    const ORGAN_TYPE_RVA = 'rva';
+    public const ORGAN_TYPE_COMMITTEE = 'committee';
+    public const ORGAN_TYPE_AVC = 'avc';
+    public const ORGAN_TYPE_FRATERNITY = 'fraternity';
+    public const ORGAN_TYPE_AVW = 'avw';
+    public const ORGAN_TYPE_KKK = 'kkk';
+    public const ORGAN_TYPE_RVA = 'rva';
 
     /**
      * Id.
@@ -33,14 +33,14 @@ class Organ
     protected $id;
 
     /**
-     * Abbreviation (only for when organs are created)
+     * Abbreviation (only for when organs are created).
      *
      * @ORM\Column(type="string")
      */
     protected $abbr;
 
     /**
-     * Name (only for when organs are created)
+     * Name (only for when organs are created).
      *
      * @ORM\Column(type="string")
      */
@@ -232,8 +232,6 @@ class Organ
 
     /**
      * Set the foundation date.
-     *
-     * @param DateTime $foundationDate
      */
     public function setFoundationDate(DateTime $foundationDate)
     {
@@ -252,8 +250,6 @@ class Organ
 
     /**
      * Set the abrogation date.
-     *
-     * @param DateTime $abrogationDate
      */
     public function setAbrogationDate(DateTime $abrogationDate)
     {
@@ -284,8 +280,6 @@ class Organ
 
     /**
      * Add a subdecision.
-     *
-     * @param SubDecision $subdecision
      */
     public function addSubdecision(SubDecision $subdecision)
     {
@@ -295,7 +289,7 @@ class Organ
     }
 
     /**
-     * Get all subdecisions.of this organ
+     * Get all subdecisions.of this organ.
      *
      * @return array
      */
@@ -305,7 +299,7 @@ class Organ
     }
 
     /**
-     * Returns all organ information
+     * Returns all organ information.
      *
      * @return OrganInformation
      */
@@ -315,7 +309,7 @@ class Organ
     }
 
     /**
-     * Returns the approved information for an organ
+     * Returns the approved information for an organ.
      *
      * @return OrganInformation
      */

@@ -3,14 +3,13 @@
 namespace Activity\Controller;
 
 use Activity\Service\ActivityCategory;
-use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\View\Model\ViewModel;
 
 class AdminCategoryController extends AbstractActionController
 {
-
     /**
      * @var ActivityCategory
      */
@@ -80,6 +79,7 @@ class AdminCategoryController extends AbstractActionController
             }
 
             $this->categoryService->deleteCategory($category);
+
             return $this->redirect()->toRoute('activity_admin_categories');
         }
 

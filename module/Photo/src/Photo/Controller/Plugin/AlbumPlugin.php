@@ -3,17 +3,16 @@
 namespace Photo\Controller\Plugin;
 
 use Exception;
-use Photo\Service\Album;
-use Photo\Service\Photo;
 use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
 use Laminas\Paginator;
+use Photo\Service\Album;
+use Photo\Service\Photo;
 
 /**
  * This plugin helps with rendering the pages doing album related stuff.
  */
 class AlbumPlugin extends AbstractPlugin
 {
-
     /**
      * @var Photo
      */
@@ -37,11 +36,12 @@ class AlbumPlugin extends AbstractPlugin
     }
 
     /**
-     * Gets an album page, but returns all objects as assoc arrays
+     * Gets an album page, but returns all objects as assoc arrays.
      *
      * @param int $albumId the id of the album
      *
      * @return array|null Array with data or null if the page does not exist
+     *
      * @throws Exception
      */
     public function getAlbumAsArray($albumId)
@@ -64,17 +64,18 @@ class AlbumPlugin extends AbstractPlugin
             'album' => $albumArray,
             'basedir' => $this->photoService->getBaseDirectory(),
             'photos' => $photos,
-            'albums' => $albums
+            'albums' => $albums,
         ];
     }
 
     /**
-     * Gets an album page, but returns all objects as assoc arrays
+     * Gets an album page, but returns all objects as assoc arrays.
      *
-     * @param int $albumId the id of the album
+     * @param int $albumId    the id of the album
      * @param int $activePage the page of the album
      *
      * @return array|null Array with data or null if the page does not exist
+     *
      * @throws Exception
      */
     public function getAlbumPageAsArray($albumId, $activePage)
@@ -88,7 +89,7 @@ class AlbumPlugin extends AbstractPlugin
         $albums = [];
 
         foreach ($paginator as $item) {
-            if ($item->getResourceId() === 'album') {
+            if ('album' === $item->getResourceId()) {
                 $albums[] = $item->toArray();
             } else {
                 $photos[] = $item->toArray();
@@ -100,18 +101,19 @@ class AlbumPlugin extends AbstractPlugin
             'basedir' => $page['basedir'],
             'pages' => $paginator->getPages(),
             'photos' => $photos,
-            'albums' => $albums
+            'albums' => $albums,
         ];
     }
 
     /**
-     * Retrieves all data needed to display a page of an album
+     * Retrieves all data needed to display a page of an album.
      *
-     * @param int $albumId the id of the album
-     * @param int $activePage the page of the album
-     * @param string $type "album"|"member"|"year"
+     * @param int    $albumId    the id of the album
+     * @param int    $activePage the page of the album
+     * @param string $type       "album"|"member"|"year"
      *
      * @return array|null Array with data or null if the page does not exist
+     *
      * @throws Exception
      */
     public function getAlbumPage($albumId, $activePage, $type = 'album')

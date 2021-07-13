@@ -2,8 +2,8 @@
 
 namespace Company\Model;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Job Label model.
@@ -22,21 +22,21 @@ class JobLabel
     protected $id;
 
     /**
-     * The name of the label
+     * The name of the label.
      *
      * @ORM\Column(type="string")
      */
     protected $name;
 
     /**
-     * The slug of the label
+     * The slug of the label.
      *
      * @ORM\Column(type="string")
      */
     protected $slug;
 
     /**
-     * The language of the label
+     * The language of the label.
      *
      * @ORM\Column(type="string")
      */
@@ -65,7 +65,7 @@ class JobLabel
     }
 
     /**
-     * Get's the id
+     * Get's the id.
      */
     public function getLanguageNeutralId()
     {
@@ -73,7 +73,7 @@ class JobLabel
     }
 
     /**
-     * Set's the id
+     * Set's the id.
      */
     public function setLanguageNeutralId($languageNeutralId)
     {
@@ -81,7 +81,7 @@ class JobLabel
     }
 
     /**
-     * Get's the id
+     * Get's the id.
      */
     public function getId()
     {
@@ -89,7 +89,7 @@ class JobLabel
     }
 
     /**
-     * Set's the id
+     * Set's the id.
      */
     public function setId($id)
     {
@@ -97,7 +97,7 @@ class JobLabel
     }
 
     /**
-     * Get's the name
+     * Get's the name.
      */
     public function getName()
     {
@@ -105,7 +105,7 @@ class JobLabel
     }
 
     /**
-     * Set's the name
+     * Set's the name.
      */
     public function setName($name)
     {
@@ -113,7 +113,7 @@ class JobLabel
     }
 
     /**
-     * Get's the slug
+     * Get's the slug.
      */
     public function getSlug()
     {
@@ -121,7 +121,7 @@ class JobLabel
     }
 
     /**
-     * Set's the slug
+     * Set's the slug.
      */
     public function setSlug($slug)
     {
@@ -129,7 +129,7 @@ class JobLabel
     }
 
     /**
-     * Get's the language
+     * Get's the language.
      */
     public function getLanguage()
     {
@@ -137,7 +137,7 @@ class JobLabel
     }
 
     /**
-     * Set's the language
+     * Set's the language.
      */
     public function setLanguage($language)
     {

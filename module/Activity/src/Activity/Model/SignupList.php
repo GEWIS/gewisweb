@@ -178,7 +178,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Returns true if this SignupList is only available to members of GEWIS.
      *
-     * @return boolean
+     * @return bool
      */
     public function getOnlyGEWIS()
     {
@@ -188,7 +188,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Sets whether or not this SignupList is available to members of GEWIS.
      *
-     * @param boolean $onlyGEWIS
+     * @param bool $onlyGEWIS
      */
     public function setOnlyGEWIS($onlyGEWIS)
     {
@@ -199,7 +199,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      * Returns true if this SignupList shows the number of members who signed up
      * when the user is not logged in.
      *
-     * @return boolean
+     * @return bool
      */
     public function getDisplaySubscribedNumber()
     {
@@ -210,7 +210,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      * Sets whether or not this SignupList should show the number of members who
      * signed up when the user is not logged in.
      *
-     * @param boolean $displaySubscribedNumber
+     * @param bool $displaySubscribedNumber
      */
     public function setDisplaySubscribedNumber($displaySubscribedNumber)
     {
@@ -262,7 +262,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * Returns the string identifier of the Resource
+     * Returns the string identifier of the Resource.
      *
      * @return string
      */
@@ -282,7 +282,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * Get the creator of this resource
+     * Get the creator of this resource.
      *
      * @return User
      */

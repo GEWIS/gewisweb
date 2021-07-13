@@ -9,14 +9,14 @@ use Laminas\View\Helper\AbstractHelper;
 class Acl extends AbstractHelper
 {
     /**
-     * Service locator
+     * Service locator.
      *
      * @var ServiceLocatorInterface
      */
     protected $locator;
 
     /**
-     * Acl
+     * Acl.
      */
     protected $acl;
 
@@ -40,7 +40,7 @@ class Acl extends AbstractHelper
     }
 
     /**
-     * Returns the Acl for a specific module
+     * Returns the Acl for a specific module.
      *
      * @param string $factory Acl factory to load
      *
@@ -52,9 +52,7 @@ class Acl extends AbstractHelper
         if ($this->acl instanceof \Laminas\Permissions\Acl\Acl) {
             return $this;
         } else {
-            throw new InvalidArgumentException(
-                'Provided factory does not exist or does not return an Acl instance'
-            );
+            throw new InvalidArgumentException('Provided factory does not exist or does not return an Acl instance');
         }
     }
 
@@ -69,7 +67,7 @@ class Acl extends AbstractHelper
     }
 
     /**
-     * Set the service locator
+     * Set the service locator.
      *
      * @param ServiceLocatorInterface
      */

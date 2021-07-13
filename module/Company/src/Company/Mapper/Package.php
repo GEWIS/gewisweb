@@ -2,9 +2,9 @@
 
 namespace Company\Mapper;
 
-use Company\Model\CompanyJobPackage as PackageModel;
 use Company\Model\CompanyBannerPackage as BannerPackageModel;
 use Company\Model\CompanyFeaturedPackage as FeaturedPackageModel;
+use Company\Model\CompanyJobPackage as PackageModel;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -25,8 +25,6 @@ class Package
 
     /**
      * Constructor.
-     *
-     * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
@@ -34,8 +32,7 @@ class Package
     }
 
     /**
-     * Saves all packages
-     *
+     * Saves all packages.
      */
     public function save()
     {
@@ -43,9 +40,9 @@ class Package
     }
 
     /**
-     * Finds the package with the given id
+     * Finds the package with the given id.
      *
-     * @param integer $packageId
+     * @param int $packageId
      */
     public function findPackage($packageId)
     {
@@ -53,8 +50,7 @@ class Package
     }
 
     /**
-     * Deletes the given package
-     *
+     * Deletes the given package.
      */
     public function delete($packageId)
     {
@@ -68,10 +64,9 @@ class Package
     }
 
     /**
-     * Will return a list of published packages that will expire between now and $date
+     * Will return a list of published packages that will expire between now and $date.
      *
      * @param date The date until where to search
-     *
      */
     public function findFuturePackageExpirationsBeforeDate($date)
     {
@@ -89,10 +84,9 @@ class Package
     }
 
     /**
-     * Will return a list of published packages that will expire between now and $date
+     * Will return a list of published packages that will expire between now and $date.
      *
      * @param date The date until where to search
-     *
      */
     public function findFuturePackageStartsBeforeDate($date)
     {
@@ -158,7 +152,7 @@ class Package
 
         $packages = $qb->getQuery()->getResult();
 
-        if (count($packages) != 1) {
+        if (1 != count($packages)) {
             return;
         }
 
@@ -167,11 +161,11 @@ class Package
 
     private function createPackage($type)
     {
-        if ($type === "job") {
+        if ('job' === $type) {
             return new PackageModel();
         }
 
-        if ($type === "featured") {
+        if ('featured' === $type) {
             return new FeaturedPackageModel();
         }
 
@@ -179,8 +173,7 @@ class Package
     }
 
     /**
-     * Inserts a new package into the given company
-     *
+     * Inserts a new package into the given company.
      */
     public function insertPackageIntoCompany($company, $type)
     {

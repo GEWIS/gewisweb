@@ -3,8 +3,8 @@
 namespace Frontpage\Form;
 
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator\StringLength;
 
 class NewsItem extends Form implements InputFilterProviderInterface
@@ -18,8 +18,8 @@ class NewsItem extends Form implements InputFilterProviderInterface
             'name' => 'dutchTitle',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Dutch title')
-            ]
+                'label' => $translator->translate('Dutch title'),
+            ],
             ]
         );
 
@@ -28,8 +28,8 @@ class NewsItem extends Form implements InputFilterProviderInterface
             'name' => 'englishTitle',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('English title')
-            ]
+                'label' => $translator->translate('English title'),
+            ],
             ]
         );
 
@@ -38,8 +38,8 @@ class NewsItem extends Form implements InputFilterProviderInterface
             'name' => 'dutchContent',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Dutch content')
-            ]
+                'label' => $translator->translate('Dutch content'),
+            ],
             ]
         );
 
@@ -48,8 +48,8 @@ class NewsItem extends Form implements InputFilterProviderInterface
             'name' => 'englishContent',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('English content')
-            ]
+                'label' => $translator->translate('English content'),
+            ],
             ]
         );
 
@@ -69,8 +69,8 @@ class NewsItem extends Form implements InputFilterProviderInterface
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
-                'value' => $translator->translate('Save')
-            ]
+                'value' => $translator->translate('Save'),
+            ],
             ]
         );
     }
@@ -91,8 +91,8 @@ class NewsItem extends Form implements InputFilterProviderInterface
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 3,
-                            'max' => 75
-                        ]
+                            'max' => 75,
+                        ],
                     ],
                 ],
             ],
@@ -104,8 +104,8 @@ class NewsItem extends Form implements InputFilterProviderInterface
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 3,
-                            'max' => 75
-                        ]
+                            'max' => 75,
+                        ],
                     ],
                 ],
             ],

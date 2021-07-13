@@ -2,10 +2,10 @@
 
 namespace Activity\Mapper;
 
+use Activity\Model\ActivityOptionProposal as ActivityOptionProposalModel;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use Activity\Model\ActivityOptionProposal as ActivityOptionProposalModel;
 
 class ActivityOptionProposal
 {
@@ -18,8 +18,6 @@ class ActivityOptionProposal
 
     /**
      * Constructor.
-     *
-     * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
@@ -30,6 +28,7 @@ class ActivityOptionProposal
      * Finds the ActivityOptionProposal model with the given id.
      *
      * @param int $id
+     *
      * @return ActivityOptionProposalModel
      */
     public function getActivityOptionProposalById($id)
@@ -48,11 +47,12 @@ class ActivityOptionProposal
     }
 
     /**
-     * Get activity proposals within a given period and associated with given organ
+     * Get activity proposals within a given period and associated with given organ.
      *
-     * @param DateTime $begin the date to get the options after
-     * @param DateTime $end the date to get the options before
-     * @param int $organId the organ options have to be associated with
+     * @param DateTime $begin   the date to get the options after
+     * @param DateTime $end     the date to get the options before
+     * @param int      $organId the organ options have to be associated with
+     *
      * @return array
      */
     public function getNonClosedProposalsWithinPeriodAndOrgan($begin, $end, $organId)
@@ -60,7 +60,7 @@ class ActivityOptionProposal
         $qb = $this->em->createQueryBuilder();
         $qb->select('b')
             ->from('Activity\Model\ActivityCalendarOption', 'a')
-            ->andWhere("a.modifiedBy IS NULL")
+            ->andWhere('a.modifiedBy IS NULL')
             ->orWhere("a.status = 'approved'")
             ->from('Activity\Model\ActivityOptionProposal', 'b')
             ->andWhere('a.proposal = b.id')

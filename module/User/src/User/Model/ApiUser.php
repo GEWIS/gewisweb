@@ -3,8 +3,8 @@
 namespace User\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Laminas\Permissions\Acl\Role\RoleInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use Laminas\Permissions\Acl\Role\RoleInterface;
 
 /**
  * User model.
@@ -14,7 +14,7 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 class ApiUser implements RoleInterface, ResourceInterface
 {
     /**
-     * Id
+     * Id.
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -93,7 +93,7 @@ class ApiUser implements RoleInterface, ResourceInterface
      */
     public function getRoleId()
     {
-        return 'api_' . $this->getId();
+        return 'api_'.$this->getId();
     }
 
     /**

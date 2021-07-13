@@ -2,14 +2,13 @@
 
 namespace User\Controller;
 
-use User\Service\User;
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\ViewModel;
 use Laminas\View\Model\JsonModel;
+use Laminas\View\Model\ViewModel;
+use User\Service\User;
 
 class UserController extends AbstractActionController
 {
-
     /**
      * @var User
      */
@@ -35,6 +34,7 @@ class UserController extends AbstractActionController
                 if (is_null($data['redirect']) || empty($data['redirect'])) {
                     return $this->redirect()->toUrl($referer);
                 }
+
                 return $this->redirect()->toUrl($data['redirect']);
             }
         }
@@ -43,7 +43,7 @@ class UserController extends AbstractActionController
 
         return new ViewModel(
             [
-            'form' => $form
+            'form' => $form,
             ]
         );
     }
@@ -55,14 +55,17 @@ class UserController extends AbstractActionController
             $redirect = $this->getRequest()->getQuery('redirect');
             if (isset($redirect)) {
                 $form->get('redirect')->setValue($redirect);
+
                 return $form;
             }
             if (isset($referer)) {
                 $form->get('redirect')->setValue($referer);
+
                 return $form;
             }
             $form->get('redirect')->setValue($this->url()->fromRoute('home'));
         }
+
         return $form;
     }
 
@@ -77,14 +80,15 @@ class UserController extends AbstractActionController
                 return new JsonModel(
                     [
                     'login' => true,
-                    'user' => $login->toArray()
+                    'user' => $login->toArray(),
                     ]
                 );
             }
         }
+
         return new JsonModel(
             [
-            'login' => false
+            'login' => false,
             ]
         );
     }
@@ -114,7 +118,7 @@ class UserController extends AbstractActionController
                 return new ViewModel(
                     [
                     'registered' => true,
-                    'user' => $newUser
+                    'user' => $newUser,
                     ]
                 );
             }
@@ -123,7 +127,7 @@ class UserController extends AbstractActionController
         // show form
         return new ViewModel(
             [
-            'form' => $this->userService->getRegisterForm()
+            'form' => $this->userService->getRegisterForm(),
             ]
         );
     }
@@ -138,14 +142,14 @@ class UserController extends AbstractActionController
         if ($request->isPost() && $this->userService->changePassword($request->getPost())) {
             return new ViewModel(
                 [
-                'success' => true
+                'success' => true,
                 ]
             );
         }
 
         return new ViewModel(
             [
-            'form' => $this->userService->getPasswordForm()
+            'form' => $this->userService->getPasswordForm(),
             ]
         );
     }
@@ -163,7 +167,7 @@ class UserController extends AbstractActionController
                 return new ViewModel(
                     [
                     'reset' => true,
-                    'user' => $newUser
+                    'user' => $newUser,
                     ]
                 );
             }
@@ -171,7 +175,7 @@ class UserController extends AbstractActionController
 
         return new ViewModel(
             [
-            'form' => $this->userService->getPasswordForm()
+            'form' => $this->userService->getPasswordForm(),
             ]
         );
     }
@@ -198,7 +202,7 @@ class UserController extends AbstractActionController
         if ($this->getRequest()->isPost() && $this->userService->activate($this->getRequest()->getPost(), $newUser)) {
             return new ViewModel(
                 [
-                'activated' => true
+                'activated' => true,
                 ]
             );
         }
@@ -206,7 +210,7 @@ class UserController extends AbstractActionController
         return new ViewModel(
             [
             'form' => $this->userService->getActivateForm(),
-            'user' => $newUser
+            'user' => $newUser,
             ]
         );
     }

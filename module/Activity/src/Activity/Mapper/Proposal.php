@@ -17,8 +17,6 @@ class Proposal
 
     /**
      * Constructor.
-     *
-     * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
@@ -29,6 +27,7 @@ class Proposal
      * Finds the proposal of with the given id.
      *
      * @param int $id
+     *
      * @return ActivityUpdateProposal
      */
     public function getProposalById($id)
@@ -56,6 +55,7 @@ class Proposal
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
             ->from('Activity\Model\ActivityUpdateProposal', 'a');
+
         return $qb->getQuery()->getResult();
     }
 }

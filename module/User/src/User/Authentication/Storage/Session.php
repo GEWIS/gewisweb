@@ -4,15 +4,15 @@ namespace User\Authentication\Storage;
 
 use DateTime;
 use Firebase\JWT\JWT;
-use UnexpectedValueException;
-use User\Model\Session as SessionModel;
 use Laminas\Authentication\Storage;
 use Laminas\Http\Header\SetCookie;
+use UnexpectedValueException;
+use User\Model\Session as SessionModel;
 
 class Session extends Storage\Session
 {
     /**
-     * @var boolean indicating whether we should remember the user
+     * @var bool indicating whether we should remember the user
      */
     protected $rememberMe;
     private $request;
@@ -44,7 +44,7 @@ class Session extends Storage\Session
     }
 
     /**
-     * Defined by Laminas\Authentication\Storage\StorageInterface
+     * Defined by Laminas\Authentication\Storage\StorageInterface.
      *
      * @return bool
      */
@@ -60,7 +60,7 @@ class Session extends Storage\Session
     /**
      * Check if there is a session stored in the database and load it when possible.
      *
-     * @return bool indicating whether a session was loaded.
+     * @return bool indicating whether a session was loaded
      */
     protected function validateSession()
     {
@@ -87,9 +87,10 @@ class Session extends Storage\Session
     }
 
     /**
-     * Defined by Laminas\Authentication\Storage\StorageInterface
+     * Defined by Laminas\Authentication\Storage\StorageInterface.
      *
      * @param mixed $contents
+     *
      * @return void
      */
     public function write($contents)
@@ -119,7 +120,7 @@ class Session extends Storage\Session
             'lidnr' => $lidnr,
             'exp' => (new DateTime('+2 weeks'))->getTimestamp(),
             'iat' => (new DateTime())->getTimestamp(),
-            'nonce' => bin2hex(openssl_random_pseudo_bytes(16))
+            'nonce' => bin2hex(openssl_random_pseudo_bytes(16)),
         ];
 
         $jwt = JWT::encode($token, $key, 'RS256');
@@ -128,7 +129,7 @@ class Session extends Storage\Session
     }
 
     /**
-     * Defined by Laminas\Authentication\Storage\StorageInterface
+     * Defined by Laminas\Authentication\Storage\StorageInterface.
      *
      * @return void
      */
@@ -140,7 +141,8 @@ class Session extends Storage\Session
     }
 
     /**
-     * Store the session token as a cookie
+     * Store the session token as a cookie.
+     *
      * @param string $jwt The session token to store
      */
     protected function saveCookie($jwt)
@@ -172,26 +174,30 @@ class Session extends Storage\Session
     }
 
     /**
-     * Get the private key to use for JWT
-     * @return string|boolean returns false if the private key is not readable
+     * Get the private key to use for JWT.
+     *
+     * @return string|bool returns false if the private key is not readable
      */
     protected function getPrivateKey()
     {
         if (!is_readable($this->config['jwt_key_path'])) {
             return false;
         }
+
         return file_get_contents($this->config['jwt_key_path']);
     }
 
     /**
-     * Get the public key to use for JWT
-     * @return string|boolean returns false if the public key is not readable
+     * Get the public key to use for JWT.
+     *
+     * @return string|bool returns false if the public key is not readable
      */
     protected function getPublicKey()
     {
         if (!is_readable($this->config['jwt_pub_key_path'])) {
             return false;
         }
+
         return file_get_contents($this->config['jwt_pub_key_path']);
     }
 }

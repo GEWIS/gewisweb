@@ -3,8 +3,8 @@
 namespace Decision\Form;
 
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\MimeType;
 use Laminas\Validator\StringLength;
@@ -27,7 +27,7 @@ class Document extends Form implements InputFilterProviderInterface
             'type' => 'hidden',
             'options' => [
                 'label' => $translator->translate('Meeting'),
-            ]
+            ],
             ]
         );
 
@@ -52,8 +52,8 @@ class Document extends Form implements InputFilterProviderInterface
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
-                'value' => $translator->translate('Upload document')
-            ]
+                'value' => $translator->translate('Upload document'),
+            ],
             ]
         );
     }
@@ -71,10 +71,10 @@ class Document extends Form implements InputFilterProviderInterface
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 2,
-                            'max' => 128
-                        ]
-                    ]
-                ]
+                            'max' => 128,
+                        ],
+                    ],
+                ],
             ],
             'upload' => [
                 'required' => true,
@@ -82,17 +82,17 @@ class Document extends Form implements InputFilterProviderInterface
                     [
                         'name' => Extension::class,
                         'options' => [
-                            'extension' => 'pdf'
-                        ]
+                            'extension' => 'pdf',
+                        ],
                     ],
                     [
                         'name' => MimeType::class,
                         'options' => [
-                            'mimeType' => 'application/pdf'
-                        ]
-                    ]
-                ]
-            ]
+                            'mimeType' => 'application/pdf',
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 }

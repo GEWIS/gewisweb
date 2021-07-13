@@ -7,12 +7,12 @@ use Application\Service\FileStorage;
 use Exception;
 use Frontpage\Model\Page as PageModel;
 use InvalidArgumentException;
-use User\Model\User;
-use User\Permissions\NotAllowedException;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\IsImage;
+use User\Model\User;
+use User\Permissions\NotAllowedException;
 
 /**
  * Page service, used for content management.
@@ -88,20 +88,19 @@ class Page extends AbstractAclService
     }
 
     /**
-     * Returns a single page
+     * Returns a single page.
      *
      * @param string $category
      * @param string $subCategory
      * @param string $name
+     *
      * @return PageModel|null
      */
     public function getPage($category, $subCategory, $name)
     {
         $page = $this->pageMapper->findPage($category, $subCategory, $name);
         if (!(is_null($page) || $this->isPageAllowed($page))) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view this page.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view this page.'));
         }
 
         return $page;
@@ -111,6 +110,7 @@ class Page extends AbstractAclService
      * Returns the parent pages of a page if those exist.
      *
      * @param PageModel $page
+     *
      * @return array
      */
     public function getPageParents($page)
@@ -127,9 +127,10 @@ class Page extends AbstractAclService
     }
 
     /**
-     * Returns a single page by its id
+     * Returns a single page by its id.
      *
-     * @param integer $pageId
+     * @param int $pageId
+     *
      * @return PageModel|null
      */
     public function getPageById($pageId)
@@ -138,7 +139,7 @@ class Page extends AbstractAclService
     }
 
     /**
-     * Checks if the current user is allowed to view the given page
+     * Checks if the current user is allowed to view the given page.
      *
      * @param PageModel $page
      *
@@ -147,7 +148,7 @@ class Page extends AbstractAclService
     public function isPageAllowed($page)
     {
         $requiredRole = $page->getRequiredRole();
-        $resource = 'page_' . $page->getId();
+        $resource = 'page_'.$page->getId();
         $this->acl->addResource($resource);
         $this->acl->allow($requiredRole, $resource, 'view');
 
@@ -162,9 +163,7 @@ class Page extends AbstractAclService
     public function getPages()
     {
         if (!$this->isAllowed('list')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the list of pages.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view the list of pages.'));
         }
         $pages = $this->pageMapper->getAllPages();
         $pageArray = [];
@@ -193,7 +192,8 @@ class Page extends AbstractAclService
      * Creates a new Page.
      *
      * @param array $data form post data
-     * @return bool|PageModel false if creation was not successful.
+     *
+     * @return bool|PageModel false if creation was not successful
      */
     public function createPage($data)
     {
@@ -213,16 +213,15 @@ class Page extends AbstractAclService
     }
 
     /**
-     * @param integer $pageId
-     * @param array $data form post data
+     * @param int   $pageId
+     * @param array $data   form post data
+     *
      * @return bool
      */
     public function updatePage($pageId, $data)
     {
         if (!$this->isAllowed('edit')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to edit pages.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to edit pages.'));
         }
         $form = $this->getPageForm($pageId);
         $form->setData($data);
@@ -239,7 +238,7 @@ class Page extends AbstractAclService
     /**
      * Removes a page.
      *
-     * @param integer $pageId The id of the page to remove.
+     * @param int $pageId the id of the page to remove
      */
     public function deletePage($pageId)
     {
@@ -254,6 +253,7 @@ class Page extends AbstractAclService
      * @param array $files
      *
      * @return array
+     *
      * @throws Exception
      */
     public function uploadImage($files)
@@ -270,30 +270,25 @@ class Page extends AbstractAclService
             if ($extensionValidator->isValid($files['upload'])) {
                 $config = $this->storageConfig;
                 $fileName = $this->storageService->storeUploadedFile($files['upload']);
-                return $config['public_dir'] . '/' . $fileName;
+
+                return $config['public_dir'].'/'.$fileName;
             }
-            throw new InvalidArgumentException(
-                $this->translator->translate('The uploaded file does not have a valid extension')
-            );
+            throw new InvalidArgumentException($this->translator->translate('The uploaded file does not have a valid extension'));
         }
-        throw new InvalidArgumentException(
-            $this->translator->translate('The uploaded file is not a valid image')
-        );
+        throw new InvalidArgumentException($this->translator->translate('The uploaded file is not a valid image'));
     }
 
     /**
      * Get the Page form.
      *
-     * @param integer $pageId
+     * @param int $pageId
      *
      * @return \Frontpage\Form\Page
      */
     public function getPageForm($pageId = null)
     {
         if (!$this->isAllowed('create')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create new pages.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to create new pages.'));
         }
         $form = $this->pageForm;
 

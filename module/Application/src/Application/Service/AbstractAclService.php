@@ -2,9 +2,9 @@
 
 namespace Application\Service;
 
-use User\Model\User;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use User\Model\User;
 
 abstract class AbstractAclService
 {
@@ -37,10 +37,10 @@ abstract class AbstractAclService
      * If no resource is given, this will use the resource given by
      * {@link getDefaultResourceId()}.
      *
-     * @param string $operation Operation to be checked.
-     * @param string|ResourceInterface $resource Resource to be checked
+     * @param string                   $operation operation to be checked
+     * @param string|ResourceInterface $resource  Resource to be checked
      *
-     * @return boolean
+     * @return bool
      */
     public function isAllowed($operation, $resource = null)
     {

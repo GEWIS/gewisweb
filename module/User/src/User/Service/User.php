@@ -6,6 +6,10 @@ use Application\Service\AbstractAclService;
 use DateInterval;
 use DateTime;
 use Decision\Mapper\Member;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\Crypt\Password\Bcrypt;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Permissions\Acl\Acl;
 use User\Authentication\Storage\Session;
 use User\Form\Activate;
 use User\Form\Login;
@@ -15,10 +19,6 @@ use User\Mapper\NewUser;
 use User\Model\NewUser as NewUserModel;
 use User\Model\User as UserModel;
 use User\Permissions\NotAllowedException;
-use Laminas\Authentication\AuthenticationService;
-use Laminas\Crypt\Password\Bcrypt;
-use Laminas\Mvc\I18n\Translator;
-use Laminas\Permissions\Acl\Acl;
 
 /**
  * User service.
@@ -47,7 +47,7 @@ class User extends AbstractAclService
 
     /**
      * @var AuthenticationService
-     * with PinMapper adapter
+     *                            with PinMapper adapter
      */
     private $pinAuthService;
 
@@ -143,10 +143,10 @@ class User extends AbstractAclService
     /**
      * Activate a user.
      *
-     * @param array $data Activation data.
+     * @param array        $data    activation data
      * @param NewUserModel $newUser The user to create
      *
-     * @return boolean
+     * @return bool
      */
     public function activate($data, NewUserModel $newUser)
     {
@@ -275,6 +275,7 @@ class User extends AbstractAclService
         // Check if the e-mail entered and the e-mail in the database match
         if ($member->getEmail() != $data['email']) {
             $form->setError(RegisterForm::ERROR_WRONG_EMAIL);
+
             return null;
         }
 
@@ -298,7 +299,7 @@ class User extends AbstractAclService
      *
      * @param array $data Passworc change date
      *
-     * @return boolean
+     * @return bool
      */
     public function changePassword($data)
     {
@@ -320,8 +321,8 @@ class User extends AbstractAclService
         if (!$adapter->verifyPassword($data['old_password'], $user->getPassword())) {
             $form->setMessages([
                 'old_password' => [
-                    $this->translator->translate("Password incorrect")
-                ]
+                    $this->translator->translate('Password incorrect'),
+                ],
             ]);
 
             return false;
@@ -379,14 +380,13 @@ class User extends AbstractAclService
      * Login using a pin code.
      *
      * @param array $data
+     *
      * @return UserModel Authenticated user. Null if not authenticated.
      */
     public function pinLogin($data)
     {
         if (!$this->isAllowed('pin_login')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to login using pin codes')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to login using pin codes'));
         }
         // try to authenticate
         $authAdapter = $this->authService->getAdapter();
@@ -413,25 +413,25 @@ class User extends AbstractAclService
     }
 
     /**
-     * Gets the user identity, or gives a 403 if the user is not logged in
+     * Gets the user identity, or gives a 403 if the user is not logged in.
      *
      * @return UserModel the current logged in user
+     *
      * @throws NotAllowedException if no user is logged in
      */
     public function getIdentity()
     {
         if (!$this->authService->hasIdentity()) {
-            throw new NotAllowedException(
-                $this->translator->translate('You need to log in to perform this action')
-            );
+            throw new NotAllowedException($this->translator->translate('You need to log in to perform this action'));
         }
+
         return $this->authService->getIdentity();
     }
 
     /**
-     * Checks whether the user is logged in
+     * Checks whether the user is logged in.
      *
-     * @return Bool true if the user is logged in, false otherwise
+     * @return bool true if the user is logged in, false otherwise
      */
     public function hasIdentity()
     {
@@ -462,7 +462,7 @@ class User extends AbstractAclService
         $ret = '';
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; ++$i) {
             $ret .= $alphabet[rand(0, strlen($alphabet) - 1)];
         }
 
@@ -497,9 +497,7 @@ class User extends AbstractAclService
     public function getPasswordForm()
     {
         if (!$this->isAllowed('password_change')) {
-            throw new NotAllowedException(
-                $this->translator->translate("You are not allowed to change your password")
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to change your password'));
         }
 
         return $this->passwordForm;

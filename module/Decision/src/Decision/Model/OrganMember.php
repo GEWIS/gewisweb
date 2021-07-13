@@ -3,8 +3,8 @@
 namespace Decision\Model;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
 use Decision\Model\SubDecision\Installation;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Organ member entity.
@@ -76,8 +76,6 @@ class OrganMember
 
     /**
      * Set the organ.
-     *
-     * @param Organ $organ
      */
     public function setOrgan(Organ $organ)
     {
@@ -96,8 +94,6 @@ class OrganMember
 
     /**
      * Set the member.
-     *
-     * @param Member $member
      */
     public function setMember(Member $member)
     {
@@ -115,7 +111,7 @@ class OrganMember
     }
 
     /**
-     * Set the function
+     * Set the function.
      *
      * @param string $function
      */
@@ -125,7 +121,7 @@ class OrganMember
     }
 
     /**
-     * Get the function
+     * Get the function.
      *
      * @return string
      */
@@ -136,8 +132,6 @@ class OrganMember
 
     /**
      * Set the installation date.
-     *
-     * @param DateTime $installDate
      */
     public function setInstallDate(DateTime $installDate)
     {
@@ -176,8 +170,6 @@ class OrganMember
 
     /**
      * Set the discharge date.
-     *
-     * @param DateTime $dischargeDate
      */
     public function setDischargeDate(DateTime $dischargeDate)
     {

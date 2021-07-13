@@ -11,10 +11,10 @@ use Frontpage\Model\Poll as PollModel;
 use Frontpage\Model\PollComment;
 use Frontpage\Model\PollOption;
 use Frontpage\Model\PollVote as PollVoteModel;
-use User\Model\User;
-use User\Permissions\NotAllowedException;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
+use User\Model\User;
+use User\Permissions\NotAllowedException;
 
 /**
  * Poll service.
@@ -88,6 +88,7 @@ class Poll extends AbstractAclService
 
     /**
      * Returns the newest approved poll or null if there is none.
+     *
      * @return PollModel|null
      */
     public function getNewestPoll()
@@ -96,8 +97,10 @@ class Poll extends AbstractAclService
     }
 
     /**
-     * Retrieves a poll by its id
+     * Retrieves a poll by its id.
+     *
      * @param int $pollId the id of the poll to retrieve
+     *
      * @return PollModel|null
      *
      * @throws NotAllowedException if the user isn't allowed to see unapproved polls
@@ -106,16 +109,17 @@ class Poll extends AbstractAclService
     {
         $poll = $this->pollMapper->findPollById($pollId);
         if (is_null($poll->getApprover()) && !$this->isAllowed('view_unapproved')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view unnapproved polls')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view unnapproved polls'));
         }
+
         return $poll;
     }
 
     /**
-     * Retrieves a poll option by its id
+     * Retrieves a poll option by its id.
+     *
      * @param int $optionId The id of the poll option to retrieve
+     *
      * @return PollOption|null
      */
     public function getPollOption($optionId)
@@ -147,6 +151,7 @@ class Poll extends AbstractAclService
      * Returns details about a poll.
      *
      * @param PollModel $poll
+     *
      * @return array
      */
     public function getPollDetails($poll)
@@ -160,7 +165,7 @@ class Poll extends AbstractAclService
 
         return [
             'canVote' => $canVote,
-            'userVote' => $userVote
+            'userVote' => $userVote,
         ];
     }
 
@@ -169,7 +174,7 @@ class Poll extends AbstractAclService
      *
      * @param PollModel $poll
      *
-     * @return boolean
+     * @return bool
      */
     public function canVote($poll)
     {
@@ -193,6 +198,7 @@ class Poll extends AbstractAclService
     /**
      * Retrieves the current user's vote for a given poll.
      * Returns null if the user hasn't voted on the poll.
+     *
      * @param PollModel $poll
      *
      * @return PollVoteModel | null
@@ -211,6 +217,7 @@ class Poll extends AbstractAclService
      * Stores a vote for the current user.
      *
      * @param PollOption $pollOption The option to vote on
+     *
      * @return bool indicating whether the vote was submitted
      */
     public function submitVote($pollOption)
@@ -221,9 +228,7 @@ class Poll extends AbstractAclService
         }
 
         if (!$this->canVote($poll)) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to vote on this poll.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to vote on this poll.'));
         }
 
         $pollVote = new PollVoteModel();
@@ -235,17 +240,15 @@ class Poll extends AbstractAclService
     }
 
     /**
-     * Creates a comment on the given poll
+     * Creates a comment on the given poll.
      *
-     * @param int $pollId
+     * @param int   $pollId
      * @param array $data
      */
     public function createComment($pollId, $data)
     {
         if (!$this->isAllowed('create', 'poll_comment')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create comments on this poll')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to create comments on this poll'));
         }
 
         $poll = $this->getPoll($pollId);
@@ -274,7 +277,9 @@ class Poll extends AbstractAclService
 
     /**
      * Saves a new poll request.
+     *
      * @param array $data
+     *
      * @return bool indicating whether the request succeeded
      */
     public function requestPoll($data)
@@ -311,9 +316,7 @@ class Poll extends AbstractAclService
     public function getPollForm()
     {
         if (!$this->isAllowed('request')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to request polls')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to request polls'));
         }
 
         return $this->pollForm;
@@ -327,9 +330,7 @@ class Poll extends AbstractAclService
     public function deletePoll($poll)
     {
         if (!$this->isAllowed('delete')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to delete polls')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to delete polls'));
         }
 
         // Check to see if poll is approved
@@ -341,7 +342,6 @@ class Poll extends AbstractAclService
             $this->pollMapper->remove($poll);
         }
 
-
         $this->pollMapper->flush();
     }
 
@@ -349,7 +349,8 @@ class Poll extends AbstractAclService
      * Approves the given poll.
      *
      * @param PollModel $poll The poll to approve
-     * @param array $data The data from the poll approval form
+     * @param array     $data The data from the poll approval form
+     *
      * @return bool indicating whether the approval succeeded
      */
     public function approvePoll($poll, $data)
@@ -373,9 +374,7 @@ class Poll extends AbstractAclService
     public function getPollApprovalForm()
     {
         if (!$this->isAllowed('approve')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to approve polls')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to approve polls'));
         }
 
         return $this->pollApprovalForm;

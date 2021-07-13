@@ -3,8 +3,8 @@
 namespace Education\Form;
 
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\MimeType;
 
@@ -19,8 +19,8 @@ class TempUpload extends Form implements InputFilterProviderInterface
             'name' => 'file',
             'type' => 'file',
             'option' => [
-                'label' => $translator->translate('Exam to upload')
-            ]
+                'label' => $translator->translate('Exam to upload'),
+            ],
             ]
         );
         $this->get('file')->setLabel($translator->translate('Exam to upload'));
@@ -35,17 +35,17 @@ class TempUpload extends Form implements InputFilterProviderInterface
                     [
                         'name' => Extension::class,
                         'options' => [
-                            'extension' => 'pdf'
-                        ]
+                            'extension' => 'pdf',
+                        ],
                     ],
                     [
                         'name' => MimeType::class,
                         'options' => [
-                            'mimeType' => 'application/pdf'
-                        ]
-                    ]
-                ]
-            ]
+                            'mimeType' => 'application/pdf',
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 }

@@ -3,9 +3,9 @@
 namespace User\Mapper;
 
 use Decision\Model\Member;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use User\Model\NewUser as NewUserModel;
-use Doctrine\ORM\EntityManager;
 
 class NewUser
 {
@@ -17,9 +17,7 @@ class NewUser
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -44,6 +42,7 @@ class NewUser
         $qb->setMaxResults(1);
 
         $res = $qb->getQuery()->getResult();
+
         return empty($res) ? null : $res[0];
     }
 
@@ -65,13 +64,13 @@ class NewUser
         $qb->setMaxResults(1);
 
         $res = $qb->getQuery()->getResult();
+
         return empty($res) ? null : $res[0];
     }
 
     /**
-     * Delete the existing activation code for a member
+     * Delete the existing activation code for a member.
      *
-     * @param Member $member
      * @return array
      */
     public function deleteByMember(Member $member)
@@ -80,13 +79,14 @@ class NewUser
         $qb->delete('User\Model\NewUser', 'u');
         $qb->where('u.member = :member');
         $qb->setParameter('member', $member);
+
         return $qb->getQuery()->getResult();
     }
 
     /**
      * Persist a user model.
      *
-     * @param NewUserModel $user User to persist.
+     * @param NewUserModel $user user to persist
      */
     public function persist(NewUserModel $user)
     {

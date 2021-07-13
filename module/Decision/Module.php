@@ -32,7 +32,7 @@ class Module
      */
     public function getConfig()
     {
-        return include __DIR__ . '/config/module.config.php';
+        return include __DIR__.'/config/module.config.php';
     }
 
     /**
@@ -57,6 +57,7 @@ class Module
                     $organMapper = $sm->get('decision_mapper_organ');
                     $organInformationForm = $sm->get('decision_form_organ_information');
                     $organInformationConfig = $sm->get('config')['organ_information'];
+
                     return new Service\Organ(
                         $translator,
                         $userRole,
@@ -87,6 +88,7 @@ class Module
                     $reorderDocumentForm = $sm->get('decision_form_reorder_document');
                     $searchDecisionForm = $sm->get('decision_form_searchdecision');
                     $authorizationForm = $sm->get('decision_form_authorization');
+
                     return new Service\Decision(
                         $translator,
                         $userRole,
@@ -113,6 +115,7 @@ class Module
                     $memberMapper = $sm->get('decision_mapper_member');
                     $authorizationMapper = $sm->get('decision_mapper_authorization');
                     $config = $sm->get('config');
+
                     return new Service\Member(
                         $translator,
                         $userRole,
@@ -129,6 +132,7 @@ class Module
                     $acl = $sm->get('decision_acl');
                     $photoService = $sm->get('photo_service_photo');
                     $memberMapper = $sm->get('decision_mapper_member');
+
                     return new Service\MemberInfo(
                         $translator,
                         $userRole,
@@ -188,6 +192,7 @@ class Module
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('decision_hydrator'));
+
                     return $form;
                 },
                 'decision_form_reorder_document' => function (ServiceLocatorInterface $sm) {
@@ -206,6 +211,7 @@ class Module
                     //NB: The returned object should implement the FileReader Interface.
                     $config = $sm->get('config');
                     $validFile = $this->getServiceConfig()['filebrowser_valid_file'];
+
                     return new LocalFileReader(
                         $config['filebrowser_folder'],
                         $validFile
@@ -258,12 +264,12 @@ class Module
                 // and aliases don't work with abstract factories
                 'decision_doctrine_em' => function (ServiceLocatorInterface $sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
-                }
+                },
             ],
             /*
              * Regex pattern matching filenames viewable in the browser
              */
-            'filebrowser_valid_file' => '[^?*:;{}\\\]*'
+            'filebrowser_valid_file' => '[^?*:;{}\\\]*',
         ];
     }
 }

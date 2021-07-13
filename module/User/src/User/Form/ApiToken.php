@@ -3,8 +3,8 @@
 namespace User\Form;
 
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilterProviderInterface;
 
 class ApiToken extends Form implements InputFilterProviderInterface
 {
@@ -17,8 +17,8 @@ class ApiToken extends Form implements InputFilterProviderInterface
             'name' => 'name',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Name')
-            ]
+                'label' => $translator->translate('Name'),
+            ],
             ]
         );
 
@@ -27,8 +27,8 @@ class ApiToken extends Form implements InputFilterProviderInterface
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
-                'value' => $translator->translate('Create API token')
-            ]
+                'value' => $translator->translate('Create API token'),
+            ],
             ]
         );
     }
@@ -43,11 +43,11 @@ class ApiToken extends Form implements InputFilterProviderInterface
                         'name' => 'StringLength',
                         'options' => [
                             'min' => 2,
-                            'max' => 64
-                        ]
-                    ]
-                ]
-            ]
+                            'max' => 64,
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 }

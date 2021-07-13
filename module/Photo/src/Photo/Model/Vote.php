@@ -12,11 +12,9 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
  *
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
- *
  */
 class Vote implements ResourceInterface
 {
-
     /**
      * Vote ID.
      *
@@ -47,9 +45,9 @@ class Vote implements ResourceInterface
      */
     protected $member;
 
-
     /**
      * Vote constructor.
+     *
      * @param Member $member The member whom voted
      */
     public function __construct($photo, $member)

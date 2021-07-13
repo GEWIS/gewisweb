@@ -3,11 +3,11 @@
 namespace Photo\Controller;
 
 use Exception;
-use Photo\Service\Album;
-use Photo\Service\Photo;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
+use Photo\Service\Album;
+use Photo\Service\Photo;
 
 class PhotoController extends AbstractActionController
 {
@@ -44,14 +44,13 @@ class PhotoController extends AbstractActionController
             [
             'activeYear' => $year,
             'years' => $years,
-            'albums' => $albums
+            'albums' => $albums,
             ]
         );
     }
 
     /**
-     * Called on viewing a photo
-     *
+     * Called on viewing a photo.
      */
     public function viewAction()
     {
@@ -68,7 +67,7 @@ class PhotoController extends AbstractActionController
     }
 
     /**
-     * Called on viewing a photo in an album for a member
+     * Called on viewing a photo in an album for a member.
      *
      * @return ViewModel
      */
@@ -120,13 +119,13 @@ class PhotoController extends AbstractActionController
 
         return new ViewModel(
             [
-            'weeklyPhotos' => $weeklyPhotos
+            'weeklyPhotos' => $weeklyPhotos,
             ]
         );
     }
 
     /**
-     * For setting a profile picture
+     * For setting a profile picture.
      */
     public function setProfilePhotoAction()
     {
@@ -142,14 +141,14 @@ class PhotoController extends AbstractActionController
     }
 
     /**
-     * For removing a profile picture
+     * For removing a profile picture.
      */
     public function removeProfilePhotoAction()
     {
         $photoId = $this->params()->fromRoute('photo_id', null);
         $this->photoService->removeProfilePhoto();
 
-        if ($photoId != null) {
+        if (null != $photoId) {
             return $this->redirect()->toRoute(
                 'photo/photo',
                 [
@@ -162,7 +161,7 @@ class PhotoController extends AbstractActionController
     }
 
     /**
-     * Store a vote for a photo
+     * Store a vote for a photo.
      */
     public function voteAction()
     {
@@ -170,6 +169,7 @@ class PhotoController extends AbstractActionController
         if ($request->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
             $this->photoService->countVote($photoId);
+
             return new JsonModel(['success' => true]);
         }
 

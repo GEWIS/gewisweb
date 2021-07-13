@@ -28,7 +28,7 @@ class Module
      */
     public function getConfig()
     {
-        return include __DIR__ . '/config/module.config.php';
+        return include __DIR__.'/config/module.config.php';
     }
 
     /**
@@ -52,6 +52,7 @@ class Module
                     $tagMapper = $sm->get('photo_mapper_tag');
                     $activityMapper = $sm->get('activity_mapper_activity');
                     $frontpageConfig = $sm->get('config')['frontpage'];
+
                     return new Frontpage(
                         $translator,
                         $userRole,
@@ -74,6 +75,7 @@ class Module
                     $pageMapper = $sm->get('frontpage_mapper_page');
                     $pageForm = $sm->get('frontpage_form_page');
                     $storageConfig = $sm->get('config')['storage'];
+
                     return new Service\Page(
                         $translator,
                         $userRole,
@@ -93,6 +95,7 @@ class Module
                     $pollForm = $sm->get('frontpage_form_poll');
                     $pollCommentForm = $sm->get('frontpage_form_poll_comment');
                     $pollApprovalForm = $sm->get('frontpage_form_poll_approval');
+
                     return new Service\Poll(
                         $translator,
                         $userRole,
@@ -110,6 +113,7 @@ class Module
                     $acl = $sm->get('frontpage_acl');
                     $newsItemMapper = $sm->get('frontpage_mapper_news_item');
                     $newsItemForm = $sm->get('frontpage_form_news_item');
+
                     return new News($translator, $userRole, $acl, $newsItemMapper, $newsItemForm);
                 },
                 'frontpage_form_page' => function (ServiceLocatorInterface $sm) {
@@ -133,6 +137,7 @@ class Module
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('frontpage_hydrator'));
+
                     return $form;
                 },
                 'frontpage_form_poll_approval' => function (ServiceLocatorInterface $sm) {
@@ -189,8 +194,8 @@ class Module
                 // reused code from the eduction module
                 'frontpage_doctrine_em' => function (ServiceLocatorInterface $sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
-                }
-            ]
+                },
+            ],
         ];
     }
 }

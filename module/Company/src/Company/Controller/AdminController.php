@@ -4,14 +4,14 @@ namespace Company\Controller;
 
 use Company\Form\EditCompany;
 use Company\Mapper\Label;
+use Company\Service\Company as CompanyService;
 use Company\Service\CompanyQuery;
 use DateInterval;
 use DateTime;
-use User\Permissions\NotAllowedException;
-use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Controller\AbstractActionController;
-use Company\Service\Company as CompanyService;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
+use User\Permissions\NotAllowedException;
 
 class AdminController extends AbstractActionController
 {
@@ -53,16 +53,12 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     *
-     * Action that displays the main page
-     *
+     * Action that displays the main page.
      */
     public function indexAction()
     {
         if (!$this->companyService->isAllowed('listAllLabels')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to access the admin interface')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to access the admin interface'));
         }
 
         // Initialize the view
@@ -73,7 +69,7 @@ class AdminController extends AbstractActionController
             'labelList' => $this->companyQueryService->getLabelList(false),
             'packageFuture' => $this->companyService->getPackageChangeEvents(
                 (new DateTime())->add(
-                    new DateInterval("P1M")
+                    new DateInterval('P1M')
                 )
             ),
             ]
@@ -81,7 +77,7 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * Action that allows adding a company
+     * Action that allows adding a company.
      */
     public function addCompanyAction()
     {
@@ -124,16 +120,12 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * Action that allows adding a package
-     *
-     *
+     * Action that allows adding a package.
      */
     public function addPackageAction()
     {
         if (!$this->companyService->isAllowed('edit')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to edit jobs')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to edit jobs'));
         }
 
         // Get parameter
@@ -187,9 +179,7 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * Action that allows adding a job
-     *
-     *
+     * Action that allows adding a job.
      */
     public function addJobAction()
     {
@@ -216,7 +206,7 @@ class AdminController extends AbstractActionController
                     'admin_company/editCompany/editPackage',
                     [
                         'slugCompanyName' => $companyName,
-                        'packageId' => $packageId
+                        'packageId' => $packageId,
                     ]
                 );
             }
@@ -231,7 +221,7 @@ class AdminController extends AbstractActionController
                 'admin_company/editCompany/editPackage/addJob',
                 [
                     'slugCompanyName' => $companyName,
-                    'packageId' => $packageId
+                    'packageId' => $packageId,
                 ]
             )
         );
@@ -250,9 +240,7 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * Action that displays a form for editing a category
-     *
-     *
+     * Action that displays a form for editing a category.
      */
     public function editCategoryAction()
     {
@@ -261,7 +249,7 @@ class AdminController extends AbstractActionController
 
         // Get parameter
         $languageNeutralId = $this->params('languageNeutralCategoryId');
-        if ($languageNeutralId === null) {
+        if (null === $languageNeutralId) {
             // The parameter is invalid or non-existent
             return $this->notFoundAction();
         }
@@ -307,9 +295,7 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * Action that displays a form for editing a label
-     *
-     *
+     * Action that displays a form for editing a label.
      */
     public function editLabelAction()
     {
@@ -318,7 +304,7 @@ class AdminController extends AbstractActionController
 
         // Get parameter
         $languageNeutralId = $this->params('languageNeutralLabelId');
-        if ($languageNeutralId === null) {
+        if (null === $languageNeutralId) {
             // The parameter is invalid or non-existent
             return $this->notFoundAction();
         }
@@ -375,9 +361,7 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * Action that displays a form for editing a company
-     *
-     *
+     * Action that displays a form for editing a company.
      */
     public function editCompanyAction()
     {
@@ -409,6 +393,7 @@ class AdminController extends AbstractActionController
                 )
             ) {
                 $companyName = $request->getPost()['slugName'];
+
                 return $this->redirect()->toRoute(
                     'admin_company/default',
                     [
@@ -434,6 +419,7 @@ class AdminController extends AbstractActionController
                 ]
             )
         );
+
         return new ViewModel(
             [
             'company' => $company,
@@ -443,9 +429,7 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * Action that displays a form for editing a package
-     *
-     *
+     * Action that displays a form for editing a package.
      */
     public function editPackageAction()
     {
@@ -495,9 +479,7 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * Action that displays a form for editing a job
-     *
-     *
+     * Action that displays a form for editing a job.
      */
     public function editJobAction()
     {
@@ -560,9 +542,7 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * Action that first asks for confirmation, and when given, deletes the company
-     *
-     *
+     * Action that first asks for confirmation, and when given, deletes the company.
      */
     public function deleteCompanyAction()
     {
@@ -573,6 +553,7 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $this->companyService->deleteCompaniesBySlug($slugName);
+
             return $this->redirect()->toRoute('admin_company');
         }
 
@@ -662,9 +643,7 @@ class AdminController extends AbstractActionController
     }
 
     /**
-     * Action that first asks for confirmation, and when given, deletes the Package
-     *
-     *
+     * Action that first asks for confirmation, and when given, deletes the Package.
      */
     public function deletePackageAction()
     {
@@ -676,6 +655,7 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $this->companyService->deletePackage($packageId);
+
             return $this->redirect()->toRoute(
                 'admin_company/editCompany',
                 ['slugCompanyName' => $companyName]
@@ -707,7 +687,7 @@ class AdminController extends AbstractActionController
             'admin_company/editCompany/editPackage',
             [
                 'slugCompanyName' => $companyName,
-                'packageId' => $packageId
+                'packageId' => $packageId,
             ]
         );
     }

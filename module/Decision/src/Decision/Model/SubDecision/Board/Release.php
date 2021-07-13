@@ -2,12 +2,11 @@
 
 namespace Decision\Model\SubDecision\Board;
 
-use DateTime;
-use Doctrine\ORM\Mapping as ORM;
-use Decision\Model\SubDecision;
-use IntlDateFormatter;
-
 use function date_default_timezone_get;
+use DateTime;
+use Decision\Model\SubDecision;
+use Doctrine\ORM\Mapping as ORM;
+use IntlDateFormatter;
 
 /**
  * Release from board duties.
@@ -52,8 +51,6 @@ class Release extends SubDecision
 
     /**
      * Set the installation.
-     *
-     * @param Installation $installation
      */
     public function setInstallation(Installation $installation)
     {
@@ -90,19 +87,17 @@ class Release extends SubDecision
         $member = $this->getInstallation()->getMember()->getFullName();
         $function = $this->getInstallation()->getFunction();
 
-        $zh = $this->getInstallation()->getMember()->getGender() == 'm' ? 'zijn' : 'haar';
+        $zh = 'm' == $this->getInstallation()->getMember()->getGender() ? 'zijn' : 'haar';
 
-        return $member . ' wordt per ' . $this->formatDate($this->getDate())
-            . ' ontheven uit ' . $zh . ' functie als ' . $function
-            . ' der s.v. GEWIS.';
+        return $member.' wordt per '.$this->formatDate($this->getDate())
+            .' ontheven uit '.$zh.' functie als '.$function
+            .' der s.v. GEWIS.';
     }
 
     /**
      * Format the date.
      *
      * returns the localized version of $date->format('d F Y')
-     *
-     * @param DateTime $date
      *
      * @return string Formatted date
      */
@@ -116,6 +111,7 @@ class Release extends SubDecision
             null,
             'd MMMM Y'
         );
+
         return $formatter->format($date);
     }
 }

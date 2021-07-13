@@ -55,7 +55,7 @@ class SignupOption
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {

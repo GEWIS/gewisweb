@@ -18,7 +18,7 @@ class JobCategories extends AbstractHelper
     }
 
     /**
-     * Returns all visible categories
+     * Returns all visible categories.
      *
      * @return array
      */

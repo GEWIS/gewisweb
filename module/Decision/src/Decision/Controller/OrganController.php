@@ -9,7 +9,6 @@ use Laminas\View\Model\ViewModel;
 
 class OrganController extends AbstractActionController
 {
-
     /**
      * @var Organ
      */
@@ -27,7 +26,7 @@ class OrganController extends AbstractActionController
     {
         return new ViewModel(
             [
-            'organs' => $this->organService->getOrgans()
+            'organs' => $this->organService->getOrgans(),
             ]
         );
     }
@@ -41,10 +40,11 @@ class OrganController extends AbstractActionController
         try {
             $organ = $this->organService->getOrgan($organId);
             $organMemberInformation = $this->organService->getOrganMemberInformation($organ);
+
             return new ViewModel(
                 array_merge(
                     [
-                    'organ' => $organ
+                    'organ' => $organ,
                     ],
                     $organMemberInformation
                 )

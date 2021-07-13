@@ -3,8 +3,8 @@
 namespace Decision\Form;
 
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\IsImage;
 use Laminas\Validator\StringLength;
@@ -20,8 +20,8 @@ class OrganInformation extends Form implements InputFilterProviderInterface
             'name' => 'email',
             'type' => 'email',
             'options' => [
-                'label' => $translator->translate('Email')
-            ]
+                'label' => $translator->translate('Email'),
+            ],
             ]
         );
 
@@ -30,8 +30,8 @@ class OrganInformation extends Form implements InputFilterProviderInterface
             'name' => 'website',
             'type' => 'url',
             'options' => [
-                'label' => $translator->translate('Website')
-            ]
+                'label' => $translator->translate('Website'),
+            ],
             ]
         );
 
@@ -40,8 +40,8 @@ class OrganInformation extends Form implements InputFilterProviderInterface
             'name' => 'shortDutchDescription',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Short dutch description')
-            ]
+                'label' => $translator->translate('Short dutch description'),
+            ],
             ]
         );
 
@@ -50,8 +50,8 @@ class OrganInformation extends Form implements InputFilterProviderInterface
             'name' => 'shortEnglishDescription',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Short english description')
-            ]
+                'label' => $translator->translate('Short english description'),
+            ],
             ]
         );
 
@@ -60,8 +60,8 @@ class OrganInformation extends Form implements InputFilterProviderInterface
             'name' => 'dutchDescription',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Long dutch description')
-            ]
+                'label' => $translator->translate('Long dutch description'),
+            ],
             ]
         );
 
@@ -70,8 +70,8 @@ class OrganInformation extends Form implements InputFilterProviderInterface
             'name' => 'englishDescription',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Long english description')
-            ]
+                'label' => $translator->translate('Long english description'),
+            ],
             ]
         );
 
@@ -93,8 +93,8 @@ class OrganInformation extends Form implements InputFilterProviderInterface
             foreach (['X', 'Y', 'Width', 'Height'] as $param) {
                 $this->add(
                     [
-                    'name' => $type . 'Crop' . $param,
-                    'type' => 'hidden'
+                    'name' => $type.'Crop'.$param,
+                    'type' => 'hidden',
                     ]
                 );
             }
@@ -107,8 +107,8 @@ class OrganInformation extends Form implements InputFilterProviderInterface
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
-                'value' => $translator->translate('Save')
-            ]
+                'value' => $translator->translate('Save'),
+            ],
             ]
         );
     }
@@ -123,10 +123,10 @@ class OrganInformation extends Form implements InputFilterProviderInterface
     {
         return [
             'website' => [
-                'required' => false
+                'required' => false,
             ],
             'email' => [
-                'required' => false
+                'required' => false,
             ],
             'shortDutchDescription' => [
                 'required' => false,
@@ -134,8 +134,8 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                     [
                         'name' => StringLength::class,
                         'options' => [
-                            'max' => 150
-                        ]
+                            'max' => 150,
+                        ],
                     ],
                 ],
             ],
@@ -145,8 +145,8 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                     [
                         'name' => StringLength::class,
                         'options' => [
-                            'max' => 150
-                        ]
+                            'max' => 150,
+                        ],
                     ],
                 ],
             ],
@@ -156,8 +156,8 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                     [
                         'name' => StringLength::class,
                         'options' => [
-                            'max' => 10000
-                        ]
+                            'max' => 10000,
+                        ],
                     ],
                 ],
             ],
@@ -167,8 +167,8 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                     [
                         'name' => StringLength::class,
                         'options' => [
-                            'max' => 10000
-                        ]
+                            'max' => 10000,
+                        ],
                     ],
                 ],
             ],
@@ -181,8 +181,8 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                     [
                         'name' => Extension::class,
                         'options' => [
-                            'extension' => ['png', 'jpg', 'jpeg', 'tiff', 'gif']
-                        ]
+                            'extension' => ['png', 'jpg', 'jpeg', 'tiff', 'gif'],
+                        ],
                     ],
                 ],
             ],
@@ -195,8 +195,8 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                     [
                         'name' => Extension::class,
                         'options' => [
-                            'extension' => ['png', 'jpg', 'jpeg', 'tiff', 'gif']
-                        ]
+                            'extension' => ['png', 'jpg', 'jpeg', 'tiff', 'gif'],
+                        ],
                     ],
                 ],
             ],

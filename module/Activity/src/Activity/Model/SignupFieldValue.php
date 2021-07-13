@@ -61,8 +61,6 @@ class SignupFieldValue
 
     /**
      * Set the field.
-     *
-     * @param SignupField $field
      */
     public function setField(SignupField $field)
     {
@@ -71,8 +69,6 @@ class SignupFieldValue
 
     /**
      * Set the signup.
-     *
-     * @param Signup $signup
      */
     public function setSignup(Signup $signup)
     {

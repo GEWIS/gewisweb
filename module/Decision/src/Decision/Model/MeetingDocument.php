@@ -46,7 +46,7 @@ class MeetingDocument
     protected $path;
 
     /**
-     * Determines the order in which to display the document
+     * Determines the order in which to display the document.
      *
      * The order is determined by sorting the positions in ascending order.
      *
@@ -76,8 +76,6 @@ class MeetingDocument
 
     /**
      * Set the meeting.
-     *
-     * @param Meeting $meeting
      */
     public function setMeeting(Meeting $meeting)
     {

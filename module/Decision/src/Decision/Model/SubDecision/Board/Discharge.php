@@ -2,8 +2,8 @@
 
 namespace Decision\Model\SubDecision\Board;
 
-use Doctrine\ORM\Mapping as ORM;
 use Decision\Model\SubDecision;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Discharge from board position.
@@ -41,8 +41,6 @@ class Discharge extends SubDecision
 
     /**
      * Set the installation.
-     *
-     * @param Installation $installation
      */
     public function setInstallation(Installation $installation)
     {

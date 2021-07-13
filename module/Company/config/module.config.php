@@ -141,7 +141,6 @@ return [
                             'constraints' => [
                                 'slugCompanyName' => '[a-zA-Z0-9_\-\.]*',
                             ],
-
                         ],
                         'may_terminate' => true,
                     ],
@@ -156,7 +155,6 @@ return [
                             'constraints' => [
                                 'slugCompanyName' => '[a-zA-Z0-9_\-\.]*',
                             ],
-
                         ],
                         'may_terminate' => true,
 
@@ -237,7 +235,7 @@ return [
                                 'options' => [
                                     'route' => '/addJob',
                                     'defaults' => [
-                                        'action' => 'addJob'
+                                        'action' => 'addJob',
                                     ],
                                     'may_terminate' => true,
                                 ],
@@ -303,6 +301,7 @@ return [
                 $translator = $sm->get('translator');
                 $companyService = $sm->get('company_service_company');
                 $companyQueryService = $sm->get('company_service_companyquery');
+
                 return new CompanyController($translator, $companyService, $companyQueryService);
             },
             'Company\Controller\Admin' => function (ServiceLocatorInterface $sm) {
@@ -312,13 +311,14 @@ return [
                 $labelMapper = $sm->get('company_mapper_label');
                 $companyForm = $sm->get('company_form_company');
                 $languages = $sm->get('languages');
+
                 return new AdminController($translator, $companyService, $companyQueryService, $labelMapper, $companyForm, $languages);
             },
         ],
     ],
     'view_manager' => [
         'template_path_stack' => [
-            'company' => __DIR__ . '/../view/',
+            'company' => __DIR__.'/../view/',
         ],
     ],
     'doctrine' => [
@@ -326,7 +326,7 @@ return [
             'company_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__ . '/../src/Company/Model/'],
+                'paths' => [__DIR__.'/../src/Company/Model/'],
             ],
             'orm_default' => [
                 'drivers' => [

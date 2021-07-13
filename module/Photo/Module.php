@@ -2,9 +2,12 @@
 
 namespace Photo;
 
-use Doctrine\ORM\Events;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
+use Doctrine\ORM\Events;
 use Exception;
+use Laminas\Cache\StorageFactory;
+use Laminas\Mvc\MvcEvent;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use League\Glide\Urls\UrlBuilderFactory;
 use Photo\Listener\AlbumDate as AlbumDateListener;
 use Photo\Listener\Remove as RemoveListener;
@@ -14,9 +17,6 @@ use Photo\Service\AlbumCover;
 use Photo\Service\Metadata;
 use Photo\Service\Photo;
 use Photo\View\Helper\GlideUrl;
-use Laminas\Cache\StorageFactory;
-use Laminas\Mvc\MvcEvent;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class Module
 {
@@ -45,7 +45,7 @@ class Module
      */
     public function getConfig()
     {
-        return include __DIR__ . '/config/module.config.php';
+        return include __DIR__.'/config/module.config.php';
     }
 
     /**
@@ -68,6 +68,7 @@ class Module
                     $albumMapper = $sm->get('photo_mapper_album');
                     $createAlbumForm = $sm->get('photo_form_album_create');
                     $editAlbumForm = $sm->get('photo_form_album_edit');
+
                     return new Album(
                         $translator,
                         $userRole,
@@ -98,6 +99,7 @@ class Module
                     $weeklyPhotoMapper = $sm->get('photo_mapper_weekly_photo');
                     $profilePhotoMapper = $sm->get('photo_mapper_profile_photo');
                     $photoConfig = $sm->get('config')['photo'];
+
                     return new Photo(
                         $translator,
                         $userRole,
@@ -120,6 +122,7 @@ class Module
                     $storage = $sm->get('application_service_storage');
                     $photoConfig = $sm->get('config')['photo'];
                     $storageConfig = $sm->get('config')['storage'];
+
                     return new AlbumCover($photoMapper, $albumMapper, $storage, $photoConfig, $storageConfig);
                 },
                 'photo_service_admin' => function (ServiceLocatorInterface $sm) {
@@ -132,6 +135,7 @@ class Module
                     $storageService = $sm->get('application_service_storage');
                     $photoMapper = $sm->get('photo_mapper_photo');
                     $photoConfig = $sm->get('config')['photo'];
+
                     return new Admin(
                         $translator,
                         $userRole,
@@ -236,22 +240,22 @@ class Module
                 },
                 'album_page_cache' => function () {
                     return StorageFactory::factory(
-                        array(
-                            'adapter' => array(
+                        [
+                            'adapter' => [
                                 'name' => 'filesystem',
-                                'options' => array(
+                                'options' => [
                                     'dirLevel' => 2,
                                     'cacheDir' => 'data/cache',
                                     'dirPermission' => 0755,
                                     'filePermission' => 0666,
-                                    'namespaceSeparator' => '-db-'
-                                ),
-                            ),
-                            'plugins' => array('serializer'),
-                        )
+                                    'namespaceSeparator' => '-db-',
+                                ],
+                            ],
+                            'plugins' => ['serializer'],
+                        ]
                     );
                 },
-            ]
+            ],
         ];
     }
 
@@ -274,9 +278,10 @@ class Module
                         $config['glide']['signing_key']
                     );
                     $helper->setUrlBuilder($urlBuilder);
+
                     return $helper;
                 },
-            ]
+            ],
         ];
     }
 }

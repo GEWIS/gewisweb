@@ -9,7 +9,6 @@ use Laminas\Validator\StringLength;
 
 class CreateAlbum extends Form
 {
-
     public function __construct(Translator $translate)
     {
         parent::__construct();
@@ -19,8 +18,8 @@ class CreateAlbum extends Form
             'name' => 'name',
             'type' => 'Laminas\Form\Element\Text',
             'options' => [
-                'label' => $translate->translate('Album title')
-            ]
+                'label' => $translate->translate('Album title'),
+            ],
             ]
         );
 
@@ -29,8 +28,8 @@ class CreateAlbum extends Form
             'name' => 'submit',
             'type' => 'submit',
             'options' => [
-                'label' => $translate->translate('Create')
-            ]
+                'label' => $translate->translate('Create'),
+            ],
             ]
         );
 
@@ -51,10 +50,10 @@ class CreateAlbum extends Form
                     'options' => [
                         'encoding' => 'UTF-8',
                         'min' => 3,
-                        'max' => 75
-                    ]
-                ]
-            ]
+                        'max' => 75,
+                    ],
+                ],
+            ],
             ]
         );
 

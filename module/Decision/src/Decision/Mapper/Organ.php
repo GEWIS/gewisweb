@@ -22,9 +22,7 @@ class Organ
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -41,11 +39,12 @@ class Organ
     public function findActive($type = null)
     {
         $criteria = [
-            'abrogationDate' => null
+            'abrogationDate' => null,
         ];
         if (!is_null($type)) {
             $criteria['type'] = $type;
         }
+
         return $this->getRepository()->findBy($criteria);
     }
 
@@ -66,6 +65,7 @@ class Organ
             $qb->andWhere('o.type = :type')
                 ->setParameter('type', $type);
         }
+
         return $qb->getQuery()->getResult();
     }
 
@@ -101,7 +101,7 @@ class Organ
     }
 
     /**
-     * Find an organ by its abbreviation
+     * Find an organ by its abbreviation.
      *
      * It is possible that multiple organs with the same abbreviation exist,
      * for example, through the reinstatement of an previously abrogated organ.
@@ -109,8 +109,8 @@ class Organ
      *
      * @param string $abbr
      * @param string $type
-     * @param bool $latest
-     *    Whether to retrieve the latest occurence of an organ or not.
+     * @param bool   $latest
+     *                       Whether to retrieve the latest occurence of an organ or not
      *
      * @return \Decision\Model\Organ
      */

@@ -1,11 +1,11 @@
 <?php
 
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use User\Controller\ApiAdminController;
 use User\Controller\ApiAuthenticationController;
 use User\Controller\ApiController;
 use User\Controller\Factory\ApiAuthenticationControllerFactory;
 use User\Controller\UserController;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 return [
     'router' => [
@@ -35,15 +35,15 @@ return [
                         'type' => 'Literal',
                         'options' => [
                             'route' => '/login',
-                        ]
+                        ],
                     ],
                     'logout' => [
                         'type' => 'Literal',
                         'options' => [
                             'route' => '/logout',
                             'defaults' => [
-                                'action' => 'logout'
-                            ]
+                                'action' => 'logout',
+                            ],
                         ],
                     ],
                     'pinlogin' => [
@@ -60,29 +60,29 @@ return [
                         'options' => [
                             'route' => '/reset/:code',
                             'constraints' => [
-                                'code' => '[a-zA-Z0-9]*'
+                                'code' => '[a-zA-Z0-9]*',
                             ],
                             'defaults' => [
                                 'code' => '',
-                                'action' => 'activateReset'
-                            ]
-                        ]
+                                'action' => 'activateReset',
+                            ],
+                        ],
                     ],
                     'activate' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/activate/:code',
                             'constraints' => [
-                                'code' => '[a-zA-Z0-9]*'
+                                'code' => '[a-zA-Z0-9]*',
                             ],
                             'defaults' => [
                                 'code' => '',
-                                'action' => 'activate'
-                            ]
-                        ]
-                    ]
+                                'action' => 'activate',
+                            ],
+                        ],
+                    ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
             'user_admin' => [
                 'type' => 'Literal',
@@ -90,7 +90,7 @@ return [
                     'route' => '/admin/user',
                     'defaults' => [
                         '__NAMESPACE__' => 'User\Controller',
-                    ]
+                    ],
                 ],
                 'may_terminate' => false,
                 'child_routes' => [
@@ -100,8 +100,8 @@ return [
                             'route' => '/api',
                             'defaults' => [
                                 'controller' => 'ApiAdmin',
-                                'action' => 'index'
-                            ]
+                                'action' => 'index',
+                            ],
                         ],
                         'may_terminate' => true,
                         'child_routes' => [
@@ -113,9 +113,9 @@ return [
                                         'id' => '[0-9]+',
                                     ],
                                     'defaults' => [
-                                        'action' => 'remove'
-                                    ]
-                                ]
+                                        'action' => 'remove',
+                                    ],
+                                ],
                             ],
                             'default' => [
                                 'type' => 'Segment',
@@ -123,13 +123,13 @@ return [
                                     'route' => '/:action',
                                     'constraints' => [
                                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
             'user_token' => [
                 'type' => 'segment',
@@ -138,9 +138,9 @@ return [
                     'defaults' => [
                         'controller' => '\User\Controller\ApiAuthenticationController',
                         'action' => 'token',
-                    ]
+                    ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
             'validate_login' => [
                 'type' => 'segment',
@@ -148,7 +148,7 @@ return [
                     'route' => '/api/validateLogin',
                     'defaults' => [
                         'controller' => '\User\Controller\Api',
-                        'action' => 'validate'
+                        'action' => 'validate',
                     ],
                 ],
                 'priority' => 100,
@@ -158,27 +158,30 @@ return [
     'controllers' => [
         'factories' => [
             'User\Controller\User' => function (ServiceLocatorInterface $sm) {
-                $userService = $sm->get("user_service_user");
+                $userService = $sm->get('user_service_user');
+
                 return new UserController($userService);
             },
             'User\Controller\Api' => function (ServiceLocatorInterface $sm) {
-                $userService = $sm->get("user_service_user");
-                $memberInfoService = $sm->get("decision_service_memberinfo");
+                $userService = $sm->get('user_service_user');
+                $memberInfoService = $sm->get('decision_service_memberinfo');
+
                 return new ApiController($userService, $memberInfoService);
             },
             'User\Controller\ApiAdmin' => function (ServiceLocatorInterface $sm) {
-                $apiUserService = $sm->get("user_service_apiuser");
+                $apiUserService = $sm->get('user_service_apiuser');
+
                 return new ApiAdminController($apiUserService);
             },
             ApiAuthenticationController::class => ApiAuthenticationControllerFactory::class,
-        ]
+        ],
     ],
     'view_manager' => [
         'template_path_stack' => [
-            'user' => __DIR__ . '/../view/'
+            'user' => __DIR__.'/../view/',
         ],
         'template_map' => [
-            'user/login' => __DIR__ . '/../view/partial/login.phtml',
+            'user/login' => __DIR__.'/../view/partial/login.phtml',
         ],
     ],
     'doctrine' => [
@@ -186,13 +189,13 @@ return [
             'user_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__ . '/../src/User/Model/']
+                'paths' => [__DIR__.'/../src/User/Model/'],
             ],
             'orm_default' => [
                 'drivers' => [
-                    'User\Model' => 'user_entities'
-                ]
-            ]
-        ]
-    ]
+                    'User\Model' => 'user_entities',
+                ],
+            ],
+        ],
+    ],
 ];

@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for labels.
- *
  */
 class Label
 {
@@ -21,8 +20,6 @@ class Label
 
     /**
      * Constructor.
-     *
-     * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
@@ -36,8 +33,7 @@ class Label
     }
 
     /**
-     * Saves all labels
-     *
+     * Saves all labels.
      */
     public function save()
     {
@@ -45,9 +41,9 @@ class Label
     }
 
     /**
-     * Finds the label with the given slug
+     * Finds the label with the given slug.
      *
-     * @param integer $labelSlug
+     * @param int $labelSlug
      */
     public function findLabel($labelSlug)
     {
@@ -55,9 +51,9 @@ class Label
     }
 
     /**
-     * Finds the label with the given id
+     * Finds the label with the given id.
      *
-     * @param integer $labelId
+     * @param int $labelId
      */
     public function findLabelById($labelId)
     {
@@ -75,8 +71,7 @@ class Label
     }
 
     /**
-     * Find the same label, but in the given language
-     *
+     * Find the same label, but in the given language.
      */
     public function siblingLabel($label, $lang)
     {
@@ -102,7 +97,7 @@ class Label
     }
 
     /**
-     * Deletes the given label
+     * Deletes the given label.
      *
      * @param LabelModel $label
      */

@@ -17,10 +17,10 @@ use Decision\Mapper\Member;
 use Decision\Service\Organ;
 use Doctrine\ORM\EntityManager;
 use Exception;
-use User\Permissions\NotAllowedException;
-use User\Service\User;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
+use User\Permissions\NotAllowedException;
+use User\Service\User;
 
 class ActivityCalendar extends AbstractAclService
 {
@@ -120,8 +120,7 @@ class ActivityCalendar extends AbstractAclService
     }
 
     /**
-     * Gets all future options
-     *
+     * Gets all future options.
      */
     public function getUpcomingOptions()
     {
@@ -129,8 +128,7 @@ class ActivityCalendar extends AbstractAclService
     }
 
     /**
-     * Gets all future options which the current user is allowed to edit/delete
-     *
+     * Gets all future options which the current user is allowed to edit/delete.
      */
     public function getEditableUpcomingOptions()
     {
@@ -171,9 +169,7 @@ class ActivityCalendar extends AbstractAclService
     public function getCreateOptionForm()
     {
         if (!$this->isAllowed('create')) {
-            throw new NotAllowedException(
-                $this->translator->translate('Not allowed to create activity options.')
-            );
+            throw new NotAllowedException($this->translator->translate('Not allowed to create activity options.'));
         }
 
         return $this->calendarOptionForm;
@@ -181,7 +177,9 @@ class ActivityCalendar extends AbstractAclService
 
     /**
      * @param $data
+     *
      * @return ProposalModel|bool
+     *
      * @throws Exception
      */
     public function createProposal($data)
@@ -210,10 +208,10 @@ class ActivityCalendar extends AbstractAclService
 //        See /Activity/Form/ActivityCalendarProposal for more details on the definition of these options
         if ($organ > -1) {
             $proposal->setOrgan($this->organService->getOrgan($organ));
-        } elseif ($organ == -1) {
-            $proposal->setOrganAlt("Board");
-        } elseif ($organ == -2) {
-            $proposal->setOrganAlt("Other");
+        } elseif (-1 == $organ) {
+            $proposal->setOrganAlt('Board');
+        } elseif (-2 == $organ) {
+            $proposal->setOrganAlt('Other');
         }
         $em->persist($proposal);
         $em->flush();
@@ -221,7 +219,7 @@ class ActivityCalendar extends AbstractAclService
         $options = $validatedData['options'];
         foreach ($options as $option) {
             $result = $this->createOption($option, $proposal);
-            if ($result == false) {
+            if (false == $result) {
                 return false;
             }
         }
@@ -237,19 +235,19 @@ class ActivityCalendar extends AbstractAclService
     public function getCreateProposalForm()
     {
         if (!$this->isAllowed('create')) {
-            throw new NotAllowedException(
-                $this->translator->translate('Not allowed to create activity proposals.')
-            );
+            throw new NotAllowedException($this->translator->translate('Not allowed to create activity proposals.'));
         }
 
         return $this->calendarProposalForm;
     }
 
     /**
-     * Returns whether an organ may create a new activity proposal
+     * Returns whether an organ may create a new activity proposal.
      *
      * @param int $organId
+     *
      * @return bool
+     *
      * @throws Exception
      */
     protected function canOrganCreateProposal($organId)
@@ -261,9 +259,9 @@ class ActivityCalendar extends AbstractAclService
         $period = $this->getCurrentPeriod();
 
         if (
-            $period == null
+            null == $period
             || !$this->isAllowed('create')
-            || $organId == null
+            || null == $organId
         ) {
             return false;
         }
@@ -271,27 +269,31 @@ class ActivityCalendar extends AbstractAclService
         $max = $this->getMaxActivities($organId, $period->getId());
         $count = $this->getCurrentProposalCount($period, $organId);
 
-        return ($count < $max);
+        return $count < $max;
     }
 
     /**
-     * Get the current ActivityOptionCreationPeriod
+     * Get the current ActivityOptionCreationPeriod.
      *
      * @return ActivityOptionCreationPeriod
+     *
      * @throws Exception
      */
     public function getCurrentPeriod()
     {
         $mapper = $this->periodMapper;
+
         return $mapper->getCurrentActivityOptionCreationPeriod();
     }
 
     /**
-     * Get the max number of activity options an organ can create
+     * Get the max number of activity options an organ can create.
      *
      * @param int $organId
      * @param int $periodId
+     *
      * @return int
+     *
      * @throws Exception
      */
     protected function getMaxActivities($organId, $periodId)
@@ -303,14 +305,16 @@ class ActivityCalendar extends AbstractAclService
         if ($maxActivities) {
             $max = $maxActivities->getValue();
         }
+
         return $max;
     }
 
     /**
-     * Get the current proposal count of an organ for the given period
+     * Get the current proposal count of an organ for the given period.
      *
      * @param $period
      * @param $organId
+     *
      * @return int
      */
     protected function getCurrentProposalCount($period, $organId)
@@ -319,13 +323,16 @@ class ActivityCalendar extends AbstractAclService
         $begin = $period->getBeginPlanningTime();
         $end = $period->getEndPlanningTime();
         $options = $mapper->getNonClosedProposalsWithinPeriodAndOrgan($begin, $end, $organId);
+
         return count($options);
     }
 
     /**
      * @param $data
      * @param ProposalModel $proposal
+     *
      * @return OptionModel|bool
+     *
      * @throws Exception
      */
     public function createOption($data, $proposal)
@@ -355,9 +362,7 @@ class ActivityCalendar extends AbstractAclService
     public function approveOption($id)
     {
         if (!$this->canApproveOption()) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to approve this option')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to approve this option'));
         }
 
         $mapper = $this->calendarOptionMapper;
@@ -373,7 +378,7 @@ class ActivityCalendar extends AbstractAclService
 
         foreach ($options as $option) {
             // Can't add two options at the same time
-            if ($option->getStatus() == null) {
+            if (null == $option->getStatus()) {
                 $this->deleteOption($option->getId());
             }
         }
@@ -393,9 +398,7 @@ class ActivityCalendar extends AbstractAclService
         $mapper = $this->calendarOptionMapper;
         $option = $mapper->find($id);
         if (!$this->canDeleteOption($option)) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to delete this option')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to delete this option'));
         }
 
         $em = $this->entityManager;
@@ -415,14 +418,14 @@ class ActivityCalendar extends AbstractAclService
         }
 
         if (
-            $option->getProposal()->getOrgan() === null
+            null === $option->getProposal()->getOrgan()
             && $option->getProposal()->getCreator()->getLidnr() === $this->userService->getIdentity()->getLidnr()
         ) {
             return true;
         }
 
         $organ = $option->getProposal()->getOrgan();
-        if ($organ !== null && $this->organService->canEditOrgan($organ)) {
+        if (null !== $organ && $this->organService->canEditOrgan($organ)) {
             return true;
         }
 
@@ -430,10 +433,12 @@ class ActivityCalendar extends AbstractAclService
     }
 
     /**
-     * Returns whether a user may create an option with given start time
+     * Returns whether a user may create an option with given start time.
      *
      * @param DateTime $beginTime
+     *
      * @return bool
+     *
      * @throws Exception
      */
     public function canCreateOption($beginTime)
@@ -454,22 +459,24 @@ class ActivityCalendar extends AbstractAclService
     }
 
     /**
-     * Returns whether a member may create a new activity proposal
+     * Returns whether a member may create a new activity proposal.
      *
      * @return bool
+     *
      * @throws Exception
      */
     public function canCreateProposal()
     {
         $organs = $this->getEditableOrgans();
 
-        return (!empty($organs));
+        return !empty($organs);
     }
 
     /**
-     * Retrieves all organs which the current user is allowed to edit and for which the organs can still create proposals
+     * Retrieves all organs which the current user is allowed to edit and for which the organs can still create proposals.
      *
      * @return array
+     *
      * @throws Exception
      */
     public function getEditableOrgans()
@@ -482,6 +489,7 @@ class ActivityCalendar extends AbstractAclService
                 array_push($organs, $organ);
             }
         }
+
         return $organs;
     }
 
@@ -496,16 +504,18 @@ class ActivityCalendar extends AbstractAclService
     }
 
     /**
-     * Get the current ActivityOptionCreationPeriod
+     * Get the current ActivityOptionCreationPeriod.
      *
      * @param int $proposalId
      * @param int $organId
+     *
      * @return int
      */
     protected function getCurrentProposalOptionCount($proposalId, $organId)
     {
         $mapper = $this->calendarOptionMapper;
         $options = $mapper->findOptionsByProposalAndOrgan($proposalId, $organId);
+
         return count($options);
     }
 

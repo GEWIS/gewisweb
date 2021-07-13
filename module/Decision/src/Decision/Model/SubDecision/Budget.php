@@ -3,12 +3,12 @@
 namespace Decision\Model\SubDecision;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
-use Decision\Model\SubDecision;
 use Decision\Model\Member;
+use Decision\Model\SubDecision;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Budget decision
+ * Budget decision.
  *
  * @ORM\Entity
  */
@@ -69,8 +69,6 @@ class Budget extends SubDecision
 
     /**
      * Set the author.
-     *
-     * @param Member $author
      */
     public function setAuthor(Member $author)
     {
@@ -129,8 +127,6 @@ class Budget extends SubDecision
 
     /**
      * Set the date.
-     *
-     * @param DateTime $date
      */
     public function setDate(DateTime $date)
     {

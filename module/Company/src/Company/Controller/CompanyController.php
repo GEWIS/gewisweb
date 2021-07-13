@@ -4,8 +4,8 @@ namespace Company\Controller;
 
 use Company\Service\Company;
 use Company\Service\CompanyQuery;
-use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
 
 class CompanyController extends AbstractActionController
@@ -33,14 +33,12 @@ class CompanyController extends AbstractActionController
     }
 
     /**
-     *
-     * Action to display a list of all nonhidden companies
-     *
+     * Action to display a list of all nonhidden companies.
      */
     public function listAction()
     {
         $featuredPackage = $this->companyService->getFeaturedPackage();
-        if ($featuredPackage === null) {
+        if (null === $featuredPackage) {
             return new ViewModel(
                 [
                 'companyList' => $this->companyService->getCompanyList(),
@@ -79,9 +77,7 @@ class CompanyController extends AbstractActionController
     }
 
     /**
-     *
-     * Action that shows the 'company in the spotlight' and the article written by the company in the current language
-     *
+     * Action that shows the 'company in the spotlight' and the article written by the company in the current language.
      */
     public function spotlightAction()
     {
@@ -104,9 +100,7 @@ class CompanyController extends AbstractActionController
     }
 
     /**
-     *
-     * Action that displays a list of all jobs (facaturebank) or a list of jobs for a company
-     *
+     * Action that displays a list of all jobs (facaturebank) or a list of jobs for a company.
      */
     public function jobListAction()
     {
@@ -124,7 +118,7 @@ class CompanyController extends AbstractActionController
         );
 
         // A job can be a thesis/internship/etc.
-        $jobCategory = ($category->getLanguageNeutralId() != null) ? $category->getSlug() : null;
+        $jobCategory = (null != $category->getLanguageNeutralId()) ? $category->getSlug() : null;
 
         if ($companyName = $this->params('slugCompanyName', null)) {
             // Retrieve published jobs for one specific company
@@ -138,7 +132,7 @@ class CompanyController extends AbstractActionController
             return $viewModel->setVariables(
                 [
                 'jobList' => $jobs,
-                'company' => $this->companyService->getCompanyBySlugName($companyName)
+                'company' => $this->companyService->getCompanyBySlugName($companyName),
                 ]
             );
         }
@@ -155,27 +149,25 @@ class CompanyController extends AbstractActionController
 
         return $viewModel->setVariables(
             [
-            'jobList' => $jobs
+            'jobList' => $jobs,
             ]
         );
     }
 
     /**
-     *
-     * Action to list a single job of a certain company
-     *
+     * Action to list a single job of a certain company.
      */
     public function jobsAction()
     {
         $jobName = $this->params('slugJobName');
         $companyName = $this->params('slugCompanyName');
         $category = $this->companyService->categoryForSlug($this->params('category'));
-        if ($jobName !== null) {
+        if (null !== $jobName) {
             $jobs = $this->companyQueryService->getJobs(
                 [
                 'companySlugName' => $companyName,
                 'jobSlug' => $jobName,
-                'jobCategory' => ($category->getLanguageNeutralId() !== null) ? $category->getSlug() : null
+                'jobCategory' => (null !== $category->getLanguageNeutralId()) ? $category->getSlug() : null,
                 ]
             );
             if (!empty($jobs)) {

@@ -2,10 +2,10 @@
 
 namespace User\Form;
 
-use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilter;
-use Laminas\I18n\Translator\TranslatorInterface as Translator;
 use Laminas\Authentication\Result;
+use Laminas\Form\Form;
+use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilter;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\StringLength;
 
@@ -23,8 +23,8 @@ class Login extends Form
             'name' => 'login',
             'type' => 'text',
             'options' => [
-                'label' => $translate->translate('Membership number or email address')
-            ]
+                'label' => $translate->translate('Membership number or email address'),
+            ],
             ]
         );
 
@@ -33,8 +33,8 @@ class Login extends Form
             'name' => 'password',
             'type' => 'password',
             'options' => [
-                'label' => $translate->translate('Your password')
-            ]
+                'label' => $translate->translate('Your password'),
+            ],
             ]
         );
 
@@ -43,8 +43,8 @@ class Login extends Form
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
-                'value' => $translate->translate('Login')
-            ]
+                'value' => $translate->translate('Login'),
+            ],
             ]
         );
 
@@ -56,7 +56,7 @@ class Login extends Form
                 'label' => $translate->translate('Remember me'),
                 'checked_value' => 1,
                 'unchecked_value' => 0,
-                'checked' => true
+                'checked' => true,
             ],
             ]
         );
@@ -64,14 +64,14 @@ class Login extends Form
         $this->add(
             [
             'name' => 'redirect',
-            'type' => 'hidden'
+            'type' => 'hidden',
             ]
         );
 
         $this->add(
             [
             'name' => 'security',
-            'type' => 'Laminas\Form\Element\Csrf'
+            'type' => 'Laminas\Form\Element\Csrf',
             ]
         );
 
@@ -89,8 +89,8 @@ class Login extends Form
                     $this->setMessages(
                         [
                         'login' => [
-                            $this->translate->translate('This user could not be found.')
-                        ]
+                            $this->translate->translate('This user could not be found.'),
+                        ],
                         ]
                     );
                     break;
@@ -98,8 +98,8 @@ class Login extends Form
                     $this->setMessages(
                         [
                         'password' => [
-                            $this->translate->translate('Wrong password provided.')
-                        ]
+                            $this->translate->translate('Wrong password provided.'),
+                        ],
                         ]
                     );
                     break;
@@ -107,8 +107,8 @@ class Login extends Form
                     $this->setMessages(
                         [
                         'password' => [
-                            $this->translate->translate('Too many login attempts, try again later.')
-                        ]
+                            $this->translate->translate('Too many login attempts, try again later.'),
+                        ],
                         ]
                     );
                     break;
@@ -125,8 +125,8 @@ class Login extends Form
             'name' => 'login',
             'required' => true,
             'validators' => [
-                ['name' => NotEmpty::class]
-            ]
+                ['name' => NotEmpty::class],
+            ],
             ]
         );
 
@@ -139,10 +139,10 @@ class Login extends Form
                 [
                     'name' => StringLength::class,
                     'options' => [
-                        'min' => 8
-                    ]
-                ]
-            ]
+                        'min' => 8,
+                    ],
+                ],
+            ],
             ]
         );
 

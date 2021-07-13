@@ -15,8 +15,6 @@ class Signup
 
     /**
      * Constructor.
-     *
-     * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
@@ -25,6 +23,7 @@ class Signup
 
     /**
      * @param int $id
+     *
      * @return \Activity\Model\Signup
      */
     public function getSignupById($id)
@@ -49,7 +48,7 @@ class Signup
      */
     public function isSignedUp($activityId, $userId)
     {
-        return $this->getSignUp($activityId, $userId) !== null;
+        return null !== $this->getSignUp($activityId, $userId);
     }
 
     /**

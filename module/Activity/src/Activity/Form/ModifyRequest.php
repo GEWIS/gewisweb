@@ -20,7 +20,7 @@ class ModifyRequest extends Form implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'security',
-            'type' => 'Laminas\Form\Element\Csrf'
+            'type' => 'Laminas\Form\Element\Csrf',
             ]
         );
 

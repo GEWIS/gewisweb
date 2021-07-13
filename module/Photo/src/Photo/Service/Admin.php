@@ -7,13 +7,13 @@ use Application\Service\FileStorage;
 use Exception;
 use Imagick;
 use InvalidArgumentException;
-use Photo\Model\Photo as PhotoModel;
-use User\Model\User;
-use User\Permissions\NotAllowedException;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\IsImage;
+use Photo\Model\Photo as PhotoModel;
+use User\Model\User;
+use User\Permissions\NotAllowedException;
 
 /**
  * Admin service for all photo admin related functions.
@@ -95,20 +95,18 @@ class Admin extends AbstractAclService
     /**
      * Move the uploaded photo to the storage and store it in the database.
      * All upload actions should use this function to prevent "ghost" files
-     * or database entries
+     * or database entries.
      *
-     * @param string $path the temporary path of the uploaded photo
+     * @param string             $path        the temporary path of the uploaded photo
      * @param \Photo\Model\Album $targetAlbum the album to save the photo in
-     * @param boolean $move whether to move the photo instead of copying it
+     * @param bool               $move        whether to move the photo instead of copying it
      *
-     * @return PhotoModel|boolean
+     * @return PhotoModel|bool
      */
     public function storeUploadedPhoto($path, $targetAlbum, $move = false)
     {
         if (!$this->isAllowed('add', 'photo')) {
-            throw new NotAllowedException(
-                $this->translator->translate('Not allowed to add photos.')
-            );
+            throw new NotAllowedException($this->translator->translate('Not allowed to add photos.'));
         }
 
         $config = $this->photoConfig;
@@ -150,6 +148,7 @@ class Admin extends AbstractAclService
                 // Rollback if anything went wrong
                 $mapper->getConnection()->rollBack();
                 $this->photoService->deletePhotoFiles($photo);
+
                 return false;
             }
         }
@@ -159,11 +158,11 @@ class Admin extends AbstractAclService
 
     /**
      * Creates and stores a thumbnail of specified maximum size from a stored
-     * image
+     * image.
      *
-     * @param string $path the path of the original image
-     * @param int $width the maximum width of the thumbnail (in px)
-     * @param int $height the maximum height of the thumbnail (in px)
+     * @param string $path   the path of the original image
+     * @param int    $width  the maximum width of the thumbnail (in px)
+     * @param int    $height the maximum height of the thumbnail (in px)
      *
      * @return string the path of the created thumbnail
      */
@@ -171,9 +170,9 @@ class Admin extends AbstractAclService
     {
         $image = new Imagick($path);
         $image->thumbnailImage($width, $height, true);
-        $image->setimageformat("png");
+        $image->setimageformat('png');
         //Tempfile is used to generate sha1, not sure this is the best method
-        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() . '.png';
+        $tempFileName = sys_get_temp_dir().'/ThumbImage'.rand().'.png';
         $image->writeImage($tempFileName);
 
         return $this->storageService->storeFile($tempFileName);
@@ -183,25 +182,23 @@ class Admin extends AbstractAclService
      * Stores an directory in $target_album.
      * If any subdirectory is present, it will be stored in a new album,
      * with the (temporary) name of the directory.
-     * (i.e. the function is applied recursively)
+     * (i.e. the function is applied recursively).
      *
-     * @param string $path The path of the directory.
-     * @param \Photo\Model\Album $targetAlbum album The album to store the photos.
+     * @param string             $path        the path of the directory
+     * @param \Photo\Model\Album $targetAlbum album The album to store the photos
      *
      * @throws Exception on invalid path
      */
     public function storeUploadedDirectory($path, $targetAlbum)
     {
         if (!$this->isAllowed('import', 'photo')) {
-            throw new NotAllowedException(
-                $this->translator->translate('Not allowed to import photos.')
-            );
+            throw new NotAllowedException($this->translator->translate('Not allowed to import photos.'));
         }
         $image = new IsImage(['magicFile' => false]);
         if ($handle = opendir($path)) {
             while (false !== ($entry = readdir($handle))) {
-                if ($entry != "." && $entry != "..") {
-                    $subPath = $path . '/' . $entry;
+                if ('.' != $entry && '..' != $entry) {
+                    $subPath = $path.'/'.$entry;
                     if (is_dir($subPath)) {
                         //TODO: this no longer works (probably because of the type of $targetAlbum)
                         $subAlbum = $this->albumService->createAlbum($entry, $targetAlbum);
@@ -213,9 +210,7 @@ class Admin extends AbstractAclService
             }
             closedir($handle);
         } else {
-            throw new Exception(
-                $this->translator->translate('The specified path is not valid')
-            );
+            throw new Exception($this->translator->translate('The specified path is not valid'));
         }
     }
 
@@ -230,34 +225,25 @@ class Admin extends AbstractAclService
             ['JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG']
         );
 
-        if ($files['file']['error'] !== 0) {
-            throw new Exception(
-                $this->translator->translate('An unknown error occurred during uploading (' . $files['file']['error'] . ')')
-            );
+        if (0 !== $files['file']['error']) {
+            throw new Exception($this->translator->translate('An unknown error occurred during uploading ('.$files['file']['error'].')'));
         }
         /**
          * We re-add the original extension so it can be preserved later on
          * when moving the file.
          */
         $extension = explode('/', $files['file']['type'])[1];
-        $path = $files['file']['tmp_name'] . '.' . $extension;
+        $path = $files['file']['tmp_name'].'.'.$extension;
         move_uploaded_file($files['file']['tmp_name'], $path);
 
         if ($imageValidator->isValid($path)) {
             if ($extensionValidator->isValid($path)) {
                 $this->storeUploadedPhoto($path, $album, true);
             } else {
-                throw new InvalidArgumentException(
-                    $this->translator->translate('The uploaded file does not have a valid extension')
-                );
+                throw new InvalidArgumentException($this->translator->translate('The uploaded file does not have a valid extension'));
             }
         } else {
-            throw new InvalidArgumentException(
-                sprintf(
-                    $this->translator->translate("The uploaded file is not a valid image \nError: %s"),
-                    implode(',', array_values($imageValidator->getMessages()))
-                )
-            );
+            throw new InvalidArgumentException(sprintf($this->translator->translate("The uploaded file is not a valid image \nError: %s"), implode(',', array_values($imageValidator->getMessages()))));
         }
     }
 
@@ -267,9 +253,7 @@ class Admin extends AbstractAclService
     public function checkUploadAllowed()
     {
         if (!$this->isAllowed('upload', 'photo')) {
-            throw new NotAllowedException(
-                $this->translator->translate('Not allowed to upload photos.')
-            );
+            throw new NotAllowedException($this->translator->translate('Not allowed to upload photos.'));
         }
     }
 

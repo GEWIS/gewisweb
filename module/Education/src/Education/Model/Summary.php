@@ -29,7 +29,7 @@ class Summary extends Exam
     }
 
     /**
-     * Set the author
+     * Set the author.
      *
      * @param string $author
      */

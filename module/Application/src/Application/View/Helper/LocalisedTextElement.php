@@ -10,7 +10,6 @@ class LocalisedTextElement extends AbstractHelper
     /**
      * Determines the correct value for an element.
      *
-     * @param ElementInterface $element
      * @return string The real value of the $element
      */
     public function __invoke(ElementInterface $element)
@@ -37,10 +36,11 @@ class LocalisedTextElement extends AbstractHelper
      *
      * @param $haystack
      * @param $needle
-     * @return boolean
+     *
+     * @return bool
      */
     private static function endsWith(string $haystack, string $needle)
     {
-        return substr_compare($haystack, $needle, -strlen($needle)) === 0;
+        return 0 === substr_compare($haystack, $needle, -strlen($needle));
     }
 }

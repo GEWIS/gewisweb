@@ -3,8 +3,8 @@
 namespace Frontpage\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use User\Model\User;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use User\Model\User;
 
 /**
  * Poll response
@@ -16,7 +16,7 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 class PollVote implements ResourceInterface
 {
     /**
-     * The poll which was voted on
+     * The poll which was voted on.
      *
      * @ORM\ManyToOne(targetEntity="Frontpage\Model\Poll")
      * @ORM\JoinColumn(name="poll_id",referencedColumnName="id")

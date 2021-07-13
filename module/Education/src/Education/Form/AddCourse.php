@@ -3,8 +3,8 @@
 namespace Education\Form;
 
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator\StringLength;
 
 class AddCourse extends Form implements InputFilterProviderInterface
@@ -16,7 +16,7 @@ class AddCourse extends Form implements InputFilterProviderInterface
             'q2' => $translator->translate('Quartile 2'),
             'q3' => $translator->translate('Quartile 3'),
             'q4' => $translator->translate('Quartile 4'),
-            'interim' => $translator->translate('Interim')
+            'interim' => $translator->translate('Interim'),
         ];
 
         parent::__construct();
@@ -26,8 +26,8 @@ class AddCourse extends Form implements InputFilterProviderInterface
             'name' => 'code',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Course code')
-            ]
+                'label' => $translator->translate('Course code'),
+            ],
             ]
         );
         $this->add(
@@ -35,8 +35,8 @@ class AddCourse extends Form implements InputFilterProviderInterface
             'name' => 'parent',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Parent course code')
-            ]
+                'label' => $translator->translate('Parent course code'),
+            ],
             ]
         );
         $this->add(
@@ -44,8 +44,8 @@ class AddCourse extends Form implements InputFilterProviderInterface
             'name' => 'name',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Name')
-            ]
+                'label' => $translator->translate('Name'),
+            ],
             ]
         );
         $this->add(
@@ -53,8 +53,8 @@ class AddCourse extends Form implements InputFilterProviderInterface
             'name' => 'url',
             'type' => 'Laminas\Form\Element\Url',
             'options' => [
-                'label' => $translator->translate('URL')
-            ]
+                'label' => $translator->translate('URL'),
+            ],
             ]
         );
         $this->add(
@@ -63,8 +63,8 @@ class AddCourse extends Form implements InputFilterProviderInterface
             'type' => 'text',
             'options' => [
                 'label' => $translator->translate('Year'),
-                'value' => date("Y")
-            ]
+                'value' => date('Y'),
+            ],
             ]
         );
         $this->add(
@@ -73,15 +73,15 @@ class AddCourse extends Form implements InputFilterProviderInterface
             'type' => 'select',
             'options' => [
                 'label' => $translator->translate('Quartile'),
-                'value_options' => $qOptions
-            ]
+                'value_options' => $qOptions,
+            ],
             ]
         );
 
         $this->add(
             [
             'name' => 'submit',
-            'type' => 'submit'
+            'type' => 'submit',
             ]
         );
 
@@ -98,23 +98,23 @@ class AddCourse extends Form implements InputFilterProviderInterface
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 5,
-                            'max' => 6
-                        ]
+                            'max' => 6,
+                        ],
                     ],
-                    ['name' => 'alnum']
+                    ['name' => 'alnum'],
                 ],
                 'filters' => [
-                    ['name' => 'string_to_upper']
-                ]
+                    ['name' => 'string_to_upper'],
+                ],
             ], 'name' => [
-                'required' => true
+                'required' => true,
             ], 'url' => [
-                'required' => false
+                'required' => false,
             ], 'quartile' => [
-                'required' => true
+                'required' => true,
             ], 'year' => [
-                'required' => true
-            ]
+                'required' => true,
+            ],
         ];
     }
 }

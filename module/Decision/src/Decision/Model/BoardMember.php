@@ -3,8 +3,8 @@
 namespace Decision\Model;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
 use Decision\Model\SubDecision\Board\Installation;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Board member entity.
@@ -149,8 +149,6 @@ class BoardMember
 
     /**
      * Set the installation decision.
-     *
-     * @param Installation $installationDec
      */
     public function setInstallationDec(Installation $installationDec)
     {

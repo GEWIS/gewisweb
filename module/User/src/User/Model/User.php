@@ -3,10 +3,10 @@
 namespace User\Model;
 
 use Decision\Model\Member;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Laminas\Permissions\Acl\Role\RoleInterface;
+use Doctrine\ORM\Mapping as ORM;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use Laminas\Permissions\Acl\Role\RoleInterface;
 
 /**
  * User model.
@@ -25,7 +25,8 @@ class User implements RoleInterface, ResourceInterface
 
     /**
      * The user's email address.
-     * Deprecated
+     * Deprecated.
+     *
      * @ORM\Column(type="string")
      */
     protected $email;
@@ -38,14 +39,14 @@ class User implements RoleInterface, ResourceInterface
     protected $password;
 
     /**
-     * User roles
+     * User roles.
      *
      * @ORM\OneToMany(targetEntity="User\Model\UserRole", mappedBy="lidnr")
      */
     protected $roles;
 
     /**
-     * User sessions
+     * User sessions.
      *
      * @ORM\OneToMany(targetEntity="User\Model\Session", mappedBy="user")
      */
@@ -60,7 +61,7 @@ class User implements RoleInterface, ResourceInterface
     protected $member;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct(NewUser $newUser = null)
     {
@@ -156,7 +157,7 @@ class User implements RoleInterface, ResourceInterface
      */
     public function getRoleId()
     {
-        return 'user_' . $this->getLidnr();
+        return 'user_'.$this->getLidnr();
     }
 
     /**
@@ -172,7 +173,7 @@ class User implements RoleInterface, ResourceInterface
         return [
             'lidnr' => $this->getLidnr(),
             'email' => $this->getEmail(),
-            'member' => $this->getMember()->toArray()
+            'member' => $this->getMember()->toArray(),
         ];
     }
 

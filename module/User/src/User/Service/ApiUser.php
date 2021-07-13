@@ -3,12 +3,12 @@
 namespace User\Service;
 
 use Application\Service\AbstractAclService;
-use User\Form\ApiToken;
-use User\Model\ApiUser as ApiUserModel;
-use User\Mapper\ApiUser as ApiUserMapper;
-use User\Permissions\NotAllowedException;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
+use User\Form\ApiToken;
+use User\Mapper\ApiUser as ApiUserMapper;
+use User\Model\ApiUser as ApiUserModel;
+use User\Permissions\NotAllowedException;
 
 /**
  * API User service.
@@ -79,30 +79,27 @@ class ApiUser extends AbstractAclService
     public function getTokens()
     {
         if (!$this->isAllowed('list')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view API tokens')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view API tokens'));
         }
+
         return $this->apiUserMapper->findAll();
     }
 
     /**
-     * Remove a token by it's ID
+     * Remove a token by it's ID.
      *
      * @param int $id
      */
     public function removeToken($id)
     {
         if (!$this->isAllowed('remove')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to remove API tokens')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to remove API tokens'));
         }
         $this->apiUserMapper->remove($id);
     }
 
     /**
-     * Obtain a token by it's ID
+     * Obtain a token by it's ID.
      *
      * @param int $id
      *
@@ -111,10 +108,9 @@ class ApiUser extends AbstractAclService
     public function getToken($id)
     {
         if (!$this->isAllowed('view')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view API tokens')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view API tokens'));
         }
+
         return $this->apiUserMapper->find($id);
     }
 
@@ -168,7 +164,7 @@ class ApiUser extends AbstractAclService
     /**
      * Check if this service has an identity.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasIdentity()
     {
@@ -176,17 +172,16 @@ class ApiUser extends AbstractAclService
     }
 
     /**
-     * Get the API token form
+     * Get the API token form.
      *
      * @return ApiToken
      */
     public function getApiTokenForm()
     {
         if (!$this->isAllowed('add')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to add API tokens')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to add API tokens'));
         }
+
         return $this->apiTokenForm;
     }
 

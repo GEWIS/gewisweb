@@ -9,10 +9,10 @@ use Application\Service\AbstractAclService;
 use DateTime;
 use Decision\Model\AssociationYear as AssociationYear;
 use Decision\Model\Organ;
-use User\Model\User;
-use User\Permissions\NotAllowedException;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
+use User\Model\User;
+use User\Permissions\NotAllowedException;
 
 class ActivityQuery extends AbstractAclService
 {
@@ -80,10 +80,10 @@ class ActivityQuery extends AbstractAclService
     }
 
     /**
-     * A GEWIS association year starts 01-07
+     * A GEWIS association year starts 01-07.
      */
-    const ASSOCIATION_YEAR_START_MONTH = 7;
-    const ASSOCIATION_YEAR_START_DAY = 1;
+    public const ASSOCIATION_YEAR_START_MONTH = 7;
+    public const ASSOCIATION_YEAR_START_DAY = 1;
 
     /**
      * Get the ACL.
@@ -121,30 +121,31 @@ class ActivityQuery extends AbstractAclService
 
     /**
      * Get an array that states whether a language is available for
-     * the provided $activity
+     * the provided $activity.
      *
      * @param ActivityModel $activity
+     *
      * @return array
      */
     public function getAvailableLanguages($activity)
     {
         return ['nl' => !is_null($activity->getName()->getValueNL()),
-            'en' => !is_null($activity->getName()->getValueEN())];
+            'en' => !is_null($activity->getName()->getValueEN()), ];
     }
 
     /**
-     * Get the activity with additional details
+     * Get the activity with additional details.
      *
      * @param $id
+     *
      * @return ActivityModel
      */
     public function getActivityWithDetails($id)
     {
         if (!$this->isAllowed('viewDetails', $this->getActivity($id))) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view this activity')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view this activity'));
         }
+
         return $this->getActivity($id);
     }
 
@@ -158,9 +159,7 @@ class ActivityQuery extends AbstractAclService
     public function getActivity($id)
     {
         if (!$this->isAllowed('view', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the activities')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view the activities'));
         }
 
         $activityMapper = $this->activityMapper;
@@ -171,14 +170,13 @@ class ActivityQuery extends AbstractAclService
     /**
      * Returns an array of all activities.
      * NB: This method is currently unused. Should it be removed?
+     *
      * @return array Array of activities
      */
     public function getAllActivities()
     {
         if (!$this->isAllowed('view', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the activities')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view the activities'));
         }
 
         $activityMapper = $this->activityMapper;
@@ -187,36 +185,34 @@ class ActivityQuery extends AbstractAclService
     }
 
     /**
-     * Get all the activities that are yet to be approved
+     * Get all the activities that are yet to be approved.
      *
      * @return array Array of activities
      */
     public function getUnapprovedActivities()
     {
         if (!$this->isAllowed('viewUnapproved', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view unapproved activities')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view unapproved activities'));
         }
 
         $activityMapper = $this->activityMapper;
+
         return $activityMapper->getAllUpcomingActivities(null, null, ActivityModel::STATUS_TO_APPROVE);
     }
 
     /**
-     * Get all activities that are approved by the board
+     * Get all activities that are approved by the board.
      *
      * @return array Array of activities
      */
     public function getApprovedActivities()
     {
         if (!$this->isAllowed('view', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view activities')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view activities'));
         }
 
         $activityMapper = $this->activityMapper;
+
         return $activityMapper->getAllUpcomingActivities(null, null, ActivityModel::STATUS_APPROVED);
     }
 
@@ -224,7 +220,7 @@ class ActivityQuery extends AbstractAclService
      * Get upcoming activities organized by the given organ.
      *
      * @param Organ $organ
-     * @param integer $count
+     * @param int   $count
      *
      * @return array
      */
@@ -244,55 +240,53 @@ class ActivityQuery extends AbstractAclService
     }
 
     /**
-     * Get all activities that are disapproved by the board
+     * Get all activities that are disapproved by the board.
      *
      * @return array Array of activities
      */
     public function getDisapprovedActivities()
     {
         if (!$this->isAllowed('viewDisapproved', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the disapproved activities')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view the disapproved activities'));
         }
 
         $activityMapper = $this->activityMapper;
+
         return $activityMapper->getAllUpcomingActivities(null, null, ActivityModel::STATUS_DISAPPROVED);
     }
 
     /**
-     * Get all activities that are approved by the board and which occur in the future
+     * Get all activities that are approved by the board and which occur in the future.
      *
-     * @param String $category Type of activities requested
+     * @param string $category Type of activities requested
      *
      * @return array Array of activities
      */
     public function getUpcomingActivities($category = null)
     {
         if (!$this->isAllowed('view', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view upcoming the activities')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view upcoming the activities'));
         }
 
         $activityMapper = $this->activityMapper;
-        if ($category === 'my') {
+        if ('my' === $category) {
             if (!$this->isAllowed('view', 'myActivities')) {
-                throw new NotAllowedException(
-                    $this->translator->translate('You are not allowed to view upcoming activities coupled to a member account')
-                );
+                throw new NotAllowedException($this->translator->translate('You are not allowed to view upcoming activities coupled to a member account'));
             }
             $user = $this->userService->getIdentity();
+
             return $activityMapper->getUpcomingActivitiesForMember($user);
         }
+
         return $activityMapper->getUpcomingActivities(null, null, $category);
     }
 
     /**
      * Gets the upcoming activities created by this user or its organs.
-     * Or, when the user is an admin, retrieve all upcoming activities
+     * Or, when the user is an admin, retrieve all upcoming activities.
      *
      * @param /User/Model/User $user
+     *
      * @return array
      */
     public function getUpcomingCreatedActivities($user)
@@ -303,14 +297,16 @@ class ActivityQuery extends AbstractAclService
             return $activityMapper->getAllUpcomingActivities();
         }
         $organs = $this->organService->getEditableOrgans();
+
         return $activityMapper->getAllUpcomingActivities($organs, $user->getLidnr());
     }
 
     /**
      * Gets a paginator for the old activities created by this user or its organs.
-     * Or, when the user is an admin, retrieve all old activities
+     * Or, when the user is an admin, retrieve all old activities.
      *
      * @param User $user
+     *
      * @return array
      */
     public function getOldCreatedActivitiesPaginator($user)
@@ -321,11 +317,12 @@ class ActivityQuery extends AbstractAclService
             return $activityMapper->getOldActivityPaginatorAdapterByOrganizer();
         }
         $organs = $this->organService->getEditableOrgans();
+
         return $activityMapper->getOldActivityPaginatorAdapterByOrganizer($organs, $user->getLidnr());
     }
 
     /**
-     * Get all the years activities have taken place in the past
+     * Get all the years activities have taken place in the past.
      *
      * @return array
      */
@@ -344,17 +341,16 @@ class ActivityQuery extends AbstractAclService
     }
 
     /**
-     * Get all the activities that have finished in a year (and thus are archived
+     * Get all the activities that have finished in a year (and thus are archived.
      *
-     * @param integer $year First part of study year
+     * @param int $year First part of study year
+     *
      * @return array
      */
     public function getFinishedActivitiesByYear($year)
     {
         if (!$this->isAllowed('view', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the activities')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view the activities'));
         }
 
         $associationYear = AssociationYear::fromYear($year);

@@ -51,7 +51,7 @@ abstract class SubDecision
     protected $meeting_type;
 
     /**
-     * Meeting number
+     * Meeting number.
      *
      * NOTE: This is a hack to make the decision a primary key here.
      *
@@ -95,7 +95,6 @@ abstract class SubDecision
      */
     protected $content;
 
-
     /**
      * Get the decision.
      *
@@ -108,8 +107,6 @@ abstract class SubDecision
 
     /**
      * Set the decision.
-     *
-     * @param Decision $decision
      */
     public function setDecision(Decision $decision)
     {

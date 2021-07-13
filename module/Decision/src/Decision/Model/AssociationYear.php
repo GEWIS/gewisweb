@@ -8,13 +8,13 @@ use DateTime;
 class AssociationYear
 {
     /**
-     * A GEWIS association year starts 01-07
+     * A GEWIS association year starts 01-07.
      */
-    const ASSOCIATION_YEAR_START_MONTH = 7;
-    const ASSOCIATION_YEAR_START_DAY = 1;
+    public const ASSOCIATION_YEAR_START_MONTH = 7;
+    public const ASSOCIATION_YEAR_START_DAY = 1;
 
     /**
-     * @var int  the first calendar year of the association year
+     * @var int the first calendar year of the association year
      */
     protected $firstYear;
 
@@ -32,12 +32,14 @@ class AssociationYear
      * Returns an instance of AssociationYear.
      *
      * @param $year int first calendar year of the association year
+     *
      * @return static
      */
     public static function fromYear($year)
     {
         $inst = new static();
         $inst->firstYear = $year;
+
         return $inst;
     }
 
@@ -45,6 +47,7 @@ class AssociationYear
      * Returns an instance of AssociationYear.
      *
      * @param DateTime $dateTime date to find the AssociationYear for
+     *
      * @return static
      */
     public static function fromDate(DateTime $dateTime)
@@ -52,13 +55,14 @@ class AssociationYear
         $inst = new static();
         if (
             $dateTime->format('n') < self::ASSOCIATION_YEAR_START_MONTH
-            || ($dateTime->format('n') == self::ASSOCIATION_YEAR_START_MONTH
+            || (self::ASSOCIATION_YEAR_START_MONTH == $dateTime->format('n')
                 && $dateTime->format('j') < self::ASSOCIATION_YEAR_START_DAY)
         ) {
             $inst->firstYear = $dateTime->format('Y') - 1;
         } else {
             $inst->firstYear = $dateTime->format('Y');
         }
+
         return $inst;
     }
 
@@ -71,7 +75,7 @@ class AssociationYear
     }
 
     /**
-     * Returns the Association year as a string
+     * Returns the Association year as a string.
      *
      * @return string the association year
      */

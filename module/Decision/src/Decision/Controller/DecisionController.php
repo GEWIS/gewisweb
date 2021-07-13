@@ -5,13 +5,12 @@ namespace Decision\Controller;
 use Decision\Controller\FileBrowser\FileReader;
 use Decision\Service\Decision;
 use Doctrine\ORM\NoResultException;
-use User\Permissions\NotAllowedException;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
+use User\Permissions\NotAllowedException;
 
 class DecisionController extends AbstractActionController
 {
-
     /**
      * @var Decision
      */
@@ -31,13 +30,13 @@ class DecisionController extends AbstractActionController
     {
         return new ViewModel(
             [
-            'meetings' => $this->decisionService->getMeetings()
+            'meetings' => $this->decisionService->getMeetings(),
             ]
         );
     }
 
     /**
-     * Download meeting notes
+     * Download meeting notes.
      */
     public function notesAction()
     {
@@ -87,7 +86,7 @@ class DecisionController extends AbstractActionController
 
             return new ViewModel(
                 [
-                'meeting' => $meeting
+                'meeting' => $meeting,
                 ]
             );
         } catch (NoResultException $e) {
@@ -109,7 +108,7 @@ class DecisionController extends AbstractActionController
                 return new ViewModel(
                     [
                     'result' => $result,
-                    'form' => $this->decisionService->getSearchDecisionForm()
+                    'form' => $this->decisionService->getSearchDecisionForm(),
                     ]
                 );
             }
@@ -117,7 +116,7 @@ class DecisionController extends AbstractActionController
 
         return new ViewModel(
             [
-            'form' => $this->decisionService->getSearchDecisionForm()
+            'form' => $this->decisionService->getSearchDecisionForm(),
             ]
         );
     }
@@ -137,7 +136,7 @@ class DecisionController extends AbstractActionController
                 return new ViewModel(
                     [
                     'meeting' => $meeting,
-                    'authorization' => $authorization
+                    'authorization' => $authorization,
                     ]
                 );
             }
@@ -149,21 +148,19 @@ class DecisionController extends AbstractActionController
             [
             'meeting' => $meeting,
             'authorization' => $authorization,
-            'form' => $form
+            'form' => $form,
             ]
         );
     }
 
     /**
-     * Browse/download files from the set FileReader
+     * Browse/download files from the set FileReader.
      */
     public function filesAction()
     {
         if (!$this->decisionService->isAllowedToBrowseFiles()) {
             $translator = $this->decisionService->getTranslator();
-            throw new NotAllowedException(
-                $translator->translate('You are not allowed to browse files.')
-            );
+            throw new NotAllowedException($translator->translate('You are not allowed to browse files.'));
         }
         $path = $this->params()->fromRoute('path');
         if (is_null($path)) {
@@ -171,7 +168,7 @@ class DecisionController extends AbstractActionController
         }
 
         $fileReader = $this->fileReader;
-        if (!$fileReader->isAllowed($path) || preg_match('(\/\.\.\/|\/\.\.$)', $path) === 1) {
+        if (!$fileReader->isAllowed($path) || 1 === preg_match('(\/\.\.\/|\/\.\.$)', $path)) {
             //File location isn't legal or path contains /../ or /.. at the end.
             //This is illegal for security reasons
             return $this->notFoundAction();
@@ -182,9 +179,10 @@ class DecisionController extends AbstractActionController
             if (is_null($folder)) {
                 return $this->notFoundAction();
             }
-            $trailingSlash = (strlen($path) > 0 && $path[strlen($path) - 1] === '/');
+            $trailingSlash = (strlen($path) > 0 && '/' === $path[strlen($path) - 1]);
             $array = explode('/', substr($path, 0, -1));
             $array1 = explode('/', $path);
+
             return new ViewModel(
                 [
                 'folderName' => $trailingSlash ? end($array) : end($array1),
@@ -196,6 +194,7 @@ class DecisionController extends AbstractActionController
         }
         //download the file
         $result = $fileReader->downloadFile($path);
+
         return is_null($result) ? $this->notFoundAction() : $result;
     }
 }

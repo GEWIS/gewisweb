@@ -3,9 +3,9 @@
 namespace User\Controller\Factory;
 
 use Interop\Container\ContainerInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use User\Controller\ApiAuthenticationController;
 use User\Service\ApiApp;
-use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class ApiAuthenticationControllerFactory implements FactoryInterface
 {

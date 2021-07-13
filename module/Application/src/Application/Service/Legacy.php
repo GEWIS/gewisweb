@@ -3,8 +3,8 @@
 namespace Application\Service;
 
 use Exception;
-use User\Model\User;
 use Laminas\Crypt\Password\Bcrypt;
+use User\Model\User;
 
 /**
  * This service contains all bindings to legacy systems such as SuSOS and the old website.
@@ -18,32 +18,32 @@ class Legacy
     /**
      * Checks if a SuSOS pincode is correct.
      *
-     * @param User $user
+     * @param User   $user
      * @param string $pincode
      *
-     * @return bool indicating whether the pincode was correct.
-     * @throws Exception
+     * @return bool indicating whether the pincode was correct
      *
+     * @throws Exception
      */
     public function checkPincode($user, $pincode)
     {
-        throw new Exception("This operation is not supported.");
+        throw new Exception('This operation is not supported.');
     }
 
     /**
-     * Checks a password against the old website's database and saves it in the new database if corrrect
+     * Checks a password against the old website's database and saves it in the new database if corrrect.
      *
-     * @param User $user
+     * @param User   $user
      * @param string $password
      * @param Bcrypt $bcrypt
      *
      * @return bool indicating if password was correct
-     * @throws Exception
      *
+     * @throws Exception
      */
     public function checkPassword($user, $password, $bcrypt)
     {
-        throw new Exception("This operation is not supported.");
+        throw new Exception('This operation is not supported.');
     }
 
     /**

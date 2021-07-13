@@ -2,10 +2,10 @@
 
 namespace Education\Form\Fieldset;
 
+use Education\Model\Exam as ExamModel;
 use Laminas\Form\Fieldset;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Education\Model\Exam as ExamModel;
 use Laminas\Validator\Callback;
 use Laminas\Validator\File\Exists;
 use Laminas\Validator\Regex;
@@ -22,7 +22,7 @@ class Exam extends Fieldset implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'file',
-            'type' => 'hidden'
+            'type' => 'hidden',
             ]
         );
 
@@ -31,8 +31,8 @@ class Exam extends Fieldset implements InputFilterProviderInterface
             'name' => 'course',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Course code')
-            ]
+                'label' => $translator->translate('Course code'),
+            ],
             ]
         );
 
@@ -41,8 +41,8 @@ class Exam extends Fieldset implements InputFilterProviderInterface
             'name' => 'date',
             'type' => 'date',
             'options' => [
-                'label' => $translator->translate('Exam date')
-            ]
+                'label' => $translator->translate('Exam date'),
+            ],
             ]
         );
 
@@ -58,7 +58,7 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                     ExamModel::EXAM_TYPE_ANSWERS => $translator->translate('Exam answers'),
                     ExamModel::EXAM_TYPE_OTHER => $translator->translate('Other'),
                 ],
-            ]
+            ],
             ]
         );
 
@@ -90,6 +90,7 @@ class Exam extends Fieldset implements InputFilterProviderInterface
     public function getInputFilterSpecification()
     {
         $dir = $this->config['upload_exam_dir'];
+
         return [
             'file' => [
                 'required' => true,
@@ -97,8 +98,8 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                     [
                         'name' => Regex::class,
                         'options' => [
-                            'pattern' => '/.+\.pdf$/'
-                        ]
+                            'pattern' => '/.+\.pdf$/',
+                        ],
                     ],
                     [
                         'name' => Callback::class,
@@ -106,14 +107,15 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                             'callback' => function ($value) use ($dir) {
                                 $validator = new Exists(
                                     [
-                                    'directory' => $dir
+                                    'directory' => $dir,
                                     ]
                                 );
+
                                 return $validator->isValid($value);
-                            }
-                        ]
-                    ]
-                ]
+                            },
+                        ],
+                    ],
+                ],
             ],
 
             'course' => [
@@ -123,22 +125,22 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 5,
-                            'max' => 6
-                        ]
+                            'max' => 6,
+                        ],
                     ],
-                    ['name' => 'alnum']
+                    ['name' => 'alnum'],
                 ],
                 'filters' => [
-                    ['name' => 'string_to_upper']
-                ]
+                    ['name' => 'string_to_upper'],
+                ],
             ],
 
             'date' => [
                 'required' => true,
                 'validators' => [
-                    ['name' => 'date']
-                ]
-            ]
+                    ['name' => 'date'],
+                ],
+            ],
         ];
     }
 }

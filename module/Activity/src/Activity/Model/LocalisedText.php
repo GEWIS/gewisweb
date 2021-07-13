@@ -14,7 +14,7 @@ use Laminas\Session\Container as SessionContainer;
 class LocalisedText
 {
     /**
-     * ID for the LocalisedText
+     * ID for the LocalisedText.
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
@@ -23,14 +23,14 @@ class LocalisedText
     protected $id;
 
     /**
-     * English text
+     * English text.
      *
      * @Orm\Column(type="text", nullable=true)
      */
     protected $valueEN;
 
     /**
-     * Dutch text
+     * Dutch text.
      *
      * @Orm\Column(type="text", nullable=true)
      */
@@ -75,48 +75,51 @@ class LocalisedText
 
     /**
      * @param string|null $locale
-     * @return string The localised text.
+     *
+     * @return string the localised text
      */
     public function getText($locale = null)
     {
-        if ($locale === null) {
+        if (null === $locale) {
             $locale = $this->getPreferredLocale();
         }
         switch ($locale) {
-            case "nl":
+            case 'nl':
                 return !is_null($this->valueNL) ? $this->valueNL : $this->valueEN;
-            case "en":
+            case 'en':
                 return !is_null($this->valueEN) ? $this->valueEN : $this->valueNL;
             default:
-                throw new InvalidArgumentException("Locale not supported: " . $locale);
+                throw new InvalidArgumentException('Locale not supported: '.$locale);
         }
     }
 
     /**
-     * @return string The preferred language: either 'nl'  or 'en'.
+     * @return string the preferred language: either 'nl'  or 'en'
      */
     private function getPreferredLocale()
     {
-        $langSession = new SessionContainer("lang");
+        $langSession = new SessionContainer('lang');
+
         return $langSession->lang;
     }
 
     /**
      * @param string|null $locale
-     * @return string The localised text.
+     *
+     * @return string the localised text
      */
     public function getExactText($locale = null)
     {
-        if ($locale === null) {
+        if (null === $locale) {
             $locale = $this->getPreferredLocale();
         }
         switch ($locale) {
-            case "nl":
+            case 'nl':
                 return $this->valueNL;
-            case "en":
+            case 'en':
                 return $this->valueEN;
             default:
-                throw new InvalidArgumentException("Locale not supported: " . $locale);
+                throw new InvalidArgumentException('Locale not supported: '.$locale);
         }
     }
 

@@ -5,8 +5,8 @@ namespace Frontpage\Controller;
 use Exception;
 use Frontpage\Service\Page;
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\ViewModel;
 use Laminas\View\Model\JsonModel;
+use Laminas\View\Model\ViewModel;
 
 class PageAdminController extends AbstractActionController
 {
@@ -26,7 +26,7 @@ class PageAdminController extends AbstractActionController
 
         return new ViewModel(
             [
-            'pages' => $pages
+            'pages' => $pages,
             ]
         );
     }
@@ -46,7 +46,7 @@ class PageAdminController extends AbstractActionController
             [
             'form' => $form,
             // Boolean indicating if the view should show an option to delete a page.
-            'canDelete' => false
+            'canDelete' => false,
             ]
         );
 
@@ -71,7 +71,7 @@ class PageAdminController extends AbstractActionController
             [
             'form' => $form,
             'canDelete' => true,
-            'pageId' => $pageId
+            'pageId' => $pageId,
             ]
         );
     }
@@ -91,7 +91,7 @@ class PageAdminController extends AbstractActionController
         if ($request->isPost()) {
             try {
                 $path = $this->pageService->uploadImage($request->getFiles());
-                $result['url'] = $request->getBasePath() . '/' . $path;
+                $result['url'] = $request->getBasePath().'/'.$path;
                 $result['fileName'] = $path;
                 $result['uploaded'] = 1;
             } catch (Exception $e) {

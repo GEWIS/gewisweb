@@ -4,11 +4,11 @@ namespace Decision\Service;
 
 use Application\Service\AbstractAclService;
 use Decision\Model\Member as MemberModel;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Permissions\Acl\Acl;
 use Photo\Service\Photo;
 use User\Model\User;
 use User\Permissions\NotAllowedException;
-use Laminas\Mvc\I18n\Translator;
-use Laminas\Permissions\Acl\Acl;
 
 /**
  * Member service.
@@ -67,13 +67,9 @@ class MemberInfo extends AbstractAclService
     public function getMembershipInfo($lidnr = null)
     {
         if (null === $lidnr && !$this->isAllowed('view_self')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view membership info.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view membership info.'));
         } elseif (null !== $lidnr && !$this->isAllowed('view')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view members.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view members.'));
         }
 
         if (null === $lidnr) {
@@ -102,12 +98,12 @@ class MemberInfo extends AbstractAclService
             'tags' => $tags,
             'profilePhoto' => $profilePhoto,
             'isExplicitProfilePhoto' => $isExplicitProfilePhoto,
-            'basedir' => $basedir
+            'basedir' => $basedir,
         ];
     }
 
     /**
-     * Gets a list of all organs which the member currently is part of
+     * Gets a list of all organs which the member currently is part of.
      *
      * @param MemberModel $member
      *
@@ -124,11 +120,12 @@ class MemberInfo extends AbstractAclService
                 $memberships[$install->getOrgan()->getAbbr()] = [];
                 $memberships[$install->getOrgan()->getAbbr()]['organ'] = $install->getOrgan();
             }
-            if ($install->getFunction() != 'Lid') {
+            if ('Lid' != $install->getFunction()) {
                 $function = $this->translator->translate($install->getFunction());
                 $memberships[$install->getOrgan()->getAbbr()]['functions'] = $function;
             }
         }
+
         return $memberships;
     }
 

@@ -4,11 +4,11 @@ namespace Frontpage\Model;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use User\Model\User;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use User\Model\User;
 
 /**
- * Poll comment
+ * Poll comment.
  *
  * @ORM\Entity
  */
@@ -63,7 +63,7 @@ class PollComment implements ResourceInterface
     /**
      * Get the comment ID.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -82,8 +82,6 @@ class PollComment implements ResourceInterface
 
     /**
      * Set the poll.
-     *
-     * @param Poll $poll
      */
     public function setPoll(Poll $poll)
     {
@@ -102,8 +100,6 @@ class PollComment implements ResourceInterface
 
     /**
      * Set the user.
-     *
-     * @param User $user
      */
     public function setUser(User $user)
     {

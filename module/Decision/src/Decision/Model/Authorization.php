@@ -38,7 +38,7 @@ class Authorization
     protected $recipient;
 
     /**
-     * Meeting number
+     * Meeting number.
      *
      * @ORM\Column(type="integer")
      */
@@ -52,7 +52,7 @@ class Authorization
     protected $revoked = false;
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -92,7 +92,7 @@ class Authorization
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getMeetingNumber()
     {
@@ -100,7 +100,7 @@ class Authorization
     }
 
     /**
-     * @param integer $meetingNumber
+     * @param int $meetingNumber
      */
     public function setMeetingNumber($meetingNumber)
     {

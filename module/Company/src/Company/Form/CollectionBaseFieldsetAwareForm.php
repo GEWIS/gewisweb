@@ -3,8 +3,8 @@
 namespace Company\Form;
 
 use InvalidArgumentException;
-use Laminas\Form\Form;
 use Laminas\Form\Element\Collection;
+use Laminas\Form\Form;
 use Laminas\Form\FormInterface;
 
 class CollectionBaseFieldsetAwareForm extends Form
@@ -14,19 +14,11 @@ class CollectionBaseFieldsetAwareForm extends Form
     // This implementation fixes it
     public function bind($object, $flags = FormInterface::VALUES_NORMALIZED)
     {
-        if (!in_array($flags, array(FormInterface::VALUES_NORMALIZED, FormInterface::VALUES_RAW))) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    '%s expects the $flags argument to be one of "%s" or "%s"; received "%s"',
-                    __METHOD__,
-                    'Laminas\Form\FormInterface::VALUES_NORMALIZED',
-                    'Laminas\Form\FormInterface::VALUES_RAW',
-                    $flags
-                )
-            );
+        if (!in_array($flags, [FormInterface::VALUES_NORMALIZED, FormInterface::VALUES_RAW])) {
+            throw new InvalidArgumentException(sprintf('%s expects the $flags argument to be one of "%s" or "%s"; received "%s"', __METHOD__, 'Laminas\Form\FormInterface::VALUES_NORMALIZED', 'Laminas\Form\FormInterface::VALUES_RAW', $flags));
         }
 
-        if ($this->baseFieldset !== null) {
+        if (null !== $this->baseFieldset) {
             $this->baseFieldset->setObject($object);
         }
 

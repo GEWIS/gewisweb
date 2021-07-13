@@ -8,9 +8,8 @@ use Laminas\View\Helper\AbstractHelper;
 class BootstrapElementError extends AbstractHelper
 {
     /**
-     * Checks if the input has a Bootstrap error
+     * Checks if the input has a Bootstrap error.
      *
-     * @param ElementInterface $element
      * @return string A Bootstrap class
      */
     public function __invoke(ElementInterface $element)

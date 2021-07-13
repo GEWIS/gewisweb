@@ -43,7 +43,7 @@ class SignupField
     protected $type;
 
     /**
-     * The minimal value constraint for the ``number'' type
+     * The minimal value constraint for the ``number'' type.
      *
      * @ORM\Column(type="integer", nullable=true)
      */
@@ -88,7 +88,7 @@ class SignupField
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -112,7 +112,7 @@ class SignupField
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getType()
     {
@@ -120,7 +120,7 @@ class SignupField
     }
 
     /**
-     * @param integer $type
+     * @param int $type
      */
     public function setType($type)
     {
@@ -128,7 +128,7 @@ class SignupField
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getMinimumValue()
     {
@@ -136,7 +136,7 @@ class SignupField
     }
 
     /**
-     * @param integer $minimumValue
+     * @param int $minimumValue
      */
     public function setMinimumValue($minimumValue)
     {
@@ -144,7 +144,7 @@ class SignupField
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getMaximumValue()
     {
@@ -152,7 +152,7 @@ class SignupField
     }
 
     /**
-     * @param integer $maximumValue
+     * @param int $maximumValue
      */
     public function setMaximumValue($maximumValue)
     {

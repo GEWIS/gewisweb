@@ -15,9 +15,7 @@ class Session
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -38,7 +36,7 @@ class Session
     }
 
     /**
-     * Find a session by its id
+     * Find a session by its id.
      *
      * @param string $id
      *
@@ -65,7 +63,7 @@ class Session
     }
 
     /**
-     * Persist a session model
+     * Persist a session model.
      */
     public function persist($session)
     {
@@ -84,7 +82,7 @@ class Session
     }
 
     /**
-     * Flush the entity manager
+     * Flush the entity manager.
      */
     public function flush()
     {
@@ -92,7 +90,7 @@ class Session
     }
 
     /**
-     * Remove an entity
+     * Remove an entity.
      *
      * @param $entity
      */

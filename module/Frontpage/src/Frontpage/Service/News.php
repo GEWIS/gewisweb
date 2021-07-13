@@ -7,13 +7,13 @@ use DateTime;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
 use Frontpage\Mapper\NewsItem;
 use Frontpage\Model\NewsItem as NewsItemModel;
-use User\Model\User;
-use User\Permissions\NotAllowedException;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
+use User\Model\User;
+use User\Permissions\NotAllowedException;
 
 /**
- * News service
+ * News service.
  */
 class News extends AbstractAclService
 {
@@ -67,9 +67,10 @@ class News extends AbstractAclService
     }
 
     /**
-     * Returns a single NewsItem by its id
+     * Returns a single NewsItem by its id.
      *
-     * @param integer $newsItem
+     * @param int $newsItem
+     *
      * @return NewsItemModel|null
      */
     public function getNewsItemById($newsItem)
@@ -85,9 +86,7 @@ class News extends AbstractAclService
     public function getPaginatorAdapter()
     {
         if (!$this->isAllowed('list')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to list all news items.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to list all news items.'));
         }
 
         return $this->newsItemMapper->getPaginatorAdapter();
@@ -96,7 +95,7 @@ class News extends AbstractAclService
     /**
      * Retrieves a certain number of news items sorted descending by their date.
      *
-     * @param integer $count
+     * @param int $count
      *
      * @return array
      */
@@ -109,7 +108,8 @@ class News extends AbstractAclService
      * Creates a news item.
      *
      * @param array $data form post data
-     * @return bool|NewsItemModel false if creation was not successful.
+     *
+     * @return bool|NewsItemModel false if creation was not successful
      */
     public function createNewsItem($data)
     {
@@ -130,16 +130,15 @@ class News extends AbstractAclService
     }
 
     /**
-     * @param integer $newsItemId
-     * @param array $data form post data
+     * @param int   $newsItemId
+     * @param array $data       form post data
+     *
      * @return bool
      */
     public function updateNewsItem($newsItemId, $data)
     {
         if (!$this->isAllowed('edit')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to edit news items.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to edit news items.'));
         }
         $form = $this->getNewsItemForm($newsItemId);
         $form->setData($data);
@@ -156,7 +155,7 @@ class News extends AbstractAclService
     /**
      * Removes a news item.
      *
-     * @param integer $newsItemId The id of the news item to remove.
+     * @param int $newsItemId the id of the news item to remove
      */
     public function deleteNewsItem($newsItemId)
     {
@@ -168,16 +167,14 @@ class News extends AbstractAclService
     /**
      * Get the NewsItem form.
      *
-     * @param integer $newsItemId
+     * @param int $newsItemId
      *
      * @return \Frontpage\Form\NewsItem
      */
     public function getNewsItemForm($newsItemId = null)
     {
         if (!$this->isAllowed('create')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create news items.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to create news items.'));
         }
         $form = $this->newsItemForm;
 

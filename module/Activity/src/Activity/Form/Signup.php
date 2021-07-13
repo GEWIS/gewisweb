@@ -6,16 +6,16 @@ use Activity\Model\SignupField;
 use Activity\Model\UserSignup;
 use Laminas\Captcha\Image as ImageCaptcha;
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Hydrator\ClassMethodsHydrator;
+use Laminas\InputFilter\InputFilterProviderInterface;
 
 //input filter
 
 class Signup extends Form implements InputFilterProviderInterface
 {
-    const USER = 1;
-    const EXTERNAL_USER = 2;
-    const EXTERNAL_ADMIN = 3;
+    public const USER = 1;
+    public const EXTERNAL_USER = 2;
+    public const EXTERNAL_ADMIN = 3;
 
     protected $type;
     protected $signupList;
@@ -30,7 +30,7 @@ class Signup extends Form implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'security',
-            'type' => 'Laminas\Form\Element\Csrf'
+            'type' => 'Laminas\Form\Element\Csrf',
             ]
         );
 
@@ -64,7 +64,7 @@ class Signup extends Form implements InputFilterProviderInterface
                     'imgUrl' => '/img/captcha/',
                     ]
                 ),
-            ]
+            ],
             ]
         );
         $this->initialiseExternalAdminForm($signupList);
@@ -82,13 +82,13 @@ class Signup extends Form implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'fullName',
-            'type' => 'Text'
+            'type' => 'Text',
             ]
         );
         $this->add(
             [
             'name' => 'email',
-            'type' => 'Text'
+            'type' => 'Text',
             ]
         );
         $this->initialiseForm($signupList);
@@ -116,6 +116,7 @@ class Signup extends Form implements InputFilterProviderInterface
      * to be used by the factory.
      *
      * @param SignupField $field
+     *
      * @return array
      */
     protected function createSignupFieldElementArray($field)
@@ -133,7 +134,7 @@ class Signup extends Form implements InputFilterProviderInterface
                     'value_options' => [
                         '1' => 'Yes',
                         '0' => 'No',
-                    ]
+                    ],
                 ];
                 break;
             case 2: //'Number'
@@ -141,7 +142,7 @@ class Signup extends Form implements InputFilterProviderInterface
                 $result['attributes'] = [
                     'min' => $field->getMinimumValue(),
                     'max' => $field->getMaximumValue(),
-                    'step' => '1'
+                    'step' => '1',
                 ];
                 break;
             case 3: //'Choice'
@@ -152,10 +153,11 @@ class Signup extends Form implements InputFilterProviderInterface
                 $result['type'] = 'Laminas\Form\Element\Select';
                 $result['options'] = [
                     //'empty_option' => 'Make a choice',
-                    'value_options' => $values
+                    'value_options' => $values,
                 ];
                 break;
         }
+
         return $result;
     }
 
@@ -168,8 +170,8 @@ class Signup extends Form implements InputFilterProviderInterface
     {
         $filter = [];
         if (
-            $this->type === Signup::EXTERNAL_USER ||
-            $this->type === Signup::EXTERNAL_ADMIN
+            Signup::EXTERNAL_USER === $this->type ||
+            Signup::EXTERNAL_ADMIN === $this->type
         ) {
             $filter['fullName'] = [
                 'required' => true,
@@ -180,9 +182,9 @@ class Signup extends Form implements InputFilterProviderInterface
                             'encoding' => 'UTF-8',
                             'min' => 1,
                             'max' => 100,
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ];
             $filter['email'] = [
                 'required' => true,
@@ -193,7 +195,7 @@ class Signup extends Form implements InputFilterProviderInterface
                             'encoding' => 'UTF-8',
                             'min' => 1,
                             'max' => 100,
-                        ]
+                        ],
                     ],
                     [
                         'name' => 'EmailAddress',

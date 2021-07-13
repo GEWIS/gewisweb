@@ -65,7 +65,7 @@ class EditPackage extends Form
             ]
         );
 
-        if ($type === "featured") {
+        if ('featured' === $type) {
             $this->add(
                 [
                 'name' => 'article',
@@ -94,7 +94,7 @@ class EditPackage extends Form
             );
         }
 
-        if ($type === "banner") {
+        if ('banner' === $type) {
             $this->add(
                 [
                 'name' => 'banner',

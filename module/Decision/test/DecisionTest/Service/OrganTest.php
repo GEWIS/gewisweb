@@ -2,11 +2,10 @@
 
 namespace DecisionTest\Service;
 
-use PHPUnit_Framework_TestCase;
-use User\Permissions\NotAllowedException;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\ServiceManager\ServiceManager;
+use PHPUnit_Framework_TestCase;
 
 class OrganTest extends PHPUnit_Framework_TestCase
 {
@@ -46,7 +45,7 @@ class OrganTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException NotAllowedException
+     * @expectedException \NotAllowedException
      */
     public function testGetOrgansThrowsNotAllowedExceptionOnGuest()
     {

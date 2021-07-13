@@ -9,7 +9,6 @@ use Laminas\View\Model\ViewModel;
 
 class PollAdminController extends AbstractActionController
 {
-
     /**
      * @var Poll
      */
@@ -21,7 +20,7 @@ class PollAdminController extends AbstractActionController
     }
 
     /**
-     * List all approved and unapproved polls
+     * List all approved and unapproved polls.
      */
     public function listAction()
     {
@@ -43,13 +42,13 @@ class PollAdminController extends AbstractActionController
             [
             'unapprovedPolls' => $unapprovedPolls,
             'paginator' => $paginator,
-            'approvalForm' => $approvalForm
+            'approvalForm' => $approvalForm,
             ]
         );
     }
 
     /**
-     * Approve a poll
+     * Approve a poll.
      */
     public function approveAction()
     {
@@ -63,7 +62,7 @@ class PollAdminController extends AbstractActionController
     }
 
     /**
-     * Delete a poll
+     * Delete a poll.
      */
     public function deleteAction()
     {

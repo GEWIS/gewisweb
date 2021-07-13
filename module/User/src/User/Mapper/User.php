@@ -17,9 +17,7 @@ class User
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -66,13 +64,12 @@ class User
         $qb->setMaxResults(1);
 
         $res = $qb->getQuery()->getResult();
+
         return empty($res) ? null : $res[0];
     }
 
     /**
      * Detach a user from the entity manager.
-     *
-     * @param UserModel $user
      */
     public function detach(UserModel $user)
     {
@@ -81,8 +78,6 @@ class User
 
     /**
      * Re-attach a user to the entity manager.
-     *
-     * @param UserModel $user
      *
      * @return UserModel
      */
@@ -96,7 +91,7 @@ class User
      *
      * This will both destroy the NewUser and create the given user
      *
-     * @param UserModel $user User to create
+     * @param UserModel    $user    User to create
      * @param NewUserModel $newUser NewUser to destroy
      */
     public function createUser(UserModel $user, NewUserModel $newUser)
@@ -109,7 +104,7 @@ class User
     /**
      * Persist a user model.
      *
-     * @param UserModel $user User to persist.
+     * @param UserModel $user user to persist
      */
     public function persist(UserModel $user)
     {

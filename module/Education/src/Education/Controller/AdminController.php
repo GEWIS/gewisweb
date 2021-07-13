@@ -10,7 +10,6 @@ use Laminas\View\Model\ViewModel;
 
 class AdminController extends AbstractActionController
 {
-
     /**
      * @var Exam
      */
@@ -41,25 +40,27 @@ class AdminController extends AbstractActionController
             // try uploading
             if ($this->examService->addCourse($request->getPost())) {
                 $this->getResponse()->setStatusCode(200);
+
                 return new ViewModel(
                     [
                     'form' => $this->examService->getAddCourseForm(),
-                    'success' => true
+                    'success' => true,
                     ]
                 );
             }
             $this->getResponse()->setStatusCode(400);
+
             return new ViewModel(
                 [
                 'form' => $this->examService->getAddCourseForm(),
-                'success' => false
+                'success' => false,
                 ]
             );
         }
 
         return new ViewModel(
             [
-            'form' => $this->examService->getAddCourseForm()
+            'form' => $this->examService->getAddCourseForm(),
             ]
         );
     }
@@ -73,14 +74,15 @@ class AdminController extends AbstractActionController
             if ($this->examService->tempExamUpload($request->getPost(), $request->getFiles())) {
                 return new ViewModel(
                     [
-                    'success' => true
+                    'success' => true,
                     ]
                 );
             } else {
                 $this->getResponse()->setStatusCode(500);
+
                 return new ViewModel(
                     [
-                    'success' => false
+                    'success' => false,
                     ]
                 );
             }
@@ -88,7 +90,7 @@ class AdminController extends AbstractActionController
 
         return new ViewModel(
             [
-            'form' => $this->examService->getTempUploadForm()
+            'form' => $this->examService->getTempUploadForm(),
             ]
         );
     }
@@ -102,14 +104,15 @@ class AdminController extends AbstractActionController
             if ($this->examService->tempSummaryUpload($request->getPost(), $request->getFiles())) {
                 return new ViewModel(
                     [
-                    'success' => true
+                    'success' => true,
                     ]
                 );
             } else {
                 $this->getResponse()->setStatusCode(500);
+
                 return new ViewModel(
                     [
-                    'success' => false
+                    'success' => false,
                     ]
                 );
             }
@@ -117,7 +120,7 @@ class AdminController extends AbstractActionController
 
         return new ViewModel(
             [
-            'form' => $this->examService->getTempUploadForm()
+            'form' => $this->examService->getTempUploadForm(),
             ]
         );
     }
@@ -132,7 +135,7 @@ class AdminController extends AbstractActionController
         if ($request->isPost() && $this->examService->bulkExamEdit($request->getPost())) {
             return new ViewModel(
                 [
-                'success' => true
+                'success' => true,
                 ]
             );
         }
@@ -142,7 +145,7 @@ class AdminController extends AbstractActionController
         return new ViewModel(
             [
             'form' => $this->examService->getBulkExamForm(),
-            'config' => $config
+            'config' => $config,
             ]
         );
     }
@@ -157,7 +160,7 @@ class AdminController extends AbstractActionController
         if ($request->isPost() && $this->examService->bulkSummaryEdit($request->getPost())) {
             return new ViewModel(
                 [
-                'success' => true
+                'success' => true,
                 ]
             );
         }
@@ -167,7 +170,7 @@ class AdminController extends AbstractActionController
         return new ViewModel(
             [
             'form' => $this->examService->getBulkSummaryForm(),
-            'config' => $config
+            'config' => $config,
             ]
         );
     }
@@ -182,7 +185,7 @@ class AdminController extends AbstractActionController
             if ($this->examService->uploadSummary($request->getPost(), $request->getFiles())) {
                 return new ViewModel(
                     [
-                    'success' => true
+                    'success' => true,
                     ]
                 );
             }
@@ -190,7 +193,7 @@ class AdminController extends AbstractActionController
 
         return new ViewModel(
             [
-            'form' => $this->summaryUploadForm
+            'form' => $this->summaryUploadForm,
             ]
         );
     }
@@ -200,8 +203,10 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $this->examService->deleteTempExam($this->params()->fromRoute('filename'), $this->params()->fromRoute('type'));
+
             return new JsonModel(['success' => 'true']);
         }
+
         return $this->notFoundAction();
     }
 }

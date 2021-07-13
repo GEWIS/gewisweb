@@ -36,7 +36,7 @@ class NewUser
     protected $code;
 
     /**
-     * User's member
+     * User's member.
      *
      * @ORM\OneToOne(targetEntity="Decision\Model\Member")
      * @ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")
@@ -44,7 +44,7 @@ class NewUser
     protected $member;
 
     /**
-     * Registration attempt timestamp
+     * Registration attempt timestamp.
      *
      * @ORM\Column(type="datetime",nullable=true)
      */
@@ -127,7 +127,7 @@ class NewUser
     }
 
     /**
-     * Set the user's email address
+     * Set the user's email address.
      *
      * @param string $email
      */

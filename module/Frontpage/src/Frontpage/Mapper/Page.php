@@ -7,7 +7,6 @@ use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for Pages.
- *
  */
 class Page
 {
@@ -19,9 +18,7 @@ class Page
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -34,6 +31,7 @@ class Page
      * @param string $category
      * @param string $subCategory
      * @param string $name
+     *
      * @return \Frontpage\Model\Page|null
      */
     public function findPage($category, $subCategory = null, $name = null)
@@ -42,7 +40,7 @@ class Page
             [
             'category' => $category,
             'subCategory' => $subCategory,
-            'name' => $name
+            'name' => $name,
             ]
         );
     }
@@ -50,7 +48,8 @@ class Page
     /**
      * Returns a page based on its id.
      *
-     * @param integer $pageId
+     * @param int $pageId
+     *
      * @return \Frontpage\Model\Page|null
      */
     public function findPageById($pageId)

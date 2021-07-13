@@ -68,7 +68,7 @@ class ActivityController extends AbstractActionController
         }
 
         // If the Activity has a sign-up list always display it by redirecting the request.
-        if ($activity->getSignupLists()->count() !== 0) {
+        if (0 !== $activity->getSignupLists()->count()) {
             return $this->forward()->dispatch(
                 'Activity\Controller\Activity',
                 [
@@ -130,7 +130,7 @@ class ActivityController extends AbstractActionController
             'isArchived' => $isArchived,
             'signupOpen' => $subscriptionOpenDatePassed &&
                 !$subscriptionCloseDatePassed &&
-                $activity->getStatus() === Activity::STATUS_APPROVED,
+                Activity::STATUS_APPROVED === $activity->getStatus(),
             'isAllowedToSubscribe' => $isAllowedToSubscribe,
             'isSignedUp' => $isSignedUp,
             'signupData' => $this->signupService->isAllowedToViewSubscriptions() ?
@@ -160,8 +160,9 @@ class ActivityController extends AbstractActionController
     /**
      * Get the appropriate signup form.
      *
-     * @param SignupList $fields
+     * @param SignupList       $fields
      * @param SessionContainer $activitySession
+     *
      * @return \Activity\Form\Signup $form
      */
     protected function prepareSignupForm($signupList, &$activitySession)
@@ -259,7 +260,7 @@ class ActivityController extends AbstractActionController
             // Ensure that the action is within the subscription window
             if (
                 !$this->signupService->isInSubscriptionWindow($signupList->getOpenDate(), $signupList->getCloseDate())
-                || $signupList->getActivity()->getStatus() !== Activity::STATUS_APPROVED
+                || Activity::STATUS_APPROVED !== $signupList->getActivity()->getStatus()
             ) {
                 $error = $translator->translate('You cannot subscribe to this activity at this moment in time');
 
@@ -290,10 +291,10 @@ class ActivityController extends AbstractActionController
     /**
      * Redirects to the view of the activity with the given $id, where the
      * $error message can be displayed if the request was unsuccesful (i.e.
-     * $success was false)
+     * $success was false).
      *
-     * @param int $id
-     * @param boolean $success Whether the request was successful
+     * @param int    $id
+     * @param bool   $success Whether the request was successful
      * @param string $message
      */
     protected function redirectActivityRequest($activityId, $signupListId, $success, $message, $session = null)
@@ -351,7 +352,7 @@ class ActivityController extends AbstractActionController
             // Ensure that the action is within the subscription window
             if (
                 !$this->signupService->isInSubscriptionWindow($signupList->getOpenDate(), $signupList->getCloseDate())
-                || $signupList->getActivity()->getStatus() !== Activity::STATUS_APPROVED
+                || Activity::STATUS_APPROVED !== $signupList->getActivity()->getStatus()
             ) {
                 $error = $translator->translate('You cannot subscribe to this activity at this moment in time');
 
@@ -411,7 +412,7 @@ class ActivityController extends AbstractActionController
             // Ensure that the action is within the subscription window
             if (
                 !$this->signupService->isInSubscriptionWindow($signupList->getOpenDate(), $signupList->getCloseDate())
-                || $signupList->getActivity()->getStatus() !== Activity::STATUS_APPROVED
+                || Activity::STATUS_APPROVED !== $signupList->getActivity()->getStatus()
             ) {
                 $error = $translator->translate('You cannot unsubscribe from this activity at this moment in time');
 
@@ -440,7 +441,7 @@ class ActivityController extends AbstractActionController
     }
 
     /**
-     * Display all the finished activities in a school year
+     * Display all the finished activities in a school year.
      *
      * @return ViewModel
      */
@@ -458,7 +459,7 @@ class ActivityController extends AbstractActionController
             [
             'activeYear' => $year,
             'years' => $years,
-            'activities' => $this->activityQueryService->getFinishedActivitiesByYear($year)
+            'activities' => $this->activityQueryService->getFinishedActivitiesByYear($year),
             ]
         );
     }

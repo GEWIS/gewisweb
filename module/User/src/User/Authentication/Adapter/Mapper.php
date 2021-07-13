@@ -2,13 +2,13 @@
 
 namespace User\Authentication\Adapter;
 
-use User\Model\LoginAttempt;
+use Application\Service\Legacy as LegacyService;
 use Laminas\Authentication\Adapter\AdapterInterface;
 use Laminas\Authentication\Result;
-use User\Mapper\User as UserMapper;
-use User\Model\User as UserModel;
 use Laminas\Crypt\Password\Bcrypt;
-use Application\Service\Legacy as LegacyService;
+use User\Mapper\User as UserMapper;
+use User\Model\LoginAttempt;
+use User\Model\User as UserModel;
 use User\Service\LoginAttempt as LoginAttemptService;
 
 class Mapper implements AdapterInterface
@@ -43,7 +43,7 @@ class Mapper implements AdapterInterface
 
     /**
      * Legacy Service
-     * (for checking logins against the old database)
+     * (for checking logins against the old database).
      *
      * @var LegacyService
      */
@@ -51,7 +51,7 @@ class Mapper implements AdapterInterface
 
     /**
      * User Service
-     * (for logging failed login attempts)
+     * (for logging failed login attempts).
      *
      * @var LoginAttemptService
      */
@@ -63,8 +63,6 @@ class Mapper implements AdapterInterface
 
     /**
      * Constructor.
-     *
-     * @param Bcrypt $bcrypt
      */
     public function __construct(Bcrypt $bcrypt, LegacyService $legacyService, loginAttemptService $loginAttemptService)
     {
@@ -102,6 +100,7 @@ class Mapper implements AdapterInterface
 
         if (!$this->verifyPassword($this->password, $user->getPassword(), $user)) {
             $this->loginAttemptService->logFailedLogin($user, LoginAttempt::TYPE_NORMAL);
+
             return new Result(
                 Result::FAILURE_CREDENTIAL_INVALID,
                 null,
@@ -115,15 +114,15 @@ class Mapper implements AdapterInterface
     /**
      * Verify a password.
      *
-     * @param string $password
-     * @param string $hash
+     * @param string    $password
+     * @param string    $hash
      * @param UserModel $user
      *
-     * @return boolean
+     * @return bool
      */
     public function verifyPassword($password, $hash, $user = null)
     {
-        if (strlen($hash) === 0) {
+        if (0 === strlen($hash)) {
             return $this->legacyService->checkPassword($user, $password, $this->bcrypt);
         }
 
@@ -157,8 +156,6 @@ class Mapper implements AdapterInterface
 
     /**
      * Set the mapper.
-     *
-     * @param UserMapper $mapper
      */
     public function setMapper(UserMapper $mapper)
     {

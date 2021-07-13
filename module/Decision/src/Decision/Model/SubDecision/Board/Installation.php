@@ -3,9 +3,9 @@
 namespace Decision\Model\SubDecision\Board;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
-use Decision\Model\SubDecision;
 use Decision\Model\Member;
+use Decision\Model\SubDecision;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Installation as board member.
@@ -95,8 +95,6 @@ class Installation extends SubDecision
 
     /**
      * Set the member.
-     *
-     * @param Member $member
      */
     public function setMember(Member $member)
     {

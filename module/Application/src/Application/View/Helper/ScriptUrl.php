@@ -6,9 +6,7 @@ use Laminas\View\Helper\AbstractHelper;
 
 /**
  * Url view helper for use inside javascript code.
- * Usage: $this->scriptUrl()->requireUrl('/url/route');
- *
- * @package Application\View\Helper
+ * Usage: $this->scriptUrl()->requireUrl('/url/route');.
  */
 class ScriptUrl extends AbstractHelper
 {
@@ -30,8 +28,8 @@ class ScriptUrl extends AbstractHelper
     /**
      * Makes an url route available to the javascript url helper.
      *
-     * @param string $name Name of the route.
-     * @param array $params List of route parameters to make available.
+     * @param string $name   name of the route
+     * @param array  $params list of route parameters to make available
      *
      * @return ScriptUrl
      */
@@ -40,7 +38,7 @@ class ScriptUrl extends AbstractHelper
         $scriptParams = [];
 
         foreach ($params as $param) {
-            $scriptParams[$param] = '{' . $param . '}';
+            $scriptParams[$param] = '{'.$param.'}';
         }
 
         $url = $this->getView()->url($name, $scriptParams);
@@ -53,8 +51,8 @@ class ScriptUrl extends AbstractHelper
      * Make multiple url routes available to the javascript url helper.
      * Only works with urls which have the same parameters.
      *
-     * @param array $names List of route names.
-     * @param array $params List of route parameters to make available.
+     * @param array $names  list of route names
+     * @param array $params list of route parameters to make available
      *
      * @return ScriptUrl
      */
@@ -63,6 +61,7 @@ class ScriptUrl extends AbstractHelper
         foreach ($names as $name) {
             $this->requireUrl($name, $params);
         }
+
         return $this;
     }
 

@@ -35,7 +35,7 @@ class Module
      */
     public function getConfig()
     {
-        return include __DIR__ . '/config/module.config.php';
+        return include __DIR__.'/config/module.config.php';
     }
 
     private function getFormFactories()
@@ -44,13 +44,13 @@ class Module
             'company_admin_edit_package_form' => function (ServiceLocatorInterface $sm) {
                 return new EditPackage(
                     $sm->get('translator'),
-                    "job"
+                    'job'
                 );
             },
             'company_admin_edit_featuredpackage_form' => function (ServiceLocatorInterface $sm) {
                 return new EditPackage(
                     $sm->get('translator'),
-                    "featured"
+                    'featured'
                 );
             },
             'company_admin_edit_category_form' => function (ServiceLocatorInterface $sm) {
@@ -72,7 +72,7 @@ class Module
             'company_admin_edit_bannerpackage_form' => function (ServiceLocatorInterface $sm) {
                 return new EditPackage(
                     $sm->get('translator'),
-                    "banner"
+                    'banner'
                 );
             },
             'company_admin_edit_company_form' => function (ServiceLocatorInterface $sm) {
@@ -90,6 +90,7 @@ class Module
                     $sm->get('company_service_companyquery')->getLabelList(false)
                 );
                 $form->setHydrator($sm->get('company_hydrator'));
+
                 return $form;
             },
         ];
@@ -204,6 +205,7 @@ class Module
                 $editCategoryForm = $sm->get('company_admin_edit_category_form');
                 $editLabelForm = $sm->get('company_admin_edit_label_form');
                 $languages = $sm->get('application_get_languages');
+
                 return new Company(
                     $translator,
                     $userRole,
@@ -234,6 +236,7 @@ class Module
                 $jobMapper = $sm->get('company_mapper_job');
                 $categoryMapper = $sm->get('company_mapper_category');
                 $labelMapper = $sm->get('company_mapper_label');
+
                 return new CompanyQuery(
                     $translator,
                     $userRole,
@@ -245,6 +248,7 @@ class Module
             },
         ];
         $factories = array_merge($serviceFactories, $this->getMapperFactories(), $this->getOtherFactories(), $this->getFormFactories());
+
         return [
             'factories' => $factories,
         ];

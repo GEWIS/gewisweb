@@ -8,7 +8,6 @@ use Laminas\View\Model\JsonModel;
 
 class MemberApiController extends AbstractActionController
 {
-
     /**
      * @var Member
      */

@@ -12,11 +12,9 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
  *
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
- *
  */
 class Album implements ResourceInterface
 {
-
     /**
      * Album ID.
      *
@@ -27,14 +25,14 @@ class Album implements ResourceInterface
     protected $id;
 
     /**
-     * First date of photos in album
+     * First date of photos in album.
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $startDateTime = null;
 
     /**
-     * End date of photos in album
+     * End date of photos in album.
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -58,7 +56,8 @@ class Album implements ResourceInterface
     /**
      * all the subalbums
      * Note: These are fetched extra lazy so we can efficiently retrieve an
-     * album count
+     * album count.
+     *
      * @ORM\OneToMany(targetEntity="Photo\Model\Album", mappedBy="parent",
      *                                                  cascade={"persist",
      *                                                  "remove"},
@@ -69,7 +68,8 @@ class Album implements ResourceInterface
     /**
      * all the photo's in this album.
      * Note: These are fetched extra lazy so we can efficiently retrieve an
-     * photo count
+     * photo count.
+     *
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="album",
      *                                      cascade={"persist", "remove"},
      *                                      fetch="EXTRA_LAZY")
@@ -91,7 +91,7 @@ class Album implements ResourceInterface
     }
 
     /**
-     * Gets an array of all child albums
+     * Gets an array of all child albums.
      *
      * @return array
      */
@@ -101,7 +101,7 @@ class Album implements ResourceInterface
     }
 
     /**
-     * Gets an array of all the photos in this album
+     * Gets an array of all the photos in this album.
      *
      * @return array
      */
@@ -134,11 +134,11 @@ class Album implements ResourceInterface
 
     /**
      * Returns an associative array representation of this object
-     * including all child objects
+     * including all child objects.
      *
      * @return array
      */
-    function toArrayWithChildren()
+    public function toArrayWithChildren()
     {
         $array = $this->toArray();
         foreach ($this->photos as $photo) {
@@ -159,17 +159,17 @@ class Album implements ResourceInterface
     public function toArray()
     {
         $array = [
-            'id'            => $this->getId(),
+            'id' => $this->getId(),
             'startDateTime' => $this->getStartDateTime(),
-            'endDateTime'   => $this->getEndDateTime(),
-            'name'          => $this->getName(),
-            'parent'        => is_null($this->getParent()) ? null
+            'endDateTime' => $this->getEndDateTime(),
+            'name' => $this->getName(),
+            'parent' => is_null($this->getParent()) ? null
                 : $this->getParent()->toArray(),
-            'children'      => [],
-            'photos'        => [],
-            'coverPath'     => $this->getCoverPath(),
-            'photoCount'    => $this->getPhotoCount(),
-            'albumCount'    => $this->getAlbumCount()
+            'children' => [],
+            'photos' => [],
+            'coverPath' => $this->getCoverPath(),
+            'photoCount' => $this->getPhotoCount(),
+            'albumCount' => $this->getAlbumCount(),
         ];
 
         return $array;
@@ -197,8 +197,6 @@ class Album implements ResourceInterface
 
     /**
      * Set the start date.
-     *
-     * @param DateTime $startDateTime
      */
     public function setStartDateTime(DateTime $startDateTime)
     {
@@ -217,8 +215,6 @@ class Album implements ResourceInterface
 
     /**
      * Set the end date.
-     *
-     * @param DateTime $endDateTime
      */
     public function setEndDateTime(DateTime $endDateTime)
     {
@@ -256,7 +252,7 @@ class Album implements ResourceInterface
     }
 
     /**
-     * Set the parent of the album
+     * Set the parent of the album.
      *
      * @param album $parent
      */
@@ -266,7 +262,7 @@ class Album implements ResourceInterface
     }
 
     /**
-     * Get the album cover
+     * Get the album cover.
      *
      * @return string
      */
@@ -276,7 +272,7 @@ class Album implements ResourceInterface
     }
 
     /**
-     * Set the cover photo for the album
+     * Set the cover photo for the album.
      *
      * @param string $photo
      */
@@ -286,9 +282,9 @@ class Album implements ResourceInterface
     }
 
     /**
-     * Get the amount of photos in the album
+     * Get the amount of photos in the album.
      *
-     * @return integer
+     * @return int
      */
     public function getPhotoCount($includeSubAlbums = true)
     {
@@ -303,9 +299,9 @@ class Album implements ResourceInterface
     }
 
     /**
-     * Get the amount of subalbums in the album
+     * Get the amount of subalbums in the album.
      *
-     * @return integer
+     * @return int
      */
     public function getAlbumCount()
     {

@@ -7,9 +7,10 @@ use Laminas\View\Helper\AbstractHelper;
 class Truncate extends AbstractHelper
 {
     /**
-     * @param string $text string to truncate
-     * @param int $length length at which to truncate
-     * @param array $options options
+     * @param string $text    string to truncate
+     * @param int    $length  length at which to truncate
+     * @param array  $options options
+     *
      * @return string truncated string
      *
      * @src http://www.codestance.com/tutorials-archive/zend-framework-truncate-view-helper-246
@@ -17,7 +18,7 @@ class Truncate extends AbstractHelper
     public function __invoke($text, $length = 100, $options = [])
     {
         $default = [
-            'ending' => '...', 'exact' => false
+            'ending' => '...', 'exact' => false,
         ];
         $options = array_merge($default, $options);
         $ending = $options['ending'];
@@ -37,6 +38,7 @@ class Truncate extends AbstractHelper
             }
         }
         $truncate .= $ending;
+
         return $truncate;
     }
 }

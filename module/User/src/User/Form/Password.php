@@ -19,8 +19,8 @@ class Password extends Form implements InputFilterProviderInterface
             'name' => 'old_password',
             'type' => 'password',
             'options' => [
-                'label' => $translate->translate('Old password')
-            ]
+                'label' => $translate->translate('Old password'),
+            ],
             ]
         );
 
@@ -29,8 +29,8 @@ class Password extends Form implements InputFilterProviderInterface
             'name' => 'password',
             'type' => 'password',
             'options' => [
-                'label' => $translate->translate('New password')
-            ]
+                'label' => $translate->translate('New password'),
+            ],
             ]
         );
 
@@ -39,8 +39,8 @@ class Password extends Form implements InputFilterProviderInterface
             'name' => 'password_verify',
             'type' => 'password',
             'options' => [
-                'label' => $translate->translate('Verify new password')
-            ]
+                'label' => $translate->translate('Verify new password'),
+            ],
             ]
         );
 
@@ -49,8 +49,8 @@ class Password extends Form implements InputFilterProviderInterface
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
-                'value' => $translate->translate('Change password')
-            ]
+                'value' => $translate->translate('Change password'),
+            ],
             ]
         );
     }
@@ -65,10 +65,10 @@ class Password extends Form implements InputFilterProviderInterface
                     [
                         'name' => StringLength::class,
                         'options' => [
-                            'min' => 8
-                        ]
-                    ]
-                ]
+                            'min' => 8,
+                        ],
+                    ],
+                ],
             ],
             'password_verify' => [
                 'required' => true,
@@ -77,17 +77,17 @@ class Password extends Form implements InputFilterProviderInterface
                     [
                         'name' => StringLength::class,
                         'options' => [
-                            'min' => 8
-                        ]
+                            'min' => 8,
+                        ],
                     ],
                     [
                         'name' => 'identical',
                         'options' => [
-                            'token' => 'password'
-                        ]
-                    ]
-                ]
-            ]
+                            'token' => 'password',
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 }

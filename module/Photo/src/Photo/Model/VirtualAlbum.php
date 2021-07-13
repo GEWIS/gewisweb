@@ -28,7 +28,7 @@ class VirtualAlbum extends Album
     }
 
     /**
-     * Set the parent of the album
+     * Set the parent of the album.
      *
      * @param album $parent
      *
@@ -36,11 +36,11 @@ class VirtualAlbum extends Album
      */
     public function setParent($parent)
     {
-        throw new Exception("Method is not implemented");
+        throw new Exception('Method is not implemented');
     }
 
     /**
-     * Gets an array of all child albums
+     * Gets an array of all child albums.
      *
      * @return array
      */
@@ -84,16 +84,16 @@ class VirtualAlbum extends Album
      */
     public function addAlbum($album)
     {
-        throw new Exception("Method is not implemented");
+        throw new Exception('Method is not implemented');
     }
 
     /**
      * Returns an associative array representation of this object
-     * including all child objects
+     * including all child objects.
      *
      * @return array
      */
-    function toArrayWithChildren()
+    public function toArrayWithChildren()
     {
         $array = $this->toArray();
         foreach ($this->photos as $photo) {
@@ -115,36 +115,37 @@ class VirtualAlbum extends Album
     public function toArray()
     {
         $array = [
-            'id'            => $this->getId(),
+            'id' => $this->getId(),
             'startDateTime' => $this->getStartDateTime(),
-            'endDateTime'   => $this->getEndDateTime(),
-            'name'          => $this->getName(),
-            'parent'        => null,
-            'children'      => [],
-            'photos'        => [],
-            'coverPath'     => $this->getCoverPath(),
-            'photoCount'    => $this->getPhotoCount(),
-            'albumCount'    => $this->getAlbumCount()
+            'endDateTime' => $this->getEndDateTime(),
+            'name' => $this->getName(),
+            'parent' => null,
+            'children' => [],
+            'photos' => [],
+            'coverPath' => $this->getCoverPath(),
+            'photoCount' => $this->getPhotoCount(),
+            'albumCount' => $this->getAlbumCount(),
         ];
 
         return $array;
     }
 
     /**
-     * Get the amount of photos in the album
+     * Get the amount of photos in the album.
      *
-     * @return integer
+     * @return int
      */
     public function getPhotoCount($includeSubAlbums = false)
     {
         $count = $this->photos->count();
+
         return $count;
     }
 
     /**
-     * Get the amount of subalbums in the album
+     * Get the amount of subalbums in the album.
      *
-     * @return integer
+     * @return int
      */
     public function getAlbumCount()
     {

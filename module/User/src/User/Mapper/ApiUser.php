@@ -2,9 +2,9 @@
 
 namespace User\Mapper;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use User\Model\ApiUser as ApiUserModel;
-use Doctrine\ORM\EntityManager;
 
 class ApiUser
 {
@@ -16,9 +16,7 @@ class ApiUser
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -26,7 +24,7 @@ class ApiUser
     }
 
     /**
-     * Find an API user by it's token
+     * Find an API user by it's token.
      *
      * @param string $token Token of the user
      *
@@ -74,7 +72,7 @@ class ApiUser
     /**
      * Persist an API user model.
      *
-     * @param ApiUserModel $apiUser ApiUser to persist.
+     * @param ApiUserModel $apiUser apiUser to persist
      */
     public function persist(ApiUserModel $apiUser)
     {

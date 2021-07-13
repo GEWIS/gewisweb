@@ -4,12 +4,11 @@ namespace Frontpage\Mapper;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 
 /**
  * Mappers for NewsItems.
- *
  */
 class NewsItem
 {
@@ -21,9 +20,7 @@ class NewsItem
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -33,7 +30,8 @@ class NewsItem
     /**
      * Returns a news item based on its id.
      *
-     * @param integer $newsItemId
+     * @param int $newsItemId
+     *
      * @return \Frontpage\Model\NewsItem|null
      */
     public function findNewsItemById($newsItemId)
@@ -44,7 +42,7 @@ class NewsItem
     /**
      * Retrieves a certain number of news items sorted descending by their date.
      *
-     * @param integer $count
+     * @param int $count
      *
      * @return array
      */

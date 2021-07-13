@@ -25,8 +25,8 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
     private $maxOptions;
 
     /**
-     * @param Translator $translator
      * @param ActivityCalendar $calendarService
+     *
      * @throws Exception
      */
     public function __construct(Translator $translator, $calendarService)
@@ -41,8 +41,8 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
             $organOptions[$organ->getId()] = $organ->getAbbr();
         }
         if ($calendarService->isAllowed('create_always')) {
-            $organOptions[-1] = "Board";
-            $organOptions[-2] = "Other";
+            $organOptions[-1] = 'Board';
+            $organOptions[-2] = 'Other';
         }
 
         $this->maxOptions = 3;
@@ -57,8 +57,8 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                     'selected' => 'selected',
                     'disabled' => 'disabled',
                 ],
-                'value_options' => $organOptions
-            ]
+                'value_options' => $organOptions,
+            ],
             ]
         );
 
@@ -88,8 +88,8 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                 'count' => 1,
                 'should_create_template' => true,
                 'allow_add' => true,
-                'target_element' => new ActivityCalendarOption($translator, $calendarService)
-            ]
+                'target_element' => new ActivityCalendarOption($translator, $calendarService),
+            ],
             ]
         );
     }
@@ -101,7 +101,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
     {
         return [
             'organ' => [
-                'required' => true
+                'required' => true,
             ],
             'name' => [
                 'required' => true,
@@ -110,13 +110,13 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 2,
-                            'max' => 128
-                        ]
-                    ]
-                ]
+                            'max' => 128,
+                        ],
+                    ],
+                ],
             ],
             'description' => [
-                'required' => false
+                'required' => false,
             ],
             'options' => [
                 'required' => true,
@@ -125,24 +125,22 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                         'name' => Callback::class,
                         'options' => [
                             'messages' => [
-                                Callback::INVALID_VALUE =>
-                                    $this->translator->translate('The activity does now have an acceptable amount of options'),
+                                Callback::INVALID_VALUE => $this->translator->translate('The activity does now have an acceptable amount of options'),
                             ],
                             'callback' => function ($value, $context = []) {
                                 return $this->isGoodOptionCount($value, $context);
-                            }
+                            },
                         ],
                     ],
                     [
                         'name' => Callback::class,
                         'options' => [
                             'messages' => [
-                                Callback::INVALID_VALUE =>
-                                    $this->translator->translate('The options for this proposal do not fit in the valid range.'),
+                                Callback::INVALID_VALUE => $this->translator->translate('The options for this proposal do not fit in the valid range.'),
                             ],
                             'callback' => function ($value, $context = []) {
                                 return $this->areGoodOptionDates($value, $context);
-                            }
+                            },
                         ],
                     ],
                 ],
@@ -151,10 +149,11 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
     }
 
     /**
-     * Check if the amount of options is acceptable
+     * Check if the amount of options is acceptable.
      *
      * @param $value
      * @param array $context
+     *
      * @return bool
      */
     public function isGoodOptionCount($value, $context = [])
@@ -165,14 +164,16 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
         if (count($value) > $this->maxOptions) {
             return false;
         }
+
         return true;
     }
 
     /**
-     * Check if the begin times of the options are acceptable
+     * Check if the begin times of the options are acceptable.
      *
      * @param $value
      * @param array $context
+     *
      * @return bool
      */
     public function areGoodOptionDates($value, $context = [])
@@ -187,6 +188,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                 return false;
             }
         }
+
         return $final;
     }
 }

@@ -2,13 +2,13 @@
 
 namespace Application\View\Helper;
 
-use Laminas\View\Helper\AbstractHelper;
 use Application\Service\Legacy as LegacyService;
+use Laminas\View\Helper\AbstractHelper;
 
 class Infima extends AbstractHelper
 {
     /**
-     * Legacy service
+     * Legacy service.
      *
      * @var LegacyService
      */
@@ -35,9 +35,7 @@ class Infima extends AbstractHelper
     }
 
     /**
-     * Set the legacy service locator
-     *
-     * @param LegacyService $service
+     * Set the legacy service locator.
      */
     public function setLegacyService(LegacyService $service)
     {

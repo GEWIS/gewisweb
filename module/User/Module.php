@@ -3,6 +3,15 @@
 namespace User;
 
 use Doctrine\Laminas\Hydrator\DoctrineObject;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\Crypt\Password\Bcrypt;
+use Laminas\Http\PhpEnvironment\RemoteAddress;
+use Laminas\Http\Request as HttpRequest;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Permissions\Acl\Acl;
+use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
+use Laminas\Permissions\Acl\Role\GenericRole as Role;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use User\Authentication\Adapter\Mapper;
 use User\Authentication\Adapter\PinMapper;
 use User\Form\Activate;
@@ -14,28 +23,19 @@ use User\Mapper\ApiUser;
 use User\Mapper\LoginAttempt;
 use User\Mapper\NewUser;
 use User\Mapper\Session;
+use User\Model\User;
 use User\Permissions\Assertion\IsBoardMember;
+use User\Permissions\NotAllowedException;
 use User\Service\ApiApp;
 use User\Service\Email;
 use User\Service\Factory\ApiAppFactory;
-use Laminas\Authentication\AuthenticationService;
-use Laminas\Crypt\Password\Bcrypt;
-use Laminas\Http\PhpEnvironment\RemoteAddress;
-use Laminas\Permissions\Acl\Acl;
-use Laminas\Permissions\Acl\Role\GenericRole as Role;
-use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
-use Laminas\Mvc\MvcEvent;
-use Laminas\Http\Request as HttpRequest;
-use User\Permissions\NotAllowedException;
-use User\Model\User;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class Module
 {
     /**
      * Bootstrap.
      *
-     * @var MvcEvent $e
+     * @var MvcEvent
      */
     public function onBootstrap(MvcEvent $e)
     {
@@ -60,8 +60,8 @@ class Module
             MvcEvent::EVENT_DISPATCH_ERROR,
             function ($e) {
                 if (
-                    $e->getError() == 'error-exception'
-                    && $e->getParam('exception', null) != null
+                    'error-exception' == $e->getError()
+                    && null != $e->getParam('exception', null)
                     && $e->getParam('exception') instanceof NotAllowedException
                 ) {
                     $form = $e->getApplication()->getServiceManager()->get('user_form_login');
@@ -73,7 +73,6 @@ class Module
             -100
         );
     }
-
 
     /**
      * Get the autoloader configuration.
@@ -89,7 +88,7 @@ class Module
      */
     public function getConfig()
     {
-        return include __DIR__ . '/config/module.config.php';
+        return include __DIR__.'/config/module.config.php';
     }
 
     /**
@@ -101,7 +100,7 @@ class Module
     {
         return [
             'aliases' => [
-                'Laminas\Authentication\AuthenticationService' => 'user_auth_service'
+                'Laminas\Authentication\AuthenticationService' => 'user_auth_service',
             ],
 
             'factories' => [
@@ -121,6 +120,7 @@ class Module
                     $activateForm = $sm->get('user_form_activate');
                     $loginForm = $sm->get('user_form_login');
                     $passwordForm = $sm->get('user_form_password');
+
                     return new Service\User(
                         $translator,
                         $userRole,
@@ -145,6 +145,7 @@ class Module
                     $loginAttemptMapper = $sm->get('user_mapper_loginattempt');
                     $userMapper = $sm->get('user_mapper_user');
                     $rateLimitConfig = $sm->get('config')['login_rate_limits'];
+
                     return new Service\LoginAttempt(
                         $remoteAddress,
                         $entityManager,
@@ -159,6 +160,7 @@ class Module
                     $acl = $sm->get('acl');
                     $apiUserMapper = $sm->get('user_mapper_apiuser');
                     $apiTokenForm = $sm->get('user_form_apitoken');
+
                     return new Service\ApiUser($translator, $userRole, $acl, $apiUserMapper, $apiTokenForm);
                 },
                 'user_service_email' => function (ServiceLocatorInterface $sm) {
@@ -166,6 +168,7 @@ class Module
                     $renderer = $sm->get('ViewRenderer');
                     $transport = $sm->get('user_mail_transport');
                     $emailConfig = $sm->get('config')['email'];
+
                     return new Email($translator, $renderer, $transport, $emailConfig);
                 },
                 ApiApp::class => ApiAppFactory::class,
@@ -173,6 +176,7 @@ class Module
                     $request = $sm->get('Request');
                     $response = $sm->get('Response');
                     $config = $sm->get('config');
+
                     return new Authentication\Storage\Session(
                         $request,
                         $response,
@@ -183,6 +187,7 @@ class Module
                     $bcrypt = new Bcrypt();
                     $config = $sm->get('config');
                     $bcrypt->setCost($config['bcrypt_cost']);
+
                     return $bcrypt;
                 },
 
@@ -221,6 +226,7 @@ class Module
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('user_hydrator'));
+
                     return $form;
                 },
 
@@ -253,10 +259,11 @@ class Module
                 'user_mail_transport' => function (ServiceLocatorInterface $sm) {
                     $config = $sm->get('config');
                     $config = $config['email'];
-                    $class = '\Laminas\Mail\Transport\\' . $config['transport'];
-                    $optionsClass = '\Laminas\Mail\Transport\\' . $config['transport'] . 'Options';
+                    $class = '\Laminas\Mail\Transport\\'.$config['transport'];
+                    $optionsClass = '\Laminas\Mail\Transport\\'.$config['transport'].'Options';
                     $transport = new $class();
                     $transport->setOptions(new $optionsClass($config['options']));
+
                     return $transport;
                 },
                 'user_auth_adapter' => function (ServiceLocatorInterface $sm) {
@@ -266,6 +273,7 @@ class Module
                         $sm->get('user_service_loginattempt')
                     );
                     $adapter->setMapper($sm->get('user_mapper_user'));
+
                     return $adapter;
                 },
                 'user_pin_auth_adapter' => function (ServiceLocatorInterface $sm) {
@@ -274,6 +282,7 @@ class Module
                         $sm->get('user_service_loginattempt')
                     );
                     $adapter->setMapper($sm->get('user_mapper_user'));
+
                     return $adapter;
                 },
                 'user_auth_service' => function (ServiceLocatorInterface $sm) {
@@ -312,16 +321,17 @@ class Module
 //                        return 'apiuser';
 //                    }
                     $range = $sm->get('config')['tue_range'];
-                    if (strpos($sm->get('user_remoteaddress'), $range) === 0) {
+                    if (0 === strpos($sm->get('user_remoteaddress'), $range)) {
                         return 'tueguest';
                     }
+
                     return 'guest';
                 },
                 'acl' => function (ServiceLocatorInterface $sm) {
                     // initialize the ACL
                     $acl = new Acl();
 
-                    /**
+                    /*
                      * Define all basic roles.
                      *
                      * - guest: everyone gets at least this access level
@@ -374,17 +384,18 @@ class Module
 
                     // sosusers can't do anything
                     $acl->deny('sosuser');
+
                     return $acl;
                 },
                 // fake 'alias' for entity manager, because doctrine uses an abstract factory
                 // and aliases don't work with abstract factories
                 'user_doctrine_em' => function (ServiceLocatorInterface $sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
-                }
+                },
             ],
             'shared' => [
-                'user_role' => false
-            ]
+                'user_role' => false,
+            ],
         ];
     }
 }

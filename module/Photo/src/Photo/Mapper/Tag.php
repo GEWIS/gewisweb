@@ -7,11 +7,9 @@ use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for Tags.
- *
  */
 class Tag
 {
-
     /**
      * Doctrine entity manager.
      *
@@ -20,9 +18,7 @@ class Tag
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -32,7 +28,7 @@ class Tag
     /**
      * Retrieves a tag by id from the database.
      *
-     * @param integer $tagId the id of the tag
+     * @param int $tagId the id of the tag
      *
      * @return \Photo\Model\Tag
      */
@@ -46,7 +42,7 @@ class Tag
         return $this->getRepository()->findOneBy(
             [
             'photo' => $photoId,
-            'member' => $lidnr
+            'member' => $lidnr,
             ]
         );
     }
@@ -55,7 +51,7 @@ class Tag
     {
         return $this->getRepository()->findBy(
             [
-            'member' => $lidnr
+            'member' => $lidnr,
             ]
         );
     }
@@ -111,7 +107,6 @@ class Tag
     {
         $this->em->remove($tag);
     }
-
 
     /**
      * Flush.

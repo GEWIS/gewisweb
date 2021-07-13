@@ -33,7 +33,7 @@ class Decision
     protected $meeting_type;
 
     /**
-     * Meeting number
+     * Meeting number.
      *
      * NOTE: This is a hack to make the meeting a primary key here.
      *
@@ -84,8 +84,6 @@ class Decision
 
     /**
      * Set the meeting.
-     *
-     * @param Meeting $meeting
      */
     public function setMeeting(Meeting $meeting)
     {
@@ -232,7 +230,7 @@ class Decision
     /**
      * Check if this decision is destroyed by another decision.
      *
-     * @return boolean
+     * @return bool
      */
     public function isDestroyed()
     {

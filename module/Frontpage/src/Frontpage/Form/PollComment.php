@@ -3,8 +3,8 @@
 namespace Frontpage\Form;
 
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator\StringLength;
 
 class PollComment extends Form implements InputFilterProviderInterface
@@ -18,8 +18,8 @@ class PollComment extends Form implements InputFilterProviderInterface
             'name' => 'author',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Author')
-            ]
+                'label' => $translator->translate('Author'),
+            ],
             ]
         );
 
@@ -28,8 +28,8 @@ class PollComment extends Form implements InputFilterProviderInterface
             'name' => 'content',
             'type' => 'textarea',
             'options' => [
-                'label' => $translator->translate('Content')
-            ]
+                'label' => $translator->translate('Content'),
+            ],
             ]
         );
 
@@ -38,8 +38,8 @@ class PollComment extends Form implements InputFilterProviderInterface
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
-                'value' => $translator->translate('Comment')
-            ]
+                'value' => $translator->translate('Comment'),
+            ],
             ]
         );
         $this->get('submit')->setLabel($translator->translate('Comment'));
@@ -61,10 +61,10 @@ class PollComment extends Form implements InputFilterProviderInterface
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 2,
-                            'max' => 32
-                        ]
-                    ]
-                ]
+                            'max' => 32,
+                        ],
+                    ],
+                ],
             ],
             'content' => [
                 'required' => true,
@@ -72,10 +72,10 @@ class PollComment extends Form implements InputFilterProviderInterface
                     [
                         'name' => StringLength::class,
                         'options' => [
-                            'min' => 8
-                        ]
-                    ]
-                ]
+                            'min' => 8,
+                        ],
+                    ],
+                ],
             ],
         ];
     }

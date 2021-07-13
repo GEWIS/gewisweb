@@ -23,49 +23,49 @@ class Page implements ResourceInterface
     protected $id;
 
     /**
-     * Dutch title of the page
+     * Dutch title of the page.
      *
      * @ORM\Column(type="string")
      */
     protected $dutchTitle;
 
     /**
-     * English title of the page
+     * English title of the page.
      *
      * @ORM\Column(type="string")
      */
     protected $englishTitle;
 
     /**
-     * Category of the page
+     * Category of the page.
      *
      * @ORM\Column(type="string")
      */
     protected $category;
 
     /**
-     * Sub-category of the page
+     * Sub-category of the page.
      *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $subCategory;
 
     /**
-     * Name of the page
+     * Name of the page.
      *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $name;
 
     /**
-     * The english HTML content of the page
+     * The english HTML content of the page.
      *
      * @ORM\Column(type="text")
      */
     protected $englishContent;
 
     /**
-     * The english HTML content of the page
+     * The english HTML content of the page.
      *
      * @ORM\Column(type="text")
      */
@@ -79,7 +79,7 @@ class Page implements ResourceInterface
     protected $requiredRole;
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -151,7 +151,7 @@ class Page implements ResourceInterface
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      */
     public function setId($id)
     {

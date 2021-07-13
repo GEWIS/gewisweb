@@ -59,7 +59,6 @@ abstract class CompanyPackage
      */
     protected $company;
 
-
     /**
      * Get the package's id.
      *
@@ -122,9 +121,9 @@ abstract class CompanyPackage
 
     /**
      * Get the number of jobs in the package.
-     * This method can be overridden in subclasses
+     * This method can be overridden in subclasses.
      *
-     * @return returns 0
+     * @return returns
      */
     public function getNumberOfActiveJobs($category)
     {
@@ -155,7 +154,6 @@ abstract class CompanyPackage
      * Set the package's company.
      *
      * @param Company company
-     *
      */
     public function setCompany(Company $company)
     {
@@ -163,18 +161,17 @@ abstract class CompanyPackage
     }
 
     /**
-     * Get's the type of the package
-     *
+     * Get's the type of the package.
      */
     public function getType()
     {
         switch (get_class($this)) {
             case "Company\Model\CompanyBannerPackage":
-                return "banner";
+                return 'banner';
             case "Company\Model\CompanyJobPackage":
-                return "job";
+                return 'job';
             case "Company\Model\CompanyFeaturedPackage":
-                return "featured";
+                return 'featured';
         }
     }
 
@@ -210,7 +207,7 @@ abstract class CompanyPackage
         return ['id' => $this->id,
             'startDate' => $this->getStartingDate()->format('Y-m-d'),
             'expirationDate' => $this->getExpirationDate()->format('Y-m-d'),
-            'published' => $this->isPublished(),];
+            'published' => $this->isPublished(), ];
     }
 
     public function exchangeArray($data)

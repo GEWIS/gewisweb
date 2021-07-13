@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Global Configuration Override
+ * Global Configuration Override.
  *
  * You can use this file for overriding configuration values from modules, etc.
  * You would place values in here that are agnostic to the environment and not
@@ -16,7 +16,7 @@ use Laminas\Session\Storage\SessionArrayStorage;
 use Laminas\Session\Validator\HttpUserAgent;
 
 return [
-    /**
+    /*
      * Bcrypt cost.
      *
      * DO NOT CHANGE THE PASSWORD HASH SETTINGS FROM THEIR DEFAULTS
@@ -32,7 +32,7 @@ return [
      */
     'bcrypt_cost' => 13,
 
-    /**
+    /*
      * IP address start for the TU/e. All IP addresses starting with this will
      * be allowed more base rights, like viewing exams
      */
@@ -42,12 +42,12 @@ return [
         'normal' => [
             'user' => 10,
             'ip' => 100,
-            'lockout_time' => 10
+            'lockout_time' => 10,
         ],
         'pin' => [
             'user' => 5,
             'ip' => 50,
-            'lockout_time' => 20
+            'lockout_time' => 20,
         ],
     ],
     'storage' => [
@@ -57,7 +57,7 @@ return [
         'dir_mode' => 0777, // rwx by default
     ],
 
-    /**
+    /*
      * Exam and Summary upload directory configration.
      */
     'education' => [
@@ -66,7 +66,7 @@ return [
         'dir_mode' => 0777, // rwx by default
     ],
 
-    /**
+    /*
      * Exam and Summary temporary upload directory configration.
      */
     'education_temp' => [
@@ -76,28 +76,28 @@ return [
         'public_summary_dir' => 'data/education_temp_summaries',
     ],
 
-    /**
+    /*
      * Dreamspark configuration.
      */
     'dreamspark' => [
         'url' => 'https://e5.onthehub.com/WebStore/Security/AuthenticateUser.aspx?account=%ACCOUNT%&username=%EMAIL%&key=%KEY%&academic_statuses=%GROUPS%',
         // configured locally
         'account' => '',
-        'key' => ''
+        'key' => '',
     ],
 
-    /**
+    /*
      * CA Path for SSL certificates, override this locally if necessary.
      */
     'sslcapath' => '/etc/ssl/certs',
 
-    /**
+    /*
      * Path for JWT keypairs
      */
     'jwt_key_path' => 'data/keys/jwt-key',
     'jwt_pub_key_path' => 'data/keys/jwt-key.pub',
 
-    /**
+    /*
      * Settings for Monolog logger
      */
     'logging' => [
@@ -106,7 +106,7 @@ return [
         'minimal_log_level' => 'INFO',
     ],
 
-    /**
+    /*
      * Photo's upload directory configuration
      */
     'photo' => [
@@ -120,14 +120,14 @@ return [
              * landscape images.
              */
             'width' => 320,
-            'height' => 640
+            'height' => 640,
         ],
         'large_thumb_size' => [
             /*
              * Max. width and height which a thumbnail may have.
              */
             'width' => 1920,
-            'height' => 1920
+            'height' => 1920,
         ],
         'album_cover' => [
             'width' => 320,
@@ -136,8 +136,8 @@ return [
             'outer_border' => 0,
             'cols' => 2,
             'rows' => 2,
-            'background' => '#ffffff'
-        ]
+            'background' => '#ffffff',
+        ],
     ],
 
     'organ_information' => [
@@ -160,23 +160,23 @@ return [
         'poster-reglement' => 'Beleid%20&%20Reglementen/Posterbeleid',
     ],
 
-    /**
+    /*
      * Doctrine global configuration, like functions
      */
     'doctrine' => [
         'configuration' => [
             'orm_default' => [
                 'numeric_functions' => [
-                    'RAND' => 'Application\Extensions\Doctrine\Rand'
-                ]
-            ]
-        ]
+                    'RAND' => 'Application\Extensions\Doctrine\Rand',
+                ],
+            ],
+        ],
     ],
 
     'session_config' => [],
 
     'session_storage' => [
-        'type' => SessionArrayStorage::class
+        'type' => SessionArrayStorage::class,
     ],
 
     'session_manager' => [

@@ -8,7 +8,6 @@ use Laminas\View\Model\ViewModel;
 
 class ActivityCalendarController extends AbstractActionController
 {
-
     /**
      * @var ActivityCalendar
      */
@@ -37,7 +36,7 @@ class ActivityCalendarController extends AbstractActionController
             'calendarKey' => $config['google_calendar_key'],
             'success' => $this->getRequest()->getQuery('success', false),
             'canCreate' => $this->calendarService->canCreateProposal(),
-            'canApprove' => $this->calendarService->canApproveOption()
+            'canApprove' => $this->calendarService->canApproveOption(),
             ]
         );
     }
@@ -70,7 +69,7 @@ class ActivityCalendarController extends AbstractActionController
             $postData = $this->getRequest()->getPost();
             $success = $this->calendarService->createProposal($postData);
 
-            if ($success === false) {
+            if (false === $success) {
                 $this->getResponse()->setStatusCode(400);
                 $form->setData($postData);
             } else {

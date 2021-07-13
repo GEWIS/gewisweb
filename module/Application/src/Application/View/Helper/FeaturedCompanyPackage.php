@@ -15,11 +15,11 @@ class FeaturedCompanyPackage extends AbstractHelper
 
     public function __construct(Company $companyService)
     {
-
         $this->companyService = $companyService;
     }
+
     /**
-     * Returns currently active featurePackage
+     * Returns currently active featurePackage.
      *
      * @return CompanyFeaturedPackage
      */

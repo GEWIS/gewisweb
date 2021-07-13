@@ -9,7 +9,6 @@ use User\Service\User;
 
 class ApiAdminController extends AbstractActionController
 {
-
     /**
      * @var ApiUser
      */
@@ -29,7 +28,7 @@ class ApiAdminController extends AbstractActionController
     {
         return new ViewModel(
             [
-                'tokens' => $this->apiUserService->getTokens()
+                'tokens' => $this->apiUserService->getTokens(),
             ]
         );
     }
@@ -48,7 +47,7 @@ class ApiAdminController extends AbstractActionController
             if (null !== $apiUser) {
                 return new ViewModel(
                     [
-                        'apiUser' => $apiUser
+                        'apiUser' => $apiUser,
                     ]
                 );
             }
@@ -56,7 +55,7 @@ class ApiAdminController extends AbstractActionController
 
         return new ViewModel(
             [
-                'form' => $service->getApiTokenForm()
+                'form' => $service->getApiTokenForm(),
             ]
         );
     }
@@ -79,7 +78,7 @@ class ApiAdminController extends AbstractActionController
 
         return new ViewModel(
             [
-                'token' => $service->getToken($id)
+                'token' => $service->getToken($id),
             ]
         );
     }

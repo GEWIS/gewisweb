@@ -20,9 +20,7 @@ class Meeting
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -33,6 +31,7 @@ class Meeting
      * Find all meetings.
      *
      * @param int|null $limit The amount of results, default is all
+     *
      * @return array Of all meetings
      */
     public function findAll($limit = null)
@@ -53,7 +52,7 @@ class Meeting
     }
 
     /**
-     * Find all meetings which have the given type
+     * Find all meetings which have the given type.
      *
      * @param AV|BV|VV|Virt $type
      *
@@ -73,9 +72,10 @@ class Meeting
     }
 
     /**
-     * Find all meetings that have taken place
+     * Find all meetings that have taken place.
      *
      * @param int|null $limit The amount of results, default is all
+     *
      * @return array Meetings that have taken place
      */
     public function findPast($limit = null, $type = null)
@@ -119,7 +119,7 @@ class Meeting
     }
 
     /**
-     * Returns the closest upcoming AV
+     * Returns the closest upcoming AV.
      *
      * @return MeetingModel|null
      */
@@ -132,7 +132,7 @@ class Meeting
      * Find a meeting with all decisions.
      *
      * @param string $type
-     * @param int $number
+     * @param int    $number
      *
      * @return MeetingModel
      */
@@ -161,10 +161,12 @@ class Meeting
     }
 
     /**
-     * Returns the document with the specified ID
+     * Returns the document with the specified ID.
      *
      * @param int $id Document ID
+     *
      * @return MeetingDocument
+     *
      * @throws InvalidArgumentException If the document does not exist
      */
     public function findDocumentOrFail($id)
@@ -172,18 +174,15 @@ class Meeting
         $document = $this->findDocument($id);
 
         if (is_null($document)) {
-            throw new InvalidArgumentException(
-                sprintf("A document with the provided ID '%d' does not exist.", $id)
-            );
+            throw new InvalidArgumentException(sprintf("A document with the provided ID '%d' does not exist.", $id));
         }
 
         return $document;
     }
 
     /**
-     * Returns the maximum document position for the given meeting
+     * Returns the maximum document position for the given meeting.
      *
-     * @param MeetingModel $meeting
      * @return string|null NULL if no documents are associated to the meeting
      */
     public function findMaxDocumentPosition(MeetingModel $meeting)
@@ -205,7 +204,7 @@ class Meeting
     /**
      * Persist a meeting model.
      *
-     * @param MeetingModel $meeting Meeting to persist.
+     * @param MeetingModel $meeting meeting to persist
      */
     public function persist(MeetingModel $meeting)
     {
@@ -216,7 +215,7 @@ class Meeting
     /**
      * Persist a document model.
      *
-     * @param MeetingDocument $document Document to persist.
+     * @param MeetingDocument $document document to persist
      */
     public function persistDocument(MeetingDocument $document)
     {
@@ -246,10 +245,11 @@ class Meeting
     }
 
     /**
-     * Finds an AV or VV planned in the future
+     * Finds an AV or VV planned in the future.
      *
      * @param string $order Order of the future AV's
-     * @param bool $vvs If VV's are included in this
+     * @param bool   $vvs   If VV's are included in this
+     *
      * @return MeetingModel|null
      */
     private function findFutureMeeting($order, $vvs = false)
@@ -269,10 +269,12 @@ class Meeting
 
         if ($vvs) {
             $qb->andWhere("m.type = 'AV' OR m.type = 'VV'");
+
             return $qb->getQuery()->getOneOrNullResult();
         }
 
         $qb->andWhere("m.type = 'AV'");
+
         return $qb->getQuery()->getOneOrNullResult();
     }
 }

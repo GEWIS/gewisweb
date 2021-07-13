@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
- * News item
+ * News item.
  *
  * @ORM\Entity
  * @ORM\Table(name="NewsItem")
@@ -75,7 +75,7 @@ class NewsItem implements ResourceInterface
     }
 
     /**
-     * Whether this news item is pinned to the top of the news section or not
+     * Whether this news item is pinned to the top of the news section or not.
      *
      * @ORM\Column(type="boolean")
      */

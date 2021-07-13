@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Session
 {
     /**
-     * The id of this session
+     * The id of this session.
      *
      * @ORM\Id
      * @ORM\Column(type="guid")
@@ -66,7 +66,7 @@ class Session
     protected $createdAt;
 
     /**
-     * The last time this session was active
+     * The last time this session was active.
      *
      * @ORM\Column(type="datetime")
      */

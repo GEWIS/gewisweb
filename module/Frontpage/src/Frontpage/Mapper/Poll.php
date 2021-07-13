@@ -4,14 +4,13 @@ namespace Frontpage\Mapper;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Frontpage\Model\PollOption;
 use Frontpage\Model\PollVote;
 
 /**
  * Mappers for Polls.
- *
  */
 class Poll
 {
@@ -23,9 +22,7 @@ class Poll
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -35,7 +32,8 @@ class Poll
     /**
      * Returns a poll based on its id.
      *
-     * @param integer $pollId
+     * @param int $pollId
+     *
      * @return \Frontpage\Model\Poll|null
      */
     public function findPollById($pollId)
@@ -46,7 +44,8 @@ class Poll
     /**
      * Returns a poll based on its id.
      *
-     * @param integer $optionId
+     * @param int $optionId
+     *
      * @return PollOption|null
      */
     public function findPollOptionById($optionId)
@@ -57,8 +56,8 @@ class Poll
     /**
      * Find the vote of a certain user on a poll.
      *
-     * @param integer $pollId
-     * @param integer $lidnr
+     * @param int $pollId
+     * @param int $lidnr
      *
      * @return PollVote|null
      */
@@ -67,7 +66,7 @@ class Poll
         return $this->em->getRepository('Frontpage\Model\PollVote')->findOneBy(
             [
             'poll' => $pollId,
-            'respondent' => $lidnr
+            'respondent' => $lidnr,
             ]
         );
     }
@@ -85,7 +84,7 @@ class Poll
     }
 
     /**
-     * Returns the latest poll if one is available
+     * Returns the latest poll if one is available.
      *
      * @return \Frontpage\Model\Poll|null
      */

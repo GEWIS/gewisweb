@@ -8,7 +8,7 @@ use Laminas\View\Helper\AbstractHelper;
 class FileUrl extends AbstractHelper
 {
     /**
-     * Service locator
+     * Service locator.
      *
      * @var ServiceLocatorInterface
      */
@@ -25,7 +25,8 @@ class FileUrl extends AbstractHelper
     {
         $config = $this->getServiceLocator()->get('config');
         $basedir = $config['storage']['public_dir'];
-        return $this->getView()->basePath() . '/' . $basedir . '/' . $path;
+
+        return $this->getView()->basePath().'/'.$basedir.'/'.$path;
     }
 
     /**
@@ -39,7 +40,7 @@ class FileUrl extends AbstractHelper
     }
 
     /**
-     * Set the service locator
+     * Set the service locator.
      *
      * @param ServiceLocatorInterface
      */

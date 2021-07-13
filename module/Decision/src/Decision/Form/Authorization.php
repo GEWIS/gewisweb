@@ -3,8 +3,8 @@
 namespace Decision\Form;
 
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilterProviderInterface;
 
 class Authorization extends Form implements InputFilterProviderInterface
 {
@@ -15,7 +15,7 @@ class Authorization extends Form implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'recipient',
-            'type' => 'hidden'
+            'type' => 'hidden',
             ]
         );
 
@@ -24,8 +24,8 @@ class Authorization extends Form implements InputFilterProviderInterface
             'name' => 'agree',
             'type' => 'checkbox',
             'options' => [
-                'use_hidden_element' => false
-            ]
+                'use_hidden_element' => false,
+            ],
             ]
         );
 
@@ -34,8 +34,8 @@ class Authorization extends Form implements InputFilterProviderInterface
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
-                'label' => $translate->translate('Authorize')
-            ]
+                'label' => $translate->translate('Authorize'),
+            ],
             ]
         );
     }
@@ -48,7 +48,7 @@ class Authorization extends Form implements InputFilterProviderInterface
         return [
             'agree' => [
                 'required' => true,
-            ]
+            ],
         ];
     }
 }

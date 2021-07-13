@@ -15,10 +15,10 @@ use Education\Model\Course as CourseModel;
 use Education\Model\Exam as ExamModel;
 use Education\Model\Summary as SummaryModel;
 use Exception;
-use User\Model\User;
-use User\Permissions\NotAllowedException;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
+use User\Model\User;
+use User\Permissions\NotAllowedException;
 
 /**
  * Exam service.
@@ -148,7 +148,7 @@ class Exam extends AbstractAclService
     }
 
     /**
-     * Get a course
+     * Get a course.
      *
      * @param string $code
      *
@@ -160,7 +160,7 @@ class Exam extends AbstractAclService
     }
 
     /**
-     * Get an exam
+     * Get an exam.
      *
      * @param int $id
      *
@@ -169,9 +169,7 @@ class Exam extends AbstractAclService
     public function getExamDownload($id)
     {
         if (!$this->isAllowed('download')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to download exams')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to download exams'));
         }
 
         $exam = $this->examMapper->find($id);
@@ -184,7 +182,7 @@ class Exam extends AbstractAclService
      *
      * @param array $data POST Data
      *
-     * @return boolean
+     * @return bool
      */
     protected function bulkEdit($data, $type)
     {
@@ -207,13 +205,14 @@ class Exam extends AbstractAclService
             if (is_null($this->getCourse($examData['course']))) {
                 // course doesn't exist
                 $messages['exams'][$key] = [
-                    'course' => [$this->translator->translate("Course doesn't exist")]
+                    'course' => [$this->translator->translate("Course doesn't exist")],
                 ];
             }
         }
 
         if (!empty($messages)) {
             $form->setMessages($messages);
+
             return false;
         }
 
@@ -231,23 +230,23 @@ class Exam extends AbstractAclService
             foreach ($data['exams'] as $examData) {
                 // finalize exam upload
                 $exam = new ExamModel();
-                if ($type === 'summary') {
+                if ('summary' === $type) {
                     $exam = new SummaryModel();
                 }
 
                 $exam->setDate(new DateTime($examData['date']));
                 $exam->setCourse($this->getCourse($examData['course']));
-                if ($type === 'summary') {
+                if ('summary' === $type) {
                     $exam->setAuthor($examData['author']);
                     $exam->setExamType(ExamModel::EXAM_TYPE_SUMMARY);
                 }
 
-                if ($type === 'exam') {
+                if ('exam' === $type) {
                     $exam->setExamType($examData['examType']);
                 }
                 $exam->setLanguage($examData['language']);
 
-                $localFile = $config['upload_' . $type . '_dir'] . '/' . $examData['file'];
+                $localFile = $config['upload_'.$type.'_dir'].'/'.$examData['file'];
 
                 $exam->setFilename($storageService->storeFile($localFile));
 
@@ -273,11 +272,11 @@ class Exam extends AbstractAclService
      *
      * Uploads exams into a temporary folder.
      *
-     * @param array $post POST Data
-     * @param array $files FILES Data
+     * @param array  $post            POST Data
+     * @param array  $files           FILES Data
      * @param string $uploadDirectory the directory to place the exam in
      *
-     * @return boolean
+     * @return bool
      */
     protected function tempUpload($post, $files, $uploadDirectory)
     {
@@ -292,7 +291,7 @@ class Exam extends AbstractAclService
         }
 
         $filename = $data['file']['name'];
-        $path = $uploadDirectory . '/' . $filename;
+        $path = $uploadDirectory.'/'.$filename;
         $tmpPath = $data['file']['tmp_name'];
 
         if (!file_exists($tmpPath)) {
@@ -302,18 +301,21 @@ class Exam extends AbstractAclService
         if (!file_exists($path)) {
             return move_uploaded_file($tmpPath, $path);
         }
+
         return true;
     }
 
     public function tempExamUpload($post, $files)
     {
         $config = $this->getConfig('education_temp');
+
         return $this->tempUpload($post, $files, $config['upload_exam_dir']);
     }
 
     public function tempSummaryUpload($post, $files)
     {
         $config = $this->getConfig('education_temp');
+
         return $this->tempUpload($post, $files, $config['upload_summary_dir']);
     }
 
@@ -327,8 +329,6 @@ class Exam extends AbstractAclService
      * Summaries have the following format:
      *
      * <code>-<author>-summary-<year>-<month>-<day>.pdf
-     *
-     * @param ExamModel $exam
      *
      * @return string Filename
      */
@@ -349,7 +349,7 @@ class Exam extends AbstractAclService
 
         $filename[] = $exam->getDate()->format('Y-m-d');
 
-        return implode('-', $filename) . '.pdf';
+        return implode('-', $filename).'.pdf';
     }
 
     /**
@@ -360,11 +360,12 @@ class Exam extends AbstractAclService
     public function getConfig($key = 'education')
     {
         $config = $this->config;
+
         return $config[$key];
     }
 
     /**
-     * Deletes a temp uploaded exam or summary
+     * Deletes a temp uploaded exam or summary.
      *
      * @param $filename The file to delete
      * @param $type The type to delete (exam/summary)
@@ -372,13 +373,11 @@ class Exam extends AbstractAclService
     public function deleteTempExam($filename, $type = 'exam')
     {
         if (!$this->isAllowed('delete')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to delete exams')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to delete exams'));
         }
         $config = $this->getConfig('education_temp');
-        $dir = $config['upload_' . $type . '_dir'];
-        unlink($dir . '/' . stripslashes($filename));
+        $dir = $config['upload_'.$type.'_dir'];
+        unlink($dir.'/'.stripslashes($filename));
     }
 
     /**
@@ -391,18 +390,16 @@ class Exam extends AbstractAclService
     protected function getBulkForm($type)
     {
         if (!$this->isAllowed('upload')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to upload exams')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to upload exams'));
         }
         if (null !== $this->bulkForm) {
             return $this->bulkForm;
         }
 
         // fully load the bulk form
-        if ($type === 'summary') {
+        if ('summary' === $type) {
             $this->bulkForm = $this->bulkSummaryForm;
-        } elseif ($type === 'exam') {
+        } elseif ('exam' === $type) {
             $this->bulkForm = $this->bulkExamForm;
         } else {
             throw new Exception('Unsupported bulk form type');
@@ -410,13 +407,13 @@ class Exam extends AbstractAclService
 
         $config = $this->getConfig('education_temp');
 
-        $dir = new DirectoryIterator($config['upload_' . $type . '_dir']);
+        $dir = new DirectoryIterator($config['upload_'.$type.'_dir']);
         $data = [];
 
         foreach ($dir as $file) {
-            if ($file->isFile() && substr($file->getFilename(), 0, 1) != '.') {
+            if ($file->isFile() && '.' != substr($file->getFilename(), 0, 1)) {
                 $examData = $this->guessExamData($file->getFilename());
-                if ($type === 'summary') {
+                if ('summary' === $type) {
                     $examData['author'] = $this->guessSummaryAuthor($file->getFilename());
                 }
                 $examData['file'] = $file->getFilename();
@@ -430,7 +427,7 @@ class Exam extends AbstractAclService
     }
 
     /**
-     * Get the bulk summary edit form
+     * Get the bulk summary edit form.
      *
      * @return Bulk
      */
@@ -471,8 +468,8 @@ class Exam extends AbstractAclService
 
         return [
             'course' => $course,
-            'date' => $year . '-' . $month . '-' . $day,
-            'language' => $language
+            'date' => $year.'-'.$month.'-'.$day,
+            'language' => $language,
         ];
     }
 
@@ -488,7 +485,7 @@ class Exam extends AbstractAclService
         $parts = explode('.', $filename);
         foreach ($parts as $part) {
             // We assume names are more than 3 characters and don't contain numbers
-            if (strlen($part) > 3 && preg_match('/\\d/', $part) == 0) {
+            if (strlen($part) > 3 && 0 == preg_match('/\\d/', $part)) {
                 return $part;
             }
         }
@@ -506,10 +503,9 @@ class Exam extends AbstractAclService
     public function getTempUploadForm()
     {
         if (!$this->isAllowed('upload')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to upload exams')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to upload exams'));
         }
+
         return $this->tempUploadForm;
     }
 
@@ -523,10 +519,9 @@ class Exam extends AbstractAclService
     public function getAddCourseForm()
     {
         if (!$this->isAllowed('upload')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to add courses')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to add courses'));
         }
+
         return $this->addCourseForm;
     }
 
@@ -551,14 +546,14 @@ class Exam extends AbstractAclService
 
         // check if course already exists
         $existingCourse = $this->getCourse($data['code']);
-        if ($existingCourse !== null) {
+        if (null !== $existingCourse) {
             return null;
         }
 
         // check if parent course exists
         if (strlen($data['parent']) > 0) {
             $existingCourse = $this->getCourse($data['parent']);
-            if ($existingCourse === null) {
+            if (null === $existingCourse) {
                 return null;
             }
         }

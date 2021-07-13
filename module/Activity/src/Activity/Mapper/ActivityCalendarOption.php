@@ -18,8 +18,6 @@ class ActivityCalendarOption
 
     /**
      * Constructor.
-     *
-     * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
@@ -27,7 +25,7 @@ class ActivityCalendarOption
     }
 
     /**
-     * Find an option by its id
+     * Find an option by its id.
      *
      * @param int $optionId Option id
      *
@@ -49,7 +47,7 @@ class ActivityCalendarOption
     }
 
     /**
-     * Gets all options created by the given organs
+     * Gets all options created by the given organs.
      *
      * @param $organs
      * @param $user
@@ -74,10 +72,12 @@ class ActivityCalendarOption
     }
 
     /**
-     * Get upcoming activity options sorted by begin date
+     * Get upcoming activity options sorted by begin date.
      *
      * @param bool $withDeleted whether to include deleted results
+     *
      * @return array
+     *
      * @throws Exception
      */
     public function getUpcomingOptions($withDeleted = false)
@@ -89,7 +89,7 @@ class ActivityCalendarOption
             ->orderBy('a.beginTime', 'ASC');
 
         if (!$withDeleted) {
-            $qb->andWhere("a.modifiedBy IS NULL")
+            $qb->andWhere('a.modifiedBy IS NULL')
                 ->orWhere("a.status = 'approved'");
         }
         $qb->setParameter('now', new DateTime());
@@ -98,10 +98,11 @@ class ActivityCalendarOption
     }
 
     /**
-     * Get upcoming activity options sorted by begin date
+     * Get upcoming activity options sorted by begin date.
      *
-     * @param DateTime $before the date to get the options before
-     * @param bool $withDeleted Whether to include deleted options
+     * @param DateTime $before      the date to get the options before
+     * @param bool     $withDeleted Whether to include deleted options
+     *
      * @return array
      */
     public function getPastOptions($before, $withDeleted = false)
@@ -116,7 +117,7 @@ class ActivityCalendarOption
             ->orderBy('b.creationTime', 'ASC');
 
         if (!$withDeleted) {
-            $qb->andWhere("a.modifiedBy IS NULL")
+            $qb->andWhere('a.modifiedBy IS NULL')
                 ->orWhere("a.status = 'approved'");
         }
 
@@ -127,7 +128,7 @@ class ActivityCalendarOption
     }
 
     /**
-     * Retrieves options associated with a proposal
+     * Retrieves options associated with a proposal.
      *
      * @param int $proposal
      *
@@ -145,10 +146,10 @@ class ActivityCalendarOption
     }
 
     /**
-     * Retrieves options associated with a proposal and associated with given organ
+     * Retrieves options associated with a proposal and associated with given organ.
      *
      * @param int $proposal
-     * @param int $organId the organ proposals have to be associated with
+     * @param int $organId  the organ proposals have to be associated with
      *
      * @return array
      */
@@ -165,7 +166,7 @@ class ActivityCalendarOption
     }
 
     /**
-     * Persist an option
+     * Persist an option.
      *
      * @param \Activity\Model\ActivityCalendarOption $option
      */

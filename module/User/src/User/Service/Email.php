@@ -2,17 +2,16 @@
 
 namespace User\Service;
 
-use User\Model\NewUser as NewUserModel;
 use Decision\Model\Member as MemberModel;
 use Laminas\Mail\Message;
 use Laminas\Mail\Transport\TransportInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
 use Laminas\View\Renderer\PhpRenderer;
+use User\Model\NewUser as NewUserModel;
 
 class Email
 {
-
     /**
      * @var Translator
      */
@@ -43,9 +42,6 @@ class Email
 
     /**
      * Send registration email.
-     *
-     * @param NewUserModel $newUser
-     * @param MemberModel $member
      */
     public function sendRegisterEmail(NewUserModel $newUser, MemberModel $member)
     {
@@ -53,10 +49,9 @@ class Email
             'user/email/register',
             [
             'user' => $newUser,
-            'member' => $member
+            'member' => $member,
             ]
         );
-
 
         $message = new Message();
 
@@ -72,7 +67,6 @@ class Email
      * Send password lost email.
      *
      * @param NewUserModel $activation
-     * @param MemberModel $member
      */
     public function sendPasswordLostMail(NewUserModel $newUser, MemberModel $member)
     {
@@ -80,10 +74,9 @@ class Email
             'user/email/reset',
             [
             'user' => $newUser,
-            'member' => $member
+            'member' => $member,
             ]
         );
-
 
         $message = new Message();
 
@@ -99,7 +92,7 @@ class Email
      * Render a template with given variables.
      *
      * @param string $template
-     * @param array $vars
+     * @param array  $vars
      *
      * @return string/
      */

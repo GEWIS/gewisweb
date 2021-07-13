@@ -11,7 +11,7 @@ error_reporting(E_ALL | E_STRICT);
 chdir(__DIR__);
 
 /**
- * Test bootstrap, for setting up autoloading
+ * Test bootstrap, for setting up autoloading.
  */
 class Bootstrap
 {
@@ -35,8 +35,8 @@ class Bootstrap
                 'module_paths' => $zf2ModulePaths,
             ],
             'modules' => [
-                'User'
-            ]
+                'User',
+            ],
         ];
 
         $serviceManager = new ServiceManager(new ServiceManagerConfig());
@@ -64,31 +64,28 @@ class Bootstrap
         if (!$zf2Path) {
             if (defined('ZF2_PATH')) {
                 $zf2Path = ZF2_PATH;
-            } elseif (is_dir($vendorPath . '/ZF2/library')) {
-                $zf2Path = $vendorPath . '/ZF2/library';
-            } elseif (is_dir($vendorPath . '/zendframework/zendframework/library')) {
-                $zf2Path = $vendorPath . '/zendframework/zendframework/library';
+            } elseif (is_dir($vendorPath.'/ZF2/library')) {
+                $zf2Path = $vendorPath.'/ZF2/library';
+            } elseif (is_dir($vendorPath.'/zendframework/zendframework/library')) {
+                $zf2Path = $vendorPath.'/zendframework/zendframework/library';
             }
         }
 
         if (!$zf2Path) {
-            throw new RuntimeException(
-                'Unable to load ZF2. Run `php composer.phar install` or'
-                . ' define a ZF2_PATH environment variable.'
-            );
+            throw new RuntimeException('Unable to load ZF2. Run `php composer.phar install` or'.' define a ZF2_PATH environment variable.');
         }
 
-        if (file_exists($vendorPath . '/autoload.php')) {
-            include $vendorPath . '/autoload.php';
+        if (file_exists($vendorPath.'/autoload.php')) {
+            include $vendorPath.'/autoload.php';
         }
 
-        include $zf2Path . '/Zend/Loader/AutoloaderFactory.php';
+        include $zf2Path.'/Zend/Loader/AutoloaderFactory.php';
         AutoloaderFactory::factory(
             [
             'Laminas\Loader\StandardAutoloader' => [
                 'autoregister_zf' => true,
                 'namespaces' => [
-                    __NAMESPACE__ => __DIR__ . '/' . __NAMESPACE__,
+                    __NAMESPACE__ => __DIR__.'/'.__NAMESPACE__,
                 ],
             ],
             ]
@@ -99,14 +96,15 @@ class Bootstrap
     {
         $dir = __DIR__;
         $previousDir = '.';
-        while (!is_dir($dir . '/' . $path)) {
+        while (!is_dir($dir.'/'.$path)) {
             $dir = dirname($dir);
             if ($previousDir === $dir) {
                 return false;
             }
             $previousDir = $dir;
         }
-        return $dir . '/' . $path;
+
+        return $dir.'/'.$path;
     }
 }
 

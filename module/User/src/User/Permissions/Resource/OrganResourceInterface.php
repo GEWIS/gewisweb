@@ -2,8 +2,8 @@
 
 namespace User\Permissions\Resource;
 
-use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Decision\Model\Organ;
+use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 interface OrganResourceInterface extends ResourceInterface
 {

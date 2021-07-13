@@ -23,8 +23,6 @@ class Job
 
     /**
      * Constructor.
-     *
-     * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
@@ -32,8 +30,7 @@ class Job
     }
 
     /**
-     * Saves all modified entities that are marked persistant
-     *
+     * Saves all modified entities that are marked persistant.
      */
     public function save()
     {
@@ -41,12 +38,10 @@ class Job
     }
 
     /**
-     *
-     * Checks if $slugName is only used by object identified with $cid
+     * Checks if $slugName is only used by object identified with $cid.
      *
      * @param string $slugName The slugName to be checked
-     * @param int $cid The id to ignore
-     *
+     * @param int    $cid      The id to ignore
      */
     public function isSlugNameUnique($companySlug, $slugName, $jid, $category)
     {
@@ -63,6 +58,7 @@ class Job
             if ($job->getId() == $jid) {
                 continue;
             }
+
             return false;
         }
 
@@ -70,7 +66,7 @@ class Job
     }
 
     /**
-     * Inserts a job into a given package
+     * Inserts a job into a given package.
      *
      * @param mixed $package
      */
@@ -80,6 +76,7 @@ class Job
         $job->setLanguage($lang);
         $job->setLanguageNeutralId($languageNeutralId);
         $job->setPackage($package);
+
         return $job;
     }
 
@@ -90,12 +87,13 @@ class Job
         $qb->where('j.category is NULL');
         $qb->andWhere('j.language=:lang');
         $qb->setParameter('lang', $lang);
+
         return $qb->getQuery()->getResult();
     }
 
     /**
      * Find all jobs identified by $jobSlugName that are owned by a company
-     * identified with $companySlugName
+     * identified with $companySlugName.
      *
      * @param mixed $companySlugName
      * @param mixed $jobSlugName
@@ -162,7 +160,6 @@ class Job
 
     /**
      * Deletes the jobs corresponding to the given language neutral id.
-     *
      */
     public function deleteByLanguageNeutralId($jobId)
     {
@@ -200,10 +197,9 @@ class Job
                         'criteria' => ['language' => $locale],
                         // Use key 'orderBy' if using ORM
                         //'orderBy'  => ['lastname' => 'ASC'],
-
                     ],
                 ],
-            ]
+            ],
             //'attributes' => [
             //'class' => 'form-control input-sm'
             //]

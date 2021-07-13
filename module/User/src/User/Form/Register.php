@@ -3,18 +3,18 @@
 namespace User\Form;
 
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilter;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilter;
 use Laminas\Validator\Digits;
 use Laminas\Validator\EmailAddress;
 use Laminas\Validator\NotEmpty;
 
 class Register extends Form
 {
-    const ERROR_WRONG_EMAIL = 'wrong_email';
-    const ERROR_MEMBER_NOT_EXISTS = 'member_not_exists';
-    const ERROR_USER_ALREADY_EXISTS = 'user_already_exists';
-    const ERROR_ALREADY_REGISTERED = 'already_registered';
+    public const ERROR_WRONG_EMAIL = 'wrong_email';
+    public const ERROR_MEMBER_NOT_EXISTS = 'member_not_exists';
+    public const ERROR_USER_ALREADY_EXISTS = 'user_already_exists';
+    public const ERROR_ALREADY_REGISTERED = 'already_registered';
 
     protected $translate;
 
@@ -28,8 +28,8 @@ class Register extends Form
             'name' => 'lidnr',
             'type' => 'number',
             'options' => [
-                'label' => $translate->translate('Membership number')
-            ]
+                'label' => $translate->translate('Membership number'),
+            ],
             ]
         );
 
@@ -38,8 +38,8 @@ class Register extends Form
             'name' => 'email',
             'type' => 'email',
             'options' => [
-                'label' => $translate->translate('E-mail address')
-            ]
+                'label' => $translate->translate('E-mail address'),
+            ],
             ]
         );
 
@@ -48,8 +48,8 @@ class Register extends Form
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
-                'value' => $translate->translate('Register')
-            ]
+                'value' => $translate->translate('Register'),
+            ],
             ]
         );
 
@@ -68,8 +68,8 @@ class Register extends Form
                 $this->setMessages(
                     [
                     'email' => [
-                        $this->translate->translate("This email address does not be long to the given member.")
-                    ]
+                        $this->translate->translate('This email address does not be long to the given member.'),
+                    ],
                     ]
                 );
                 break;
@@ -77,8 +77,8 @@ class Register extends Form
                 $this->setMessages(
                     [
                     'lidnr' => [
-                        $this->translate->translate("There is no member with this membership number.")
-                    ]
+                        $this->translate->translate('There is no member with this membership number.'),
+                    ],
                     ]
                 );
                 break;
@@ -86,8 +86,8 @@ class Register extends Form
                 $this->setMessages(
                     [
                     'lidnr' => [
-                        $this->translate->translate("You already attempted to register, please check your email or try again after 15 minutes.")
-                    ]
+                        $this->translate->translate('You already attempted to register, please check your email or try again after 15 minutes.'),
+                    ],
                     ]
                 );
                 break;
@@ -95,8 +95,8 @@ class Register extends Form
                 $this->setMessages(
                     [
                     'lidnr' => [
-                        $this->translate->translate("This member already has an account.")
-                    ]
+                        $this->translate->translate('This member already has an account.'),
+                    ],
                     ]
                 );
                 break;
@@ -113,8 +113,8 @@ class Register extends Form
             'required' => true,
             'validators' => [
                 ['name' => NotEmpty::class],
-                ['name' => Digits::class]
-            ]
+                ['name' => Digits::class],
+            ],
             ]
         );
 
@@ -124,8 +124,8 @@ class Register extends Form
             'required' => true,
             'validators' => [
                 ['name' => NotEmpty::class],
-                ['name' => EmailAddress::class]
-            ]
+                ['name' => EmailAddress::class],
+            ],
             ]
         );
 

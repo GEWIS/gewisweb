@@ -15,9 +15,7 @@ class ApiApp
     protected $mapper;
 
     /**
-     * Constructor
-     *
-     * @param ApiAppMapper $mapper
+     * Constructor.
      */
     public function __construct(ApiAppMapper $mapper)
     {
@@ -25,9 +23,10 @@ class ApiApp
     }
 
     /**
-     * Get a callback from an appId and a user identity
+     * Get a callback from an appId and a user identity.
+     *
      * @param string $appId
-     * @param UserModel $user
+     *
      * @return string
      */
     public function callbackWithToken($appId, UserModel $user)
@@ -39,10 +38,10 @@ class ApiApp
             'lidnr' => $user->getLidnr(),
             'exp' => (new DateTime('+5 min'))->getTimestamp(),
             'iat' => (new DateTime())->getTimestamp(),
-            'nonce' => bin2hex(openssl_random_pseudo_bytes(16))
+            'nonce' => bin2hex(openssl_random_pseudo_bytes(16)),
         ];
 
-        return $app->getCallback() . '?token=' . JWT::encode($token, $app->getSecret(), 'HS256');
+        return $app->getCallback().'?token='.JWT::encode($token, $app->getSecret(), 'HS256');
     }
 
     /**

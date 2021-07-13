@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ActivityUpdateProposal
 {
     /**
-     * ID for the proposal
+     * ID for the proposal.
      *
      * @ORM\Id
      * @ORM\Column(type="integer", nullable=false)
@@ -29,7 +29,7 @@ class ActivityUpdateProposal
     protected $old;
 
     /**
-     * The new activity
+     * The new activity.
      *
      * @ORM\ManyToOne(targetEntity="Activity\Model\Activity")
      * @ORM\JoinColumn(referencedColumnName="id")

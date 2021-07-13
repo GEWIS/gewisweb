@@ -2,10 +2,10 @@
 
 namespace Education\Form;
 
-use Laminas\Form\Form;
 use Laminas\Form\Fieldset;
-use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Form\Form;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilterProviderInterface;
 
 class Bulk extends Form implements InputFilterProviderInterface
 {
@@ -21,15 +21,15 @@ class Bulk extends Form implements InputFilterProviderInterface
                 'count' => 0,
                 'allow_add' => true,
                 'allow_remove' => true,
-                'target_element' => $exam
-            ]
+                'target_element' => $exam,
+            ],
             ]
         );
 
         $this->add(
             [
             'name' => 'submit',
-            'type' => 'submit'
+            'type' => 'submit',
             ]
         );
 

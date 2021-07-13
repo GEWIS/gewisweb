@@ -7,10 +7,10 @@ use Activity\Model\ActivityCategory as CategoryModel;
 use Activity\Model\LocalisedText;
 use Application\Service\AbstractAclService;
 use Doctrine\ORM\EntityManager;
-use User\Model\User;
-use User\Permissions\NotAllowedException;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
+use User\Model\User;
+use User\Permissions\NotAllowedException;
 
 class ActivityCategory extends AbstractAclService
 {
@@ -79,14 +79,13 @@ class ActivityCategory extends AbstractAclService
      * Get all categories.
      *
      * @param $id
+     *
      * @return CategoryModel
      */
     public function getCategoryById($id)
     {
         if (!$this->isAllowed('listCategories', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view activity categories')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view activity categories'));
         }
 
         return $this->categoryMapper->getCategoryById($id);
@@ -100,9 +99,7 @@ class ActivityCategory extends AbstractAclService
     public function getAllCategories()
     {
         if (!$this->isAllowed('listCategories', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view activity categories')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view activity categories'));
         }
 
         return $this->categoryMapper->getAllCategories();
@@ -111,9 +108,7 @@ class ActivityCategory extends AbstractAclService
     public function createCategory($data)
     {
         if (!$this->isAllowed('addCategory', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create an activity category')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to create an activity category'));
         }
 
         $form = $this->getCategoryForm();
@@ -141,9 +136,7 @@ class ActivityCategory extends AbstractAclService
     public function getCategoryForm()
     {
         if (!$this->isAllowed('addCategory', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create an activity category')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to create an activity category'));
         }
 
         return $this->categoryForm;
@@ -152,9 +145,7 @@ class ActivityCategory extends AbstractAclService
     public function updateCategory($category, $data)
     {
         if (!$this->isAllowed('editCategory', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to edit an activity category')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to edit an activity category'));
         }
 
         $form = $this->getCategoryForm();
@@ -178,9 +169,7 @@ class ActivityCategory extends AbstractAclService
     public function deleteCategory($category)
     {
         if (!$this->isAllowed('deleteCategory', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to delete an activity category')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to delete an activity category'));
         }
 
         $em = $this->entityManager;

@@ -22,3 +22,5 @@ autoload_classmap.php
 .mysql
 .vagrant/
 .vs/
+
+*.cache

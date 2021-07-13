@@ -13,10 +13,8 @@ use Doctrine\ORM\EntityRepository;
 class FeaturedPackage extends Package
 {
     /**
-     *
      * Returns an random featured package from the active featured packages,
-     * and null when there is no featured package in the current language
-     *
+     * and null when there is no featured package in the current language.
      */
     public function getFeaturedPackage($locale)
     {

@@ -33,10 +33,10 @@ class EditJob extends CollectionBaseFieldsetAwareForm
 
         $labelOptions = [];
         foreach ($labels as $label) {
-            $labelOptions[] = array('value' => $label->getId(),
+            $labelOptions[] = ['value' => $label->getId(),
                 'label' => $label->getName(),
-                'label_attributes' => array('class' => 'checkbox')
-            );
+                'label_attributes' => ['class' => 'checkbox'],
+            ];
         }
 
         $this->setLanguages($languages);
@@ -50,7 +50,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                 'count' => count($languages),
                 'target_element' => new JobFieldset($mapper, $translator, $this->getHydrator()),
                 'items' => $languages,
-            ]
+            ],
             ]
         );
 
@@ -60,7 +60,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
             'type' => 'Laminas\Form\Element\MultiCheckbox',
             'options' => [
                 'label' => $translator->translate('What labels apply to this job?'),
-                'value_options' => $labelOptions
+                'value_options' => $labelOptions,
             ],
             ]
         );
@@ -210,7 +210,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                         'options' => [
                             'callback' => function ($value) {
                                 // If no file is uploaded, we don't care, because it is optional
-                                if ($value['error'] == 4) {
+                                if (4 == $value['error']) {
                                     return true;
                                 }
                                 $extensionValidator = new Extension('pdf');
@@ -218,8 +218,9 @@ class EditJob extends CollectionBaseFieldsetAwareForm
                                     return false;
                                 }
                                 $mimeValidator = new MimeType('application/pdf');
+
                                 return $mimeValidator->isValid($value);
-                            }
+                            },
                         ],
                     ],
                 ],
@@ -279,9 +280,7 @@ class EditJob extends CollectionBaseFieldsetAwareForm
     }
 
     /**
-     *
      * Checks if a given slugName is unique. (Callback for validation).
-     *
      */
     public function slugNameUnique($slugName, $context)
     {

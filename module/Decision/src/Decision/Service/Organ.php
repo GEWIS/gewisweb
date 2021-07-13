@@ -10,10 +10,10 @@ use Decision\Model\Organ as OrganModel;
 use Decision\Model\OrganInformation;
 use Doctrine\ORM\EntityManager;
 use Imagick;
-use User\Permissions\NotAllowedException;
-use User\Service\User;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
+use User\Permissions\NotAllowedException;
+use User\Service\User;
 
 /**
  * User service.
@@ -109,14 +109,12 @@ class Organ extends AbstractAclService
     /**
      * Get organs.
      *
-     * @return array Of organs.
+     * @return array of organs
      */
     public function getOrgans()
     {
         if (!$this->isAllowed('list')) {
-            throw new NotAllowedException(
-                $this->translator->translate('Not allowed to view the list of organs.')
-            );
+            throw new NotAllowedException($this->translator->translate('Not allowed to view the list of organs.'));
         }
 
         return $this->organMapper->findActive();
@@ -132,9 +130,7 @@ class Organ extends AbstractAclService
     public function getOrgan($id)
     {
         if (!$this->isAllowed('view')) {
-            throw new NotAllowedException(
-                $this->translator->translate('Not allowed to view organ information')
-            );
+            throw new NotAllowedException($this->translator->translate('Not allowed to view organ information'));
         }
 
         return $this->organMapper->find($id);
@@ -148,9 +144,7 @@ class Organ extends AbstractAclService
     public function getEditableOrgans()
     {
         if (!$this->isAllowed('edit')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to edit organ information')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to edit organ information'));
         }
 
         if ($this->isAllowed('editall')) {
@@ -220,12 +214,12 @@ class Organ extends AbstractAclService
      *
      * @param $abbr
      * @param string $type
-     * @param bool $latest
-     *    Whether to retrieve the latest occurence of an organ or not.
+     * @param bool   $latest
+     *                       Whether to retrieve the latest occurence of an organ or not
      *
      * @return OrganModel
-     * @see Decision/Mapper/Organ::findByAbbr()
      *
+     * @see Decision/Mapper/Organ::findByAbbr()
      */
     public function findOrganByAbbr($abbr, $type = null, $latest = false)
     {
@@ -233,10 +227,9 @@ class Organ extends AbstractAclService
     }
 
     /**
-     * @param integer $organId
-     *
-     * @param array $post POST Data
-     * @param array $files FILES Data
+     * @param int   $organId
+     * @param array $post    POST Data
+     * @param array $files   FILES Data
      *
      * @return bool
      */
@@ -298,13 +291,14 @@ class Organ extends AbstractAclService
     /**
      * Create a thumbnail of the given file at the given location and scale.
      *
-     * @param string $file The file to create the thumbnail of
-     * @param string $x The start x position in the image
-     * @param string $y The start y position in the image
-     * @param string $width The width of the area to crop
-     * @param string $height The height of the are to crop
-     * @param int $thumbWidth The width of the final thumbnail
-     * @param int $thumbHeight The height of the final thumbnail
+     * @param string $file        The file to create the thumbnail of
+     * @param string $x           The start x position in the image
+     * @param string $y           The start y position in the image
+     * @param string $width       The width of the area to crop
+     * @param string $height      The height of the are to crop
+     * @param int    $thumbWidth  The width of the final thumbnail
+     * @param int    $thumbHeight The height of the final thumbnail
+     *
      * @return string path of where the thumbnail is stored
      */
     public function makeOrganInformationImage($file, $x, $y, $width, $height, $thumbWidth, $thumbHeight)
@@ -321,7 +315,7 @@ class Organ extends AbstractAclService
         $image->setimageformat('jpg');
 
         //Tempfile is used such that the file storage service can generate a filename
-        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() . '.jpg';
+        $tempFileName = sys_get_temp_dir().'/ThumbImage'.rand().'.jpg';
         $image->writeImage($tempFileName);
 
         return $this->storageService->storeFile($tempFileName);
@@ -349,9 +343,7 @@ class Organ extends AbstractAclService
     public function getOrganInformationForm($organInformation)
     {
         if (!$this->canEditOrgan($organInformation->getOrgan())) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to edit this organ\'s information')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to edit this organ\'s information'));
         }
 
         $form = $this->organInformationForm;
@@ -416,10 +408,10 @@ class Organ extends AbstractAclService
                 if (!isset($currentMembers[$install->getMember()->getLidnr()])) {
                     $currentMembers[$install->getMember()->getLidnr()] = [
                         'member' => $install->getMember(),
-                        'functions' => []
+                        'functions' => [],
                     ];
                 }
-                if ($install->getFunction() != 'Lid') {
+                if ('Lid' != $install->getFunction()) {
                     $function = $this->translator->translate($install->getFunction());
                     $currentMembers[$install->getMember()->getLidnr()]['functions'][] = $function;
                 }
@@ -449,7 +441,7 @@ class Organ extends AbstractAclService
 
         return [
             'oldMembers' => $oldMembers,
-            'currentMembers' => $currentMembers
+            'currentMembers' => $currentMembers,
         ];
     }
 

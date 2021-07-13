@@ -10,7 +10,6 @@ use Laminas\View\Model\ViewModel;
 
 class AdminController extends AbstractActionController
 {
-
     /**
      * @var Decision
      */
@@ -32,7 +31,7 @@ class AdminController extends AbstractActionController
             if ($this->decisionService->uploadNotes($request->getPost(), $request->getFiles())) {
                 return new ViewModel(
                     [
-                    'success' => true
+                    'success' => true,
                     ]
                 );
             }
@@ -40,7 +39,7 @@ class AdminController extends AbstractActionController
 
         return new ViewModel(
             [
-            'form' => $this->decisionService->getNotesForm()
+            'form' => $this->decisionService->getNotesForm(),
             ]
         );
     }
@@ -82,6 +81,7 @@ class AdminController extends AbstractActionController
     public function deleteDocumentAction()
     {
         $this->decisionService->deleteDocument($this->getRequest()->getPost());
+
         return $this->redirect()->toRoute('admin_decision/document');
     }
 
@@ -102,7 +102,7 @@ class AdminController extends AbstractActionController
 
         $data = $form->getData();
         $id = $data['document'];
-        $moveDown = ($data['direction'] === 'down') ? true : false;
+        $moveDown = ('down' === $data['direction']) ? true : false;
 
         // Update ordering document
         $this->decisionService->changePositionDocument($id, $moveDown);
@@ -127,7 +127,7 @@ class AdminController extends AbstractActionController
             [
             'meetings' => $meetings,
             'authorizations' => $authorizations,
-            'number' => $number
+            'number' => $number,
             ]
         );
     }

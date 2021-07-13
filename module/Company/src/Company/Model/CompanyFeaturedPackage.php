@@ -19,7 +19,7 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
     protected $article;
 
     /**
-     * Get the featured package's article text
+     * Get the featured package's article text.
      *
      * @return string
      */
@@ -29,7 +29,7 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
     }
 
     /**
-     * Set the featured package's article text
+     * Set the featured package's article text.
      *
      * @param string $image
      */
@@ -71,6 +71,7 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
         $array = parent::getArrayCopy();
         $array['language'] = $this->getLanguage();
         $array['article'] = $this->getArticle();
+
         return $array;
     }
 

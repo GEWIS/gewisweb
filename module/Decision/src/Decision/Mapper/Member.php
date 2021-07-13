@@ -17,9 +17,7 @@ class Member
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -41,8 +39,8 @@ class Member
     /**
      * Finds members by (part of) their name.
      *
-     * @param string $query (part of) the full name of a member
-     * @param integer $maxResults
+     * @param string $query      (part of) the full name of a member
+     * @param int    $maxResults
      *
      * @return array
      */
@@ -56,7 +54,8 @@ class Member
             ->setMaxResults($maxResults)
             ->orderBy("m.$orderColumn", $orderDirection)
             ->setFirstResult(0);
-        $qb->setParameter(':name', '%' . strtolower($query) . '%');
+        $qb->setParameter(':name', '%'.strtolower($query).'%');
+
         return $qb->getQuery()->getResult();
     }
 
@@ -65,7 +64,7 @@ class Member
      *
      * When $days equals 0 or isn't given, it will give all birthdays of today.
      *
-     * @param int $days The number of days to look ahead.
+     * @param int $days the number of days to look ahead
      *
      * @return array Of members sorted by birthday
      */
@@ -79,10 +78,10 @@ class Member
         $select = $builder->generateSelectClause(['m' => 't1']);
 
         $sql = "SELECT $select FROM Member AS t1"
-            . " WHERE DATEDIFF(DATE_SUB(t1.birth, INTERVAL YEAR(t1.birth) YEAR),"
-            . " DATE_SUB(CURDATE(), INTERVAL YEAR(CURDATE()) YEAR)) BETWEEN 0 AND :days"
-            . " AND t1.expiration >= CURDATE()"
-            . "ORDER BY DATE_SUB(t1.birth, INTERVAL YEAR(t1.birth) YEAR) ASC";
+            .' WHERE DATEDIFF(DATE_SUB(t1.birth, INTERVAL YEAR(t1.birth) YEAR),'
+            .' DATE_SUB(CURDATE(), INTERVAL YEAR(CURDATE()) YEAR)) BETWEEN 0 AND :days'
+            .' AND t1.expiration >= CURDATE()'
+            .'ORDER BY DATE_SUB(t1.birth, INTERVAL YEAR(t1.birth) YEAR) ASC';
 
         $query = $this->em->createNativeQuery($sql, $builder);
         $query->setParameter('days', $days);
@@ -92,8 +91,6 @@ class Member
 
     /**
      * Find all organs of this member.
-     *
-     * @param MemberModel $member
      *
      * @return array Of organs
      */
@@ -116,7 +113,7 @@ class Member
     /**
      * Persist a member model.
      *
-     * @param MemberModel $member Member to persist.
+     * @param MemberModel $member member to persist
      */
     public function persist(MemberModel $user)
     {

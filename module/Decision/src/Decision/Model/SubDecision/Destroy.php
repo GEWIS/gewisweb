@@ -2,9 +2,9 @@
 
 namespace Decision\Model\SubDecision;
 
-use Doctrine\ORM\Mapping as ORM;
-use Decision\Model\SubDecision;
 use Decision\Model\Decision;
+use Decision\Model\SubDecision;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Destroying a decision.

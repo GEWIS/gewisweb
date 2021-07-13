@@ -3,11 +3,11 @@
 namespace Photo\Controller;
 
 use Exception;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\JsonModel;
+use Laminas\View\Model\ViewModel;
 use Photo\Service\Admin;
 use Photo\Service\Album;
-use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\ViewModel;
-use Laminas\View\Model\JsonModel;
 
 class AlbumAdminController extends AbstractActionController
 {
@@ -43,7 +43,7 @@ class AlbumAdminController extends AbstractActionController
         return new ViewModel(
             [
             'albumsByYear' => $albumsByYear,
-            'albumsWithoutDate' => $albumsWithoutDate
+            'albumsWithoutDate' => $albumsWithoutDate,
             ]
         );
     }
@@ -58,7 +58,7 @@ class AlbumAdminController extends AbstractActionController
             $albumId = $this->params()->fromRoute('album_id');
             $album = $this->albumService->createAlbum($albumId, $request->getPost());
             if ($album) {
-                $this->redirect()->toUrl($this->url()->fromRoute('admin_photo') . '#' . $album->getId());
+                $this->redirect()->toUrl($this->url()->fromRoute('admin_photo').'#'.$album->getId());
             }
         }
         $form = $this->albumService->getCreateAlbumForm();
@@ -71,7 +71,7 @@ class AlbumAdminController extends AbstractActionController
     }
 
     /**
-     * Retrieves photos on a certain page
+     * Retrieves photos on a certain page.
      */
     public function pageAction()
     {
@@ -94,7 +94,7 @@ class AlbumAdminController extends AbstractActionController
         $albumId = $this->params()->fromRoute('album_id');
         if ($request->isPost()) {
             if ($this->albumService->updateAlbum($albumId, $request->getPost())) {
-                $this->redirect()->toUrl($this->url()->fromRoute('admin_photo') . '#' . $albumId);
+                $this->redirect()->toUrl($this->url()->fromRoute('admin_photo').'#'.$albumId);
             }
         }
         $form = $this->albumService->getEditAlbumForm($albumId);
@@ -115,7 +115,7 @@ class AlbumAdminController extends AbstractActionController
 
         return new ViewModel(
             [
-            'album' => $album
+            'album' => $album,
             ]
         );
     }

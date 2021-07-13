@@ -22,8 +22,6 @@ class Activity
 
     /**
      * Constructor.
-     *
-     * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
@@ -62,10 +60,10 @@ class Activity
     }
 
     /**
-     * Get upcoming activities sorted by date
+     * Get upcoming activities sorted by date.
      *
-     * @param integer $count Optional number of activities to retrieve.
-     * @param Organ $organ Option organ by whom the activities are organized.
+     * @param int   $count optional number of activities to retrieve
+     * @param Organ $organ option organ by whom the activities are organized
      *
      * @return array
      */
@@ -88,7 +86,7 @@ class Activity
         }
 
         // For now 'career' is the only category, however this may change in the future
-        if ($category === 'career') {
+        if ('career' === $category) {
             $qb->andWhere('a.isMyFuture = 1');
         }
         $qb->setParameter('now', new DateTime());
@@ -98,7 +96,7 @@ class Activity
     }
 
     /**
-     * Get upcoming activities sorted by date for member
+     * Get upcoming activities sorted by date for member.
      *
      * @param User $user Option user that should relate to activity
      *
@@ -123,14 +121,15 @@ class Activity
             function ($a, $b) {
                 $beginA = $a->getBeginTime();
                 $beginB = $b->getBeginTime();
+
                 return $beginA < $beginB ? -1 : 1;
             }
         );
 
         $size = count($result);
 
-        for ($i = 0; $i < $size; $i++) {
-            for ($j = $i + 1; $j < $size; $j++) {
+        for ($i = 0; $i < $size; ++$i) {
+            for ($j = $i + 1; $j < $size; ++$j) {
                 if (
                     array_key_exists($i, $result)
                     && array_key_exists($j, $result)
@@ -145,7 +144,7 @@ class Activity
     }
 
     /**
-     * Get upcoming activities sorted by date that a user is subscribed to
+     * Get upcoming activities sorted by date that a user is subscribed to.
      *
      * @param User $user Option user that should relate to activity
      *
@@ -171,7 +170,7 @@ class Activity
     }
 
     /**
-     * Get upcoming activities sorted by date that a user created
+     * Get upcoming activities sorted by date that a user created.
      *
      * @param User $user Option user that should relate to activity
      *
@@ -191,7 +190,7 @@ class Activity
     }
 
     /**
-     * Get upcoming activities sorted by date that a organ created
+     * Get upcoming activities sorted by date that a organ created.
      *
      * @param Organ $organ Option organ that should relate to activity
      *
@@ -214,8 +213,9 @@ class Activity
      * Gets upcoming activities of the given organs or user, sorted by date.
      *
      * @param array|null $organs
-     * @param int|null $userid
-     * @param int|null $status An optional filter for activity status
+     * @param int|null   $userid
+     * @param int|null   $status An optional filter for activity status
+     *
      * @return array
      */
     public function getAllUpcomingActivities($organs = null, $userid = null, $status = null)
@@ -268,11 +268,12 @@ class Activity
 
     /**
      * Gets a paginator of old activities of the given organs, sorted by date.
-     * Supplying 'null' to all arguments gets all activities
+     * Supplying 'null' to all arguments gets all activities.
      *
      * @param array|null $organs
-     * @param int|null $userid
-     * @param int|null $status An optional filter for activity status
+     * @param int|null   $userid
+     * @param int|null   $status An optional filter for activity status
+     *
      * @return array
      */
     public function getOldActivityPaginatorAdapterByOrganizer($organs = null, $userid = null, $status = null)
@@ -288,7 +289,7 @@ class Activity
     }
 
     /**
-     * Returns the newest activity that has taken place
+     * Returns the newest activity that has taken place.
      *
      * @return ActivityModel
      */
@@ -327,7 +328,7 @@ class Activity
     }
 
     /**
-     * Returns the oldest activity that has taken place
+     * Returns the oldest activity that has taken place.
      *
      * @return ActivityModel
      */

@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class UserRole
 {
     /**
-     * Id
+     * Id.
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")

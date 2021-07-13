@@ -25,8 +25,6 @@ class Company
 
     /**
      * Constructor.
-     *
-     * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
@@ -34,8 +32,7 @@ class Company
     }
 
     /**
-     * Saves all unsaved entities, that are marked persistent
-     *
+     * Saves all unsaved entities, that are marked persistent.
      */
     public function save()
     {
@@ -43,12 +40,10 @@ class Company
     }
 
     /**
-     *
-     * Checks if $slugName is only used by object identified with $cid
+     * Checks if $slugName is only used by object identified with $cid.
      *
      * @param string $slugName The slugName to be checked
-     * @param int $cid The id to ignore
-     *
+     * @param int    $cid      The id to ignore
      */
     public function isSlugNameUnique($slugName, $cid)
     {
@@ -64,7 +59,7 @@ class Company
 
     /**
      * Inserts a company into the datebase, and initializes the given
-     * translations as empty translations for them
+     * translations as empty translations for them.
      *
      * @param mixed $languages
      */
@@ -88,7 +83,7 @@ class Company
     }
 
     /**
-     * Find all public companies with a certain locale
+     * Find all public companies with a certain locale.
      *
      * @return array
      */
@@ -102,6 +97,7 @@ class Company
             ->andWhere('t.language = ?1')
             ->setParameter(1, $locale)
             ->orderBy('c.name', 'ASC');
+
         return array_filter(
             $qb->getQuery()->getResult(),
             function ($company) {
@@ -114,6 +110,7 @@ class Company
      * Find a specific company by its id.
      *
      * @param $id The id of the company
+     *
      * @return CompanyModel|null
      */
     public function findById($id)
@@ -134,10 +131,10 @@ class Company
     /**
      * Find the company with the given slugName.
      *
-     * @param slugName The 'username' of the company to get.
+     * @param slugName the 'username' of the company to get
      * @param asObject if yes, returns the company as an object in an array, otherwise returns the company as an array of an array
      *
-     * @return An array of companies with the given slugName.
+     * @return An array of companies with the given slugName
      */
     public function findEditableCompaniesBySlugName($slugName, $asObject)
     {
@@ -154,7 +151,7 @@ class Company
     }
 
     /**
-     * Return the company with the given slug
+     * Return the company with the given slug.
      *
      * @param string $slugName the slugname to find
      *
@@ -163,9 +160,9 @@ class Company
     public function findCompanyBySlugName($slugName)
     {
         $result = $this->getRepository()->findBy(['slugName' => $slugName]);
+
         return empty($result) ? null : $result[0];
     }
-
 
     /**
      * Removes a company.

@@ -2,8 +2,8 @@
 
 namespace Company\Model;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * CompanyPackage model.
@@ -49,21 +49,21 @@ class CompanyJobPackage extends CompanyPackage
     }
 
     /**
-     * Get the jobs that are part of the given category
-     *
+     * Get the jobs that are part of the given category.
      */
     public function getJobsInCategory($category)
     {
         $filter = function ($job) use ($category) {
-            if ($category === null) {
+            if (null === $category) {
                 return $job->isActive();
             }
-            if ($job->getCategory() === null && $category->getLanguageNeutralId() === null) {
+            if (null === $job->getCategory() && null === $category->getLanguageNeutralId()) {
                 return $job->isActive();
             }
-            if ($job->getCategory() === null) {
+            if (null === $job->getCategory()) {
                 return false;
             }
+
             return $job->getCategory()->getLanguageNeutralId() === $category->getLanguageNeutralId()
                 && $job->isActive() && $job->getLanguage() === $category->getLanguage();
         };

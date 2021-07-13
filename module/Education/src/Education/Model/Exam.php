@@ -17,14 +17,14 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
  */
 class Exam implements ResourceInterface
 {
-    const EXAM_TYPE_FINAL = 'exam';
-    const EXAM_TYPE_INTERMEDIATE_TEST = 'intermediate';
-    const EXAM_TYPE_ANSWERS = 'answers';
-    const EXAM_TYPE_OTHER = 'other';
-    const EXAM_TYPE_SUMMARY = 'summary';
+    public const EXAM_TYPE_FINAL = 'exam';
+    public const EXAM_TYPE_INTERMEDIATE_TEST = 'intermediate';
+    public const EXAM_TYPE_ANSWERS = 'answers';
+    public const EXAM_TYPE_OTHER = 'other';
+    public const EXAM_TYPE_SUMMARY = 'summary';
 
-    const EXAM_LANGUAGE_ENGLISH = 'en';
-    const EXAM_LANGUAGE_DUTCH = 'nl';
+    public const EXAM_LANGUAGE_ENGLISH = 'en';
+    public const EXAM_LANGUAGE_DUTCH = 'nl';
 
     /**
      * Study ID.
@@ -36,7 +36,7 @@ class Exam implements ResourceInterface
     protected $id;
 
     /**
-     * Date of the exam
+     * Date of the exam.
      *
      * @ORM\Column(type="date")
      */
@@ -50,7 +50,7 @@ class Exam implements ResourceInterface
     protected $filename;
 
     /**
-     * Type of exam. One of {exam, intermediate, answers, summary}
+     * Type of exam. One of {exam, intermediate, answers, summary}.
      *
      * @ORM\Column(type="string")
      */
@@ -133,8 +133,6 @@ class Exam implements ResourceInterface
 
     /**
      * Set the date.
-     *
-     * @param DateTime $date
      */
     public function setDate(DateTime $date)
     {

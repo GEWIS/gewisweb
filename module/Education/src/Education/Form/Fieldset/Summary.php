@@ -2,10 +2,10 @@
 
 namespace Education\Form\Fieldset;
 
+use Education\Model\Exam as ExamModel;
 use Laminas\Form\Fieldset;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Education\Model\Exam as ExamModel;
 use Laminas\Validator\Callback;
 use Laminas\Validator\File\Exists;
 use Laminas\Validator\Regex;
@@ -22,7 +22,7 @@ class Summary extends Fieldset implements InputFilterProviderInterface
         $this->add(
             [
             'name' => 'file',
-            'type' => 'hidden'
+            'type' => 'hidden',
             ]
         );
 
@@ -31,8 +31,8 @@ class Summary extends Fieldset implements InputFilterProviderInterface
             'name' => 'course',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Course code')
-            ]
+                'label' => $translator->translate('Course code'),
+            ],
             ]
         );
 
@@ -41,8 +41,8 @@ class Summary extends Fieldset implements InputFilterProviderInterface
             'name' => 'date',
             'type' => 'date',
             'options' => [
-                'label' => $translator->translate('Summary date')
-            ]
+                'label' => $translator->translate('Summary date'),
+            ],
             ]
         );
 
@@ -51,8 +51,8 @@ class Summary extends Fieldset implements InputFilterProviderInterface
             'name' => 'author',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Author')
-            ]
+                'label' => $translator->translate('Author'),
+            ],
             ]
         );
 
@@ -92,8 +92,8 @@ class Summary extends Fieldset implements InputFilterProviderInterface
                     [
                         'name' => Regex::class,
                         'options' => [
-                            'pattern' => '/.+\.pdf$/'
-                        ]
+                            'pattern' => '/.+\.pdf$/',
+                        ],
                     ],
                     [
                         'name' => Callback::class,
@@ -101,15 +101,15 @@ class Summary extends Fieldset implements InputFilterProviderInterface
                             'callback' => function ($value) use ($dir) {
                                 $validator = new Exists(
                                     [
-                                    'directory' => $dir
+                                    'directory' => $dir,
                                     ]
                                 );
 
                                 return $validator->isValid($value);
-                            }
-                        ]
-                    ]
-                ]
+                            },
+                        ],
+                    ],
+                ],
             ],
 
             'course' => [
@@ -119,14 +119,14 @@ class Summary extends Fieldset implements InputFilterProviderInterface
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 5,
-                            'max' => 6
-                        ]
+                            'max' => 6,
+                        ],
                     ],
-                    ['name' => 'alnum']
+                    ['name' => 'alnum'],
                 ],
                 'filters' => [
-                    ['name' => 'string_to_upper']
-                ]
+                    ['name' => 'string_to_upper'],
+                ],
             ],
 
             'author' => [
@@ -136,8 +136,8 @@ class Summary extends Fieldset implements InputFilterProviderInterface
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 3,
-                            'max' => 150
-                        ]
+                            'max' => 150,
+                        ],
                     ],
                 ],
             ],
@@ -145,9 +145,9 @@ class Summary extends Fieldset implements InputFilterProviderInterface
             'date' => [
                 'required' => true,
                 'validators' => [
-                    ['name' => 'date']
-                ]
-            ]
+                    ['name' => 'date'],
+                ],
+            ],
         ];
     }
 }

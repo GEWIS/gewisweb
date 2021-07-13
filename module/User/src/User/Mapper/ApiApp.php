@@ -13,9 +13,6 @@ class ApiApp
      */
     protected $em;
 
-    /**
-     * @param EntityManager $em
-     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
@@ -23,13 +20,14 @@ class ApiApp
 
     /**
      * @param string $appId
+     *
      * @return ApiAppModel
      */
     public function findByAppId($appId)
     {
         return $this->getRepository()->findOneBy(
             [
-            'appId' => $appId
+            'appId' => $appId,
             ]
         );
     }

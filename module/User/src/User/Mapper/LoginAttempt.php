@@ -15,9 +15,7 @@ class LoginAttempt
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -40,11 +38,12 @@ class LoginAttempt
             $qb->andWhere('a.user = :user')
                 ->setParameter('user', $user);
         }
+
         return $qb->getQuery()->getSingleScalarResult();
     }
 
     /**
-     * Persist a login attempt model
+     * Persist a login attempt model.
      */
     public function persist($loginAttempt)
     {

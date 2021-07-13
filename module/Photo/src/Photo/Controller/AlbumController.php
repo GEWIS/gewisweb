@@ -2,10 +2,10 @@
 
 namespace Photo\Controller;
 
-use Photo\Service\Album;
 use Laminas\Cache\Storage\StorageInterface;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
+use Photo\Service\Album;
 
 class AlbumController extends AbstractActionController
 {
@@ -32,7 +32,7 @@ class AlbumController extends AbstractActionController
     }
 
     /**
-     * Shows a page from the album, or a 404 if this page does not exist
+     * Shows a page from the album, or a 404 if this page does not exist.
      *
      * @return array|ViewModel
      */
@@ -80,7 +80,7 @@ class AlbumController extends AbstractActionController
 
     /**
      * Shows a page with photo's of a member, or a 404 if this page does not
-     * exist
+     * exist.
      *
      * @return array|ViewModel
      */

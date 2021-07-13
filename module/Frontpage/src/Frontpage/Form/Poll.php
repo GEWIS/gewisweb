@@ -3,8 +3,8 @@
 namespace Frontpage\Form;
 
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator\StringLength;
 
 class Poll extends Form implements InputFilterProviderInterface
@@ -18,8 +18,8 @@ class Poll extends Form implements InputFilterProviderInterface
             'name' => 'dutchQuestion',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('Dutch question')
-            ]
+                'label' => $translator->translate('Dutch question'),
+            ],
             ]
         );
 
@@ -28,8 +28,8 @@ class Poll extends Form implements InputFilterProviderInterface
             'name' => 'englishQuestion',
             'type' => 'text',
             'options' => [
-                'label' => $translator->translate('English question')
-            ]
+                'label' => $translator->translate('English question'),
+            ],
             ]
         );
 
@@ -42,9 +42,9 @@ class Poll extends Form implements InputFilterProviderInterface
                 'should_create_template' => true,
                 'allow_add' => true,
                 'target_element' => [
-                    'type' => 'Frontpage\Form\PollOption'
-                ]
-            ]
+                    'type' => 'Frontpage\Form\PollOption',
+                ],
+            ],
             ]
         );
 
@@ -53,8 +53,8 @@ class Poll extends Form implements InputFilterProviderInterface
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
-                'value' => $translator->translate('Submit')
-            ]
+                'value' => $translator->translate('Submit'),
+            ],
             ]
         );
     }
@@ -75,8 +75,8 @@ class Poll extends Form implements InputFilterProviderInterface
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 5,
-                            'max' => 128
-                        ]
+                            'max' => 128,
+                        ],
                     ],
                 ],
             ],
@@ -87,8 +87,8 @@ class Poll extends Form implements InputFilterProviderInterface
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 5,
-                            'max' => 128
-                        ]
+                            'max' => 128,
+                        ],
                     ],
                 ],
             ],

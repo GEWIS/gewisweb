@@ -16,8 +16,6 @@ class SignupFieldValue
 
     /**
      * Constructor.
-     *
-     * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
@@ -25,9 +23,8 @@ class SignupFieldValue
     }
 
     /**
-     * Finds all field values associated with the $signup
+     * Finds all field values associated with the $signup.
      *
-     * @param \Activity\Model\Signup $signup
      * @return array of \Activity\Model\ActivityFieldValue
      */
     public function getFieldValuesBySignup(\Activity\Model\Signup $signup)

@@ -9,7 +9,6 @@ use Laminas\Validator\NotEmpty;
 
 class EditAlbum extends Form
 {
-
     public function __construct(Translator $translate)
     {
         parent::__construct();
@@ -19,8 +18,8 @@ class EditAlbum extends Form
             'name' => 'name',
             'type' => 'Laminas\Form\Element\Text',
             'options' => [
-                'label' => $translate->translate('Album title')
-            ]
+                'label' => $translate->translate('Album title'),
+            ],
             ]
         );
 
@@ -29,8 +28,8 @@ class EditAlbum extends Form
             'name' => 'startDateTime',
             'type' => 'Laminas\Form\Element\DateTime',
             'options' => [
-                'label' => $translate->translate('Start date')
-            ]
+                'label' => $translate->translate('Start date'),
+            ],
             ]
         );
 
@@ -39,8 +38,8 @@ class EditAlbum extends Form
             'name' => 'endDateTime',
             'type' => 'Laminas\Form\Element\DateTime',
             'options' => [
-                'label' => $translate->translate('End date')
-            ]
+                'label' => $translate->translate('End date'),
+            ],
             ]
         );
 
@@ -49,8 +48,8 @@ class EditAlbum extends Form
             'name' => 'submit',
             'type' => 'submit',
             'options' => [
-                'label' => $translate->translate('Save')
-            ]
+                'label' => $translate->translate('Save'),
+            ],
             ]
         );
 
@@ -70,10 +69,10 @@ class EditAlbum extends Form
                 [
                     'name' => 'alnum',
                     'options' => [
-                        'allowWhiteSpace' => true
-                    ]
-                ]
-            ]
+                        'allowWhiteSpace' => true,
+                    ],
+                ],
+            ],
             ]
         );
 

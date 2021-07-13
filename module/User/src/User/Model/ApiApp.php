@@ -5,14 +5,14 @@ namespace User\Model;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ApiApp model
+ * ApiApp model.
  *
  * @ORM\Entity
  */
 class ApiApp
 {
     /**
-     * Id
+     * Id.
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -21,28 +21,28 @@ class ApiApp
     protected $id;
 
     /**
-     * Application ID
+     * Application ID.
      *
      * @ORM\Column(type="string")
      */
     protected $appId;
 
     /**
-     * Application secret
+     * Application secret.
      *
      * @ORM\Column(type="string")
      */
     protected $secret;
 
     /**
-     * Callback URL
+     * Callback URL.
      *
      * @ORM\Column(type="string")
      */
     protected $callback;
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {

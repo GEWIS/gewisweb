@@ -4,15 +4,14 @@ namespace Activity\Controller;
 
 use Activity\Service\ActivityQuery;
 use Activity\Service\Signup;
-use User\Permissions\NotAllowedException;
 use Laminas\Form\FormInterface;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\JsonModel;
+use User\Permissions\NotAllowedException;
 use User\Service\User;
 
 class ApiController extends AbstractActionController
 {
-
     /**
      * @var ActivityQuery
      */
@@ -38,9 +37,7 @@ class ApiController extends AbstractActionController
     {
         if (!$this->activityQueryService->isAllowed('list', 'activityApi')) {
             $translator = $this->activityQueryService->getTranslator();
-            throw new NotAllowedException(
-                $translator->translate('You are not allowed to access the activities through the API')
-            );
+            throw new NotAllowedException($translator->translate('You are not allowed to access the activities through the API'));
         }
 
         $activities = $this->activityQueryService->getUpcomingActivities();
@@ -104,7 +101,7 @@ class ApiController extends AbstractActionController
     }
 
     /**
-     * Get all activities which the current user has subscribed to
+     * Get all activities which the current user has subscribed to.
      */
     public function signedupAction()
     {
@@ -112,7 +109,7 @@ class ApiController extends AbstractActionController
 
         return new JsonModel(
             [
-            'activities' => $activities
+            'activities' => $activities,
             ]
         );
     }

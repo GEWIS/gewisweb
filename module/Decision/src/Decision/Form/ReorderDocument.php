@@ -19,7 +19,7 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
      */
     protected $translator;
 
-    public function __construct($name = null, $options = array())
+    public function __construct($name = null, $options = [])
     {
         parent::__construct($name, $options);
 
@@ -39,12 +39,12 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
                     'down' => ReorderDocument::generateIcon('fa-chevron-down', $this->translator->translate('Move down')),
                 ],
                 'label_attributes' => [
-                    'class' => 'label label-radio-hidden'
+                    'class' => 'label label-radio-hidden',
                 ],
                 'label_options' => [
                     'disable_html_escape' => true, // Required to render HTML icons
                 ],
-            ]
+            ],
             ]
         );
 
@@ -54,7 +54,7 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
             'name' => 'document',
             'attributes' => [
                 'value' => null, // Value should be populated in the view
-            ]
+            ],
             ]
         );
 
@@ -74,12 +74,12 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
                 'required' => true,
                 'filters' => [
                     ['name' => ToNull::class],
-                    ['name' => ToInt::class]
+                    ['name' => ToInt::class],
                 ],
                 'validators' => [
-                    ['name' => NotEmpty::class]
+                    ['name' => NotEmpty::class],
                 ],
-            ]
+            ],
         ];
     }
 
@@ -91,13 +91,14 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
     }
 
     /**
-     * Returns an icon as a HTML string
+     * Returns an icon as a HTML string.
      *
      * FUTURE: Think of a better way to show icons in the label. Icons are
      * layout and shouldn't be defined in the Form.
      *
      * @param string $className FontAwesome class
-     * @param string $title Element title
+     * @param string $title     Element title
+     *
      * @return string
      */
     private static function generateIcon($className, $title)

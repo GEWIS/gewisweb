@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
- * Poll Option
+ * Poll Option.
  *
  * @ORM\Entity
  * @ORM\Table(name="PollOption")
@@ -55,7 +55,7 @@ class PollOption implements ResourceInterface
     protected $anonymousVotes = 0;
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -87,7 +87,7 @@ class PollOption implements ResourceInterface
     }
 
     /**
-     * Adds a new vote for this poll option
+     * Adds a new vote for this poll option.
      *
      * @param PollVote $pollVote
      */
@@ -122,7 +122,7 @@ class PollOption implements ResourceInterface
     }
 
     /**
-     * @param integer $votes
+     * @param int $votes
      */
     public function setAnonymousVotes($votes)
     {
@@ -132,7 +132,7 @@ class PollOption implements ResourceInterface
     /**
      * Get the number of votes for this poll option.
      *
-     * @return integer
+     * @return int
      */
     public function getVotesCount()
     {

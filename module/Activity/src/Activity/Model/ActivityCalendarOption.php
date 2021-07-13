@@ -49,7 +49,7 @@ class ActivityCalendarOption
     protected $endTime;
 
     /**
-     * To what activity proposal does the option belong
+     * To what activity proposal does the option belong.
      *
      * @ORM\ManyToOne(targetEntity="Activity\Model\ActivityOptionProposal")
      * @ORM\JoinColumn(referencedColumnName="id",nullable=false)
@@ -57,7 +57,7 @@ class ActivityCalendarOption
     protected $proposal;
 
     /**
-     * Who modified this activity option, if null then the option is not modified
+     * Who modified this activity option, if null then the option is not modified.
      *
      * @ORM\ManyToOne(targetEntity="User\Model\User")
      * @ORM\JoinColumn(referencedColumnName="lidnr",nullable=true)
@@ -145,7 +145,7 @@ class ActivityCalendarOption
     }
 
     /**
-     * Returns the string identifier of the Resource
+     * Returns the string identifier of the Resource.
      *
      * @return string
      */
@@ -163,11 +163,11 @@ class ActivityCalendarOption
     }
 
     /**
-     *
      * Returns in order of presense:
      * 1. The abbreviation of the related organ
      * 2. The alternative for an organ, other organising parties
-     * 3. The full name of the member who created the proposal
+     * 3. The full name of the member who created the proposal.
+     *
      * @return mixed
      */
     public function getCreatorAlt()

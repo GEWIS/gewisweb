@@ -31,7 +31,7 @@ class Module
      */
     public function getConfig()
     {
-        return include __DIR__ . '/config/module.config.php';
+        return include __DIR__.'/config/module.config.php';
     }
 
     /**
@@ -56,6 +56,7 @@ class Module
                     $bulkSummaryForm = $sm->get('company_form_bulk_summary');
                     $bulkExamForm = $sm->get('company_form_bulk_exam');
                     $config = $sm->get('config');
+
                     return new Service\Exam(
                         $translator,
                         $userRole,
@@ -81,6 +82,7 @@ class Module
                         $sm->get('translator')
                     );
                     $form->setHydrator($sm->get('education_hydrator'));
+
                     return $form;
                 },
                 'education_form_add_course' => function (ServiceLocatorInterface $sm) {
@@ -112,6 +114,7 @@ class Module
                     $fieldset->setConfig($sm->get('config'));
                     $fieldset->setObject(new Model\Exam());
                     $fieldset->setHydrator($sm->get('education_hydrator_exam'));
+
                     return $fieldset;
                 },
                 'education_form_fieldset_summary' => function (ServiceLocatorInterface $sm) {
@@ -121,6 +124,7 @@ class Module
                     $fieldset->setConfig($sm->get('config'));
                     $fieldset->setObject(new Summary());
                     $fieldset->setHydrator($sm->get('education_hydrator'));
+
                     return $fieldset;
                 },
                 'education_mapper_exam' => function (ServiceLocatorInterface $sm) {
@@ -179,8 +183,8 @@ class Module
                 // and aliases don't work with abstract factories
                 'education_doctrine_em' => function (ServiceLocatorInterface $sm) {
                     return $sm->get('doctrine.entitymanager.orm_default');
-                }
-            ]
+                },
+            ],
         ];
     }
 
@@ -198,9 +202,10 @@ class Module
                     $helper = new ExamUrl();
                     $helper->setDir($config['education']['public_dir']);
                     $helper->setExamService($sm->get('education_service_exam'));
+
                     return $helper;
-                }
-            ]
+                },
+            ],
         ];
     }
 }

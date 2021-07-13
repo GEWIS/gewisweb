@@ -3,18 +3,16 @@
 namespace Photo\Mapper;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Photo\Model\MemberAlbum;
 use Photo\Model\Photo as PhotoModel;
-use Doctrine\ORM\EntityManager;
 
 /**
  * Mappers for Photo.
- *
  */
 class Photo
 {
-
     /**
      * Doctrine entity manager.
      *
@@ -23,9 +21,7 @@ class Photo
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -37,8 +33,8 @@ class Photo
      *
      * @param \Photo\Model\Album $album      The album to retrieve the photos
      *                                       from
-     * @param integer            $start      the result to start at
-     * @param integer            $maxResults max amount of results to return,
+     * @param int                $start      the result to start at
+     * @param int                $maxResults max amount of results to return,
      *                                       null for infinite
      *
      * @return array of photo's
@@ -48,7 +44,6 @@ class Photo
         $start = 0,
         $maxResults = null
     ) {
-
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
@@ -80,7 +75,7 @@ class Photo
      * will be returned.
      *
      * @param \Photo\Model\Album|int $album
-     * @param int $maxResults
+     * @param int                    $maxResults
      *
      * @return array of Photo\Model\Photo
      */
@@ -100,13 +95,10 @@ class Photo
     }
 
     /**
-     * Returns the next photo in the album to display
-     *
-     * @param PhotoModel $photo
-     * @param \Photo\Model\Album $album
+     * Returns the next photo in the album to display.
      *
      * @return PhotoModel|null Photo if there is a next
-     * photo, null otherwise
+     *                         photo, null otherwise
      */
     public function getNextPhoto(
         PhotoModel $photo,
@@ -135,12 +127,10 @@ class Photo
     }
 
     /**
-     * Returns the previous photo in the album to display
-     *
-     * @param PhotoModel $photo
+     * Returns the previous photo in the album to display.
      *
      * @return PhotoModel|null Photo if there is a previous
-     * photo, null otherwise
+     *                         photo, null otherwise
      */
     public function getPreviousPhoto(
         PhotoModel $photo,
@@ -181,8 +171,8 @@ class Photo
     {
         return $this->getRepository()->findOneBy(
             [
-            'path'  => $path,
-            'album' => $album->getId()
+            'path' => $path,
+            'album' => $album->getId(),
             ]
         );
     }
@@ -200,7 +190,7 @@ class Photo
     /**
      * Retrieves a photo by id from the database.
      *
-     * @param integer $photoId the id of the photo
+     * @param int $photoId the id of the photo
      *
      * @return PhotoModel
      */
@@ -210,9 +200,7 @@ class Photo
     }
 
     /**
-     * Removes a photo
-     *
-     * @param PhotoModel $photo
+     * Removes a photo.
      */
     public function remove(PhotoModel $photo)
     {
@@ -220,9 +208,7 @@ class Photo
     }
 
     /**
-     * Persist photo
-     *
-     * @param PhotoModel $photo
+     * Persist photo.
      */
     public function persist(PhotoModel $photo)
     {

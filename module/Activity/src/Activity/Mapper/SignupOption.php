@@ -16,8 +16,6 @@ class SignupOption
 
     /**
      * Constructor.
-     *
-     * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
@@ -28,6 +26,7 @@ class SignupOption
      * Finds the option of with the given id.
      *
      * @param int $id
+     *
      * @return \Activity\Model\SignupOption
      */
     public function getOptionById($id)

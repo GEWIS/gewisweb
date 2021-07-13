@@ -18,12 +18,12 @@ use User\Permissions\Resource\OrganResourceInterface;
 class Activity implements OrganResourceInterface, CreatorResourceInterface
 {
     /**
-     * Status codes for the activity
+     * Status codes for the activity.
      */
-    const STATUS_TO_APPROVE = 1; // Activity needs to be approved
-    const STATUS_APPROVED = 2;  // The activity is approved
-    const STATUS_DISAPPROVED = 3; // The board disapproved the activity
-    const STATUS_UPDATE = 4; // This activity is an update for some activity
+    public const STATUS_TO_APPROVE = 1; // Activity needs to be approved
+    public const STATUS_APPROVED = 2;  // The activity is approved
+    public const STATUS_DISAPPROVED = 3; // The board disapproved the activity
+    public const STATUS_UPDATE = 4; // This activity is an update for some activity
 
     /**
      * ID for the activity.
@@ -93,7 +93,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     protected $status;
 
     /**
-     * The update proposal associated with this activity
+     * The update proposal associated with this activity.
      *
      * @ORM\OneToMany(targetEntity="Activity\Model\ActivityUpdateProposal", mappedBy="old")
      */
@@ -138,14 +138,14 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     protected $company;
 
     /**
-     * Is this a My Future related activity
+     * Is this a My Future related activity.
      *
      * @ORM\Column(type="boolean")
      */
     protected $isMyFuture;
 
     /**
-     * Whether this activity needs a GEFLITST photographer
+     * Whether this activity needs a GEFLITST photographer.
      *
      * @ORM\Column(type="boolean")
      */
@@ -165,16 +165,13 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         return $this->approver;
     }
 
-    /**
-     * @param User $approver
-     */
     public function setApprover(User $approver)
     {
         $this->approver = $approver;
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getStatus()
     {
@@ -182,7 +179,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @param integer $status
+     * @param int $status
      */
     public function setStatus($status)
     {
@@ -304,7 +301,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -487,9 +484,6 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         return $this->creator;
     }
 
-    /**
-     * @param User $creator
-     */
     public function setCreator(User $creator)
     {
         $this->creator = $creator;
@@ -534,7 +528,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * Returns the string identifier of the Resource
+     * Returns the string identifier of the Resource.
      *
      * @return string
      */
@@ -554,7 +548,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * Get the creator of this resource
+     * Get the creator of this resource.
      *
      * @return User
      */

@@ -18,9 +18,7 @@ class Authorization
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -28,9 +26,9 @@ class Authorization
     }
 
     /**
-     * Find all authorizations for a meeting
+     * Find all authorizations for a meeting.
      *
-     * @param integer $meetingNumber
+     * @param int $meetingNumber
      *
      * @return array
      */
@@ -40,10 +38,10 @@ class Authorization
     }
 
     /**
-     * Find non-revoked authorizations for a meeting for a user
+     * Find non-revoked authorizations for a meeting for a user.
      *
-     * @param integer $meetingNumber
-     * @param integer $authorizer
+     * @param int $meetingNumber
+     * @param int $authorizer
      *
      * @return array
      */
@@ -63,10 +61,10 @@ class Authorization
     }
 
     /**
-     * Find non-revoked authorizations for a meeting for a recipient
+     * Find non-revoked authorizations for a meeting for a recipient.
      *
-     * @param integer $meetingNumber
-     * @param integer $recipient
+     * @param int $meetingNumber
+     * @param int $recipient
      *
      * @return array
      */

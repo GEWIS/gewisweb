@@ -15,11 +15,11 @@ use Company\Service\Company;
 use DateTime;
 use Decision\Model\Organ;
 use Doctrine\ORM\EntityManager;
-use User\Model\User;
-use User\Permissions\NotAllowedException;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Stdlib\Parameters;
+use User\Model\User;
+use User\Permissions\NotAllowedException;
 
 class Activity extends AbstractAclService
 {
@@ -111,14 +111,12 @@ class Activity extends AbstractAclService
      *
      * @param array $data Parameters describing activity
      *
-     * @return bool Activity that was created.
+     * @return bool activity that was created
      */
     public function createActivity($data)
     {
         if (!$this->isAllowed('create', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create an activity')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to create an activity'));
         }
 
         $form = $this->getActivityForm();
@@ -136,7 +134,7 @@ class Activity extends AbstractAclService
         $organId = intval($data['organ']);
         $organ = null;
 
-        if ($organId !== 0) {
+        if (0 !== $organId) {
             $organ = $this->findOrgan($organId);
         }
 
@@ -144,7 +142,7 @@ class Activity extends AbstractAclService
         $companyId = intval($data['company']);
         $company = null;
 
-        if ($companyId !== 0) {
+        if (0 !== $companyId) {
             $company = $this->companyService->getCompanyById($companyId);
         }
 
@@ -159,16 +157,14 @@ class Activity extends AbstractAclService
     }
 
     /**
-     * Return activity creation form
+     * Return activity creation form.
      *
      * @return ActivityForm
      */
     public function getActivityForm()
     {
         if (!$this->isAllowed('create', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create an activity')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to create an activity'));
         }
 
         return $this->activityForm;
@@ -179,7 +175,9 @@ class Activity extends AbstractAclService
      * for this organ.
      *
      * @param int $organId The id of the organ associated with the activity
+     *
      * @return Organ The organ associated with the activity, if the user is a member of that organ
+     *
      * @throws NotAllowedException if the user is not a member of the organ specified
      */
     protected function findOrgan($organId)
@@ -187,9 +185,7 @@ class Activity extends AbstractAclService
         $organ = $this->organService->getOrgan($organId);
 
         if (!$this->organService->canEditOrgan($organ)) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create an activity for this organ')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to create an activity for this organ'));
         }
 
         return $organ;
@@ -200,12 +196,12 @@ class Activity extends AbstractAclService
      *
      * @pre $data is valid data of Activity\Form\Activity
      *
-     * @param array $data Parameters describing activity
-     * @param User $user The user that creates this activity
-     * @param Organ $organ The organ this activity is associated with
+     * @param array   $data    Parameters describing activity
+     * @param User    $user    The user that creates this activity
+     * @param Organ   $organ   The organ this activity is associated with
      * @param Company $company The company this activity is associated with
      *
-     * @return ActivityModel Activity that was created.
+     * @return ActivityModel activity that was created
      */
     protected function saveActivityData($data, $user, $organ, $company, $status)
     {
@@ -254,7 +250,7 @@ class Activity extends AbstractAclService
         // Send an email when a new Activity was created, but do not send one
         // when an activity is updated. This e-mail is handled in
         // `$this->createUpdateProposal()`.
-        if ($status !== ActivityModel::STATUS_UPDATE) {
+        if (ActivityModel::STATUS_UPDATE !== $status) {
             $this->emailService->sendEmail(
                 'activity_creation',
                 'email/activity',
@@ -270,7 +266,8 @@ class Activity extends AbstractAclService
      * Creates a SignupList for the specified Activity.
      *
      * @param array|Parameters $data
-     * @param ActivityModel $activity
+     * @param ActivityModel    $activity
+     *
      * @return SignupListModel
      */
     public function createSignupList($data, $activity)
@@ -300,14 +297,14 @@ class Activity extends AbstractAclService
     }
 
     /**
-     * Create a new field
+     * Create a new field.
      *
      * @pre $data is valid data of Activity\Form\SignupListFields
      *
-     * @param array|Parameters $data Parameters for the new field.
-     * @param SignupListModel $activity The SignupList the field belongs to.
+     * @param array|Parameters $data     parameters for the new field
+     * @param SignupListModel  $activity the SignupList the field belongs to
      *
-     * @return ActivityField The new field.
+     * @return ActivityField the new field
      */
     public function createSignupField($data, $signupList)
     {
@@ -317,12 +314,12 @@ class Activity extends AbstractAclService
         $field->setName(new LocalisedText($data['nameEn'], $data['name']));
         $field->setType($data['type']);
 
-        if ($data['type'] === '2') {
+        if ('2' === $data['type']) {
             $field->setMinimumValue($data['minimumValue']);
             $field->setMaximumValue($data['maximumValue']);
         }
 
-        if ($data['type'] === '3') {
+        if ('3' === $data['type']) {
             $this->createSignupOption($data, $field);
         }
 
@@ -332,11 +329,12 @@ class Activity extends AbstractAclService
     /**
      * Creates options for both languages specified and adds it to $field.
      * If no languages are specified, this method does nothing.
+     *
      * @pre The options corresponding to the languages specified are filled in
      * $params. If both languages are specified, they must have the same amount of options.
      *
-     * @param array $data The array containing the options strings.
-     * @param SignupFieldModel $field The field to add the options to.
+     * @param array            $data  the array containing the options strings
+     * @param SignupFieldModel $field the field to add the options to
      */
     protected function createSignupOption($data, $field)
     {
@@ -355,7 +353,7 @@ class Activity extends AbstractAclService
             $numOptions = count($optionsEn);
         }
 
-        for ($i = 0; $i < $numOptions; $i++) {
+        for ($i = 0; $i < $numOptions; ++$i) {
             $option = new SignupOptionModel();
             $option->setValue(new LocalisedText(
                 isset($data['optionsEn']) ? $optionsEn[$i] : null,
@@ -382,11 +380,11 @@ class Activity extends AbstractAclService
         $type = 'activity_creation_require_GEFLITST';
         $view = 'email/activity_created_require_GEFLITST';
 
-        if ($organ != null) {
+        if (null != $organ) {
             $subject = sprintf('%s: %s on %s', $organ->getAbbr(), $activityTitle, $activityTime);
 
             $organInfo = $organ->getApprovedOrganInformation();
-            if ($organInfo != null && $organInfo->getEmail() != null) {
+            if (null != $organInfo && null != $organInfo->getEmail()) {
                 $this->emailService->sendEmailAsOrgan(
                     $type,
                     $view,
@@ -420,16 +418,14 @@ class Activity extends AbstractAclService
     /**
      * Create a new update proposal from user form.
      *
-     * @param ActivityModel $currentActivity
      * @param array $data
+     *
      * @return bool indicating whether the update was applied or is pending
      */
     public function createUpdateProposal(ActivityModel $currentActivity, Parameters $data)
     {
         if (!$this->isAllowed('update', $currentActivity)) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to update this activity')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to update this activity'));
         }
 
         $form = $this->getActivityForm();
@@ -447,7 +443,7 @@ class Activity extends AbstractAclService
         $organId = intval($data['organ']);
         $organ = null;
 
-        if ($organId !== 0) {
+        if (0 !== $organId) {
             $organ = $this->findOrgan($organId);
         }
 
@@ -455,7 +451,7 @@ class Activity extends AbstractAclService
         $companyId = intval($data['company']);
         $company = null;
 
-        if ($companyId !== 0) {
+        if (0 !== $companyId) {
             $company = $this->companyService->getCompanyById($companyId);
         }
 
@@ -480,7 +476,7 @@ class Activity extends AbstractAclService
         $em = $this->entityManager;
 
         // TODO: ->count and ->unwrap are undefined
-        if ($currentActivity->getUpdateProposal()->count() !== 0) {
+        if (0 !== $currentActivity->getUpdateProposal()->count()) {
             $proposal = $currentActivity->getUpdateProposal()->unwrap()->first();
             //Remove old update proposal
             $oldUpdate = $proposal->getNew();
@@ -526,7 +522,8 @@ class Activity extends AbstractAclService
      *
      * @param array $current
      * @param array $proposal
-     * @return boolean
+     *
+     * @return bool
      */
     protected function isUpdateProposalNew($current, $proposal)
     {
@@ -599,8 +596,6 @@ class Activity extends AbstractAclService
      *
      * Adapted from https://www.php.net/manual/en/function.array-diff-assoc.php#usernotes.
      *
-     * @param array $array1
-     * @param array $array2
      * @return array
      */
     protected function array_diff_assoc_recursive(array $array1, array $array2)
@@ -629,7 +624,7 @@ class Activity extends AbstractAclService
     /**
      * Recursively unset a key in an array (by reference).
      *
-     * @param array $array
+     * @param array  $array
      * @param string $key
      */
     protected function recursiveUnsetKey(&$array, $key)
@@ -647,7 +642,6 @@ class Activity extends AbstractAclService
      * `array_filter` but recursively. Used to compare an update proposal of an activity
      * to the original activity.
      *
-     * @param array $array
      * @return array
      */
     protected function array_filter_recursive(array $array)
@@ -666,9 +660,8 @@ class Activity extends AbstractAclService
     }
 
     /**
-     * Checks whether the current user is allowed to apply an update proposal for the given activity
+     * Checks whether the current user is allowed to apply an update proposal for the given activity.
      *
-     * @param ActivityModel $activity
      * @return bool indicating whether the update may be applied
      */
     protected function canApplyUpdateProposal(ActivityModel $activity)
@@ -682,13 +675,11 @@ class Activity extends AbstractAclService
         }
 
         // If the activity has not been approved the update proposal can be applied.
-        return $activity->getStatus() === ActivityModel::STATUS_TO_APPROVE;
+        return ActivityModel::STATUS_TO_APPROVE === $activity->getStatus();
     }
 
     /**
-     * Apply a proposed activity update
-     *
-     * @param ActivityProposalModel $proposal
+     * Apply a proposed activity update.
      */
     public function updateActivity(ActivityProposalModel $proposal)
     {
@@ -698,7 +689,7 @@ class Activity extends AbstractAclService
         // If the old activity was already approved, keep it approved.
         // Otherwise the status of the new Activity becomes
         // ActivityModel::STATUS_TO_APPROVE.
-        if ($old->getStatus() !== ActivityModel::STATUS_APPROVED) {
+        if (ActivityModel::STATUS_APPROVED !== $old->getStatus()) {
             $new->setStatus(ActivityModel::STATUS_TO_APPROVE);
         } else {
             $new->setStatus(ActivityModel::STATUS_APPROVED);
@@ -718,9 +709,7 @@ class Activity extends AbstractAclService
     /**
      * Revoke a proposed activity update
      * NB: This action permanently removes the proposal, so this cannot be undone.
-     * (The potentially updated activity remains untouched)
-     *
-     * @param ActivityProposalModel $proposal
+     * (The potentially updated activity remains untouched).
      */
     public function revokeUpdateProposal(ActivityProposalModel $proposal)
     {
@@ -732,16 +721,12 @@ class Activity extends AbstractAclService
     }
 
     /**
-     * Approve of an activity
-     *
-     * @param ActivityModel $activity
+     * Approve of an activity.
      */
     public function approve(ActivityModel $activity)
     {
         if (!$this->isAllowed('approve', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to change the status of the activity')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to change the status of the activity'));
         }
         $activity->setStatus(ActivityModel::STATUS_APPROVED);
         $em = $this->entityManager;
@@ -750,16 +735,12 @@ class Activity extends AbstractAclService
     }
 
     /**
-     * Reset the approval status of an activity
-     *
-     * @param ActivityModel $activity
+     * Reset the approval status of an activity.
      */
     public function reset(ActivityModel $activity)
     {
         if (!$this->isAllowed('reset', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to change the status of the activity')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to change the status of the activity'));
         }
 
         $activity->setStatus(ActivityModel::STATUS_TO_APPROVE);
@@ -769,16 +750,12 @@ class Activity extends AbstractAclService
     }
 
     /**
-     * Disapprove of an activity
-     *
-     * @param ActivityModel $activity
+     * Disapprove of an activity.
      */
     public function disapprove(ActivityModel $activity)
     {
         if (!$this->isAllowed('disapprove', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to change the status of the activity')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to change the status of the activity'));
         }
 
         $activity->setStatus(ActivityModel::STATUS_DISAPPROVED);

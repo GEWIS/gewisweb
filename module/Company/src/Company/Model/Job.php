@@ -4,8 +4,8 @@ namespace Company\Model;
 
 use Carbon\Carbon;
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Job model.
@@ -128,7 +128,7 @@ class Job
     protected $languageNeutralId;
 
     /**
-     * Job labels
+     * Job labels.
      *
      * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="job", cascade={"persist", "remove"}, fetch="EAGER")
      */
@@ -143,12 +143,12 @@ class Job
     }
 
     /**
-     * Get's the id
+     * Get's the id.
      */
     public function getLanguageNeutralId()
     {
         $lnid = $this->languageNeutralId;
-        if ($lnid == 0) {
+        if (0 == $lnid) {
             return $this->id;
         }
 
@@ -156,7 +156,7 @@ class Job
     }
 
     /**
-     * Set's the id
+     * Set's the id.
      */
     public function setLanguageNeutralId($languageNeutralId)
     {
@@ -433,7 +433,7 @@ class Job
     }
 
     /**
-     * Get the job's company
+     * Get the job's company.
      *
      * @return company
      */
@@ -443,7 +443,7 @@ class Job
     }
 
     /**
-     * Get the labels. Returns an array of JobLabelAssignments
+     * Get the labels. Returns an array of JobLabelAssignments.
      *
      * @return array
      */
@@ -469,7 +469,7 @@ class Job
      */
     public function addLabel($label)
     {
-        if ($this->labels === null) {
+        if (null === $this->labels) {
             $this->labels = [];
         }
         $label->setJob($this);
@@ -482,7 +482,7 @@ class Job
     }
 
     /**
-     * Returns the job's location
+     * Returns the job's location.
      *
      * The location property specifies for which location (i.e. city or country)
      * this job is intended. This location may not be equal to the company's
@@ -496,7 +496,7 @@ class Job
     }
 
     /**
-     * Sets the job's location
+     * Sets the job's location.
      *
      * @param string $location
      */

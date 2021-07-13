@@ -5,12 +5,12 @@ namespace Decision\Service;
 use Application\Service\AbstractAclService;
 use Decision\Mapper\Authorization;
 use Decision\Model\Member as MemberModel;
-use User\Permissions\NotAllowedException;
-use User\Service\User;
 use Laminas\Code\Exception\InvalidArgumentException;
 use Laminas\Http\Client as HttpClient;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
+use User\Permissions\NotAllowedException;
+use User\Service\User;
 
 /**
  * Member service.
@@ -75,29 +75,24 @@ class Member extends AbstractAclService
         return $this->userRole;
     }
 
-    const MIN_SEARCH_QUERY_LENGTH = 2;
+    public const MIN_SEARCH_QUERY_LENGTH = 2;
 
     /**
-     * Returns is the member is active
+     * Returns is the member is active.
      *
      * @param MemberModel $member
+     *
      * @return bool
      */
-
     public function isActiveMember()
     {
         return $this->isAllowed('edit', 'organ');
     }
 
-    /**
-     *
-     */
     public function findMemberByLidNr($lidnr)
     {
         if (!$this->isAllowed('view')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view members.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view members.'));
         }
 
         return $this->memberMapper->findByLidnr($lidnr);
@@ -109,9 +104,7 @@ class Member extends AbstractAclService
     public function getDreamsparkUrl()
     {
         if (!$this->isAllowed('login', 'dreamspark')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed login into Microsoft Imagine.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed login into Microsoft Imagine.'));
         }
 
         $user = $this->userService->getIdentity();
@@ -138,14 +131,12 @@ class Member extends AbstractAclService
         $url = str_replace('%GROUPS%', implode(',', $groups), $url);
 
         $client = new HttpClient($url, [
-            'sslcapath' => $sslcapath
+            'sslcapath' => $sslcapath,
         ]);
         $response = $client->send();
 
-        if ($response->getStatusCode() != 200) {
-            throw new NotAllowedException(
-                $this->translator->translate('Login to Microsoft Imagine failed. If this persists, contact the WebCommittee.')
-            );
+        if (200 != $response->getStatusCode()) {
+            throw new NotAllowedException($this->translator->translate('Login to Microsoft Imagine failed. If this persists, contact the WebCommittee.'));
         }
 
         return $response->getBody();
@@ -156,30 +147,25 @@ class Member extends AbstractAclService
      *
      * When $days equals 0 or isn't given, it will give all birthdays of today.
      *
-     * @param int $days The number of days to look ahead.
+     * @param int $days the number of days to look ahead
      *
      * @return array Of members sorted by birthday
      */
     public function getBirthdayMembers($days = 0)
     {
-        if ($days == 0 && !$this->isAllowed('birthdays_today')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the list of today\'s birthdays.')
-            );
+        if (0 == $days && !$this->isAllowed('birthdays_today')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view the list of today\'s birthdays.'));
         }
 
         if ($days > 0 && !$this->isAllowed('birthdays')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the list of birthdays.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view the list of birthdays.'));
         }
+
         return $this->memberMapper->findBirthdayMembers($days);
     }
 
     /**
      * Get the organs a member is part of.
-     *
-     * @param MemberModel $member
      *
      * @return array
      */
@@ -199,15 +185,11 @@ class Member extends AbstractAclService
     public function searchMembersByName($query)
     {
         if (strlen($query) < self::MIN_SEARCH_QUERY_LENGTH) {
-            throw new InvalidArgumentException(
-                $this->translator->translate('Name must be at least ' . self::MIN_SEARCH_QUERY_LENGTH . ' characters')
-            );
+            throw new InvalidArgumentException($this->translator->translate('Name must be at least '.self::MIN_SEARCH_QUERY_LENGTH.' characters'));
         }
 
         if (!$this->isAllowed('search')) {
-            throw new NotAllowedException(
-                $this->translator->translate('Not allowed to search for members.')
-            );
+            throw new NotAllowedException($this->translator->translate('Not allowed to search for members.'));
         }
 
         return $this->memberMapper->searchByName($query);
@@ -232,6 +214,7 @@ class Member extends AbstractAclService
         if (count($authorizations) < $maxAuthorizations) {
             return true;
         }
+
         return false;
     }
 

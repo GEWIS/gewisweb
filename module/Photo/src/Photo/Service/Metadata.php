@@ -11,10 +11,10 @@ use DateTime;
 class Metadata
 {
     /**
-     * Populates the metadata of a photo based on the EXIF data of the photo
+     * Populates the metadata of a photo based on the EXIF data of the photo.
      *
-     * @param \Photo\Model\Photo $photo the photo to add the metadata to.
-     * @param string $path The path where the actual image file is stored
+     * @param \Photo\Model\Photo $photo the photo to add the metadata to
+     * @param string             $path  The path where the actual image file is stored
      *
      * @return \Photo\Model\Photo the photo with the added metadata
      */
@@ -26,7 +26,7 @@ class Metadata
             $photo->setArtist($exif['Artist']);
             $photo->setCamera($exif['Model']);
             $photo->setDateTime(new DateTime($exif['DateTimeOriginal']));
-            $photo->setFlash($exif['Flash'] != 0);
+            $photo->setFlash(0 != $exif['Flash']);
             $photo->setFocalLength($this->frac2dec($exif['FocalLength']));
             $photo->setExposureTime($this->frac2dec($exif['ExposureTime']));
             if (isset($exif['ShutterSpeedValue'])) {
@@ -36,8 +36,8 @@ class Metadata
                 $photo->setAperture($this->exifGetFstop($exif['ApertureValue']));
             }
             $photo->setIso($exif['ISOSpeedRatings']);
-            $photo->setLongitude($this->exifGpsToCoordinate($exif["GPSLongitude"], $exif['GPSLongitudeRef']));
-            $photo->setLatitude($this->exifGpsToCoordinate($exif["GPSLatitude"], $exif['GPSLatitudeRef']));
+            $photo->setLongitude($this->exifGpsToCoordinate($exif['GPSLongitude'], $exif['GPSLongitudeRef']));
+            $photo->setLatitude($this->exifGpsToCoordinate($exif['GPSLatitude'], $exif['GPSLatitudeRef']));
         } else {
             // We must have a date/time for a photo
             // Since no date is known, we use the current one
@@ -62,18 +62,18 @@ class Metadata
      */
     private static function frac2dec($str)
     {
-        if (strpos($str, '/') === false) {
+        if (false === strpos($str, '/')) {
             return $str;
         }
         list($n, $d) = explode('/', $str);
 
-        return $n / $d;//I assume stuff like '234/0' is not supported by EXIF.
+        return $n / $d; //I assume stuff like '234/0' is not supported by EXIF.
     }
 
     /**
      * Computes the shutter speed from the exif data.
      *
-     * @param string $shutterSpeed the shutter speed as listed in the photo's exif data.
+     * @param string $shutterSpeed the shutter speed as listed in the photo's exif data
      *
      * @return string|null
      */
@@ -81,20 +81,20 @@ class Metadata
     {
         $apex = $this->frac2dec($shutterSpeed);
         $shutter = pow(2, -$apex);
-        if ($shutter == 0) {
+        if (0 == $shutter) {
             return null;
         }
         if ($shutter >= 1) {
-            return round($shutter) . 's';
+            return round($shutter).'s';
         }
 
-        return '1/' . round(1 / $shutter) . 's';
+        return '1/'.round(1 / $shutter).'s';
     }
 
     /**
      * Computes the relative aperture from the exif data.
      *
-     * @param string $apertureValue the aperture value as listed in the photo's exif data.
+     * @param string $apertureValue the aperture value as listed in the photo's exif data
      *
      * @return string|null
      */
@@ -102,11 +102,11 @@ class Metadata
     {
         $apex = $this->frac2dec($apertureValue);
         $fstop = pow(2, $apex / 2);
-        if ($fstop == 0) {
+        if (0 == $fstop) {
             return null;
         }
 
-        return 'f/' . sprintf("%01.1f", $fstop);
+        return 'f/'.sprintf('%01.1f', $fstop);
     }
 
     /**
@@ -114,6 +114,7 @@ class Metadata
      *
      * @param string $coordinate
      * @param string $hemisphere
+     *
      * @return float
      */
     private static function exifGpsToCoordinate($coordinate, $hemisphere)
@@ -123,23 +124,24 @@ class Metadata
         }
 
         if (is_string($coordinate)) {
-            $coordinate = array_map("trim", explode(",", $coordinate));
+            $coordinate = array_map('trim', explode(',', $coordinate));
         }
 
-        for ($i = 0; $i < 3; $i++) {
+        for ($i = 0; $i < 3; ++$i) {
             $part = explode('/', $coordinate[$i]);
-            if (count($part) == 1) {
+            if (1 == count($part)) {
                 $coordinate[$i] = $part[0];
                 continue;
             }
-            if (count($part) == 2) {
+            if (2 == count($part)) {
                 $coordinate[$i] = floatval($part[0]) / floatval($part[1]);
                 continue;
             }
             $coordinate[$i] = 0;
         }
         list($degrees, $minutes, $seconds) = $coordinate;
-        $sign = ($hemisphere == 'W' || $hemisphere == 'S') ? -1 : 1;
+        $sign = ('W' == $hemisphere || 'S' == $hemisphere) ? -1 : 1;
+
         return $sign * ($degrees + $minutes / 60 + $seconds / 3600);
     }
 }

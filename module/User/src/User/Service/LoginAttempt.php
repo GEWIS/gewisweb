@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManager;
 
 class LoginAttempt
 {
-
     /**
      * @var string
      */
@@ -75,7 +74,7 @@ class LoginAttempt
     public function loginAttemptsExceeded($type, $user)
     {
         $ip = $this->remoteAddress;
-        $since = (new DateTime())->sub(new DateInterval('PT' . $this->rateLimitConfig[$type]['lockout_time'] . 'M'));
+        $since = (new DateTime())->sub(new DateInterval('PT'.$this->rateLimitConfig[$type]['lockout_time'].'M'));
         if ($this->loginAttemptMapper->getFailedAttemptCount($since, $type, $ip) > $this->rateLimitConfig[$type]['ip']) {
             return true;
         }

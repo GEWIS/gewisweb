@@ -2,16 +2,16 @@
 
 namespace Decision\Form;
 
-use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilterProviderInterface;
-use Laminas\I18n\Translator\TranslatorInterface as Translator;
 use Decision\Mapper\Meeting as MeetingMapper;
+use Laminas\Form\Form;
+use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\MimeType;
 
 class Notes extends Form implements InputFilterProviderInterface
 {
-    const ERROR_FILE_EXISTS = 'file_exists';
+    public const ERROR_FILE_EXISTS = 'file_exists';
 
     protected $translator;
 
@@ -23,9 +23,9 @@ class Notes extends Form implements InputFilterProviderInterface
         $options = [];
         foreach ($mapper->findAll() as $meeting) {
             $meeting = $meeting[0];
-            $name = $meeting->getType() . '/' . $meeting->getNumber();
-            $options[$name] = $meeting->getType() . ' ' . $meeting->getNumber()
-                . ' (' . $meeting->getDate()->format('Y-m-d') . ')';
+            $name = $meeting->getType().'/'.$meeting->getNumber();
+            $options[$name] = $meeting->getType().' '.$meeting->getNumber()
+                .' ('.$meeting->getDate()->format('Y-m-d').')';
         }
 
         $this->add(
@@ -35,8 +35,8 @@ class Notes extends Form implements InputFilterProviderInterface
             'options' => [
                 'label' => $translator->translate('Meeting'),
                 'empty_option' => $translator->translate('Choose a meeting'),
-                'value_options' => $options
-            ]
+                'value_options' => $options,
+            ],
             ]
         );
 
@@ -45,8 +45,8 @@ class Notes extends Form implements InputFilterProviderInterface
             'name' => 'upload',
             'type' => 'file',
             'option' => [
-                'label' => $translator->translate('Notes to upload')
-            ]
+                'label' => $translator->translate('Notes to upload'),
+            ],
             ]
         );
         $this->get('upload')->setLabel($translator->translate('Notes to upload'));
@@ -56,8 +56,8 @@ class Notes extends Form implements InputFilterProviderInterface
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
-                'value' => $translator->translate('Submit')
-            ]
+                'value' => $translator->translate('Submit'),
+            ],
             ]
         );
     }
@@ -69,12 +69,12 @@ class Notes extends Form implements InputFilterProviderInterface
      */
     public function setError($error)
     {
-        if ($error == self::ERROR_FILE_EXISTS) {
+        if (self::ERROR_FILE_EXISTS == $error) {
             $this->setMessages(
                 [
                 'meeting' => [
-                    $this->translator->translate('There already are notes for this meeting')
-                ]
+                    $this->translator->translate('There already are notes for this meeting'),
+                ],
                 ]
             );
         }
@@ -92,17 +92,17 @@ class Notes extends Form implements InputFilterProviderInterface
                     [
                         'name' => Extension::class,
                         'options' => [
-                            'extension' => 'pdf'
-                        ]
+                            'extension' => 'pdf',
+                        ],
                     ],
                     [
                         'name' => MimeType::class,
                         'options' => [
-                            'mimeType' => 'application/pdf'
-                        ]
-                    ]
-                ]
-            ]
+                            'mimeType' => 'application/pdf',
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 }

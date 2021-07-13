@@ -1,9 +1,10 @@
 <?php
 
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework (http://framework.zend.com/).
  *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @see      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ *
  * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
@@ -23,7 +24,7 @@ class IndexController extends AbstractActionController
         $session = new SessionContainer('lang');
         $session->lang = $this->params()->fromRoute('lang');
 
-        if ($session->lang != 'en' && $session->lang != 'nl') {
+        if ('en' != $session->lang && 'nl' != $session->lang) {
             $session->lang = 'nl';
         }
 
@@ -35,14 +36,14 @@ class IndexController extends AbstractActionController
     }
 
     /**
-     * Action called when loading pages from external templates
+     * Action called when loading pages from external templates.
      */
     public function externalAction()
     {
     }
 
     /**
-     * Throws a teapot error
+     * Throws a teapot error.
      */
     public function teapotAction()
     {

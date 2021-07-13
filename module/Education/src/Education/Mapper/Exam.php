@@ -3,9 +3,9 @@
 namespace Education\Mapper;
 
 use Closure;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Education\Model\Exam as ExamModel;
-use Doctrine\ORM\EntityManager;
 
 /**
  * Mapper for Exam.
@@ -20,9 +20,7 @@ class Exam
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -34,8 +32,6 @@ class Exam
      *
      * Instead of the EntityManager, this inserts this Mapper into the
      * function.
-     *
-     * @param Closure $func
      */
     public function transactional(Closure $func)
     {
@@ -47,9 +43,10 @@ class Exam
     }
 
     /**
-     * Find an exam
+     * Find an exam.
      *
      * @param int $id
+     *
      * @return ExamModel
      */
     public function find($id)
@@ -58,9 +55,7 @@ class Exam
     }
 
     /**
-     * Persist an exam
-     *
-     * @param ExamModel $exam
+     * Persist an exam.
      */
     public function persist(ExamModel $exam)
     {

@@ -7,8 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Mappers for labels assignments
- *
+ * Mappers for labels assignments.
  */
 class LabelAssignment
 {
@@ -21,8 +20,6 @@ class LabelAssignment
 
     /**
      * Constructor.
-     *
-     * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
@@ -36,8 +33,7 @@ class LabelAssignment
     }
 
     /**
-     * Saves all label assignments
-     *
+     * Saves all label assignments.
      */
     public function save()
     {
@@ -45,7 +41,7 @@ class LabelAssignment
     }
 
     /**
-     * Deletes the given label assignment
+     * Deletes the given label assignment.
      *
      * @param LabelAssignmentModel $labelAssignment
      */
@@ -57,6 +53,7 @@ class LabelAssignment
 
     /**
      * @param int $jobId
+     *
      * @return mixed
      */
     public function findAssignmentsByJobId($jobId)
@@ -73,6 +70,7 @@ class LabelAssignment
     /**
      * @param int $jobId
      * @param int $labelId
+     *
      * @return mixed
      */
     public function findAssignmentByJobIdAndLabelId($jobId, $labelId)
@@ -89,7 +87,7 @@ class LabelAssignment
     }
 
     /**
-     * Find all Labels assignments
+     * Find all Labels assignments.
      *
      * @return array
      */

@@ -12,11 +12,9 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
  *
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
- *
  */
 class ProfilePhoto implements ResourceInterface
 {
-
     /**
      * Tag ID.
      *
@@ -53,7 +51,7 @@ class ProfilePhoto implements ResourceInterface
     protected $explicit;
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -87,7 +85,7 @@ class ProfilePhoto implements ResourceInterface
     }
 
     /**
-     * Get the explicit bool
+     * Get the explicit bool.
      *
      * @return bool
      */
@@ -97,7 +95,7 @@ class ProfilePhoto implements ResourceInterface
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      */
     public function setId($id)
     {

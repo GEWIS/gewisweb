@@ -29,7 +29,7 @@ class EditLabel extends CollectionBaseFieldsetAwareForm
                 'count' => count($languages),
                 'target_element' => new LabelFieldset($translate, $this->getHydrator()),
                 'items' => $languages,
-            ]
+            ],
             ]
         );
 
@@ -58,6 +58,7 @@ class EditLabel extends CollectionBaseFieldsetAwareForm
     public function slugNameUnique($slugName, $context)
     {
         $cid = $context['id'];
+
         return $this->mapper->isSlugNameUnique($slugName, $cid);
     }
 }

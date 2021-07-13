@@ -2,9 +2,9 @@
 
 namespace Photo\Controller;
 
-use Photo\Service\Photo;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\JsonModel;
+use Photo\Service\Photo;
 
 class TagController extends AbstractActionController
 {

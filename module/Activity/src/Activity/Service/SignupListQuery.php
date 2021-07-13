@@ -4,10 +4,10 @@ namespace Activity\Service;
 
 use Activity\Mapper\SignupList;
 use Application\Service\AbstractAclService;
-use User\Model\User;
-use User\Permissions\NotAllowedException;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
+use User\Model\User;
+use User\Permissions\NotAllowedException;
 
 class SignupListQuery extends AbstractAclService
 {
@@ -61,14 +61,13 @@ class SignupListQuery extends AbstractAclService
     /**
      * @param $signupListId
      * @param $activityId
+     *
      * @return \Activity\Model\SignupList|null
      */
     public function getSignupListByActivity($signupListId, $activityId)
     {
         if (!$this->isAllowed('view', 'signupList')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view sign-up lists')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view sign-up lists'));
         }
 
         return $this->signupListMapper->getSignupListByIdAndActivity($signupListId, $activityId);
@@ -77,9 +76,7 @@ class SignupListQuery extends AbstractAclService
     public function getSignupListsOfActivity($activityId)
     {
         if (!$this->isAllowed('view', 'signupList')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view sign-up lists')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view sign-up lists'));
         }
 
         return $this->signupListMapper->getSignupListsOfActivity($activityId);

@@ -7,14 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
- * Maintains a list of the "Foto of the week"
+ * Maintains a list of the "Foto of the week".
  *
  * @ORM\Entity
- *
  */
 class WeeklyPhoto implements ResourceInterface
 {
-
     /**
      * Week Id.
      *
@@ -40,7 +38,7 @@ class WeeklyPhoto implements ResourceInterface
     protected $photo;
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -64,7 +62,7 @@ class WeeklyPhoto implements ResourceInterface
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      */
     public function setId($id)
     {

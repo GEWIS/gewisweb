@@ -4,12 +4,11 @@ namespace Frontpage\Controller;
 
 use Frontpage\Service\News;
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\ViewModel;
 use Laminas\Paginator\Paginator;
+use Laminas\View\Model\ViewModel;
 
 class NewsAdminController extends AbstractActionController
 {
-
     /**
      * @var News
      */
@@ -40,7 +39,7 @@ class NewsAdminController extends AbstractActionController
     }
 
     /**
-     * Create a news item
+     * Create a news item.
      */
     public function createAction()
     {
@@ -57,7 +56,7 @@ class NewsAdminController extends AbstractActionController
             [
             'form' => $form,
             // Boolean indicating if the view should show an option to delete a news item.
-            'canDelete' => false
+            'canDelete' => false,
             ]
         );
 
@@ -67,7 +66,7 @@ class NewsAdminController extends AbstractActionController
     }
 
     /**
-     * Edit a news item
+     * Edit a news item.
      */
     public function editAction()
     {
@@ -86,13 +85,13 @@ class NewsAdminController extends AbstractActionController
             'form' => $form,
             // Boolean indicating if the view should show an option to delete a news item.
             'canDelete' => true,
-            'newsItemId' => $newsItemId
+            'newsItemId' => $newsItemId,
             ]
         );
     }
 
     /**
-     * Delete a news item
+     * Delete a news item.
      */
     public function deleteAction()
     {

@@ -8,11 +8,9 @@ use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for Hit.
- *
  */
 class Hit
 {
-
     /**
      * Doctrine entity manager.
      *
@@ -21,9 +19,7 @@ class Hit
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -32,10 +28,11 @@ class Hit
 
     /**
      * Get the amount of hits of all photos that have been visited
-     * in the specified time range
+     * in the specified time range.
      *
      * @param DateTime $begindate
      * @param DateTime $enddate
+     *
      * @return array of array of string
      */
     public function getHitsInRange($begindate, $enddate)

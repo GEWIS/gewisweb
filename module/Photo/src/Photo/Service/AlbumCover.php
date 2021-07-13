@@ -7,7 +7,6 @@ use Imagick;
 
 /**
  * Album cover services. Used for (re)generating album covers.
- *
  */
 class AlbumCover
 {
@@ -49,24 +48,25 @@ class AlbumCover
      * Creates, stores and returns the path to a cover image, a mozaic generated from
      * a random selection of photos in the album or sub-albums.
      *
-     * @param \Photo\Model\Album $album The album to create the cover for.
+     * @param \Photo\Model\Album $album the album to create the cover for
      *
-     * @return string The path to the cover image.
+     * @return string the path to the cover image
      */
     public function createCover($album)
     {
         $cover = $this->generateCover($album);
-        $tempFileName = sys_get_temp_dir() . '/CoverImage' . rand() . '.png';
+        $tempFileName = sys_get_temp_dir().'/CoverImage'.rand().'.png';
         $cover->writeImage($tempFileName);
+
         return $this->storage->storeFile($tempFileName, false);
     }
 
     /**
      * Creates a cover image for the given album.
      *
-     * @param \Photo\Model\Album $album The album to create a cover image for.
+     * @param \Photo\Model\Album $album the album to create a cover image for
      *
-     * @return Imagick The cover image.
+     * @return Imagick the cover image
      */
     protected function generateCover($album)
     {
@@ -80,9 +80,9 @@ class AlbumCover
          */
         while (count($images) < $count) {
             if ($columns < $rows) {
-                $rows--;
+                --$rows;
             } else {
-                $columns--;
+                --$columns;
             }
             $count = $rows * $columns;
         }
@@ -97,18 +97,18 @@ class AlbumCover
         if (count($images) > 0) {
             $this->drawComposition($target, $columns, $rows, $images);
         }
-        $target->setImageFormat("png");
+        $target->setImageFormat('png');
 
         return $target;
     }
 
     /**
-     * Returns the images needed to fill the album cover
+     * Returns the images needed to fill the album cover.
      *
      * @param \Photo\Model\Album $album
-     * @param int $count the amount of images needed.
+     * @param int                $count the amount of images needed
      *
-     * @return Imagick a list of the images.
+     * @return Imagick a list of the images
      */
     protected function getImages($album, $count)
     {
@@ -121,7 +121,7 @@ class AlbumCover
         //convert the photo objects to Imagick objects
         $images = [];
         foreach ($photos as $photo) {
-            $imagePath = $this->storageConfig['storage_dir'] . '/' . $photo->getSmallThumbPath();
+            $imagePath = $this->storageConfig['storage_dir'].'/'.$photo->getSmallThumbPath();
             $images[] = new Imagick($imagePath);
         }
 
@@ -131,10 +131,10 @@ class AlbumCover
     /**
      * Draws the mosaic of photos.
      *
-     * @param Imagick $target The target object to draw to.
-     * @param int $columns The amount of columns to fill
-     * @param int $rows The amount of rows to fill
-     * @param Imagick $images The list of images to fill the mosaic with.
+     * @param Imagick $target  the target object to draw to
+     * @param int     $columns The amount of columns to fill
+     * @param int     $rows    The amount of rows to fill
+     * @param Imagick $images  the list of images to fill the mosaic with
      */
     protected function drawComposition($target, $columns, $rows, $images)
     {
@@ -157,8 +157,8 @@ class AlbumCover
         $outerBorderY = $outerBorder + ceil(($innerHeight - $realInnerHeight) / 2);
 
         //compose all images
-        for ($x = 0; $x < $columns; $x++) {
-            for ($y = 0; $y < $rows; $y++) {
+        for ($x = 0; $x < $columns; ++$x) {
+            for ($y = 0; $y < $rows; ++$y) {
                 $image = $this->resizeCropImage(
                     $images[$x * $rows + $y],
                     $imageWidth,
@@ -179,9 +179,10 @@ class AlbumCover
      * fill the full width and height without damaging the aspect ratio of the
      * photo.
      *
-     * @param Imagick $image The Imagick object to be resized and cropped
-     * @param int $width The desired width
-     * @param int $height The desired height
+     * @param Imagick $image  The Imagick object to be resized and cropped
+     * @param int     $width  The desired width
+     * @param int     $height The desired height
+     *
      * @return Imagick $image
      */
     protected function resizeCropImage($image, $width, $height)

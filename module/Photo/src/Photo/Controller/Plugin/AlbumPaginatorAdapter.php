@@ -2,26 +2,24 @@
 
 namespace Photo\Controller\Plugin;
 
+use Laminas\Paginator\Adapter\AdapterInterface;
 use Photo\Service\Album;
 use Photo\Service\Photo;
-use Laminas\Paginator\Adapter\AdapterInterface;
 
 /**
- * Paginator for album pages
- *
+ * Paginator for album pages.
  */
 class AlbumPaginatorAdapter implements AdapterInterface
 {
-
     /**
-     * Album
+     * Album.
      *
      * @var \Photo\Model\Album
      */
     protected $album = null;
 
     /**
-     * Item count
+     * Item count.
      *
      * @var int
      */
@@ -54,7 +52,7 @@ class AlbumPaginatorAdapter implements AdapterInterface
     /**
      * Returns an array of items for a page.
      *
-     * @param int $offset Page offset
+     * @param int $offset           Page offset
      * @param int $itemCountPerPage Number of items per page
      *
      * @return array

@@ -52,7 +52,7 @@ class ActivityOptionProposal implements OrganResourceInterface
     protected $creationTime;
 
     /**
-     * Who created this activity proposal
+     * Who created this activity proposal.
      *
      * @ORM\ManyToOne(targetEntity="Decision\Model\Organ")
      * @ORM\JoinColumn(referencedColumnName="id",nullable=true)
@@ -60,7 +60,7 @@ class ActivityOptionProposal implements OrganResourceInterface
     protected $organ;
 
     /**
-     * Who created this activity proposal, if not an organ
+     * Who created this activity proposal, if not an organ.
      *
      * @Orm\Column(type="string",nullable=true)
      */
@@ -148,11 +148,12 @@ class ActivityOptionProposal implements OrganResourceInterface
         if ($this->organ) {
             return $this->organ;
         }
+
         return $this->organAlt;
     }
 
     /**
-     * Returns the string identifier of the Resource
+     * Returns the string identifier of the Resource.
      *
      * @return string
      */
@@ -170,11 +171,11 @@ class ActivityOptionProposal implements OrganResourceInterface
     }
 
     /**
-     *
      * Returns in order of presense:
      * 1. The abbreviation of the related organ
      * 2. The alternative for an organ, other organising parties
-     * 3. The full name of the member who created the proposal
+     * 3. The full name of the member who created the proposal.
+     *
      * @return mixed
      */
     public function getCreatorAlt()

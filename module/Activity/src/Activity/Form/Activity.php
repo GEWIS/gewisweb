@@ -18,7 +18,6 @@ class Activity extends Form implements InputFilterProviderInterface
 
     /**
      * @param Organ[] $organs
-     * @param Translator $translator
      */
     public function __construct(array $organs, array $companies, array $categories, Translator $translator)
     {
@@ -48,8 +47,8 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'organ',
             'type' => 'select',
             'options' => [
-                'value_options' => $organOptions
-            ]
+                'value_options' => $organOptions,
+            ],
             ]
         );
 
@@ -58,8 +57,8 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'company',
             'type' => 'select',
             'options' => [
-                'value_options' => $companyOptions
-            ]
+                'value_options' => $companyOptions,
+            ],
             ]
         );
 
@@ -68,7 +67,7 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'beginTime',
             'type' => 'datetime',
             'options' => [
-                'format' => 'Y/m/d H:i'
+                'format' => 'Y/m/d H:i',
             ],
             ]
         );
@@ -78,7 +77,7 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'endTime',
             'type' => 'datetime',
             'options' => [
-                'format' => 'Y/m/d H:i'
+                'format' => 'Y/m/d H:i',
             ],
             ]
         );
@@ -203,7 +202,7 @@ class Activity extends Form implements InputFilterProviderInterface
             'name' => 'categories',
             'type' => 'Laminas\Form\Element\MultiCheckbox',
             'options' => [
-                'value_options' => $categoryOptions
+                'value_options' => $categoryOptions,
             ],
             ]
         );
@@ -238,6 +237,7 @@ class Activity extends Form implements InputFilterProviderInterface
      *
      * @param $value
      * @param array $context
+     *
      * @return bool
      */
     public static function beforeEndTime($value, $context = [])
@@ -245,6 +245,7 @@ class Activity extends Form implements InputFilterProviderInterface
         try {
             $thisTime = new DateTime($value);
             $endTime = isset($context['endTime']) ? new DateTime($context['endTime']) : new DateTime('now');
+
             return $thisTime <= $endTime;
         } catch (Exception $e) {
             // An exception is an indication that one of the times was not valid
@@ -257,13 +258,15 @@ class Activity extends Form implements InputFilterProviderInterface
      *
      * @param $value
      * @param array $context
-     * @return boolean
+     *
+     * @return bool
      */
     public static function beforeBeginTime($value, $context = [])
     {
         try {
             $thisTime = new DateTime($value);
             $beginTime = isset($context['beginTime']) ? new DateTime($context['beginTime']) : new DateTime('now');
+
             return $thisTime <= $beginTime;
         } catch (Exception $e) {
             // An exception is an indication that one of the DateTimes was not valid
@@ -272,9 +275,10 @@ class Activity extends Form implements InputFilterProviderInterface
     }
 
     /**
-     * Validate the form
+     * Validate the form.
      *
      * @return bool
+     *
      * @throws DomainException
      */
     public function isValid()
@@ -317,7 +321,7 @@ class Activity extends Form implements InputFilterProviderInterface
                         }
 
                         if (
-                            $field->get('type')->getValue() === '3'
+                            '3' === $field->get('type')->getValue()
                             && !(new NotEmpty())->isValid($field->get('options')->getValue())
                         ) {
                             // TODO: Return error messages
@@ -333,7 +337,7 @@ class Activity extends Form implements InputFilterProviderInterface
                         }
 
                         if (
-                            $field->get('type')->getValue() === '3'
+                            '3' === $field->get('type')->getValue()
                             && !(new NotEmpty())->isValid($field->get('optionsEn')->getValue())
                         ) {
                             // TODO: Return error messages
@@ -351,7 +355,8 @@ class Activity extends Form implements InputFilterProviderInterface
 
     /**
      * Get the input filter. Will generate a different inputfilter depending on if the Dutch and/or English language
-     * is set
+     * is set.
+     *
      * @return InputFilter
      */
     public function getInputFilterSpecification()
@@ -370,10 +375,9 @@ class Activity extends Form implements InputFilterProviderInterface
                         'name' => Callback::class,
                         'options' => [
                             'messages' => [
-                                Callback::INVALID_VALUE =>
-                                    $this->translator->translate('The activity must start before it ends.'),
+                                Callback::INVALID_VALUE => $this->translator->translate('The activity must start before it ends.'),
                             ],
-                            'callback' => [$this, 'beforeEndTime']
+                            'callback' => [$this, 'beforeEndTime'],
                         ],
                     ],
                 ],
@@ -423,16 +427,17 @@ class Activity extends Form implements InputFilterProviderInterface
     }
 
     /**
-     * Build a generic input filter
+     * Build a generic input filter.
      *
      * @input string $languagePostFix Postfix that is used for language fields to indicate that a field belongs to that
      * language
+     *
      * @return array
      */
     protected function inputFilterGeneric($languagePostFix)
     {
         return [
-            'name' . $languagePostFix => [
+            'name'.$languagePostFix => [
                 'required' => true,
                 'validators' => [
                     [
@@ -445,7 +450,7 @@ class Activity extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'location' . $languagePostFix => [
+            'location'.$languagePostFix => [
                 'required' => true,
                 'validators' => [
                     [
@@ -458,7 +463,7 @@ class Activity extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'costs' . $languagePostFix => [
+            'costs'.$languagePostFix => [
                 'required' => true,
                 'validators' => [
                     [
@@ -471,7 +476,7 @@ class Activity extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'description' . $languagePostFix => [
+            'description'.$languagePostFix => [
                 'required' => true,
                 'validators' => [
                     [

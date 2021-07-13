@@ -3,17 +3,15 @@
 namespace Photo\Mapper;
 
 use DateTime;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Photo\Model\Album as AlbumModel;
-use Doctrine\ORM\EntityManager;
 
 /**
  * Mappers for Album.
- *
  */
 class Album
 {
-
     /**
      * Doctrine entity manager.
      *
@@ -22,9 +20,7 @@ class Album
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -34,7 +30,7 @@ class Album
     /**
      * Retrieves an album by id from the database.
      *
-     * @param integer $albumId the id of the album
+     * @param int $albumId the id of the album
      *
      * @return AlbumModel|null
      */
@@ -57,10 +53,10 @@ class Album
      * Returns all the subalbums of a given album.
      *
      * @param AlbumModel $parent     the parent album to retrieve the
-     *                                       subalbum from
-     * @param integer            $start      the result to start at
-     * @param integer            $maxResults max amount of results to return,
-     *                                       null for infinite
+     *                               subalbum from
+     * @param int        $start      the result to start at
+     * @param int        $maxResults max amount of results to return,
+     *                               null for infinite
      *
      * @return array of subalbums or null if there are none
      */
@@ -82,7 +78,7 @@ class Album
     }
 
     /**
-     * return all the sub-albums without a parent
+     * return all the sub-albums without a parent.
      *
      * @return array of \Photo\Model\Album
      */
@@ -99,7 +95,7 @@ class Album
     }
 
     /**
-     * Gets all root albums with a start date between the specified dates
+     * Gets all root albums with a start date between the specified dates.
      *
      * @param $start DateTime start date and time
      * @param $end   DateTime end date and time
@@ -140,7 +136,7 @@ class Album
     }
 
     /**
-     * Returns the root album containing the most recent photos
+     * Returns the root album containing the most recent photos.
      *
      * @return AlbumModel
      */
@@ -161,7 +157,7 @@ class Album
     }
 
     /**
-     * Returns the root album containing the oldest photos
+     * Returns the root album containing the oldest photos.
      *
      * @return AlbumModel
      */
@@ -183,8 +179,6 @@ class Album
 
     /**
      * Removes an album.
-     *
-     * @param AlbumModel $album
      */
     public function remove(AlbumModel $album)
     {
@@ -192,9 +186,7 @@ class Album
     }
 
     /**
-     * Persist album
-     *
-     * @param AlbumModel $album
+     * Persist album.
      */
     public function persist(AlbumModel $album)
     {

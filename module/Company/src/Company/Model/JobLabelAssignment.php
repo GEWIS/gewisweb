@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Job Label Assignment model.
- * Used for mapping labels to jobs
+ * Used for mapping labels to jobs.
  *
  * @ORM\Entity
  */

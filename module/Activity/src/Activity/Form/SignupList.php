@@ -5,9 +5,9 @@ namespace Activity\Form;
 use DateTime;
 use Exception;
 use Laminas\Form\Fieldset;
+use Laminas\Hydrator\ClassMethodsHydrator;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Hydrator\ClassMethodsHydrator;
 use Laminas\Validator\Callback;
 
 class SignupList extends Fieldset implements InputFilterProviderInterface
@@ -54,7 +54,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
             'name' => 'openDate',
             'type' => 'datetime',
             'options' => [
-                'format' => 'Y/m/d H:i'
+                'format' => 'Y/m/d H:i',
             ],
             ]
         );
@@ -64,7 +64,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
             'name' => 'closeDate',
             'type' => 'datetime',
             'options' => [
-                'format' => 'Y/m/d H:i'
+                'format' => 'Y/m/d H:i',
             ],
             ]
         );
@@ -114,6 +114,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
      *
      * @param $value
      * @param array $context
+     *
      * @return bool
      */
     public static function beforeCloseDate($value, $context = [])
@@ -121,6 +122,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
         try {
             $thisTime = new DateTime($value);
             $closeTime = isset($context['closeDate']) ? new DateTime($context['closeDate']) : new DateTime('now');
+
             return $thisTime < $closeTime;
         } catch (Exception $e) {
             // An exception is an indication that one of the times was not valid
@@ -189,8 +191,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                         'name' => Callback::class,
                         'options' => [
                             'messages' => [
-                                Callback::INVALID_VALUE =>
-                                    $this->translator->translate(
+                                Callback::INVALID_VALUE => $this->translator->translate(
                                         'The sign-up list opening date and time must be before the sign-up list closes.'
                                     ),
                             ],
@@ -230,9 +231,10 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
     }
 
     /**
-     * Validate the form
+     * Validate the form.
      *
      * @return bool
+     *
      * @throws DomainException
      */
     public function isValid()

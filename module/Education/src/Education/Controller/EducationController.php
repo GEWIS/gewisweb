@@ -9,7 +9,6 @@ use Laminas\View\Model\ViewModel;
 
 class EducationController extends AbstractActionController
 {
-
     /**
      * @var Exam
      */
@@ -39,7 +38,7 @@ class EducationController extends AbstractActionController
                 return new ViewModel(
                     [
                     'form' => $this->searchCourseForm,
-                    'courses' => $courses
+                    'courses' => $courses,
                     ]
                 );
             }
@@ -47,7 +46,7 @@ class EducationController extends AbstractActionController
 
         return new ViewModel(
             [
-            'form' => $this->searchCourseForm
+            'form' => $this->searchCourseForm,
             ]
         );
     }
@@ -67,14 +66,14 @@ class EducationController extends AbstractActionController
             return $this->redirect()->toRoute(
                 'education/course',
                 [
-                'code' => $course->getParent()->getCode()
+                'code' => $course->getParent()->getCode(),
                 ]
             );
         }
 
         return new ViewModel(
             [
-            'course' => $course
+            'course' => $course,
             ]
         );
     }

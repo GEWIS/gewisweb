@@ -8,11 +8,9 @@ use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for Vote.
- *
  */
 class Vote
 {
-
     /**
      * Doctrine entity manager.
      *
@@ -21,9 +19,7 @@ class Vote
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -32,10 +28,11 @@ class Vote
 
     /**
      * Get the amount of votes of all photos that have been visited
-     * in the specified time range
+     * in the specified time range.
      *
      * @param DateTime $startDate
      * @param DateTime $enddate
+     *
      * @return array of array of string
      */
     public function getVotesInRange($startDate, $endDate)
@@ -52,19 +49,20 @@ class Vote
         return $qb->getQuery()->getResult();
     }
 
-
     /**
-     * Check if a vote exists
+     * Check if a vote exists.
+     *
      * @param int $photoId The photo
-     * @param int $lidnr The tag
-     * @return null|object
+     * @param int $lidnr   The tag
+     *
+     * @return object|null
      */
     public function findVote($photoId, $lidnr)
     {
         return $this->getRepository()->findOneBy(
             [
             'photo' => $photoId,
-            'member' => $lidnr
+            'member' => $lidnr,
             ]
         );
     }

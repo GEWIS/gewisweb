@@ -15,8 +15,6 @@ class ActivityCategory
 
     /**
      * Constructor.
-     *
-     * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
@@ -27,6 +25,7 @@ class ActivityCategory
      * Get a Category by an Id.
      *
      * @param $id
+     *
      * @return array
      */
     public function getCategoryById($id)

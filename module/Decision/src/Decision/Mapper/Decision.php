@@ -16,9 +16,7 @@ class Decision
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -50,7 +48,7 @@ class Decision
     /**
      * Persist an entity.
      *
-     * @param MeetingNotes to persist.
+     * @param MeetingNotes to persist
      */
     public function persist($entity)
     {

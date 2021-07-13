@@ -40,6 +40,6 @@ class CompanyBannerPackage extends CompanyPackage //implements RoleInterface, Re
 
     public function getType()
     {
-        return "banner";
+        return 'banner';
     }
 }

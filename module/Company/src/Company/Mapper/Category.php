@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for cateogry.
- *
  */
 class Category
 {
@@ -21,8 +20,6 @@ class Category
 
     /**
      * Constructor.
-     *
-     * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
@@ -36,8 +33,7 @@ class Category
     }
 
     /**
-     * Saves all categories
-     *
+     * Saves all categories.
      */
     public function save()
     {
@@ -45,9 +41,9 @@ class Category
     }
 
     /**
-     * Finds the category with the given id
+     * Finds the category with the given id.
      *
-     * @param integer $categorySlug
+     * @param int $categorySlug
      */
     public function findCategory($categorySlug)
     {
@@ -72,16 +68,15 @@ class Category
         $categoryForJobsWithoutCategory->setHidden(false);
         $categoryForJobsWithoutCategory->setLanguageNeutralId(null);
         $categoryForJobsWithoutCategory->setLanguage($lang);
-        $categoryForJobsWithoutCategory->setSlug("jobs");
-        $categoryForJobsWithoutCategory->setName($translator->translate("Job"));
-        $categoryForJobsWithoutCategory->setPluralName($translator->translate("Jobs"));
+        $categoryForJobsWithoutCategory->setSlug('jobs');
+        $categoryForJobsWithoutCategory->setName($translator->translate('Job'));
+        $categoryForJobsWithoutCategory->setPluralName($translator->translate('Jobs'));
 
         return $categoryForJobsWithoutCategory;
     }
 
     /**
-     * Find the same category, but in the given language
-     *
+     * Find the same category, but in the given language.
      */
     public function siblingCategory($category, $lang)
     {
@@ -107,7 +102,7 @@ class Category
     }
 
     /**
-     * Deletes the given category
+     * Deletes the given category.
      *
      * @param CategoryModel $category
      */

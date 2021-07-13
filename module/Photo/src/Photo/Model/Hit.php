@@ -11,11 +11,9 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
  *
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
- *
  */
 class Hit implements ResourceInterface
 {
-
     /**
      * Hit ID.
      *
@@ -41,7 +39,7 @@ class Hit implements ResourceInterface
     protected $photo;
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -65,7 +63,7 @@ class Hit implements ResourceInterface
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      */
     public function setId($id)
     {

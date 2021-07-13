@@ -7,11 +7,9 @@ use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for WeeklyPhoto.
- *
  */
 class WeeklyPhoto
 {
-
     /**
      * Doctrine entity manager.
      *
@@ -20,9 +18,7 @@ class WeeklyPhoto
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -33,7 +29,8 @@ class WeeklyPhoto
      * Check whether the given photo has been a photo of the week.
      *
      * @param \Photo\Model\Photo $photo
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasBeenPhotoOfTheWeek($photo)
     {
@@ -55,7 +52,7 @@ class WeeklyPhoto
     }
 
     /**
-     * Retrieves all WeeklyPhotos
+     * Retrieves all WeeklyPhotos.
      *
      * @return array
      */
@@ -71,9 +68,7 @@ class WeeklyPhoto
     }
 
     /**
-     * Persist weeklyPhoto
-     *
-     * @param \Photo\Model\WeeklyPhoto $weeklyPhoto
+     * Persist weeklyPhoto.
      */
     public function persist(\Photo\Model\WeeklyPhoto $weeklyPhoto)
     {

@@ -15,37 +15,44 @@ return [
         'factories' => [
             'Frontpage\Controller\Frontpage' => function (ServiceLocatorInterface $sm) {
                 $frontpageService = $sm->get('frontpage_service_frontpage');
+
                 return new FrontpageController($frontpageService);
             },
             'Frontpage\Controller\Organ' => function (ServiceLocatorInterface $sm) {
                 $organService = $sm->get('decision_service_organ');
                 $activityQueryService = $sm->get('activity_service_activityQuery');
+
                 return new OrganController($organService, $activityQueryService);
             },
             'Frontpage\Controller\Page' => function (ServiceLocatorInterface $sm) {
                 $pageService = $sm->get('frontpage_service_page');
+
                 return new PageController($pageService);
             },
             'Frontpage\Controller\PageAdmin' => function (ServiceLocatorInterface $sm) {
                 $pageService = $sm->get('frontpage_service_page');
+
                 return new PageAdminController($pageService);
             },
             'Frontpage\Controller\Poll' => function (ServiceLocatorInterface $sm) {
                 $pollService = $sm->get('frontpage_service_poll');
                 $pollCommentForm = $sm->get('frontpage_form_poll_comment');
+
                 return new PollController($pollService, $pollCommentForm);
             },
             'Frontpage\Controller\PollAdmin' => function (ServiceLocatorInterface $sm) {
                 $pollService = $sm->get('frontpage_service_poll');
+
                 return new PollAdminController($pollService);
             },
             'Frontpage\Controller\NewsAdmin' => function (ServiceLocatorInterface $sm) {
                 $newsService = $sm->get('frontpage_service_news');
+
                 return new NewsAdminController($newsService);
             },
             'Frontpage\Controller\Admin' => function () {
                 return new AdminController();
-            }]
+            }, ],
     ],
     'router' => [
         'routes' => [
@@ -76,7 +83,7 @@ return [
                                 'action' => 'page',
                             ],
                         ],
-                        'priority' => -1
+                        'priority' => -1,
                     ],
                     'organ' => [
                         'type' => 'Segment',
@@ -88,10 +95,10 @@ return [
                             ],
                             'defaults' => [
                                 'action' => 'organ',
-                                'controller' => 'Organ'
-                            ]
+                                'controller' => 'Organ',
+                            ],
                         ],
-                        'priority' => 100
+                        'priority' => 100,
                     ],
                     'committee_list' => [
                         'type' => 'Literal',
@@ -99,10 +106,10 @@ return [
                             'route' => 'association/committees',
                             'defaults' => [
                                 'action' => 'committeeList',
-                                'controller' => 'Organ'
-                            ]
+                                'controller' => 'Organ',
+                            ],
                         ],
-                        'priority' => 100
+                        'priority' => 100,
                     ],
                     'fraternity_list' => [
                         'type' => 'Literal',
@@ -110,10 +117,10 @@ return [
                             'route' => 'association/fraternities',
                             'defaults' => [
                                 'action' => 'fraternityList',
-                                'controller' => 'Organ'
-                            ]
+                                'controller' => 'Organ',
+                            ],
                         ],
-                        'priority' => 100
+                        'priority' => 100,
                     ],
                 ],
             ],
@@ -172,7 +179,7 @@ return [
                         ],
                     ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
             'poll' => [
                 'type' => 'Literal',
@@ -244,7 +251,7 @@ return [
                         ],
                     ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
             'admin_poll' => [
                 'type' => 'Segment',
@@ -295,7 +302,7 @@ return [
                         ],
                     ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
             'admin_news' => [
                 'type' => 'Segment',
@@ -355,7 +362,7 @@ return [
                         ],
                     ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
             'admin' => [
                 'type' => 'Segment',
@@ -368,19 +375,19 @@ return [
                     ],
                 ],
                 'may_terminate' => true,
-                'priority' => 100
+                'priority' => 100,
             ],
         ],
     ],
     'view_manager' => [
         'template_path_stack' => [
-            'Frontpage' => __DIR__ . '/../view',
+            'Frontpage' => __DIR__.'/../view',
         ],
         'template_map' => [
-            'page-admin/edit' => __DIR__ . '/../view/frontpage/page-admin/edit.phtml',
-            'news-admin/edit' => __DIR__ . '/../view/frontpage/news-admin/edit.phtml',
-            'organ/committee-list' => __DIR__ . '/../view/frontpage/organ/committee-list.phtml',
-            'organ/fraternity-list' => __DIR__ . '/../view/frontpage/organ/fraternity-list.phtml',
+            'page-admin/edit' => __DIR__.'/../view/frontpage/page-admin/edit.phtml',
+            'news-admin/edit' => __DIR__.'/../view/frontpage/news-admin/edit.phtml',
+            'organ/committee-list' => __DIR__.'/../view/frontpage/organ/committee-list.phtml',
+            'organ/fraternity-list' => __DIR__.'/../view/frontpage/organ/fraternity-list.phtml',
         ],
     ],
     'doctrine' => [
@@ -388,13 +395,13 @@ return [
             'frontpage_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__ . '/../src/Frontpage/Model/']
+                'paths' => [__DIR__.'/../src/Frontpage/Model/'],
             ],
             'orm_default' => [
                 'drivers' => [
-                    'Frontpage\Model' => 'frontpage_entities'
-                ]
-            ]
-        ]
+                    'Frontpage\Model' => 'frontpage_entities',
+                ],
+            ],
+        ],
     ],
 ];

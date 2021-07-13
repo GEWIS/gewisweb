@@ -117,12 +117,13 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
      *
      * @input string $languagePostFix Postfix that is used for language fields to indicate that a field belongs to that
      * language
+     *
      * @return array
      */
     protected function inputFilterGeneric($languagePostFix)
     {
         return [
-            'name' . $languagePostFix => [
+            'name'.$languagePostFix => [
                 'required' => true,
                 'validators' => [
                     [

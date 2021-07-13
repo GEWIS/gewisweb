@@ -6,17 +6,16 @@ use Activity\Form\ModifyRequest as RequestForm;
 use Activity\Model\Activity;
 use Activity\Service\ActivityQuery;
 use InvalidArgumentException;
-use Laminas\Mvc\I18n\Translator;
-use User\Permissions\NotAllowedException;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\I18n\Translator;
+use User\Permissions\NotAllowedException;
 
 /**
- * Controller for all administrative activity actions
+ * Controller for all administrative activity actions.
  */
 class AdminApprovalController extends AbstractActionController
 {
-
     /**
      * @var \Activity\Service\Activity
      */
@@ -47,9 +46,7 @@ class AdminApprovalController extends AbstractActionController
 
         if (!$acl->isAllowed($identity, 'activity', 'approval')) {
             $translator = $this->translator;
-            throw new NotAllowedException(
-                $translator->translate('You are not allowed to view the approval of this activity')
-            );
+            throw new NotAllowedException($translator->translate('You are not allowed to view the approval of this activity'));
         }
 
         /** @var $activity Activity */
@@ -63,12 +60,12 @@ class AdminApprovalController extends AbstractActionController
             'activity' => $activity,
             'approvalForm' => new RequestForm('updateApprovalStatus', 'Approve'),
             'disapprovalForm' => new RequestForm('updateApprovalStatus', 'Disapprove'),
-            'resetForm' => new RequestForm('updateApprovalStatus', 'Reset')
+            'resetForm' => new RequestForm('updateApprovalStatus', 'Reset'),
         ];
     }
 
     /**
-     * Approve of an activity
+     * Approve of an activity.
      */
     public function approveAction()
     {
@@ -76,9 +73,10 @@ class AdminApprovalController extends AbstractActionController
     }
 
     /**
-     * Set the approval status of the activity requested
+     * Set the approval status of the activity requested.
      *
      * @param $status
+     *
      * @return array|Response
      */
     protected function setApprovalStatus($status)
@@ -112,14 +110,14 @@ class AdminApprovalController extends AbstractActionController
                 $this->activityService->reset($activity);
                 break;
             default:
-                throw new InvalidArgumentException('No such status ' . $status);
+                throw new InvalidArgumentException('No such status '.$status);
         }
 
         return $this->redirect()->toRoute('activity_admin');
     }
 
     /**
-     * Disapprove an activity
+     * Disapprove an activity.
      */
     public function disapproveAction()
     {
@@ -127,7 +125,7 @@ class AdminApprovalController extends AbstractActionController
     }
 
     /**
-     * Reset the approval status of an activity
+     * Reset the approval status of an activity.
      */
     public function resetAction()
     {
@@ -135,7 +133,7 @@ class AdminApprovalController extends AbstractActionController
     }
 
     /**
-     * Display the proposed update
+     * Display the proposed update.
      */
     public function viewProposalAction()
     {
@@ -150,12 +148,12 @@ class AdminApprovalController extends AbstractActionController
         return [
             'proposal' => $proposal,
             'proposalApplyForm' => new RequestForm('proposalApply', 'Apply update'),
-            'proposalRevokeForm' => new RequestForm('proposalRevoke', 'Revoke update')
+            'proposalRevokeForm' => new RequestForm('proposalRevoke', 'Revoke update'),
         ];
     }
 
     /**
-     * Apply the proposed update
+     * Apply the proposed update.
      */
     public function applyProposalAction()
     {
@@ -190,7 +188,7 @@ class AdminApprovalController extends AbstractActionController
     }
 
     /**
-     * Revoke the proposed update
+     * Revoke the proposed update.
      */
     public function revokeProposalAction()
     {

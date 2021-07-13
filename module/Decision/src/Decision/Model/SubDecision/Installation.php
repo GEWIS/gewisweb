@@ -2,8 +2,8 @@
 
 namespace Decision\Model\SubDecision;
 
-use Doctrine\ORM\Mapping as ORM;
 use Decision\Model\Member;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Installation into organ.
@@ -73,8 +73,6 @@ class Installation extends FoundationReference
 
     /**
      * Set the member.
-     *
-     * @param Member $member
      */
     public function setMember(Member $member)
     {
@@ -82,7 +80,7 @@ class Installation extends FoundationReference
     }
 
     /**
-     * Get the discharge, if it exists
+     * Get the discharge, if it exists.
      *
      * @return Discharge
      */

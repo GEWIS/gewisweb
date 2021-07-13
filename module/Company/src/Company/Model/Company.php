@@ -3,8 +3,8 @@
 namespace Company\Model;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use Exception;
 
 /**
@@ -124,8 +124,6 @@ class Company // implements ArrayHydrator (for zend2 form)
 
     /**
      * Add a translation.
-     *
-     * @param CompanyI18n $translation
      */
     public function addTranslation(CompanyI18n $translation)
     {
@@ -263,11 +261,8 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     *
-     * Return true if the company should not be visible to the user, and false if it should be visible to the user
-     *
+     * Return true if the company should not be visible to the user, and false if it should be visible to the user.
      */
-
     public function isHidden()
     {
         $visible = false;
@@ -327,14 +322,14 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Returns the number of jobs that are contained in all packages of this
      * company.
-     *
      */
     public function getNumberOfJobs()
     {
         $jobCount = function ($package) {
-            if ($package->getType() == 'job') {
+            if ('job' == $package->getType()) {
                 return $package->getJobs()->count();
             }
+
             return 0;
         };
 
@@ -344,7 +339,6 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Returns the number of jobs that are contained in all active packages of this
      * company.
-     *
      */
     public function getNumberOfActiveJobs($category = null)
     {
@@ -356,8 +350,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * Returns the number of expired packages
-     *
+     * Returns the number of expired packages.
      */
     public function getNumberOfExpiredPackages()
     {
@@ -372,8 +365,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * Returns true if a banner is active, and false when there is no banner active
-     *
+     * Returns true if a banner is active, and false when there is no banner active.
      */
     public function getFeaturedLanguages()
     {
@@ -384,22 +376,21 @@ class Company // implements ArrayHydrator (for zend2 form)
             array_filter(
                 $this->getPackages()->toArray(),
                 function ($package) {
-                    return $package->getType() === 'featured' && $package->isActive();
+                    return 'featured' === $package->getType() && $package->isActive();
                 }
             )
         );
     }
 
     /**
-     * Returns true if a banner is active, and false when there is no banner active
-     *
+     * Returns true if a banner is active, and false when there is no banner active.
      */
     public function isBannerActive()
     {
         $banners = array_filter(
             $this->getPackages()->toArray(),
             function ($package) {
-                return $package->getType() === 'banner' && $package->isActive();
+                return 'banner' === $package->getType() && $package->isActive();
             }
         );
 
@@ -409,7 +400,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Get the company's language.
      *
-     * @return Integer
+     * @return int
      */
     public function getLanguageNeutralId()
     {
@@ -419,7 +410,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Set the company's language neutral id.
      *
-     * @param Integer $languageNeutralId
+     * @param int $languageNeutralId
      */
     public function setLanguageNeutralId($language)
     {
@@ -427,8 +418,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * If this object contains an translation for a given locale, it is returned, otherwise null is returned
-     *
+     * If this object contains an translation for a given locale, it is returned, otherwise null is returned.
      */
     public function getTranslationFromLocale($locale)
     {
@@ -442,13 +432,7 @@ class Company // implements ArrayHydrator (for zend2 form)
             return $this->getTranslations()[$companyLanguages->indexOf($locale)];
         }
 
-        throw new Exception(
-            sprintf(
-                'Requested non-existent translation for locale %s of company with language neutral id %d',
-                $locale,
-                $this->getLanguageNeutralId()
-            )
-        );
+        throw new Exception(sprintf('Requested non-existent translation for locale %s of company with language neutral id %d', $locale, $this->getLanguageNeutralId()));
     }
 
     /**
@@ -468,7 +452,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * Returns the translation identified by $language
+     * Returns the translation identified by $language.
      *
      * Note, does not set $logo, the user should set this property himself
      *
@@ -477,19 +461,19 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     public function getTranslationFromArray($data, $language)
     {
-        if ($language !== '') {
+        if ('' !== $language) {
             $translation = $this->getTranslationFromLocale($language);
 
             if (is_null($translation)) {
                 $translation = new CompanyI18n($language, $this);
             }
 
-            $language = $language . '_';
+            $language = $language.'_';
 
             // Translated properties
-            $translation->setWebsite($this->updateIfSet($data[($language) . 'website'], ''));
-            $translation->setSlogan($this->updateIfSet($data[$language . 'slogan'], ''));
-            $translation->setDescription($this->updateIfSet($data[$language . 'description'], ''));
+            $translation->setWebsite($this->updateIfSet($data[($language).'website'], ''));
+            $translation->setSlogan($this->updateIfSet($data[$language.'slogan'], ''));
+            $translation->setDescription($this->updateIfSet($data[$language.'description'], ''));
 
             // Do not set logo, because most likely, $data[logo] is bogus.
             // Instead, the user should set this property himself later.
@@ -498,8 +482,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * Updates this object with values in the form of getArrayCopy()
-     *
+     * Updates this object with values in the form of getArrayCopy().
      */
     public function exchangeArray($data)
     {
@@ -533,7 +516,6 @@ class Company // implements ArrayHydrator (for zend2 form)
      * translation.
      *
      * It will aso add keys in the form $lan_varName=>$this->getTranslationFromLocale($lang)=>var
-     *
      */
     public function getArrayCopy()
     {
@@ -550,10 +532,10 @@ class Company // implements ArrayHydrator (for zend2 form)
         // Languages
         $arraycopy['languages'] = [];
         foreach ($this->getTranslations() as $translation) {
-            $arraycopy[$translation->getLanguage() . '_' . 'slogan'] = $translation->getSlogan();
-            $arraycopy[$translation->getLanguage() . '_' . 'website'] = $translation->getWebsite();
-            $arraycopy[$translation->getLanguage() . '_' . 'description'] = $translation->getDescription();
-            $arraycopy[$translation->getLanguage() . '_' . 'logo'] = $translation->getLogo();
+            $arraycopy[$translation->getLanguage().'_'.'slogan'] = $translation->getSlogan();
+            $arraycopy[$translation->getLanguage().'_'.'website'] = $translation->getWebsite();
+            $arraycopy[$translation->getLanguage().'_'.'description'] = $translation->getDescription();
+            $arraycopy[$translation->getLanguage().'_'.'logo'] = $translation->getLogo();
             $arraycopy['languages'][] = $translation->getLanguage();
         }
 

@@ -3,15 +3,14 @@
 namespace Photo\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\JsonModel;
+use Laminas\View\Model\ViewModel;
 use Photo\Service\Album;
 use Photo\Service\Photo;
-use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\ViewModel;
-use Laminas\View\Model\JsonModel;
 
 class PhotoAdminController extends AbstractActionController
 {
-
     /**
      * @var Photo
      */
@@ -35,7 +34,7 @@ class PhotoAdminController extends AbstractActionController
     }
 
     /**
-     * Shows an admin page for the specified photo
+     * Shows an admin page for the specified photo.
      */
     public function indexAction()
     {
@@ -92,12 +91,12 @@ class PhotoAdminController extends AbstractActionController
         if (is_null($weeklyPhoto)) {
             echo "No photo of the week chosen, were any photos viewed?\n";
         } else {
-            echo "Photo of the week set to photo: " . $weeklyPhoto->getPhoto()->getId();
+            echo 'Photo of the week set to photo: '.$weeklyPhoto->getPhoto()->getId();
         }
     }
 
     /**
-     * Temp function to migrate to new storage format
+     * Temp function to migrate to new storage format.
      */
     public function migrateAspectRatiosAction()
     {
@@ -113,18 +112,18 @@ class PhotoAdminController extends AbstractActionController
         $photos = $qb->getQuery()->getResult();
         $i = 0;
         foreach ($photos as $photo) {
-            $i++;
+            ++$i;
             $ratio = 0;
-            if (!file_exists('public/data/' . $photo->getSmallThumbPath())) {
+            if (!file_exists('public/data/'.$photo->getSmallThumbPath())) {
                 printf("Missing file: %s\n", $photo->getSmallThumbPath());
                 continue;
             }
-            $size = getimagesize('public/data/' . $photo->getSmallThumbPath());
+            $size = getimagesize('public/data/'.$photo->getSmallThumbPath());
             if ($size[0] > 0) {
                 $ratio = $size[1] / $size[0];
             }
             $photo->setAspectRatio($ratio);
-            if ($i % 1000 == 0) {
+            if (0 == $i % 1000) {
                 $em->flush();
             }
         }

@@ -3,8 +3,8 @@
 namespace Decision\Form;
 
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator\NotEmpty;
 
 class SearchDecision extends Form implements InputFilterProviderInterface
@@ -18,8 +18,8 @@ class SearchDecision extends Form implements InputFilterProviderInterface
             'name' => 'query',
             'type' => 'text',
             'options' => [
-                'label' => $translate->translate('Search query')
-            ]
+                'label' => $translate->translate('Search query'),
+            ],
             ]
         );
 
@@ -29,8 +29,8 @@ class SearchDecision extends Form implements InputFilterProviderInterface
             'type' => 'submit',
             'attributes' => [
                 'value' => $translate->translate('Search'),
-                'label' => $translate->translate('Search')
-            ]
+                'label' => $translate->translate('Search'),
+            ],
             ]
         );
     }
@@ -44,9 +44,9 @@ class SearchDecision extends Form implements InputFilterProviderInterface
             'query' => [
                 'required' => true,
                 'validators' => [
-                    ['name' => NotEmpty::class]
-                ]
-            ]
+                    ['name' => NotEmpty::class],
+                ],
+            ],
         ];
     }
 }

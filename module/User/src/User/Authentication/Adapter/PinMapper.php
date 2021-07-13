@@ -2,13 +2,13 @@
 
 namespace User\Authentication\Adapter;
 
+use Application\Service\Legacy as LegacyService;
 use Laminas\Authentication\Adapter\AdapterInterface;
 use Laminas\Authentication\Result;
 use User\Mapper\User as UserMapper;
+use User\Model\LoginAttempt;
 use User\Model\User as UserModel;
 use User\Model\UserRole as UserRoleModel;
-use User\Model\LoginAttempt;
-use Application\Service\Legacy as LegacyService;
 use User\Service\LoginAttempt as LoginAttemptService;
 
 class PinMapper implements AdapterInterface
@@ -29,7 +29,7 @@ class PinMapper implements AdapterInterface
 
     /**
      * User Service
-     * (for logging failed login attempts)
+     * (for logging failed login attempts).
      *
      * @var LoginAttemptService
      */
@@ -48,7 +48,6 @@ class PinMapper implements AdapterInterface
      * @var string
      */
     protected $pincode;
-
 
     /**
      * Constructor.
@@ -88,6 +87,7 @@ class PinMapper implements AdapterInterface
 
         if (!$this->verifyPincode($user)) {
             $this->loginAttemptService->logFailedLogin($user, LoginAttempt::TYPE_PIN);
+
             return new Result(
                 Result::FAILURE_CREDENTIAL_INVALID,
                 null,
@@ -110,9 +110,7 @@ class PinMapper implements AdapterInterface
     /**
      * Verify the password.
      *
-     * @param UserModel $user
-     *
-     * @return boolean
+     * @return bool
      */
     protected function verifyPincode(UserModel $user)
     {
@@ -143,8 +141,6 @@ class PinMapper implements AdapterInterface
 
     /**
      * Set the mapper.
-     *
-     * @param UserMapper $mapper
      */
     public function setMapper(UserMapper $mapper)
     {

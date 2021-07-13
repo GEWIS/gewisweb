@@ -10,7 +10,6 @@ use Laminas\View\Model\ViewModel;
 
 class PollController extends AbstractActionController
 {
-
     /**
      * @var Poll
      */
@@ -28,7 +27,7 @@ class PollController extends AbstractActionController
     }
 
     /**
-     * Displays the currently active poll
+     * Displays the currently active poll.
      */
     public function indexAction()
     {
@@ -42,7 +41,7 @@ class PollController extends AbstractActionController
                     $details,
                     [
                     'poll' => $poll,
-                    'commentForm' => $this->pollCommentForm
+                    'commentForm' => $this->pollCommentForm,
                     ]
                 )
             );
@@ -63,15 +62,16 @@ class PollController extends AbstractActionController
         if (is_null($pollId)) {
             return $this->pollService->getNewestPoll();
         }
+
         return $this->pollService->getPoll($pollId);
     }
 
     /**
-     * Submits a poll vote
+     * Submits a poll vote.
      */
     public function voteAction()
     {
-        $pollId = (int)$this->params('poll_id');
+        $pollId = (int) $this->params('poll_id');
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -82,6 +82,7 @@ class PollController extends AbstractActionController
         }
 
         $this->redirect()->toRoute('poll/view', ['poll_id' => $pollId]);
+
         return $this->getResponse();
     }
 
@@ -100,11 +101,12 @@ class PollController extends AbstractActionController
         // execute the index action and show the poll
         $vm = $this->indexAction();
         $vm->setTemplate('frontpage/poll/index');
+
         return $vm;
     }
 
     /**
-     * View all previous polls
+     * View all previous polls.
      */
     public function historyAction()
     {
@@ -119,13 +121,13 @@ class PollController extends AbstractActionController
 
         return new ViewModel(
             [
-            'paginator' => $paginator
+            'paginator' => $paginator,
             ]
         );
     }
 
     /**
-     * Request a poll
+     * Request a poll.
      */
     public function requestAction()
     {

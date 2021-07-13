@@ -2,11 +2,11 @@
 
 namespace User\Controller;
 
+use Laminas\Mvc\Controller\AbstractActionController;
 use User\Model\User;
 use User\Permissions\NotAllowedException;
 use User\Service\ApiApp;
 use User\Service\User as UserService;
-use Laminas\Mvc\Controller\AbstractActionController;
 
 class ApiAuthenticationController extends AbstractActionController
 {
@@ -20,11 +20,8 @@ class ApiAuthenticationController extends AbstractActionController
      */
     protected $apiAppService;
 
-
     /**
      * ApiAuthenticationController constructor.
-     * @param UserService $userService
-     * @param ApiApp $apiAppService
      */
     public function __construct(UserService $userService, ApiApp $apiAppService)
     {

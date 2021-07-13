@@ -36,7 +36,7 @@ class MaxActivities
      */
     protected $value;
     /**
-     * The associated period
+     * The associated period.
      *
      * @ORM\ManyToOne(targetEntity="Activity\Model\ActivityOptionCreationPeriod")
      */
@@ -51,7 +51,7 @@ class MaxActivities
     }
 
     /**
-     * Set the period
+     * Set the period.
      *
      * @param ActivityOptionCreationPeriod $period
      */
@@ -77,7 +77,7 @@ class MaxActivities
     }
 
     /**
-     * Set the organ
+     * Set the organ.
      *
      * @param Organ $organ
      */
@@ -95,7 +95,7 @@ class MaxActivities
     }
 
     /**
-     * Set the value
+     * Set the value.
      *
      * @param int $value
      */
@@ -114,7 +114,7 @@ class MaxActivities
         return [
             'id' => $this->getId(),
             'organ' => $this->getOrgan(),
-            'value' => $this->getValue()
+            'value' => $this->getValue(),
         ];
     }
 }

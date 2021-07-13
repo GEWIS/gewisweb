@@ -5,11 +5,11 @@ namespace Frontpage\Model;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use User\Model\User;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use User\Model\User;
 
 /**
- * Poll
+ * Poll.
  *
  * @ORM\Entity
  * @ORM\Table(name="Poll")
@@ -77,7 +77,7 @@ class Poll implements ResourceInterface
     protected $approver;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -174,7 +174,7 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * Adds options to the poll
+     * Adds options to the poll.
      *
      * @param ArrayCollection $options
      */
@@ -203,7 +203,7 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * Removes options from the poll
+     * Removes options from the poll.
      *
      * @param ArrayCollection $options
      */
@@ -217,8 +217,6 @@ class Poll implements ResourceInterface
 
     /**
      * Add a comment to the poll.
-     *
-     * @param PollComment $comment
      */
     public function addComment(PollComment $comment)
     {
@@ -251,11 +249,12 @@ class Poll implements ResourceInterface
     /**
      * Check to see if the poll is approved. <br>
      * If no-one approved this poll, this poll is not approved.
+     *
      * @return bool true if poll is approved; false otherwise
      */
     public function isApproved()
     {
-        return ($this->getApprover() !== null);
+        return null !== $this->getApprover();
     }
 
     /**

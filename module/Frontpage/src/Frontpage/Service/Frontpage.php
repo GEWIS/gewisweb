@@ -10,11 +10,11 @@ use Decision\Service\Member;
 use Doctrine\Common\Proxy\Exception\InvalidArgumentException;
 use Doctrine\ORM\NoResultException;
 use Frontpage\Model\NewsItem;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Permissions\Acl\Acl;
 use Photo\Mapper\Tag;
 use Photo\Service\Photo;
 use User\Model\User;
-use Laminas\Mvc\I18n\Translator;
-use Laminas\Permissions\Acl\Acl;
 
 /**
  * Frontpage service.
@@ -118,7 +118,7 @@ class Frontpage extends AbstractAclService
     }
 
     /**
-     * Retrieves all data which is needed on the home page
+     * Retrieves all data which is needed on the home page.
      */
     public function getHomePageData()
     {
@@ -138,7 +138,7 @@ class Frontpage extends AbstractAclService
             'weeklyPhoto' => $weeklyPhoto,
             'poll' => $pollDetails,
             'news' => $news,
-            'companyBanner' => $companyBanner
+            'companyBanner' => $companyBanner,
         ];
     }
 
@@ -169,7 +169,7 @@ class Frontpage extends AbstractAclService
 
         return [
             'birthdays' => $birthdays,
-            'tag' => $tag
+            'tag' => $tag,
         ];
     }
 
@@ -188,14 +188,14 @@ class Frontpage extends AbstractAclService
         usort($news, function ($a, $b) {
             if (($a instanceof NewsItem) && ($b instanceof NewsItem)) {
                 if ($a->getPinned() === $b->getPinned()) {
-                    return ($this->getItemTimestamp($a) - $this->getItemTimestamp($b));
+                    return $this->getItemTimestamp($a) - $this->getItemTimestamp($b);
                 }
 
                 return $a->getPinned() ? -1 : 1;
             }
 
             if (($a instanceof Activity) && ($b instanceof Activity)) {
-                return ($this->getItemTimestamp($a) - $this->getItemTimestamp($b));
+                return $this->getItemTimestamp($a) - $this->getItemTimestamp($b);
             }
 
             return $a instanceof Activity ? 1 : -1;
@@ -205,10 +205,11 @@ class Frontpage extends AbstractAclService
     }
 
     /**
-     * Get a time stamp of a news item or activity for sorting
+     * Get a time stamp of a news item or activity for sorting.
      *
      * @param $item
-     * @return integer
+     *
+     * @return int
      */
     public function getItemTimestamp($item)
     {
@@ -227,6 +228,7 @@ class Frontpage extends AbstractAclService
     public function getUpcomingActivities()
     {
         $count = $this->frontpageConfig['activity_count'];
+
         return $this->activityMapper->getUpcomingActivities($count);
     }
 

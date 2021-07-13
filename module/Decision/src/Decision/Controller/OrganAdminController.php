@@ -8,7 +8,6 @@ use Laminas\View\Model\ViewModel;
 
 class OrganAdminController extends AbstractActionController
 {
-
     /**
      * @var Organ
      */
@@ -26,7 +25,7 @@ class OrganAdminController extends AbstractActionController
     {
         return new ViewModel(
             [
-            'organs' => $this->organService->getEditableOrgans()
+            'organs' => $this->organService->getEditableOrgans(),
             ]
         );
     }
@@ -49,7 +48,7 @@ class OrganAdminController extends AbstractActionController
 
         return new ViewModel(
             [
-            'form' => $form
+            'form' => $form,
             ]
         );
     }

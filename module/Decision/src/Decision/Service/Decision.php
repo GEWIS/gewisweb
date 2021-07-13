@@ -16,10 +16,10 @@ use Decision\Model\MeetingDocument;
 use Decision\Model\MeetingNotes as NotesModel;
 use Doctrine\ORM\PersistentCollection;
 use InvalidArgumentException;
-use User\Permissions\NotAllowedException;
-use User\Service\User;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
+use User\Permissions\NotAllowedException;
+use User\Service\User;
 
 /**
  * Decision service.
@@ -154,14 +154,13 @@ class Decision extends AbstractAclService
      * Get all meetings.
      *
      * @param int|null $limit The amount of meetings to retrieve, default is all
+     *
      * @return array Of all meetings
      */
     public function getMeetings($limit = null)
     {
         if (!$this->isAllowed('list_meetings')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to list meetings.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings.'));
         }
 
         return $this->meetingMapper->findAll($limit);
@@ -170,16 +169,15 @@ class Decision extends AbstractAclService
     /**
      * Get past meetings.
      *
-     * @param int|null $limit The amount of meetings to retrieve, default is all
-     * @param string|null $type Constraint on the type of the meeting, default is none
+     * @param int|null    $limit The amount of meetings to retrieve, default is all
+     * @param string|null $type  Constraint on the type of the meeting, default is none
+     *
      * @return array Of all meetings
      */
     public function getPastMeetings($limit = null, $type = null)
     {
         if (!$this->isAllowed('list_meetings')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to list meetings.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings.'));
         }
 
         return $this->meetingMapper->findPast($limit, $type);
@@ -188,9 +186,7 @@ class Decision extends AbstractAclService
     public function getMeetingsByType($type)
     {
         if (!$this->isAllowed('list_meetings')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to list meetings.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings.'));
         }
 
         return $this->meetingMapper->findByType($type);
@@ -200,16 +196,14 @@ class Decision extends AbstractAclService
      * Get information about one meeting.
      *
      * @param string $type
-     * @param int $number
+     * @param int    $number
      *
      * @return Meeting
      */
     public function getMeeting($type, $number)
     {
         if (!$this->isAllowed('view', 'meeting')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view meetings.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view meetings.'));
         }
 
         return $this->meetingMapper->find($type, $number);
@@ -226,7 +220,7 @@ class Decision extends AbstractAclService
     }
 
     /**
-     * Returns the closest upcoming meeting for members
+     * Returns the closest upcoming meeting for members.
      *
      * @return Meeting|null
      */
@@ -239,6 +233,7 @@ class Decision extends AbstractAclService
      * Get meeting documents corresponding to a certain id.
      *
      * @param $id
+     *
      * @return MeetingDocument
      */
     public function getMeetingDocument($id)
@@ -247,7 +242,7 @@ class Decision extends AbstractAclService
     }
 
     /**
-     * Returns a download for a meeting document
+     * Returns a download for a meeting document.
      *
      * @param MeetingDocument $meetingDocument
      *
@@ -256,9 +251,7 @@ class Decision extends AbstractAclService
     public function getMeetingDocumentDownload($meetingDocument)
     {
         if (!$this->isAllowed('view_documents', 'meeting')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view meeting documents.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view meeting documents.'));
         }
 
         if (is_null($meetingDocument)) {
@@ -267,24 +260,20 @@ class Decision extends AbstractAclService
 
         $path = $meetingDocument->getPath();
         $extension = pathinfo($path, PATHINFO_EXTENSION);
-        $fileName = $meetingDocument->getName() . '.' . $extension;
+        $fileName = $meetingDocument->getName().'.'.$extension;
 
         return $this->storageService->downloadFile($path, $fileName);
     }
 
     /**
-     * Returns a download for meeting notes
-     *
-     * @param Meeting $meeting
+     * Returns a download for meeting notes.
      *
      * @return response|null
      */
     public function getMeetingNotesDownload(Meeting $meeting)
     {
         if (!$this->isAllowed('view_notes', 'meeting')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view meeting notes.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view meeting notes.'));
         }
 
         if (is_null($meeting->getNotes())) {
@@ -292,7 +281,7 @@ class Decision extends AbstractAclService
         }
 
         $path = $meeting->getNotes()->getPath();
-        $fileName = $meeting->getType() . '-' . $meeting->getNumber() . '.pdf';
+        $fileName = $meeting->getType().'-'.$meeting->getNumber().'.pdf';
 
         return $this->storageService->downloadFile($path, $fileName);
     }
@@ -303,7 +292,7 @@ class Decision extends AbstractAclService
      * @param array|Traversable $post
      * @param array|Traversable $files
      *
-     * @return boolean If uploading was a success
+     * @return bool If uploading was a success
      */
     public function uploadNotes($post, $files)
     {
@@ -341,7 +330,7 @@ class Decision extends AbstractAclService
      * @param array|Traversable $post
      * @param array|Traversable $files
      *
-     * @return boolean If uploading was a success
+     * @return bool If uploading was a success
      */
     public function uploadDocument($post, $files)
     {
@@ -374,15 +363,14 @@ class Decision extends AbstractAclService
         $document->setDisplayPosition($position);
 
         $this->meetingMapper->persistDocument($document);
+
         return true;
     }
 
     public function deleteDocument($post)
     {
         if (!$this->isAllowed('delete_document', 'meeting')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to delete meeting documents.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to delete meeting documents.'));
         }
         $id = $post->toArray()['document'];
         $document = $this->getMeetingDocument($id);
@@ -390,7 +378,7 @@ class Decision extends AbstractAclService
     }
 
     /**
-     * Changes a document's position in the ordering
+     * Changes a document's position in the ordering.
      *
      * The basic flow is (1) retrieve documents, (2) swap document positions,
      * then (3) persist position. Unfortunately, I have to update the positions
@@ -400,9 +388,11 @@ class Decision extends AbstractAclService
      * FUTURE: When documents have display positions, simplify the code by only
      * mutating two rows.
      *
-     * @param int $id Document ID
+     * @param int  $id       Document ID
      * @param bool $moveDown If the document should be moved down in the ordering, defaults to TRUE
+     *
      * @return void
+     *
      * @throws NotAllowedException
      * @throws InvalidArgumentException If the document doesn't exist
      */
@@ -426,7 +416,7 @@ class Decision extends AbstractAclService
         });
 
         $oldPosition = $ordering->indexOf($id);
-        $newPosition = ($moveDown === true) ? ($oldPosition + 1) : ($oldPosition - 1);
+        $newPosition = (true === $moveDown) ? ($oldPosition + 1) : ($oldPosition - 1);
 
         // Do nothing if the document is already at the top/bottom
         if ($newPosition < 0 || $newPosition > ($ordering->count() - 1)) {
@@ -457,9 +447,7 @@ class Decision extends AbstractAclService
     public function search($data)
     {
         if (!$this->isAllowed('search')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to search decisions.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to search decisions.'));
         }
 
         $form = $this->getSearchDecisionForm();
@@ -478,34 +466,30 @@ class Decision extends AbstractAclService
     /**
      * Retrieves all authorizations for the given meeting number.
      *
-     * @param integer $meetingNumber
+     * @param int $meetingNumber
      *
      * @return array
      */
     public function getAllAuthorizations($meetingNumber)
     {
         if (!$this->isAllowed('view_all', 'authorization')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view all authorizations.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view all authorizations.'));
         }
 
         return $this->authorizationMapper->find($meetingNumber);
     }
 
     /**
-     * Gets the authorization of the current user for the given meeting
+     * Gets the authorization of the current user for the given meeting.
      *
-     * @param integer $meetingNumber
+     * @param int $meetingNumber
      *
      * @return AuthorizationModel|null
      */
     public function getUserAuthorization($meetingNumber)
     {
         if (!$this->isAllowed('view_own', 'authorization')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view authorizations.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view authorizations.'));
         }
 
         $lidnr = $this->userService->getIdentity()->getLidnr();
@@ -568,9 +552,7 @@ class Decision extends AbstractAclService
     public function getNotesForm()
     {
         if (!$this->isAllowed('upload_notes', 'meeting')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to upload notes.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to upload notes.'));
         }
 
         return $this->notesForm;
@@ -584,9 +566,7 @@ class Decision extends AbstractAclService
     public function getDocumentForm()
     {
         if (!$this->isAllowed('upload_document', 'meeting')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to upload meeting documents.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not allowed to upload meeting documents.'));
         }
 
         return $this->documentForm;
@@ -619,9 +599,7 @@ class Decision extends AbstractAclService
     public function getAuthorizationForm()
     {
         if (!$this->isAllowed('create', 'authorization')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not authorize people.')
-            );
+            throw new NotAllowedException($this->translator->translate('You are not authorize people.'));
         }
 
         return $this->authorizationForm;
@@ -649,6 +627,7 @@ class Decision extends AbstractAclService
 
     /**
      * Returns whether the current role is allowed to view files.
+     *
      * @return bool
      */
     public function isAllowedToBrowseFiles()
@@ -657,19 +636,18 @@ class Decision extends AbstractAclService
     }
 
     /**
-     * Checks the user's permission
+     * Checks the user's permission.
      *
      * @param string $operation
      * @param string $resource
      * @param string $errorMessage English error message
+     *
      * @throws NotAllowedException If the user doesn't have permission
      */
     private function isAllowedOrFail($operation, $resource, $errorMessage)
     {
         if (!$this->isAllowed($operation, $resource)) {
-            throw new NotAllowedException(
-                $this->translator->translate($errorMessage)
-            );
+            throw new NotAllowedException($this->translator->translate($errorMessage));
         }
     }
 }

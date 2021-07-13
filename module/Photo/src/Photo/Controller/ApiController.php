@@ -7,7 +7,6 @@ use Laminas\View\Model\JsonModel;
 
 class ApiController extends AbstractActionController
 {
-
     /**
      * Retrieve a list of all photo's in an album.
      *

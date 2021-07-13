@@ -3,9 +3,9 @@
 namespace Decision\Model\SubDecision;
 
 use Decision\Model\Organ;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Decision\Model\SubDecision;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 
 /**
@@ -15,22 +15,22 @@ use InvalidArgumentException;
  */
 class Foundation extends SubDecision
 {
-    const ORGAN_TYPE_COMMITTEE = 'committee';
-    const ORGAN_TYPE_AVC = 'avc';
-    const ORGAN_TYPE_FRATERNITY = 'fraternity';
-    const ORGAN_TYPE_AVW = 'avw';
-    const ORGAN_TYPE_KKK = 'kkk';
-    const ORGAN_TYPE_RVA = 'rva';
+    public const ORGAN_TYPE_COMMITTEE = 'committee';
+    public const ORGAN_TYPE_AVC = 'avc';
+    public const ORGAN_TYPE_FRATERNITY = 'fraternity';
+    public const ORGAN_TYPE_AVW = 'avw';
+    public const ORGAN_TYPE_KKK = 'kkk';
+    public const ORGAN_TYPE_RVA = 'rva';
 
     /**
-     * Abbreviation (only for when organs are created)
+     * Abbreviation (only for when organs are created).
      *
      * @ORM\Column(type="string")
      */
     protected $abbr;
 
     /**
-     * Name (only for when organs are created)
+     * Name (only for when organs are created).
      *
      * @ORM\Column(type="string")
      */
@@ -78,7 +78,7 @@ class Foundation extends SubDecision
             self::ORGAN_TYPE_FRATERNITY,
             self::ORGAN_TYPE_AVW,
             self::ORGAN_TYPE_KKK,
-            self::ORGAN_TYPE_RVA
+            self::ORGAN_TYPE_RVA,
         ];
     }
 
@@ -142,7 +142,7 @@ class Foundation extends SubDecision
     public function setOrganType($organType)
     {
         if (!in_array($organType, self::getOrganTypes())) {
-            throw new InvalidArgumentException("Given type does not exist.");
+            throw new InvalidArgumentException('Given type does not exist.');
         }
         $this->organType = $organType;
     }
@@ -177,6 +177,7 @@ class Foundation extends SubDecision
     public function toArray()
     {
         $decision = $this->getDecision();
+
         return [
             'meeting_type' => $decision->getMeeting()->getType(),
             'meeting_number' => $decision->getMeeting()->getNumber(),
@@ -185,7 +186,7 @@ class Foundation extends SubDecision
             'subdecision_number' => $this->getNumber(),
             'abbr' => $this->getAbbr(),
             'name' => $this->getName(),
-            'organtype' => $this->getOrganType()
+            'organtype' => $this->getOrganType(),
         ];
     }
 }

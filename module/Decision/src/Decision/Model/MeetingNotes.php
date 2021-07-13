@@ -40,7 +40,7 @@ class MeetingNotes implements ResourceInterface
     protected $meeting;
 
     /**
-     * The storage path
+     * The storage path.
      *
      * @ORM\Column(type="string")
      */
@@ -71,7 +71,6 @@ class MeetingNotes implements ResourceInterface
     {
         $this->path = $path;
     }
-
 
     /**
      * Get the resource ID.

@@ -33,7 +33,7 @@ class PageController extends AbstractActionController
         return new ViewModel(
             [
             'page' => $page,
-            'parents' => $parents
+            'parents' => $parents,
             ]
         );
     }

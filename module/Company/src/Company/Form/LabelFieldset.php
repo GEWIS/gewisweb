@@ -5,9 +5,6 @@ namespace Company\Form;
 use Company\Model\JobLabel;
 use Laminas\Form\Fieldset;
 
-/**
- *
- */
 class LabelFieldset extends Fieldset
 {
     public function __construct($translate, $hydrator)

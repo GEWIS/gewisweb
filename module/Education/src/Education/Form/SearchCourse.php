@@ -3,8 +3,8 @@
 namespace Education\Form;
 
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilter;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilter;
 use Laminas\Validator\NotEmpty;
 
 class SearchCourse extends Form
@@ -18,8 +18,8 @@ class SearchCourse extends Form
             'name' => 'query',
             'type' => 'text',
             'options' => [
-                'label' => $translate->translate('Search query')
-            ]
+                'label' => $translate->translate('Search query'),
+            ],
             ]
         );
 
@@ -36,7 +36,7 @@ class SearchCourse extends Form
             'required' => true,
             'validators' => [
                 ['name' => NotEmpty::class],
-            ]
+            ],
             ]
         );
 

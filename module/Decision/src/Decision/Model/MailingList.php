@@ -2,8 +2,8 @@
 
 namespace Decision\Model;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Mailing List model.
@@ -148,7 +148,7 @@ class MailingList
     /**
      * Get if it should be on the form.
      *
-     * @return boolean
+     * @return bool
      */
     public function getOnForm()
     {
@@ -158,7 +158,7 @@ class MailingList
     /**
      * Set if it should be on the form.
      *
-     * @param boolean $onForm
+     * @param bool $onForm
      */
     public function setOnForm($onForm)
     {
@@ -168,7 +168,7 @@ class MailingList
     /**
      * Get if it is a default list.
      *
-     * @return boolean
+     * @return bool
      */
     public function getDefaultSub()
     {
@@ -178,7 +178,7 @@ class MailingList
     /**
      * Set if it is a default list.
      *
-     * @param boolean $default
+     * @param bool $default
      */
     public function setDefaultSub($default)
     {
@@ -197,8 +197,6 @@ class MailingList
 
     /**
      * Add a member.
-     *
-     * @param Member $member
      */
     public function addMember(Member $member)
     {

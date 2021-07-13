@@ -14,6 +14,7 @@ interface FileReader
      * the operation fails otherwise.
      *
      * @param string $path
+     *
      * @return array[FileNode]|null
      */
     public function listDir($path);
@@ -24,6 +25,7 @@ interface FileReader
      * Returns true on success, false on failure.
      *
      * @param string $path
+     *
      * @return bool
      */
     public function downloadFile($path);
@@ -31,14 +33,18 @@ interface FileReader
     /**
      * Returns whether the given $path is valid
      * and is a directory.
+     *
      * @param string $path
+     *
      * @return bool
      */
     public function isDir($path);
 
     /**
      * Returns whether the given $path is allowed to be accessed.
+     *
      * @param string $path
+     *
      * @return bool
      */
     public function isAllowed($path);

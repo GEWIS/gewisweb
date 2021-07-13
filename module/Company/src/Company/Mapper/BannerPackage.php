@@ -13,13 +13,12 @@ use Doctrine\ORM\EntityRepository;
 class BannerPackage extends Package
 {
     /**
-     *
-     * Returns an random banner from the active banners
-     *
+     * Returns an random banner from the active banners.
      */
     public function getBannerPackage()
     {
         $banners = $this->findVisiblePackages();
+
         return empty($banners) ? null : $banners[array_rand($banners)];
     }
 

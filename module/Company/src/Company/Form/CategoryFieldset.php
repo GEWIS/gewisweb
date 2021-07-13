@@ -5,9 +5,6 @@ namespace Company\Form;
 use Company\Model\JobCategory;
 use Laminas\Form\Fieldset;
 
-/**
- *
- */
 class CategoryFieldset extends Fieldset
 {
     public function __construct($translate, $hydrator)

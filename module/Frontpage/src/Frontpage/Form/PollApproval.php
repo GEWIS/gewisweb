@@ -3,8 +3,8 @@
 namespace Frontpage\Form;
 
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilterProviderInterface;
 
 class PollApproval extends Form implements InputFilterProviderInterface
 {
@@ -17,8 +17,8 @@ class PollApproval extends Form implements InputFilterProviderInterface
             'name' => 'expiryDate',
             'type' => 'Laminas\Form\Element\Date',
             'options' => [
-                'label' => $translator->translate('Expiration date for the poll (YYYY-MM-DD)')
-            ]
+                'label' => $translator->translate('Expiration date for the poll (YYYY-MM-DD)'),
+            ],
             ]
         );
 
@@ -27,8 +27,8 @@ class PollApproval extends Form implements InputFilterProviderInterface
             'name' => 'submit',
             'type' => 'submit',
             'options' => [
-                'label' => $translator->translate('Approve poll')
-            ]
+                'label' => $translator->translate('Approve poll'),
+            ],
             ]
         );
     }

@@ -321,10 +321,10 @@ class EditCompany extends Form
             'required' => false,
             'filters' => [
                 ['name' => 'StripTags'],
-                ['name' => 'StringTrim']
+                ['name' => 'StringTrim'],
             ],
             'validators' => [
-            ]
+            ],
             ]
         );
 
@@ -334,10 +334,10 @@ class EditCompany extends Form
             'required' => false,
             'filters' => [
                 ['name' => 'StripTags'],
-                ['name' => 'StringTrim']
+                ['name' => 'StringTrim'],
             ],
             'validators' => [
-            ]
+            ],
             ]
         );
 
@@ -350,10 +350,10 @@ class EditCompany extends Form
                     'name' => StringLength::class,
                     'options' => [
                         'min' => 2,
-                        'max' => 10000
-                    ]
-                ]
-            ]
+                        'max' => 10000,
+                    ],
+                ],
+            ],
             ]
         );
 
@@ -366,10 +366,10 @@ class EditCompany extends Form
                     'name' => StringLength::class,
                     'options' => [
                         'min' => 2,
-                        'max' => 10000
-                    ]
-                ]
-            ]
+                        'max' => 10000,
+                    ],
+                ],
+            ],
             ]
         );
 
@@ -445,6 +445,7 @@ class EditCompany extends Form
     public function slugNameUnique($slugName, $context)
     {
         $cid = $context['id'];
+
         return $this->mapper->isSlugNameUnique($slugName, $cid);
     }
 }

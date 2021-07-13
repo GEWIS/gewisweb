@@ -2,9 +2,9 @@
 
 namespace Education\Mapper;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Education\Model\Course as CourseModel;
-use Doctrine\ORM\EntityManager;
 
 /**
  * Mappers for Course.
@@ -22,9 +22,7 @@ class Course
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -32,7 +30,7 @@ class Course
     }
 
     /**
-     * Persist multiple studies
+     * Persist multiple studies.
      *
      * @param array $studies Array of StudyModel
      */
@@ -44,7 +42,7 @@ class Course
     }
 
     /**
-     * Persist course
+     * Persist course.
      *
      * @param CourseModel $course of CourseModel
      */
@@ -83,6 +81,7 @@ class Course
         $qb->setParameter(1, $code);
 
         $res = $qb->getQuery()->getResult();
+
         return empty($res) ? null : $res[0];
     }
 
@@ -95,7 +94,7 @@ class Course
      */
     public function search($query)
     {
-        $query = '%' . $query . '%';
+        $query = '%'.$query.'%';
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('c')

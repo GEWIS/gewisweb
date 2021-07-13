@@ -6,12 +6,11 @@ use Decision\Service\Decision;
 use Decision\Service\Member;
 use Decision\Service\MemberInfo;
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\ViewModel;
 use Laminas\View\Model\JsonModel;
+use Laminas\View\Model\ViewModel;
 
 class MemberController extends AbstractActionController
 {
-
     /**
      * @var Member
      */
@@ -96,13 +95,13 @@ class MemberController extends AbstractActionController
                 $members[] = [
                     'lidnr' => $member->getLidnr(),
                     'fullName' => $member->getFullname(),
-                    'generation' => $member->getGeneration()
+                    'generation' => $member->getGeneration(),
                 ];
             }
 
             return new JsonModel(
                 [
-                'members' => $members
+                'members' => $members,
                 ]
             );
         }
@@ -111,7 +110,7 @@ class MemberController extends AbstractActionController
     }
 
     /**
-     * Determinues whether a member can be authorized without additional confirmation
+     * Determinues whether a member can be authorized without additional confirmation.
      */
     public function canAuthorizeAction()
     {
@@ -125,13 +124,14 @@ class MemberController extends AbstractActionController
             if ($canAuthorize) {
                 return new JsonModel(
                     [
-                    'value' => true
+                    'value' => true,
                     ]
                 );
             }
+
             return new JsonModel(
                 [
-                'value' => false
+                'value' => false,
                 ]
             );
         }
@@ -146,7 +146,7 @@ class MemberController extends AbstractActionController
     {
         return new ViewModel(
             [
-            'members' => $this->memberService->getBirthdayMembers(7)
+            'members' => $this->memberService->getBirthdayMembers(7),
             ]
         );
     }
@@ -166,12 +166,12 @@ class MemberController extends AbstractActionController
      */
     public function downloadRegulationAction()
     {
-        $regulation = $this->params("regulation");
+        $regulation = $this->params('regulation');
         if (isset($this->regulationsConfig['regulation'])) {
             $this->getResponse()->setStatusCode(404);
         }
         $path = $this->regulationsConfig[$regulation];
 
-        return $this->redirect()->toUrl($this->url()->fromRoute('decision/files', ['path' => '']) . $path);
+        return $this->redirect()->toUrl($this->url()->fromRoute('decision/files', ['path' => '']).$path);
     }
 }

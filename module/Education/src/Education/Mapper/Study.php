@@ -2,8 +2,8 @@
 
 namespace Education\Mapper;
 
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for Study.
@@ -21,9 +21,7 @@ class Study
     protected $em;
 
     /**
-     * Constructor
-     *
-     * @param EntityManager $em
+     * Constructor.
      */
     public function __construct(EntityManager $em)
     {
@@ -31,7 +29,7 @@ class Study
     }
 
     /**
-     * Persist multiple studies
+     * Persist multiple studies.
      *
      * @param array $studies Array of StudyModel
      */

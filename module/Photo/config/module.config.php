@@ -1,5 +1,6 @@
 <?php
 
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Photo\Controller\AlbumAdminController;
 use Photo\Controller\AlbumController;
 use Photo\Controller\ApiController;
@@ -7,7 +8,6 @@ use Photo\Controller\PhotoAdminController;
 use Photo\Controller\PhotoController;
 use Photo\Controller\Plugin\AlbumPlugin;
 use Photo\Controller\TagController;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 return [
     'router' => [
@@ -204,7 +204,7 @@ return [
                         ],
                     ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
             'admin_photo' => [
                 'type' => 'Literal',
@@ -213,8 +213,8 @@ return [
                     'defaults' => [
                         '__NAMESPACE__' => 'Photo\Controller',
                         'controller' => 'AlbumAdmin',
-                        'action' => 'index'
-                    ]
+                        'action' => 'index',
+                    ],
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
@@ -230,7 +230,7 @@ return [
                             'route' => '/album',
                             'defaults' => [
                                 'controller' => 'AlbumAdmin',
-                                'action' => 'index'
+                                'action' => 'index',
                             ],
                         ],
                     ],
@@ -240,7 +240,7 @@ return [
                             'route' => '/album[/:album_id]',
                             'defaults' => [
                                 'controller' => 'AlbumAdmin',
-                                'action' => 'page'
+                                'action' => 'page',
                             ],
                             'constraints' => [
                                 'album_id' => '[0-9]+',
@@ -253,7 +253,7 @@ return [
                             'route' => '/album[/:album_id][/:page]',
                             'defaults' => [
                                 'controller' => 'AlbumAdmin',
-                                'action' => 'page'
+                                'action' => 'page',
                             ],
                             'constraints' => [
                                 'album_id' => '[0-9]+',
@@ -267,7 +267,7 @@ return [
                             'route' => '/album[/:album_id]/edit',
                             'defaults' => [
                                 'controller' => 'AlbumAdmin',
-                                'action' => 'edit'
+                                'action' => 'edit',
                             ],
                             'constraints' => [
                                 'album_id' => '[0-9]+',
@@ -280,7 +280,7 @@ return [
                             'route' => '/album[/:album_id]/create',
                             'defaults' => [
                                 'controller' => 'AlbumAdmin',
-                                'action' => 'create'
+                                'action' => 'create',
                             ],
                             'constraints' => [
                                 'album_id' => '[0-9]*',
@@ -293,7 +293,7 @@ return [
                             'route' => '/album[/:album_id]/add',
                             'defaults' => [
                                 'controller' => 'AlbumAdmin',
-                                'action' => 'add'
+                                'action' => 'add',
                             ],
                             'constraints' => [
                                 'album_id' => '[0-9]+',
@@ -306,7 +306,7 @@ return [
                             'route' => '/album[/:album_id]/import',
                             'defaults' => [
                                 'controller' => 'AlbumAdmin',
-                                'action' => 'import'
+                                'action' => 'import',
                             ],
                             'constraints' => [
                                 'album_id' => '[0-9]+',
@@ -319,7 +319,7 @@ return [
                             'route' => '/album[/:album_id]/upload',
                             'defaults' => [
                                 'controller' => 'AlbumAdmin',
-                                'action' => 'upload'
+                                'action' => 'upload',
                             ],
                             'constraints' => [
                                 'album_id' => '[0-9]+',
@@ -332,7 +332,7 @@ return [
                             'route' => '/album[/:album_id]/move',
                             'defaults' => [
                                 'controller' => 'AlbumAdmin',
-                                'action' => 'move'
+                                'action' => 'move',
                             ],
                             'constraints' => [
                                 'album_id' => '[0-9]+',
@@ -345,7 +345,7 @@ return [
                             'route' => '/album[/:album_id]/delete',
                             'defaults' => [
                                 'controller' => 'AlbumAdmin',
-                                'action' => 'delete'
+                                'action' => 'delete',
                             ],
                             'constraints' => [
                                 'album_id' => '[0-9]+',
@@ -358,7 +358,7 @@ return [
                             'route' => '/album[/:album_id]/cover',
                             'defaults' => [
                                 'controller' => 'AlbumAdmin',
-                                'action' => 'cover'
+                                'action' => 'cover',
                             ],
                             'constraints' => [
                                 'album_id' => '[0-9]+',
@@ -371,7 +371,7 @@ return [
                             'route' => '/photo[/:photo_id]',
                             'defaults' => [
                                 'controller' => 'PhotoAdmin',
-                                'action' => 'index'
+                                'action' => 'index',
                             ],
                             'constraints' => [
                                 'photo_id' => '[0-9]+',
@@ -384,7 +384,7 @@ return [
                             'route' => '/photo[/:photo_id]/move',
                             'defaults' => [
                                 'controller' => 'PhotoAdmin',
-                                'action' => 'move'
+                                'action' => 'move',
                             ],
                             'constraints' => [
                                 'photo_id' => '[0-9]+',
@@ -397,7 +397,7 @@ return [
                             'route' => '/photo[/:photo_id]/delete',
                             'defaults' => [
                                 'controller' => 'PhotoAdmin',
-                                'action' => 'delete'
+                                'action' => 'delete',
                             ],
                             'constraints' => [
                                 'photo_id' => '[0-9]+',
@@ -405,7 +405,7 @@ return [
                         ],
                     ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
             'api_photo' => [
                 'type' => 'Literal',
@@ -414,8 +414,8 @@ return [
                     'defaults' => [
                         '__NAMESPACE__' => 'Photo\Controller',
                         'controller' => 'Api',
-                        'action' => 'index'
-                    ]
+                        'action' => 'index',
+                    ],
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
@@ -424,7 +424,7 @@ return [
                         'options' => [
                             'route' => '/album/:album_id',
                             'defaults' => [
-                                'action' => 'list'
+                                'action' => 'list',
                             ],
                             'constraints' => [
                                 'album_id' => '[0-9]+',
@@ -432,56 +432,62 @@ return [
                         ],
                     ],
                 ],
-                'priority' => 100
-            ]
+                'priority' => 100,
+            ],
         ],
     ],
     'controllers' => [
         'factories' => [
             'Photo\Controller\Photo' => function (ServiceLocatorInterface $sm) {
-                $photoService = $sm->get("photo_service_photo");
-                $albumService = $sm->get("photo_service_album");
+                $photoService = $sm->get('photo_service_photo');
+                $albumService = $sm->get('photo_service_album');
+
                 return new PhotoController($photoService, $albumService);
             },
             'Photo\Controller\Tag' => function (ServiceLocatorInterface $sm) {
-                $photoService = $sm->get("photo_service_photo");
+                $photoService = $sm->get('photo_service_photo');
+
                 return new TagController($photoService);
             },
             'Photo\Controller\AlbumAdmin' => function (ServiceLocatorInterface $sm) {
-                $adminService = $sm->get("photo_service_admin");
-                $albumService = $sm->get("photo_service_album");
+                $adminService = $sm->get('photo_service_admin');
+                $albumService = $sm->get('photo_service_album');
+
                 return new AlbumAdminController($adminService, $albumService);
             },
             'Photo\Controller\Album' => function (ServiceLocatorInterface $sm) {
-                $albumService = $sm->get("photo_service_album");
+                $albumService = $sm->get('photo_service_album');
                 $pageCache = $sm->get('album_page_cache');
                 $photoConfig = $sm->get('config')['photo'];
+
                 return new AlbumController($albumService, $pageCache, $photoConfig);
             },
             'Photo\Controller\PhotoAdmin' => function (ServiceLocatorInterface $sm) {
-                $photoService = $sm->get("photo_service_photo");
-                $albumService = $sm->get("photo_service_album");
+                $photoService = $sm->get('photo_service_photo');
+                $albumService = $sm->get('photo_service_album');
                 $entityManager = $sm->get('photo_doctrine_em');
+
                 return new PhotoAdminController($photoService, $albumService, $entityManager);
             },
             'Photo\Controller\Api' => function () {
                 return new ApiController();
             },
-        ]
+        ],
     ],
     'controller_plugins' => [
         'factories' => [
             'AlbumPlugin' => function (ServiceLocatorInterface $sm) {
-                $photoService = $sm->get("photo_service_photo");
-                $albumService = $sm->get("photo_service_album");
+                $photoService = $sm->get('photo_service_photo');
+                $albumService = $sm->get('photo_service_album');
                 $photoConfig = $sm->get('config')['photo'];
+
                 return new AlbumPlugin($photoService, $albumService, $photoConfig);
-            }
-        ]
+            },
+        ],
     ],
     'view_manager' => [
         'template_path_stack' => [
-            'photo' => __DIR__ . '/../view/'
+            'photo' => __DIR__.'/../view/',
         ],
         'strategies' => [
             'ViewJsonStrategy',
@@ -492,14 +498,14 @@ return [
             'photo_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__ . '/../src/Photo/Model/']
+                'paths' => [__DIR__.'/../src/Photo/Model/'],
             ],
             'orm_default' => [
                 'drivers' => [
-                    'Photo\Model' => 'photo_entities'
-                ]
-            ]
-        ]
+                    'Photo\Model' => 'photo_entities',
+                ],
+            ],
+        ],
     ],
     'console' => [
         'router' => [
@@ -509,20 +515,20 @@ return [
                         'route' => 'photo weeklyphoto',
                         'defaults' => [
                             'controller' => 'Photo\Controller\PhotoAdmin',
-                            'action' => 'weeklyPhoto'
-                        ]
-                    ]
+                            'action' => 'weeklyPhoto',
+                        ],
+                    ],
                 ],
                 'migrate_aspect_ratio' => [
                     'options' => [
                         'route' => 'photo aspectratio',
                         'defaults' => [
                             'controller' => 'Photo\Controller\PhotoAdmin',
-                            'action' => 'migrateAspectRatios'
-                        ]
-                    ]
+                            'action' => 'migrateAspectRatios',
+                        ],
+                    ],
                 ],
-            ]
-        ]
-    ]
+            ],
+        ],
+    ],
 ];

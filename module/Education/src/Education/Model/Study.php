@@ -2,8 +2,8 @@
 
 namespace Education\Model;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 
 /**
@@ -13,8 +13,8 @@ use InvalidArgumentException;
  */
 class Study
 {
-    const PHASE_BACHELOR = 'bachelor';
-    const PHASE_MASTER = 'master';
+    public const PHASE_BACHELOR = 'bachelor';
+    public const PHASE_MASTER = 'master';
 
     /**
      * Study ID.
@@ -144,11 +144,11 @@ class Study
                 $phase,
                 [
                 self::PHASE_BACHELOR,
-                self::PHASE_MASTER
+                self::PHASE_MASTER,
                 ]
             )
         ) {
-            throw new InvalidArgumentException("Invalid phase given.");
+            throw new InvalidArgumentException('Invalid phase given.');
         }
         $this->phase = $phase;
     }
@@ -165,8 +165,6 @@ class Study
 
     /**
      * Add a course.
-     *
-     * @param Course $course
      */
     public function addCourse(Course $course)
     {
@@ -175,8 +173,6 @@ class Study
 
     /**
      * Remove a course.
-     *
-     * @param Course $course
      */
     public function removeCourse(Course $course)
     {

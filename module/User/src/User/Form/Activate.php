@@ -3,8 +3,8 @@
 namespace User\Form;
 
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\StringLength;
 
@@ -19,8 +19,8 @@ class Activate extends Form implements InputFilterProviderInterface
             'name' => 'password',
             'type' => 'password',
             'options' => [
-                'label' => $translate->translate('Your password')
-            ]
+                'label' => $translate->translate('Your password'),
+            ],
             ]
         );
 
@@ -29,8 +29,8 @@ class Activate extends Form implements InputFilterProviderInterface
             'name' => 'password_verify',
             'type' => 'password',
             'options' => [
-                'label' => $translate->translate('Verify your password')
-            ]
+                'label' => $translate->translate('Verify your password'),
+            ],
             ]
         );
 
@@ -39,8 +39,8 @@ class Activate extends Form implements InputFilterProviderInterface
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
-                'value' => $translate->translate('Activate')
-            ]
+                'value' => $translate->translate('Activate'),
+            ],
             ]
         );
     }
@@ -55,10 +55,10 @@ class Activate extends Form implements InputFilterProviderInterface
                     [
                         'name' => StringLength::class,
                         'options' => [
-                            'min' => 8
-                        ]
-                    ]
-                ]
+                            'min' => 8,
+                        ],
+                    ],
+                ],
             ],
             'password_verify' => [
                 'required' => true,
@@ -67,17 +67,17 @@ class Activate extends Form implements InputFilterProviderInterface
                     [
                         'name' => StringLength::class,
                         'options' => [
-                            'min' => 8
-                        ]
+                            'min' => 8,
+                        ],
                     ],
                     [
                         'name' => 'identical',
                         'options' => [
-                            'token' => 'password'
-                        ]
-                    ]
-                ]
-            ]
+                            'token' => 'password',
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 }

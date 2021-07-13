@@ -12,9 +12,9 @@ use InvalidArgumentException;
  */
 class Address
 {
-    const TYPE_HOME = 'home';
-    const TYPE_STUDENT = 'student'; // student room
-    const TYPE_MAIL = 'mail'; // mailing address
+    public const TYPE_HOME = 'home';
+    public const TYPE_STUDENT = 'student'; // student room
+    public const TYPE_MAIL = 'mail'; // mailing address
 
     /**
      * Member.
@@ -26,7 +26,7 @@ class Address
     protected $member;
 
     /**
-     * Type
+     * Type.
      *
      * Can be one of:
      *
@@ -56,7 +56,7 @@ class Address
     protected $street;
 
     /**
-     * House number (+ suffix)
+     * House number (+ suffix).
      *
      * @ORM\Column(type="string")
      */
@@ -109,8 +109,6 @@ class Address
 
     /**
      * Set the member.
-     *
-     * @param Member $member
      */
     public function setMember(Member $member)
     {
@@ -137,7 +135,7 @@ class Address
     public function setType($type)
     {
         if (!in_array($type, self::getTypes())) {
-            throw new InvalidArgumentException("Non-existing type.");
+            throw new InvalidArgumentException('Non-existing type.');
         }
         $this->type = $type;
     }

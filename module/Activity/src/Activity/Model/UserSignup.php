@@ -42,8 +42,6 @@ class UserSignup extends Signup
 
     /**
      * Set the user for the activity signup.
-     *
-     * @param User $user
      */
     public function setUser(User $user)
     {

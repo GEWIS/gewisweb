@@ -8,7 +8,6 @@ use Laminas\View\Model\ViewModel;
 
 class FrontpageController extends AbstractActionController
 {
-
     /**
      * @var Frontpage
      */
@@ -22,6 +21,7 @@ class FrontpageController extends AbstractActionController
     public function homeAction()
     {
         $homePageData = $this->frontpageService->getHomepageData();
+
         return new ViewModel($homePageData);
     }
 }

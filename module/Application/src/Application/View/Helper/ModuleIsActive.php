@@ -8,7 +8,7 @@ use Laminas\View\Helper\AbstractHelper;
 class ModuleIsActive extends AbstractHelper
 {
     /**
-     * Service locator
+     * Service locator.
      *
      * @var ServiceLocatorInterface
      */
@@ -27,6 +27,7 @@ class ModuleIsActive extends AbstractHelper
                 return false;
             }
         }
+
         return true;
     }
 
@@ -42,6 +43,7 @@ class ModuleIsActive extends AbstractHelper
             return [];
         }
         $controller = str_replace('\\Controller', '', $match->getParam('controller'));
+
         return array_map('strtolower', explode('\\', $controller));
     }
 
@@ -56,7 +58,7 @@ class ModuleIsActive extends AbstractHelper
     }
 
     /**
-     * Set the service locator
+     * Set the service locator.
      *
      * @param ServiceLocatorInterface
      */

@@ -19,9 +19,9 @@ use Activity\Mapper\SignupOption;
 use Activity\Service\ActivityQuery;
 use Activity\Service\SignupListQuery;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use User\Permissions\Assertion\IsCreatorOrOrganMember;
 use User\Permissions\NotAllowedException;
-use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class Module
 {
@@ -39,7 +39,7 @@ class Module
      */
     public function getConfig()
     {
-        return include __DIR__ . '/config/module.config.php';
+        return include __DIR__.'/config/module.config.php';
     }
 
     /**
@@ -62,6 +62,7 @@ class Module
                     $companyService = $sm->get('company_service_company');
                     $emailService = $sm->get('application_service_email');
                     $activityForm = $sm->get('activity_form_activity');
+
                     return new Service\Activity(
                         $translator,
                         $userRole,
@@ -83,6 +84,7 @@ class Module
                     $organService = $sm->get('decision_service_organ');
                     $activityMapper = $sm->get('activity_mapper_activity');
                     $proposalMapper = $sm->get('activity_mapper_proposal');
+
                     return new ActivityQuery(
                         $translator,
                         $userRole,
@@ -100,6 +102,7 @@ class Module
                     $entityManager = $sm->get('Doctrine\ORM\EntityManager');
                     $categoryMapper = $sm->get('activity_mapper_category');
                     $categoryForm = $sm->get('activity_form_category');
+
                     return new Service\ActivityCategory(
                         $translator,
                         $userRole,
@@ -114,6 +117,7 @@ class Module
                     $userRole = $sm->get('user_role');
                     $acl = $sm->get('activity_acl');
                     $signupListMapper = $sm->get('activity_mapper_signuplist');
+
                     return new SignupListQuery(
                         $translator,
                         $userRole,
@@ -133,12 +137,14 @@ class Module
                     $translator = $sm->get('translator');
                     $form = new SignupListForm($translator);
                     $form->setHydrator($sm->get('activity_hydrator'));
+
                     return $form;
                 },
                 'activity_form_signuplist_fields' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $form = new SignupListField($translator);
                     $form->setHydrator($sm->get('activity_hydrator'));
+
                     return $form;
                 },
                 'activity_form_activity' => function (ServiceLocatorInterface $sm) {
@@ -155,19 +161,23 @@ class Module
                     $translator = $sm->get('translator');
                     $form = new Form\Activity($organs, $companies, $categories, $translator);
                     $form->setHydrator($sm->get('activity_hydrator'));
+
                     return $form;
                 },
                 'activity_form_calendar_proposal' => function (ServiceLocatorInterface $sm) {
                     $calendarService = $sm->get('activity_service_calendar');
+
                     return new Form\ActivityCalendarProposal($sm->get('translator'), $calendarService);
                 },
                 'activity_form_calendar_option' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $calendarService = $sm->get('activity_service_calendar');
+
                     return new Form\ActivityCalendarOption($translator, $calendarService);
                 },
                 'activity_form_category' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
+
                     return new CategoryForm($translator);
                 },
                 'activity_hydrator' => function (ServiceLocatorInterface $sm) {
@@ -184,6 +194,7 @@ class Module
                     $signupMapper = $sm->get('activity_mapper_signup');
                     $signupOptionMapper = $sm->get('activity_mapper_signup_option');
                     $signupFieldValueMapper = $sm->get('activity_mapper_signup_field_value');
+
                     return new Service\Signup(
                         $translator,
                         $userRole,
@@ -210,6 +221,7 @@ class Module
                     $memberMapper = $sm->get('decision_mapper_member');
                     $calendarOptionForm = $sm->get('activity_form_calendar_option');
                     $calendarProposalForm = $sm->get('activity_form_calendar_proposal');
+
                     return new Service\ActivityCalendar(
                         $translator,
                         $userRole,
@@ -325,7 +337,7 @@ class Module
 
                     return $acl;
                 },
-            ]
+            ],
         ];
     }
 }

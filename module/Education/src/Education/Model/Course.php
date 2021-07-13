@@ -2,8 +2,8 @@
 
 namespace Education\Model;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
@@ -14,11 +14,11 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
  */
 class Course implements ResourceInterface
 {
-    const QUARTILE_Q1 = 'q1';
-    const QUARTILE_Q2 = 'q2';
-    const QUARTILE_Q3 = 'q3';
-    const QUARTILE_Q4 = 'q4';
-    const QUARTILE_INTERIM = 'interim';
+    public const QUARTILE_Q1 = 'q1';
+    public const QUARTILE_Q2 = 'q2';
+    public const QUARTILE_Q3 = 'q3';
+    public const QUARTILE_Q4 = 'q4';
+    public const QUARTILE_INTERIM = 'interim';
 
     /**
      * Course code.
@@ -188,7 +188,7 @@ class Course implements ResourceInterface
     }
 
     /**
-     * Set the course name
+     * Set the course name.
      *
      * @param string $name
      */
@@ -209,8 +209,6 @@ class Course implements ResourceInterface
 
     /**
      * Add a study.
-     *
-     * @param Study $study
      */
     public function addStudy(Study $study)
     {
@@ -234,8 +232,6 @@ class Course implements ResourceInterface
 
     /**
      * Set the parent course.
-     *
-     * @param Course $parent
      */
     public function setParent(Course $parent)
     {
@@ -245,8 +241,6 @@ class Course implements ResourceInterface
 
     /**
      * Add a child.
-     *
-     * @param Course $child
      */
     public function addChild(Course $child)
     {
@@ -255,8 +249,6 @@ class Course implements ResourceInterface
 
     /**
      * Remove a study.
-     *
-     * @param Study $study
      */
     public function removeStudy(Study $study)
     {
@@ -301,11 +293,11 @@ class Course implements ResourceInterface
                 self::QUARTILE_Q2,
                 self::QUARTILE_Q3,
                 self::QUARTILE_Q4,
-                self::QUARTILE_INTERIM
+                self::QUARTILE_INTERIM,
                 ]
             )
         ) {
-            throw new InvalidArgumentException("Invalid argument supplied, must be a valid quartile.");
+            throw new InvalidArgumentException('Invalid argument supplied, must be a valid quartile.');
         }
         $this->quartile = $quartile;
     }
@@ -332,8 +324,6 @@ class Course implements ResourceInterface
 
     /**
      * Add an exam.
-     *
-     * @param Exam $exam
      */
     public function addExam(Exam $exam)
     {

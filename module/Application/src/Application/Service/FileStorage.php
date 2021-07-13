@@ -3,16 +3,14 @@
 namespace Application\Service;
 
 use Exception;
-use RuntimeException;
 use Laminas\Http\Headers;
 use Laminas\Http\Response\Stream;
 use Laminas\Mvc\I18n\Translator;
+use RuntimeException;
 
 /**
  * File storage service. This service can be used to safely store files without
  * having to worry about file names.
- *
- * @package Application\Service
  */
 class FileStorage
 {
@@ -33,7 +31,7 @@ class FileStorage
     }
 
     /**
-     * Generates CFS paths
+     * Generates CFS paths.
      *
      * @param string $path The path of the photo to generate the path for
      *
@@ -45,14 +43,14 @@ class FileStorage
         $hash = sha1_file($path);
         /**
          * the hash is split to obtain a path
-         * like 92/cfceb39d57d914ed8b14d0e37643de0797ae56.jpg
+         * like 92/cfceb39d57d914ed8b14d0e37643de0797ae56.jpg.
          */
         $directory = substr($hash, 0, 2);
-        if (!file_exists($config['storage_dir'] . '/' . $directory)) {
-            mkdir($config['storage_dir'] . '/' . $directory, $config['dir_mode']);
+        if (!file_exists($config['storage_dir'].'/'.$directory)) {
+            mkdir($config['storage_dir'].'/'.$directory, $config['dir_mode']);
         }
 
-        return $directory . '/' . substr($hash, 2);
+        return $directory.'/'.substr($hash, 2);
     }
 
     /**
@@ -61,23 +59,19 @@ class FileStorage
      * @param array $file
      *
      * @return string The CFS path at which the file was stored
+     *
      * @throws Exception
      */
     public function storeUploadedFile($file)
     {
         $config = $this->storageConfig;
-        if ($file['error'] !== 0) {
-            throw new RuntimeException(
-                sprintf(
-                    $this->translator->translate('An unknown error occurred during uploading (%i)'),
-                    $file['error']
-                )
-            );
+        if (0 !== $file['error']) {
+            throw new RuntimeException(sprintf($this->translator->translate('An unknown error occurred during uploading (%i)'), $file['error']));
         }
 
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-        $storagePath = $this->generateStoragePath($file['tmp_name']) . '.' . $extension;
-        $destination = $config['storage_dir'] . '/' . $storagePath;
+        $storagePath = $this->generateStoragePath($file['tmp_name']).'.'.$extension;
+        $destination = $config['storage_dir'].'/'.$storagePath;
         if (!file_exists($destination)) {
             move_uploaded_file($file['tmp_name'], $destination);
         } else {
@@ -88,19 +82,19 @@ class FileStorage
     }
 
     /**
-     * Stores files in the content based file system
+     * Stores files in the content based file system.
      *
      * @param string $source The source file to store
-     * @param boolean $move indicating whether the file should be moved or copied
+     * @param bool   $move   indicating whether the file should be moved or copied
      *
-     * @return string the path at which the file was stored.
+     * @return string the path at which the file was stored
      */
     public function storeFile($source, $move = true)
     {
         $config = $this->storageConfig;
         $extension = pathinfo($source, PATHINFO_EXTENSION);
-        $storagePath = $this->generateStoragePath($source) . '.' . $extension;
-        $destination = $config['storage_dir'] . '/' . $storagePath;
+        $storagePath = $this->generateStoragePath($source).'.'.$extension;
+        $destination = $config['storage_dir'].'/'.$storagePath;
         if (!file_exists($destination)) {
             if ($move) {
                 rename($source, $destination);
@@ -119,12 +113,12 @@ class FileStorage
      *
      * @param string $path The CFS path of the file to remove
      *
-     * @return bool indicating if removing the file was successful.
+     * @return bool indicating if removing the file was successful
      */
     public function removeFile($path)
     {
         $config = $this->storageConfig;
-        $fullPath = $config['storage_dir'] . '/' . $path;
+        $fullPath = $config['storage_dir'].'/'.$path;
 
         if (file_exists($fullPath)) {
             return unlink($fullPath);
@@ -138,7 +132,7 @@ class FileStorage
      * In most modern browsers this function will cause the browser to display
      * the file and give the user the option to save it.
      *
-     * @param string $path The CFS path of the file to download
+     * @param string $path     The CFS path of the file to download
      * @param string $fileName The file name to give the downloaded file
      *
      * @return |null If the given file is not found, null is returned
@@ -147,7 +141,7 @@ class FileStorage
     {
         $config = $this->storageConfig;
 
-        $file = $config['storage_dir'] . '/' . $path;
+        $file = $config['storage_dir'].'/'.$path;
 
         if (!file_exists($file)) {
             return null;
@@ -165,13 +159,13 @@ class FileStorage
         $headers->addHeaders(
             [
             // Suggests to the browser to display the file instead of saving
-            'Content-Disposition' => 'inline; filename="' . $fileName . '"',
+            'Content-Disposition' => 'inline; filename="'.$fileName.'"',
             'Content-Type' => $type,
             'Content-Length' => filesize($file),
             // zf2 parses date as a string for a \DateTime() object:
             'Expires' => '+1 year',
             'Cache-Control' => 'public',
-            'Pragma' => ''
+            'Pragma' => '',
             ]
         );
         $response->setHeaders($headers);

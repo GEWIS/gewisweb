@@ -1,9 +1,10 @@
 <?php
 
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework (http://framework.zend.com/).
  *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @see      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ *
  * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
@@ -20,15 +21,15 @@ use Application\View\Helper\JobCategories;
 use Application\View\Helper\ModuleIsActive;
 use Application\View\Helper\ScriptUrl;
 use Carbon\Carbon;
-use Locale;
-use Monolog\Handler\RotatingFileHandler;
-use Monolog\Logger;
-use User\Permissions\NotAllowedException;
 use Laminas\Mvc\ModuleRouteListener;
 use Laminas\Mvc\MvcEvent;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\Validator\AbstractValidator;
+use Locale;
+use Monolog\Handler\RotatingFileHandler;
+use Monolog\Logger;
+use User\Permissions\NotAllowedException;
 
 class Module
 {
@@ -58,11 +59,11 @@ class Module
         $sm = $e->getApplication()->getServiceManager();
         $logger = $sm->get('logger');
 
-        if ($e->getError() === 'error-router-no-match') {
+        if ('error-router-no-match' === $e->getError()) {
             // not an interesting error
             return;
         }
-        if ($e->getError() === 'error-exception') {
+        if ('error-exception' === $e->getError()) {
             $ex = $e->getParam('exception');
 
             if ($ex instanceof NotAllowedException) {
@@ -71,6 +72,7 @@ class Module
             }
 
             $logger->error($ex);
+
             return;
         }
         $logger->error($e->getError());
@@ -89,7 +91,7 @@ class Module
 
     public function getConfig()
     {
-        return include __DIR__ . '/config/module.config.php';
+        return include __DIR__.'/config/module.config.php';
     }
 
     public function getAutoloaderConfig()
@@ -107,18 +109,20 @@ class Module
                     $renderer = $sm->get('ViewRenderer');
                     $transport = $sm->get('user_mail_transport');
                     $emailConfig = $sm->get('config')['email'];
+
                     return new Email($renderer, $transport, $emailConfig);
                 },
                 'application_service_storage' => function (ServiceLocatorInterface $sm) {
                     $translator = $sm->get('translator');
                     $storageConfig = $sm->get('config')['storage'];
+
                     return new FileStorage($translator, $storageConfig);
                 },
                 'application_get_languages' => function () {
                     return ['nl', 'en'];
                 },
                 'logger' => function (ServiceLocatorInterface $sm) {
-                    $logger = new Logger("gewisweb");
+                    $logger = new Logger('gewisweb');
                     $config = $sm->get('config')['logging'];
 
                     $handler = new RotatingFileHandler(
@@ -129,7 +133,7 @@ class Module
                     $logger->pushHandler($handler);
 
                     return $logger;
-                }
+                },
             ],
         ];
     }
@@ -146,32 +150,38 @@ class Module
                 'acl' => function (ServiceLocatorInterface $sm) {
                     $helper = new Acl();
                     $helper->setServiceLocator($sm);
+
                     return $helper;
                 },
                 'scriptUrl' => function () {
                     $helper = new ScriptUrl();
+
                     return $helper;
                 },
                 'moduleIsActive' => function (ServiceLocatorInterface $sm) {
                     $helper = new ModuleIsActive();
                     $helper->setServiceLocator($sm);
+
                     return $helper;
                 },
                 'jobCategories' => function (ServiceLocatorInterface $sm) {
                     $companyQueryService = $sm->get('company_service_companyquery');
+
                     return new JobCategories($companyQueryService);
                 },
                 'fileUrl' => function (ServiceLocatorInterface $sm) {
                     $helper = new FileUrl();
                     $helper->setServiceLocator($sm);
+
                     return $helper;
                 },
                 'infima' => function (ServiceLocatorInterface $sm) {
                     $helper = new Infima();
                     $helper->setLegacyService($sm->get('application_service_legacy'));
+
                     return $helper;
-                }
-            ]
+                },
+            ],
         ];
     }
 }

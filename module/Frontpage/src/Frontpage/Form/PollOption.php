@@ -22,8 +22,8 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
             'name' => 'dutchText',
             'type' => 'text',
             'options' => [
-                'label' => 'Dutch option'
-            ]
+                'label' => 'Dutch option',
+            ],
             ]
         );
 
@@ -32,8 +32,8 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
             'name' => 'englishText',
             'type' => 'text',
             'options' => [
-                'label' => 'English option'
-            ]
+                'label' => 'English option',
+            ],
             ]
         );
     }
@@ -51,8 +51,8 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 2,
-                            'max' => 128
-                        ]
+                            'max' => 128,
+                        ],
                     ],
                 ],
             ],
@@ -63,8 +63,8 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
                         'name' => StringLength::class,
                         'options' => [
                             'min' => 2,
-                            'max' => 128
-                        ]
+                            'max' => 128,
+                        ],
                     ],
                 ],
             ],

@@ -68,7 +68,8 @@ phpcbf: rundev
 		@docker-compose down
 
 phpcsfix: rundev
-		@docker-compose exec web /code/vendor/bin/phpcs-fixer fix -rules=@PSR1,-@PSR12 /code/module /code/config
+		@docker-compose exec web /code/vendor/bin/php-cs-fixer fix --rules=@PSR1,-@PSR12 /code/module
+		@docker-compose exec web /code/vendor/bin/php-cs-fixer fix --rules=@PSR1,-@PSR12 /code/config
 		@docker cp gewisweb_web_1:/code/module ./module
 		@docker cp gewisweb_web_1:/code/config ./config
 		@docker-compose down

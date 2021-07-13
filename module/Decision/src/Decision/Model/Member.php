@@ -4,8 +4,8 @@ namespace Decision\Model;
 
 use DateTime;
 use DateTimeInterface;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 
 /**
@@ -15,18 +15,18 @@ use InvalidArgumentException;
  */
 class Member
 {
-    const GENDER_MALE = 'm';
-    const GENDER_FEMALE = 'f';
-    const GENDER_OTHER = 'o';
+    public const GENDER_MALE = 'm';
+    public const GENDER_FEMALE = 'f';
+    public const GENDER_OTHER = 'o';
 
-    const TYPE_ORDINARY = 'ordinary';
-    const TYPE_PROLONGED = 'prolonged';
-    const TYPE_EXTERNAL = 'external';
-    const TYPE_EXTRAORDINARY = 'extraordinary';
-    const TYPE_HONORARY = 'honorary';
+    public const TYPE_ORDINARY = 'ordinary';
+    public const TYPE_PROLONGED = 'prolonged';
+    public const TYPE_EXTERNAL = 'external';
+    public const TYPE_EXTRAORDINARY = 'extraordinary';
+    public const TYPE_HONORARY = 'honorary';
 
     /**
-     * The user
+     * The user.
      *
      * @ORM\Id
      * @ORM\Column(type="integer", name="lidnr")
@@ -147,7 +147,7 @@ class Member
      */
     protected $iban;
     /**
-     * If the member receives a 'supremum'
+     * If the member receives a 'supremum'.
      *
      * @ORM\Column(type="string",nullable=true)
      */
@@ -202,7 +202,7 @@ class Member
         return [
             self::GENDER_MALE,
             self::GENDER_FEMALE,
-            self::GENDER_OTHER
+            self::GENDER_OTHER,
         ];
     }
 
@@ -218,10 +218,9 @@ class Member
             self::TYPE_PROLONGED,
             self::TYPE_EXTERNAL,
             self::TYPE_EXTRAORDINARY,
-            self::TYPE_HONORARY
+            self::TYPE_HONORARY,
         ];
     }
-
 
     /**
      * Constructor.
@@ -362,14 +361,14 @@ class Member
      */
     public function getFullName()
     {
-        $name = $this->getFirstName() . ' ';
+        $name = $this->getFirstName().' ';
 
         $middle = $this->getMiddleName();
         if (!empty($middle)) {
-            $name .= $middle . ' ';
+            $name .= $middle.' ';
         }
 
-        return $name . $this->getLastName();
+        return $name.$this->getLastName();
     }
 
     /**
@@ -392,7 +391,7 @@ class Member
     public function setGender($gender)
     {
         if (!in_array($gender, self::getGenders())) {
-            throw new InvalidArgumentException("Invalid gender value");
+            throw new InvalidArgumentException('Invalid gender value');
         }
         $this->gender = $gender;
     }
@@ -432,12 +431,12 @@ class Member
      *
      * @param string $type
      *
-     * @throws InvalidArgumentException When the type is incorrect.
+     * @throws InvalidArgumentException when the type is incorrect
      */
     public function setType($type)
     {
         if (!in_array($type, self::getTypes())) {
-            throw new InvalidArgumentException("Nonexisting type given.");
+            throw new InvalidArgumentException('Nonexisting type given.');
         }
         $this->type = $type;
     }
@@ -476,8 +475,6 @@ class Member
 
     /**
      * Set the birthdate.
-     *
-     * @param DateTime $birth
      */
     public function setBirth(DateTime $birth)
     {
@@ -545,7 +542,7 @@ class Member
     }
 
     /**
-     * Get the organ installations of organs that the member is currently part of
+     * Get the organ installations of organs that the member is currently part of.
      *
      * @return ArrayCollection
      */
@@ -562,20 +559,21 @@ class Member
             function (OrganMember $organ) use ($today) {
                 $dischargeDate = $organ->getDischargeDate();
 
-            // Keep installation if not discharged or discharged in the future
+                // Keep installation if not discharged or discharged in the future
                 return is_null($dischargeDate) || $dischargeDate >= $today;
             }
         );
     }
 
     /**
-     * Returns whether the member is currently part of any organs
+     * Returns whether the member is currently part of any organs.
      *
      * @return bool
      */
     public function isActive()
     {
         $currentInstallations = $this->getCurrentOrganInstallations();
+
         return !empty($currentInstallations);
     }
 
@@ -590,7 +588,7 @@ class Member
     }
 
     /**
-     * Get the current board the member is part of
+     * Get the current board the member is part of.
      *
      * @return BoardMember|null
      */
@@ -603,7 +601,7 @@ class Member
             function (BoardMember $boardMember) use ($today) {
                 $dischargeDate = $boardMember->getDischargeDate();
 
-            // Keep installation if not discharged or discharged in the future
+                // Keep installation if not discharged or discharged in the future
                 return is_null($dischargeDate) || $dischargeDate >= $today;
             }
         );
@@ -632,7 +630,7 @@ class Member
             'initials' => $this->getInitials(),
             'firstName' => $this->getFirstName(),
             'generation' => $this->getGeneration(),
-            'expiration' => $this->getExpiration()->format('l j F Y')
+            'expiration' => $this->getExpiration()->format('l j F Y'),
         ];
     }
 
@@ -684,8 +682,6 @@ class Member
 
     /**
      * Add an address.
-     *
-     * @param Address $address
      */
     public function addAddress(Address $address)
     {
@@ -707,8 +703,6 @@ class Member
      * Add a mailing list subscription.
      *
      * Note that this is the owning side.
-     *
-     * @param MailingList $list
      */
     public function addList(MailingList $list)
     {

@@ -41,7 +41,7 @@ abstract class Signup
     /**
      * Get the signup id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -60,8 +60,6 @@ abstract class Signup
 
     /**
      * Set the SignupList that the user signed up for.
-     *
-     * @param SignupList $signupList
      */
     public function setSignupList(SignupList $signupList)
     {

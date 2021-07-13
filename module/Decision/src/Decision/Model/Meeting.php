@@ -3,9 +3,9 @@
 namespace Decision\Model;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OrderBy;
-use Doctrine\Common\Collections\ArrayCollection;
 use InvalidArgumentException;
 
 /**
@@ -15,10 +15,10 @@ use InvalidArgumentException;
  */
 class Meeting
 {
-    const TYPE_BV = 'BV'; // bestuursvergadering
-    const TYPE_AV = 'AV'; // algemene leden vergadering
-    const TYPE_VV = 'VV'; // voorzitters vergadering
-    const TYPE_VIRT = 'Virt'; // virtual meeting
+    public const TYPE_BV = 'BV'; // bestuursvergadering
+    public const TYPE_AV = 'AV'; // algemene leden vergadering
+    public const TYPE_VV = 'VV'; // voorzitters vergadering
+    public const TYPE_VIRT = 'Virt'; // virtual meeting
 
     /**
      * Meeting type.
@@ -59,7 +59,7 @@ class Meeting
     protected $documents;
 
     /**
-     * The notes for this meeting
+     * The notes for this meeting.
      *
      * @ORM\OneToOne(targetEntity="MeetingNotes", mappedBy="meeting")
      */
@@ -74,7 +74,7 @@ class Meeting
             self::TYPE_BV,
             self::TYPE_AV,
             self::TYPE_VV,
-            self::TYPE_VIRT
+            self::TYPE_VIRT,
         ];
     }
 
@@ -119,7 +119,7 @@ class Meeting
     public function setType($type)
     {
         if (!in_array($type, self::getTypes())) {
-            throw new InvalidArgumentException("Invalid meeting type given.");
+            throw new InvalidArgumentException('Invalid meeting type given.');
         }
         $this->type = $type;
     }
@@ -146,8 +146,6 @@ class Meeting
 
     /**
      * Set the meeting date.
-     *
-     * @param DateTime $date
      */
     public function setDate(DateTime $date)
     {
@@ -166,8 +164,6 @@ class Meeting
 
     /**
      * Add a decision.
-     *
-     * @param Decision $decision
      */
     public function addDecision(Decision $decision)
     {
