@@ -7,33 +7,6 @@
   </component>
   <component name="PhpIncludePathManager">
     <include_path>
-      <path value="$PROJECT_DIR$/vendor/vendor/doctrine" />
-      <path value="$PROJECT_DIR$/vendor/vendor/erusev" />
-      <path value="$PROJECT_DIR$/vendor/vendor/firebase" />
-      <path value="$PROJECT_DIR$/vendor/vendor/fortawesome" />
-      <path value="$PROJECT_DIR$/vendor/vendor/fzaninotto" />
-      <path value="$PROJECT_DIR$/vendor/vendor/guzzlehttp" />
-      <path value="$PROJECT_DIR$/vendor/vendor/intervention" />
-      <path value="$PROJECT_DIR$/vendor/vendor/jszanto" />
-      <path value="$PROJECT_DIR$/vendor/vendor/kylekatarnls" />
-      <path value="$PROJECT_DIR$/vendor/vendor/league" />
-      <path value="$PROJECT_DIR$/vendor/vendor/maglnet" />
-      <path value="$PROJECT_DIR$/vendor/vendor/michelf" />
-      <path value="$PROJECT_DIR$/vendor/vendor/monolog" />
-      <path value="$PROJECT_DIR$/vendor/vendor/nesbot" />
-      <path value="$PROJECT_DIR$/vendor/vendor/paragonie" />
-      <path value="$PROJECT_DIR$/vendor/vendor/psr" />
-      <path value="$PROJECT_DIR$/vendor/vendor/ralouphie" />
-      <path value="$PROJECT_DIR$/vendor/vendor/slowprog" />
-      <path value="$PROJECT_DIR$/vendor/vendor/squizlabs" />
-      <path value="$PROJECT_DIR$/vendor/vendor/symfony" />
-      <path value="$PROJECT_DIR$/vendor/vendor/true" />
-      <path value="$PROJECT_DIR$/vendor/vendor/twbs" />
-      <path value="$PROJECT_DIR$/vendor/vendor/zendframework" />
-      <path value="$PROJECT_DIR$/vendor/vendor/bin" />
-      <path value="$PROJECT_DIR$/vendor/vendor/composer" />
-      <path value="$PROJECT_DIR$/vendor/vendor/container-interop" />
-      <path value="$PROJECT_DIR$/vendor/vendor/cweagans" />
       <path value="$PROJECT_DIR$/vendor/michelf/php-markdown" />
       <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
       <path value="$PROJECT_DIR$/vendor/slowprog/composer-copy-file" />
@@ -166,6 +139,7 @@
       <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
       <path value="$PROJECT_DIR$/vendor/friendsofphp/php-cs-fixer" />
       <path value="$PROJECT_DIR$/vendor/php-cs-fixer/diff" />
+      <path value="$PROJECT_DIR$/vendor/san/san-session-toolbar" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
