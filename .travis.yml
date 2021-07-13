@@ -11,28 +11,28 @@ jobs:
     include:
         -   name:   "PHP 5.6 Production"
             php:    5.6
-            env:    APP_ENV=production
+            env:    APPLICATION_ENV=production
         -   name:   "PHP 5.6 Development"
             php:    5.6
-            env:    APP_ENV=development
+            env:    APPLICATION_ENV=development
         -   name:   "PHP 7.0 Production"
             php:    7.0
-            env:    APP_ENV=production
+            env:    APPLICATION_ENV=production
         -   name:   "PHP 7.0 Development"
             php:    7.0
-            env:    APP_ENV=development
+            env:    APPLICATION_ENV=development
         -   name:   "PHP 7.4 Production"
             php:    7.4
-            env:    APP_ENV=production
+            env:    APPLICATION_ENV=production
         -   name:   "PHP 7.4 Development"
             php:    7.4
-            env:    APP_ENV=development
+            env:    APPLICATION_ENV=development
         -   name:   "PHP 8.0 Production"
             php:    8.0
-            env:    APP_ENV=production
+            env:    APPLICATION_ENV=production
         -   name:   "PHP 8.0 Development"
             php:    8.0
-            env:    APP_ENV=development
+            env:    APPLICATION_ENV=development
 
 
 before_script:

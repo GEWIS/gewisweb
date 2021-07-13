@@ -66,7 +66,7 @@ class Module
                 ) {
                     $form = $e->getApplication()->getServiceManager()->get('user_form_login');
                     $e->getResult()->setVariable('form', $form);
-                    $e->getResult()->setTemplate((APP_ENV === 'production' ? 'error/403' : 'error/debug/403'));
+                    $e->getResult()->setTemplate((APPLICATION_ENV === 'production' ? 'error/403' : 'error/debug/403'));
                     $e->getResponse()->setStatusCode(403);
                 }
             },

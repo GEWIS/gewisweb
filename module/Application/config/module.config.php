@@ -94,8 +94,8 @@ return [
         'display_not_found_reason' => true,
         'display_exceptions' => true,
         'doctype' => 'HTML5',
-        'not_found_template' => (APP_ENV === 'production' ? 'error/404' : 'error/debug/404'),
-        'exception_template' => (APP_ENV === 'production' ? 'error/500' : 'error/debug/500'),
+        'not_found_template' => (APPLICATION_ENV === 'production' ? 'error/404' : 'error/debug/404'),
+        'exception_template' => (APPLICATION_ENV === 'production' ? 'error/500' : 'error/debug/500'),
         'template_map' => [
             'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
