@@ -56,7 +56,7 @@ update: rundev updatecomposer updatepackage updatecss updateglide
 		@docker-compose down
 
 phpstan:
-		@vendor/bin/phpstan analyse module/Activity/src module/Application/src module/Company/src module/Decision/src module/Education/src module/Frontpage/src module/Photo/src module/User/src
+		@vendor/bin/phpstan analyse -l 1 module/Activity/src module/Application/src module/Company/src module/Decision/src module/Education/src module/Frontpage/src module/Photo/src module/User/src
 
 phpcs:
 		@vendor/bin/phpcs -p --standard=PSR1,PSR12 --extensions=php,dist module config

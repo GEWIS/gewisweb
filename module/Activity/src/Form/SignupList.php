@@ -12,16 +12,12 @@ use Laminas\Validator\Callback;
 
 class SignupList extends Fieldset implements InputFilterProviderInterface
 {
-    /**
-     * @var Translator
-     */
-    protected $translator;
-    private $isValid;
+
+    private Translator $translator;
 
     public function __construct(Translator $translator)
     {
         parent::__construct('signuplist');
-        $this->translator = $translator;
         $this->setHydrator(new ClassMethodsHydrator(false))
             ->setObject(new \Activity\Model\SignupList());
 
@@ -107,6 +103,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 ],
             ]
         );
+        $this->translator = $translator;
     }
 
     /**
@@ -228,21 +225,5 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 //],
             ],
         ];
-    }
-
-    /**
-     * Validate the form.
-     *
-     * @return bool
-     *
-     * @throws DomainException
-     */
-    public function isValid()
-    {
-        // TODO: isValid is not found
-        $valid = parent::isValid();
-        $this->isValid = $valid;
-
-        return $valid;
     }
 }

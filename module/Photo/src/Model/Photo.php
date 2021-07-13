@@ -108,7 +108,7 @@ class Photo implements ResourceInterface
      *
      * @ORM\Column(type="string")
      */
-    protected $containerallThumbPath;
+    protected $smallThumbPath;
 
     /**
      * The path where the large thumbnail of the photo is located relative to

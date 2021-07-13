@@ -237,6 +237,7 @@ class Poll extends AbstractAclService
         $pollOption->addVote($pollVote);
         $this->pollMapper->persist($pollOption);
         $this->pollMapper->flush();
+        return true;
     }
 
     /**
@@ -364,6 +365,7 @@ class Poll extends AbstractAclService
 
         $poll->setApprover($this->userRole);
         $this->pollMapper->flush();
+        return true;
     }
 
     /**

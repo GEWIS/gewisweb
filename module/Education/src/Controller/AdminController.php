@@ -7,6 +7,7 @@ use Education\Service\Exam;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
+use Laminas\View\View;
 
 class AdminController extends AbstractActionController
 {
@@ -30,6 +31,7 @@ class AdminController extends AbstractActionController
 
     public function indexAction()
     {
+        return new View();
     }
 
     public function addCourseAction()

@@ -105,15 +105,13 @@ class Session extends Storage\Session
      * Store the current session.
      *
      * @param $lidnr the lidnr of the logged in user
-     *
-     * @return SessionModel
      */
     public function saveSession($lidnr)
     {
         $key = $this->getPrivateKey();
         if (!$key) {
             // Key not readable
-            return false;
+            return;
         }
         $token = [
             'iss' => 'https://gewis.nl/',
