@@ -7,7 +7,7 @@ nbproject
 .buildpath
 *.DS_Store
 .env
-.idea
+.idea/sonarlint/
 .project
 .settings
 vendor/
