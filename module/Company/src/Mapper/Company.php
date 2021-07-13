@@ -4,6 +4,7 @@ namespace Company\Mapper;
 
 use Company\Model\Company as CompanyModel;
 use Company\Model\CompanyI18n;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
@@ -85,7 +86,7 @@ class Company
     /**
      * Find all public companies with a certain locale.
      *
-     * @return array
+     * @return Collection
      */
     public function findPublicByLocale($locale)
     {
@@ -121,7 +122,7 @@ class Company
     /**
      * Find all companies.
      *
-     * @return array
+     * @return Collection
      */
     public function findAll()
     {

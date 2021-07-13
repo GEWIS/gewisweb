@@ -2,6 +2,7 @@
 
 namespace User\Mapper;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use User\Model\ApiUser as ApiUserModel;
@@ -38,7 +39,7 @@ class ApiUser
     /**
      * Find all tokens.
      *
-     * @return array
+     * @return Collection
      */
     public function findAll()
     {

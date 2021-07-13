@@ -3,6 +3,7 @@
 namespace Activity\Mapper;
 
 use DateTime;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Exception;
@@ -50,9 +51,7 @@ class ActivityCalendarOption
      * Gets all options created by the given organs.
      *
      * @param $organs
-     * @param $user
-     *
-     * @return array
+     * @return Collection
      */
     public function getUpcomingOptionsByOrgans($organs)
     {
@@ -76,7 +75,7 @@ class ActivityCalendarOption
      *
      * @param bool $withDeleted whether to include deleted results
      *
-     * @return array
+     * @return Collection
      *
      * @throws Exception
      */
@@ -103,7 +102,7 @@ class ActivityCalendarOption
      * @param DateTime $before the date to get the options before
      * @param bool $withDeleted Whether to include deleted options
      *
-     * @return array
+     * @return Collection
      */
     public function getPastOptions($before, $withDeleted = false)
     {
@@ -130,9 +129,8 @@ class ActivityCalendarOption
     /**
      * Retrieves options associated with a proposal.
      *
-     * @param int $proposal
-     *
-     * @return array
+     * @param $proposalId
+     * @return Collection
      */
     public function findOptionsByProposal($proposalId)
     {
@@ -148,10 +146,10 @@ class ActivityCalendarOption
     /**
      * Retrieves options associated with a proposal and associated with given organ.
      *
-     * @param int $proposal
+     * @param $proposalId
      * @param int $organId the organ proposals have to be associated with
      *
-     * @return array
+     * @return Collection
      */
     public function findOptionsByProposalAndOrgan($proposalId, $organId)
     {

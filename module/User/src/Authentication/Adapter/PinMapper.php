@@ -52,7 +52,8 @@ class PinMapper implements AdapterInterface
     /**
      * Constructor.
      *
-     * @param LegacyService
+     * @param LegacyService $legacyService
+     * @param LoginAttemptService $loginAttemptService
      */
     public function __construct(LegacyService $legacyService, loginAttemptService $loginAttemptService)
     {

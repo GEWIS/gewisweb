@@ -55,7 +55,7 @@ class NewUser
      *
      * We can populate most values from a member model.
      *
-     * @param Member $member
+     * @param Member|null $member
      */
     public function __construct(Member $member = null)
     {

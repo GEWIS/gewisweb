@@ -5,6 +5,7 @@ namespace Company\Mapper;
 use Company\Model\CompanyBannerPackage as BannerPackageModel;
 use Company\Model\CompanyFeaturedPackage as FeaturedPackageModel;
 use Company\Model\CompanyJobPackage as PackageModel;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -106,7 +107,7 @@ class Package
     /**
      * Find all Packages.
      *
-     * @return array
+     * @return Collection
      */
     public function findAll()
     {
@@ -128,7 +129,7 @@ class Package
     /**
      * Find all packages that should be visible, and returns an editable version of them.
      *
-     * @return array
+     * @return Collection
      */
     public function findVisiblePackages()
     {
@@ -140,7 +141,7 @@ class Package
     /**
      * Find all packages, and returns an editable version of them.
      *
-     * @return PackageModel
+     * @return PackageModel|null
      */
     public function findEditablePackage($packageId)
     {
@@ -153,7 +154,7 @@ class Package
         $packages = $qb->getQuery()->getResult();
 
         if (1 != count($packages)) {
-            return;
+            return null;
         }
 
         return $packages[0];

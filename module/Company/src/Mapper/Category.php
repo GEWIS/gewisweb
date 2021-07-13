@@ -3,6 +3,7 @@
 namespace Company\Mapper;
 
 use Company\Model\JobCategory as CategoryModel;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -115,7 +116,7 @@ class Category
     /**
      * Find all Categories.
      *
-     * @return array
+     * @return Collection
      */
     public function findAll()
     {

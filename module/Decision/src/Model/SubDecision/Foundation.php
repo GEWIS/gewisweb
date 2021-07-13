@@ -150,7 +150,7 @@ class Foundation extends SubDecision
     /**
      * Get the references.
      *
-     * @return array of references
+     * @return ArrayCollection of references
      */
     public function getReferences()
     {

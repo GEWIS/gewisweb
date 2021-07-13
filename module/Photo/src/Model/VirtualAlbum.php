@@ -3,6 +3,7 @@
 namespace Photo\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Exception;
 
 /**
@@ -20,7 +21,7 @@ class VirtualAlbum extends Album
     /**
      * Get the parent album.
      *
-     * @return Album $parent
+     * @return Album|null $parent
      */
     public function getParent()
     {
@@ -64,7 +65,7 @@ class VirtualAlbum extends Album
         $this->photos[] = $photo;
     }
 
-    public function addPhotos(array $photos)
+    public function addPhotos(Collection $photos)
     {
         $this->photos
             = new ArrayCollection(
@@ -114,7 +115,7 @@ class VirtualAlbum extends Album
      */
     public function toArray()
     {
-        $array = [
+        return [
             'id' => $this->getId(),
             'startDateTime' => $this->getStartDateTime(),
             'endDateTime' => $this->getEndDateTime(),
@@ -126,8 +127,6 @@ class VirtualAlbum extends Album
             'photoCount' => $this->getPhotoCount(),
             'albumCount' => $this->getAlbumCount(),
         ];
-
-        return $array;
     }
 
     /**
@@ -137,9 +136,7 @@ class VirtualAlbum extends Album
      */
     public function getPhotoCount($includeSubAlbums = false)
     {
-        $count = $this->photos->count();
-
-        return $count;
+        return $this->photos->count();
     }
 
     /**

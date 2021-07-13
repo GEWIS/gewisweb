@@ -62,7 +62,7 @@ class MemberInfo extends AbstractAclService
     /**
      * Obtain information about the current user.
      *
-     * @return MemberModel
+     * @return array|null
      */
     public function getMembershipInfo($lidnr = null)
     {

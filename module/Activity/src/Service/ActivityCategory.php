@@ -6,6 +6,7 @@ use Activity\Form\ActivityCategory as CategoryForm;
 use Activity\Model\ActivityCategory as CategoryModel;
 use Activity\Model\LocalisedText;
 use Application\Service\AbstractAclService;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
@@ -94,7 +95,7 @@ class ActivityCategory extends AbstractAclService
     /**
      * Get all categories.
      *
-     * @return array
+     * @return Collection
      */
     public function getAllCategories()
     {

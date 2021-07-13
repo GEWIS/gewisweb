@@ -3,8 +3,11 @@
 namespace Decision\Mapper;
 
 use Decision\Model\Member as MemberModel;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 class Member
@@ -42,7 +45,7 @@ class Member
      * @param string $query (part of) the full name of a member
      * @param int $maxResults
      *
-     * @return array
+     * @return Collection
      */
     public function searchByName($query, $maxResults = 32, $orderColumn = 'generation', $orderDirection = 'DESC')
     {
@@ -66,7 +69,7 @@ class Member
      *
      * @param int $days the number of days to look ahead
      *
-     * @return array Of members sorted by birthday
+     * @return Collection Of members sorted by birthday
      */
     public function findBirthdayMembers($days)
     {
@@ -92,7 +95,7 @@ class Member
     /**
      * Find all organs of this member.
      *
-     * @return array Of organs
+     * @return Collection Of organs
      */
     public function findOrgans(MemberModel $member)
     {
@@ -113,7 +116,9 @@ class Member
     /**
      * Persist a member model.
      *
-     * @param MemberModel $member member to persist
+     * @param MemberModel $user
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function persist(MemberModel $user)
     {

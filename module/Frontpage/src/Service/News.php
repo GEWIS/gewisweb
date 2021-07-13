@@ -4,6 +4,7 @@ namespace Frontpage\Service;
 
 use Application\Service\AbstractAclService;
 use DateTime;
+use Doctrine\Common\Collections\Collection;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
 use Frontpage\Mapper\NewsItem;
 use Frontpage\Model\NewsItem as NewsItemModel;
@@ -97,7 +98,7 @@ class News extends AbstractAclService
      *
      * @param int $count
      *
-     * @return array
+     * @return Collection
      */
     public function getLatestNewsItems($count)
     {

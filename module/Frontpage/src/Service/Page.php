@@ -252,7 +252,7 @@ class Page extends AbstractAclService
      *
      * @param array $files
      *
-     * @return array
+     * @return string
      *
      * @throws Exception
      */

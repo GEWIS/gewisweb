@@ -3,12 +3,13 @@
 namespace Activity\Controller;
 
 use Activity\Form\ModifyRequest as RequestForm;
-use Activity\Model\Activity;
+use Activity\Service\Activity;
 use Activity\Service\ActivityQuery;
 use InvalidArgumentException;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -17,7 +18,7 @@ use User\Permissions\NotAllowedException;
 class AdminApprovalController extends AbstractActionController
 {
     /**
-     * @var \Activity\Service\Activity
+     * @var Activity
      */
     private $activityService;
 
@@ -27,7 +28,7 @@ class AdminApprovalController extends AbstractActionController
     private $activityQueryService;
     private Translator $translator;
 
-    public function __construct(Translator $translator, \Activity\Service\Activity $activityService, ActivityQuery $activityQueryService)
+    public function __construct(Translator $translator, Activity $activityService, ActivityQuery $activityQueryService)
     {
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;
@@ -45,7 +46,6 @@ class AdminApprovalController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('You are not allowed to view the approval of this activity'));
         }
 
-        /** @var $activity Activity */
         $activity = $this->activityQueryService->getActivity($id);
 
         if (is_null($activity)) {
@@ -73,13 +73,12 @@ class AdminApprovalController extends AbstractActionController
      *
      * @param $status
      *
-     * @return array|Response
+     * @return ViewModel|Response
      */
     protected function setApprovalStatus($status)
     {
         $id = (int)$this->params('id');
 
-        /** @var $activity Activity */
         $activity = $this->activityQueryService->getActivity($id);
 
         //Assure the form is used

@@ -3,6 +3,7 @@
 namespace Photo\Mapper;
 
 use DateTime;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -31,9 +32,8 @@ class Vote
      * in the specified time range.
      *
      * @param DateTime $startDate
-     * @param DateTime $enddate
-     *
-     * @return array of array of string
+     * @param $endDate
+     * @return Collection of array of string
      */
     public function getVotesInRange($startDate, $endDate)
     {

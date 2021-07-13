@@ -53,7 +53,7 @@ class PollController extends AbstractActionController
     /**
      * Get the right from the route.
      *
-     * @param int $pollId
+     * @return \Frontpage\Model\Poll|null
      */
     public function obtainPoll()
     {

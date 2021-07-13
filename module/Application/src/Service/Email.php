@@ -42,10 +42,10 @@ class Email
     /**
      * Send an email.
      *
-     * @param $type String Type that this email belongs to. A key in the config file for email.
-     * @param $view String Template of the email
-     * @param $subject String Subject of the email
-     * @param $data array Variables that you want to have available in the template
+     * @param String $type Type that this email belongs to. A key in the config file for email.
+     * @param String $view Template of the email
+     * @param String $subject Subject of the email
+     * @param array $data Variables that you want to have available in the template
      */
     public function sendEmail($type, $view, $subject, $data)
     {
@@ -61,11 +61,11 @@ class Email
     /**
      * Send an email as a given user. The user will be added as reply-to header to the email.
      *
-     * @param $type String Type that this email belongs to. A key in the config file for email.
-     * @param $view String Template of the email
-     * @param $subject String Subject of the email
-     * @param $data array Variables that you want to have available in the template
-     * @param $user user The user as which the email should be sent
+     * @param String $type Type that this email belongs to. A key in the config file for email.
+     * @param String $view Template of the email
+     * @param String $subject Subject of the email
+     * @param array $data Variables that you want to have available in the template
+     * @param user $user The user as which the email should be sent
      */
     public function sendEmailAsUser($type, $view, $subject, $data, $user)
     {
@@ -82,11 +82,11 @@ class Email
     /**
      * Send an email as a given user. The user will be added as reply-to header to the email.
      *
-     * @param $recipient member The receiver of this email
-     * @param $view String Template of the email
-     * @param $subject String Subject of the email
-     * @param $data array Variables that you want to have available in the template
-     * @param $user member The user as which the email should be sent
+     * @param member $recipient The receiver of this email
+     * @param String $view Template of the email
+     * @param String $subject Subject of the email
+     * @param array $data Variables that you want to have available in the template
+     * @param member $user The user as which the email should be sent
      */
     public function sendEmailAsUserToUser($recipient, $view, $subject, $data, $user)
     {
@@ -103,11 +103,11 @@ class Email
     /**
      * Send an email as a given user. The user will be added as reply-to header to the email.
      *
-     * @param $type String Type that this email belongs to. A key in the config file for email.
-     * @param $view String Template of the email
-     * @param $subject String Subject of the email
-     * @param $data array Variables that you want to have available in the template
-     * @param $organ organInformation The organ as which the email should be sent
+     * @param String $type Type that this email belongs to. A key in the config file for email.
+     * @param String $view Template of the email
+     * @param String $subject Subject of the email
+     * @param array $data Variables that you want to have available in the template
+     * @param organInformation $organ The organ as which the email should be sent
      */
     public function sendEmailAsOrgan($type, $view, $subject, $data, $organ)
     {
@@ -124,8 +124,8 @@ class Email
     /**
      * Constructs the Message instance for a given view with given variables.
      *
-     * @param $view String Template of the email
-     * @param $data array Variables that you want to have available in the template
+     * @param String $view Template of the email
+     * @param array $data Variables that you want to have available in the template
      *
      * @return Message the constructed instance containing the given view as HTML body
      */

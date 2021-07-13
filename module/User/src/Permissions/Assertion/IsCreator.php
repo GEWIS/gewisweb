@@ -21,9 +21,10 @@ class IsCreator implements AssertionInterface
      * $role, $resource, or $privilege parameters are null, it means that the query applies to all Roles, Resources, or
      * privileges, respectively.
      *
-     * @param RoleInterface $role
-     * @param ResourceInterface $resource
-     * @param string $privilege
+     * @param Acl $acl
+     * @param RoleInterface|null $role
+     * @param ResourceInterface|null $resource
+     * @param null $privilege
      *
      * @return bool
      */

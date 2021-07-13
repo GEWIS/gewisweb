@@ -2,7 +2,6 @@
 
 namespace Application\View\Helper;
 
-use Interop\Container\ContainerInterface;
 use Laminas\View\Helper\AbstractHelper;
 
 class ModuleIsActive extends AbstractHelper
@@ -17,7 +16,7 @@ class ModuleIsActive extends AbstractHelper
     /**
      * Get the active module.
      *
-     * @return string
+     * @return bool
      */
     public function __invoke($condition)
     {

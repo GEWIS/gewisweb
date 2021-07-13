@@ -81,9 +81,8 @@ class CompanyQuery extends AbstractACLService
      * Returns all jobs with a $jobSlugName, owned by a company with a
      * $companySlugName, and a specific $category.
      *
-     * @param mixed $companySlugName
-     * @param mixed $jobSlugName
-     * @param mixed $category
+     * @param $dict
+     * @return int|mixed|string
      */
     public function getJobs($dict)
     {

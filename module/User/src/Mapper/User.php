@@ -79,7 +79,7 @@ class User
     /**
      * Re-attach a user to the entity manager.
      *
-     * @return UserModel
+     * @return object|UserModel
      */
     public function merge(UserModel $user)
     {

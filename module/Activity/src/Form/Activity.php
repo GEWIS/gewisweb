@@ -357,7 +357,7 @@ class Activity extends Form implements InputFilterProviderInterface
      * Get the input filter. Will generate a different inputfilter depending on if the Dutch and/or English language
      * is set.
      *
-     * @return InputFilter
+     * @return array
      */
     public function getInputFilterSpecification()
     {

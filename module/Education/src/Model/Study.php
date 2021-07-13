@@ -105,7 +105,7 @@ class Study
     /**
      * Get the courses in this study.
      *
-     * @return array
+     * @return ArrayCollection
      */
     public function getCourses()
     {

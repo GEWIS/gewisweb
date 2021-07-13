@@ -14,8 +14,10 @@ use Decision\Model\Authorization as AuthorizationModel;
 use Decision\Model\Meeting;
 use Decision\Model\MeetingDocument;
 use Decision\Model\MeetingNotes as NotesModel;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\PersistentCollection;
 use InvalidArgumentException;
+use Laminas\Http\Response\Stream;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
 use User\Permissions\NotAllowedException;
@@ -172,7 +174,7 @@ class Decision extends AbstractAclService
      * @param int|null $limit The amount of meetings to retrieve, default is all
      * @param string|null $type Constraint on the type of the meeting, default is none
      *
-     * @return array Of all meetings
+     * @return Collection Of all meetings
      */
     public function getPastMeetings($limit = null, $type = null)
     {
@@ -246,7 +248,7 @@ class Decision extends AbstractAclService
      *
      * @param MeetingDocument $meetingDocument
      *
-     * @return response|null
+     * @return Stream|null
      */
     public function getMeetingDocumentDownload($meetingDocument)
     {
@@ -268,7 +270,7 @@ class Decision extends AbstractAclService
     /**
      * Returns a download for meeting notes.
      *
-     * @return response|null
+     * @return Stream|null
      */
     public function getMeetingNotesDownload(Meeting $meeting)
     {
@@ -442,7 +444,7 @@ class Decision extends AbstractAclService
      *
      * @param array|Traversable $data Search data
      *
-     * @return array Search results
+     * @return Collection|null Search results
      */
     public function search($data)
     {

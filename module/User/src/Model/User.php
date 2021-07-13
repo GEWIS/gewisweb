@@ -117,7 +117,7 @@ class User implements RoleInterface, ResourceInterface
     /**
      * Get the user's roles.
      *
-     * @return array
+     * @return ArrayCollection
      */
     public function getRoles()
     {

@@ -40,8 +40,11 @@ class Job
     /**
      * Checks if $slugName is only used by object identified with $cid.
      *
+     * @param $companySlug
      * @param string $slugName The slugName to be checked
-     * @param int $cid The id to ignore
+     * @param $jid
+     * @param $category
+     * @return bool
      */
     public function isSlugNameUnique($companySlug, $slugName, $jid, $category)
     {
@@ -95,9 +98,8 @@ class Job
      * Find all jobs identified by $jobSlugName that are owned by a company
      * identified with $companySlugName.
      *
-     * @param mixed $companySlugName
-     * @param mixed $jobSlugName
-     * @param mixed $category
+     * @param $dict
+     * @return int|mixed|string
      */
     public function findJob($dict)
     {

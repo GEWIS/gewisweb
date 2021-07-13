@@ -2,8 +2,10 @@
 
 namespace Education\Mapper;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\ORMException;
 use Education\Model\Course as CourseModel;
 
 /**
@@ -32,7 +34,8 @@ class Course
     /**
      * Persist multiple studies.
      *
-     * @param array $studies Array of StudyModel
+     * @param array $courses
+     * @throws ORMException
      */
     public function persistMultiple(array $courses)
     {
@@ -90,7 +93,7 @@ class Course
      *
      * @param string $query
      *
-     * @return array
+     * @return Collection
      */
     public function search($query)
     {

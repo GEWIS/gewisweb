@@ -31,7 +31,7 @@ class CompanyJobPackage extends CompanyPackage
     /**
      * Get the jobs in the package.
      *
-     * @return array jobs in the package
+     * @return ArrayCollection jobs in the package
      */
     public function getJobs()
     {

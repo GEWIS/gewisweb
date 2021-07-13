@@ -5,6 +5,7 @@ namespace Decision\Service;
 use Application\Service\AbstractAclService;
 use Decision\Mapper\Authorization;
 use Decision\Model\Member as MemberModel;
+use Doctrine\Common\Collections\Collection;
 use Laminas\Code\Exception\InvalidArgumentException;
 use Laminas\Http\Client as HttpClient;
 use Laminas\Mvc\I18n\Translator;
@@ -80,8 +81,6 @@ class Member extends AbstractAclService
     /**
      * Returns is the member is active.
      *
-     * @param MemberModel $member
-     *
      * @return bool
      */
     public function isActiveMember()
@@ -149,7 +148,7 @@ class Member extends AbstractAclService
      *
      * @param int $days the number of days to look ahead
      *
-     * @return array Of members sorted by birthday
+     * @return Collection Of members sorted by birthday
      */
     public function getBirthdayMembers($days = 0)
     {
@@ -167,7 +166,7 @@ class Member extends AbstractAclService
     /**
      * Get the organs a member is part of.
      *
-     * @return array
+     * @return Collection
      */
     public function getOrgans(MemberModel $member)
     {
@@ -180,7 +179,7 @@ class Member extends AbstractAclService
      * @param string $query (part of) the full name of a member
      * @pre $name must be at least MIN_SEARCH_QUERY_LENGTH
      *
-     * @return array|null
+     * @return Collection
      */
     public function searchMembersByName($query)
     {
@@ -198,10 +197,11 @@ class Member extends AbstractAclService
     /**
      * Find a member by (part of) its name.
      *
-     * @param string $query (part of) the full name of a member
+     * @param $member
+     * @param $meeting
+     * @return bool
      * @pre $name must be at least MIN_SEARCH_QUERY_LENGTH
      *
-     * @return array|null
      */
     public function canAuthorize($member, $meeting)
     {

@@ -3,7 +3,6 @@
 namespace Decision\Controller;
 
 use Decision\Service\Organ;
-use Doctrine\ORM\NoResultException;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
@@ -37,20 +36,16 @@ class OrganController extends AbstractActionController
     public function showAction()
     {
         $organId = $this->params()->fromRoute('organ');
-        try {
-            $organ = $this->organService->getOrgan($organId);
-            $organMemberInformation = $this->organService->getOrganMemberInformation($organ);
+        $organ = $this->organService->getOrgan($organId);
+        $organMemberInformation = $this->organService->getOrganMemberInformation($organ);
 
-            return new ViewModel(
-                array_merge(
-                    [
-                        'organ' => $organ,
-                    ],
-                    $organMemberInformation
-                )
-            );
-        } catch (NoResultException $e) {
-            return $this->notFoundAction();
-        }
+        return new ViewModel(
+            array_merge(
+                [
+                    'organ' => $organ,
+                ],
+                $organMemberInformation
+            )
+        );
     }
 }

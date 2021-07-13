@@ -80,7 +80,7 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
     /**
      * Get the input filter.
      *
-     * @return InputFilter
+     * @return array
      */
     public function getInputFilterSpecification()
     {

@@ -155,7 +155,7 @@ class Meeting
     /**
      * Get the decisions.
      *
-     * @return array
+     * @return ArrayCollection
      */
     public function getDecisions()
     {
@@ -195,7 +195,7 @@ class Meeting
     /**
      * Add a document.
      *
-     * @param Document $document
+     * @param MeetingDocument $document
      */
     public function addDocument(MeetingDocument $document)
     {

@@ -66,7 +66,8 @@ class Email
     /**
      * Send password lost email.
      *
-     * @param NewUserModel $activation
+     * @param NewUserModel $newUser
+     * @param MemberModel $member
      */
     public function sendPasswordLostMail(NewUserModel $newUser, MemberModel $member)
     {

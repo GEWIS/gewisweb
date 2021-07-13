@@ -2,6 +2,7 @@
 
 namespace Decision\Mapper;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -30,7 +31,7 @@ class Authorization
      *
      * @param int $meetingNumber
      *
-     * @return array
+     * @return Collection
      */
     public function find($meetingNumber)
     {
@@ -43,7 +44,7 @@ class Authorization
      * @param int $meetingNumber
      * @param int $authorizer
      *
-     * @return array
+     * @return \Decision\Model\Authorization|null
      */
     public function findUserAuthorization($meetingNumber, $authorizer)
     {
@@ -66,7 +67,7 @@ class Authorization
      * @param int $meetingNumber
      * @param int $recipient
      *
-     * @return array
+     * @return Collection
      */
     public function findRecipientAuthorization($meetingNumber, $recipient)
     {

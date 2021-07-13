@@ -3,6 +3,7 @@
 namespace Activity\Mapper;
 
 use Activity\Model\ActivityUpdateProposal;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 

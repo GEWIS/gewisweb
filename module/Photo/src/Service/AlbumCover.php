@@ -3,6 +3,7 @@
 namespace Photo\Service;
 
 use Application\Service\FileStorage;
+use Doctrine\Common\Collections\Collection;
 use Imagick;
 
 /**
@@ -108,7 +109,7 @@ class AlbumCover
      * @param \Photo\Model\Album $album
      * @param int $count the amount of images needed
      *
-     * @return Imagick a list of the images
+     * @return array of Imagick - a list of the images
      */
     protected function getImages($album, $count)
     {
@@ -134,7 +135,7 @@ class AlbumCover
      * @param Imagick $target the target object to draw to
      * @param int $columns The amount of columns to fill
      * @param int $rows The amount of rows to fill
-     * @param Imagick $images the list of images to fill the mosaic with
+     * @param Collection $images of Imagick the list of images to fill the mosaic with
      */
     protected function drawComposition($target, $columns, $rows, $images)
     {

@@ -4,7 +4,6 @@ namespace Frontpage\Controller;
 
 use Activity\Service\ActivityQuery;
 use Decision\Model\Organ;
-use Doctrine\ORM\NoResultException;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
@@ -55,23 +54,19 @@ class OrganController extends AbstractActionController
         $type = $this->params()->fromRoute('type');
         $abbr = $this->params()->fromRoute('abbr');
         $organService = $this->organService;
-        try {
-            $organ = $organService->findOrganByAbbr($abbr, $type, true);
-            $organMemberInformation = $organService->getOrganMemberInformation($organ);
+        $organ = $organService->findOrganByAbbr($abbr, $type, true);
+        $organMemberInformation = $organService->getOrganMemberInformation($organ);
 
-            $activities = $this->activityQueryService->getOrganActivities($organ, 3);
+        $activities = $this->activityQueryService->getOrganActivities($organ, 3);
 
-            return new ViewModel(
-                array_merge(
-                    [
-                        'organ' => $organ,
-                        'activities' => $activities,
-                    ],
-                    $organMemberInformation
-                )
-            );
-        } catch (NoResultException $e) {
-            return $this->notFoundAction();
-        }
+        return new ViewModel(
+            array_merge(
+                [
+                    'organ' => $organ,
+                    'activities' => $activities,
+                ],
+                $organMemberInformation
+            )
+        );
     }
 }

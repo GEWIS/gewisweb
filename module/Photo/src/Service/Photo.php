@@ -7,6 +7,7 @@ use Application\Service\FileStorage;
 use DateInterval;
 use DateTime;
 use Decision\Model\Member;
+use Doctrine\Common\Collections\Collection;
 use Exception;
 use Laminas\Http\Response\Stream;
 use Laminas\I18n\Filter\Alnum;
@@ -141,7 +142,7 @@ class Photo extends AbstractAclService
      * @param int $maxResults max amount of results to return,
      *                               null for infinite
      *
-     * @return array of Photo\Model\Album
+     * @return Collection of Photo\Model\Album
      */
     public function getPhotos($album, $start = 0, $maxResults = null)
     {
@@ -355,7 +356,7 @@ class Photo extends AbstractAclService
      * @param DateTime $begindate
      * @param DateTime $enddate
      *
-     * @return PhotoModel|null
+     * @return WeeklyPhotoModel|null
      */
     public function generatePhotoOfTheWeek($begindate = null, $enddate = null)
     {
@@ -458,7 +459,7 @@ class Photo extends AbstractAclService
     }
 
     /**
-     * @param ProfilePhotoModel $profilePhoto
+     * @param ProfilePhotoModel|null $profilePhoto
      *
      * @throws Exception
      */
@@ -629,7 +630,7 @@ class Photo extends AbstractAclService
     /**
      * Retrieves all WeeklyPhotos.
      *
-     * @return array
+     * @return Collection
      */
     public function getPhotosOfTheWeek()
     {

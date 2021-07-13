@@ -118,7 +118,7 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @return array
+     * @return ArrayCollection
      */
     public function getOptions()
     {
@@ -126,7 +126,7 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @return array
+     * @return ArrayCollection
      */
     public function getComments()
     {

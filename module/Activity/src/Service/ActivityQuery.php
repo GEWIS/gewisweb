@@ -9,6 +9,8 @@ use Application\Service\AbstractAclService;
 use DateTime;
 use Decision\Model\AssociationYear as AssociationYear;
 use Decision\Model\Organ;
+use Doctrine\Common\Collections\Collection;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
 use User\Model\User;
@@ -112,7 +114,7 @@ class ActivityQuery extends AbstractAclService
     /**
      * Retrieve all update proposals from the database.
      *
-     * @return a Collection of \Activity\Model\ActivityUpdateProposal
+     * @return Collection a Collection of \Activity\Model\ActivityUpdateProposal
      */
     public function getAllProposals()
     {
@@ -171,7 +173,7 @@ class ActivityQuery extends AbstractAclService
      * Returns an array of all activities.
      * NB: This method is currently unused. Should it be removed?
      *
-     * @return array Array of activities
+     * @return Collection Array of activities
      */
     public function getAllActivities()
     {
@@ -187,7 +189,7 @@ class ActivityQuery extends AbstractAclService
     /**
      * Get all the activities that are yet to be approved.
      *
-     * @return array Array of activities
+     * @return Collection Array of activities
      */
     public function getUnapprovedActivities()
     {
@@ -203,7 +205,7 @@ class ActivityQuery extends AbstractAclService
     /**
      * Get all activities that are approved by the board.
      *
-     * @return array Array of activities
+     * @return Collection Array of activities
      */
     public function getApprovedActivities()
     {
@@ -222,7 +224,7 @@ class ActivityQuery extends AbstractAclService
      * @param Organ $organ
      * @param int $count
      *
-     * @return array
+     * @return Collection
      */
     public function getOrganActivities($organ, $count = null)
     {
@@ -242,7 +244,7 @@ class ActivityQuery extends AbstractAclService
     /**
      * Get all activities that are disapproved by the board.
      *
-     * @return array Array of activities
+     * @return Collection Array of activities
      */
     public function getDisapprovedActivities()
     {
@@ -260,7 +262,7 @@ class ActivityQuery extends AbstractAclService
      *
      * @param string $category Type of activities requested
      *
-     * @return array Array of activities
+     * @return Collection Array of activities
      */
     public function getUpcomingActivities($category = null)
     {
@@ -287,7 +289,7 @@ class ActivityQuery extends AbstractAclService
      *
      * @param /User/Model/User $user
      *
-     * @return array
+     * @return Collection
      */
     public function getUpcomingCreatedActivities($user)
     {
@@ -307,7 +309,7 @@ class ActivityQuery extends AbstractAclService
      *
      * @param User $user
      *
-     * @return array
+     * @return DoctrinePaginator
      */
     public function getOldCreatedActivitiesPaginator($user)
     {

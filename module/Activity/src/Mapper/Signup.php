@@ -54,7 +54,7 @@ class Signup
     /**
      * Get the signup object for an usedid/activityid if it exists.
      *
-     * @param int $activityId
+     * @param $signupListId
      * @param int $userId
      *
      * @return \Activity\Model\Signup
@@ -76,7 +76,7 @@ class Signup
             );
         $result = $qb->getQuery()->getResult();
 
-        return isset($result[0]) ? $result[0] : null;
+        return $result[0] ?? null;
     }
 
     /**

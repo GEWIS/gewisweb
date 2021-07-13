@@ -111,7 +111,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Get the company's translations.
      *
-     * @return array
+     * @return ArrayCollection
      */
     public function getTranslations()
     {
@@ -302,7 +302,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Get the company's packages.
      *
-     * @return CompanyPackages
+     * @return ArrayCollection of CompanyPackages
      */
     public function getPackages()
     {
@@ -312,7 +312,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Get the number of packages.
      *
-     * @return the number of packages
+     * @return integer the number of packages
      */
     public function getNumberOfPackages()
     {
@@ -410,7 +410,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Set the company's language neutral id.
      *
-     * @param int $languageNeutralId
+     * @param $language
      */
     public function setLanguageNeutralId($language)
     {

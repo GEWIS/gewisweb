@@ -3,6 +3,7 @@
 namespace Decision\Mapper;
 
 use Decision\Model\MeetingNotes;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -28,7 +29,7 @@ class Decision
      *
      * @param string $query
      *
-     * @return array
+     * @return Collection
      */
     public function search($query)
     {

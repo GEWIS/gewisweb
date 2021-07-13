@@ -15,6 +15,8 @@ use Company\Service\Company;
 use DateTime;
 use Decision\Model\Organ;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Stdlib\Parameters;
@@ -199,7 +201,7 @@ class Activity extends AbstractAclService
      * @param array $data Parameters describing activity
      * @param User $user The user that creates this activity
      * @param Organ $organ The organ this activity is associated with
-     * @param Company $company The company this activity is associated with
+     * @param Company|null $company The company this activity is associated with
      *
      * @return ActivityModel activity that was created
      */
@@ -302,9 +304,9 @@ class Activity extends AbstractAclService
      * @pre $data is valid data of Activity\Form\SignupListFields
      *
      * @param array|Parameters $data parameters for the new field
-     * @param SignupListModel $activity the SignupList the field belongs to
+     * @param SignupListModel $signupList the SignupList the field belongs to
      *
-     * @return ActivityField the new field
+     * @return SignupFieldModel the new field
      */
     public function createSignupField($data, $signupList)
     {
@@ -418,9 +420,12 @@ class Activity extends AbstractAclService
     /**
      * Create a new update proposal from user form.
      *
-     * @param array $data
+     * @param ActivityModel $currentActivity
+     * @param Parameters $data
      *
      * @return bool indicating whether the update was applied or is pending
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function createUpdateProposal(ActivityModel $currentActivity, Parameters $data)
     {
@@ -482,14 +487,13 @@ class Activity extends AbstractAclService
             $oldUpdate = $proposal->getNew();
             $proposal->setNew($newActivity);
             $em->remove($oldUpdate);
-            $em->flush();
         } else {
             $proposal = new ActivityProposalModel();
             $proposal->setOld($currentActivity);
             $proposal->setNew($newActivity);
             $em->persist($proposal);
-            $em->flush();
         }
+        $em->flush();
 
         // Try to directly update the proposal.
         if ($this->canApplyUpdateProposal($currentActivity)) {
@@ -648,7 +652,7 @@ class Activity extends AbstractAclService
     {
         foreach ($array as $key => $value) {
             if (is_array($value)) {
-                $array[$key] = $this->array_filter_recursive($array[$key]);
+                $array[$key] = $this->array_filter_recursive($value);
             }
 
             if (in_array($array[$key], ['', null, []], true)) {

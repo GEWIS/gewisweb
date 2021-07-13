@@ -14,6 +14,8 @@ use Application\Service\AbstractAclService;
 use DateTime;
 use Decision\Model\Member;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
 use User\Model\User;
@@ -281,9 +283,12 @@ class Signup extends AbstractAclService
     /**
      * Creates the generic parts of a signup.
      *
-     * @param SignupListModel $activity
-     *
+     * @param SignupModel $signup
+     * @param SignupListModel $signupList
+     * @param array $fieldResults
      * @return SignupModel
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     protected function createSignup(SignupModel $signup, SignupListModel $signupList, array $fieldResults)
     {

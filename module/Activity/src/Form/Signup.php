@@ -164,7 +164,7 @@ class Signup extends Form implements InputFilterProviderInterface
     /**
      * Apparently, validators are automatically added, so this works.
      *
-     * @return type array
+     * @return array
      */
     public function getInputFilterSpecification()
     {

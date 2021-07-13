@@ -259,7 +259,7 @@ class Organ
     /**
      * Get the members.
      *
-     * @return OrganMember
+     * @return ArrayCollection of OrganMember
      */
     public function getMembers()
     {
@@ -291,7 +291,7 @@ class Organ
     /**
      * Get all subdecisions.of this organ.
      *
-     * @return array
+     * @return ArrayCollection
      */
     public function getSubdecisions()
     {

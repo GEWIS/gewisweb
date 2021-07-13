@@ -4,6 +4,7 @@ namespace Activity\Model;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use User\Model\User;
 use User\Permissions\Resource\CreatorResourceInterface;
 use User\Permissions\Resource\OrganResourceInterface;
 
@@ -107,7 +108,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @param array $signUps
+     * @param $fields
      */
     public function setFields($fields)
     {

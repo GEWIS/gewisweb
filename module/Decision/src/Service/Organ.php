@@ -8,6 +8,7 @@ use Application\Service\FileStorage;
 use Decision\Mapper\Organ as OrganMapper;
 use Decision\Model\Organ as OrganModel;
 use Decision\Model\OrganInformation;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Imagick;
 use Laminas\Mvc\I18n\Translator;
@@ -109,7 +110,7 @@ class Organ extends AbstractAclService
     /**
      * Get organs.
      *
-     * @return array of organs
+     * @return Collection of organs
      */
     public function getOrgans()
     {
@@ -139,7 +140,7 @@ class Organ extends AbstractAclService
     /**
      * Retrieves all organs which the current user is allowed to edit.
      *
-     * @return array
+     * @return Collection
      */
     public function getEditableOrgans()
     {
@@ -192,7 +193,7 @@ class Organ extends AbstractAclService
     /**
      * @param string $type either committee, avc or fraternity
      *
-     * @return array
+     * @return Collection
      */
     public function findActiveOrgansByType($type)
     {
@@ -202,7 +203,7 @@ class Organ extends AbstractAclService
     /**
      * @param string $type either committee, avc or fraternity
      *
-     * @return array
+     * @return Collection
      */
     public function findAbrogatedOrgansByType($type)
     {
@@ -338,7 +339,7 @@ class Organ extends AbstractAclService
      *
      * @param OrganInformation $organInformation
      *
-     * @return \Decision\Form\OrganInformation|bool
+     * @return \Decision\Form\OrganInformation
      */
     public function getOrganInformationForm($organInformation)
     {

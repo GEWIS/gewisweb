@@ -331,7 +331,7 @@ class ActivityCalendar extends AbstractAclService
      * @param $data
      * @param ProposalModel $proposal
      *
-     * @return OptionModel|bool
+     * @return OptionModel
      *
      * @throws Exception
      */

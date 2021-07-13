@@ -278,7 +278,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @param SignupList $category
+     * @param SignupList $signupList
      */
     public function removeSignupList($signupList)
     {
@@ -429,7 +429,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @param mixed $organ
+     * @param mixed $company
      */
     public function setCompany($company)
     {

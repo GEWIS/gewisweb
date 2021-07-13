@@ -337,7 +337,7 @@ class Member
     /**
      * Set the member's initials.
      *
-     * @param string $initals
+     * @param $initials
      */
     public function setInitials($initials)
     {

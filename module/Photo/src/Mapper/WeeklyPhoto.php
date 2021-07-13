@@ -2,6 +2,7 @@
 
 namespace Photo\Mapper;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -54,7 +55,7 @@ class WeeklyPhoto
     /**
      * Retrieves all WeeklyPhotos.
      *
-     * @return array
+     * @return Collection
      */
     public function getPhotosOfTheWeek()
     {

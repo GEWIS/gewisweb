@@ -552,7 +552,7 @@ class Photo implements ResourceInterface
      */
     public function toArray()
     {
-        $array = [
+        return [
             'id' => $this->getId(),
             'dateTime' => $this->getDateTime(),
             'artist' => $this->getArtist(),
@@ -570,8 +570,6 @@ class Photo implements ResourceInterface
             'longitude' => $this->getLongitude(),
             'latitude' => $this->getLatitude(),
         ];
-
-        return $array;
     }
 
     /**

@@ -93,7 +93,7 @@ class Album implements ResourceInterface
     /**
      * Gets an array of all child albums.
      *
-     * @return array
+     * @return ArrayCollection
      */
     public function getChildren()
     {
@@ -103,7 +103,7 @@ class Album implements ResourceInterface
     /**
      * Gets an array of all the photos in this album.
      *
-     * @return array
+     * @return ArrayCollection
      */
     public function getPhotos()
     {
@@ -158,7 +158,7 @@ class Album implements ResourceInterface
      */
     public function toArray()
     {
-        $array = [
+        return [
             'id' => $this->getId(),
             'startDateTime' => $this->getStartDateTime(),
             'endDateTime' => $this->getEndDateTime(),
@@ -171,8 +171,6 @@ class Album implements ResourceInterface
             'photoCount' => $this->getPhotoCount(),
             'albumCount' => $this->getAlbumCount(),
         ];
-
-        return $array;
     }
 
     /**
@@ -188,7 +186,7 @@ class Album implements ResourceInterface
     /**
      * Get the start date.
      *
-     * @return DateTime
+     * @return DateTime|null
      */
     public function getStartDateTime()
     {
@@ -206,7 +204,7 @@ class Album implements ResourceInterface
     /**
      * Get the end date.
      *
-     * @return DateTime
+     * @return DateTime|null
      */
     public function getEndDateTime()
     {

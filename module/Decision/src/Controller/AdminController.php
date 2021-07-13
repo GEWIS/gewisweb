@@ -102,7 +102,7 @@ class AdminController extends AbstractActionController
 
         $data = $form->getData();
         $id = $data['document'];
-        $moveDown = ('down' === $data['direction']) ? true : false;
+        $moveDown = 'down' === $data['direction'];
 
         // Update ordering document
         $this->decisionService->changePositionDocument($id, $moveDown);

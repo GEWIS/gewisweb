@@ -6,6 +6,7 @@ use Application\Service\AbstractAclService;
 use Application\Service\FileStorage;
 use DateTime;
 use DirectoryIterator;
+use Doctrine\Common\Collections\Collection;
 use Education\Form\AddCourse;
 use Education\Form\Bulk;
 use Education\Form\SearchCourse;
@@ -15,6 +16,7 @@ use Education\Model\Course as CourseModel;
 use Education\Model\Exam as ExamModel;
 use Education\Model\Summary as SummaryModel;
 use Exception;
+use Laminas\Http\Response\Stream;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
 use User\Model\User;
@@ -130,7 +132,7 @@ class Exam extends AbstractAclService
      *
      * @param array $data
      *
-     * @return array Courses, null if form is not valid
+     * @return Collection|null Courses, null if form is not valid
      */
     public function searchCourse($data)
     {
@@ -164,7 +166,7 @@ class Exam extends AbstractAclService
      *
      * @param int $id
      *
-     * @return ExamModel
+     * @return Stream|null
      */
     public function getExamDownload($id)
     {
@@ -478,7 +480,7 @@ class Exam extends AbstractAclService
      *
      * @param string $filename
      *
-     * @return array
+     * @return array|string
      */
     public static function guessSummaryAuthor($filename)
     {

@@ -12,6 +12,7 @@ use Laminas\Form\FormInterface;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Paginator\Paginator;
+use Laminas\Session\AbstractContainer;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\Stdlib\Parameters;
 use Laminas\View\Model\ViewModel;
@@ -68,7 +69,7 @@ class AdminController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        if (!$this->activityService->isAllowed($activity, 'update')) {
+        if (!$this->activityService->isAllowed('update', $activity)) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to update this activity'));
         }
 
@@ -172,8 +173,7 @@ class AdminController extends AbstractActionController
                 return $this->notFoundAction();
             }
 
-            if (!$this->activityService->isAllowed($activity, 'viewParticipants')) {
-                $this->translator = $this->translator;
+            if (!$this->activityService->isAllowed('viewParticipants', $activity)) {
                 throw new NotAllowedException($this->translator->translate('You are not allowed to view the participants of this activity'));
             }
         } else {
@@ -183,8 +183,7 @@ class AdminController extends AbstractActionController
                 return $this->notFoundAction();
             }
 
-            if (!$this->activityService->isAllowed($signupList, 'viewParticipants')) {
-                $this->translator = $this->translator;
+            if (!$this->activityService->isAllowed('viewParticipants', $signupList)) {
                 throw new NotAllowedException($this->translator->translate('You are not allowed to view the participants of this activity'));
             }
 
@@ -245,7 +244,7 @@ class AdminController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        if (!$this->activityService->isAllowed($signupList, 'adminSignup')) {
+        if (!$this->activityService->isAllowed('adminSignup', $signupList)) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to use this form'));
         }
 
@@ -289,9 +288,11 @@ class AdminController extends AbstractActionController
      * $error message can be displayed if the request was unsuccesful (i.e.
      * $success was false).
      *
-     * @param int $id
+     * @param $activityId
+     * @param $signupListId
      * @param bool $success Whether the request was successful
      * @param string $message
+     * @param AbstractContainer $session
      */
     protected function redirectActivityAdminRequest($activityId, $signupListId, $success, $message, $session = null)
     {
@@ -322,7 +323,7 @@ class AdminController extends AbstractActionController
 
         $signupList = $signup->getSignupList();
 
-        if (!$this->activityService->isAllowed($signupList, 'adminSignup')) {
+        if (!$this->activityService->isAllowed('adminSignup', $signupList)) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to use this form'));
         }
 

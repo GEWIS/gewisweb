@@ -8,7 +8,6 @@ use Company\Service\Company;
 use DateTime;
 use Decision\Service\Member;
 use Doctrine\Common\Proxy\Exception\InvalidArgumentException;
-use Doctrine\ORM\NoResultException;
 use Frontpage\Model\NewsItem;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
@@ -161,11 +160,7 @@ class Frontpage extends AbstractAclService
             $birthdays[] = ['member' => $member, 'age' => $age];
         }
 
-        try {
-            $tag = $this->tagMapper->getMostActiveMemberTag($members);
-        } catch (NoResultException $e) {
-            $tag = null;
-        }
+        $tag = $this->tagMapper->getMostActiveMemberTag($members);
 
         return [
             'birthdays' => $birthdays,

@@ -445,7 +445,7 @@ class Job
     /**
      * Get the labels. Returns an array of JobLabelAssignments.
      *
-     * @return array
+     * @return ArrayCollection
      */
     public function getLabels()
     {

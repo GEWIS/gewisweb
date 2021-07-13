@@ -3,6 +3,7 @@
 namespace Photo\Mapper;
 
 use DateTime;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -33,7 +34,7 @@ class Hit
      * @param DateTime $begindate
      * @param DateTime $enddate
      *
-     * @return array of array of string
+     * @return Collection of array of string
      */
     public function getHitsInRange($begindate, $enddate)
     {

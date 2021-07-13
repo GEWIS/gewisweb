@@ -11,15 +11,9 @@ use Laminas\Validator\StringLength;
 
 class Document extends Form implements InputFilterProviderInterface
 {
-    /**
-     * @var Translator
-     */
-    private $translator;
-
     public function __construct(Translator $translator)
     {
         parent::__construct();
-        $this->translator = $translator;
 
         $this->add(
             [

@@ -4,7 +4,6 @@ namespace Decision\Controller;
 
 use Decision\Controller\FileBrowser\FileReader;
 use Decision\Service\Decision;
-use Doctrine\ORM\NoResultException;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
@@ -43,34 +42,26 @@ class DecisionController extends AbstractActionController
         $type = $this->params()->fromRoute('type');
         $number = $this->params()->fromRoute('number');
 
-        try {
-            $meeting = $this->decisionService->getMeeting($type, $number);
-            $response = $this->decisionService->getMeetingNotesDownload($meeting);
-            if (is_null($response)) {
-                return $this->notFoundAction();
-            }
-
-            return $response;
-        } catch (NoResultException $e) {
+        $meeting = $this->decisionService->getMeeting($type, $number);
+        $response = $this->decisionService->getMeetingNotesDownload($meeting);
+        if (is_null($response)) {
             return $this->notFoundAction();
         }
+
+        return $response;
     }
 
     public function documentAction()
     {
         $id = $this->params()->fromRoute('id');
 
-        try {
-            $meetingDocument = $this->decisionService->getMeetingDocument($id);
-            $response = $this->decisionService->getMeetingDocumentDownload($meetingDocument);
-            if (is_null($response)) {
-                return $this->notFoundAction();
-            }
-
-            return $response;
-        } catch (NoResultException $e) {
+        $meetingDocument = $this->decisionService->getMeetingDocument($id);
+        $response = $this->decisionService->getMeetingDocumentDownload($meetingDocument);
+        if (is_null($response)) {
             return $this->notFoundAction();
         }
+
+        return $response;
     }
 
     /**
@@ -81,17 +72,13 @@ class DecisionController extends AbstractActionController
         $type = $this->params()->fromRoute('type');
         $number = $this->params()->fromRoute('number');
 
-        try {
-            $meeting = $this->decisionService->getMeeting($type, $number);
+        $meeting = $this->decisionService->getMeeting($type, $number);
 
-            return new ViewModel(
-                [
-                    'meeting' => $meeting,
-                ]
-            );
-        } catch (NoResultException $e) {
-            return $this->notFoundAction();
-        }
+        return new ViewModel(
+            [
+                'meeting' => $meeting,
+            ]
+        );
     }
 
     /**

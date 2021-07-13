@@ -135,7 +135,7 @@ class FileStorage
      * @param string $path The CFS path of the file to download
      * @param string $fileName The file name to give the downloaded file
      *
-     * @return |null If the given file is not found, null is returned
+     * @return Stream|null If the given file is not found, null is returned
      */
     public function downloadFile($path, $fileName)
     {

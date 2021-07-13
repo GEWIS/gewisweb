@@ -296,6 +296,7 @@ class AdminController extends AbstractActionController
 
     /**
      * Action that displays a form for editing a label.
+     * @noinspection PhpParamsInspection
      */
     public function editLabelAction()
     {

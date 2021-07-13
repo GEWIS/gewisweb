@@ -196,7 +196,7 @@ class Decision
     /**
      * Add a subdecision.
      *
-     * @param SubDecision $decision
+     * @param SubDecision $subdecision
      */
     public function addSubdecision(SubDecision $subdecision)
     {

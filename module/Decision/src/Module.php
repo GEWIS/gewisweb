@@ -32,7 +32,6 @@ class Module
      * Get service configuration.
      *
      * @return array Service configuration
-     * @noinspection PhpParamsInspection
      */
     public function getServiceConfig()
     {

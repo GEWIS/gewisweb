@@ -159,7 +159,7 @@ class PollComment implements ResourceInterface
     /**
      * Set the creation date.
      *
-     * @param string $createdOn
+     * @param DateTime $createdOn
      */
     public function setCreatedOn(DateTime $createdOn)
     {

@@ -3,7 +3,6 @@
 namespace UserTest;
 
 use Laminas\Loader\AutoloaderFactory;
-use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
 use RuntimeException;
 
@@ -39,7 +38,7 @@ class Bootstrap
             ],
         ];
 
-        $serviceManager = new ServiceManager(new ServiceManagerConfig());
+        $serviceManager = new ServiceManager();
         $serviceManager->setService('ApplicationConfig', $config);
         $serviceManager->get('ModuleManager')->loadModules();
         static::$serviceManager = $serviceManager;

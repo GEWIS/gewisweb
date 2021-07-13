@@ -7,6 +7,7 @@ use Application\Service\FileStorage;
 use DateInterval;
 use DateTime;
 use Decision\Service\Member;
+use Doctrine\Common\Collections\Collection;
 use Exception;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
@@ -118,7 +119,7 @@ class Album extends AbstractAclService
      * @param AlbumModel $album The album to retrieve sub-albums
      *                               of
      *
-     * @return array of albums
+     * @return array|Collection
      */
     public function getAlbums($album = null, $start = 0, $maxResults = null)
     {
@@ -147,7 +148,7 @@ class Album extends AbstractAclService
      *
      * @param $year integer the year in which the albums have been created
      *
-     * @return array of \Photo\Model\Albums
+     * @return array|Collection
      */
     public function getAlbumsByYear($year)
     {
@@ -173,7 +174,7 @@ class Album extends AbstractAclService
      * Retrieves all root albums which do not have a startDateTime specified.
      * This is in most cases analogous to returning all empty albums.
      *
-     * @return array of \Photo\Model\Album
+     * @return Collection of \Photo\Model\Album
      */
     public function getAlbumsWithoutDate()
     {

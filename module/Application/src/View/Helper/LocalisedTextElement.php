@@ -34,8 +34,8 @@ class LocalisedTextElement extends AbstractHelper
     /**
      * Checks whether a haystack ends with a needle. PHP does not offer this functionality natively until PHP 8.0.
      *
-     * @param $haystack
-     * @param $needle
+     * @param string $haystack
+     * @param string $needle
      *
      * @return bool
      */

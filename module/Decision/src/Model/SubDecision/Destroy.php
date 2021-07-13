@@ -50,7 +50,7 @@ class Destroy extends SubDecision
     /**
      * Set the target.
      *
-     * @param Target $target
+     * @param Decision $target
      */
     public function setTarget(Decision $target)
     {

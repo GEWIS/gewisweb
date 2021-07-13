@@ -155,9 +155,7 @@ class Module
                     return $helper;
                 },
                 'scriptUrl' => function () {
-                    $helper = new ScriptUrl();
-
-                    return $helper;
+                    return new ScriptUrl();
                 },
                 'moduleIsActive' => function (ContainerInterface $container) {
                     $helper = new ModuleIsActive();

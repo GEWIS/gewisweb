@@ -7,7 +7,6 @@ use Firebase\JWT\JWT;
 use Laminas\Authentication\Storage;
 use Laminas\Http\Header\SetCookie;
 use UnexpectedValueException;
-use User\Model\Session as SessionModel;
 
 class Session extends Storage\Session
 {

@@ -2,6 +2,7 @@
 
 namespace Frontpage\Mapper;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
@@ -44,7 +45,7 @@ class NewsItem
      *
      * @param int $count
      *
-     * @return array
+     * @return Collection
      */
     public function getLatestNewsItems($count)
     {

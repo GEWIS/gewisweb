@@ -50,7 +50,7 @@ class ActivityOptionCreationPeriod
     /**
      * Finds the ActivityOptionCreationPeriod model that is currently active.
      *
-     * @return ActivityOptionCreationPeriod
+     * @return ActivityOptionCreationPeriodModel
      *
      * @throws Exception
      */

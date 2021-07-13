@@ -4,13 +4,12 @@ namespace Activity\Controller;
 
 use Activity\Form\ModifyRequest as RequestForm;
 use Activity\Model\Activity;
-use Activity\Model\SignupList;
 use Activity\Service\ActivityQuery;
 use Activity\Service\Signup;
 use Activity\Service\SignupListQuery;
 use DateTime;
-use Decision\Service\Member;
 use Laminas\Form\FormInterface;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Session\Container as SessionContainer;
@@ -122,6 +121,7 @@ class ActivityController extends AbstractActionController
 
         $identity = $this->userService->getIdentity();
         $isSignedUp = false;
+        // TODO: you are passing a signup list while an activity is expected (repeated multiple times)
         if ($this->signupService->isAllowedToInternalSubscribe()) {
             $isSignedUp = $isAllowedToSubscribe
                 && $this->signupService->isSignedUp($signupList, $identity->getMember());
@@ -169,12 +169,12 @@ class ActivityController extends AbstractActionController
     /**
      * Get the appropriate signup form.
      *
-     * @param SignupList $fields
+     * @param $signupList
      * @param SessionContainer $activitySession
      *
      * @return \Activity\Form\Signup $form
      */
-    protected function prepareSignupForm($signupList, &$activitySession)
+    protected function prepareSignupForm($signupList, $activitySession)
     {
         if ($this->signupService->isAllowedToSubscribe()) {
             $form = $this->signupService->getForm($signupList);
@@ -299,9 +299,12 @@ class ActivityController extends AbstractActionController
      * $error message can be displayed if the request was unsuccesful (i.e.
      * $success was false).
      *
-     * @param int $id
+     * @param $activityId
+     * @param $signupListId
      * @param bool $success Whether the request was successful
      * @param string $message
+     * @param null $session
+     * @return Response
      */
     protected function redirectActivityRequest($activityId, $signupListId, $success, $message, $session = null)
     {
