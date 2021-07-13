@@ -2,8 +2,8 @@
 
 namespace User\Service\Factory;
 
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use User\Service\ApiApp;
 
 class ApiAppFactory implements FactoryInterface
@@ -11,8 +11,8 @@ class ApiAppFactory implements FactoryInterface
     /**
      * @return ApiApp
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        return new ApiApp($serviceLocator->get(\User\Mapper\ApiApp::class));
+        return new ApiApp($container->get(\User\Mapper\ApiApp::class));
     }
 }

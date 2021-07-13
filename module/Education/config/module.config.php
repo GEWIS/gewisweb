@@ -2,7 +2,7 @@
 
 use Education\Controller\AdminController;
 use Education\Controller\EducationController;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
 
 return [
     'router' => [
@@ -143,16 +143,16 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            'Education\Controller\Education' => function (ServiceLocatorInterface $sm) {
-                $examService = $sm->get('education_service_exam');
-                $searchCourseForm = $sm->get('education_form_searchcourse');
+            'Education\Controller\Education' => function (ContainerInterface $container) {
+                $examService = $container->get('education_service_exam');
+                $searchCourseForm = $container->get('education_form_searchcourse');
 
                 return new EducationController($examService, $searchCourseForm);
             },
-            'Education\Controller\Admin' => function (ServiceLocatorInterface $sm) {
-                $examService = $sm->get('education_service_exam');
-                $uploadSummaryForm = $sm->get('education_form_summaryupload');
-                $educationTempConfig = $sm->get('config')['education_temp'];
+            'Education\Controller\Admin' => function (ContainerInterface $container) {
+                $examService = $container->get('education_service_exam');
+                $uploadSummaryForm = $container->get('education_form_summaryupload');
+                $educationTempConfig = $container->get('config')['education_temp'];
 
                 return new AdminController($examService, $uploadSummaryForm, $educationTempConfig);
             },

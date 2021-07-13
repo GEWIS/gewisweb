@@ -17,7 +17,7 @@ use Company\Mapper\Package;
 use Company\Service\Company;
 use Company\Service\CompanyQuery;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
 
 class Module
 {
@@ -34,55 +34,55 @@ class Module
     private function getFormFactories()
     {
         return [
-            'company_admin_edit_package_form' => function (ServiceLocatorInterface $sm) {
+            'company_admin_edit_package_form' => function (ContainerInterface $container) {
                 return new EditPackage(
-                    $sm->get('translator'),
+                    $container->get('translator'),
                     'job'
                 );
             },
-            'company_admin_edit_featuredpackage_form' => function (ServiceLocatorInterface $sm) {
+            'company_admin_edit_featuredpackage_form' => function (ContainerInterface $container) {
                 return new EditPackage(
-                    $sm->get('translator'),
+                    $container->get('translator'),
                     'featured'
                 );
             },
-            'company_admin_edit_category_form' => function (ServiceLocatorInterface $sm) {
+            'company_admin_edit_category_form' => function (ContainerInterface $container) {
                 return new EditCategory(
-                    $sm->get('company_mapper_category'),
-                    $sm->get('translator'),
-                    $sm->get('application_get_languages'),
-                    $sm->get('company_hydrator')
+                    $container->get('company_mapper_category'),
+                    $container->get('translator'),
+                    $container->get('application_get_languages'),
+                    $container->get('company_hydrator')
                 );
             },
-            'company_admin_edit_label_form' => function (ServiceLocatorInterface $sm) {
+            'company_admin_edit_label_form' => function (ContainerInterface $container) {
                 return new EditLabel(
-                    $sm->get('company_mapper_label'),
-                    $sm->get('translator'),
-                    $sm->get('application_get_languages'),
-                    $sm->get('company_hydrator')
+                    $container->get('company_mapper_label'),
+                    $container->get('translator'),
+                    $container->get('application_get_languages'),
+                    $container->get('company_hydrator')
                 );
             },
-            'company_admin_edit_bannerpackage_form' => function (ServiceLocatorInterface $sm) {
+            'company_admin_edit_bannerpackage_form' => function (ContainerInterface $container) {
                 return new EditPackage(
-                    $sm->get('translator'),
+                    $container->get('translator'),
                     'banner'
                 );
             },
-            'company_admin_edit_company_form' => function (ServiceLocatorInterface $sm) {
+            'company_admin_edit_company_form' => function (ContainerInterface $container) {
                 return new EditCompany(
-                    $sm->get('company_mapper_company'),
-                    $sm->get('translator')
+                    $container->get('company_mapper_company'),
+                    $container->get('translator')
                 );
             },
-            'company_admin_edit_job_form' => function (ServiceLocatorInterface $sm) {
+            'company_admin_edit_job_form' => function (ContainerInterface $container) {
                 $form = new EditJob(
-                    $sm->get('company_mapper_job'),
-                    $sm->get('translator'),
-                    $sm->get('application_get_languages'),
-                    $sm->get('company_hydrator'),
-                    $sm->get('company_service_companyquery')->getLabelList(false)
+                    $container->get('company_mapper_job'),
+                    $container->get('translator'),
+                    $container->get('application_get_languages'),
+                    $container->get('company_hydrator'),
+                    $container->get('company_service_companyquery')->getLabelList(false)
                 );
-                $form->setHydrator($sm->get('company_hydrator'));
+                $form->setHydrator($container->get('company_hydrator'));
 
                 return $form;
             },
@@ -92,44 +92,44 @@ class Module
     private function getMapperFactories()
     {
         return [
-            'company_mapper_company' => function (ServiceLocatorInterface $sm) {
+            'company_mapper_company' => function (ContainerInterface $container) {
                 return new Mapper\Company(
-                    $sm->get('doctrine.entitymanager.orm_default')
+                    $container->get('doctrine.entitymanager.orm_default')
                 );
             },
-            'company_mapper_job' => function (ServiceLocatorInterface $sm) {
+            'company_mapper_job' => function (ContainerInterface $container) {
                 return new Job(
-                    $sm->get('doctrine.entitymanager.orm_default')
+                    $container->get('doctrine.entitymanager.orm_default')
                 );
             },
-            'company_mapper_package' => function (ServiceLocatorInterface $sm) {
+            'company_mapper_package' => function (ContainerInterface $container) {
                 return new Package(
-                    $sm->get('doctrine.entitymanager.orm_default')
+                    $container->get('doctrine.entitymanager.orm_default')
                 );
             },
-            'company_mapper_featuredpackage' => function (ServiceLocatorInterface $sm) {
+            'company_mapper_featuredpackage' => function (ContainerInterface $container) {
                 return new FeaturedPackage(
-                    $sm->get('doctrine.entitymanager.orm_default')
+                    $container->get('doctrine.entitymanager.orm_default')
                 );
             },
-            'company_mapper_category' => function (ServiceLocatorInterface $sm) {
+            'company_mapper_category' => function (ContainerInterface $container) {
                 return new Category(
-                    $sm->get('doctrine.entitymanager.orm_default')
+                    $container->get('doctrine.entitymanager.orm_default')
                 );
             },
-            'company_mapper_label' => function (ServiceLocatorInterface $sm) {
+            'company_mapper_label' => function (ContainerInterface $container) {
                 return new Label(
-                    $sm->get('doctrine.entitymanager.orm_default')
+                    $container->get('doctrine.entitymanager.orm_default')
                 );
             },
-            'company_mapper_label_assignment' => function (ServiceLocatorInterface $sm) {
+            'company_mapper_label_assignment' => function (ContainerInterface $container) {
                 return new LabelAssignment(
-                    $sm->get('doctrine.entitymanager.orm_default')
+                    $container->get('doctrine.entitymanager.orm_default')
                 );
             },
-            'company_mapper_bannerpackage' => function (ServiceLocatorInterface $sm) {
+            'company_mapper_bannerpackage' => function (ContainerInterface $container) {
                 return new BannerPackage(
-                    $sm->get('doctrine.entitymanager.orm_default')
+                    $container->get('doctrine.entitymanager.orm_default')
                 );
             },
         ];
@@ -138,16 +138,16 @@ class Module
     private function getOtherFactories()
     {
         return [
-            'company_language' => function (ServiceLocatorInterface $sm) {
-                return $sm->get('translator');
+            'company_language' => function (ContainerInterface $container) {
+                return $container->get('translator');
             },
-            'company_hydrator' => function (ServiceLocatorInterface $sm) {
+            'company_hydrator' => function (ContainerInterface $container) {
                 return new DoctrineObject(
-                    $sm->get('doctrine.entitymanager.orm_default')
+                    $container->get('doctrine.entitymanager.orm_default')
                 );
             },
-            'company_acl' => function (ServiceLocatorInterface $sm) {
-                $acl = $sm->get('acl');
+            'company_acl' => function (ContainerInterface $container) {
+                $acl = $container->get('acl');
 
                 // add resource
                 $acl->addResource('company');
@@ -174,27 +174,27 @@ class Module
     public function getServiceConfig()
     {
         $serviceFactories = [
-            'company_service_company' => function (ServiceLocatorInterface $sm) {
-                $translator = $sm->get('translator');
-                $userRole = $sm->get('user_role');
-                $acl = $sm->get('company_acl');
-                $storageService = $sm->get('application_service_storage');
-                $companyMapper = $sm->get('company_mapper_company');
-                $packageMapper = $sm->get('company_mapper_package');
-                $bannerPackageMapper = $sm->get('company_mapper_bannerpackage');
-                $featuredPackageMapper = $sm->get('company_mapper_featuredpackage');
-                $jobMapper = $sm->get('company_mapper_job');
-                $categoryMapper = $sm->get('company_mapper_category');
-                $labelMapper = $sm->get('company_mapper_label');
-                $labelAssignmentMapper = $sm->get('company_mapper_label_assignment');
-                $editCompanyForm = $sm->get('company_admin_edit_company_form');
-                $editPackageForm = $sm->get('company_admin_edit_package_form');
-                $editBannerPackageForm = $sm->get('company_admin_edit_bannerpackage_form');
-                $editFeaturedPackageForm = $sm->get('company_admin_edit_featuredpackage_form');
-                $editJobForm = $sm->get('company_admin_edit_job_form');
-                $editCategoryForm = $sm->get('company_admin_edit_category_form');
-                $editLabelForm = $sm->get('company_admin_edit_label_form');
-                $languages = $sm->get('application_get_languages');
+            'company_service_company' => function (ContainerInterface $container) {
+                $translator = $container->get('translator');
+                $userRole = $container->get('user_role');
+                $acl = $container->get('company_acl');
+                $storageService = $container->get('application_service_storage');
+                $companyMapper = $container->get('company_mapper_company');
+                $packageMapper = $container->get('company_mapper_package');
+                $bannerPackageMapper = $container->get('company_mapper_bannerpackage');
+                $featuredPackageMapper = $container->get('company_mapper_featuredpackage');
+                $jobMapper = $container->get('company_mapper_job');
+                $categoryMapper = $container->get('company_mapper_category');
+                $labelMapper = $container->get('company_mapper_label');
+                $labelAssignmentMapper = $container->get('company_mapper_label_assignment');
+                $editCompanyForm = $container->get('company_admin_edit_company_form');
+                $editPackageForm = $container->get('company_admin_edit_package_form');
+                $editBannerPackageForm = $container->get('company_admin_edit_bannerpackage_form');
+                $editFeaturedPackageForm = $container->get('company_admin_edit_featuredpackage_form');
+                $editJobForm = $container->get('company_admin_edit_job_form');
+                $editCategoryForm = $container->get('company_admin_edit_category_form');
+                $editLabelForm = $container->get('company_admin_edit_label_form');
+                $languages = $container->get('application_get_languages');
 
                 return new Company(
                     $translator,
@@ -219,13 +219,13 @@ class Module
                     $languages
                 );
             },
-            'company_service_companyquery' => function (ServiceLocatorInterface $sm) {
-                $translator = $sm->get('translator');
-                $userRole = $sm->get('user_role');
-                $acl = $sm->get('company_acl');
-                $jobMapper = $sm->get('company_mapper_job');
-                $categoryMapper = $sm->get('company_mapper_category');
-                $labelMapper = $sm->get('company_mapper_label');
+            'company_service_companyquery' => function (ContainerInterface $container) {
+                $translator = $container->get('translator');
+                $userRole = $container->get('user_role');
+                $acl = $container->get('company_acl');
+                $jobMapper = $container->get('company_mapper_job');
+                $categoryMapper = $container->get('company_mapper_category');
+                $labelMapper = $container->get('company_mapper_label');
 
                 return new CompanyQuery(
                     $translator,

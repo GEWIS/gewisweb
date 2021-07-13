@@ -3,7 +3,7 @@
 namespace Application\View\Helper;
 
 use Laminas\Code\Exception\InvalidArgumentException;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
 use Laminas\View\Helper\AbstractHelper;
 
 class Acl extends AbstractHelper

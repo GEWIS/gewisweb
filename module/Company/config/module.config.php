@@ -3,7 +3,7 @@
 use Application\View\Helper\Truncate;
 use Company\Controller\AdminController;
 use Company\Controller\CompanyController;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
 
 return [
     'router' => [
@@ -297,20 +297,20 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            'Company\Controller\Company' => function (ServiceLocatorInterface $sm) {
-                $translator = $sm->get('translator');
-                $companyService = $sm->get('company_service_company');
-                $companyQueryService = $sm->get('company_service_companyquery');
+            'Company\Controller\Company' => function (ContainerInterface $container) {
+                $translator = $container->get('translator');
+                $companyService = $container->get('company_service_company');
+                $companyQueryService = $container->get('company_service_companyquery');
 
                 return new CompanyController($translator, $companyService, $companyQueryService);
             },
-            'Company\Controller\Admin' => function (ServiceLocatorInterface $sm) {
-                $translator = $sm->get('translator');
-                $companyService = $sm->get('company_service_company');
-                $companyQueryService = $sm->get('company_service_companyquery');
-                $labelMapper = $sm->get('company_mapper_label');
-                $companyForm = $sm->get('company_form_company');
-                $languages = $sm->get('languages');
+            'Company\Controller\Admin' => function (ContainerInterface $container) {
+                $translator = $container->get('translator');
+                $companyService = $container->get('company_service_company');
+                $companyQueryService = $container->get('company_service_companyquery');
+                $labelMapper = $container->get('company_mapper_label');
+                $companyForm = $container->get('company_form_company');
+                $languages = $container->get('languages');
 
                 return new AdminController($translator, $companyService, $companyQueryService, $labelMapper, $companyForm, $languages);
             },

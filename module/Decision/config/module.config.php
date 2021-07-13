@@ -6,7 +6,7 @@ use Decision\Controller\MemberApiController;
 use Decision\Controller\MemberController;
 use Decision\Controller\OrganAdminController;
 use Decision\Controller\OrganController;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
 
 return [
     'router' => [
@@ -351,37 +351,37 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            'Decision\Controller\Decision' => function (ServiceLocatorInterface $sm) {
-                $decisionService = $sm->get('decision_service_decision');
-                $fileReader = $sm->get('decision_fileReader');
+            'Decision\Controller\Decision' => function (ContainerInterface $container) {
+                $decisionService = $container->get('decision_service_decision');
+                $fileReader = $container->get('decision_fileReader');
 
                 return new DecisionController($decisionService, $fileReader);
             },
-            'Decision\Controller\Organ' => function (ServiceLocatorInterface $sm) {
-                $organService = $sm->get('decision_service_organ');
+            'Decision\Controller\Organ' => function (ContainerInterface $container) {
+                $organService = $container->get('decision_service_organ');
 
                 return new OrganController($organService);
             },
-            'Decision\Controller\Admin' => function (ServiceLocatorInterface $sm) {
-                $decisionService = $sm->get('decision_service_decision');
+            'Decision\Controller\Admin' => function (ContainerInterface $container) {
+                $decisionService = $container->get('decision_service_decision');
 
                 return new AdminController($decisionService);
             },
-            'Decision\Controller\OrganAdmin' => function (ServiceLocatorInterface $sm) {
-                $organService = $sm->get('decision_service_organ');
+            'Decision\Controller\OrganAdmin' => function (ContainerInterface $container) {
+                $organService = $container->get('decision_service_organ');
 
                 return new OrganAdminController($organService);
             },
-            'Decision\Controller\Member' => function (ServiceLocatorInterface $sm) {
-                $memberService = $sm->get('decision_service_member');
-                $memberInfoService = $sm->get('decision_service_memberinfo');
-                $decisionService = $sm->get('decision_service_decision');
-                $regulationsConfig = $sm->get('config')['regulations'];
+            'Decision\Controller\Member' => function (ContainerInterface $container) {
+                $memberService = $container->get('decision_service_member');
+                $memberInfoService = $container->get('decision_service_memberinfo');
+                $decisionService = $container->get('decision_service_decision');
+                $regulationsConfig = $container->get('config')['regulations'];
 
                 return new MemberController($memberService, $memberInfoService, $decisionService, $regulationsConfig);
             },
-            'Decision\Controller\MemberApi' => function (ServiceLocatorInterface $sm) {
-                $memberService = $sm->get('decision_service_member');
+            'Decision\Controller\MemberApi' => function (ContainerInterface $container) {
+                $memberService = $container->get('decision_service_member');
 
                 return new MemberApiController($memberService);
             },

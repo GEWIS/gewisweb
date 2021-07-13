@@ -23,7 +23,7 @@ use Application\View\Helper\ScriptUrl;
 use Carbon\Carbon;
 use Laminas\Mvc\ModuleRouteListener;
 use Laminas\Mvc\MvcEvent;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\Validator\AbstractValidator;
 use Locale;
@@ -56,8 +56,8 @@ class Module
 
     public function logError(MvCEvent $e)
     {
-        $sm = $e->getApplication()->getServiceManager();
-        $logger = $sm->get('logger');
+        $container = $e->getApplication()->getServiceManager();
+        $logger = $container->get('logger');
 
         if ('error-router-no-match' === $e->getError()) {
             // not an interesting error
@@ -106,25 +106,25 @@ class Module
                 'application_service_legacy' => function () {
                     return new Legacy();
                 },
-                'application_service_email' => function (ServiceLocatorInterface $sm) {
-                    $renderer = $sm->get('ViewRenderer');
-                    $transport = $sm->get('user_mail_transport');
-                    $emailConfig = $sm->get('config')['email'];
+                'application_service_email' => function (ContainerInterface $container) {
+                    $renderer = $container->get('ViewRenderer');
+                    $transport = $container->get('user_mail_transport');
+                    $emailConfig = $container->get('config')['email'];
 
                     return new Email($renderer, $transport, $emailConfig);
                 },
-                'application_service_storage' => function (ServiceLocatorInterface $sm) {
-                    $translator = $sm->get('translator');
-                    $storageConfig = $sm->get('config')['storage'];
+                'application_service_storage' => function (ContainerInterface $container) {
+                    $translator = $container->get('translator');
+                    $storageConfig = $container->get('config')['storage'];
 
                     return new FileStorage($translator, $storageConfig);
                 },
                 'application_get_languages' => function () {
                     return ['nl', 'en'];
                 },
-                'logger' => function (ServiceLocatorInterface $sm) {
+                'logger' => function (ContainerInterface $container) {
                     $logger = new Logger('gewisweb');
-                    $config = $sm->get('config')['logging'];
+                    $config = $container->get('config')['logging'];
 
                     $handler = new RotatingFileHandler(
                         $config['logfile_path'],
@@ -148,9 +148,9 @@ class Module
     {
         return [
             'factories' => [
-                'acl' => function (ServiceLocatorInterface $sm) {
+                'acl' => function (ContainerInterface $container) {
                     $helper = new Acl();
-                    $helper->setServiceLocator($sm);
+                    $helper->setServiceLocator($container);
 
                     return $helper;
                 },
@@ -159,26 +159,26 @@ class Module
 
                     return $helper;
                 },
-                'moduleIsActive' => function (ServiceLocatorInterface $sm) {
+                'moduleIsActive' => function (ContainerInterface $container) {
                     $helper = new ModuleIsActive();
-                    $helper->setServiceLocator($sm);
+                    $helper->setServiceLocator($container);
 
                     return $helper;
                 },
-                'jobCategories' => function (ServiceLocatorInterface $sm) {
-                    $companyQueryService = $sm->get('company_service_companyquery');
+                'jobCategories' => function (ContainerInterface $container) {
+                    $companyQueryService = $container->get('company_service_companyquery');
 
                     return new JobCategories($companyQueryService);
                 },
-                'fileUrl' => function (ServiceLocatorInterface $sm) {
+                'fileUrl' => function (ContainerInterface $container) {
                     $helper = new FileUrl();
-                    $helper->setServiceLocator($sm);
+                    $helper->setServiceLocator($container);
 
                     return $helper;
                 },
-                'infima' => function (ServiceLocatorInterface $sm) {
+                'infima' => function (ContainerInterface $container) {
                     $helper = new Infima();
-                    $helper->setLegacyService($sm->get('application_service_legacy'));
+                    $helper->setLegacyService($container->get('application_service_legacy'));
 
                     return $helper;
                 },

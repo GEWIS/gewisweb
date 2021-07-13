@@ -14,7 +14,7 @@ use Decision\Mapper\Meeting;
 use Decision\Mapper\Member;
 use Decision\Mapper\Organ;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
 
 class Module
 {
@@ -38,18 +38,18 @@ class Module
     {
         return [
             'factories' => [
-                'decision_service_organ' => function (ServiceLocatorInterface $sm) {
-                    $translator = $sm->get('translator');
-                    $userRole = $sm->get('user_role');
-                    $acl = $sm->get('decision_acl');
-                    $entityManager = $sm->get('doctrine.entitymanager.orm_default');
-                    $userService = $sm->get('user_service_user');
-                    $storageService = $sm->get('application_service_storage');
-                    $emailService = $sm->get('application_service_email');
-                    $memberMapper = $sm->get('decision_mapper_member');
-                    $organMapper = $sm->get('decision_mapper_organ');
-                    $organInformationForm = $sm->get('decision_form_organ_information');
-                    $organInformationConfig = $sm->get('config')['organ_information'];
+                'decision_service_organ' => function (ContainerInterface $container) {
+                    $translator = $container->get('translator');
+                    $userRole = $container->get('user_role');
+                    $acl = $container->get('decision_acl');
+                    $entityManager = $container->get('doctrine.entitymanager.orm_default');
+                    $userService = $container->get('user_service_user');
+                    $storageService = $container->get('application_service_storage');
+                    $emailService = $container->get('application_service_email');
+                    $memberMapper = $container->get('decision_mapper_member');
+                    $organMapper = $container->get('decision_mapper_organ');
+                    $organInformationForm = $container->get('decision_form_organ_information');
+                    $organInformationConfig = $container->get('config')['organ_information'];
 
                     return new Service\Organ(
                         $translator,
@@ -65,22 +65,22 @@ class Module
                         $organInformationConfig
                     );
                 },
-                'decision_service_decision' => function (ServiceLocatorInterface $sm) {
-                    $translator = $sm->get('translator');
-                    $userRole = $sm->get('user_role');
-                    $acl = $sm->get('decision_acl');
-                    $userService = $sm->get('user_service_user');
-                    $storageService = $sm->get('application_service_storage');
-                    $emailService = $sm->get('application_service_email');
-                    $memberMapper = $sm->get('decision_mapper_member');
-                    $meetingMapper = $sm->get('decision_mapper_meeting');
-                    $decisionMapper = $sm->get('decision_mapper_decision');
-                    $authorizationMapper = $sm->get('decision_mapper_authorization');
-                    $notesForm = $sm->get('decision_form_notes');
-                    $documentForm = $sm->get('decision_form_document');
-                    $reorderDocumentForm = $sm->get('decision_form_reorder_document');
-                    $searchDecisionForm = $sm->get('decision_form_searchdecision');
-                    $authorizationForm = $sm->get('decision_form_authorization');
+                'decision_service_decision' => function (ContainerInterface $container) {
+                    $translator = $container->get('translator');
+                    $userRole = $container->get('user_role');
+                    $acl = $container->get('decision_acl');
+                    $userService = $container->get('user_service_user');
+                    $storageService = $container->get('application_service_storage');
+                    $emailService = $container->get('application_service_email');
+                    $memberMapper = $container->get('decision_mapper_member');
+                    $meetingMapper = $container->get('decision_mapper_meeting');
+                    $decisionMapper = $container->get('decision_mapper_decision');
+                    $authorizationMapper = $container->get('decision_mapper_authorization');
+                    $notesForm = $container->get('decision_form_notes');
+                    $documentForm = $container->get('decision_form_document');
+                    $reorderDocumentForm = $container->get('decision_form_reorder_document');
+                    $searchDecisionForm = $container->get('decision_form_searchdecision');
+                    $authorizationForm = $container->get('decision_form_authorization');
 
                     return new Service\Decision(
                         $translator,
@@ -100,14 +100,14 @@ class Module
                         $authorizationForm
                     );
                 },
-                'decision_service_member' => function (ServiceLocatorInterface $sm) {
-                    $translator = $sm->get('translator');
-                    $userRole = $sm->get('user_role');
-                    $acl = $sm->get('decision_acl');
-                    $userService = $sm->get('user_service_user');
-                    $memberMapper = $sm->get('decision_mapper_member');
-                    $authorizationMapper = $sm->get('decision_mapper_authorization');
-                    $config = $sm->get('config');
+                'decision_service_member' => function (ContainerInterface $container) {
+                    $translator = $container->get('translator');
+                    $userRole = $container->get('user_role');
+                    $acl = $container->get('decision_acl');
+                    $userService = $container->get('user_service_user');
+                    $memberMapper = $container->get('decision_mapper_member');
+                    $authorizationMapper = $container->get('decision_mapper_authorization');
+                    $config = $container->get('config');
 
                     return new Service\Member(
                         $translator,
@@ -119,12 +119,12 @@ class Module
                         $config
                     );
                 },
-                'decision_service_memberinfo' => function (ServiceLocatorInterface $sm) {
-                    $translator = $sm->get('translator');
-                    $userRole = $sm->get('user_role');
-                    $acl = $sm->get('decision_acl');
-                    $photoService = $sm->get('photo_service_photo');
-                    $memberMapper = $sm->get('decision_mapper_member');
+                'decision_service_memberinfo' => function (ContainerInterface $container) {
+                    $translator = $container->get('translator');
+                    $userRole = $container->get('user_role');
+                    $acl = $container->get('decision_acl');
+                    $photoService = $container->get('photo_service_photo');
+                    $memberMapper = $container->get('decision_mapper_member');
 
                     return new Service\MemberInfo(
                         $translator,
@@ -134,75 +134,75 @@ class Module
                         $memberMapper
                     );
                 },
-                'decision_mapper_member' => function (ServiceLocatorInterface $sm) {
+                'decision_mapper_member' => function (ContainerInterface $container) {
                     return new Member(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'decision_mapper_organ' => function (ServiceLocatorInterface $sm) {
+                'decision_mapper_organ' => function (ContainerInterface $container) {
                     return new Organ(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'decision_mapper_meeting' => function (ServiceLocatorInterface $sm) {
+                'decision_mapper_meeting' => function (ContainerInterface $container) {
                     return new Meeting(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'decision_mapper_decision' => function (ServiceLocatorInterface $sm) {
+                'decision_mapper_decision' => function (ContainerInterface $container) {
                     return new Decision(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'decision_mapper_authorization' => function (ServiceLocatorInterface $sm) {
+                'decision_mapper_authorization' => function (ContainerInterface $container) {
                     return new Mapper\Authorization(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'decision_form_searchdecision' => function (ServiceLocatorInterface $sm) {
+                'decision_form_searchdecision' => function (ContainerInterface $container) {
                     return new SearchDecision(
-                        $sm->get('translator')
+                        $container->get('translator')
                     );
                 },
-                'decision_form_document' => function (ServiceLocatorInterface $sm) {
+                'decision_form_document' => function (ContainerInterface $container) {
                     return new Document(
-                        $sm->get('translator')
+                        $container->get('translator')
                     );
                 },
-                'decision_form_notes' => function (ServiceLocatorInterface $sm) {
+                'decision_form_notes' => function (ContainerInterface $container) {
                     return new Notes(
-                        $sm->get('translator'),
-                        $sm->get('decision_mapper_meeting')
+                        $container->get('translator'),
+                        $container->get('decision_mapper_meeting')
                     );
                 },
-                'decision_form_authorization' => function (ServiceLocatorInterface $sm) {
+                'decision_form_authorization' => function (ContainerInterface $container) {
                     return new Authorization(
-                        $sm->get('translator')
+                        $container->get('translator')
                     );
                 },
-                'decision_form_organ_information' => function (ServiceLocatorInterface $sm) {
+                'decision_form_organ_information' => function (ContainerInterface $container) {
                     $form = new OrganInformation(
-                        $sm->get('translator')
+                        $container->get('translator')
                     );
-                    $form->setHydrator($sm->get('decision_hydrator'));
+                    $form->setHydrator($container->get('decision_hydrator'));
 
                     return $form;
                 },
-                'decision_form_reorder_document' => function (ServiceLocatorInterface $sm) {
-                    $translator = $sm->get('translator');
+                'decision_form_reorder_document' => function (ContainerInterface $container) {
+                    $translator = $container->get('translator');
 
                     return (new ReorderDocument())
                         ->setTranslator($translator)
                         ->setupElements();
                 },
-                'decision_hydrator' => function (ServiceLocatorInterface $sm) {
+                'decision_hydrator' => function (ContainerInterface $container) {
                     return new DoctrineObject(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'decision_fileReader' => function (ServiceLocatorInterface $sm) {
+                'decision_fileReader' => function (ContainerInterface $container) {
                     //NB: The returned object should implement the FileReader Interface.
-                    $config = $sm->get('config');
+                    $config = $container->get('config');
                     $validFile = $this->getServiceConfig()['filebrowser_valid_file'];
 
                     return new LocalFileReader(
@@ -210,8 +210,8 @@ class Module
                         $validFile
                     );
                 },
-                'decision_acl' => function (ServiceLocatorInterface $sm) {
-                    $acl = $sm->get('acl');
+                'decision_acl' => function (ContainerInterface $container) {
+                    $acl = $container->get('acl');
 
                     // add resources for this module
                     $acl->addResource('organ');

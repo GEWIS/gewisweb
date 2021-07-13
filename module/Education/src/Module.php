@@ -13,7 +13,7 @@ use Education\Mapper\Exam;
 use Education\Mapper\Study;
 use Education\Model\Summary;
 use Education\View\Helper\ExamUrl;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
 
 class Module
 {
@@ -36,19 +36,19 @@ class Module
     {
         return [
             'factories' => [
-                'education_service_exam' => function (ServiceLocatorInterface $sm) {
-                    $translator = $sm->get('translator');
-                    $userRole = $sm->get('user_role');
-                    $acl = $sm->get('education_acl');
-                    $storageService = $sm->get('application_service_storage');
-                    $courseMapper = $sm->get('education_mapper_course');
-                    $examMapper = $sm->get('education_mapper_exam');
-                    $addCourseForm = $sm->get('education_form_add_course');
-                    $searchCourseForm = $sm->get('education_form_searchcourse');
-                    $tempUploadForm = $sm->get('education_form_tempupload');
-                    $bulkSummaryForm = $sm->get('education_form_bulk_summary');
-                    $bulkExamForm = $sm->get('education_form_bulk_exam');
-                    $config = $sm->get('config');
+                'education_service_exam' => function (ContainerInterface $container) {
+                    $translator = $container->get('translator');
+                    $userRole = $container->get('user_role');
+                    $acl = $container->get('education_acl');
+                    $storageService = $container->get('application_service_storage');
+                    $courseMapper = $container->get('education_mapper_course');
+                    $examMapper = $container->get('education_mapper_exam');
+                    $addCourseForm = $container->get('education_form_add_course');
+                    $searchCourseForm = $container->get('education_form_searchcourse');
+                    $tempUploadForm = $container->get('education_form_tempupload');
+                    $bulkSummaryForm = $container->get('education_form_bulk_summary');
+                    $bulkExamForm = $container->get('education_form_bulk_exam');
+                    $config = $container->get('config');
 
                     return new Service\Exam(
                         $translator,
@@ -65,101 +65,101 @@ class Module
                         $config
                     );
                 },
-                'education_form_tempupload' => function (ServiceLocatorInterface $sm) {
+                'education_form_tempupload' => function (ContainerInterface $container) {
                     return new TempUpload(
-                        $sm->get('translator')
+                        $container->get('translator')
                     );
                 },
-                'education_form_summaryupload' => function (ServiceLocatorInterface $sm) {
+                'education_form_summaryupload' => function (ContainerInterface $container) {
                     $form = new SummaryUpload(
-                        $sm->get('translator')
+                        $container->get('translator')
                     );
-                    $form->setHydrator($sm->get('education_hydrator'));
+                    $form->setHydrator($container->get('education_hydrator'));
 
                     return $form;
                 },
-                'education_form_add_course' => function (ServiceLocatorInterface $sm) {
+                'education_form_add_course' => function (ContainerInterface $container) {
                     return new AddCourse(
-                        $sm->get('translator')
+                        $container->get('translator')
                     );
                 },
-                'education_form_bulk_exam' => function (ServiceLocatorInterface $sm) {
+                'education_form_bulk_exam' => function (ContainerInterface $container) {
                     return new Bulk(
-                        $sm->get('translator'),
-                        $sm->get('education_form_fieldset_exam')
+                        $container->get('translator'),
+                        $container->get('education_form_fieldset_exam')
                     );
                 },
-                'education_form_bulk_summary' => function (ServiceLocatorInterface $sm) {
+                'education_form_bulk_summary' => function (ContainerInterface $container) {
                     return new Bulk(
-                        $sm->get('translator'),
-                        $sm->get('education_form_fieldset_summary')
+                        $container->get('translator'),
+                        $container->get('education_form_fieldset_summary')
                     );
                 },
-                'education_form_searchcourse' => function (ServiceLocatorInterface $sm) {
+                'education_form_searchcourse' => function (ContainerInterface $container) {
                     return new SearchCourse(
-                        $sm->get('translator')
+                        $container->get('translator')
                     );
                 },
-                'education_form_fieldset_exam' => function (ServiceLocatorInterface $sm) {
+                'education_form_fieldset_exam' => function (ContainerInterface $container) {
                     $fieldset = new Form\Fieldset\Exam(
-                        $sm->get('translator')
+                        $container->get('translator')
                     );
-                    $fieldset->setConfig($sm->get('config'));
+                    $fieldset->setConfig($container->get('config'));
                     $fieldset->setObject(new Model\Exam());
-                    $fieldset->setHydrator($sm->get('education_hydrator_exam'));
+                    $fieldset->setHydrator($container->get('education_hydrator_exam'));
 
                     return $fieldset;
                 },
-                'education_form_fieldset_summary' => function (ServiceLocatorInterface $sm) {
+                'education_form_fieldset_summary' => function (ContainerInterface $container) {
                     $fieldset = new Form\Fieldset\Summary(
-                        $sm->get('translator')
+                        $container->get('translator')
                     );
-                    $fieldset->setConfig($sm->get('config'));
+                    $fieldset->setConfig($container->get('config'));
                     $fieldset->setObject(new Summary());
-                    $fieldset->setHydrator($sm->get('education_hydrator'));
+                    $fieldset->setHydrator($container->get('education_hydrator'));
 
                     return $fieldset;
                 },
-                'education_mapper_exam' => function (ServiceLocatorInterface $sm) {
+                'education_mapper_exam' => function (ContainerInterface $container) {
                     return new Exam(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'education_mapper_course' => function (ServiceLocatorInterface $sm) {
+                'education_mapper_course' => function (ContainerInterface $container) {
                     return new Course(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'education_mapper_study' => function (ServiceLocatorInterface $sm) {
+                'education_mapper_study' => function (ContainerInterface $container) {
                     return new Study(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'education_hydrator_study' => function (ServiceLocatorInterface $sm) {
+                'education_hydrator_study' => function (ContainerInterface $container) {
                     return new DoctrineObject(
-                        $sm->get('doctrine.entitymanager.orm_default'),
+                        $container->get('doctrine.entitymanager.orm_default'),
                         'Education\Model\Study'
                     );
                 },
-                'education_hydrator_course' => function (ServiceLocatorInterface $sm) {
+                'education_hydrator_course' => function (ContainerInterface $container) {
                     return new DoctrineObject(
-                        $sm->get('doctrine.entitymanager.orm_default'),
+                        $container->get('doctrine.entitymanager.orm_default'),
                         'Education\Model\Course'
                     );
                 },
-                'education_hydrator' => function (ServiceLocatorInterface $sm) {
+                'education_hydrator' => function (ContainerInterface $container) {
                     return new DoctrineObject(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'education_hydrator_exam' => function (ServiceLocatorInterface $sm) {
+                'education_hydrator_exam' => function (ContainerInterface $container) {
                     return new DoctrineObject(
-                        $sm->get('doctrine.entitymanager.orm_default'),
+                        $container->get('doctrine.entitymanager.orm_default'),
                         'Education\Model\Exam'
                     );
                 },
-                'education_acl' => function (ServiceLocatorInterface $sm) {
-                    $acl = $sm->get('acl');
+                'education_acl' => function (ContainerInterface $container) {
+                    $acl = $container->get('acl');
 
                     // add resource
                     $acl->addResource('exam');
@@ -185,11 +185,11 @@ class Module
     {
         return [
             'factories' => [
-                'examUrl' => function (ServiceLocatorInterface $sm) {
-                    $config = $sm->get('config');
+                'examUrl' => function (ContainerInterface $container) {
+                    $config = $container->get('config');
                     $helper = new ExamUrl();
                     $helper->setDir($config['education']['public_dir']);
-                    $helper->setExamService($sm->get('education_service_exam'));
+                    $helper->setExamService($container->get('education_service_exam'));
 
                     return $helper;
                 },

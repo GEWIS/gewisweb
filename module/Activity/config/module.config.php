@@ -2,7 +2,7 @@
 
 use Activity\Controller\ActivityCalendarController;
 use Activity\Controller\AdminCategoryController;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
 
 return [
     'router' => [
@@ -469,46 +469,46 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            'Activity\Controller\Activity' => function (ServiceLocatorInterface $sm) {
-                $activityService = $sm->get('activity_service_activity');
-                $activityQueryService = $sm->get('activity_service_activityQuery');
-                $signupService = $sm->get('activity_service_signup');
-                $signupListQueryService = $sm->get('activity_service_signupListQuery');
+            'Activity\Controller\Activity' => function (ContainerInterface $container) {
+                $activityService = $container->get('activity_service_activity');
+                $activityQueryService = $container->get('activity_service_activityQuery');
+                $signupService = $container->get('activity_service_signup');
+                $signupListQueryService = $container->get('activity_service_signupListQuery');
 
                 return new Activity\Controller\ActivityController($activityService, $activityQueryService, $signupService, $signupListQueryService);
             },
-            'Activity\Controller\AdminApproval' => function (ServiceLocatorInterface $sm) {
-                $translator = $sm->get('translator');
-                $activityService = $sm->get('activity_service_activity');
-                $activityQueryService = $sm->get('activity_service_activityQuery');
+            'Activity\Controller\AdminApproval' => function (ContainerInterface $container) {
+                $translator = $container->get('translator');
+                $activityService = $container->get('activity_service_activity');
+                $activityQueryService = $container->get('activity_service_activityQuery');
 
                 return new Activity\Controller\AdminApprovalController($translator, $activityService, $activityQueryService);
             },
-            'Activity\Controller\AdminCategory' => function (ServiceLocatorInterface $sm) {
-                $translator = $sm->get('translator');
-                $categoryService = $sm->get('activity_service_category');
+            'Activity\Controller\AdminCategory' => function (ContainerInterface $container) {
+                $translator = $container->get('translator');
+                $categoryService = $container->get('activity_service_category');
 
                 return new AdminCategoryController($translator, $categoryService);
             },
-            'Activity\Controller\Api' => function (ServiceLocatorInterface $sm) {
-                $activityQueryService = $sm->get('activity_service_activityQuery');
-                $signupService = $sm->get('activity_service_signup');
-                $userService = $sm->get('user_service_user');
+            'Activity\Controller\Api' => function (ContainerInterface $container) {
+                $activityQueryService = $container->get('activity_service_activityQuery');
+                $signupService = $container->get('activity_service_signup');
+                $userService = $container->get('user_service_user');
 
                 return new Activity\Controller\ApiController($activityQueryService, $signupService, $userService);
             },
-            'Activity\Controller\Admin' => function (ServiceLocatorInterface $sm) {
-                $translator = $sm->get('translator');
-                $activityService = $sm->get('activity_service_activity');
-                $activityQueryService = $sm->get('activity_service_activityQuery');
-                $signupService = $sm->get('activity_service_signup');
-                $signupListQueryService = $sm->get('activity_service_signupListQuery');
+            'Activity\Controller\Admin' => function (ContainerInterface $container) {
+                $translator = $container->get('translator');
+                $activityService = $container->get('activity_service_activity');
+                $activityQueryService = $container->get('activity_service_activityQuery');
+                $signupService = $container->get('activity_service_signup');
+                $signupListQueryService = $container->get('activity_service_signupListQuery');
 
                 return new Activity\Controller\AdminController($translator, $activityService, $activityQueryService, $signupService, $signupListQueryService);
             },
-            'Activity\Controller\ActivityCalendar' => function (ServiceLocatorInterface $sm) {
-                $calendarService = $sm->get('activity_service_calendar');
-                $calendarConfig = $sm->get('config')['calendar'];
+            'Activity\Controller\ActivityCalendar' => function (ContainerInterface $container) {
+                $calendarService = $container->get('activity_service_calendar');
+                $calendarConfig = $container->get('config')['calendar'];
 
                 return new ActivityCalendarController($calendarService, $calendarConfig);
             },

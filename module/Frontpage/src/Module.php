@@ -10,7 +10,7 @@ use Frontpage\Form\PollApproval;
 use Frontpage\Form\PollComment;
 use Frontpage\Service\Frontpage;
 use Frontpage\Service\News;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
 
 class Module
 {
@@ -33,18 +33,18 @@ class Module
     {
         return [
             'factories' => [
-                'frontpage_service_frontpage' => function (ServiceLocatorInterface $sm) {
-                    $translator = $sm->get('translator');
-                    $userRole = $sm->get('user_role');
-                    $acl = $sm->get('frontpage_acl');
-                    $pollService = $sm->get('frontpage_service_poll');
-                    $newsService = $sm->get('frontpage_service_news');
-                    $memberService = $sm->get('decision_service_member');
-                    $companyService = $sm->get('company_service_company');
-                    $photoService = $sm->get('photo_service_photo');
-                    $tagMapper = $sm->get('photo_mapper_tag');
-                    $activityMapper = $sm->get('activity_mapper_activity');
-                    $frontpageConfig = $sm->get('config')['frontpage'];
+                'frontpage_service_frontpage' => function (ContainerInterface $container) {
+                    $translator = $container->get('translator');
+                    $userRole = $container->get('user_role');
+                    $acl = $container->get('frontpage_acl');
+                    $pollService = $container->get('frontpage_service_poll');
+                    $newsService = $container->get('frontpage_service_news');
+                    $memberService = $container->get('decision_service_member');
+                    $companyService = $container->get('company_service_company');
+                    $photoService = $container->get('photo_service_photo');
+                    $tagMapper = $container->get('photo_mapper_tag');
+                    $activityMapper = $container->get('activity_mapper_activity');
+                    $frontpageConfig = $container->get('config')['frontpage'];
 
                     return new Frontpage(
                         $translator,
@@ -60,14 +60,14 @@ class Module
                         $frontpageConfig
                     );
                 },
-                'frontpage_service_page' => function (ServiceLocatorInterface $sm) {
-                    $translator = $sm->get('translator');
-                    $userRole = $sm->get('user_role');
-                    $acl = $sm->get('frontpage_acl');
-                    $storageService = $sm->get('application_service_storage');
-                    $pageMapper = $sm->get('frontpage_mapper_page');
-                    $pageForm = $sm->get('frontpage_form_page');
-                    $storageConfig = $sm->get('config')['storage'];
+                'frontpage_service_page' => function (ContainerInterface $container) {
+                    $translator = $container->get('translator');
+                    $userRole = $container->get('user_role');
+                    $acl = $container->get('frontpage_acl');
+                    $storageService = $container->get('application_service_storage');
+                    $pageMapper = $container->get('frontpage_mapper_page');
+                    $pageForm = $container->get('frontpage_form_page');
+                    $storageConfig = $container->get('config')['storage'];
 
                     return new Service\Page(
                         $translator,
@@ -79,15 +79,15 @@ class Module
                         $storageConfig
                     );
                 },
-                'frontpage_service_poll' => function (ServiceLocatorInterface $sm) {
-                    $translator = $sm->get('translator');
-                    $userRole = $sm->get('user_role');
-                    $acl = $sm->get('frontpage_acl');
-                    $emailService = $sm->get('application_service_email');
-                    $pollMapper = $sm->get('frontpage_mapper_poll');
-                    $pollForm = $sm->get('frontpage_form_poll');
-                    $pollCommentForm = $sm->get('frontpage_form_poll_comment');
-                    $pollApprovalForm = $sm->get('frontpage_form_poll_approval');
+                'frontpage_service_poll' => function (ContainerInterface $container) {
+                    $translator = $container->get('translator');
+                    $userRole = $container->get('user_role');
+                    $acl = $container->get('frontpage_acl');
+                    $emailService = $container->get('application_service_email');
+                    $pollMapper = $container->get('frontpage_mapper_poll');
+                    $pollForm = $container->get('frontpage_form_poll');
+                    $pollCommentForm = $container->get('frontpage_form_poll_comment');
+                    $pollApprovalForm = $container->get('frontpage_form_poll_approval');
 
                     return new Service\Poll(
                         $translator,
@@ -100,77 +100,77 @@ class Module
                         $pollApprovalForm
                     );
                 },
-                'frontpage_service_news' => function (ServiceLocatorInterface $sm) {
-                    $translator = $sm->get('translator');
-                    $userRole = $sm->get('user_role');
-                    $acl = $sm->get('frontpage_acl');
-                    $newsItemMapper = $sm->get('frontpage_mapper_news_item');
-                    $newsItemForm = $sm->get('frontpage_form_news_item');
+                'frontpage_service_news' => function (ContainerInterface $container) {
+                    $translator = $container->get('translator');
+                    $userRole = $container->get('user_role');
+                    $acl = $container->get('frontpage_acl');
+                    $newsItemMapper = $container->get('frontpage_mapper_news_item');
+                    $newsItemForm = $container->get('frontpage_form_news_item');
 
                     return new News($translator, $userRole, $acl, $newsItemMapper, $newsItemForm);
                 },
-                'frontpage_form_page' => function (ServiceLocatorInterface $sm) {
+                'frontpage_form_page' => function (ContainerInterface $container) {
                     $form = new Page(
-                        $sm->get('translator')
+                        $container->get('translator')
                     );
-                    $form->setHydrator($sm->get('frontpage_hydrator'));
+                    $form->setHydrator($container->get('frontpage_hydrator'));
 
                     return $form;
                 },
-                'frontpage_form_poll' => function (ServiceLocatorInterface $sm) {
+                'frontpage_form_poll' => function (ContainerInterface $container) {
                     $form = new Poll(
-                        $sm->get('translator')
+                        $container->get('translator')
                     );
-                    $form->setHydrator($sm->get('frontpage_hydrator'));
+                    $form->setHydrator($container->get('frontpage_hydrator'));
 
                     return $form;
                 },
-                'frontpage_form_poll_comment' => function (ServiceLocatorInterface $sm) {
+                'frontpage_form_poll_comment' => function (ContainerInterface $container) {
                     $form = new PollComment(
-                        $sm->get('translator')
+                        $container->get('translator')
                     );
-                    $form->setHydrator($sm->get('frontpage_hydrator'));
+                    $form->setHydrator($container->get('frontpage_hydrator'));
 
                     return $form;
                 },
-                'frontpage_form_poll_approval' => function (ServiceLocatorInterface $sm) {
+                'frontpage_form_poll_approval' => function (ContainerInterface $container) {
                     $form = new PollApproval(
-                        $sm->get('translator')
+                        $container->get('translator')
                     );
-                    $form->setHydrator($sm->get('frontpage_hydrator'));
+                    $form->setHydrator($container->get('frontpage_hydrator'));
 
                     return $form;
                 },
-                'frontpage_form_news_item' => function (ServiceLocatorInterface $sm) {
+                'frontpage_form_news_item' => function (ContainerInterface $container) {
                     $form = new NewsItem(
-                        $sm->get('translator')
+                        $container->get('translator')
                     );
-                    $form->setHydrator($sm->get('frontpage_hydrator'));
+                    $form->setHydrator($container->get('frontpage_hydrator'));
 
                     return $form;
                 },
-                'frontpage_hydrator' => function (ServiceLocatorInterface $sm) {
+                'frontpage_hydrator' => function (ContainerInterface $container) {
                     return new DoctrineObject(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'frontpage_mapper_page' => function (ServiceLocatorInterface $sm) {
+                'frontpage_mapper_page' => function (ContainerInterface $container) {
                     return new Mapper\Page(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'frontpage_mapper_poll' => function (ServiceLocatorInterface $sm) {
+                'frontpage_mapper_poll' => function (ContainerInterface $container) {
                     return new Mapper\Poll(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'frontpage_mapper_news_item' => function (ServiceLocatorInterface $sm) {
+                'frontpage_mapper_news_item' => function (ContainerInterface $container) {
                     return new Mapper\NewsItem(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'frontpage_acl' => function (ServiceLocatorInterface $sm) {
-                    $acl = $sm->get('acl');
+                'frontpage_acl' => function (ContainerInterface $container) {
+                    $acl = $container->get('acl');
 
                     $acl->addResource('page');
                     $acl->addResource('poll');

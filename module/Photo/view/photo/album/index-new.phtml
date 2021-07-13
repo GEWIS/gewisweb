@@ -116,7 +116,7 @@ $this->scriptUrl()->requireUrl('member/search')
                 <?php
                 $ar = $item->getAspectRatio();
                 $width = $config['small_thumb_size']['width'];
-                $smallSize = [
+                $containerallSize = [
                     'w' => $width,
                     'h' => round($width * $ar)
                 ];
@@ -139,10 +139,10 @@ $this->scriptUrl()->requireUrl('member/search')
                     >
                         <img
                             class="lazy-load"
-                            data-width="<?= $smallSize['w'] ?>" data-height="<?= $smallSize['h'] ?>"
-                            data-src="<?= $this->glideUrl()->getUrl($item->getPath(), $smallSize) ?>"
+                            data-width="<?= $containerallSize['w'] ?>" data-height="<?= $containerallSize['h'] ?>"
+                            data-src="<?= $this->glideUrl()->getUrl($item->getPath(), $containerallSize) ?>"
                             alt=""
-                            data-size="<?= $smallSize['w'] . 'x' . $smallSize['h'] ?>"
+                            data-size="<?= $containerallSize['w'] . 'x' . $containerallSize['h'] ?>"
                         >
                     </a>
                     <figcaption style="display:none">

@@ -2,7 +2,7 @@
 
 namespace Application\View\Helper;
 
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
 use Laminas\View\Helper\AbstractHelper;
 
 class FileUrl extends AbstractHelper

@@ -7,7 +7,7 @@ use Doctrine\ORM\Events;
 use Exception;
 use Laminas\Cache\StorageFactory;
 use Laminas\Mvc\MvcEvent;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
 use League\Glide\Urls\UrlBuilderFactory;
 use Photo\Listener\AlbumDate as AlbumDateListener;
 use Photo\Listener\Remove as RemoveListener;
@@ -22,12 +22,12 @@ class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
-        $sm = $e->getApplication()->getServiceManager();
-        $em = $sm->get('doctrine.entitymanager.orm_default');
+        $container = $e->getApplication()->getServiceManager();
+        $em = $container->get('doctrine.entitymanager.orm_default');
         $dem = $em->getEventManager();
         $dem->addEventListener([Events::prePersist], new AlbumDateListener());
-        $photoService = $sm->get('photo_service_photo');
-        $albumService = $sm->get('photo_service_album');
+        $photoService = $container->get('photo_service_photo');
+        $albumService = $container->get('photo_service_album');
         $dem->addEventListener([Events::preRemove], new RemoveListener($photoService, $albumService));
     }
 
@@ -50,17 +50,17 @@ class Module
     {
         return [
             'factories' => [
-                'photo_service_album' => function (ServiceLocatorInterface $sm) {
-                    $translator = $sm->get('translator');
-                    $userRole = $sm->get('user_role');
-                    $acl = $sm->get('photo_acl');
-                    $photoService = $sm->get('photo_service_photo');
-                    $albumCoverService = $sm->get('photo_service_album_cover');
-                    $memberService = $sm->get('decision_service_member');
-                    $storageService = $sm->get('application_service_storage');
-                    $albumMapper = $sm->get('photo_mapper_album');
-                    $createAlbumForm = $sm->get('photo_form_album_create');
-                    $editAlbumForm = $sm->get('photo_form_album_edit');
+                'photo_service_album' => function (ContainerInterface $container) {
+                    $translator = $container->get('translator');
+                    $userRole = $container->get('user_role');
+                    $acl = $container->get('photo_acl');
+                    $photoService = $container->get('photo_service_photo');
+                    $albumCoverService = $container->get('photo_service_album_cover');
+                    $memberService = $container->get('decision_service_member');
+                    $storageService = $container->get('application_service_storage');
+                    $albumMapper = $container->get('photo_mapper_album');
+                    $createAlbumForm = $container->get('photo_form_album_create');
+                    $editAlbumForm = $container->get('photo_form_album_edit');
 
                     return new Album(
                         $translator,
@@ -78,20 +78,20 @@ class Module
                 'photo_service_metadata' => function () {
                     return new Metadata();
                 },
-                'photo_service_photo' => function (ServiceLocatorInterface $sm) {
-                    $translator = $sm->get('translator');
-                    $userRole = $sm->get('user_role');
-                    $acl = $sm->get('photo_acl');
-                    $memberService = $sm->get('decision_service_member');
-                    $storageService = $sm->get('application_service_storage');
-                    $photoMapper = $sm->get('photo_mapper_photo');
-                    $albumMapper = $sm->get('photo_mapper_album');
-                    $tagMapper = $sm->get('photo_mapper_tag');
-                    $hitMapper = $sm->get('photo_mapper_hit');
-                    $voteMapper = $sm->get('photo_mapper_vote');
-                    $weeklyPhotoMapper = $sm->get('photo_mapper_weekly_photo');
-                    $profilePhotoMapper = $sm->get('photo_mapper_profile_photo');
-                    $photoConfig = $sm->get('config')['photo'];
+                'photo_service_photo' => function (ContainerInterface $container) {
+                    $translator = $container->get('translator');
+                    $userRole = $container->get('user_role');
+                    $acl = $container->get('photo_acl');
+                    $memberService = $container->get('decision_service_member');
+                    $storageService = $container->get('application_service_storage');
+                    $photoMapper = $container->get('photo_mapper_photo');
+                    $albumMapper = $container->get('photo_mapper_album');
+                    $tagMapper = $container->get('photo_mapper_tag');
+                    $hitMapper = $container->get('photo_mapper_hit');
+                    $voteMapper = $container->get('photo_mapper_vote');
+                    $weeklyPhotoMapper = $container->get('photo_mapper_weekly_photo');
+                    $profilePhotoMapper = $container->get('photo_mapper_profile_photo');
+                    $photoConfig = $container->get('config')['photo'];
 
                     return new Photo(
                         $translator,
@@ -109,25 +109,25 @@ class Module
                         $photoConfig
                     );
                 },
-                'photo_service_album_cover' => function (ServiceLocatorInterface $sm) {
-                    $photoMapper = $sm->get('photo_mapper_photo');
-                    $albumMapper = $sm->get('photo_mapper_album');
-                    $storage = $sm->get('application_service_storage');
-                    $photoConfig = $sm->get('config')['photo'];
-                    $storageConfig = $sm->get('config')['storage'];
+                'photo_service_album_cover' => function (ContainerInterface $container) {
+                    $photoMapper = $container->get('photo_mapper_photo');
+                    $albumMapper = $container->get('photo_mapper_album');
+                    $storage = $container->get('application_service_storage');
+                    $photoConfig = $container->get('config')['photo'];
+                    $storageConfig = $container->get('config')['storage'];
 
                     return new AlbumCover($photoMapper, $albumMapper, $storage, $photoConfig, $storageConfig);
                 },
-                'photo_service_admin' => function (ServiceLocatorInterface $sm) {
-                    $translator = $sm->get('translator');
-                    $userRole = $sm->get('user_role');
-                    $acl = $sm->get('photo_acl');
-                    $photoService = $sm->get('photo_service_photo');
-                    $albumService = $sm->get('photo_service_album');
-                    $metadataService = $sm->get('photo_service_metadata');
-                    $storageService = $sm->get('application_service_storage');
-                    $photoMapper = $sm->get('photo_mapper_photo');
-                    $photoConfig = $sm->get('config')['photo'];
+                'photo_service_admin' => function (ContainerInterface $container) {
+                    $translator = $container->get('translator');
+                    $userRole = $container->get('user_role');
+                    $acl = $container->get('photo_acl');
+                    $photoService = $container->get('photo_service_photo');
+                    $albumService = $container->get('photo_service_album');
+                    $metadataService = $container->get('photo_service_metadata');
+                    $storageService = $container->get('application_service_storage');
+                    $photoMapper = $container->get('photo_mapper_photo');
+                    $photoConfig = $container->get('config')['photo'];
 
                     return new Admin(
                         $translator,
@@ -141,65 +141,65 @@ class Module
                         $photoConfig
                     );
                 },
-                'photo_form_album_edit' => function (ServiceLocatorInterface $sm) {
+                'photo_form_album_edit' => function (ContainerInterface $container) {
                     $form = new Form\EditAlbum(
-                        $sm->get('translator')
+                        $container->get('translator')
                     );
-                    $form->setHydrator($sm->get('photo_hydrator_album'));
+                    $form->setHydrator($container->get('photo_hydrator_album'));
 
                     return $form;
                 },
-                'photo_form_album_create' => function (ServiceLocatorInterface $sm) {
+                'photo_form_album_create' => function (ContainerInterface $container) {
                     $form = new Form\CreateAlbum(
-                        $sm->get('translator')
+                        $container->get('translator')
                     );
-                    $form->setHydrator($sm->get('photo_hydrator_album'));
+                    $form->setHydrator($container->get('photo_hydrator_album'));
 
                     return $form;
                 },
-                'photo_hydrator_album' => function (ServiceLocatorInterface $sm) {
+                'photo_hydrator_album' => function (ContainerInterface $container) {
                     return new DoctrineObject(
-                        $sm->get('doctrine.entitymanager.orm_default'),
+                        $container->get('doctrine.entitymanager.orm_default'),
                         'Photo\Model\Album'
                     );
                 },
-                'photo_mapper_album' => function (ServiceLocatorInterface $sm) {
+                'photo_mapper_album' => function (ContainerInterface $container) {
                     return new Mapper\Album(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'photo_mapper_photo' => function (ServiceLocatorInterface $sm) {
+                'photo_mapper_photo' => function (ContainerInterface $container) {
                     return new Mapper\Photo(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'photo_mapper_profile_photo' => function (ServiceLocatorInterface $sm) {
+                'photo_mapper_profile_photo' => function (ContainerInterface $container) {
                     return new Mapper\ProfilePhoto(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'photo_mapper_tag' => function (ServiceLocatorInterface $sm) {
+                'photo_mapper_tag' => function (ContainerInterface $container) {
                     return new Mapper\Tag(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'photo_mapper_hit' => function (ServiceLocatorInterface $sm) {
+                'photo_mapper_hit' => function (ContainerInterface $container) {
                     return new Mapper\Hit(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'photo_mapper_weekly_photo' => function (ServiceLocatorInterface $sm) {
+                'photo_mapper_weekly_photo' => function (ContainerInterface $container) {
                     return new Mapper\WeeklyPhoto(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'photo_mapper_vote' => function (ServiceLocatorInterface $sm) {
+                'photo_mapper_vote' => function (ContainerInterface $container) {
                     return new Mapper\Vote(
-                        $sm->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'photo_acl' => function (ServiceLocatorInterface $sm) {
-                    $acl = $sm->get('acl');
+                'photo_acl' => function (ContainerInterface $container) {
+                    $acl = $container->get('acl');
 
                     // add resources for this module
                     $acl->addResource('photo');
@@ -250,9 +250,9 @@ class Module
     {
         return [
             'factories' => [
-                'glideUrl' => function (ServiceLocatorInterface $sm) {
+                'glideUrl' => function (ContainerInterface $container) {
                     $helper = new GlideUrl();
-                    $config = $sm->get('config');
+                    $config = $container->get('config');
                     if (
                         !isset($config['glide']) || !isset($config['glide']['base_url'])
                         || !isset($config['glide']['signing_key'])

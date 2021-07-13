@@ -12,7 +12,7 @@ class OrganTest extends PHPUnit_Framework_TestCase
 {
     protected $organ;
 
-    protected $sm;
+    protected $container;
 
     /**
      * Construct an organ service with mock objects.

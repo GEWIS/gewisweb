@@ -1,6 +1,6 @@
 <?php
 
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
 use User\Controller\ApiAdminController;
 use User\Controller\ApiAuthenticationController;
 use User\Controller\ApiController;
@@ -157,19 +157,19 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            'User\Controller\User' => function (ServiceLocatorInterface $sm) {
-                $userService = $sm->get('user_service_user');
+            'User\Controller\User' => function (ContainerInterface $container) {
+                $userService = $container->get('user_service_user');
 
                 return new UserController($userService);
             },
-            'User\Controller\Api' => function (ServiceLocatorInterface $sm) {
-                $userService = $sm->get('user_service_user');
-                $memberInfoService = $sm->get('decision_service_memberinfo');
+            'User\Controller\Api' => function (ContainerInterface $container) {
+                $userService = $container->get('user_service_user');
+                $memberInfoService = $container->get('decision_service_memberinfo');
 
                 return new ApiController($userService, $memberInfoService);
             },
-            'User\Controller\ApiAdmin' => function (ServiceLocatorInterface $sm) {
-                $apiUserService = $sm->get('user_service_apiuser');
+            'User\Controller\ApiAdmin' => function (ContainerInterface $container) {
+                $apiUserService = $container->get('user_service_apiuser');
 
                 return new ApiAdminController($apiUserService);
             },
