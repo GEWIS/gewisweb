@@ -7,7 +7,7 @@ engines:
     enabled: true
     config:
       file_extensions: "php,dist"
-      standard: "PSR1,PSR12"
+      standard: "PSR1,PSR2"
   phpmd:
     enabled: true
     checks:
