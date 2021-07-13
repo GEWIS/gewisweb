@@ -40,7 +40,7 @@ class AlbumController extends AbstractActionController
     {
         $albumId = $this->params()->fromRoute('album_id');
         $activePage = (int)$this->params()->fromRoute('page');
-        $albumPage = $this->AlbumPlugin()->getAlbumPage(
+        $albumPage = $this->plugin('AlbumPlugin')->getAlbumPage(
             $albumId,
             $activePage,
             'album'
@@ -88,7 +88,7 @@ class AlbumController extends AbstractActionController
     {
         $lidnr = (int)$this->params()->fromRoute('lidnr');
         $activePage = (int)$this->params()->fromRoute('page');
-        $albumPage = $this->AlbumPlugin()->getAlbumPage(
+        $albumPage = $this->plugin('AlbumPlugin')->getAlbumPage(
             $lidnr,
             $activePage,
             'member'

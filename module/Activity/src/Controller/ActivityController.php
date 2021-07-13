@@ -393,7 +393,6 @@ class ActivityController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        $translator = $this->getServiceLocator()->get('translator');
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -402,14 +401,14 @@ class ActivityController extends AbstractActionController
 
             // Check if the form is valid
             if (!$form->isValid()) {
-                $message = $translator->translate('Wrong form');
+                $message = $this->translator->translate('Wrong form');
 
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $message);
             }
 
             // Ensure the user is allowed to (UN)subscribe
             if (!$this->signupService->isAllowedToSubscribe()) {
-                $message = $translator->translate('You have to be logged in to subscribe for this activity');
+                $message = $this->translator->translate('You have to be logged in to subscribe for this activity');
 
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $message);
             }
@@ -419,7 +418,7 @@ class ActivityController extends AbstractActionController
                 !$this->signupService->isInSubscriptionWindow($signupList->getOpenDate(), $signupList->getCloseDate())
                 || Activity::STATUS_APPROVED !== $signupList->getActivity()->getStatus()
             ) {
-                $error = $translator->translate('You cannot unsubscribe from this activity at this moment in time');
+                $error = $this->translator->translate('You cannot unsubscribe from this activity at this moment in time');
 
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
             }
@@ -429,18 +428,18 @@ class ActivityController extends AbstractActionController
 
             // Check if the user is subscribed
             if (!$this->signupService->isSignedUp($signupList, $user)) {
-                $message = $translator->translate('You are not subscribed to this activity!');
+                $message = $this->translator->translate('You are not subscribed to this activity!');
 
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $message);
             }
 
             $this->signupService->signOff($signupList, $user);
-            $message = $translator->translate('Successfully unsubscribed');
+            $message = $this->translator->translate('Successfully unsubscribed');
 
             return $this->redirectActivityRequest($activityId, $signupListId, true, $message);
         }
 
-        $error = $translator->translate('Use the form to unsubscribe');
+        $error = $this->translator->translate('Use the form to unsubscribe');
 
         return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
     }

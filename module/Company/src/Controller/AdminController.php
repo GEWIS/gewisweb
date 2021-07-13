@@ -535,7 +535,8 @@ class AdminController extends AbstractActionController
         return new ViewModel(
             [
                 'form' => $jobForm,
-                'job' => $job,
+                // TODO: Only attachment of one language of the job is passed on to the view (view needs adjustment)
+                'job' => $jobs[0],
                 'languages' => $this->getLanguageDescriptions(),
             ]
         );

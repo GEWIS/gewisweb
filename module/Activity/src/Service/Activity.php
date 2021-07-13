@@ -356,8 +356,8 @@ class Activity extends AbstractAclService
         for ($i = 0; $i < $numOptions; ++$i) {
             $option = new SignupOptionModel();
             $option->setValue(new LocalisedText(
-                isset($data['optionsEn']) ? $optionsEn[$i] : null,
-                isset($data['options']) ? $options[$i] : null
+                isset($optionsEn) ? $optionsEn[$i] : null,
+                isset($options) ? $options[$i] : null
             ));
             $option->setField($field);
             $em->persist($option);

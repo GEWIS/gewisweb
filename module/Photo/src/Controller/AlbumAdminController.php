@@ -77,7 +77,7 @@ class AlbumAdminController extends AbstractActionController
     {
         $albumId = $this->params()->fromRoute('album_id');
         $activePage = (int)$this->params()->fromRoute('page');
-        $albumPage = $this->AlbumPlugin()->getAlbumPageAsArray($albumId, $activePage);
+        $albumPage = $this->plugin('AlbumPlugin')->getAlbumPageAsArray($albumId, $activePage);
         if (is_null($albumPage)) {
             return $this->notFoundAction();
         }

@@ -16,7 +16,7 @@ class ApiController extends AbstractActionController
     public function listAction()
     {
         $albumId = $this->params()->fromRoute('album_id');
-        $album = $this->AlbumPlugin()->getAlbumAsArray($albumId);
+        $album = $this->plugin('AlbumPlugin')->getAlbumAsArray($albumId);
         if (is_null($albumId)) {
             return $this->notFoundAction();
         }
