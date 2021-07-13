@@ -262,8 +262,10 @@ class Module
                 'glideUrl' => function (ServiceLocatorInterface $sm) {
                     $helper = new GlideUrl();
                     $config = $sm->get('config');
-                    if (!isset($config['glide']) || !isset($config['glide']['base_url'])
-                        || !isset($config['glide']['signing_key'])) {
+                    if (
+                        !isset($config['glide']) || !isset($config['glide']['base_url'])
+                        || !isset($config['glide']['signing_key'])
+                    ) {
                         throw new Exception('Invalid glide configuration');
                     }
 

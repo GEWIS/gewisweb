@@ -316,8 +316,10 @@ class Activity extends Form implements InputFilterProviderInterface
                             $valid = false;
                         }
 
-                        if ($field->get('type')->getValue() === '3'
-                            && !(new NotEmpty())->isValid($field->get('options')->getValue())) {
+                        if (
+                            $field->get('type')->getValue() === '3'
+                            && !(new NotEmpty())->isValid($field->get('options')->getValue())
+                        ) {
                             // TODO: Return error messages
                             $valid = false;
                         }
@@ -330,8 +332,10 @@ class Activity extends Form implements InputFilterProviderInterface
                             $valid = false;
                         }
 
-                        if ($field->get('type')->getValue() === '3'
-                            && !(new NotEmpty())->isValid($field->get('optionsEn')->getValue())) {
+                        if (
+                            $field->get('type')->getValue() === '3'
+                            && !(new NotEmpty())->isValid($field->get('optionsEn')->getValue())
+                        ) {
                             // TODO: Return error messages
                             $valid = false;
                         }

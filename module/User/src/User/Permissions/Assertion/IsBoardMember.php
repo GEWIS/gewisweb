@@ -7,9 +7,7 @@ use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Role\RoleInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
-
 use User\Model\User;
-
 use Decision\Model\BoardMember;
 
 /**

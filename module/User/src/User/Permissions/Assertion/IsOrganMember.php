@@ -7,10 +7,8 @@ use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Role\RoleInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
-
 use User\Model\User;
 use User\Permissions\Resource\OrganResourceInterface;
-
 use Decision\Model\OrganMember;
 use Decision\Model\Organ;
 
@@ -46,8 +44,10 @@ class IsOrganMember implements AssertionInterface
         }
 
         foreach ($member->getOrganInstallations() as $organInstall) {
-            if ($organInstall->getOrgan()->getId() === $organ->getId()
-                && $this->isCurrentMember($organInstall)) {
+            if (
+                $organInstall->getOrgan()->getId() === $organ->getId()
+                && $this->isCurrentMember($organInstall)
+            ) {
                 return true;
             }
         }

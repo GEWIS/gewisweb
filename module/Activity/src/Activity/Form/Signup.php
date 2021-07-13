@@ -167,8 +167,10 @@ class Signup extends Form implements InputFilterProviderInterface
     public function getInputFilterSpecification()
     {
         $filter = [];
-        if ($this->type === Signup::EXTERNAL_USER ||
-            $this->type === Signup::EXTERNAL_ADMIN) {
+        if (
+            $this->type === Signup::EXTERNAL_USER ||
+            $this->type === Signup::EXTERNAL_ADMIN
+        ) {
             $filter['fullName'] = [
                 'required' => true,
                 'validators' => [

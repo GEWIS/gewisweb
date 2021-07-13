@@ -131,7 +131,8 @@ class Activity
 
         for ($i = 0; $i < $size; $i++) {
             for ($j = $i + 1; $j < $size; $j++) {
-                if (array_key_exists($i, $result)
+                if (
+                    array_key_exists($i, $result)
                     && array_key_exists($j, $result)
                     && $result[$i]->getId() == $result[$j]->getId()
                 ) {

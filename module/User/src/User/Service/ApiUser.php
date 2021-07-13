@@ -3,7 +3,6 @@
 namespace User\Service;
 
 use Application\Service\AbstractAclService;
-
 use User\Form\ApiToken;
 use User\Model\ApiUser as ApiUserModel;
 use User\Mapper\ApiUser as ApiUserMapper;

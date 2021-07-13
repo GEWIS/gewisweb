@@ -148,12 +148,14 @@ class AdminController extends AbstractActionController
         if ($request->isPost()) {
             $files = $request->getFiles();
 
-            if ($this->companyService->insertPackageForCompanySlugNameByData(
-                $companyName,
-                $request->getPost(),
-                $files['banner'],
-                $type
-            )) {
+            if (
+                $this->companyService->insertPackageForCompanySlugNameByData(
+                    $companyName,
+                    $request->getPost(),
+                    $files['banner'],
+                    $type
+                )
+            ) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/editCompany',
@@ -399,11 +401,13 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $post = $request->getPost();
-            if ($this->companyService->saveCompanyByData(
-                $company,
-                $post,
-                $request->getFiles()
-            )) {
+            if (
+                $this->companyService->saveCompanyByData(
+                    $company,
+                    $post,
+                    $request->getFiles()
+                )
+            ) {
                 $companyName = $request->getPost()['slugName'];
                 return $this->redirect()->toRoute(
                     'admin_company/default',

@@ -3,7 +3,6 @@
 namespace Decision\Model\SubDecision\Board;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Decision\Model\SubDecision;
 
 /**

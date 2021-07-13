@@ -3,9 +3,7 @@
 namespace User\Service;
 
 use User\Model\NewUser as NewUserModel;
-
 use Decision\Model\Member as MemberModel;
-
 use Laminas\Mail\Message;
 use Laminas\Mail\Transport\TransportInterface;
 use Laminas\Mvc\I18n\Translator;

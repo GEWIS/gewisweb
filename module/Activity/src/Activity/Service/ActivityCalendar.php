@@ -260,7 +260,8 @@ class ActivityCalendar extends AbstractAclService
 
         $period = $this->getCurrentPeriod();
 
-        if ($period == null
+        if (
+            $period == null
             || !$this->isAllowed('create')
             || $organId == null
         ) {
@@ -413,7 +414,8 @@ class ActivityCalendar extends AbstractAclService
             return false;
         }
 
-        if ($option->getProposal()->getOrgan() === null
+        if (
+            $option->getProposal()->getOrgan() === null
             && $option->getProposal()->getCreator()->getLidnr() === $this->userService->getIdentity()->getLidnr()
         ) {
             return true;

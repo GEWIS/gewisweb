@@ -257,8 +257,10 @@ class ActivityController extends AbstractActionController
             }
 
             // Ensure that the action is within the subscription window
-            if (!$this->signupService->isInSubscriptionWindow($signupList->getOpenDate(), $signupList->getCloseDate())
-                || $signupList->getActivity()->getStatus() !== Activity::STATUS_APPROVED) {
+            if (
+                !$this->signupService->isInSubscriptionWindow($signupList->getOpenDate(), $signupList->getCloseDate())
+                || $signupList->getActivity()->getStatus() !== Activity::STATUS_APPROVED
+            ) {
                 $error = $translator->translate('You cannot subscribe to this activity at this moment in time');
 
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
@@ -347,8 +349,10 @@ class ActivityController extends AbstractActionController
             }
 
             // Ensure that the action is within the subscription window
-            if (!$this->signupService->isInSubscriptionWindow($signupList->getOpenDate(), $signupList->getCloseDate())
-                || $signupList->getActivity()->getStatus() !== Activity::STATUS_APPROVED) {
+            if (
+                !$this->signupService->isInSubscriptionWindow($signupList->getOpenDate(), $signupList->getCloseDate())
+                || $signupList->getActivity()->getStatus() !== Activity::STATUS_APPROVED
+            ) {
                 $error = $translator->translate('You cannot subscribe to this activity at this moment in time');
 
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
@@ -405,8 +409,10 @@ class ActivityController extends AbstractActionController
             }
 
             // Ensure that the action is within the subscription window
-            if (!$this->signupService->isInSubscriptionWindow($signupList->getOpenDate(), $signupList->getCloseDate())
-                || $signupList->getActivity()->getStatus() !== Activity::STATUS_APPROVED) {
+            if (
+                !$this->signupService->isInSubscriptionWindow($signupList->getOpenDate(), $signupList->getCloseDate())
+                || $signupList->getActivity()->getStatus() !== Activity::STATUS_APPROVED
+            ) {
                 $error = $translator->translate('You cannot unsubscribe from this activity at this moment in time');
 
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);

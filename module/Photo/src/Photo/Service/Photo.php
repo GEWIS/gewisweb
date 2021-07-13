@@ -418,7 +418,8 @@ class Photo extends AbstractAclService
         foreach ($results as $res) {
             $photo = $this->photoMapper->getPhotoById($res[1]);
             $rating = $this->ratePhoto($photo, $res[2]);
-            if (!$this->weeklyPhotoMapper->hasBeenPhotoOfTheWeek($photo)
+            if (
+                !$this->weeklyPhotoMapper->hasBeenPhotoOfTheWeek($photo)
                 && $rating > $bestRating
             ) {
                 $bestPhoto = $photo;

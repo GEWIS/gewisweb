@@ -4,7 +4,6 @@ namespace Decision\Model;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-
 use Decision\Model\SubDecision\Installation;
 
 /**

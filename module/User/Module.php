@@ -26,7 +26,6 @@ use Laminas\Permissions\Acl\Role\GenericRole as Role;
 use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
 use Laminas\Mvc\MvcEvent;
 use Laminas\Http\Request as HttpRequest;
-
 use User\Permissions\NotAllowedException;
 use User\Model\User;
 use Laminas\ServiceManager\ServiceLocatorInterface;
@@ -60,9 +59,10 @@ class Module
         $em->attach(
             MvcEvent::EVENT_DISPATCH_ERROR,
             function ($e) {
-                if ($e->getError() == 'error-exception'
-                && $e->getParam('exception', null) != null
-                && $e->getParam('exception') instanceof NotAllowedException
+                if (
+                    $e->getError() == 'error-exception'
+                    && $e->getParam('exception', null) != null
+                    && $e->getParam('exception') instanceof NotAllowedException
                 ) {
                     $form = $e->getApplication()->getServiceManager()->get('user_form_login');
                     $e->getResult()->setVariable('form', $form);

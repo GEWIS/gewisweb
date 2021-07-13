@@ -50,9 +50,11 @@ class AssociationYear
     public static function fromDate(DateTime $dateTime)
     {
         $inst = new static();
-        if ($dateTime->format('n') < self::ASSOCIATION_YEAR_START_MONTH
+        if (
+            $dateTime->format('n') < self::ASSOCIATION_YEAR_START_MONTH
             || ($dateTime->format('n') == self::ASSOCIATION_YEAR_START_MONTH
-                && $dateTime->format('j') < self::ASSOCIATION_YEAR_START_DAY)) {
+                && $dateTime->format('j') < self::ASSOCIATION_YEAR_START_DAY)
+        ) {
             $inst->firstYear = $dateTime->format('Y') - 1;
         } else {
             $inst->firstYear = $dateTime->format('Y');

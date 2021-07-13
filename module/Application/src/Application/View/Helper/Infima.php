@@ -3,7 +3,6 @@
 namespace Application\View\Helper;
 
 use Laminas\View\Helper\AbstractHelper;
-
 use Application\Service\Legacy as LegacyService;
 
 class Infima extends AbstractHelper

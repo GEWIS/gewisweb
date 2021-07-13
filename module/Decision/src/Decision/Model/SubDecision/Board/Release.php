@@ -4,9 +4,9 @@ namespace Decision\Model\SubDecision\Board;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-
 use Decision\Model\SubDecision;
 use IntlDateFormatter;
+
 use function date_default_timezone_get;
 
 /**

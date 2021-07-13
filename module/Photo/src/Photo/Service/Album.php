@@ -204,7 +204,8 @@ class Album extends AbstractAclService
     {
         $oldest = $this->albumMapper->getOldestAlbum();
         $newest = $this->albumMapper->getNewestAlbum();
-        if (is_null($oldest) || is_null($newest)
+        if (
+            is_null($oldest) || is_null($newest)
             || is_null($oldest->getStartDateTime())
             || is_null($newest->getEndDateTime())
         ) {

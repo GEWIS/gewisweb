@@ -4,9 +4,7 @@ namespace Decision\Model\SubDecision;
 
 use Decision\Model\Organ;
 use Doctrine\ORM\Mapping as ORM;
-
 use Doctrine\Common\Collections\ArrayCollection;
-
 use Decision\Model\SubDecision;
 use InvalidArgumentException;
 

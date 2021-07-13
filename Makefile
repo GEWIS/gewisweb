@@ -58,11 +58,11 @@ phpstan: rundev
 		@docker-compose down
 
 phpcs: rundev
-		@docker-compose exec web /code/vendor/bin/phpcs -p --standard=PSR1,PSR2 --extensions=php,dist /code/module /code/config
+		@docker-compose exec web /code/vendor/bin/phpcs -p --standard=PSR1,PSR12 --extensions=php,dist /code/module /code/config
 		@docker-compose down
 
 phpcbf: rundev
-		@docker-compose exec web /code/vendor/bin/phpcbf -p --standard=PSR1,PSR2 --extensions=php,dist /code/module /code/config
+		@docker-compose exec web /code/vendor/bin/phpcbf -p --standard=PSR1,PSR12 --extensions=php,dist /code/module /code/config
 		@docker cp gewisweb_web_1:/code/module ./module
 		@docker-compose down
 

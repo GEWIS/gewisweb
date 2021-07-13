@@ -5,7 +5,6 @@ namespace Decision\Form;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
-
 use Decision\Mapper\Meeting as MeetingMapper;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\MimeType;
