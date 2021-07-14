@@ -469,6 +469,16 @@ class User extends AbstractAclService
     }
 
     /**
+     * Get the login form.
+     *
+     * @return Login Login form
+     */
+    public function getLoginForm()
+    {
+        return $this->loginForm;
+    }
+
+    /**
      * Get the ACL.
      *
      * @return Acl

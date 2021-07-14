@@ -39,7 +39,7 @@ class UserController extends AbstractActionController
             }
         }
 
-        $form = $this->handleRedirect($this->userService, $referer);
+        $form = $this->handleRedirect($referer);
 
         return new ViewModel(
             [
@@ -48,9 +48,9 @@ class UserController extends AbstractActionController
         );
     }
 
-    private function handleRedirect($userService, $referer)
+    private function handleRedirect($referer)
     {
-        $form = $userService->getLoginForm();
+        $form = $this->userService->getLoginForm();
         if (is_null($form->get('redirect')->getValue())) {
             $redirect = $this->getRequest()->getQuery('redirect');
             if (isset($redirect)) {
