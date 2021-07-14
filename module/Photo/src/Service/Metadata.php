@@ -65,7 +65,7 @@ class Metadata
         if (false === strpos($str, '/')) {
             return $str;
         }
-        list($n, $d) = explode('/', $str);
+        [$n, $d] = explode('/', $str);
 
         return $n / $d; //I assume stuff like '234/0' is not supported by EXIF.
     }
@@ -139,7 +139,7 @@ class Metadata
             }
             $coordinate[$i] = 0;
         }
-        list($degrees, $minutes, $seconds) = $coordinate;
+        [$degrees, $minutes, $seconds] = $coordinate;
         $sign = ('W' == $hemisphere || 'S' == $hemisphere) ? -1 : 1;
 
         return $sign * ($degrees + $minutes / 60 + $seconds / 3600);
