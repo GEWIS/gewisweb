@@ -142,13 +142,14 @@ class Module
                     } catch (NotAllowedException $e) {
                         $organs = [];
                     }
-                    $organs = $organService->getEditableOrgans();
+
                     $companyService = $container->get('company_service_company');
                     try {
                         $companies = $companyService->getHiddenCompanyList();
                     } catch (NotAllowedException $e) {
                         $companies = [];
                     }
+
                     $categoryService = $container->get('activity_service_category');
                     $categories = $categoryService->getAllCategories();
                     $translator = $container->get('translator');
