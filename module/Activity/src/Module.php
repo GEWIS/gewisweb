@@ -151,7 +151,12 @@ class Module
                     }
 
                     $categoryService = $container->get('activity_service_category');
-                    $categories = $categoryService->getAllCategories();
+                    try {
+                        $categories = $categoryService->getAllCategories();
+                    } catch (NotAllowedException $e) {
+                        $categories = [];
+                    }
+
                     $translator = $container->get('translator');
                     $form = new Form\Activity($organs, $companies, $categories, $translator);
                     $form->setHydrator($container->get('activity_hydrator'));
