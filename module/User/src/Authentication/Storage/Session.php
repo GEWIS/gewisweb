@@ -38,7 +38,7 @@ class Session extends Storage\Session
     {
         $this->rememberMe = $rememberMe;
         if ($rememberMe) {
-            $this->saveSession($this->session->read()->getLidnr());
+            $this->saveSession($this->read()->getLidnr());
         }
     }
 
