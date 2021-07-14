@@ -37,15 +37,15 @@ class AuthenticationService extends LaminasAuthService
     public function __construct(StorageInterface $storage = null, AdapterInterface $adapter = null)
     {
         if (
-            null === $storage
-            || get_class($storage) !== Session::class
+            null !== $storage
+            && get_class($storage) !== Session::class
         ) {
             throw new RuntimeException("Invalid storage passed to Auth service.");
         }
 
         if (
-            null === $adapter
-            || (get_class($adapter) !== Mapper::class && get_class($adapter) !== PinMapper::class)
+            null !== $adapter
+            && (get_class($adapter) !== Mapper::class && get_class($adapter) !== PinMapper::class)
         ) {
             throw new RuntimeException("Invalid adapter passed to Auth service.");
         }
@@ -61,10 +61,7 @@ class AuthenticationService extends LaminasAuthService
      */
     public function setStorage(StorageInterface $storage)
     {
-        if (
-            null === $storage
-            && get_class($storage) !== Session::class
-        ) {
+        if (get_class($storage) !== Session::class) {
             throw new RuntimeException("Invalid storage passed to Auth service.");
         }
 
@@ -80,8 +77,8 @@ class AuthenticationService extends LaminasAuthService
     public function setAdapter(AdapterInterface $adapter)
     {
         if (
-            null === $adapter
-            || (get_class($adapter) !== Mapper::class && get_class($adapter) !== PinMapper::class)
+            get_class($adapter) !== Mapper::class
+            && get_class($adapter) !== PinMapper::class
         ) {
             throw new RuntimeException("Invalid adapter passed to Auth service.");
         }

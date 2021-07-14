@@ -95,7 +95,6 @@ class Module
             'aliases' => [
                 'Laminas\Authentication\AuthenticationService' => 'user_auth_service',
             ],
-
             'factories' => [
                 'user_service_user' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
