@@ -69,11 +69,11 @@ class Session extends Storage\Session
 
         $request = $this->sm->get('Request');
         $cookies = $request->getHeaders()->get('cookie');
-        if (!isset($cookies->SESSTOKEN)) {
+        if (!isset($cookies->GEWISSESSTOKEN)) {
             return false;
         }
         try {
-            $session = JWT::decode($cookies->SESSTOKEN, $key, ['RS256']);
+            $session = JWT::decode($cookies->GEWISSESSTOKEN, $key, ['RS256']);
         } catch (\UnexpectedValueException $e) {
             return false;
         }
