@@ -25,7 +25,7 @@ class ActivityCategory
     /**
      * Get a Category by an Id.
      *
-     * @param $id
+     * @param int $id
      *
      * @return \Activity\Model\ActivityCategory
      */

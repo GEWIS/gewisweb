@@ -2,6 +2,7 @@
 
 namespace Application\View\Helper;
 
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\View\Helper\AbstractHelper;
 
 class ModuleIsActive extends AbstractHelper
@@ -16,7 +17,7 @@ class ModuleIsActive extends AbstractHelper
     /**
      * Get the active module.
      *
-     * @return bool
+     * @return bool $condition
      */
     public function __invoke($condition)
     {
@@ -59,7 +60,7 @@ class ModuleIsActive extends AbstractHelper
     /**
      * Set the service locator.
      *
-     * @param ServiceLocatorInterface
+     * @param ServiceLocatorInterface $locator
      */
     public function setServiceLocator($locator)
     {

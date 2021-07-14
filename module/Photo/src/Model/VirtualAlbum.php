@@ -31,7 +31,7 @@ class VirtualAlbum extends Album
     /**
      * Set the parent of the album.
      *
-     * @param album $parent
+     * @param Album $parent
      *
      * @throws Exception
      */

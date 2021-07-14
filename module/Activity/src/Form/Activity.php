@@ -4,6 +4,7 @@ namespace Activity\Form;
 
 use DateTime;
 use Decision\Model\Organ;
+use DomainException;
 use Exception;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
@@ -235,7 +236,7 @@ class Activity extends Form implements InputFilterProviderInterface
     /**
      * Check if a certain date is before the end date of the activity.
      *
-     * @param $value
+     * @param DateTime $value
      * @param array $context
      *
      * @return bool
@@ -256,7 +257,7 @@ class Activity extends Form implements InputFilterProviderInterface
     /**
      * Checks if a certain date is before the begin date of the activity.
      *
-     * @param $value
+     * @param DateTime $value
      * @param array $context
      *
      * @return bool

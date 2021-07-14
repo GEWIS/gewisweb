@@ -24,8 +24,8 @@ class GlideUrl extends AbstractHelper
     /**
      * Gets a signed glide URL.
      *
-     * @param $imagePath
-     * @param $params
+     * @param string $imagePath
+     * @param array $params
      *
      * @return string
      */

@@ -129,7 +129,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
     /**
      * Check if a certain date is before the end date of the option.
      *
-     * @param $value
+     * @param string $value
      * @param array $context
      *
      * @return bool
@@ -148,7 +148,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
     /**
      * Check if a certain date is in the future.
      *
-     * @param $value
+     * @param string $value
      * @param array $context
      *
      * @return bool
@@ -167,7 +167,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
     /**
      * Check if a certain date is within the current planning period.
      *
-     * @param $value
+     * @param string $value
      * @param array $context
      *
      * @return bool

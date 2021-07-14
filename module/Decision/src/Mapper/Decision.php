@@ -49,7 +49,7 @@ class Decision
     /**
      * Persist an entity.
      *
-     * @param MeetingNotes to persist
+     * @param MeetingNotes $entity to persist
      */
     public function persist($entity)
     {

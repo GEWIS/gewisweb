@@ -94,7 +94,7 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @return date
+     * @return DateTime
      */
     public function getExpiryDate()
     {

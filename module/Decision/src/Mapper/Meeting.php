@@ -55,7 +55,7 @@ class Meeting
     /**
      * Find all meetings which have the given type.
      *
-     * @param AV|BV|VV|Virt $type
+     * @param int $type AV|BV|VV|Virt
      *
      * @return Collection
      */
@@ -227,7 +227,7 @@ class Meeting
     /**
      * Removes an entity.
      *
-     * @param $entity
+     * @param \Decision\Model\Meeting $entity
      */
     public function remove($entity)
     {

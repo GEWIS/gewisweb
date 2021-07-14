@@ -119,7 +119,7 @@ class ProfilePhoto implements ResourceInterface
     }
 
     /**
-     * @param DateTime
+     * @param DateTime $dateTime
      */
     public function setDateTime($dateTime)
     {
@@ -127,7 +127,7 @@ class ProfilePhoto implements ResourceInterface
     }
 
     /**
-     * @param bool
+     * @param bool $explicit
      */
     public function setExplicit($explicit)
     {

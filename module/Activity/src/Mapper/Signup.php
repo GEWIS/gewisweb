@@ -41,8 +41,8 @@ class Signup
     /**
      * Check if a user is signed up for an activity.
      *
-     * @param $activityId
-     * @param $userId
+     * @param int $activityId
+     * @param int $userId
      *
      * @return bool
      */
@@ -54,7 +54,7 @@ class Signup
     /**
      * Get the signup object for an usedid/activityid if it exists.
      *
-     * @param $signupListId
+     * @param int $signupListId
      * @param int $userId
      *
      * @return \Activity\Model\Signup

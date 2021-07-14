@@ -74,7 +74,7 @@ class Session
     /**
      * Detach an entity from the entity manager.
      *
-     * @param $entity
+     * @param object $entity
      */
     public function detach($entity)
     {
@@ -92,7 +92,7 @@ class Session
     /**
      * Remove an entity.
      *
-     * @param $entity
+     * @param object $entity
      */
     public function remove($entity)
     {

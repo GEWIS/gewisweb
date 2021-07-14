@@ -109,7 +109,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
     /**
      * Check if a certain date is before the closing date of the SignupList.
      *
-     * @param $value
+     * @param string $value
      * @param array $context
      *
      * @return bool

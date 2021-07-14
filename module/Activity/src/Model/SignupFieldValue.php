@@ -102,7 +102,7 @@ class SignupFieldValue
     }
 
     /**
-     * @param SignupOption
+     * @param SignupOption $option
      */
     public function setOption($option)
     {

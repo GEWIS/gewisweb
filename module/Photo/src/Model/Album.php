@@ -252,7 +252,7 @@ class Album implements ResourceInterface
     /**
      * Set the parent of the album.
      *
-     * @param album $parent
+     * @param Album $parent
      */
     public function setParent($parent)
     {

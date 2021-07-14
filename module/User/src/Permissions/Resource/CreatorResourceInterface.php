@@ -3,6 +3,7 @@
 namespace User\Permissions\Resource;
 
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use User\Model\User;
 
 interface CreatorResourceInterface extends ResourceInterface
 {

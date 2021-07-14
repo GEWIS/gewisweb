@@ -71,7 +71,7 @@ class AdminApprovalController extends AbstractActionController
     /**
      * Set the approval status of the activity requested.
      *
-     * @param $status
+     * @param int $status
      *
      * @return ViewModel|Response
      */

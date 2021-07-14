@@ -103,7 +103,7 @@ class Session extends Storage\Session
     /**
      * Store the current session.
      *
-     * @param $lidnr the lidnr of the logged in user
+     * @param int $lidnr the lidnr of the logged in user
      */
     public function saveSession($lidnr)
     {

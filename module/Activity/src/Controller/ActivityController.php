@@ -4,6 +4,7 @@ namespace Activity\Controller;
 
 use Activity\Form\ModifyRequest as RequestForm;
 use Activity\Model\Activity;
+use Activity\Model\SignupList;
 use Activity\Service\ActivityQuery;
 use Activity\Service\Signup;
 use Activity\Service\SignupListQuery;
@@ -169,7 +170,7 @@ class ActivityController extends AbstractActionController
     /**
      * Get the appropriate signup form.
      *
-     * @param $signupList
+     * @param SignupList $signupList
      * @param SessionContainer $activitySession
      *
      * @return \Activity\Form\Signup $form
@@ -299,8 +300,8 @@ class ActivityController extends AbstractActionController
      * $error message can be displayed if the request was unsuccesful (i.e.
      * $success was false).
      *
-     * @param $activityId
-     * @param $signupListId
+     * @param int $activityId
+     * @param int $signupListId
      * @param bool $success Whether the request was successful
      * @param string $message
      * @param null $session

@@ -248,7 +248,7 @@ class Company extends AbstractACLService
     /**
      * Searches for packages that change before $date.
      *
-     * @param date The date until where to search
+     * @param DateTime The date until where to search
      *
      * @return array Two sorted arrays, containing the packages that respectively start and expire between now and $date,
      */
@@ -293,7 +293,7 @@ class Company extends AbstractACLService
     /**
      * Get public company by id.
      *
-     * @param $id
+     * @param int $id
      *
      * @return \Company\Model\Company|null
      */
@@ -899,7 +899,7 @@ class Company extends AbstractACLService
     /**
      * Deletes the given job.
      *
-     * @param $jobId
+     * @param int $jobId
      */
     public function deleteJob($jobId)
     {
@@ -1003,7 +1003,7 @@ class Company extends AbstractACLService
      * Returns all jobs with a given slugname, owned by a company with
      * $companySlugName.
      *
-     * @param $languageNeutralId
+     * @param int $languageNeutralId
      * @return int|mixed|string
      */
     public function getEditableJobsByLanguageNeutralId($languageNeutralId)

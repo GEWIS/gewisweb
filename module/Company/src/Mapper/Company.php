@@ -110,7 +110,7 @@ class Company
     /**
      * Find a specific company by its id.
      *
-     * @param $id The id of the company
+     * @param int $id The id of the company
      *
      * @return CompanyModel|null
      */
@@ -132,10 +132,10 @@ class Company
     /**
      * Find the company with the given slugName.
      *
-     * @param slugName the 'username' of the company to get
-     * @param asObject if yes, returns the company as an object in an array, otherwise returns the company as an array of an array
+     * @param string $slugName the 'username' of the company to get
+     * @param bool $asObject if yes, returns the company as an object in an array, otherwise returns the company as an array of an array
      *
-     * @return An array of companies with the given slugName
+     * @return Collection An array of companies with the given slugName
      */
     public function findEditableCompaniesBySlugName($slugName, $asObject)
     {
@@ -168,7 +168,7 @@ class Company
     /**
      * Removes a company.
      *
-     * @param $company
+     * @param \Company\Model\Company $company
      */
     public function remove($company)
     {

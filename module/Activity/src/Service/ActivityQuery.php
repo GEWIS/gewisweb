@@ -138,7 +138,7 @@ class ActivityQuery extends AbstractAclService
     /**
      * Get the activity with additional details.
      *
-     * @param $id
+     * @param int $id
      *
      * @return ActivityModel
      */
@@ -287,7 +287,7 @@ class ActivityQuery extends AbstractAclService
      * Gets the upcoming activities created by this user or its organs.
      * Or, when the user is an admin, retrieve all upcoming activities.
      *
-     * @param /User/Model/User $user
+     * @param User $user
      *
      * @return Collection
      */

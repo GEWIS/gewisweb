@@ -15,7 +15,7 @@ class AlbumController extends AbstractActionController
     private $albumService;
 
     /**
-     * @var Storage
+     * @var StorageInterface
      */
     private $pageCache;
 

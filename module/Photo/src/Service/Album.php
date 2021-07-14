@@ -146,7 +146,7 @@ class Album extends AbstractAclService
      *
      * Example: A value of 2010 would represent the association year 2010/2011
      *
-     * @param $year integer the year in which the albums have been created
+     * @param integer $year the year in which the albums have been created
      *
      * @return array|Collection
      */
@@ -227,7 +227,7 @@ class Album extends AbstractAclService
     public function getAssociationYear($date)
     {
         if ($date->format('n') < self::ASSOCIATION_YEAR_START_MONTH) {
-            return $date->format('Y') - 1;
+            return (int) $date->format('Y') - 1;
         } else {
             return $date->format('Y');
         }

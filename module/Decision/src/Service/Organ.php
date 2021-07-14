@@ -213,7 +213,7 @@ class Organ extends AbstractAclService
     /**
      * Finds an organ by its abbreviation.
      *
-     * @param $abbr
+     * @param string $abbr
      * @param string $type
      * @param bool $latest
      *                       Whether to retrieve the latest occurence of an organ or not
@@ -370,7 +370,6 @@ class Organ extends AbstractAclService
 
         if (is_null($organInformation)) {
             $organInformation = new OrganInformation();
-            // TODO: ->setOrgan is undefined
             $organInformation->setOrgan($organ);
             $em->persist($organInformation);
             // TODO: ->add is undefined

@@ -31,7 +31,7 @@ class AssociationYear
     /**
      * Returns an instance of AssociationYear.
      *
-     * @param $year int first calendar year of the association year
+     * @param int $year first calendar year of the association year
      *
      * @return static
      */
@@ -58,7 +58,7 @@ class AssociationYear
             || (self::ASSOCIATION_YEAR_START_MONTH == $dateTime->format('n')
                 && $dateTime->format('j') < self::ASSOCIATION_YEAR_START_DAY)
         ) {
-            $inst->firstYear = $dateTime->format('Y') - 1;
+            $inst->firstYear = (int) $dateTime->format('Y') - 1;
         } else {
             $inst->firstYear = $dateTime->format('Y');
         }

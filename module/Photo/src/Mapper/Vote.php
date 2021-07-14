@@ -32,7 +32,7 @@ class Vote
      * in the specified time range.
      *
      * @param DateTime $startDate
-     * @param $endDate
+     * @param DateTime $endDate
      * @return Collection of array of string
      */
     public function getVotesInRange($startDate, $endDate)

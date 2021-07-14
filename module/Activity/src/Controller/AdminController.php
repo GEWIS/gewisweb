@@ -288,8 +288,8 @@ class AdminController extends AbstractActionController
      * $error message can be displayed if the request was unsuccesful (i.e.
      * $success was false).
      *
-     * @param $activityId
-     * @param $signupListId
+     * @param int $activityId
+     * @param int $signupListId
      * @param bool $success Whether the request was successful
      * @param string $message
      * @param AbstractContainer $session

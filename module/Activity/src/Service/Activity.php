@@ -369,9 +369,9 @@ class Activity extends AbstractAclService
     }
 
     /**
-     * @param $activity ActivityModel
-     * @param $user User
-     * @param $organ Organ
+     * @param ActivityModel $activity
+     * @param User $user
+     * @param Organ $organ
      */
     private function requestGEFLITST($activity, $user, $organ)
     {

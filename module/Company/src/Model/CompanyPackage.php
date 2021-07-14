@@ -72,7 +72,7 @@ abstract class CompanyPackage
     /**
      * Get the package's starting date.
      *
-     * @return date
+     * @return DateTime
      */
     public function getStartingDate()
     {
@@ -82,7 +82,7 @@ abstract class CompanyPackage
     /**
      * Set the package's starting date.
      *
-     * @param date $starts
+     * @param DateTime $starts
      */
     public function setStartingDate($starts)
     {
@@ -92,7 +92,7 @@ abstract class CompanyPackage
     /**
      * Get the package's expiration date.
      *
-     * @return date
+     * @return DateTime
      */
     public function getExpirationDate()
     {
@@ -102,7 +102,7 @@ abstract class CompanyPackage
     /**
      * Set the package's expiration date.
      *
-     * @param date $expires
+     * @param DateTime $expires
      */
     public function setExpirationDate($expires)
     {
@@ -153,7 +153,7 @@ abstract class CompanyPackage
     /**
      * Set the package's company.
      *
-     * @param Company company
+     * @param Company $company
      */
     public function setCompany(Company $company)
     {

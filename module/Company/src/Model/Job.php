@@ -435,7 +435,7 @@ class Job
     /**
      * Get the job's company.
      *
-     * @return company
+     * @return Company
      */
     public function getCompany()
     {

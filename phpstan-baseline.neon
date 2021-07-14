@@ -1,4 +1,4 @@
 parameters:
     ignoreErrors:
-        - '#Call to an undefined method Laminas\\Stdlib\\RequestInterface::[a-zA-Z0-9_]+\(\)#'
-        - '#Call to an undefined method Laminas\\Stdlib\\ResponseInterface::[a-zA-Z0-9_]+\(\)#'
+        - '#Call to an undefined method Laminas\\Stdlib\\RequestInterface::[a-zA-Z0-9_]+\(\).#'
+        - '#Call to an undefined method Laminas\\Stdlib\\ResponseInterface::[a-zA-Z0-9_]+\(\).#'

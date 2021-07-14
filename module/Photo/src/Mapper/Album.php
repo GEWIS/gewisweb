@@ -98,8 +98,8 @@ class Album
     /**
      * Gets all root albums with a start date between the specified dates.
      *
-     * @param $start DateTime start date and time
-     * @param $end   DateTime end date and time
+     * @param DateTime $start start date and time
+     * @param DateTime $end   end date and time
      *
      * @return Collection of \Photo\Model\Album
      */

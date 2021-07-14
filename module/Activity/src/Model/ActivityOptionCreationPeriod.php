@@ -112,7 +112,7 @@ class ActivityOptionCreationPeriod
     }
 
     /**
-     * @param $endOptionTime
+     * @param DateTime $endOptionTime
      */
     public function setEndOptionTime($endOptionTime)
     {

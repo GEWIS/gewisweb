@@ -176,7 +176,7 @@ class ActivityCalendar extends AbstractAclService
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
      * @return ProposalModel|bool
      *
@@ -312,8 +312,8 @@ class ActivityCalendar extends AbstractAclService
     /**
      * Get the current proposal count of an organ for the given period.
      *
-     * @param $period
-     * @param $organId
+     * @param ActivityOptionCreationPeriod $period
+     * @param int $organId
      *
      * @return int
      */
@@ -328,7 +328,7 @@ class ActivityCalendar extends AbstractAclService
     }
 
     /**
-     * @param $data
+     * @param array $data
      * @param ProposalModel $proposal
      *
      * @return OptionModel

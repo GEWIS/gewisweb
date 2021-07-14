@@ -4,6 +4,7 @@ namespace Decision\Service;
 
 use Application\Service\AbstractAclService;
 use Decision\Mapper\Authorization;
+use Decision\Model\Meeting;
 use Decision\Model\Member as MemberModel;
 use Doctrine\Common\Collections\Collection;
 use Laminas\Code\Exception\InvalidArgumentException;
@@ -197,8 +198,8 @@ class Member extends AbstractAclService
     /**
      * Find a member by (part of) its name.
      *
-     * @param $member
-     * @param $meeting
+     * @param MemberModel $member
+     * @param Meeting $meeting
      * @return bool
      * @pre $name must be at least MIN_SEARCH_QUERY_LENGTH
      *

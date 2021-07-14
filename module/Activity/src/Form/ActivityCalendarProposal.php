@@ -151,7 +151,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
     /**
      * Check if the amount of options is acceptable.
      *
-     * @param $value
+     * @param int $value
      * @param array $context
      *
      * @return bool
@@ -171,7 +171,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
     /**
      * Check if the begin times of the options are acceptable.
      *
-     * @param $value
+     * @param array $value
      * @param array $context
      *
      * @return bool

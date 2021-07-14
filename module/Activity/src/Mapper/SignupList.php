@@ -22,8 +22,8 @@ class SignupList
     }
 
     /**
-     * @param $signupListId
-     * @param $activityId
+     * @param int $signupListId
+     * @param int $activityId
      *
      * @return \Activity\Model\SignupList|null
      */

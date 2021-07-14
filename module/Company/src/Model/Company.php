@@ -410,7 +410,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Set the company's language neutral id.
      *
-     * @param $language
+     * @param int $language
      */
     public function setLanguageNeutralId($language)
     {

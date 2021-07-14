@@ -2,10 +2,12 @@ includes:
     - phpstan-baseline.neon
 
 parameters:
-    level: 1
+    level: 2
     bootstrapFiles:
         - bootstrap.php
     paths:
+        - config
+        - bootstrap.php
         - module/Activity/src
         - module/Application/src
         - module/Company/src
@@ -14,5 +16,6 @@ parameters:
         - module/Frontpage/src
         - module/Photo/src
         - module/User/src
+        - public/index.php
     reportUnmatchedIgnoredErrors: false
     tmpDir: data/cache/phpstan

@@ -30,7 +30,7 @@ class Activity
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return ActivityModel
      */

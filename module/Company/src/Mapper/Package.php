@@ -5,6 +5,7 @@ namespace Company\Mapper;
 use Company\Model\CompanyBannerPackage as BannerPackageModel;
 use Company\Model\CompanyFeaturedPackage as FeaturedPackageModel;
 use Company\Model\CompanyJobPackage as PackageModel;
+use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -67,7 +68,7 @@ class Package
     /**
      * Will return a list of published packages that will expire between now and $date.
      *
-     * @param date The date until where to search
+     * @param DateTime $date The date until where to search
      */
     public function findFuturePackageExpirationsBeforeDate($date)
     {
@@ -87,7 +88,7 @@ class Package
     /**
      * Will return a list of published packages that will expire between now and $date.
      *
-     * @param date The date until where to search
+     * @param DateTime $date The date until where to search
      */
     public function findFuturePackageStartsBeforeDate($date)
     {

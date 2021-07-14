@@ -325,8 +325,8 @@ class Signup extends AbstractAclService
     /**
      * Sign an external user up for an activity, which the current user may admin.
      *
-     * @param type $fullName
-     * @param type $email
+     * @param string $fullName
+     * @param string $email
      *
      * @throws NotAllowedException
      */
@@ -358,8 +358,8 @@ class Signup extends AbstractAclService
     /**
      * Sign an external user up for an activity, allowed by a guest.
      *
-     * @param type $fullName
-     * @param type $email
+     * @param string $fullName
+     * @param string $email
      *
      * @throws NotAllowedException
      */

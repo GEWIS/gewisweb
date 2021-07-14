@@ -3,6 +3,7 @@
 namespace Decision\Model\SubDecision\Board;
 
 use DateTime;
+use Decision\Model\BoardMember;
 use Decision\Model\Member;
 use Decision\Model\SubDecision;
 use Doctrine\ORM\Mapping as ORM;

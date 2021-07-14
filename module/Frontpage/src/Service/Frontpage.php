@@ -202,7 +202,7 @@ class Frontpage extends AbstractAclService
     /**
      * Get a time stamp of a news item or activity for sorting.
      *
-     * @param $item
+     * @param Activity|NewsItem $item
      *
      * @return int
      */

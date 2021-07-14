@@ -3,6 +3,8 @@
 namespace Activity\Model;
 
 use DateTime;
+use Decision\Model\Organ;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use User\Model\User;
 use User\Permissions\Resource\CreatorResourceInterface;
@@ -108,7 +110,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @param $fields
+     * @param Collection $fields
      */
     public function setFields($fields)
     {

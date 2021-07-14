@@ -81,7 +81,7 @@ class CompanyQuery extends AbstractACLService
      * Returns all jobs with a $jobSlugName, owned by a company with a
      * $companySlugName, and a specific $category.
      *
-     * @param $dict
+     * @param array $dict
      * @return int|mixed|string
      */
     public function getJobs($dict)
@@ -122,7 +122,7 @@ class CompanyQuery extends AbstractACLService
     /**
      * Returns all categories if $visible is false, only returns visible categories if $visible is false.
      *
-     * @param $visible
+     * @param bool $visible
      *
      * @return array
      */
@@ -179,7 +179,7 @@ class CompanyQuery extends AbstractACLService
     /**
      * Returns all labels if $visible is false, only returns visible labels if $visible is false.
      *
-     * @param $visible
+     * @param bool $visible
      *
      * @return array
      */

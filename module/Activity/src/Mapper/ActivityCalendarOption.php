@@ -50,7 +50,7 @@ class ActivityCalendarOption
     /**
      * Gets all options created by the given organs.
      *
-     * @param $organs
+     * @param Collection $organs
      * @return Collection
      */
     public function getUpcomingOptionsByOrgans($organs)
@@ -129,7 +129,7 @@ class ActivityCalendarOption
     /**
      * Retrieves options associated with a proposal.
      *
-     * @param $proposalId
+     * @param int $proposalId
      * @return Collection
      */
     public function findOptionsByProposal($proposalId)
@@ -146,7 +146,7 @@ class ActivityCalendarOption
     /**
      * Retrieves options associated with a proposal and associated with given organ.
      *
-     * @param $proposalId
+     * @param int $proposalId
      * @param int $organId the organ proposals have to be associated with
      *
      * @return Collection

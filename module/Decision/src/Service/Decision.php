@@ -234,7 +234,7 @@ class Decision extends AbstractAclService
     /**
      * Get meeting documents corresponding to a certain id.
      *
-     * @param $id
+     * @param int $id
      *
      * @return MeetingDocument
      */
@@ -291,8 +291,8 @@ class Decision extends AbstractAclService
     /**
      * Upload meeting notes.
      *
-     * @param array|Traversable $post
-     * @param array|Traversable $files
+     * @param array|\Traversable $post
+     * @param array|\Traversable $files
      *
      * @return bool If uploading was a success
      */
@@ -329,8 +329,8 @@ class Decision extends AbstractAclService
     /**
      * Upload a meeting document.
      *
-     * @param array|Traversable $post
-     * @param array|Traversable $files
+     * @param array|\Traversable $post
+     * @param array|\Traversable $files
      *
      * @return bool If uploading was a success
      */
@@ -442,7 +442,7 @@ class Decision extends AbstractAclService
     /**
      * Search for decisions.
      *
-     * @param array|Traversable $data Search data
+     * @param array|\Traversable $data Search data
      *
      * @return Collection|null Search results
      */

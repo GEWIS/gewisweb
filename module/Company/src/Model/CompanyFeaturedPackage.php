@@ -31,7 +31,7 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
     /**
      * Set the featured package's article text.
      *
-     * @param $article
+     * @param string $article
      */
     public function setArticle($article)
     {

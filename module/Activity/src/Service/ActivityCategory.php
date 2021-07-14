@@ -79,7 +79,7 @@ class ActivityCategory extends AbstractAclService
     /**
      * Get all categories.
      *
-     * @param $id
+     * @param int $id
      *
      * @return CategoryModel
      */

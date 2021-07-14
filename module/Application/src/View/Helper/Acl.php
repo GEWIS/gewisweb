@@ -3,7 +3,9 @@
 namespace Application\View\Helper;
 
 use Laminas\Code\Exception\InvalidArgumentException;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\View\Helper\AbstractHelper;
+use User\Model\User;
 
 class Acl extends AbstractHelper
 {
