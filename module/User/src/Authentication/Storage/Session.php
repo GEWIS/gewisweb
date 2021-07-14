@@ -14,8 +14,17 @@ class Session extends Storage\Session
      * @var bool indicating whether we should remember the user
      */
     protected $rememberMe;
+
+    /**
+     * @var \Laminas\Http\Request
+     */
     private $request;
+
+    /**
+     * @var \Laminas\Http\Response
+     */
     private $response;
+
     /**
      * @var array
      */
@@ -26,6 +35,7 @@ class Session extends Storage\Session
         $this->request = $request;
         $this->response = $response;
         $this->config = $config;
+
         parent::__construct();
     }
 
@@ -37,8 +47,9 @@ class Session extends Storage\Session
     public function setRememberMe($rememberMe = 0)
     {
         $this->rememberMe = $rememberMe;
+
         if ($rememberMe) {
-            $this->saveSession($this->read()->getLidnr());
+            $this->saveSession(parent::read()->getLidnr());
         }
     }
 
@@ -64,8 +75,9 @@ class Session extends Storage\Session
     protected function validateSession()
     {
         $key = $this->getPublicKey();
+
+        // Check if the key is readable.
         if (!$key) {
-            // Key not readable
             return false;
         }
 
@@ -73,6 +85,7 @@ class Session extends Storage\Session
         if (!isset($cookies->SESSTOKEN)) {
             return false;
         }
+
         try {
             $session = JWT::decode($cookies->SESSTOKEN, $key, ['RS256']);
         } catch (UnexpectedValueException $e) {
@@ -95,6 +108,7 @@ class Session extends Storage\Session
     public function write($contents)
     {
         parent::write($contents);
+
         if ($this->rememberMe) {
             $this->saveSession($contents);
         }
@@ -104,14 +118,18 @@ class Session extends Storage\Session
      * Store the current session.
      *
      * @param int $lidnr the lidnr of the logged in user
+     *
+     * @return void
      */
     protected function saveSession($lidnr)
     {
         $key = $this->getPrivateKey();
+
+        // Check if the key is readable.
         if (!$key) {
-            // Key not readable
             return;
         }
+
         $token = [
             'iss' => 'https://gewis.nl/',
             'lidnr' => $lidnr,
@@ -141,10 +159,13 @@ class Session extends Storage\Session
      * Store the session token as a cookie.
      *
      * @param string $jwt The session token to store
+     *
+     * @return void
      */
     protected function saveCookie($jwt)
     {
         $sessionToken = new SetCookie('GEWISSESSTOKEN', $jwt, strtotime('+2 weeks'), '/');
+
         // Use secure cookies in production
         if (APPLICATION_ENV === 'production') {
             $sessionToken->setSecure(true)->setHttponly(true);
@@ -155,10 +176,20 @@ class Session extends Storage\Session
         $this->response->getHeaders()->addHeader($sessionToken);
     }
 
+    /**
+     * Destroy the cookie holding the stored session.
+     *
+     * @return void
+     */
     protected function clearCookie()
     {
         $sessionToken = new SetCookie('GEWISSESSTOKEN', 'deleted', strtotime('-1 Year'), '/');
-        $sessionToken->setSecure(true)->setHttponly(true);
+
+        // Use secure cookies in production
+        if (APPLICATION_ENV === 'production') {
+            $sessionToken->setSecure(true)->setHttponly(true);
+        }
+
         $this->response->getHeaders()->addHeader($sessionToken);
     }
 

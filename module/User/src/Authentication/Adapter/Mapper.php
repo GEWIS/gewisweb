@@ -75,6 +75,8 @@ class Mapper implements AdapterInterface
             );
         }
 
+        $this->mapper->detach($user);
+
         if ($this->loginAttemptService->loginAttemptsExceeded(LoginAttempt::TYPE_NORMAL, $user)) {
             return new Result(
                 Result::FAILURE,
@@ -116,15 +118,17 @@ class Mapper implements AdapterInterface
     }
 
     /**
-     * @param string $login
+     * Sets the credentials used to authenticate.
+     *
+     * @param mixed $login
      * @param string $password
-     * @return Result
+     *
+     * @return void
      */
-    public function authenticateWithCredentials($login, $password): Result
+    public function setCredentials($login, $password)
     {
         $this->login = $login;
         $this->password = $password;
-        return $this->authenticate();
     }
 
     /**

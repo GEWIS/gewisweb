@@ -62,15 +62,17 @@ class PinMapper implements AdapterInterface
     }
 
     /**
+     * Sets the credentials used to authenticate.
+     *
      * @param string $lidnr
      * @param string $pincode
-     * @return Result
+     *
+     * @return void
      */
-    public function authenticateWithCredentials($lidnr, $pincode): Result
+    public function setCredentials($lidnr, $pincode)
     {
         $this->lidnr = $lidnr;
         $this->pincode = $pincode;
-        return $this->authenticate();
     }
 
     /**

@@ -348,18 +348,17 @@ class User extends AbstractAclService
      */
     public function login($data)
     {
-        $form = $this->loginForm;
-
+        $form = $this->getLoginForm();
         $form->setData($data);
 
         if (!$form->isValid()) {
             return null;
         }
 
-        // try to authenticate
-        $result = $this->authService->authenticateWithCredentials($data['login'], $data['password']);
+        // Try to authenticate the user.
+        $result = $this->authService->authenticate($data['login'], $data['password']);
 
-        // process the result
+        // Check if authentication was successful.
         if (!$result->isValid()) {
             $form->setResult($result);
 
@@ -383,10 +382,11 @@ class User extends AbstractAclService
         if (!$this->isAllowed('pin_login')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to login using pin codes'));
         }
-        // try to authenticate
-        $result = $this->pinAuthService->authenticateWithCredentials($data['lidnr'], $data['pincode']);
 
-        // process the result
+        // Try to authenticate the user.
+        $result = $this->pinAuthService->authenticate($data['lidnr'], $data['pincode']);
+
+        // Check if authentication was successful.
         if (!$result->isValid()) {
             return null;
         }
