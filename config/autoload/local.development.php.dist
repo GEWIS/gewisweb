@@ -39,7 +39,7 @@ return [
             'activity_creation_require_GEFLITST' => 'web@gewis.nl'
         ]
     ],
-    'cookie_domain' => 'test.gewis.nl',
+    'cookie_domain' => getenv('COOKIE_DOMAIN'),
 
     /*
      * API key for google calendar
