@@ -15,4 +15,4 @@ parameters:
         - module/Photo/src
         - module/User/src
     reportUnmatchedIgnoredErrors: false
-    tmpDir: phpstan
+    tmpDir: data/cache/phpstan

@@ -15,7 +15,7 @@ gewisweb-vagrant/
 node_modules/
 .sass-cache/
 .scannerwork/
-phpstan/
+data/cache/phpstan/
 public/css/gewis-theme.css
 public/css/gewis-theme.css.map
 public/styleguide/

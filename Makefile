@@ -65,12 +65,12 @@ phpcbf:
 		@vendor/bin/phpcbf -p --standard=PSR1,PSR12 --extensions=php,dist module config
 
 phpcsfix:
-		@vendor/bin/php-cs-fixer fix --rules=@PSR1,-@PSR12,-@Symfony module
-		@vendor/bin/php-cs-fixer fix --rules=@PSR1,-@PSR12,-@Symfony config
+		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --rules=@PSR1,-@PSR12,-@Symfony module
+		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --rules=@PSR1,-@PSR12,-@Symfony config
 
 phpcsfixtypes:
-		@vendor/bin/php-cs-fixer fix --allow-risky=yes --rules=@PSR1,-@PSR12,-@Symfony,-phpdoc_to_param_type,-phpdoc_to_property_type,-phpdoc_to_return_type /code/module
-		@vendor/bin/php-cs-fixer fix --allow-risky=yes --rules=@PSR1,-@PSR12,-@Symfony,-phpdoc_to_param_type,-phpdoc_to_property_type,-phpdoc_to_return_type /code/config
+		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --allow-risky=yes --rules=@PSR1,-@PSR12,-@Symfony,-phpdoc_to_param_type,-phpdoc_to_property_type,-phpdoc_to_return_type /code/module
+		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --allow-risky=yes --rules=@PSR1,-@PSR12,-@Symfony,-phpdoc_to_param_type,-phpdoc_to_property_type,-phpdoc_to_return_type /code/config
 
 updatecomposer:
 		@docker-compose exec web php composer.phar selfupdate
