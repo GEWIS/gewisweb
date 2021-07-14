@@ -47,7 +47,7 @@ class Activity extends AbstractAclService
      */
     private $categoryService;
     /**
-     * @var \User\Authentication\Service\User
+     * @var \User\Service\User
      */
     private $userService;
     /**
@@ -73,7 +73,7 @@ class Activity extends AbstractAclService
         Acl $acl,
         EntityManager $entityManager,
         ActivityCategory $categoryService,
-        \User\Authentication\Service\User $userService,
+        \User\Service\User $userService,
         \Decision\Service\Organ $organService,
         Company $companyService,
         Email $emailService,

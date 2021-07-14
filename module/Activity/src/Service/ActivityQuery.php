@@ -32,7 +32,7 @@ class ActivityQuery extends AbstractAclService
      */
     private $acl;
     /**
-     * @var \User\Authentication\Service\User
+     * @var \User\Service\User
      */
     private $userService;
     /**
@@ -52,7 +52,7 @@ class ActivityQuery extends AbstractAclService
         Translator $translator,
         $userRole,
         Acl $acl,
-        \User\Authentication\Service\User $userService,
+        \User\Service\User $userService,
         \Decision\Service\Organ $organService,
         \Activity\Mapper\Activity $activityMapper,
         Proposal $proposalMapper
