@@ -277,7 +277,7 @@ class Module
                     );
                 },
                 'user_pin_auth_service' => function (ContainerInterface $container) {
-                    return new AuthenticationService(
+                    return new Authentication\AuthenticationService(
                         $container->get('user_auth_storage'),
                         $container->get('user_pin_auth_adapter')
                     );
