@@ -43,8 +43,13 @@ class News extends AbstractAclService
      */
     private $newsItemForm;
 
-    public function __construct(Translator $translator, $userRole, Acl $acl, NewsItem $newsItemMapper, \Frontpage\Form\NewsItem $newsItemForm)
-    {
+    public function __construct(
+        Translator $translator,
+        $userRole,
+        Acl $acl,
+        NewsItem $newsItemMapper,
+        \Frontpage\Form\NewsItem $newsItemForm
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;

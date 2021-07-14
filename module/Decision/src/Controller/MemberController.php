@@ -33,8 +33,13 @@ class MemberController extends AbstractActionController
     private $regulationsConfig;
     private User $userService;
 
-    public function __construct(Member $memberService, MemberInfo $memberInfoService, Decision $decisionService, User $userService, array $regulationsConfig)
-    {
+    public function __construct(
+        Member $memberService,
+        MemberInfo $memberInfoService,
+        Decision $decisionService,
+        User $userService,
+        array $regulationsConfig
+    ) {
         $this->memberService = $memberService;
         $this->memberInfoService = $memberInfoService;
         $this->decisionService = $decisionService;

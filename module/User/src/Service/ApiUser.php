@@ -40,8 +40,13 @@ class ApiUser extends AbstractAclService
      */
     private $apiTokenForm;
 
-    public function __construct(Translator $translator, $userRole, Acl $acl, ApiUserMapper $apiUserMapper, ApiToken $apiTokenForm)
-    {
+    public function __construct(
+        Translator $translator,
+        $userRole,
+        Acl $acl,
+        ApiUserMapper $apiUserMapper,
+        ApiToken $apiTokenForm
+    ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
         $this->acl = $acl;

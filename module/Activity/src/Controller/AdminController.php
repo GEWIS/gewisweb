@@ -48,8 +48,15 @@ class AdminController extends AbstractActionController
     private User $userService;
     private \Activity\Mapper\Signup $signupMapper;
 
-    public function __construct(Translator $translator, \Activity\Service\Activity $activityService, ActivityQuery $activityQueryService, Signup $signupService, SignupListQuery $signupListQueryService, User $userService, \Activity\Mapper\Signup $signupMapper)
-    {
+    public function __construct(
+        Translator $translator,
+        \Activity\Service\Activity $activityService,
+        ActivityQuery $activityQueryService,
+        Signup $signupService,
+        SignupListQuery $signupListQueryService,
+        User $userService,
+        \Activity\Mapper\Signup $signupMapper
+    ) {
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;
         $this->signupService = $signupService;
@@ -174,7 +181,9 @@ class AdminController extends AbstractActionController
             }
 
             if (!$this->activityService->isAllowed('viewParticipants', $activity)) {
-                throw new NotAllowedException($this->translator->translate('You are not allowed to view the participants of this activity'));
+                throw new NotAllowedException(
+                    $this->translator->translate('You are not allowed to view the participants of this activity')
+                );
             }
         } else {
             $signupList = $this->signupListQueryService->getSignupListByActivity($signupListId, $activityId);
@@ -184,7 +193,9 @@ class AdminController extends AbstractActionController
             }
 
             if (!$this->activityService->isAllowed('viewParticipants', $signupList)) {
-                throw new NotAllowedException($this->translator->translate('You are not allowed to view the participants of this activity'));
+                throw new NotAllowedException(
+                    $this->translator->translate('You are not allowed to view the participants of this activity')
+                );
             }
 
             $activity = $this->activityQueryService->getActivity($activityId);

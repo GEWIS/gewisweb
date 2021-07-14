@@ -36,8 +36,13 @@ class AlbumCover
      */
     private $storageConfig;
 
-    public function __construct(\Photo\Mapper\Photo $photoMapper, \Photo\Mapper\Album $albumMapper, FileStorage $storage, array $photoConfig, array $storageConfig)
-    {
+    public function __construct(
+        \Photo\Mapper\Photo $photoMapper,
+        \Photo\Mapper\Album $albumMapper,
+        FileStorage $storage,
+        array $photoConfig,
+        array $storageConfig
+    ) {
         $this->photoMapper = $photoMapper;
         $this->albumMapper = $albumMapper;
         $this->storage = $storage;

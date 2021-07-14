@@ -237,7 +237,12 @@ class Module
                 );
             },
         ];
-        $factories = array_merge($serviceFactories, $this->getMapperFactories(), $this->getOtherFactories(), $this->getFormFactories());
+        $factories = array_merge(
+            $serviceFactories,
+            $this->getMapperFactories(),
+            $this->getOtherFactories(),
+            $this->getFormFactories()
+        );
 
         return [
             'factories' => $factories,

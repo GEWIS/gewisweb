@@ -37,7 +37,9 @@ class ApiController extends AbstractActionController
     {
         if (!$this->activityQueryService->isAllowed('list', 'activityApi')) {
             $translator = $this->activityQueryService->getTranslator();
-            throw new NotAllowedException($translator->translate('You are not allowed to access the activities through the API'));
+            throw new NotAllowedException(
+                $translator->translate('You are not allowed to access the activities through the API')
+            );
         }
 
         $activities = $this->activityQueryService->getUpcomingActivities();

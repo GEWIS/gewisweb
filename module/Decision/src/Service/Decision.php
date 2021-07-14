@@ -20,6 +20,7 @@ use InvalidArgumentException;
 use Laminas\Http\Response\Stream;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
+use Traversable;
 use User\Permissions\NotAllowedException;
 use User\Service\User;
 
@@ -253,7 +254,9 @@ class Decision extends AbstractAclService
     public function getMeetingDocumentDownload($meetingDocument)
     {
         if (!$this->isAllowed('view_documents', 'meeting')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view meeting documents.'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view meeting documents.')
+            );
         }
 
         if (is_null($meetingDocument)) {
@@ -291,8 +294,8 @@ class Decision extends AbstractAclService
     /**
      * Upload meeting notes.
      *
-     * @param array|\Traversable $post
-     * @param array|\Traversable $files
+     * @param array|Traversable $post
+     * @param array|Traversable $files
      *
      * @return bool If uploading was a success
      */
@@ -329,8 +332,8 @@ class Decision extends AbstractAclService
     /**
      * Upload a meeting document.
      *
-     * @param array|\Traversable $post
-     * @param array|\Traversable $files
+     * @param array|Traversable $post
+     * @param array|Traversable $files
      *
      * @return bool If uploading was a success
      */
@@ -372,7 +375,9 @@ class Decision extends AbstractAclService
     public function deleteDocument($post)
     {
         if (!$this->isAllowed('delete_document', 'meeting')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to delete meeting documents.'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to delete meeting documents.')
+            );
         }
         $id = $post->toArray()['document'];
         $document = $this->getMeetingDocument($id);
@@ -442,7 +447,7 @@ class Decision extends AbstractAclService
     /**
      * Search for decisions.
      *
-     * @param array|\Traversable $data Search data
+     * @param array|Traversable $data Search data
      *
      * @return Collection|null Search results
      */
@@ -475,7 +480,9 @@ class Decision extends AbstractAclService
     public function getAllAuthorizations($meetingNumber)
     {
         if (!$this->isAllowed('view_all', 'authorization')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view all authorizations.'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view all authorizations.')
+            );
         }
 
         return $this->authorizationMapper->find($meetingNumber);
@@ -568,7 +575,9 @@ class Decision extends AbstractAclService
     public function getDocumentForm()
     {
         if (!$this->isAllowed('upload_document', 'meeting')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to upload meeting documents.'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to upload meeting documents.')
+            );
         }
 
         return $this->documentForm;

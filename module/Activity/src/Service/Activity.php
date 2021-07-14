@@ -187,7 +187,9 @@ class Activity extends AbstractAclService
         $organ = $this->organService->getOrgan($organId);
 
         if (!$this->organService->canEditOrgan($organ)) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to create an activity for this organ'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to create an activity for this organ')
+            );
         }
 
         return $organ;
@@ -730,7 +732,9 @@ class Activity extends AbstractAclService
     public function approve(ActivityModel $activity)
     {
         if (!$this->isAllowed('approve', 'activity')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to change the status of the activity'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to change the status of the activity')
+            );
         }
         $activity->setStatus(ActivityModel::STATUS_APPROVED);
         $em = $this->entityManager;
@@ -744,7 +748,9 @@ class Activity extends AbstractAclService
     public function reset(ActivityModel $activity)
     {
         if (!$this->isAllowed('reset', 'activity')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to change the status of the activity'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to change the status of the activity')
+            );
         }
 
         $activity->setStatus(ActivityModel::STATUS_TO_APPROVE);
@@ -759,7 +765,9 @@ class Activity extends AbstractAclService
     public function disapprove(ActivityModel $activity)
     {
         if (!$this->isAllowed('disapprove', 'activity')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to change the status of the activity'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to change the status of the activity')
+            );
         }
 
         $activity->setStatus(ActivityModel::STATUS_DISAPPROVED);

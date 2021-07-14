@@ -312,7 +312,14 @@ return [
                 $companyForm = $container->get('company_form_company');
                 $languages = $container->get('languages');
 
-                return new AdminController($translator, $companyService, $companyQueryService, $labelMapper, $companyForm, $languages);
+                return new AdminController(
+                    $translator,
+                    $companyService,
+                    $companyQueryService,
+                    $labelMapper,
+                    $companyForm,
+                    $languages
+                );
             },
         ],
     ],

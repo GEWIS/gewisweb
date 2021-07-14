@@ -130,7 +130,9 @@ class CompanyQuery extends AbstractACLService
     {
         if (!$visible) {
             if (!$this->isAllowed('listAllCategories')) {
-                throw new NotAllowedException($this->translator->translate('You are not allowed to access the admin interface'));
+                throw new NotAllowedException(
+                    $this->translator->translate('You are not allowed to access the admin interface')
+                );
             }
             $results = $this->categoryMapper->findAll();
 

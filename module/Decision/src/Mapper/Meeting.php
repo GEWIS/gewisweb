@@ -227,7 +227,7 @@ class Meeting
     /**
      * Removes an entity.
      *
-     * @param \Decision\Model\Meeting $entity
+     * @param MeetingModel $entity
      */
     public function remove($entity)
     {

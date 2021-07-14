@@ -42,8 +42,14 @@ class AdminController extends AbstractActionController
      */
     private $companyQueryService;
 
-    public function __construct(Translator $translator, CompanyService $companyService, CompanyQuery $companyQueryService, Label $labelMapper, EditCompany $companyForm, array $languages)
-    {
+    public function __construct(
+        Translator $translator,
+        CompanyService $companyService,
+        CompanyQuery $companyQueryService,
+        Label $labelMapper,
+        EditCompany $companyForm,
+        array $languages
+    ) {
         $this->translator = $translator;
         $this->companyService = $companyService;
         $this->companyQueryService = $companyQueryService;
@@ -58,7 +64,9 @@ class AdminController extends AbstractActionController
     public function indexAction()
     {
         if (!$this->companyService->isAllowed('listAllLabels')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to access the admin interface'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to access the admin interface')
+            );
         }
 
         // Initialize the view

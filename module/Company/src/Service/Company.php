@@ -197,7 +197,9 @@ class Company extends AbstractACLService
     public function getFeaturedPackage()
     {
         if (!$this->isAllowed('viewFeaturedCompany')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view the featured company'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view the featured company')
+            );
         }
 
         return $this->featuredPackageMapper->getFeaturedPackage($this->translator->getLocale());
@@ -284,7 +286,9 @@ class Company extends AbstractACLService
     public function getHiddenCompanyList()
     {
         if (!$this->isAllowed('listall')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to access the admin interface'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to access the admin interface')
+            );
         }
 
         return $this->companyMapper->findAll();

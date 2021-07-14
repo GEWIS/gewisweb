@@ -44,8 +44,14 @@ class ActivityController extends AbstractActionController
 
     private User $userService;
 
-    public function __construct(Translator $translator, \Activity\Service\Activity $activityService, ActivityQuery $activityQueryService, Signup $signupService, SignupListQuery $signupListQueryService, User $userService)
-    {
+    public function __construct(
+        Translator $translator,
+        \Activity\Service\Activity $activityService,
+        ActivityQuery $activityQueryService,
+        Signup $signupService,
+        SignupListQuery $signupListQueryService,
+        User $userService
+    ) {
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;
         $this->signupService = $signupService;

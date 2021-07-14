@@ -194,7 +194,9 @@ class ActivityQuery extends AbstractAclService
     public function getUnapprovedActivities()
     {
         if (!$this->isAllowed('viewUnapproved', 'activity')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view unapproved activities'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view unapproved activities')
+            );
         }
 
         $activityMapper = $this->activityMapper;
@@ -249,12 +251,12 @@ class ActivityQuery extends AbstractAclService
     public function getDisapprovedActivities()
     {
         if (!$this->isAllowed('viewDisapproved', 'activity')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view the disapproved activities'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view the disapproved activities')
+            );
         }
 
-        $activityMapper = $this->activityMapper;
-
-        return $activityMapper->getAllUpcomingActivities(null, null, ActivityModel::STATUS_DISAPPROVED);
+        return $this->activityMapper->getAllUpcomingActivities(null, null, ActivityModel::STATUS_DISAPPROVED);
     }
 
     /**
@@ -267,20 +269,23 @@ class ActivityQuery extends AbstractAclService
     public function getUpcomingActivities($category = null)
     {
         if (!$this->isAllowed('view', 'activity')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view upcoming the activities'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view upcoming the activities')
+            );
         }
 
-        $activityMapper = $this->activityMapper;
         if ('my' === $category) {
             if (!$this->isAllowed('view', 'myActivities')) {
-                throw new NotAllowedException($this->translator->translate('You are not allowed to view upcoming activities coupled to a member account'));
+                throw new NotAllowedException(
+                    $this->translator->translate('You are not allowed to view upcoming activities coupled to a member account')
+                );
             }
             $user = $this->userService->getIdentity();
 
-            return $activityMapper->getUpcomingActivitiesForMember($user);
+            return $this->activityMapper->getUpcomingActivitiesForMember($user);
         }
 
-        return $activityMapper->getUpcomingActivities(null, null, $category);
+        return $this->activityMapper->getUpcomingActivities(null, null, $category);
     }
 
     /**

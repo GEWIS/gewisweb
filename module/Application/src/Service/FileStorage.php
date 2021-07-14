@@ -66,7 +66,12 @@ class FileStorage
     {
         $config = $this->storageConfig;
         if (0 !== $file['error']) {
-            throw new RuntimeException(sprintf($this->translator->translate('An unknown error occurred during uploading (%i)'), $file['error']));
+            throw new RuntimeException(
+                sprintf(
+                    $this->translator->translate('An unknown error occurred during uploading (%i)'),
+                    $file['error']
+                )
+            );
         }
 
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);

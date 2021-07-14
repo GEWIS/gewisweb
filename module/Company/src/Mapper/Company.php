@@ -168,7 +168,7 @@ class Company
     /**
      * Removes a company.
      *
-     * @param \Company\Model\Company $company
+     * @param CompanyModel $company
      */
     public function remove($company)
     {

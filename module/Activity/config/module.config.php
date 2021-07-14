@@ -477,14 +477,25 @@ return [
                 $signupListQueryService = $container->get('activity_service_signupListQuery');
                 $userService = $container->get('user_service_user');
 
-                return new Activity\Controller\ActivityController($translator, $activityService, $activityQueryService, $signupService, $signupListQueryService, $userService);
+                return new Activity\Controller\ActivityController(
+                    $translator,
+                    $activityService,
+                    $activityQueryService,
+                    $signupService,
+                    $signupListQueryService,
+                    $userService
+                );
             },
             'Activity\Controller\AdminApproval' => function (ContainerInterface $container) {
                 $translator = $container->get('translator');
                 $activityService = $container->get('activity_service_activity');
                 $activityQueryService = $container->get('activity_service_activityQuery');
 
-                return new Activity\Controller\AdminApprovalController($translator, $activityService, $activityQueryService);
+                return new Activity\Controller\AdminApprovalController(
+                    $translator,
+                    $activityService,
+                    $activityQueryService
+                );
             },
             'Activity\Controller\AdminCategory' => function (ContainerInterface $container) {
                 $translator = $container->get('translator');
@@ -508,7 +519,15 @@ return [
                 $userService = $container->get('user_service_user');
                 $signupMapper = $container->get('activity_mapper_signup');
 
-                return new Activity\Controller\AdminController($translator, $activityService, $activityQueryService, $signupService, $signupListQueryService, $userService, $signupMapper);
+                return new Activity\Controller\AdminController(
+                    $translator,
+                    $activityService,
+                    $activityQueryService,
+                    $signupService,
+                    $signupListQueryService,
+                    $userService,
+                    $signupMapper
+                );
             },
             'Activity\Controller\ActivityCalendar' => function (ContainerInterface $container) {
                 $calendarService = $container->get('activity_service_calendar');

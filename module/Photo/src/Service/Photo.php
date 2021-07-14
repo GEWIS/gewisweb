@@ -635,7 +635,9 @@ class Photo extends AbstractAclService
     public function getPhotosOfTheWeek()
     {
         if (!$this->isAllowed('view')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view previous photos of the week'));
+            throw new NotAllowedException(
+                $this->translator->translate('Not allowed to view previous photos of the week')
+            );
         }
 
         return $this->weeklyPhotoMapper->getPhotosOfTheWeek();

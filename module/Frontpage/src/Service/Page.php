@@ -163,7 +163,9 @@ class Page extends AbstractAclService
     public function getPages()
     {
         if (!$this->isAllowed('list')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view the list of pages.'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view the list of pages.')
+            );
         }
         $pages = $this->pageMapper->getAllPages();
         $pageArray = [];
@@ -273,7 +275,9 @@ class Page extends AbstractAclService
 
                 return $config['public_dir'] . '/' . $fileName;
             }
-            throw new InvalidArgumentException($this->translator->translate('The uploaded file does not have a valid extension'));
+            throw new InvalidArgumentException(
+                $this->translator->translate('The uploaded file does not have a valid extension')
+            );
         }
         throw new InvalidArgumentException($this->translator->translate('The uploaded file is not a valid image'));
     }

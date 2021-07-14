@@ -32,8 +32,12 @@ class Email
      */
     private $emailConfig;
 
-    public function __construct(Translator $translator, PhpRenderer $renderer, TransportInterface $transport, array $emailConfig)
-    {
+    public function __construct(
+        Translator $translator,
+        PhpRenderer $renderer,
+        TransportInterface $transport,
+        array $emailConfig
+    ) {
         $this->translator = $translator;
         $this->renderer = $renderer;
         $this->transport = $transport;

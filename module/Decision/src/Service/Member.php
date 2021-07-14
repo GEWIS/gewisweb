@@ -104,7 +104,9 @@ class Member extends AbstractAclService
     public function getDreamsparkUrl()
     {
         if (!$this->isAllowed('login', 'dreamspark')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed login into Microsoft Imagine.'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed login into Microsoft Imagine.')
+            );
         }
 
         $user = $this->userService->getIdentity();
@@ -136,7 +138,9 @@ class Member extends AbstractAclService
         $response = $client->send();
 
         if (200 != $response->getStatusCode()) {
-            throw new NotAllowedException($this->translator->translate('Login to Microsoft Imagine failed. If this persists, contact the WebCommittee.'));
+            throw new NotAllowedException(
+                $this->translator->translate('Login to Microsoft Imagine failed. If this persists, contact the WebCommittee.')
+            );
         }
 
         return $response->getBody();
@@ -154,11 +158,15 @@ class Member extends AbstractAclService
     public function getBirthdayMembers($days = 0)
     {
         if (0 == $days && !$this->isAllowed('birthdays_today')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view the list of today\'s birthdays.'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view the list of today\'s birthdays.')
+            );
         }
 
         if ($days > 0 && !$this->isAllowed('birthdays')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view the list of birthdays.'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view the list of birthdays.')
+            );
         }
 
         return $this->memberMapper->findBirthdayMembers($days);
@@ -185,7 +193,9 @@ class Member extends AbstractAclService
     public function searchMembersByName($query)
     {
         if (strlen($query) < self::MIN_SEARCH_QUERY_LENGTH) {
-            throw new InvalidArgumentException($this->translator->translate('Name must be at least ' . self::MIN_SEARCH_QUERY_LENGTH . ' characters'));
+            throw new InvalidArgumentException(
+                $this->translator->translate('Name must be at least ' . self::MIN_SEARCH_QUERY_LENGTH . ' characters')
+            );
         }
 
         if (!$this->isAllowed('search')) {

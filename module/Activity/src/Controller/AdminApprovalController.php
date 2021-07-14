@@ -43,7 +43,9 @@ class AdminApprovalController extends AbstractActionController
         $id = (int)$this->params('id');
 
         if (!$this->activityService->isAllowed('approval')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view the approval of this activity'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view the approval of this activity')
+            );
         }
 
         $activity = $this->activityQueryService->getActivity($id);

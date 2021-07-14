@@ -109,7 +109,9 @@ class Poll extends AbstractAclService
     {
         $poll = $this->pollMapper->findPollById($pollId);
         if (is_null($poll->getApprover()) && !$this->isAllowed('view_unapproved')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view unnapproved polls'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view unnapproved polls')
+            );
         }
 
         return $poll;
@@ -249,7 +251,9 @@ class Poll extends AbstractAclService
     public function createComment($pollId, $data)
     {
         if (!$this->isAllowed('create', 'poll_comment')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to create comments on this poll'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to create comments on this poll')
+            );
         }
 
         $poll = $this->getPoll($pollId);

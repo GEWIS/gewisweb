@@ -226,7 +226,9 @@ class Admin extends AbstractAclService
         );
 
         if (0 !== $files['file']['error']) {
-            throw new Exception($this->translator->translate('An unknown error occurred during uploading (' . $files['file']['error'] . ')'));
+            throw new Exception(
+                $this->translator->translate('An unknown error occurred during uploading (' . $files['file']['error'] . ')')
+            );
         }
         /**
          * We re-add the original extension so it can be preserved later on
@@ -240,10 +242,20 @@ class Admin extends AbstractAclService
             if ($extensionValidator->isValid($path)) {
                 $this->storeUploadedPhoto($path, $album, true);
             } else {
-                throw new InvalidArgumentException($this->translator->translate('The uploaded file does not have a valid extension'));
+                throw new InvalidArgumentException(
+                    $this->translator->translate('The uploaded file does not have a valid extension')
+                );
             }
         } else {
-            throw new InvalidArgumentException(sprintf($this->translator->translate("The uploaded file is not a valid image \nError: %s"), implode(',', array_values($imageValidator->getMessages()))));
+            throw new InvalidArgumentException(
+                sprintf(
+                    $this->translator->translate("The uploaded file is not a valid image \nError: %s"),
+                    implode(
+                        ',',
+                        array_values($imageValidator->getMessages())
+                    )
+                )
+            );
         }
     }
 

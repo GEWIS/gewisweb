@@ -145,7 +145,9 @@ class Organ extends AbstractAclService
     public function getEditableOrgans()
     {
         if (!$this->isAllowed('edit')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to edit organ information'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to edit organ information')
+            );
         }
 
         if ($this->isAllowed('editall')) {
@@ -344,7 +346,9 @@ class Organ extends AbstractAclService
     public function getOrganInformationForm($organInformation)
     {
         if (!$this->canEditOrgan($organInformation->getOrgan())) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to edit this organ\'s information'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to edit this organ\'s information')
+            );
         }
 
         $form = $this->organInformationForm;

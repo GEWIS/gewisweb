@@ -204,7 +204,10 @@ class AdminController extends AbstractActionController
     {
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $this->examService->deleteTempExam($this->params()->fromRoute('filename'), $this->params()->fromRoute('type'));
+            $this->examService->deleteTempExam(
+                $this->params()->fromRoute('filename'),
+                $this->params()->fromRoute('type')
+            );
 
             return new JsonModel(['success' => 'true']);
         }
