@@ -391,17 +391,26 @@ class Activity extends Form implements InputFilterProviderInterface
             ],
         ];
 
-        if ($this->data['language_english']) {
+        if (
+            isset($this->data['language_english'])
+            && $this->data['language_english']
+        ) {
             $filter += $this->inputFilterEnglish();
         }
 
-        if ($this->data['language_dutch']) {
+        if (
+            isset($this->data['language_dutch'])
+            && $this->data['language_dutch']
+        ) {
             $filter += $this->inputFilterDutch();
         }
         // One of the language_dutch or language_english needs to set. If not, display a message at both, indicating that
         // they need to be set
 
-        if (!$this->data['language_dutch'] && !$this->data['language_english']) {
+        if (
+            (isset($this->data['language_dutch']) && !$this->data['language_dutch'])
+            && (isset($this->data['language_english']) && !$this->data['language_english'])
+        ) {
             unset($this->data['language_dutch'], $this->data['language_english']);
 
             $filter += [
