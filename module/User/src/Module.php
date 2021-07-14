@@ -14,6 +14,7 @@ use Laminas\Permissions\Acl\Role\GenericRole as Role;
 use Interop\Container\ContainerInterface;
 use User\Authentication\Adapter\Mapper;
 use User\Authentication\Adapter\PinMapper;
+use User\Service\Factory\ApiAppFactory;
 use User\Form\Activate;
 use User\Form\ApiToken;
 use User\Form\Login;
@@ -28,7 +29,6 @@ use User\Permissions\Assertion\IsBoardMember;
 use User\Permissions\NotAllowedException;
 use User\Service\ApiApp;
 use User\Service\Email;
-use User\Service\Factory\ApiAppFactory;
 
 class Module
 {
@@ -103,7 +103,6 @@ class Module
                     $bcrypt = $container->get('user_bcrypt');
                     $authService = $container->get('user_auth_service');
                     $pinMapper = $container->get('user_pin_auth_service');
-                    $authStorage = $container->get('user_auth_storage');
                     $emailService = $container->get('user_service_email');
                     $acl = $container->get('acl');
                     $userMapper = $container->get('user_mapper_user');
@@ -120,7 +119,6 @@ class Module
                         $bcrypt,
                         $authService,
                         $pinMapper,
-                        $authStorage,
                         $emailService,
                         $acl,
                         $userMapper,
@@ -139,7 +137,7 @@ class Module
                     $userMapper = $container->get('user_mapper_user');
                     $rateLimitConfig = $container->get('config')['login_rate_limits'];
 
-                    return new Service\LoginAttempt(
+                    return new Authentication\Service\LoginAttempt(
                         $remoteAddress,
                         $entityManager,
                         $loginAttemptMapper,
@@ -260,23 +258,17 @@ class Module
                     return $transport;
                 },
                 'user_auth_adapter' => function (ContainerInterface $container) {
-                    $adapter = new Mapper(
+                    return new Mapper(
                         $container->get('user_bcrypt'),
-                        $container->get('application_service_legacy'),
-                        $container->get('user_service_loginattempt')
+                        $container->get('user_service_loginattempt'),
+                        $container->get('user_mapper_user')
                     );
-                    $adapter->setMapper($container->get('user_mapper_user'));
-
-                    return $adapter;
                 },
                 'user_pin_auth_adapter' => function (ContainerInterface $container) {
-                    $adapter = new PinMapper(
-                        $container->get('application_service_legacy'),
-                        $container->get('user_service_loginattempt')
+                    return new PinMapper(
+                        $container->get('user_service_loginattempt'),
+                        $container->get('user_mapper_user')
                     );
-                    $adapter->setMapper($container->get('user_mapper_user'));
-
-                    return $adapter;
                 },
                 'user_auth_service' => function (ContainerInterface $container) {
                     return new Authentication\AuthenticationService(

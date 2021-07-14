@@ -1,10 +1,11 @@
 <?php
 
-namespace User\Service;
+namespace User\Authentication\Service;
 
 use DateInterval;
 use DateTime;
 use Doctrine\ORM\EntityManager;
+use User\Mapper\User;
 
 class LoginAttempt
 {
@@ -29,7 +30,7 @@ class LoginAttempt
     private $entityManager;
 
     /**
-     * @var \User\Mapper\User
+     * @var User
      */
     private $userMapper;
 
@@ -37,7 +38,7 @@ class LoginAttempt
         string $remoteAddress,
         EntityManager $entityManager,
         \User\Mapper\LoginAttempt $loginAttemptMapper,
-        \User\Mapper\User $userMapper,
+        User $userMapper,
         array $rateLimitConfig
     ) {
         $this->remoteAddress = $remoteAddress;
@@ -71,7 +72,7 @@ class LoginAttempt
         return $this->userMapper->findByLidnr($user->getLidnr());
     }
 
-    public function loginAttemptsExceeded($type, $user)
+    public function loginAttemptsExceeded($type, $user): bool
     {
         $ip = $this->remoteAddress;
         $since = (new DateTime())->sub(new DateInterval('PT' . $this->rateLimitConfig[$type]['lockout_time'] . 'M'));

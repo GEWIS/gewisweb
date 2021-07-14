@@ -2,14 +2,13 @@
 
 namespace User\Authentication\Adapter;
 
-use Application\Service\Legacy as LegacyService;
 use Laminas\Authentication\Adapter\AdapterInterface;
 use Laminas\Authentication\Result;
 use Laminas\Crypt\Password\Bcrypt;
+use RuntimeException;
 use User\Mapper\User as UserMapper;
 use User\Model\LoginAttempt;
-use User\Model\User as UserModel;
-use User\Service\LoginAttempt as LoginAttemptService;
+use User\Authentication\Service\LoginAttempt as LoginAttemptService;
 
 class Mapper implements AdapterInterface
 {
@@ -18,36 +17,21 @@ class Mapper implements AdapterInterface
      *
      * @var UserMapper
      */
-    protected $mapper;
-
-    /**
-     * Email.
-     *
-     * @var string
-     */
-    protected $email;
+    protected UserMapper $mapper;
 
     /**
      * Password.
      *
      * @var string
      */
-    protected $password;
+    protected string $password;
 
     /**
      * Bcrypt instance.
      *
      * @var Bcrypt
      */
-    protected $bcrypt;
-
-    /**
-     * Legacy Service
-     * (for checking logins against the old database).
-     *
-     * @var LegacyService
-     */
-    protected $legacyService;
+    protected Bcrypt $bcrypt;
 
     /**
      * User Service
@@ -55,7 +39,8 @@ class Mapper implements AdapterInterface
      *
      * @var LoginAttemptService
      */
-    protected $loginAttemptService;
+    protected LoginAttemptService $loginAttemptService;
+
     /**
      * @var mixed
      */
@@ -63,12 +48,15 @@ class Mapper implements AdapterInterface
 
     /**
      * Constructor.
+     * @param Bcrypt $bcrypt
+     * @param LoginAttemptService $loginAttemptService
+     * @param UserMapper $mapper
      */
-    public function __construct(Bcrypt $bcrypt, LegacyService $legacyService, loginAttemptService $loginAttemptService)
+    public function __construct(Bcrypt $bcrypt, loginAttemptService $loginAttemptService, UserMapper $mapper)
     {
         $this->bcrypt = $bcrypt;
-        $this->legacyService = $legacyService;
         $this->loginAttemptService = $loginAttemptService;
+        $this->mapper = $mapper;
     }
 
     /**
@@ -76,7 +64,7 @@ class Mapper implements AdapterInterface
      *
      * @return Result
      */
-    public function authenticate()
+    public function authenticate(): Result
     {
         $user = $this->mapper->findByLogin($this->login);
 
@@ -84,27 +72,22 @@ class Mapper implements AdapterInterface
             return new Result(
                 Result::FAILURE_IDENTITY_NOT_FOUND,
                 null,
-                []
             );
         }
-
-        $this->mapper->detach($user);
 
         if ($this->loginAttemptService->loginAttemptsExceeded(LoginAttempt::TYPE_NORMAL, $user)) {
             return new Result(
                 Result::FAILURE,
                 null,
-                []
             );
         }
 
-        if (!$this->verifyPassword($this->password, $user->getPassword(), $user)) {
+        if (!$this->verifyPassword($this->password, $user->getPassword())) {
             $this->loginAttemptService->logFailedLogin($user, LoginAttempt::TYPE_NORMAL);
 
             return new Result(
                 Result::FAILURE_CREDENTIAL_INVALID,
                 null,
-                []
             );
         }
 
@@ -116,14 +99,13 @@ class Mapper implements AdapterInterface
      *
      * @param string $password
      * @param string $hash
-     * @param UserModel $user
      *
      * @return bool
      */
-    public function verifyPassword($password, $hash, $user = null)
+    public function verifyPassword($password, $hash)
     {
         if (0 === strlen($hash)) {
-            return $this->legacyService->checkPassword($user, $password, $this->bcrypt);
+            throw new RuntimeException("Legacy service is not available for Mapper Auth.");
         }
 
         if ($this->bcrypt->verify($password, $hash)) {
@@ -134,14 +116,15 @@ class Mapper implements AdapterInterface
     }
 
     /**
-     * Set the credentials.
-     *
-     * @param array $data
+     * @param string $login
+     * @param string $password
+     * @return Result
      */
-    public function setCredentials($data)
+    public function authenticateWithCredentials($login, $password): Result
     {
-        $this->login = $data['login'];
-        $this->password = $data['password'];
+        $this->login = $login;
+        $this->password = $password;
+        return $this->authenticate();
     }
 
     /**
@@ -149,16 +132,8 @@ class Mapper implements AdapterInterface
      *
      * @return UserMapper
      */
-    public function getMapper()
+    public function getMapper(): UserMapper
     {
         return $this->mapper;
-    }
-
-    /**
-     * Set the mapper.
-     */
-    public function setMapper(UserMapper $mapper)
-    {
-        $this->mapper = $mapper;
     }
 }

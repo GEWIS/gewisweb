@@ -21,6 +21,14 @@ class Session extends Storage\Session
      */
     private $config;
 
+    public function __construct($request, $response, array $config)
+    {
+        $this->request = $request;
+        $this->response = $response;
+        $this->config = $config;
+        parent::__construct();
+    }
+
     /**
      * Set whether we should remember this session or not.
      *
@@ -30,16 +38,8 @@ class Session extends Storage\Session
     {
         $this->rememberMe = $rememberMe;
         if ($rememberMe) {
-            $this->saveSession($this->read()->getLidnr());
+            $this->saveSession($this->session->{$this->member}->getLidnr());
         }
-    }
-
-    /**
-     * Ensure that this session is no longer remembered.
-     */
-    public function forgetMe()
-    {
-        $this->rememberMe = false;
     }
 
     /**
@@ -105,7 +105,7 @@ class Session extends Storage\Session
      *
      * @param int $lidnr the lidnr of the logged in user
      */
-    public function saveSession($lidnr)
+    protected function saveSession($lidnr)
     {
         $key = $this->getPrivateKey();
         if (!$key) {
@@ -160,14 +160,6 @@ class Session extends Storage\Session
         $sessionToken = new SetCookie('GEWISSESSTOKEN', 'deleted', strtotime('-1 Year'), '/');
         $sessionToken->setSecure(true)->setHttponly(true);
         $this->response->getHeaders()->addHeader($sessionToken);
-    }
-
-    public function __construct($request, $response, array $config)
-    {
-        $this->request = $request;
-        $this->response = $response;
-        $this->config = $config;
-        parent::__construct(null, null, null);
     }
 
     /**

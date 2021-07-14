@@ -6,11 +6,12 @@ use Application\Service\AbstractAclService;
 use DateInterval;
 use DateTime;
 use Decision\Mapper\Member;
-use Laminas\Authentication\AuthenticationService;
 use Laminas\Crypt\Password\Bcrypt;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
-use User\Authentication\Storage\Session;
+use RuntimeException;
+use User\Authentication\Adapter\Mapper;
+use User\Authentication\AuthenticationService;
 use User\Form\Activate;
 use User\Form\Login;
 use User\Form\Password;
@@ -42,19 +43,15 @@ class User extends AbstractAclService
 
     /**
      * @var AuthenticationService
+     * with regular Mapper adapter
      */
     private $authService;
 
     /**
      * @var AuthenticationService
-     *                            with PinMapper adapter
+     * with PinMapper adapter
      */
     private $pinAuthService;
-
-    /**
-     * @var Session
-     */
-    private $authStorage;
 
     /**
      * @var Email
@@ -107,7 +104,6 @@ class User extends AbstractAclService
         Bcrypt $bcrypt,
         AuthenticationService $authService,
         AuthenticationService $pinAuthService,
-        Session $authStorage,
         Email $emailService,
         Acl $acl,
         \User\Mapper\User $userMapper,
@@ -123,7 +119,6 @@ class User extends AbstractAclService
         $this->bcrypt = $bcrypt;
         $this->authService = $authService;
         $this->pinAuthService = $pinAuthService;
-        $this->authStorage = $authStorage;
         $this->emailService = $emailService;
         $this->acl = $acl;
         $this->userMapper = $userMapper;
@@ -316,6 +311,10 @@ class User extends AbstractAclService
         // check the password
         $adapter = $this->authService->getAdapter();
 
+        if (get_class($adapter) != Mapper::class) {
+            throw new RuntimeException("Adapter was not of the expected type");
+        }
+
         $user = $this->authService->getIdentity();
 
         if (!$adapter->verifyPassword($data['old_password'], $user->getPassword())) {
@@ -358,11 +357,7 @@ class User extends AbstractAclService
         }
 
         // try to authenticate
-        $authAdapter = $this->authService->getAdapter();
-
-        $authAdapter->setCredentials($form->getData());
-
-        $result = $this->authService->authenticate();
+        $result = $this->authService->authenticateWithCredentials($data['login'], $data['password']);
 
         // process the result
         if (!$result->isValid()) {
@@ -371,7 +366,7 @@ class User extends AbstractAclService
             return null;
         }
 
-        $this->authStorage->setRememberMe($data['remember']);
+        $this->authService->setRememberMe($data['remember']);
 
         return $this->authService->getIdentity();
     }
@@ -389,11 +384,7 @@ class User extends AbstractAclService
             throw new NotAllowedException($this->translator->translate('You are not allowed to login using pin codes'));
         }
         // try to authenticate
-        $authAdapter = $this->authService->getAdapter();
-
-        $authAdapter->setCredentials($data['lidnr'], $data['pincode']);
-
-        $result = $this->pinAuthService->authenticate();
+        $result = $this->pinAuthService->authenticateWithCredentials($data['lidnr'], $data['pincode']);
 
         // process the result
         if (!$result->isValid()) {
@@ -410,32 +401,6 @@ class User extends AbstractAclService
     {
         // clear the user identity
         $this->authService->clearIdentity();
-    }
-
-    /**
-     * Gets the user identity, or gives a 403 if the user is not logged in.
-     *
-     * @return UserModel the current logged in user
-     *
-     * @throws NotAllowedException if no user is logged in
-     */
-    public function getIdentity()
-    {
-        if (!$this->authService->hasIdentity()) {
-            throw new NotAllowedException($this->translator->translate('You need to log in to perform this action'));
-        }
-
-        return $this->authService->getIdentity();
-    }
-
-    /**
-     * Checks whether the user is logged in.
-     *
-     * @return bool true if the user is logged in, false otherwise
-     */
-    public function hasIdentity()
-    {
-        return $this->authService->hasIdentity();
     }
 
     /**
@@ -523,5 +488,30 @@ class User extends AbstractAclService
     protected function getDefaultResourceId()
     {
         return 'user';
+    }
+
+    /**
+     * Gets the user identity, or gives a 403 if the user is not logged in
+     *
+     * @return UserModel the current logged in user
+     * @throws NotAllowedException if no user is logged in
+     */
+    public function getIdentity() {
+        if (!$this->authService->hasIdentity()) {
+            throw new NotAllowedException(
+                $this->translator->translate('You need to log in to perform this action')
+            );
+        }
+        return $this->authService->getIdentity();
+    }
+
+    /**
+     * Checks whether the user is logged in
+     *
+     * @return bool true if the user is logged in, false otherwise
+     */
+    public function hasIdentity(): bool
+    {
+        return $this->authService->hasIdentity();
     }
 }

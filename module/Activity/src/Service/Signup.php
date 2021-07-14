@@ -44,7 +44,7 @@ class Signup extends AbstractAclService
     private $entityManager;
 
     /**
-     * @var \User\Service\User
+     * @var \User\Authentication\Service\User
      */
     private $userService;
 
@@ -68,7 +68,7 @@ class Signup extends AbstractAclService
         $userRole,
         Acl $acl,
         EntityManager $entityManager,
-        \User\Service\User $userService,
+        \User\Authentication\Service\User $userService,
         \Activity\Mapper\Signup $signupMapper,
         SignupOption $signupOptionMapper,
         SignupFieldValue $signupFieldValueMapper

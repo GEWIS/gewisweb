@@ -2,14 +2,11 @@
 
 namespace User\Authentication\Adapter;
 
-use Application\Service\Legacy as LegacyService;
 use Laminas\Authentication\Adapter\AdapterInterface;
 use Laminas\Authentication\Result;
+use RuntimeException;
 use User\Mapper\User as UserMapper;
-use User\Model\LoginAttempt;
-use User\Model\User as UserModel;
-use User\Model\UserRole as UserRoleModel;
-use User\Service\LoginAttempt as LoginAttemptService;
+use User\Authentication\Service\LoginAttempt as LoginAttemptService;
 
 class PinMapper implements AdapterInterface
 {
@@ -18,14 +15,7 @@ class PinMapper implements AdapterInterface
      *
      * @var UserMapper
      */
-    protected $mapper;
-
-    /**
-     * Legacy service.
-     *
-     * @var LegacyService
-     */
-    protected $legacyService;
+    protected UserMapper $mapper;
 
     /**
      * User Service
@@ -33,32 +23,32 @@ class PinMapper implements AdapterInterface
      *
      * @var LoginAttemptService
      */
-    protected $loginAttemptService;
+    protected LoginAttemptService $loginAttemptService;
 
     /**
      * Lidnr.
      *
      * @var string
      */
-    protected $lidnr;
+    protected string $lidnr;
 
     /**
      * Pincode.
      *
      * @var string
      */
-    protected $pincode;
+    protected string $pincode;
 
     /**
      * Constructor.
      *
-     * @param LegacyService $legacyService
      * @param LoginAttemptService $loginAttemptService
+     * @param UserMapper $mapper
      */
-    public function __construct(LegacyService $legacyService, loginAttemptService $loginAttemptService)
+    public function __construct(loginAttemptService $loginAttemptService, UserMapper $mapper)
     {
-        $this->legacyService = $legacyService;
         $this->loginAttemptService = $loginAttemptService;
+        $this->mapper = $mapper;
     }
 
     /**
@@ -66,68 +56,21 @@ class PinMapper implements AdapterInterface
      *
      * @return Result
      */
-    public function authenticate()
+    public function authenticate(): Result
     {
-        $user = $this->mapper->findByLogin($this->lidnr);
-
-        if (null === $user) {
-            return new Result(
-                Result::FAILURE_IDENTITY_NOT_FOUND,
-                null,
-                []
-            );
-        }
-
-        if ($this->loginAttemptService->loginAttemptsExceeded(LoginAttempt::TYPE_PIN, $user)) {
-            return new Result(
-                Result::FAILURE,
-                null,
-                []
-            );
-        }
-
-        if (!$this->verifyPincode($user)) {
-            $this->loginAttemptService->logFailedLogin($user, LoginAttempt::TYPE_PIN);
-
-            return new Result(
-                Result::FAILURE_CREDENTIAL_INVALID,
-                null,
-                []
-            );
-        }
-
-        /**
-         * Users logging in in this way should not have all their regular roles. Since this login
-         * method is less secure.
-         */
-        $userRole = new UserRoleModel();
-        $userRole->setRole('sosuser');
-        $userRole->setLidnr($this->lidnr);
-        $user->setRoles([$userRole]);
-
-        return new Result(Result::SUCCESS, $user);
+        throw new RuntimeException("Legacy service is not available for PinMapper Auth.");
     }
 
     /**
-     * Verify the password.
-     *
-     * @return bool
-     */
-    protected function verifyPincode(UserModel $user)
-    {
-        return $this->legacyService->checkPincode($user, $this->pincode);
-    }
-
-    /**
-     * Set the credentials.
-     *
      * @param string $lidnr
      * @param string $pincode
+     * @return Result
      */
-    public function setCredentials($lidnr, $pincode)
+    public function authenticateWithCredentials($lidnr, $pincode): Result
     {
         $this->lidnr = $lidnr;
         $this->pincode = $pincode;
+        return $this->authenticate();
     }
 
     /**
@@ -135,16 +78,8 @@ class PinMapper implements AdapterInterface
      *
      * @return UserMapper
      */
-    public function getMapper()
+    public function getMapper(): UserMapper
     {
         return $this->mapper;
-    }
-
-    /**
-     * Set the mapper.
-     */
-    public function setMapper(UserMapper $mapper)
-    {
-        $this->mapper = $mapper;
     }
 }
