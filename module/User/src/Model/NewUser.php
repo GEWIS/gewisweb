@@ -46,7 +46,7 @@ class NewUser
     /**
      * Registration attempt timestamp.
      *
-     * @ORM\Column(type="datetime",nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $time;
 

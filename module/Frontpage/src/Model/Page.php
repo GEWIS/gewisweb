@@ -9,7 +9,7 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
  * Tag.
  *
  * @ORM\Entity
- * @ORM\Table(name="Page",uniqueConstraints={@ORM\UniqueConstraint(name="page_idx", columns={"category", "subCategory", "name"})})
+ * @ORM\Table(name="Page", uniqueConstraints={@ORM\UniqueConstraint(name="page_idx", columns={"category", "subCategory", "name"})})
  */
 class Page implements ResourceInterface
 {

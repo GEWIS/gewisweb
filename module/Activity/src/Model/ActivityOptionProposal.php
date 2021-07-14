@@ -40,7 +40,7 @@ class ActivityOptionProposal implements OrganResourceInterface
      * Who created this activity option.
      *
      * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(referencedColumnName="lidnr",nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="lidnr", nullable=false)
      */
     protected $creator;
 
@@ -55,14 +55,14 @@ class ActivityOptionProposal implements OrganResourceInterface
      * Who created this activity proposal.
      *
      * @ORM\ManyToOne(targetEntity="Decision\Model\Organ")
-     * @ORM\JoinColumn(referencedColumnName="id",nullable=true)
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=true)
      */
     protected $organ;
 
     /**
      * Who created this activity proposal, if not an organ.
      *
-     * @Orm\Column(type="string",nullable=true)
+     * @Orm\Column(type="string", nullable=true)
      */
     protected $organAlt;
 

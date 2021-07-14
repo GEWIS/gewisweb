@@ -46,14 +46,14 @@ class Foundation extends SubDecision
     /**
      * References from other subdecisions to this organ.
      *
-     * @ORM\OneToMany(targetEntity="FoundationReference",mappedBy="foundation")
+     * @ORM\OneToMany(targetEntity="FoundationReference", mappedBy="foundation")
      */
     protected $references;
 
     /**
      * Organ entry for this organ.
      *
-     * @ORM\OneToOne(targetEntity="Decision\Model\Organ",mappedBy="foundation")
+     * @ORM\OneToOne(targetEntity="Decision\Model\Organ", mappedBy="foundation")
      */
     protected $organ;
 

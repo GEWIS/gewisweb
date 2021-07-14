@@ -12,8 +12,7 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
  * @ORM\Entity
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"exam"="Education\Model\Exam"
- *                      , "summary"="Education\Model\Summary"})
+ * @ORM\DiscriminatorMap({"exam": "Education\Model\Exam", "summary": "Education\Model\Summary"})
  */
 class Exam implements ResourceInterface
 {
@@ -67,7 +66,7 @@ class Exam implements ResourceInterface
      * Course belonging to this exam.
      *
      * @ORM\ManyToOne(targetEntity="Education\Model\Course", inversedBy="exams")
-     * @ORM\JoinColumn(name="course_code",referencedColumnName="code")
+     * @ORM\JoinColumn(name="course_code", referencedColumnName="code")
      */
     protected $course;
 

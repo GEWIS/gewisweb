@@ -24,7 +24,7 @@ class PollOption implements ResourceInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Frontpage\Model\Poll", inversedBy="options")
-     * @ORM\JoinColumn(name="poll_id",referencedColumnName="id")
+     * @ORM\JoinColumn(name="poll_id", referencedColumnName="id")
      */
     protected $poll;
 

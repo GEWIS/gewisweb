@@ -77,7 +77,7 @@ class Member
      * - m
      * - f
      *
-     * @ORM\Column(type="string",length=1)
+     * @ORM\Column(type="string", length=1)
      */
     protected $gender;
 
@@ -143,27 +143,27 @@ class Member
     /**
      * Iban number.
      *
-     * @ORM\Column(type="string",nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $iban;
     /**
      * If the member receives a 'supremum'.
      *
-     * @ORM\Column(type="string",nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $supremum;
 
     /**
      * Addresses of this member.
      *
-     * @ORM\OneToMany(targetEntity="Address", mappedBy="member",cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Address", mappedBy="member", cascade={"persist"})
      */
     protected $addresses;
 
     /**
      * Installations of this member.
      *
-     * @ORM\OneToMany(targetEntity="Decision\Model\SubDecision\Installation",mappedBy="member")
+     * @ORM\OneToMany(targetEntity="Decision\Model\SubDecision\Installation", mappedBy="member")
      */
     protected $installations;
 
@@ -172,8 +172,8 @@ class Member
      *
      * @ORM\ManyToMany(targetEntity="MailingList", inversedBy="members")
      * @ORM\JoinTable(name="members_mailinglists",
-     *      joinColumns={@ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="name", referencedColumnName="name")}
+     *     joinColumns={@ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="name", referencedColumnName="name")}
      * )
      */
     protected $lists;

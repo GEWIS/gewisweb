@@ -12,7 +12,6 @@ use Laminas\Validator\Callback;
 
 class SignupList extends Fieldset implements InputFilterProviderInterface
 {
-
     private Translator $translator;
 
     public function __construct(Translator $translator)

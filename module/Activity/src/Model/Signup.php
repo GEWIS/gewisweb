@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"user"="UserSignup","external"="ExternalSignup"})
+ * @ORM\DiscriminatorMap({"user": "UserSignup", "external": "ExternalSignup"})
  */
 abstract class Signup
 {

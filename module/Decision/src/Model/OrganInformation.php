@@ -24,7 +24,7 @@ class OrganInformation
 
     /**
      * @ORM\ManyToOne(targetEntity="Decision\Model\Organ", inversedBy="organInformation")
-     * @ORM\JoinColumn(name="organ_id",referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="organ_id", referencedColumnName="id", nullable=false)
      */
     protected $organ;
 

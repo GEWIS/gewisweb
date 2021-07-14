@@ -28,7 +28,7 @@ class LoginAttempt
      * The user for which the login was attempted.
      *
      * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(name="user_id",referencedColumnName="lidnr")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="lidnr")
      */
     protected $user;
 

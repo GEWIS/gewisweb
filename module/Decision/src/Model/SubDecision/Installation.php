@@ -22,7 +22,7 @@ class Installation extends FoundationReference
     /**
      * Member.
      *
-     * @ORM\ManyToOne(targetEntity="Decision\Model\Member",inversedBy="installations")
+     * @ORM\ManyToOne(targetEntity="Decision\Model\Member", inversedBy="installations")
      * @ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")
      */
     protected $member;
@@ -30,14 +30,14 @@ class Installation extends FoundationReference
     /**
      * Discharges.
      *
-     * @ORM\OneToOne(targetEntity="Discharge",mappedBy="installation")
+     * @ORM\OneToOne(targetEntity="Discharge", mappedBy="installation")
      */
     protected $discharge;
 
     /**
      * The organmember reference.
      *
-     * @ORM\OneToOne(targetEntity="Decision\Model\OrganMember",mappedBy="installation")
+     * @ORM\OneToOne(targetEntity="Decision\Model\OrganMember", mappedBy="installation")
      */
     protected $organMember;
 

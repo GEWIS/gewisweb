@@ -49,7 +49,7 @@ class Album implements ResourceInterface
      * Parent album, null if there is no parent album.
      *
      * @ORM\ManyToOne(targetEntity="Photo\Model\Album", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id",referencedColumnName="id")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     protected $parent;
 
@@ -59,9 +59,9 @@ class Album implements ResourceInterface
      * album count.
      *
      * @ORM\OneToMany(targetEntity="Photo\Model\Album", mappedBy="parent",
-     *                                                  cascade={"persist",
-     *                                                  "remove"},
-     *                                                  fetch="EXTRA_LAZY")
+     *     cascade={"persist",
+     *     "remove"},
+     * fetch="EXTRA_LAZY")
      */
     protected $children;
 
@@ -71,9 +71,9 @@ class Album implements ResourceInterface
      * photo count.
      *
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="album",
-     *                                      cascade={"persist", "remove"},
-     *                                      fetch="EXTRA_LAZY")
-     * @ORM\OrderBy({"dateTime" = "ASC"})
+     *     cascade={"persist", "remove"},
+     * fetch="EXTRA_LAZY")
+     * @ORM\OrderBy({"dateTime": "ASC"})
      */
     protected $photos;
 

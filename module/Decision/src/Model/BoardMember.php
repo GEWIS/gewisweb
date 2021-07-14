@@ -27,8 +27,8 @@ class BoardMember
     /**
      * Member lidnr.
      *
-     * @ORM\ManyToOne(targetEntity="Member",inversedBy="boardInstallations")
-     * @ORM\JoinColumn(name="lidnr",referencedColumnName="lidnr")
+     * @ORM\ManyToOne(targetEntity="Member", inversedBy="boardInstallations")
+     * @ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")
      */
     protected $member;
 
@@ -51,11 +51,11 @@ class BoardMember
      *
      * @ORM\OneToOne(targetEntity="Decision\Model\SubDecision\Board\Installation", inversedBy="boardMember")
      * @ORM\JoinColumns({
-     *  @ORM\JoinColumn(name="r_meeting_type", referencedColumnName="meeting_type"),
-     *  @ORM\JoinColumn(name="r_meeting_number", referencedColumnName="meeting_number"),
-     *  @ORM\JoinColumn(name="r_decision_point", referencedColumnName="decision_point"),
-     *  @ORM\JoinColumn(name="r_decision_number", referencedColumnName="decision_number"),
-     *  @ORM\JoinColumn(name="r_number", referencedColumnName="number")
+     *     @ORM\JoinColumn(name="r_meeting_type", referencedColumnName="meeting_type"),
+     *     @ORM\JoinColumn(name="r_meeting_number", referencedColumnName="meeting_number"),
+     *     @ORM\JoinColumn(name="r_decision_point", referencedColumnName="decision_point"),
+     *     @ORM\JoinColumn(name="r_decision_number", referencedColumnName="decision_number"),
+     *     @ORM\JoinColumn(name="r_number", referencedColumnName="number")
      * })
      */
     protected $installationDec;

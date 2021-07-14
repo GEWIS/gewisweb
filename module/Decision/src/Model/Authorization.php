@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Authorization model.
  *
  * @ORM\Entity
- * @ORM\Table(name="Authorization",uniqueConstraints={@ORM\UniqueConstraint(name="auth_idx", columns={"authorizer", "recipient", "meetingNumber"})})
+ * @ORM\Table(name="Authorization", uniqueConstraints={@ORM\UniqueConstraint(name="auth_idx", columns={"authorizer", "recipient", "meetingNumber"})})
  */
 class Authorization
 {

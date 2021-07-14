@@ -32,7 +32,7 @@ class Budget extends SubDecision
     /**
      * Version of the budget.
      *
-     * @ORM\Column(type="string",length=32)
+     * @ORM\Column(type="string", length=32)
      */
     protected $version;
 

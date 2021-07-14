@@ -25,7 +25,7 @@ class SignupOption
      * Field that the option belongs to.
      *
      * @ORM\ManyToOne(targetEntity="Activity\Model\SignupField", inversedBy="options", cascade={"persist"})
-     * @ORM\JoinColumn(name="field_id",referencedColumnName="id")
+     * @ORM\JoinColumn(name="field_id", referencedColumnName="id")
      */
     protected $field;
 

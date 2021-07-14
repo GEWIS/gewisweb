@@ -25,8 +25,8 @@ class MeetingDocument
      *
      * @ORM\ManyToOne(targetEntity="Meeting", inversedBy="documents")
      * @ORM\JoinColumns({
-     *  @ORM\JoinColumn(name="meeting_type", referencedColumnName="type"),
-     *  @ORM\JoinColumn(name="meeting_number", referencedColumnName="number")
+     *     @ORM\JoinColumn(name="meeting_type", referencedColumnName="type"),
+     *     @ORM\JoinColumn(name="meeting_number", referencedColumnName="number")
      * })
      */
     protected $meeting;
@@ -50,7 +50,7 @@ class MeetingDocument
      *
      * The order is determined by sorting the positions in ascending order.
      *
-     * @ORM\Column(type="integer", options={"default":0})
+     * @ORM\Column(type="integer", options={"default": 0})
      */
     protected $displayPosition;
 

@@ -23,14 +23,14 @@ class ActivityCalendarOption
     /**
      * Type for the option.
      *
-     * @ORM\Column(type="string",nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $type;
 
     /**
      * Status for the option.
      *
-     * @ORM\Column(type="string",nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $status;
 
@@ -52,7 +52,7 @@ class ActivityCalendarOption
      * To what activity proposal does the option belong.
      *
      * @ORM\ManyToOne(targetEntity="Activity\Model\ActivityOptionProposal")
-     * @ORM\JoinColumn(referencedColumnName="id",nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=false)
      */
     protected $proposal;
 
@@ -60,7 +60,7 @@ class ActivityCalendarOption
      * Who modified this activity option, if null then the option is not modified.
      *
      * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(referencedColumnName="lidnr",nullable=true)
+     * @ORM\JoinColumn(referencedColumnName="lidnr", nullable=true)
      */
     protected $modifiedBy;
 

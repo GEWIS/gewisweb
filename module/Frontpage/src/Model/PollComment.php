@@ -27,7 +27,7 @@ class PollComment implements ResourceInterface
      * Referenced poll.
      *
      * @ORM\ManyToOne(targetEntity="Frontpage\Model\Poll", inversedBy="comments")
-     * @ORM\JoinColumn(name="poll_id",referencedColumnName="id")
+     * @ORM\JoinColumn(name="poll_id", referencedColumnName="id")
      */
     protected $poll;
 
@@ -35,7 +35,7 @@ class PollComment implements ResourceInterface
      * User that posted the comment.
      *
      * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(name="user_lidnr",referencedColumnName="lidnr")
+     * @ORM\JoinColumn(name="user_lidnr", referencedColumnName="lidnr")
      */
     protected $user;
 

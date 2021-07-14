@@ -11,7 +11,7 @@ use User\Model\User;
  * Represents a vote on a poll option.
  *
  * @ORM\Entity
- * @ORM\Table(name="PollVote",uniqueConstraints={@ORM\UniqueConstraint(name="vote_idx", columns={"poll_id", "user_id"})})
+ * @ORM\Table(name="PollVote", uniqueConstraints={@ORM\UniqueConstraint(name="vote_idx", columns={"poll_id", "user_id"})})
  */
 class PollVote implements ResourceInterface
 {
@@ -19,7 +19,7 @@ class PollVote implements ResourceInterface
      * The poll which was voted on.
      *
      * @ORM\ManyToOne(targetEntity="Frontpage\Model\Poll")
-     * @ORM\JoinColumn(name="poll_id",referencedColumnName="id")
+     * @ORM\JoinColumn(name="poll_id", referencedColumnName="id")
      */
     protected $poll;
 
@@ -28,7 +28,7 @@ class PollVote implements ResourceInterface
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Frontpage\Model\PollOption", inversedBy="votes")
-     * @ORM\JoinColumn(name="option_id",referencedColumnName="id")
+     * @ORM\JoinColumn(name="option_id", referencedColumnName="id")
      */
     protected $pollOption;
 
@@ -37,7 +37,7 @@ class PollVote implements ResourceInterface
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="User\Model\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="user_id",referencedColumnName="lidnr")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="lidnr")
      */
     protected $respondent;
 

@@ -91,7 +91,7 @@ class Photo implements ResourceInterface
      * Album in which the photo is.
      *
      * @ORM\ManyToOne(targetEntity="Photo\Model\Album", inversedBy="photos")
-     * @ORM\JoinColumn(name="album_id",referencedColumnName="id")
+     * @ORM\JoinColumn(name="album_id", referencedColumnName="id")
      */
     protected $album;
 

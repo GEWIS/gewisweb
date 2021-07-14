@@ -10,7 +10,7 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
  * Tag.
  *
  * @ORM\Entity
- * @ORM\Table(name="Tag",uniqueConstraints={@ORM\UniqueConstraint(name="tag_idx", columns={"photo_id", "member_id"})})
+ * @ORM\Table(name="Tag", uniqueConstraints={@ORM\UniqueConstraint(name="tag_idx", columns={"photo_id", "member_id"})})
  */
 class Tag implements ResourceInterface
 {
@@ -25,13 +25,13 @@ class Tag implements ResourceInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Photo\Model\Photo", inversedBy="tags")
-     * @ORM\JoinColumn(name="photo_id",referencedColumnName="id")
+     * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
     protected $photo;
 
     /**
      * @ORM\ManyToOne(targetEntity="Decision\Model\Member")
-     * @ORM\JoinColumn(name="member_id",referencedColumnName="lidnr")
+     * @ORM\JoinColumn(name="member_id", referencedColumnName="lidnr")
      */
     protected $member;
 

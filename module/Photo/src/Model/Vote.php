@@ -41,7 +41,7 @@ class Vote implements ResourceInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Decision\Model\Member")
-     * @ORM\JoinColumn(name="member_id",referencedColumnName="lidnr")
+     * @ORM\JoinColumn(name="member_id", referencedColumnName="lidnr")
      */
     protected $member;
 

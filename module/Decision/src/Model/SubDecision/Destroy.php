@@ -27,12 +27,12 @@ class Destroy extends SubDecision
     /**
      * Reference to the destruction of a decision.
      *
-     * @ORM\OneToOne(targetEntity="\Decision\Model\Decision",inversedBy="destroyedby")
+     * @ORM\OneToOne(targetEntity="\Decision\Model\Decision", inversedBy="destroyedby")
      * @ORM\JoinColumns({
-     *  @ORM\JoinColumn(name="r_meeting_type", referencedColumnName="meeting_type"),
-     *  @ORM\JoinColumn(name="r_meeting_number", referencedColumnName="meeting_number"),
-     *  @ORM\JoinColumn(name="r_decision_point", referencedColumnName="point"),
-     *  @ORM\JoinColumn(name="r_decision_number", referencedColumnName="number"),
+     *     @ORM\JoinColumn(name="r_meeting_type", referencedColumnName="meeting_type"),
+     *     @ORM\JoinColumn(name="r_meeting_number", referencedColumnName="meeting_number"),
+     *     @ORM\JoinColumn(name="r_decision_point", referencedColumnName="point"),
+     *     @ORM\JoinColumn(name="r_decision_number", referencedColumnName="number"),
      * })
      */
     protected $target;

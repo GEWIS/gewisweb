@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="packageType",type="string")
- * @ORM\DiscriminatorMap({"job"="CompanyJobPackage","banner"="CompanyBannerPackage","featured"="CompanyFeaturedPackage"})
+ * @ORM\DiscriminatorColumn(name="packageType", type="string")
+ * @ORM\DiscriminatorMap({"job": "CompanyJobPackage", "banner": "CompanyBannerPackage", "featured": "CompanyFeaturedPackage"})
  */
 abstract class CompanyPackage
 {

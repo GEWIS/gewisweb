@@ -54,7 +54,7 @@ class Meeting
      * Documents.
      *
      * @ORM\OneToMany(targetEntity="MeetingDocument", mappedBy="meeting")
-     * @OrderBy({"displayPosition" = "ASC"})
+     * @OrderBy({"displayPosition": "ASC"})
      */
     protected $documents;
 

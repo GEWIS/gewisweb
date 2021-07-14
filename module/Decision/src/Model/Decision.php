@@ -16,8 +16,8 @@ class Decision
      *
      * @ORM\ManyToOne(targetEntity="Meeting", inversedBy="decisions")
      * @ORM\JoinColumns({
-     *  @ORM\JoinColumn(name="meeting_type", referencedColumnName="type"),
-     *  @ORM\JoinColumn(name="meeting_number", referencedColumnName="number"),
+     *     @ORM\JoinColumn(name="meeting_type", referencedColumnName="type"),
+     *     @ORM\JoinColumn(name="meeting_number", referencedColumnName="number"),
      * })
      */
     protected $meeting;
@@ -71,7 +71,7 @@ class Decision
      * Subdecisions.
      *
      * @ORM\OneToMany(targetEntity="SubDecision", mappedBy="decision", cascade={"persist", "remove"})
-     * @ORM\OrderBy({"number"="ASC"})
+     * @ORM\OrderBy({"number": "ASC"})
      */
     protected $subdecisions;
 

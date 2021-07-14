@@ -81,7 +81,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      * All the people who signed up for this SignupList.
      *
      * @ORM\OneToMany(targetEntity="Signup", mappedBy="signupList", orphanRemoval=true)
-     * @ORM\OrderBy({"id" = "ASC"})
+     * @ORM\OrderBy({"id": "ASC"})
      */
     protected $signUps;
 

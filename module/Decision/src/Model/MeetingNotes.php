@@ -33,8 +33,8 @@ class MeetingNotes implements ResourceInterface
      *
      * @ORM\OneToOne(targetEntity="Meeting", inversedBy="meetingNotes")
      * @ORM\JoinColumns({
-     *  @ORM\JoinColumn(name="type", referencedColumnName="type"),
-     *  @ORM\JoinColumn(name="number", referencedColumnName="number"),
+     *     @ORM\JoinColumn(name="type", referencedColumnName="type"),
+     *     @ORM\JoinColumn(name="number", referencedColumnName="number"),
      * })
      */
     protected $meeting;

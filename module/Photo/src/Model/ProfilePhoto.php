@@ -26,13 +26,13 @@ class ProfilePhoto implements ResourceInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Photo\Model\Photo", inversedBy="tags")
-     * @ORM\JoinColumn(name="photo_id",referencedColumnName="id")
+     * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
     protected $photo;
 
     /**
      * @ORM\OneToOne(targetEntity="Decision\Model\Member")
-     * @ORM\JoinColumn(name="member_id",referencedColumnName="lidnr")
+     * @ORM\JoinColumn(name="member_id", referencedColumnName="lidnr")
      */
     protected $member;
 
