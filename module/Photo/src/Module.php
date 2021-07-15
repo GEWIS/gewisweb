@@ -79,7 +79,6 @@ class Module
                 },
                 'photo_service_photo' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
-                    $userRole = $container->get('user_role');
                     $memberService = $container->get('decision_service_member');
                     $storageService = $container->get('application_service_storage');
                     $photoMapper = $container->get('photo_mapper_photo');
@@ -93,7 +92,6 @@ class Module
 
                     return new Photo(
                         $translator,
-                        $userRole,
                         $memberService,
                         $storageService,
                         $photoMapper,

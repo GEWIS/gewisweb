@@ -78,7 +78,6 @@ class Module
                 },
                 'frontpage_service_poll' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
-                    $userRole = $container->get('user_role');
                     $emailService = $container->get('application_service_email');
                     $pollMapper = $container->get('frontpage_mapper_poll');
                     $pollForm = $container->get('frontpage_form_poll');
@@ -88,7 +87,6 @@ class Module
 
                     return new Service\Poll(
                         $translator,
-                        $userRole,
                         $emailService,
                         $pollMapper,
                         $pollForm,

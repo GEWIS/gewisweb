@@ -25,11 +25,6 @@ class Poll
     private $translator;
 
     /**
-     * @var User|string
-     */
-    private $userRole;
-
-    /**
      * @var Email
      */
     private $emailService;
@@ -57,7 +52,6 @@ class Poll
 
     public function __construct(
         Translator $translator,
-        $userRole,
         Email $emailService,
         \Frontpage\Mapper\Poll $pollMapper,
         \Frontpage\Form\Poll $pollForm,
@@ -66,7 +60,6 @@ class Poll
         AclService $aclService
     ) {
         $this->translator = $translator;
-        $this->userRole = $userRole;
         $this->emailService = $emailService;
         $this->pollMapper = $pollMapper;
         $this->pollForm = $pollForm;
@@ -196,7 +189,7 @@ class Poll
      */
     public function getVote($poll)
     {
-        $user = $this->userRole;
+        $user = $this->aclService->getIdentity();
         if ($user instanceof User) {
             return $this->pollMapper->findVote($poll->getId(), $user->getLidnr());
         }
@@ -223,7 +216,7 @@ class Poll
         }
 
         $pollVote = new PollVoteModel();
-        $pollVote->setRespondent($this->userRole);
+        $pollVote->setRespondent($this->aclService->getIdentity());
         $pollVote->setPoll($poll);
         $pollOption->addVote($pollVote);
         $this->pollMapper->persist($pollOption);
@@ -257,7 +250,7 @@ class Poll
         }
 
         $comment = $form->getData();
-        $comment->setUser($this->userRole);
+        $comment->setUser($this->aclService->getIdentity());
         $comment->setCreatedOn(new DateTime());
 
         $poll->addComment($comment);
@@ -288,7 +281,7 @@ class Poll
         }
 
         $poll->setExpiryDate(new DateTime());
-        $poll->setCreator($this->userRole);
+        $poll->setCreator($this->aclService->getIdentity());
         $this->pollMapper->persist($poll);
         $this->pollMapper->flush();
 
@@ -356,7 +349,7 @@ class Poll
             return false;
         }
 
-        $poll->setApprover($this->userRole);
+        $poll->setApprover($this->aclService->getIdentity());
         $this->pollMapper->flush();
         return true;
     }

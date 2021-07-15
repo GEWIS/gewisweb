@@ -38,11 +38,6 @@ class Photo
     private $translator;
 
     /**
-     * @var User|string
-     */
-    private $userRole;
-
-    /**
      * @var \Decision\Service\Member
      */
     private $memberService;
@@ -90,7 +85,6 @@ class Photo
 
     public function __construct(
         Translator $translator,
-        $userRole,
         \Decision\Service\Member $memberService,
         FileStorage $storageService,
         \Photo\Mapper\Photo $photoMapper,
@@ -103,7 +97,6 @@ class Photo
         AclService $aclService
     ) {
         $this->translator = $translator;
-        $this->userRole = $userRole;
         $this->memberService = $memberService;
         $this->storageService = $storageService;
         $this->photoMapper = $photoMapper;
@@ -652,7 +645,7 @@ class Photo
      */
     public function countVote($photoId)
     {
-        $member = $this->userRole->getMember();
+        $member = $this->aclService->getIdentity()->getMember();
         if (null !== $this->voteMapper->findVote($photoId, $member->getLidnr())) {
             // Already voted
             return;
