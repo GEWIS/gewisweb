@@ -81,7 +81,7 @@ class Page
     public function getPage($category, $subCategory, $name)
     {
         $page = $this->pageMapper->findPage($category, $subCategory, $name);
-        if (!(is_null($page) || $this->isAllowed('view', $page))) {
+        if (!(is_null($page) || $this->aclService->isAllowed('view', $page))) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view this page.'));
         }
 

@@ -475,7 +475,7 @@ return [
                 $activityQueryService = $container->get('activity_service_activityQuery');
                 $signupService = $container->get('activity_service_signup');
                 $signupListQueryService = $container->get('activity_service_signupListQuery');
-                $userService = $container->get('user_service_user');
+                $aclService = $container->get('activity_service_acl');
 
                 return new Activity\Controller\ActivityController(
                     $translator,
@@ -483,7 +483,7 @@ return [
                     $activityQueryService,
                     $signupService,
                     $signupListQueryService,
-                    $userService
+                    $aclService
                 );
             },
             'Activity\Controller\AdminApproval' => function (ContainerInterface $container) {
