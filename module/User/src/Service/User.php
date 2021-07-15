@@ -7,7 +7,6 @@ use DateTime;
 use Decision\Mapper\Member;
 use Laminas\Crypt\Password\Bcrypt;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Permissions\Acl\Acl;
 use RuntimeException;
 use User\Authentication\Adapter\Mapper;
 use User\Authentication\AuthenticationService;
@@ -87,7 +86,7 @@ class User
      */
     private $passwordForm;
 
-    private Acl $aclService;
+    private AclService $aclService;
 
     public function __construct(
         Translator $translator,
@@ -102,7 +101,7 @@ class User
         Activate $activateForm,
         Login $loginForm,
         Password $passwordForm,
-        Acl $aclService
+        AclService $aclService
     ) {
         $this->translator = $translator;
         $this->bcrypt = $bcrypt;
