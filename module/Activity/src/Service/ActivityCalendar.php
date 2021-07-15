@@ -63,7 +63,7 @@ class ActivityCalendar
         ActivityCalendarOption $calendarOptionForm,
         ActivityCalendarProposal $calendarProposalForm,
         AclService $aclService,
-        ActivitycalendarForm $calendarFormService
+        ActivityCalendarForm $calendarFormService
     ) {
         $this->translator = $translator;
         $this->entityManager = $entityManager;

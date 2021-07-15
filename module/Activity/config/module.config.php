@@ -533,9 +533,10 @@ return [
             },
             'Activity\Controller\ActivityCalendar' => function (ContainerInterface $container) {
                 $calendarService = $container->get('activity_service_calendar');
+                $calendarFormService = $container->get('activity_service_calendar_form');
                 $calendarConfig = $container->get('config')['calendar'];
 
-                return new ActivityCalendarController($calendarService, $calendarConfig);
+                return new ActivityCalendarController($calendarService, $calendarFormService, $calendarConfig);
             },
         ],
     ],

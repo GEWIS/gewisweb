@@ -3,6 +3,7 @@
 namespace Activity\Controller;
 
 use Activity\Service\ActivityCalendar;
+use Activity\Service\ActivityCalendarForm;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
@@ -14,13 +15,19 @@ class ActivityCalendarController extends AbstractActionController
     private $calendarService;
 
     /**
+     * @var ActivityCalendarForm
+     */
+    private $calendarFormService;
+
+    /**
      * @var array
      */
     private $calendarConfig;
 
-    public function __construct(ActivityCalendar $calendarService, array $calendarConfig)
+    public function __construct(ActivityCalendar $calendarService, ActivityCalendarForm $calendarFormService, array $calendarConfig)
     {
         $this->calendarService = $calendarService;
+        $this->calendarFormService = $calendarFormService;
         $this->calendarConfig = $calendarConfig;
     }
 
@@ -77,7 +84,7 @@ class ActivityCalendarController extends AbstractActionController
             }
         }
 
-        $period = $this->calendarService->getCurrentPeriod();
+        $period = $this->calendarFormService->getCurrentPeriod();
 
         return new ViewModel(
             [

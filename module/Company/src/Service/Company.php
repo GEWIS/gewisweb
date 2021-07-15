@@ -71,7 +71,7 @@ class Company
     private $categoryMapper;
 
     /**
-     * @var CompanyQuery
+     * @var Label
      */
     private $labelMapper;
 
@@ -231,7 +231,7 @@ class Company
     /**
      * Searches for packages that change before $date.
      *
-     * @param DateTime The date until where to search
+     * @param DateTime $date The date until where to search
      *
      * @return array Two sorted arrays, containing the packages that respectively start and expire between now and $date,
      */

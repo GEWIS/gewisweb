@@ -165,18 +165,18 @@ class Module
                 },
                 'frontpage_service_acl' => function (ContainerInterface $container, $requestedName, array $options = null) {
                     $aclService = (new AclServiceFactory())->__invoke($container, $requestedName, $options);
-                    if (get_class($aclService) !== AclService::class) {
-                        throw new RuntimeException(
-                            sprintf(
-                                'Expected service of type %s, got service of type %s',
-                                AclService::class,
-                                get_class($aclService)
-                            )
-                        );
+                    if (get_class($aclService) === AclService::class) {
+                        $pages = $container->get('frontpage_mapper_page')->getAllPages();
+                        $aclService->setPages($pages);
+                        return $aclService;
                     }
-                    $pages = $container->get('frontpage_mapper_page')->getAllPages();
-                    $aclService->setPages($pages);
-                    return $aclService;
+                    throw new RuntimeException(
+                        sprintf(
+                            'Expected service of type %s, got service of type %s',
+                            AclService::class,
+                            get_class($aclService)
+                        )
+                    );
                 },
             ],
         ];

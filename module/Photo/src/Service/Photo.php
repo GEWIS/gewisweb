@@ -566,7 +566,7 @@ class Photo
      */
     public function ratePhoto($photo, $occurences)
     {
-        $tagged = $photo->getTags()->count() > 0;
+        $tagged = count($photo->getTags()) > 0;
         $now = new DateTime();
         $age = $now->diff($photo->getDateTime(), true)->days;
         $res = $occurences * (1 + 1 / $age);

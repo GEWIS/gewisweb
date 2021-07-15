@@ -17,6 +17,7 @@ use Doctrine\ORM\PersistentCollection;
 use InvalidArgumentException;
 use Laminas\Http\Response\Stream;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Stdlib\ParametersInterface;
 use Traversable;
 use User\Permissions\NotAllowedException;
 
@@ -267,8 +268,8 @@ class Decision
     /**
      * Upload meeting notes.
      *
-     * @param array|Traversable $post
-     * @param array|Traversable $files
+     * @param ParametersInterface $post
+     * @param ParametersInterface $files
      *
      * @return bool If uploading was a success
      */
@@ -305,8 +306,8 @@ class Decision
     /**
      * Upload a meeting document.
      *
-     * @param array|Traversable $post
-     * @param array|Traversable $files
+     * @param ParametersInterface $post
+     * @param ParametersInterface $files
      *
      * @return bool If uploading was a success
      */
