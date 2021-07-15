@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Frontpage\Service;
-
 
 class AclService extends \User\Service\AclService
 {

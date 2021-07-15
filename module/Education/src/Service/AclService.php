@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Education\Service;
-
 
 class AclService extends \User\Service\AclService
 {

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Activity\Service;
-
 
 use User\Permissions\Assertion\IsCreatorOrOrganMember;
 

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace User\Authorization;
-
 
 use Application\Service\AbstractAclService;
 use Laminas\I18n\Translator\TranslatorInterface;
@@ -17,7 +15,7 @@ abstract class GenericAclService extends AbstractAclService
     private string $remoteAddress;
     private string $tueRange;
 
-    public function __construct (
+    public function __construct(
         TranslatorInterface $translator,
         AuthenticationService $authService,
         string $remoteAddress,
