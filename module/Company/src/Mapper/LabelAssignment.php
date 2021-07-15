@@ -3,7 +3,6 @@
 namespace Company\Mapper;
 
 use Company\Model\JobLabelAssignment as LabelAssignmentModel;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -90,7 +89,7 @@ class LabelAssignment
     /**
      * Find all Labels assignments.
      *
-     * @return Collection
+     * @return array
      */
     public function findAll()
     {

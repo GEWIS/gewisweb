@@ -5,7 +5,6 @@ namespace Activity\Mapper;
 use Activity\Model\Activity as ActivityModel;
 use DateTime;
 use Decision\Model\Organ;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
@@ -49,7 +48,7 @@ class Activity
     /**
      * get all activities including options.
      *
-     * @return Collection
+     * @return array
      */
     public function getAllActivities()
     {
@@ -66,7 +65,7 @@ class Activity
      * @param int $count optional number of activities to retrieve
      * @param Organ $organ option organ by whom the activities are organized
      *
-     * @return Collection
+     * @return array
      */
     public function getUpcomingActivities($count = null, $organ = null, $category = null)
     {
@@ -106,7 +105,7 @@ class Activity
     public function getUpcomingActivitiesForMember($user)
     {
         // Get subscriptions (not including non-approved)
-        $result = $this->getUpcomingActivitiesSubscribedBy($user)->toArray();
+        $result = $this->getUpcomingActivitiesSubscribedBy($user);
 
         // Get created by member (including non-approved)
         $result = array_merge($result, $this->getUpcomingActivitiesCreatedBy($user));
@@ -149,7 +148,7 @@ class Activity
      *
      * @param User $user Option user that should relate to activity
      *
-     * @return Collection
+     * @return array
      */
     public function getUpcomingActivitiesSubscribedBy($user)
     {
@@ -175,7 +174,7 @@ class Activity
      *
      * @param User $user Option user that should relate to activity
      *
-     * @return Collection
+     * @return array
      */
     public function getUpcomingActivitiesCreatedBy($user)
     {
@@ -195,7 +194,7 @@ class Activity
      *
      * @param Organ $organ Option organ that should relate to activity
      *
-     * @return Collection
+     * @return array
      */
     public function getUpcomingActivitiesByOrgan($organ)
     {
@@ -217,7 +216,7 @@ class Activity
      * @param int|null $userid
      * @param int|null $status An optional filter for activity status
      *
-     * @return Collection
+     * @return array
      */
     public function getAllUpcomingActivities($organs = null, $userid = null, $status = null)
     {

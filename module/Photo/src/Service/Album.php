@@ -155,7 +155,7 @@ class Album
      * Retrieves all root albums which do not have a startDateTime specified.
      * This is in most cases analogous to returning all empty albums.
      *
-     * @return Collection of \Photo\Model\Album
+     * @return array of \Photo\Model\Album
      */
     public function getAlbumsWithoutDate()
     {

@@ -5,7 +5,6 @@ namespace Decision\Service;
 use Decision\Mapper\Authorization;
 use Decision\Model\Meeting;
 use Decision\Model\Member as MemberModel;
-use Doctrine\Common\Collections\Collection;
 use Laminas\Code\Exception\InvalidArgumentException;
 use Laminas\Http\Client as HttpClient;
 use Laminas\Mvc\I18n\Translator;
@@ -127,7 +126,7 @@ class Member
      *
      * @param int $days the number of days to look ahead
      *
-     * @return Collection Of members sorted by birthday
+     * @return array Of members sorted by birthday
      */
     public function getBirthdayMembers($days = 0)
     {
@@ -149,7 +148,7 @@ class Member
     /**
      * Get the organs a member is part of.
      *
-     * @return Collection
+     * @return array
      */
     public function getOrgans(MemberModel $member)
     {
@@ -162,7 +161,7 @@ class Member
      * @param string $query (part of) the full name of a member
      * @pre $name must be at least MIN_SEARCH_QUERY_LENGTH
      *
-     * @return Collection
+     * @return array
      */
     public function searchMembersByName($query)
     {

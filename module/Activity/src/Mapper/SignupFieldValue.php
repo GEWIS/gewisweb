@@ -2,7 +2,6 @@
 
 namespace Activity\Mapper;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -26,7 +25,7 @@ class SignupFieldValue
     /**
      * Finds all field values associated with the $signup.
      *
-     * @return Collection of \Activity\Model\ActivityFieldValue
+     * @return array of \Activity\Model\ActivityFieldValue
      */
     public function getFieldValuesBySignup(\Activity\Model\Signup $signup)
     {

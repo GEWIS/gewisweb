@@ -2,10 +2,6 @@
 
 namespace Frontpage\Service;
 
-use Doctrine\Common\Collections\Collection;
-use Laminas\I18n\Translator\TranslatorInterface;
-use User\Authentication\AuthenticationService;
-
 class AclService extends \User\Service\AclService
 {
     private array $pages;

@@ -6,7 +6,6 @@ use Application\Service\FileStorage;
 use DateInterval;
 use DateTime;
 use Decision\Model\Member;
-use Doctrine\Common\Collections\Collection;
 use Exception;
 use Laminas\Http\Response\Stream;
 use Laminas\I18n\Filter\Alnum;
@@ -24,7 +23,6 @@ use Photo\Model\ProfilePhoto as ProfilePhotoModel;
 use Photo\Model\Tag as TagModel;
 use Photo\Model\Vote as VoteModel;
 use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
-use User\Model\User;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -117,7 +115,7 @@ class Photo
      * @param int $maxResults max amount of results to return,
      *                               null for infinite
      *
-     * @return Collection of Photo\Model\Album
+     * @return array of Photo\Model\Album
      */
     public function getPhotos($album, $start = 0, $maxResults = null)
     {
@@ -605,7 +603,7 @@ class Photo
     /**
      * Retrieves all WeeklyPhotos.
      *
-     * @return Collection
+     * @return array
      */
     public function getPhotosOfTheWeek()
     {

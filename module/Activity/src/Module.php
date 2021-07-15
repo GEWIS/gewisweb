@@ -155,7 +155,7 @@ class Module
                     $translator = $container->get('translator');
                     $calendarFormService = $container->get('activity_service_calendar_form');
                     $aclService = $container->get('activity_service_acl');
-                    $createAlways = $aclService->isAllowed('create_always');
+                    $createAlways = $aclService->isAllowed('create_always', 'activity');
                     return new Form\ActivityCalendarProposal($translator, $calendarFormService, $createAlways);
                 },
                 'activity_form_calendar_option' => function (ContainerInterface $container) {

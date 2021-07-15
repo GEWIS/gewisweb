@@ -3,7 +3,6 @@
 namespace Frontpage\Service;
 
 use DateTime;
-use Doctrine\Common\Collections\Collection;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
 use Frontpage\Mapper\NewsItem;
 use Frontpage\Model\NewsItem as NewsItemModel;
@@ -85,7 +84,7 @@ class News
      *
      * @param int $count
      *
-     * @return Collection
+     * @return array
      */
     public function getLatestNewsItems($count)
     {

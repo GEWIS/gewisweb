@@ -7,7 +7,6 @@ use Application\Service\FileStorage;
 use Decision\Mapper\Organ as OrganMapper;
 use Decision\Model\Organ as OrganModel;
 use Decision\Model\OrganInformation;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Imagick;
 use Laminas\Mvc\I18n\Translator;
@@ -84,7 +83,7 @@ class Organ
     /**
      * Get organs.
      *
-     * @return Collection of organs
+     * @return array of organs
      */
     public function getOrgans()
     {
@@ -114,7 +113,7 @@ class Organ
     /**
      * Retrieves all organs which the current user is allowed to edit.
      *
-     * @return Collection
+     * @return array
      */
     public function getEditableOrgans()
     {
@@ -169,7 +168,7 @@ class Organ
     /**
      * @param string $type either committee, avc or fraternity
      *
-     * @return Collection
+     * @return array
      */
     public function findActiveOrgansByType($type)
     {
@@ -179,7 +178,7 @@ class Organ
     /**
      * @param string $type either committee, avc or fraternity
      *
-     * @return Collection
+     * @return array
      */
     public function findAbrogatedOrgansByType($type)
     {
@@ -215,7 +214,7 @@ class Organ
         $organInformation = $this->getEditableOrganInformation($organId);
         $form = $this->getOrganInformationForm($organInformation);
 
-        $data = array_merge_recursive($post->toArray(), $files->toArray());
+        $data = array_merge_recursive($post, $files);
 
         $form->setData($data);
         if (!$form->isValid()) {

@@ -3,7 +3,6 @@
 namespace Company\Mapper;
 
 use Company\Model\JobLabel as LabelModel;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -111,7 +110,7 @@ class Label
     /**
      * Find all Labels.
      *
-     * @return Collection
+     * @return array
      */
     public function findAll()
     {

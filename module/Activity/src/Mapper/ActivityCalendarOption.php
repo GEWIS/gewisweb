@@ -51,7 +51,7 @@ class ActivityCalendarOption
      * Gets all options created by the given organs.
      *
      * @param Collection $organs
-     * @return Collection
+     * @return array
      */
     public function getUpcomingOptionsByOrgans($organs)
     {
@@ -75,7 +75,7 @@ class ActivityCalendarOption
      *
      * @param bool $withDeleted whether to include deleted results
      *
-     * @return Collection
+     * @return array
      *
      * @throws Exception
      */
@@ -102,7 +102,7 @@ class ActivityCalendarOption
      * @param DateTime $before the date to get the options before
      * @param bool $withDeleted Whether to include deleted options
      *
-     * @return Collection
+     * @return array
      */
     public function getPastOptions($before, $withDeleted = false)
     {
@@ -130,7 +130,7 @@ class ActivityCalendarOption
      * Retrieves options associated with a proposal.
      *
      * @param int $proposalId
-     * @return Collection
+     * @return array
      */
     public function findOptionsByProposal($proposalId)
     {
@@ -149,7 +149,7 @@ class ActivityCalendarOption
      * @param int $proposalId
      * @param int $organId the organ proposals have to be associated with
      *
-     * @return Collection
+     * @return array
      */
     public function findOptionsByProposalAndOrgan($proposalId, $organId)
     {

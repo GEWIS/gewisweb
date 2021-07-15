@@ -3,7 +3,6 @@
 namespace Photo\Mapper;
 
 use DateTime;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Photo\Model\Album as AlbumModel;
@@ -59,7 +58,7 @@ class Album
      * @param int $maxResults max amount of results to return,
      *                               null for infinite
      *
-     * @return Collection of subalbums or null if there are none
+     * @return array of subalbums or null if there are none
      */
     public function getSubAlbums($parent, $start = 0, $maxResults = null)
     {
@@ -81,7 +80,7 @@ class Album
     /**
      * return all the sub-albums without a parent.
      *
-     * @return Collection of \Photo\Model\Album
+     * @return array of \Photo\Model\Album
      */
     public function getRootAlbums()
     {
@@ -101,7 +100,7 @@ class Album
      * @param DateTime $start start date and time
      * @param DateTime $end   end date and time
      *
-     * @return Collection of \Photo\Model\Album
+     * @return array of \Photo\Model\Album
      */
     public function getAlbumsInDateRange($start, $end)
     {
@@ -122,7 +121,7 @@ class Album
      * Retrieves all root albums which do not have a startDateTime specified.
      * This is in most cases analogous to returning all empty albums.
      *
-     * @return Collection
+     * @return array
      */
     public function getAlbumsWithoutDate()
     {

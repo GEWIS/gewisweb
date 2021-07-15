@@ -6,7 +6,6 @@ use Company\Model\CompanyBannerPackage as BannerPackageModel;
 use Company\Model\CompanyFeaturedPackage as FeaturedPackageModel;
 use Company\Model\CompanyJobPackage as PackageModel;
 use DateTime;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -108,7 +107,7 @@ class Package
     /**
      * Find all Packages.
      *
-     * @return Collection
+     * @return array
      */
     public function findAll()
     {
@@ -130,7 +129,7 @@ class Package
     /**
      * Find all packages that should be visible, and returns an editable version of them.
      *
-     * @return Collection
+     * @return array
      */
     public function findVisiblePackages()
     {

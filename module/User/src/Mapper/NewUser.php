@@ -3,7 +3,6 @@
 namespace User\Mapper;
 
 use Decision\Model\Member;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use User\Model\NewUser as NewUserModel;
@@ -72,7 +71,7 @@ class NewUser
     /**
      * Delete the existing activation code for a member.
      *
-     * @return Collection
+     * @return array
      */
     public function deleteByMember(Member $member)
     {

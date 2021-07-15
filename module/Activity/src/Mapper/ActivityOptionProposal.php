@@ -4,7 +4,6 @@ namespace Activity\Mapper;
 
 use Activity\Model\ActivityOptionProposal as ActivityOptionProposalModel;
 use DateTime;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -54,7 +53,7 @@ class ActivityOptionProposal
      * @param DateTime $end the date to get the options before
      * @param int $organId the organ options have to be associated with
      *
-     * @return Collection
+     * @return array
      */
     public function getNonClosedProposalsWithinPeriodAndOrgan($begin, $end, $organId)
     {

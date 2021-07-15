@@ -2,7 +2,6 @@
 
 namespace Company\Mapper;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -21,7 +20,7 @@ class FeaturedPackage extends Package
     {
         $featuredPackages = $this->findVisiblePackagesByLocale($locale);
         if (!empty($featuredPackages)) {
-            return $featuredPackages[array_rand($featuredPackages->toArray())];
+            return $featuredPackages[array_rand($featuredPackages)];
         }
 
         return null;
@@ -30,7 +29,7 @@ class FeaturedPackage extends Package
     /**
      * Find all packages that should be visible, and returns an editable version of them.
      *
-     * @return Collection
+     * @return array
      */
     public function findVisiblePackagesByLocale($locale)
     {

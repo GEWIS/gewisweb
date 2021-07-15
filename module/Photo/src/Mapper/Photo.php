@@ -2,7 +2,6 @@
 
 namespace Photo\Mapper;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -38,7 +37,7 @@ class Photo
      * @param int $maxResults max amount of results to return,
      *                                       null for infinite
      *
-     * @return Collection of photo's
+     * @return array of photo's
      */
     public function getAlbumPhotos(
         \Photo\Model\Album $album,
@@ -78,7 +77,7 @@ class Photo
      * @param \Photo\Model\Album|int $album
      * @param int $maxResults
      *
-     * @return Collection of Photo\Model\Photo
+     * @return array of Photo\Model\Photo
      */
     public function getRandomAlbumPhotos($album, $maxResults)
     {

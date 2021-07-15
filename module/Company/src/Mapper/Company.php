@@ -4,7 +4,6 @@ namespace Company\Mapper;
 
 use Company\Model\Company as CompanyModel;
 use Company\Model\CompanyI18n;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
@@ -86,7 +85,7 @@ class Company
     /**
      * Find all public companies with a certain locale.
      *
-     * @return Collection
+     * @return array
      */
     public function findPublicByLocale($locale)
     {
@@ -122,7 +121,7 @@ class Company
     /**
      * Find all companies.
      *
-     * @return Collection
+     * @return array
      */
     public function findAll()
     {
@@ -135,7 +134,7 @@ class Company
      * @param string $slugName the 'username' of the company to get
      * @param bool $asObject if yes, returns the company as an object in an array, otherwise returns the company as an array of an array
      *
-     * @return Collection An array of companies with the given slugName
+     * @return array An array of companies with the given slugName
      */
     public function findEditableCompaniesBySlugName($slugName, $asObject)
     {

@@ -8,7 +8,6 @@ use Activity\Model\ActivityUpdateProposal;
 use DateTime;
 use Decision\Model\AssociationYear as AssociationYear;
 use Decision\Model\Organ;
-use Doctrine\Common\Collections\Collection;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
 use Laminas\Mvc\I18n\Translator;
 use User\Model\User;
@@ -79,7 +78,7 @@ class ActivityQuery
     /**
      * Retrieve all update proposals from the database.
      *
-     * @return Collection a Collection of \Activity\Model\ActivityUpdateProposal
+     * @return array a Collection of \Activity\Model\ActivityUpdateProposal
      */
     public function getAllProposals()
     {
@@ -138,7 +137,7 @@ class ActivityQuery
      * Returns an array of all activities.
      * NB: This method is currently unused. Should it be removed?
      *
-     * @return Collection Array of activities
+     * @return array Array of activities
      */
     public function getAllActivities()
     {
@@ -154,7 +153,7 @@ class ActivityQuery
     /**
      * Get all the activities that are yet to be approved.
      *
-     * @return Collection Array of activities
+     * @return array Array of activities
      */
     public function getUnapprovedActivities()
     {
@@ -172,7 +171,7 @@ class ActivityQuery
     /**
      * Get all activities that are approved by the board.
      *
-     * @return Collection Array of activities
+     * @return array Array of activities
      */
     public function getApprovedActivities()
     {
@@ -191,7 +190,7 @@ class ActivityQuery
      * @param Organ $organ
      * @param int $count
      *
-     * @return Collection
+     * @return array
      */
     public function getOrganActivities($organ, $count = null)
     {
@@ -211,7 +210,7 @@ class ActivityQuery
     /**
      * Get all activities that are disapproved by the board.
      *
-     * @return Collection Array of activities
+     * @return array Array of activities
      */
     public function getDisapprovedActivities()
     {
@@ -229,7 +228,7 @@ class ActivityQuery
      *
      * @param string $category Type of activities requested
      *
-     * @return Collection Array of activities
+     * @return array Array of activities
      */
     public function getUpcomingActivities($category = null)
     {
@@ -259,7 +258,7 @@ class ActivityQuery
      *
      * @param User $user
      *
-     * @return Collection
+     * @return array
      */
     public function getUpcomingCreatedActivities($user)
     {

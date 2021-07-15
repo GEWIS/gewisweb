@@ -6,6 +6,8 @@ use DateTime;
 use Firebase\JWT\JWT;
 use Laminas\Authentication\Storage;
 use Laminas\Http\Header\SetCookie;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use UnexpectedValueException;
 
 class Session extends Storage\Session
@@ -16,12 +18,12 @@ class Session extends Storage\Session
     protected $rememberMe;
 
     /**
-     * @var \Laminas\Http\Request
+     * @var Request
      */
     private $request;
 
     /**
-     * @var \Laminas\Http\Response
+     * @var Response
      */
     private $response;
 

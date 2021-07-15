@@ -6,7 +6,6 @@ use DateInterval;
 use DateTime;
 use Decision\Model\Meeting as MeetingModel;
 use Decision\Model\MeetingDocument;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use InvalidArgumentException;
@@ -33,7 +32,7 @@ class Meeting
      *
      * @param int|null $limit The amount of results, default is all
      *
-     * @return Collection Of all meetings
+     * @return array Of all meetings
      */
     public function findAll($limit = null)
     {
@@ -57,7 +56,7 @@ class Meeting
      *
      * @param int $type AV|BV|VV|Virt
      *
-     * @return Collection
+     * @return array
      */
     public function findByType($type)
     {
@@ -77,7 +76,7 @@ class Meeting
      *
      * @param int|null $limit The amount of results, default is all
      *
-     * @return Collection Meetings that have taken place
+     * @return array Meetings that have taken place
      */
     public function findPast($limit = null, $type = null)
     {

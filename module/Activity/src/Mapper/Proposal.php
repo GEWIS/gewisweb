@@ -3,7 +3,6 @@
 namespace Activity\Mapper;
 
 use Activity\Model\ActivityUpdateProposal;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -49,7 +48,7 @@ class Proposal
     /**
      * Finds all update proposals.
      *
-     * @return Collection of \Activity\Model\ActivityUpdateProposal
+     * @return array of \Activity\Model\ActivityUpdateProposal
      */
     public function getAllProposals()
     {

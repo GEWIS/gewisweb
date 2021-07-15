@@ -2,7 +2,6 @@
 
 namespace Activity\Mapper;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 
 class ActivityCategory
@@ -44,7 +43,7 @@ class ActivityCategory
     /**
      * Get all Categories.
      *
-     * @return Collection
+     * @return array
      */
     public function getAllCategories()
     {

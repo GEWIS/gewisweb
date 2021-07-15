@@ -14,7 +14,6 @@ namespace User\Controller;
 use Decision\Service\MemberInfo;
 use Laminas\Mvc\Controller\AbstractActionController;
 use User\Service\AclService;
-use User\Service\User;
 
 class ApiController extends AbstractActionController
 {

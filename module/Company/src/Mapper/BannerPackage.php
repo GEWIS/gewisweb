@@ -19,7 +19,7 @@ class BannerPackage extends Package
     {
         $banners = $this->findVisiblePackages();
 
-        return empty($banners) ? null : $banners[array_rand($banners->toArray())];
+        return empty($banners) ? null : $banners[array_rand($banners)];
     }
 
     /**

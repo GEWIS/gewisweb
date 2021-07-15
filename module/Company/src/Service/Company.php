@@ -525,8 +525,8 @@ class Company
     {
         $companyForm = $this->editCompanyForm;
         $mergedData = array_merge_recursive(
-            $data->toArray(),
-            $files->toArray()
+            $data,
+            $files
         );
         $companyForm->setData($mergedData);
         if ($companyForm->isValid()) {
@@ -601,8 +601,8 @@ class Company
     {
         $companyForm = $this->editCompanyForm;
         $mergedData = array_merge_recursive(
-            $data->toArray(),
-            $files->toArray()
+            $data,
+            $files
         );
         $companyForm->setData($mergedData);
 
@@ -725,8 +725,8 @@ class Company
 
         $jobForm = $this->getJobForm();
         $mergedData = array_merge_recursive(
-            $data->toArray(),
-            $files->toArray()
+            $data,
+            $files
         );
         $jobForm->setCompanySlug(current($jobs)->getCompany()->getSlugName());
         $jobForm->setCurrentSlug($data['slugName']);

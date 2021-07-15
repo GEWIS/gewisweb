@@ -111,7 +111,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Get the company's translations.
      *
-     * @return ArrayCollection
+     * @return ArrayCollection|array
      */
     public function getTranslations()
     {

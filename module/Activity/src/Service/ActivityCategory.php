@@ -5,7 +5,6 @@ namespace Activity\Service;
 use Activity\Form\ActivityCategory as CategoryForm;
 use Activity\Model\ActivityCategory as CategoryModel;
 use Activity\Model\LocalisedText;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
@@ -68,7 +67,7 @@ class ActivityCategory
     /**
      * Get all categories.
      *
-     * @return Collection
+     * @return array
      */
     public function getAllCategories()
     {

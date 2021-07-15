@@ -2,7 +2,6 @@
 
 namespace Education\Mapper;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
@@ -93,7 +92,7 @@ class Course
      *
      * @param string $query
      *
-     * @return Collection
+     * @return array
      */
     public function search($query)
     {

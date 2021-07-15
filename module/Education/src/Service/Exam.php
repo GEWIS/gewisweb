@@ -5,7 +5,6 @@ namespace Education\Service;
 use Application\Service\FileStorage;
 use DateTime;
 use DirectoryIterator;
-use Doctrine\Common\Collections\Collection;
 use Education\Form\AddCourse;
 use Education\Form\Bulk;
 use Education\Form\SearchCourse;
@@ -113,7 +112,7 @@ class Exam
      *
      * @param array $data
      *
-     * @return Collection|null Courses, null if form is not valid
+     * @return array|null Courses, null if form is not valid
      */
     public function searchCourse($data)
     {
@@ -265,7 +264,7 @@ class Exam
     {
         $form = $this->getTempUploadForm();
 
-        $data = array_merge_recursive($post->toArray(), $files->toArray());
+        $data = array_merge_recursive($post, $files);
 
         $form->setData($data);
 

@@ -2,7 +2,6 @@
 
 namespace Decision\Mapper;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
@@ -35,7 +34,7 @@ class Organ
      *
      * @param string $type
      *
-     * @return Collection
+     * @return array
      */
     public function findActive($type = null)
     {
@@ -54,7 +53,7 @@ class Organ
      *
      * @param string $type
      *
-     * @return Collection
+     * @return array
      */
     public function findAbrogated($type = null)
     {
@@ -73,7 +72,7 @@ class Organ
     /**
      * Find all organs.
      *
-     * @return Collection
+     * @return array
      */
     public function findAll()
     {

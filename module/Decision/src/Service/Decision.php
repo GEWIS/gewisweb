@@ -13,7 +13,6 @@ use Decision\Model\Authorization as AuthorizationModel;
 use Decision\Model\Meeting;
 use Decision\Model\MeetingDocument;
 use Decision\Model\MeetingNotes as NotesModel;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\PersistentCollection;
 use InvalidArgumentException;
 use Laminas\Http\Response\Stream;
@@ -149,7 +148,7 @@ class Decision
      * @param int|null $limit The amount of meetings to retrieve, default is all
      * @param string|null $type Constraint on the type of the meeting, default is none
      *
-     * @return Collection Of all meetings
+     * @return array Of all meetings
      */
     public function getPastMeetings($limit = null, $type = null)
     {
@@ -423,7 +422,7 @@ class Decision
      *
      * @param array|Traversable $data Search data
      *
-     * @return Collection|null Search results
+     * @return array|null Search results
      */
     public function search($data)
     {

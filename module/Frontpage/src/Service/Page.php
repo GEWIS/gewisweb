@@ -7,7 +7,6 @@ use Exception;
 use Frontpage\Model\Page as PageModel;
 use InvalidArgumentException;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Permissions\Acl\Acl;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\IsImage;
 use User\Permissions\NotAllowedException;
