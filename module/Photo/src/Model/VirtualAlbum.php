@@ -65,7 +65,7 @@ class VirtualAlbum extends Album
         $this->photos[] = $photo;
     }
 
-    public function addPhotos(Collection $photos)
+    public function addPhotos(array $photos)
     {
         $this->photos
             = new ArrayCollection(

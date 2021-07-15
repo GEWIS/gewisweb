@@ -50,7 +50,7 @@ class ActivityCalendarOption
     /**
      * Gets all options created by the given organs.
      *
-     * @param Collection $organs
+     * @param array $organs
      * @return array
      */
     public function getUpcomingOptionsByOrgans($organs)
