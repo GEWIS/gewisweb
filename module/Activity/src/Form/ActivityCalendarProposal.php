@@ -29,7 +29,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
      *
      * @throws Exception
      */
-    public function __construct(Translator $translator, $calendarService)
+    public function __construct(Translator $translator, $calendarService, bool $createAlways)
     {
         parent::__construct();
         $this->translator = $translator;
@@ -40,7 +40,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
         foreach ($organs as $organ) {
             $organOptions[$organ->getId()] = $organ->getAbbr();
         }
-        if ($calendarService->isAllowed('create_always')) {
+        if ($createAlways) {
             $organOptions[-1] = 'Board';
             $organOptions[-2] = 'Other';
         }

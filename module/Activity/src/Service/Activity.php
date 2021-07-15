@@ -9,7 +9,6 @@ use Activity\Model\LocalisedText;
 use Activity\Model\SignupField as SignupFieldModel;
 use Activity\Model\SignupList as SignupListModel;
 use Activity\Model\SignupOption as SignupOptionModel;
-use Application\Service\AbstractAclService;
 use Application\Service\Email;
 use Company\Service\Company;
 use DateTime;
@@ -18,26 +17,16 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Permissions\Acl\Acl;
 use Laminas\Stdlib\Parameters;
 use User\Model\User;
 use User\Permissions\NotAllowedException;
 
-class Activity extends AbstractAclService
+class Activity
 {
     /**
      * @var Translator
      */
     private $translator;
-
-    /**
-     * @var User|string
-     */
-    private $userRole;
-    /**
-     * @var Acl
-     */
-    private $acl;
     /**
      * @var EntityManager
      */
@@ -46,10 +35,6 @@ class Activity extends AbstractAclService
      * @var ActivityCategory
      */
     private $categoryService;
-    /**
-     * @var \User\Authentication\Service\User
-     */
-    private $userService;
     /**
      * @var \Decision\Service\Organ
      */
@@ -66,44 +51,26 @@ class Activity extends AbstractAclService
      * @var ActivityForm
      */
     private $activityForm;
+    private AclService $aclService;
 
     public function __construct(
         Translator $translator,
-        $userRole,
-        Acl $acl,
         EntityManager $entityManager,
         ActivityCategory $categoryService,
-        \User\Authentication\Service\User $userService,
         \Decision\Service\Organ $organService,
         Company $companyService,
         Email $emailService,
-        ActivityForm $activityForm
+        ActivityForm $activityForm,
+        AclService $aclService
     ) {
         $this->translator = $translator;
-        $this->userRole = $userRole;
-        $this->acl = $acl;
         $this->entityManager = $entityManager;
         $this->categoryService = $categoryService;
-        $this->userService = $userService;
         $this->organService = $organService;
         $this->companyService = $companyService;
         $this->emailService = $emailService;
         $this->activityForm = $activityForm;
-    }
-
-    public function getRole()
-    {
-        return $this->userRole;
-    }
-
-    /**
-     * Get the ACL.
-     *
-     * @return Acl
-     */
-    public function getAcl()
-    {
-        return $this->acl;
+        $this->aclService = $aclService;
     }
 
     /**
@@ -117,7 +84,7 @@ class Activity extends AbstractAclService
      */
     public function createActivity($data)
     {
-        if (!$this->isAllowed('create', 'activity')) {
+        if (!$this->aclService->isAllowed('create', 'activity')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create an activity'));
         }
 
@@ -129,7 +96,7 @@ class Activity extends AbstractAclService
         }
 
         // Find the creator
-        $user = $this->userService->getIdentity();
+        $user = $this->aclService->getIdentityOrThrowException();
 
         // Find the organ the activity belongs to, and see if the user has permission to create an activity
         // for this organ. If the id is 0, the activity belongs to no organ.
@@ -165,7 +132,7 @@ class Activity extends AbstractAclService
      */
     public function getActivityForm()
     {
-        if (!$this->isAllowed('create', 'activity')) {
+        if (!$this->aclService->isAllowed('create', 'activity')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create an activity'));
         }
 
@@ -203,7 +170,8 @@ class Activity extends AbstractAclService
      * @param array $data Parameters describing activity
      * @param User $user The user that creates this activity
      * @param Organ $organ The organ this activity is associated with
-     * @param Company|null $company The company this activity is associated with
+     * @param \Company\Model\Company|null $company The company this activity is associated with
+     * @param int $status
      *
      * @return ActivityModel activity that was created
      */
@@ -431,7 +399,7 @@ class Activity extends AbstractAclService
      */
     public function createUpdateProposal(ActivityModel $currentActivity, Parameters $data)
     {
-        if (!$this->isAllowed('update', $currentActivity)) {
+        if (!$this->aclService->isAllowed('update', $currentActivity)) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to update this activity'));
         }
 
@@ -443,7 +411,7 @@ class Activity extends AbstractAclService
         }
 
         // Find the creator
-        $user = $this->userService->getIdentity();
+        $user = $this->aclService->getIdentityOrThrowException();
 
         // Find the organ the activity belongs to, and see if the user has permission to create an activity
         // for this organ. If the id is 0, the activity belongs to no organ.
@@ -672,11 +640,11 @@ class Activity extends AbstractAclService
      */
     protected function canApplyUpdateProposal(ActivityModel $activity)
     {
-        if ($this->isAllowed('update', 'activity')) {
+        if ($this->aclService->isAllowed('update', 'activity')) {
             return true;
         }
 
-        if (!$this->isAllowed('update', $activity)) {
+        if (!$this->aclService->isAllowed('update', $activity)) {
             return false;
         }
 
@@ -731,7 +699,7 @@ class Activity extends AbstractAclService
      */
     public function approve(ActivityModel $activity)
     {
-        if (!$this->isAllowed('approve', 'activity')) {
+        if (!$this->aclService->isAllowed('approve', 'activity')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to change the status of the activity')
             );
@@ -747,7 +715,7 @@ class Activity extends AbstractAclService
      */
     public function reset(ActivityModel $activity)
     {
-        if (!$this->isAllowed('reset', 'activity')) {
+        if (!$this->aclService->isAllowed('reset', 'activity')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to change the status of the activity')
             );
@@ -764,7 +732,7 @@ class Activity extends AbstractAclService
      */
     public function disapprove(ActivityModel $activity)
     {
-        if (!$this->isAllowed('disapprove', 'activity')) {
+        if (!$this->aclService->isAllowed('disapprove', 'activity')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to change the status of the activity')
             );
@@ -774,17 +742,5 @@ class Activity extends AbstractAclService
         $em = $this->entityManager;
         $em->persist($activity);
         $em->flush();
-    }
-
-    /**
-     * Get the default resource ID.
-     *
-     * This is used by {@link isAllowed()} when no resource is specified.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'activity';
     }
 }

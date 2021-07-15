@@ -4,6 +4,7 @@ namespace Company\Controller;
 
 use Company\Form\EditCompany;
 use Company\Mapper\Label;
+use Company\Service\AclService;
 use Company\Service\Company as CompanyService;
 use Company\Service\CompanyQuery;
 use DateInterval;
@@ -41,6 +42,7 @@ class AdminController extends AbstractActionController
      * @var CompanyQuery
      */
     private $companyQueryService;
+    private AclService $aclService;
 
     public function __construct(
         Translator $translator,
@@ -48,7 +50,8 @@ class AdminController extends AbstractActionController
         CompanyQuery $companyQueryService,
         Label $labelMapper,
         EditCompany $companyForm,
-        array $languages
+        array $languages,
+        AclService $aclService
     ) {
         $this->translator = $translator;
         $this->companyService = $companyService;
@@ -56,6 +59,7 @@ class AdminController extends AbstractActionController
         $this->labelMapper = $labelMapper;
         $this->companyForm = $companyForm;
         $this->languages = $languages;
+        $this->aclService = $aclService;
     }
 
     /**
@@ -63,7 +67,7 @@ class AdminController extends AbstractActionController
      */
     public function indexAction()
     {
-        if (!$this->companyService->isAllowed('listAllLabels')) {
+        if (!$this->aclService->isAllowed('listAllLabels', 'company')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to access the admin interface')
             );
@@ -132,7 +136,7 @@ class AdminController extends AbstractActionController
      */
     public function addPackageAction()
     {
-        if (!$this->companyService->isAllowed('edit')) {
+        if (!$this->aclService->isAllowed('edit', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit jobs'));
         }
 

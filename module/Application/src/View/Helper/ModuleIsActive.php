@@ -4,6 +4,7 @@ namespace Application\View\Helper;
 
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\View\Helper\AbstractHelper;
+use Interop\Container\ContainerInterface;
 
 class ModuleIsActive extends AbstractHelper
 {
@@ -50,7 +51,7 @@ class ModuleIsActive extends AbstractHelper
     /**
      * Get the service locator.
      *
-     * @return ServiceLocatorInterface
+     * @return ContainerInterface
      */
     public function getServiceLocator()
     {
@@ -60,7 +61,7 @@ class ModuleIsActive extends AbstractHelper
     /**
      * Set the service locator.
      *
-     * @param ServiceLocatorInterface $locator
+     * @param ContainerInterface $locator
      */
     public function setServiceLocator($locator)
     {

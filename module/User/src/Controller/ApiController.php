@@ -13,6 +13,7 @@ namespace User\Controller;
 
 use Decision\Service\MemberInfo;
 use Laminas\Mvc\Controller\AbstractActionController;
+use User\Service\AclService;
 use User\Service\User;
 
 class ApiController extends AbstractActionController
@@ -26,17 +27,19 @@ class ApiController extends AbstractActionController
      * @var MemberInfo
      */
     private $memberInfoService;
+    private AclService $aclService;
 
-    public function __construct(User $userService, MemberInfo $memberInfoService)
+    public function __construct(User $userService, MemberInfo $memberInfoService, AclService $aclService)
     {
         $this->userService = $userService;
         $this->memberInfoService = $memberInfoService;
+        $this->aclService = $aclService;
     }
 
     public function validateAction()
     {
         if ($this->userService->hasIdentity()) {
-            $identity = $this->userService->getIdentity();
+            $identity = $this->aclService->getIdentity();
             $response = $this->getResponse();
             $response->setStatusCode(200);
             $headers = $response->getHeaders();

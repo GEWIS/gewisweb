@@ -2,7 +2,6 @@
 
 namespace User\Service;
 
-use Application\Service\AbstractAclService;
 use DateInterval;
 use DateTime;
 use Decision\Mapper\Member;
@@ -24,17 +23,12 @@ use User\Permissions\NotAllowedException;
 /**
  * User service.
  */
-class User extends AbstractAclService
+class User
 {
     /**
      * @var Translator
      */
     private $translator;
-
-    /**
-     * @var UserModel|string
-     */
-    private $userRole;
 
     /**
      * @var Bcrypt
@@ -57,11 +51,6 @@ class User extends AbstractAclService
      * @var Email
      */
     private $emailService;
-
-    /**
-     * @var Acl
-     */
-    private $acl;
 
     /**
      * @var \User\Mapper\User
@@ -98,29 +87,28 @@ class User extends AbstractAclService
      */
     private $passwordForm;
 
+    private Acl $aclService;
+
     public function __construct(
         Translator $translator,
-        $userRole,
         Bcrypt $bcrypt,
         AuthenticationService $authService,
         AuthenticationService $pinAuthService,
         Email $emailService,
-        Acl $acl,
         \User\Mapper\User $userMapper,
         NewUser $newUserMapper,
         Member $memberMapper,
         RegisterForm $registerForm,
         Activate $activateForm,
         Login $loginForm,
-        Password $passwordForm
+        Password $passwordForm,
+        Acl $aclService
     ) {
         $this->translator = $translator;
-        $this->userRole = $userRole;
         $this->bcrypt = $bcrypt;
         $this->authService = $authService;
         $this->pinAuthService = $pinAuthService;
         $this->emailService = $emailService;
-        $this->acl = $acl;
         $this->userMapper = $userMapper;
         $this->newUserMapper = $newUserMapper;
         $this->memberMapper = $memberMapper;
@@ -128,11 +116,7 @@ class User extends AbstractAclService
         $this->activateForm = $activateForm;
         $this->loginForm = $loginForm;
         $this->passwordForm = $passwordForm;
-    }
-
-    public function getRole()
-    {
-        return $this->userRole;
+        $this->aclService = $aclService;
     }
 
     /**
@@ -380,8 +364,10 @@ class User extends AbstractAclService
      */
     public function pinLogin($data)
     {
-        if (!$this->isAllowed('pin_login')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to login using pin codes'));
+        if (!$this->aclService->isAllowed('pin_login', 'user')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to login using pin codes')
+            );
         }
         // try to authenticate
         $result = $this->pinAuthService->authenticateWithCredentials($data['lidnr'], $data['pincode']);
@@ -461,8 +447,10 @@ class User extends AbstractAclService
      */
     public function getPasswordForm()
     {
-        if (!$this->isAllowed('password_change')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to change your password'));
+        if (!$this->aclService->isAllowed('password_change', 'user')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to change your password')
+            );
         }
 
         return $this->passwordForm;
@@ -476,52 +464,5 @@ class User extends AbstractAclService
     public function getLoginForm()
     {
         return $this->loginForm;
-    }
-
-    /**
-     * Get the ACL.
-     *
-     * @return Acl
-     */
-    public function getAcl()
-    {
-        return $this->acl;
-    }
-
-    /**
-     * Get the default resource ID.
-     *
-     * This is used by {@link isAllowed()} when no resource is specified.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'user';
-    }
-
-    /**
-     * Gets the user identity, or gives a 403 if the user is not logged in
-     *
-     * @return UserModel the current logged in user
-     * @throws NotAllowedException if no user is logged in
-     */
-    public function getIdentity() {
-        if (!$this->authService->hasIdentity()) {
-            throw new NotAllowedException(
-                $this->translator->translate('You need to log in to perform this action')
-            );
-        }
-        return $this->authService->getIdentity();
-    }
-
-    /**
-     * Checks whether the user is logged in
-     *
-     * @return bool true if the user is logged in, false otherwise
-     */
-    public function hasIdentity(): bool
-    {
-        return $this->authService->hasIdentity();
     }
 }

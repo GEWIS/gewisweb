@@ -12,6 +12,8 @@
       <sourceFolder url="file://$MODULE_DIR$/module/Photo/src" isTestSource="false" packagePrefix="Photo\" />
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/module/Decision/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/module/User/test" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/vendor" />
       <excludeFolder url="file://$MODULE_DIR$/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/data/cache" />

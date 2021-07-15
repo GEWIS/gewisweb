@@ -4,6 +4,7 @@ namespace Activity\Controller;
 
 use Activity\Form\ModifyRequest as RequestForm;
 use Activity\Model\Activity;
+use Activity\Service\AclService;
 use Activity\Service\ActivityQuery;
 use Activity\Service\Signup;
 use Activity\Service\SignupListQuery;
@@ -17,7 +18,6 @@ use Laminas\Session\Container as SessionContainer;
 use Laminas\Stdlib\Parameters;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
-use User\Service\User;
 
 /**
  * Controller that gives some additional details for activities, such as a list of email adresses
@@ -45,8 +45,8 @@ class AdminController extends AbstractActionController
      */
     private $signupListQueryService;
     private Translator $translator;
-    private User $userService;
     private \Activity\Mapper\Signup $signupMapper;
+    private AclService $aclService;
 
     public function __construct(
         Translator $translator,
@@ -54,16 +54,16 @@ class AdminController extends AbstractActionController
         ActivityQuery $activityQueryService,
         Signup $signupService,
         SignupListQuery $signupListQueryService,
-        User $userService,
-        \Activity\Mapper\Signup $signupMapper
+        \Activity\Mapper\Signup $signupMapper,
+        AclService $aclService
     ) {
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;
         $this->signupService = $signupService;
         $this->signupListQueryService = $signupListQueryService;
         $this->translator = $translator;
-        $this->userService = $userService;
         $this->signupMapper = $signupMapper;
+        $this->aclService = $aclService;
     }
 
     public function updateAction()
@@ -76,7 +76,7 @@ class AdminController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        if (!$this->activityService->isAllowed('update', $activity)) {
+        if (!$this->aclService->isAllowed('update', $activity)) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to update this activity'));
         }
 
@@ -180,7 +180,7 @@ class AdminController extends AbstractActionController
                 return $this->notFoundAction();
             }
 
-            if (!$this->activityService->isAllowed('viewParticipants', $activity)) {
+            if (!$this->aclService->isAllowed('viewParticipants', $activity)) {
                 throw new NotAllowedException(
                     $this->translator->translate('You are not allowed to view the participants of this activity')
                 );
@@ -192,7 +192,7 @@ class AdminController extends AbstractActionController
                 return $this->notFoundAction();
             }
 
-            if (!$this->activityService->isAllowed('viewParticipants', $signupList)) {
+            if (!$this->aclService->isAllowed('viewParticipants', $signupList)) {
                 throw new NotAllowedException(
                     $this->translator->translate('You are not allowed to view the participants of this activity')
                 );
@@ -255,7 +255,7 @@ class AdminController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        if (!$this->activityService->isAllowed('adminSignup', $signupList)) {
+        if (!$this->aclService->isAllowed('adminSignup', $signupList)) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to use this form'));
         }
 
@@ -334,7 +334,7 @@ class AdminController extends AbstractActionController
 
         $signupList = $signup->getSignupList();
 
-        if (!$this->activityService->isAllowed('adminSignup', $signupList)) {
+        if (!$this->aclService->isAllowed('adminSignup', $signupList)) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to use this form'));
         }
 
@@ -387,9 +387,9 @@ class AdminController extends AbstractActionController
     public function viewAction()
     {
         $admin = false;
-        $identity = $this->userService->getIdentity();
+        $identity = $this->aclService->getIdentityOrThrowException();
 
-        if (!$this->activityService->isAllowed('viewAdmin')) {
+        if (!$this->aclService->isAllowed('viewAdmin', 'activity')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to administer activities'));
         }
 
@@ -397,7 +397,7 @@ class AdminController extends AbstractActionController
         $unapprovedActivities = null;
         $approvedActivities = null;
 
-        if ($this->activityService->isAllowed('approval')) {
+        if ($this->aclService->isAllowed('approval', 'activity')) {
             $admin = true;
             $disapprovedActivities = $this->activityQueryService->getDisapprovedActivities();
             $unapprovedActivities = $this->activityQueryService->getUnapprovedActivities();
