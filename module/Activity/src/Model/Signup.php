@@ -2,6 +2,7 @@
 
 namespace Activity\Model;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -69,7 +70,7 @@ abstract class Signup
     /**
      * Get all the extra field values.
      *
-     * @return array
+     * @return Collection
      */
     public function getFieldValues()
     {

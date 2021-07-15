@@ -86,7 +86,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     protected $signUps;
 
     /**
-     * @return array
+     * @return Collection
      */
     public function getSignUps()
     {
@@ -102,7 +102,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return array
+     * @return Collection
      */
     public function getFields()
     {

@@ -5,6 +5,7 @@ namespace Activity\Model;
 use DateTime;
 use Decision\Model\Organ;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use User\Model\User;
 use User\Permissions\Resource\CreatorResourceInterface;
@@ -293,7 +294,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Returns an ArrayCollection of SignupLists associated with this activity.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getSignupLists()
     {
@@ -469,7 +470,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getCategories()
     {

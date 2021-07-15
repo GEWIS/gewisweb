@@ -4,6 +4,7 @@ namespace Photo\Model;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
@@ -93,7 +94,7 @@ class Album implements ResourceInterface
     /**
      * Gets an array of all child albums.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getChildren()
     {
@@ -103,7 +104,7 @@ class Album implements ResourceInterface
     /**
      * Gets an array of all the photos in this album.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getPhotos()
     {

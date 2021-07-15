@@ -3,6 +3,7 @@
 namespace Company\Model;
 
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,7 +32,7 @@ class CompanyJobPackage extends CompanyPackage
     /**
      * Get the jobs in the package.
      *
-     * @return ArrayCollection jobs in the package
+     * @return Collection jobs in the package
      */
     public function getJobs()
     {

@@ -3,6 +3,7 @@
 namespace Education\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
@@ -140,7 +141,7 @@ class Course implements ResourceInterface
     /**
      * Get the studies for this course.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getStudies()
     {
@@ -170,7 +171,7 @@ class Course implements ResourceInterface
     /**
      * Get all exams belonging to this study.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getExams()
     {
@@ -315,7 +316,7 @@ class Course implements ResourceInterface
     /**
      * Get all children courses.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getChildren()
     {

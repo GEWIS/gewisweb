@@ -4,6 +4,7 @@ namespace Frontpage\Model;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use User\Model\User;
@@ -118,7 +119,7 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getOptions()
     {
@@ -126,7 +127,7 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getComments()
     {

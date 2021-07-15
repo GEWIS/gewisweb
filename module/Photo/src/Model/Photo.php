@@ -3,6 +3,7 @@
 namespace Photo\Model;
 
 use DateTime;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
@@ -320,7 +321,7 @@ class Photo implements ResourceInterface
     }
 
     /**
-     * @return array
+     * @return Collection
      */
     public function getTags()
     {

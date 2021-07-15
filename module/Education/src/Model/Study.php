@@ -3,6 +3,7 @@
 namespace Education\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 
@@ -105,7 +106,7 @@ class Study
     /**
      * Get the courses in this study.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getCourses()
     {

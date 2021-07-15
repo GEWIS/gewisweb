@@ -5,6 +5,7 @@ namespace Company\Model;
 use Carbon\Carbon;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -445,7 +446,7 @@ class Job
     /**
      * Get the labels. Returns an array of JobLabelAssignments.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getLabels()
     {

@@ -5,6 +5,7 @@ namespace Decision\Model\SubDecision;
 use Decision\Model\Organ;
 use Decision\Model\SubDecision;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 
@@ -150,7 +151,7 @@ class Foundation extends SubDecision
     /**
      * Get the references.
      *
-     * @return ArrayCollection of references
+     * @return Collection of references
      */
     public function getReferences()
     {

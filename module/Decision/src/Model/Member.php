@@ -5,6 +5,7 @@ namespace Decision\Model;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 
@@ -524,7 +525,7 @@ class Member
     /**
      * Get the installations.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getInstallations()
     {
@@ -534,7 +535,7 @@ class Member
     /**
      * Get the organ installations.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getOrganInstallations()
     {
@@ -544,7 +545,7 @@ class Member
     /**
      * Get the organ installations of organs that the member is currently part of.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getCurrentOrganInstallations()
     {
@@ -580,7 +581,7 @@ class Member
     /**
      * Get the board installations.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getBoardInstallations()
     {
@@ -653,7 +654,7 @@ class Member
     /**
      * Get all addresses.
      *
-     * @return ArrayCollection all addresses
+     * @return Collection all addresses
      */
     public function getAddresses()
     {
@@ -692,7 +693,7 @@ class Member
     /**
      * Get mailing list subscriptions.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getLists()
     {

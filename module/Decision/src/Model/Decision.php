@@ -2,6 +2,7 @@
 
 namespace Decision\Model;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -186,7 +187,7 @@ class Decision
     /**
      * Get the subdecisions.
      *
-     * @return array
+     * @return Collection
      */
     public function getSubdecisions()
     {

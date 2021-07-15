@@ -4,6 +4,7 @@ namespace Company\Model;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 
@@ -111,7 +112,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Get the company's translations.
      *
-     * @return ArrayCollection|array
+     * @return Collection|array
      */
     public function getTranslations()
     {
@@ -302,7 +303,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Get the company's packages.
      *
-     * @return ArrayCollection of CompanyPackages
+     * @return Collection of CompanyPackages
      */
     public function getPackages()
     {

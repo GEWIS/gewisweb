@@ -5,6 +5,7 @@ namespace Decision\Model;
 use DateTime;
 use Decision\Model\SubDecision\Foundation;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -259,7 +260,7 @@ class Organ
     /**
      * Get the members.
      *
-     * @return ArrayCollection of OrganMember
+     * @return Collection of OrganMember
      */
     public function getMembers()
     {
