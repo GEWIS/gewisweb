@@ -4,6 +4,7 @@ namespace Photo\Mapper;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 
 /**
@@ -77,13 +78,13 @@ class Tag
             ->setMaxResults(1)
             ->orderBy('tag_count', 'DESC');
 
-        try {
-            $res = $qb->getQuery()->getSingleResult();
-        } catch (NoResultException $e) {
+        $res = $qb->getQuery()->getResult();
+
+        if (empty($res)) {
             return null;
         }
 
-        $lidnr = $res[1];
+        $lidnr = $res[0][1];
 
         // Retrieve the most recent tag of a member
         $qb2 = $this->em->createQueryBuilder();
@@ -95,7 +96,13 @@ class Tag
             ->setMaxResults(1)
             ->orderBy('p.dateTime', 'DESC');
 
-        return $qb2->getQuery()->getSingleResult();
+        $res = $qb2->getQuery()->getResult();
+
+        if (empty($res)) {
+            return null;
+        }
+
+        return $res[0];
     }
 
     /**
