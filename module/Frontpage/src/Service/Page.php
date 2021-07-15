@@ -2,7 +2,6 @@
 
 namespace Frontpage\Service;
 
-use Application\Service\AbstractAclService;
 use Application\Service\FileStorage;
 use Exception;
 use Frontpage\Model\Page as PageModel;
@@ -11,23 +10,17 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\IsImage;
-use User\Model\User;
 use User\Permissions\NotAllowedException;
 
 /**
  * Page service, used for content management.
  */
-class Page extends AbstractAclService
+class Page
 {
     /**
      * @var Translator
      */
     private $translator;
-
-    /**
-     * @var User|string
-     */
-    private $userRole;
 
     /**
      * @var Acl
@@ -53,28 +46,24 @@ class Page extends AbstractAclService
      * @var array
      */
     private $storageConfig;
+    private AclService $aclService;
 
     public function __construct(
         Translator $translator,
-        $userRole,
         Acl $acl,
         FileStorage $storageService,
         \Frontpage\Mapper\Page $pageMapper,
         \Frontpage\Form\Page $pageForm,
-        array $storageConfig
+        array $storageConfig,
+        AclService $aclService
     ) {
         $this->translator = $translator;
-        $this->userRole = $userRole;
         $this->acl = $acl;
         $this->storageService = $storageService;
         $this->pageMapper = $pageMapper;
         $this->pageForm = $pageForm;
         $this->storageConfig = $storageConfig;
-    }
-
-    public function getRole()
-    {
-        return $this->userRole;
+        $this->aclService = $aclService;
     }
 
     /**
@@ -152,7 +141,7 @@ class Page extends AbstractAclService
         $this->acl->addResource($resource);
         $this->acl->allow($requiredRole, $resource, 'view');
 
-        return $this->isAllowed('view', $resource);
+        return $this->aclService->isAllowed('view', $resource);
     }
 
     /**
@@ -162,7 +151,7 @@ class Page extends AbstractAclService
      */
     public function getPages()
     {
-        if (!$this->isAllowed('list')) {
+        if (!$this->aclService->isAllowed('list', 'page')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view the list of pages.')
             );
@@ -222,7 +211,7 @@ class Page extends AbstractAclService
      */
     public function updatePage($pageId, $data)
     {
-        if (!$this->isAllowed('edit')) {
+        if (!$this->aclService->isAllowed('edit', 'page')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit pages.'));
         }
         $form = $this->getPageForm($pageId);
@@ -279,7 +268,9 @@ class Page extends AbstractAclService
                 $this->translator->translate('The uploaded file does not have a valid extension')
             );
         }
-        throw new InvalidArgumentException($this->translator->translate('The uploaded file is not a valid image'));
+        throw new InvalidArgumentException(
+            $this->translator->translate('The uploaded file is not a valid image')
+        );
     }
 
     /**
@@ -291,8 +282,10 @@ class Page extends AbstractAclService
      */
     public function getPageForm($pageId = null)
     {
-        if (!$this->isAllowed('create')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to create new pages.'));
+        if (!$this->aclService->isAllowed('create', 'page')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to create new pages.')
+            );
         }
         $form = $this->pageForm;
 
@@ -302,25 +295,5 @@ class Page extends AbstractAclService
         }
 
         return $form;
-    }
-
-    /**
-     * Get the Acl.
-     *
-     * @return Acl
-     */
-    public function getAcl()
-    {
-        return $this->acl;
-    }
-
-    /**
-     * Get the default resource ID.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'page';
     }
 }

@@ -376,15 +376,15 @@ return [
                 $memberService = $container->get('decision_service_member');
                 $memberInfoService = $container->get('decision_service_memberinfo');
                 $decisionService = $container->get('decision_service_decision');
-                $userService = $container->get('user_service_user');
                 $regulationsConfig = $container->get('config')['regulations'];
+                $aclService = $container->get('decision_service_acl');
 
                 return new MemberController(
                     $memberService,
                     $memberInfoService,
                     $decisionService,
-                    $userService,
-                    $regulationsConfig
+                    $regulationsConfig,
+                    $aclService
                 );
             },
             'Decision\Controller\MemberApi' => function (ContainerInterface $container) {

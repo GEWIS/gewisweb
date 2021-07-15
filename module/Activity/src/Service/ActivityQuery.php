@@ -5,36 +5,21 @@ namespace Activity\Service;
 use Activity\Mapper\Proposal;
 use Activity\Model\Activity as ActivityModel;
 use Activity\Model\ActivityUpdateProposal;
-use Application\Service\AbstractAclService;
 use DateTime;
 use Decision\Model\AssociationYear as AssociationYear;
 use Decision\Model\Organ;
 use Doctrine\Common\Collections\Collection;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Permissions\Acl\Acl;
 use User\Model\User;
 use User\Permissions\NotAllowedException;
 
-class ActivityQuery extends AbstractAclService
+class ActivityQuery
 {
     /**
      * @var Translator
      */
     private $translator;
-
-    /**
-     * @var User|string
-     */
-    private $userRole;
-    /**
-     * @var Acl
-     */
-    private $acl;
-    /**
-     * @var \User\Service\User
-     */
-    private $userService;
     /**
      * @var \Decision\Service\Organ
      */
@@ -47,28 +32,20 @@ class ActivityQuery extends AbstractAclService
      * @var Proposal
      */
     private $proposalMapper;
+    private AclService $aclService;
 
     public function __construct(
         Translator $translator,
-        $userRole,
-        Acl $acl,
-        \User\Service\User $userService,
         \Decision\Service\Organ $organService,
         \Activity\Mapper\Activity $activityMapper,
-        Proposal $proposalMapper
+        Proposal $proposalMapper,
+        AclService $aclService
     ) {
         $this->translator = $translator;
-        $this->userRole = $userRole;
-        $this->acl = $acl;
-        $this->userService = $userService;
         $this->organService = $organService;
         $this->activityMapper = $activityMapper;
         $this->proposalMapper = $proposalMapper;
-    }
-
-    public function getRole()
-    {
-        return $this->userRole;
+        $this->aclService = $aclService;
     }
 
     /**
@@ -88,16 +65,6 @@ class ActivityQuery extends AbstractAclService
     public const ASSOCIATION_YEAR_START_DAY = 1;
 
     /**
-     * Get the ACL.
-     *
-     * @return Acl
-     */
-    public function getAcl()
-    {
-        return $this->acl;
-    }
-
-    /**
      * Get the information of one proposal from the database.
      *
      * @param int $id The proposal id to be searched for
@@ -106,9 +73,7 @@ class ActivityQuery extends AbstractAclService
      */
     public function getProposal($id)
     {
-        $proposalMapper = $this->proposalMapper;
-
-        return $proposalMapper->getProposalById($id);
+        return $this->proposalMapper->getProposalById($id);
     }
 
     /**
@@ -144,7 +109,7 @@ class ActivityQuery extends AbstractAclService
      */
     public function getActivityWithDetails($id)
     {
-        if (!$this->isAllowed('viewDetails', $this->getActivity($id))) {
+        if (!$this->aclService->isAllowed('viewDetails', $this->getActivity($id))) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view this activity'));
         }
 
@@ -160,7 +125,7 @@ class ActivityQuery extends AbstractAclService
      */
     public function getActivity($id)
     {
-        if (!$this->isAllowed('view', 'activity')) {
+        if (!$this->aclService->isAllowed('view', 'activity')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view the activities'));
         }
 
@@ -177,7 +142,7 @@ class ActivityQuery extends AbstractAclService
      */
     public function getAllActivities()
     {
-        if (!$this->isAllowed('view', 'activity')) {
+        if (!$this->aclService->isAllowed('view', 'activity')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view the activities'));
         }
 
@@ -193,7 +158,7 @@ class ActivityQuery extends AbstractAclService
      */
     public function getUnapprovedActivities()
     {
-        if (!$this->isAllowed('viewUnapproved', 'activity')) {
+        if (!$this->aclService->isAllowed('viewUnapproved', 'activity')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view unapproved activities')
             );
@@ -211,7 +176,7 @@ class ActivityQuery extends AbstractAclService
      */
     public function getApprovedActivities()
     {
-        if (!$this->isAllowed('view', 'activity')) {
+        if (!$this->aclService->isAllowed('view', 'activity')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view activities'));
         }
 
@@ -250,7 +215,7 @@ class ActivityQuery extends AbstractAclService
      */
     public function getDisapprovedActivities()
     {
-        if (!$this->isAllowed('viewDisapproved', 'activity')) {
+        if (!$this->aclService->isAllowed('viewDisapproved', 'activity')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view the disapproved activities')
             );
@@ -268,19 +233,19 @@ class ActivityQuery extends AbstractAclService
      */
     public function getUpcomingActivities($category = null)
     {
-        if (!$this->isAllowed('view', 'activity')) {
+        if (!$this->aclService->isAllowed('view', 'activity')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view upcoming the activities')
             );
         }
 
         if ('my' === $category) {
-            if (!$this->isAllowed('view', 'myActivities')) {
+            if (!$this->aclService->isAllowed('view', 'myActivities')) {
                 throw new NotAllowedException(
                     $this->translator->translate('You are not allowed to view upcoming activities coupled to a member account')
                 );
             }
-            $user = $this->userService->getIdentity();
+            $user = $this->aclService->getIdentityOrThrowException();
 
             return $this->activityMapper->getUpcomingActivitiesForMember($user);
         }
@@ -299,7 +264,7 @@ class ActivityQuery extends AbstractAclService
     public function getUpcomingCreatedActivities($user)
     {
         $activityMapper = $this->getActivityMapper();
-        if ($this->isAllowed('viewDetails', 'activity')) {
+        if ($this->aclService->isAllowed('viewDetails', 'activity')) {
             //Only admins are allowed to unconditionally view activity details
             return $activityMapper->getAllUpcomingActivities();
         }
@@ -319,7 +284,7 @@ class ActivityQuery extends AbstractAclService
     public function getOldCreatedActivitiesPaginator($user)
     {
         $activityMapper = $this->getActivityMapper();
-        if ($this->isAllowed('viewDetails', 'activity')) {
+        if ($this->aclService->isAllowed('viewDetails', 'activity')) {
             //Only admins are allowed to unconditionally view activity details
             return $activityMapper->getOldActivityPaginatorAdapterByOrganizer();
         }
@@ -356,7 +321,7 @@ class ActivityQuery extends AbstractAclService
      */
     public function getFinishedActivitiesByYear($year)
     {
-        if (!$this->isAllowed('view', 'activity')) {
+        if (!$this->aclService->isAllowed('view', 'activity')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view the activities'));
         }
 
@@ -365,17 +330,5 @@ class ActivityQuery extends AbstractAclService
         $endDate = $associationYear->getEndDate() < new DateTime() ? $associationYear->getEndDate() : new DateTime();
 
         return $this->getActivityMapper()->getArchivedActivitiesInRange($associationYear->getStartDate(), $endDate);
-    }
-
-    /**
-     * Get the default resource ID.
-     *
-     * This is used by {@link isAllowed()} when no resource is specified.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'activity';
     }
 }

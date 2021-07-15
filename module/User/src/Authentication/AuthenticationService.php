@@ -158,7 +158,7 @@ class AuthenticationService implements AuthenticationServiceInterface
      *
      * @return User|null
      */
-    public function getIdentity()
+    public function getIdentity(): ?User
     {
         if ($this->getStorage()->isEmpty()) {
             return null;

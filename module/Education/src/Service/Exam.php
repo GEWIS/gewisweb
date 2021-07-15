@@ -2,7 +2,6 @@
 
 namespace Education\Service;
 
-use Application\Service\AbstractAclService;
 use Application\Service\FileStorage;
 use DateTime;
 use DirectoryIterator;
@@ -18,29 +17,17 @@ use Education\Model\Summary as SummaryModel;
 use Exception;
 use Laminas\Http\Response\Stream;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Permissions\Acl\Acl;
-use User\Model\User;
 use User\Permissions\NotAllowedException;
 
 /**
  * Exam service.
  */
-class Exam extends AbstractAclService
+class Exam
 {
     /**
      * @var Translator
      */
     private $translator;
-
-    /**
-     * @var User|string
-     */
-    private $userRole;
-
-    /**
-     * @var Acl
-     */
-    private $acl;
 
     /**
      * @var FileStorage
@@ -86,11 +73,10 @@ class Exam extends AbstractAclService
      * @var array
      */
     private $config;
+    private AclService $aclService;
 
     public function __construct(
         Translator $translator,
-        $userRole,
-        Acl $acl,
         FileStorage $storageService,
         Course $courseMapper,
         \Education\Mapper\Exam $examMapper,
@@ -99,11 +85,10 @@ class Exam extends AbstractAclService
         TempUpload $tempUploadForm,
         Bulk $bulkSummaryForm,
         Bulk $bulkExamForm,
-        array $config
+        array $config,
+        AclService $aclService
     ) {
         $this->translator = $translator;
-        $this->userRole = $userRole;
-        $this->acl = $acl;
         $this->storageService = $storageService;
         $this->courseMapper = $courseMapper;
         $this->examMapper = $examMapper;
@@ -113,11 +98,7 @@ class Exam extends AbstractAclService
         $this->bulkSummaryForm = $bulkSummaryForm;
         $this->bulkExamForm = $bulkExamForm;
         $this->config = $config;
-    }
-
-    public function getRole()
-    {
-        return $this->userRole;
+        $this->aclService = $aclService;
     }
 
     /**
@@ -170,7 +151,7 @@ class Exam extends AbstractAclService
      */
     public function getExamDownload($id)
     {
-        if (!$this->isAllowed('download')) {
+        if (!$this->aclService->isAllowed('download', 'exam')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to download exams'));
         }
 
@@ -374,7 +355,7 @@ class Exam extends AbstractAclService
      */
     public function deleteTempExam($filename, $type = 'exam')
     {
-        if (!$this->isAllowed('delete')) {
+        if (!$this->aclService->isAllowed('delete', 'exam')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete exams'));
         }
         $config = $this->getConfig('education_temp');
@@ -391,7 +372,7 @@ class Exam extends AbstractAclService
      */
     protected function getBulkForm($type)
     {
-        if (!$this->isAllowed('upload')) {
+        if (!$this->aclService->isAllowed('upload', 'exam')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to upload exams'));
         }
         if (null !== $this->bulkForm) {
@@ -504,7 +485,7 @@ class Exam extends AbstractAclService
      */
     public function getTempUploadForm()
     {
-        if (!$this->isAllowed('upload')) {
+        if (!$this->aclService->isAllowed('upload', 'exam')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to upload exams'));
         }
 
@@ -520,7 +501,7 @@ class Exam extends AbstractAclService
      */
     public function getAddCourseForm()
     {
-        if (!$this->isAllowed('upload')) {
+        if (!$this->aclService->isAllowed('upload', 'exam')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to add courses'));
         }
 
@@ -574,25 +555,5 @@ class Exam extends AbstractAclService
         $this->courseMapper->persist($newCourse);
 
         return $newCourse;
-    }
-
-    /**
-     * Get the Acl.
-     *
-     * @return Acl
-     */
-    public function getAcl()
-    {
-        return $this->acl;
-    }
-
-    /**
-     * Get the default resource ID.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'exam';
     }
 }

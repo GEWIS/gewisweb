@@ -16,7 +16,7 @@
 
             <div class="card-content">
                 <span><?= $organ->getName() ?>
-                    <?php if (!is_null($organInformation) && $this->acl('decision_acl')->isAllowed('organ', 'view')): ?>
+                    <?php if (!is_null($organInformation) && $this->acl('decision_service_acl')->isAllowed('organ', 'view')): ?>
                         <a href="mailto:<?= $organInformation->getEmail() ?>" class="pull-right">
                                 <span class="fas fa-envelope"></span>
                             </a> &nbsp;

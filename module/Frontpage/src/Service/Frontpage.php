@@ -3,37 +3,24 @@
 namespace Frontpage\Service;
 
 use Activity\Model\Activity;
-use Application\Service\AbstractAclService;
 use Company\Service\Company;
 use DateTime;
 use Decision\Service\Member;
 use Doctrine\Common\Proxy\Exception\InvalidArgumentException;
 use Frontpage\Model\NewsItem;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Permissions\Acl\Acl;
 use Photo\Mapper\Tag;
 use Photo\Service\Photo;
-use User\Model\User;
 
 /**
  * Frontpage service.
  */
-class Frontpage extends AbstractAclService
+class Frontpage
 {
     /**
      * @var Translator
      */
     private $translator;
-
-    /**
-     * @var User|string
-     */
-    private $userRole;
-
-    /**
-     * @var Acl
-     */
-    private $acl;
 
     /**
      * @var Poll
@@ -77,8 +64,6 @@ class Frontpage extends AbstractAclService
 
     public function __construct(
         Translator $translator,
-        $userRole,
-        Acl $acl,
         Poll $pollService,
         News $newsService,
         Member $memberService,
@@ -89,8 +74,6 @@ class Frontpage extends AbstractAclService
         array $frontpageConfig
     ) {
         $this->translator = $translator;
-        $this->userRole = $userRole;
-        $this->acl = $acl;
         $this->pollService = $pollService;
         $this->newsService = $newsService;
         $this->memberService = $memberService;
@@ -99,11 +82,6 @@ class Frontpage extends AbstractAclService
         $this->tagMapper = $tagMapper;
         $this->activityMapper = $activityMapper;
         $this->frontpageConfig = $frontpageConfig;
-    }
-
-    public function getRole()
-    {
-        return $this->userRole;
     }
 
     /**
@@ -225,25 +203,5 @@ class Frontpage extends AbstractAclService
         $count = $this->frontpageConfig['activity_count'];
 
         return $this->activityMapper->getUpcomingActivities($count);
-    }
-
-    /**
-     * Get the Acl.
-     *
-     * @return Acl
-     */
-    public function getAcl()
-    {
-        return $this->acl;
-    }
-
-    /**
-     * Get the default resource ID.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'frontpage';
     }
 }

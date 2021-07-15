@@ -311,6 +311,7 @@ return [
                 $labelMapper = $container->get('company_mapper_label');
                 $companyForm = $container->get('company_form_company');
                 $languages = $container->get('languages');
+                $aclService = $container->get('company_service_acl');
 
                 return new AdminController(
                     $translator,
@@ -318,7 +319,8 @@ return [
                     $companyQueryService,
                     $labelMapper,
                     $companyForm,
-                    $languages
+                    $languages,
+                    $aclService
                 );
             },
         ],

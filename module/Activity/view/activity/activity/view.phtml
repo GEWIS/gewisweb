@@ -238,7 +238,7 @@ $this->headTitle($this->translate('Activities')); ?>
                         </thead>
                         <tbody>
                         <?php $i = 1; ?>
-                        <?php if (!$this->acl('activity_acl')->isAllowed('signupList', 'viewDetails')): ?>
+                        <?php if (!$this->acl('activity_service_acl')->isAllowed('signupList', 'viewDetails')): ?>
                             <tr>
                                 <td align="center" colspan="<?= count($fields) + 2 ?>">
                                     <?php
@@ -252,11 +252,11 @@ $this->headTitle($this->translate('Activities')); ?>
                                 </td>
                             </tr>
                         <?php endif; ?>
-                        <?php if (!$isArchived || $this->acl('activity_acl')->isAllowed('signupList', 'viewDetails')): ?>
+                        <?php if (!$isArchived || $this->acl('activity_service_acl')->isAllowed('signupList', 'viewDetails')): ?>
                             <?php foreach ($signupList->getSignUps() as $signup): ?>
-                                <?php if (($signup instanceof Activity\Model\ExternalSignup) || $this->acl('activity_acl')->isAllowed('signupList', 'viewDetails')): ?>
+                                <?php if (($signup instanceof Activity\Model\ExternalSignup) || $this->acl('activity_service_acl')->isAllowed('signupList', 'viewDetails')): ?>
                                     <tr>
-                                        <td><?= $this->acl('activity_acl')->isAllowed('signupList', 'view') || $signupList->getDisplaySubscribedNumber() ? $i : '' ?></td>
+                                        <td><?= $this->acl('activity_service_acl')->isAllowed('signupList', 'view') || $signupList->getDisplaySubscribedNumber() ? $i : '' ?></td>
                                         <td><?= $this->escapeHtml($signup->getFullName()) ?></td>
                                         <?php foreach ($fields as $field): ?>
                                             <?php foreach ($signup->getFieldValues() as $fieldValue): ?>

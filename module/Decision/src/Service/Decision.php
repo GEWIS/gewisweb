@@ -2,7 +2,6 @@
 
 namespace Decision\Service;
 
-use Application\Service\AbstractAclService;
 use Application\Service\Email;
 use Application\Service\FileStorage;
 use Decision\Form\Authorization;
@@ -19,35 +18,18 @@ use Doctrine\ORM\PersistentCollection;
 use InvalidArgumentException;
 use Laminas\Http\Response\Stream;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Permissions\Acl\Acl;
 use Traversable;
 use User\Permissions\NotAllowedException;
-use User\Service\User;
 
 /**
  * Decision service.
  */
-class Decision extends AbstractAclService
+class Decision
 {
     /**
      * @var Translator
      */
     private $translator;
-
-    /**
-     * @var \User\Model\User|string
-     */
-    private $userRole;
-
-    /**
-     * @var Acl
-     */
-    private $acl;
-
-    /**
-     * @var User
-     */
-    private $userService;
 
     /**
      * @var FileStorage
@@ -103,12 +85,10 @@ class Decision extends AbstractAclService
      * @var Authorization
      */
     private $authorizationForm;
+    private AclService $aclService;
 
     public function __construct(
         Translator $translator,
-        $userRole,
-        Acl $acl,
-        User $userService,
         FileStorage $storageService,
         Email $emailService,
         \Decision\Mapper\Member $memberMapper,
@@ -119,12 +99,10 @@ class Decision extends AbstractAclService
         Document $documentForm,
         ReorderDocument $reorderDocumentForm,
         SearchDecision $searchDecisionForm,
-        Authorization $authorizationForm
+        Authorization $authorizationForm,
+        AclService $aclService
     ) {
         $this->translator = $translator;
-        $this->userRole = $userRole;
-        $this->acl = $acl;
-        $this->userService = $userService;
         $this->storageService = $storageService;
         $this->emailService = $emailService;
         $this->memberMapper = $memberMapper;
@@ -136,11 +114,7 @@ class Decision extends AbstractAclService
         $this->reorderDocumentForm = $reorderDocumentForm;
         $this->searchDecisionForm = $searchDecisionForm;
         $this->authorizationForm = $authorizationForm;
-    }
-
-    public function getRole()
-    {
-        return $this->userRole;
+        $this->aclService = $aclService;
     }
 
     /**
@@ -162,7 +136,7 @@ class Decision extends AbstractAclService
      */
     public function getMeetings($limit = null)
     {
-        if (!$this->isAllowed('list_meetings')) {
+        if (!$this->aclService->isAllowed('list_meetings', 'decision')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings.'));
         }
 
@@ -179,7 +153,7 @@ class Decision extends AbstractAclService
      */
     public function getPastMeetings($limit = null, $type = null)
     {
-        if (!$this->isAllowed('list_meetings')) {
+        if (!$this->aclService->isAllowed('list_meetings', 'decision')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings.'));
         }
 
@@ -188,7 +162,7 @@ class Decision extends AbstractAclService
 
     public function getMeetingsByType($type)
     {
-        if (!$this->isAllowed('list_meetings')) {
+        if (!$this->aclService->isAllowed('list_meetings', 'decision')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings.'));
         }
 
@@ -205,7 +179,7 @@ class Decision extends AbstractAclService
      */
     public function getMeeting($type, $number)
     {
-        if (!$this->isAllowed('view', 'meeting')) {
+        if (!$this->aclService->isAllowed('view', 'meeting')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view meetings.'));
         }
 
@@ -253,7 +227,7 @@ class Decision extends AbstractAclService
      */
     public function getMeetingDocumentDownload($meetingDocument)
     {
-        if (!$this->isAllowed('view_documents', 'meeting')) {
+        if (!$this->aclService->isAllowed('view_documents', 'meeting')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view meeting documents.')
             );
@@ -277,7 +251,7 @@ class Decision extends AbstractAclService
      */
     public function getMeetingNotesDownload(Meeting $meeting)
     {
-        if (!$this->isAllowed('view_notes', 'meeting')) {
+        if (!$this->aclService->isAllowed('view_notes', 'meeting')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view meeting notes.'));
         }
 
@@ -374,7 +348,7 @@ class Decision extends AbstractAclService
 
     public function deleteDocument($post)
     {
-        if (!$this->isAllowed('delete_document', 'meeting')) {
+        if (!$this->aclService->isAllowed('delete_document', 'meeting')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to delete meeting documents.')
             );
@@ -453,7 +427,7 @@ class Decision extends AbstractAclService
      */
     public function search($data)
     {
-        if (!$this->isAllowed('search')) {
+        if (!$this->aclService->isAllowed('search', 'decision')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to search decisions.'));
         }
 
@@ -479,7 +453,7 @@ class Decision extends AbstractAclService
      */
     public function getAllAuthorizations($meetingNumber)
     {
-        if (!$this->isAllowed('view_all', 'authorization')) {
+        if (!$this->aclService->isAllowed('view_all', 'authorization')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view all authorizations.')
             );
@@ -497,11 +471,11 @@ class Decision extends AbstractAclService
      */
     public function getUserAuthorization($meetingNumber)
     {
-        if (!$this->isAllowed('view_own', 'authorization')) {
+        if (!$this->aclService->isAllowed('view_own', 'authorization')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view authorizations.'));
         }
 
-        $lidnr = $this->userService->getIdentity()->getLidnr();
+        $lidnr = $this->aclService->getIdentityOrThrowException()->getLidnr();
 
         return $this->authorizationMapper->findUserAuthorization($meetingNumber, $lidnr);
     }
@@ -515,7 +489,7 @@ class Decision extends AbstractAclService
         if (!$form->isValid()) {
             return false;
         }
-        $user = $this->userService->getIdentity();
+        $user = $this->aclService->getIdentityOrThrowException();
         $authorizer = $user->getMember();
         $recipient = $this->memberMapper->findByLidnr($data['recipient']);
         if (is_null($recipient) || $recipient->getLidnr() === $authorizer->getLidnr()) {
@@ -560,7 +534,7 @@ class Decision extends AbstractAclService
      */
     public function getNotesForm()
     {
-        if (!$this->isAllowed('upload_notes', 'meeting')) {
+        if (!$this->aclService->isAllowed('upload_notes', 'meeting')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to upload notes.'));
         }
 
@@ -574,7 +548,7 @@ class Decision extends AbstractAclService
      */
     public function getDocumentForm()
     {
-        if (!$this->isAllowed('upload_document', 'meeting')) {
+        if (!$this->aclService->isAllowed('upload_document', 'meeting')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to upload meeting documents.')
             );
@@ -609,31 +583,11 @@ class Decision extends AbstractAclService
      */
     public function getAuthorizationForm()
     {
-        if (!$this->isAllowed('create', 'authorization')) {
+        if (!$this->aclService->isAllowed('create', 'authorization')) {
             throw new NotAllowedException($this->translator->translate('You are not authorize people.'));
         }
 
         return $this->authorizationForm;
-    }
-
-    /**
-     * Get the default resource ID.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'decision';
-    }
-
-    /**
-     * Get the Acl.
-     *
-     * @return Acl
-     */
-    public function getAcl()
-    {
-        return $this->acl;
     }
 
     /**
@@ -643,7 +597,7 @@ class Decision extends AbstractAclService
      */
     public function isAllowedToBrowseFiles()
     {
-        return $this->isAllowed('browse', 'files');
+        return $this->aclService->isAllowed('browse', 'files');
     }
 
     /**
@@ -657,7 +611,7 @@ class Decision extends AbstractAclService
      */
     private function isAllowedOrFail($operation, $resource, $errorMessage)
     {
-        if (!$this->isAllowed($operation, $resource)) {
+        if (!$this->aclService->isAllowed($operation, $resource)) {
             throw new NotAllowedException($this->translator->translate($errorMessage));
         }
     }

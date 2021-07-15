@@ -2,13 +2,13 @@
 
 namespace Decision\Controller;
 
+use Decision\Service\AclService;
 use Decision\Service\Decision;
 use Decision\Service\Member;
 use Decision\Service\MemberInfo;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
-use User\Service\User;
 
 class MemberController extends AbstractActionController
 {
@@ -31,20 +31,20 @@ class MemberController extends AbstractActionController
      * @var array
      */
     private $regulationsConfig;
-    private User $userService;
+    private AclService $aclService;
 
     public function __construct(
         Member $memberService,
         MemberInfo $memberInfoService,
         Decision $decisionService,
-        User $userService,
-        array $regulationsConfig
+        array $regulationsConfig,
+        AclService $aclService
     ) {
         $this->memberService = $memberService;
         $this->memberInfoService = $memberInfoService;
         $this->decisionService = $decisionService;
         $this->regulationsConfig = $regulationsConfig;
-        $this->userService = $userService;
+        $this->aclService = $aclService;
     }
 
     public function indexAction()
@@ -56,7 +56,7 @@ class MemberController extends AbstractActionController
             'VV' => array_column($this->decisionService->getPastMeetings(3, 'VV'), 0),
         ];
 
-        $member = $this->userService->getIdentity()->getMember();
+        $member = $this->aclService->getIdentityOrThrowException()->getMember();
 
         return new ViewModel(
             [

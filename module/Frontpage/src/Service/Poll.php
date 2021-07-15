@@ -2,7 +2,6 @@
 
 namespace Frontpage\Service;
 
-use Application\Service\AbstractAclService;
 use Application\Service\Email;
 use DateTime;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
@@ -12,14 +11,13 @@ use Frontpage\Model\PollComment;
 use Frontpage\Model\PollOption;
 use Frontpage\Model\PollVote as PollVoteModel;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Permissions\Acl\Acl;
 use User\Model\User;
 use User\Permissions\NotAllowedException;
 
 /**
  * Poll service.
  */
-class Poll extends AbstractAclService
+class Poll
 {
     /**
      * @var Translator
@@ -30,11 +28,6 @@ class Poll extends AbstractAclService
      * @var User|string
      */
     private $userRole;
-
-    /**
-     * @var Acl
-     */
-    private $acl;
 
     /**
      * @var Email
@@ -60,30 +53,26 @@ class Poll extends AbstractAclService
      * @var PollApproval
      */
     private $pollApprovalForm;
+    private AclService $aclService;
 
     public function __construct(
         Translator $translator,
         $userRole,
-        Acl $acl,
         Email $emailService,
         \Frontpage\Mapper\Poll $pollMapper,
         \Frontpage\Form\Poll $pollForm,
         \Frontpage\Form\PollComment $pollCommentForm,
-        PollApproval $pollApprovalForm
+        PollApproval $pollApprovalForm,
+        AclService $aclService
     ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
-        $this->acl = $acl;
         $this->emailService = $emailService;
         $this->pollMapper = $pollMapper;
         $this->pollForm = $pollForm;
         $this->pollCommentForm = $pollCommentForm;
         $this->pollApprovalForm = $pollApprovalForm;
-    }
-
-    public function getRole()
-    {
-        return $this->userRole;
+        $this->aclService = $aclService;
     }
 
     /**
@@ -108,7 +97,7 @@ class Poll extends AbstractAclService
     public function getPoll($pollId)
     {
         $poll = $this->pollMapper->findPollById($pollId);
-        if (is_null($poll->getApprover()) && !$this->isAllowed('view_unapproved')) {
+        if (is_null($poll->getApprover()) && !$this->aclService->isAllowed('view_unapproved', 'poll')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view unnapproved polls')
             );
@@ -180,7 +169,7 @@ class Poll extends AbstractAclService
      */
     public function canVote($poll)
     {
-        if (!$this->isAllowed('vote')) {
+        if (!$this->aclService->isAllowed('vote', 'poll')) {
             return false;
         }
 
@@ -250,7 +239,7 @@ class Poll extends AbstractAclService
      */
     public function createComment($pollId, $data)
     {
-        if (!$this->isAllowed('create', 'poll_comment')) {
+        if (!$this->aclService->isAllowed('create', 'poll_comment')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to create comments on this poll')
             );
@@ -320,7 +309,7 @@ class Poll extends AbstractAclService
      */
     public function getPollForm()
     {
-        if (!$this->isAllowed('request')) {
+        if (!$this->aclService->isAllowed('request', 'poll')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to request polls'));
         }
 
@@ -334,7 +323,7 @@ class Poll extends AbstractAclService
      */
     public function deletePoll($poll)
     {
-        if (!$this->isAllowed('delete')) {
+        if (!$this->aclService->isAllowed('delete', 'poll')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete polls'));
         }
 
@@ -379,30 +368,10 @@ class Poll extends AbstractAclService
      */
     public function getPollApprovalForm()
     {
-        if (!$this->isAllowed('approve')) {
+        if (!$this->aclService->isAllowed('approve', 'poll')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to approve polls'));
         }
 
         return $this->pollApprovalForm;
-    }
-
-    /**
-     * Get the Acl.
-     *
-     * @return Acl
-     */
-    public function getAcl()
-    {
-        return $this->acl;
-    }
-
-    /**
-     * Get the default resource ID.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'poll';
     }
 }

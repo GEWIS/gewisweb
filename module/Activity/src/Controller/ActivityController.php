@@ -5,6 +5,7 @@ namespace Activity\Controller;
 use Activity\Form\ModifyRequest as RequestForm;
 use Activity\Model\Activity;
 use Activity\Model\SignupList;
+use Activity\Service\AclService;
 use Activity\Service\ActivityQuery;
 use Activity\Service\Signup;
 use Activity\Service\SignupListQuery;
@@ -16,7 +17,6 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\Stdlib\Parameters;
 use Laminas\View\Model\ViewModel;
-use User\Service\User;
 
 class ActivityController extends AbstractActionController
 {
@@ -42,7 +42,7 @@ class ActivityController extends AbstractActionController
      */
     private $signupListQueryService;
 
-    private User $userService;
+    private AclService $aclService;
 
     public function __construct(
         Translator $translator,
@@ -50,14 +50,14 @@ class ActivityController extends AbstractActionController
         ActivityQuery $activityQueryService,
         Signup $signupService,
         SignupListQuery $signupListQueryService,
-        User $userService
+        AclService $aclService
     ) {
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;
         $this->signupService = $signupService;
         $this->signupListQueryService = $signupListQueryService;
         $this->translator = $translator;
-        $this->userService = $userService;
+        $this->aclService = $aclService;
     }
 
     /**
@@ -126,7 +126,7 @@ class ActivityController extends AbstractActionController
         $fields = $signupList->getFields();
         $form = $this->prepareSignupForm($signupList, $activitySession);
 
-        $identity = $this->userService->getIdentity();
+        $identity = $this->aclService->getIdentityOrThrowException();
         $isSignedUp = false;
         // TODO: you are passing a signup list while an activity is expected (repeated multiple times)
         if ($this->signupService->isAllowedToInternalSubscribe()) {
@@ -280,7 +280,7 @@ class ActivityController extends AbstractActionController
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
             }
 
-            $identity = $this->userService->getIdentity();
+            $identity = $this->aclService->getIdentityOrThrowException();
             $user = $identity->getMember();
 
             // Check if the user is not already subscribed
@@ -433,7 +433,7 @@ class ActivityController extends AbstractActionController
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
             }
 
-            $identity = $this->userService->getIdentity();
+            $identity = $this->aclService->getIdentityOrThrowException();
             $user = $identity->getMember();
 
             // Check if the user is subscribed

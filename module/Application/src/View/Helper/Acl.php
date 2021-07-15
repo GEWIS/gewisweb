@@ -2,42 +2,37 @@
 
 namespace Application\View\Helper;
 
-use Laminas\Code\Exception\InvalidArgumentException;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Application\Service\AbstractAclService;
+use Interop\Container\ContainerInterface;
+use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use Laminas\ServiceManager\Exception\InvalidArgumentException;
 use Laminas\View\Helper\AbstractHelper;
-use User\Model\User;
 
 class Acl extends AbstractHelper
 {
     /**
      * Service locator.
      *
-     * @var ServiceLocatorInterface
+     * @var ContainerInterface
      */
-    protected $locator;
+    protected ContainerInterface $locator;
 
     /**
      * Acl.
+     *
+     * @var AbstractAclService
      */
-    protected $acl;
-
-    public function isAllowed($resource, $operation)
-    {
-        return $this->acl->isAllowed(
-            $this->getRole(),
-            $resource,
-            $operation
-        );
-    }
+    protected AbstractAclService $acl;
 
     /**
-     * Get the current user's role.
      *
-     * @return User|string
+     * @param ResourceInterface|string $resource
+     * @param string $operation
+     * @return bool
      */
-    public function getRole()
+    public function isAllowed($resource, string $operation)
     {
-        return $this->getServiceLocator()->get('user_role');
+        return $this->acl->isAllowed($operation, $resource);
     }
 
     /**
@@ -47,10 +42,10 @@ class Acl extends AbstractHelper
      *
      * @return Acl
      */
-    public function __invoke($factory)
+    public function __invoke(string $factory)
     {
         $this->acl = $this->getServiceLocator()->get($factory);
-        if ($this->acl instanceof \Laminas\Permissions\Acl\Acl) {
+        if ($this->acl instanceof AbstractAclService) {
             return $this;
         } else {
             throw new InvalidArgumentException('Provided factory does not exist or does not return an Acl instance');
@@ -60,9 +55,9 @@ class Acl extends AbstractHelper
     /**
      * Get the service locator.
      *
-     * @return ServiceLocatorInterface
+     * @return ContainerInterface
      */
-    public function getServiceLocator()
+    protected function getServiceLocator()
     {
         return $this->locator;
     }
@@ -70,9 +65,9 @@ class Acl extends AbstractHelper
     /**
      * Set the service locator.
      *
-     * @param ServiceLocatorInterface
+     * @param ContainerInterface $locator
      */
-    public function setServiceLocator($locator)
+    public function setServiceLocator(ContainerInterface $locator)
     {
         $this->locator = $locator;
     }

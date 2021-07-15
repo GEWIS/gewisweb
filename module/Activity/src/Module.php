@@ -20,7 +20,7 @@ use Activity\Service\ActivityQuery;
 use Activity\Service\SignupListQuery;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Interop\Container\ContainerInterface;
-use User\Permissions\Assertion\IsCreatorOrOrganMember;
+use User\Authorization\AclServiceFactory;
 use User\Permissions\NotAllowedException;
 
 class Module
@@ -46,74 +46,62 @@ class Module
             'factories' => [
                 'activity_service_activity' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
-                    $userRole = $container->get('user_role');
-                    $acl = $container->get('activity_acl');
                     $entityManager = $container->get('doctrine.entitymanager.orm_default');
                     $categoryService = $container->get('activity_service_category');
-                    $userService = $container->get('user_service_user');
                     $organService = $container->get('decision_service_organ');
                     $companyService = $container->get('company_service_company');
                     $emailService = $container->get('application_service_email');
                     $activityForm = $container->get('activity_form_activity');
+                    $aclService = $container->get('activity_service_acl');
 
                     return new Service\Activity(
                         $translator,
-                        $userRole,
-                        $acl,
                         $entityManager,
                         $categoryService,
-                        $userService,
                         $organService,
                         $companyService,
                         $emailService,
-                        $activityForm
+                        $activityForm,
+                        $aclService
                     );
                 },
                 'activity_service_activityQuery' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
-                    $userRole = $container->get('user_role');
-                    $acl = $container->get('activity_acl');
-                    $userService = $container->get('user_service_user');
                     $organService = $container->get('decision_service_organ');
                     $activityMapper = $container->get('activity_mapper_activity');
                     $proposalMapper = $container->get('activity_mapper_proposal');
+                    $aclService = $container->get('activity_service_acl');
 
                     return new ActivityQuery(
                         $translator,
-                        $userRole,
-                        $acl,
-                        $userService,
                         $organService,
                         $activityMapper,
-                        $proposalMapper
+                        $proposalMapper,
+                        $aclService
                     );
                 },
                 'activity_service_category' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
-                    $userRole = $container->get('user_role');
-                    $acl = $container->get('activity_acl');
                     $entityManager = $container->get('doctrine.entitymanager.orm_default');
                     $categoryMapper = $container->get('activity_mapper_category');
                     $categoryForm = $container->get('activity_form_category');
+                    $aclService = $container->get('activity_service_acl');
 
                     return new Service\ActivityCategory(
                         $translator,
-                        $userRole,
-                        $acl,
                         $entityManager,
                         $categoryMapper,
-                        $categoryForm
+                        $categoryForm,
+                        $aclService
                     );
                 },
                 'activity_service_signupListQuery' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
-                    $userRole = $container->get('user_role');
                     $acl = $container->get('activity_acl');
                     $signupListMapper = $container->get('activity_mapper_signuplist');
 
                     return new SignupListQuery(
                         $translator,
-                        $userRole,
                         $acl,
                         $signupListMapper
                     );
@@ -164,9 +152,10 @@ class Module
                     return $form;
                 },
                 'activity_form_calendar_proposal' => function (ContainerInterface $container) {
+                    $translator = $container->get('translator');
                     $calendarService = $container->get('activity_service_calendar');
-
-                    return new Form\ActivityCalendarProposal($container->get('translator'), $calendarService);
+                    $createAlways = $calendarService->isAllowed('create_always');
+                    return new Form\ActivityCalendarProposal($translator, $calendarService, $createAlways);
                 },
                 'activity_form_calendar_option' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
@@ -186,31 +175,24 @@ class Module
                 },
                 'activity_service_signup' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
-                    $userRole = $container->get('user_role');
-                    $acl = $container->get('activity_acl');
                     $entityManager = $container->get('doctrine.entitymanager.orm_default');
-                    $userService = $container->get('user_service_user');
                     $signupMapper = $container->get('activity_mapper_signup');
                     $signupOptionMapper = $container->get('activity_mapper_signup_option');
                     $signupFieldValueMapper = $container->get('activity_mapper_signup_field_value');
+                    $aclService = $container->get('activity_service_acl');
 
                     return new Service\Signup(
                         $translator,
-                        $userRole,
-                        $acl,
                         $entityManager,
-                        $userService,
                         $signupMapper,
                         $signupOptionMapper,
-                        $signupFieldValueMapper
+                        $signupFieldValueMapper,
+                        $aclService
                     );
                 },
                 'activity_service_calendar' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
-                    $userRole = $container->get('user_role');
-                    $acl = $container->get('activity_acl');
                     $entityManager = $container->get('doctrine.entitymanager.orm_default');
-                    $userService = $container->get('user_service_user');
                     $organService = $container->get('decision_service_organ');
                     $emailService = $container->get('application_service_email');
                     $calendarOptionMapper = $container->get('activity_mapper_calendar_option');
@@ -220,13 +202,11 @@ class Module
                     $memberMapper = $container->get('decision_mapper_member');
                     $calendarOptionForm = $container->get('activity_form_calendar_option');
                     $calendarProposalForm = $container->get('activity_form_calendar_proposal');
+                    $aclService = $container->get('activity_service_acl');
 
                     return new Service\ActivityCalendar(
                         $translator,
-                        $userRole,
-                        $acl,
                         $entityManager,
-                        $userService,
                         $organService,
                         $emailService,
                         $calendarOptionMapper,
@@ -235,7 +215,8 @@ class Module
                         $maxActivitiesMapper,
                         $memberMapper,
                         $calendarOptionForm,
-                        $calendarProposalForm
+                        $calendarProposalForm,
+                        $aclService
                     );
                 },
                 'activity_mapper_activity' => function (ContainerInterface $container) {
@@ -293,49 +274,7 @@ class Module
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'activity_acl' => function (ContainerInterface $container) {
-                    $acl = $container->get('acl');
-                    $acl->addResource('activity');
-                    $acl->addResource('activityApi');
-                    $acl->addResource('myActivities');
-                    $acl->addResource('model');
-                    $acl->addResource('activity_calendar_proposal');
-                    $acl->addResource('signupList');
-
-                    $acl->allow('guest', 'activity', ['view', 'viewCategory']);
-                    $acl->allow('guest', 'signupList', ['view', 'externalSignup']);
-
-                    $acl->allow('user', 'activity_calendar_proposal', ['create', 'delete_own']);
-                    $acl->allow('admin', 'activity_calendar_proposal', ['create_always', 'delete_all', 'approve']);
-
-                    $acl->allow('user', 'myActivities', 'view');
-                    $acl->allow(
-                        'user',
-                        'signupList',
-                        ['view', 'viewDetails', 'signup', 'signoff', 'checkUserSignedUp']
-                    );
-
-                    $acl->allow('active_member', 'activity', ['create', 'viewAdmin', 'listCategories']);
-                    $acl->allow(
-                        'active_member',
-                        'activity',
-                        ['update', 'viewDetails', 'adminSignup', 'viewParticipants', 'exportParticipants'],
-                        new IsCreatorOrOrganMember()
-                    );
-                    $acl->allow(
-                        'active_member',
-                        'signupList',
-                        ['adminSignup', 'viewParticipants', 'exportParticipants'],
-                        new IsCreatorOrOrganMember()
-                    );
-
-                    $acl->allow('sosuser', 'signupList', ['signup', 'signoff', 'checkUserSignedUp']);
-
-                    $acl->allow('user', 'activityApi', 'list');
-                    $acl->allow('apiuser', 'activityApi', 'list');
-
-                    return $acl;
-                },
+                'activity_service_acl' => AclServiceFactory::class,
             ],
         ];
     }

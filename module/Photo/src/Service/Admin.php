@@ -2,38 +2,25 @@
 
 namespace Photo\Service;
 
-use Application\Service\AbstractAclService;
 use Application\Service\FileStorage;
 use Exception;
 use Imagick;
 use InvalidArgumentException;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Permissions\Acl\Acl;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\IsImage;
 use Photo\Model\Photo as PhotoModel;
-use User\Model\User;
 use User\Permissions\NotAllowedException;
 
 /**
  * Admin service for all photo admin related functions.
  */
-class Admin extends AbstractAclService
+class Admin
 {
     /**
      * @var Translator
      */
     private $translator;
-
-    /**
-     * @var User|string
-     */
-    private $userRole;
-
-    /**
-     * @var Acl
-     */
-    private $acl;
 
     /**
      * @var Photo
@@ -64,32 +51,26 @@ class Admin extends AbstractAclService
      * @var array
      */
     private $photoConfig;
+    private AclService $aclService;
 
     public function __construct(
         Translator $translator,
-        $userRole,
-        Acl $acl,
         Photo $photoService,
         Album $albumService,
         Metadata $metadataService,
         FileStorage $storageService,
         \Photo\Mapper\Photo $photoMapper,
-        array $photoConfig
+        array $photoConfig,
+        AclService $aclService
     ) {
         $this->translator = $translator;
-        $this->userRole = $userRole;
-        $this->acl = $acl;
         $this->photoService = $photoService;
         $this->albumService = $albumService;
         $this->metadataService = $metadataService;
         $this->storageService = $storageService;
         $this->photoMapper = $photoMapper;
         $this->photoConfig = $photoConfig;
-    }
-
-    public function getRole()
-    {
-        return $this->userRole;
+        $this->aclService = $aclService;
     }
 
     /**
@@ -105,7 +86,7 @@ class Admin extends AbstractAclService
      */
     public function storeUploadedPhoto($path, $targetAlbum, $move = false)
     {
-        if (!$this->isAllowed('add', 'photo')) {
+        if (!$this->aclService->isAllowed('add', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to add photos.'));
         }
 
@@ -191,7 +172,7 @@ class Admin extends AbstractAclService
      */
     public function storeUploadedDirectory($path, $targetAlbum)
     {
-        if (!$this->isAllowed('import', 'photo')) {
+        if (!$this->aclService->isAllowed('import', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to import photos.'));
         }
         $image = new IsImage(['magicFile' => false]);
@@ -264,28 +245,8 @@ class Admin extends AbstractAclService
      */
     public function checkUploadAllowed()
     {
-        if (!$this->isAllowed('upload', 'photo')) {
+        if (!$this->aclService->isAllowed('upload', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to upload photos.'));
         }
-    }
-
-    /**
-     * Get the default resource ID.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'admin';
-    }
-
-    /**
-     * Get the Acl.
-     *
-     * @return Acl
-     */
-    public function getAcl()
-    {
-        return $this->acl;
     }
 }

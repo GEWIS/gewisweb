@@ -2,7 +2,7 @@
 $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
     ->requireUrl('member/view', ['lidnr']);
 ?>
-<?php if ($this->acl('photo_acl')->isAllowed('tag', 'view')): ?>
+<?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'view')): ?>
     <div>
         <h4><?= $this->translate('People in this photo') ?></h4>
         <ul id="tagList">
@@ -21,7 +21,7 @@ $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
         </ul>
     </div>
 <?php endif; ?>
-<?php if ($this->acl('photo_acl')->isAllowed('tag', 'add')): ?>
+<?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'add')): ?>
     <div>
         <form action="<?= $this->url('photo/photo/tag/add',
             ['photo_id' => $this->photo->getId(), 'lidnr' => 'lidnr']); ?>" id="tagForm" class="form-inline">
