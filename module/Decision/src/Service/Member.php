@@ -2,7 +2,6 @@
 
 namespace Decision\Service;
 
-use Application\Service\AbstractAclService;
 use Decision\Mapper\Authorization;
 use Decision\Model\Meeting;
 use Decision\Model\Member as MemberModel;
@@ -10,34 +9,17 @@ use Doctrine\Common\Collections\Collection;
 use Laminas\Code\Exception\InvalidArgumentException;
 use Laminas\Http\Client as HttpClient;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Permissions\Acl\Acl;
 use User\Permissions\NotAllowedException;
-use User\Service\User;
 
 /**
  * Member service.
  */
-class Member extends AbstractAclService
+class Member
 {
     /**
      * @var Translator
      */
     private $translator;
-
-    /**
-     * @var \User\Model\User|string
-     */
-    private $userRole;
-
-    /**
-     * @var Acl
-     */
-    private $acl;
-
-    /**
-     * @var User
-     */
-    private $userService;
 
     /**
      * @var \Decision\Mapper\Member
@@ -53,28 +35,20 @@ class Member extends AbstractAclService
      * @var array
      */
     private $config;
+    private AclService $aclService;
 
     public function __construct(
         Translator $translator,
-        $userRole,
-        Acl $acl,
-        User $userService,
         \Decision\Mapper\Member $memberMapper,
         Authorization $authorizationMapper,
-        array $config
+        array $config,
+        AclService $aclService
     ) {
         $this->translator = $translator;
-        $this->userRole = $userRole;
-        $this->acl = $acl;
-        $this->userService = $userService;
         $this->memberMapper = $memberMapper;
         $this->authorizationMapper = $authorizationMapper;
         $this->config = $config;
-    }
-
-    public function getRole()
-    {
-        return $this->userRole;
+        $this->aclService = $aclService;
     }
 
     public const MIN_SEARCH_QUERY_LENGTH = 2;
@@ -86,12 +60,12 @@ class Member extends AbstractAclService
      */
     public function isActiveMember()
     {
-        return $this->isAllowed('edit', 'organ');
+        return $this->aclService->isAllowed('edit', 'organ');
     }
 
     public function findMemberByLidNr($lidnr)
     {
-        if (!$this->isAllowed('view')) {
+        if (!$this->aclService->isAllowed('view', 'member')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view members.'));
         }
 
@@ -103,26 +77,26 @@ class Member extends AbstractAclService
      */
     public function getDreamsparkUrl()
     {
-        if (!$this->isAllowed('login', 'dreamspark')) {
+        if (!$this->aclService->isAllowed('login', 'dreamspark')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed login into Microsoft Imagine.')
             );
         }
 
-        $user = $this->userService->getIdentity();
+        $user = $this->aclService->getIdentityOrThrowException();
 
         $sslcapath = $this->config['sslcapath'];
         $config = $this->config['dreamspark'];
 
         // determine groups for dreamspark
         $groups = [];
-        if ($this->isAllowed('students', 'dreamspark')) {
+        if ($this->aclService->isAllowed('students', 'dreamspark')) {
             $groups[] = 'students';
         }
-        if ($this->isAllowed('faculty', 'dreamspark')) {
+        if ($this->aclService->isAllowed('faculty', 'dreamspark')) {
             $groups[] = 'faculty';
         }
-        if ($this->isAllowed('staff', 'dreamspark')) {
+        if ($this->aclService->isAllowed('staff', 'dreamspark')) {
             $groups[] = 'staff';
         }
 
@@ -157,13 +131,13 @@ class Member extends AbstractAclService
      */
     public function getBirthdayMembers($days = 0)
     {
-        if (0 == $days && !$this->isAllowed('birthdays_today')) {
+        if (0 == $days && !$this->aclService->isAllowed('birthdays_today', 'member')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view the list of today\'s birthdays.')
             );
         }
 
-        if ($days > 0 && !$this->isAllowed('birthdays')) {
+        if ($days > 0 && !$this->aclService->isAllowed('birthdays', 'member')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view the list of birthdays.')
             );
@@ -198,7 +172,7 @@ class Member extends AbstractAclService
             );
         }
 
-        if (!$this->isAllowed('search')) {
+        if (!$this->aclService->isAllowed('search', 'member')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to search for members.'));
         }
 
@@ -227,25 +201,5 @@ class Member extends AbstractAclService
         }
 
         return false;
-    }
-
-    /**
-     * Get the default resource ID.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'member';
-    }
-
-    /**
-     * Get the Acl.
-     *
-     * @return Acl
-     */
-    public function getAcl()
-    {
-        return $this->acl;
     }
 }

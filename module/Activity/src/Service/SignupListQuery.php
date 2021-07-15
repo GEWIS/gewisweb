@@ -3,13 +3,10 @@
 namespace Activity\Service;
 
 use Activity\Mapper\SignupList;
-use Application\Service\AbstractAclService;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Permissions\Acl\Acl;
-use User\Model\User;
 use User\Permissions\NotAllowedException;
 
-class SignupListQuery extends AbstractAclService
+class SignupListQuery
 {
     /**
      * @var Translator
@@ -17,45 +14,19 @@ class SignupListQuery extends AbstractAclService
     private $translator;
 
     /**
-     * @var User|string
-     */
-    private $userRole;
-
-    /**
-     * @var Acl
-     */
-    private $acl;
-
-    /**
      * @var SignupList
      */
     private $signupListMapper;
+    private AclService $aclService;
 
     public function __construct(
         Translator $translator,
-        $userRole,
-        Acl $acl,
-        SignupList $signupListMapper
+        SignupList $signupListMapper,
+        AclService $aclService
     ) {
         $this->translator = $translator;
-        $this->userRole = $userRole;
-        $this->acl = $acl;
         $this->signupListMapper = $signupListMapper;
-    }
-
-    public function getRole()
-    {
-        return $this->userRole;
-    }
-
-    /**
-     * Get the ACL.
-     *
-     * @return Acl
-     */
-    public function getAcl()
-    {
-        return $this->acl;
+        $this->aclService = $aclService;
     }
 
     /**
@@ -66,7 +37,7 @@ class SignupListQuery extends AbstractAclService
      */
     public function getSignupListByActivity($signupListId, $activityId)
     {
-        if (!$this->isAllowed('view', 'signupList')) {
+        if (!$this->aclService->isAllowed('view', 'signupList')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view sign-up lists'));
         }
 
@@ -75,22 +46,10 @@ class SignupListQuery extends AbstractAclService
 
     public function getSignupListsOfActivity($activityId)
     {
-        if (!$this->isAllowed('view', 'signupList')) {
+        if (!$this->aclService->isAllowed('view', 'signupList')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view sign-up lists'));
         }
 
         return $this->signupListMapper->getSignupListsOfActivity($activityId);
-    }
-
-    /**
-     * Get the default resource ID.
-     *
-     * This is used by {@link isAllowed()} when no resource is specified.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'signupList';
     }
 }

@@ -2,33 +2,20 @@
 
 namespace Decision\Service;
 
-use Application\Service\AbstractAclService;
 use Decision\Model\Member as MemberModel;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Permissions\Acl\Acl;
 use Photo\Service\Photo;
-use User\Model\User;
 use User\Permissions\NotAllowedException;
 
 /**
  * Member service.
  */
-class MemberInfo extends AbstractAclService
+class MemberInfo
 {
     /**
      * @var Translator
      */
     private $translator;
-
-    /**
-     * @var User|string
-     */
-    private $userRole;
-
-    /**
-     * @var Acl
-     */
-    private $acl;
 
     /**
      * @var Photo
@@ -39,24 +26,18 @@ class MemberInfo extends AbstractAclService
      * @var \Decision\Mapper\Member
      */
     private $memberMapper;
+    private AclService $aclService;
 
     public function __construct(
         Translator $translator,
-        $userRole,
-        Acl $acl,
         Photo $photoService,
-        \Decision\Mapper\Member $memberMapper
+        \Decision\Mapper\Member $memberMapper,
+        AclService $aclService
     ) {
         $this->translator = $translator;
-        $this->userRole = $userRole;
-        $this->acl = $acl;
         $this->photoService = $photoService;
         $this->memberMapper = $memberMapper;
-    }
-
-    public function getRole()
-    {
-        return $this->userRole;
+        $this->aclService = $aclService;
     }
 
     /**
@@ -66,14 +47,14 @@ class MemberInfo extends AbstractAclService
      */
     public function getMembershipInfo($lidnr = null)
     {
-        if (null === $lidnr && !$this->isAllowed('view_self')) {
+        if (null === $lidnr && !$this->aclService->isAllowed('view_self', 'member')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view membership info.'));
-        } elseif (null !== $lidnr && !$this->isAllowed('view')) {
+        } elseif (null !== $lidnr && !$this->aclService->isAllowed('view', 'member')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view members.'));
         }
 
         if (null === $lidnr) {
-            $lidnr = $this->getRole()->getLidnr();
+            $lidnr = $this->aclService->getIdentityOrThrowException()->getLidnr();
         }
 
         $member = $this->memberMapper->findByLidnr($lidnr);
@@ -127,25 +108,5 @@ class MemberInfo extends AbstractAclService
         }
 
         return $memberships;
-    }
-
-    /**
-     * Get the default resource ID.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'member';
-    }
-
-    /**
-     * Get the Acl.
-     *
-     * @return Acl
-     */
-    public function getAcl()
-    {
-        return $this->acl;
     }
 }

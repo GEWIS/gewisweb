@@ -9,7 +9,7 @@ $this->headTitle($this->translate('Committees')); ?>
                 <h1><?= $this->translate('Committees') ?></h1>
                 <p><?= $this->translate('GEWIS has many different committees, learn more about them below!') ?></p>
             </div>
-            <?php if ($this->acl('decision_acl')->isAllowed('organ', 'view')): ?>
+            <?php if ($this->acl('decision_service_acl')->isAllowed('organ', 'view')): ?>
                 <div class="col-md-3">
                     <a href="<?= $this->url('home/page', ['category' => 'committee', 'sub_category' => 'info']) ?>"
                        class="btn btn-primary pull-right">

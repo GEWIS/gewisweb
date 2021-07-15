@@ -2,7 +2,6 @@
 
 namespace Photo\Service;
 
-use Application\Service\AbstractAclService;
 use Application\Service\FileStorage;
 use DateInterval;
 use DateTime;
@@ -12,7 +11,6 @@ use Exception;
 use Laminas\Http\Response\Stream;
 use Laminas\I18n\Filter\Alnum;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Permissions\Acl\Acl;
 use Photo\Mapper\Hit;
 use Photo\Mapper\ProfilePhoto as ProfilePhotoMapper;
 use Photo\Mapper\Tag;
@@ -32,7 +30,7 @@ use User\Permissions\NotAllowedException;
 /**
  * Photo service.
  */
-class Photo extends AbstractAclService
+class Photo
 {
     /**
      * @var Translator
@@ -43,11 +41,6 @@ class Photo extends AbstractAclService
      * @var User|string
      */
     private $userRole;
-
-    /**
-     * @var Acl
-     */
-    private $acl;
 
     /**
      * @var \Decision\Service\Member
@@ -63,11 +56,6 @@ class Photo extends AbstractAclService
      * @var \Photo\Mapper\Photo
      */
     private $photoMapper;
-
-    /**
-     * @var \Photo\Mapper\Album
-     */
-    private $albumMapper;
 
     /**
      * @var TagMapper
@@ -98,40 +86,34 @@ class Photo extends AbstractAclService
      * @var array
      */
     private $photoConfig;
+    private AclService $aclService;
 
     public function __construct(
         Translator $translator,
         $userRole,
-        Acl $acl,
         \Decision\Service\Member $memberService,
         FileStorage $storageService,
         \Photo\Mapper\Photo $photoMapper,
-        \Photo\Mapper\Album $albumMapper,
         Tag $tagMapper,
         Hit $hitMapper,
         Vote $voteMapper,
         WeeklyPhotoMapper $weeklyPhotoMapper,
         ProfilePhotoMapper $profilePhotoMapper,
-        array $photoConfig
+        array $photoConfig,
+        AclService $aclService
     ) {
         $this->translator = $translator;
         $this->userRole = $userRole;
-        $this->acl = $acl;
         $this->memberService = $memberService;
         $this->storageService = $storageService;
         $this->photoMapper = $photoMapper;
-        $this->albumMapper = $albumMapper;
         $this->tagMapper = $tagMapper;
         $this->hitMapper = $hitMapper;
         $this->voteMapper = $voteMapper;
         $this->weeklyPhotoMapper = $weeklyPhotoMapper;
         $this->profilePhotoMapper = $profilePhotoMapper;
         $this->photoConfig = $photoConfig;
-    }
-
-    public function getRole()
-    {
-        return $this->userRole;
+        $this->aclService = $aclService;
     }
 
     /**
@@ -146,7 +128,7 @@ class Photo extends AbstractAclService
      */
     public function getPhotos($album, $start = 0, $maxResults = null)
     {
-        if (!$this->isAllowed('view')) {
+        if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
         }
 
@@ -166,7 +148,7 @@ class Photo extends AbstractAclService
      */
     public function getPhotoDownload($photoId)
     {
-        if (!$this->isAllowed('download')) {
+        if (!$this->aclService->isAllowed('download', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to download photos'));
         }
 
@@ -186,7 +168,7 @@ class Photo extends AbstractAclService
      */
     public function getPhoto($id)
     {
-        if (!$this->isAllowed('view')) {
+        if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
         }
 
@@ -227,7 +209,7 @@ class Photo extends AbstractAclService
      */
     public function getPhotoData($photoId, AlbumModel $album = null)
     {
-        if (!$this->isAllowed('view')) {
+        if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
         }
 
@@ -246,7 +228,7 @@ class Photo extends AbstractAclService
         $next = $this->getNextPhoto($photo, $album);
         $previous = $this->getPreviousPhoto($photo, $album);
 
-        $lidnr = $this->memberService->getRole()->getLidnr();
+        $lidnr = $this->aclService->getIdentity()->getLidnr();
         $isTagged = $this->isTaggedIn($photoId, $lidnr);
         $profilePhoto = $this->getStoredProfilePhoto($lidnr);
         $isProfilePhoto = false;
@@ -277,7 +259,7 @@ class Photo extends AbstractAclService
         PhotoModel $photo,
         AlbumModel $album
     ) {
-        if (!$this->isAllowed('view')) {
+        if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
         }
 
@@ -293,7 +275,7 @@ class Photo extends AbstractAclService
         PhotoModel $photo,
         AlbumModel $album
     ) {
-        if (!$this->isAllowed('view')) {
+        if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
         }
 
@@ -310,7 +292,7 @@ class Photo extends AbstractAclService
      */
     public function deletePhoto($photoId)
     {
-        if (!$this->isAllowed('delete')) {
+        if (!$this->aclService->isAllowed('delete', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to delete photos.'));
         }
 
@@ -466,7 +448,7 @@ class Photo extends AbstractAclService
     public function removeProfilePhoto(ProfilePhotoModel $profilePhoto = null)
     {
         if (null == $profilePhoto) {
-            $member = $this->memberService->getRole()->getMember();
+            $member = $this->aclService->getIdentity()->getMember();
             $lidnr = $member->getLidnr();
             $profilePhoto = $this->getStoredProfilePhoto($lidnr);
         }
@@ -554,7 +536,7 @@ class Photo extends AbstractAclService
     public function setProfilePhoto($photoId)
     {
         $photo = $this->getPhoto($photoId);
-        $member = $this->memberService->getRole()->getMember();
+        $member = $this->aclService->getIdentity()->getMember();
         $lidnr = $member->getLidnr();
         $profilePhoto = $this->getStoredProfilePhoto($lidnr);
         if (null != $profilePhoto) {
@@ -634,7 +616,7 @@ class Photo extends AbstractAclService
      */
     public function getPhotosOfTheWeek()
     {
-        if (!$this->isAllowed('view')) {
+        if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException(
                 $this->translator->translate('Not allowed to view previous photos of the week')
             );
@@ -691,7 +673,7 @@ class Photo extends AbstractAclService
      */
     public function addTag($photoId, $lidnr)
     {
-        if (!$this->isAllowed('add', 'tag')) {
+        if (!$this->aclService->isAllowed('add', 'tag')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to add tags.'));
         }
 
@@ -721,7 +703,7 @@ class Photo extends AbstractAclService
      */
     public function findTag($photoId, $lidnr)
     {
-        if (!$this->isAllowed('view', 'tag')) {
+        if (!$this->aclService->isAllowed('view', 'tag')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view tags.'));
         }
 
@@ -756,7 +738,7 @@ class Photo extends AbstractAclService
      */
     public function removeTag($photoId, $lidnr)
     {
-        if (!$this->isAllowed('remove', 'tag')) {
+        if (!$this->aclService->isAllowed('remove', 'tag')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to remove tags.'));
         }
 
@@ -780,7 +762,7 @@ class Photo extends AbstractAclService
      */
     public function getTagsForMember($member)
     {
-        if (!$this->isAllowed('view', 'tag')) {
+        if (!$this->aclService->isAllowed('view', 'tag')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view tags.'));
         }
 
@@ -795,25 +777,5 @@ class Photo extends AbstractAclService
     public function getBaseDirectory()
     {
         return str_replace('public', '', $this->photoConfig['upload_dir']);
-    }
-
-    /**
-     * Get the Acl.
-     *
-     * @return Acl
-     */
-    public function getAcl()
-    {
-        return $this->acl;
-    }
-
-    /**
-     * Get the default resource ID.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'photo';
     }
 }

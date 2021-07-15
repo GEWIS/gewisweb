@@ -14,6 +14,7 @@ use Education\Mapper\Study;
 use Education\Model\Summary;
 use Education\View\Helper\ExamUrl;
 use Interop\Container\ContainerInterface;
+use User\Authorization\AclServiceFactory;
 
 class Module
 {
@@ -38,8 +39,6 @@ class Module
             'factories' => [
                 'education_service_exam' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
-                    $userRole = $container->get('user_role');
-                    $acl = $container->get('education_acl');
                     $storageService = $container->get('application_service_storage');
                     $courseMapper = $container->get('education_mapper_course');
                     $examMapper = $container->get('education_mapper_exam');
@@ -49,11 +48,10 @@ class Module
                     $bulkSummaryForm = $container->get('education_form_bulk_summary');
                     $bulkExamForm = $container->get('education_form_bulk_exam');
                     $config = $container->get('config');
+                    $aclService = $container->get('education_service_acl');
 
                     return new Service\Exam(
                         $translator,
-                        $userRole,
-                        $acl,
                         $storageService,
                         $courseMapper,
                         $examMapper,
@@ -62,7 +60,8 @@ class Module
                         $tempUploadForm,
                         $bulkSummaryForm,
                         $bulkExamForm,
-                        $config
+                        $config,
+                        $aclService
                     );
                 },
                 'education_form_tempupload' => function (ContainerInterface $container) {
@@ -158,20 +157,7 @@ class Module
                         'Education\Model\Exam'
                     );
                 },
-                'education_acl' => function (ContainerInterface $container) {
-                    $acl = $container->get('acl');
-
-                    // add resource
-                    $acl->addResource('exam');
-
-                    // users (logged in GEWIS members) are allowed to view
-                    // exams besides users, also people on the TU/e network are
-                    // allowed to view and download exams (users inherit from
-                    // tueguest)
-                    $acl->allow('tueguest', 'exam', ['view', 'download']);
-
-                    return $acl;
-                },
+                'education_service_acl' => AclServiceFactory::class,
             ],
         ];
     }

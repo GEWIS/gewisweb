@@ -27,7 +27,7 @@ $this->headTitle($this->translate('Current poll')); ?>
             <p class="lead"><?= $this->translate('Unfortunately there currently is no poll :('); ?></p>
         <?php endif; ?>
 
-        <?php if (isset($poll) && $this->acl('frontpage_acl')->isAllowed('poll_comment', 'list')): ?>
+        <?php if (isset($poll) && $this->acl('frontpage_service_acl')->isAllowed('poll_comment', 'list')): ?>
             <hr>
             <h2><?= $this->translate('Comments') ?></h2>
             <?php if (count($poll->getComments()) == 0): ?>
@@ -37,7 +37,7 @@ $this->headTitle($this->translate('Current poll')); ?>
                     <div class="row">
                         <div class="col-sm-2">
                             <strong><?= $this->escapeHtml($comment->getAuthor()) ?></strong>
-                            <?php if ($this->acl('frontpage_acl')->isAllowed('poll_comment', 'view_user')): ?>
+                            <?php if ($this->acl('frontpage_service_acl')->isAllowed('poll_comment', 'view_user')): ?>
                                 <?php $lidnr = $comment->getUser()->getLidnr() ?>
                                 (<a href="<?= $this->url('member/view', ['lidnr' => $lidnr]) ?>"><?= $lidnr ?></a>)
                                 <br>
@@ -50,7 +50,7 @@ $this->headTitle($this->translate('Current poll')); ?>
                     </div>
                 <?php endforeach ?>
             <?php endif ?>
-            <?php if ($this->acl('frontpage_acl')->isAllowed('poll_comment', 'create')): ?>
+            <?php if ($this->acl('frontpage_service_acl')->isAllowed('poll_comment', 'create')): ?>
                 <hr>
                 <h3><?= $this->translate('Comment on this poll') ?></h3>
                 <?php

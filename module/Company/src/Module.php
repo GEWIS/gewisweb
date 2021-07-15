@@ -18,6 +18,7 @@ use Company\Service\Company;
 use Company\Service\CompanyQuery;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Interop\Container\ContainerInterface;
+use User\Authorization\AclServiceFactory;
 
 class Module
 {
@@ -146,23 +147,7 @@ class Module
                     $container->get('doctrine.entitymanager.orm_default')
                 );
             },
-            'company_acl' => function (ContainerInterface $container) {
-                $acl = $container->get('acl');
-
-                // add resource
-                $acl->addResource('company');
-
-                $acl->allow('guest', 'company', 'viewFeaturedCompany');
-                $acl->allow('guest', 'company', 'list');
-                $acl->allow('guest', 'company', 'view');
-                $acl->allow('guest', 'company', 'listVisibleCategories');
-                $acl->allow('guest', 'company', 'listVisibleLabels');
-                $acl->allow('guest', 'company', 'showBanner');
-                $acl->allow('company_admin', 'company', ['insert', 'edit', 'delete']);
-                $acl->allow('company_admin', 'company', ['listall', 'listAllCategories', 'listAllLabels']);
-
-                return $acl;
-            },
+            'company_service_acl' => AclServiceFactory::class,
         ];
     }
 
@@ -176,8 +161,6 @@ class Module
         $serviceFactories = [
             'company_service_company' => function (ContainerInterface $container) {
                 $translator = $container->get('translator');
-                $userRole = $container->get('user_role');
-                $acl = $container->get('company_acl');
                 $storageService = $container->get('application_service_storage');
                 $companyMapper = $container->get('company_mapper_company');
                 $packageMapper = $container->get('company_mapper_package');
@@ -195,11 +178,10 @@ class Module
                 $editCategoryForm = $container->get('company_admin_edit_category_form');
                 $editLabelForm = $container->get('company_admin_edit_label_form');
                 $languages = $container->get('application_get_languages');
+                $aclService = $container->get('company_service_acl');
 
                 return new Company(
                     $translator,
-                    $userRole,
-                    $acl,
                     $storageService,
                     $companyMapper,
                     $packageMapper,
@@ -216,24 +198,23 @@ class Module
                     $editJobForm,
                     $editCategoryForm,
                     $editLabelForm,
-                    $languages
+                    $languages,
+                    $aclService
                 );
             },
             'company_service_companyquery' => function (ContainerInterface $container) {
                 $translator = $container->get('translator');
-                $userRole = $container->get('user_role');
-                $acl = $container->get('company_acl');
                 $jobMapper = $container->get('company_mapper_job');
                 $categoryMapper = $container->get('company_mapper_category');
                 $labelMapper = $container->get('company_mapper_label');
+                $aclService = $container->get('company_service_acl');
 
                 return new CompanyQuery(
                     $translator,
-                    $userRole,
-                    $acl,
                     $jobMapper,
                     $categoryMapper,
-                    $labelMapper
+                    $labelMapper,
+                    $aclService
                 );
             },
         ];

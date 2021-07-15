@@ -34,7 +34,7 @@ class FileUrl extends AbstractHelper
      *
      * @return ServiceLocatorInterface
      */
-    public function getServiceLocator()
+    protected function getServiceLocator()
     {
         return $this->locator;
     }
@@ -42,7 +42,7 @@ class FileUrl extends AbstractHelper
     /**
      * Set the service locator.
      *
-     * @param ServiceLocatorInterface
+     * @param ServiceLocatorInterface $locator
      */
     public function setServiceLocator($locator)
     {

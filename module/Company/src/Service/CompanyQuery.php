@@ -2,34 +2,21 @@
 
 namespace Company\Service;
 
-use Application\Service\AbstractAclService;
 use Company\Mapper\Category;
 use Company\Mapper\Job;
 use Company\Mapper\Label;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Permissions\Acl\Acl;
-use User\Model\User;
 use User\Permissions\NotAllowedException;
 
 /**
  * CompanyQuery service.
  */
-class CompanyQuery extends AbstractACLService
+class CompanyQuery
 {
     /**
      * @var Translator
      */
     private $translator;
-
-    /**
-     * @var User|string
-     */
-    private $userRole;
-
-    /**
-     * @var Acl
-     */
-    private $acl;
 
     /**
      * @var Job
@@ -45,26 +32,20 @@ class CompanyQuery extends AbstractACLService
      * @var Label
      */
     private $labelMapper;
+    private AclService $aclService;
 
     public function __construct(
         Translator $translator,
-        $userRole,
-        Acl $acl,
         Job $jobMapper,
         Category $categoryMapper,
-        Label $labelMapper
+        Label $labelMapper,
+        AclService $aclService
     ) {
         $this->translator = $translator;
-        $this->userRole = $userRole;
-        $this->acl = $acl;
         $this->jobMapper = $jobMapper;
         $this->categoryMapper = $categoryMapper;
         $this->labelMapper = $labelMapper;
-    }
-
-    public function getRole()
-    {
-        return $this->userRole;
+        $this->aclService = $aclService;
     }
 
     /**
@@ -129,7 +110,7 @@ class CompanyQuery extends AbstractACLService
     public function getCategoryList($visible)
     {
         if (!$visible) {
-            if (!$this->isAllowed('listAllCategories')) {
+            if (!$this->aclService->isAllowed('listAllCategories', 'company')) {
                 throw new NotAllowedException(
                     $this->translator->translate('You are not allowed to access the admin interface')
                 );
@@ -140,7 +121,7 @@ class CompanyQuery extends AbstractACLService
                 return $a->getLanguageNeutralId();
             });
         }
-        if (!$this->isAllowed('listVisibleCategories')) {
+        if (!$this->aclService->isAllowed('listVisibleCategories', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list all categories'));
         }
 
@@ -232,25 +213,5 @@ class CompanyQuery extends AbstractACLService
         }
 
         return $resultArray;
-    }
-
-    /**
-     * Get the Acl.
-     *
-     * @return Acl
-     */
-    public function getAcl()
-    {
-        return $this->acl;
-    }
-
-    /**
-     * Get the default resource Id.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'company';
     }
 }

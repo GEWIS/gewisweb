@@ -7,7 +7,15 @@
  */
 
 return [
-//    'Laminas\Session',
+    'Laminas\Serializer',
+    'Laminas\Mail',
+    'Laminas\Log',
+    'Laminas\Cache',
+    'Laminas\InputFilter',
+    'Laminas\Filter',
+    'Laminas\Paginator',
+    'Laminas\Hydrator',
+    'Laminas\Session',
     'Laminas\I18n',
     'Laminas\Mvc\I18n',
     'Laminas\Form',

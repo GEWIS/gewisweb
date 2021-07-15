@@ -2,13 +2,13 @@
 
 namespace Activity\Controller;
 
+use Activity\Service\AclService;
 use Activity\Service\ActivityQuery;
 use Activity\Service\Signup;
 use Laminas\Form\FormInterface;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\JsonModel;
 use User\Permissions\NotAllowedException;
-use User\Service\User;
 
 class ApiController extends AbstractActionController
 {
@@ -21,13 +21,17 @@ class ApiController extends AbstractActionController
      * @var Signup
      */
     private $signupService;
-    private User $userService;
+    private AclService $aclService;
 
-    public function __construct(ActivityQuery $activityQueryService, Signup $signupService, User $userService)
+    public function __construct(
+        ActivityQuery $activityQueryService,
+        Signup $signupService,
+        AclService $aclService
+    )
     {
         $this->activityQueryService = $activityQueryService;
         $this->signupService = $signupService;
-        $this->userService = $userService;
+        $this->aclService = $aclService;
     }
 
     /**
@@ -35,7 +39,7 @@ class ApiController extends AbstractActionController
      */
     public function listAction()
     {
-        if (!$this->activityQueryService->isAllowed('list', 'activityApi')) {
+        if (!$this->aclService->isAllowed('list', 'activityApi')) {
             $translator = $this->activityQueryService->getTranslator();
             throw new NotAllowedException(
                 $translator->translate('You are not allowed to access the activities through the API')
@@ -88,7 +92,7 @@ class ApiController extends AbstractActionController
         $params = [];
         $params['success'] = false;
 
-        $identity = $this->userService->getIdentity();
+        $identity = $this->aclService->getIdentityOrThrowException();
         $user = $identity->getMember();
         if ($this->getRequest()->isPost() && $this->signupService->isAllowedToSubscribe()) {
             $activity = $this->activityQueryService->getActivity($id);

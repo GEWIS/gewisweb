@@ -2,7 +2,6 @@
 
 namespace Decision\Service;
 
-use Application\Service\AbstractAclService;
 use Application\Service\Email;
 use Application\Service\FileStorage;
 use Decision\Mapper\Organ as OrganMapper;
@@ -12,14 +11,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Imagick;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Permissions\Acl\Acl;
 use User\Permissions\NotAllowedException;
-use User\Service\User;
 
 /**
  * User service.
  */
-class Organ extends AbstractAclService
+class Organ
 {
     /**
      * @var Translator
@@ -27,24 +24,9 @@ class Organ extends AbstractAclService
     private $translator;
 
     /**
-     * @var \User\Model\User|string
-     */
-    private $userRole;
-
-    /**
-     * @var Acl
-     */
-    private $acl;
-
-    /**
      * @var EntityManager
      */
     private $entityManager;
-
-    /**
-     * @var User
-     */
-    private $userService;
 
     /**
      * @var FileStorage
@@ -75,36 +57,28 @@ class Organ extends AbstractAclService
      * @var array
      */
     private $organInformationConfig;
+    private AclService $aclService;
 
     public function __construct(
         Translator $translator,
-        $userRole,
-        Acl $acl,
         EntityManager $entityManager,
-        User $userService,
         FileStorage $storageService,
         Email $emailService,
         \Decision\Mapper\Member $memberMapper,
         OrganMapper $organMapper,
         \Decision\Form\OrganInformation $organInformationForm,
-        array $organInformationConfig
+        array $organInformationConfig,
+        AclService $aclService
     ) {
         $this->translator = $translator;
-        $this->userRole = $userRole;
-        $this->acl = $acl;
         $this->entityManager = $entityManager;
-        $this->userService = $userService;
         $this->storageService = $storageService;
         $this->emailService = $emailService;
         $this->memberMapper = $memberMapper;
         $this->organMapper = $organMapper;
         $this->organInformationForm = $organInformationForm;
         $this->organInformationConfig = $organInformationConfig;
-    }
-
-    public function getRole()
-    {
-        return $this->userRole;
+        $this->aclService = $aclService;
     }
 
     /**
@@ -114,7 +88,7 @@ class Organ extends AbstractAclService
      */
     public function getOrgans()
     {
-        if (!$this->isAllowed('list')) {
+        if (!$this->aclService->isAllowed('list', 'organ')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view the list of organs.'));
         }
 
@@ -130,7 +104,7 @@ class Organ extends AbstractAclService
      */
     public function getOrgan($id)
     {
-        if (!$this->isAllowed('view')) {
+        if (!$this->aclService->isAllowed('view', 'organ')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view organ information'));
         }
 
@@ -144,13 +118,13 @@ class Organ extends AbstractAclService
      */
     public function getEditableOrgans()
     {
-        if (!$this->isAllowed('edit')) {
+        if (!$this->aclService->isAllowed('edit', 'organ')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to edit organ information')
             );
         }
 
-        if ($this->isAllowed('editall')) {
+        if ($this->aclService->isAllowed('editall', 'organ')) {
             return array_merge(
                 $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_COMMITTEE),
                 $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_FRATERNITY),
@@ -161,7 +135,7 @@ class Organ extends AbstractAclService
             );
         }
 
-        $user = $this->userService->getIdentity();
+        $user = $this->aclService->getIdentityOrThrowException();
 
         return $this->memberMapper->findOrgans($user->getMember());
     }
@@ -173,15 +147,15 @@ class Organ extends AbstractAclService
      */
     public function canEditOrgan($organ)
     {
-        if (!$this->isAllowed('edit')) {
+        if (!$this->aclService->isAllowed('edit', 'organ')) {
             return false;
         }
 
-        if ($this->isAllowed('editall')) {
+        if ($this->aclService->isAllowed('editall', 'organ')) {
             return true;
         }
 
-        $user = $this->userService->getIdentity();
+        $user = $this->aclService->getIdentityOrThrowException();
 
         foreach ($this->memberMapper->findOrgans($user->getMember()) as $memberOrgan) {
             if ($memberOrgan->getId() === $organ->getId()) {
@@ -277,7 +251,7 @@ class Organ extends AbstractAclService
 
         $this->entityManager->flush();
 
-        if ($this->isAllowed('approve')) {
+        if ($this->aclService->isAllowed('approve', 'organ')) {
             $this->approveOrganInformation($organInformation);
         }
 
@@ -331,7 +305,7 @@ class Organ extends AbstractAclService
         if (!is_null($oldInformation)) {
             $em->remove($oldInformation);
         }
-        $user = $em->merge($this->userService->getIdentity());
+        $user = $em->merge($this->aclService->getIdentityOrThrowException());
         $organInformation->setApprover($user);
         $em->flush();
     }
@@ -447,25 +421,5 @@ class Organ extends AbstractAclService
             'oldMembers' => $oldMembers,
             'currentMembers' => $currentMembers,
         ];
-    }
-
-    /**
-     * Get the default resource ID.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'organ';
-    }
-
-    /**
-     * Get the Acl.
-     *
-     * @return Acl
-     */
-    public function getAcl()
-    {
-        return $this->acl;
     }
 }

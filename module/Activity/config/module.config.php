@@ -490,11 +490,13 @@ return [
                 $translator = $container->get('translator');
                 $activityService = $container->get('activity_service_activity');
                 $activityQueryService = $container->get('activity_service_activityQuery');
+                $aclService = $container->get('activity_service_acl');
 
                 return new Activity\Controller\AdminApprovalController(
                     $translator,
                     $activityService,
-                    $activityQueryService
+                    $activityQueryService,
+                    $aclService
                 );
             },
             'Activity\Controller\AdminCategory' => function (ContainerInterface $container) {
@@ -506,9 +508,9 @@ return [
             'Activity\Controller\Api' => function (ContainerInterface $container) {
                 $activityQueryService = $container->get('activity_service_activityQuery');
                 $signupService = $container->get('activity_service_signup');
-                $userService = $container->get('user_service_user');
+                $aclService = $container->get('activity_service_acl');
 
-                return new Activity\Controller\ApiController($activityQueryService, $signupService, $userService);
+                return new Activity\Controller\ApiController($activityQueryService, $signupService, $aclService);
             },
             'Activity\Controller\Admin' => function (ContainerInterface $container) {
                 $translator = $container->get('translator');
@@ -516,8 +518,8 @@ return [
                 $activityQueryService = $container->get('activity_service_activityQuery');
                 $signupService = $container->get('activity_service_signup');
                 $signupListQueryService = $container->get('activity_service_signupListQuery');
-                $userService = $container->get('user_service_user');
                 $signupMapper = $container->get('activity_mapper_signup');
+                $aclService = $container->get('activity_service_acl');
 
                 return new Activity\Controller\AdminController(
                     $translator,
@@ -525,8 +527,8 @@ return [
                     $activityQueryService,
                     $signupService,
                     $signupListQueryService,
-                    $userService,
-                    $signupMapper
+                    $signupMapper,
+                    $aclService
                 );
             },
             'Activity\Controller\ActivityCalendar' => function (ContainerInterface $container) {

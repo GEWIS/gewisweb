@@ -11,6 +11,7 @@ use Frontpage\Form\PollComment;
 use Frontpage\Service\Frontpage;
 use Frontpage\Service\News;
 use Interop\Container\ContainerInterface;
+use User\Authorization\AclServiceFactory;
 
 class Module
 {
@@ -35,8 +36,6 @@ class Module
             'factories' => [
                 'frontpage_service_frontpage' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
-                    $userRole = $container->get('user_role');
-                    $acl = $container->get('frontpage_acl');
                     $pollService = $container->get('frontpage_service_poll');
                     $newsService = $container->get('frontpage_service_news');
                     $memberService = $container->get('decision_service_member');
@@ -48,8 +47,6 @@ class Module
 
                     return new Frontpage(
                         $translator,
-                        $userRole,
-                        $acl,
                         $pollService,
                         $newsService,
                         $memberService,
@@ -62,52 +59,51 @@ class Module
                 },
                 'frontpage_service_page' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
-                    $userRole = $container->get('user_role');
                     $acl = $container->get('frontpage_acl');
                     $storageService = $container->get('application_service_storage');
                     $pageMapper = $container->get('frontpage_mapper_page');
                     $pageForm = $container->get('frontpage_form_page');
                     $storageConfig = $container->get('config')['storage'];
+                    $aclService = $container->get('frontpage_service_acl');
 
                     return new Service\Page(
                         $translator,
-                        $userRole,
                         $acl,
                         $storageService,
                         $pageMapper,
                         $pageForm,
-                        $storageConfig
+                        $storageConfig,
+                        $aclService
                     );
                 },
                 'frontpage_service_poll' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
                     $userRole = $container->get('user_role');
-                    $acl = $container->get('frontpage_acl');
                     $emailService = $container->get('application_service_email');
                     $pollMapper = $container->get('frontpage_mapper_poll');
                     $pollForm = $container->get('frontpage_form_poll');
                     $pollCommentForm = $container->get('frontpage_form_poll_comment');
                     $pollApprovalForm = $container->get('frontpage_form_poll_approval');
+                    $aclService = $container->get('frontpage_service_acl');
 
                     return new Service\Poll(
                         $translator,
                         $userRole,
-                        $acl,
                         $emailService,
                         $pollMapper,
                         $pollForm,
                         $pollCommentForm,
-                        $pollApprovalForm
+                        $pollApprovalForm,
+                        $aclService
                     );
                 },
                 'frontpage_service_news' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
-                    $userRole = $container->get('user_role');
-                    $acl = $container->get('frontpage_acl');
                     $newsItemMapper = $container->get('frontpage_mapper_news_item');
                     $newsItemForm = $container->get('frontpage_form_news_item');
+                    $aclService = $container->get('frontpage_service_acl');
 
-                    return new News($translator, $userRole, $acl, $newsItemMapper, $newsItemForm);
+                    return new News($translator, $newsItemMapper, $newsItemForm, $aclService);
                 },
                 'frontpage_form_page' => function (ContainerInterface $container) {
                     $form = new Page(
@@ -169,19 +165,7 @@ class Module
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'frontpage_acl' => function (ContainerInterface $container) {
-                    $acl = $container->get('acl');
-
-                    $acl->addResource('page');
-                    $acl->addResource('poll');
-                    $acl->addResource('poll_comment');
-                    $acl->addResource('news_item');
-
-                    $acl->allow('user', 'poll', ['vote', 'request']);
-                    $acl->allow('user', 'poll_comment', ['view', 'create', 'list']);
-
-                    return $acl;
-                },
+                'frontpage_service_acl' => AclServiceFactory::class,
             ],
         ];
     }

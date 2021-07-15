@@ -17,6 +17,7 @@ use Photo\Service\AlbumCover;
 use Photo\Service\Metadata;
 use Photo\Service\Photo;
 use Photo\View\Helper\GlideUrl;
+use User\Authorization\AclServiceFactory;
 
 class Module
 {
@@ -52,8 +53,6 @@ class Module
             'factories' => [
                 'photo_service_album' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
-                    $userRole = $container->get('user_role');
-                    $acl = $container->get('photo_acl');
                     $photoService = $container->get('photo_service_photo');
                     $albumCoverService = $container->get('photo_service_album_cover');
                     $memberService = $container->get('decision_service_member');
@@ -61,18 +60,18 @@ class Module
                     $albumMapper = $container->get('photo_mapper_album');
                     $createAlbumForm = $container->get('photo_form_album_create');
                     $editAlbumForm = $container->get('photo_form_album_edit');
+                    $aclService = $container->get('photo_service_acl');
 
                     return new Album(
                         $translator,
-                        $userRole,
-                        $acl,
                         $photoService,
                         $albumCoverService,
                         $memberService,
                         $storageService,
                         $albumMapper,
                         $createAlbumForm,
-                        $editAlbumForm
+                        $editAlbumForm,
+                        $aclService
                     );
                 },
                 'photo_service_metadata' => function () {
@@ -81,32 +80,30 @@ class Module
                 'photo_service_photo' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
                     $userRole = $container->get('user_role');
-                    $acl = $container->get('photo_acl');
                     $memberService = $container->get('decision_service_member');
                     $storageService = $container->get('application_service_storage');
                     $photoMapper = $container->get('photo_mapper_photo');
-                    $albumMapper = $container->get('photo_mapper_album');
                     $tagMapper = $container->get('photo_mapper_tag');
                     $hitMapper = $container->get('photo_mapper_hit');
                     $voteMapper = $container->get('photo_mapper_vote');
                     $weeklyPhotoMapper = $container->get('photo_mapper_weekly_photo');
                     $profilePhotoMapper = $container->get('photo_mapper_profile_photo');
                     $photoConfig = $container->get('config')['photo'];
+                    $aclService = $container->get('photo_service_acl');
 
                     return new Photo(
                         $translator,
                         $userRole,
-                        $acl,
                         $memberService,
                         $storageService,
                         $photoMapper,
-                        $albumMapper,
                         $tagMapper,
                         $hitMapper,
                         $voteMapper,
                         $weeklyPhotoMapper,
                         $profilePhotoMapper,
-                        $photoConfig
+                        $photoConfig,
+                        $aclService
                     );
                 },
                 'photo_service_album_cover' => function (ContainerInterface $container) {
@@ -120,25 +117,23 @@ class Module
                 },
                 'photo_service_admin' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
-                    $userRole = $container->get('user_role');
-                    $acl = $container->get('photo_acl');
                     $photoService = $container->get('photo_service_photo');
                     $albumService = $container->get('photo_service_album');
                     $metadataService = $container->get('photo_service_metadata');
                     $storageService = $container->get('application_service_storage');
                     $photoMapper = $container->get('photo_mapper_photo');
                     $photoConfig = $container->get('config')['photo'];
+                    $aclService = $container->get('photo_service_acl');
 
                     return new Admin(
                         $translator,
-                        $userRole,
-                        $acl,
                         $photoService,
                         $albumService,
                         $metadataService,
                         $storageService,
                         $photoMapper,
-                        $photoConfig
+                        $photoConfig,
+                        $aclService
                     );
                 },
                 'photo_form_album_edit' => function (ContainerInterface $container) {
@@ -198,33 +193,7 @@ class Module
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'photo_acl' => function (ContainerInterface $container) {
-                    $acl = $container->get('acl');
-
-                    // add resources for this module
-                    $acl->addResource('photo');
-                    $acl->addResource('album');
-                    $acl->addResource('tag');
-
-                    // Only users and 'the screen' are allowed to view photos and albums
-                    $acl->allow('user', 'photo', 'view');
-                    $acl->allow('user', 'album', 'view');
-
-                    $acl->allow('apiuser', 'photo', 'view');
-                    $acl->allow('apiuser', 'album', 'view');
-
-                    // Users are allowed to view, remove and add tags
-                    $acl->allow('user', 'tag', ['view', 'add', 'remove']);
-
-                    // Users are allowed to download photos
-                    $acl->allow('user', 'photo', ['download', 'view_metadata']);
-
-                    $acl->allow('photo_guest', 'photo', 'view');
-                    $acl->allow('photo_guest', 'album', 'view');
-                    $acl->allow('photo_guest', 'photo', ['download', 'view_metadata']);
-
-                    return $acl;
-                },
+                'photo_service_acl' => AclServiceFactory::class,
                 'album_page_cache' => function () {
                     return StorageFactory::factory(
                         [

@@ -63,7 +63,7 @@ use Activity\Model\Activity;
                         });
                     </script>
                 </section>
-                <?php if (!empty($birthdays) && $this->acl('decision_acl')->isAllowed('member', 'birthdays')): ?>
+                <?php if (!empty($birthdays) && $this->acl('decision_service_acl')->isAllowed('member', 'birthdays')): ?>
                     <section class="content-section">
                         <div class="panel panel-default" style="overflow:hidden;">
                             <?php if (!is_null($birthdayTag)): ?>
@@ -157,7 +157,7 @@ use Activity\Model\Activity;
                         </div>
                     </div>
                 <?php endif; ?>
-                <?php if ($this->acl('decision_acl')->isAllowed('member', 'birthdays')): ?>
+                <?php if ($this->acl('decision_service_acl')->isAllowed('member', 'birthdays')): ?>
                     <div class="panel panel-default">
                         <div class="panel-heading panel-heading--full-height">
                             <h3><?= $this->translate('Infima') ?></h3>

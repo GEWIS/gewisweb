@@ -58,7 +58,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             <li>
                                 <a href="<?= $this->url('user/default', ['action' => 'password']) ?>"><?= $this->translate('Change password') ?></a>
                             </li>
-                            <?php if ($this->acl('decision_acl')->isAllowed('organ', 'edit')): ?>
+                            <?php if ($this->acl('decision_service_acl')->isAllowed('organ', 'edit')): ?>
                                 <li><a href="<?= $this->url('admin') ?>"><?= $this->translate('Admin') ?></a></li>
                             <?php endif; ?>
                             <li><a href="<?= $this->url('user/default', [
@@ -193,26 +193,26 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 <?= $this->translate('Activities') ?>
                             </a>
                         </li>
-                        <?php if ($this->acl('activity_acl')->isAllowed('activity', 'view')): ?>
+                        <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'view')): ?>
                             <li><a href="<?= $this->url('activity/my') ?>"> <?= $this->translate('My activities') ?></a>
                             </li>
                         <?php endif; ?>
-                        <?php if ($this->acl('activity_acl')->isAllowed('activity', 'view')): ?>
+                        <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'view')): ?>
                             <li>
                                 <a href="<?= $this->url('activity/archive') ?>"> <?= $this->translate('Activity Archive') ?></a>
                             </li>
                         <?php endif; ?>
-                        <?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>
+                        <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'create')): ?>
                             <li>
                                 <a href="<?= $this->url('activity/create') ?>"> <?= $this->translate('Create an activity') ?></a>
                             </li>
                         <?php endif; ?>
-                        <?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>
+                        <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'create')): ?>
                             <li>
                                 <a href="<?= $this->url('home/page', ['category' => 'activity', 'sub_category' => 'corona']) ?>"><?= $this->translate('Activity Information COVID-19') ?></a>
                             </li>
                         <?php endif; ?>
-                        <?php if ($this->acl('activity_acl')->isAllowed('activity', 'create')): ?>
+                        <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'create')): ?>
                             <li><a href="<?= $this->url('activity_calendar') ?>"> <?= $this->translate('Option
                             calendar') ?></a></li>
                         <?php endif; ?>
@@ -222,7 +222,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     </ul>
                 </li>
                 <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['photo']) ? 'active' : '' ?>">
-                    <?php if ($this->acl('photo_acl')->isAllowed('photo', 'view')): ?>
+                    <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'view')): ?>
                         <a href="<?= $this->url('photo') ?>" role="button" aria-haspopup="true" aria-expanded="false"
                            class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown">
                             <?= $this->translate('Photos') ?>
@@ -236,7 +236,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             <?= $this->translate('Photos') ?>
                         </a>
                     <?php endif; ?>
-                    <?php if ($this->acl('photo_acl')->isAllowed('photo', 'view')): ?>
+                    <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'view')): ?>
                         <ul class="dropdown-menu">
                             <li class="visible-sm visible-xs">
                                 <a href="<?= $this->url('photo') ?>">

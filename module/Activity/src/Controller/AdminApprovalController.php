@@ -3,6 +3,7 @@
 namespace Activity\Controller;
 
 use Activity\Form\ModifyRequest as RequestForm;
+use Activity\Service\AclService;
 use Activity\Service\Activity;
 use Activity\Service\ActivityQuery;
 use InvalidArgumentException;
@@ -27,12 +28,19 @@ class AdminApprovalController extends AbstractActionController
      */
     private $activityQueryService;
     private Translator $translator;
+    private AclService $aclService;
 
-    public function __construct(Translator $translator, Activity $activityService, ActivityQuery $activityQueryService)
+    public function __construct(
+        Translator $translator,
+        Activity $activityService,
+        ActivityQuery $activityQueryService,
+        AclService $aclService
+    )
     {
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;
         $this->translator = $translator;
+        $this->aclService = $aclService;
     }
 
     /**
@@ -42,7 +50,7 @@ class AdminApprovalController extends AbstractActionController
     {
         $id = (int)$this->params('id');
 
-        if (!$this->activityService->isAllowed('approval')) {
+        if (!$this->aclService->isAllowed('approval', 'activity')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view the approval of this activity')
             );

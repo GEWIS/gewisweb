@@ -2,7 +2,7 @@
 $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
     ->requireUrl('member/view', ['lidnr']);
 ?>
-<?php if ($this->acl('photo_acl')->isAllowed('tag', 'view')): ?>
+<?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'view')): ?>
     <strong><?= $this->photo->getAlbum()->getName() ?></strong>
     <?php $tagCount = $this->photo->getTags()->count();
     $i = 1; ?>
@@ -29,7 +29,7 @@ $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
         <?php endforeach; ?>
     </div>
 <?php endif; ?>
-<?php if ($this->acl('photo_acl')->isAllowed('tag', 'add')): ?>
+<?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'add')): ?>
     <div>
         <form class="form-inline tagForm">
             <div class="form-group">

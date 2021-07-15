@@ -2,36 +2,24 @@
 
 namespace Frontpage\Service;
 
-use Application\Service\AbstractAclService;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
 use Frontpage\Mapper\NewsItem;
 use Frontpage\Model\NewsItem as NewsItemModel;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Permissions\Acl\Acl;
-use User\Model\User;
 use User\Permissions\NotAllowedException;
+use User\Service\AclService;
 
 /**
  * News service.
  */
-class News extends AbstractAclService
+class News
 {
     /**
      * @var Translator
      */
     private $translator;
-
-    /**
-     * @var User|string
-     */
-    private $userRole;
-
-    /**
-     * @var Acl
-     */
-    private $acl;
 
     /**
      * @var NewsItem
@@ -42,24 +30,18 @@ class News extends AbstractAclService
      * @var \Frontpage\Form\NewsItem
      */
     private $newsItemForm;
+    private AclService $aclService;
 
     public function __construct(
         Translator $translator,
-        $userRole,
-        Acl $acl,
         NewsItem $newsItemMapper,
-        \Frontpage\Form\NewsItem $newsItemForm
+        \Frontpage\Form\NewsItem $newsItemForm,
+        AclService $aclService
     ) {
         $this->translator = $translator;
-        $this->userRole = $userRole;
-        $this->acl = $acl;
         $this->newsItemMapper = $newsItemMapper;
         $this->newsItemForm = $newsItemForm;
-    }
-
-    public function getRole()
-    {
-        return $this->userRole;
+        $this->aclService = $aclService;
     }
 
     /**
@@ -91,7 +73,7 @@ class News extends AbstractAclService
      */
     public function getPaginatorAdapter()
     {
-        if (!$this->isAllowed('list')) {
+        if (!$this->aclService->isAllowed('list', 'news_item')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list all news items.'));
         }
 
@@ -143,7 +125,7 @@ class News extends AbstractAclService
      */
     public function updateNewsItem($newsItemId, $data)
     {
-        if (!$this->isAllowed('edit')) {
+        if (!$this->aclService->isAllowed('edit', 'news_item')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit news items.'));
         }
         $form = $this->getNewsItemForm($newsItemId);
@@ -179,7 +161,7 @@ class News extends AbstractAclService
      */
     public function getNewsItemForm($newsItemId = null)
     {
-        if (!$this->isAllowed('create')) {
+        if (!$this->aclService->isAllowed('create', 'news_item')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create news items.'));
         }
         $form = $this->newsItemForm;
@@ -190,25 +172,5 @@ class News extends AbstractAclService
         }
 
         return $form;
-    }
-
-    /**
-     * Get the Acl.
-     *
-     * @return Acl
-     */
-    public function getAcl()
-    {
-        return $this->acl;
-    }
-
-    /**
-     * Get the default resource ID.
-     *
-     * @return string
-     */
-    protected function getDefaultResourceId()
-    {
-        return 'news_item';
     }
 }

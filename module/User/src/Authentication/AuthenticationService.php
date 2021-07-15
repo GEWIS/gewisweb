@@ -89,7 +89,7 @@ class AuthenticationService extends LaminasAuthService
     /**
      * @return User|null
      */
-    public function getIdentity()
+    public function getIdentity(): ?User
     {
         if ($this->storage->isEmpty()) {
             return null;
@@ -100,6 +100,7 @@ class AuthenticationService extends LaminasAuthService
         if (is_object($user)) {
             $user = $user->getLidnr();
         }
+
         return $mapper->findByLidnr($user);
     }
 

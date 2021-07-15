@@ -29,7 +29,7 @@ class Infima extends AbstractHelper
      *
      * @return LegacyService
      */
-    public function getLegacyService()
+    protected function getLegacyService()
     {
         return $this->legacyService;
     }

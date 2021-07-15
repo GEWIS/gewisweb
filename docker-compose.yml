@@ -28,6 +28,7 @@ services:
             - .env
 #        environment:
 #            - APPLICATION_ENV=
+#            - COOKIE_DOMAIN=
 #            - GLIDE_HOST=
 #            - GLIDE_KEY=
 #            - DOCKER_GOOGLE_API_KEY=

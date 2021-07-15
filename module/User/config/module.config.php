@@ -163,10 +163,10 @@ return [
                 return new UserController($userService);
             },
             'User\Controller\Api' => function (ContainerInterface $container) {
-                $userService = $container->get('user_service_user');
                 $memberInfoService = $container->get('decision_service_memberinfo');
+                $aclService = $container->get('user_service_acl');
 
-                return new ApiController($userService, $memberInfoService);
+                return new ApiController($memberInfoService, $aclService);
             },
             'User\Controller\ApiAdmin' => function (ContainerInterface $container) {
                 $apiUserService = $container->get('user_service_apiuser');

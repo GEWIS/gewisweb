@@ -207,7 +207,7 @@ $this->scriptUrl()->requireUrl('member/search');
                 </div>
                 <div class="col-lg-3">
                     <?= $this->partial('partial/metadata.phtml', ['photo' => $photo]) ?>
-                    <?php if ($this->acl('photo_acl')->isAllowed('photo', 'download')): ?>
+                    <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'download')): ?>
                         <a
                             class="btn btn-default" href="<?= $this->url('photo/photo_download',
                             ['photo_id' => $photo->getId()]); ?>"
