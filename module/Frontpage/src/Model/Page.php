@@ -226,6 +226,6 @@ class Page implements ResourceInterface
      */
     public function getResourceId()
     {
-        return 'page';
+        return 'page' . $this->getId();
     }
 }

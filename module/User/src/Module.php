@@ -140,11 +140,11 @@ class Module
                 },
                 'user_service_apiuser' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
-                    $acl = $container->get('acl');
                     $apiUserMapper = $container->get('user_mapper_apiuser');
                     $apiTokenForm = $container->get('user_form_apitoken');
+                    $aclService = $container->get('user_service_acl');
 
-                    return new Service\ApiUser($translator, $acl, $apiUserMapper, $apiTokenForm);
+                    return new Service\ApiUser($translator, $apiUserMapper, $apiTokenForm, $aclService);
                 },
                 'user_service_email' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');

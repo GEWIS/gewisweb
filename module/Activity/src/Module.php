@@ -97,13 +97,13 @@ class Module
                 },
                 'activity_service_signupListQuery' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
-                    $acl = $container->get('activity_acl');
                     $signupListMapper = $container->get('activity_mapper_signuplist');
+                    $aclService = $container->get('activity_service_acl');
 
                     return new SignupListQuery(
                         $translator,
-                        $acl,
-                        $signupListMapper
+                        $signupListMapper,
+                        $aclService
                     );
                 },
                 'activity_form_activity_signup' => function () {

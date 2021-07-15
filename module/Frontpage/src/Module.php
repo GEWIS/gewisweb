@@ -8,9 +8,11 @@ use Frontpage\Form\Page;
 use Frontpage\Form\Poll;
 use Frontpage\Form\PollApproval;
 use Frontpage\Form\PollComment;
+use Frontpage\Service\AclService;
 use Frontpage\Service\Frontpage;
 use Frontpage\Service\News;
 use Interop\Container\ContainerInterface;
+use RuntimeException;
 use User\Authorization\AclServiceFactory;
 
 class Module
@@ -59,7 +61,6 @@ class Module
                 },
                 'frontpage_service_page' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
-                    $acl = $container->get('frontpage_acl');
                     $storageService = $container->get('application_service_storage');
                     $pageMapper = $container->get('frontpage_mapper_page');
                     $pageForm = $container->get('frontpage_form_page');
@@ -68,7 +69,6 @@ class Module
 
                     return new Service\Page(
                         $translator,
-                        $acl,
                         $storageService,
                         $pageMapper,
                         $pageForm,
@@ -163,7 +163,21 @@ class Module
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'frontpage_service_acl' => AclServiceFactory::class,
+                'frontpage_service_acl' => function (ContainerInterface $container, $requestedName, array $options = null) {
+                    $aclService = (new AclServiceFactory())->__invoke($container, $requestedName, $options);
+                    if (get_class($aclService) !== AclService::class) {
+                        throw new RuntimeException(
+                            sprintf(
+                                'Expected service of type %s, got service of type %s',
+                                AclService::class,
+                                get_class($aclService)
+                            )
+                        );
+                    }
+                    $pages = $container->get('frontpage_mapper_page')->getAllPages();
+                    $aclService->setPages($pages);
+                    return $aclService;
+                },
             ],
         ];
     }

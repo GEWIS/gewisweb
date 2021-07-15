@@ -23,11 +23,6 @@ class Page
     private $translator;
 
     /**
-     * @var Acl
-     */
-    private $acl;
-
-    /**
      * @var FileStorage
      */
     private $storageService;
@@ -50,7 +45,6 @@ class Page
 
     public function __construct(
         Translator $translator,
-        Acl $acl,
         FileStorage $storageService,
         \Frontpage\Mapper\Page $pageMapper,
         \Frontpage\Form\Page $pageForm,
@@ -58,7 +52,6 @@ class Page
         AclService $aclService
     ) {
         $this->translator = $translator;
-        $this->acl = $acl;
         $this->storageService = $storageService;
         $this->pageMapper = $pageMapper;
         $this->pageForm = $pageForm;
@@ -88,7 +81,7 @@ class Page
     public function getPage($category, $subCategory, $name)
     {
         $page = $this->pageMapper->findPage($category, $subCategory, $name);
-        if (!(is_null($page) || $this->isPageAllowed($page))) {
+        if (!(is_null($page) || $this->isAllowed('view', $page))) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view this page.'));
         }
 
@@ -125,23 +118,6 @@ class Page
     public function getPageById($pageId)
     {
         return $this->pageMapper->findPageById($pageId);
-    }
-
-    /**
-     * Checks if the current user is allowed to view the given page.
-     *
-     * @param PageModel $page
-     *
-     * @return bool
-     */
-    public function isPageAllowed($page)
-    {
-        $requiredRole = $page->getRequiredRole();
-        $resource = 'page_' . $page->getId();
-        $this->acl->addResource($resource);
-        $this->acl->allow($requiredRole, $resource, 'view');
-
-        return $this->aclService->isAllowed('view', $resource);
     }
 
     /**
