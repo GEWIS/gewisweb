@@ -6,7 +6,7 @@
 use Laminas\Mvc\MvcEvent;
 
 define('WEB_DIR', '/var/www/gewisweb');
-define('APPLICATION_ENV', getenv('APPLICATION_ENV') ?: 'production');
+define('APP_ENV', getenv('APP_ENV') ?: 'production');
 
 $cwd = getcwd();
 chdir(WEB_DIR);
@@ -22,7 +22,7 @@ if (file_exists('vendor/autoload.php')) {
 
 // Config
 $config = include 'config/application.config.php';
-if (APPLICATION_ENV === 'development' && file_exists('config/development.config.php')) {
+if (APP_ENV === 'development' && file_exists('config/development.config.php')) {
     $config = Laminas\Stdlib\ArrayUtils::merge($config, include 'config/development.config.php');
 }
 

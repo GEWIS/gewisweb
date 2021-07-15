@@ -167,7 +167,7 @@ class Session extends Storage\Session
         $sessionToken = new SetCookie('GEWISSESSTOKEN', $jwt, strtotime('+2 weeks'), '/');
 
         // Use secure cookies in production
-        if (APPLICATION_ENV === 'production') {
+        if (APP_ENV === 'production') {
             $sessionToken->setSecure(true)->setHttponly(true);
         }
 
@@ -186,7 +186,7 @@ class Session extends Storage\Session
         $sessionToken = new SetCookie('GEWISSESSTOKEN', 'deleted', strtotime('-1 Year'), '/');
 
         // Use secure cookies in production
-        if (APPLICATION_ENV === 'production') {
+        if (APP_ENV === 'production') {
             $sessionToken->setSecure(true)->setHttponly(true);
         }
 

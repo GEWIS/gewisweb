@@ -1,5 +1,5 @@
 <?php
-define('APPLICATION_ENV', getenv('APPLICATION_ENV') ?: 'production');
+define('APP_ENV', getenv('APP_ENV') ?: 'production');
 
 // make sure we are in the correct directory
 chdir(__DIR__);
@@ -22,7 +22,7 @@ class ConsoleRunner
     {
         // Retrieve configuration
         $appConfig = require __DIR__ . '/config/application.config.php';
-        if (APPLICATION_ENV === 'development' && file_exists(__DIR__ . '/config/development.config.php')) {
+        if (APP_ENV === 'development' && file_exists(__DIR__ . '/config/development.config.php')) {
             $appConfig = ArrayUtils::merge($appConfig, require __DIR__ . '/config/development.config.php');
         }
 

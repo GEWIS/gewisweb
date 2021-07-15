@@ -27,7 +27,7 @@ services:
         env_file:
             - .env
 #        environment:
-#            - APPLICATION_ENV=
+#            - APP_ENV=
 #            - COOKIE_DOMAIN=
 #            - GLIDE_HOST=
 #            - GLIDE_KEY=
