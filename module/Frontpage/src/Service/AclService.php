@@ -10,10 +10,16 @@ class AclService extends \User\Service\AclService
 {
     private Collection $pages;
 
-    public function setPages(Collection $pages) {
-        $this->pages = $pages;
-        // Recreate the ACL with page permissions.
+    public function setPages(Collection $pages)
+    {
+        // Recreate the ACL to erase old page permissions.
         $this->createAcl();
+        $this->pages = $pages;
+        foreach ($this->pages as $page) {
+            $requiredRole = $page->getRequiredRole();
+            $this->acl->addResource($page);
+            $this->acl->allow($requiredRole, $page, 'view');
+        }
     }
 
     protected function createAcl()
@@ -27,11 +33,5 @@ class AclService extends \User\Service\AclService
 
         $this->acl->allow('user', 'poll', ['vote', 'request']);
         $this->acl->allow('user', 'poll_comment', ['view', 'create', 'list']);
-
-        foreach ($this->pages as $page) {
-            $requiredRole = $page->getRequiredRole();
-            $this->acl->addResource($page);
-            $this->acl->allow($requiredRole, $page, 'view');
-        }
     }
 }
