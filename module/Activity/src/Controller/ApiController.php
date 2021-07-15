@@ -27,8 +27,7 @@ class ApiController extends AbstractActionController
         ActivityQuery $activityQueryService,
         Signup $signupService,
         AclService $aclService
-    )
-    {
+    ) {
         $this->activityQueryService = $activityQueryService;
         $this->signupService = $signupService;
         $this->aclService = $aclService;

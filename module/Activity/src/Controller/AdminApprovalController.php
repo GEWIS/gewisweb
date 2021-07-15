@@ -35,8 +35,7 @@ class AdminApprovalController extends AbstractActionController
         Activity $activityService,
         ActivityQuery $activityQueryService,
         AclService $aclService
-    )
-    {
+    ) {
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;
         $this->translator = $translator;

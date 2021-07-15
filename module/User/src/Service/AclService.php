@@ -1,8 +1,6 @@
 <?php
 
-
 namespace User\Service;
-
 
 use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\Permissions\Acl\Acl;
@@ -22,8 +20,7 @@ class AclService extends GenericAclService
         AuthenticationService $authService,
         string $remoteAddress,
         string $tueRange
-    )
-    {
+    ) {
         parent::__construct($translator, $authService, $remoteAddress, $tueRange);
         $this->createAcl();
     }

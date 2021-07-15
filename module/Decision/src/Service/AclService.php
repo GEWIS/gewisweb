@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Decision\Service;
-
 
 class AclService extends \User\Service\AclService
 {

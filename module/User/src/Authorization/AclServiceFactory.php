@@ -1,8 +1,6 @@
 <?php
 
-
 namespace User\Authorization;
-
 
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;

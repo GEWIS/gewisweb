@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Company\Service;
-
 
 class AclService extends \User\Service\AclService
 {
