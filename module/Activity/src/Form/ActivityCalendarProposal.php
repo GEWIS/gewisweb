@@ -2,7 +2,7 @@
 
 namespace Activity\Form;
 
-use Activity\Service\ActivityCalendar;
+use Activity\Service\ActivityCalendarForm;
 use Exception;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
@@ -15,9 +15,9 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
     protected $translator;
 
     /**
-     * @var ActivityCalendar
+     * @var ActivityCalendarForm
      */
-    private $calendarService;
+    private $calendarFormService;
 
     /**
      * @var int
@@ -25,17 +25,17 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
     private $maxOptions;
 
     /**
-     * @param ActivityCalendar $calendarService
-     *
-     * @throws Exception
+     * @param Translator $translator
+     * @param ActivityCalendarForm $calendarFormService
+     * @param bool $createAlways
      */
-    public function __construct(Translator $translator, $calendarService, bool $createAlways)
+    public function __construct(Translator $translator, ActivityCalendarForm $calendarFormService, bool $createAlways)
     {
         parent::__construct();
         $this->translator = $translator;
-        $this->calendarService = $calendarService;
+        $this->calendarFormService = $calendarFormService;
 
-        $organs = $calendarService->getEditableOrgans();
+        $organs = $calendarFormService->getEditableOrgans();
         $organOptions = [];
         foreach ($organs as $organ) {
             $organOptions[$organ->getId()] = $organ->getAbbr();
@@ -88,7 +88,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                     'count' => 1,
                     'should_create_template' => true,
                     'allow_add' => true,
-                    'target_element' => new ActivityCalendarOption($translator, $calendarService),
+                    'target_element' => new ActivityCalendarOption($translator, $calendarFormService),
                 ],
             ]
         );
@@ -181,8 +181,8 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
         $final = true;
         foreach ($value as $option) {
             try {
-                $beginTime = $this->calendarService->toDateTime($option['beginTime']);
-                $result = $this->calendarService->canCreateOption($beginTime);
+                $beginTime = $this->calendarFormService->toDateTime($option['beginTime']);
+                $result = $this->calendarFormService->canCreateOption($beginTime);
                 $final = $final && $result;
             } catch (Exception $e) {
                 return false;

@@ -2,7 +2,7 @@
 
 namespace Activity\Form;
 
-use Activity\Service\ActivityCalendar;
+use Activity\Service\ActivityCalendarForm;
 use DateTime;
 use Exception;
 use Laminas\Form\Fieldset;
@@ -15,20 +15,21 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
     protected $translator;
 
     /**
-     * @var ActivityCalendar
+     * @var ActivityCalendarForm
      */
-    private $calendarService;
+    private $calendarFormService;
 
     /**
      * ActivityCalendarOption constructor.
      *
-     * @param ActivityCalendar $calendarService
+     * @param Translator $translator
+     * @param ActivityCalendarForm $calendarFormService
      */
-    public function __construct(Translator $translator, $calendarService)
+    public function __construct(Translator $translator, ActivityCalendarForm $calendarFormService)
     {
         parent::__construct();
         $this->translator = $translator;
-        $this->calendarService = $calendarService;
+        $this->calendarFormService = $calendarFormService;
 
         $typeOptions = [
             'Lunch Lecture' => $translator->translate('Lunch lecture'),
@@ -137,9 +138,9 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
     public function beforeEndTime($value, $context = [])
     {
         try {
-            $endTime = isset($context['endTime']) ? $this->calendarService->toDateTime($context['endTime']) : new DateTime('now');
+            $endTime = isset($context['endTime']) ? $this->calendarFormService->toDateTime($context['endTime']) : new DateTime('now');
 
-            return $this->calendarService->toDateTime($value) <= $endTime;
+            return $this->calendarFormService->toDateTime($value) <= $endTime;
         } catch (Exception $e) {
             return false;
         }
@@ -158,7 +159,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
         try {
             $today = new DateTime();
 
-            return $this->calendarService->toDateTime($value) > $today;
+            return $this->calendarFormService->toDateTime($value) > $today;
         } catch (Exception $e) {
             return false;
         }
@@ -175,8 +176,8 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
     public function cannotPlanInPeriod($value, $context = [])
     {
         try {
-            $beginTime = $this->calendarService->toDateTime($value);
-            $result = $this->calendarService->canCreateOption($beginTime);
+            $beginTime = $this->calendarFormService->toDateTime($value);
+            $result = $this->calendarFormService->canCreateOption($beginTime);
 
             return !$result;
         } catch (Exception $e) {

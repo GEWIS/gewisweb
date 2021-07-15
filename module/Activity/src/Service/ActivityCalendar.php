@@ -4,10 +4,7 @@ namespace Activity\Service;
 
 use Activity\Form\ActivityCalendarOption;
 use Activity\Form\ActivityCalendarProposal;
-use Activity\Mapper\ActivityOptionProposal;
-use Activity\Mapper\MaxActivities;
 use Activity\Model\ActivityCalendarOption as OptionModel;
-use Activity\Model\ActivityOptionCreationPeriod;
 use Activity\Model\ActivityOptionProposal as ProposalModel;
 use Application\Service\Email;
 use DateInterval;
@@ -42,18 +39,6 @@ class ActivityCalendar
      */
     private $calendarOptionMapper;
     /**
-     * @var ActivityOptionProposal
-     */
-    private $optionProposalMapper;
-    /**
-     * @var \Activity\Mapper\ActivityOptionCreationPeriod
-     */
-    private $periodMapper;
-    /**
-     * @var MaxActivities
-     */
-    private $maxActivitiesMapper;
-    /**
      * @var Member
      */
     private $memberMapper;
@@ -66,6 +51,7 @@ class ActivityCalendar
      */
     private $calendarProposalForm;
     private AclService $aclService;
+    private ActivityCalendarForm $calendarFormService;
 
     public function __construct(
         Translator $translator,
@@ -73,26 +59,22 @@ class ActivityCalendar
         Organ $organService,
         Email $emailService,
         \Activity\Mapper\ActivityCalendarOption $calendarOptionMapper,
-        ActivityOptionProposal $optionProposalMapper,
-        \Activity\Mapper\ActivityOptionCreationPeriod $periodMapper,
-        MaxActivities $maxActivitiesMapper,
         Member $memberMapper,
         ActivityCalendarOption $calendarOptionForm,
         ActivityCalendarProposal $calendarProposalForm,
-        AclService $aclService
+        AclService $aclService,
+        ActivitycalendarForm $calendarFormService
     ) {
         $this->translator = $translator;
         $this->entityManager = $entityManager;
         $this->organService = $organService;
         $this->emailService = $emailService;
         $this->calendarOptionMapper = $calendarOptionMapper;
-        $this->optionProposalMapper = $optionProposalMapper;
-        $this->periodMapper = $periodMapper;
-        $this->maxActivitiesMapper = $maxActivitiesMapper;
         $this->memberMapper = $memberMapper;
         $this->calendarOptionForm = $calendarOptionForm;
         $this->calendarProposalForm = $calendarProposalForm;
         $this->aclService = $aclService;
+        $this->calendarFormService = $calendarFormService;
     }
 
     /**
@@ -170,7 +152,7 @@ class ActivityCalendar
         $validatedData = $form->getData();
 
         $organ = $validatedData['organ'];
-        if (!$this->canOrganCreateProposal($organ)) {
+        if (!$this->calendarFormService->canOrganCreateProposal($organ)) {
             return false;
         }
 
@@ -218,92 +200,6 @@ class ActivityCalendar
     }
 
     /**
-     * Returns whether an organ may create a new activity proposal.
-     *
-     * @param int $organId
-     *
-     * @return bool
-     *
-     * @throws Exception
-     */
-    protected function canOrganCreateProposal($organId)
-    {
-        if ($this->aclService->isAllowed('create_always', 'activity_calendar_proposal')) {
-            return true;
-        }
-
-        $period = $this->getCurrentPeriod();
-
-        if (
-            null == $period
-            || !$this->aclService->isAllowed('create', 'activity_calendar_proposal')
-            || null == $organId
-        ) {
-            return false;
-        }
-
-        $max = $this->getMaxActivities($organId, $period->getId());
-        $count = $this->getCurrentProposalCount($period, $organId);
-
-        return $count < $max;
-    }
-
-    /**
-     * Get the current ActivityOptionCreationPeriod.
-     *
-     * @return ActivityOptionCreationPeriod
-     *
-     * @throws Exception
-     */
-    public function getCurrentPeriod()
-    {
-        $mapper = $this->periodMapper;
-
-        return $mapper->getCurrentActivityOptionCreationPeriod();
-    }
-
-    /**
-     * Get the max number of activity options an organ can create.
-     *
-     * @param int $organId
-     * @param int $periodId
-     *
-     * @return int
-     *
-     * @throws Exception
-     */
-    protected function getMaxActivities($organId, $periodId)
-    {
-        $mapper = $this->maxActivitiesMapper;
-        $maxActivities = $mapper->getMaxActivityOptionsByOrganPeriod($organId, $periodId);
-        // TODO: The initial value of $max below represents a default value for when no appropriate MaxActivities instance exists.
-        $max = 2;
-        if ($maxActivities) {
-            $max = $maxActivities->getValue();
-        }
-
-        return $max;
-    }
-
-    /**
-     * Get the current proposal count of an organ for the given period.
-     *
-     * @param ActivityOptionCreationPeriod $period
-     * @param int $organId
-     *
-     * @return int
-     */
-    protected function getCurrentProposalCount($period, $organId)
-    {
-        $mapper = $this->optionProposalMapper;
-        $begin = $period->getBeginPlanningTime();
-        $end = $period->getEndPlanningTime();
-        $options = $mapper->getNonClosedProposalsWithinPeriodAndOrgan($begin, $end, $organId);
-
-        return count($options);
-    }
-
-    /**
      * @param array $data
      * @param ProposalModel $proposal
      *
@@ -318,9 +214,9 @@ class ActivityCalendar
 
         $em = $this->entityManager;
         $option->setProposal($proposal);
-        $beginTime = $this->toDateTime($validatedData['beginTime']);
+        $beginTime = $this->calendarFormService->toDateTime($validatedData['beginTime']);
         $option->setBeginTime($beginTime);
-        $endTime = $this->toDateTime($validatedData['endTime']);
+        $endTime = $this->calendarFormService->toDateTime($validatedData['endTime']);
         $option->setEndTime($endTime);
         $type = $validatedData['type'];
         $option->setType($type);
@@ -328,11 +224,6 @@ class ActivityCalendar
         $em->flush();
 
         return $option;
-    }
-
-    public function toDateTime($value, $format = 'd/m/Y')
-    {
-        return DateTime::createFromFormat($format, $value);
     }
 
     public function approveOption($id)
@@ -409,32 +300,6 @@ class ActivityCalendar
     }
 
     /**
-     * Returns whether a user may create an option with given start time.
-     *
-     * @param DateTime $beginTime
-     *
-     * @return bool
-     *
-     * @throws Exception
-     */
-    public function canCreateOption($beginTime)
-    {
-        if ($this->aclService->isAllowed('create_always', 'activity_calendar_proposal')) {
-            return true;
-        }
-
-        $period = $this->getCurrentPeriod();
-        $begin = $period->getBeginOptionTime();
-        $end = $period->getEndOptionTime();
-
-        if ($begin > $beginTime || $beginTime > $end) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Returns whether a member may create a new activity proposal.
      *
      * @return bool
@@ -443,30 +308,9 @@ class ActivityCalendar
      */
     public function canCreateProposal()
     {
-        $organs = $this->getEditableOrgans();
+        $organs = $this->calendarFormService->getEditableOrgans();
 
         return !empty($organs);
-    }
-
-    /**
-     * Retrieves all organs which the current user is allowed to edit and for which the organs can still create proposals.
-     *
-     * @return array
-     *
-     * @throws Exception
-     */
-    public function getEditableOrgans()
-    {
-        $allOrgans = $this->organService->getEditableOrgans();
-        $organs = [];
-        foreach ($allOrgans as $organ) {
-            $organId = $organ->getId();
-            if ($this->canOrganCreateProposal($organId)) {
-                array_push($organs, $organ);
-            }
-        }
-
-        return $organs;
     }
 
     /**

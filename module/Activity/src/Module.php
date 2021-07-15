@@ -153,15 +153,16 @@ class Module
                 },
                 'activity_form_calendar_proposal' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
-                    $calendarService = $container->get('activity_service_calendar');
-                    $createAlways = $calendarService->isAllowed('create_always');
-                    return new Form\ActivityCalendarProposal($translator, $calendarService, $createAlways);
+                    $calendarFormService = $container->get('activity_service_calendar_form');
+                    $aclService = $container->get('activity_service_acl');
+                    $createAlways = $aclService->isAllowed('create_always');
+                    return new Form\ActivityCalendarProposal($translator, $calendarFormService, $createAlways);
                 },
                 'activity_form_calendar_option' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
-                    $calendarService = $container->get('activity_service_calendar');
+                    $calendarFormService = $container->get('activity_service_calendar_form');
 
-                    return new Form\ActivityCalendarOption($translator, $calendarService);
+                    return new Form\ActivityCalendarOption($translator, $calendarFormService);
                 },
                 'activity_form_category' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
@@ -196,13 +197,11 @@ class Module
                     $organService = $container->get('decision_service_organ');
                     $emailService = $container->get('application_service_email');
                     $calendarOptionMapper = $container->get('activity_mapper_calendar_option');
-                    $optionProposalMapper = $container->get('activity_mapper_option_proposal');
-                    $periodMapper = $container->get('activity_mapper_period');
-                    $maxActivitiesMapper = $container->get('activity_mapper_max_activities');
                     $memberMapper = $container->get('decision_mapper_member');
                     $calendarOptionForm = $container->get('activity_form_calendar_option');
                     $calendarProposalForm = $container->get('activity_form_calendar_proposal');
                     $aclService = $container->get('activity_service_acl');
+                    $calendarFormService = $container->get('activity_service_calendar_form');
 
                     return new Service\ActivityCalendar(
                         $translator,
@@ -210,13 +209,26 @@ class Module
                         $organService,
                         $emailService,
                         $calendarOptionMapper,
-                        $optionProposalMapper,
-                        $periodMapper,
-                        $maxActivitiesMapper,
                         $memberMapper,
                         $calendarOptionForm,
                         $calendarProposalForm,
-                        $aclService
+                        $aclService,
+                        $calendarFormService
+                    );
+                },
+                'activity_service_calendar_form' => function (ContainerInterface $container) {
+                    $aclService = $container->get('activity_service_acl');
+                    $organService = $container->get('decision_service_organ');
+                    $periodMapper = $container->get('activity_mapper_period');
+                    $maxActivitiesMapper = $container->get('activity_mapper_max_activities');
+                    $optionProposalMapper = $container->get('activity_mapper_option_proposal');
+
+                    return new Service\ActivityCalendarForm(
+                        $aclService,
+                        $organService,
+                        $periodMapper,
+                        $maxActivitiesMapper,
+                        $optionProposalMapper
                     );
                 },
                 'activity_mapper_activity' => function (ContainerInterface $container) {
