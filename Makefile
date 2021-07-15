@@ -62,7 +62,7 @@ phpcs:
 		@vendor/bin/phpcs -p --standard=PSR1,PSR12 --extensions=php,dist module config
 
 phpcbf:
-		@vendor/bin/phpcbf -p --standard=PSR1,PSR12 --extensions=php,dist --filter=gitmodified module config
+		@vendor/bin/phpcbf -p --standard=PSR1,PSR12 --extensions=php,dist --filter=GitModified module config
 
 phpcbfall:
 		@vendor/bin/phpcbf -p --standard=PSR1,PSR12 --extensions=php,dist module config
