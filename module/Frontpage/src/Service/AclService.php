@@ -8,9 +8,9 @@ use User\Authentication\AuthenticationService;
 
 class AclService extends \User\Service\AclService
 {
-    private Collection $pages;
+    private array $pages;
 
-    public function setPages(Collection $pages)
+    public function setPages(array $pages)
     {
         // Recreate the ACL to erase old page permissions.
         $this->createAcl();
