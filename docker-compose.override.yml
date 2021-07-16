@@ -9,6 +9,8 @@ services:
             - gewisweb_mysql:/var/lib/mysql:rw
         networks:
             - gewisweb_network
+        ports:
+            - "3306:3306"
         restart: unless-stopped
     myadmin:
         image: phpmyadmin/phpmyadmin:latest

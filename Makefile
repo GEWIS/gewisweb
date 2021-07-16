@@ -61,9 +61,10 @@ loadenv:
 copyconf:
 		cp config/autoload/local.development.php.dist config/autoload/local.php
 		cp config/autoload/doctrine.local.development.php.dist config/autoload/doctrine.local.php
+		cp config/autoload/laminas-developer-tools.local.php.dist config/autoload/laminas-developer-tools.local.php
 
-
-phpstan: loadenv copyconf
+phpstan: loadenv copyconf rundev
+		@export "DOCKER_DB_HOST=0.0.0.0"
 		@vendor/bin/phpstan analyse -c phpstan.neon
 
 phpcs:
