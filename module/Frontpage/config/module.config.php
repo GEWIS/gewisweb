@@ -52,7 +52,8 @@ return [
             },
             'Frontpage\Controller\Admin' => function () {
                 return new AdminController();
-            },],
+            },
+        ],
     ],
     'router' => [
         'routes' => [

@@ -204,10 +204,12 @@ abstract class CompanyPackage
     // For zend2 forms
     public function getArrayCopy()
     {
-        return ['id' => $this->id,
+        return [
+            'id' => $this->id,
             'startDate' => $this->getStartingDate()->format('Y-m-d'),
             'expirationDate' => $this->getExpirationDate()->format('Y-m-d'),
-            'published' => $this->isPublished(),];
+            'published' => $this->isPublished(),
+        ];
     }
 
     public function exchangeArray($data)

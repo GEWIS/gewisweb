@@ -95,8 +95,10 @@ class ActivityQuery
      */
     public function getAvailableLanguages($activity)
     {
-        return ['nl' => !is_null($activity->getName()->getValueNL()),
-            'en' => !is_null($activity->getName()->getValueEN()),];
+        return [
+            'nl' => !is_null($activity->getName()->getValueNL()),
+            'en' => !is_null($activity->getName()->getValueEN()),
+        ];
     }
 
     /**
