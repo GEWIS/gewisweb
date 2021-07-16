@@ -5,6 +5,8 @@ parameters:
     level: 2
     bootstrapFiles:
         - bootstrap.php
+    laminasframework:
+       serviceManagerLoader: phpstan-sm.php
     paths:
         - config
         - bootstrap.php

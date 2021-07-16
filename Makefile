@@ -56,9 +56,14 @@ update: rundev updatecomposer updatepackage updatecss updateglide
 		@docker-compose down
 
 loadenv:
-		@export $(grep -v '^#' .env | xargs -d '\n')
+		@export $$(grep -v '^#' .env | xargs -d '\n')
 
-phpstan:
+copyconf:
+		cp config/autoload/local.development.php.dist config/autoload/local.php
+		cp config/autoload/doctrine.local.development.php.dist config/autoload/doctrine.local.php
+
+
+phpstan: loadenv copyconf
 		@vendor/bin/phpstan analyse -c phpstan.neon
 
 phpcs:
