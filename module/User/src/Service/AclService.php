@@ -6,6 +6,7 @@ use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
 use Laminas\Permissions\Acl\Role\GenericRole as Role;
+use User\Authentication\ApiAuthenticationService;
 use User\Authentication\AuthenticationService;
 use User\Authorization\GenericAclService;
 use User\Model\User;
@@ -18,10 +19,11 @@ class AclService extends GenericAclService
     public function __construct(
         TranslatorInterface $translator,
         AuthenticationService $authService,
+        ApiAuthenticationService $apiAuthService,
         string $remoteAddress,
         string $tueRange
     ) {
-        parent::__construct($translator, $authService, $remoteAddress, $tueRange);
+        parent::__construct($translator, $authService, $apiAuthService, $remoteAddress, $tueRange);
         $this->createAcl();
     }
 

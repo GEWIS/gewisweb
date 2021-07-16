@@ -8,8 +8,10 @@ use Laminas\Http\PhpEnvironment\RemoteAddress;
 use Laminas\Http\Request as HttpRequest;
 use Laminas\Mvc\MvcEvent;
 use Interop\Container\ContainerInterface;
+use User\Authentication\Adapter\ApiMapper;
 use User\Authentication\Adapter\Mapper;
 use User\Authentication\Adapter\PinMapper;
+use User\Authentication\ApiAuthenticationService;
 use User\Authorization\AclServiceFactory;
 use User\Mapper\User;
 use User\Service\Factory\ApiAppFactory;
@@ -46,8 +48,9 @@ class Module
                 ->getFieldValue();
 
             $container = $e->getApplication()->getServiceManager();
-            $service = $container->get('user_service_apiuser');
-            $service->verifyToken($token);
+            /** @var ApiAuthenticationService $service */
+            $service = $container->get('user_apiauth_service');
+            $service->authenticate($token);
         }
 
         // this event listener will turn the request into '403 Forbidden' when
@@ -256,6 +259,11 @@ class Module
                         $container->get('user_mapper_user')
                     );
                 },
+                'user_apiauth_adapter' => function (ContainerInterface $container) {
+                    return new ApiMapper(
+                        $container->get('user_mapper_apiuser')
+                    );
+                },
                 'user_pin_auth_adapter' => function (ContainerInterface $container) {
                     return new PinMapper(
                         $container->get('user_service_loginattempt'),
@@ -266,6 +274,11 @@ class Module
                     return new Authentication\AuthenticationService(
                         $container->get('user_auth_storage'),
                         $container->get('user_auth_adapter')
+                    );
+                },
+                'user_apiauth_service' => function (ContainerInterface $container) {
+                    return new Authentication\ApiAuthenticationService(
+                        $container->get('user_apiauth_adapter')
                     );
                 },
                 'user_pin_auth_service' => function (ContainerInterface $container) {

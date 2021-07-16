@@ -128,18 +128,6 @@ class ApiUser
     }
 
     /**
-     * Verify and save an API token.
-     *
-     * @param string $token
-     */
-    public function verifyToken($token)
-    {
-        $mapper = $this->apiUserMapper;
-
-        $this->identity = $mapper->findByToken($token);
-    }
-
-    /**
      * Generate a token.
      *
      * @return string

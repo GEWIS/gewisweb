@@ -4,6 +4,7 @@ namespace User\Authorization;
 
 use Application\Service\AbstractAclService;
 use Laminas\I18n\Translator\TranslatorInterface;
+use User\Authentication\ApiAuthenticationService;
 use User\Authentication\AuthenticationService;
 use User\Model\User;
 use User\Permissions\NotAllowedException;
@@ -12,17 +13,20 @@ abstract class GenericAclService extends AbstractAclService
 {
     private TranslatorInterface $translator;
     private AuthenticationService $authService;
+    private ApiAuthenticationService $apiAuthService;
     private string $remoteAddress;
     private string $tueRange;
 
     public function __construct(
         TranslatorInterface $translator,
         AuthenticationService $authService,
+        ApiAuthenticationService $apiAuthService,
         string $remoteAddress,
         string $tueRange
     ) {
         $this->translator = $translator;
         $this->authService = $authService;
+        $this->apiAuthService = $apiAuthService;
         $this->remoteAddress = $remoteAddress;
         $this->tueRange = $tueRange;
     }
@@ -36,11 +40,9 @@ abstract class GenericAclService extends AbstractAclService
             return $this->authService->getIdentity();
         }
 
-        // TODO: Refactor and re-enable the ApiUser service after a circular dependency has been removed.
-        // Possibly extend the LaminasAuthService ?
-//        if ($this->apiUserService->hasIdentity()) {
-//            return 'apiuser';
-//        }
+        if ($this->apiAuthService->hasIdentity()) {
+            return 'apiuser';
+        }
 
         if (0 === strpos($this->remoteAddress, $this->tueRange)) {
             return 'tueguest';
