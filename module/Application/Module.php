@@ -12,10 +12,10 @@ namespace Application;
 use Carbon\Carbon;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
-use Zend\Mvc\ModuleRouteListener;
-use Zend\Mvc\MvcEvent;
-use Zend\Session\Container as SessionContainer;
-use Zend\Validator\AbstractValidator;
+use Laminas\Mvc\ModuleRouteListener;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Session\Container as SessionContainer;
+use Laminas\Validator\AbstractValidator;
 use User\Permissions\NotAllowedException;
 
 class Module
