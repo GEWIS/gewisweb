@@ -16,6 +16,7 @@ class AclServiceFactory implements FactoryInterface
         $apiAuthService = $container->get('user_apiauth_service');
         $remoteAddress = $container->get('user_remoteaddress');
         $tueRange = $container->get('config')['tue_range'];
+
         switch ($requestedName) {
             case 'user_service_acl':
                 return new AclService($translator, $authService, $apiAuthService, $remoteAddress, $tueRange);

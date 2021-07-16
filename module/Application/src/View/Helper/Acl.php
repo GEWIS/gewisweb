@@ -41,10 +41,13 @@ class Acl extends AbstractHelper
      * @param string $factory Acl factory to load
      *
      * @return Acl
+     *
+     * @throws InvalidArgumentException
      */
     public function __invoke(string $factory)
     {
         $this->acl = $this->getServiceLocator()->get($factory);
+
         if ($this->acl instanceof AbstractAclService) {
             return $this;
         } else {
