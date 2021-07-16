@@ -55,6 +55,9 @@ replenish: rundev
 update: rundev updatecomposer updatepackage updatecss updateglide
 		@docker-compose down
 
+loadenv:
+		@export $(grep -v '^#' .env | xargs -d '\n')
+
 phpstan:
 		@vendor/bin/phpstan analyse -c phpstan.neon
 
