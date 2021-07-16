@@ -26,7 +26,7 @@ Vagrantfile
 Makefile
 autoload_classmap.php
 composer.phar
-config/ssh.env
+config/bash.env
 config/autoload/doctrine.local.php
 config/autoload/doctrine.external.php
 config/autoload/gewisdb.local.php

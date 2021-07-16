@@ -23,6 +23,5 @@ autoload_classmap.php
 .mysql
 .vagrant/
 .vs/
-config/ssh.env
-
+config/bash.env
 *.cache
