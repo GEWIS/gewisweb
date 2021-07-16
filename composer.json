@@ -111,7 +111,7 @@
         },
         "patches": {
             "doctrine/orm": {
-                "Fix issues with SubDecisions.": "https://raw.githubusercontent.com/GEWIS/orm/2.8.x/1-to-1-multiple-join-columns.patch"
+                "Fix issues with SubDecisions.": "https://raw.githubusercontent.com/GEWIS/orm/2.9.x/1-to-1-multiple-join-columns.patch"
             }
         }
     },
