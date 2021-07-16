@@ -22,7 +22,7 @@ return [
         'connection' => [
             // Configuration for service `doctrine.connection.orm_default` service
             'orm_default' => [
-                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'driverClass' => \Doctrine\DBAL\PDO\MySQL\Driver::class,
                 'params' => [
                     'host'     => getenv('DOCKER_DB_HOST'),
                     'port'     => getenv('DOCKER_DB_PORT'),
