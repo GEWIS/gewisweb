@@ -140,6 +140,8 @@
       <path value="$PROJECT_DIR$/vendor/friendsofphp/php-cs-fixer" />
       <path value="$PROJECT_DIR$/vendor/php-cs-fixer/diff" />
       <path value="$PROJECT_DIR$/vendor/san/san-session-toolbar" />
+      <path value="$PROJECT_DIR$/vendor/laminas/laminas-mvc-console" />
+      <path value="$PROJECT_DIR$/vendor/laminas/laminas-text" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

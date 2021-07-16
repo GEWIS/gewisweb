@@ -13,4 +13,4 @@ chown -R  www-data:www-data /code/data
 rm -R /tmp/gewisweb-${BRANCH}
 cd /code
 php composer.phar dump-autoload -o --no-dev
-./vendor/doctrine/doctrine-module/bin/doctrine-module orm:generate-proxies
+./orm orm:generate-proxies

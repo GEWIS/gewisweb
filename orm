@@ -10,5 +10,4 @@ chdir(__DIR__);
 
 require 'bootstrap.php';
 
-$application = ConsoleRunner::getApplication();
-$application->run();
+include 'vendor/bin/doctrine-module';

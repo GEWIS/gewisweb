@@ -7,6 +7,8 @@
  */
 
 return [
+    'Laminas\Mvc\Console',
+    'Laminas\Mvc\I18n',
     'Laminas\Serializer',
     'Laminas\Mail',
     'Laminas\Log',
@@ -17,7 +19,6 @@ return [
     'Laminas\Hydrator',
     'Laminas\Session',
     'Laminas\I18n',
-    'Laminas\Mvc\I18n',
     'Laminas\Form',
     'Laminas\Router',
     'Laminas\Validator',
