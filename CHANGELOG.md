@@ -1,3 +1,47 @@
+## [v2.2.3](https://github.com/GEWIS/gewisweb/tree/v2.2.3) (2021-07-16)
+
+* Re-added Infima.
+* Fixed issue where sessions were not correctly persisted.
+
+---
+
+## [v2.2.2](https://github.com/GEWIS/gewisweb/tree/v2.2.2) (2021-07-07)
+
+* Person who (dis)approved an activity is now shown in the admin details page.
+* Fixed issue with activities breaking organ pages.
+* Fixed issue when trying to upload large photos.
+* Fixed issue with Decisions not actively syncing.
+* Fixed issue with Photo of the Week generation.
+
+---
+
+## [v2.2.1](https://github.com/GEWIS/gewisweb/tree/v2.2.1) (2021-06-29)
+
+* Patched ORM to fix issues with Decisions not showing.
+* Several bug fixes.
+
+---
+
+## [v2.2](https://github.com/GEWIS/gewisweb/tree/v2.2) (2021-06-27)
+
+* Added Matomo to gather website analytics (tracking and performance).
+
+---
+
+## [v2.1](https://github.com/GEWIS/gewisweb/tree/v2.1) (2021-06-25)
+
+* Hotfix for several major bugs after Docker deployment and Activity module update.
+
+---
+
+## [v2.0](https://github.com/GEWIS/gewisweb/tree/v2.0) (2021-06-24)
+
+* Moved to Docker for deployment.
+* Updated the Activity module; includes sign-up lists, activity categories, and bug fixes.
+* Bug fixes.
+
+---
+
 ## [v1.8](https://github.com/GEWIS/gewisweb/tree/v1.8) (2020-08-21)
 
 * Made the new photo viewer the main photo viewer
