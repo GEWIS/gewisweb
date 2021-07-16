@@ -38,22 +38,22 @@ runprodtest: buildprod
 rundev: builddev
 		@docker-compose up -d --force-recreate --remove-orphans
 
-getvendordir: rundev
-		@rm -Rf ./vendor
-		@docker cp gewisweb_web_1:/code/vendor ./vendor
+stop:
 		@docker-compose down
 
-replenish: rundev
+getvendordir:
+		@rm -Rf ./vendor
+		@docker cp gewisweb_web_1:/code/vendor ./vendor
+
+replenish:
 		@docker cp ./public gewisweb_web_1:/code
 		@docker-compose exec web chown -R www-data:www-data /code/public
 		@docker cp ./data gewisweb_web_1:/code
 		@docker-compose exec web chown -R www-data:www-data /code/data
 		@docker-compose exec web php composer.phar dump-autoload --dev
 		@docker-compose exec web ./orm orm:generate-proxies
-		@docker-compose down
 
-update: rundev updatecomposer updatepackage updatecss updateglide
-		@docker-compose down
+update: updatecomposer updatepackage updatecss updateglide
 
 loadenv:
 		@export $$(grep -v '^#' .env | xargs -d '\n')
@@ -63,9 +63,8 @@ copyconf:
 		cp config/autoload/doctrine.local.development.php.dist config/autoload/doctrine.local.php
 		cp config/autoload/laminas-developer-tools.local.php.dist config/autoload/laminas-developer-tools.local.php
 
-phpstan: loadenv copyconf rundev
-		@export "DOCKER_DB_HOST=0.0.0.0"
-		@vendor/bin/phpstan analyse -c phpstan.neon
+phpstan:
+		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon
 
 phpcs:
 		@vendor/bin/phpcs -p --standard=PSR1,PSR12 --extensions=php,dist module config
