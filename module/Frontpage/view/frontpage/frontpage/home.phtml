@@ -1,3 +1,8 @@
+<?php
+
+use Activity\Model\Activity;
+
+?>
 <div class="jumbotron jumbotron--panorama"></div>
 
 <section class="section">
@@ -20,7 +25,7 @@
                             <h3>
                                 <?php
                                 $lang = $this->plugin('translate')->getTranslator()->getLocale();
-                                if ($item instanceof \Activity\Model\Activity) {
+                                if ($item instanceof Activity) {
                                     echo ($lang === 'en') ? $item->getName()->getValueEN() : $item->getName()->getValueNL();
                                 } else {
                                     echo ($lang === 'en') ? $item->getEnglishTitle() : $item->getDutchTitle();
@@ -30,7 +35,7 @@
                             <div style="position: relative; overflow: hidden;">
                                 <div class="reveal reveal-10">
                                     <?php
-                                    if ($item instanceof \Activity\Model\Activity) {
+                                    if ($item instanceof Activity) {
                                         $content = ($lang === 'en') ? $item->getDescription()->getValueEN() : $item->getDescription()->getValueNL();
                                     } else {
                                         $content = ($lang === 'en') ? $item->getEnglishContent() : $item->getDutchContent();
@@ -58,7 +63,7 @@
                         });
                     </script>
                 </section>
-                <?php if (!empty($birthdays) && $this->acl('decision_acl')->isAllowed('member', 'birthdays')): ?>
+                <?php if (!empty($birthdays) && $this->acl('decision_service_acl')->isAllowed('member', 'birthdays')): ?>
                     <section class="content-section">
                         <div class="panel panel-default" style="overflow:hidden;">
                             <?php if (!is_null($birthdayTag)): ?>
@@ -152,7 +157,7 @@
                         </div>
                     </div>
                 <?php endif; ?>
-                <?php if ($this->acl('decision_acl')->isAllowed('member', 'birthdays')): ?>
+                <?php if ($this->acl('decision_service_acl')->isAllowed('member', 'birthdays')): ?>
                     <div class="panel panel-default">
                         <div class="panel-heading panel-heading--full-height">
                             <h3><?= $this->translate('Infima') ?></h3>

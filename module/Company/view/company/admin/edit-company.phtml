@@ -71,23 +71,23 @@ $submit->setAttribute('class', 'btn btn-primary pull-right');
 <h2><?= $this->translate('Packages') ?></h2>
 <table class="table table-striped">
     <thead>
-        <tr>
-            <th>
-                <?= $this->translate('Active'); ?>
-            </th>
-            <th>
-                <?= $this->translate('Start date'); ?>
-            </th>
-            <th>
-                <?= $this->translate('Expiration date'); ?>
-            </th>
-            <th>
-                <?= $this->translate('Jobs / Type'); ?>
-            </th>
-            <th>
-                <?= $this->translate('Actions'); ?>
-            </th>
-        </tr>
+    <tr>
+        <th>
+            <?= $this->translate('Active'); ?>
+        </th>
+        <th>
+            <?= $this->translate('Start date'); ?>
+        </th>
+        <th>
+            <?= $this->translate('Expiration date'); ?>
+        </th>
+        <th>
+            <?= $this->translate('Jobs / Type'); ?>
+        </th>
+        <th>
+            <?= $this->translate('Actions'); ?>
+        </th>
+    </tr>
     </thead>
     <?php foreach ($company->getPackages() as $package): ?>
         <tr>

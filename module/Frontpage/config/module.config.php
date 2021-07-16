@@ -1,17 +1,58 @@
 <?php
 
+use Frontpage\Controller\AdminController;
+use Frontpage\Controller\FrontpageController;
+use Frontpage\Controller\NewsAdminController;
+use Frontpage\Controller\OrganController;
+use Frontpage\Controller\PageAdminController;
+use Frontpage\Controller\PageController;
+use Frontpage\Controller\PollAdminController;
+use Frontpage\Controller\PollController;
+use Interop\Container\ContainerInterface;
+
 return [
     'controllers' => [
-        'invokables' => [
-            'Frontpage\Controller\Frontpage' => 'Frontpage\Controller\FrontpageController',
-            'Frontpage\Controller\Organ' => 'Frontpage\Controller\OrganController',
-            'Frontpage\Controller\Page' => 'Frontpage\Controller\PageController',
-            'Frontpage\Controller\PageAdmin' => 'Frontpage\Controller\PageAdminController',
-            'Frontpage\Controller\Poll' => 'Frontpage\Controller\PollController',
-            'Frontpage\Controller\PollAdmin' => 'Frontpage\Controller\PollAdminController',
-            'Frontpage\Controller\NewsAdmin' => 'Frontpage\Controller\NewsAdminController',
-            'Frontpage\Controller\Admin' => 'Frontpage\Controller\AdminController',
-        ],
+        'factories' => [
+            'Frontpage\Controller\Frontpage' => function (ContainerInterface $container) {
+                $frontpageService = $container->get('frontpage_service_frontpage');
+
+                return new FrontpageController($frontpageService);
+            },
+            'Frontpage\Controller\Organ' => function (ContainerInterface $container) {
+                $organService = $container->get('decision_service_organ');
+                $activityQueryService = $container->get('activity_service_activityQuery');
+
+                return new OrganController($organService, $activityQueryService);
+            },
+            'Frontpage\Controller\Page' => function (ContainerInterface $container) {
+                $pageService = $container->get('frontpage_service_page');
+
+                return new PageController($pageService);
+            },
+            'Frontpage\Controller\PageAdmin' => function (ContainerInterface $container) {
+                $pageService = $container->get('frontpage_service_page');
+
+                return new PageAdminController($pageService);
+            },
+            'Frontpage\Controller\Poll' => function (ContainerInterface $container) {
+                $pollService = $container->get('frontpage_service_poll');
+                $pollCommentForm = $container->get('frontpage_form_poll_comment');
+
+                return new PollController($pollService, $pollCommentForm);
+            },
+            'Frontpage\Controller\PollAdmin' => function (ContainerInterface $container) {
+                $pollService = $container->get('frontpage_service_poll');
+
+                return new PollAdminController($pollService);
+            },
+            'Frontpage\Controller\NewsAdmin' => function (ContainerInterface $container) {
+                $newsService = $container->get('frontpage_service_news');
+
+                return new NewsAdminController($newsService);
+            },
+            'Frontpage\Controller\Admin' => function () {
+                return new AdminController();
+            },],
     ],
     'router' => [
         'routes' => [
@@ -42,7 +83,7 @@ return [
                                 'action' => 'page',
                             ],
                         ],
-                        'priority' => -1
+                        'priority' => -1,
                     ],
                     'organ' => [
                         'type' => 'Segment',
@@ -54,10 +95,10 @@ return [
                             ],
                             'defaults' => [
                                 'action' => 'organ',
-                                'controller' => 'Organ'
-                            ]
+                                'controller' => 'Organ',
+                            ],
                         ],
-                        'priority' => 100
+                        'priority' => 100,
                     ],
                     'committee_list' => [
                         'type' => 'Literal',
@@ -65,10 +106,10 @@ return [
                             'route' => 'association/committees',
                             'defaults' => [
                                 'action' => 'committeeList',
-                                'controller' => 'Organ'
-                            ]
+                                'controller' => 'Organ',
+                            ],
                         ],
-                        'priority' => 100
+                        'priority' => 100,
                     ],
                     'fraternity_list' => [
                         'type' => 'Literal',
@@ -76,10 +117,10 @@ return [
                             'route' => 'association/fraternities',
                             'defaults' => [
                                 'action' => 'fraternityList',
-                                'controller' => 'Organ'
-                            ]
+                                'controller' => 'Organ',
+                            ],
                         ],
-                        'priority' => 100
+                        'priority' => 100,
                     ],
                 ],
             ],
@@ -138,7 +179,7 @@ return [
                         ],
                     ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
             'poll' => [
                 'type' => 'Literal',
@@ -210,7 +251,7 @@ return [
                         ],
                     ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
             'admin_poll' => [
                 'type' => 'Segment',
@@ -261,7 +302,7 @@ return [
                         ],
                     ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
             'admin_news' => [
                 'type' => 'Segment',
@@ -321,7 +362,7 @@ return [
                         ],
                     ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
             'admin' => [
                 'type' => 'Segment',
@@ -334,7 +375,7 @@ return [
                     ],
                 ],
                 'may_terminate' => true,
-                'priority' => 100
+                'priority' => 100,
             ],
         ],
     ],
@@ -354,13 +395,13 @@ return [
             'frontpage_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__ . '/../src/Frontpage/Model/']
+                'paths' => [__DIR__ . '/../src/Model/'],
             ],
             'orm_default' => [
                 'drivers' => [
-                    'Frontpage\Model' => 'frontpage_entities'
-                ]
-            ]
-        ]
+                    'Frontpage\Model' => 'frontpage_entities',
+                ],
+            ],
+        ],
     ],
 ];

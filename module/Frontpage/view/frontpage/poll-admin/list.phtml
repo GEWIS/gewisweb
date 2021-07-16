@@ -12,15 +12,15 @@ $this->scriptUrl()->requireUrls(
 <h1><?= $this->translate('Polls awaiting approval') ?></h1>
 <table class="table table-striped">
     <thead>
-        <tr>
-            <th>#</th>
-            <th><?= $this->translate('Dutch question') ?></th>
-            <th><?= $this->translate('English question') ?></th>
-            <th><?= $this->translate('Date') ?></th>
-            <th><?= $this->translate('Submitter') ?></th>
-            <th><?= $this->translate('Approver') ?></th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>#</th>
+        <th><?= $this->translate('Dutch question') ?></th>
+        <th><?= $this->translate('English question') ?></th>
+        <th><?= $this->translate('Date') ?></th>
+        <th><?= $this->translate('Submitter') ?></th>
+        <th><?= $this->translate('Approver') ?></th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
     <?php foreach ($unapprovedPolls as $poll): ?>
@@ -34,10 +34,10 @@ $this->scriptUrl()->requireUrls(
         </dl>
         <table class="table table-striped">
             <thead>
-                <tr>
-                    <th><?= $this->translate('Dutch option') ?></th>
-                    <th><?= $this->translate('English option') ?></th>
-                </tr>
+            <tr>
+                <th><?= $this->translate('Dutch option') ?></th>
+                <th><?= $this->translate('English option') ?></th>
+            </tr>
             </thead>
             <tbody>
             <?php foreach ($poll->getOptions() as $option): ?>
@@ -87,15 +87,15 @@ $this->scriptUrl()->requireUrls(
 
     <table class="table table-striped">
         <thead>
-            <tr>
-                <th>#</th>
-                <th><?= $this->translate('Dutch question') ?></th>
-                <th><?= $this->translate('English question') ?></th>
-                <th><?= $this->translate('Date') ?></th>
-                <th><?= $this->translate('Submitter') ?></th>
-                <th><?= $this->translate('Approver') ?></th>
-                <th></th>
-            </tr>
+        <tr>
+            <th>#</th>
+            <th><?= $this->translate('Dutch question') ?></th>
+            <th><?= $this->translate('English question') ?></th>
+            <th><?= $this->translate('Date') ?></th>
+            <th><?= $this->translate('Submitter') ?></th>
+            <th><?= $this->translate('Approver') ?></th>
+            <th></th>
+        </tr>
         </thead>
         <tbody>
         <?php foreach ($paginator as $poll): ?>
@@ -109,10 +109,10 @@ $this->scriptUrl()->requireUrls(
             </dl>
             <table class="table table-striped">
                 <thead>
-                    <tr>
-                        <th><?= $this->translate('Dutch option') ?></th>
-                        <th><?= $this->translate('English option') ?></th>
-                    </tr>
+                <tr>
+                    <th><?= $this->translate('Dutch option') ?></th>
+                    <th><?= $this->translate('English option') ?></th>
+                </tr>
                 </thead>
                 <tbody>
                 <?php foreach ($poll->getOptions() as $option): ?>

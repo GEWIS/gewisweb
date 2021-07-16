@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-12">
                 <ul class="nav nav-pills head-menu">
-                    <?php if ($this->acl('activity_acl')->isAllowed('activity', 'viewAdmin')): ?>
+                    <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'viewAdmin')): ?>
                         <li class="dropdown">
                             <a href="<?= $this->url('activity_admin') ?>" class="dropdown-toggle" data-toggle="dropdown"
                                role="button" aria-haspopup="true" aria-expanded="false">
@@ -18,7 +18,7 @@
                                 <li>
                                     <a href="<?= $this->url('activity_admin') ?>"><?= $this->translate('Overview') ?></a>
                                 </li>
-                                <?php if ($this->acl('activity_acl')->isAllowed('activity', 'listCategories')): ?>
+                                <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'listCategories')): ?>
                                     <li>
                                         <a href="<?= $this->url('activity_admin_categories') ?>"><?= $this->translate('Categories') ?></a>
                                     </li>
@@ -26,14 +26,14 @@
                             </ul>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('company_acl')->isAllowed('company', 'listall')): ?>
+                    <?php if ($this->acl('company_service_acl')->isAllowed('company', 'listall')): ?>
                         <li>
                             <a href="<?= $this->url('admin_company') ?>">
                                 <?= $this->translate('Career') ?>
                             </a>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('decision_acl')->isAllowed('meeting', 'upload_notes')): ?>
+                    <?php if ($this->acl('decision_service_acl')->isAllowed('meeting', 'upload_notes')): ?>
                         <li class="dropdown">
                             <a href="<?= $this->url('admin_decision') ?>" class="dropdown-toggle" data-toggle="dropdown"
                                role="button" aria-haspopup="true" aria-expanded="false">
@@ -53,7 +53,7 @@
                         </li>
                     <?php endif; ?>
 
-                    <?php if ($this->acl('decision_acl')->isAllowed('organ', 'viewAdmin')): ?>
+                    <?php if ($this->acl('decision_service_acl')->isAllowed('organ', 'viewAdmin')): ?>
                         <li>
                             <a href="<?= $this->url('admin_organ') ?>">
                                 <?= $this->translate('Organs') ?>
@@ -61,7 +61,7 @@
                         </li>
                     <?php endif; ?>
 
-                    <?php if ($this->acl('education_acl')->isAllowed('exam', 'upload')): ?>
+                    <?php if ($this->acl('education_service_acl')->isAllowed('exam', 'upload')): ?>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">
@@ -74,27 +74,27 @@
                             </ul>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('frontpage_acl')->isAllowed('poll', 'approve')): ?>
+                    <?php if ($this->acl('frontpage_service_acl')->isAllowed('poll', 'approve')): ?>
                         <li>
                             <a href="<?= $this->url('admin_poll') ?>"><?= $this->translate('Polls') ?></a>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('frontpage_acl')->isAllowed('page', 'create')): ?>
+                    <?php if ($this->acl('frontpage_service_acl')->isAllowed('page', 'create')): ?>
                         <li>
                             <a href="<?= $this->url('admin_page') ?>"><?= $this->translate('Pages') ?></a>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('frontpage_acl')->isAllowed('news_item', 'create')): ?>
+                    <?php if ($this->acl('frontpage_service_acl')->isAllowed('news_item', 'create')): ?>
                         <li>
                             <a href="<?= $this->url('admin_news') ?>"><?= $this->translate('News') ?></a>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('photo_acl')->isAllowed('album', 'nodate')): ?>
+                    <?php if ($this->acl('photo_service_acl')->isAllowed('album', 'nodate')): ?>
                         <li>
                             <a href="<?= $this->url('admin_photo') ?>"><?= $this->translate('Photos') ?></a>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('acl')->isAllowed('apiuser', 'add')): ?>
+                    <?php if ($this->acl('user_service_acl')->isAllowed('apiuser', 'add')): ?>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">

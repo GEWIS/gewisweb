@@ -1,8 +1,12 @@
 <?php
 // set title
+use Decision\Model\AssociationYear;
+use Photo\Model\Album;
+use Photo\Model\MemberAlbum;
+
 $this->headTitle($album->getName());
 $currentAlbum = $album;
-while(!is_null($currentAlbum->getParent())) {
+while (!is_null($currentAlbum->getParent())) {
     $this->headTitle($currentAlbum->getParent()->getName());
     $currentAlbum = $currentAlbum->getParent();
 }
@@ -21,11 +25,11 @@ $this->headTitle($this->translate('Photos'));
                     <?= $this->translate('Photos') ?>
                 </a>
             </li>
-            <?php if (!$currentAlbum instanceof \Photo\Model\MemberAlbum): ?>
+            <?php if (!$currentAlbum instanceof MemberAlbum): ?>
                 <li>
                     <?php
                     // determine association year
-                    $associationYear = \Decision\Model\AssociationYear::fromDate($album->getStartDateTime());
+                    $associationYear = AssociationYear::fromDate($album->getStartDateTime());
                     ?>
                     <a href="<?= $this->url('photo/year', ['year' => $associationYear->getYear()]); ?>">
                         <?= $associationYear->getYearString() ?>
@@ -37,17 +41,17 @@ $this->headTitle($this->translate('Photos'));
             $crumbs = [];
             if (!is_null($album->getParent())) {
                 $currentAlbum = $album;
-                while(!is_null($currentAlbum->getParent())) {
+                while (!is_null($currentAlbum->getParent())) {
                     // prepend parent to array
                     array_unshift($crumbs, [
-                        'url'  => $this->url('photo/album', ['album_id' => $currentAlbum->getParent()->getId()]),
+                        'url' => $this->url('photo/album', ['album_id' => $currentAlbum->getParent()->getId()]),
                         'name' => $currentAlbum->getParent()->getName()
                     ]);
                     $currentAlbum = $currentAlbum->getParent();
                 }
             }
             // then we print them
-            foreach($crumbs as $crumb): ?>
+            foreach ($crumbs as $crumb): ?>
                 <li>
                     <a href="<?= $crumb['url'] ?>">
                         <?= $this->escapeHtml($crumb['name']) ?>
@@ -55,7 +59,7 @@ $this->headTitle($this->translate('Photos'));
                 </li>
             <?php endforeach; ?>
             <li class="active">
-                <?php if ($album instanceof \Photo\Model\MemberAlbum): ?>
+                <?php if ($album instanceof MemberAlbum): ?>
                     <span class="fas fa-user"></span>
                     &nbsp;
                 <?php endif; ?>
@@ -70,19 +74,19 @@ $this->headTitle($this->translate('Photos'));
         <div class="row">
             <div class="col-lg-12">
                 <div class="alert alert-danger" role="alert">
-                    <?= $this->translate('Do you want to help test new features of the website?')?>
+                    <?= $this->translate('Do you want to help test new features of the website?') ?>
                     <?php
-                    if ($album instanceof \Photo\Model\MemberAlbum) {
-                        echo sprintf($this->translate('Then try the new photo viewer %sHERE%s!'), '<a href="' .$this->url('photo/album_beta', ['album_id' => $currentAlbum->getId(), 'album_type' => 'member']) . '">', '</a>' );
+                    if ($album instanceof MemberAlbum) {
+                        echo sprintf($this->translate('Then try the new photo viewer %sHERE%s!'), '<a href="' . $this->url('photo/album_beta', ['album_id' => $currentAlbum->getId(), 'album_type' => 'member']) . '">', '</a>');
                     } else {
-                        echo sprintf($this->translate('Then try the new photo viewer %sHERE%s!'), '<a href="' .$this->url('photo/album_beta', ['album_id' => $currentAlbum->getId(), 'album_type' => 'album']) . '">', '</a>' );
+                        echo sprintf($this->translate('Then try the new photo viewer %sHERE%s!'), '<a href="' . $this->url('photo/album_beta', ['album_id' => $currentAlbum->getId(), 'album_type' => 'album']) . '">', '</a>');
                     }
                     ?>
                 </div>
                 <h1 class="page-header">
                     <?= $this->escapeHtml($album->getName()); ?>
                     <small>
-                        <?php if ($album instanceof \Photo\Model\MemberAlbum): ?>
+                        <?php if ($album instanceof MemberAlbum): ?>
                             <a href="<?= $this->url('member/view', ['lidnr' => $album->getMember()->getLidnr()]) ?>">
                                 <?= strtolower($this->translate("View user profile")) ?>
                             </a>
@@ -94,7 +98,7 @@ $this->headTitle($this->translate('Photos'));
         </div>
         <?php
         $path = '';
-        if ($album instanceof \Photo\Model\MemberAlbum) {
+        if ($album instanceof MemberAlbum) {
             $path = $this->url('photo/member', ['lidnr' => $album->getMember()->getLidnr()]);
         } else {
             $path = $this->url('photo/album', ['album_id' => $album->getId()]);
@@ -113,7 +117,7 @@ $this->headTitle($this->translate('Photos'));
             <div class="grid-sizer"></div>
             <div class="gutter-sizer"></div>
             <?php foreach ($paginator as $item): ?>
-                <?php if ($item instanceof \Photo\Model\Album): ?>
+                <?php if ($item instanceof Album): ?>
                     <div class="photo-grid-item photo-grid-item-album">
                         <a class="thumbnail" href="<?= $this->url('photo/album', ['album_id' => $item->getId()]); ?>">
                             <img src="<?= $this->fileUrl($item->getCoverPath()); ?>">
@@ -123,9 +127,10 @@ $this->headTitle($this->translate('Photos'));
                         </a>
                     </div>
                 <?php else: ?>
-                    <div class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
+                    <div
+                        class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
                         <a href="<?php
-                        if ($album instanceof \Photo\Model\MemberAlbum) {
+                        if ($album instanceof MemberAlbum) {
                             echo $this->url('photo/member/photo', [
                                 'lidnr' => $album->getMember()->getLidnr(),
                                 'page' => isset($paginator->current) ? $paginator->current : 0,
@@ -140,7 +145,8 @@ $this->headTitle($this->translate('Photos'));
                                 : $item->getLargeThumbPath();
                             $size = getimagesize('public/data/' . $image);
                             ?>
-                            <img data-width="<?= $size[0] ?>" data-height="<?= $size[1] ?>" src="<?= $this->fileUrl($image); ?>">
+                            <img data-width="<?= $size[0] ?>" data-height="<?= $size[1] ?>"
+                                 src="<?= $this->fileUrl($image); ?>">
                         </a>
                     </div>
                 <?php endif; ?>

@@ -1,5 +1,6 @@
 *~
 *autoload_classmap.php
+*.cache
 *.gitignore
 *.kate-swp
 *.log

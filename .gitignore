@@ -7,7 +7,7 @@ nbproject
 .buildpath
 *.DS_Store
 .env
-.idea
+.idea/sonarlint/
 .project
 .settings
 vendor/
@@ -15,6 +15,7 @@ gewisweb-vagrant/
 node_modules/
 .sass-cache/
 .scannerwork/
+data/cache/phpstan/
 public/css/gewis-theme.css
 public/css/gewis-theme.css.map
 public/styleguide/
@@ -23,3 +24,5 @@ autoload_classmap.php
 .vagrant/
 .vs/
 config/ssh.env
+
+*.cache

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Global Configuration Override
+ * Global Configuration Override.
  *
  * You can use this file for overriding configuration values from modules, etc.
  * You would place values in here that are agnostic to the environment and not
@@ -11,8 +12,11 @@
  * file.
  */
 
+use Laminas\Session\Storage\SessionArrayStorage;
+use Laminas\Session\Validator\HttpUserAgent;
+
 return [
-    /**
+    /*
      * Bcrypt cost.
      *
      * DO NOT CHANGE THE PASSWORD HASH SETTINGS FROM THEIR DEFAULTS
@@ -28,7 +32,7 @@ return [
      */
     'bcrypt_cost' => 13,
 
-    /**
+    /*
      * IP address start for the TU/e. All IP addresses starting with this will
      * be allowed more base rights, like viewing exams
      */
@@ -38,12 +42,12 @@ return [
         'normal' => [
             'user' => 10,
             'ip' => 100,
-            'lockout_time' => 10
+            'lockout_time' => 10,
         ],
         'pin' => [
             'user' => 5,
             'ip' => 50,
-            'lockout_time' => 20
+            'lockout_time' => 20,
         ],
     ],
     'storage' => [
@@ -53,7 +57,7 @@ return [
         'dir_mode' => 0777, // rwx by default
     ],
 
-    /**
+    /*
      * Exam and Summary upload directory configration.
      */
     'education' => [
@@ -62,7 +66,7 @@ return [
         'dir_mode' => 0777, // rwx by default
     ],
 
-    /**
+    /*
      * Exam and Summary temporary upload directory configration.
      */
     'education_temp' => [
@@ -72,28 +76,28 @@ return [
         'public_summary_dir' => 'data/education_temp_summaries',
     ],
 
-    /**
+    /*
      * Dreamspark configuration.
      */
     'dreamspark' => [
         'url' => 'https://e5.onthehub.com/WebStore/Security/AuthenticateUser.aspx?account=%ACCOUNT%&username=%EMAIL%&key=%KEY%&academic_statuses=%GROUPS%',
         // configured locally
         'account' => '',
-        'key' => ''
+        'key' => '',
     ],
 
-    /**
+    /*
      * CA Path for SSL certificates, override this locally if necessary.
      */
     'sslcapath' => '/etc/ssl/certs',
 
-    /**
+    /*
      * Path for JWT keypairs
      */
     'jwt_key_path' => 'data/keys/jwt-key',
     'jwt_pub_key_path' => 'data/keys/jwt-key.pub',
 
-    /**
+    /*
      * Settings for Monolog logger
      */
     'logging' => [
@@ -102,7 +106,7 @@ return [
         'minimal_log_level' => 'INFO',
     ],
 
-    /**
+    /*
      * Photo's upload directory configuration
      */
     'photo' => [
@@ -116,14 +120,14 @@ return [
              * landscape images.
              */
             'width' => 320,
-            'height' => 640
+            'height' => 640,
         ],
         'large_thumb_size' => [
             /*
              * Max. width and height which a thumbnail may have.
              */
             'width' => 1920,
-            'height' => 1920
+            'height' => 1920,
         ],
         'album_cover' => [
             'width' => 320,
@@ -132,8 +136,8 @@ return [
             'outer_border' => 0,
             'cols' => 2,
             'rows' => 2,
-            'background' => '#ffffff'
-        ]
+            'background' => '#ffffff',
+        ],
     ],
 
     'organ_information' => [
@@ -156,97 +160,29 @@ return [
         'poster-reglement' => 'Beleid%20&%20Reglementen/Posterbeleid',
     ],
 
-    /**
+    /*
      * Doctrine global configuration, like functions
      */
     'doctrine' => [
         'configuration' => [
             'orm_default' => [
                 'numeric_functions' => [
-                    'RAND'  => 'Application\Extensions\Doctrine\Rand'
-                ]
-            ]
-        ]
+                    'RAND' => 'Application\Extensions\Doctrine\Rand',
+                ],
+            ],
+        ],
     ],
 
-    /**
-     * OASE SOAP API configuration.
-     *
-     * Please not that it is impossible to use this API without a whitelisted
-     * IP. Hence, it is only possible to use this on the GEWIS server. In 2013
-     * we communicated with STU about using this API, instead of trying to
-     * pull the information from OASE via HTTP. Which would lead to
-     * impracticalities on our side, and a slow OASE at times on the side of
-     * Dienst ICT.
-     */
-    'oase' => [
-        'soap' => [
-            'wsdl' => 'http://dlwtbiz.campus.test.tue.nl/ESB/ESB_ESB_DLWO_ESB_ReceivePort.svc?wsdl',
-            'options' => [
-                'classmap' => [
-                    'Vraag' => 'Education\Oase\Vraag',
-                    'Property' => 'Education\Oase\Property',
-                    'Antwoord' => 'Education\Oase\Antwoord'
-                ],
-                'soap_version' => SOAP_1_1
-            ]
+    'session_config' => [],
+
+    'session_storage' => [
+        'type' => SessionArrayStorage::class,
+    ],
+
+    'session_manager' => [
+        'validators' => [
+            HttpUserAgent::class,
         ],
-        /**
-         * Filters for studies
-         */
-        'studies' => [
-            /**
-             * Studies of W&I will have these keywords.
-             *
-             * Only studies with these keywords will be considered.
-             */
-            'keywords' => [
-                "software science",
-                "web science",
-                "wiskunde",
-                "informatica",
-                "mathematics",
-                "finance and risk",
-                "information security technology",
-                "(eit-sde)",
-                "computational science and engineering",
-                "statistics, probability, and operations research",
-                "computer",
-                "security",
-                "business information systems",
-                "embedded systems"
-            ],
-            /**
-             * Negative keywords.
-             *
-             * Studies with these keywords will not be considered W&I studies.
-             */
-            'negative_keywords' => [
-                'leraar',
-                'natuurkunde'
-            ],
-            /**
-             * Group ID's.
-             *
-             * Only studies with these group ID's will be considered.
-             */
-            'group_ids' => [
-                100, // diverse masters
-                110, // schakelprogramma's
-                150, // minoren
-                155, // HBO-minor
-                200, // bachelor (pre-bachelor-college)
-                210, // regulier onderwijs (incl. master)
-                212, // coherente keuzepakketten wss
-                250,
-            ],
-            /**
-             * Education types
-             */
-            'education_types' => [
-                'master',
-                'bachelor'
-            ]
-        ]
-    ]
+        'enable_default_container_manager' => true,
+    ],
 ];

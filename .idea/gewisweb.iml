@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/module/Activity/src" isTestSource="false" packagePrefix="Activity\" />
+      <sourceFolder url="file://$MODULE_DIR$/module/Application/src" isTestSource="false" packagePrefix="Application\" />
+      <sourceFolder url="file://$MODULE_DIR$/module/Company/src" isTestSource="false" packagePrefix="Company\" />
+      <sourceFolder url="file://$MODULE_DIR$/module/Decision/src" isTestSource="false" packagePrefix="Decision\" />
+      <sourceFolder url="file://$MODULE_DIR$/module/Education/src" isTestSource="false" packagePrefix="Education\" />
+      <sourceFolder url="file://$MODULE_DIR$/module/Frontpage/src" isTestSource="false" packagePrefix="Frontpage\" />
+      <sourceFolder url="file://$MODULE_DIR$/module/User/src" isTestSource="false" packagePrefix="User\" />
+      <sourceFolder url="file://$MODULE_DIR$/module/Photo/src" isTestSource="false" packagePrefix="Photo\" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/module/Decision/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/module/User/test" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor" />
+      <excludeFolder url="file://$MODULE_DIR$/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/data/cache" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

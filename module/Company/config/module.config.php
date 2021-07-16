@@ -1,5 +1,10 @@
 <?php
 
+use Application\View\Helper\Truncate;
+use Company\Controller\AdminController;
+use Company\Controller\CompanyController;
+use Interop\Container\ContainerInterface;
+
 return [
     'router' => [
         'routes' => [
@@ -136,7 +141,6 @@ return [
                             'constraints' => [
                                 'slugCompanyName' => '[a-zA-Z0-9_\-\.]*',
                             ],
-
                         ],
                         'may_terminate' => true,
                     ],
@@ -151,7 +155,6 @@ return [
                             'constraints' => [
                                 'slugCompanyName' => '[a-zA-Z0-9_\-\.]*',
                             ],
-
                         ],
                         'may_terminate' => true,
 
@@ -232,7 +235,7 @@ return [
                                 'options' => [
                                     'route' => '/addJob',
                                     'defaults' => [
-                                        'action' => 'addJob'
+                                        'action' => 'addJob',
                                     ],
                                     'may_terminate' => true,
                                 ],
@@ -293,9 +296,33 @@ return [
         ],
     ],
     'controllers' => [
-        'invokables' => [
-            'Company\Controller\Company' => 'Company\Controller\CompanyController',
-            'Company\Controller\Admin' => 'Company\Controller\AdminController',
+        'factories' => [
+            'Company\Controller\Company' => function (ContainerInterface $container) {
+                $translator = $container->get('translator');
+                $companyService = $container->get('company_service_company');
+                $companyQueryService = $container->get('company_service_companyquery');
+
+                return new CompanyController($translator, $companyService, $companyQueryService);
+            },
+            'Company\Controller\Admin' => function (ContainerInterface $container) {
+                $translator = $container->get('translator');
+                $companyService = $container->get('company_service_company');
+                $companyQueryService = $container->get('company_service_companyquery');
+                $labelMapper = $container->get('company_mapper_label');
+                $companyForm = $container->get('company_form_company');
+                $languages = $container->get('languages');
+                $aclService = $container->get('company_service_acl');
+
+                return new AdminController(
+                    $translator,
+                    $companyService,
+                    $companyQueryService,
+                    $labelMapper,
+                    $companyForm,
+                    $languages,
+                    $aclService
+                );
+            },
         ],
     ],
     'view_manager' => [
@@ -308,7 +335,7 @@ return [
             'company_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__ . '/../src/Company/Model/'],
+                'paths' => [__DIR__ . '/../src/Model/'],
             ],
             'orm_default' => [
                 'drivers' => [
@@ -318,8 +345,10 @@ return [
         ],
     ],
     'view_helpers' => [
-        'invokables' => [
-            'truncate' => 'Application\View\Helper\Truncate'
+        'factories' => [
+            'truncate' => function () {
+                return new Truncate();
+            },
         ],
     ],
 ];

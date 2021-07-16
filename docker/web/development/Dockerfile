@@ -1,4 +1,4 @@
-FROM php:7.1-fpm as gewisweb_web_development
+FROM php:7.4-fpm as gewisweb_web_development
 
 RUN apt-get update \
     && apt-get install -y \
@@ -13,11 +13,15 @@ RUN apt-get update \
         libpq-dev \
         libxml2-dev \
         libzip-dev \
+        nano \
+        rsync \
+        sshpass \
         unzip \
+        zip \
     && apt-get upgrade -y
 
 RUN docker-php-ext-configure \
-        gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+        gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
         calendar \
         exif \
@@ -34,7 +38,7 @@ RUN pecl install imagick \
     && docker-php-ext-enable imagick \
     && pecl install memcached \
     && docker-php-ext-enable memcached \
-    && pecl install xdebug-2.9.8 \
+    && pecl install xdebug \
     && docker-php-ext-enable xdebug
 
 WORKDIR /code
@@ -62,7 +66,7 @@ COPY --chown=www-data:www-data ./docker/web/development/php-fpm.conf /usr/local/
 COPY --chown=www-data:www-data ./config/autoload/local.development.php.dist ./config/autoload/local.php
 COPY --chown=www-data:www-data ./config/autoload/doctrine.local.development.php.dist ./config/autoload/doctrine.local.php
 COPY --chown=www-data:www-data ./config/autoload/gewisdb.local.php.dist ./config/autoload/gewisdb.local.php
-COPY --chown=www-data:www-data ./config/autoload/zdt.local.php.dist ./config/autoload/zdt.local.php
+COPY --chown=www-data:www-data ./config/autoload/laminas-developer-tools.local.php.dist ./config/autoload/laminas-developer-tools.local.php
 
 COPY --chown=www-data:www-data ./docker/web/development/crontab /etc/cron.d/crontab
 RUN chmod 0644 /etc/cron.d/crontab && crontab /etc/cron.d/crontab
@@ -71,6 +75,8 @@ COPY --chown=www-data:www-data ./docker/web/development/docker-entrypoint.sh ./d
 RUN chmod 0775 ./docker-entrypoint.sh
 
 COPY --chown=www-data:www-data . /code
+
+ENV PHP_IDE_CONFIG="serverName=gewis.nl"
 
 RUN php composer.phar dump-autoload
 

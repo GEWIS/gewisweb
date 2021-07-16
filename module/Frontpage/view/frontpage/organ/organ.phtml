@@ -67,7 +67,7 @@ function getOrganDescription($organInformation, $lang)
             </div>
             <div class="col-md-4">
                 <table class="table">
-                    <?php if (!is_null($organInformation) && $this->acl('decision_acl')->isAllowed('organ', 'view')): ?>
+                    <?php if (!is_null($organInformation) && $this->acl('decision_service_acl')->isAllowed('organ', 'view')): ?>
                         <tr>
                             <td><span class="fas fa-envelope"></span>&nbsp;&nbsp;<?= $this->translate('Email') ?></td>
                             <td>
@@ -114,7 +114,7 @@ function getOrganDescription($organInformation, $lang)
         </div>
         <div class="row">
             <div class="col-md-12">
-                <?php if ($this->acl('decision_acl')->isAllowed('organ', 'view')): ?>
+                <?php if ($this->acl('decision_service_acl')->isAllowed('organ', 'view')): ?>
                     <h1><?= $this->translate('Current members') ?></h1>
                     <ul>
                         <?php foreach ($currentMembers as $membership): ?>

@@ -1,6 +1,6 @@
 <?php
 $locale = $this->translator->getLocale();
-$escaper = new Zend\Escaper\Escaper('utf-8');
+$escaper = new Laminas\Escaper\Escaper('utf-8');
 
 $companyURL = $this->url('company/companyItem', // Route url
     ['slugCompanyName' => $company->getSlugName()], // Url parameters

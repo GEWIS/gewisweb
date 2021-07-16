@@ -902,7 +902,7 @@ if(!String.prototype.formatNum) {
                 return this.locale.title_day.format(this.locale['d' + p.getDay()], p.getDate(), this.locale['m' + p.getMonth()], p.getFullYear());
                 break;
         }
-        return;
+
     };
 
     Calendar.prototype.getYear = function() {

@@ -90,7 +90,7 @@ class Module
             'invokables' => [
                 'application_service_storage' => 'Application\Service\FileStorage',
                 'application_service_legacy' => 'Application\Service\Legacy',
-                'application_service_email' => 'Application\Service\Email'
+                'application_service_email' => 'Application\Service\Email',
             ],
             'factories' => [
                 'application_get_languages' => function ($sm) {
@@ -108,7 +108,7 @@ class Module
                     $logger->pushHandler($handler);
 
                     return $logger;
-                }
+                },
             ],
         ];
     }
@@ -149,8 +149,8 @@ class Module
                     $helper = new \Application\View\Helper\FileUrl();
                     $helper->setServiceLocator($locator);
                     return $helper;
-                }
-            ]
+                },
+            ],
         ];
     }
 }

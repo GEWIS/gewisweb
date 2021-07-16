@@ -2,8 +2,8 @@
 
 namespace UserTest\Model;
 
-use User\Model\User;
 use PHPUnit_Framework_TestCase;
+use User\Model\User;
 
 class UserTest extends PHPUnit_Framework_TestCase
 {

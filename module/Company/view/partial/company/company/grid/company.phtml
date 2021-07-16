@@ -1,5 +1,5 @@
 <?php
-$escaper = new Zend\Escaper\Escaper('utf-8');
+$escaper = new Laminas\Escaper\Escaper('utf-8');
 
 // If multiple companies are on display, the title should redirect to the company page, else, it should redirect to the website
 $companyURL = $this->url('company/companyItem', // Route url

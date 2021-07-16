@@ -1,5 +1,10 @@
 <?php
 
+use Activity\Command\CalendarNotify;
+use Activity\Controller\ActivityCalendarController;
+use Activity\Controller\AdminCategoryController;
+use Interop\Container\ContainerInterface;
+
 return [
     'router' => [
         'routes' => [
@@ -23,7 +28,7 @@ return [
                                 'id' => '\d+',
                             ],
                             'defaults' => [
-                                'action' => 'view'
+                                'action' => 'view',
                             ],
                         ],
                         'may_terminate' => true,
@@ -36,7 +41,7 @@ return [
                                         'signupList' => '\d+',
                                     ],
                                     'defaults' => [
-                                        'action' => 'viewSignupList'
+                                        'action' => 'viewSignupList',
                                     ],
                                 ],
                             ],
@@ -51,8 +56,8 @@ return [
                                 'signupList' => '\d+',
                             ],
                             'defaults' => [
-                                'action' => 'signup'
-                            ]
+                                'action' => 'signup',
+                            ],
                         ],
                     ],
                     'externalSignup' => [
@@ -64,7 +69,7 @@ return [
                                 'signupList' => '\d+',
                             ],
                             'defaults' => [
-                                'action' => 'externalSignup'
+                                'action' => 'externalSignup',
                             ],
                         ],
                     ],
@@ -77,8 +82,8 @@ return [
                                 'signupList' => '\d+',
                             ],
                             'defaults' => [
-                                'action' => 'signoff'
-                            ]
+                                'action' => 'signoff',
+                            ],
                         ],
                     ],
                     'create' => [
@@ -86,9 +91,9 @@ return [
                         'options' => [
                             'route' => '/create',
                             'defaults' => [
-                                'action' => 'create'
-                            ]
-                        ]
+                                'action' => 'create',
+                            ],
+                        ],
                     ],
                     'career' => [
                         'type' => 'Literal',
@@ -96,9 +101,9 @@ return [
                             'route' => '/career',
                             'defaults' => [
                                 'action' => 'index',
-                                'category' => 'career'
-                            ]
-                        ]
+                                'category' => 'career',
+                            ],
+                        ],
                     ],
                     'my' => [
                         'type' => 'Literal',
@@ -106,18 +111,18 @@ return [
                             'route' => '/my',
                             'defaults' => [
                                 'action' => 'index',
-                                'category' => 'my'
-                            ]
-                        ]
+                                'category' => 'my',
+                            ],
+                        ],
                     ],
                     'archive' => [
                         'type' => 'Literal',
                         'options' => [
                             'route' => '/archive',
                             'defaults' => [
-                                'action' => 'archive'
-                            ]
-                        ]
+                                'action' => 'archive',
+                            ],
+                        ],
                     ],
                     // Route for categorizing activities by association year.
                     'year' => [
@@ -133,7 +138,7 @@ return [
                         ],
                     ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
             'activity_admin' => [
                 'priority' => 100,
@@ -143,7 +148,7 @@ return [
                     'defaults' => [
                         '__NAMESPACE__' => 'Activity\Controller',
                         'controller' => 'admin',
-                        'action' => 'view'
+                        'action' => 'view',
                     ],
                 ],
                 'may_terminate' => true,
@@ -157,9 +162,9 @@ return [
                             ],
                             'defaults' => [
                                 'controller' => 'admin',
-                                'action' => 'view'
-                            ]
-                        ]
+                                'action' => 'view',
+                            ],
+                        ],
                     ],
                     'participants' => [
                         'type' => 'Segment',
@@ -186,8 +191,8 @@ return [
                             'defaults' => [
                                 'controller' => 'admin',
                                 'action' => 'externalSignup',
-                            ]
-                        ]
+                            ],
+                        ],
                     ],
                     'externalSignoff' => [
                         'type' => 'Segment',
@@ -199,8 +204,8 @@ return [
                             'defaults' => [
                                 'controller' => 'admin',
                                 'action' => 'externalSignoff',
-                            ]
-                        ]
+                            ],
+                        ],
                     ],
                     'update' => [
                         'type' => 'Segment',
@@ -211,12 +216,11 @@ return [
                             ],
                             'defaults' => [
                                 'controller' => 'admin',
-                                'action' => 'update'
-                            ]
-                        ]
-                    ]
-                ]
-
+                                'action' => 'update',
+                            ],
+                        ],
+                    ],
+                ],
             ],
             'activity_calendar' => [
                 'type' => 'Literal',
@@ -225,7 +229,7 @@ return [
                     'defaults' => [
                         '__NAMESPACE__' => 'Activity\Controller',
                         'controller' => 'activityCalendar',
-                        'action' => 'index'
+                        'action' => 'index',
                     ],
                 ],
                 'may_terminate' => true,
@@ -236,8 +240,8 @@ return [
                             'route' => 'delete',
                             'defaults' => [
                                 'action' => 'delete',
-                            ]
-                        ]
+                            ],
+                        ],
                     ],
                     'approve' => [
                         'type' => 'Literal',
@@ -245,20 +249,19 @@ return [
                             'route' => 'approve',
                             'defaults' => [
                                 'action' => 'approve',
-                            ]
-                        ]
+                            ],
+                        ],
                     ],
                     'create' => [
                         'type' => 'Literal',
                         'options' => [
                             'route' => 'create',
                             'defaults' => [
-                                'action' => 'create'
-                            ]
-                        ]
+                                'action' => 'create',
+                            ],
+                        ],
                     ],
-                ]
-
+                ],
             ],
             'activity_admin_approval' => [
                 'priority' => 150,
@@ -268,7 +271,7 @@ return [
                     'defaults' => [
                         '__NAMESPACE__' => 'Activity\Controller',
                         'controller' => 'adminApproval',
-                    ]
+                    ],
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
@@ -278,9 +281,9 @@ return [
                             'route' => '/view/[:id]',
                             'defaults' => [
                                 'controller' => 'adminApproval',
-                                'action' => 'view'
-                            ]
-                        ]
+                                'action' => 'view',
+                            ],
+                        ],
                     ],
                     'proposal' => [
                         'type' => 'Segment',
@@ -288,9 +291,9 @@ return [
                             'route' => '/proposal/[:id]',
                             'defaults' => [
                                 'controller' => 'adminApproval',
-                                'action' => 'viewProposal'
-                            ]
-                        ]
+                                'action' => 'viewProposal',
+                            ],
+                        ],
                     ],
                     'apply_proposal' => [
                         'type' => 'Segment',
@@ -298,9 +301,9 @@ return [
                             'route' => '/proposal/[:id]/apply',
                             'defaults' => [
                                 'controller' => 'adminApproval',
-                                'action' => 'applyProposal'
-                            ]
-                        ]
+                                'action' => 'applyProposal',
+                            ],
+                        ],
                     ],
                     'revoke_proposal' => [
                         'type' => 'Segment',
@@ -308,9 +311,9 @@ return [
                             'route' => '/proposal/[:id]/revoke',
                             'defaults' => [
                                 'controller' => 'adminApproval',
-                                'action' => 'revokeProposal'
-                            ]
-                        ]
+                                'action' => 'revokeProposal',
+                            ],
+                        ],
                     ],
                     'approve' => [
                         'type' => 'Segment',
@@ -318,9 +321,9 @@ return [
                             'route' => '/approve/[:id]',
                             'defaults' => [
                                 'controller' => 'adminApproval',
-                                'action' => 'approve'
-                            ]
-                        ]
+                                'action' => 'approve',
+                            ],
+                        ],
                     ],
                     'disapprove' => [
                         'type' => 'Segment',
@@ -328,9 +331,9 @@ return [
                             'route' => '/disapprove/[:id]',
                             'defaults' => [
                                 'controller' => 'adminApproval',
-                                'action' => 'disapprove'
-                            ]
-                        ]
+                                'action' => 'disapprove',
+                            ],
+                        ],
                     ],
                     'reset' => [
                         'type' => 'Segment',
@@ -338,10 +341,10 @@ return [
                             'route' => '/reset/[:id]',
                             'defaults' => [
                                 'controller' => 'adminApproval',
-                                'action' => 'reset'
-                            ]
-                        ]
-                    ]
+                                'action' => 'reset',
+                            ],
+                        ],
+                    ],
                 ],
             ],
             'activity_admin_categories' => [
@@ -351,7 +354,7 @@ return [
                     'defaults' => [
                         '__NAMESPACE__' => 'Activity\Controller',
                         'controller' => 'adminCategory',
-                        'action' => 'index'
+                        'action' => 'index',
                     ],
                 ],
                 'may_terminate' => true,
@@ -411,9 +414,9 @@ return [
                         'options' => [
                             'route' => '/list',
                             'defaults' => [
-                                'action' => 'list'
-                            ]
-                        ]
+                                'action' => 'list',
+                            ],
+                        ],
                     ],
                     'view' => [
                         'type' => 'Segment',
@@ -423,8 +426,8 @@ return [
                                 'action' => '[0-9]*',
                             ],
                             'defaults' => [
-                                'action' => 'view'
-                            ]
+                                'action' => 'view',
+                            ],
                         ],
                     ],
                     'signup' => [
@@ -435,8 +438,8 @@ return [
                                 'id' => '[0-9]*',
                             ],
                             'defaults' => [
-                                'action' => 'signup'
-                            ]
+                                'action' => 'signup',
+                            ],
                         ],
                     ],
                     'signoff' => [
@@ -447,8 +450,8 @@ return [
                                 'id' => '[0-9]*',
                             ],
                             'defaults' => [
-                                'action' => 'signoff'
-                            ]
+                                'action' => 'signoff',
+                            ],
                         ],
                     ],
                     'signedup' => [
@@ -456,65 +459,110 @@ return [
                         'options' => [
                             'route' => '/signedup',
                             'defaults' => [
-                                'action' => 'signedup'
-                            ]
+                                'action' => 'signedup',
+                            ],
                         ],
                     ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
         ],
     ],
     'controllers' => [
-        'invokables' => [
-            'Activity\Controller\Activity' => 'Activity\Controller\ActivityController',
-            'Activity\Controller\AdminApproval' => 'Activity\Controller\AdminApprovalController',
-            'Activity\Controller\AdminCategory' => 'Activity\Controller\AdminCategoryController',
-            'Activity\Controller\Api' => 'Activity\Controller\ApiController',
-            'Activity\Controller\Admin' => 'Activity\Controller\AdminController',
-            'Activity\Controller\ActivityCalendar' => 'Activity\Controller\ActivityCalendarController',
-        ],
         'factories' => [
-            'Activity\Controller\Activity' => function ($sm) {
-                $controller = new Activity\Controller\ActivityController();
-                $activity = $sm->getServiceLocator()->get('activity_service');
-                $controller->setActivity($activity);
-                return $controller;
+            'Activity\Controller\Activity' => function (ContainerInterface $container) {
+                $translator = $container->get('translator');
+                $activityService = $container->get('activity_service_activity');
+                $activityQueryService = $container->get('activity_service_activityQuery');
+                $signupService = $container->get('activity_service_signup');
+                $signupListQueryService = $container->get('activity_service_signupListQuery');
+                $aclService = $container->get('activity_service_acl');
+
+                return new Activity\Controller\ActivityController(
+                    $translator,
+                    $activityService,
+                    $activityQueryService,
+                    $signupService,
+                    $signupListQueryService,
+                    $aclService
+                );
             },
-        ]
+            'Activity\Controller\AdminApproval' => function (ContainerInterface $container) {
+                $translator = $container->get('translator');
+                $activityService = $container->get('activity_service_activity');
+                $activityQueryService = $container->get('activity_service_activityQuery');
+                $aclService = $container->get('activity_service_acl');
+
+                return new Activity\Controller\AdminApprovalController(
+                    $translator,
+                    $activityService,
+                    $activityQueryService,
+                    $aclService
+                );
+            },
+            'Activity\Controller\AdminCategory' => function (ContainerInterface $container) {
+                $translator = $container->get('translator');
+                $categoryService = $container->get('activity_service_category');
+
+                return new AdminCategoryController($translator, $categoryService);
+            },
+            'Activity\Controller\Api' => function (ContainerInterface $container) {
+                $activityQueryService = $container->get('activity_service_activityQuery');
+                $signupService = $container->get('activity_service_signup');
+                $aclService = $container->get('activity_service_acl');
+
+                return new Activity\Controller\ApiController($activityQueryService, $signupService, $aclService);
+            },
+            'Activity\Controller\Admin' => function (ContainerInterface $container) {
+                $translator = $container->get('translator');
+                $activityService = $container->get('activity_service_activity');
+                $activityQueryService = $container->get('activity_service_activityQuery');
+                $signupService = $container->get('activity_service_signup');
+                $signupListQueryService = $container->get('activity_service_signupListQuery');
+                $signupMapper = $container->get('activity_mapper_signup');
+                $aclService = $container->get('activity_service_acl');
+
+                return new Activity\Controller\AdminController(
+                    $translator,
+                    $activityService,
+                    $activityQueryService,
+                    $signupService,
+                    $signupListQueryService,
+                    $signupMapper,
+                    $aclService
+                );
+            },
+            'Activity\Controller\ActivityCalendar' => function (ContainerInterface $container) {
+                $calendarService = $container->get('activity_service_calendar');
+                $calendarFormService = $container->get('activity_service_calendar_form');
+                $calendarConfig = $container->get('config')['calendar'];
+
+                return new ActivityCalendarController($calendarService, $calendarFormService, $calendarConfig);
+            },
+        ],
     ],
     'view_manager' => [
         'template_path_stack' => [
-            'activity' => __DIR__ . '/../view/'
-        ]
+            'activity' => __DIR__ . '/../view/',
+        ],
     ],
-    'console' => [
-        'router' => [
-            'routes' => [
-                'activity_calendar_update' => [
-                    'options' => [
-                        'route' => 'activity calendar notify',
-                        'defaults' => [
-                            'controller' => 'Activity\Controller\ActivityCalendar',
-                            'action' => 'sendNotifications'
-                        ]
-                    ]
-                ],
-            ]
-        ]
+    'laminas-cli' => [
+        'commands' => [
+            'activity:calendar:notify' => CalendarNotify::class,
+        ],
     ],
     'doctrine' => [
         'driver' => [
             'activity_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__ . '/../src/Activity/Model/']
+                'paths' => [__DIR__ . '/../src/Model/'],
             ],
             'orm_default' => [
                 'drivers' => [
-                    'Activity\Model' => 'activity_entities'
-                ]
-            ]
-        ]
-    ]
+                    'Activity\Model' => 'activity_entities',
+                ],
+            ],
+        ],
+    ],
 ];

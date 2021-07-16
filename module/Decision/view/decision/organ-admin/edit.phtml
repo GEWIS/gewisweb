@@ -136,7 +136,7 @@ foreach (['cover', 'thumbnail'] as $type) {
 ?>
 <?php
 $submit = $form->get('submit');
-$approve = $this->acl('decision_acl')->isAllowed('organ', 'approve') ? ' / ' . $this->translate('Approve') : '';
+$approve = $this->acl('decision_service_acl')->isAllowed('organ', 'approve') ? ' / ' . $this->translate('Approve') : '';
 $submit->setLabel($this->translate('Save') . $approve);
 $submit->setAttribute('class', 'btn btn-primary');
 ?>

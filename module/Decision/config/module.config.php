@@ -1,5 +1,13 @@
 <?php
 
+use Decision\Controller\AdminController;
+use Decision\Controller\DecisionController;
+use Decision\Controller\MemberApiController;
+use Decision\Controller\MemberController;
+use Decision\Controller\OrganAdminController;
+use Decision\Controller\OrganController;
+use Interop\Container\ContainerInterface;
+
 return [
     'router' => [
         'routes' => [
@@ -39,11 +47,11 @@ return [
                             'route' => '/:type/:number',
                             'constraints' => [
                                 'type' => 'BV|AV|VV|Virt',
-                                'number' => '[0-9]+'
+                                'number' => '[0-9]+',
                             ],
                             'defaults' => [
-                                'action' => 'view'
-                            ]
+                                'action' => 'view',
+                            ],
                         ],
                         'may_terminate' => true,
                         'child_routes' => [
@@ -56,14 +64,14 @@ return [
                                     ],
                                 ],
                             ],
-                        ]
+                        ],
                     ],
                     'document' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/document/:id',
                             'constraints' => [
-                                'id' => '[0-9]+'
+                                'id' => '[0-9]+',
                             ],
                             'defaults' => [
                                 'action' => 'document',
@@ -84,13 +92,13 @@ return [
                         'options' => [
                             'regex' => '/files(?<path>' . $this->getServiceConfig()['filebrowser_valid_file'] . ')',
                             'defaults' => [
-                                'action' => 'files'
+                                'action' => 'files',
                             ],
-                            'spec' => '/files/%path%'
+                            'spec' => '/files/%path%',
                         ],
                     ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
             'admin_decision' => [
                 'type' => 'Literal',
@@ -118,9 +126,9 @@ return [
                         'options' => [
                             'route' => '/notes',
                             'defaults' => [
-                                'action' => 'notes'
-                            ]
-                        ]
+                                'action' => 'notes',
+                            ],
+                        ],
                     ],
                     'document' => [
                         'type' => 'Segment',
@@ -128,12 +136,12 @@ return [
                             'route' => '/document[/:type][/:number]',
                             'constraints' => [
                                 'type' => 'BV|AV|VV|Virt',
-                                'number' => '[0-9]+'
+                                'number' => '[0-9]+',
                             ],
                             'defaults' => [
-                                'action' => 'document'
-                            ]
-                        ]
+                                'action' => 'document',
+                            ],
+                        ],
                     ],
                     'delete_document' => [
                         'type' => 'Segment',
@@ -158,7 +166,7 @@ return [
                         'options' => [
                             'route' => '/authorizations[/:number]',
                             'constraints' => [
-                                'number' => '[0-9]+'
+                                'number' => '[0-9]+',
                             ],
                             'defaults' => [
                                 'action' => 'authorizations',
@@ -166,7 +174,7 @@ return [
                         ],
                     ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
             'organ' => [
                 'type' => 'Literal',
@@ -175,8 +183,8 @@ return [
                     'defaults' => [
                         '__NAMESPACE__' => 'Decision\Controller',
                         'controller' => 'Organ',
-                        'action' => 'index'
-                    ]
+                        'action' => 'index',
+                    ],
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
@@ -188,12 +196,12 @@ return [
                                 'organ' => '[0-9]+',
                             ],
                             'defaults' => [
-                                'action' => 'show'
-                            ]
+                                'action' => 'show',
+                            ],
                         ],
                     ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
             'member' => [
                 'type' => 'Literal',
@@ -230,55 +238,54 @@ return [
                         'options' => [
                             'route' => '/birthdays',
                             'defaults' => [
-                                'action' => 'birthdays'
-                            ]
-                        ]
+                                'action' => 'birthdays',
+                            ],
+                        ],
                     ],
                     'dreamspark' => [
                         'type' => 'Literal',
                         'options' => [
                             'route' => '/dreamspark',
                             'defaults' => [
-                                'action' => 'dreamspark'
-                            ]
-                        ]
+                                'action' => 'dreamspark',
+                            ],
+                        ],
                     ],
                     'view' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/:lidnr',
                             'constraints' => [
-                                'lidnr' => '[0-9]+'
+                                'lidnr' => '[0-9]+',
                             ],
                             'defaults' => [
-                                'action' => 'view'
-                            ]
-                        ]
+                                'action' => 'view',
+                            ],
+                        ],
                     ],
                     'self' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/self',
                             'defaults' => [
-                                'action' => 'self'
-                            ]
-                        ]
+                                'action' => 'self',
+                            ],
+                        ],
                     ],
                     'regulations' => [
                         'type' => 'Segment',
                         'options' => [
                             'route' => '/regulations/:regulation',
                             'constraints' => [
-                                'regulation' => '[a-zA-Z_-]+'
+                                'regulation' => '[a-zA-Z_-]+',
                             ],
                             'defaults' => [
-                                'action' => 'downloadRegulation'
-                            ]
-                        ]
-                    ]
-
+                                'action' => 'downloadRegulation',
+                            ],
+                        ],
+                    ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
             'member_api' => [
                 'type' => 'Literal',
@@ -333,57 +340,77 @@ return [
                                 'organ_id' => '[0-9]+',
                             ],
                             'defaults' => [
-                                'action' => 'edit'
-                            ]
-                        ]
+                                'action' => 'edit',
+                            ],
+                        ],
                     ],
                 ],
-                'priority' => 100
+                'priority' => 100,
             ],
         ],
     ],
     'controllers' => [
-        'invokables' => [
-            'Decision\Controller\Decision' => 'Decision\Controller\DecisionController',
-            'Decision\Controller\Organ' => 'Decision\Controller\OrganController',
-            'Decision\Controller\Admin' => 'Decision\Controller\AdminController',
-            'Decision\Controller\OrganAdmin' => 'Decision\Controller\OrganAdminController',
-            'Decision\Controller\Member' => 'Decision\Controller\MemberController',
-            'Decision\Controller\MemberApi' => 'Decision\Controller\MemberApiController',
-        ]
+        'factories' => [
+            'Decision\Controller\Decision' => function (ContainerInterface $container) {
+                $decisionService = $container->get('decision_service_decision');
+                $fileReader = $container->get('decision_fileReader');
+
+                return new DecisionController($decisionService, $fileReader);
+            },
+            'Decision\Controller\Organ' => function (ContainerInterface $container) {
+                $organService = $container->get('decision_service_organ');
+
+                return new OrganController($organService);
+            },
+            'Decision\Controller\Admin' => function (ContainerInterface $container) {
+                $decisionService = $container->get('decision_service_decision');
+
+                return new AdminController($decisionService);
+            },
+            'Decision\Controller\OrganAdmin' => function (ContainerInterface $container) {
+                $organService = $container->get('decision_service_organ');
+
+                return new OrganAdminController($organService);
+            },
+            'Decision\Controller\Member' => function (ContainerInterface $container) {
+                $memberService = $container->get('decision_service_member');
+                $memberInfoService = $container->get('decision_service_memberinfo');
+                $decisionService = $container->get('decision_service_decision');
+                $regulationsConfig = $container->get('config')['regulations'];
+                $aclService = $container->get('decision_service_acl');
+
+                return new MemberController(
+                    $memberService,
+                    $memberInfoService,
+                    $decisionService,
+                    $regulationsConfig,
+                    $aclService
+                );
+            },
+            'Decision\Controller\MemberApi' => function (ContainerInterface $container) {
+                $memberService = $container->get('decision_service_member');
+
+                return new MemberApiController($memberService);
+            },
+        ],
     ],
     'view_manager' => [
         'template_path_stack' => [
-            'decision' => __DIR__ . '/../view/'
-        ]
+            'decision' => __DIR__ . '/../view/',
+        ],
     ],
     'doctrine' => [
         'driver' => [
             'decision_entities' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__ . '/../src/Decision/Model/']
+                'paths' => [__DIR__ . '/../src/Model/'],
             ],
             'orm_default' => [
                 'drivers' => [
-                    'Decision\Model' => 'decision_entities'
-                ]
-            ]
-        ]
+                    'Decision\Model' => 'decision_entities',
+                ],
+            ],
+        ],
     ],
-    'console' => [
-        'router' => [
-            'routes' => [
-                'sort-documents-legacy' => [
-                    'options' => [
-                        'route' => 'documents sort-legacy',
-                        'defaults' => [
-                            'controller' => 'Decision\Controller\Admin',
-                            'action' => 'sortDocumentsLegacy'
-                        ]
-                    ]
-                ]
-            ]
-        ]
-    ]
 ];

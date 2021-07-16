@@ -2,16 +2,15 @@
 
 namespace Test;
 
-use Zend\Loader\AutoloaderFactory;
-use Zend\Mvc\Service\ServiceManagerConfig;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\Loader\AutoloaderFactory;
+use Laminas\ServiceManager\ServiceManager;
 use RuntimeException;
 
 error_reporting(E_ALL | E_STRICT);
 chdir(__DIR__);
 
 /**
- * Test bootstrap, for setting up autoloading
+ * Test bootstrap, for setting up autoloading.
  */
 class Bootstrap
 {
@@ -37,11 +36,11 @@ class Bootstrap
             'modules' => [
                 'Decision',
                 'User',
-                'Application'
-            ]
+                'Application',
+            ],
         ];
 
-        $serviceManager = new ServiceManager(new ServiceManagerConfig());
+        $serviceManager = new ServiceManager();
         $serviceManager->setService('ApplicationConfig', $config);
         $serviceManager->get('ModuleManager')->loadModules();
         static::$serviceManager = $serviceManager;
@@ -74,10 +73,7 @@ class Bootstrap
         }
 
         if (!$zf2Path) {
-            throw new RuntimeException(
-                'Unable to load ZF2. Run `php composer.phar install` or'
-                . ' define a ZF2_PATH environment variable.'
-            );
+            throw new RuntimeException('Unable to load ZF2. Run `php composer.phar install` or' . ' define a ZF2_PATH environment variable.');
         }
 
         if (file_exists($vendorPath . '/autoload.php')) {
@@ -85,14 +81,16 @@ class Bootstrap
         }
 
         include $zf2Path . '/Zend/Loader/AutoloaderFactory.php';
-        AutoloaderFactory::factory([
-            'Zend\Loader\StandardAutoloader' => [
-                'autoregister_zf' => true,
-                'namespaces' => [
-                    __NAMESPACE__ => __DIR__ . '/' . __NAMESPACE__,
+        AutoloaderFactory::factory(
+            [
+                'Laminas\Loader\StandardAutoloader' => [
+                    'autoregister_zf' => true,
+                    'namespaces' => [
+                        __NAMESPACE__ => __DIR__ . '/' . __NAMESPACE__,
+                    ],
                 ],
-            ],
-        ]);
+            ]
+        );
     }
 
     protected static function findParentPath($path)
@@ -106,6 +104,7 @@ class Bootstrap
             }
             $previousDir = $dir;
         }
+
         return $dir . '/' . $path;
     }
 }

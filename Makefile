@@ -1,4 +1,4 @@
-.PHONY: help runprod rundev updatecomposer updatepackage build buildprod builddev login push pushprod pushdev update all prod dev
+.PHONY: help runprod rundev update updatecomposer updatepackage updateglide getvendordir phpstan phpcs phpcbf phpcsfix phpcsfixtypes build buildprod builddev login push pushprod pushdev update all prod dev
 
 help:
 		@echo "Makefile commands:"
@@ -9,6 +9,11 @@ help:
 		@echo "updatecss"
 		@echo "updateglide"
 		@echo "getvendordir"
+		@echo "phpstan"
+		@echo "phpcs"
+		@echo "phpcbf"
+		@echo "phpcsfix"
+		@echo "phpcsfixtypes"
 		@echo "replenish"
 		@echo "build"
 		@echo "buildprod"
@@ -44,16 +49,36 @@ replenish: rundev
 		@docker cp ./data gewisweb_web_1:/code
 		@docker-compose exec web chown -R www-data:www-data /code/data
 		@docker-compose exec web php composer.phar dump-autoload --dev
-		@docker-compose exec web ./web orm:generate-proxies
+		@docker-compose exec web ./orm orm:generate-proxies
 		@docker-compose down
 
 update: rundev updatecomposer updatepackage updatecss updateglide
 		@docker-compose down
 
+phpstan:
+		@vendor/bin/phpstan analyse -c phpstan.neon
+
+phpcs:
+		@vendor/bin/phpcs -p --standard=PSR1,PSR12 --extensions=php,dist module config
+
+phpcbf:
+		@vendor/bin/phpcbf -p --standard=PSR1,PSR12 --extensions=php,dist --filter=GitModified module config
+
+phpcbfall:
+		@vendor/bin/phpcbf -p --standard=PSR1,PSR12 --extensions=php,dist module config
+
+phpcsfix:
+		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --rules=@PSR1,@PSR12,@DoctrineAnnotation,@PHP74Migration module
+		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --rules=@PSR1,@PSR12,@DoctrineAnnotation,@PHP74Migration config
+
+phpcsfixtypes:
+		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --allow-risky=yes --rules=@PSR1,@PSR12,@DoctrineAnnotation,@PHP74Migration:risky /code/module
+		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --allow-risky=yes --rules=@PSR1,@PSR12,@DoctrineAnnotation,@PHP74Migration:risky /code/config
+
 updatecomposer:
 		@docker-compose exec web php composer.phar selfupdate
 		@docker cp gewisweb_web_1:/code/composer.phar ./composer.phar
-		@docker-compose exec web php composer.phar update
+		@docker-compose exec web php composer.phar update -W
 		@docker cp gewisweb_web_1:/code/composer.lock ./composer.lock
 
 updatepackage:
@@ -70,7 +95,7 @@ updateglide:
 		@docker-compose exec glide php -r "unlink('composer-setup.php');"
 		@docker-compose exec glide php composer.phar selfupdate
 		@docker cp gewisweb_glide_1:/glide/composer.phar ./docker/glide/composer.phar
-		@docker-compose exec glide php composer.phar update
+		@docker-compose exec glide php composer.phar update -W
 		@docker cp gewisweb_glide_1:/glide/composer.lock ./docker/glide/composer.lock
 
 all: build login push
