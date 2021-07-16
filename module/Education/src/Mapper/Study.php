@@ -55,6 +55,6 @@ class Study
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Education\Mapper\Study');
+        return $this->em->getRepository('Education\Model\Study');
     }
 }

@@ -115,6 +115,6 @@ class Course
      */
     public function getRepository()
     {
-        return $this->em->getRepository('Education\Mapper\Course');
+        return $this->em->getRepository('Education\Model\Course');
     }
 }
