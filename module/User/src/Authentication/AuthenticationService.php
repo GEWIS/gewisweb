@@ -38,21 +38,6 @@ class AuthenticationService implements AuthenticationServiceInterface
      */
     public function __construct(StorageInterface $storage, AdapterInterface $adapter)
     {
-        if (get_class($storage) !== Session::class) {
-            throw new RuntimeException(
-                'AuthenticationService expects the persistent storage handler to be of type Session.'
-            );
-        }
-
-        if (
-            get_class($adapter) !== Mapper::class
-            && get_class($adapter) !== PinMapper::class
-        ) {
-            throw new RuntimeException(
-                'AuthenticationService expects the authentication adapter to be of type Mapper or PinMapper.'
-            );
-        }
-
         $this->setStorage($storage);
         $this->setAdapter($adapter);
     }
@@ -70,15 +55,23 @@ class AuthenticationService implements AuthenticationServiceInterface
     /**
      * Sets the authentication adapter.
      *
-     * @param  AdapterInterface $adapter
+     * @param AdapterInterface $adapter
      *
      * @return self Provides a fluent interface
      */
     public function setAdapter(AdapterInterface $adapter)
     {
-        $this->adapter = $adapter;
+        if (
+            $adapter instanceof Mapper
+            || $adapter instanceof PinMapper
+        ) {
+            $this->adapter = $adapter;
+            return $this;
+        }
 
-        return $this;
+        throw new RuntimeException(
+            'AuthenticationService expects the authentication adapter to be of type Mapper or PinMapper.'
+        );
     }
 
     /**
@@ -94,15 +87,20 @@ class AuthenticationService implements AuthenticationServiceInterface
     /**
      * Sets the persistent storage handler.
      *
-     * @param  StorageInterface $storage
+     * @param StorageInterface $storage
      *
      * @return self Provides a fluent interface
      */
     public function setStorage(StorageInterface $storage)
     {
-        $this->storage = $storage;
+        if ($storage instanceof Session) {
+            $this->storage = $storage;
+            return $this;
+        }
 
-        return $this;
+        throw new RuntimeException(
+            'AuthenticationService expects the persistent storage handler to be of type Session.'
+        );
     }
 
     /**

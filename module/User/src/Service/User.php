@@ -294,7 +294,7 @@ class User
         // check the password
         $adapter = $this->authService->getAdapter();
 
-        if (get_class($adapter) != Mapper::class) {
+        if (!($adapter instanceof Mapper)) {
             throw new RuntimeException("Adapter was not of the expected type");
         }
 

@@ -218,12 +218,12 @@ class Exam
 
                 $exam->setDate(new DateTime($examData['date']));
                 $exam->setCourse($this->getCourse($examData['course']));
-                if (SummaryModel::class === get_class($exam)) {
+                if ($exam instanceof SummaryModel) {
                     $exam->setAuthor($examData['author']);
                     $exam->setExamType(ExamModel::EXAM_TYPE_SUMMARY);
                 }
 
-                if (ExamModel::class === get_class($exam)) {
+                if ($exam instanceof ExamModel) {
                     $exam->setExamType($examData['examType']);
                 }
                 $exam->setLanguage($examData['language']);
