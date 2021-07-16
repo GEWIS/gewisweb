@@ -41,7 +41,6 @@
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-filter" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-modulemanager" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-permissions-acl" />
-      <path value="$PROJECT_DIR$/vendor/laminas/laminas-console" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-diactoros" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-json" />
       <path value="$PROJECT_DIR$/vendor/kylekatarnls/update-helper" />
@@ -140,8 +139,7 @@
       <path value="$PROJECT_DIR$/vendor/friendsofphp/php-cs-fixer" />
       <path value="$PROJECT_DIR$/vendor/php-cs-fixer/diff" />
       <path value="$PROJECT_DIR$/vendor/san/san-session-toolbar" />
-      <path value="$PROJECT_DIR$/vendor/laminas/laminas-mvc-console" />
-      <path value="$PROJECT_DIR$/vendor/laminas/laminas-text" />
+      <path value="$PROJECT_DIR$/vendor/laminas/laminas-cli" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

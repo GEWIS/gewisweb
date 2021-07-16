@@ -9,6 +9,7 @@ use Laminas\Cache\StorageFactory;
 use Laminas\Mvc\MvcEvent;
 use Interop\Container\ContainerInterface;
 use League\Glide\Urls\UrlBuilderFactory;
+use Photo\Command\WeeklyPhoto;
 use Photo\Listener\AlbumDate as AlbumDateListener;
 use Photo\Listener\Remove as RemoveListener;
 use Photo\Service\Admin;
@@ -208,6 +209,13 @@ class Module
                             'plugins' => ['serializer'],
                         ]
                     );
+                },
+                'activity_service_acl' => AclServiceFactory::class,
+                WeeklyPhoto::class => function (ContainerInterface $container) {
+                    $weeklyPhoto = new WeeklyPhoto();
+                    $photoService = $container->get('photo_service_photo');
+                    $weeklyPhoto->setPhotoService($photoService);
+                    return $weeklyPhoto;
                 },
             ],
         ];

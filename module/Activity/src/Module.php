@@ -2,6 +2,7 @@
 
 namespace Activity;
 
+use Activity\Command\CalendarNotify;
 use Activity\Form\ActivityCategory as CategoryForm;
 use Activity\Form\SignupList as SignupListForm;
 use Activity\Form\SignupListField;
@@ -287,6 +288,12 @@ class Module
                     );
                 },
                 'activity_service_acl' => AclServiceFactory::class,
+                CalendarNotify::class => function (ContainerInterface $container) {
+                    $calendarNotify = new CalendarNotify();
+                    $calendarService = $container->get('activity_service_calendar');
+                    $calendarNotify->setCalendarService($calendarService);
+                    return $calendarNotify;
+                },
             ],
         ];
     }

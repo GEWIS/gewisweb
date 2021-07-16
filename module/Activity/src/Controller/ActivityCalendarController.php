@@ -93,9 +93,4 @@ class ActivityCalendarController extends AbstractActionController
             ]
         );
     }
-
-    public function sendNotificationsAction()
-    {
-        $this->calendarService->sendOverdueNotifications();
-    }
 }

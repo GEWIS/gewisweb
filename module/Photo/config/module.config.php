@@ -1,6 +1,7 @@
 <?php
 
 use Interop\Container\ContainerInterface;
+use Photo\Command\WeeklyPhoto;
 use Photo\Controller\AlbumAdminController;
 use Photo\Controller\AlbumController;
 use Photo\Controller\ApiController;
@@ -507,28 +508,9 @@ return [
             ],
         ],
     ],
-    'console' => [
-        'router' => [
-            'routes' => [
-                'weeklyphoto' => [
-                    'options' => [
-                        'route' => 'photo weeklyphoto',
-                        'defaults' => [
-                            'controller' => 'Photo\Controller\PhotoAdmin',
-                            'action' => 'weeklyPhoto',
-                        ],
-                    ],
-                ],
-                'migrate_aspect_ratio' => [
-                    'options' => [
-                        'route' => 'photo aspectratio',
-                        'defaults' => [
-                            'controller' => 'Photo\Controller\PhotoAdmin',
-                            'action' => 'migrateAspectRatios',
-                        ],
-                    ],
-                ],
-            ],
+    'laminas-cli' => [
+        'commands' => [
+            'photo:weeklyphoto' => WeeklyPhoto::class,
         ],
     ],
 ];

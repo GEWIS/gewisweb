@@ -1,5 +1,6 @@
 <?php
 
+use Activity\Command\CalendarNotify;
 use Activity\Controller\ActivityCalendarController;
 use Activity\Controller\AdminCategoryController;
 use Interop\Container\ContainerInterface;
@@ -545,19 +546,9 @@ return [
             'activity' => __DIR__ . '/../view/',
         ],
     ],
-    'console' => [
-        'router' => [
-            'routes' => [
-                'activity_calendar_update' => [
-                    'options' => [
-                        'route' => 'activity calendar notify',
-                        'defaults' => [
-                            'controller' => 'Activity\Controller\ActivityCalendar',
-                            'action' => 'sendNotifications',
-                        ],
-                    ],
-                ],
-            ],
+    'laminas-cli' => [
+        'commands' => [
+            'activity:calendar:notify' => CalendarNotify::class,
         ],
     ],
     'doctrine' => [

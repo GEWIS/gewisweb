@@ -7,7 +7,6 @@
  */
 
 return [
-    'Laminas\Mvc\Console',
     'Laminas\Mvc\I18n',
     'Laminas\Serializer',
     'Laminas\Mail',

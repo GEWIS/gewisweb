@@ -1,14 +1,1 @@
-#!/usr/bin/env php
-<?php
-
-if (php_sapi_name() != 'cli') {
-    throw new RuntimeException("This script can only be called from the command line.");
-}
-
-// make sure we are in the correct directory
-chdir(__DIR__);
-
-require 'bootstrap.php';
-
-$application = ConsoleRunner::getApplication();
-$application->run();
+./vendor/bin/laminas
