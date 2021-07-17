@@ -16,6 +16,8 @@
     "require": {
         "php": "^7.4.0",
         "ext-calendar": "*",
+        "ext-curl": "*",
+        "ext-dom": "*",
         "ext-exif": "*",
         "ext-fileinfo": "*",
         "ext-gd": "*",
@@ -77,6 +79,7 @@
         "cweagans/composer-patches": "^1.7.1"
     },
     "require-dev": {
+        "ext-simplexml": "*",
         "ext-xdebug": "^3.0.0",
         "laminas/laminas-component-installer": "^2.0.0",
         "laminas/laminas-developer-tools": "^2.0.0",
