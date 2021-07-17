@@ -25,3 +25,7 @@ autoload_classmap.php
 .vs/
 config/bash.env
 *.cache
+
+.idea/sonarlint.xml
+
+.idea/sonarlint-state.xml
