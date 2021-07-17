@@ -58,23 +58,6 @@ class AclService extends GenericAclService
         $this->acl->addRole(new Role('admin'));
         $this->acl->addRole(new Role('photo_guest'), 'guest');
 
-        $user = $this->getIdentity();
-
-        // add user to registry
-        if ($user instanceof User) {
-            $roles = $user->getRoleNames();
-            // if the user has no roles, add the 'user' role by default
-            if (empty($roles)) {
-                $roles = ['user'];
-            }
-
-            if (count($user->getMember()->getCurrentOrganInstallations()) > 0) {
-                $roles[] = 'active_member';
-            }
-
-            $this->acl->addRole($user, $roles);
-        }
-
         // admins are allowed to do everything
         $this->acl->allow('admin');
 

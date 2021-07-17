@@ -152,13 +152,29 @@ class User implements RoleInterface, ResourceInterface
     }
 
     /**
-     * Get the user's role ID.
-     *
      * @return string
      */
-    public function getRoleId()
+    public function getRoleId(): string
     {
-        return 'user_' . $this->getLidnr();
+        if (in_array('admin', $this->getRoleNames())) {
+            return 'admin';
+        }
+
+        // TODO: We could create an assertion for this. (member check for C4)
+        if (in_array('company_admin', $this->getRoleNames())) {
+            return 'company_admin';
+        }
+
+        if (in_array('photo_guest', $this->getRoleNames())) {
+            return 'photo_guest';
+        }
+
+        // TODO: We could create an assertion for this.
+        if (count($this->getMember()->getCurrentOrganInstallations()) > 0) {
+            return 'active_member';
+        }
+
+        return 'user';
     }
 
     /**

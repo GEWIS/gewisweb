@@ -6,6 +6,7 @@ use Application\Service\AbstractAclService;
 use Laminas\I18n\Translator\TranslatorInterface;
 use User\Authentication\ApiAuthenticationService;
 use User\Authentication\AuthenticationService;
+use User\Model\ApiUser;
 use User\Model\User;
 use User\Permissions\NotAllowedException;
 
@@ -33,17 +34,27 @@ abstract class GenericAclService extends AbstractAclService
 
     /**
      * @inheritDoc
+     *
+     * The role that should take precedence should be returned first.
+     * This is because of the behaviour of {@link \Laminas\Permissions\Acl\Role\Registry}.
      */
     protected function getRole()
     {
         if ($this->authService->hasIdentity()) {
-            return $this->authService->getIdentity();
+            $user = $this->authService->getIdentity();
+            if ($user instanceof User) {
+                return $user->getRoleId();
+            }
         }
 
         if ($this->apiAuthService->hasIdentity()) {
-            return 'apiuser';
+            $user = $this->apiAuthService->getIdentity();
+            if ($user instanceof ApiUser) {
+                return $user->getRoleId();
+            }
         }
 
+        // TODO: We could create an assertion for this.
         if (0 === strpos($this->remoteAddress, $this->tueRange)) {
             return 'tueguest';
         }
