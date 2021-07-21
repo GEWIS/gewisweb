@@ -2,7 +2,7 @@
 
 namespace Frontpage\Controller;
 
-use Frontpage\Service\Poll;
+use Frontpage\Service\Poll as PollService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Paginator\Paginator;
 use Laminas\View\Model\ViewModel;
@@ -10,11 +10,16 @@ use Laminas\View\Model\ViewModel;
 class PollAdminController extends AbstractActionController
 {
     /**
-     * @var Poll
+     * @var PollService
      */
-    private $pollService;
+    private PollService $pollService;
 
-    public function __construct(Poll $pollService)
+    /**
+     * PollAdminController constructor.
+     *
+     * @param PollService $pollService
+     */
+    public function __construct(PollService $pollService)
     {
         $this->pollService = $pollService;
     }

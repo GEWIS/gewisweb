@@ -2,8 +2,9 @@
 
 namespace Frontpage\Controller;
 
-use Frontpage\Form\PollComment;
-use Frontpage\Service\Poll;
+use Frontpage\Form\PollComment as PollCommentForm;
+use Frontpage\Model\Poll as PollModel;
+use Frontpage\Service\Poll as PollService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Paginator\Paginator;
 use Laminas\View\Model\ViewModel;
@@ -11,19 +12,27 @@ use Laminas\View\Model\ViewModel;
 class PollController extends AbstractActionController
 {
     /**
-     * @var Poll
+     * @var PollCommentForm
      */
-    private $pollService;
+    private PollCommentForm $pollCommentForm;
 
     /**
-     * @var PollComment
+     * @var PollService
      */
-    private $pollCommentForm;
+    private PollService $pollService;
 
-    public function __construct(Poll $pollService, PollComment $pollCommentForm)
-    {
-        $this->pollService = $pollService;
+    /**
+     * PollController constructor.
+     *
+     * @param PollCommentForm $pollCommentForm
+     * @param PollService $pollService
+     */
+    public function __construct(
+        PollCommentForm $pollCommentForm,
+        PollService $pollService
+    ) {
         $this->pollCommentForm = $pollCommentForm;
+        $this->pollService = $pollService;
     }
 
     /**
@@ -53,7 +62,7 @@ class PollController extends AbstractActionController
     /**
      * Get the right from the route.
      *
-     * @return \Frontpage\Model\Poll|null
+     * @return PollModel|null
      */
     public function obtainPoll()
     {

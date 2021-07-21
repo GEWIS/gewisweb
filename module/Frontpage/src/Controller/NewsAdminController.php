@@ -2,7 +2,7 @@
 
 namespace Frontpage\Controller;
 
-use Frontpage\Service\News;
+use Frontpage\Service\News as NewsService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Paginator\Paginator;
 use Laminas\View\Model\ViewModel;
@@ -10,11 +10,16 @@ use Laminas\View\Model\ViewModel;
 class NewsAdminController extends AbstractActionController
 {
     /**
-     * @var News
+     * @var NewsService
      */
-    private $newsService;
+    private NewsService $newsService;
 
-    public function __construct(News $newsService)
+    /**
+     * NewsAdminController constructor.
+     *
+     * @param NewsService $newsService
+     */
+    public function __construct(NewsService $newsService)
     {
         $this->newsService = $newsService;
     }
