@@ -59,10 +59,9 @@ use Decision\Model\Address;
                                 href="<?= $this->url('home/organ', ['type' => $install['organ']->getType(), 'abbr' =>
                                     $abbr]) ?>"
                             ><?= $abbr ?></a>
-                            <?php $functions = $install['functions']; ?>
-                            <?php if (!empty($functions)): ?> (<?=
-                                $functions ?>)
-                            <?php endif ?>
+                            <?php if (isset($install['functions'])): ?>
+                                (<?= $install['functions'] ?>)
+                            <?php endif; ?>
                         </li>
                     <?php endforeach; ?>
                 </ul>
