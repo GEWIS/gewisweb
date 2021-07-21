@@ -2,11 +2,13 @@
 
 namespace Company\Controller;
 
-use Company\Form\EditCompany;
-use Company\Mapper\Label;
-use Company\Service\AclService;
-use Company\Service\Company as CompanyService;
-use Company\Service\CompanyQuery;
+use Company\Form\EditCompany as EditCompanyForm;
+use Company\Mapper\Label as LabelMapper;
+use Company\Service\{
+    AclService,
+    Company as CompanyService,
+    CompanyQuery as CompanyQueryService,
+};
 use DateInterval;
 use DateTime;
 use Laminas\Mvc\Controller\AbstractActionController;
@@ -17,49 +19,67 @@ use User\Permissions\NotAllowedException;
 class AdminController extends AbstractActionController
 {
     /**
-     * @var Translator
-     */
-    private $translator;
-
-    /**
      * @var CompanyService
      */
-    private $companyService;
+    private CompanyService $companyService;
+
     /**
-     * @var Label
+     * @var CompanyQueryService
      */
-    private $labelMapper;
+    private CompanyQueryService $companyQueryService;
+
     /**
-     * @var EditCompany
+     * @var LabelMapper
      */
-    private $companyForm;
+    private LabelMapper $labelMapper;
+
+    /**
+     * @var EditCompanyForm
+     */
+    private EditCompanyForm $companyForm;
+
     /**
      * @var array
      */
-    private $languages;
+    private array $languages;
 
     /**
-     * @var CompanyQuery
+     * @var AclService
      */
-    private $companyQueryService;
     private AclService $aclService;
 
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
+    /**
+     * AdminController constructor.
+     *
+     * @param CompanyService $companyService
+     * @param CompanyQueryService $companyQueryService
+     * @param LabelMapper $labelMapper
+     * @param EditCompanyForm $companyForm
+     * @param array $languages
+     * @param AclService $aclService
+     * @param Translator $translator
+     */
     public function __construct(
-        Translator $translator,
         CompanyService $companyService,
-        CompanyQuery $companyQueryService,
-        Label $labelMapper,
-        EditCompany $companyForm,
+        CompanyQueryService $companyQueryService,
+        LabelMapper $labelMapper,
+        EditCompanyForm $companyForm,
         array $languages,
-        AclService $aclService
+        AclService $aclService,
+        Translator $translator
     ) {
-        $this->translator = $translator;
         $this->companyService = $companyService;
         $this->companyQueryService = $companyQueryService;
         $this->labelMapper = $labelMapper;
         $this->companyForm = $companyForm;
         $this->languages = $languages;
         $this->aclService = $aclService;
+        $this->translator = $translator;
     }
 
     /**

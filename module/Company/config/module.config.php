@@ -1,9 +1,14 @@
 <?php
 
 use Application\View\Helper\Truncate;
-use Company\Controller\AdminController;
-use Company\Controller\CompanyController;
-use Interop\Container\ContainerInterface;
+use Company\Controller\{
+    AdminController,
+    CompanyController,
+};
+use Company\Controller\Factory\{
+    AdminControllerFactory,
+    CompanyControllerFactory,
+};
 
 return [
     'router' => [
@@ -14,10 +19,8 @@ return [
                     'route' => '/career',
                     'priority' => 2,
                     'defaults' => [
-                        '__NAMESPACE__' => 'Company\Controller',
-                        'controller' => 'Company',
+                        'controller' => CompanyController::class,
                         'action' => 'list', // index is reserved for some magical frontpage for the company module, but since it is not yet implemented, a company list will be presented.
-                        'actionArgument' => '',
                     ],
                 ],
                 'may_terminate' => true,
@@ -31,10 +34,7 @@ return [
                                 'category' => '[a-zA-Z0-9_\-\.]*',
                             ],
                             'defaults' => [
-                                '__NAMESPACE__' => 'Company\Controller',
-                                'controller' => 'Company',
                                 'action' => 'jobList',
-                                'actionArgument' => '',
                             ],
                         ],
                     ],
@@ -44,10 +44,7 @@ return [
                         'options' => [
                             'route' => '/spotlight',
                             'defaults' => [
-                                '__NAMESPACE__' => 'Company\Controller',
-                                'controller' => 'Company',
                                 'action' => 'spotlight',
-                                'actionArgument' => '',
                             ],
                         ],
                     ],
@@ -57,7 +54,6 @@ return [
                         'options' => [
                             'route' => '/list',
                             'defaults' => [
-                                'controller' => 'Company\Controller\Company',
                                 'action' => 'list',
                                 'slugCompanyName' => '',
                             ],
@@ -91,7 +87,6 @@ return [
                                 'options' => [
                                     'route' => '/:category',
                                     'defaults' => [
-                                        'controller' => 'Company\Controller\Company',
                                         'action' => 'jobList',
                                     ],
                                 ],
@@ -105,7 +100,6 @@ return [
                                                 'slugJobName' => '[a-zA-Z0-9_-]*',
                                             ],
                                             'defaults' => [
-                                                'controller' => 'Company\Controller\Company',
                                                 'action' => 'jobs',
                                             ],
                                         ],
@@ -123,8 +117,7 @@ return [
                 'options' => [
                     'route' => '/admin/company',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Company\Controller',
-                        'controller' => 'Admin',
+                        'controller' => AdminController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -297,32 +290,8 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            'Company\Controller\Company' => function (ContainerInterface $container) {
-                $translator = $container->get('translator');
-                $companyService = $container->get('company_service_company');
-                $companyQueryService = $container->get('company_service_companyquery');
-
-                return new CompanyController($translator, $companyService, $companyQueryService);
-            },
-            'Company\Controller\Admin' => function (ContainerInterface $container) {
-                $translator = $container->get('translator');
-                $companyService = $container->get('company_service_company');
-                $companyQueryService = $container->get('company_service_companyquery');
-                $labelMapper = $container->get('company_mapper_label');
-                $companyForm = $container->get('company_form_company');
-                $languages = $container->get('languages');
-                $aclService = $container->get('company_service_acl');
-
-                return new AdminController(
-                    $translator,
-                    $companyService,
-                    $companyQueryService,
-                    $labelMapper,
-                    $companyForm,
-                    $languages,
-                    $aclService
-                );
-            },
+            AdminController::class => AdminControllerFactory::class,
+            CompanyController::class => CompanyControllerFactory::class,
         ],
     ],
     'view_manager' => [

@@ -2,8 +2,10 @@
 
 namespace Company\Controller;
 
-use Company\Service\Company;
-use Company\Service\CompanyQuery;
+use Company\Service\{
+    Company as CompanyService,
+    CompanyQuery as CompanyQueryService,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
@@ -11,25 +13,35 @@ use Laminas\View\Model\ViewModel;
 class CompanyController extends AbstractActionController
 {
     /**
+     * @var CompanyService
+     */
+    private CompanyService $companyService;
+
+    /**
+     * @var CompanyQueryService
+     */
+    private CompanyQueryService $companyQueryService;
+
+    /**
      * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
-     * @var Company
+     * CompanyController constructor.
+     *
+     * @param CompanyService $companyService
+     * @param CompanyQueryService $companyQueryService
+     * @param Translator $translator
      */
-    private $companyService;
-
-    /**
-     * @var CompanyQuery
-     */
-    private $companyQueryService;
-
-    public function __construct(Translator $translator, Company $companyService, CompanyQuery $companyQueryService)
-    {
-        $this->translator = $translator;
+    public function __construct(
+        CompanyService $companyService,
+        CompanyQueryService $companyQueryService,
+        Translator $translator
+    ) {
         $this->companyService = $companyService;
         $this->companyQueryService = $companyQueryService;
+        $this->translator = $translator;
     }
 
     /**
@@ -96,7 +108,7 @@ class CompanyController extends AbstractActionController
         }
 
         // There is no company is the spotlight, so throw a 404
-        $this->getResponse()->setStatusCode(404);
+        return $this->notFoundAction();
     }
 
     /**
