@@ -42,16 +42,14 @@ abstract class GenericAclService extends AbstractAclService
     {
         if ($this->authService->hasIdentity()) {
             $user = $this->authService->getIdentity();
-            if ($user instanceof User) {
-                return $user->getRoleId();
-            }
+
+            return $user->getRoleId();
         }
 
         if ($this->apiAuthService->hasIdentity()) {
             $user = $this->apiAuthService->getIdentity();
-            if ($user instanceof ApiUser) {
-                return $user->getRoleId();
-            }
+
+            return $user->getRoleId();
         }
 
         // TODO: We could create an assertion for this.

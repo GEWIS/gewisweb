@@ -5,9 +5,9 @@ namespace User\Model;
 use Decision\Model\Member;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\Permissions\Acl\Role\RoleInterface;
+use RuntimeException;
 
 /**
  * User model.
@@ -156,25 +156,30 @@ class User implements RoleInterface, ResourceInterface
      */
     public function getRoleId(): string
     {
-        if (in_array('admin', $this->getRoleNames())) {
+        $roleNames = $this->getRoleNames();
+        if (in_array('admin', $roleNames)) {
             return 'admin';
         }
 
-        // TODO: We could create an assertion for this. (member check for C4)
-        if (in_array('company_admin', $this->getRoleNames())) {
+        if (in_array('company_admin', $roleNames)) {
             return 'company_admin';
         }
 
-        if (in_array('photo_guest', $this->getRoleNames())) {
-            return 'photo_guest';
+        if (empty($roleNames)) {
+            return 'user';
         }
 
-        // TODO: We could create an assertion for this.
         if (count($this->getMember()->getCurrentOrganInstallations()) > 0) {
             return 'active_member';
         }
 
-        return 'user';
+        if (in_array('photo_guest', $roleNames)) {
+            return 'photo_guest';
+        }
+
+        throw new RuntimeException(
+            sprintf('Could not determine user role unambiguously for user %s', $this->getLidnr())
+        );
     }
 
     /**
