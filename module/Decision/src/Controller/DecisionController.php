@@ -3,7 +3,7 @@
 namespace Decision\Controller;
 
 use Decision\Controller\FileBrowser\FileReader;
-use Decision\Service\Decision;
+use Decision\Service\Decision as DecisionService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
@@ -11,13 +11,25 @@ use User\Permissions\NotAllowedException;
 class DecisionController extends AbstractActionController
 {
     /**
-     * @var Decision
+     * @var DecisionService
      */
-    private $decisionService;
+    private DecisionService $decisionService;
+
+    /**
+     * @var FileReader
+     */
     private FileReader $fileReader;
 
-    public function __construct(Decision $decisionService, FileReader $fileReader)
-    {
+    /**
+     * DecisionController constructor.
+     *
+     * @param DecisionService $decisionService
+     * @param FileReader $fileReader
+     */
+    public function __construct(
+        DecisionService $decisionService,
+        FileReader $fileReader
+    ) {
         $this->decisionService = $decisionService;
         $this->fileReader = $fileReader;
     }
