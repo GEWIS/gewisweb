@@ -4,16 +4,21 @@ namespace Photo\Controller;
 
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\JsonModel;
-use Photo\Service\Photo;
+use Photo\Service\Photo as PhotoService;
 
 class TagController extends AbstractActionController
 {
     /**
-     * @var Photo
+     * @var PhotoService
      */
-    private $photoService;
+    private PhotoService $photoService;
 
-    public function __construct(Photo $photoService)
+    /**
+     * TagController constructor.
+     *
+     * @param PhotoService $photoService
+     */
+    public function __construct(PhotoService $photoService)
     {
         $this->photoService = $photoService;
     }

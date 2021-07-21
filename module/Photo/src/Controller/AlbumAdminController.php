@@ -4,25 +4,37 @@ namespace Photo\Controller;
 
 use Exception;
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\JsonModel;
-use Laminas\View\Model\ViewModel;
-use Photo\Service\Admin;
-use Photo\Service\Album;
+use Laminas\View\Model\{
+    JsonModel,
+    ViewModel,
+};
+use Photo\Service\{
+    Admin as AdminService,
+    Album as AlbumService,
+};
 
 class AlbumAdminController extends AbstractActionController
 {
     /**
-     * @var Admin
+     * @var AdminService
      */
-    private $adminService;
+    private AdminService $adminService;
 
     /**
-     * @var Album
+     * @var AlbumService
      */
-    private $albumService;
+    private AlbumService $albumService;
 
-    public function __construct(Admin $adminService, Album $albumService)
-    {
+    /**
+     * AlbumAdminController constructor.
+     *
+     * @param AdminService $adminService
+     * @param AlbumService $albumService
+     */
+    public function __construct(
+        AdminService $adminService,
+        AlbumService $albumService
+    ) {
         $this->adminService = $adminService;
         $this->albumService = $albumService;
     }
