@@ -62,7 +62,7 @@ class AclService extends GenericAclService
         $this->acl->allow('admin');
 
         // board members also are admins
-        $this->acl->allow('user', null, null, new IsBoardMember());
+        $this->acl->allow('active_member', null, null, new IsBoardMember());
 
         // configure the user ACL
         $this->acl->addResource(new Resource('apiuser'));
