@@ -44,8 +44,6 @@ class AclService extends \User\Service\AclService
             new IsCreatorOrOrganMember()
         );
 
-        $this->acl->allow('sosuser', 'signupList', ['signup', 'signoff', 'checkUserSignedUp']);
-
         $this->acl->allow('user', 'activityApi', 'list');
         $this->acl->allow('apiuser', 'activityApi', 'list');
     }

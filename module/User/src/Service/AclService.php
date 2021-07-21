@@ -52,7 +52,6 @@ class AclService extends GenericAclService
         $this->acl->addRole(new Role('tueguest'), 'guest');
         $this->acl->addRole(new Role('user'), 'tueguest');
         $this->acl->addrole(new Role('apiuser'), 'guest');
-        $this->acl->addrole(new Role('sosuser'), 'apiuser');
         $this->acl->addrole(new Role('active_member'), 'user');
         $this->acl->addrole(new Role('company_admin'), 'active_member');
         $this->acl->addRole(new Role('admin'));
@@ -71,8 +70,5 @@ class AclService extends GenericAclService
         $this->acl->allow('user', 'user', ['password_change']);
         $this->acl->allow('photo_guest', 'user', ['password_change']);
         $this->acl->allow('tueguest', 'user', 'pin_login');
-
-        // sosusers can't do anything
-        $this->acl->deny('sosuser');
     }
 }
