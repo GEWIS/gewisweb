@@ -3,9 +3,11 @@
 namespace Activity\Controller;
 
 use Activity\Form\ModifyRequest as RequestForm;
-use Activity\Service\AclService;
-use Activity\Service\Activity;
-use Activity\Service\ActivityQuery;
+use Activity\Service\{
+    AclService,
+    Activity as ActivityService,
+    ActivityQuery as ActivityQueryService,
+};
 use InvalidArgumentException;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
@@ -19,27 +21,43 @@ use User\Permissions\NotAllowedException;
 class AdminApprovalController extends AbstractActionController
 {
     /**
-     * @var Activity
+     * @var ActivityService
      */
-    private $activityService;
+    private ActivityService $activityService;
 
     /**
-     * @var ActivityQuery
+     * @var ActivityQueryService
      */
-    private $activityQueryService;
-    private Translator $translator;
+    private ActivityQueryService $activityQueryService;
+
+    /**
+     * @var AclService
+     */
     private AclService $aclService;
 
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
+    /**
+     * AdminApprovalController constructor.
+     *
+     * @param ActivityService $activityService
+     * @param ActivityQueryService $activityQueryService
+     * @param AclService $aclService
+     * @param Translator $translator
+     */
     public function __construct(
-        Translator $translator,
-        Activity $activityService,
-        ActivityQuery $activityQueryService,
-        AclService $aclService
+        ActivityService $activityService,
+        ActivityQueryService $activityQueryService,
+        AclService $aclService,
+        Translator $translator
     ) {
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;
-        $this->translator = $translator;
         $this->aclService = $aclService;
+        $this->translator = $translator;
     }
 
     /**

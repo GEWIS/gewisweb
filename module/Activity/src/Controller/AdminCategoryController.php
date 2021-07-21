@@ -2,7 +2,7 @@
 
 namespace Activity\Controller;
 
-use Activity\Service\ActivityCategory;
+use Activity\Service\ActivityCategory as ActivityCategoryService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Session\Container as SessionContainer;
@@ -11,13 +11,25 @@ use Laminas\View\Model\ViewModel;
 class AdminCategoryController extends AbstractActionController
 {
     /**
-     * @var ActivityCategory
+     * @var ActivityCategoryService
      */
-    private $categoryService;
+    private ActivityCategoryService $categoryService;
+
+    /**
+     * @var Translator
+     */
     private Translator $translator;
 
-    public function __construct(Translator $translator, ActivityCategory $categoryService)
-    {
+    /**
+     * AdminCategoryController constructor.
+     *
+     * @param ActivityCategoryService $categoryService
+     * @param Translator $translator
+     */
+    public function __construct(
+        ActivityCategoryService $categoryService,
+        Translator $translator
+    ) {
         $this->categoryService = $categoryService;
         $this->translator = $translator;
     }

@@ -2,13 +2,22 @@
 
 namespace Activity\Controller;
 
-use Activity\Form\ModifyRequest as RequestForm;
-use Activity\Model\Activity;
-use Activity\Model\SignupList;
-use Activity\Service\AclService;
-use Activity\Service\ActivityQuery;
-use Activity\Service\Signup;
-use Activity\Service\SignupListQuery;
+use Laminas\Session\AbstractContainer;
+use Activity\Form\{
+    ModifyRequest as RequestForm,
+    Signup as SignupForm,
+};
+use Activity\Model\{
+    Activity as ActivityModel,
+    SignupList as SignupListModel,
+};
+use Activity\Service\{
+    AclService,
+    Activity as ActivityService,
+    ActivityQuery as ActivityQueryService,
+    Signup as SignupService,
+    SignupListQuery as SignupListQueryService,
+};
 use DateTime;
 use Laminas\Form\FormInterface;
 use Laminas\Http\Response;
@@ -20,44 +29,60 @@ use Laminas\View\Model\ViewModel;
 
 class ActivityController extends AbstractActionController
 {
+    /**
+     * @var ActivityService
+     */
+    private ActivityService $activityService;
+
+    /**
+     * @var ActivityQueryService
+     */
+    private ActivityQueryService $activityQueryService;
+
+    /**
+     * @var SignupService
+     */
+    private SignupService $signupService;
+
+    /**
+     * @var SignupListQueryService
+     */
+    private SignupListQueryService $signupListQueryService;
+
+    /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
+     * @var Translator
+     */
     private Translator $translator;
 
     /**
-     * @var \Activity\Service\Activity
+     * ActivityController constructor.
+     *
+     * @param ActivityService $activityService
+     * @param ActivityQueryService $activityQueryService
+     * @param SignupService $signupService
+     * @param SignupListQueryService $signupListQueryService
+     * @param AclService $aclService
+     * @param Translator $translator
      */
-    private $activityService;
-
-    /**
-     * @var ActivityQuery
-     */
-    private $activityQueryService;
-
-    /**
-     * @var Signup
-     */
-    private $signupService;
-
-    /**
-     * @var SignupListQuery
-     */
-    private $signupListQueryService;
-
-    private AclService $aclService;
-
     public function __construct(
-        Translator $translator,
-        \Activity\Service\Activity $activityService,
-        ActivityQuery $activityQueryService,
-        Signup $signupService,
-        SignupListQuery $signupListQueryService,
-        AclService $aclService
+        ActivityService $activityService,
+        ActivityQueryService $activityQueryService,
+        SignupService $signupService,
+        SignupListQueryService $signupListQueryService,
+        AclService $aclService,
+        Translator $translator
     ) {
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;
         $this->signupService = $signupService;
         $this->signupListQueryService = $signupListQueryService;
-        $this->translator = $translator;
         $this->aclService = $aclService;
+        $this->translator = $translator;
     }
 
     /**
@@ -85,7 +110,7 @@ class ActivityController extends AbstractActionController
         // If the Activity has a sign-up list always display it by redirecting the request.
         if (0 !== $activity->getSignupLists()->count()) {
             return $this->forward()->dispatch(
-                'Activity\Controller\Activity',
+                ActivityController::class,
                 [
                     'action' => 'viewSignupList',
                     'id' => $activityId,
@@ -146,7 +171,7 @@ class ActivityController extends AbstractActionController
                 'isArchived' => $isArchived,
                 'signupOpen' => $subscriptionOpenDatePassed &&
                     !$subscriptionCloseDatePassed &&
-                    Activity::STATUS_APPROVED === $activity->getStatus(),
+                    ActivityModel::STATUS_APPROVED === $activity->getStatus(),
                 'isAllowedToSubscribe' => $isAllowedToSubscribe,
                 'isSignedUp' => $isSignedUp,
                 'signupData' => $this->signupService->isAllowedToViewSubscriptions() ?
@@ -176,12 +201,12 @@ class ActivityController extends AbstractActionController
     /**
      * Get the appropriate signup form.
      *
-     * @param SignupList $signupList
+     * @param SignupListModel $signupList
      * @param SessionContainer $activitySession
      *
-     * @return \Activity\Form\Signup $form
+     * @return SignupForm $form
      */
-    protected function prepareSignupForm($signupList, $activitySession)
+    protected function prepareSignupForm(SignupListModel $signupList, SessionContainer $activitySession)
     {
         if ($this->signupService->isAllowedToSubscribe()) {
             $form = $this->signupService->getForm($signupList);
@@ -273,7 +298,7 @@ class ActivityController extends AbstractActionController
             // Ensure that the action is within the subscription window
             if (
                 !$this->signupService->isInSubscriptionWindow($signupList->getOpenDate(), $signupList->getCloseDate())
-                || Activity::STATUS_APPROVED !== $signupList->getActivity()->getStatus()
+                || ActivityModel::STATUS_APPROVED !== $signupList->getActivity()->getStatus()
             ) {
                 $error = $this->translator->translate('You cannot subscribe to this activity at this moment in time');
 
@@ -303,18 +328,24 @@ class ActivityController extends AbstractActionController
 
     /**
      * Redirects to the view of the activity with the given $id, where the
-     * $error message can be displayed if the request was unsuccesful (i.e.
+     * $error message can be displayed if the request was unsuccessful (i.e.
      * $success was false).
      *
      * @param int $activityId
      * @param int $signupListId
      * @param bool $success Whether the request was successful
      * @param string $message
-     * @param null $session
+     * @param AbstractContainer|null $session
+     *
      * @return Response
      */
-    protected function redirectActivityRequest($activityId, $signupListId, $success, $message, $session = null)
-    {
+    protected function redirectActivityRequest(
+        int $activityId,
+        int $signupListId,
+        bool $success,
+        string $message,
+        AbstractContainer $session = null
+    ): Response {
         if (is_null($session)) {
             $session = new SessionContainer('activityRequest');
         }
@@ -367,7 +398,7 @@ class ActivityController extends AbstractActionController
             // Ensure that the action is within the subscription window
             if (
                 !$this->signupService->isInSubscriptionWindow($signupList->getOpenDate(), $signupList->getCloseDate())
-                || Activity::STATUS_APPROVED !== $signupList->getActivity()->getStatus()
+                || ActivityModel::STATUS_APPROVED !== $signupList->getActivity()->getStatus()
             ) {
                 $error = $this->translator->translate('You cannot subscribe to this activity at this moment in time');
 
@@ -426,7 +457,7 @@ class ActivityController extends AbstractActionController
             // Ensure that the action is within the subscription window
             if (
                 !$this->signupService->isInSubscriptionWindow($signupList->getOpenDate(), $signupList->getCloseDate())
-                || Activity::STATUS_APPROVED !== $signupList->getActivity()->getStatus()
+                || ActivityModel::STATUS_APPROVED !== $signupList->getActivity()->getStatus()
             ) {
                 $error = $this->translator->translate('You cannot unsubscribe from this activity at this moment in time');
 

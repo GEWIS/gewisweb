@@ -3,13 +3,18 @@
 namespace Activity\Controller;
 
 use Activity\Form\ModifyRequest as RequestForm;
-use Activity\Model\Activity;
-use Activity\Service\AclService;
-use Activity\Service\ActivityQuery;
-use Activity\Service\Signup;
-use Activity\Service\SignupListQuery;
+use Activity\Mapper\Signup as SignupMapper;
+use Activity\Model\Activity as ActivityModel;
+use Activity\Service\{
+    AclService,
+    Activity as ActivityService,
+    ActivityQuery as ActivityQueryService,
+    Signup as SignupService,
+    SignupListQuery as SignupListQueryService,
+};
 use DateTime;
 use Laminas\Form\FormInterface;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Paginator\Paginator;
@@ -26,44 +31,67 @@ use User\Permissions\NotAllowedException;
 class AdminController extends AbstractActionController
 {
     /**
-     * @var \Activity\Service\Activity
+     * @var ActivityService
      */
-    private $activityService;
+    private ActivityService $activityService;
 
     /**
-     * @var ActivityQuery
+     * @var ActivityQueryService
      */
-    private $activityQueryService;
+    private ActivityQueryService $activityQueryService;
 
     /**
-     * @var Signup
+     * @var SignupService
      */
-    private $signupService;
+    private SignupService $signupService;
 
     /**
-     * @var SignupListQuery
+     * @var SignupListQueryService
      */
-    private $signupListQueryService;
-    private Translator $translator;
-    private \Activity\Mapper\Signup $signupMapper;
+    private SignupListQueryService $signupListQueryService;
+
+    /**
+     * @var SignupMapper
+     */
+    private SignupMapper $signupMapper;
+
+    /**
+     * @var AclService
+     */
     private AclService $aclService;
 
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
+    /**
+     * AdminController constructor.
+     *
+     * @param ActivityService $activityService
+     * @param ActivityQueryService $activityQueryService
+     * @param SignupService $signupService
+     * @param SignupListQueryService $signupListQueryService
+     * @param SignupMapper $signupMapper
+     * @param AclService $aclService
+     * @param Translator $translator
+     */
     public function __construct(
-        Translator $translator,
-        \Activity\Service\Activity $activityService,
-        ActivityQuery $activityQueryService,
-        Signup $signupService,
-        SignupListQuery $signupListQueryService,
-        \Activity\Mapper\Signup $signupMapper,
-        AclService $aclService
+        ActivityService $activityService,
+        ActivityQueryService $activityQueryService,
+        SignupService $signupService,
+        SignupListQueryService $signupListQueryService,
+        SignupMapper $signupMapper,
+        AclService $aclService,
+        Translator $translator
     ) {
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;
         $this->signupService = $signupService;
         $this->signupListQueryService = $signupListQueryService;
-        $this->translator = $translator;
         $this->signupMapper = $signupMapper;
         $this->aclService = $aclService;
+        $this->translator = $translator;
     }
 
     public function updateAction()
@@ -130,7 +158,7 @@ class AdminController extends AbstractActionController
         $activityData['language_english'] = $languages['en'];
 
         $allowSignupList = true;
-        if (Activity::STATUS_APPROVED === $activity->getStatus() || (isset($participants) && 0 !== $participants)) {
+        if (ActivityModel::STATUS_APPROVED === $activity->getStatus() || (isset($participants) && 0 !== $participants)) {
             $allowSignupList = false;
             unset($activityData['signupLists']);
         }
@@ -296,22 +324,31 @@ class AdminController extends AbstractActionController
 
     /**
      * Redirects to the view of the activity with the given $id, where the
-     * $error message can be displayed if the request was unsuccesful (i.e.
+     * $error message can be displayed if the request was unsuccessful (i.e.
      * $success was false).
      *
      * @param int $activityId
      * @param int $signupListId
      * @param bool $success Whether the request was successful
      * @param string $message
-     * @param AbstractContainer $session
+     * @param AbstractContainer|null $session
+     *
+     * @return Response
      */
-    protected function redirectActivityAdminRequest($activityId, $signupListId, $success, $message, $session = null)
-    {
+    protected function redirectActivityAdminRequest(
+        int $activityId,
+        int $signupListId,
+        bool $success,
+        string $message,
+        AbstractContainer $session = null
+    ): Response {
         if (is_null($session)) {
             $session = new SessionContainer('activityAdminRequest');
         }
+
         $session->success = $success;
         $session->message = $message;
+
         $this->redirect()->toRoute(
             'activity_admin/participants',
             [
