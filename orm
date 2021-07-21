@@ -10,4 +10,4 @@ chdir(__DIR__);
 
 require 'bootstrap.php';
 
-include 'vendor/bin/doctrine-module';
+include 'vendor/doctrine/doctrine-module/bin/doctrine-module';
