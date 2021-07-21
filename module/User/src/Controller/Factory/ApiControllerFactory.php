@@ -4,25 +4,24 @@ namespace User\Controller\Factory;
 
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
-use User\Controller\ApiAuthenticationController;
-use User\Service\ApiApp as ApiAppService;
+use User\Controller\ApiController;
 
-class ApiAuthenticationControllerFactory implements FactoryInterface
+class ApiControllerFactory implements FactoryInterface
 {
     /**
      * @param ContainerInterface $container
      * @param string $requestedName
      * @param null|array $options
      *
-     * @return ApiAuthenticationController
+     * @return ApiController
      */
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
         array $options = null
-    ): ApiAuthenticationController {
-        return new ApiAuthenticationController(
-            $container->get(ApiAppService::class),
+    ): ApiController {
+        return new ApiController(
+            $container->get('decision_service_memberinfo'),
             $container->get('user_service_acl')
         );
     }

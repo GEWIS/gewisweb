@@ -1,11 +1,17 @@
 <?php
 
-use Interop\Container\ContainerInterface;
-use User\Controller\ApiAdminController;
-use User\Controller\ApiAuthenticationController;
-use User\Controller\ApiController;
-use User\Controller\Factory\ApiAuthenticationControllerFactory;
-use User\Controller\UserController;
+use User\Controller\{
+    ApiAdminController,
+    ApiAuthenticationController,
+    ApiController,
+    UserController,
+};
+use User\Controller\Factory\{
+    ApiAdminControllerFactory,
+    ApiAuthenticationControllerFactory,
+    ApiControllerFactory,
+    UserControllerFactory,
+};
 
 return [
     'router' => [
@@ -15,8 +21,7 @@ return [
                 'options' => [
                     'route' => '/user',
                     'defaults' => [
-                        '__NAMESPACE__' => 'User\Controller',
-                        'controller' => 'User',
+                        'controller' => UserController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -88,9 +93,6 @@ return [
                 'type' => 'Literal',
                 'options' => [
                     'route' => '/admin/user',
-                    'defaults' => [
-                        '__NAMESPACE__' => 'User\Controller',
-                    ],
                 ],
                 'may_terminate' => false,
                 'child_routes' => [
@@ -99,7 +101,7 @@ return [
                         'options' => [
                             'route' => '/api',
                             'defaults' => [
-                                'controller' => 'ApiAdmin',
+                                'controller' => ApiAdminController::class,
                                 'action' => 'index',
                             ],
                         ],
@@ -136,7 +138,7 @@ return [
                 'options' => [
                     'route' => '/token/:appId',
                     'defaults' => [
-                        'controller' => '\User\Controller\ApiAuthenticationController',
+                        'controller' => ApiAuthenticationController::class,
                         'action' => 'token',
                     ],
                 ],
@@ -147,7 +149,7 @@ return [
                 'options' => [
                     'route' => '/api/validateLogin',
                     'defaults' => [
-                        'controller' => '\User\Controller\Api',
+                        'controller' => ApiController::class,
                         'action' => 'validate',
                     ],
                 ],
@@ -157,23 +159,10 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            'User\Controller\User' => function (ContainerInterface $container) {
-                $userService = $container->get('user_service_user');
-
-                return new UserController($userService);
-            },
-            'User\Controller\Api' => function (ContainerInterface $container) {
-                $memberInfoService = $container->get('decision_service_memberinfo');
-                $aclService = $container->get('user_service_acl');
-
-                return new ApiController($memberInfoService, $aclService);
-            },
-            'User\Controller\ApiAdmin' => function (ContainerInterface $container) {
-                $apiUserService = $container->get('user_service_apiuser');
-
-                return new ApiAdminController($apiUserService);
-            },
+            ApiAdminController::class => ApiAdminControllerFactory::class,
             ApiAuthenticationController::class => ApiAuthenticationControllerFactory::class,
+            ApiController::class => ApiControllerFactory::class,
+            UserController::class => UserControllerFactory::class,
         ],
     ],
     'view_manager' => [

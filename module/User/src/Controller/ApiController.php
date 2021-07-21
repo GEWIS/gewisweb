@@ -1,30 +1,33 @@
 <?php
 
-/**
- * Zend Framework (http://framework.zend.com/).
- *
- * @see      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- *
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
-
 namespace User\Controller;
 
-use Decision\Service\MemberInfo;
+use Decision\Service\MemberInfo as MemberInfoService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use User\Service\AclService;
 
 class ApiController extends AbstractActionController
 {
     /**
-     * @var MemberInfo
+     * @var MemberInfoService
      */
-    private $memberInfoService;
+    private MemberInfoService $memberInfoService;
+
+    /**
+     * @var AclService
+     */
     private AclService $aclService;
 
-    public function __construct(MemberInfo $memberInfoService, AclService $aclService)
-    {
+    /**
+     * ApiController constructor.
+     *
+     * @param MemberInfoService $memberInfoService
+     * @param AclService $aclService
+     */
+    public function __construct(
+        MemberInfoService $memberInfoService,
+        AclService $aclService
+    ) {
         $this->memberInfoService = $memberInfoService;
         $this->aclService = $aclService;
     }
