@@ -1,15 +1,7 @@
 <?php
 
-/**
- * Zend Framework (http://framework.zend.com/).
- *
- * @see      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- *
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
-
 use Application\Controller\IndexController;
+use Application\Controller\Factory\IndexControllerFactory;
 use Application\View\Helper\BootstrapElementError;
 use Application\View\Helper\FeaturedCompanyPackage;
 use Application\View\Helper\LocalisedTextElement;
@@ -24,8 +16,7 @@ return [
                 'options' => [
                     'route' => '/lang/:lang/',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Application\Controller',
-                        'controller' => 'Index',
+                        'controller' => IndexController::class,
                         'action' => 'lang',
                         'lang' => 'nl',
                     ],
@@ -37,8 +28,7 @@ return [
                 'options' => [
                     'route' => '/coffee',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Application\Controller',
-                        'controller' => 'Index',
+                        'controller' => IndexController::class,
                         'action' => 'teapot',
                     ],
                 ],
@@ -85,9 +75,7 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            'Application\Controller\Index' => function () {
-                return new IndexController();
-            },
+            IndexController::class => IndexControllerFactory::class,
         ],
     ],
     'view_manager' => [
