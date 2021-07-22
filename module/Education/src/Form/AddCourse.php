@@ -2,6 +2,7 @@
 
 namespace Education\Form;
 
+use Laminas\Filter\StringToUpper;
 use Laminas\Form\Form;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
@@ -101,10 +102,14 @@ class AddCourse extends Form implements InputFilterProviderInterface
                             'max' => 6,
                         ],
                     ],
-                    ['name' => 'alnum'],
+                    [
+                        'name' => 'alnum',
+                    ],
                 ],
                 'filters' => [
-                    ['name' => 'string_to_upper'],
+                    [
+                        'name' => StringToUpper::class,
+                    ],
                 ],
             ], 'name' => [
                 'required' => true,
