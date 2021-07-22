@@ -117,7 +117,7 @@ class AdminController extends AbstractActionController
                 $participants += $signupList->getSignups()->count();
             }
 
-            if (min($openingDates) < new DateTime() || Activity::STATUS_APPROVED === $activity->getStatus()) {
+            if (min($openingDates) < new DateTime() || ActivityModel::STATUS_APPROVED === $activity->getStatus()) {
                 $message = $this->translator->translate('Activities that have sign-up lists which are open or approved cannot be updated.');
 
                 $this->redirectActivityAdmin(false, $message);

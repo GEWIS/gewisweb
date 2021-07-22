@@ -3,6 +3,7 @@
 namespace Frontpage\Controller;
 
 use Activity\Service\ActivityQuery as ActivityQueryService;
+use Decision\Model\Organ;
 use Decision\Service\Organ as OrganService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
