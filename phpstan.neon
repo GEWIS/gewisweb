@@ -1,14 +1,14 @@
 includes:
-    - phpstan-baseline.neon
+    - phpstan/phpstan-baseline.neon
 
 parameters:
     level: 3
     bootstrapFiles:
         - bootstrap.php
     laminasframework:
-       serviceManagerLoader: phpstan-sm.php
+       serviceManagerLoader: phpstan/phpstan-sm.php
     doctrine:
-        objectManagerLoader: phpstan-om.php
+        objectManagerLoader: phpstan/phpstan-om.php
     paths:
         - config
         - bootstrap.php

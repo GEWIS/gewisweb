@@ -1,0 +1,272 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method Activity\\\\Controller\\\\ActivityController\\:\\:indexAction\\(\\) should return Laminas\\\\View\\\\Model\\\\ViewModel but returns array\\<string, mixed\\>\\.$#"
+			count: 1
+			path: module/Activity/src/Controller/ActivityController.php
+
+		-
+			message: "#^Method Activity\\\\Controller\\\\ActivityController\\:\\:prepareSignupForm\\(\\) should return Activity\\\\Form\\\\Signup but returns null\\.$#"
+			count: 1
+			path: module/Activity/src/Controller/ActivityController.php
+
+		-
+			message: "#^Method Activity\\\\Controller\\\\AdminCategoryController\\:\\:indexAction\\(\\) should return Laminas\\\\View\\\\Model\\\\ViewModel but returns array\\<string, array\\>\\.$#"
+			count: 1
+			path: module/Activity/src/Controller/AdminCategoryController.php
+
+		-
+			message: "#^Call to an undefined method Activity\\\\Model\\\\ActivityUpdateProposal\\:\\:count\\(\\)\\.$#"
+			count: 1
+			path: module/Activity/src/Controller/AdminController.php
+
+		-
+			message: "#^Call to an undefined method Activity\\\\Model\\\\ActivityUpdateProposal\\:\\:first\\(\\)\\.$#"
+			count: 1
+			path: module/Activity/src/Controller/AdminController.php
+
+		-
+			message: "#^Call to an undefined method Activity\\\\Model\\\\Activity\\:\\:getCanSignup\\(\\)\\.$#"
+			count: 1
+			path: module/Activity/src/Controller/ApiController.php
+
+		-
+			message: "#^Call to an undefined method Activity\\\\Model\\\\Activity\\:\\:getFields\\(\\)\\.$#"
+			count: 1
+			path: module/Activity/src/Controller/ApiController.php
+
+		-
+			message: "#^Call to an undefined method Laminas\\\\Form\\\\ElementInterface\\:\\:getFieldSets\\(\\)\\.$#"
+			count: 1
+			path: module/Activity/src/Form/Activity.php
+
+		-
+			message: "#^Call to an undefined method Activity\\\\Model\\\\ActivityUpdateProposal\\:\\:count\\(\\)\\.$#"
+			count: 1
+			path: module/Activity/src/Service/Activity.php
+
+		-
+			message: "#^Call to an undefined method Activity\\\\Model\\\\ActivityUpdateProposal\\:\\:unwrap\\(\\)\\.$#"
+			count: 1
+			path: module/Activity/src/Service/Activity.php
+
+		-
+			message: "#^Argument of an invalid type Activity\\\\Model\\\\Signup supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: module/Activity/src/Service/Signup.php
+
+		-
+			message: "#^Call to an undefined method Activity\\\\Mapper\\\\Signup\\:\\:getSignedUp\\(\\)\\.$#"
+			count: 1
+			path: module/Activity/src/Service/Signup.php
+
+		-
+			message: "#^Call to an undefined method Activity\\\\Model\\\\ExternalSignup\\:\\:getActivity\\(\\)\\.$#"
+			count: 1
+			path: module/Activity/src/Service/Signup.php
+
+		-
+			message: "#^Call to an undefined method Laminas\\\\Mvc\\\\I18n\\\\Translator\\:\\:setlocale\\(\\)\\.$#"
+			count: 1
+			path: module/Application/src/Module.php
+
+		-
+			message: "#^Call to method setLegacyService\\(\\) on an unknown class Application\\\\View\\\\Helper\\\\Infima\\.$#"
+			count: 1
+			path: module/Application/src/Module.php
+
+		-
+			message: "#^Instantiated class Application\\\\View\\\\Helper\\\\Infima not found\\.$#"
+			count: 1
+			path: module/Application/src/Module.php
+
+		-
+			message: "#^Property Application\\\\View\\\\Helper\\\\ModuleIsActive\\:\\:\\$locator \\(Laminas\\\\ServiceManager\\\\ServiceLocatorInterface\\) does not accept Interop\\\\Container\\\\ContainerInterface\\.$#"
+			count: 1
+			path: module/Application/src/View/Helper/ModuleIsActive.php
+
+		-
+			message: "#^Call to an undefined method Laminas\\\\Form\\\\ElementInterface\\:\\:setLanguage\\(\\)\\.$#"
+			count: 1
+			path: module/Company/src/Form/FixedKeyDictionaryCollection.php
+
+		-
+			message: "#^Method Company\\\\Model\\\\Job\\:\\:getTimestamp\\(\\) should return Carbon\\\\Carbon but returns null\\.$#"
+			count: 1
+			path: module/Company/src/Model/Job.php
+
+		-
+			message: "#^Call to an undefined method Laminas\\\\Mvc\\\\I18n\\\\Translator\\:\\:getLocale\\(\\)\\.$#"
+			count: 4
+			path: module/Company/src/Service/Company.php
+
+		-
+			message: "#^Call to an undefined method Laminas\\\\Mvc\\\\I18n\\\\Translator\\:\\:getLocale\\(\\)\\.$#"
+			count: 7
+			path: module/Company/src/Service/CompanyQuery.php
+
+		-
+			message: "#^Argument of an invalid type string supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: module/Decision/src/Controller/FileBrowser/FileNode.php
+
+		-
+			message: "#^Method Decision\\\\Controller\\\\FileBrowser\\\\FileNode\\:\\:__construct\\(\\) with return type void returns false but should not return anything\\.$#"
+			count: 1
+			path: module/Decision/src/Controller/FileBrowser/FileNode.php
+
+		-
+			message: "#^Property Decision\\\\Controller\\\\FileBrowser\\\\FileNode\\:\\:\\$iconExtensions \\(string\\) does not accept default value of type array\\<string, array\\<int, string\\>\\>\\.$#"
+			count: 1
+			path: module/Decision/src/Controller/FileBrowser/FileNode.php
+
+		-
+			message: "#^Method Decision\\\\Controller\\\\FileBrowser\\\\LocalFileReader\\:\\:downloadFile\\(\\) should return bool but returns Laminas\\\\Http\\\\Response\\\\Stream\\.$#"
+			count: 1
+			path: module/Decision/src/Controller/FileBrowser/LocalFileReader.php
+
+		-
+			message: "#^Method Decision\\\\Controller\\\\FileBrowser\\\\LocalFileReader\\:\\:downloadFile\\(\\) should return bool but returns null\\.$#"
+			count: 1
+			path: module/Decision/src/Controller/FileBrowser/LocalFileReader.php
+
+		-
+			message: "#^Method Decision\\\\Controller\\\\FileBrowser\\\\LocalFileReader\\:\\:listDir\\(\\) should return array but returns null\\.$#"
+			count: 1
+			path: module/Decision/src/Controller/FileBrowser/LocalFileReader.php
+
+		-
+			message: "#^Property Decision\\\\Model\\\\AssociationYear\\:\\:\\$firstYear \\(int\\) does not accept string\\.$#"
+			count: 1
+			path: module/Decision/src/Model/AssociationYear.php
+
+		-
+			message: "#^Method Decision\\\\Model\\\\Organ\\:\\:getApprovedOrganInformation\\(\\) should return Decision\\\\Model\\\\OrganInformation but returns null\\.$#"
+			count: 1
+			path: module/Decision/src/Model/Organ.php
+
+		-
+			message: "#^Argument of an invalid type Decision\\\\Model\\\\OrganInformation supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: module/Decision/src/Service/Organ.php
+
+		-
+			message: "#^Call to an undefined method Decision\\\\Model\\\\OrganInformation\\:\\:add\\(\\)\\.$#"
+			count: 1
+			path: module/Decision/src/Service/Organ.php
+
+		-
+			message: "#^Call to an undefined method Education\\\\Service\\\\Exam\\:\\:uploadSummary\\(\\)\\.$#"
+			count: 1
+			path: module/Education/src/Controller/AdminController.php
+
+		-
+			message: "#^Method Education\\\\Controller\\\\AdminController\\:\\:indexAction\\(\\) should return Laminas\\\\View\\\\Model\\\\ViewModel but returns Laminas\\\\View\\\\View\\.$#"
+			count: 1
+			path: module/Education/src/Controller/AdminController.php
+
+		-
+			message: "#^Call to an undefined method Laminas\\\\Form\\\\ElementInterface\\:\\:populateValues\\(\\)\\.$#"
+			count: 1
+			path: module/Education/src/Service/Exam.php
+
+		-
+			message: "#^Method Education\\\\Service\\\\Exam\\:\\:addCourse\\(\\) should return Education\\\\Model\\\\Course but returns null\\.$#"
+			count: 2
+			path: module/Education/src/Service/Exam.php
+
+		-
+			message: "#^Cannot call method setCreatedOn\\(\\) on array\\|object\\.$#"
+			count: 1
+			path: module/Frontpage/src/Service/Poll.php
+
+		-
+			message: "#^Cannot call method setUser\\(\\) on array\\|object\\.$#"
+			count: 1
+			path: module/Frontpage/src/Service/Poll.php
+
+		-
+			message: "#^Method Frontpage\\\\Service\\\\Poll\\:\\:getPollDetails\\(\\) should return array but returns null\\.$#"
+			count: 1
+			path: module/Frontpage/src/Service/Poll.php
+
+		-
+			message: "#^Return type \\(array\\) of method Photo\\\\Model\\\\VirtualAlbum\\:\\:getChildren\\(\\) should be compatible with return type \\(Doctrine\\\\Common\\\\Collections\\\\Collection\\) of method Photo\\\\Model\\\\Album\\:\\:getChildren\\(\\)$#"
+			count: 1
+			path: module/Photo/src/Model/VirtualAlbum.php
+
+		-
+			message: "#^Method Photo\\\\Service\\\\Album\\:\\:getAssociationYear\\(\\) should return int but returns string\\.$#"
+			count: 1
+			path: module/Photo/src/Service/Album.php
+
+		-
+			message: "#^Method Photo\\\\Service\\\\Metadata\\:\\:exifGpsToCoordinate\\(\\) should return float but returns null\\.$#"
+			count: 1
+			path: module/Photo/src/Service/Metadata.php
+
+		-
+			message: "#^Method Photo\\\\Service\\\\Metadata\\:\\:frac2dec\\(\\) should return float but returns string\\.$#"
+			count: 1
+			path: module/Photo/src/Service/Metadata.php
+
+		-
+			message: "#^Property User\\\\Authentication\\\\Storage\\\\Session\\:\\:\\$rememberMe \\(bool\\) does not accept int\\.$#"
+			count: 1
+			path: module/User/src/Authentication/Storage/Session.php
+
+		-
+			message: "#^Property User\\\\Controller\\\\ApiAdminController\\:\\:\\$apiUserService \\(User\\\\Service\\\\ApiUser\\) does not accept User\\\\Service\\\\User\\.$#"
+			count: 1
+			path: module/User/src/Controller/ApiAdminController.php
+
+		-
+			message: "#^Method User\\\\Controller\\\\UserController\\:\\:indexAction\\(\\) should return Laminas\\\\View\\\\Model\\\\ViewModel but returns Laminas\\\\Http\\\\Response\\.$#"
+			count: 2
+			path: module/User/src/Controller/UserController.php
+
+		-
+			message: "#^Parameter \\#4 \\$privilege \\(null\\) of method User\\\\Permissions\\\\Assertion\\\\IsBoardMember\\:\\:assert\\(\\) should be compatible with parameter \\$privilege \\(string\\) of method Laminas\\\\Permissions\\\\Acl\\\\Assertion\\\\AssertionInterface\\:\\:assert\\(\\)$#"
+			count: 1
+			path: module/User/src/Permissions/Assertion/IsBoardMember.php
+
+		-
+			message: "#^Parameter \\#4 \\$privilege \\(null\\) of method User\\\\Permissions\\\\Assertion\\\\IsCreator\\:\\:assert\\(\\) should be compatible with parameter \\$privilege \\(string\\) of method Laminas\\\\Permissions\\\\Acl\\\\Assertion\\\\AssertionInterface\\:\\:assert\\(\\)$#"
+			count: 1
+			path: module/User/src/Permissions/Assertion/IsCreator.php
+
+		-
+			message: "#^Parameter \\#4 \\$privilege \\(null\\) of method User\\\\Permissions\\\\Assertion\\\\IsCreatorOrOrganMember\\:\\:assert\\(\\) should be compatible with parameter \\$privilege \\(string\\) of method Laminas\\\\Permissions\\\\Acl\\\\Assertion\\\\AssertionInterface\\:\\:assert\\(\\)$#"
+			count: 1
+			path: module/User/src/Permissions/Assertion/IsCreatorOrOrganMember.php
+
+		-
+			message: "#^Parameter \\#4 \\$privilege \\(null\\) of method User\\\\Permissions\\\\Assertion\\\\IsOrganMember\\:\\:assert\\(\\) should be compatible with parameter \\$privilege \\(string\\) of method Laminas\\\\Permissions\\\\Acl\\\\Assertion\\\\AssertionInterface\\:\\:assert\\(\\)$#"
+			count: 1
+			path: module/User/src/Permissions/Assertion/IsOrganMember.php
+
+		-
+			message: "#^Cannot call method setToken\\(\\) on array\\|object\\.$#"
+			count: 1
+			path: module/User/src/Service/ApiUser.php
+
+		-
+			message: "#^Method User\\\\Service\\\\User\\:\\:login\\(\\) should return User\\\\Model\\\\User but returns null\\.$#"
+			count: 2
+			path: module/User/src/Service/User.php
+
+		-
+			message: "#^Method User\\\\Service\\\\User\\:\\:pinLogin\\(\\) should return User\\\\Model\\\\User but returns null\\.$#"
+			count: 1
+			path: module/User/src/Service/User.php
+
+		-
+			message: "#^Method User\\\\Service\\\\User\\:\\:register\\(\\) should return User\\\\Model\\\\NewUser but returns null\\.$#"
+			count: 4
+			path: module/User/src/Service/User.php
+
+		-
+			message: "#^Method User\\\\Service\\\\User\\:\\:reset\\(\\) should return User\\\\Model\\\\User but returns null\\.$#"
+			count: 3
+			path: module/User/src/Service/User.php
+

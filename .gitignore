@@ -29,3 +29,5 @@ config/bash.env
 .idea/sonarlint.xml
 
 .idea/sonarlint-state.xml
+
+phpstan/phpstan-baseline-pr.neon
