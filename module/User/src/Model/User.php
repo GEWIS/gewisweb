@@ -165,12 +165,12 @@ class User implements RoleInterface, ResourceInterface
             return 'company_admin';
         }
 
-        if (empty($roleNames)) {
-            return 'user';
-        }
-
         if (count($this->getMember()->getCurrentOrganInstallations()) > 0) {
             return 'active_member';
+        }
+
+        if (empty($roleNames)) {
+            return 'user';
         }
 
         if (in_array('photo_guest', $roleNames)) {
