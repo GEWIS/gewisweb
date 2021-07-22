@@ -3,19 +3,26 @@
 namespace Frontpage\Controller;
 
 use Exception;
-use Frontpage\Service\Page;
+use Frontpage\Service\Page as PageService;
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\JsonModel;
-use Laminas\View\Model\ViewModel;
+use Laminas\View\Model\{
+    JsonModel,
+    ViewModel,
+};
 
 class PageAdminController extends AbstractActionController
 {
     /**
-     * @var Page
+     * @var PageService
      */
-    private $pageService;
+    private PageService $pageService;
 
-    public function __construct(Page $pageService)
+    /**
+     * PageAdminController constructor.
+     *
+     * @param PageService $pageService
+     */
+    public function __construct(PageService $pageService)
     {
         $this->pageService = $pageService;
     }

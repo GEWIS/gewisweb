@@ -1,8 +1,13 @@
 <?php
 
-use Education\Controller\AdminController;
-use Education\Controller\EducationController;
-use Interop\Container\ContainerInterface;
+use Education\Controller\{
+    AdminController,
+    EducationController,
+};
+use Education\Controller\Factory\{
+    AdminControllerFactory,
+    EducationControllerFactory,
+};
 
 return [
     'router' => [
@@ -12,8 +17,7 @@ return [
                 'options' => [
                     'route' => '/education',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Education\Controller',
-                        'controller' => 'Education',
+                        'controller' => EducationController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -63,8 +67,7 @@ return [
                 'options' => [
                     'route' => '/admin/education',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Education\Controller',
-                        'controller' => 'Admin',
+                        'controller' => AdminController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -143,19 +146,8 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            'Education\Controller\Education' => function (ContainerInterface $container) {
-                $examService = $container->get('education_service_exam');
-                $searchCourseForm = $container->get('education_form_searchcourse');
-
-                return new EducationController($examService, $searchCourseForm);
-            },
-            'Education\Controller\Admin' => function (ContainerInterface $container) {
-                $examService = $container->get('education_service_exam');
-                $uploadSummaryForm = $container->get('education_form_summaryupload');
-                $educationTempConfig = $container->get('config')['education_temp'];
-
-                return new AdminController($examService, $uploadSummaryForm, $educationTempConfig);
-            },
+            AdminController::class => AdminControllerFactory::class,
+            EducationController::class => EducationControllerFactory::class,
         ],
     ],
     'view_manager' => [

@@ -2,9 +2,11 @@
 
 namespace Activity\Controller;
 
-use Activity\Service\AclService;
-use Activity\Service\ActivityQuery;
-use Activity\Service\Signup;
+use Activity\Service\{
+    AclService,
+    ActivityQuery as ActivityQueryService,
+    Signup as SignupService,
+};
 use Laminas\Form\FormInterface;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\JsonModel;
@@ -13,19 +15,30 @@ use User\Permissions\NotAllowedException;
 class ApiController extends AbstractActionController
 {
     /**
-     * @var ActivityQuery
+     * @var ActivityQueryService
      */
-    private $activityQueryService;
+    private ActivityQueryService $activityQueryService;
 
     /**
-     * @var Signup
+     * @var SignupService
      */
-    private $signupService;
+    private SignupService$signupService;
+
+    /**
+     * @var AclService
+     */
     private AclService $aclService;
 
+    /**
+     * ApiController constructor.
+     *
+     * @param ActivityQueryService $activityQueryService
+     * @param SignupService $signupService
+     * @param AclService $aclService
+     */
     public function __construct(
-        ActivityQuery $activityQueryService,
-        Signup $signupService,
+        ActivityQueryService $activityQueryService,
+        SignupService $signupService,
         AclService $aclService
     ) {
         $this->activityQueryService = $activityQueryService;

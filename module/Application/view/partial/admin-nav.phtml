@@ -69,7 +69,19 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="<?= $this->url('admin_poll') ?>"><?= $this->translate('Polls') ?></a>
+                                    <a href="<?= $this->url('admin_education/bulk_upload_exam') ?>">
+                                        <?= $this->translate('Upload exams') ?>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= $this->url('admin_education/bulk_upload_summary') ?>">
+                                        <?= $this->translate('Upload summaries') ?>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= $this->url('admin_education/add_course') ?>">
+                                        <?= $this->translate('Add courses') ?>
+                                    </a>
                                 </li>
                             </ul>
                         </li>

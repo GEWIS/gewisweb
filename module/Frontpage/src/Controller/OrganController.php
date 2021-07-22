@@ -2,27 +2,36 @@
 
 namespace Frontpage\Controller;
 
-use Activity\Service\ActivityQuery;
+use Activity\Service\ActivityQuery as ActivityQueryService;
 use Decision\Model\Organ;
+use Decision\Service\Organ as OrganService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
 class OrganController extends AbstractActionController
 {
     /**
-     * @var \Decision\Service\Organ
+     * @var ActivityQueryService
      */
-    private $organService;
+    private ActivityQueryService $activityQueryService;
 
     /**
-     * @var ActivityQuery
+     * @var OrganService
      */
-    private $activityQueryService;
+    private OrganService $organService;
 
-    public function __construct(\Decision\Service\Organ $organService, ActivityQuery $activityQueryService)
-    {
-        $this->organService = $organService;
+    /**
+     * OrganController constructor.
+     *
+     * @param ActivityQueryService $activityQueryService
+     * @param OrganService $organService
+     */
+    public function __construct(
+        ActivityQueryService $activityQueryService,
+        OrganService $organService
+    ) {
         $this->activityQueryService = $activityQueryService;
+        $this->organService = $organService;
     }
 
     public function committeeListAction()

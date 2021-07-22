@@ -1,9 +1,22 @@
 <?php
 
 use Activity\Command\CalendarNotify;
-use Activity\Controller\ActivityCalendarController;
-use Activity\Controller\AdminCategoryController;
-use Interop\Container\ContainerInterface;
+use Activity\Controller\{
+    ActivityCalendarController,
+    ActivityController,
+    AdminApprovalController,
+    AdminCategoryController,
+    AdminController,
+    ApiController,
+};
+use Activity\Controller\Factory\{
+    ActivityCalendarControllerFactory,
+    ActivityControllerFactory,
+    AdminApprovalControllerFactory,
+    AdminCategoryControllerFactory,
+    AdminControllerFactory,
+    ApiControllerFactory,
+};
 
 return [
     'router' => [
@@ -13,8 +26,7 @@ return [
                 'options' => [
                     'route' => '/activity',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Activity\Controller',
-                        'controller' => 'Activity',
+                        'controller' => ActivityController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -146,8 +158,7 @@ return [
                 'options' => [
                     'route' => '/admin/activity',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Activity\Controller',
-                        'controller' => 'admin',
+                        'controller' => AdminController::class,
                         'action' => 'view',
                     ],
                 ],
@@ -161,7 +172,6 @@ return [
                                 'page' => '[0-9]+',
                             ],
                             'defaults' => [
-                                'controller' => 'admin',
                                 'action' => 'view',
                             ],
                         ],
@@ -175,7 +185,6 @@ return [
                                 'signupList' => '\d+',
                             ],
                             'defaults' => [
-                                'controller' => 'admin',
                                 'action' => 'participants',
                             ],
                         ],
@@ -189,7 +198,6 @@ return [
                                 'signupList' => '\d+',
                             ],
                             'defaults' => [
-                                'controller' => 'admin',
                                 'action' => 'externalSignup',
                             ],
                         ],
@@ -202,7 +210,6 @@ return [
                                 'id' => '\d+',
                             ],
                             'defaults' => [
-                                'controller' => 'admin',
                                 'action' => 'externalSignoff',
                             ],
                         ],
@@ -215,7 +222,6 @@ return [
                                 'id' => '\d+',
                             ],
                             'defaults' => [
-                                'controller' => 'admin',
                                 'action' => 'update',
                             ],
                         ],
@@ -227,8 +233,7 @@ return [
                 'options' => [
                     'route' => '/activity/calendar/',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Activity\Controller',
-                        'controller' => 'activityCalendar',
+                        'controller' => ActivityCalendarController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -269,8 +274,7 @@ return [
                 'options' => [
                     'route' => '/admin/activity/approval',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Activity\Controller',
-                        'controller' => 'adminApproval',
+                        'controller' => AdminApprovalController::class,
                     ],
                 ],
                 'may_terminate' => true,
@@ -280,7 +284,6 @@ return [
                         'options' => [
                             'route' => '/view/[:id]',
                             'defaults' => [
-                                'controller' => 'adminApproval',
                                 'action' => 'view',
                             ],
                         ],
@@ -290,7 +293,6 @@ return [
                         'options' => [
                             'route' => '/proposal/[:id]',
                             'defaults' => [
-                                'controller' => 'adminApproval',
                                 'action' => 'viewProposal',
                             ],
                         ],
@@ -300,7 +302,6 @@ return [
                         'options' => [
                             'route' => '/proposal/[:id]/apply',
                             'defaults' => [
-                                'controller' => 'adminApproval',
                                 'action' => 'applyProposal',
                             ],
                         ],
@@ -310,7 +311,6 @@ return [
                         'options' => [
                             'route' => '/proposal/[:id]/revoke',
                             'defaults' => [
-                                'controller' => 'adminApproval',
                                 'action' => 'revokeProposal',
                             ],
                         ],
@@ -320,7 +320,6 @@ return [
                         'options' => [
                             'route' => '/approve/[:id]',
                             'defaults' => [
-                                'controller' => 'adminApproval',
                                 'action' => 'approve',
                             ],
                         ],
@@ -330,7 +329,6 @@ return [
                         'options' => [
                             'route' => '/disapprove/[:id]',
                             'defaults' => [
-                                'controller' => 'adminApproval',
                                 'action' => 'disapprove',
                             ],
                         ],
@@ -340,7 +338,6 @@ return [
                         'options' => [
                             'route' => '/reset/[:id]',
                             'defaults' => [
-                                'controller' => 'adminApproval',
                                 'action' => 'reset',
                             ],
                         ],
@@ -352,8 +349,7 @@ return [
                 'options' => [
                     'route' => '/admin/activity/categories',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Activity\Controller',
-                        'controller' => 'adminCategory',
+                        'controller' => AdminCategoryController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -364,7 +360,6 @@ return [
                         'options' => [
                             'route' => '/add',
                             'defaults' => [
-                                'controller' => 'adminCategory',
                                 'action' => 'add',
                             ],
                         ],
@@ -377,7 +372,6 @@ return [
                                 'id' => '\d+',
                             ],
                             'defaults' => [
-                                'controller' => 'adminCategory',
                                 'action' => 'delete',
                             ],
                         ],
@@ -390,7 +384,6 @@ return [
                                 'id' => '\d+',
                             ],
                             'defaults' => [
-                                'controller' => 'adminCategory',
                                 'action' => 'edit',
                             ],
                         ],
@@ -402,8 +395,7 @@ return [
                 'options' => [
                     'route' => '/api/activity',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Activity\Controller',
-                        'controller' => 'Api',
+                        'controller' => ApiController::class,
                         'action' => 'list',
                     ],
                 ],
@@ -470,75 +462,12 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            'Activity\Controller\Activity' => function (ContainerInterface $container) {
-                $translator = $container->get('translator');
-                $activityService = $container->get('activity_service_activity');
-                $activityQueryService = $container->get('activity_service_activityQuery');
-                $signupService = $container->get('activity_service_signup');
-                $signupListQueryService = $container->get('activity_service_signupListQuery');
-                $aclService = $container->get('activity_service_acl');
-
-                return new Activity\Controller\ActivityController(
-                    $translator,
-                    $activityService,
-                    $activityQueryService,
-                    $signupService,
-                    $signupListQueryService,
-                    $aclService
-                );
-            },
-            'Activity\Controller\AdminApproval' => function (ContainerInterface $container) {
-                $translator = $container->get('translator');
-                $activityService = $container->get('activity_service_activity');
-                $activityQueryService = $container->get('activity_service_activityQuery');
-                $aclService = $container->get('activity_service_acl');
-
-                return new Activity\Controller\AdminApprovalController(
-                    $translator,
-                    $activityService,
-                    $activityQueryService,
-                    $aclService
-                );
-            },
-            'Activity\Controller\AdminCategory' => function (ContainerInterface $container) {
-                $translator = $container->get('translator');
-                $categoryService = $container->get('activity_service_category');
-
-                return new AdminCategoryController($translator, $categoryService);
-            },
-            'Activity\Controller\Api' => function (ContainerInterface $container) {
-                $activityQueryService = $container->get('activity_service_activityQuery');
-                $signupService = $container->get('activity_service_signup');
-                $aclService = $container->get('activity_service_acl');
-
-                return new Activity\Controller\ApiController($activityQueryService, $signupService, $aclService);
-            },
-            'Activity\Controller\Admin' => function (ContainerInterface $container) {
-                $translator = $container->get('translator');
-                $activityService = $container->get('activity_service_activity');
-                $activityQueryService = $container->get('activity_service_activityQuery');
-                $signupService = $container->get('activity_service_signup');
-                $signupListQueryService = $container->get('activity_service_signupListQuery');
-                $signupMapper = $container->get('activity_mapper_signup');
-                $aclService = $container->get('activity_service_acl');
-
-                return new Activity\Controller\AdminController(
-                    $translator,
-                    $activityService,
-                    $activityQueryService,
-                    $signupService,
-                    $signupListQueryService,
-                    $signupMapper,
-                    $aclService
-                );
-            },
-            'Activity\Controller\ActivityCalendar' => function (ContainerInterface $container) {
-                $calendarService = $container->get('activity_service_calendar');
-                $calendarFormService = $container->get('activity_service_calendar_form');
-                $calendarConfig = $container->get('config')['calendar'];
-
-                return new ActivityCalendarController($calendarService, $calendarFormService, $calendarConfig);
-            },
+            ActivityCalendarController::class => ActivityCalendarControllerFactory::class,
+            ActivityController::class => ActivityControllerFactory::class,
+            AdminApprovalController::class => AdminApprovalControllerFactory::class,
+            AdminCategoryController::class => AdminCategoryControllerFactory::class,
+            AdminController::class => AdminControllerFactory::class,
+            ApiController::class => ApiControllerFactory::class,
         ],
     ],
     'view_manager' => [

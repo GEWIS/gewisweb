@@ -4,30 +4,44 @@ namespace Photo\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\JsonModel;
-use Laminas\View\Model\ViewModel;
-use Photo\Service\Album;
-use Photo\Service\Photo;
+use Laminas\View\Model\{
+    JsonModel,
+    ViewModel,
+};
+use Photo\Service\{
+    Album as AlbumService,
+    Photo as PhotoService,
+};
 
 class PhotoAdminController extends AbstractActionController
 {
     /**
-     * @var Photo
+     * @var AlbumService
      */
-    private $photoService;
+    private AlbumService $albumService;
+
+    /**
+     * @var PhotoService
+     */
+    private PhotoService $photoService;
 
     /**
      * @var EntityManager
      */
-    private $entityManager;
+    private EntityManager $entityManager;
 
     /**
-     * @var Album
+     * PhotoAdminController constructor.
+     *
+     * @param AlbumService $albumService
+     * @param PhotoService $photoService
+     * @param EntityManager $entityManager
      */
-    private $albumService;
-
-    public function __construct(Photo $photoService, Album $albumService, EntityManager $entityManager)
-    {
+    public function __construct(
+        AlbumService $albumService,
+        PhotoService $photoService,
+        EntityManager $entityManager
+    ) {
         $this->photoService = $photoService;
         $this->albumService = $albumService;
         $this->entityManager = $entityManager;

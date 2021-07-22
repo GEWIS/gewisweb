@@ -5,8 +5,10 @@ namespace Photo\Controller\Plugin;
 use Exception;
 use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
 use Laminas\Paginator;
-use Photo\Service\Album;
-use Photo\Service\Photo;
+use Photo\Service\{
+    Album as AlbumService,
+    Photo as PhotoService,
+};
 
 /**
  * This plugin helps with rendering the pages doing album related stuff.
@@ -14,22 +16,32 @@ use Photo\Service\Photo;
 class AlbumPlugin extends AbstractPlugin
 {
     /**
-     * @var Photo
+     * @var AlbumService
      */
-    private $photoService;
+    private AlbumService $albumService;
 
     /**
-     * @var Album
+     * @var PhotoService
      */
-    private $albumService;
+    private PhotoService $photoService;
 
     /**
      * @var array
      */
-    private $photoConfig;
+    private array $photoConfig;
 
-    public function __construct(Photo $photoService, Album $albumService, array $photoConfig)
-    {
+    /**
+     * AlbumPlugin constructor.
+     *
+     * @param AlbumService $albumService
+     * @param PhotoService $photoService
+     * @param array $photoConfig
+     */
+    public function __construct(
+        AlbumService $albumService,
+        PhotoService $photoService,
+        array $photoConfig
+    ) {
         $this->photoService = $photoService;
         $this->albumService = $albumService;
         $this->photoConfig = $photoConfig;

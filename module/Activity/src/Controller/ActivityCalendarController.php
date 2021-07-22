@@ -2,30 +2,42 @@
 
 namespace Activity\Controller;
 
-use Activity\Service\ActivityCalendar;
-use Activity\Service\ActivityCalendarForm;
+use Activity\Service\{
+    ActivityCalendar as ActivityCalendarService,
+    ActivityCalendarForm as ActivityCalendarFormService,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
 class ActivityCalendarController extends AbstractActionController
 {
     /**
-     * @var ActivityCalendar
+     * @var ActivityCalendarService
      */
-    private $calendarService;
+    private ActivityCalendarService $calendarService;
 
     /**
-     * @var ActivityCalendarForm
+     * @var ActivityCalendarFormService
      */
-    private $calendarFormService;
+    private ActivityCalendarFormService $calendarFormService;
 
     /**
      * @var array
      */
-    private $calendarConfig;
+    private array $calendarConfig;
 
-    public function __construct(ActivityCalendar $calendarService, ActivityCalendarForm $calendarFormService, array $calendarConfig)
-    {
+    /**
+     * ActivityCalendarController constructor.
+     *
+     * @param ActivityCalendarService $calendarService
+     * @param ActivityCalendarFormService $calendarFormService
+     * @param array $calendarConfig
+     */
+    public function __construct(
+        ActivityCalendarService $calendarService,
+        ActivityCalendarFormService $calendarFormService,
+        array $calendarConfig
+    ) {
         $this->calendarService = $calendarService;
         $this->calendarFormService = $calendarFormService;
         $this->calendarConfig = $calendarConfig;

@@ -2,7 +2,7 @@
 
 namespace Decision\Controller;
 
-use Decision\Service\Decision;
+use Decision\Service\Decision as DecisionService;
 use Laminas\Http\Response;
 use Laminas\Json\Json;
 use Laminas\Mvc\Controller\AbstractActionController;
@@ -11,11 +11,16 @@ use Laminas\View\Model\ViewModel;
 class AdminController extends AbstractActionController
 {
     /**
-     * @var Decision
+     * @var DecisionService
      */
-    private $decisionService;
+    private DecisionService $decisionService;
 
-    public function __construct(Decision $decisionService)
+    /**
+     * AdminController constructor.
+     *
+     * @param DecisionService $decisionService
+     */
+    public function __construct(DecisionService $decisionService)
     {
         $this->decisionService = $decisionService;
     }

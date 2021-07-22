@@ -1,12 +1,21 @@
 <?php
 
-use Decision\Controller\AdminController;
-use Decision\Controller\DecisionController;
-use Decision\Controller\MemberApiController;
-use Decision\Controller\MemberController;
-use Decision\Controller\OrganAdminController;
-use Decision\Controller\OrganController;
-use Interop\Container\ContainerInterface;
+use Decision\Controller\{
+    AdminController,
+    DecisionController,
+    MemberApiController,
+    MemberController,
+    OrganAdminController,
+    OrganController,
+};
+use Decision\Controller\Factory\{
+    AdminControllerFactory,
+    DecisionControllerFactory,
+    MemberApiControllerFactory,
+    MemberControllerFactory,
+    OrganAdminControllerFactory,
+    OrganControllerFactory,
+};
 
 return [
     'router' => [
@@ -16,8 +25,7 @@ return [
                 'options' => [
                     'route' => '/decision',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Decision\Controller',
-                        'controller' => 'Decision',
+                        'controller' => DecisionController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -105,8 +113,7 @@ return [
                 'options' => [
                     'route' => '/admin/decision',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Decision\Controller',
-                        'controller' => 'Admin',
+                        'controller' => AdminController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -181,8 +188,7 @@ return [
                 'options' => [
                     'route' => '/organ',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Decision\Controller',
-                        'controller' => 'Organ',
+                        'controller' => OrganController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -208,8 +214,7 @@ return [
                 'options' => [
                     'route' => '/member',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Decision\Controller',
-                        'controller' => 'Member',
+                        'controller' => MemberController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -292,8 +297,7 @@ return [
                 'options' => [
                     'route' => '/api/member',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Decision\Controller',
-                        'controller' => 'MemberApi',
+                        'controller' => MemberApiController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -316,8 +320,7 @@ return [
                 'options' => [
                     'route' => '/admin/organ',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Decision\Controller',
-                        'controller' => 'OrganAdmin',
+                        'controller' => OrganAdminController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -351,47 +354,12 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            'Decision\Controller\Decision' => function (ContainerInterface $container) {
-                $decisionService = $container->get('decision_service_decision');
-                $fileReader = $container->get('decision_fileReader');
-
-                return new DecisionController($decisionService, $fileReader);
-            },
-            'Decision\Controller\Organ' => function (ContainerInterface $container) {
-                $organService = $container->get('decision_service_organ');
-
-                return new OrganController($organService);
-            },
-            'Decision\Controller\Admin' => function (ContainerInterface $container) {
-                $decisionService = $container->get('decision_service_decision');
-
-                return new AdminController($decisionService);
-            },
-            'Decision\Controller\OrganAdmin' => function (ContainerInterface $container) {
-                $organService = $container->get('decision_service_organ');
-
-                return new OrganAdminController($organService);
-            },
-            'Decision\Controller\Member' => function (ContainerInterface $container) {
-                $memberService = $container->get('decision_service_member');
-                $memberInfoService = $container->get('decision_service_memberinfo');
-                $decisionService = $container->get('decision_service_decision');
-                $regulationsConfig = $container->get('config')['regulations'];
-                $aclService = $container->get('decision_service_acl');
-
-                return new MemberController(
-                    $memberService,
-                    $memberInfoService,
-                    $decisionService,
-                    $regulationsConfig,
-                    $aclService
-                );
-            },
-            'Decision\Controller\MemberApi' => function (ContainerInterface $container) {
-                $memberService = $container->get('decision_service_member');
-
-                return new MemberApiController($memberService);
-            },
+            AdminController::class => AdminControllerFactory::class,
+            DecisionController::class => DecisionControllerFactory::class,
+            MemberApiController::class => MemberApiControllerFactory::class,
+            MemberController::class => MemberControllerFactory::class,
+            OrganAdminController::class => OrganAdminControllerFactory::class,
+            OrganController::class => OrganControllerFactory::class,
         ],
     ],
     'view_manager' => [

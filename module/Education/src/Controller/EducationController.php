@@ -2,25 +2,33 @@
 
 namespace Education\Controller;
 
-use Education\Form\SearchCourse;
-use Education\Service\Exam;
+use Education\Form\SearchCourse as SearchCourseForm;
+use Education\Service\Exam as ExamService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
 class EducationController extends AbstractActionController
 {
     /**
-     * @var Exam
+     * @var ExamService
      */
-    private $examService;
+    private ExamService $examService;
 
     /**
-     * @var SearchCourse
+     * @var SearchCourseForm
      */
-    private $searchCourseForm;
+    private SearchCourseForm $searchCourseForm;
 
-    public function __construct(Exam $examService, SearchCourse $searchCourseForm)
-    {
+    /**
+     * EducationController constructor.
+     *
+     * @param ExamService $examService
+     * @param SearchCourseForm $searchCourseForm
+     */
+    public function __construct(
+        ExamService $examService,
+        SearchCourseForm $searchCourseForm
+    ) {
         $this->examService = $examService;
         $this->searchCourseForm = $searchCourseForm;
     }

@@ -3,18 +3,25 @@
 namespace User\Controller;
 
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\JsonModel;
-use Laminas\View\Model\ViewModel;
-use User\Service\User;
+use Laminas\View\Model\{
+    JsonModel,
+    ViewModel,
+};
+use User\Service\User as UserService;
 
 class UserController extends AbstractActionController
 {
     /**
-     * @var User
+     * @var UserService
      */
-    private $userService;
+    private UserService $userService;
 
-    public function __construct(User $userService)
+    /**
+     * UserController constructor.
+     *
+     * @param UserService $userService
+     */
+    public function __construct(UserService $userService)
     {
         $this->userService = $userService;
     }

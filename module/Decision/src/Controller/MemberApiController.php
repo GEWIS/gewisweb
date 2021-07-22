@@ -2,18 +2,23 @@
 
 namespace Decision\Controller;
 
-use Decision\Service\Member;
+use Decision\Service\Member as MemberService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\JsonModel;
 
 class MemberApiController extends AbstractActionController
 {
     /**
-     * @var Member
+     * @var MemberService
      */
-    private $memberService;
+    private MemberService $memberService;
 
-    public function __construct(Member $memberService)
+    /**
+     * MemberApiController constructor.
+     *
+     * @param MemberService $memberService
+     */
+    public function __construct(MemberService $memberService)
     {
         $this->memberService = $memberService;
     }

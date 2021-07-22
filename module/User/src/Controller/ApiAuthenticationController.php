@@ -5,29 +5,33 @@ namespace User\Controller;
 use Laminas\Mvc\Controller\AbstractActionController;
 use User\Model\User;
 use User\Permissions\NotAllowedException;
-use User\Service\AclService;
-use User\Service\ApiApp;
-use User\Service\User as UserService;
+use User\Service\{
+    AclService,
+    ApiApp as ApiAppService,
+};
 
 class ApiAuthenticationController extends AbstractActionController
 {
     /**
-     * @var UserService
+     * @var ApiAppService
      */
-    protected $userService;
+    protected ApiAppService $apiAppService;
 
     /**
-     * @var ApiApp
+     * @var AclService
      */
-    protected $apiAppService;
     private AclService $aclService;
 
     /**
      * ApiAuthenticationController constructor.
+     *
+     * @param ApiAppService $apiAppService
+     * @param AclService $aclService
      */
-    public function __construct(UserService $userService, ApiApp $apiAppService, AclService $aclService)
-    {
-        $this->userService = $userService;
+    public function __construct(
+        ApiAppService $apiAppService,
+        AclService $aclService
+    ) {
         $this->apiAppService = $apiAppService;
         $this->aclService = $aclService;
     }
@@ -42,23 +46,7 @@ class ApiAuthenticationController extends AbstractActionController
         }
 
         return $this->redirect()->toUrl(
-            $this->getApiAppService()->callbackWithToken($appId, $identity)
+            $this->apiAppService->callbackWithToken($appId, $identity)
         );
-    }
-
-    /**
-     * @return UserService
-     */
-    public function getUserService()
-    {
-        return $this->userService;
-    }
-
-    /**
-     * @return ApiApp
-     */
-    public function getApiAppService()
-    {
-        return $this->apiAppService;
     }
 }

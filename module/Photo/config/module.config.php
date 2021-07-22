@@ -1,14 +1,24 @@
 <?php
 
-use Interop\Container\ContainerInterface;
 use Photo\Command\WeeklyPhoto;
-use Photo\Controller\AlbumAdminController;
-use Photo\Controller\AlbumController;
-use Photo\Controller\ApiController;
-use Photo\Controller\PhotoAdminController;
-use Photo\Controller\PhotoController;
-use Photo\Controller\Plugin\AlbumPlugin;
-use Photo\Controller\TagController;
+use Photo\Controller\{
+    AlbumAdminController,
+    AlbumController,
+    ApiController,
+    PhotoAdminController,
+    PhotoController,
+    TagController,
+    Plugin\AlbumPlugin,
+};
+use Photo\Controller\Factory\{
+    AlbumAdminControllerFactory,
+    AlbumControllerFactory,
+    ApiControllerFactory,
+    PhotoAdminControllerFactory,
+    PhotoControllerFactory,
+    TagControllerFactory,
+    Plugin\AlbumPluginFactory,
+};
 
 return [
     'router' => [
@@ -18,8 +28,7 @@ return [
                 'options' => [
                     'route' => '/photo',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Photo\Controller',
-                        'controller' => 'Photo',
+                        'controller' => PhotoController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -34,7 +43,7 @@ return [
                                 'page' => '[0-9]+',
                             ],
                             'defaults' => [
-                                'controller' => 'Album',
+                                'controller' => AlbumController::class,
                                 'action' => 'member',
                             ],
                         ],
@@ -48,7 +57,7 @@ return [
                                         'photo_id' => '[0-9]+',
                                     ],
                                     'defaults' => [
-                                        'controller' => 'Photo',
+                                        'controller' => PhotoController::class,
                                         'action' => 'member',
                                     ],
                                 ],
@@ -64,7 +73,7 @@ return [
                                 'page' => '[0-9]+',
                             ],
                             'defaults' => [
-                                'controller' => 'Album',
+                                'controller' => AlbumController::class,
                                 'action' => 'index',
                             ],
                         ],
@@ -78,7 +87,7 @@ return [
                                 'album_type' => '(album|member)',
                             ],
                             'defaults' => [
-                                'controller' => 'Album',
+                                'controller' => AlbumController::class,
                                 'action' => 'indexNew',
                             ],
                         ],
@@ -91,7 +100,6 @@ return [
                                 'photo_id' => '[0-9]+',
                             ],
                             'defaults' => [
-                                'controller' => 'Photo',
                                 'action' => 'view',
                             ],
                         ],
@@ -149,7 +157,6 @@ return [
                                 'photo_id' => '[0-9]+',
                             ],
                             'defaults' => [
-                                'controller' => 'Photo',
                                 'action' => 'download',
                             ],
                         ],
@@ -163,7 +170,6 @@ return [
                                 'year' => '\d{4}',
                             ],
                             'defaults' => [
-                                'controller' => 'Photo',
                                 'action' => 'index',
                             ],
                         ],
@@ -173,7 +179,6 @@ return [
                         'options' => [
                             'route' => '/weekly',
                             'defaults' => [
-                                'controller' => 'Photo',
                                 'action' => 'weekly',
                             ],
                         ],
@@ -186,7 +191,6 @@ return [
                                 'photo_id' => '[0-9]+',
                             ],
                             'defaults' => [
-                                'controller' => 'Photo',
                                 'action' => 'setProfilePhoto',
                             ],
                         ],
@@ -199,7 +203,6 @@ return [
                                 'photo_id' => '[0-9]+',
                             ],
                             'defaults' => [
-                                'controller' => 'Photo',
                                 'action' => 'removeProfilePhoto',
                             ],
                         ],
@@ -212,8 +215,7 @@ return [
                 'options' => [
                     'route' => '/admin/photo',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Photo\Controller',
-                        'controller' => 'AlbumAdmin',
+                        'controller' => AlbumAdminController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -230,7 +232,6 @@ return [
                         'options' => [
                             'route' => '/album',
                             'defaults' => [
-                                'controller' => 'AlbumAdmin',
                                 'action' => 'index',
                             ],
                         ],
@@ -240,7 +241,6 @@ return [
                         'options' => [
                             'route' => '/album[/:album_id]',
                             'defaults' => [
-                                'controller' => 'AlbumAdmin',
                                 'action' => 'page',
                             ],
                             'constraints' => [
@@ -253,7 +253,6 @@ return [
                         'options' => [
                             'route' => '/album[/:album_id][/:page]',
                             'defaults' => [
-                                'controller' => 'AlbumAdmin',
                                 'action' => 'page',
                             ],
                             'constraints' => [
@@ -267,7 +266,6 @@ return [
                         'options' => [
                             'route' => '/album[/:album_id]/edit',
                             'defaults' => [
-                                'controller' => 'AlbumAdmin',
                                 'action' => 'edit',
                             ],
                             'constraints' => [
@@ -280,7 +278,6 @@ return [
                         'options' => [
                             'route' => '/album[/:album_id]/create',
                             'defaults' => [
-                                'controller' => 'AlbumAdmin',
                                 'action' => 'create',
                             ],
                             'constraints' => [
@@ -293,7 +290,6 @@ return [
                         'options' => [
                             'route' => '/album[/:album_id]/add',
                             'defaults' => [
-                                'controller' => 'AlbumAdmin',
                                 'action' => 'add',
                             ],
                             'constraints' => [
@@ -306,7 +302,6 @@ return [
                         'options' => [
                             'route' => '/album[/:album_id]/import',
                             'defaults' => [
-                                'controller' => 'AlbumAdmin',
                                 'action' => 'import',
                             ],
                             'constraints' => [
@@ -319,7 +314,6 @@ return [
                         'options' => [
                             'route' => '/album[/:album_id]/upload',
                             'defaults' => [
-                                'controller' => 'AlbumAdmin',
                                 'action' => 'upload',
                             ],
                             'constraints' => [
@@ -332,7 +326,6 @@ return [
                         'options' => [
                             'route' => '/album[/:album_id]/move',
                             'defaults' => [
-                                'controller' => 'AlbumAdmin',
                                 'action' => 'move',
                             ],
                             'constraints' => [
@@ -345,7 +338,6 @@ return [
                         'options' => [
                             'route' => '/album[/:album_id]/delete',
                             'defaults' => [
-                                'controller' => 'AlbumAdmin',
                                 'action' => 'delete',
                             ],
                             'constraints' => [
@@ -358,7 +350,6 @@ return [
                         'options' => [
                             'route' => '/album[/:album_id]/cover',
                             'defaults' => [
-                                'controller' => 'AlbumAdmin',
                                 'action' => 'cover',
                             ],
                             'constraints' => [
@@ -371,7 +362,7 @@ return [
                         'options' => [
                             'route' => '/photo[/:photo_id]',
                             'defaults' => [
-                                'controller' => 'PhotoAdmin',
+                                'controller' => PhotoAdminController::class,
                                 'action' => 'index',
                             ],
                             'constraints' => [
@@ -384,7 +375,7 @@ return [
                         'options' => [
                             'route' => '/photo[/:photo_id]/move',
                             'defaults' => [
-                                'controller' => 'PhotoAdmin',
+                                'controller' => PhotoAdminController::class,
                                 'action' => 'move',
                             ],
                             'constraints' => [
@@ -397,7 +388,7 @@ return [
                         'options' => [
                             'route' => '/photo[/:photo_id]/delete',
                             'defaults' => [
-                                'controller' => 'PhotoAdmin',
+                                'controller' => PhotoAdminController::class,
                                 'action' => 'delete',
                             ],
                             'constraints' => [
@@ -413,8 +404,7 @@ return [
                 'options' => [
                     'route' => '/api/photo',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Photo\Controller',
-                        'controller' => 'Api',
+                        'controller' => ApiController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -439,51 +429,20 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            'Photo\Controller\Photo' => function (ContainerInterface $container) {
-                $photoService = $container->get('photo_service_photo');
-                $albumService = $container->get('photo_service_album');
-
-                return new PhotoController($photoService, $albumService);
-            },
-            'Photo\Controller\Tag' => function (ContainerInterface $container) {
-                $photoService = $container->get('photo_service_photo');
-
-                return new TagController($photoService);
-            },
-            'Photo\Controller\AlbumAdmin' => function (ContainerInterface $container) {
-                $adminService = $container->get('photo_service_admin');
-                $albumService = $container->get('photo_service_album');
-
-                return new AlbumAdminController($adminService, $albumService);
-            },
-            'Photo\Controller\Album' => function (ContainerInterface $container) {
-                $albumService = $container->get('photo_service_album');
-                $pageCache = $container->get('album_page_cache');
-                $photoConfig = $container->get('config')['photo'];
-
-                return new AlbumController($albumService, $pageCache, $photoConfig);
-            },
-            'Photo\Controller\PhotoAdmin' => function (ContainerInterface $container) {
-                $photoService = $container->get('photo_service_photo');
-                $albumService = $container->get('photo_service_album');
-                $entityManager = $container->get('doctrine.entitymanager.orm_default');
-
-                return new PhotoAdminController($photoService, $albumService, $entityManager);
-            },
-            'Photo\Controller\Api' => function () {
-                return new ApiController();
-            },
+            AlbumAdminController::class => AlbumAdminControllerFactory::class,
+            AlbumController::class => AlbumControllerFactory::class,
+            ApiController::class => ApiControllerFactory::class,
+            PhotoAdminController::class => PhotoAdminControllerFactory::class,
+            PhotoController::class => PhotoControllerFactory::class,
+            TagController::class => TagControllerFactory::class,
         ],
     ],
     'controller_plugins' => [
+        'aliases' => [
+            'AlbumPlugin' => AlbumPlugin::class,
+        ],
         'factories' => [
-            'AlbumPlugin' => function (ContainerInterface $container) {
-                $photoService = $container->get('photo_service_photo');
-                $albumService = $container->get('photo_service_album');
-                $photoConfig = $container->get('config')['photo'];
-
-                return new AlbumPlugin($photoService, $albumService, $photoConfig);
-            },
+            AlbumPlugin::class => AlbumPluginFactory::class,
         ],
     ],
     'view_manager' => [

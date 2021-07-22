@@ -5,27 +5,37 @@ namespace Photo\Controller;
 use Laminas\Cache\Storage\StorageInterface;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
-use Photo\Service\Album;
+use Photo\Service\Album as AlbumService;
 
 class AlbumController extends AbstractActionController
 {
     /**
-     * @var Album
+     * @var AlbumService
      */
-    private $albumService;
+    private AlbumService $albumService;
 
     /**
      * @var StorageInterface
      */
-    private $pageCache;
+    private StorageInterface $pageCache;
 
     /**
      * @var array
      */
-    private $photoConfig;
+    private array $photoConfig;
 
-    public function __construct(Album $albumService, StorageInterface $pageCache, array $photoConfig)
-    {
+    /**
+     * AlbumController constructor.
+     *
+     * @param AlbumService $albumService
+     * @param StorageInterface $pageCache
+     * @param array $photoConfig
+     */
+    public function __construct(
+        AlbumService $albumService,
+        StorageInterface $pageCache,
+        array $photoConfig
+    ) {
         $this->albumService = $albumService;
         $this->pageCache = $pageCache;
         $this->photoConfig = $photoConfig;

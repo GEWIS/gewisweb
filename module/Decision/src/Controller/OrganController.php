@@ -2,18 +2,23 @@
 
 namespace Decision\Controller;
 
-use Decision\Service\Organ;
+use Decision\Service\Organ as OrganService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
 class OrganController extends AbstractActionController
 {
     /**
-     * @var Organ
+     * @var OrganService
      */
-    private $organService;
+    private OrganService $organService;
 
-    public function __construct(Organ $organService)
+    /**
+     * OrganController constructor.
+     *
+     * @param OrganService $organService
+     */
+    public function __construct(OrganService $organService)
     {
         $this->organService = $organService;
     }

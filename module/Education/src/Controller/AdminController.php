@@ -2,28 +2,44 @@
 
 namespace Education\Controller;
 
-use Education\Form\SummaryUpload;
-use Education\Service\Exam;
+use Education\Form\SummaryUpload as SummaryUploadForm;
+use Education\Service\Exam as ExamService;
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\JsonModel;
-use Laminas\View\Model\ViewModel;
+use Laminas\View\Model\{
+    JsonModel,
+    ViewModel,
+};
 use Laminas\View\View;
 
 class AdminController extends AbstractActionController
 {
     /**
-     * @var Exam
+     * @var ExamService
      */
-    private $examService;
+    private ExamService $examService;
 
     /**
-     * @var SummaryUpload
+     * @var SummaryUploadForm
      */
-    private $summaryUploadForm;
+    private SummaryUploadForm $summaryUploadForm;
+
+    /**
+     * @var array
+     */
     private array $educationTempConfig;
 
-    public function __construct(Exam $examService, SummaryUpload $summaryUploadForm, array $educationTempConfig)
-    {
+    /**
+     * AdminController constructor.
+     *
+     * @param ExamService $examService
+     * @param SummaryUploadForm $summaryUploadForm
+     * @param array $educationTempConfig
+     */
+    public function __construct(
+        ExamService $examService,
+        SummaryUploadForm $summaryUploadForm,
+        array $educationTempConfig
+    ) {
         $this->examService = $examService;
         $this->summaryUploadForm = $summaryUploadForm;
         $this->educationTempConfig = $educationTempConfig;

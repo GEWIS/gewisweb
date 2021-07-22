@@ -2,41 +2,58 @@
 
 namespace Decision\Controller;
 
-use Decision\Service\AclService;
-use Decision\Service\Decision;
-use Decision\Service\Member;
-use Decision\Service\MemberInfo;
+use Decision\Service\{
+    AclService,
+    Decision as DecisionService,
+    Member as MemberService,
+    MemberInfo as MemberInfoService,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\JsonModel;
-use Laminas\View\Model\ViewModel;
+use Laminas\View\Model\{
+    JsonModel,
+    ViewModel,
+};
 
 class MemberController extends AbstractActionController
 {
     /**
-     * @var Member
+     * @var MemberService
      */
-    private $memberService;
+    private MemberService $memberService;
 
     /**
-     * @var MemberInfo
+     * @var MemberInfoService
      */
-    private $memberInfoService;
+    private MemberInfoService $memberInfoService;
 
     /**
-     * @var Decision
+     * @var DecisionService
      */
-    private $decisionService;
+    private DecisionService $decisionService;
 
     /**
      * @var array
      */
-    private $regulationsConfig;
+    private array $regulationsConfig;
+
+    /**
+     * @var AclService
+     */
     private AclService $aclService;
 
+    /**
+     * MemberController constructor.
+     *
+     * @param MemberService $memberService
+     * @param MemberInfoService $memberInfoService
+     * @param DecisionService $decisionService
+     * @param array $regulationsConfig
+     * @param AclService $aclService
+     */
     public function __construct(
-        Member $memberService,
-        MemberInfo $memberInfoService,
-        Decision $decisionService,
+        MemberService $memberService,
+        MemberInfoService $memberInfoService,
+        DecisionService $decisionService,
         array $regulationsConfig,
         AclService $aclService
     ) {

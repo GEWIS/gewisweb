@@ -1,60 +1,27 @@
 <?php
 
-use Frontpage\Controller\AdminController;
-use Frontpage\Controller\FrontpageController;
-use Frontpage\Controller\NewsAdminController;
-use Frontpage\Controller\OrganController;
-use Frontpage\Controller\PageAdminController;
-use Frontpage\Controller\PageController;
-use Frontpage\Controller\PollAdminController;
-use Frontpage\Controller\PollController;
-use Interop\Container\ContainerInterface;
+use Frontpage\Controller\{
+    AdminController,
+    FrontpageController,
+    NewsAdminController,
+    OrganController,
+    PageAdminController,
+    PageController,
+    PollAdminController,
+    PollController,
+};
+use Frontpage\Controller\Factory\{
+    AdminControllerFactory,
+    FrontpageControllerFactory,
+    NewsAdminControllerFactory,
+    OrganControllerFactory,
+    PageAdminControllerFactory,
+    PageControllerFactory,
+    PollAdminControllerFactory,
+    PollControllerFactory,
+};
 
 return [
-    'controllers' => [
-        'factories' => [
-            'Frontpage\Controller\Frontpage' => function (ContainerInterface $container) {
-                $frontpageService = $container->get('frontpage_service_frontpage');
-
-                return new FrontpageController($frontpageService);
-            },
-            'Frontpage\Controller\Organ' => function (ContainerInterface $container) {
-                $organService = $container->get('decision_service_organ');
-                $activityQueryService = $container->get('activity_service_activityQuery');
-
-                return new OrganController($organService, $activityQueryService);
-            },
-            'Frontpage\Controller\Page' => function (ContainerInterface $container) {
-                $pageService = $container->get('frontpage_service_page');
-
-                return new PageController($pageService);
-            },
-            'Frontpage\Controller\PageAdmin' => function (ContainerInterface $container) {
-                $pageService = $container->get('frontpage_service_page');
-
-                return new PageAdminController($pageService);
-            },
-            'Frontpage\Controller\Poll' => function (ContainerInterface $container) {
-                $pollService = $container->get('frontpage_service_poll');
-                $pollCommentForm = $container->get('frontpage_form_poll_comment');
-
-                return new PollController($pollService, $pollCommentForm);
-            },
-            'Frontpage\Controller\PollAdmin' => function (ContainerInterface $container) {
-                $pollService = $container->get('frontpage_service_poll');
-
-                return new PollAdminController($pollService);
-            },
-            'Frontpage\Controller\NewsAdmin' => function (ContainerInterface $container) {
-                $newsService = $container->get('frontpage_service_news');
-
-                return new NewsAdminController($newsService);
-            },
-            'Frontpage\Controller\Admin' => function () {
-                return new AdminController();
-            },
-        ],
-    ],
     'router' => [
         'routes' => [
             'home' => [
@@ -62,8 +29,7 @@ return [
                 'options' => [
                     'route' => '/',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Frontpage\Controller',
-                        'controller' => 'Frontpage',
+                        'controller' => FrontpageController::class,
                         'action' => 'home',
                     ],
                 ],
@@ -79,8 +45,7 @@ return [
                                 'name' => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ],
                             'defaults' => [
-                                '__NAMESPACE__' => 'Frontpage\Controller',
-                                'controller' => 'Page',
+                                'controller' => PageController::class,
                                 'action' => 'page',
                             ],
                         ],
@@ -95,8 +60,8 @@ return [
                                 'abbr' => '[^/]*',
                             ],
                             'defaults' => [
+                                'controller' => OrganController::class,
                                 'action' => 'organ',
-                                'controller' => 'Organ',
                             ],
                         ],
                         'priority' => 100,
@@ -106,8 +71,8 @@ return [
                         'options' => [
                             'route' => 'association/committees',
                             'defaults' => [
+                                'controller' => OrganController::class,
                                 'action' => 'committeeList',
-                                'controller' => 'Organ',
                             ],
                         ],
                         'priority' => 100,
@@ -117,8 +82,8 @@ return [
                         'options' => [
                             'route' => 'association/fraternities',
                             'defaults' => [
+                                'controller' => OrganController::class,
                                 'action' => 'fraternityList',
-                                'controller' => 'Organ',
                             ],
                         ],
                         'priority' => 100,
@@ -130,8 +95,7 @@ return [
                 'options' => [
                     'route' => '/admin/page',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Frontpage\Controller',
-                        'controller' => 'PageAdmin',
+                        'controller' => PageAdminController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -187,8 +151,7 @@ return [
                 'options' => [
                     'route' => '/poll',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Frontpage\Controller',
-                        'controller' => 'Poll',
+                        'controller' => PollController::class,
                         'action' => 'index',
                     ],
                 ],
@@ -259,8 +222,7 @@ return [
                 'options' => [
                     'route' => '/admin/poll',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Frontpage\Controller',
-                        'controller' => 'PollAdmin',
+                        'controller' => PollAdminController::class,
                         'action' => 'list',
                     ],
                 ],
@@ -310,8 +272,7 @@ return [
                 'options' => [
                     'route' => '/admin/news',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Frontpage\Controller',
-                        'controller' => 'NewsAdmin',
+                        'controller' => NewsAdminController::class,
                         'action' => 'list',
                     ],
                 ],
@@ -370,14 +331,25 @@ return [
                 'options' => [
                     'route' => '/admin[/]',
                     'defaults' => [
-                        '__NAMESPACE__' => 'Frontpage\Controller',
-                        'controller' => 'Admin',
+                        'controller' => AdminController::class,
                         'action' => 'index',
                     ],
                 ],
                 'may_terminate' => true,
                 'priority' => 100,
             ],
+        ],
+    ],
+    'controllers' => [
+        'factories' => [
+            AdminController::class => AdminControllerFactory::class,
+            FrontpageController::class => FrontpageControllerFactory::class,
+            NewsAdminController::class => NewsAdminControllerFactory::class,
+            OrganController::class => OrganControllerFactory::class,
+            PageAdminController::class => PageAdminControllerFactory::class,
+            PageController::class => PageControllerFactory::class,
+            PollAdminController::class => PollAdminControllerFactory::class,
+            PollController::class => PollControllerFactory::class,
         ],
     ],
     'view_manager' => [

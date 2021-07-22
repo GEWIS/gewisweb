@@ -2,18 +2,23 @@
 
 namespace Frontpage\Controller;
 
-use Frontpage\Service\Page;
+use Frontpage\Service\Page as PageService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
 class PageController extends AbstractActionController
 {
     /**
-     * @var Page
+     * @var PageService
      */
-    private $pageService;
+    private PageService $pageService;
 
-    public function __construct(Page $pageService)
+    /**
+     * PageController constructor.
+     *
+     * @param PageService $pageService
+     */
+    public function __construct(PageService $pageService)
     {
         $this->pageService = $pageService;
     }

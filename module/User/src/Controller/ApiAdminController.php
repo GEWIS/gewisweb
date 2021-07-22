@@ -4,17 +4,21 @@ namespace User\Controller;
 
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
-use User\Service\ApiUser;
-use User\Service\User;
+use User\Service\ApiUser as ApiUserService;
 
 class ApiAdminController extends AbstractActionController
 {
     /**
-     * @var ApiUser
+     * @var ApiUserService
      */
-    private $apiUserService;
+    private ApiUserService$apiUserService;
 
-    public function __construct(User $apiUserService)
+    /**
+     * ApiAdminController constructor.
+     *
+     * @param ApiUserService $apiUserService
+     */
+    public function __construct(ApiUserService $apiUserService)
     {
         $this->apiUserService = $apiUserService;
     }
