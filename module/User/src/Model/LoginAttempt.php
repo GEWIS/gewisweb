@@ -3,13 +3,19 @@
 namespace User\Model;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToOne,
+};
 
 /**
  * A failed login attempt.
- *
- * @ORM\Entity
  */
+#[Entity]
 class LoginAttempt
 {
     public const TYPE_PIN = 'pin';
@@ -17,46 +23,45 @@ class LoginAttempt
 
     /**
      * Id.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected string $id;
 
     /**
      * The user for which the login was attempted.
-     *
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="lidnr")
      */
-    protected $user;
+    #[ManyToOne(targetEntity: "User\Model\User")]
+    #[JoinColumn(
+        name: "user_id",
+        referencedColumnName: "lidnr",
+        nullable: false,
+    )]
+    protected User $user;
 
     /**
      * The ip from which the login was attempted.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $ip;
+    #[Column(type: "string")]
+    protected string $ip;
 
     /**
      * Type of login {pin,normal}.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $type;
+    #[Column(type: "string")]
+    protected string $type;
 
     /**
      * Attempt timestamp.
-     *
-     * @ORM\Column(type="datetime")
      */
-    protected $time;
+    #[Column(type: "datetime")]
+    protected DateTime $time;
 
     /**
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -64,7 +69,7 @@ class LoginAttempt
     /**
      * @return User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
@@ -72,7 +77,7 @@ class LoginAttempt
     /**
      * @param User $user
      */
-    public function setUser($user)
+    public function setUser(User $user): void
     {
         $this->user = $user;
     }
@@ -80,7 +85,7 @@ class LoginAttempt
     /**
      * @return string
      */
-    public function getIp()
+    public function getIp(): string
     {
         return $this->ip;
     }
@@ -88,7 +93,7 @@ class LoginAttempt
     /**
      * @param string $ip
      */
-    public function setIp($ip)
+    public function setIp(string $ip): void
     {
         $this->ip = $ip;
     }
@@ -96,7 +101,7 @@ class LoginAttempt
     /**
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -104,7 +109,7 @@ class LoginAttempt
     /**
      * @param string $type
      */
-    public function setType($type)
+    public function setType(string $type): void
     {
         $this->type = $type;
     }
@@ -112,7 +117,7 @@ class LoginAttempt
     /**
      * @return DateTime
      */
-    public function getTime()
+    public function getTime(): DateTime
     {
         return $this->time;
     }
@@ -120,7 +125,7 @@ class LoginAttempt
     /**
      * @param DateTime $time
      */
-    public function setTime($time)
+    public function setTime(DateTime $time): void
     {
         $this->time = $time;
     }

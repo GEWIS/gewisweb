@@ -3,61 +3,68 @@
 namespace User\Model;
 
 use DateTime;
-use Decision\Model\Member;
-use Doctrine\ORM\Mapping as ORM;
+use Decision\Model\Member as MemberModel;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    Id,
+    JoinColumn,
+    OneToOne,
+};
 
 /**
  * User model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class NewUser
 {
     /**
      * The membership number.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer")
      */
-    protected $lidnr;
+    #[Id]
+    #[Column(type: "integer")]
+    protected int $lidnr;
 
     /**
      * The user's email address.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $email;
+    #[Column(type: "string")]
+    protected string $email;
 
     /**
      * The user's activation code.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $code;
+    #[Column(type: "string")]
+    protected string $code;
 
     /**
      * User's member.
-     *
-     * @ORM\OneToOne(targetEntity="Decision\Model\Member")
-     * @ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")
      */
-    protected $member;
+    #[OneToOne(targetEntity: "Decision\Model\Member")]
+    #[JoinColumn(
+        name: "lidnr",
+        referencedColumnName: "lidnr",
+        nullable: false,
+    )]
+    protected MemberModel $member;
 
     /**
      * Registration attempt timestamp.
-     *
-     * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $time;
+    #[Column(
+        type: "datetime",
+        nullable: true,
+    )]
+    protected ?DateTime $time;
 
     /**
      * Constructor.
      *
      * We can populate most values from a member model.
      *
-     * @param Member|null $member
+     * @param MemberModel $member
      */
-    public function __construct(Member $member = null)
+    public function __construct(MemberModel $member)
     {
         if (null !== $member) {
             $this->lidnr = $member->getLidnr();
@@ -71,7 +78,7 @@ class NewUser
      *
      * @return int
      */
-    public function getLidnr()
+    public function getLidnr(): int
     {
         return $this->lidnr;
     }
@@ -81,7 +88,7 @@ class NewUser
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -91,7 +98,7 @@ class NewUser
      *
      * @return string
      */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->code;
     }
@@ -99,9 +106,9 @@ class NewUser
     /**
      * Get the registration time.
      *
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getTime()
+    public function getTime(): ?DateTime
     {
         return $this->time;
     }
@@ -109,9 +116,9 @@ class NewUser
     /**
      * Get the member.
      *
-     * @return Member
+     * @return MemberModel
      */
-    public function getMember()
+    public function getMember(): MemberModel
     {
         return $this->member;
     }
@@ -121,7 +128,7 @@ class NewUser
      *
      * @param int $lidnr
      */
-    public function setLidnr($lidnr)
+    public function setLidnr(int $lidnr): void
     {
         $this->lidnr = $lidnr;
     }
@@ -131,7 +138,7 @@ class NewUser
      *
      * @param string $email
      */
-    public function setEmail($email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
@@ -141,7 +148,7 @@ class NewUser
      *
      * @param string $code
      */
-    public function setCode($code)
+    public function setCode(string $code): void
     {
         $this->code = $code;
     }
@@ -151,7 +158,7 @@ class NewUser
      *
      * @param DateTime $time
      */
-    public function setTime($time)
+    public function setTime(DateTime $time): void
     {
         $this->time = $time;
     }

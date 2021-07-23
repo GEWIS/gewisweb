@@ -2,49 +2,49 @@
 
 namespace User\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+};
 
 /**
  * ApiApp model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class ApiApp
 {
     /**
      * Id.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
      * Application ID.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $appId;
+    #[Column(type: "string")]
+    protected string $appId;
 
     /**
      * Application secret.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $secret;
+    #[Column(type: "string")]
+    protected string $secret;
 
     /**
      * Callback URL.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $callback;
+    #[Column(type: "string")]
+    protected string $callback;
 
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -52,7 +52,7 @@ class ApiApp
     /**
      * @return string
      */
-    public function getAppId()
+    public function getAppId(): string
     {
         return $this->appId;
     }
@@ -60,7 +60,7 @@ class ApiApp
     /**
      * @param string $appId
      */
-    public function setAppId($appId)
+    public function setAppId(string $appId): void
     {
         $this->appId = $appId;
     }
@@ -68,7 +68,7 @@ class ApiApp
     /**
      * @return string
      */
-    public function getSecret()
+    public function getSecret(): string
     {
         return $this->secret;
     }
@@ -76,7 +76,7 @@ class ApiApp
     /**
      * @param string $secret
      */
-    public function setSecret($secret)
+    public function setSecret(string $secret): void
     {
         $this->secret = $secret;
     }
@@ -84,7 +84,7 @@ class ApiApp
     /**
      * @return string
      */
-    public function getCallback()
+    public function getCallback(): string
     {
         return $this->callback;
     }

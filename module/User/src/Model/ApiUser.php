@@ -2,46 +2,49 @@
 
 namespace User\Model;
 
-use Doctrine\ORM\Mapping as ORM;
-use Laminas\Permissions\Acl\Resource\ResourceInterface;
-use Laminas\Permissions\Acl\Role\RoleInterface;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id
+};
+use Laminas\Permissions\Acl\{
+    Resource\ResourceInterface,
+    Role\RoleInterface,
+};
 
 /**
  * User model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class ApiUser implements RoleInterface, ResourceInterface
 {
     /**
      * Id.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
      * Application name.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $name;
+    #[Column(type: "string")]
+    protected string $name;
 
     /**
      * Authentication token.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $token;
+    #[Column(type: "string")]
+    protected string $token;
 
     /**
      * Get the id.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -51,7 +54,7 @@ class ApiUser implements RoleInterface, ResourceInterface
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -61,7 +64,7 @@ class ApiUser implements RoleInterface, ResourceInterface
      *
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -71,7 +74,7 @@ class ApiUser implements RoleInterface, ResourceInterface
      *
      * @return string
      */
-    public function getToken()
+    public function getToken(): string
     {
         return $this->token;
     }
@@ -81,7 +84,7 @@ class ApiUser implements RoleInterface, ResourceInterface
      *
      * @param string $token
      */
-    public function setToken($token)
+    public function setToken(string $token): void
     {
         $this->token = $token;
     }
@@ -91,7 +94,7 @@ class ApiUser implements RoleInterface, ResourceInterface
      *
      * @return string
      */
-    public function getRoleId()
+    public function getRoleId(): string
     {
         return 'apiuser';
     }
@@ -101,7 +104,7 @@ class ApiUser implements RoleInterface, ResourceInterface
      *
      * @return string
      */
-    public function getResourceId()
+    public function getResourceId(): string
     {
         return 'api';
     }

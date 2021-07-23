@@ -2,61 +2,74 @@
 
 namespace User\Model;
 
-use Decision\Model\Member;
+use Decision\Model\Member as MemberModel;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use Laminas\Permissions\Acl\Resource\ResourceInterface;
-use Laminas\Permissions\Acl\Role\RoleInterface;
+use Doctrine\ORM\Mapping\{Column,
+    Entity,
+    Id,
+    JoinColumn,
+    OneToMany,
+    OneToOne,
+};
+use Laminas\Permissions\Acl\{
+    Resource\ResourceInterface,
+    Role\RoleInterface,
+};
 use RuntimeException;
 
 /**
  * User model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class User implements RoleInterface, ResourceInterface
 {
     /**
      * The membership number.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer")
      */
-    protected $lidnr;
+    #[Id]
+    #[Column(type: "integer")]
+    protected int $lidnr;
 
     /**
      * The user's email address.
      * Deprecated.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $email;
+    #[Column(type: "string")]
+    protected string $email;
 
     /**
      * The user's password.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $password;
+    #[Column(type: "string")]
+    protected string $password;
 
     /**
      * User roles.
-     *
-     * @ORM\OneToMany(targetEntity="User\Model\UserRole", mappedBy="lidnr")
      */
-    protected $roles;
+    #[OneToMany(
+        targetEntity: "User\Model\UserRole",
+        mappedBy: "lidnr",
+    )]
+    protected ArrayCollection $roles;
 
     /**
      * The corresponding member for this user.
-     *
-     * @ORM\OneToOne(targetEntity="Decision\Model\Member", fetch="EAGER")
-     * @ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")
      */
-    protected $member;
+    #[OneToOne(
+        targetEntity: "Decision\Model\Member",
+        fetch: "EAGER",
+    )]
+    #[JoinColumn(
+        name: "lidnr",
+        referencedColumnName: "lidnr",
+        nullable: false,
+    )]
+    protected MemberModel $member;
 
     /**
      * Constructor.
+     *
+     * @param NewUser|null $newUser
      */
     public function __construct(NewUser $newUser = null)
     {
@@ -74,7 +87,7 @@ class User implements RoleInterface, ResourceInterface
      *
      * @return int
      */
-    public function getLidnr()
+    public function getLidnr(): int
     {
         return $this->lidnr;
     }
@@ -84,7 +97,7 @@ class User implements RoleInterface, ResourceInterface
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->member->getEmail();
     }
@@ -94,7 +107,7 @@ class User implements RoleInterface, ResourceInterface
      *
      * @return string
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -104,7 +117,7 @@ class User implements RoleInterface, ResourceInterface
      *
      * @param string $password
      */
-    public function setPassword($password)
+    public function setPassword(string $password): void
     {
         $this->password = $password;
     }
@@ -112,9 +125,9 @@ class User implements RoleInterface, ResourceInterface
     /**
      * Get the user's roles.
      *
-     * @return Collection
+     * @return ArrayCollection
      */
-    public function getRoles()
+    public function getRoles(): ArrayCollection
     {
         return $this->roles;
     }
@@ -122,9 +135,9 @@ class User implements RoleInterface, ResourceInterface
     /**
      * Get the member information of this user.
      *
-     * @return Member
+     * @return MemberModel
      */
-    public function getMember()
+    public function getMember(): MemberModel
     {
         return $this->member;
     }
@@ -134,7 +147,7 @@ class User implements RoleInterface, ResourceInterface
      *
      * @return array Role names
      */
-    public function getRoleNames()
+    public function getRoleNames(): array
     {
         $names = [];
 
@@ -177,14 +190,14 @@ class User implements RoleInterface, ResourceInterface
     }
 
     /**
-     * @param array $roles
+     * @param ArrayCollection $roles
      */
-    public function setRoles($roles)
+    public function setRoles(ArrayCollection $roles): void
     {
         $this->roles = $roles;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'lidnr' => $this->getLidnr(),
@@ -198,7 +211,7 @@ class User implements RoleInterface, ResourceInterface
      *
      * @return string
      */
-    public function getResourceId()
+    public function getResourceId(): string
     {
         return 'user';
     }

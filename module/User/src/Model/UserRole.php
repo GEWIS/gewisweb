@@ -2,47 +2,57 @@
 
 namespace User\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToOne,
+};
 
 /**
  * User role model.
  *
  * This specifies all the roles of a user.
- *
- * @ORM\Entity
  */
+#[Entity]
 class UserRole
 {
     /**
      * Id.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
      * The membership number of the user with this role.
-     *
-     * @ORM\ManyToOne(targetEntity="User\Model\User", inversedBy="roles")
-     * @ORM\JoinColumn(referencedColumnName="lidnr")
      */
-    protected $lidnr;
+    #[ManyToOne(
+        targetEntity: "User\Model\User",
+        inversedBy: "roles",
+    )]
+    #[JoinColumn(
+        referencedColumnName: "lidnr",
+        nullable: false,
+    )]
+    protected int $lidnr;
 
     /**
      * The user's role.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $role;
+    #[Column(type: "string")]
+    protected string $role;
 
     /**
      * Get the id.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -52,7 +62,7 @@ class UserRole
      *
      * @return int
      */
-    public function getLidnr()
+    public function getLidnr(): int
     {
         return $this->lidnr;
     }
@@ -62,7 +72,7 @@ class UserRole
      *
      * @param int $lidnr
      */
-    public function setLidnr($lidnr)
+    public function setLidnr(int $lidnr): void
     {
         $this->lidnr = $lidnr;
     }
@@ -72,7 +82,7 @@ class UserRole
      *
      * @return string
      */
-    public function getRole()
+    public function getRole(): string
     {
         return $this->role;
     }
@@ -82,7 +92,7 @@ class UserRole
      *
      * @param string $role
      */
-    public function setRole($role)
+    public function setRole(string $role): void
     {
         $this->role = $role;
     }
