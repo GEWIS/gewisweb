@@ -4,168 +4,219 @@ namespace Photo\Model;
 
 use DateTime;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{Column,
+    Entity,
+    GeneratedValue,
+    HasLifecycleCallbacks,
+    Id,
+    JoinColumn,
+    ManyToOne,
+    OneToMany,
+    OneToOne,
+};
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Photo.
- *
- * @ORM\Entity
- * @ORM\HasLifecycleCallbacks
  */
+#[Entity]
+#[HasLifecycleCallbacks]
 class Photo implements ResourceInterface
 {
     /**
      * Photo ID.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
      * Date and time when the photo was taken.
-     *
-     * @ORM\Column(type="datetime")
      */
-    protected $dateTime;
+    #[Column(type: "datetime")]
+    protected DateTime $dateTime;
 
     /**
      * Artist/author.
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
-    protected $artist;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $artist;
 
     /**
      * The type of camera used.
-     *
-     * @ORM\Column(type="string", nullable=true))
      */
-    protected $camera;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $camera;
 
     /**
      * Whether a flash has been used.
-     *
-     * @ORM\Column(type="boolean", nullable=true))
      */
-    protected $flash;
+    #[Column(
+        type: "boolean",
+        nullable: true,
+    )]
+    protected ?bool $flash;
 
     /**
      * The focal length of the lens, in mm.
-     *
-     * @ORM\Column(type="float", nullable=true))
      */
-    protected $focalLength;
+    #[Column(
+        type: "float",
+        nullable: true,
+    )]
+    protected ?float $focalLength;
 
     /**
      * The exposure time, in seconds.
-     *
-     * @ORM\Column(type="float", nullable=true))
      */
-    protected $exposureTime;
+    #[Column(
+        type: "float",
+        nullable: true,
+    )]
+    protected ?float $exposureTime;
 
     /**
      * The shutter speed.
-     *
-     * @ORM\Column(type="string", nullable=true))
      */
-    protected $shutterSpeed;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $shutterSpeed;
 
     /**
      * The lens aperture.
-     *
-     * @ORM\Column(type="string", nullable=true))
      */
-    protected $aperture;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $aperture;
 
     /**
      * Indicates the ISO Speed and ISO Latitude of the camera.
-     *
-     * @ORM\Column(type="smallint", nullable=true))
      */
-    protected $iso;
+    #[Column(
+        type: "smallint",
+        nullable: true,
+    )]
+    protected ?int $iso;
 
     /**
      * Album in which the photo is.
-     *
-     * @ORM\ManyToOne(targetEntity="Photo\Model\Album", inversedBy="photos")
-     * @ORM\JoinColumn(name="album_id", referencedColumnName="id")
      */
-    protected $album;
+    #[ManyToOne(
+        targetEntity: "Photo\Model\Album",
+        inversedBy: "photos",
+    )]
+    #[JoinColumn(
+        name: "album_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected Album $album;
 
     /**
      * The path where the photo is located relative to the storage directory.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $path;
+    #[Column(type: "string")]
+    protected string $path;
 
     /**
      * The path where the small thumbnail of the photo is located relative to
      * the storage directory.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $smallThumbPath;
+    #[Column(type: "string")]
+    protected string $smallThumbPath;
 
     /**
      * The path where the large thumbnail of the photo is located relative to
      * the storage directory.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $largeThumbPath;
+    #[Column(type: "string")]
+    protected string $largeThumbPath;
 
     /**
      * The GPS longitude of the location where the photo was taken.
-     *
-     * @ORM\Column(type="float", nullable=true)
      */
-    protected $longitude;
+    #[Column(
+        type: "float",
+        nullable: true,
+    )]
+    protected ?float $longitude;
 
     /**
      * The GPS latitude of the location where the photo was taken.
-     *
-     * @ORM\Column(type="float", nullable=true)
      */
-    protected $latitude;
+    #[Column(
+        type: "float",
+        nullable: true,
+    )]
+    protected ?float $latitude;
 
     /**
      * All the hits of this photo.
-     *
-     * @ORM\OneToMany(targetEntity="Hit", mappedBy="photo", cascade={"persist", "remove"})
      */
-    protected $hits;
+    #[OneToMany(
+        targetEntity: "Photo\Model\Hit",
+        mappedBy: "photo",
+        cascade: ["persist", "remove"],
+    )]
+    protected Collection $hits;
+
+    /**
+     * All the votes for this photo.
+     */
+    #[OneToMany(
+        targetEntity: "Photo\Model\Vote",
+        mappedBy: "photo",
+        cascade: ["persist", "remove"],
+    )]
+    protected Collection $votes;
 
     /**
      * All the tags for this photo.
-     *
-     * @ORM\OneToMany(targetEntity="Tag", mappedBy="photo", cascade={"persist", "remove"}, fetch="EAGER")
      */
-    protected $tags;
+    #[OneToMany(
+        targetEntity: "Photo\Model\Tag",
+        mappedBy: "photo",
+        cascade: ["persist", "remove"],
+        fetch: "EAGER",
+    )]
+    protected Collection $tags;
 
     /**
      * The corresponding WeeklyPhoto entity if this photo has been a weekly photo.
-     *
-     * @ORM\OneToOne(targetEntity="WeeklyPhoto", mappedBy="photo", cascade={"persist", "remove"})
      */
-    protected $weeklyPhoto;
+    #[OneToOne(
+        targetEntity: "Photo\Model\WeeklyPhoto",
+        mappedBy: "photo",
+        cascade: ["persist", "remove"],
+    )]
+    protected ?WeeklyPhoto $weeklyPhoto;
 
     /**
      * The aspect ratio of the photo width/height.
-     *
-     * @ORM\Column(type="float", nullable=true)
      */
-    protected $aspectRatio;
+    #[Column(
+        type: "float",
+        nullable: true,
+    )]
+    protected ?float $aspectRatio;
 
     /**
      * Get the ID.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -175,7 +226,7 @@ class Photo implements ResourceInterface
      *
      * @return DateTime
      */
-    public function getDateTime()
+    public function getDateTime(): DateTime
     {
         return $this->dateTime;
     }
@@ -183,9 +234,9 @@ class Photo implements ResourceInterface
     /**
      * Get the artist.
      *
-     * @return string
+     * @return string|null
      */
-    public function getArtist()
+    public function getArtist(): ?string
     {
         return $this->artist;
     }
@@ -193,9 +244,9 @@ class Photo implements ResourceInterface
     /**
      * Get the camera.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCamera()
+    public function getCamera(): ?string
     {
         return $this->camera;
     }
@@ -203,9 +254,9 @@ class Photo implements ResourceInterface
     /**
      * Get the flash.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getFlash()
+    public function getFlash(): ?bool
     {
         return $this->flash;
     }
@@ -213,9 +264,9 @@ class Photo implements ResourceInterface
     /**
      * Get the focal length.
      *
-     * @return string
+     * @return float|null
      */
-    public function getFocalLength()
+    public function getFocalLength(): ?float
     {
         return $this->focalLength;
     }
@@ -223,9 +274,9 @@ class Photo implements ResourceInterface
     /**
      * Get the exposure time.
      *
-     * @return string
+     * @return float|null
      */
-    public function getExposureTime()
+    public function getExposureTime(): ?float
     {
         return $this->exposureTime;
     }
@@ -233,9 +284,9 @@ class Photo implements ResourceInterface
     /**
      * Get the shutter speed.
      *
-     * @return string
+     * @return string|null
      */
-    public function getShutterSpeed()
+    public function getShutterSpeed(): ?string
     {
         return $this->shutterSpeed;
     }
@@ -243,9 +294,9 @@ class Photo implements ResourceInterface
     /**
      * Get the aperture.
      *
-     * @return string
+     * @return string|null
      */
-    public function getAperture()
+    public function getAperture(): ?string
     {
         return $this->aperture;
     }
@@ -253,9 +304,9 @@ class Photo implements ResourceInterface
     /**
      * Get the ISO.
      *
-     * @return int
+     * @return int|null
      */
-    public function getIso()
+    public function getIso(): ?int
     {
         return $this->iso;
     }
@@ -265,7 +316,7 @@ class Photo implements ResourceInterface
      *
      * @return Album
      */
-    public function getAlbum()
+    public function getAlbum(): Album
     {
         return $this->album;
     }
@@ -275,7 +326,7 @@ class Photo implements ResourceInterface
      *
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -285,7 +336,7 @@ class Photo implements ResourceInterface
      *
      * @return string
      */
-    public function getLargeThumbPath()
+    public function getLargeThumbPath(): string
     {
         return $this->largeThumbPath;
     }
@@ -295,7 +346,7 @@ class Photo implements ResourceInterface
      *
      * @return string
      */
-    public function getSmallThumbPath()
+    public function getSmallThumbPath(): string
     {
         return $this->smallThumbPath;
     }
@@ -303,9 +354,9 @@ class Photo implements ResourceInterface
     /**
      * Get the GPS longitude of the location where the photo was taken.
      *
-     * @return float
+     * @return float|null
      */
-    public function getLongitude()
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
@@ -313,9 +364,9 @@ class Photo implements ResourceInterface
     /**
      * Get the GPS latitude of the location where the photo was taken.
      *
-     * @return float
+     * @return float|null
      */
-    public function getLatitude()
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
@@ -323,7 +374,7 @@ class Photo implements ResourceInterface
     /**
      * @return Collection
      */
-    public function getTags()
+    public function getTags(): Collection
     {
         return $this->tags;
     }
@@ -331,7 +382,7 @@ class Photo implements ResourceInterface
     /**
      * @return int
      */
-    public function getTagCount()
+    public function getTagCount(): int
     {
         return $this->tags->count();
     }
@@ -339,23 +390,31 @@ class Photo implements ResourceInterface
     /**
      * @return int
      */
-    public function getHitCount()
+    public function getHitCount(): int
     {
         return $this->hits->count();
     }
 
     /**
+     * @return int
+     */
+    public function getVoteCount(): int
+    {
+        return $this->votes->count();
+    }
+
+    /**
      * @return WeeklyPhoto|null
      */
-    public function getWeeklyPhoto()
+    public function getWeeklyPhoto(): ?WeeklyPhoto
     {
         return $this->weeklyPhoto;
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getAspectRatio()
+    public function getAspectRatio(): ?float
     {
         if (null === $this->aspectRatio) {
             [$width, $height, $type, $attr] = getimagesize('public/data/' . $this->getSmallThumbPath());
@@ -368,7 +427,7 @@ class Photo implements ResourceInterface
     /**
      * Set the dateTime.
      */
-    public function setDateTime(DateTime $dateTime)
+    public function setDateTime(DateTime $dateTime): void
     {
         $this->dateTime = $dateTime;
     }
@@ -378,7 +437,7 @@ class Photo implements ResourceInterface
      *
      * @param string $artist
      */
-    public function setArtist($artist)
+    public function setArtist(string $artist): void
     {
         $this->artist = $artist;
     }
@@ -388,7 +447,7 @@ class Photo implements ResourceInterface
      *
      * @param string $camera
      */
-    public function setCamera($camera)
+    public function setCamera(string $camera): void
     {
         $this->camera = $camera;
     }
@@ -398,7 +457,7 @@ class Photo implements ResourceInterface
      *
      * @param bool $flash
      */
-    public function setFlash($flash)
+    public function setFlash(bool $flash): void
     {
         $this->flash = $flash;
     }
@@ -408,7 +467,7 @@ class Photo implements ResourceInterface
      *
      * @param string $focalLength
      */
-    public function setFocalLength($focalLength)
+    public function setFocalLength(string $focalLength): void
     {
         $this->focalLength = $focalLength;
     }
@@ -418,7 +477,7 @@ class Photo implements ResourceInterface
      *
      * @param string $exposureTime
      */
-    public function setExposureTime($exposureTime)
+    public function setExposureTime(string $exposureTime): void
     {
         $this->exposureTime = $exposureTime;
     }
@@ -428,7 +487,7 @@ class Photo implements ResourceInterface
      *
      * @param string $shutterSpeed
      */
-    public function setShutterSpeed($shutterSpeed)
+    public function setShutterSpeed(string $shutterSpeed): void
     {
         $this->shutterSpeed = $shutterSpeed;
     }
@@ -438,7 +497,7 @@ class Photo implements ResourceInterface
      *
      * @param string $aperture
      */
-    public function setAperture($aperture)
+    public function setAperture(string $aperture): void
     {
         $this->aperture = $aperture;
     }
@@ -448,7 +507,7 @@ class Photo implements ResourceInterface
      *
      * @param int $iso
      */
-    public function setIso($iso)
+    public function setIso(int $iso): void
     {
         $this->iso = $iso;
     }
@@ -458,7 +517,7 @@ class Photo implements ResourceInterface
      *
      * @param Album $album
      */
-    public function setAlbum($album)
+    public function setAlbum(Album $album): void
     {
         $this->album = $album;
     }
@@ -468,7 +527,7 @@ class Photo implements ResourceInterface
      *
      * @param string $path
      */
-    public function setPath($path)
+    public function setPath(string $path): void
     {
         $this->path = $path;
     }
@@ -478,7 +537,7 @@ class Photo implements ResourceInterface
      *
      * @param string $path
      */
-    public function setLargeThumbPath($path)
+    public function setLargeThumbPath(string $path): void
     {
         $this->largeThumbPath = $path;
     }
@@ -488,7 +547,7 @@ class Photo implements ResourceInterface
      *
      * @param string $path
      */
-    public function setSmallThumbPath($path)
+    public function setSmallThumbPath(string $path): void
     {
         $this->smallThumbPath = $path;
     }
@@ -498,7 +557,7 @@ class Photo implements ResourceInterface
      *
      * @param float $longitude
      */
-    public function setLongitude($longitude)
+    public function setLongitude(float $longitude): void
     {
         $this->longitude = $longitude;
     }
@@ -508,7 +567,7 @@ class Photo implements ResourceInterface
      *
      * @param float $latitude
      */
-    public function setLatitude($latitude)
+    public function setLatitude(float $latitude): void
     {
         $this->latitude = $latitude;
     }
@@ -518,7 +577,7 @@ class Photo implements ResourceInterface
      *
      * @param float $ratio
      */
-    public function setAspectRatio($ratio)
+    public function setAspectRatio(float $ratio): void
     {
         $this->aspectRatio = $ratio;
     }
@@ -528,18 +587,28 @@ class Photo implements ResourceInterface
      *
      * @param Hit $hit
      */
-    public function addHit($hit)
+    public function addHit(Hit $hit): void
     {
         $hit->setPhoto($this);
         $this->hits[] = $hit;
     }
 
     /**
+     * Add a vote for this photo.
+     *
+     * @param Vote @vote
+     */
+    public function addVote(Vote $vote): void
+    {
+        $vote->setPhoto($this);
+        $this->votes[] = $vote;
+    }
+    /**
      * Add a tag to a photo.
      *
      * @param Tag $tag
      */
-    public function addTag($tag)
+    public function addTag(Tag $tag): void
     {
         $tag->setPhoto($this);
         $this->tags[] = $tag;
@@ -550,7 +619,7 @@ class Photo implements ResourceInterface
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id' => $this->getId(),
@@ -577,7 +646,7 @@ class Photo implements ResourceInterface
      *
      * @return string
      */
-    public function getResourceId()
+    public function getResourceId(): string
     {
         return 'photo';
     }

@@ -3,7 +3,6 @@
 namespace Photo\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Exception;
 
 /**
@@ -23,7 +22,7 @@ class VirtualAlbum extends Album
      *
      * @return Album|null $parent
      */
-    public function getParent()
+    public function getParent(): ?Album
     {
         return null;
     }
@@ -35,7 +34,7 @@ class VirtualAlbum extends Album
      *
      * @throws Exception
      */
-    public function setParent($parent)
+    public function setParent(Album $parent): void
     {
         throw new Exception('Method is not implemented');
     }
@@ -43,16 +42,19 @@ class VirtualAlbum extends Album
     /**
      * Gets an array of all child albums.
      *
-     * @return array
+     * @return ArrayCollection
      */
-    public function getChildren()
+    public function getChildren(): ArrayCollection
     {
-        return [];
+        return new ArrayCollection();
     }
 
-    public function getPhotos()
+    /**
+     * @return ArrayCollection
+     */
+    public function getPhotos(): ArrayCollection
     {
-        return $this->photos->toArray();
+        return $this->photos;
     }
 
     /**
@@ -60,12 +62,15 @@ class VirtualAlbum extends Album
      *
      * @param Photo $photo
      */
-    public function addPhoto($photo)
+    public function addPhoto(Photo $photo): void
     {
         $this->photos[] = $photo;
     }
 
-    public function addPhotos(array $photos)
+    /**
+     * @param array $photos
+     */
+    public function addPhotos(array $photos): void
     {
         $this->photos
             = new ArrayCollection(
@@ -83,7 +88,7 @@ class VirtualAlbum extends Album
      *
      * @throws Exception
      */
-    public function addAlbum($album)
+    public function addAlbum(Album $album): void
     {
         throw new Exception('Method is not implemented');
     }
@@ -94,7 +99,7 @@ class VirtualAlbum extends Album
      *
      * @return array
      */
-    public function toArrayWithChildren()
+    public function toArrayWithChildren(): array
     {
         $array = $this->toArray();
         foreach ($this->photos as $photo) {
@@ -113,7 +118,7 @@ class VirtualAlbum extends Album
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id' => $this->getId(),
@@ -132,9 +137,11 @@ class VirtualAlbum extends Album
     /**
      * Get the amount of photos in the album.
      *
+     * @param bool $includeSubAlbums
+     *
      * @return int
      */
-    public function getPhotoCount($includeSubAlbums = false)
+    public function getPhotoCount(bool $includeSubAlbums = false): int
     {
         return $this->photos->count();
     }
@@ -144,7 +151,7 @@ class VirtualAlbum extends Album
      *
      * @return int
      */
-    public function getAlbumCount()
+    public function getAlbumCount(): int
     {
         return 0;
     }

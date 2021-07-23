@@ -2,43 +2,61 @@
 
 namespace Photo\Model;
 
-use Decision\Model\Member;
-use Doctrine\ORM\Mapping as ORM;
+use Decision\Model\Member as MemberModel;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToOne,
+    Table,
+    UniqueConstraint,
+};
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Tag.
- *
- * @ORM\Entity
- * @ORM\Table(name="Tag", uniqueConstraints={@ORM\UniqueConstraint(name="tag_idx", columns={"photo_id", "member_id"})})
  */
+#[Entity]
+#[Table(name: "Tag")]
+#[UniqueConstraint(
+    name: "tag_idx",
+    columns: ["photo_id", "member_id"],
+)]
 class Tag implements ResourceInterface
 {
     /**
      * Tag ID.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Photo\Model\Photo", inversedBy="tags")
-     * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
-     */
-    protected $photo;
+    #[ManyToOne(
+        targetEntity: "Photo\Model\Photo",
+        inversedBy: "tags",
+    )]
+    #[JoinColumn(
+        name: "photo_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected Photo $photo;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Decision\Model\Member")
-     * @ORM\JoinColumn(name="member_id", referencedColumnName="lidnr")
-     */
-    protected $member;
+    #[ManyToOne(targetEntity: "Decision\Model\Member")]
+    #[JoinColumn(
+        name: "member_id",
+        referencedColumnName: "lidnr",
+        nullable: false,
+    )]
+    protected MemberModel $member;
 
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -46,15 +64,15 @@ class Tag implements ResourceInterface
     /**
      * @return Photo
      */
-    public function getPhoto()
+    public function getPhoto(): Photo
     {
         return $this->photo;
     }
 
     /**
-     * @return Member
+     * @return MemberModel
      */
-    public function getMember()
+    public function getMember(): MemberModel
     {
         return $this->member;
     }
@@ -62,7 +80,7 @@ class Tag implements ResourceInterface
     /**
      * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -70,15 +88,15 @@ class Tag implements ResourceInterface
     /**
      * @param Photo $photo
      */
-    public function setPhoto($photo)
+    public function setPhoto(Photo $photo): void
     {
         $this->photo = $photo;
     }
 
     /**
-     * @param Member $member
+     * @param MemberModel $member
      */
-    public function setMember($member)
+    public function setMember(MemberModel $member): void
     {
         $this->member = $member;
     }
@@ -88,7 +106,7 @@ class Tag implements ResourceInterface
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id' => $this->getId(),
@@ -102,7 +120,7 @@ class Tag implements ResourceInterface
      *
      * @return string
      */
-    public function getResourceId()
+    public function getResourceId(): string
     {
         return 'tag';
     }

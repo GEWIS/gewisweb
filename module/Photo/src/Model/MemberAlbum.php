@@ -2,7 +2,7 @@
 
 namespace Photo\Model;
 
-use Decision\Model\Member;
+use Decision\Model\Member as MemberModel;
 
 /**
  * Class MemberAlbum
@@ -14,22 +14,23 @@ class MemberAlbum extends VirtualAlbum
     /**
      * Member that this album is for.
      *
-     * @var Member
+     * @var MemberModel
      */
-    private $member;
+    private MemberModel $member;
 
     /**
      * MemberAlbum constructor.
      *
      * @param int $id it is best to use the member lidnr here
+     * @param MemberModel $member
      */
-    public function __construct($id, Member $member)
+    public function __construct(int $id, MemberModel $member)
     {
         parent::__construct($id);
         $this->member = $member;
     }
 
-    public function getMember()
+    public function getMember(): MemberModel
     {
         return $this->member;
     }

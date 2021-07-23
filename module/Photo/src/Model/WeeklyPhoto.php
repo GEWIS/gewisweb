@@ -3,44 +3,54 @@
 namespace Photo\Model;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    OneToOne,
+};
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Maintains a list of the "Foto of the week".
- *
- * @ORM\Entity
  */
+#[Entity]
 class WeeklyPhoto implements ResourceInterface
 {
     /**
      * Week Id.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
      * The start date of the week the photo is based on.
-     *
-     * @ORM\Column(type="date")
      */
-    protected $week;
+    #[Column(type: "date")]
+    protected DateTime $week;
 
     /**
      * The photo of the week.
-     *
-     * @ORM\OneToOne(targetEntity="Photo\Model\Photo", inversedBy="weeklyPhoto")
-     * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
-    protected $photo;
+    #[OneToOne(
+        targetEntity: "Photo\Model\Photo",
+        inversedBy: "weeklyPhoto",
+    )]
+    #[JoinColumn(
+        name: "photo_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected Photo $photo;
 
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -48,7 +58,7 @@ class WeeklyPhoto implements ResourceInterface
     /**
      * @return DateTime
      */
-    public function getWeek()
+    public function getWeek(): DateTime
     {
         return $this->week;
     }
@@ -56,7 +66,7 @@ class WeeklyPhoto implements ResourceInterface
     /**
      * @return Photo
      */
-    public function getPhoto()
+    public function getPhoto(): Photo
     {
         return $this->photo;
     }
@@ -64,7 +74,7 @@ class WeeklyPhoto implements ResourceInterface
     /**
      * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -72,7 +82,7 @@ class WeeklyPhoto implements ResourceInterface
     /**
      * @param DateTime $week
      */
-    public function setWeek($week)
+    public function setWeek(DateTime $week): void
     {
         $this->week = $week;
     }
@@ -80,7 +90,7 @@ class WeeklyPhoto implements ResourceInterface
     /**
      * @param Photo $photo
      */
-    public function setPhoto($photo)
+    public function setPhoto(Photo $photo): void
     {
         $this->photo = $photo;
     }
@@ -90,7 +100,7 @@ class WeeklyPhoto implements ResourceInterface
      *
      * @return string
      */
-    public function getResourceId()
+    public function getResourceId(): string
     {
         return 'weeklyphoto';
     }

@@ -3,45 +3,56 @@
 namespace Photo\Model;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    HasLifecycleCallbacks,
+    Id,
+    JoinColumn,
+    ManyToOne,
+};
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Hit, represents a hit for a photo.
- *
- * @ORM\Entity
- * @ORM\HasLifecycleCallbacks
  */
+#[Entity]
+#[HasLifecycleCallbacks]
 class Hit implements ResourceInterface
 {
     /**
      * Hit ID.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
      * Date and time when the photo was viewed.
-     *
-     * @ORM\Column(type="datetime")
      */
-    protected $dateTime;
+    #[Column(type: "datetime")]
+    protected DateTime $dateTime;
 
     /**
      * The photo which was viewed.
-     *
-     * @ORM\ManyToOne(targetEntity="Photo\Model\Photo", inversedBy="hits")
-     * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
-    protected $photo;
+    #[ManyToOne(
+        targetEntity: "Photo\Model\Photo",
+        inversedBy: "hits",
+    )]
+    #[JoinColumn(
+        name: "photo_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected Photo $photo;
 
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -49,7 +60,7 @@ class Hit implements ResourceInterface
     /**
      * @return DateTime
      */
-    public function getDateTime()
+    public function getDateTime(): DateTime
     {
         return $this->dateTime;
     }
@@ -57,7 +68,7 @@ class Hit implements ResourceInterface
     /**
      * @return Photo
      */
-    public function getPhoto()
+    public function getPhoto(): Photo
     {
         return $this->photo;
     }
@@ -65,7 +76,7 @@ class Hit implements ResourceInterface
     /**
      * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -73,7 +84,7 @@ class Hit implements ResourceInterface
     /**
      * @param DateTime $dateTime
      */
-    public function setDateTime($dateTime)
+    public function setDateTime(DateTime $dateTime): void
     {
         $this->dateTime = $dateTime;
     }
@@ -81,7 +92,7 @@ class Hit implements ResourceInterface
     /**
      * @param Photo $photo
      */
-    public function setPhoto($photo)
+    public function setPhoto(Photo $photo): void
     {
         $this->photo = $photo;
     }
@@ -91,7 +102,7 @@ class Hit implements ResourceInterface
      *
      * @return string
      */
-    public function getResourceId()
+    public function getResourceId(): string
     {
         return 'hit';
     }
