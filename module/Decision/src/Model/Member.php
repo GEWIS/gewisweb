@@ -730,4 +730,35 @@ class Member
     {
         $this->lists = new ArrayCollection();
     }
+
+    /**
+     * Returns true the member is currently installed as a board member and false otherwise.
+     *
+     * @return bool
+     */
+    public function isBoardMember(): bool
+    {
+        foreach ($this->getBoardInstallations() as $boardInstall) {
+            if ($this->isCurrentBoard($boardInstall)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if this is a current board member.
+     *
+     * @param BoardMember $boardMember
+     *
+     * @return bool
+     */
+    protected function isCurrentBoard(BoardMember $boardMember): bool
+    {
+        $now = new DateTime();
+
+        return $boardMember->getInstallDate() <= $now
+            && (null === $boardMember->getDischargeDate() || $boardMember->getDischargeDate() >= $now);
+    }
 }

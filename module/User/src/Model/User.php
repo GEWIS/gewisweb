@@ -2,12 +2,14 @@
 
 namespace User\Model;
 
+use DateTime;
 use Decision\Model\Member;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\Permissions\Acl\Role\RoleInterface;
+use RuntimeException;
 
 /**
  * User model.
@@ -152,13 +154,42 @@ class User implements RoleInterface, ResourceInterface
     }
 
     /**
-     * Get the user's role ID.
+     * Get the user's role ID, in order of most privileged to least privileged. This is because of the behaviour of
+     * {@link \Laminas\Permissions\Acl\Role\Registry}.
      *
      * @return string
      */
-    public function getRoleId()
+    public function getRoleId(): string
     {
-        return 'user_' . $this->getLidnr();
+        $roleNames = $this->getRoleNames();
+
+        if (in_array('admin', $roleNames)) {
+            return 'admin';
+        }
+
+        if ($this->getMember()->isBoardMember()) {
+            return 'board';
+        }
+
+        if (in_array('company_admin', $roleNames)) {
+            return 'company_admin';
+        }
+
+        if (count($this->getMember()->getCurrentOrganInstallations()) > 0) {
+            return 'active_member';
+        }
+
+        if (empty($roleNames)) {
+            return 'user';
+        }
+
+        if (in_array('photo_guest', $roleNames)) {
+            return 'photo_guest';
+        }
+
+        throw new RuntimeException(
+            sprintf('Could not determine user role unambiguously for user %s', $this->getLidnr())
+        );
     }
 
     /**

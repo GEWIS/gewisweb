@@ -91,9 +91,9 @@ class ApiUser implements RoleInterface, ResourceInterface
      *
      * @return string
      */
-    public function getRoleId()
+    public function getRoleId(): string
     {
-        return 'api_' . $this->getId();
+        return 'apiuser';
     }
 
     /**

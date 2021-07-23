@@ -44,42 +44,25 @@ class AclService extends GenericAclService
          * - tueguest: guest from the TU/e
          * - user: GEWIS-member
          * - apiuser: Automated tool given access by an admin
+         * - board: Board member of GEWIS
          * - admin: Defined administrators
          * - photo_guest: Special role for non-members but friends of GEWIS nonetheless
          */
-
         $this->acl->addRole(new Role('guest'));
         $this->acl->addRole(new Role('tueguest'), 'guest');
         $this->acl->addRole(new Role('user'), 'tueguest');
         $this->acl->addrole(new Role('apiuser'), 'guest');
-        $this->acl->addrole(new Role('sosuser'), 'apiuser');
         $this->acl->addrole(new Role('active_member'), 'user');
         $this->acl->addrole(new Role('company_admin'), 'active_member');
+        $this->acl->addRole(new Role('board'));
         $this->acl->addRole(new Role('admin'));
         $this->acl->addRole(new Role('photo_guest'), 'guest');
-
-        $user = $this->getIdentity();
-
-        // add user to registry
-        if ($user instanceof User) {
-            $roles = $user->getRoleNames();
-            // if the user has no roles, add the 'user' role by default
-            if (empty($roles)) {
-                $roles = ['user'];
-            }
-
-            if (count($user->getMember()->getCurrentOrganInstallations()) > 0) {
-                $roles[] = 'active_member';
-            }
-
-            $this->acl->addRole($user, $roles);
-        }
 
         // admins are allowed to do everything
         $this->acl->allow('admin');
 
         // board members also are admins
-        $this->acl->allow('user', null, null, new IsBoardMember());
+        $this->acl->allow('board');
 
         // configure the user ACL
         $this->acl->addResource(new Resource('apiuser'));
@@ -88,8 +71,5 @@ class AclService extends GenericAclService
         $this->acl->allow('user', 'user', ['password_change']);
         $this->acl->allow('photo_guest', 'user', ['password_change']);
         $this->acl->allow('tueguest', 'user', 'pin_login');
-
-        // sosusers can't do anything
-        $this->acl->deny('sosuser');
     }
 }
