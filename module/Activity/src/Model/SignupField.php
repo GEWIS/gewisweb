@@ -2,71 +2,95 @@
 
 namespace Activity\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToOne,
+    OneToMany,
+    OneToOne,
+};
+use League\CommonMark\Util\ArrayCollection;
 
 /**
  * SignupField model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class SignupField
 {
     /**
      * ID for the field.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "IDENTITY")]
+    protected int $id;
 
     /**
      * Activity that the SignupField belongs to.
-     *
-     * @ORM\ManyToOne(targetEntity="Activity\Model\SignupList", inversedBy="fields", cascade={"persist"})
-     * @ORM\JoinColumn(name="signupList_id", referencedColumnName="id")
      */
-    protected $signupList;
+    #[ManyToOne(
+        targetEntity: "Activity\Model\SignupList",
+        cascade: ["persist"],
+        inversedBy: "fields",
+    )]
+    #[JoinColumn(
+        name: "signuplist_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected SignupList $signupList;
 
     /**
      * The name of the SignupField.
-     *
-     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist"})
      */
-    protected $name;
+    #[OneToOne(
+        targetEntity: "Activity\Model\LocalisedText",
+        cascade: ["persist"],
+        orphanRemoval: true,
+    )]
+    protected LocalisedText $name;
 
     /**
      * The type of the SignupField.
-     *
-     * @ORM\Column(type="integer", nullable=false)
      */
-    protected $type;
+    #[Column(type: "integer")]
+    protected int $type;
 
     /**
      * The minimal value constraint for the ``number'' type.
-     *
-     * @ORM\Column(type="integer", nullable=true)
      */
-    protected $minimumValue;
+    #[Column(
+        type: "integer",
+        nullable: true,
+    )]
+    protected ?int $minimumValue;
 
     /**
      * The maximal value constraint for the ``number'' type.
-     *
-     * @ORM\Column(type="integer", nullable=true)
      */
-    protected $maximumValue;
+    #[Column(
+        type: "integer",
+        nullable: true,
+    )]
+    protected ?int $maximumValue;
 
     /**
      * The allowed options for the SignupField of the ``option'' type.
-     *
-     * @ORM\OneToMany(targetEntity="Activity\Model\SignupOption", mappedBy="field", orphanRemoval=true)
      */
-    protected $options;
+    #[OneToMany(
+        targetEntity: "Activity\Model\SignupOption",
+        mappedBy: "field",
+        orphanRemoval: true,
+    )]
+    protected ArrayCollection $options;
 
     /**
      * @return SignupList
      */
-    public function getSignupList()
+    public function getSignupList(): SignupList
     {
         return $this->signupList;
     }
@@ -74,15 +98,15 @@ class SignupField
     /**
      * @param SignupList $signupList
      */
-    public function setSignupList($signupList)
+    public function setSignupList(SignupList $signupList): void
     {
         $this->signupList = $signupList;
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
-    public function getOptions()
+    public function getOptions(): ArrayCollection
     {
         return $this->options;
     }
@@ -90,7 +114,7 @@ class SignupField
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -98,7 +122,7 @@ class SignupField
     /**
      * @return LocalisedText
      */
-    public function getName()
+    public function getName(): LocalisedText
     {
         return $this->name;
     }
@@ -106,7 +130,7 @@ class SignupField
     /**
      * @param LocalisedText $name
      */
-    public function setName($name)
+    public function setName(LocalisedText $name): void
     {
         $this->name = $name->copy();
     }
@@ -114,7 +138,7 @@ class SignupField
     /**
      * @return int
      */
-    public function getType()
+    public function getType(): int
     {
         return $this->type;
     }
@@ -122,39 +146,39 @@ class SignupField
     /**
      * @param int $type
      */
-    public function setType($type)
+    public function setType(int $type): void
     {
         $this->type = $type;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMinimumValue()
+    public function getMinimumValue(): ?int
     {
         return $this->minimumValue;
     }
 
     /**
-     * @param int $minimumValue
+     * @param int|null $minimumValue
      */
-    public function setMinimumValue($minimumValue)
+    public function setMinimumValue(?int $minimumValue): void
     {
         $this->minimumValue = $minimumValue;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMaximumValue()
+    public function getMaximumValue(): ?int
     {
         return $this->maximumValue;
     }
 
     /**
-     * @param int $maximumValue
+     * @param int|null $maximumValue
      */
-    public function setMaximumValue($maximumValue)
+    public function setMaximumValue(?int $maximumValue): void
     {
         $this->maximumValue = $maximumValue;
     }
@@ -164,10 +188,11 @@ class SignupField
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $options = [];
         $optionsEn = [];
+
         foreach ($this->getOptions() as $option) {
             $optionData = $option->toArray();
             $options[] = $optionData['value'];

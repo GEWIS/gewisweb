@@ -1,5 +1,7 @@
 <?php
 
+namespace Activity;
+
 use Activity\Command\CalendarNotify;
 use Activity\Controller\{
     ActivityCalendarController,
@@ -17,6 +19,7 @@ use Activity\Controller\Factory\{
     AdminControllerFactory,
     ApiControllerFactory,
 };
+use Application\Extensions\Doctrine\AttributeDriver;
 use Laminas\Router\Http\{
     Literal,
     Segment,
@@ -486,14 +489,15 @@ return [
     ],
     'doctrine' => [
         'driver' => [
-            'activity_entities' => [
-                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
-                'cache' => 'array',
-                'paths' => [__DIR__ . '/../src/Model/'],
+            __NAMESPACE__ . '_driver' => [
+                'class' => AttributeDriver::class,
+                'paths' => [
+                    __DIR__ . '/../src/Model/',
+                ],
             ],
             'orm_default' => [
                 'drivers' => [
-                    'Activity\Model' => 'activity_entities',
+                    __NAMESPACE__ . '\Model' => __NAMESPACE__ . '_driver',
                 ],
             ],
         ],

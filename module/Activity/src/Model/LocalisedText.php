@@ -2,73 +2,105 @@
 
 namespace Activity\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+};
 use InvalidArgumentException;
 use Laminas\Session\Container as SessionContainer;
 
 /**
  * Class LocalisedText: stores Dutch and English versions of text fields.
- *
- * @ORM\Entity
  */
+#[Entity]
 class LocalisedText
 {
     /**
      * ID for the LocalisedText.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "IDENTITY")]
+    protected int $id;
 
     /**
      * English text.
-     *
-     * @Orm\Column(type="text", nullable=true)
      */
-    protected $valueEN;
+    #[Column(
+        type: "text",
+        nullable: true,
+    )]
+    protected ?string $valueEN;
 
     /**
      * Dutch text.
-     *
-     * @Orm\Column(type="text", nullable=true)
      */
-    protected $valueNL;
+    #[Column(
+        type: "text",
+        nullable: true,
+    )]
+    protected ?string $valueNL;
 
-    public function __construct($valueEN, $valueNL)
+    /**
+     * LocalisedText constructor.
+     *
+     * @param string|null $valueEN
+     * @param string|null $valueNL
+     */
+    public function __construct(?string $valueEN, ?string $valueNL)
     {
         $this->valueEN = $valueEN;
         $this->valueNL = $valueNL;
     }
 
-    public function getValueEN()
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getValueEN(): ?string
     {
         return $this->valueEN;
     }
 
-    public function setValueEN($valueEN)
-    {
-        return new LocalisedText($valueEN, $this->valueNL);
-    }
-
-    public function getValueNL()
+    /**
+     * @return string|null
+     */
+    public function getValueNL(): ?string
     {
         return $this->valueNL;
     }
 
-    public function updateValues($valueEN, $valueNL)
+    /**
+     * @param string|null $valueEN
+     * @param string|null $valueNL
+     */
+    public function updateValues(?string $valueEN, ?string $valueNL): void
     {
         $this->updateValueEN($valueEN);
         $this->updateValueNL($valueNL);
     }
 
-    public function updateValueEN($valueEN)
+    /**
+     * @param string|null $valueEN
+     */
+    public function updateValueEN(?string $valueEN): void
     {
         $this->valueEN = $valueEN;
     }
 
-    public function updateValueNL($valueNL)
+    /**
+     * @param string|null $valueNL
+     */
+    public function updateValueNL(?string $valueNL): void
     {
         $this->valueNL = $valueNL;
     }
@@ -77,12 +109,15 @@ class LocalisedText
      * @param string|null $locale
      *
      * @return string the localised text
+     *
+     * @throws InvalidArgumentException
      */
-    public function getText($locale = null)
+    public function getText(string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->getPreferredLocale();
         }
+
         switch ($locale) {
             case 'nl':
                 return !is_null($this->valueNL) ? $this->valueNL : $this->valueEN;
@@ -96,7 +131,7 @@ class LocalisedText
     /**
      * @return string the preferred language: either 'nl'  or 'en'
      */
-    private function getPreferredLocale()
+    private function getPreferredLocale(): string
     {
         $langSession = new SessionContainer('lang');
 
@@ -107,12 +142,15 @@ class LocalisedText
      * @param string|null $locale
      *
      * @return string the localised text
+     *
+     * @throws InvalidArgumentException
      */
-    public function getExactText($locale = null)
+    public function getExactText(string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->getPreferredLocale();
         }
+
         switch ($locale) {
             case 'nl':
                 return $this->valueNL;
@@ -126,7 +164,7 @@ class LocalisedText
     /**
      * @return LocalisedText
      */
-    public function copy()
+    public function copy(): LocalisedText
     {
         return new LocalisedText($this->valueEN, $this->valueNL);
     }

@@ -2,144 +2,154 @@
 
 namespace Activity\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use DateTime;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToOne,
+};
+use User\Model\User as UserModel;
 
 /**
  * Activity calendar option model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class ActivityCalendarOption
 {
     /**
      * ID for the option.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
      * Type for the option.
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
-    protected $type;
+    #[Column(
+        type: "string",
+        nullable: true)
+    ]
+    protected ?string $type;
 
     /**
      * Status for the option.
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
-    protected $status;
+    #[Column(
+        type: "string",
+        nullable: true)
+    ]
+    protected ?string $status;
 
     /**
      * The date and time the activity starts.
-     *
-     * @ORM\Column(type="datetime")
      */
-    protected $beginTime;
+    #[Column(type: "datetime")]
+    protected DateTime $beginTime;
 
     /**
      * The date and time the activity ends.
-     *
-     * @ORM\Column(type="datetime")
      */
-    protected $endTime;
+    #[Column(type: "datetime")]
+    protected DateTime $endTime;
 
     /**
      * To what activity proposal does the option belong.
-     *
-     * @ORM\ManyToOne(targetEntity="Activity\Model\ActivityOptionProposal")
-     * @ORM\JoinColumn(referencedColumnName="id", nullable=false)
      */
-    protected $proposal;
+    #[ManyToOne(targetEntity: "Activity\Model\ActivityOptionProposal")]
+    #[JoinColumn(
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected ActivityOptionProposal $proposal;
 
     /**
      * Who modified this activity option, if null then the option is not modified.
-     *
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(referencedColumnName="lidnr", nullable=true)
      */
-    protected $modifiedBy;
+    #[ManyToOne(targetEntity: "User\Model\User")]
+    #[JoinColumn(referencedColumnName: "lidnr")]
+    protected ?UserModel $modifiedBy;
 
     /**
-     * @return mixed
+     * @return DateTime
      */
-    public function getBeginTime()
+    public function getBeginTime(): DateTime
     {
         return $this->beginTime;
     }
 
     /**
-     * @param mixed $beginTime
+     * @param DateTime $beginTime
      */
-    public function setBeginTime($beginTime)
+    public function setBeginTime(DateTime $beginTime): void
     {
         $this->beginTime = $beginTime;
     }
 
     /**
-     * @return mixed
+     * @return DateTime
      */
-    public function getEndTime()
+    public function getEndTime(): DateTime
     {
         return $this->endTime;
     }
 
     /**
-     * @param mixed $endTime
+     * @param DateTime $endTime
      */
-    public function setEndTime($endTime)
+    public function setEndTime(DateTime $endTime): void
     {
         $this->endTime = $endTime;
     }
 
     /**
-     * @return mixed
+     * @return UserModel|null
      */
-    public function getModifiedBy()
+    public function getModifiedBy(): ?UserModel
     {
         return $this->modifiedBy;
     }
 
     /**
-     * @param mixed $modifiedBy
+     * @param UserModel|null $modifiedBy
      */
-    public function setModifiedBy($modifiedBy)
+    public function setModifiedBy(?UserModel $modifiedBy): void
     {
         $this->modifiedBy = $modifiedBy;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
     /**
-     * @param string $status
+     * @param string|null $status
      */
-    public function setStatus($status)
+    public function setStatus(?string $status): void
     {
         $this->status = $status;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }
 
     /**
-     * @param string $type
+     * @param string|null $type
      */
-    public function setType($type)
+    public function setType(?string $type): void
     {
         $this->type = $type;
     }
@@ -147,17 +157,17 @@ class ActivityCalendarOption
     /**
      * Returns the string identifier of the Resource.
      *
-     * @return string
+     * @return int|string
      */
-    public function getResourceId()
+    public function getResourceId(): int|string
     {
         return $this->getId();
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -178,7 +188,7 @@ class ActivityCalendarOption
     /**
      * @return ActivityOptionProposal
      */
-    public function getProposal()
+    public function getProposal(): ActivityOptionProposal
     {
         return $this->proposal;
     }
@@ -186,7 +196,7 @@ class ActivityCalendarOption
     /**
      * @param ActivityOptionProposal $proposal
      */
-    public function setProposal($proposal)
+    public function setProposal(ActivityOptionProposal $proposal): void
     {
         $this->proposal = $proposal;
     }

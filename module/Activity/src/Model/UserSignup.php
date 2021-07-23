@@ -2,40 +2,46 @@
 
 namespace Activity\Model;
 
-use Doctrine\ORM\Mapping as ORM;
-use User\Model\User;
+use Doctrine\ORM\Mapping\{
+    Entity,
+    JoinColumn,
+    ManyToOne,
+};
+use User\Model\User as UserModel;
 
 /**
  * Signup model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class UserSignup extends Signup
 {
     /**
      * Who is subscribed.
-     *
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(name="user_lidnr", referencedColumnName="lidnr")
      */
-    protected $user;
+    #[ManyToOne(targetEntity: "User\Model\User")]
+    #[JoinColumn(
+        name: "user_lidnr",
+        referencedColumnName: "lidnr",
+        nullable: false,
+    )]
+    protected UserModel $user;
 
     /**
      * Get the full name of the user whom signed up for the activity.
      *
      * @return string
      */
-    public function getFullName()
+    public function getFullName(): string
     {
-        return is_null($this->getUser()) ? null : $this->getUser()->getMember()->getFullName();
+        return $this->getUser()->getMember()->getFullName();
     }
 
     /**
      * Get the user that is signed up.
      *
-     * @return User
+     * @return UserModel
      */
-    public function getUser()
+    public function getUser(): UserModel
     {
         return $this->user;
     }
@@ -43,7 +49,7 @@ class UserSignup extends Signup
     /**
      * Set the user for the activity signup.
      */
-    public function setUser(User $user)
+    public function setUser(UserModel $user): void
     {
         $this->user = $user;
     }
@@ -53,8 +59,8 @@ class UserSignup extends Signup
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
-        return is_null($this->getUser()) ? null : $this->getUser()->getMember()->getEmail();
+        return $this->getUser()->getMember()->getEmail();
     }
 }

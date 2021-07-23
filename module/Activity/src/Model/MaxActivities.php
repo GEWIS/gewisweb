@@ -2,50 +2,57 @@
 
 namespace Activity\Model;
 
-use Decision\Model\Organ;
-use Doctrine\ORM\Mapping as ORM;
-
+use Decision\Model\Organ as OrganModel;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToOne,
+};
 /**
  * Max Activities model.
  * Contains the max amount of activities an organ may create options for
  * Note that this is the limit per period!
- *
- * @ORM\Entity
  */
+#[Entity]
 class MaxActivities
 {
     /**
      * ID for the field.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "IDENTITY")]
+    protected int $id;
+
     /**
      * Who created this activity.
-     *
-     * @ORM\ManyToOne(targetEntity="Decision\Model\Organ")
-     * @ORM\JoinColumn(referencedColumnName="id", nullable=false)
      */
-    protected $organ;
+    #[ManyToOne(targetEntity: "Decision\Model\Organ")]
+    #[JoinColumn(
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected OrganModel $organ;
+
     /**
      * The value of the option.
-     *
-     * @ORM\Column(type="integer", nullable=false)
      */
-    protected $value;
+    #[Column(type: "integer")]
+    protected int $value;
+
     /**
      * The associated period.
-     *
-     * @ORM\ManyToOne(targetEntity="Activity\Model\ActivityOptionCreationPeriod")
      */
-    protected $period;
+    #[ManyToOne(targetEntity: "Activity\Model\ActivityOptionCreationPeriod")]
+    protected ActivityOptionCreationPeriod $period;
 
     /**
      * @return ActivityOptionCreationPeriod
      */
-    public function getPeriod()
+    public function getPeriod(): ActivityOptionCreationPeriod
     {
         return $this->period;
     }
@@ -55,7 +62,7 @@ class MaxActivities
      *
      * @param ActivityOptionCreationPeriod $period
      */
-    public function setPeriod($period)
+    public function setPeriod(ActivityOptionCreationPeriod $period): void
     {
         $this->period = $period;
     }
@@ -63,15 +70,15 @@ class MaxActivities
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @return Organ
+     * @return OrganModel
      */
-    public function getOrgan()
+    public function getOrgan(): OrganModel
     {
         return $this->organ;
     }
@@ -79,9 +86,9 @@ class MaxActivities
     /**
      * Set the organ.
      *
-     * @param Organ $organ
+     * @param OrganModel $organ
      */
-    public function setOrgan($organ)
+    public function setOrgan(OrganModel $organ): void
     {
         $this->organ = $organ;
     }
@@ -89,7 +96,7 @@ class MaxActivities
     /**
      * @return int
      */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->value;
     }
@@ -99,7 +106,7 @@ class MaxActivities
      *
      * @param int $value
      */
-    public function setValue($value)
+    public function setValue(int $value): void
     {
         $this->value = $value;
     }
@@ -109,7 +116,7 @@ class MaxActivities
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id' => $this->getId(),

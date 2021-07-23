@@ -2,61 +2,88 @@
 
 namespace Activity\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToOne,
+};
 
 /**
  * Update prop model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class ActivityUpdateProposal
 {
     /**
      * ID for the proposal.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "IDENTITY")]
+    protected int $id;
 
     /**
      * The previous activity version, if any.
-     *
-     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity", inversedBy="updateProposal")
-     * @ORM\JoinColumn(referencedColumnName="id")
      */
-    protected $old;
+    #[ManyToOne(
+        targetEntity: "Activity\Model\Activity",
+        inversedBy: "updateProposal",
+    )]
+    #[JoinColumn(
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected Activity $old;
 
     /**
      * The new activity.
-     *
-     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity")
-     * @ORM\JoinColumn(referencedColumnName="id")
      */
-    protected $new;
+    #[ManyToOne(targetEntity: "Activity\Model\Activity")]
+    #[JoinColumn(
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected Activity $new;
 
-    public function getId()
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getOld()
+    /**
+     * @return Activity
+     */
+    public function getOld(): Activity
     {
         return $this->old;
     }
 
-    public function setOld(Activity $old)
+    /**
+     * @param Activity $old
+     */
+    public function setOld(Activity $old): void
     {
         $this->old = $old;
     }
 
-    public function getNew()
+    /**
+     * @return Activity
+     */
+    public function getNew(): Activity
     {
         return $this->new;
     }
 
-    public function setNew(Activity $new)
+    /**
+     * @param Activity $new
+     */
+    public function setNew(Activity $new): void
     {
         $this->new = $new;
     }

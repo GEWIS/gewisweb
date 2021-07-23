@@ -3,54 +3,56 @@
 namespace Activity\Model;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+};
 
 /**
  * Activity Options Creation Period
  * Contains a period during which options may be created.
- *
- * @ORM\Entity
  */
+#[Entity]
 class ActivityOptionCreationPeriod
 {
     /**
      * ID for the field.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "IDENTITY")]
+    protected int $id;
 
     /**
      * The date and time the planning period starts.
-     *
-     * @ORM\Column(type="datetime")
      */
-    protected $beginPlanningTime;
+    #[Column(type: "datetime")]
+    protected DateTime $beginPlanningTime;
 
     /**
      * The date and time the planning period ends.
-     *
-     * @ORM\Column(type="datetime")
      */
-    protected $endPlanningTime;
+    #[Column(type: "datetime")]
+    protected DateTime $endPlanningTime;
 
     /**
      * The date and time the period for which options can be created starts.
-     *
-     * @ORM\Column(type="datetime")
      */
-    protected $beginOptionTime;
+    #[Column(type: "datetime")]
+    protected DateTime $beginOptionTime;
 
     /**
      * The date and time the period for which options can be created ends.
-     *
-     * @ORM\Column(type="datetime")
      */
-    protected $endOptionTime;
+    #[Column(type: "datetime")]
+    protected DateTime $endOptionTime;
 
-    public function getId()
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
@@ -58,7 +60,7 @@ class ActivityOptionCreationPeriod
     /**
      * @return DateTime
      */
-    public function getBeginPlanningTime()
+    public function getBeginPlanningTime(): DateTime
     {
         return $this->beginPlanningTime;
     }
@@ -66,7 +68,7 @@ class ActivityOptionCreationPeriod
     /**
      * @param DateTime $beginPlanningTime
      */
-    public function setBeginPlanningTime($beginPlanningTime)
+    public function setBeginPlanningTime(DateTime $beginPlanningTime): void
     {
         $this->beginPlanningTime = $beginPlanningTime;
     }
@@ -74,7 +76,7 @@ class ActivityOptionCreationPeriod
     /**
      * @return DateTime
      */
-    public function getEndPlanningTime()
+    public function getEndPlanningTime(): DateTime
     {
         return $this->endPlanningTime;
     }
@@ -82,7 +84,7 @@ class ActivityOptionCreationPeriod
     /**
      * @param DateTime $endPlanningTime
      */
-    public function setEndPlanningTime($endPlanningTime)
+    public function setEndPlanningTime(DateTime $endPlanningTime): void
     {
         $this->endPlanningTime = $endPlanningTime;
     }
@@ -90,7 +92,7 @@ class ActivityOptionCreationPeriod
     /**
      * @return DateTime
      */
-    public function getBeginOptionTime()
+    public function getBeginOptionTime(): DateTime
     {
         return $this->beginOptionTime;
     }
@@ -98,7 +100,7 @@ class ActivityOptionCreationPeriod
     /**
      * @param DateTime $beginOptionTime
      */
-    public function setBeginOptionTime($beginOptionTime)
+    public function setBeginOptionTime(DateTime $beginOptionTime): void
     {
         $this->beginOptionTime = $beginOptionTime;
     }
@@ -106,7 +108,7 @@ class ActivityOptionCreationPeriod
     /**
      * @return DateTime
      */
-    public function getEndOptionTime()
+    public function getEndOptionTime(): DateTime
     {
         return $this->endOptionTime;
     }
@@ -114,7 +116,7 @@ class ActivityOptionCreationPeriod
     /**
      * @param DateTime $endOptionTime
      */
-    public function setEndOptionTime($endOptionTime)
+    public function setEndOptionTime(DateTime $endOptionTime): void
     {
         $this->endOptionTime = $endOptionTime;
     }
@@ -124,7 +126,7 @@ class ActivityOptionCreationPeriod
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id' => $this->getId(),

@@ -2,44 +2,68 @@
 
 namespace Activity\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToOne,
+    OneToOne,
+};
 
 /**
  * SignupOption model.
  * Contains the possible options of a field of type ``option''.
- *
- * @ORM\Entity
  */
+#[Entity]
 class SignupOption
 {
     /**
      * ID for the field.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "IDENTITY")]
+    protected int $id;
 
     /**
      * Field that the option belongs to.
-     *
-     * @ORM\ManyToOne(targetEntity="Activity\Model\SignupField", inversedBy="options", cascade={"persist"})
-     * @ORM\JoinColumn(name="field_id", referencedColumnName="id")
      */
-    protected $field;
+    #[ManyToOne(
+        targetEntity: "Activity\Model\SignupField",
+        cascade: ["persist"],
+        inversedBy: "options",
+    )]
+    #[JoinColumn(
+        name: "field_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected SignupField $field;
 
     /**
      * The value of the option.
-     *
-     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist"})
      */
-    protected $value;
+    #[OneToOne(
+        targetEntity: "Activity\Model\LocalisedText",
+        cascade: ["persist"],
+        orphanRemoval: true,
+    )]
+    protected LocalisedText $value;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
     /**
      * @return SignupField
      */
-    public function getField()
+    public function getField(): SignupField
     {
         return $this->field;
     }
@@ -49,23 +73,15 @@ class SignupOption
      *
      * @param SignupField $field
      */
-    public function setField($field)
+    public function setField(SignupField $field): void
     {
         $this->field = $field;
     }
 
     /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
      * @return LocalisedText
      */
-    public function getValue()
+    public function getValue(): LocalisedText
     {
         return $this->value;
     }
@@ -75,7 +91,7 @@ class SignupOption
      *
      * @param LocalisedText $value
      */
-    public function setValue($value)
+    public function setValue(LocalisedText $value): void
     {
         $this->value = $value->copy();
     }
@@ -85,7 +101,7 @@ class SignupOption
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id' => $this->getId(),

@@ -2,114 +2,124 @@
 
 namespace Activity\Model;
 
-use Decision\Model\Organ;
-use Doctrine\ORM\Mapping as ORM;
+use DateTime;
+use Decision\Model\Organ as OrganModel;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToOne,
+};
+use User\Model\User as UserModel;
 use User\Permissions\Resource\OrganResourceInterface;
 
 /**
  * Activity calendar activity option proposal model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class ActivityOptionProposal implements OrganResourceInterface
 {
     /**
      * ID for the option.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
      * Name for the activity option proposal.
-     *
-     * @Orm\Column(type="string")
      */
-    protected $name;
+    #[Column(type: "string")]
+    protected string $name;
 
     /**
      * Description for the activity option proposal.
-     *
-     * @Orm\Column(type="string")
      */
-    protected $description;
+    #[Column(type: "string")]
+    protected string $description;
 
     /**
      * Who created this activity option.
-     *
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(referencedColumnName="lidnr", nullable=false)
      */
-    protected $creator;
+    #[ManyToOne(targetEntity: "User\Model\User")]
+    #[JoinColumn(
+        referencedColumnName: "lidnr",
+        nullable: false,
+    )]
+    protected UserModel $creator;
 
     /**
      * The date and time the activity option was created.
-     *
-     * @ORM\Column(type="datetime")
      */
-    protected $creationTime;
+    #[Column(type: "datetime")]
+    protected DateTime $creationTime;
 
     /**
      * Who created this activity proposal.
-     *
-     * @ORM\ManyToOne(targetEntity="Decision\Model\Organ")
-     * @ORM\JoinColumn(referencedColumnName="id", nullable=true)
      */
-    protected $organ;
+    #[ManyToOne(targetEntity: "Decision\Model\Organ")]
+    #[JoinColumn(
+        referencedColumnName: "id",
+        nullable: true,
+    )]
+    protected ?OrganModel $organ;
 
     /**
      * Who created this activity proposal, if not an organ.
-     *
-     * @Orm\Column(type="string", nullable=true)
      */
-    protected $organAlt;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $organAlt;
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
     /**
-     * @param mixed $description
+     * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
 
     /**
-     * @return mixed
+     * @return DateTime
      */
-    public function getCreationTime()
+    public function getCreationTime(): DateTime
     {
         return $this->creationTime;
     }
 
     /**
-     * @param mixed $creationTime
+     * @param DateTime $creationTime
      */
-    public function setCreationTime($creationTime)
+    public function setCreationTime(DateTime $creationTime): void
     {
         $this->creationTime = $creationTime;
     }
@@ -117,33 +127,33 @@ class ActivityOptionProposal implements OrganResourceInterface
     /**
      * Get the organ of this resource.
      *
-     * @return Organ
+     * @return OrganModel|null
      */
-    public function getResourceOrgan()
+    public function getResourceOrgan(): ?OrganModel
     {
         return $this->getOrgan();
     }
 
     /**
-     * @return mixed
+     * @return OrganModel|null
      */
-    public function getOrgan()
+    public function getOrgan(): ?OrganModel
     {
         return $this->organ;
     }
 
     /**
-     * @param mixed $organ
+     * @param OrganModel|null $organ
      */
-    public function setOrgan($organ)
+    public function setOrgan(?OrganModel $organ): void
     {
         $this->organ = $organ;
     }
 
     /**
-     * @return mixed
+     * @return OrganModel|string
      */
-    public function getOrganOrAlt()
+    public function getOrganOrAlt(): OrganModel|string
     {
         if ($this->organ) {
             return $this->organ;
@@ -155,17 +165,17 @@ class ActivityOptionProposal implements OrganResourceInterface
     /**
      * Returns the string identifier of the Resource.
      *
-     * @return string
+     * @return int|string
      */
-    public function getResourceId()
+    public function getResourceId(): int|string
     {
         return $this->getId();
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -176,9 +186,9 @@ class ActivityOptionProposal implements OrganResourceInterface
      * 2. The alternative for an organ, other organising parties
      * 3. The full name of the member who created the proposal.
      *
-     * @return mixed
+     * @return string
      */
-    public function getCreatorAlt()
+    public function getCreatorAlt(): string
     {
         if (!is_null($this->getOrgan())) {
             return $this->getOrgan()->getAbbr();
@@ -192,33 +202,33 @@ class ActivityOptionProposal implements OrganResourceInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getOrganAlt()
+    public function getOrganAlt(): ?string
     {
         return $this->organAlt;
     }
 
     /**
-     * @param string $organAlt
+     * @param string|null $organAlt
      */
-    public function setOrganAlt($organAlt)
+    public function setOrganAlt(?string $organAlt): void
     {
         $this->organAlt = $organAlt;
     }
 
     /**
-     * @return mixed
+     * @return UserModel
      */
-    public function getCreator()
+    public function getCreator(): UserModel
     {
         return $this->creator;
     }
 
     /**
-     * @param mixed $creator
+     * @param UserModel $creator
      */
-    public function setCreator($creator)
+    public function setCreator(UserModel $creator): void
     {
         $this->creator = $creator;
     }

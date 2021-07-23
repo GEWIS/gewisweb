@@ -1,5 +1,7 @@
 <?php
 
+namespace Application;
+
 use Application\Controller\IndexController;
 use Application\Controller\Factory\IndexControllerFactory;
 use Application\View\Helper\{
@@ -13,6 +15,7 @@ use Laminas\Router\Http\{
     Literal,
     Segment,
 };
+use Memcached;
 
 return [
     'router' => [

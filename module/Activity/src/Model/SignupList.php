@@ -3,129 +3,154 @@
 namespace Activity\Model;
 
 use DateTime;
-use Decision\Model\Organ;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use User\Model\User;
-use User\Permissions\Resource\CreatorResourceInterface;
-use User\Permissions\Resource\OrganResourceInterface;
+use Decision\Model\Organ as OrganModel;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToOne,
+    OneToMany,
+    OneToOne,
+    OrderBy,
+};
+use User\Model\User as UserModel;
+use User\Permissions\Resource\{
+    CreatorResourceInterface,
+    OrganResourceInterface,
+};
 
 /**
  * SignupList model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class SignupList implements OrganResourceInterface, CreatorResourceInterface
 {
     /**
      * ID for the SignupList.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "IDENTITY")]
+    protected int $id;
 
     /**
      * The Activity this SignupList belongs to.
-     *
-     * @ORM\ManyToOne(targetEntity="Activity\Model\Activity", inversedBy="signupLists", cascade={"persist"})
-     * @ORM\JoinColumn(name="activity_id", referencedColumnName="id")
      */
-    protected $activity;
+    #[ManyToOne(
+        targetEntity: "Activity\Model\Activity",
+        cascade: ["persist"],
+        inversedBy: "signupLists",
+    )]
+    #[JoinColumn(
+        name: "activity_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected Activity $activity;
 
     /**
      * The name of the SignupList.
-     *
-     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist"})
      */
-    protected $name;
+    #[OneToOne(
+        targetEntity: "Activity\Model\Activity",
+        cascade: ["persist"],
+        orphanRemoval: true,
+    )]
+    protected LocalisedText $name;
 
     /**
      * The date and time the SignupList is open for signups.
-     *
-     * @ORM\Column(type="datetime")
      */
-    protected $openDate;
+    #[Column(type: "datetime")]
+    protected DateTime $openDate;
 
     /**
      * The date and time after which the SignupList is no longer open.
-     *
-     * @ORM\Column(type="datetime")
      */
-    protected $closeDate;
+    #[Column(type: "datetime")]
+    protected DateTime $closeDate;
 
     /**
      * Determines if people outside of GEWIS can sign up.
-     *
-     * @ORM\Column(type="boolean")
      */
-    protected $onlyGEWIS;
+    #[Column(type: "boolean")]
+    protected bool $onlyGEWIS;
 
     /**
      * Determines if the number of signed up members should be displayed
      * when the user is NOT logged in.
-     *
-     * @ORM\Column(type="boolean")
      */
-    protected $displaySubscribedNumber;
+    #[Column(type: "boolean")]
+    protected bool $displaySubscribedNumber;
 
     /**
      * All additional fields belonging to the activity.
-     *
-     * @ORM\OneToMany(targetEntity="SignupField", mappedBy="signupList", orphanRemoval=true)
      */
+    #[OneToMany(
+        targetEntity: "Activity\Model\SignupField",
+        mappedBy: "signupList",
+        orphanRemoval: true,
+    )]
     protected $fields;
 
     /**
      * All the people who signed up for this SignupList.
-     *
-     * @ORM\OneToMany(targetEntity="Signup", mappedBy="signupList", orphanRemoval=true)
-     * @ORM\OrderBy({"id": "ASC"})
      */
-    protected $signUps;
+    #[OneToMany(
+        targetEntity: "Activity\Model\Signup",
+        mappedBy: "signupList",
+        orphanRemoval: true,
+    )]
+    #[OrderBy(value: ["id" => "ASC"])]
+    protected ArrayCollection $signUps;
 
     /**
-     * @return Collection
+     * @return int
      */
-    public function getSignUps()
-    {
-        return $this->signUps;
-    }
-
-    /**
-     * @param array $signUps
-     */
-    public function setSignUps($signUps)
-    {
-        $this->signUps = $signUps;
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getFields()
-    {
-        return $this->fields;
-    }
-
-    /**
-     * @param Collection $fields
-     */
-    public function setFields($fields)
-    {
-        $this->fields = $fields;
-    }
-
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
+     * @return ArrayCollection
+     */
+    public function getSignUps(): ArrayCollection
+    {
+        return $this->signUps;
+    }
+
+    /**
+     * @param ArrayCollection $signUps
+     */
+    public function setSignUps(ArrayCollection $signUps): void
+    {
+        $this->signUps = $signUps;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getFields(): ArrayCollection
+    {
+        return $this->fields;
+    }
+
+    /**
+     * @param ArrayCollection $fields
+     */
+    public function setFields(ArrayCollection $fields): void
+    {
+        $this->fields = $fields;
+    }
+
+    /**
      * @return LocalisedText
      */
-    public function getName()
+    public function getName(): LocalisedText
     {
         return $this->name;
     }
@@ -133,7 +158,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     /**
      * @param LocalisedText $name
      */
-    public function setName($name)
+    public function setName(LocalisedText $name): void
     {
         $this->name = $name->copy();
     }
@@ -143,7 +168,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      *
      * @return DateTime
      */
-    public function getOpenDate()
+    public function getOpenDate(): DateTime
     {
         return $this->openDate;
     }
@@ -153,7 +178,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      *
      * @param DateTime $openDate
      */
-    public function setOpenDate($openDate)
+    public function setOpenDate(DateTime $openDate): void
     {
         $this->openDate = $openDate;
     }
@@ -163,7 +188,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      *
      * @return DateTime
      */
-    public function getCloseDate()
+    public function getCloseDate(): DateTime
     {
         return $this->closeDate;
     }
@@ -173,7 +198,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      *
      * @param DateTime $closeDate
      */
-    public function setCloseDate($closeDate)
+    public function setCloseDate(DateTime $closeDate): void
     {
         $this->closeDate = $closeDate;
     }
@@ -183,7 +208,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      *
      * @return bool
      */
-    public function getOnlyGEWIS()
+    public function getOnlyGEWIS(): bool
     {
         return $this->onlyGEWIS;
     }
@@ -193,7 +218,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      *
      * @param bool $onlyGEWIS
      */
-    public function setOnlyGEWIS($onlyGEWIS)
+    public function setOnlyGEWIS(bool $onlyGEWIS): void
     {
         $this->onlyGEWIS = $onlyGEWIS;
     }
@@ -204,7 +229,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      *
      * @return bool
      */
-    public function getDisplaySubscribedNumber()
+    public function getDisplaySubscribedNumber(): bool
     {
         return $this->displaySubscribedNumber;
     }
@@ -215,7 +240,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      *
      * @param bool $displaySubscribedNumber
      */
-    public function setDisplaySubscribedNumber($displaySubscribedNumber)
+    public function setDisplaySubscribedNumber(bool $displaySubscribedNumber): void
     {
         $this->displaySubscribedNumber = $displaySubscribedNumber;
     }
@@ -225,7 +250,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      *
      * @return Activity
      */
-    public function getActivity()
+    public function getActivity(): Activity
     {
         return $this->activity;
     }
@@ -235,7 +260,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      *
      * @param Activity $activity
      */
-    public function setActivity($activity)
+    public function setActivity(Activity $activity): void
     {
         $this->activity = $activity;
     }
@@ -245,7 +270,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $fields = [];
         foreach ($this->getFields() as $field) {
@@ -269,7 +294,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      *
      * @return string
      */
-    public function getResourceId()
+    public function getResourceId(): string
     {
         return 'signupList';
     }
@@ -277,9 +302,9 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Get the organ of this resource.
      *
-     * @return Organ
+     * @return OrganModel|null
      */
-    public function getResourceOrgan()
+    public function getResourceOrgan(): ?OrganModel
     {
         return $this->getActivity()->getOrgan();
     }
@@ -287,9 +312,9 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Get the creator of this resource.
      *
-     * @return User
+     * @return UserModel
      */
-    public function getResourceCreator()
+    public function getResourceCreator(): UserModel
     {
         return $this->getActivity()->getCreator();
     }
