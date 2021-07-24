@@ -9,8 +9,6 @@ use Laminas\Permissions\Acl\Role\GenericRole as Role;
 use User\Authentication\ApiAuthenticationService;
 use User\Authentication\AuthenticationService;
 use User\Authorization\GenericAclService;
-use User\Model\User;
-use User\Permissions\Assertion\IsBoardMember;
 
 class AclService extends GenericAclService
 {
@@ -57,14 +55,8 @@ class AclService extends GenericAclService
         $this->acl->addRole(new Role('admin'));
         $this->acl->addRole(new Role('photo_guest'), 'guest');
 
-        // admins are allowed to do everything
+        // admins (this includes board members) are allowed to do everything
         $this->acl->allow('admin');
-
-        foreach ($this->acl->getRoles() as $role) {
-            // board members also are admins
-            // since they can have any other role, we need to apply this assertion to all roles
-            $this->acl->allow($role, null, null, new IsBoardMember());
-        }
 
         // configure the user ACL
         $this->acl->addResource(new Resource('apiuser'));

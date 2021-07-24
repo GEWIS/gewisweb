@@ -2,8 +2,6 @@
 
 namespace User\Permissions\Assertion;
 
-use DateTime;
-use Decision\Model\BoardMember;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
@@ -25,7 +23,7 @@ class IsBoardMember implements AssertionInterface
      * @param Acl $acl
      * @param RoleInterface|null $role
      * @param ResourceInterface|null $resource
-     * @param null $privilege
+     * @param string $privilege
      *
      * @return bool
      */
@@ -36,25 +34,6 @@ class IsBoardMember implements AssertionInterface
         }
         $member = $role->getMember();
 
-        foreach ($member->getBoardInstallations() as $boardInstall) {
-            if ($this->isCurrentBoard($boardInstall)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Check if this is a current board member.
-     *
-     * @return bool
-     */
-    protected function isCurrentBoard(BoardMember $boardMember)
-    {
-        $now = new DateTime();
-
-        return $boardMember->getInstallDate() <= $now &&
-            (null === $boardMember->getDischargeDate() || $boardMember->getDischargeDate() >= $now);
+        return $member->isBoardMember();
     }
 }
