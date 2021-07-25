@@ -3,69 +3,80 @@
 namespace Frontpage\Model;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToOne,
+};
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
-use User\Model\User;
+use User\Model\User as UserModel;
 
 /**
  * Poll comment.
- *
- * @ORM\Entity
  */
+#[Entity]
 class PollComment implements ResourceInterface
 {
     /**
      * Poll comment ID.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
      * Referenced poll.
-     *
-     * @ORM\ManyToOne(targetEntity="Frontpage\Model\Poll", inversedBy="comments")
-     * @ORM\JoinColumn(name="poll_id", referencedColumnName="id")
      */
-    protected $poll;
+    #[ManyToOne(
+        targetEntity: "Frontpage\Model\Poll",
+        inversedBy: "comments",
+    )]
+    #[JoinColumn(
+        name: "poll_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected Poll $poll;
 
     /**
      * User that posted the comment.
-     *
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(name="user_lidnr", referencedColumnName="lidnr")
      */
-    protected $user;
+    #[ManyToOne(targetEntity: "User\Model\User")]
+    #[JoinColumn(
+        name: "user_lidnr",
+        referencedColumnName: "lidnr",
+        nullable: false,
+    )]
+    protected UserModel $user;
 
     /**
      * Author of the comment.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $author;
+    #[Column(type: "string")]
+    protected string $author;
 
     /**
      * Comment content.
-     *
-     * @ORM\Column(type="text")
      */
-    protected $content;
+    #[Column(type: "string")]
+    protected string $content;
 
     /**
      * Comment date.
-     *
-     * @ORM\Column(type="datetime")
      */
-    protected $createdOn;
+    #[Column(type: "datetime")]
+    protected DateTime $createdOn;
 
     /**
      * Get the comment ID.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -75,7 +86,7 @@ class PollComment implements ResourceInterface
      *
      * @return Poll
      */
-    public function getPoll()
+    public function getPoll(): Poll
     {
         return $this->poll;
     }
@@ -83,7 +94,7 @@ class PollComment implements ResourceInterface
     /**
      * Set the poll.
      */
-    public function setPoll(Poll $poll)
+    public function setPoll(Poll $poll): void
     {
         $this->poll = $poll;
     }
@@ -91,9 +102,9 @@ class PollComment implements ResourceInterface
     /**
      * Get the user.
      *
-     * @return User
+     * @return UserModel
      */
-    public function getUser()
+    public function getUser(): UserModel
     {
         return $this->user;
     }
@@ -101,7 +112,7 @@ class PollComment implements ResourceInterface
     /**
      * Set the user.
      */
-    public function setUser(User $user)
+    public function setUser(UserModel $user): void
     {
         $this->user = $user;
     }
@@ -111,7 +122,7 @@ class PollComment implements ResourceInterface
      *
      * @return string
      */
-    public function getAuthor()
+    public function getAuthor(): string
     {
         return $this->author;
     }
@@ -121,7 +132,7 @@ class PollComment implements ResourceInterface
      *
      * @param string $author
      */
-    public function setAuthor($author)
+    public function setAuthor(string $author): void
     {
         $this->author = $author;
     }
@@ -131,7 +142,7 @@ class PollComment implements ResourceInterface
      *
      * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -141,9 +152,9 @@ class PollComment implements ResourceInterface
      *
      * @param string $content
      */
-    public function setContent($content)
+    public function setContent(string $content): void
     {
-        return $this->content = $content;
+        $this->content = $content;
     }
 
     /**
@@ -151,7 +162,7 @@ class PollComment implements ResourceInterface
      *
      * @return DateTime
      */
-    public function getCreatedOn()
+    public function getCreatedOn(): DateTime
     {
         return $this->createdOn;
     }
@@ -161,7 +172,7 @@ class PollComment implements ResourceInterface
      *
      * @param DateTime $createdOn
      */
-    public function setCreatedOn(DateTime $createdOn)
+    public function setCreatedOn(DateTime $createdOn): void
     {
         $this->createdOn = $createdOn;
     }
@@ -171,7 +182,7 @@ class PollComment implements ResourceInterface
      *
      * @return string
      */
-    public function getResourceId()
+    public function getResourceId(): string
     {
         return 'poll_comment';
     }

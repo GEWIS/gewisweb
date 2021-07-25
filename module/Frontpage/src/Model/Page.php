@@ -2,86 +2,91 @@
 
 namespace Frontpage\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    UniqueConstraint,
+};
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
- * Tag.
- *
- * @ORM\Entity
- * @ORM\Table(name="Page", uniqueConstraints={@ORM\UniqueConstraint(name="page_idx", columns={"category", "subCategory", "name"})})
+ * Page.
  */
+#[Entity]
+#[UniqueConstraint(
+    name: "page_idx",
+    columns: ["category", "subCategory", "name"],
+)]
 class Page implements ResourceInterface
 {
     /**
      * Tag ID.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
      * Dutch title of the page.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $dutchTitle;
+    #[Column(type: "string")]
+    protected string $dutchTitle;
 
     /**
      * English title of the page.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $englishTitle;
+    #[Column(type: "string")]
+    protected string $englishTitle;
 
     /**
      * Category of the page.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $category;
+    #[Column(type: "string")]
+    protected string $category;
 
     /**
      * Sub-category of the page.
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
-    protected $subCategory;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $subCategory;
 
     /**
      * Name of the page.
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
-    protected $name;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $name;
 
     /**
      * The english HTML content of the page.
-     *
-     * @ORM\Column(type="text")
      */
-    protected $englishContent;
+    #[Column(type: "string")]
+    protected string $englishContent;
 
     /**
      * The english HTML content of the page.
-     *
-     * @ORM\Column(type="text")
      */
-    protected $dutchContent;
+    #[Column(type: "string")]
+    protected string $dutchContent;
 
     /**
      * The minimal role required to view a page.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $requiredRole;
+    #[Column(type: "string")]
+    protected string $requiredRole;
 
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -89,7 +94,7 @@ class Page implements ResourceInterface
     /**
      * @return string
      */
-    public function getDutchTitle()
+    public function getDutchTitle(): string
     {
         return $this->dutchTitle;
     }
@@ -97,7 +102,7 @@ class Page implements ResourceInterface
     /**
      * @return string
      */
-    public function getEnglishTitle()
+    public function getEnglishTitle(): string
     {
         return $this->englishTitle;
     }
@@ -105,7 +110,7 @@ class Page implements ResourceInterface
     /**
      * @return string
      */
-    public function getCategory()
+    public function getCategory(): string
     {
         return $this->category;
     }
@@ -113,7 +118,7 @@ class Page implements ResourceInterface
     /**
      * @return string|null
      */
-    public function getSubCategory()
+    public function getSubCategory(): ?string
     {
         return $this->subCategory;
     }
@@ -121,7 +126,7 @@ class Page implements ResourceInterface
     /**
      * @return string|null
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -129,7 +134,7 @@ class Page implements ResourceInterface
     /**
      * @return string
      */
-    public function getEnglishContent()
+    public function getEnglishContent(): string
     {
         return $this->englishContent;
     }
@@ -137,7 +142,7 @@ class Page implements ResourceInterface
     /**
      * @return string
      */
-    public function getDutchContent()
+    public function getDutchContent(): string
     {
         return $this->dutchContent;
     }
@@ -145,7 +150,7 @@ class Page implements ResourceInterface
     /**
      * @return string
      */
-    public function getRequiredRole()
+    public function getRequiredRole(): string
     {
         return $this->requiredRole;
     }
@@ -153,7 +158,7 @@ class Page implements ResourceInterface
     /**
      * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -161,7 +166,7 @@ class Page implements ResourceInterface
     /**
      * @param string $dutchTitle
      */
-    public function setDutchTitle($dutchTitle)
+    public function setDutchTitle(string $dutchTitle): void
     {
         $this->dutchTitle = $dutchTitle;
     }
@@ -169,7 +174,7 @@ class Page implements ResourceInterface
     /**
      * @param string $englishTitle
      */
-    public function setEnglishTitle($englishTitle)
+    public function setEnglishTitle(string $englishTitle): void
     {
         $this->englishTitle = $englishTitle;
     }
@@ -177,7 +182,7 @@ class Page implements ResourceInterface
     /**
      * @param string $category
      */
-    public function setCategory($category)
+    public function setCategory(string $category): void
     {
         $this->category = $category;
     }
@@ -185,7 +190,7 @@ class Page implements ResourceInterface
     /**
      * @param string $subCategory
      */
-    public function setSubCategory($subCategory)
+    public function setSubCategory(string $subCategory): void
     {
         $this->subCategory = $subCategory;
     }
@@ -193,7 +198,7 @@ class Page implements ResourceInterface
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -201,7 +206,7 @@ class Page implements ResourceInterface
     /**
      * @param string $englishContent
      */
-    public function setEnglishContent($englishContent)
+    public function setEnglishContent(string $englishContent): void
     {
         $this->englishContent = $englishContent;
     }
@@ -209,12 +214,15 @@ class Page implements ResourceInterface
     /**
      * @param string $dutchContent
      */
-    public function setDutchContent($dutchContent)
+    public function setDutchContent(string $dutchContent): void
     {
         $this->dutchContent = $dutchContent;
     }
 
-    public function setRequiredRole($requiredRole)
+    /**
+     * @param string $requiredRole
+     */
+    public function setRequiredRole(string $requiredRole): void
     {
         $this->requiredRole = $requiredRole;
     }
@@ -224,7 +232,7 @@ class Page implements ResourceInterface
      *
      * @return string
      */
-    public function getResourceId()
+    public function getResourceId(): string
     {
         return 'page' . $this->getId();
     }

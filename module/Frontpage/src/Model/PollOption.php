@@ -2,62 +2,79 @@
 
 namespace Frontpage\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToOne,
+    OneToMany,
+};
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Poll Option.
- *
- * @ORM\Entity
- * @ORM\Table(name="PollOption")
  */
+#[Entity]
 class PollOption implements ResourceInterface
 {
     /**
      * Poll Option ID.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Frontpage\Model\Poll", inversedBy="options")
-     * @ORM\JoinColumn(name="poll_id", referencedColumnName="id")
+     * Referenced poll.
      */
-    protected $poll;
+    #[ManyToOne(
+        targetEntity: "Frontpage\Model\Poll",
+        inversedBy: "options",
+    )]
+    #[JoinColumn(
+        name: "poll_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected Poll $poll;
 
     /**
      * The dutch text for this option.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $dutchText;
+    #[Column(type: "string")]
+    protected string $dutchText;
 
     /**
      * The english translation of the option if available.
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
-    protected $englishText;
+    #[Column(type: "string")]
+    protected string $englishText;
 
     /**
-     * @ORM\OneToMany(targetEntity="PollVote", mappedBy="pollOption", cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
+     * Votes for this option.
      */
+    // TODO: Determine correct type.
+    #[OneToMany(
+        targetEntity: "Frontpage\Model\PollVote",
+        mappedBy: "pollOption",
+        cascade: ["persist, remove"],
+        fetch: "EXTRA_LAZY",
+    )]
     protected $votes;
 
     /**
      * Number of votes not bound to a specific user.
-     *
-     * @ORM\Column(type="integer")
      */
-    protected $anonymousVotes = 0;
+    #[Column(type: "integer")]
+    protected int $anonymousVotes = 0;
 
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -65,7 +82,7 @@ class PollOption implements ResourceInterface
     /**
      * @return Poll
      */
-    public function getPoll()
+    public function getPoll(): Poll
     {
         return $this->poll;
     }
@@ -73,7 +90,7 @@ class PollOption implements ResourceInterface
     /**
      * @return string
      */
-    public function getDutchText()
+    public function getDutchText(): string
     {
         return $this->dutchText;
     }
@@ -81,7 +98,7 @@ class PollOption implements ResourceInterface
     /**
      * @return string
      */
-    public function getEnglishText()
+    public function getEnglishText(): string
     {
         return $this->englishText;
     }
@@ -91,32 +108,32 @@ class PollOption implements ResourceInterface
      *
      * @param PollVote $pollVote
      */
-    public function addVote($pollVote)
+    public function addVote(PollVote $pollVote): void
     {
         $pollVote->setPollOption($this);
         $this->votes[] = $pollVote;
     }
 
     /**
-     * @param mixed $poll
+     * @param Poll $poll
      */
-    public function setPoll($poll)
+    public function setPoll(Poll $poll): void
     {
         $this->poll = $poll;
     }
 
     /**
-     * @param mixed $dutchText
+     * @param string $dutchText
      */
-    public function setDutchText($dutchText)
+    public function setDutchText(string $dutchText): void
     {
         $this->dutchText = $dutchText;
     }
 
     /**
-     * @param mixed $englishText
+     * @param string $englishText
      */
-    public function setEnglishText($englishText)
+    public function setEnglishText(string $englishText): void
     {
         $this->englishText = $englishText;
     }
@@ -124,7 +141,7 @@ class PollOption implements ResourceInterface
     /**
      * @param int $votes
      */
-    public function setAnonymousVotes($votes)
+    public function setAnonymousVotes(int $votes): void
     {
         $this->anonymousVotes = $votes;
     }
@@ -134,7 +151,7 @@ class PollOption implements ResourceInterface
      *
      * @return int
      */
-    public function getVotesCount()
+    public function getVotesCount(): int
     {
         return $this->anonymousVotes + (is_null($this->votes) ? 0 : $this->votes->count());
     }
@@ -144,7 +161,7 @@ class PollOption implements ResourceInterface
      *
      * @return string
      */
-    public function getResourceId()
+    public function getResourceId(): string
     {
         return 'poll_option';
     }

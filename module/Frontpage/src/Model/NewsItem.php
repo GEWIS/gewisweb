@@ -3,88 +3,84 @@
 namespace Frontpage\Model;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+};
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * News item.
- *
- * @ORM\Entity
- * @ORM\Table(name="NewsItem")
  */
+#[Entity]
 class NewsItem implements ResourceInterface
 {
     /**
      * News item ID.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
      * The date the news item was written.
-     *
-     * @ORM\Column(type="date")
      */
-    protected $date;
+    #[Column(type: "date")]
+    protected DateTime $date;
 
     /**
      * Dutch title of the news.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $dutchTitle;
+    #[Column(type: "string")]
+    protected string $dutchTitle;
 
     /**
      * English title of the news.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $englishTitle;
+    #[Column(type: "string")]
+    protected string $englishTitle;
 
     /**
      * The english HTML content of the news.
-     *
-     * @ORM\Column(type="text")
      */
-    protected $englishContent;
+    #[Column(type: "text")]
+    protected string $englishContent;
 
     /**
      * The english HTML content of the news.
-     *
-     * @ORM\Column(type="text")
      */
-    protected $dutchContent;
+    #[Column(type: "text")]
+    protected string $dutchContent;
 
     /**
-     * @return mixed
+     * Whether this news item is pinned to the top of the news section or not.
      */
-    public function getPinned()
+    #[Column(type: "boolean")]
+    protected bool $pinned;
+
+    /**
+     * @return bool
+     */
+    public function getPinned(): bool
     {
         return $this->pinned;
     }
 
     /**
-     * @param mixed $pinned
+     * @param bool $pinned
      */
-    public function setPinned($pinned)
+    public function setPinned(bool $pinned): void
     {
         $this->pinned = $pinned;
     }
 
     /**
-     * Whether this news item is pinned to the top of the news section or not.
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $pinned;
-
-    /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -92,7 +88,7 @@ class NewsItem implements ResourceInterface
     /**
      * @return DateTime
      */
-    public function getDate()
+    public function getDate(): DateTime
     {
         return $this->date;
     }
@@ -100,7 +96,7 @@ class NewsItem implements ResourceInterface
     /**
      * @return string
      */
-    public function getDutchTitle()
+    public function getDutchTitle(): string
     {
         return $this->dutchTitle;
     }
@@ -108,7 +104,7 @@ class NewsItem implements ResourceInterface
     /**
      * @return string
      */
-    public function getEnglishTitle()
+    public function getEnglishTitle(): string
     {
         return $this->englishTitle;
     }
@@ -116,7 +112,7 @@ class NewsItem implements ResourceInterface
     /**
      * @return string
      */
-    public function getEnglishContent()
+    public function getEnglishContent(): string
     {
         return $this->englishContent;
     }
@@ -124,7 +120,7 @@ class NewsItem implements ResourceInterface
     /**
      * @return string
      */
-    public function getDutchContent()
+    public function getDutchContent(): string
     {
         return $this->dutchContent;
     }
@@ -132,7 +128,7 @@ class NewsItem implements ResourceInterface
     /**
      * @param DateTime $date
      */
-    public function setDate($date)
+    public function setDate(DateTime $date): void
     {
         $this->date = $date;
     }
@@ -140,7 +136,7 @@ class NewsItem implements ResourceInterface
     /**
      * @param string $dutchTitle
      */
-    public function setDutchTitle($dutchTitle)
+    public function setDutchTitle(string $dutchTitle): void
     {
         $this->dutchTitle = $dutchTitle;
     }
@@ -148,7 +144,7 @@ class NewsItem implements ResourceInterface
     /**
      * @param string $englishTitle
      */
-    public function setEnglishTitle($englishTitle)
+    public function setEnglishTitle(string $englishTitle): void
     {
         $this->englishTitle = $englishTitle;
     }
@@ -156,7 +152,7 @@ class NewsItem implements ResourceInterface
     /**
      * @param string $englishContent
      */
-    public function setEnglishContent($englishContent)
+    public function setEnglishContent(string $englishContent): void
     {
         $this->englishContent = $englishContent;
     }
@@ -164,7 +160,7 @@ class NewsItem implements ResourceInterface
     /**
      * @param string $dutchContent
      */
-    public function setDutchContent($dutchContent)
+    public function setDutchContent(string $dutchContent): void
     {
         $this->dutchContent = $dutchContent;
     }
@@ -174,7 +170,7 @@ class NewsItem implements ResourceInterface
      *
      * @return string
      */
-    public function getResourceId()
+    public function getResourceId(): string
     {
         return 'news_item';
     }

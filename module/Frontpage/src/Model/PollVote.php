@@ -2,49 +2,72 @@
 
 namespace Frontpage\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Entity,
+    Id,
+    JoinColumn,
+    ManyToOne,
+    UniqueConstraint,
+};
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
-use User\Model\User;
+use User\Model\User as UserModel;
 
 /**
  * Poll response
  * Represents a vote on a poll option.
- *
- * @ORM\Entity
- * @ORM\Table(name="PollVote", uniqueConstraints={@ORM\UniqueConstraint(name="vote_idx", columns={"poll_id", "user_id"})})
  */
+#[Entity]
+#[UniqueConstraint(
+    name: "vote_idx",
+    columns: ["poll_id", "user_id"],
+)]
 class PollVote implements ResourceInterface
 {
     /**
      * The poll which was voted on.
-     *
-     * @ORM\ManyToOne(targetEntity="Frontpage\Model\Poll")
-     * @ORM\JoinColumn(name="poll_id", referencedColumnName="id")
      */
-    protected $poll;
+    #[ManyToOne(targetEntity: "Frontpage\Model\Poll")]
+    #[JoinColumn(
+        name: "poll_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected Poll $poll;
 
     /**
      * The option which was chosen.
-     *
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Frontpage\Model\PollOption", inversedBy="votes")
-     * @ORM\JoinColumn(name="option_id", referencedColumnName="id")
      */
-    protected $pollOption;
+    #[Id]
+    #[ManyToOne(
+        targetEntity: "Frontpage\Model\PollOption",
+        inversedBy: "votes",
+    )]
+    #[JoinColumn(
+        name: "option_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected PollOption $pollOption;
 
     /**
      * The user whom submitted this vote.
-     *
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="User\Model\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="lidnr")
      */
-    protected $respondent;
+    #[Id]
+    #[ManyToOne(
+        targetEntity: "User\Model\User",
+        cascade: ["perist"],
+    )]
+    #[JoinColumn(
+        name: "user_id",
+        referencedColumnName: "lidnr",
+        nullable: false,
+    )]
+    protected UserModel $respondent;
 
     /**
      * @return PollOption
      */
-    public function getPollOption()
+    public function getPollOption(): PollOption
     {
         return $this->pollOption;
     }
@@ -52,7 +75,7 @@ class PollVote implements ResourceInterface
     /**
      * @param Poll $poll
      */
-    public function setPoll($poll)
+    public function setPoll(Poll $poll): void
     {
         $this->poll = $poll;
     }
@@ -60,15 +83,15 @@ class PollVote implements ResourceInterface
     /**
      * @param PollOption $pollOption
      */
-    public function setPollOption($pollOption)
+    public function setPollOption(PollOption $pollOption): void
     {
         $this->pollOption = $pollOption;
     }
 
     /**
-     * @param User $respondent
+     * @param UserModel $respondent
      */
-    public function setRespondent($respondent)
+    public function setRespondent(UserModel $respondent): void
     {
         $this->respondent = $respondent;
     }
@@ -78,7 +101,7 @@ class PollVote implements ResourceInterface
      *
      * @return string
      */
-    public function getResourceId()
+    public function getResourceId(): string
     {
         return 'poll_response';
     }
