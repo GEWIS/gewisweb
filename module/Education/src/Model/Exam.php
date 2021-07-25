@@ -3,17 +3,29 @@
 namespace Education\Model;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    DiscriminatorColumn,
+    DiscriminatorMap,
+    Entity,
+    GeneratedValue,
+    Id,
+    InheritanceType,
+    JoinColumn,
+    ManyToOne,
+};
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Exam.
- *
- * @ORM\Entity
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"exam": "Education\Model\Exam", "summary": "Education\Model\Summary"})
  */
+#[Entity]
+#[InheritanceType(value: "SINGLE_TABLE")]
+#[DiscriminatorColumn(
+    name: "type",
+    type: "string",
+)]
+#[DiscriminatorMap(["exam" => "Education\Model\Exam", "summary" => "Education\Model\Summary"])]
 class Exam implements ResourceInterface
 {
     public const EXAM_TYPE_FINAL = 'exam';
@@ -27,40 +39,35 @@ class Exam implements ResourceInterface
 
     /**
      * Study ID.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
      * Date of the exam.
-     *
-     * @ORM\Column(type="date")
      */
-    protected $date;
+    #[Column(type: "date")]
+    protected DateTime $date;
 
     /**
      * Filename of the exam.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $filename;
+    #[Column(type: "string")]
+    protected string $filename;
 
     /**
      * Type of exam. One of {exam, intermediate, answers, summary}.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $examType;
+    #[Column(type: "string")]
+    protected string $examType;
 
     /**
      * The language of the exam.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $language;
+    #[Column(type: "string")]
+    protected string $language;
 
     /**
      * Course belonging to this exam.
@@ -68,14 +75,23 @@ class Exam implements ResourceInterface
      * @ORM\ManyToOne(targetEntity="Education\Model\Course", inversedBy="exams")
      * @ORM\JoinColumn(name="course_code", referencedColumnName="code")
      */
-    protected $course;
+    #[ManyToOne(
+        targetEntity: "Education\Model\Course",
+        inversedBy: "exams",
+    )]
+    #[JoinColumn(
+        name: "course_code",
+        referencedColumnName: "code",
+        nullable: false,
+    )]
+    protected Course $course;
 
     /**
      * Get the ID.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -85,7 +101,7 @@ class Exam implements ResourceInterface
      *
      * @return DateTime
      */
-    public function getDate()
+    public function getDate(): DateTime
     {
         return $this->date;
     }
@@ -95,7 +111,7 @@ class Exam implements ResourceInterface
      *
      * @return string
      */
-    public function getFilename()
+    public function getFilename(): string
     {
         return $this->filename;
     }
@@ -105,7 +121,7 @@ class Exam implements ResourceInterface
      *
      * @return string
      */
-    public function getExamType()
+    public function getExamType(): string
     {
         return $this->examType;
     }
@@ -115,7 +131,7 @@ class Exam implements ResourceInterface
      *
      * @return Course
      */
-    public function getCourse()
+    public function getCourse(): Course
     {
         return $this->course;
     }
@@ -125,15 +141,17 @@ class Exam implements ResourceInterface
      *
      * @return string
      */
-    public function getLanguage()
+    public function getLanguage(): string
     {
         return $this->language;
     }
 
     /**
      * Set the date.
+     *
+     * @param DateTime $date
      */
-    public function setDate(DateTime $date)
+    public function setDate(DateTime $date): void
     {
         $this->date = $date;
     }
@@ -143,7 +161,7 @@ class Exam implements ResourceInterface
      *
      * @param string $examType
      */
-    public function setExamType($examType)
+    public function setExamType(string $examType): void
     {
         $this->examType = $examType;
     }
@@ -153,7 +171,7 @@ class Exam implements ResourceInterface
      *
      * @param string $filename
      */
-    public function setFilename($filename)
+    public function setFilename(string $filename): void
     {
         $this->filename = $filename;
     }
@@ -163,7 +181,7 @@ class Exam implements ResourceInterface
      *
      * @param string $language
      */
-    public function setLanguage($language)
+    public function setLanguage(string $language): void
     {
         $this->language = $language;
     }
@@ -173,7 +191,7 @@ class Exam implements ResourceInterface
      *
      * @param Course $course
      */
-    public function setCourse($course)
+    public function setCourse(Course $course): void
     {
         $this->course = $course;
     }
@@ -183,7 +201,7 @@ class Exam implements ResourceInterface
      *
      * @return string
      */
-    public function getResourceId()
+    public function getResourceId(): string
     {
         return 'exam';
     }

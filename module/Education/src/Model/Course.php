@@ -3,16 +3,24 @@
 namespace Education\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    Id,
+    InverseJoinColumn,
+    JoinColumn,
+    JoinTable,
+    ManyToMany,
+    ManyToOne,
+    OneToMany,
+};
 use InvalidArgumentException;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Course.
- *
- * @ORM\Entity
  */
+#[Entity]
 class Course implements ResourceInterface
 {
     public const QUARTILE_Q1 = 'q1';
@@ -23,32 +31,28 @@ class Course implements ResourceInterface
 
     /**
      * Course code.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="string")
      */
-    protected $code;
+    #[Id]
+    #[Column(type: "string")]
+    protected string $code;
 
     /**
      * Course name.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $name;
+    #[Column(type: "string")]
+    protected string $name;
 
     /**
      * Course url.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $url;
+    #[Column(type: "string")]
+    protected string $url;
 
     /**
      * Last year the course has been given.
-     *
-     * @ORM\Column(type="integer")
      */
-    protected $year;
+    #[Column(type: "integer")]
+    protected int $year;
 
     /**
      * Quartile in which this course has been given.
@@ -60,43 +64,60 @@ class Course implements ResourceInterface
      * - q3
      * - q4
      * - interim
-     *
-     * @ORM\Column(type="string")
      */
-    protected $quartile;
+    #[Column(type: "string")]
+    protected string $quartile;
 
     /**
      * The studies that apply to the course.
-     *
-     * @ORM\ManyToMany(targetEntity="Education\Model\Study", inversedBy="courses")
-     * @ORM\JoinTable(name="CoursesStudies",
-     *     joinColumns={@ORM\JoinColumn(name="course_code", referencedColumnName="code")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="study_id", referencedColumnName="id")}
-     * )
      */
-    protected $studies;
+    #[ManyToMany(
+        targetEntity: "Education\Model\Study",
+        inversedBy: "courses",
+    )]
+    #[JoinTable(
+        name: "CoursesStudies",
+    )]
+    #[JoinColumn(
+        name: "course_code",
+        referencedColumnName: "code",
+    )]
+    #[InverseJoinColumn(
+        name: "study_id",
+        referencedColumnName: "id",
+    )]
+    protected ArrayCollection $studies;
 
     /**
      * Exams (and summaries) in this course.
-     *
-     * @ORM\OneToMany(targetEntity="Education\Model\Exam", mappedBy="course")
      */
-    protected $exams;
+    #[OneToMany(
+        targetEntity: "Education\Model\Exam",
+        mappedBy: "course",
+    )]
+    protected ArrayCollection $exams;
 
     /**
      * Parent course.
-     *
-     * @ORM\ManyToOne(targetEntity="Education\Model\Course", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_code", referencedColumnName="code")
      */
-    protected $parent;
+    #[ManyToOne(
+        targetEntity: "Education\Model\Course",
+        inversedBy: "children",
+    )]
+    #[JoinColumn(
+        name: "parent_code",
+        referencedColumnName: "code",
+    )]
+    protected Course $parent;
 
     /**
      * Children of this course.
-     *
-     * @ORM\OneToMany(targetEntity="Education\Model\Course", mappedBy="parent")
      */
-    protected $children;
+    #[OneToMany(
+        targetEntity: "Education\Model\Course",
+        mappedBy: "parent",
+    )]
+    protected ArrayCollection $children;
 
     /**
      * Constructor.
@@ -113,7 +134,7 @@ class Course implements ResourceInterface
      *
      * @return string
      */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->code;
     }
@@ -123,7 +144,7 @@ class Course implements ResourceInterface
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -133,7 +154,7 @@ class Course implements ResourceInterface
      *
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -141,9 +162,9 @@ class Course implements ResourceInterface
     /**
      * Get the studies for this course.
      *
-     * @return Collection
+     * @return ArrayCollection
      */
-    public function getStudies()
+    public function getStudies(): ArrayCollection
     {
         return $this->studies;
     }
@@ -153,7 +174,7 @@ class Course implements ResourceInterface
      *
      * @return int
      */
-    public function getYear()
+    public function getYear(): int
     {
         return $this->year;
     }
@@ -163,7 +184,7 @@ class Course implements ResourceInterface
      *
      * @return string
      */
-    public function getQuartile()
+    public function getQuartile(): string
     {
         return $this->quartile;
     }
@@ -171,9 +192,9 @@ class Course implements ResourceInterface
     /**
      * Get all exams belonging to this study.
      *
-     * @return Collection
+     * @return ArrayCollection
      */
-    public function getExams()
+    public function getExams(): ArrayCollection
     {
         return $this->exams;
     }
@@ -183,7 +204,7 @@ class Course implements ResourceInterface
      *
      * @param string $code
      */
-    public function setCode($code)
+    public function setCode(string $code): void
     {
         $this->code = $code;
     }
@@ -193,7 +214,7 @@ class Course implements ResourceInterface
      *
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -203,7 +224,7 @@ class Course implements ResourceInterface
      *
      * @param string $url
      */
-    public function setUrl($url)
+    public function setUrl(string $url): void
     {
         $this->url = $url;
     }
@@ -211,7 +232,7 @@ class Course implements ResourceInterface
     /**
      * Add a study.
      */
-    public function addStudy(Study $study)
+    public function addStudy(Study $study): void
     {
         if (!$this->studies->contains($study)) {
             $study->addCourse($this);
@@ -224,7 +245,7 @@ class Course implements ResourceInterface
      *
      * @param array $studies
      */
-    public function addStudies($studies)
+    public function addStudies(array $studies): void
     {
         foreach ($studies as $study) {
             $this->addStudy($study);
@@ -234,7 +255,7 @@ class Course implements ResourceInterface
     /**
      * Set the parent course.
      */
-    public function setParent(Course $parent)
+    public function setParent(Course $parent): void
     {
         $parent->addChild($this);
         $this->parent = $parent;
@@ -243,7 +264,7 @@ class Course implements ResourceInterface
     /**
      * Add a child.
      */
-    public function addChild(Course $child)
+    public function addChild(Course $child): void
     {
         $this->children[] = $child;
     }
@@ -251,7 +272,7 @@ class Course implements ResourceInterface
     /**
      * Remove a study.
      */
-    public function removeStudy(Study $study)
+    public function removeStudy(Study $study): void
     {
         $study->removeCourse($this);
         $this->studies->removeElement($study);
@@ -262,7 +283,7 @@ class Course implements ResourceInterface
      *
      * @param array $studies
      */
-    public function removeStudies($studies)
+    public function removeStudies(array $studies): void
     {
         foreach ($studies as $study) {
             $this->removeStudy($study);
@@ -274,7 +295,7 @@ class Course implements ResourceInterface
      *
      * @param int $year
      */
-    public function setYear($year)
+    public function setYear(int $year): void
     {
         $this->year = $year;
     }
@@ -284,17 +305,17 @@ class Course implements ResourceInterface
      *
      * @param string $quartile
      */
-    public function setQuartile($quartile)
+    public function setQuartile(string $quartile): void
     {
         if (
             !in_array(
                 $quartile,
                 [
-                self::QUARTILE_Q1,
-                self::QUARTILE_Q2,
-                self::QUARTILE_Q3,
-                self::QUARTILE_Q4,
-                self::QUARTILE_INTERIM,
+                    self::QUARTILE_Q1,
+                    self::QUARTILE_Q2,
+                    self::QUARTILE_Q3,
+                    self::QUARTILE_Q4,
+                    self::QUARTILE_INTERIM,
                 ]
             )
         ) {
@@ -308,7 +329,7 @@ class Course implements ResourceInterface
      *
      * @return Course
      */
-    public function getParent()
+    public function getParent(): Course
     {
         return $this->parent;
     }
@@ -316,9 +337,9 @@ class Course implements ResourceInterface
     /**
      * Get all children courses.
      *
-     * @return Collection
+     * @return ArrayCollection
      */
-    public function getChildren()
+    public function getChildren(): ArrayCollection
     {
         return $this->children;
     }
@@ -326,7 +347,7 @@ class Course implements ResourceInterface
     /**
      * Add an exam.
      */
-    public function addExam(Exam $exam)
+    public function addExam(Exam $exam): void
     {
         $this->exams[] = $exam;
     }
@@ -336,7 +357,7 @@ class Course implements ResourceInterface
      *
      * @return string
      */
-    public function getResourceId()
+    public function getResourceId(): string
     {
         return 'course';
     }

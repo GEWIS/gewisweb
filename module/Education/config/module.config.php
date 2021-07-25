@@ -1,5 +1,8 @@
 <?php
 
+namespace Education;
+
+use Application\Extensions\Doctrine\AttributeDriver;
 use Education\Controller\{
     AdminController,
     EducationController,
@@ -161,14 +164,15 @@ return [
     ],
     'doctrine' => [
         'driver' => [
-            'education_entities' => [
-                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
-                'cache' => 'array',
-                'paths' => [__DIR__ . '/../src/Model/'],
+            __NAMESPACE__ . '_driver' => [
+                'class' => AttributeDriver::class,
+                'paths' => [
+                    __DIR__ . '/../src/Model/',
+                ],
             ],
             'orm_default' => [
                 'drivers' => [
-                    'Education\Model' => 'education_entities',
+                    __NAMESPACE__ . '\Model' => __NAMESPACE__ . '_driver',
                 ],
             ],
         ],
