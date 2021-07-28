@@ -2,6 +2,10 @@
 
 namespace Frontpage\Form;
 
+use Laminas\Filter\{
+    StringToLower,
+    ToNull,
+};
 use Laminas\Form\Form;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
@@ -117,7 +121,9 @@ class Page extends Form implements InputFilterProviderInterface
                     ],
                 ],
                 'filters' => [
-                    ['name' => 'string_to_lower'],
+                    [
+                        'name' => StringToLower::class,
+                    ],
                 ],
             ],
 
@@ -133,8 +139,12 @@ class Page extends Form implements InputFilterProviderInterface
                     ],
                 ],
                 'filters' => [
-                    ['name' => 'string_to_lower'],
-                    ['name' => 'to_null'],
+                    [
+                        'name' => StringToLower::class,
+                    ],
+                    [
+                        'name' => ToNull::class,
+                    ],
                 ],
             ],
 
@@ -150,8 +160,12 @@ class Page extends Form implements InputFilterProviderInterface
                     ],
                 ],
                 'filters' => [
-                    ['name' => 'string_to_lower'],
-                    ['name' => 'to_null'],
+                    [
+                        'name' => StringToLower::class,
+                    ],
+                    [
+                        'name' => ToNull::class,
+                    ],
                 ],
             ],
 
