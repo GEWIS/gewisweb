@@ -5,6 +5,7 @@ namespace Company\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\{
     Column,
+    Entity,
     GeneratedValue,
     Id,
     OneToMany,
@@ -13,6 +14,7 @@ use Doctrine\ORM\Mapping\{
 /**
  * Job Label model.
  */
+#[Entity]
 class JobLabel
 {
     /**

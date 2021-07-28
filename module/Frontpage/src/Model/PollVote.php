@@ -55,7 +55,7 @@ class PollVote implements ResourceInterface
     #[Id]
     #[ManyToOne(
         targetEntity: "User\Model\User",
-        cascade: ["perist"],
+        cascade: ["persist"],
     )]
     #[JoinColumn(
         name: "user_id",

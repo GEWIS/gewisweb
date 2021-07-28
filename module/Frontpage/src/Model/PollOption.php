@@ -60,7 +60,7 @@ class PollOption implements ResourceInterface
     #[OneToMany(
         targetEntity: "Frontpage\Model\PollVote",
         mappedBy: "pollOption",
-        cascade: ["persist, remove"],
+        cascade: ["persist", "remove"],
         fetch: "EXTRA_LAZY",
     )]
     protected $votes;

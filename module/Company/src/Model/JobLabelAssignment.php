@@ -24,7 +24,7 @@ class JobLabelAssignment
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected $id;
+    protected int $id;
 
     /**
      *

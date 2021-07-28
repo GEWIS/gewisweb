@@ -185,7 +185,7 @@ class Member
         targetEntity: "Decision\Model\MailingList",
         inversedBy: "members",
     )]
-    #[JoinTable(name: "member_mailinglists")]
+    #[JoinTable(name: "members_mailinglists")]
     #[JoinColumn(
         name: "lidnr",
         referencedColumnName: "lidnr"

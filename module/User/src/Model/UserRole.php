@@ -39,7 +39,7 @@ class UserRole
         referencedColumnName: "lidnr",
         nullable: false,
     )]
-    protected int $lidnr;
+    protected User $lidnr;
 
     /**
      * The user's role.
