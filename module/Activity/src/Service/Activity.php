@@ -528,19 +528,21 @@ class Activity
         // `$proposal` instead of having to implode `$current` (which requires an extra `array_filter()`).
         if (isset($proposal['signupLists'])) {
             foreach ($proposal['signupLists'] as $keyOuter => $signupList) {
-                foreach ($signupList['fields'] as $keyInner => $field) {
-                    if (array_key_exists('options', $field)) {
-                        $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['options'] = explode(
-                            ',',
-                            $field['options']
-                        );
-                    }
+                if (isset($signupList['fields'])) {
+                    foreach ($signupList['fields'] as $keyInner => $field) {
+                        if (array_key_exists('options', $field)) {
+                            $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['options'] = explode(
+                                ',',
+                                $field['options']
+                            );
+                        }
 
-                    if (array_key_exists('optionsEn', $field)) {
-                        $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['optionsEn'] = explode(
-                            ',',
-                            $field['optionsEn']
-                        );
+                        if (array_key_exists('optionsEn', $field)) {
+                            $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['optionsEn'] = explode(
+                                ',',
+                                $field['optionsEn']
+                            );
+                        }
                     }
                 }
             }
