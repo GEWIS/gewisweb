@@ -2,7 +2,10 @@
 
 namespace Company\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -57,7 +60,7 @@ class JobLabel
         mappedBy: "label",
         cascade: ["persist"],
     )]
-    protected ArrayCollection $assignments;
+    protected Collection $assignments;
 
     /**
      * Constructor.

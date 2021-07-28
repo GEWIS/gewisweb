@@ -5,7 +5,10 @@ namespace Activity\Model;
 use Company\Model\Company as CompanyModel;
 use DateTime;
 use Decision\Model\Organ as OrganModel;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -121,7 +124,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         targetEntity: "Activity\Model\ActivityUpdateProposal",
         mappedBy: "old",
     )]
-    protected ActivityUpdateProposal $updateProposal;
+    protected Collection $updateProposal;
 
     /**
      * Activity description.
@@ -142,7 +145,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         cascade: ["persist"],
     )]
     #[JoinTable(name: "ActivityCategoryAssignment")]
-    protected ArrayCollection $categories;
+    protected Collection $categories;
 
     /**
      * All additional SignupLists belonging to this activity.
@@ -152,7 +155,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         mappedBy: "activity",
         cascade: ["remove"],
     )]
-    protected ArrayCollection $signupLists;
+    protected Collection $signupLists;
 
     /**
      * Which organ organises this activity.
@@ -188,6 +191,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
 
     public function __construct()
     {
+        $this->updateProposal = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->signupLists = new ArrayCollection();
     }
@@ -222,9 +226,9 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return ActivityUpdateProposal
+     * @return Collection
      */
-    public function getUpdateProposal(): ActivityUpdateProposal
+    public function getUpdateProposal(): Collection
     {
         return $this->updateProposal;
     }
@@ -326,11 +330,11 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * Returns an ArrayCollection of SignupLists associated with this activity.
+     * Returns an Collection of SignupLists associated with this activity.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getSignupLists(): ArrayCollection
+    public function getSignupLists(): Collection
     {
         return $this->signupLists;
     }
@@ -504,9 +508,9 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getCategories(): ArrayCollection
+    public function getCategories(): Collection
     {
         return $this->categories;
     }

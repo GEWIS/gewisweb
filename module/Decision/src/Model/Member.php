@@ -4,7 +4,10 @@ namespace Decision\Model;
 
 use DateTime;
 use DateTimeInterface;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -167,7 +170,7 @@ class Member
         mappedBy: "member",
         cascade: ["persist"],
     )]
-    protected ArrayCollection $addresses;
+    protected Collection $addresses;
 
     /**
      * Installations of this member.
@@ -176,7 +179,7 @@ class Member
         targetEntity: "Decision\Model\SubDecision\Installation",
         mappedBy: "member",
     )]
-    protected ArrayCollection $installations;
+    protected Collection $installations;
 
     /**
      * Memberships of mailing lists.
@@ -194,7 +197,7 @@ class Member
         name: "name",
         referencedColumnName: "name",
     )]
-    protected ArrayCollection $lists;
+    protected Collection $lists;
 
     /**
      * Organ memberships.
@@ -203,7 +206,7 @@ class Member
         targetEntity: "Decision\Model\OrganMember",
         mappedBy: "member",
     )]
-    protected ArrayCollection $organInstallations;
+    protected Collection $organInstallations;
 
     /**
      * Board memberships.
@@ -212,7 +215,7 @@ class Member
         targetEntity: "Decision\Model\BoardMember",
         mappedBy: "member",
     )]
-    protected ArrayCollection $boardInstallations;
+    protected Collection $boardInstallations;
 
     /**
      * Static method to get available genders.
@@ -548,9 +551,9 @@ class Member
     /**
      * Get the installations.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getInstallations(): ArrayCollection
+    public function getInstallations(): Collection
     {
         return $this->installations;
     }
@@ -558,9 +561,9 @@ class Member
     /**
      * Get the organ installations.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getOrganInstallations(): ArrayCollection
+    public function getOrganInstallations(): Collection
     {
         return $this->organInstallations;
     }
@@ -568,9 +571,9 @@ class Member
     /**
      * Get the organ installations of organs that the member is currently part of.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getCurrentOrganInstallations(): ArrayCollection
+    public function getCurrentOrganInstallations(): Collection
     {
         if (is_null($this->getOrganInstallations())) {
             return new ArrayCollection();
@@ -604,9 +607,9 @@ class Member
     /**
      * Get the board installations.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getBoardInstallations(): ArrayCollection
+    public function getBoardInstallations(): Collection
     {
         return $this->boardInstallations;
     }
@@ -680,9 +683,9 @@ class Member
     /**
      * Get all addresses.
      *
-     * @return ArrayCollection all addresses
+     * @return Collection all addresses
      */
-    public function getAddresses(): ArrayCollection
+    public function getAddresses(): Collection
     {
         return $this->addresses;
     }
@@ -721,9 +724,9 @@ class Member
     /**
      * Get mailing list subscriptions.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getLists(): ArrayCollection
+    public function getLists(): Collection
     {
         return $this->lists;
     }

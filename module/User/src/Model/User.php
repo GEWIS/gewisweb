@@ -3,7 +3,10 @@
 namespace User\Model;
 
 use Decision\Model\Member as MemberModel;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Doctrine\ORM\Mapping\{Column,
     Entity,
     Id,
@@ -50,7 +53,7 @@ class User implements RoleInterface, ResourceInterface
         targetEntity: "User\Model\UserRole",
         mappedBy: "lidnr",
     )]
-    protected ArrayCollection $roles;
+    protected Collection $roles;
 
     /**
      * The corresponding member for this user.
@@ -125,9 +128,9 @@ class User implements RoleInterface, ResourceInterface
     /**
      * Get the user's roles.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getRoles(): ArrayCollection
+    public function getRoles(): Collection
     {
         return $this->roles;
     }
@@ -197,6 +200,9 @@ class User implements RoleInterface, ResourceInterface
         $this->roles = $roles;
     }
 
+    /**
+     * @return array
+     */
     public function toArray(): array
     {
         return [

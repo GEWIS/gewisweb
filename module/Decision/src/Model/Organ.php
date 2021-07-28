@@ -4,7 +4,10 @@ namespace Decision\Model;
 
 use DateTime;
 use Decision\Model\SubDecision\Foundation;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -110,7 +113,7 @@ class Organ
         targetEntity: "Decision\Model\OrganMember",
         mappedBy: "organ",
     )]
-    protected ArrayCollection $members;
+    protected Collection $members;
 
     /**
      * Reference to subdecisions.
@@ -147,7 +150,7 @@ class Organ
         referencedColumnName: "number",
         nullable: false,
     )]
-    protected ArrayCollection $subdecisions;
+    protected Collection $subdecisions;
 
     /**
      * All organInformation for this organ.
@@ -157,7 +160,7 @@ class Organ
         mappedBy: "organ",
         cascade: ["persist", "remove"],
     )]
-    protected OrganInformation $organInformation;
+    protected Collection $organInformation;
 
     /**
      * Constructor.
@@ -166,6 +169,7 @@ class Organ
     {
         $this->members = new ArrayCollection();
         $this->subdecisions = new ArrayCollection();
+        $this->organInformation = new ArrayCollection();
     }
 
     /**
@@ -311,9 +315,9 @@ class Organ
     /**
      * Get the members.
      *
-     * @return ArrayCollection of OrganMember
+     * @return Collection of OrganMember
      */
-    public function getMembers(): ArrayCollection
+    public function getMembers(): Collection
     {
         return $this->members;
     }
@@ -345,9 +349,9 @@ class Organ
     /**
      * Get all subdecisions.of this organ.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getSubdecisions(): ArrayCollection
+    public function getSubdecisions(): Collection
     {
         return $this->subdecisions;
     }
@@ -370,9 +374,9 @@ class Organ
     /**
      * Returns all organ information.
      *
-     * @return ArrayCollection of OrganInformation
+     * @return Collection
      */
-    public function getOrganInformation(): OrganInformation
+    public function getOrganInformation(): Collection
     {
         return $this->organInformation;
     }

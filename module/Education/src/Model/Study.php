@@ -2,7 +2,10 @@
 
 namespace Education\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -54,7 +57,7 @@ class Study
         targetEntity: "Education\Model\Course",
         mappedBy: "studies",
     )]
-    protected ArrayCollection $courses;
+    protected Collection $courses;
 
     /**
      * Constructor.
@@ -107,9 +110,9 @@ class Study
     /**
      * Get the courses in this study.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getCourses(): ArrayCollection
+    public function getCourses(): Collection
     {
         return $this->courses;
     }

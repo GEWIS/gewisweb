@@ -3,7 +3,10 @@
 namespace Photo\Model;
 
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Doctrine\ORM\Mapping\{Column,
     Entity,
     GeneratedValue,
@@ -79,7 +82,7 @@ class Album implements ResourceInterface
         cascade: ["persist", "remove"],
         fetch: "EXTRA_LAZY",
     )]
-    protected ArrayCollection $children;
+    protected Collection $children;
 
     /**
      * all the photo's in this album.
@@ -93,7 +96,7 @@ class Album implements ResourceInterface
         fetch: "EXTRA_LAZY",
     )]
     #[OrderBy(value: ["dateTime" => "ASC"])]
-    protected ArrayCollection $photos;
+    protected Collection $photos;
 
     /**
      * The cover photo to display with the album.
@@ -115,9 +118,9 @@ class Album implements ResourceInterface
     /**
      * Gets an array of all child albums.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getChildren(): ArrayCollection
+    public function getChildren(): Collection
     {
         return $this->children->toArray();
     }
@@ -125,9 +128,9 @@ class Album implements ResourceInterface
     /**
      * Gets an array of all the photos in this album.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getPhotos(): ArrayCollection
+    public function getPhotos(): Collection
     {
         return $this->photos;
     }

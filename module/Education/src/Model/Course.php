@@ -2,7 +2,10 @@
 
 namespace Education\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -86,7 +89,7 @@ class Course implements ResourceInterface
         name: "study_id",
         referencedColumnName: "id",
     )]
-    protected ArrayCollection $studies;
+    protected Collection $studies;
 
     /**
      * Exams (and summaries) in this course.
@@ -95,7 +98,7 @@ class Course implements ResourceInterface
         targetEntity: "Education\Model\Exam",
         mappedBy: "course",
     )]
-    protected ArrayCollection $exams;
+    protected Collection $exams;
 
     /**
      * Parent course.
@@ -117,7 +120,7 @@ class Course implements ResourceInterface
         targetEntity: "Education\Model\Course",
         mappedBy: "parent",
     )]
-    protected ArrayCollection $children;
+    protected Collection $children;
 
     /**
      * Constructor.
@@ -162,9 +165,9 @@ class Course implements ResourceInterface
     /**
      * Get the studies for this course.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getStudies(): ArrayCollection
+    public function getStudies(): Collection
     {
         return $this->studies;
     }
@@ -192,9 +195,9 @@ class Course implements ResourceInterface
     /**
      * Get all exams belonging to this study.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getExams(): ArrayCollection
+    public function getExams(): Collection
     {
         return $this->exams;
     }
@@ -337,9 +340,9 @@ class Course implements ResourceInterface
     /**
      * Get all children courses.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getChildren(): ArrayCollection
+    public function getChildren(): Collection
     {
         return $this->children;
     }

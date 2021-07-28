@@ -2,7 +2,10 @@
 
 namespace Decision\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -56,7 +59,7 @@ class MailingList
         targetEntity: "Decision\Model\Member",
         mappedBy: "lists",
     )]
-    protected ArrayCollection $members;
+    protected Collection $members;
 
     /**
      * Constructor.
@@ -189,9 +192,9 @@ class MailingList
     /**
      * Get subscribed members.
      *
-     * @return ArrayCollection of members
+     * @return Collection of members
      */
-    public function getMembers(): ArrayCollection
+    public function getMembers(): Collection
     {
         return $this->members;
     }

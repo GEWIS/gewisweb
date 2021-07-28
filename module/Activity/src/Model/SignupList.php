@@ -4,7 +4,10 @@ namespace Activity\Model;
 
 use DateTime;
 use Decision\Model\Organ as OrganModel;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -105,7 +108,11 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
         orphanRemoval: true,
     )]
     #[OrderBy(value: ["id" => "ASC"])]
-    protected ArrayCollection $signUps;
+    protected Collection $signUps;
+
+    public function __construct() {
+        $this->signUps = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -116,33 +123,33 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getSignUps(): ArrayCollection
+    public function getSignUps(): Collection
     {
         return $this->signUps;
     }
 
     /**
-     * @param ArrayCollection $signUps
+     * @param Collection $signUps
      */
-    public function setSignUps(ArrayCollection $signUps): void
+    public function setSignUps(Collection $signUps): void
     {
         $this->signUps = $signUps;
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getFields(): ArrayCollection
+    public function getFields(): Collection
     {
         return $this->fields;
     }
 
     /**
-     * @param ArrayCollection $fields
+     * @param Collection $fields
      */
-    public function setFields(ArrayCollection $fields): void
+    public function setFields(Collection $fields): void
     {
         $this->fields = $fields;
     }

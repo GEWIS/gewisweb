@@ -3,7 +3,10 @@
 namespace Company\Model;
 
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -135,7 +138,7 @@ class Job
         cascade: ["persist", "remove"],
         fetch: "EAGER",
     )]
-    protected ArrayCollection $labels;
+    protected Collection $labels;
 
     /**
      * Constructor.
@@ -448,22 +451,25 @@ class Job
     /**
      * Get the labels. Returns an array of JobLabelAssignments.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getLabels(): ArrayCollection
+    public function getLabels(): Collection
     {
         return $this->labels;
     }
 
-    // TODO: Fix typing of parameter.
     /**
      * Sets all labels.
      *
      * @param array $labels
      */
-    public function setLabels($labels): void
+    public function setLabels(array $labels): void
     {
-        $this->labels = $labels;
+        $this->labels->clear();
+
+        foreach ($labels as $label) {
+            $this->labels->add($label);
+        }
     }
 
     /**

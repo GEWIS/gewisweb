@@ -4,8 +4,8 @@ namespace Company\Model;
 
 use DateTime;
 use Doctrine\Common\Collections\{
-    Collection,
     ArrayCollection,
+    Collection,
 };
 use Doctrine\ORM\Mapping\{
     Column,
@@ -40,7 +40,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
-    protected ArrayCollection $translations;
+    protected Collection $translations;
 
     /**
      * The company's display name.
@@ -92,7 +92,7 @@ class Company // implements ArrayHydrator (for zend2 form)
         mappedBy: "company",
         cascade: ["persist", "remove"],
     )]
-    protected ArrayCollection $packages;
+    protected Collection $packages;
 
     private int $languageNeutralId;
 
@@ -118,9 +118,9 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Get the company's translations.
      *
-     * @return ArrayCollection|array
+     * @return Collection|array
      */
-    public function getTranslations(): ArrayCollection|array
+    public function getTranslations(): Collection|array
     {
         return $this->translations;
     }
@@ -309,9 +309,9 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Get the company's packages.
      *
-     * @return ArrayCollection of CompanyPackages
+     * @return Collection of CompanyPackages
      */
-    public function getPackages(): ArrayCollection
+    public function getPackages(): Collection
     {
         return $this->packages;
     }

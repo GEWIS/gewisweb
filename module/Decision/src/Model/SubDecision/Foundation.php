@@ -6,7 +6,10 @@ use Decision\Model\{
     Organ,
     SubDecision,
 };
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -53,7 +56,7 @@ class Foundation extends SubDecision
         targetEntity: "Decision\Model\SubDecision\FoundationReference",
         mappedBy: "foundation",
     )]
-    protected ArrayCollection $references;
+    protected Collection $references;
 
     /**
      * Organ entry for this organ.
@@ -157,9 +160,9 @@ class Foundation extends SubDecision
     /**
      * Get the references.
      *
-     * @return ArrayCollection of references
+     * @return Collection of references
      */
-    public function getReferences(): ArrayCollection
+    public function getReferences(): Collection
     {
         return $this->references;
     }

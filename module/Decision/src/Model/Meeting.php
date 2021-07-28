@@ -3,7 +3,10 @@
 namespace Decision\Model;
 
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -52,7 +55,7 @@ class Meeting
         targetEntity: "Decision\Model\Decision",
         mappedBy: "meeting",
     )]
-    protected ArrayCollection $decisions;
+    protected Collection $decisions;
 
     /**
      * Documents.
@@ -62,7 +65,7 @@ class Meeting
         mappedBy: "meeting",
     )]
     #[OrderBy(value: ["displayPosition" => "ASC"])]
-    protected ArrayCollection $documents;
+    protected Collection $documents;
 
     /**
      * The notes for this meeting.
@@ -170,9 +173,9 @@ class Meeting
     /**
      * Get the decisions.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getDecisions(): ArrayCollection
+    public function getDecisions(): Collection
     {
         return $this->decisions;
     }
@@ -202,9 +205,9 @@ class Meeting
     /**
      * Get the documents.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getDocuments(): ArrayCollection
+    public function getDocuments(): Collection
     {
         return $this->documents;
     }

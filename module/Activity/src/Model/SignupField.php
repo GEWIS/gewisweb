@@ -2,6 +2,10 @@
 
 namespace Activity\Model;
 
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -12,7 +16,6 @@ use Doctrine\ORM\Mapping\{
     OneToMany,
     OneToOne,
 };
-use League\CommonMark\Util\ArrayCollection;
 
 /**
  * SignupField model.
@@ -85,7 +88,11 @@ class SignupField
         mappedBy: "field",
         orphanRemoval: true,
     )]
-    protected ArrayCollection $options;
+    protected Collection $options;
+
+    public function __construct() {
+        $this->options = new ArrayCollection();
+    }
 
     /**
      * @return SignupList
@@ -104,9 +111,9 @@ class SignupField
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getOptions(): ArrayCollection
+    public function getOptions(): Collection
     {
         return $this->options;
     }

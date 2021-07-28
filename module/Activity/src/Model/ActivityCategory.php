@@ -2,7 +2,10 @@
 
 namespace Activity\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -34,7 +37,7 @@ class ActivityCategory
         mappedBy: "categories",
         cascade: ["persist"],
     )]
-    protected ArrayCollection $activities;
+    protected Collection $activities;
 
     /**
      * Name for the Category.

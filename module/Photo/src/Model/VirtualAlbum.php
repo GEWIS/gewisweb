@@ -2,7 +2,10 @@
 
 namespace Photo\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Exception;
 
 /**
@@ -42,17 +45,17 @@ class VirtualAlbum extends Album
     /**
      * Gets an array of all child albums.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getChildren(): ArrayCollection
+    public function getChildren(): Collection
     {
         return new ArrayCollection();
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getPhotos(): ArrayCollection
+    public function getPhotos(): Collection
     {
         return $this->photos;
     }

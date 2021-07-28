@@ -3,7 +3,10 @@
 namespace Frontpage\Model;
 
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -56,7 +59,7 @@ class Poll implements ResourceInterface
         mappedBy: "poll",
         cascade: ["persist", "remove"],
     )]
-    protected ArrayCollection $options;
+    protected Collection $options;
 
     /**
      * Poll comments.
@@ -66,7 +69,7 @@ class Poll implements ResourceInterface
         mappedBy: "poll",
         cascade: ["persist", "remove"],
     )]
-    protected ArrayCollection $comments;
+    protected Collection $comments;
 
     /**
      * Who approved this poll. If null then nobody approved it.
@@ -127,17 +130,17 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getOptions(): ArrayCollection
+    public function getOptions(): Collection
     {
         return $this->options;
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getComments(): ArrayCollection
+    public function getComments(): Collection
     {
         return $this->comments;
     }

@@ -2,7 +2,10 @@
 
 namespace Activity\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Doctrine\ORM\Mapping\{
     Column,
     DiscriminatorColumn,
@@ -25,7 +28,12 @@ use Doctrine\ORM\Mapping\{
     name: "type",
     type: "string",
 )]
-#[DiscriminatorMap(value: ["user" => "UserSignup", "external" => "ExternalSignup"])]
+#[DiscriminatorMap(value:
+    [
+        "user" => "UserSignup",
+        "external" => "ExternalSignup",
+    ]
+)]
 abstract class Signup
 {
     /**
@@ -58,7 +66,11 @@ abstract class Signup
         mappedBy: "signup",
         cascade: ["persist", "remove"],
     )]
-    protected ArrayCollection $fieldValues;
+    protected Collection $fieldValues;
+
+    public function __construct() {
+        $this->fieldValues = new ArrayCollection();
+    }
 
     /**
      * Get the signup id.
@@ -91,9 +103,9 @@ abstract class Signup
     /**
      * Get all the extra field values.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getFieldValues(): ArrayCollection
+    public function getFieldValues(): Collection
     {
         return $this->fieldValues;
     }

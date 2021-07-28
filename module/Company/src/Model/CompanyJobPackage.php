@@ -2,7 +2,10 @@
 
 namespace Company\Model;
 
-use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Doctrine\ORM\Mapping\{
     Entity,
     OneToMany,
@@ -22,7 +25,7 @@ class CompanyJobPackage extends CompanyPackage
         mappedBy: "package",
         cascade: ["persist", "remove"],
     )]
-    protected ArrayCollection $jobs;
+    protected Collection $jobs;
 
     /**
      * Constructor.
@@ -36,9 +39,9 @@ class CompanyJobPackage extends CompanyPackage
     /**
      * Get the jobs in the package.
      *
-     * @return ArrayCollection jobs in the package
+     * @return Collection jobs in the package
      */
-    public function getJobs(): ArrayCollection
+    public function getJobs(): Collection
     {
         return $this->jobs;
     }
