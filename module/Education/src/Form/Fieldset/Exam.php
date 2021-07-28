@@ -3,13 +3,16 @@
 namespace Education\Form\Fieldset;
 
 use Education\Model\Exam as ExamModel;
+use Laminas\Filter\StringToUpper;
 use Laminas\Form\Fieldset;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\Callback;
-use Laminas\Validator\File\Exists;
-use Laminas\Validator\Regex;
-use Laminas\Validator\StringLength;
+use Laminas\Validator\{
+    Callback,
+    File\Exists,
+    Regex,
+    StringLength,
+};
 
 class Exam extends Fieldset implements InputFilterProviderInterface
 {
@@ -131,7 +134,9 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                     ['name' => 'alnum'],
                 ],
                 'filters' => [
-                    ['name' => 'string_to_upper'],
+                    [
+                        'name' => StringToUpper::class,
+                    ],
                 ],
             ],
 
