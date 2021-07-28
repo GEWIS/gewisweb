@@ -29,7 +29,7 @@ class ProfilePhoto implements ResourceInterface
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected int $id;
+    protected ?int $id = null;
 
     #[ManyToOne(
         targetEntity: Photo::class,
@@ -63,9 +63,9 @@ class ProfilePhoto implements ResourceInterface
     protected bool $explicit;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

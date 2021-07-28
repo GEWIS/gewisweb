@@ -26,7 +26,7 @@ class PollComment implements ResourceInterface
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * Referenced poll.
@@ -74,9 +74,9 @@ class PollComment implements ResourceInterface
     /**
      * Get the comment ID.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

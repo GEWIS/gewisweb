@@ -28,7 +28,7 @@ class Vote implements ResourceInterface
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * Date and time when the photo was voted for.
@@ -72,6 +72,14 @@ class Vote implements ResourceInterface
         $this->dateTime = new DateTime();
         $this->voter = $voter;
         $this->photo = $photo;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     /**

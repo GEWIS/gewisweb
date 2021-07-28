@@ -25,7 +25,7 @@ class ApiUser implements RoleInterface, ResourceInterface
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * Application name.
@@ -42,9 +42,9 @@ class ApiUser implements RoleInterface, ResourceInterface
     /**
      * Get the id.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

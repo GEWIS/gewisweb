@@ -23,7 +23,7 @@ class ActivityOptionCreationPeriod
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "IDENTITY")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * The date and time the planning period starts.
@@ -50,9 +50,9 @@ class ActivityOptionCreationPeriod
     protected DateTime $endOptionTime;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

@@ -23,7 +23,7 @@ class LocalisedText
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "IDENTITY")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * English text.
@@ -56,9 +56,9 @@ class LocalisedText
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

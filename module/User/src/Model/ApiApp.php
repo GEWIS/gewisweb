@@ -21,7 +21,7 @@ class ApiApp
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * Application ID.
@@ -42,9 +42,9 @@ class ApiApp
     protected string $callback;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

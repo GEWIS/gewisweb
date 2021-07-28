@@ -27,7 +27,7 @@ class Page implements ResourceInterface
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * Dutch title of the page.
@@ -84,9 +84,9 @@ class Page implements ResourceInterface
     protected string $requiredRole;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

@@ -23,7 +23,7 @@ class ActivityUpdateProposal
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "IDENTITY")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * The previous activity version, if any.
@@ -49,9 +49,9 @@ class ActivityUpdateProposal
     protected Activity $new;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

@@ -46,7 +46,7 @@ abstract class CompanyPackage
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * The package's starting date.
@@ -78,9 +78,9 @@ abstract class CompanyPackage
     /**
      * Get the package's id.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

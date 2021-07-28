@@ -32,7 +32,7 @@ class Album implements ResourceInterface
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * First date of photos in album.
@@ -201,9 +201,9 @@ class Album implements ResourceInterface
     /**
      * Get the ID.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

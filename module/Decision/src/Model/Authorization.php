@@ -28,7 +28,7 @@ class Authorization
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * Member submitting this authorization.
@@ -63,9 +63,9 @@ class Authorization
     protected bool $revoked = false;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

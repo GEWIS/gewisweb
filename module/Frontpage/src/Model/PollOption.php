@@ -26,7 +26,7 @@ class PollOption implements ResourceInterface
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * Referenced poll.
@@ -72,9 +72,9 @@ class PollOption implements ResourceInterface
     protected int $anonymousVotes = 0;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

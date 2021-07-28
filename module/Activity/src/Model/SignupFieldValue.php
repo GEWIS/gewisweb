@@ -23,7 +23,7 @@ class SignupFieldValue
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "IDENTITY")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * Field which the value belongs to.
@@ -70,9 +70,9 @@ class SignupFieldValue
     protected ?SignupOption $option;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

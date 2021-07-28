@@ -28,7 +28,7 @@ class Company // implements ArrayHydrator (for zend2 form)
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * Translations of details of the company.
@@ -108,9 +108,9 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Get the company's id.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

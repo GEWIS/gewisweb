@@ -42,7 +42,7 @@ abstract class Signup
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "IDENTITY")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * The SignupList the signup is for.
@@ -75,9 +75,9 @@ abstract class Signup
     /**
      * Get the signup id.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

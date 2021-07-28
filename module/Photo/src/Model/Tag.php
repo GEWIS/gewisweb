@@ -32,7 +32,7 @@ class Tag implements ResourceInterface
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected int $id;
+    protected ?int $id = null;
 
     #[ManyToOne(
         targetEntity: Photo::class,
@@ -54,9 +54,9 @@ class Tag implements ResourceInterface
     protected MemberModel $member;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

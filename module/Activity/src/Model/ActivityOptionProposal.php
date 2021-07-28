@@ -27,7 +27,7 @@ class ActivityOptionProposal implements OrganResourceInterface
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * Name for the activity option proposal.
@@ -173,9 +173,9 @@ class ActivityOptionProposal implements OrganResourceInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

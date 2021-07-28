@@ -25,7 +25,7 @@ class SignupOption
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "IDENTITY")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * Field that the option belongs to.
@@ -53,9 +53,9 @@ class SignupOption
     protected LocalisedText $value;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

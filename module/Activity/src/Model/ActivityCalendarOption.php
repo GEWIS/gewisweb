@@ -25,7 +25,7 @@ class ActivityCalendarOption
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * Type for the option.
@@ -165,9 +165,9 @@ class ActivityCalendarOption
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

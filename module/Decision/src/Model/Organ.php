@@ -42,7 +42,7 @@ class Organ
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * Abbreviation (only for when organs are created).
@@ -175,9 +175,9 @@ class Organ
     /**
      * Get the ID.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

@@ -27,7 +27,7 @@ class LoginAttempt
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected string $id;
+    protected ?int $id = null;
 
     /**
      * The user for which the login was attempted.
@@ -59,9 +59,9 @@ class LoginAttempt
     protected DateTime $time;
 
     /**
-     * @return string
+     * @return int|null
      */
-    public function getId(): string
+    public function getId(): ?int
     {
         return $this->id;
     }

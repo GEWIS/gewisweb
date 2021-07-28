@@ -25,7 +25,7 @@ class WeeklyPhoto implements ResourceInterface
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * The start date of the week the photo is based on.
@@ -48,9 +48,9 @@ class WeeklyPhoto implements ResourceInterface
     protected Photo $photo;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

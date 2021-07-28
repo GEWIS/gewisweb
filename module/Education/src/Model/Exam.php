@@ -48,7 +48,7 @@ class Exam implements ResourceInterface
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * Date of the exam.
@@ -91,9 +91,9 @@ class Exam implements ResourceInterface
     /**
      * Get the ID.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

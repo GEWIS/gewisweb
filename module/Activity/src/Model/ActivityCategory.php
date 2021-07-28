@@ -27,7 +27,7 @@ class ActivityCategory
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "IDENTITY")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * The Activities this Category belongs to.
@@ -79,9 +79,9 @@ class ActivityCategory
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

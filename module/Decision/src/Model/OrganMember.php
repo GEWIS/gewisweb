@@ -28,7 +28,7 @@ class OrganMember
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * Organ.
@@ -101,6 +101,14 @@ class OrganMember
         nullable: true,
     )]
     protected ?DateTime $dischargeDate;
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     /**
      * Set the organ.
