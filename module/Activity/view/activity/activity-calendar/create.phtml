@@ -68,15 +68,6 @@ $form->prepare();
             </div>
         <?php endif ?>
         <?= $this->form()->openTag($form) ?>
-        <?php if ($success === false): ?>
-            <div class="row spacing-top--md">
-                <div class="col-md-12">
-                    <div class="alert alert-danger" role="alert">
-                        <i class="fas fa-exclamation-circle"></i> <?= $this->translate('The activity could not be saved. Check and correct your input data.') ?>
-                    </div>
-                </div>
-            </div>
-        <?php endif ?>
         <div class="row spacing-top--md">
             <div class="col-md-12">
                 <h3><?= $this->translate('Details') ?></h3>
