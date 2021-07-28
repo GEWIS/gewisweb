@@ -24,7 +24,7 @@ class OrganInformation
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected int $id;
+    protected ?int $id;
 
     /**
      *
@@ -117,12 +117,12 @@ class OrganInformation
      */
     #[ManyToOne(targetEntity: "User\Model\User")]
     #[JoinColumn(referencedColumnName: "lidnr")]
-    protected UserModel $approver;
+    protected ?UserModel $approver;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -240,17 +240,17 @@ class OrganInformation
     }
 
     /**
-     * @return UserModel
+     * @return UserModel|null
      */
-    public function getApprover(): UserModel
+    public function getApprover(): ?UserModel
     {
         return $this->approver;
     }
 
     /**
-     * @param UserModel $approver
+     * @param UserModel|null $approver
      */
-    public function setApprover(UserModel $approver): void
+    public function setApprover(?UserModel $approver): void
     {
         $this->approver = $approver;
     }
@@ -287,7 +287,6 @@ class OrganInformation
         $this->thumbnailPath = $thumbnailPath;
     }
 
-    // TODO: Check how this works.
     public function __clone()
     {
         $this->id = null;
