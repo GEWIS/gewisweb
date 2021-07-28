@@ -30,7 +30,7 @@ class OrganInformation
      *
      */
     #[ManyToOne(
-        targetEntity: "Decision\Model\Organ",
+        targetEntity: Organ::class,
         inversedBy: "organInformation",
     )]
     #[JoinColumn(
@@ -115,7 +115,7 @@ class OrganInformation
     /**
      * Who was the last one to approve this information. If null then nobody approved it.
      */
-    #[ManyToOne(targetEntity: "User\Model\User")]
+    #[ManyToOne(targetEntity: UserModel::class)]
     #[JoinColumn(referencedColumnName: "lidnr")]
     protected ?UserModel $approver;
 

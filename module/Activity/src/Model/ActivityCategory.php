@@ -33,7 +33,7 @@ class ActivityCategory
      * The Activities this Category belongs to.
      */
     #[ManyToMany(
-        targetEntity: "Activity\Model\Activity",
+        targetEntity: Activity::class,
         mappedBy: "categories",
         cascade: ["persist"],
     )]
@@ -43,7 +43,7 @@ class ActivityCategory
      * Name for the Category.
      */
     #[OneToOne(
-        targetEntity: "Activity\Model\LocalisedText",
+        targetEntity: LocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]

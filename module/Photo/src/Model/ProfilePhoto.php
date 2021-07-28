@@ -32,7 +32,7 @@ class ProfilePhoto implements ResourceInterface
     protected int $id;
 
     #[ManyToOne(
-        targetEntity: "Photo\Model\Photo",
+        targetEntity: Photo::class,
         inversedBy: "tags",
     )]
     #[JoinColumn(
@@ -42,7 +42,7 @@ class ProfilePhoto implements ResourceInterface
     )]
     protected Photo $photo;
 
-    #[OneToOne(targetEntity: "Decision\Model\Member")]
+    #[OneToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(
         name: "member_id",
         referencedColumnName: "lidnr",

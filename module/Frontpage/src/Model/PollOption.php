@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping\{
     ManyToOne,
     OneToMany,
 };
+use Doctrine\Common\Collections\Collection;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
@@ -31,7 +32,7 @@ class PollOption implements ResourceInterface
      * Referenced poll.
      */
     #[ManyToOne(
-        targetEntity: "Frontpage\Model\Poll",
+        targetEntity: Poll::class,
         inversedBy: "options",
     )]
     #[JoinColumn(
@@ -56,14 +57,13 @@ class PollOption implements ResourceInterface
     /**
      * Votes for this option.
      */
-    // TODO: Determine correct type.
     #[OneToMany(
-        targetEntity: "Frontpage\Model\PollVote",
+        targetEntity: PollVote::class,
         mappedBy: "pollOption",
         cascade: ["persist", "remove"],
         fetch: "EXTRA_LAZY",
     )]
-    protected $votes;
+    protected Collection $votes;
 
     /**
      * Number of votes not bound to a specific user.

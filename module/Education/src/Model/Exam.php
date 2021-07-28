@@ -25,7 +25,12 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
     name: "type",
     type: "string",
 )]
-#[DiscriminatorMap(["exam" => "Education\Model\Exam", "summary" => "Education\Model\Summary"])]
+#[DiscriminatorMap(value:
+    [
+        "exam" => Exam::class,
+        "summary" => Summary::class,
+    ]
+)]
 class Exam implements ResourceInterface
 {
     public const EXAM_TYPE_FINAL = 'exam';
@@ -71,12 +76,9 @@ class Exam implements ResourceInterface
 
     /**
      * Course belonging to this exam.
-     *
-     * @ORM\ManyToOne(targetEntity="Education\Model\Course", inversedBy="exams")
-     * @ORM\JoinColumn(name="course_code", referencedColumnName="code")
      */
     #[ManyToOne(
-        targetEntity: "Education\Model\Course",
+        targetEntity: Course::class,
         inversedBy: "exams",
     )]
     #[JoinColumn(

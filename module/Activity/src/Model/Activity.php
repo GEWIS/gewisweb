@@ -53,7 +53,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      * Name for the activity.
      */
     #[OneToOne(
-        targetEntity: "Activity\Model\LocalisedText",
+        targetEntity: LocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
@@ -78,7 +78,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      * The location the activity is held at.
      */
     #[OneToOne(
-        targetEntity: "Activity\Model\LocalisedText",
+        targetEntity: LocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
@@ -88,7 +88,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      * How much does it cost.
      */
     #[OneToOne(
-        targetEntity: "Activity\Model\LocalisedText",
+        targetEntity: LocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
@@ -97,14 +97,14 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Who did approve this activity.
      */
-    #[ManyToOne(targetEntity: "User\Model\User")]
+    #[ManyToOne(targetEntity: UserModel::class)]
     #[JoinColumn(referencedColumnName: "lidnr")]
     protected UserModel $approver;
 
     /**
      * Who created this activity.
      */
-    #[ManyToOne(targetEntity: "User\Model\User")]
+    #[ManyToOne(targetEntity: UserModel::class)]
     #[JoinColumn(
         referencedColumnName: "lidnr",
         nullable: false,
@@ -121,7 +121,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      * The update proposal associated with this activity.
      */
     #[OneToMany(
-        targetEntity: "Activity\Model\ActivityUpdateProposal",
+        targetEntity: ActivityUpdateProposal::class,
         mappedBy: "old",
     )]
     protected Collection $updateProposal;
@@ -130,7 +130,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      * Activity description.
      */
     #[OneToOne(
-        targetEntity: "Activity\Model\LocalisedText",
+        targetEntity: LocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
@@ -140,7 +140,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      * All additional Categories belonging to this activity.
      */
     #[ManyToMany(
-        targetEntity: "Activity\Model\ActivityCategory",
+        targetEntity: ActivityCategory::class,
         inversedBy: "activities",
         cascade: ["persist"],
     )]
@@ -151,7 +151,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      * All additional SignupLists belonging to this activity.
      */
     #[OneToMany(
-        targetEntity: "Activity\Model\SignupList",
+        targetEntity: SignupList::class,
         mappedBy: "activity",
         cascade: ["remove"],
     )]
@@ -160,7 +160,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Which organ organises this activity.
      */
-    #[ManyToOne(targetEntity: "Decision\Model\Organ")]
+    #[ManyToOne(targetEntity: OrganModel::class)]
     #[JoinColumn(
         referencedColumnName: "id",
         nullable: true,
@@ -170,7 +170,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Which company organises this activity.
      */
-    #[ManyToOne(targetEntity: "Company\Model\Company")]
+    #[ManyToOne(targetEntity: CompanyModel::class)]
     #[JoinColumn(
         referencedColumnName: "id",
         nullable: true,

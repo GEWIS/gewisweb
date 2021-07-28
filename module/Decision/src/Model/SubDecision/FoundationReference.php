@@ -22,7 +22,7 @@ abstract class FoundationReference extends SubDecision
      * Reference to foundation of organ.
      */
     #[ManyToOne(
-        targetEntity: "Decision\Model\SubDecision\Foundation",
+        targetEntity: Foundation::class,
         inversedBy: "references",
         cascade: ["persist"],
     )]

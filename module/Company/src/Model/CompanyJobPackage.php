@@ -21,7 +21,7 @@ class CompanyJobPackage extends CompanyPackage
      * The package's jobs.
      */
     #[OneToMany(
-        targetEntity: "Company\Model\Job",
+        targetEntity: Job::class,
         mappedBy: "package",
         cascade: ["persist", "remove"],
     )]

@@ -112,7 +112,7 @@ class Job
      * The job's package.
      */
     #[ManyToOne(
-        targetEntity: "Company\Model\CompanyJobPackage",
+        targetEntity: CompanyJobPackage::class,
         inversedBy: "jobs",
     )]
     protected CompanyPackage $package;
@@ -120,7 +120,7 @@ class Job
     /**
      * The job's category.
      */
-    #[ManyToOne(targetEntity: "Company\Model\JobCategory")]
+    #[ManyToOne(targetEntity: JobCategory::class)]
     protected string $category;
 
     /**
@@ -133,7 +133,7 @@ class Job
      * Job labels.
      */
     #[OneToMany(
-        targetEntity: "Company\Model\JobLabelAssignment",
+        targetEntity: JobLabelAssignment::class,
         mappedBy: "job",
         cascade: ["persist", "remove"],
         fetch: "EAGER",

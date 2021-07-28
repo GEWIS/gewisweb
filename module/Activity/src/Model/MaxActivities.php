@@ -30,7 +30,7 @@ class MaxActivities
     /**
      * Who created this activity.
      */
-    #[ManyToOne(targetEntity: "Decision\Model\Organ")]
+    #[ManyToOne(targetEntity: OrganModel::class)]
     #[JoinColumn(
         referencedColumnName: "id",
         nullable: false,
@@ -46,7 +46,7 @@ class MaxActivities
     /**
      * The associated period.
      */
-    #[ManyToOne(targetEntity: "Activity\Model\ActivityOptionCreationPeriod")]
+    #[ManyToOne(targetEntity: ActivityOptionCreationPeriod::class)]
     protected ActivityOptionCreationPeriod $period;
 
     /**

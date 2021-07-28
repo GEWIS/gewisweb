@@ -35,7 +35,7 @@ class MeetingNotes implements ResourceInterface
      * The corresponding meeting for these notes.
      */
     #[OneToOne(
-        targetEntity: "Decision\Model\Meeting",
+        targetEntity: Meeting::class,
         inversedBy: "meetingNotes",
     )]
     #[JoinColumn(

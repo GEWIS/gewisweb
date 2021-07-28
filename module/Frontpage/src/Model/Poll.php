@@ -55,7 +55,7 @@ class Poll implements ResourceInterface
      * Poll options.
      */
     #[OneToMany(
-        targetEntity: "Frontpage\Model\PollOption",
+        targetEntity: PollOption::class,
         mappedBy: "poll",
         cascade: ["persist", "remove"],
     )]
@@ -65,7 +65,7 @@ class Poll implements ResourceInterface
      * Poll comments.
      */
     #[OneToMany(
-        targetEntity: "Frontpage\Model\PollComment",
+        targetEntity: PollComment::class,
         mappedBy: "poll",
         cascade: ["persist", "remove"],
     )]
@@ -74,7 +74,7 @@ class Poll implements ResourceInterface
     /**
      * Who approved this poll. If null then nobody approved it.
      */
-    #[ManyToOne(targetEntity: "User\Model\User")]
+    #[ManyToOne(targetEntity: UserModel::class)]
     #[JoinColumn(
         referencedColumnName: "lidnr",
         nullable: false,
@@ -84,7 +84,7 @@ class Poll implements ResourceInterface
     /**
      * Who approved this poll. If null then nobody approved it.
      */
-    #[ManyToOne(targetEntity: "User\Model\User")]
+    #[ManyToOne(targetEntity: UserModel::class)]
     #[JoinColumn(referencedColumnName: "lidnr")]
     protected UserModel $approver;
 

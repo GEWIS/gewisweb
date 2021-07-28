@@ -31,7 +31,7 @@ class SignupOption
      * Field that the option belongs to.
      */
     #[ManyToOne(
-        targetEntity: "Activity\Model\SignupField",
+        targetEntity: SignupField::class,
         cascade: ["persist"],
         inversedBy: "options",
     )]
@@ -46,7 +46,7 @@ class SignupOption
      * The value of the option.
      */
     #[OneToOne(
-        targetEntity: "Activity\Model\LocalisedText",
+        targetEntity: LocalisedText::class,
         cascade: ["persist"],
         orphanRemoval: true,
     )]

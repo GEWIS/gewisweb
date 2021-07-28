@@ -35,7 +35,7 @@ class SignupField
      * Activity that the SignupField belongs to.
      */
     #[ManyToOne(
-        targetEntity: "Activity\Model\SignupList",
+        targetEntity: SignupList::class,
         cascade: ["persist"],
         inversedBy: "fields",
     )]
@@ -50,7 +50,7 @@ class SignupField
      * The name of the SignupField.
      */
     #[OneToOne(
-        targetEntity: "Activity\Model\LocalisedText",
+        targetEntity: LocalisedText::class,
         cascade: ["persist"],
         orphanRemoval: true,
     )]
@@ -84,7 +84,7 @@ class SignupField
      * The allowed options for the SignupField of the ``option'' type.
      */
     #[OneToMany(
-        targetEntity: "Activity\Model\SignupOption",
+        targetEntity: SignupOption::class,
         mappedBy: "field",
         orphanRemoval: true,
     )]

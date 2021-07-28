@@ -66,7 +66,7 @@ class Organ
      * Reference to foundation of organ.
      */
     #[OneToOne(
-        targetEntity: "Decision\Model\SubDecision\Foundation",
+        targetEntity: Foundation::class,
         inversedBy: "organ",
     )]
     #[JoinColumn(
@@ -110,7 +110,7 @@ class Organ
      * Reference to members.
      */
     #[OneToMany(
-        targetEntity: "Decision\Model\OrganMember",
+        targetEntity: OrganMember::class,
         mappedBy: "organ",
     )]
     protected Collection $members;
@@ -118,7 +118,7 @@ class Organ
     /**
      * Reference to subdecisions.
      */
-    #[ManyToMany(targetEntity: "Decision\Model\SubDecision")]
+    #[ManyToMany(targetEntity: SubDecision::class)]
     #[JoinTable(name: "organs_subdecisions")]
     #[JoinColumn(
         name: "organ_id",
@@ -156,7 +156,7 @@ class Organ
      * All organInformation for this organ.
      */
     #[OneToMany(
-        targetEntity: "Decision\Model\OrganInformation",
+        targetEntity: OrganInformation::class,
         mappedBy: "organ",
         cascade: ["persist", "remove"],
     )]

@@ -2,6 +2,7 @@
 
 namespace Decision\Model;
 
+use Decision\Model\SubDecision\Destroy;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\{
     Column,
@@ -24,7 +25,7 @@ class Decision
      * Meeting.
      */
     #[ManyToOne(
-        targetEntity: "Decision\Model\Meeting",
+        targetEntity: Meeting::class,
         inversedBy: "decisions",
     )]
     #[JoinColumn(
@@ -83,7 +84,7 @@ class Decision
      * Subdecisions.
      */
     #[OneToMany(
-        targetEntity: "Decision\Model\SubDecision",
+        targetEntity: SubDecision::class,
         mappedBy: "decision",
         cascade: ["persist", "remove"],
     )]
@@ -94,7 +95,7 @@ class Decision
      * Destroyed by.
      */
     #[OneToOne(
-        targetEntity: "Decision\Model\SubDecision\Destroy",
+        targetEntity: Destroy::class,
         mappedBy: "target",
     )]
     protected SubDecision\Destroy $destroyedby;

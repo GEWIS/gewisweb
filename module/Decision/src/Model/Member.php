@@ -19,7 +19,9 @@ use Doctrine\ORM\Mapping\{
     OneToMany,
     OneToOne,
 };
+use Decision\Model\SubDecision\Installation;
 use InvalidArgumentException;
+use User\Model\User as UserModel;
 
 /**
  * Member model.
@@ -42,7 +44,7 @@ class Member
      */
     #[Id]
     #[Column(type: "integer")]
-    #[OneToOne(targetEntity: "User\Model\User")]
+    #[OneToOne(targetEntity: UserModel::class)]
     #[JoinColumn(
         name: "lidnr",
         referencedColumnName: "lidnr",
@@ -166,7 +168,7 @@ class Member
      * Addresses of this member.
      */
     #[OneToMany(
-        targetEntity: "Decision\Model\Address",
+        targetEntity: Address::class,
         mappedBy: "member",
         cascade: ["persist"],
     )]
@@ -176,7 +178,7 @@ class Member
      * Installations of this member.
      */
     #[OneToMany(
-        targetEntity: "Decision\Model\SubDecision\Installation",
+        targetEntity: Installation::class,
         mappedBy: "member",
     )]
     protected Collection $installations;
@@ -185,7 +187,7 @@ class Member
      * Memberships of mailing lists.
      */
     #[ManyToMany(
-        targetEntity: "Decision\Model\MailingList",
+        targetEntity: MailingList::class,
         inversedBy: "members",
     )]
     #[JoinTable(name: "members_mailinglists")]
@@ -203,7 +205,7 @@ class Member
      * Organ memberships.
      */
     #[OneToMany(
-        targetEntity: "Decision\Model\OrganMember",
+        targetEntity: OrganMember::class,
         mappedBy: "member",
     )]
     protected Collection $organInstallations;
@@ -212,7 +214,7 @@ class Member
      * Board memberships.
      */
     #[OneToMany(
-        targetEntity: "Decision\Model\BoardMember",
+        targetEntity: BoardMember::class,
         mappedBy: "member",
     )]
     protected Collection $boardInstallations;

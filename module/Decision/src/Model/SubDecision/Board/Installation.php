@@ -36,7 +36,7 @@ class Installation extends SubDecision
      * (See the Statuten, Art. 13 Lid 2.
      */
     // TODO: Inversed relation
-    #[ManyToOne(targetEntity: "Decision\Model\Member")]
+    #[ManyToOne(targetEntity: Member::class)]
     #[JoinColumn(
         name: "lidnr",
         referencedColumnName: "lidnr",
@@ -53,7 +53,7 @@ class Installation extends SubDecision
      * Discharge.
      */
     #[OneToOne(
-        targetEntity: "Decision\Model\SubDecision\Board\Discharge",
+        targetEntity: Discharge::class,
         mappedBy: "installation",
     )]
     protected Discharge $discharge;
@@ -62,7 +62,7 @@ class Installation extends SubDecision
      * Release.
      */
     #[OneToOne(
-        targetEntity: "Decision\Model\SubDecision\Board\Release",
+        targetEntity: Release::class,
         mappedBy: "installation",
     )]
     protected Release $release;
@@ -71,7 +71,7 @@ class Installation extends SubDecision
      * Board member reference.
      */
     #[OneToOne(
-        targetEntity: "Decision\Model\BoardMember",
+        targetEntity: BoardMember::class,
         mappedBy: "installationDec",
     )]
     protected BoardMember $boardMember;

@@ -26,7 +26,7 @@ class PollVote implements ResourceInterface
     /**
      * The poll which was voted on.
      */
-    #[ManyToOne(targetEntity: "Frontpage\Model\Poll")]
+    #[ManyToOne(targetEntity: Poll::class)]
     #[JoinColumn(
         name: "poll_id",
         referencedColumnName: "id",
@@ -39,7 +39,7 @@ class PollVote implements ResourceInterface
      */
     #[Id]
     #[ManyToOne(
-        targetEntity: "Frontpage\Model\PollOption",
+        targetEntity: PollOption::class,
         inversedBy: "votes",
     )]
     #[JoinColumn(
@@ -54,7 +54,7 @@ class PollVote implements ResourceInterface
      */
     #[Id]
     #[ManyToOne(
-        targetEntity: "User\Model\User",
+        targetEntity: UserModel::class,
         cascade: ["persist"],
     )]
     #[JoinColumn(

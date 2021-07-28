@@ -30,7 +30,7 @@ class Installation extends FoundationReference
      * Member.
      */
     #[ManyToOne(
-        targetEntity: "Decision\Model\Member",
+        targetEntity: Member::class,
         inversedBy: "installations",
     )]
     #[JoinColumn(
@@ -43,7 +43,7 @@ class Installation extends FoundationReference
      * Discharges.
      */
     #[OneToOne(
-        targetEntity: "Decision\Model\SubDecision\Discharge",
+        targetEntity: Discharge::class,
         mappedBy: "installation",
     )]
     protected Discharge $discharge;
@@ -52,7 +52,7 @@ class Installation extends FoundationReference
      * The organmember reference.
      */
     #[OneToOne(
-        targetEntity: "Decision\Model\OrganMember",
+        targetEntity: OrganMember::class,
         mappedBy: "installation",
     )]
     protected OrganMember $organMember;

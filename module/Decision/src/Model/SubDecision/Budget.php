@@ -23,7 +23,7 @@ class Budget extends SubDecision
     /**
      * Budget author.
      */
-    #[ManyToOne(targetEntity: "Decision\Model\Member")]
+    #[ManyToOne(targetEntity: Member::class)]
     #[JoinColumn(
         name: "lidnr",
         referencedColumnName: "lidnr",

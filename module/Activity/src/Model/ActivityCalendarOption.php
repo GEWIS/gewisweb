@@ -60,7 +60,7 @@ class ActivityCalendarOption
     /**
      * To what activity proposal does the option belong.
      */
-    #[ManyToOne(targetEntity: "Activity\Model\ActivityOptionProposal")]
+    #[ManyToOne(targetEntity: ActivityOptionProposal::class)]
     #[JoinColumn(
         referencedColumnName: "id",
         nullable: false,
@@ -70,7 +70,7 @@ class ActivityCalendarOption
     /**
      * Who modified this activity option, if null then the option is not modified.
      */
-    #[ManyToOne(targetEntity: "User\Model\User")]
+    #[ManyToOne(targetEntity: UserModel::class)]
     #[JoinColumn(referencedColumnName: "lidnr")]
     protected ?UserModel $modifiedBy;
 

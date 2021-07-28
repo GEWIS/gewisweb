@@ -40,7 +40,7 @@ class NewUser
     /**
      * User's member.
      */
-    #[OneToOne(targetEntity: "Decision\Model\Member")]
+    #[OneToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(
         name: "lidnr",
         referencedColumnName: "lidnr",

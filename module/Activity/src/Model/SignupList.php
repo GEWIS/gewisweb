@@ -43,7 +43,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      * The Activity this SignupList belongs to.
      */
     #[ManyToOne(
-        targetEntity: "Activity\Model\Activity",
+        targetEntity: Activity::class,
         cascade: ["persist"],
         inversedBy: "signupLists",
     )]
@@ -58,7 +58,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      * The name of the SignupList.
      */
     #[OneToOne(
-        targetEntity: "Activity\Model\Activity",
+        targetEntity: Activity::class,
         cascade: ["persist"],
         orphanRemoval: true,
     )]
@@ -93,7 +93,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      * All additional fields belonging to the activity.
      */
     #[OneToMany(
-        targetEntity: "Activity\Model\SignupField",
+        targetEntity: SignupField::class,
         mappedBy: "signupList",
         orphanRemoval: true,
     )]
@@ -103,7 +103,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      * All the people who signed up for this SignupList.
      */
     #[OneToMany(
-        targetEntity: "Activity\Model\Signup",
+        targetEntity: Signup::class,
         mappedBy: "signupList",
         orphanRemoval: true,
     )]

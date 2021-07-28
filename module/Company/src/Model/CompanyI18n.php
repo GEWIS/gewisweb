@@ -30,7 +30,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      * Company entity that these details are for.
      */
     #[ManyToOne(
-        targetEntity: "Company\Model\Company",
+        targetEntity: Company::class,
         inversedBy: "translations",
         cascade: ["persist"],
     )]

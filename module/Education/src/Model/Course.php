@@ -75,7 +75,7 @@ class Course implements ResourceInterface
      * The studies that apply to the course.
      */
     #[ManyToMany(
-        targetEntity: "Education\Model\Study",
+        targetEntity: Study::class,
         inversedBy: "courses",
     )]
     #[JoinTable(
@@ -95,7 +95,7 @@ class Course implements ResourceInterface
      * Exams (and summaries) in this course.
      */
     #[OneToMany(
-        targetEntity: "Education\Model\Exam",
+        targetEntity: Exam::class,
         mappedBy: "course",
     )]
     protected Collection $exams;
@@ -104,7 +104,7 @@ class Course implements ResourceInterface
      * Parent course.
      */
     #[ManyToOne(
-        targetEntity: "Education\Model\Course",
+        targetEntity: Course::class,
         inversedBy: "children",
     )]
     #[JoinColumn(
@@ -117,7 +117,7 @@ class Course implements ResourceInterface
      * Children of this course.
      */
     #[OneToMany(
-        targetEntity: "Education\Model\Course",
+        targetEntity: Course::class,
         mappedBy: "parent",
     )]
     protected Collection $children;

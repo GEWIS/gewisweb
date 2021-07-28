@@ -12,6 +12,20 @@ use Doctrine\ORM\Mapping\{
     JoinColumn,
     ManyToOne,
 };
+use Decision\Model\SubDecision\{
+    Abrogation,
+    Board\Discharge as BoardDischarge,
+    Board\Installation as BoardInstallation,
+    Board\Release as BoardRelease,
+    Budget,
+    Destroy,
+    Discharge,
+    Foundation,
+    FoundationReference,
+    Installation,
+    Other,
+    Reckoning,
+};
 
 /**
  * SubDecision model.
@@ -24,18 +38,18 @@ use Doctrine\ORM\Mapping\{
 )]
 #[DiscriminatorMap(value:
     [
-        "foundation" => "Decision\Model\SubDecision\Foundation",
-        "abrogation" => "Decision\Model\SubDecision\Abrogation",
-        "installation" => "Decision\Model\SubDecision\Installation",
-        "discharge" => "Decision\Model\SubDecision\Discharge",
-        "budget" => "Decision\Model\SubDecision\Budget",
-        "reckoning" => "Decision\Model\SubDecision\Reckoning",
-        "other" => "Decision\Model\SubDecision\Other",
-        "destroy" => "Decision\Model\SubDecision\Destroy",
-        "board_installation" => "Decision\Model\SubDecision\Board\Installation",
-        "board_release" => "Decision\Model\SubDecision\Board\Release",
-        "board_discharge" => "Decision\Model\SubDecision\Board\Discharge",
-        "foundationreference" => "Decision\Model\SubDecision\FoundationReference",
+        "foundation" => Foundation::class,
+        "abrogation" => Abrogation::class,
+        "installation" => Installation::class,
+        "discharge" => Discharge::class,
+        "budget" => Budget::class,
+        "reckoning" => Reckoning::class,
+        "other" => Other::class,
+        "destroy" => Destroy::class,
+        "board_installation" => BoardInstallation::class,
+        "board_release" => BoardRelease::class,
+        "board_discharge" => BoardDischarge::class,
+        "foundationreference" => FoundationReference::class,
     ]
 )]
 abstract class SubDecision
@@ -44,7 +58,7 @@ abstract class SubDecision
      * Decision.
      */
     #[ManyToOne(
-        targetEntity: "Decision\Model\Decision",
+        targetEntity: Decision::class,
         inversedBy: "subdecisions",
     )]
     #[JoinColumn(

@@ -32,7 +32,7 @@ class PollComment implements ResourceInterface
      * Referenced poll.
      */
     #[ManyToOne(
-        targetEntity: "Frontpage\Model\Poll",
+        targetEntity: Poll::class,
         inversedBy: "comments",
     )]
     #[JoinColumn(
@@ -45,7 +45,7 @@ class PollComment implements ResourceInterface
     /**
      * User that posted the comment.
      */
-    #[ManyToOne(targetEntity: "User\Model\User")]
+    #[ManyToOne(targetEntity: UserModel::class)]
     #[JoinColumn(
         name: "user_lidnr",
         referencedColumnName: "lidnr",

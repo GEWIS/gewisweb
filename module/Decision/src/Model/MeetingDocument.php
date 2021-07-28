@@ -29,7 +29,7 @@ class MeetingDocument
      * Meeting.
      */
     #[ManyToOne(
-        targetEntity: "Decision\Model\Meeting",
+        targetEntity: Meeting::class,
         inversedBy: "documents",
     )]
     #[JoinColumn(

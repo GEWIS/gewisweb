@@ -33,7 +33,7 @@ class Destroy extends SubDecision
      * Reference to the destruction of a decision.
      */
     #[OneToOne(
-        targetEntity: "Decision\Model\Decision",
+        targetEntity: Decision::class,
         inversedBy: "destroyedby",
     )]
     #[JoinColumn(

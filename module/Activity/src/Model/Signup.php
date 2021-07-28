@@ -30,8 +30,8 @@ use Doctrine\ORM\Mapping\{
 )]
 #[DiscriminatorMap(value:
     [
-        "user" => "UserSignup",
-        "external" => "ExternalSignup",
+        "user" => UserSignup::class,
+        "external" => ExternalSignup::class,
     ]
 )]
 abstract class Signup
@@ -48,7 +48,7 @@ abstract class Signup
      * The SignupList the signup is for.
      */
     #[ManyToOne(
-        targetEntity: "Activity\Model\SignupList",
+        targetEntity: SignupList::class,
         inversedBy: "signUps",
     )]
     #[JoinColumn(
@@ -62,7 +62,7 @@ abstract class Signup
      * Additional field values for this Signup.
      */
     #[OneToMany(
-        targetEntity: "Activity\Model\SignupFieldValue",
+        targetEntity: SignupFieldValue::class,
         mappedBy: "signup",
         cascade: ["persist", "remove"],
     )]

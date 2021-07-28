@@ -22,7 +22,7 @@ class Discharge extends SubDecision
      * Reference to the installation of a member.
      */
     #[OneToOne(
-        targetEntity: "Decision\Model\SubDecision\Board\Installation",
+        targetEntity: Installation::class,
         inversedBy: "discharge",
     )]
     #[JoinColumn(

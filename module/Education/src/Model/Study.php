@@ -54,7 +54,7 @@ class Study
      * Courses belonging to this study.
      */
     #[ManyToMany(
-        targetEntity: "Education\Model\Course",
+        targetEntity: Course::class,
         mappedBy: "studies",
     )]
     protected Collection $courses;

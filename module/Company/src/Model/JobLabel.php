@@ -56,7 +56,7 @@ class JobLabel
      * The Assignments this Label belongs to.
      */
     #[OneToMany(
-        targetEntity: "Company\Model\JobLabelAssignment",
+        targetEntity: JobLabelAssignment::class,
         mappedBy: "label",
         cascade: ["persist"],
     )]

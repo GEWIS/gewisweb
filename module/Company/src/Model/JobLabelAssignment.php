@@ -30,7 +30,7 @@ class JobLabelAssignment
      *
      */
     #[ManyToOne(
-        targetEntity: "Company\Model\Job",
+        targetEntity: Job::class,
         inversedBy: "labels",
     )]
     #[JoinColumn(
@@ -44,7 +44,7 @@ class JobLabelAssignment
      *
      */
     #[ManyToOne(
-        targetEntity: "Company\Model\JobLabel",
+        targetEntity: JobLabel::class,
         inversedBy: "assignments",
         fetch: "EAGER",
     )]

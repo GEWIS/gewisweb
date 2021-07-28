@@ -29,7 +29,7 @@ class ActivityUpdateProposal
      * The previous activity version, if any.
      */
     #[ManyToOne(
-        targetEntity: "Activity\Model\Activity",
+        targetEntity: Activity::class,
         inversedBy: "updateProposal",
     )]
     #[JoinColumn(
@@ -41,7 +41,7 @@ class ActivityUpdateProposal
     /**
      * The new activity.
      */
-    #[ManyToOne(targetEntity: "Activity\Model\Activity")]
+    #[ManyToOne(targetEntity: Activity::class)]
     #[JoinColumn(
         referencedColumnName: "id",
         nullable: false,

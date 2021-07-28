@@ -39,7 +39,7 @@ class Hit implements ResourceInterface
      * The photo which was viewed.
      */
     #[ManyToOne(
-        targetEntity: "Photo\Model\Photo",
+        targetEntity: Photo::class,
         inversedBy: "hits",
     )]
     #[JoinColumn(

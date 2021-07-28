@@ -62,7 +62,7 @@ class Album implements ResourceInterface
      * Parent album, null if there is no parent album.
      */
     #[ManyToOne(
-        targetEntity: "Photo\Model\Album",
+        targetEntity: Album::class,
         inversedBy: "children",
     )]
     #[JoinColumn(
@@ -77,7 +77,7 @@ class Album implements ResourceInterface
      * album count.
      */
     #[OneToMany(
-        targetEntity: "Photo\Model\Album",
+        targetEntity: Album::class,
         mappedBy: "parent",
         cascade: ["persist", "remove"],
         fetch: "EXTRA_LAZY",
@@ -90,7 +90,7 @@ class Album implements ResourceInterface
      * photo count.
      */
     #[OneToMany(
-        targetEntity: "Photo\Model\Photo",
+        targetEntity: Photo::class,
         mappedBy: "album",
         cascade: ["persist", "remove"],
         fetch: "EXTRA_LAZY",

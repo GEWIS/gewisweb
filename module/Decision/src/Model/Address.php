@@ -26,7 +26,7 @@ class Address
      */
     #[Id]
     #[ManyToOne(
-        targetEntity: "Decision\Model\Member",
+        targetEntity: Member::class,
         inversedBy: "addresses",
     )]
     #[JoinColumn(

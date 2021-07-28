@@ -32,7 +32,7 @@ class LoginAttempt
     /**
      * The user for which the login was attempted.
      */
-    #[ManyToOne(targetEntity: "User\Model\User")]
+    #[ManyToOne(targetEntity: User::class)]
     #[JoinColumn(
         name: "user_id",
         referencedColumnName: "lidnr",

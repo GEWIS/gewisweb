@@ -40,7 +40,7 @@ class Vote implements ResourceInterface
      * The photo which was voted for.
      */
     #[ManyToOne(
-        targetEntity: "Photo\Model\Photo",
+        targetEntity: Photo::class,
         inversedBy: "votes",
     )]
     #[JoinColumn(
@@ -53,7 +53,7 @@ class Vote implements ResourceInterface
     /**
      * The member who voted.
      */
-    #[ManyToOne(targetEntity: "User\Model\User")]
+    #[ManyToOne(targetEntity: UserModel::class)]
     #[JoinColumn(
         name: "voter_id",
         referencedColumnName: "lidnr",

@@ -50,7 +50,7 @@ class User implements RoleInterface, ResourceInterface
      * User roles.
      */
     #[OneToMany(
-        targetEntity: "User\Model\UserRole",
+        targetEntity: UserRole::class,
         mappedBy: "lidnr",
     )]
     protected Collection $roles;
@@ -59,7 +59,7 @@ class User implements RoleInterface, ResourceInterface
      * The corresponding member for this user.
      */
     #[OneToOne(
-        targetEntity: "Decision\Model\Member",
+        targetEntity: MemberModel::class,
         fetch: "EAGER",
     )]
     #[JoinColumn(

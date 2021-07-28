@@ -32,7 +32,7 @@ class UserRole
      * The membership number of the user with this role.
      */
     #[ManyToOne(
-        targetEntity: "User\Model\User",
+        targetEntity: User::class,
         inversedBy: "roles",
     )]
     #[JoinColumn(
@@ -60,9 +60,9 @@ class UserRole
     /**
      * Get the membership number.
      *
-     * @return int
+     * @return User
      */
-    public function getLidnr(): int
+    public function getLidnr(): User
     {
         return $this->lidnr;
     }
@@ -70,9 +70,9 @@ class UserRole
     /**
      * Set the membership number.
      *
-     * @param int $lidnr
+     * @param User $lidnr
      */
-    public function setLidnr(int $lidnr): void
+    public function setLidnr(User $lidnr): void
     {
         $this->lidnr = $lidnr;
     }

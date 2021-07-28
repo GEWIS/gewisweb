@@ -35,7 +35,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      * Are of type \Company\Model\CompanyI18n.
      */
     #[OneToMany(
-        targetEntity: "Company\Model\CompanyI18n",
+        targetEntity: CompanyI18n::class,
         mappedBy: "company",
         cascade: ["persist", "remove"],
         orphanRemoval: true,
@@ -88,7 +88,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      * The company's packages.
      */
     #[OneToMany(
-        targetEntity: "Company\Model\CompanyPackage",
+        targetEntity: CompanyPackage::class,
         mappedBy: "company",
         cascade: ["persist", "remove"],
     )]

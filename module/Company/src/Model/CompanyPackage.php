@@ -26,9 +26,9 @@ use Exception;
 )]
 #[DiscriminatorMap(value:
     [
-        "job" => "Company\Model\CompanyJobPackage",
-        "banner" => "Company\Model\CompanyBannerPackage",
-        "featured" => "Company\Model\CompanyFeaturedPackage",
+        "job" => CompanyJobPackage::class,
+        "banner" => CompanyBannerPackage::class,
+        "featured" => CompanyFeaturedPackage::class,
     ]
 )]
 abstract class CompanyPackage
@@ -70,7 +70,7 @@ abstract class CompanyPackage
      * The package's company.
      */
     #[ManyToOne(
-        targetEntity: "Company\Model\Company",
+        targetEntity: Company::class,
         inversedBy: "packages",
     )]
     protected Company $company;

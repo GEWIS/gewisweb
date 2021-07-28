@@ -52,7 +52,7 @@ class Meeting
      * Decisions.
      */
     #[OneToMany(
-        targetEntity: "Decision\Model\Decision",
+        targetEntity: Decision::class,
         mappedBy: "meeting",
     )]
     protected Collection $decisions;
@@ -61,7 +61,7 @@ class Meeting
      * Documents.
      */
     #[OneToMany(
-        targetEntity: "Decision\Model\MeetingDocument",
+        targetEntity: MeetingDocument::class,
         mappedBy: "meeting",
     )]
     #[OrderBy(value: ["displayPosition" => "ASC"])]
@@ -71,7 +71,7 @@ class Meeting
      * The notes for this meeting.
      */
     #[OneToOne(
-        targetEntity: "Decision\Model\MeetingNotes",
+        targetEntity: MeetingNotes::class,
         mappedBy: "meeting",
     )]
     protected MeetingNotes $meetingNotes;

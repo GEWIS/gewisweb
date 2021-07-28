@@ -28,7 +28,7 @@ class SignupFieldValue
     /**
      * Field which the value belongs to.
      */
-    #[ManyToOne(targetEntity: "Activity\Model\SignupField")]
+    #[ManyToOne(targetEntity: SignupField::class)]
     #[JoinColumn(
         name: "field_id",
         referencedColumnName: "id",
@@ -40,7 +40,7 @@ class SignupFieldValue
      * Signup which the value belongs to.
      */
     #[ManyToOne(
-        targetEntity: "Activity\Model\Signup",
+        targetEntity: Signup::class,
         inversedBy: "fieldValues",
     )]
     #[JoinColumn(
@@ -61,11 +61,8 @@ class SignupFieldValue
 
     /**
      * The option chosen.
-     *
-     * @ORM\ManyToOne(targetEntity="SignupOption")
-     * @ORM\JoinColumn(name="option_id", referencedColumnName="id")
      */
-    #[ManyToOne(targetEntity: "Activity\Model\SignupOption")]
+    #[ManyToOne(targetEntity: SignupOption::class)]
     #[JoinColumn(
         name: "option_id",
         referencedColumnName: "id",

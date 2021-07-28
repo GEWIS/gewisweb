@@ -37,7 +37,7 @@ class WeeklyPhoto implements ResourceInterface
      * The photo of the week.
      */
     #[OneToOne(
-        targetEntity: "Photo\Model\Photo",
+        targetEntity: Photo::class,
         inversedBy: "weeklyPhoto",
     )]
     #[JoinColumn(

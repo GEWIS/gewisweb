@@ -56,7 +56,7 @@ class MailingList
      * Mailing list members.
      */
     #[ManyToMany(
-        targetEntity: "Decision\Model\Member",
+        targetEntity: Member::class,
         mappedBy: "lists",
     )]
     protected Collection $members;

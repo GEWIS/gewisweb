@@ -113,7 +113,7 @@ class Photo implements ResourceInterface
      * Album in which the photo is.
      */
     #[ManyToOne(
-        targetEntity: "Photo\Model\Album",
+        targetEntity: Album::class,
         inversedBy: "photos",
     )]
     #[JoinColumn(
@@ -165,7 +165,7 @@ class Photo implements ResourceInterface
      * All the hits of this photo.
      */
     #[OneToMany(
-        targetEntity: "Photo\Model\Hit",
+        targetEntity: Hit::class,
         mappedBy: "photo",
         cascade: ["persist", "remove"],
     )]
@@ -175,7 +175,7 @@ class Photo implements ResourceInterface
      * All the votes for this photo.
      */
     #[OneToMany(
-        targetEntity: "Photo\Model\Vote",
+        targetEntity: Vote::class,
         mappedBy: "photo",
         cascade: ["persist", "remove"],
     )]
@@ -185,7 +185,7 @@ class Photo implements ResourceInterface
      * All the tags for this photo.
      */
     #[OneToMany(
-        targetEntity: "Photo\Model\Tag",
+        targetEntity: Tag::class,
         mappedBy: "photo",
         cascade: ["persist", "remove"],
         fetch: "EAGER",
@@ -196,7 +196,7 @@ class Photo implements ResourceInterface
      * The corresponding WeeklyPhoto entity if this photo has been a weekly photo.
      */
     #[OneToOne(
-        targetEntity: "Photo\Model\WeeklyPhoto",
+        targetEntity: WeeklyPhoto::class,
         mappedBy: "photo",
         cascade: ["persist", "remove"],
     )]

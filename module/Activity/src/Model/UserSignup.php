@@ -18,7 +18,7 @@ class UserSignup extends Signup
     /**
      * Who is subscribed.
      */
-    #[ManyToOne(targetEntity: "User\Model\User")]
+    #[ManyToOne(targetEntity: UserModel::class)]
     #[JoinColumn(
         name: "user_lidnr",
         referencedColumnName: "lidnr",

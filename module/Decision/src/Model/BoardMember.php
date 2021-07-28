@@ -3,7 +3,7 @@
 namespace Decision\Model;
 
 use DateTime;
-use Decision\Model\SubDecision\Board\Installation;
+use Decision\Model\SubDecision\Board\Installation as BoardInstallation;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -34,7 +34,7 @@ class BoardMember
      * Member lidnr.
      */
     #[ManyToOne(
-        targetEntity: "Decision\Model\Member",
+        targetEntity: Member::class,
         inversedBy: "boardInstallations",
     )]
     #[JoinColumn(
@@ -60,7 +60,7 @@ class BoardMember
      * Installation.
      */
     #[OneToOne(
-        targetEntity: "Decision\Model\SubDecision\Board\Installation",
+        targetEntity: BoardInstallation::class,
         inversedBy: "boardMember",
     )]
     #[JoinColumn(
@@ -83,7 +83,7 @@ class BoardMember
         name: "r_number",
         referencedColumnName: "number",
     )]
-    protected Installation $installationDec;
+    protected BoardInstallation $installationDec;
 
     /**
      * Discharge date.
@@ -167,9 +167,9 @@ class BoardMember
     /**
      * Get the installation decision.
      *
-     * @return Installation
+     * @return BoardInstallation
      */
-    public function getInstallationDec(): Installation
+    public function getInstallationDec(): BoardInstallation
     {
         return $this->installationDec;
     }
@@ -177,7 +177,7 @@ class BoardMember
     /**
      * Set the installation decision.
      */
-    public function setInstallationDec(Installation $installationDec): void
+    public function setInstallationDec(BoardInstallation $installationDec): void
     {
         $this->installationDec = $installationDec;
     }

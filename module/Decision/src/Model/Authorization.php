@@ -33,7 +33,7 @@ class Authorization
     /**
      * Member submitting this authorization.
      */
-    #[ManyToOne(targetEntity: "Decision\Model\Member")]
+    #[ManyToOne(targetEntity: Member::class)]
     #[JoinColumn(
         name: "authorizer",
         referencedColumnName: "lidnr",
@@ -43,7 +43,7 @@ class Authorization
     /**
      * Member receiving this authorization..
      */
-    #[ManyToOne(targetEntity: "Decision\Model\Member")]
+    #[ManyToOne(targetEntity: Member::class)]
     #[JoinColumn(
         name: "recipient",
         referencedColumnName: "lidnr",

@@ -34,7 +34,7 @@ class OrganMember
      * Organ.
      */
     #[ManyToOne(
-        targetEntity: "Decision\Model\Organ",
+        targetEntity: Organ::class,
         inversedBy: "members",
     )]
     protected Organ $organ;
@@ -43,7 +43,7 @@ class OrganMember
      * Member.
      */
     #[ManyToOne(
-        targetEntity: "Decision\Model\Member",
+        targetEntity: Member::class,
         inversedBy: "organInstallations",
     )]
     #[JoinColumn(
@@ -68,7 +68,7 @@ class OrganMember
      * Installation.
      */
     #[OneToOne(
-        targetEntity: "Decision\Model\SubDecision\Installation",
+        targetEntity: Installation::class,
         inversedBy: "organMember",
     )]
     #[JoinColumn(

@@ -35,7 +35,7 @@ class Tag implements ResourceInterface
     protected int $id;
 
     #[ManyToOne(
-        targetEntity: "Photo\Model\Photo",
+        targetEntity: Photo::class,
         inversedBy: "tags",
     )]
     #[JoinColumn(
@@ -45,7 +45,7 @@ class Tag implements ResourceInterface
     )]
     protected Photo $photo;
 
-    #[ManyToOne(targetEntity: "Decision\Model\Member")]
+    #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(
         name: "member_id",
         referencedColumnName: "lidnr",

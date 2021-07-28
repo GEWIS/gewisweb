@@ -44,7 +44,7 @@ class ActivityOptionProposal implements OrganResourceInterface
     /**
      * Who created this activity option.
      */
-    #[ManyToOne(targetEntity: "User\Model\User")]
+    #[ManyToOne(targetEntity: UserModel::class)]
     #[JoinColumn(
         referencedColumnName: "lidnr",
         nullable: false,
@@ -60,7 +60,7 @@ class ActivityOptionProposal implements OrganResourceInterface
     /**
      * Who created this activity proposal.
      */
-    #[ManyToOne(targetEntity: "Decision\Model\Organ")]
+    #[ManyToOne(targetEntity: OrganModel::class)]
     #[JoinColumn(
         referencedColumnName: "id",
         nullable: true,

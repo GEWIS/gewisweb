@@ -53,7 +53,7 @@ class Foundation extends SubDecision
      * References from other subdecisions to this organ.
      */
     #[OneToMany(
-        targetEntity: "Decision\Model\SubDecision\FoundationReference",
+        targetEntity: FoundationReference::class,
         mappedBy: "foundation",
     )]
     protected Collection $references;
@@ -62,7 +62,7 @@ class Foundation extends SubDecision
      * Organ entry for this organ.
      */
     #[OneToOne(
-        targetEntity: "Decision\Model\Organ",
+        targetEntity: Organ::class,
         mappedBy: "foundation",
     )]
     protected Organ $organ;
@@ -80,7 +80,7 @@ class Foundation extends SubDecision
      *
      * @return array
      */
-    public static function getOrganTypes()
+    public static function getOrganTypes(): array
     {
         return [
             self::ORGAN_TYPE_COMMITTEE,
