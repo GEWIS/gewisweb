@@ -36,7 +36,6 @@ class Installation extends FoundationReference
     #[JoinColumn(
         name: "lidnr",
         referencedColumnName: "lidnr",
-        nullable: false,
     )]
     protected Member $member;
 

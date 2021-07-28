@@ -37,7 +37,6 @@ class Authorization
     #[JoinColumn(
         name: "authorizer",
         referencedColumnName: "lidnr",
-        nullable: false,
     )]
     protected Member $authorizer;
 
@@ -48,7 +47,6 @@ class Authorization
     #[JoinColumn(
         name: "recipient",
         referencedColumnName: "lidnr",
-        nullable: false,
     )]
     protected Member $recipient;
 

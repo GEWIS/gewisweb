@@ -35,12 +35,10 @@ class MeetingDocument
     #[JoinColumn(
         name: "meeting_type",
         referencedColumnName: "type",
-        nullable: false,
     )]
     #[JoinColumn(
         name: "meeting_number",
         referencedColumnName: "number",
-        nullable: false,
     )]
     protected Meeting $meeting;
 

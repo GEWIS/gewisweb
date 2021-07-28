@@ -49,7 +49,6 @@ class OrganMember
     #[JoinColumn(
         name: "lidnr",
         referencedColumnName: "lidnr",
-        nullable: false,
     )]
     protected Member $member;
 
@@ -75,27 +74,22 @@ class OrganMember
     #[JoinColumn(
         name: "r_meeting_type",
         referencedColumnName: "meeting_type",
-        nullable: false,
     )]
     #[JoinColumn(
         name: "r_meeting_number",
         referencedColumnName: "meeting_number",
-        nullable: false,
     )]
     #[JoinColumn(
         name: "r_decision_point",
         referencedColumnName: "decision_point",
-        nullable: false,
     )]
     #[JoinColumn(
         name: "r_decision_number",
         referencedColumnName: "decision_number",
-        nullable: false,
     )]
     #[JoinColumn(
         name: "r_number",
         referencedColumnName: "number",
-        nullable: false,
     )]
     protected Installation $installation;
 

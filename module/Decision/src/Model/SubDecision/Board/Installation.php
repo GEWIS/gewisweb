@@ -40,7 +40,6 @@ class Installation extends SubDecision
     #[JoinColumn(
         name: "lidnr",
         referencedColumnName: "lidnr",
-        nullable: false,
     )]
     protected Member $member;
 
