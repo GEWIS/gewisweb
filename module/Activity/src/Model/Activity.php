@@ -68,10 +68,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * The date and time the activity ends.
      */
-    #[Column(
-        type: "datetime",
-        nullable: true,
-    )]
+    #[Column(type: "datetime")]
     protected DateTime $endTime;
 
     /**
