@@ -3,88 +3,106 @@
 namespace Decision\Model;
 
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    Id,
+    JoinColumn,
+    ManyToOne,
+    OneToMany,
+    OneToOne,
+    OrderBy,
+};
 
 /**
  * Decision model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class Decision
 {
     /**
      * Meeting.
-     *
-     * @ORM\ManyToOne(targetEntity="Meeting", inversedBy="decisions")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="meeting_type", referencedColumnName="type"),
-     *     @ORM\JoinColumn(name="meeting_number", referencedColumnName="number"),
-     * })
      */
-    protected $meeting;
+    #[ManyToOne(
+        targetEntity: "Decision\Model\Meeting",
+        inversedBy: "decisions",
+    )]
+    #[JoinColumn(
+        name: "meeting_type",
+        referencedColumnName: "type",
+        nullable: false,
+    )]
+    #[JoinColumn(
+        name: "meeting_number",
+        referencedColumnName: "number",
+        nullable: false,
+    )]
+    protected Meeting $meeting;
 
     /**
      * Meeting type.
      *
      * NOTE: This is a hack to make the meeting a primary key here.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="string")
      */
-    protected $meeting_type;
+    #[Id]
+    #[Column(type: "string")]
+    protected string $meeting_type;
 
     /**
      * Meeting number.
      *
      * NOTE: This is a hack to make the meeting a primary key here.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer")
      */
-    protected $meeting_number;
+    #[Id]
+    #[Column(type: "integer")]
+    protected int $meeting_number;
 
     /**
      * Point in the meeting in which the decision was made.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer")
      */
-    protected $point;
+    #[Id]
+    #[Column(type: "integer")]
+    protected int $point;
 
     /**
      * Decision number.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer")
      */
-    protected $number;
+    #[Id]
+    #[Column(type: "integer")]
+    protected int $number;
 
     /**
      * Content.
      *
      * Generated from subdecisions.
-     *
-     * @ORM\Column(type="text")
      */
-    protected $content;
+    #[Column(type: "text")]
+    protected string $content;
 
     /**
      * Subdecisions.
-     *
-     * @ORM\OneToMany(targetEntity="SubDecision", mappedBy="decision", cascade={"persist", "remove"})
-     * @ORM\OrderBy({"number": "ASC"})
      */
-    protected $subdecisions;
+    #[OneToMany(
+        targetEntity: "Decision\Model\SubDecision",
+        mappedBy: "decision",
+        cascade: ["persist", "remove"],
+    )]
+    #[OrderBy(value: ["number" => "ASC"])]
+    protected Collection $subdecisions;
 
     /**
      * Destroyed by.
-     *
-     * @ORM\OneToOne(targetEntity="\Decision\Model\SubDecision\Destroy", mappedBy="target")
      */
-    protected $destroyedby;
+    #[OneToOne(
+        targetEntity: "Decision\Model\SubDecision\Destroy",
+        mappedBy: "target",
+    )]
+    protected SubDecision\Destroy $destroyedby;
 
     /**
      * Set the meeting.
+     *
+     * @param Meeting $meeting
      */
     public function setMeeting(Meeting $meeting)
     {
@@ -99,7 +117,7 @@ class Decision
      *
      * @return string
      */
-    public function getMeetingType()
+    public function getMeetingType(): string
     {
         return $this->meeting_type;
     }
@@ -109,7 +127,7 @@ class Decision
      *
      * @return int
      */
-    public function getMeetingNumber()
+    public function getMeetingNumber(): int
     {
         return $this->meeting_number;
     }
@@ -119,7 +137,7 @@ class Decision
      *
      * @return Meeting
      */
-    public function getMeeting()
+    public function getMeeting(): Meeting
     {
         return $this->meeting;
     }
@@ -129,7 +147,7 @@ class Decision
      *
      * @param int $point
      */
-    public function setPoint($point)
+    public function setPoint(int $point): void
     {
         $this->point = $point;
     }
@@ -139,7 +157,7 @@ class Decision
      *
      * @return int
      */
-    public function getPoint()
+    public function getPoint(): int
     {
         return $this->point;
     }
@@ -149,7 +167,7 @@ class Decision
      *
      * @param int $number
      */
-    public function setNumber($number)
+    public function setNumber(int $number): void
     {
         $this->number = $number;
     }
@@ -159,7 +177,7 @@ class Decision
      *
      * @return int
      */
-    public function getNumber()
+    public function getNumber(): int
     {
         return $this->number;
     }
@@ -169,7 +187,7 @@ class Decision
      *
      * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -179,7 +197,7 @@ class Decision
      *
      * @param string $content
      */
-    public function setContent($content)
+    public function setContent(string $content): void
     {
         $this->content = $content;
     }
@@ -189,7 +207,7 @@ class Decision
      *
      * @return Collection
      */
-    public function getSubdecisions()
+    public function getSubdecisions(): Collection
     {
         return $this->subdecisions;
     }
@@ -199,7 +217,7 @@ class Decision
      *
      * @param SubDecision $subdecision
      */
-    public function addSubdecision(SubDecision $subdecision)
+    public function addSubdecision(SubDecision $subdecision): void
     {
         $this->subdecisions[] = $subdecision;
     }
@@ -209,7 +227,7 @@ class Decision
      *
      * @param array $subdecisions
      */
-    public function addSubdecisions($subdecisions)
+    public function addSubdecisions(array $subdecisions): void
     {
         foreach ($subdecisions as $subdecision) {
             $this->addSubdecision($subdecision);
@@ -223,7 +241,7 @@ class Decision
      *
      * @return SubDecision\Destroy
      */
-    public function getDestroyedBy()
+    public function getDestroyedBy(): SubDecision\Destroy
     {
         return $this->destroyedby;
     }
@@ -233,7 +251,7 @@ class Decision
      *
      * @return bool
      */
-    public function isDestroyed()
+    public function isDestroyed(): bool
     {
         return null !== $this->destroyedby;
     }

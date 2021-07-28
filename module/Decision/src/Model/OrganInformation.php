@@ -2,264 +2,292 @@
 
 namespace Decision\Model;
 
-use Doctrine\ORM\Mapping as ORM;
-use User\Model\User;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToOne,
+};
+use User\Model\User as UserModel;
 
 /**
  * Organ information.
- *
- * @ORM\Entity
- * @ORM\Table(name="OrganInformation")
  */
+#[Entity]
 class OrganInformation
 {
     /**
      * Organ information ID.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Decision\Model\Organ", inversedBy="organInformation")
-     * @ORM\JoinColumn(name="organ_id", referencedColumnName="id", nullable=false)
+     *
      */
-    protected $organ;
+    #[ManyToOne(
+        targetEntity: "Decision\Model\Organ",
+        inversedBy: "organInformation",
+    )]
+    #[JoinColumn(
+        name: "organ_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected Organ $organ;
 
     /**
      * The email address of the organ if available.
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
-    protected $email;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $email;
 
     /**
      * The website of the organ if available.
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
-    protected $website;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $website;
 
     /**
      * A short description of the organ in dutch.
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
-    protected $shortDutchDescription;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $shortDutchDescription;
 
     /**
      * A description of the organ in dutch.
-     *
-     * @ORM\Column(type="text", nullable=true)
      */
-    protected $dutchDescription;
+    #[Column(
+        type: "text",
+        nullable: true,
+    )]
+    protected ?string $dutchDescription;
 
     /**
      * A short description of the organ in english.
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
-    protected $shortEnglishDescription;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $shortEnglishDescription;
 
     /**
      * A description of the organ in english.
-     *
-     * @ORM\Column(type="text", nullable=true)
      */
-    protected $englishDescription;
+    #[Column(
+        type: "text",
+        nullable: true,
+    )]
+    protected ?string $englishDescription;
 
     /**
      * The cover photo to display for this organ.
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
-    protected $coverPath;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $coverPath;
 
     /**
      * The thumbnail photo to display for this organ.
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
-    protected $thumbnailPath;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $thumbnailPath;
 
     /**
      * Who was the last one to approve this information. If null then nobody approved it.
-     *
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(referencedColumnName="lidnr", nullable=true)
      */
-    protected $approver;
+    #[ManyToOne(targetEntity: "User\Model\User")]
+    #[JoinColumn(referencedColumnName: "lidnr")]
+    protected UserModel $approver;
 
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @return string
+     * @return Organ
      */
-    public function getOrgan()
+    public function getOrgan(): Organ
     {
         return $this->organ;
     }
 
     /**
-     * @param string|Organ $organ
+     * @param Organ $organ
      */
-    public function setOrgan($organ)
+    public function setOrgan(Organ $organ): void
     {
         $this->organ = $organ;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
     /**
-     * @param string $email
+     * @param string|null $email
      */
-    public function setEmail($email)
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getWebsite()
+    public function getWebsite(): ?string
     {
         return $this->website;
     }
 
     /**
-     * @param string $website
+     * @param string|null $website
      */
-    public function setWebsite($website)
+    public function setWebsite(?string $website): void
     {
         $this->website = $website;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getShortDutchDescription()
+    public function getShortDutchDescription(): ?string
     {
         return $this->shortDutchDescription;
     }
 
     /**
-     * @param string $shortDutchDescription
+     * @param string|null $shortDutchDescription
      */
-    public function setShortDutchDescription($shortDutchDescription)
+    public function setShortDutchDescription(?string $shortDutchDescription): void
     {
         $this->shortDutchDescription = $shortDutchDescription;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDutchDescription()
+    public function getDutchDescription(): ?string
     {
         return $this->dutchDescription;
     }
 
     /**
-     * @param string $dutchDescription
+     * @param string|null $dutchDescription
      */
-    public function setDutchDescription($dutchDescription)
+    public function setDutchDescription(?string $dutchDescription): void
     {
         $this->dutchDescription = $dutchDescription;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getShortEnglishDescription()
+    public function getShortEnglishDescription(): ?string
     {
         return $this->shortEnglishDescription;
     }
 
     /**
-     * @param string $shortEnglishDescription
+     * @param string|null $shortEnglishDescription
      */
-    public function setShortEnglishDescription($shortEnglishDescription)
+    public function setShortEnglishDescription(?string $shortEnglishDescription): void
     {
         $this->shortEnglishDescription = $shortEnglishDescription;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getEnglishDescription()
+    public function getEnglishDescription(): ?string
     {
         return $this->englishDescription;
     }
 
     /**
-     * @param string $englishDescription
+     * @param string|null $englishDescription
      */
-    public function setEnglishDescription($englishDescription)
+    public function setEnglishDescription(?string $englishDescription): void
     {
         $this->englishDescription = $englishDescription;
     }
 
     /**
-     * @return User
+     * @return UserModel
      */
-    public function getApprover()
+    public function getApprover(): UserModel
     {
         return $this->approver;
     }
 
     /**
-     * @param User $approver
+     * @param UserModel $approver
      */
-    public function setApprover($approver)
+    public function setApprover(UserModel $approver): void
     {
         $this->approver = $approver;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCoverPath()
+    public function getCoverPath(): ?string
     {
         return $this->coverPath;
     }
 
     /**
-     * @param string $coverPath
+     * @param string|null $coverPath
      */
-    public function setCoverPath($coverPath)
+    public function setCoverPath(?string $coverPath): void
     {
         $this->coverPath = $coverPath;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getThumbnailPath()
+    public function getThumbnailPath(): ?string
     {
         return $this->thumbnailPath;
     }
 
     /**
-     * @param mixed $thumbnailPath
+     * @param string|null $thumbnailPath
      */
-    public function setThumbnailPath($thumbnailPath)
+    public function setThumbnailPath(?string $thumbnailPath): void
     {
         $this->thumbnailPath = $thumbnailPath;
     }
 
+    // TODO: Check how this works.
     public function __clone()
     {
         $this->id = null;

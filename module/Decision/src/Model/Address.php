@@ -2,14 +2,19 @@
 
 namespace Decision\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    Id,
+    JoinColumn,
+    ManyToOne,
+};
 use InvalidArgumentException;
 
 /**
  * Address model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class Address
 {
     public const TYPE_HOME = 'home';
@@ -18,12 +23,18 @@ class Address
 
     /**
      * Member.
-     *
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Member", inversedBy="addresses"))
-     * @ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")
      */
-    protected $member;
+    #[Id]
+    #[ManyToOne(
+        targetEntity: "Decision\Model\Member",
+        inversedBy: "addresses",
+    )]
+    #[JoinColumn(
+        name: "lidnr",
+        referencedColumnName: "lidnr",
+        nullable: false,
+    )]
+    protected Member $member;
 
     /**
      * Type.
@@ -33,62 +44,55 @@ class Address
      * - home (Parent's home)
      * - student (Student's home)
      * - mail (Where GEWIS mail should go to)
-     *
-     * @ORM\Id
-     * @ORM\Column(type="string")
      */
-    protected $type;
+    #[Id]
+    #[Column(type: "string")]
+    protected string $type;
 
     /**
      * Country.
      *
      * By default, netherlands.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $country = 'netherlands';
+    #[Column(type: "string")]
+    protected string $country = 'netherlands';
 
     /**
      * Street.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $street;
+    #[Column(type: "string")]
+    protected string $street;
 
     /**
      * House number (+ suffix).
-     *
-     * @ORM\Column(type="string")
      */
-    protected $number;
+    #[Column(type: "string")]
+    protected string $number;
 
     /**
      * Postal code.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $postalCode;
+    #[Column(type: "string")]
+    protected string $postalCode;
 
     /**
      * City.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $city;
+    #[Column(type: "string")]
+    protected string $city;
 
     /**
      * Phone number.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $phone;
+    #[Column(type: "string")]
+    protected string $phone;
 
     /**
      * Get available address types.
      *
      * @return array
      */
-    public static function getTypes()
+    public static function getTypes(): array
     {
         return [
             self::TYPE_HOME,
@@ -102,15 +106,17 @@ class Address
      *
      * @return Member
      */
-    public function getMember()
+    public function getMember(): Member
     {
         return $this->member;
     }
 
     /**
      * Set the member.
+     *
+     * @param Member $member
      */
-    public function setMember(Member $member)
+    public function setMember(Member $member): void
     {
         $this->member = $member;
     }
@@ -120,7 +126,7 @@ class Address
      *
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -132,7 +138,7 @@ class Address
      *
      * @throws InvalidArgumentException When the type is incorrect
      */
-    public function setType($type)
+    public function setType(string $type): void
     {
         if (!in_array($type, self::getTypes())) {
             throw new InvalidArgumentException('Non-existing type.');
@@ -145,7 +151,7 @@ class Address
      *
      * @return string
      */
-    public function getCountry()
+    public function getCountry(): string
     {
         return $this->country;
     }
@@ -155,7 +161,7 @@ class Address
      *
      * @param string $country
      */
-    public function setCountry($country)
+    public function setCountry(string $country): void
     {
         $this->country = $country;
     }
@@ -165,7 +171,7 @@ class Address
      *
      * @return string
      */
-    public function getStreet()
+    public function getStreet(): string
     {
         return $this->street;
     }
@@ -175,7 +181,7 @@ class Address
      *
      * @param string $street
      */
-    public function setStreet($street)
+    public function setStreet(string $street): void
     {
         $this->street = $street;
     }
@@ -185,7 +191,7 @@ class Address
      *
      * @return string
      */
-    public function getNumber()
+    public function getNumber(): string
     {
         return $this->number;
     }
@@ -195,7 +201,7 @@ class Address
      *
      * @param string $number
      */
-    public function setNumber($number)
+    public function setNumber(string $number): void
     {
         $this->number = $number;
     }
@@ -205,7 +211,7 @@ class Address
      *
      * @param string $postalCode
      */
-    public function setPostalCode($postalCode)
+    public function setPostalCode(string $postalCode): void
     {
         $this->postalCode = $postalCode;
     }
@@ -215,7 +221,7 @@ class Address
      *
      * @return string
      */
-    public function getPostalCode()
+    public function getPostalCode(): string
     {
         return $this->postalCode;
     }
@@ -225,7 +231,7 @@ class Address
      *
      * @return string
      */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->city;
     }
@@ -235,7 +241,7 @@ class Address
      *
      * @param string $city
      */
-    public function setCity($city)
+    public function setCity(string $city): void
     {
         $this->city = $city;
     }
@@ -245,7 +251,7 @@ class Address
      *
      * @return string
      */
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->phone;
     }
@@ -255,7 +261,7 @@ class Address
      *
      * @param string $phone
      */
-    public function setPhone($phone)
+    public function setPhone(string $phone): void
     {
         $this->phone = $phone;
     }

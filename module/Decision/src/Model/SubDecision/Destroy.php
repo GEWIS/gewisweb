@@ -2,9 +2,15 @@
 
 namespace Decision\Model\SubDecision;
 
-use Decision\Model\Decision;
-use Decision\Model\SubDecision;
-use Doctrine\ORM\Mapping as ORM;
+use Decision\Model\{
+    Decision,
+    SubDecision,
+};
+use Doctrine\ORM\Mapping\{
+    Entity,
+    JoinColumn,
+    OneToOne,
+};
 
 /**
  * Destroying a decision.
@@ -19,30 +25,45 @@ use Doctrine\ORM\Mapping as ORM;
  * Also note that destroying decisions that destroy is undefined behaviour!
  *
  * @author Pieter Kokx <kokx@gewis.nl>
- *
- * @ORM\Entity
  */
+#[Entity]
 class Destroy extends SubDecision
 {
     /**
      * Reference to the destruction of a decision.
-     *
-     * @ORM\OneToOne(targetEntity="\Decision\Model\Decision", inversedBy="destroyedby")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="r_meeting_type", referencedColumnName="meeting_type"),
-     *     @ORM\JoinColumn(name="r_meeting_number", referencedColumnName="meeting_number"),
-     *     @ORM\JoinColumn(name="r_decision_point", referencedColumnName="point"),
-     *     @ORM\JoinColumn(name="r_decision_number", referencedColumnName="number"),
-     * })
      */
-    protected $target;
+    #[OneToOne(
+        targetEntity: "Decision\Model\Decision",
+        inversedBy: "destroyedby",
+    )]
+    #[JoinColumn(
+        name: "r_meeting_type",
+        referencedColumnName: "meeting_type",
+        nullable: false,
+    )]
+    #[JoinColumn(
+        name: "r_meeting_number",
+        referencedColumnName: "meeting_number",
+        nullable: false,
+    )]
+    #[JoinColumn(
+        name: "r_decision_point",
+        referencedColumnName: "point",
+        nullable: false,
+    )]
+    #[JoinColumn(
+        name: "r_decision_number",
+        referencedColumnName: "number",
+        nullable: false,
+    )]
+    protected Decision $target;
 
     /**
      * Get the target.
      *
-     * @return SubDecision
+     * @return Decision
      */
-    public function getTarget()
+    public function getTarget(): Decision
     {
         return $this->target;
     }
@@ -52,7 +73,7 @@ class Destroy extends SubDecision
      *
      * @param Decision $target
      */
-    public function setTarget(Decision $target)
+    public function setTarget(Decision $target): void
     {
         $this->target = $target;
     }

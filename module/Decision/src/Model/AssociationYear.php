@@ -16,14 +16,14 @@ class AssociationYear
     /**
      * @var int the first calendar year of the association year
      */
-    protected $firstYear;
+    protected int $firstYear;
 
     /**
      * Declare constructor private to enforce the use of the static methods.
      *
      * AssociationYear constructor.
      */
-    final private function __construct()
+    private function __construct()
     {
         // never used
     }
@@ -35,7 +35,7 @@ class AssociationYear
      *
      * @return static
      */
-    public static function fromYear($year)
+    public static function fromYear(int $year): static
     {
         $inst = new static();
         $inst->firstYear = $year;
@@ -50,7 +50,7 @@ class AssociationYear
      *
      * @return static
      */
-    public static function fromDate(DateTime $dateTime)
+    public static function fromDate(DateTime $dateTime): static
     {
         $inst = new static();
         if (
@@ -69,7 +69,7 @@ class AssociationYear
     /**
      * @return int the first calendar year of the association year
      */
-    public function getYear()
+    public function getYear(): int
     {
         return $this->firstYear;
     }
@@ -79,7 +79,7 @@ class AssociationYear
      *
      * @return string the association year
      */
-    public function getYearString()
+    public function getYearString(): string
     {
         return sprintf('%4d-%4d', $this->firstYear, $this->firstYear + 1);
     }
@@ -89,7 +89,7 @@ class AssociationYear
      *
      * @return DateTime
      */
-    public function getStartDate()
+    public function getStartDate(): DateTime
     {
         return DateTime::createFromFormat(
             'j-m-Y',
@@ -102,7 +102,7 @@ class AssociationYear
      *
      * @return DateTime
      */
-    public function getEndDate()
+    public function getEndDate(): DateTime
     {
         return DateTime::createFromFormat(
             'j-m-Y',

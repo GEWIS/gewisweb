@@ -2,59 +2,72 @@
 
 namespace Decision\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToOne,
+    UniqueConstraint,
+};
 
 /**
  * Authorization model.
- *
- * @ORM\Entity
- * @ORM\Table(name="Authorization", uniqueConstraints={@ORM\UniqueConstraint(name="auth_idx", columns={"authorizer", "recipient", "meetingNumber"})})
  */
+#[Entity]
+#[UniqueConstraint(
+    name: "auth_idx",
+    columns: ["authorizer", "recipient", "meetingNumber"],
+)]
 class Authorization
 {
     /**
      * Authorization ID.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
      * Member submitting this authorization.
-     *
-     * @ORM\ManyToOne(targetEntity="Member"))
-     * @ORM\JoinColumn(name="authorizer", referencedColumnName="lidnr")
      */
-    protected $authorizer;
+    #[ManyToOne(targetEntity: "Decision\Model\Member")]
+    #[JoinColumn(
+        name: "authorizer",
+        referencedColumnName: "lidnr",
+        nullable: false,
+    )]
+    protected Member $authorizer;
 
     /**
      * Member receiving this authorization..
-     *
-     * @ORM\ManyToOne(targetEntity="Member"))
-     * @ORM\JoinColumn(name="recipient", referencedColumnName="lidnr")
      */
-    protected $recipient;
+    #[ManyToOne(targetEntity: "Decision\Model\Member")]
+    #[JoinColumn(
+        name: "recipient",
+        referencedColumnName: "lidnr",
+        nullable: false,
+    )]
+    protected Member $recipient;
 
     /**
      * Meeting number.
-     *
-     * @ORM\Column(type="integer")
      */
-    protected $meetingNumber;
+    #[Column(type: "integer")]
+    protected int $meetingNumber;
 
     /**
      * Has the authorization been revoked?
-     *
-     * @ORM\Column(type="boolean"))
      */
-    protected $revoked = false;
+    #[Column(type: "boolean")]
+    protected bool $revoked = false;
 
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -62,7 +75,7 @@ class Authorization
     /**
      * @return Member
      */
-    public function getAuthorizer()
+    public function getAuthorizer(): Member
     {
         return $this->authorizer;
     }
@@ -70,7 +83,7 @@ class Authorization
     /**
      * @param Member $authorizer
      */
-    public function setAuthorizer($authorizer)
+    public function setAuthorizer(Member $authorizer): void
     {
         $this->authorizer = $authorizer;
     }
@@ -78,7 +91,7 @@ class Authorization
     /**
      * @return Member
      */
-    public function getRecipient()
+    public function getRecipient(): Member
     {
         return $this->recipient;
     }
@@ -86,7 +99,7 @@ class Authorization
     /**
      * @param Member $recipient
      */
-    public function setRecipient($recipient)
+    public function setRecipient(Member $recipient): void
     {
         $this->recipient = $recipient;
     }
@@ -94,7 +107,7 @@ class Authorization
     /**
      * @return int
      */
-    public function getMeetingNumber()
+    public function getMeetingNumber(): int
     {
         return $this->meetingNumber;
     }
@@ -102,7 +115,7 @@ class Authorization
     /**
      * @param int $meetingNumber
      */
-    public function setMeetingNumber($meetingNumber)
+    public function setMeetingNumber(int $meetingNumber): void
     {
         $this->meetingNumber = $meetingNumber;
     }
@@ -110,7 +123,7 @@ class Authorization
     /**
      * @return bool
      */
-    public function getRevoked()
+    public function getRevoked(): bool
     {
         return $this->revoked;
     }
@@ -118,7 +131,7 @@ class Authorization
     /**
      * @param bool $revoked
      */
-    public function setRevoked($revoked)
+    public function setRevoked(bool $revoked): void
     {
         $this->revoked = $revoked;
     }

@@ -5,15 +5,23 @@ namespace Decision\Model;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    Id,
+    InverseJoinColumn,
+    JoinColumn,
+    JoinTable,
+    ManyToMany,
+    OneToMany,
+    OneToOne,
+};
 use InvalidArgumentException;
 
 /**
  * Member model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class Member
 {
     public const GENDER_MALE = 'm';
@@ -28,48 +36,45 @@ class Member
 
     /**
      * The user.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="lidnr")
-     * @ORM\OneToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")
      */
-    protected $lidnr;
+    #[Id]
+    #[Column(type: "integer")]
+    #[OneToOne(targetEntity: "User\Model\User")]
+    #[JoinColumn(
+        name: "lidnr",
+        referencedColumnName: "lidnr",
+    )]
+    protected int $lidnr;
 
     /**
      * Member's email address.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $email;
+    #[Column(type: "string")]
+    protected string $email;
 
     /**
      * Member's last name.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $lastName;
+    #[Column(type: "string")]
+    protected string $lastName;
 
     /**
      * Middle name.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $middleName;
+    #[Column(type: "string")]
+    protected string $middleName;
 
     /**
      * Initials.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $initials;
+    #[Column(type: "string")]
+    protected string $initials;
 
     /**
      * First name.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $firstName;
+    #[Column(type: "string")]
+    protected string $firstName;
 
     /**
      * Gender of the member.
@@ -77,20 +82,21 @@ class Member
      * Either one of:
      * - m
      * - f
-     *
-     * @ORM\Column(type="string", length=1)
      */
-    protected $gender;
+    #[Column(
+        type: "string",
+        length: 1,
+    )]
+    protected string $gender;
 
     /**
      * Generation.
      *
      * This is the year that this member became a GEWIS member. This is not
      * a academic year, but rather a calendar year.
-     *
-     * @ORM\Column(type="integer")
      */
-    protected $generation;
+    #[Column(type: "integer")]
+    protected int $generation;
 
     /**
      * Member type.
@@ -108,97 +114,112 @@ class Member
      * http://gewis.nl/vereniging/statuten/statuten.php
      *
      * Zie artikel 7 lid 1 en 2.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $type;
+    #[Column(type: "string")]
+    protected string $type;
 
     /**
      * Last changed date of membership.
-     *
-     * @ORM\Column(type="date")
      */
-    protected $changedOn;
+    #[Column(type: "date")]
+    protected DateTime $changedOn;
 
     /**
      * Member birth date.
-     *
-     * @ORM\Column(type="date")
      */
-    protected $birth;
+    #[Column(type: "date")]
+    protected DateTime $birth;
 
     /**
      * Member expiration date.
-     *
-     * @ORM\Column(type="date")
      */
-    protected $expiration;
+    #[Column(type: "date")]
+    protected DateTime $expiration;
 
     /**
      * How much the member has paid for membership. 0 by default.
-     *
-     * @ORM\Column(type="integer")
      */
-    protected $paid = 0;
+    #[Column(type: "integer")]
+    protected int $paid = 0;
 
     /**
      * Iban number.
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
-    protected $iban;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $iban;
     /**
      * If the member receives a 'supremum'.
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
-    protected $supremum;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected string $supremum;
 
     /**
      * Addresses of this member.
-     *
-     * @ORM\OneToMany(targetEntity="Address", mappedBy="member", cascade={"persist"})
      */
-    protected $addresses;
+    #[OneToMany(
+        targetEntity: "Decision\Model\Address",
+        mappedBy: "member",
+        cascade: ["persist"],
+    )]
+    protected ArrayCollection $addresses;
 
     /**
      * Installations of this member.
-     *
-     * @ORM\OneToMany(targetEntity="Decision\Model\SubDecision\Installation", mappedBy="member")
      */
-    protected $installations;
+    #[OneToMany(
+        targetEntity: "Decision\Model\SubDecision\Installation",
+        mappedBy: "member",
+    )]
+    protected ArrayCollection $installations;
 
     /**
      * Memberships of mailing lists.
-     *
-     * @ORM\ManyToMany(targetEntity="MailingList", inversedBy="members")
-     * @ORM\JoinTable(name="members_mailinglists",
-     *     joinColumns={@ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="name", referencedColumnName="name")}
-     * )
      */
-    protected $lists;
+    #[ManyToMany(
+        targetEntity: "Decision\Model\MailingList",
+        inversedBy: "members",
+    )]
+    #[JoinTable(name: "member_mailinglists")]
+    #[JoinColumn(
+        name: "lidnr",
+        referencedColumnName: "lidnr"
+    )]
+    #[InverseJoinColumn(
+        name: "name",
+        referencedColumnName: "name",
+    )]
+    protected ArrayCollection $lists;
 
     /**
      * Organ memberships.
-     *
-     * @ORM\OneToMany(targetEntity="OrganMember", mappedBy="member")
      */
-    protected $organInstallations;
+    #[OneToMany(
+        targetEntity: "Decision\Model\OrganMember",
+        mappedBy: "member",
+    )]
+    protected ArrayCollection $organInstallations;
 
     /**
      * Board memberships.
-     *
-     * @ORM\OneToMany(targetEntity="BoardMember", mappedBy="member")
      */
-    protected $boardInstallations;
+    #[OneToMany(
+        targetEntity: "Decision\Model\BoardMember",
+        mappedBy: "member",
+    )]
+    protected ArrayCollection $boardInstallations;
 
     /**
      * Static method to get available genders.
      *
      * @return array
      */
-    protected static function getGenders()
+    protected static function getGenders(): array
     {
         return [
             self::GENDER_MALE,
@@ -212,7 +233,7 @@ class Member
      *
      * @return array
      */
-    protected static function getTypes()
+    protected static function getTypes(): array
     {
         return [
             self::TYPE_ORDINARY,
@@ -240,7 +261,7 @@ class Member
      *
      * @return int
      */
-    public function getLidnr()
+    public function getLidnr(): int
     {
         return $this->lidnr;
     }
@@ -250,7 +271,7 @@ class Member
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -260,7 +281,7 @@ class Member
      *
      * @return string
      */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
@@ -270,7 +291,7 @@ class Member
      *
      * @return string
      */
-    public function getMiddleName()
+    public function getMiddleName(): string
     {
         return $this->middleName;
     }
@@ -280,7 +301,7 @@ class Member
      *
      * @return string
      */
-    public function getInitials()
+    public function getInitials(): string
     {
         return $this->initials;
     }
@@ -290,7 +311,7 @@ class Member
      *
      * @return string
      */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
@@ -300,7 +321,7 @@ class Member
      *
      * @param string $lidnr
      */
-    public function setLidnr($lidnr)
+    public function setLidnr(string $lidnr): void
     {
         $this->lidnr = $lidnr;
     }
@@ -310,7 +331,7 @@ class Member
      *
      * @param string $email
      */
-    public function setEmail($email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
@@ -320,7 +341,7 @@ class Member
      *
      * @param string $lastName
      */
-    public function setLastName($lastName)
+    public function setLastName(string $lastName): void
     {
         $this->lastName = $lastName;
     }
@@ -330,7 +351,7 @@ class Member
      *
      * @param string $middleName
      */
-    public function setMiddleName($middleName)
+    public function setMiddleName(string $middleName): void
     {
         $this->middleName = $middleName;
     }
@@ -340,7 +361,7 @@ class Member
      *
      * @param string $initials
      */
-    public function setInitials($initials)
+    public function setInitials(string $initials): void
     {
         $this->initials = $initials;
     }
@@ -350,7 +371,7 @@ class Member
      *
      * @param string $firstName
      */
-    public function setFirstName($firstName)
+    public function setFirstName(string $firstName): void
     {
         $this->firstName = $firstName;
     }
@@ -360,7 +381,7 @@ class Member
      *
      * @return string
      */
-    public function getFullName()
+    public function getFullName(): string
     {
         $name = $this->getFirstName() . ' ';
 
@@ -377,7 +398,7 @@ class Member
      *
      * @return string
      */
-    public function getGender()
+    public function getGender(): string
     {
         return $this->gender;
     }
@@ -389,7 +410,7 @@ class Member
      *
      * @throws InvalidArgumentException when the gender does not have correct value
      */
-    public function setGender($gender)
+    public function setGender(string $gender): void
     {
         if (!in_array($gender, self::getGenders())) {
             throw new InvalidArgumentException('Invalid gender value');
@@ -400,9 +421,9 @@ class Member
     /**
      * Get the generation.
      *
-     * @return string
+     * @return int
      */
-    public function getGeneration()
+    public function getGeneration(): int
     {
         return $this->generation;
     }
@@ -410,9 +431,9 @@ class Member
     /**
      * Set the generation.
      *
-     * @param string $generation
+     * @param int $generation
      */
-    public function setGeneration($generation)
+    public function setGeneration(int $generation): void
     {
         $this->generation = $generation;
     }
@@ -422,7 +443,7 @@ class Member
      *
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -434,7 +455,7 @@ class Member
      *
      * @throws InvalidArgumentException when the type is incorrect
      */
-    public function setType($type)
+    public function setType(string $type): void
     {
         if (!in_array($type, self::getTypes())) {
             throw new InvalidArgumentException('Nonexisting type given.');
@@ -449,7 +470,7 @@ class Member
      *
      * @return DateTime
      */
-    public function getExpiration()
+    public function getExpiration(): DateTime
     {
         return $this->expiration;
     }
@@ -459,7 +480,7 @@ class Member
      *
      * @param DateTime $expiration
      */
-    public function setExpiration($expiration)
+    public function setExpiration(DateTime $expiration): void
     {
         $this->expiration = $expiration;
     }
@@ -469,15 +490,17 @@ class Member
      *
      * @return DateTime
      */
-    public function getBirth()
+    public function getBirth(): DateTime
     {
         return $this->birth;
     }
 
     /**
      * Set the birthdate.
+     *
+     * @param DateTime $birth
      */
-    public function setBirth(DateTime $birth)
+    public function setBirth(DateTime $birth): void
     {
         $this->birth = $birth;
     }
@@ -487,7 +510,7 @@ class Member
      *
      * @return DateTime
      */
-    public function getChangedOn()
+    public function getChangedOn(): DateTime
     {
         return $this->changedOn;
     }
@@ -497,7 +520,7 @@ class Member
      *
      * @param DateTime $changedOn
      */
-    public function setChangedOn($changedOn)
+    public function setChangedOn(DateTime $changedOn): void
     {
         $this->changedOn = $changedOn;
     }
@@ -507,7 +530,7 @@ class Member
      *
      * @return int
      */
-    public function getPaid()
+    public function getPaid(): int
     {
         return $this->paid;
     }
@@ -517,7 +540,7 @@ class Member
      *
      * @param int $paid
      */
-    public function setPaid($paid)
+    public function setPaid(int $paid): void
     {
         $this->paid = $paid;
     }
@@ -525,9 +548,9 @@ class Member
     /**
      * Get the installations.
      *
-     * @return Collection
+     * @return ArrayCollection
      */
-    public function getInstallations()
+    public function getInstallations(): ArrayCollection
     {
         return $this->installations;
     }
@@ -535,9 +558,9 @@ class Member
     /**
      * Get the organ installations.
      *
-     * @return Collection
+     * @return ArrayCollection
      */
-    public function getOrganInstallations()
+    public function getOrganInstallations(): ArrayCollection
     {
         return $this->organInstallations;
     }
@@ -545,9 +568,9 @@ class Member
     /**
      * Get the organ installations of organs that the member is currently part of.
      *
-     * @return Collection
+     * @return ArrayCollection
      */
-    public function getCurrentOrganInstallations()
+    public function getCurrentOrganInstallations(): ArrayCollection
     {
         if (is_null($this->getOrganInstallations())) {
             return new ArrayCollection();
@@ -571,7 +594,7 @@ class Member
      *
      * @return bool
      */
-    public function isActive()
+    public function isActive(): bool
     {
         $currentInstallations = $this->getCurrentOrganInstallations();
 
@@ -581,9 +604,9 @@ class Member
     /**
      * Get the board installations.
      *
-     * @return Collection
+     * @return ArrayCollection
      */
-    public function getBoardInstallations()
+    public function getBoardInstallations(): ArrayCollection
     {
         return $this->boardInstallations;
     }
@@ -593,7 +616,7 @@ class Member
      *
      * @return BoardMember|null
      */
-    public function getCurrentBoardInstallation()
+    public function getCurrentBoardInstallation(): ?BoardMember
     {
         // Filter out past board installations
         $today = new DateTime();
@@ -620,7 +643,7 @@ class Member
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'lidnr' => $this->getLidnr(),
@@ -635,7 +658,10 @@ class Member
         ];
     }
 
-    public function toApiArray()
+    /**
+     * @return array
+     */
+    public function toApiArray(): array
     {
         return [
             'lidnr' => $this->getLidnr(),
@@ -654,9 +680,9 @@ class Member
     /**
      * Get all addresses.
      *
-     * @return Collection all addresses
+     * @return ArrayCollection all addresses
      */
-    public function getAddresses()
+    public function getAddresses(): ArrayCollection
     {
         return $this->addresses;
     }
@@ -664,7 +690,7 @@ class Member
     /**
      * Clear all addresses.
      */
-    public function clearAddresses()
+    public function clearAddresses(): void
     {
         $this->addresses = new ArrayCollection();
     }
@@ -674,7 +700,7 @@ class Member
      *
      * @param array $addresses
      */
-    public function addAddresses($addresses)
+    public function addAddresses(array $addresses): void
     {
         foreach ($addresses as $address) {
             $this->addAddress($address);
@@ -683,8 +709,10 @@ class Member
 
     /**
      * Add an address.
+     *
+     * @param Address $address
      */
-    public function addAddress(Address $address)
+    public function addAddress(Address $address): void
     {
         $address->setMember($this);
         $this->addresses[] = $address;
@@ -693,9 +721,9 @@ class Member
     /**
      * Get mailing list subscriptions.
      *
-     * @return Collection
+     * @return ArrayCollection
      */
-    public function getLists()
+    public function getLists(): ArrayCollection
     {
         return $this->lists;
     }
@@ -704,8 +732,10 @@ class Member
      * Add a mailing list subscription.
      *
      * Note that this is the owning side.
+     *
+     * @param MailingList $list
      */
-    public function addList(MailingList $list)
+    public function addList(MailingList $list): void
     {
         $list->addMember($this);
         $this->lists[] = $list;
@@ -716,7 +746,7 @@ class Member
      *
      * @param array $lists
      */
-    public function addLists($lists)
+    public function addLists(array $lists): void
     {
         foreach ($lists as $list) {
             $this->addList($list);
@@ -726,7 +756,7 @@ class Member
     /**
      * Clear the lists.
      */
-    public function clearLists()
+    public function clearLists(): void
     {
         $this->lists = new ArrayCollection();
     }

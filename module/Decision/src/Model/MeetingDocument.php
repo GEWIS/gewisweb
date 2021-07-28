@@ -2,64 +2,77 @@
 
 namespace Decision\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToOne,
+};
 
 /**
  * Meeting document model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class MeetingDocument
 {
     /**
      * Document id.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
      * Meeting.
-     *
-     * @ORM\ManyToOne(targetEntity="Meeting", inversedBy="documents")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="meeting_type", referencedColumnName="type"),
-     *     @ORM\JoinColumn(name="meeting_number", referencedColumnName="number")
-     * })
      */
-    protected $meeting;
+    #[ManyToOne(
+        targetEntity: "Decision\Model\Meeting",
+        inversedBy: "documents",
+    )]
+    #[JoinColumn(
+        name: "meeting_type",
+        referencedColumnName: "type",
+        nullable: false,
+    )]
+    #[JoinColumn(
+        name: "meeting_number",
+        referencedColumnName: "number",
+        nullable: false,
+    )]
+    protected Meeting $meeting;
 
     /**
      * Name of the document.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $name;
+    #[Column(type: "string")]
+    protected string $name;
 
     /**
      * Path of the document, relative to the storage directory.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $path;
+    #[Column(type: "string")]
+    protected string $path;
 
     /**
      * Determines the order in which to display the document.
      *
      * The order is determined by sorting the positions in ascending order.
-     *
-     * @ORM\Column(type="integer", options={"default": 0})
      */
-    protected $displayPosition;
+    #[Column(
+        type: "integer",
+        options: ["default" => 0],
+    )]
+    protected int $displayPosition;
 
     /**
      * Get the document id.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -69,15 +82,17 @@ class MeetingDocument
      *
      * @return Meeting
      */
-    public function getMeeting()
+    public function getMeeting(): Meeting
     {
         return $this->meeting;
     }
 
     /**
      * Set the meeting.
+     *
+     * @param Meeting $meeting
      */
-    public function setMeeting(Meeting $meeting)
+    public function setMeeting(Meeting $meeting): void
     {
         $meeting->addDocument($this);
         $this->meeting = $meeting;
@@ -88,7 +103,7 @@ class MeetingDocument
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -98,7 +113,7 @@ class MeetingDocument
      *
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -108,7 +123,7 @@ class MeetingDocument
      *
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -118,17 +133,23 @@ class MeetingDocument
      *
      * @param string $path
      */
-    public function setPath($path)
+    public function setPath(string $path): void
     {
         $this->path = $path;
     }
 
-    public function getDisplayPosition()
+    /**
+     * @return int
+     */
+    public function getDisplayPosition(): int
     {
         return $this->displayPosition;
     }
 
-    public function setDisplayPosition($position)
+    /**
+     * @param int $position
+     */
+    public function setDisplayPosition(int $position): void
     {
         $this->displayPosition = $position;
     }

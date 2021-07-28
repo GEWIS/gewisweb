@@ -4,16 +4,20 @@ namespace Decision\Model;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\OrderBy;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    Id,
+    OneToMany,
+    OneToOne,
+    OrderBy,
+};
 use InvalidArgumentException;
 
 /**
  * Meeting model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class Meeting
 {
     public const TYPE_BV = 'BV'; // bestuursvergadering
@@ -23,53 +27,58 @@ class Meeting
 
     /**
      * Meeting type.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="string")
      */
+    #[Id]
+    #[Column(type: "string")]
     protected $type;
 
     /**
      * Meeting number.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer")
      */
+    #[Id]
+    #[Column(type: "integer")]
     protected $number;
 
     /**
      * Meeting date.
-     *
-     * @ORM\Column(type="date")
      */
+    #[Column(type: "date")]
     protected $date;
 
     /**
      * Decisions.
-     *
-     * @ORM\OneToMany(targetEntity="Decision", mappedBy="meeting")
      */
-    protected $decisions;
+    #[OneToMany(
+        targetEntity: "Decision\Model\Decision",
+        mappedBy: "meeting",
+    )]
+    protected ArrayCollection $decisions;
 
     /**
      * Documents.
-     *
-     * @ORM\OneToMany(targetEntity="MeetingDocument", mappedBy="meeting")
-     * @OrderBy({"displayPosition": "ASC"})
      */
-    protected $documents;
+    #[OneToMany(
+        targetEntity: "Decision\Model\MeetingDocument",
+        mappedBy: "meeting",
+    )]
+    #[OrderBy(value: ["displayPosition" => "ASC"])]
+    protected ArrayCollection $documents;
 
     /**
      * The notes for this meeting.
-     *
-     * @ORM\OneToOne(targetEntity="MeetingNotes", mappedBy="meeting")
      */
-    protected $meetingNotes;
+    #[OneToOne(
+        targetEntity: "Decision\Model\MeetingNotes",
+        mappedBy: "meeting",
+    )]
+    protected MeetingNotes $meetingNotes;
 
     /**
      * Get all allowed meeting types.
+     *
+     * @return array
      */
-    public static function getTypes()
+    public static function getTypes(): array
     {
         return [
             self::TYPE_BV,
@@ -92,7 +101,7 @@ class Meeting
      *
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -102,12 +111,15 @@ class Meeting
      *
      * @return int
      */
-    public function getNumber()
+    public function getNumber(): int
     {
         return $this->number;
     }
 
-    public function getNotes()
+    /**
+     * @return MeetingNotes
+     */
+    public function getNotes(): MeetingNotes
     {
         return $this->meetingNotes;
     }
@@ -117,7 +129,7 @@ class Meeting
      *
      * @param string $type
      */
-    public function setType($type)
+    public function setType(string $type): void
     {
         if (!in_array($type, self::getTypes())) {
             throw new InvalidArgumentException('Invalid meeting type given.');
@@ -130,7 +142,7 @@ class Meeting
      *
      * @param int $number
      */
-    public function setNumber($number)
+    public function setNumber(int $number): void
     {
         $this->number = $number;
     }
@@ -140,15 +152,17 @@ class Meeting
      *
      * @return DateTime
      */
-    public function getDate()
+    public function getDate(): DateTime
     {
         return $this->date;
     }
 
     /**
      * Set the meeting date.
+     *
+     * @param DateTime $date
      */
-    public function setDate(DateTime $date)
+    public function setDate(DateTime $date): void
     {
         $this->date = $date;
     }
@@ -156,17 +170,19 @@ class Meeting
     /**
      * Get the decisions.
      *
-     * @return Collection
+     * @return ArrayCollection
      */
-    public function getDecisions()
+    public function getDecisions(): ArrayCollection
     {
         return $this->decisions;
     }
 
     /**
      * Add a decision.
+     *
+     * @param Decision $decision
      */
-    public function addDecision(Decision $decision)
+    public function addDecision(Decision $decision): void
     {
         $this->decisions[] = $decision;
     }
@@ -176,7 +192,7 @@ class Meeting
      *
      * @param array $decisions
      */
-    public function addDecisions($decisions)
+    public function addDecisions(array $decisions): void
     {
         foreach ($decisions as $decision) {
             $this->addDecision($decision);
@@ -186,9 +202,9 @@ class Meeting
     /**
      * Get the documents.
      *
-     * @return Collection
+     * @return ArrayCollection
      */
-    public function getDocuments()
+    public function getDocuments(): ArrayCollection
     {
         return $this->documents;
     }
@@ -198,7 +214,7 @@ class Meeting
      *
      * @param MeetingDocument $document
      */
-    public function addDocument(MeetingDocument $document)
+    public function addDocument(MeetingDocument $document): void
     {
         $this->documents[] = $document;
     }
@@ -208,7 +224,7 @@ class Meeting
      *
      * @param array $documents
      */
-    public function addDocuments($documents)
+    public function addDocuments(array $documents): void
     {
         foreach ($documents as $document) {
             $this->addDocument($document);

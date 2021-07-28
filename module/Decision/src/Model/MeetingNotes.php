@@ -2,54 +2,64 @@
 
 namespace Decision\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    Id,
+    JoinColumn,
+    OneToOne,
+};
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Meeting notes.
- *
- * @ORM\Entity
  */
+#[Entity]
 class MeetingNotes implements ResourceInterface
 {
     /**
      * Meeting type.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="string")
      */
-    protected $type;
+    #[Id]
+    #[Column(type: "string")]
+    protected string $type;
 
     /**
      * Meeting number.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer")
      */
-    protected $number;
+    #[Id]
+    #[Column(type: "integer")]
+    protected int $number;
 
     /**
      * The corresponding meeting for these notes.
-     *
-     * @ORM\OneToOne(targetEntity="Meeting", inversedBy="meetingNotes")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="type", referencedColumnName="type"),
-     *     @ORM\JoinColumn(name="number", referencedColumnName="number"),
-     * })
      */
-    protected $meeting;
+    #[OneToOne(
+        targetEntity: "Decision\Model\Meeting",
+        inversedBy: "meetingNotes",
+    )]
+    #[JoinColumn(
+        name: "type",
+        referencedColumnName: "type",
+        nullable: false,
+    )]
+    #[JoinColumn(
+        name: "number",
+        referencedColumnName: "number",
+        nullable: false,
+    )]
+    protected Meeting $meeting;
 
     /**
      * The storage path.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $path;
+    #[Column(type: "string")]
+    protected string $path;
 
     /**
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -57,7 +67,7 @@ class MeetingNotes implements ResourceInterface
     /**
      * @param Meeting $meeting
      */
-    public function setMeeting($meeting)
+    public function setMeeting(Meeting $meeting): void
     {
         $this->meeting = $meeting;
         $this->type = $meeting->getType();
@@ -67,7 +77,7 @@ class MeetingNotes implements ResourceInterface
     /**
      * @param string $path
      */
-    public function setPath($path)
+    public function setPath(string $path): void
     {
         $this->path = $path;
     }
@@ -77,7 +87,7 @@ class MeetingNotes implements ResourceInterface
      *
      * @return string
      */
-    public function getResourceId()
+    public function getResourceId(): string
     {
         return 'meeting_notes';
     }
