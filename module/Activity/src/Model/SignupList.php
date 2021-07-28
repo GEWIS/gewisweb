@@ -58,7 +58,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      * The name of the SignupList.
      */
     #[OneToOne(
-        targetEntity: Activity::class,
+        targetEntity: LocalisedText::class,
         cascade: ["persist"],
         orphanRemoval: true,
     )]
@@ -97,7 +97,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
         mappedBy: "signupList",
         orphanRemoval: true,
     )]
-    protected $fields;
+    protected Collection $fields;
 
     /**
      * All the people who signed up for this SignupList.
