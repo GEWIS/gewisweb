@@ -111,7 +111,7 @@ class Course implements ResourceInterface
         name: "parent_code",
         referencedColumnName: "code",
     )]
-    protected Course $parent;
+    protected ?Course $parent = null;
 
     /**
      * Children of this course.
@@ -330,9 +330,9 @@ class Course implements ResourceInterface
     /**
      * Get the parent course.
      *
-     * @return Course
+     * @return Course|null
      */
-    public function getParent(): Course
+    public function getParent(): ?Course
     {
         return $this->parent;
     }
