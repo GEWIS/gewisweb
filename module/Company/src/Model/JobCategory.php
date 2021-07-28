@@ -2,78 +2,77 @@
 
 namespace Company\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+};
 
 /**
  * Job Category model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class JobCategory
 {
     /**
      * The category id.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
      * The name of the category.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $name;
+    #[Column(type: "string")]
+    protected string $name;
 
     /**
      * The name of the category.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $pluralName;
+    #[Column(type: "string")]
+    protected string $pluralName;
 
     /**
      * The slug of the category.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $slug;
+    #[Column(type: "string")]
+    protected string $slug;
 
     /**
      * The language of the category.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $language;
+    #[Column(type: "string")]
+    protected string $language;
 
     /**
      * If the category is hidden.
-     *
-     * @ORM\Column(type="boolean")
      */
-    protected $hidden;
+    #[Column(type: "boolean")]
+    protected bool $hidden;
 
     /**
      * The category id.
-     *
-     * @ORM\Column(type="integer")
      */
-    protected $languageNeutralId;
+    #[Column(type: "integer")]
+    protected int $languageNeutralId;
 
     /**
-     * Get's the id.
+     * @return bool
      */
-    public function getHidden()
+    public function getHidden(): bool
     {
         return $this->hidden;
     }
 
     /**
      * Set's the id.
+     *
+     * @param bool $hidden
      */
-    public function setHidden($hidden)
+    public function setHidden(bool $hidden): void
     {
         $this->hidden = $hidden;
     }
@@ -87,16 +86,20 @@ class JobCategory
 
     /**
      * Get's the id.
+     *
+     * @return int
      */
-    public function getLanguageNeutralId()
+    public function getLanguageNeutralId(): int
     {
         return $this->languageNeutralId;
     }
 
     /**
      * Set's the id.
+     *
+     * @param int $languageNeutralId
      */
-    public function setLanguageNeutralId($languageNeutralId)
+    public function setLanguageNeutralId(int $languageNeutralId): void
     {
         $this->languageNeutralId = $languageNeutralId;
     }
@@ -104,55 +107,67 @@ class JobCategory
     /**
      * Get's the id.
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
      * Set's the id.
+     *
+     * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
 
     /**
      * Get's the name.
+     *
+     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
      * Get's the plural name.
+     *
+     * @return string
      */
-    public function getPluralName()
+    public function getPluralName(): string
     {
         return $this->pluralName;
     }
 
     /**
      * Set's the name.
+     *
+     * @param string $name
      */
-    public function setPluralName($name)
+    public function setPluralName(string $name): void
     {
         $this->pluralName = $name;
     }
 
     /**
      * Set's the name.
+     *
+     * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
     /**
      * Get's the slug.
+     *
+     * @return string
      */
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->slug;
     }
@@ -160,23 +175,27 @@ class JobCategory
     /**
      * Set's the slug.
      */
-    public function setSlug($slug)
+    public function setSlug($slug): void
     {
         $this->slug = $slug;
     }
 
     /**
      * Get's the language.
+     *
+     * @return string
      */
-    public function getLanguage()
+    public function getLanguage(): string
     {
         return $this->language;
     }
 
     /**
      * Set's the language.
+     *
+     * @param string $language
      */
-    public function setLanguage($language)
+    public function setLanguage(string $language): void
     {
         $this->language = $language;
     }

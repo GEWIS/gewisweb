@@ -2,28 +2,36 @@
 
 namespace Company\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+};
+use Exception;
 
 /**
  * CompanyFeaturedPackage model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, ResourceInterface
 {
     /**
      * The featured package content article.
-     *
-     * @ORM\Column(type="text")
      */
-    protected $article;
+    #[Column(type: "text")]
+    protected string $article;
+
+    /**
+     * The package's language.
+     */
+    #[Column(type: "string")]
+    protected string $language;
 
     /**
      * Get the featured package's article text.
      *
      * @return string
      */
-    public function getArticle()
+    public function getArticle(): string
     {
         return $this->article;
     }
@@ -33,24 +41,17 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
      *
      * @param string $article
      */
-    public function setArticle($article)
+    public function setArticle(string $article): void
     {
         $this->article = $article;
     }
-
-    /**
-     * The package's language.
-     *
-     * @ORM\Column(type="string")
-     */
-    protected $language;
 
     /**
      * Get the package's language.
      *
      * @return string language of the package
      */
-    public function getLanguage()
+    public function getLanguage(): string
     {
         return $this->language;
     }
@@ -60,13 +61,16 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
      *
      * @param string $language language of the package
      */
-    public function setLanguage($language)
+    public function setLanguage(string $language): void
     {
         $this->language = $language;
     }
 
     // For zend2 forms
-    public function getArrayCopy()
+    /**
+     * @return array
+     */
+    public function getArrayCopy(): array
     {
         $array = parent::getArrayCopy();
         $array['language'] = $this->getLanguage();
@@ -75,7 +79,12 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
         return $array;
     }
 
-    public function exchangeArray($data)
+    /**
+     * @param array $data
+     *
+     * @throws Exception
+     */
+    public function exchangeArray(array $data): void
     {
         parent::exchangeArray($data);
         $this->setLanguage((isset($data['language'])) ? $data['language'] : $this->getLanguage());

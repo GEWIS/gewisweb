@@ -2,36 +2,58 @@
 
 namespace Company\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToOne,
+};
 
 /**
  * Job Label Assignment model.
  * Used for mapping labels to jobs.
- *
- * @ORM\Entity
  */
+#[Entity]
 class JobLabelAssignment
 {
     /**
      * The label id.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Company\Model\Job", inversedBy="labels")
-     * @ORM\JoinColumn(name="job_id", referencedColumnName="id")
+     *
      */
-    protected $job;
+    #[ManyToOne(
+        targetEntity: "Company\Model\Job",
+        inversedBy: "labels",
+    )]
+    #[JoinColumn(
+        name: "job_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected Job $job;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Company\Model\JobLabel", inversedBy="assignments", fetch="EAGER")
-     * @ORM\JoinColumn(name="label_id", referencedColumnName="id")
+     *
      */
-    protected $label;
+    #[ManyToOne(
+        targetEntity: "Company\Model\JobLabel",
+        inversedBy: "assignments",
+        fetch: "EAGER",
+    )]
+    #[JoinColumn(
+        name: "label_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected JobLabel $label;
 
     /**
      * Constructor.
@@ -43,15 +65,15 @@ class JobLabelAssignment
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @return mixed
+     * @return Job
      */
-    public function getJob()
+    public function getJob(): Job
     {
         return $this->job;
     }
@@ -59,23 +81,23 @@ class JobLabelAssignment
     /**
      * @param Job $job
      */
-    public function setJob($job)
+    public function setJob(Job $job): void
     {
         $this->job = $job;
     }
 
     /**
-     * @return mixed
+     * @return JobLabel
      */
-    public function getLabel()
+    public function getLabel(): JobLabel
     {
         return $this->label;
     }
 
     /**
-     * @param mixed $label
+     * @param JobLabel $label
      */
-    public function setLabel($label)
+    public function setLabel(JobLabel $label): void
     {
         $this->label = $label;
     }

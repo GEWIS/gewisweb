@@ -2,138 +2,140 @@
 
 namespace Company\Model;
 
-use Carbon\Carbon;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    ManyToOne,
+    OneToMany,
+};
 
 /**
  * Job model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class Job
 {
     /**
      * The job id.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
      * The job's display name.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $name;
+    #[Column(type: "string")]
+    protected string $name;
 
     /**
      * The job's slug name.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $slugName;
+    #[Column(type: "string")]
+    protected string $slugName;
+
     /**
      * The job's status.
-     *
-     * @ORM\Column(type="boolean")
      */
-    protected $active;
+    #[Column(type: "boolean")]
+    protected bool $active;
 
     /**
      * The job's website.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $website;
+    #[Column(type: "string")]
+    protected string $website;
 
     /**
      * The location(url) of an attachment describing the job.
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
-    protected $attachment;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $attachment;
 
     /**
      * The job's contact's name.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $contactName;
+    #[Column(type: "string")]
+    protected string $contactName;
 
     /**
      * The job's phone.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $phone;
+    #[Column(type: "string")]
+    protected string $phone;
 
     /**
      * The job's email.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $email;
+    #[Column(type: "string")]
+    protected string $email;
 
     /**
      * The job's description.
-     *
-     * @ORM\Column(type="text")
      */
-    protected $description;
+    #[Column(type: "text")]
+    protected string $description;
 
     /**
      * The job's location.
-     *
-     * @ORM\Column(type="text", nullable=true)
      */
-    protected $location;
+    #[Column(
+        type: "text",
+        nullable: true,
+    )]
+    protected ?string $location;
 
     /**
      * The job's timestamp.
-     *
-     * @ORM\Column(type="date")
      */
-    protected $timestamp;
+    #[Column(type: "date")]
+    protected DateTime $timestamp;
 
     /**
      * The job's language.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $language;
+    #[Column(type: "string")]
+    protected string $language;
 
     /**
      * The job's package.
-     *
-     * @ORM\ManyToOne(targetEntity="\Company\Model\CompanyJobPackage", inversedBy="jobs")
      */
-    protected $package;
+    #[ManyToOne(
+        targetEntity: "Company\Model\CompanyJobPackage",
+        inversedBy: "jobs",
+    )]
+    protected CompanyPackage $package;
 
     /**
      * The job's category.
-     *
-     * @ORM\ManyToOne(targetEntity="\Company\Model\JobCategory")
      */
-    protected $category;
+    #[ManyToOne(targetEntity: "Company\Model\JobCategory")]
+    protected string $category;
 
     /**
      * The category id.
-     *
-     * @ORM\Column(type="integer")
      */
-    protected $languageNeutralId;
+    #[Column(type: "integer")]
+    protected int $languageNeutralId;
 
     /**
      * Job labels.
-     *
-     * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="job", cascade={"persist", "remove"}, fetch="EAGER")
      */
-    protected $labels;
+    #[OneToMany(
+        targetEntity: "Company\Model\JobLabelAssignment",
+        mappedBy: "job",
+        cascade: ["persist", "remove"],
+        fetch: "EAGER",
+    )]
+    protected ArrayCollection $labels;
 
     /**
      * Constructor.
@@ -145,8 +147,10 @@ class Job
 
     /**
      * Get's the id.
+     *
+     * @return int
      */
-    public function getLanguageNeutralId()
+    public function getLanguageNeutralId(): int
     {
         $lnid = $this->languageNeutralId;
         if (0 == $lnid) {
@@ -158,8 +162,10 @@ class Job
 
     /**
      * Set's the id.
+     *
+     * @param int $languageNeutralId
      */
-    public function setLanguageNeutralId($languageNeutralId)
+    public function setLanguageNeutralId(int $languageNeutralId): void
     {
         $this->languageNeutralId = $languageNeutralId;
     }
@@ -169,7 +175,7 @@ class Job
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -179,7 +185,7 @@ class Job
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -189,7 +195,7 @@ class Job
      *
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -199,7 +205,7 @@ class Job
      *
      * @return string
      */
-    public function getCategory()
+    public function getCategory(): string
     {
         return $this->category;
     }
@@ -209,7 +215,7 @@ class Job
      *
      * @param string $category
      */
-    public function setCategory($category)
+    public function setCategory(string $category): void
     {
         $this->category = $category;
     }
@@ -219,7 +225,7 @@ class Job
      *
      * @return string the Jobs slug name
      */
-    public function getSlugName()
+    public function getSlugName(): string
     {
         return $this->slugName;
     }
@@ -229,7 +235,7 @@ class Job
      *
      * @param string $name
      */
-    public function setSlugName($name)
+    public function setSlugName(string $name): void
     {
         $this->slugName = $name;
     }
@@ -239,12 +245,12 @@ class Job
      *
      * @return bool
      */
-    public function getActive()
+    public function getActive(): bool
     {
         return $this->active;
     }
 
-    public function isActive()
+    public function isActive(): bool
     {
         return $this->getActive() && $this->getPackage()->isActive() && !$this->getPackage()->getCompany()->isHidden();
     }
@@ -254,7 +260,7 @@ class Job
      *
      * @param bool $active
      */
-    public function setActive($active)
+    public function setActive(bool $active): void
     {
         $this->active = $active;
     }
@@ -264,7 +270,7 @@ class Job
      *
      * @return string
      */
-    public function getWebsite()
+    public function getWebsite(): string
     {
         return $this->website;
     }
@@ -274,7 +280,7 @@ class Job
      *
      * @param string $website
      */
-    public function setWebsite($website)
+    public function setWebsite(string $website)
     {
         $this->website = $website;
     }
@@ -282,9 +288,9 @@ class Job
     /**
      * Get the job's attachment.
      *
-     * @return string
+     * @return string|null
      */
-    public function getAttachment()
+    public function getAttachment(): ?string
     {
         return $this->attachment;
     }
@@ -292,9 +298,9 @@ class Job
     /**
      * Set the job's attachment.
      *
-     * @param string $attachment
+     * @param string|null $attachment
      */
-    public function setAttachment($attachment)
+    public function setAttachment(?string $attachment): void
     {
         $this->attachment = $attachment;
     }
@@ -304,7 +310,7 @@ class Job
      *
      * @return string
      */
-    public function getContactName()
+    public function getContactName(): string
     {
         return $this->contactName;
     }
@@ -314,7 +320,7 @@ class Job
      *
      * @param string $name
      */
-    public function setContactName($name)
+    public function setContactName(string $name): void
     {
         $this->contactName = $name;
     }
@@ -324,7 +330,7 @@ class Job
      *
      * @return string
      */
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->phone;
     }
@@ -334,7 +340,7 @@ class Job
      *
      * @param string $phone
      */
-    public function setPhone($phone)
+    public function setPhone(string $phone): void
     {
         $this->phone = $phone;
     }
@@ -344,7 +350,7 @@ class Job
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -354,7 +360,7 @@ class Job
      *
      * @param string $email
      */
-    public function setEmail($email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
@@ -362,15 +368,11 @@ class Job
     /**
      * Get the job's timestamp.
      *
-     * @return Carbon|null
+     * @return DateTime
      */
-    public function getTimestamp()
+    public function getTimestamp(): DateTime
     {
-        if (is_null($this->timestamp)) {
-            return null;
-        }
-
-        return Carbon::instance($this->timestamp);
+        return $this->timestamp;
     }
 
     /**
@@ -378,7 +380,7 @@ class Job
      *
      * @param DateTime $timestamp
      */
-    public function setTimeStamp($timestamp)
+    public function setTimeStamp(DateTime $timestamp): void
     {
         $this->timestamp = $timestamp;
     }
@@ -388,7 +390,7 @@ class Job
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -398,7 +400,7 @@ class Job
      *
      * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
@@ -408,7 +410,7 @@ class Job
      *
      * @return string language of the job
      */
-    public function getLanguage()
+    public function getLanguage(): string
     {
         return $this->language;
     }
@@ -418,7 +420,7 @@ class Job
      *
      * @param string $language language of the job
      */
-    public function setLanguage($language)
+    public function setLanguage(string $language): void
     {
         $this->language = $language;
     }
@@ -428,7 +430,7 @@ class Job
      *
      * @return CompanyPackage
      */
-    public function getPackage()
+    public function getPackage(): CompanyPackage
     {
         return $this->package;
     }
@@ -438,7 +440,7 @@ class Job
      *
      * @return Company
      */
-    public function getCompany()
+    public function getCompany(): Company
     {
         return $this->getPackage()->getCompany();
     }
@@ -446,19 +448,20 @@ class Job
     /**
      * Get the labels. Returns an array of JobLabelAssignments.
      *
-     * @return Collection
+     * @return ArrayCollection
      */
-    public function getLabels()
+    public function getLabels(): ArrayCollection
     {
         return $this->labels;
     }
 
+    // TODO: Fix typing of parameter.
     /**
      * Sets all labels.
      *
      * @param array $labels
      */
-    public function setLabels($labels)
+    public function setLabels($labels): void
     {
         $this->labels = $labels;
     }
@@ -468,16 +471,19 @@ class Job
      *
      * @param JobLabelAssignment $label
      */
-    public function addLabel($label)
+    public function addLabel(JobLabelAssignment $label): void
     {
         if (null === $this->labels) {
-            $this->labels = [];
+            $this->labels = new ArrayCollection();
         }
         $label->setJob($this);
-        $this->labels[] = $label;
+        $this->labels->add($label);
     }
 
-    public function setPackage(CompanyPackage $package)
+    /**
+     * @param CompanyPackage $package
+     */
+    public function setPackage(CompanyPackage $package): void
     {
         $this->package = $package;
     }
@@ -489,9 +495,9 @@ class Job
      * this job is intended. This location may not be equal to the company's
      * address.
      *
-     * @return string
+     * @return string|null
      */
-    public function getLocation()
+    public function getLocation(): ?string
     {
         return $this->location;
     }
@@ -501,7 +507,7 @@ class Job
      *
      * @param string $location
      */
-    public function setLocation($location)
+    public function setLocation(string $location): void
     {
         $this->location = $location;
     }

@@ -24,7 +24,6 @@ use Application\View\Helper\{
     ModuleIsActive,
     ScriptUrl,
 };
-use Carbon\Carbon;
 use Laminas\Cache\Storage\Adapter\Memcached;
 use Laminas\Mvc\{
     ModuleRouteListener,
@@ -51,7 +50,6 @@ class Module
         $translator = $e->getApplication()->getServiceManager()->get('translator');
         $translator->setlocale($locale);
 
-        Carbon::setLocale($locale);
         Locale::setDefault($locale);
 
         $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'logError']);

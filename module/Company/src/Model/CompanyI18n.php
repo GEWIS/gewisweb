@@ -2,69 +2,75 @@
 
 namespace Company\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    ManyToOne,
+};
 
 /**
  * CompanyI18n model.
  * Contains language-specific information of companies.
- *
- * @ORM\Entity
  */
+#[Entity]
+
 class CompanyI18n //implements ArrayHydrator (for zend2 form)
 {
     /**
      * Id of the company details.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
      * Company entity that these details are for.
-     *
-     * @ORM\ManyToOne(targetEntity="\Company\Model\Company", inversedBy="translations", cascade={"persist"})
      */
-    protected $company;
+    #[ManyToOne(
+        targetEntity: "Company\Model\Company",
+        inversedBy: "translations",
+        cascade: ["persist"],
+    )]
+    protected Company $company;
 
     /**
      * The company's slogan.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $slogan;
+    #[Column(type: "string")]
+    protected string $slogan;
 
     /**
      * The company's logo.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $logo;
+    #[Column(type: "string")]
+    protected string $logo;
 
     /**
      * The company's (HTML) description.
-     *
-     * @ORM\Column(type="text")
      */
-    protected $description;
+    #[Column(type: "text")]
+    protected string $description;
 
     /**
      * The company's website.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $website;
+    #[Column(type: "string")]
+    protected string $website;
 
     /**
      * The language that this company record is written in.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $language;
+    #[Column(type: "string")]
+    protected string $language;
 
     /**
      * Constructor.
+     *
+     * @param $locale
+     * @param $company
      */
     public function __construct($locale, $company)
     {
@@ -79,7 +85,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -89,7 +95,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      *
      * @return Company company that these details are for
      */
-    public function getCompany()
+    public function getCompany(): Company
     {
         return $this->company;
     }
@@ -99,7 +105,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      *
      * @param Company $company company that these details are for
      */
-    public function setCompany(Company $company)
+    public function setCompany(Company $company): void
     {
         $this->company = $company;
     }
@@ -109,7 +115,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      *
      * @return string
      */
-    public function getSlogan()
+    public function getSlogan(): string
     {
         return $this->slogan;
     }
@@ -119,7 +125,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      *
      * @param string $slogan
      */
-    public function setSlogan($slogan)
+    public function setSlogan(string $slogan): void
     {
         $this->slogan = $slogan;
     }
@@ -129,7 +135,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      *
      * @return string
      */
-    public function getLogo()
+    public function getLogo(): string
     {
         return $this->logo;
     }
@@ -139,7 +145,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      *
      * @param string $logo
      */
-    public function setLogo($logo)
+    public function setLogo(string $logo): void
     {
         $this->logo = $logo;
     }
@@ -149,7 +155,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -159,7 +165,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      *
      * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
@@ -169,7 +175,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      *
      * @return string
      */
-    public function getWebsite()
+    public function getWebsite(): string
     {
         return $this->website;
     }
@@ -179,7 +185,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      *
      * @param string $website
      */
-    public function setWebsite($website)
+    public function setWebsite(string $website): void
     {
         $this->website = $website;
     }
@@ -189,7 +195,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      *
      * @return string
      */
-    public function getLanguage()
+    public function getLanguage(): string
     {
         return $this->language;
     }
@@ -199,7 +205,7 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      *
      * @param string $language
      */
-    public function setLanguage($language)
+    public function setLanguage(string $language): void
     {
         $this->language = $language;
     }

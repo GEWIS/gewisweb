@@ -3,16 +3,34 @@
 namespace Company\Model;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    DiscriminatorColumn,
+    DiscriminatorMap,
+    Entity,
+    GeneratedValue,
+    Id,
+    InheritanceType,
+    ManyToOne,
+};
+use Exception;
 
 /**
  * CompanyPackage model.
- *
- * @ORM\Entity
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="packageType", type="string")
- * @ORM\DiscriminatorMap({"job": "CompanyJobPackage", "banner": "CompanyBannerPackage", "featured": "CompanyFeaturedPackage"})
  */
+#[Entity]
+#[InheritanceType(value: "SINGLE_TABLE")]
+#[DiscriminatorColumn(
+    name: "packageType",
+    type: "string",
+)]
+#[DiscriminatorMap(value:
+    [
+        "job" => "Company\Model\CompanyJobPackage",
+        "banner" => "Company\Model\CompanyBannerPackage",
+        "featured" => "Company\Model\CompanyFeaturedPackage",
+    ]
+)]
 abstract class CompanyPackage
 {
     /**
@@ -24,47 +42,45 @@ abstract class CompanyPackage
 
     /**
      * The package's id.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
      * The package's starting date.
-     *
-     * @ORM\Column(type="date")
      */
-    protected $starts;
+    #[Column(type: "date")]
+    protected DateTime $starts;
 
     /**
      * The package's expiration date.
-     *
-     * @ORM\Column(type="date")
      */
-    protected $expires;
+    #[Column(type: "date")]
+    protected DateTime $expires;
 
     /**
      * The package's pusblish state.
-     *
-     * @ORM\Column(type="boolean")
      */
-    protected $published;
+    #[Column(type: "boolean")]
+    protected bool $published;
 
     /**
      * The package's company.
-     *
-     * @ORM\ManyToOne(targetEntity="\Company\Model\Company", inversedBy="packages")
      */
-    protected $company;
+    #[ManyToOne(
+        targetEntity: "Company\Model\Company",
+        inversedBy: "packages",
+    )]
+    protected Company $company;
 
     /**
      * Get the package's id.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -74,7 +90,7 @@ abstract class CompanyPackage
      *
      * @return DateTime
      */
-    public function getStartingDate()
+    public function getStartingDate(): DateTime
     {
         return $this->starts;
     }
@@ -84,7 +100,7 @@ abstract class CompanyPackage
      *
      * @param DateTime $starts
      */
-    public function setStartingDate($starts)
+    public function setStartingDate(DateTime $starts): void
     {
         $this->starts = $starts;
     }
@@ -94,7 +110,7 @@ abstract class CompanyPackage
      *
      * @return DateTime
      */
-    public function getExpirationDate()
+    public function getExpirationDate(): DateTime
     {
         return $this->expires;
     }
@@ -104,7 +120,7 @@ abstract class CompanyPackage
      *
      * @param DateTime $expires
      */
-    public function setExpirationDate($expires)
+    public function setExpirationDate(DateTime $expires): void
     {
         $this->expires = $expires;
     }
@@ -114,7 +130,7 @@ abstract class CompanyPackage
      *
      * @return bool
      */
-    public function isPublished()
+    public function isPublished(): bool
     {
         return $this->published;
     }
@@ -123,9 +139,11 @@ abstract class CompanyPackage
      * Get the number of jobs in the package.
      * This method can be overridden in subclasses.
      *
+     * @param $category
+     *
      * @return integer 0
      */
-    public function getNumberOfActiveJobs($category)
+    public function getNumberOfActiveJobs($category): int
     {
         return 0;
     }
@@ -135,7 +153,7 @@ abstract class CompanyPackage
      *
      * @param bool $published
      */
-    public function setPublished($published)
+    public function setPublished(bool $published): void
     {
         $this->published = $published;
     }
@@ -145,7 +163,7 @@ abstract class CompanyPackage
      *
      * @return Company
      */
-    public function getCompany()
+    public function getCompany(): Company
     {
         return $this->company;
     }
@@ -155,15 +173,17 @@ abstract class CompanyPackage
      *
      * @param Company $company
      */
-    public function setCompany(Company $company)
+    public function setCompany(Company $company): void
     {
         $this->company = $company;
     }
 
     /**
      * Get's the type of the package.
+     *
+     * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         switch (get_class($this)) {
             case "Company\Model\CompanyBannerPackage":
@@ -175,7 +195,12 @@ abstract class CompanyPackage
         }
     }
 
-    public function isExpired($now)
+    /**
+     * @param DateTime $now
+     *
+     * @return bool
+     */
+    public function isExpired(DateTime $now): bool
     {
         if ($now > $this->getExpirationDate()) {
             return true;
@@ -184,7 +209,10 @@ abstract class CompanyPackage
         return false;
     }
 
-    public function isActive()
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
     {
         $now = new DateTime();
         if ($this->isExpired($now)) {
@@ -202,7 +230,10 @@ abstract class CompanyPackage
     }
 
     // For zend2 forms
-    public function getArrayCopy()
+    /**
+     * @return array
+     */
+    public function getArrayCopy(): array
     {
         return [
             'id' => $this->id,
@@ -212,7 +243,12 @@ abstract class CompanyPackage
         ];
     }
 
-    public function exchangeArray($data)
+    /**
+     * @param array $data
+     *
+     * @throws Exception
+     */
+    public function exchangeArray(array $data): void
     {
         $this->id = (isset($data['id'])) ? $data['id'] : $this->getId();
         $this->setStartingDate(

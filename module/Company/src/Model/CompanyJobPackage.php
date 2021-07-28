@@ -3,16 +3,27 @@
 namespace Company\Model;
 
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Entity,
+    OneToMany,
+};
 
 /**
  * CompanyPackage model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class CompanyJobPackage extends CompanyPackage
 {
+    /**
+     * The package's jobs.
+     */
+    #[OneToMany(
+        targetEntity: "Company\Model\Job",
+        mappedBy: "package",
+        cascade: ["persist", "remove"],
+    )]
+    protected ArrayCollection $jobs;
+
     /**
      * Constructor.
      */
@@ -23,18 +34,11 @@ class CompanyJobPackage extends CompanyPackage
     }
 
     /**
-     * The package's jobs.
-     *
-     * @ORM\OneToMany(targetEntity="\Company\Model\Job", mappedBy="package", cascade={"persist", "remove"})
-     */
-    protected $jobs;
-
-    /**
      * Get the jobs in the package.
      *
-     * @return Collection jobs in the package
+     * @return ArrayCollection jobs in the package
      */
-    public function getJobs()
+    public function getJobs(): ArrayCollection
     {
         return $this->jobs;
     }
@@ -42,17 +46,23 @@ class CompanyJobPackage extends CompanyPackage
     /**
      * Get the number of jobs in the package.
      *
-     * @return number of jobs in the package
+     * @param $category
+     *
+     * @return int of jobs in the package
      */
-    public function getNumberOfActiveJobs($category = null)
+    public function getNumberOfActiveJobs($category = null): int
     {
         return count($this->getJobsInCategory($category));
     }
 
     /**
      * Get the jobs that are part of the given category.
+     *
+     * @param $category
+     *
+     * @return array
      */
-    public function getJobsInCategory($category)
+    public function getJobsInCategory($category): array
     {
         $filter = function ($job) use ($category) {
             if (null === $category) {
@@ -77,7 +87,7 @@ class CompanyJobPackage extends CompanyPackage
      *
      * @param Job $job job to be added
      */
-    public function addJob(Job $job)
+    public function addJob(Job $job): void
     {
         $this->jobs->add($job);
     }
@@ -87,7 +97,7 @@ class CompanyJobPackage extends CompanyPackage
      *
      * @param Job $job job to be removed
      */
-    public function removeJob(Job $job)
+    public function removeJob(Job $job): void
     {
         $this->jobs->removeElement($job);
     }

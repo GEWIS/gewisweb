@@ -3,90 +3,98 @@
 namespace Company\Model;
 
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\{
+    Collection,
+    ArrayCollection,
+};
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    OneToMany,
+};
 use Exception;
 
 /**
  * Company model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class Company // implements ArrayHydrator (for zend2 form)
 {
     /**
      * The company id.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected int $id;
 
     /**
      * Translations of details of the company.
      * Are of type \Company\Model\CompanyI18n.
-     *
-     * @ORM\OneToMany(targetEntity="\Company\Model\CompanyI18n", mappedBy="company", cascade={"persist", "remove"}, orphanRemoval=true)
      */
-    protected $translations;
+    #[OneToMany(
+        targetEntity: "Company\Model\CompanyI18n",
+        mappedBy: "company",
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    protected ArrayCollection $translations;
 
     /**
      * The company's display name.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $name;
+    #[Column(type: "string")]
+    protected string $name;
 
     /**
      * The company's slug version of the name. (username).
-     *
-     * @ORM\Column(type="string")
      */
-    protected $slugName;
+    #[Column(type: "string")]
+    protected string $slugName;
 
     /**
      * The company's contact's name.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $contactName;
+    #[Column(type: "string")]
+    protected string $contactName;
 
     /**
      * The company's address.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $address;
+    #[Column(type: "string")]
+    protected string $address;
 
     /**
      * The company's email.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $email;
+    #[Column(type: "string")]
+    protected string $email;
 
     /**
      * The company's phone.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $phone;
+    #[Column(type: "string")]
+    protected string $phone;
 
     /**
      * Whether the company is hidden.
-     *
-     * @ORM\Column(type="boolean")
      */
-    protected $hidden;
+    #[Column(type: "boolean")]
+    protected bool $hidden;
 
     /**
      * The company's packages.
-     *
-     * @ORM\OneToMany(targetEntity="\Company\Model\CompanyPackage", mappedBy="company", cascade={"persist", "remove"})
      */
-    protected $packages;
+    #[OneToMany(
+        targetEntity: "Company\Model\CompanyPackage",
+        mappedBy: "company",
+        cascade: ["persist", "remove"],
+    )]
+    protected ArrayCollection $packages;
+
+    private int $languageNeutralId;
 
     /**
      * Constructor.
@@ -102,7 +110,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -110,17 +118,19 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Get the company's translations.
      *
-     * @return Collection
+     * @return ArrayCollection|array
      */
-    public function getTranslations()
+    public function getTranslations(): ArrayCollection|array
     {
         return $this->translations;
     }
 
     /**
      * Add a translation.
+     *
+     * @param CompanyI18n $translation
      */
-    public function addTranslation(CompanyI18n $translation)
+    public function addTranslation(CompanyI18n $translation): void
     {
         $this->translations->add($translation);
     }
@@ -130,7 +140,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @param CompanyI18n $translation Translation to remove
      */
-    public function removeTranslation(CompanyI18n $translation)
+    public function removeTranslation(CompanyI18n $translation): void
     {
         $this->translations->removeElement($translation);
     }
@@ -140,7 +150,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -150,7 +160,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -160,7 +170,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @return string the company's slug name
      */
-    public function getSlugName()
+    public function getSlugName(): string
     {
         return $this->slugName;
     }
@@ -170,7 +180,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @param string $slugName the new slug name
      */
-    public function setSlugName($slugName)
+    public function setSlugName(string $slugName): void
     {
         $this->slugName = $slugName;
     }
@@ -180,7 +190,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @return string
      */
-    public function getContactName()
+    public function getContactName(): string
     {
         return $this->contactName;
     }
@@ -190,7 +200,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @param string $name
      */
-    public function setContactName($name)
+    public function setContactName(string $name): void
     {
         $this->contactName = $name;
     }
@@ -200,7 +210,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @return string
      */
-    public function getAddress()
+    public function getAddress(): string
     {
         return $this->address;
     }
@@ -210,7 +220,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @param string $address
      */
-    public function setAddress($address)
+    public function setAddress(string $address): void
     {
         $this->address = $address;
     }
@@ -220,7 +230,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -230,7 +240,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @param string $email
      */
-    public function setEmail($email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
@@ -240,7 +250,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @return string
      */
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->phone;
     }
@@ -250,15 +260,17 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @param string $phone
      */
-    public function setPhone($phone)
+    public function setPhone(string $phone): void
     {
         $this->phone = $phone;
     }
 
     /**
      * Return true if the company should not be visible to the user, and false if it should be visible to the user.
+     *
+     * @return bool
      */
-    public function isHidden()
+    public function isHidden(): bool
     {
         $visible = false;
 
@@ -278,7 +290,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @return bool
      */
-    public function getHidden()
+    public function getHidden(): bool
     {
         return $this->hidden;
         // TODO check whether package is not expired
@@ -287,9 +299,9 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Set the company's hidden status.
      *
-     * @param string $hidden
+     * @param bool $hidden
      */
-    public function setHidden($hidden)
+    public function setHidden(bool $hidden): void
     {
         $this->hidden = $hidden;
     }
@@ -297,9 +309,9 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Get the company's packages.
      *
-     * @return Collection of CompanyPackages
+     * @return ArrayCollection of CompanyPackages
      */
-    public function getPackages()
+    public function getPackages(): ArrayCollection
     {
         return $this->packages;
     }
@@ -309,7 +321,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @return integer the number of packages
      */
-    public function getNumberOfPackages()
+    public function getNumberOfPackages(): int
     {
         return count($this->packages);
     }
@@ -317,8 +329,10 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Returns the number of jobs that are contained in all packages of this
      * company.
+     *
+     * @return int
      */
-    public function getNumberOfJobs()
+    public function getNumberOfJobs(): int
     {
         $jobCount = function ($package) {
             if ('job' == $package->getType()) {
@@ -334,8 +348,13 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Returns the number of jobs that are contained in all active packages of this
      * company.
+     *
+     * // TODO: Determine correct type of parameter.
+     * @param $category
+     *
+     * @return int
      */
-    public function getNumberOfActiveJobs($category = null)
+    public function getNumberOfActiveJobs($category = null): int
     {
         $jobCount = function ($package) use ($category) {
             return $package->getNumberOfActiveJobs($category);
@@ -346,8 +365,10 @@ class Company // implements ArrayHydrator (for zend2 form)
 
     /**
      * Returns the number of expired packages.
+     *
+     * @return int
      */
-    public function getNumberOfExpiredPackages()
+    public function getNumberOfExpiredPackages(): int
     {
         return count(
             array_filter(
@@ -361,8 +382,10 @@ class Company // implements ArrayHydrator (for zend2 form)
 
     /**
      * Returns true if a banner is active, and false when there is no banner active.
+     *
+     * @return array
      */
-    public function getFeaturedLanguages()
+    public function getFeaturedLanguages(): array
     {
         return array_map(
             function ($package) {
@@ -379,8 +402,10 @@ class Company // implements ArrayHydrator (for zend2 form)
 
     /**
      * Returns true if a banner is active, and false when there is no banner active.
+     *
+     * @return bool
      */
-    public function isBannerActive()
+    public function isBannerActive(): bool
     {
         $banners = array_filter(
             $this->getPackages()->toArray(),
@@ -411,9 +436,10 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @param string $locale
      *
+     * // TODO: Determine correct return type.
      * @return mixed|null
      */
-    public function getTranslationFromLocale(string $locale)
+    public function getTranslationFromLocale(string $locale): mixed
     {
         $companyLanguages = $this->getAvailableLanguages();
 
@@ -430,8 +456,10 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @param mixed $object
      * @param mixed $default
+     *
+     * @return mixed
      */
-    private static function updateIfSet($object, $default)
+    private static function updateIfSet(mixed $object, mixed $default): mixed
     {
         if (isset($object)) {
             return $object;
@@ -445,10 +473,14 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * Note, does not set $logo, the user should set this property himself
      *
-     * @param mixed $data
-     * @param mixed $language
+     * @param array $data
+     * @param string $language
+     *
+     * @return CompanyI18n|null
+     *
+     * @throws Exception
      */
-    public function updateTranslationFromArray($data, $language)
+    public function updateTranslationFromArray(array $data, string $language): ?CompanyI18n
     {
         if ('' !== $language) {
             $translation = $this->getTranslationFromLocale($language);
@@ -468,12 +500,16 @@ class Company // implements ArrayHydrator (for zend2 form)
             // Instead, the user should set this property himself later.
             return $translation;
         }
+
+        return null;
     }
 
     /**
      * Updates this object with values in the form of getArrayCopy().
+     *
+     * @throws Exception
      */
-    public function exchangeArray($data)
+    public function exchangeArray($data): void
     {
         $languages = $data['languages'];
 
@@ -495,8 +531,10 @@ class Company // implements ArrayHydrator (for zend2 form)
      * translation.
      *
      * It will aso add keys in the form $lan_varName=>$this->getTranslationFromLocale($lang)=>var
+     *
+     * @return array
      */
-    public function getArrayCopy()
+    public function getArrayCopy(): array
     {
         $arraycopy = [];
         $arraycopy['id'] = $this->getId();
