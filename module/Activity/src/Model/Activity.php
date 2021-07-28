@@ -70,8 +70,8 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      */
     #[Column(
         type: "datetime",
-        nullable: true)
-    ]
+        nullable: true,
+    )]
     protected DateTime $endTime;
 
     /**
