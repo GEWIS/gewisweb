@@ -33,17 +33,25 @@ abstract class GenericAclService extends AbstractAclService
 
     /**
      * @inheritDoc
+     *
+     * The role that should take precedence should be returned first.
+     * This is because of the behaviour of {@link \Laminas\Permissions\Acl\Role\Registry}.
      */
     protected function getRole()
     {
         if ($this->authService->hasIdentity()) {
-            return $this->authService->getIdentity();
+            $user = $this->authService->getIdentity();
+
+            return $user->getRoleId();
         }
 
         if ($this->apiAuthService->hasIdentity()) {
-            return 'apiuser';
+            $user = $this->apiAuthService->getIdentity();
+
+            return $user->getRoleId();
         }
 
+        // TODO: We could create an assertion for this.
         if (0 === strpos($this->remoteAddress, $this->tueRange)) {
             return 'tueguest';
         }
