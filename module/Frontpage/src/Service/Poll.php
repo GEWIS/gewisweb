@@ -11,6 +11,7 @@ use Frontpage\Model\PollComment;
 use Frontpage\Model\PollOption;
 use Frontpage\Model\PollVote as PollVoteModel;
 use Laminas\Mvc\I18n\Translator;
+use RuntimeException;
 use User\Model\User;
 use User\Permissions\NotAllowedException;
 
@@ -136,7 +137,7 @@ class Poll
      *
      * @param PollModel $poll
      *
-     * @return array
+     * @return array|null
      */
     public function getPollDetails($poll)
     {
@@ -250,6 +251,11 @@ class Poll
         }
 
         $comment = $form->getData();
+
+        if (!$comment instanceof PollComment) {
+            throw new RuntimeException('The PollComment model could not be retrieved from the form.');
+        }
+
         $comment->setUser($this->aclService->getIdentity());
         $comment->setCreatedOn(new DateTime());
 
