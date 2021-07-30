@@ -3,6 +3,7 @@
 namespace User\Service;
 
 use Laminas\Mvc\I18n\Translator;
+use RuntimeException;
 use User\Form\ApiToken;
 use User\Mapper\ApiUser as ApiUserMapper;
 use User\Model\ApiUser as ApiUserModel;
@@ -120,6 +121,11 @@ class ApiUser
         }
 
         $apiUser = $form->getData();
+        
+        if (!$apiUser instanceof ApiUserModel) {
+            throw new RuntimeException('The ApiUser model could not be retrieved from the form.');
+        }
+
         $apiUser->setToken($this->generateToken());
 
         $this->apiUserMapper->persist($apiUser);
