@@ -210,7 +210,7 @@ class Album
         if ($date->format('n') < self::ASSOCIATION_YEAR_START_MONTH) {
             return (int) $date->format('Y') - 1;
         } else {
-            return $date->format('Y');
+            return (int) $date->format('Y');
         }
     }
 
