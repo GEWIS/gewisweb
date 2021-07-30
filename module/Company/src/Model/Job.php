@@ -362,7 +362,7 @@ class Job
     /**
      * Get the job's timestamp.
      *
-     * @return Carbon
+     * @return Carbon|null
      */
     public function getTimestamp()
     {
