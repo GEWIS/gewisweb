@@ -5,17 +5,22 @@ namespace Education\Service;
 use Application\Service\FileStorage;
 use DateTime;
 use DirectoryIterator;
-use Education\Form\AddCourse;
-use Education\Form\Bulk;
-use Education\Form\SearchCourse;
-use Education\Form\TempUpload;
+use Education\Form\{
+    AddCourse,
+    Bulk,
+    SearchCourse,
+    TempUpload,
+};
 use Education\Mapper\Course;
-use Education\Model\Course as CourseModel;
-use Education\Model\Exam as ExamModel;
-use Education\Model\Summary as SummaryModel;
+use Education\Model\{
+    Course as CourseModel,
+    Exam as ExamModel,
+    Summary as SummaryModel,
+};
 use Exception;
 use Laminas\Http\Response\Stream;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Stdlib\Parameters;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -287,18 +292,30 @@ class Exam
         return true;
     }
 
-    public function tempExamUpload($post, $files)
+    /**
+     * @param Parameters $post
+     * @param Parameters $files
+     *
+     * @return bool
+     */
+    public function tempExamUpload(Parameters $post, Parameters $files): bool
     {
         $config = $this->getConfig('education_temp');
 
-        return $this->tempUpload($post, $files, $config['upload_exam_dir']);
+        return $this->tempUpload($post->toArray(), $files->toArray(), $config['upload_exam_dir']);
     }
 
-    public function tempSummaryUpload($post, $files)
+    /**
+     * @param Parameters $post
+     * @param Parameters $files
+     *
+     * @return bool
+     */
+    public function tempSummaryUpload(Parameters $post, Parameters $files): bool
     {
         $config = $this->getConfig('education_temp');
 
-        return $this->tempUpload($post, $files, $config['upload_summary_dir']);
+        return $this->tempUpload($post->toArray(), $files->toArray(), $config['upload_summary_dir']);
     }
 
     /**

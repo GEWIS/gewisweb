@@ -3,13 +3,16 @@
 namespace Education\Form;
 
 use Education\Model\Exam as ExamModel;
+use Laminas\Filter\StringToUpper;
 use Laminas\Form\Form;
 use Laminas\I18n\Translator\TranslatorInterface as Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
-use Laminas\Validator\File\Extension;
-use Laminas\Validator\File\MimeType;
-use Laminas\Validator\Regex;
-use Laminas\Validator\StringLength;
+use Laminas\Validator\{
+    File\Extension,
+    File\MimeType,
+    Regex,
+    StringLength,
+};
 
 /**
  * Upload a summary.
@@ -102,7 +105,9 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
                     ['name' => 'alnum'],
                 ],
                 'filters' => [
-                    ['name' => 'string_to_upper'],
+                    [
+                        'name' => StringToUpper::class,
+                    ],
                 ],
             ],
 
