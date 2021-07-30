@@ -15,7 +15,7 @@ interface FileReader
      *
      * @param string $path
      *
-     * @return array[FileNode]|null
+     * @return array|null of FileNode
      */
     public function listDir($path);
 

@@ -42,10 +42,10 @@ class LocalFileReader implements FileReader
     {
         $fullPath = $this->root . $path;
         if (!is_file($fullPath) || !$this->isValidPathName($fullPath)) {
-            return null;
+            return false;
         }
         $contentType = mime_content_type($fullPath);
-        if ('text' === substr($contentType, 0, strlen('text'))) {
+        if (str_starts_with($contentType, 'text')) {
             $contentType = 'text/plain';
         }
         $response = new Stream();
@@ -58,7 +58,7 @@ class LocalFileReader implements FileReader
             ->addHeaderLine('Content-Length', filesize($fullPath));
         $response->setHeaders($headers);
 
-        return $response;
+        return true;
     }
 
     public function listDir($path)
