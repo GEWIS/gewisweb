@@ -528,19 +528,21 @@ class Activity
         // `$proposal` instead of having to implode `$current` (which requires an extra `array_filter()`).
         if (isset($proposal['signupLists'])) {
             foreach ($proposal['signupLists'] as $keyOuter => $signupList) {
-                foreach ($signupList['fields'] as $keyInner => $field) {
-                    if (array_key_exists('options', $field)) {
-                        $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['options'] = explode(
-                            ',',
-                            $field['options']
-                        );
-                    }
+                if (isset($signupList['fields'])) {
+                    foreach ($signupList['fields'] as $keyInner => $field) {
+                        if (array_key_exists('options', $field)) {
+                            $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['options'] = explode(
+                                ',',
+                                $field['options']
+                            );
+                        }
 
-                    if (array_key_exists('optionsEn', $field)) {
-                        $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['optionsEn'] = explode(
-                            ',',
-                            $field['optionsEn']
-                        );
+                        if (array_key_exists('optionsEn', $field)) {
+                            $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['optionsEn'] = explode(
+                                ',',
+                                $field['optionsEn']
+                            );
+                        }
                     }
                 }
             }
@@ -550,14 +552,21 @@ class Activity
         unset($proposal['language_dutch'], $proposal['language_english'], $proposal['submit']);
 
         // Get the difference between the original Activity and the update
-        // proposal. We unset all `id`s after getting the diff to reduce the
-        // number of calls.
-        $diff = $this->array_diff_assoc_recursive($current, $proposal);
-        $this->recursiveUnsetKey($diff, 'id');
+        // proposal. Because we want to detect additions and deletions in
+        // the activity data, we actually have to check both ways. After
+        // this unset all `id`s after getting the diff to reduce the number
+        // of calls.
+        $diff1 = $this->array_diff_assoc_recursive($current, $proposal);
+        $diff2 = $this->array_diff_assoc_recursive($proposal, $current);
+        $this->recursiveUnsetKey($diff1, 'id');
+        $this->recursiveUnsetKey($diff2, 'id');
 
-        // Filter out all empty parts of the difference, if we an empty result
+        // Filter out all empty parts of the differences, if both are empty
         // nothing has changed on form submission.
-        if (empty($this->array_filter_recursive($diff))) {
+        if (
+            empty($this->array_filter_recursive($diff1))
+            && empty($this->array_filter_recursive($diff2))
+        ) {
             return false;
         }
 
