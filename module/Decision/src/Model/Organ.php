@@ -308,7 +308,7 @@ class Organ
     {
         $array = $this->subdecisions->toArray();
         usort($array, function ($dA, $dB) {
-            return ($dA->getDecision()->getMeeting()->getDate() < $dB->getDecision()->getMeeting()->getDate() ? -1 : 1);
+            return ($dA->getDecision()->getMeeting()->getDate() > $dB->getDecision()->getMeeting()->getDate() ? -1 : 1);
         });
 
         return $array;
