@@ -302,19 +302,16 @@ class Organ
     /**
      * Get all subdecisions of this organ ordered by upload order.
      *
-     * @return ArrayCollection subdecisions[0]->
+     * @return array subdecisions[0]->getDate < subdecision[1]->getDate
      */
     public function getSubDecisionsUploadOrdered()
     {
-        try {
-            $sIterator = $this->subdecisions->getIterator();
-            $sIterator->uasort(function ($dA, $dB) {
-              return ($dA->getMeeting()->getDate() < $dB->getMeeting()->getDate() ? -1 : 1);
-            });
+        $array = $this->subdecisions->toArray();
+        usort($array, function ($dA, $dB) {
+            return ($dA->getDecision()->getMeeting()->getDate() < $dB->getDecision()->getMeeting()->getDate() ? -1 : 1);
+        });
 
-            return new ArrayCollection(iterator_to_array($sIterator));
-        } catch (\Exception $e) {
-        }
+        return $array;
     }
 
     /**
