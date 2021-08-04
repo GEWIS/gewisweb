@@ -2,3 +2,8 @@ parameters:
     ignoreErrors:
         - '#Call to an undefined method Laminas\\Stdlib\\RequestInterface::[a-zA-Z0-9_]+\(\).#'
         - '#Call to an undefined method Laminas\\Stdlib\\ResponseInterface::[a-zA-Z0-9_]+\(\).#'
+        - "#^Strict comparison using \\=\\=\\= between 'development' and 'production' will always evaluate to false\\.$#"
+        - "#^Strict comparison using \\=\\=\\= between 'development' and 'development' will always evaluate to true\\.$#"
+        - "#^Strict comparison using \\=\\=\\= between 'production' and 'production' will always evaluate to true\\.$#"
+        - "#^Strict comparison using \\=\\=\\= between 'production' and 'development' will always evaluate to false\\.$#"
+        - "#^Method [a-zA-Z0-9_]+\\\\Controller\\\\[a-zA-Z0-9_]+\\:\\:indexAction\\(\\) should return Laminas\\\\View\\\\Model\\\\ViewModel but returns Laminas\\\\Http\\\\Response\\.$#"
