@@ -304,7 +304,7 @@ class Organ
      *
      * @return array subdecisions[0]->getDate < subdecision[1]->getDate
      */
-    public function getSubDecisionsUploadOrdered()
+    public function getOrderedSubdecisions()
     {
         $array = $this->subdecisions->toArray();
         usort($array, function ($dA, $dB) {
