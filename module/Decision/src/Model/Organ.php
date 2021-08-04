@@ -300,6 +300,24 @@ class Organ
     }
 
     /**
+     * Get all subdecisions of this organ ordered by upload order.
+     *
+     * @return ArrayCollection subdecisions[0]->
+     */
+    public function getSubDecisionsUploadOrdered()
+    {
+        try {
+            $sIterator = $this->subdecisions->getIterator();
+            $sIterator->uasort(function ($dA, $dB) {
+              return ($dA->getMeeting()->getDate() < $dB->getMeeting()->getDate() ? -1 : 1);
+            });
+
+            return new ArrayCollection(iterator_to_array($sIterator));
+        } catch (\Exception $e) {
+        }
+    }
+
+    /**
      * Returns all organ information.
      *
      * @return ArrayCollection of OrganInformation
