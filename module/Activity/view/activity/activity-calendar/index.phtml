@@ -209,11 +209,11 @@ $this->headLink()
     });
 
 
-    function getEndDate(end) {
-        if (end.dateTime !== undefined) {
-            return new Date(end.dateTime).getTime();
+    function getEndDate(item) {
+        if (item.dateTime !== undefined) {
+            return new Date(item.dateTime).getTime();
         }
-        var endDate = new Date(end.date);
+        var endDate = new Date(item.date);
         endDate.setDate(endDate.getDate() - 1);
         return endDate.getTime();
     }
