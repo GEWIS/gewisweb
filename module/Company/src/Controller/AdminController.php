@@ -113,6 +113,10 @@ class AdminController extends AbstractActionController
      */
     public function addCompanyAction()
     {
+        if (!$this->aclService->isAllowed('insert', 'company')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to create a company'));
+        }
+
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
