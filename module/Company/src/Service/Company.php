@@ -183,7 +183,7 @@ class Company
             );
         }
 
-        return $this->featuredPackageMapper->getFeaturedPackage($this->translator->getLocale());
+        return $this->featuredPackageMapper->getFeaturedPackage($this->translator->getTranslator()->getLocale());
     }
 
     private function getFuturePackageStartsBeforeDate($date)
@@ -256,7 +256,7 @@ class Company
             throw new NotAllowedException($this->translator->translate('You are not allowed to list the companies'));
         }
 
-        return $this->companyMapper->findPublicByLocale($this->translator->getLocale());
+        return $this->companyMapper->findPublicByLocale($this->translator->getTranslator()->getLocale());
     }
 
     // Company list for admin interface
@@ -295,10 +295,10 @@ class Company
     {
         $mapper = $this->categoryMapper;
         $category = $mapper->findCategory($slug);
-        $locale = $this->translator->getLocale();
+        $locale = $this->translator->getTranslator()->getLocale();
 
         if (null === $category && 'jobs' == $slug) {
-            $category = $mapper->createNullCategory($this->translator->getLocale(), $this->translator);
+            $category = $mapper->createNullCategory($this->translator->getTranslator()->getLocale(), $this->translator);
         }
         if (null === $category || $category->getLanguage() == $locale) {
             return $category;

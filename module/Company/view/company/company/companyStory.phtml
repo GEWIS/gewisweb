@@ -1,5 +1,5 @@
 <?php
-$locale = $this->translator->getLocale();
+$locale = $this->translator->getTranslator()->getLocale();
 $escaper = new Laminas\Escaper\Escaper('utf-8');
 
 $companyURL = $this->url('company/companyItem', // Route url

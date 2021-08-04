@@ -5,7 +5,7 @@ namespace Education\Form;
 use Education\Model\Exam as ExamModel;
 use Laminas\Filter\StringToUpper;
 use Laminas\Form\Form;
-use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator\{
     File\Extension,
