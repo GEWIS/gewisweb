@@ -94,11 +94,11 @@ class Album implements ResourceInterface
     /**
      * Gets an array of all child albums.
      *
-     * @return Collection
+     * @return array
      */
     public function getChildren()
     {
-        return $this->children;
+        return $this->children->toArray();
     }
 
     /**

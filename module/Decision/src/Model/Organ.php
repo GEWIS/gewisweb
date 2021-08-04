@@ -302,7 +302,7 @@ class Organ
     /**
      * Returns all organ information.
      *
-     * @return OrganInformation
+     * @return ArrayCollection of OrganInformation
      */
     public function getOrganInformation()
     {
@@ -312,7 +312,7 @@ class Organ
     /**
      * Returns the approved information for an organ.
      *
-     * @return OrganInformation
+     * @return OrganInformation|null
      */
     public function getApprovedOrganInformation()
     {

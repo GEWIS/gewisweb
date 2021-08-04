@@ -7,6 +7,7 @@ use Laminas\View\Model\{
     JsonModel,
     ViewModel,
 };
+use Laminas\View\View;
 use User\Service\User as UserService;
 
 class UserController extends AbstractActionController

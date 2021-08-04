@@ -44,9 +44,9 @@ class Session extends Storage\Session
     /**
      * Set whether we should remember this session or not.
      *
-     * @param int $rememberMe
+     * @param bool $rememberMe
      */
-    public function setRememberMe($rememberMe = 0)
+    public function setRememberMe($rememberMe = false)
     {
         $this->rememberMe = $rememberMe;
 

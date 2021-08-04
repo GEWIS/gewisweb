@@ -160,7 +160,7 @@ class User
      *
      * @param array $data Registration data
      *
-     * @return NewUserModel New registered user. Null when the user could not be registered.
+     * @return NewUserModel|null New registered user. Null when the user could not be registered.
      */
     public function register($data)
     {
@@ -227,7 +227,7 @@ class User
      *
      * @param array $data Reset data
      *
-     * @return UserModel User. Null when the password could not be reset.
+     * @return UserModel|null User. Null when the password could not be reset.
      */
     public function reset($data)
     {
@@ -327,7 +327,7 @@ class User
      *
      * @param array $data Login data
      *
-     * @return UserModel Authenticated user. Null if not authenticated.
+     * @return UserModel|null Authenticated user. Null if not authenticated.
      */
     public function login($data)
     {
@@ -348,7 +348,7 @@ class User
             return null;
         }
 
-        $this->authService->setRememberMe($data['remember']);
+        $this->authService->setRememberMe($data['remember'] === 1);
 
         return $this->authService->getIdentity();
     }
@@ -358,7 +358,7 @@ class User
      *
      * @param array $data
      *
-     * @return UserModel Authenticated user. Null if not authenticated.
+     * @return UserModel|null Authenticated user. Null if not authenticated.
      */
     public function pinLogin($data)
     {

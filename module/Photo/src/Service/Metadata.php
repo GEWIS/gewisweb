@@ -62,8 +62,8 @@ class Metadata
      */
     private static function frac2dec($str)
     {
-        if (false === strpos($str, '/')) {
-            return $str;
+        if (!str_contains($str, '/')) {
+            return (float) $str;
         }
         [$n, $d] = explode('/', $str);
 
@@ -115,7 +115,7 @@ class Metadata
      * @param string $coordinate
      * @param string $hemisphere
      *
-     * @return float
+     * @return float|null
      */
     private static function exifGpsToCoordinate($coordinate, $hemisphere)
     {

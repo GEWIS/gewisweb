@@ -2,7 +2,6 @@
 
 namespace Application\View\Helper;
 
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\View\Helper\AbstractHelper;
 use Interop\Container\ContainerInterface;
 
@@ -11,7 +10,7 @@ class ModuleIsActive extends AbstractHelper
     /**
      * Service locator.
      *
-     * @var ServiceLocatorInterface
+     * @var ContainerInterface
      */
     protected $locator;
 

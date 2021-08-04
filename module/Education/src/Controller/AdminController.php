@@ -193,29 +193,6 @@ class AdminController extends AbstractActionController
         );
     }
 
-    public function summaryAction()
-    {
-        $request = $this->getRequest();
-
-        if ($request->isPost()) {
-            // try uploading
-            // TODO: -> uploadSummary is undefined
-            if ($this->examService->uploadSummary($request->getPost(), $request->getFiles())) {
-                return new ViewModel(
-                    [
-                        'success' => true,
-                    ]
-                );
-            }
-        }
-
-        return new ViewModel(
-            [
-                'form' => $this->summaryUploadForm,
-            ]
-        );
-    }
-
     public function deleteTempAction()
     {
         $request = $this->getRequest();

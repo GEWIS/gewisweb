@@ -2,6 +2,8 @@
 
 namespace Decision\Controller\FileBrowser;
 
+use RuntimeException;
+
 /**
  * Represents a node in a filesystem, which is either a file, or a directory.
  * Immutable.
@@ -39,7 +41,7 @@ class FileNode
     /**
      * File extensions per FontAwesome icon.
      *
-     * @var string[string][]
+     * @var array of array of string
      */
     private $iconExtensions = [
         'fa-file-word' => ['docx', 'docm', 'doc', 'dotx', 'dotm', 'dot', 'odt', 'rtf', 'wpd'],
@@ -76,8 +78,7 @@ class FileNode
     public function __construct($kind, $fullPath, $name)
     {
         if ('dir' !== $kind && 'file' !== $kind) {
-            //invalid kind
-            return false;
+            throw new RuntimeException('Kind is not supported.');
         }
         $this->kind = $kind;
         $this->fullPath = $fullPath;

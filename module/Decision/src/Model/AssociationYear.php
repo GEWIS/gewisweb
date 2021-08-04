@@ -60,7 +60,7 @@ class AssociationYear
         ) {
             $inst->firstYear = (int) $dateTime->format('Y') - 1;
         } else {
-            $inst->firstYear = $dateTime->format('Y');
+            $inst->firstYear = (int) $dateTime->format('Y');
         }
 
         return $inst;

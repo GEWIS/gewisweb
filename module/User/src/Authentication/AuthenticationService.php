@@ -185,11 +185,11 @@ class AuthenticationService implements AuthenticationServiceInterface
     /**
      * Set whether we should remember this session or not.
      *
-     * @param int $rememberMe
+     * @param bool $rememberMe
      *
      * @return void
      */
-    public function setRememberMe($rememberMe = 0)
+    public function setRememberMe($rememberMe = false)
     {
         $this->getStorage()->setRememberMe($rememberMe);
     }

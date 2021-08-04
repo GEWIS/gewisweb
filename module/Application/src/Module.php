@@ -174,12 +174,6 @@ class Module
 
                     return $helper;
                 },
-                'infima' => function (ContainerInterface $container) {
-                    $helper = new Infima();
-                    $helper->setLegacyService($container->get('application_service_legacy'));
-
-                    return $helper;
-                },
             ],
         ];
     }

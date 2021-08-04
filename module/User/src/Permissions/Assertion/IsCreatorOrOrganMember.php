@@ -23,11 +23,11 @@ class IsCreatorOrOrganMember implements AssertionInterface
      * @param Acl $acl
      * @param RoleInterface|null $role
      * @param ResourceInterface|null $resource
-     * @param null $privilege
+     * @param string $privilege
      *
      * @return bool
      */
-    public function assert(Acl $acl, RoleInterface $role = null, ResourceInterface $resource = null, $privilege = null)
+    public function assert(Acl $acl, RoleInterface $role = null, ResourceInterface $resource = null, $privilege = null): bool
     {
         $isCreator = new IsCreator();
         $isOrganMember = new IsOrganMember();

@@ -18,9 +18,11 @@ use Education\Model\{
     Summary as SummaryModel,
 };
 use Exception;
+use Laminas\Form\Form;
 use Laminas\Http\Response\Stream;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Stdlib\Parameters;
+use RuntimeException;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -420,7 +422,11 @@ class Exam
             }
         }
 
-        $this->bulkForm->get('exams')->populateValues($data);
+        $form = $this->bulkForm->get('exams');
+        if (!$form instanceof Form) {
+            throw new RuntimeException('The form could not be retrieved');
+        }
+        $form->populateValues($data);
 
         return $this->bulkForm;
     }
@@ -529,7 +535,7 @@ class Exam
      *
      * @param array $data Course data
      *
-     * @return CourseModel New course. Null when the course could not be added.
+     * @return CourseModel|null New course. Null when the course could not be added.
      */
     public function addCourse($data)
     {
