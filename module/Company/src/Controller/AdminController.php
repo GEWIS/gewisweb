@@ -119,8 +119,9 @@ class AdminController extends AbstractActionController
             // Check if data is valid, and insert when it is
             $company = $this->companyService->insertCompanyByData(
                 $request->getPost(),
-                $request->getFiles()
+                $request->getFiles(),
             );
+
             if (!is_null($company)) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
@@ -422,7 +423,7 @@ class AdminController extends AbstractActionController
                 $this->companyService->saveCompanyByData(
                     $company,
                     $post,
-                    $request->getFiles()
+                    $request->getFiles(),
                 )
             ) {
                 $companyName = $request->getPost()['slugName'];

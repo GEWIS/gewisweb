@@ -3,26 +3,34 @@
 namespace Company\Service;
 
 use Application\Service\FileStorage;
-use Company\Form\EditCategory;
-use Company\Form\EditCompany;
-use Company\Form\EditJob;
-use Company\Form\EditLabel;
-use Company\Form\EditPackage;
-use Company\Mapper\BannerPackage;
-use Company\Mapper\Category;
-use Company\Mapper\FeaturedPackage;
-use Company\Mapper\Label;
-use Company\Mapper\LabelAssignment;
-use Company\Mapper\Package;
-use Company\Model\Job;
-use Company\Model\Job as JobModel;
-use Company\Model\JobCategory as CategoryModel;
-use Company\Model\JobLabel as LabelModel;
-use Company\Model\JobLabelAssignment;
+use Company\Form\{
+    EditCategory as EditCategoryForm,
+    EditCompany as EditCompanyForm,
+    EditJob as EditJobForm,
+    EditLabel as EditLabelForm,
+    EditPackage as EditPackageForm,
+};
+use Company\Mapper\{
+    BannerPackage as BannerPackageMapper,
+    Category as CategoryMapper,
+    FeaturedPackage as FeaturedPackageMapper,
+    Job as JobMapper,
+    Label as LabelMapper,
+    LabelAssignment as LabelAssignmentMapper,
+    Package as PackageMapper,
+};
+use Company\Model\{
+    Company as CompanyModel,
+    Job as JobModel,
+    JobCategory as CategoryModel,
+    JobLabel as LabelModel,
+    JobLabelAssignment as JobLabelAssignmentModel,
+};
 use DateTime;
 use Exception;
 use InvalidArgumentException;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Stdlib\Parameters;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -46,72 +54,72 @@ class Company
     private $companyMapper;
 
     /**
-     * @var Package
+     * @var PackageMapper
      */
     private $packageMapper;
 
     /**
-     * @var BannerPackage
+     * @var BannerPackageMapper
      */
     private $bannerPackageMapper;
 
     /**
-     * @var FeaturedPackage
+     * @var FeaturedPackageMapper
      */
     private $featuredPackageMapper;
 
     /**
-     * @var \Company\Mapper\Job
+     * @var JobMapper
      */
     private $jobMapper;
 
     /**
-     * @var Category
+     * @var CategoryMapper
      */
     private $categoryMapper;
 
     /**
-     * @var Label
+     * @var LabelMapper
      */
     private $labelMapper;
 
     /**
-     * @var LabelAssignment
+     * @var LabelAssignmentMapper
      */
     private $labelAssignmentMapper;
 
     /**
-     * @var EditCompany
+     * @var EditCompanyForm
      */
     private $editCompanyForm;
 
     /**
-     * @var EditPackage
+     * @var EditPackageForm
      */
     private $editPackageForm;
 
     /**
-     * @var EditPackage
+     * @var EditPackageForm
      */
     private $editBannerPackageForm;
 
     /**
-     * @var EditPackage
+     * @var EditPackageForm
      */
     private $editFeaturedPackageForm;
 
     /**
-     * @var EditJob
+     * @var EditJobForm
      */
     private $editJobForm;
 
     /**
-     * @var EditCategory
+     * @var EditCategoryForm
      */
     private $editCategoryForm;
 
     /**
-     * @var EditLabel
+     * @var EditLabelForm
      */
     private $editLabelForm;
 
@@ -125,20 +133,20 @@ class Company
         Translator $translator,
         FileStorage $storageService,
         \Company\Mapper\Company $companyMapper,
-        Package $packageMapper,
-        BannerPackage $bannerPackageMapper,
-        FeaturedPackage $featuredPackageMapper,
-        \Company\Mapper\Job $jobMapper,
-        Category $categoryMapper,
-        Label $labelMapper,
-        LabelAssignment $labelAssignmentMapper,
-        EditCompany $editCompanyForm,
-        EditPackage $editPackageForm,
-        EditPackage $editBannerPackageForm,
-        EditPackage $editFeaturedPackageForm,
-        EditJob $editJobForm,
-        EditCategory $editCategoryForm,
-        EditLabel $editLabelForm,
+        PackageMapper $packageMapper,
+        BannerPackageMapper $bannerPackageMapper,
+        FeaturedPackageMapper $featuredPackageMapper,
+        JobMapper $jobMapper,
+        CategoryMapper $categoryMapper,
+        LabelMapper $labelMapper,
+        LabelAssignmentMapper $labelAssignmentMapper,
+        EditCompanyForm $editCompanyForm,
+        EditPackageForm $editPackageForm,
+        EditPackageForm $editBannerPackageForm,
+        EditPackageForm $editFeaturedPackageForm,
+        EditJobForm $editJobForm,
+        EditCategoryForm $editCategoryForm,
+        EditLabelForm $editLabelForm,
         array $languages,
         AclService $aclService
     ) {
@@ -518,28 +526,41 @@ class Company
     /**
      * Checks if the data is valid, and if it is, saves the Company.
      *
-     * @param \Company\Model\Company $company
-     * @param array $data
+     * @param CompanyModel $company
+     * @param Parameters $data
+     * @param Parameters $files
+     *
+     * @return bool
+     *
+     * @throws Exception
      */
-    public function saveCompanyByData($company, $data, $files)
+    public function saveCompanyByData(CompanyModel $company, Parameters $data, Parameters $files): bool
     {
         $companyForm = $this->editCompanyForm;
+
+        $dataArray = $data->toArray();
+        $filesArray = $files->toArray();
         $mergedData = array_merge_recursive(
-            $data,
-            $files
+            $dataArray,
+            $filesArray,
         );
         $companyForm->setData($mergedData);
+
         if ($companyForm->isValid()) {
             $company->exchangeArray($data);
+
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
+
                 if (UPLOAD_ERR_NO_FILE !== $file['error']) {
                     if (UPLOAD_ERR_OK !== $file['error']) {
                         return false;
                     }
+
                     $oldPath = $translation->getLogo();
                     $newPath = $this->storageService->storeUploadedFile($file);
                     $translation->setLogo($newPath);
+
                     if ('' !== $oldPath && $oldPath != $newPath) {
                         $this->storageService->removeFile($oldPath);
                     }
@@ -549,6 +570,8 @@ class Company
 
             return true;
         }
+
+        return false;
     }
 
     /**
@@ -595,26 +618,36 @@ class Company
      * Checks if the data is valid, and if it is, inserts the company, and sets
      * all data.
      *
-     * @param \Company\Model\Company $data
+     * @param Parameters $data
+     * @param Parameters $files
+     *
+     * @return CompanyModel|false|null
+     * @throws Exception
      */
-    public function insertCompanyByData($data, $files)
+    public function insertCompanyByData(Parameters $data, Parameters $files)
     {
         $companyForm = $this->editCompanyForm;
+
+        $dataArray = $data->toArray();
+        $filesArray = $files->toArray();
         $mergedData = array_merge_recursive(
-            $data,
-            $files
+            $dataArray,
+            $filesArray,
         );
         $companyForm->setData($mergedData);
 
         if ($companyForm->isValid()) {
             $company = $this->insertCompany($data['languages']);
             $company->exchangeArray($data);
+
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
+
                 if (UPLOAD_ERR_NO_FILE !== $file['error']) {
                     if (UPLOAD_ERR_OK !== $file['error']) {
                         return false;
                     }
+
                     $newPath = $this->storageService->storeUploadedFile($file);
                     $translation->setLogo($newPath);
                 }
