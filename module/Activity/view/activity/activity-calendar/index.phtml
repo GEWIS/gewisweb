@@ -199,7 +199,7 @@ $this->headLink()
                     "url": item.htmlLink,
                     "class": "event-important",
                     "start": (new Date(item.start.dateTime !== undefined ? item.start.dateTime : item.start.date)).getTime(),
-                    "end": (new Date(item.end.dateTime !== undefined ? item.end.dateTime : item.end.date)).getTime(),
+                    "end": getEndDate(item.end),
                 });
             }
         });
@@ -207,6 +207,16 @@ $this->headLink()
     }).error(function () {
         initCalendar()
     });
+
+
+    function getEndDate(item) {
+        if (item.dateTime !== undefined) {
+            return new Date(item.dateTime).getTime();
+        }
+        var endDate = new Date(item.date);
+        endDate.setDate(endDate.getDate() - 1);
+        return endDate.getTime();
+    }
 
 
     function initCalendar() {
