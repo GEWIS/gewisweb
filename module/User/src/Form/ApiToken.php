@@ -3,7 +3,7 @@
 namespace User\Form;
 
 use Laminas\Form\Form;
-use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
 
 class ApiToken extends Form implements InputFilterProviderInterface

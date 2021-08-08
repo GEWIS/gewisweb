@@ -4,7 +4,7 @@ namespace Education\Form;
 
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
-use Laminas\I18n\Translator\TranslatorInterface as Translator;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
 
 class Bulk extends Form implements InputFilterProviderInterface

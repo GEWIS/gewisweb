@@ -7,6 +7,7 @@
  */
 
 return [
+    'Laminas\I18n\Module',
     'Laminas\Mvc\I18n',
     'Laminas\Serializer',
     'Laminas\Mail',
@@ -17,7 +18,6 @@ return [
     'Laminas\Paginator',
     'Laminas\Hydrator',
     'Laminas\Session',
-    'Laminas\I18n',
     'Laminas\Form',
     'Laminas\Router',
     'Laminas\Validator',

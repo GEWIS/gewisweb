@@ -121,7 +121,7 @@ class ApiUser
         }
 
         $apiUser = $form->getData();
-        
+
         if (!$apiUser instanceof ApiUserModel) {
             throw new RuntimeException('The ApiUser model could not be retrieved from the form.');
         }

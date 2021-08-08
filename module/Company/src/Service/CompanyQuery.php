@@ -68,15 +68,15 @@ class CompanyQuery
     public function getJobs($dict)
     {
         if (array_key_exists('jobCategory', $dict) && null === $dict['jobCategory']) {
-            $jobs = $this->jobMapper->findJobsWithoutCategory($this->translator->getLocale());
+            $jobs = $this->jobMapper->findJobsWithoutCategory($this->translator->getTranslator()->getLocale());
             foreach ($jobs as $job) {
                 $job->setCategory($this->categoryMapper
-                    ->createNullCategory($this->translator->getLocale(), $this->translator));
+                    ->createNullCategory($this->translator->getTranslator()->getLocale(), $this->translator));
             }
 
             return $jobs;
         }
-        $locale = $this->translator->getLocale();
+        $locale = $this->translator->getTranslator()->getLocale();
         $dict['language'] = $locale;
 
         return $this->jobMapper->findJob($dict);
@@ -125,8 +125,8 @@ class CompanyQuery
             throw new NotAllowedException($this->translator->translate('You are not allowed to list all categories'));
         }
 
-        $categories = $this->categoryMapper->findVisibleCategoryByLanguage($this->translator->getLocale());
-        $jobsWithoutCategory = $this->jobMapper->findJobsWithoutCategory($this->translator->getLocale());
+        $categories = $this->categoryMapper->findVisibleCategoryByLanguage($this->translator->getTranslator()->getLocale());
+        $jobsWithoutCategory = $this->jobMapper->findJobsWithoutCategory($this->translator->getTranslator()->getLocale());
         $filteredCategories = $this->filterCategories($categories);
         $noVacancyCategory = count(array_filter($filteredCategories, function ($el) {
             return 'jobs' == $el->getSlug();
@@ -134,7 +134,7 @@ class CompanyQuery
 
         if (count($jobsWithoutCategory) > 0 && 0 == $noVacancyCategory) {
             $filteredCategories[] = $this->categoryMapper
-                ->createNullCategory($this->translator->getLocale(), $this->translator);
+                ->createNullCategory($this->translator->getTranslator()->getLocale(), $this->translator);
         }
 
         return $filteredCategories;
@@ -176,7 +176,7 @@ class CompanyQuery
             });
         }
 
-        $labels = $this->labelMapper->findVisibleLabelByLanguage($this->translator->getLocale());
+        $labels = $this->labelMapper->findVisibleLabelByLanguage($this->translator->getTranslator()->getLocale());
 
         return $this->filterLabels($labels);
     }

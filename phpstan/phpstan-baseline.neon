@@ -7,3 +7,4 @@ parameters:
         - "#^Strict comparison using \\=\\=\\= between 'production' and 'production' will always evaluate to true\\.$#"
         - "#^Strict comparison using \\=\\=\\= between 'production' and 'development' will always evaluate to false\\.$#"
         - "#^Method [a-zA-Z0-9_]+\\\\Controller\\\\[a-zA-Z0-9_]+\\:\\:indexAction\\(\\) should return Laminas\\\\View\\\\Model\\\\ViewModel but returns Laminas\\\\Http\\\\Response\\.$#"
+        - "#^Call to an undefined method Laminas\\\\I18n\\\\Translator\\\\TranslatorInterface\\:\\:getLocale\\(\\)\\.$#"
