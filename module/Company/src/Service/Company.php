@@ -756,21 +756,23 @@ class Company
      *
      * @param int|string $languageNeutralId Identifier of the Job to save
      * @param array $jobs The Job to save
-     * @param array $data The (new) data to save
-     * @param array $files The (new) files to save
+     * @param Parameters $data The (new) data to save
+     * @param Parameters $files The (new) files to save
      *
      * @return bool
      */
-    public function saveJobData($languageNeutralId, $jobs, $data, $files)
+    public function saveJobData($languageNeutralId, $jobs, Parameters $data, Parameters $files)
     {
         if (!$this->aclService->isAllowed('edit', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit jobs'));
         }
 
         $jobForm = $this->getJobForm();
+        $dataArray = $data->toArray();
+        $filesArray = $files->toArray();
         $mergedData = array_merge_recursive(
-            $data,
-            $files
+            $dataArray,
+            $filesArray,
         );
         $jobForm->setCompanySlug(current($jobs)->getCompany()->getSlugName());
         $jobForm->setCurrentSlug($data['slugName']);
