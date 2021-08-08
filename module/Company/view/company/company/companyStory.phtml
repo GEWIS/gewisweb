@@ -11,7 +11,7 @@ $companyURL = $this->url('company/companyItem', // Route url
 <div class="col-md-3">
     <?php
     $translation = $company->getTranslationFromLocale($locale);
-    if (!isset($translation)) {
+    if (!is_null($translation)) {
         $translation = $company->getTranslations()[0];
     }
     ?>

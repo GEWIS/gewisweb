@@ -76,12 +76,19 @@ class CompanyController extends AbstractActionController
 
         if (!is_null($company)) {
             if (!$company->isHidden()) {
-                return new ViewModel(
-                    [
-                        'company' => $company,
-                        'translator' => $this->translator,
-                    ]
-                );
+                if (
+                    in_array(
+                        $this->translator->getTranslator()->getLocale(),
+                        $company->getAvailableLanguages()->toArray(),
+                    )
+                ) {
+                    return new ViewModel(
+                        [
+                            'company' => $company,
+                            'translator' => $this->translator,
+                        ]
+                    );
+                }
             }
         }
 

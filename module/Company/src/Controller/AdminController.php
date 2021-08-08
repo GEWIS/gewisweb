@@ -126,7 +126,7 @@ class AdminController extends AbstractActionController
                 $request->getFiles(),
             );
 
-            if (!is_null($company)) {
+            if ($company) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/default',
@@ -423,6 +423,7 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $post = $request->getPost();
+
             if (
                 $this->companyService->saveCompanyByData(
                     $company,

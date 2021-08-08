@@ -566,7 +566,18 @@ class Company
                     }
                 }
             }
+
+            // Save the company data, removing any translations cannot be done in the same UnitOfWork.
             $this->saveCompany();
+
+            // Remove translations if necessary.
+            $enabledLanguages = $data['languages'];
+            foreach ($company->getTranslations() as $translation) {
+                if (!in_array($translation->getLanguage(), $enabledLanguages)) {
+                    $company->removeTranslation($translation);
+                    $this->companyMapper->removeTranslation($translation);
+                }
+            }
 
             return true;
         }
@@ -601,7 +612,7 @@ class Company
     /**
      * Saves all modified companies.
      */
-    public function saveCompany()
+    public function saveCompany(): void
     {
         $this->companyMapper->save();
     }
