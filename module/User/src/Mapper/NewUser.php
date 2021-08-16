@@ -13,9 +13,9 @@ class NewUser extends BaseMapper
      *
      * @param int $lidnr
      *
-     * @return NewUserModel
+     * @return NewUserModel|null
      */
-    public function getByLidnr($lidnr)
+    public function getByLidnr($lidnr): ?NewUserModel
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('u, m')
@@ -35,9 +35,9 @@ class NewUser extends BaseMapper
      *
      * @param string $code
      *
-     * @return NewUserModel
+     * @return NewUserModel|null
      */
-    public function getByCode($code)
+    public function getByCode($code): ?NewUserModel
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('u, m')

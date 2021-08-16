@@ -13,9 +13,9 @@ class User extends BaseMapper
      *
      * @param int $lidnr Membership number
      *
-     * @return UserModel
+     * @return UserModel|null
      */
-    public function findByLidnr($lidnr)
+    public function findByLidnr(int $lidnr): ?UserModel
     {
         return $this->getRepository()->findOneBy(['lidnr' => $lidnr]);
     }
@@ -25,9 +25,9 @@ class User extends BaseMapper
      *
      * @param string $login
      *
-     * @return UserModel
+     * @return UserModel|null
      */
-    public function findByLogin($login)
+    public function findByLogin($login): ?UserModel
     {
         // create query for user
         $qb = $this->em->createQueryBuilder();

@@ -10,9 +10,9 @@ class ApiApp extends BaseMapper
     /**
      * @param string $appId
      *
-     * @return ApiAppModel
+     * @return ApiAppModel|null
      */
-    public function findByAppId($appId)
+    public function findByAppId(string $appId): ?ApiAppModel
     {
         return $this->getRepository()->findOneBy(
             [

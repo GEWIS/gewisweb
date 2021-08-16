@@ -12,9 +12,9 @@ class ApiUser extends BaseMapper
      *
      * @param string $token Token of the user
      *
-     * @return ApiUserModel
+     * @return ApiUserModel|null
      */
-    public function findByToken($token)
+    public function findByToken($token): ?ApiUserModel
     {
         return $this->getRepository()->findOneBy(['token' => $token]);
     }
