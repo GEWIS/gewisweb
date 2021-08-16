@@ -23,7 +23,6 @@ use User\Form\Register;
 use User\Mapper\ApiUser;
 use User\Mapper\LoginAttempt;
 use User\Mapper\NewUser;
-use User\Mapper\Session;
 use User\Permissions\NotAllowedException;
 use User\Service\ApiApp;
 use User\Service\Email;
@@ -228,11 +227,6 @@ class Module
                 },
                 'user_mapper_apiuser' => function (ContainerInterface $container) {
                     return new ApiUser(
-                        $container->get('doctrine.entitymanager.orm_default')
-                    );
-                },
-                'user_mapper_session' => function (ContainerInterface $container) {
-                    return new Session(
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
