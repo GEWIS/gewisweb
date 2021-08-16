@@ -3,6 +3,7 @@ includes:
 
 parameters:
     level: 5
+    treatPhpDocTypesAsCertain: false
     bootstrapFiles:
         - bootstrap.php
     laminasframework:
