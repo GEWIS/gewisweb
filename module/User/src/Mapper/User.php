@@ -2,28 +2,12 @@
 
 namespace User\Mapper;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
+use Application\Mapper\BaseMapper;
 use User\Model\NewUser as NewUserModel;
 use User\Model\User as UserModel;
 
-class User
+class User extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * Find a user by its membership number.
      *
@@ -69,24 +53,6 @@ class User
     }
 
     /**
-     * Detach a user from the entity manager.
-     */
-    public function detach(UserModel $user)
-    {
-        $this->em->detach($user);
-    }
-
-    /**
-     * Re-attach a user to the entity manager.
-     *
-     * @return object|UserModel
-     */
-    public function merge(UserModel $user)
-    {
-        return $this->em->merge($user);
-    }
-
-    /**
      * Finish user creation.
      *
      * This will both destroy the NewUser and create the given user
@@ -102,23 +68,10 @@ class User
     }
 
     /**
-     * Persist a user model.
-     *
-     * @param UserModel $user user to persist
+     * @inheritDoc
      */
-    public function persist(UserModel $user)
+    protected function getRepositoryName(): string
     {
-        $this->em->persist($user);
-        $this->em->flush();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('User\Model\User');
+        return 'User\Model\User';
     }
 }

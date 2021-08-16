@@ -43,6 +43,19 @@ abstract class BaseMapper
     }
 
     /**
+     * Remove an entity by its ID using find
+     *
+     * @param mixed $id
+     * @throws ORMException
+     */
+    public function removeById($id)
+    {
+        $entity = $this->find($id);
+        $this->em->remove($entity);
+        $this->em->flush();
+    }
+
+    /**
      * @throws ORMException
      * @throws OptimisticLockException
      */

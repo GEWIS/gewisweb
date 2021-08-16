@@ -84,7 +84,7 @@ class ApiUser
         if (!$this->aclService->isAllowed('remove', 'apiuser')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to remove API tokens'));
         }
-        $this->apiUserMapper->remove($id);
+        $this->apiUserMapper->removeById($id);
     }
 
     /**

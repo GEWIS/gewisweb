@@ -2,22 +2,11 @@
 
 namespace User\Mapper;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
+use Application\Mapper\BaseMapper;
 use User\Model\ApiApp as ApiAppModel;
 
-class ApiApp
+class ApiApp extends BaseMapper
 {
-    /**
-     * @var EntityManager
-     */
-    protected $em;
-
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * @param string $appId
      *
@@ -33,10 +22,10 @@ class ApiApp
     }
 
     /**
-     * @return EntityRepository
+     * @inheritDoc
      */
-    public function getRepository()
+    protected function getRepositoryName(): string
     {
-        return $this->em->getRepository(ApiAppModel::class);
+        return 'User\Model\ApiUser';
     }
 }
