@@ -21,26 +21,13 @@ class LocalisedTextElement extends AbstractHelper
                 return $currentValue;
             }
 
-            if (LocalisedTextElement::endsWith($currentValue->getAttribute('id'), 'en')) {
+            if (str_ends_with($currentValue->getAttribute('id'), 'en')) {
                 return $currentValue->getValueEN();
-            } elseif (LocalisedTextElement::endsWith($currentValue->getAttribute('id'), 'nl')) {
+            } elseif (str_ends_with($currentValue->getAttribute('id'), 'nl')) {
                 return $currentValue->getValueNL();
             }
         }
 
         return '';
-    }
-
-    /**
-     * Checks whether a haystack ends with a needle. PHP does not offer this functionality natively until PHP 8.0.
-     *
-     * @param string $haystack
-     * @param string $needle
-     *
-     * @return bool
-     */
-    private static function endsWith(string $haystack, string $needle)
-    {
-        return 0 === substr_compare($haystack, $needle, -strlen($needle));
     }
 }

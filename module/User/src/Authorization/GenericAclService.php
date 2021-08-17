@@ -52,7 +52,7 @@ abstract class GenericAclService extends AbstractAclService
         }
 
         // TODO: We could create an assertion for this.
-        if (0 === strpos($this->remoteAddress, $this->tueRange)) {
+        if (str_starts_with($this->remoteAddress, $this->tueRange)) {
             return 'tueguest';
         }
 
