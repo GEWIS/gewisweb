@@ -54,10 +54,6 @@ class Session extends SessionStorage
     public function setRememberMe(bool $rememberMe): void
     {
         $this->rememberMe = $rememberMe;
-
-        if ($rememberMe) {
-            $this->saveSession(parent::read()->getLidnr());
-        }
     }
 
     /**
