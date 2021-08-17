@@ -19,22 +19,21 @@ class AuthenticationService implements AuthenticationServiceInterface
      *
      * @var Session
      */
-    protected $storage;
+    protected Session $storage;
 
     /**
      * Authentication adapter.
      *
      * @var Mapper|PinMapper
      */
-    protected $adapter;
+    protected Mapper|PinMapper $adapter;
 
     /**
      * Constructor.
      *
-     * @param Session $storage
-     * @param Mapper|PinMapper $adapter
+     * @param StorageInterface $storage
+     * @param AdapterInterface $adapter
      *
-     * @throws RuntimeException
      */
     public function __construct(StorageInterface $storage, AdapterInterface $adapter)
     {
@@ -47,7 +46,7 @@ class AuthenticationService implements AuthenticationServiceInterface
      *
      * @return Mapper|PinMapper
      */
-    public function getAdapter()
+    public function getAdapter(): PinMapper|Mapper
     {
         return $this->adapter;
     }
@@ -59,13 +58,14 @@ class AuthenticationService implements AuthenticationServiceInterface
      *
      * @return self Provides a fluent interface
      */
-    public function setAdapter(AdapterInterface $adapter)
+    public function setAdapter(AdapterInterface $adapter): static
     {
         if (
             $adapter instanceof Mapper
             || $adapter instanceof PinMapper
         ) {
             $this->adapter = $adapter;
+
             return $this;
         }
 
@@ -79,7 +79,7 @@ class AuthenticationService implements AuthenticationServiceInterface
      *
      * @return Session
      */
-    public function getStorage()
+    public function getStorage(): Session
     {
         return $this->storage;
     }
@@ -91,10 +91,11 @@ class AuthenticationService implements AuthenticationServiceInterface
      *
      * @return self Provides a fluent interface
      */
-    public function setStorage(StorageInterface $storage)
+    public function setStorage(StorageInterface $storage): static
     {
         if ($storage instanceof Session) {
             $this->storage = $storage;
+
             return $this;
         }
 
@@ -107,14 +108,14 @@ class AuthenticationService implements AuthenticationServiceInterface
      * Authenticates against the authentication adapter. The default values must be `null` to be compatible with the
      * `AuthenticationServiceInterface`. We can safely assume they are provided, but if not throw a `RuntimeException`.
      *
-     * @param mixed $login
-     * @param string $securityCode
+     * @param mixed|null $login
+     * @param string|null $securityCode
      *
      * @return Result
      *
      * @throws RuntimeException
      */
-    public function authenticate($login = null, $securityCode = null)
+    public function authenticate(mixed $login = null, string $securityCode = null): Result
     {
         if (
             is_null($login)
@@ -135,7 +136,7 @@ class AuthenticationService implements AuthenticationServiceInterface
 
         // If the authentication was successful, persist the identity.
         if ($result->isValid()) {
-            $this->getStorage()->write($result->getIdentity());
+            $this->getStorage()->write($result->getIdentity()->getLidnr());
         }
 
         return $result;
@@ -146,7 +147,7 @@ class AuthenticationService implements AuthenticationServiceInterface
      *
      * @return bool
      */
-    public function hasIdentity()
+    public function hasIdentity(): bool
     {
         return !$this->getStorage()->isEmpty();
     }
@@ -158,16 +159,12 @@ class AuthenticationService implements AuthenticationServiceInterface
      */
     public function getIdentity(): ?User
     {
-        if ($this->getStorage()->isEmpty()) {
+        if (!$this->hasIdentity()) {
             return null;
         }
 
         $mapper = $this->getAdapter()->getMapper();
         $user = $this->getStorage()->read();
-
-        if (is_object($user)) {
-            $user = $user->getLidnr();
-        }
 
         return $mapper->findByLidnr($user);
     }
@@ -177,7 +174,7 @@ class AuthenticationService implements AuthenticationServiceInterface
      *
      * @return void
      */
-    public function clearIdentity()
+    public function clearIdentity(): void
     {
         $this->getStorage()->clear();
     }
@@ -189,7 +186,7 @@ class AuthenticationService implements AuthenticationServiceInterface
      *
      * @return void
      */
-    public function setRememberMe($rememberMe = false)
+    public function setRememberMe(bool $rememberMe): void
     {
         $this->getStorage()->setRememberMe($rememberMe);
     }

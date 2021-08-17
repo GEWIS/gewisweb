@@ -4,36 +4,42 @@ namespace User\Authentication\Storage;
 
 use DateTime;
 use Firebase\JWT\JWT;
-use Laminas\Authentication\Storage;
-use Laminas\Http\Header\SetCookie;
-use Laminas\Http\Request;
-use Laminas\Http\Response;
+use Laminas\Authentication\Storage\Session as SessionStorage;
+use Laminas\Http\{
+    Header\SetCookie,
+    Request,
+    Response,
+};
 use UnexpectedValueException;
+use User\Model\User as UserModel;
 
-class Session extends Storage\Session
+class Session extends SessionStorage
 {
     /**
      * @var bool indicating whether we should remember the user
      */
-    protected $rememberMe;
+    protected bool $rememberMe;
 
     /**
      * @var Request
      */
-    private $request;
+    private Request $request;
 
     /**
      * @var Response
      */
-    private $response;
+    private Response $response;
 
     /**
      * @var array
      */
-    private $config;
+    private array $config;
 
-    public function __construct($request, $response, array $config)
-    {
+    public function __construct(
+        Request $request,
+        Response $response,
+        array $config,
+    ) {
         $this->request = $request;
         $this->response = $response;
         $this->config = $config;
@@ -46,13 +52,9 @@ class Session extends Storage\Session
      *
      * @param bool $rememberMe
      */
-    public function setRememberMe($rememberMe = false)
+    public function setRememberMe(bool $rememberMe): void
     {
         $this->rememberMe = $rememberMe;
-
-        if ($rememberMe) {
-            $this->saveSession(parent::read()->getLidnr());
-        }
     }
 
     /**
@@ -60,7 +62,7 @@ class Session extends Storage\Session
      *
      * @return bool
      */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         if (!parent::isEmpty()) {
             return false;
@@ -74,7 +76,7 @@ class Session extends Storage\Session
      *
      * @return bool indicating whether a session was loaded
      */
-    protected function validateSession()
+    protected function validateSession(): bool
     {
         $key = $this->getPublicKey();
 
@@ -88,9 +90,24 @@ class Session extends Storage\Session
             return false;
         }
 
+        // Stop validation if we are destroying the session.
+        if ($this->response->getHeaders()->has('set-cookie')) {
+            foreach ($this->response->getHeaderS()->get('set-cookie') as $cookie) {
+                if ($cookie->getName() === 'GEWISSESSTOKEN' && $cookie->getValue() === 'deleted') {
+                    return false;
+                }
+            }
+        }
+
         try {
             $session = JWT::decode($cookies->GEWISSESSTOKEN, $key, ['RS256']);
         } catch (UnexpectedValueException $e) {
+            return false;
+        }
+
+        // Check if the session has not expired.
+        $now = (new DateTime())->getTimestamp();
+        if ($now >= $session->exp) {
             return false;
         }
 
@@ -103,11 +120,11 @@ class Session extends Storage\Session
     /**
      * Defined by Laminas\Authentication\Storage\StorageInterface.
      *
-     * @param mixed $contents
+     * @param int $contents
      *
      * @return void
      */
-    public function write($contents)
+    public function write($contents): void
     {
         parent::write($contents);
 
@@ -123,7 +140,7 @@ class Session extends Storage\Session
      *
      * @return void
      */
-    protected function saveSession($lidnr)
+    protected function saveSession(int $lidnr): void
     {
         $key = $this->getPrivateKey();
 
@@ -150,9 +167,11 @@ class Session extends Storage\Session
      *
      * @return void
      */
-    public function clear()
+    public function clear(): void
     {
         // Clear the session
+        $this->setRememberMe(false);
+        parent::write(null);
         parent::clear();
         $this->clearCookie();
     }
@@ -164,16 +183,10 @@ class Session extends Storage\Session
      *
      * @return void
      */
-    protected function saveCookie($jwt)
+    protected function saveCookie(string $jwt): void
     {
         $sessionToken = new SetCookie('GEWISSESSTOKEN', $jwt, strtotime('+2 weeks'), '/');
-
-        // Use secure cookies in production
-        if (APP_ENV === 'production') {
-            $sessionToken->setSecure(true)->setHttponly(true);
-        }
-
-        $sessionToken->setDomain($this->config['cookie_domain']);
+        $sessionToken = $this->setCookieParameters($sessionToken);
 
         $this->response->getHeaders()->addHeader($sessionToken);
     }
@@ -183,16 +196,29 @@ class Session extends Storage\Session
      *
      * @return void
      */
-    protected function clearCookie()
+    protected function clearCookie(): void
     {
         $sessionToken = new SetCookie('GEWISSESSTOKEN', 'deleted', strtotime('-1 Year'), '/');
+        $sessionToken = $this->setCookieParameters($sessionToken);
 
+        $this->response->getHeaders()->addHeader($sessionToken);
+    }
+
+    /**
+     * @param SetCookie $sessionToken
+     *
+     * @return SetCookie
+     */
+    private function setCookieParameters(SetCookie $sessionToken): SetCookie
+    {
         // Use secure cookies in production
         if (APP_ENV === 'production') {
             $sessionToken->setSecure(true)->setHttponly(true);
         }
 
-        $this->response->getHeaders()->addHeader($sessionToken);
+        $sessionToken->setDomain($this->config['cookie_domain']);
+
+        return $sessionToken;
     }
 
     /**
@@ -200,7 +226,7 @@ class Session extends Storage\Session
      *
      * @return string|bool returns false if the private key is not readable
      */
-    protected function getPrivateKey()
+    protected function getPrivateKey(): bool|string
     {
         if (!is_readable($this->config['jwt_key_path'])) {
             return false;
@@ -214,7 +240,7 @@ class Session extends Storage\Session
      *
      * @return string|bool returns false if the public key is not readable
      */
-    protected function getPublicKey()
+    protected function getPublicKey(): bool|string
     {
         if (!is_readable($this->config['jwt_pub_key_path'])) {
             return false;
