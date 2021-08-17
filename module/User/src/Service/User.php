@@ -350,7 +350,7 @@ class User
         }
 
         // Try to authenticate the user.
-        $this->authService->setRememberMe($data['remember'] === 1);
+        $this->authService->setRememberMe($data['remember'] === '1');
         $result = $this->authService->authenticate($data['login'], $data['password']);
 
         // Check if authentication was successful.

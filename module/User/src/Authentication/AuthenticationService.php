@@ -136,7 +136,7 @@ class AuthenticationService implements AuthenticationServiceInterface
 
         // If the authentication was successful, persist the identity.
         if ($result->isValid()) {
-            $this->getStorage()->write($result->getIdentity());
+            $this->getStorage()->write($result->getIdentity()->getLidnr());
         }
 
         return $result;
@@ -165,10 +165,6 @@ class AuthenticationService implements AuthenticationServiceInterface
 
         $mapper = $this->getAdapter()->getMapper();
         $user = $this->getStorage()->read();
-
-        if (is_object($user)) {
-            $user = $user->getLidnr();
-        }
 
         return $mapper->findByLidnr($user);
     }
