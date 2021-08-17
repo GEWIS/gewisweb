@@ -99,6 +99,12 @@ class Session extends SessionStorage
             return false;
         }
 
+        // Check if the session has not expired.
+        $now = (new DateTime())->getTimestamp();
+        if ($now >= $session->exp) {
+            return false;
+        }
+
         parent::write($session->lidnr);
         $this->saveSession($session->lidnr);
 
