@@ -4,19 +4,27 @@ namespace User\Service;
 
 use DateInterval;
 use DateTime;
-use Decision\Mapper\Member;
+use Decision\Mapper\Member as MemberMapper;
 use Laminas\Crypt\Password\Bcrypt;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Stdlib\Parameters;
 use RuntimeException;
 use User\Authentication\Adapter\Mapper;
 use User\Authentication\AuthenticationService;
-use User\Form\Activate;
-use User\Form\Login;
-use User\Form\Password;
-use User\Form\Register as RegisterForm;
-use User\Mapper\NewUser;
-use User\Model\NewUser as NewUserModel;
-use User\Model\User as UserModel;
+use User\Form\{
+    Activate as ActivateForm,
+    Login as LoginForm,
+    Password as PasswordForm,
+    Register as RegisterForm,
+};
+use User\Mapper\{
+    NewUser as NewUserMapper,
+    User as UserMapper,
+};
+use User\Model\{
+    NewUser as NewUserModel,
+    User as UserModel,
+};
 use User\Permissions\NotAllowedException;
 
 /**
@@ -27,65 +35,68 @@ class User
     /**
      * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
      * @var Bcrypt
      */
-    private $bcrypt;
+    private Bcrypt $bcrypt;
 
     /**
      * @var AuthenticationService
      * with regular Mapper adapter
      */
-    private $authService;
+    private AuthenticationService $authService;
 
     /**
      * @var AuthenticationService
      * with PinMapper adapter
      */
-    private $pinAuthService;
+    private AuthenticationService $pinAuthService;
 
     /**
      * @var Email
      */
-    private $emailService;
+    private Email $emailService;
 
     /**
-     * @var \User\Mapper\User
+     * @var UserMapper
      */
-    private $userMapper;
+    private UserMapper $userMapper;
 
     /**
-     * @var NewUser
+     * @var NewUserMapper
      */
-    private $newUserMapper;
+    private NewUserMapper $newUserMapper;
 
     /**
-     * @var Member
+     * @var MemberMapper
      */
-    private $memberMapper;
+    private MemberMapper $memberMapper;
 
     /**
      * @var RegisterForm
      */
-    private $registerForm;
+    private RegisterForm $registerForm;
 
     /**
-     * @var Activate
+     * @var ActivateForm
      */
-    private $activateForm;
+    private ActivateForm $activateForm;
 
     /**
-     * @var Login
+     * @var LoginForm
      */
-    private $loginForm;
+    private LoginForm $loginForm;
 
     /**
-     * @var Password
+     * @var PasswordForm
      */
-    private $passwordForm;
+    private PasswordForm $passwordForm;
 
+    /**
+     * @var AclService
+     */
     private AclService $aclService;
 
     public function __construct(
@@ -94,14 +105,14 @@ class User
         AuthenticationService $authService,
         AuthenticationService $pinAuthService,
         Email $emailService,
-        \User\Mapper\User $userMapper,
-        NewUser $newUserMapper,
-        Member $memberMapper,
+        UserMapper $userMapper,
+        NewUserMapper $newUserMapper,
+        MemberMapper $memberMapper,
         RegisterForm $registerForm,
-        Activate $activateForm,
-        Login $loginForm,
-        Password $passwordForm,
-        AclService $aclService
+        ActivateForm $activateForm,
+        LoginForm $loginForm,
+        PasswordForm $passwordForm,
+        AclService $aclService,
     ) {
         $this->translator = $translator;
         $this->bcrypt = $bcrypt;
@@ -121,12 +132,12 @@ class User
     /**
      * Activate a user.
      *
-     * @param array $data activation data
+     * @param Parameters $data activation data
      * @param NewUserModel $newUser The user to create
      *
      * @return bool
      */
-    public function activate($data, NewUserModel $newUser)
+    public function activate(Parameters $data, NewUserModel $newUser): bool
     {
         $form = $this->activateForm;
 
@@ -158,11 +169,11 @@ class User
      *
      * Will also send an email to the user.
      *
-     * @param array $data Registration data
+     * @param Parameters $data Registration data
      *
      * @return NewUserModel|null New registered user. Null when the user could not be registered.
      */
-    public function register($data)
+    public function register(Parameters $data): ?NewUserModel
     {
         $form = $this->registerForm;
         $form->setData($data);
@@ -225,11 +236,11 @@ class User
      *
      * Will also send an email to the user.
      *
-     * @param array $data Reset data
+     * @param Parameters $data Reset data
      *
      * @return UserModel|null User. Null when the password could not be reset.
      */
-    public function reset($data)
+    public function reset(Parameters $data): ?UserModel
     {
         $form = $this->registerForm;
         $form->setData($data);
@@ -275,11 +286,11 @@ class User
     /**
      * Change the password of a user.
      *
-     * @param array $data Passworc change date
+     * @param Parameters $data Passworc change date
      *
      * @return bool
      */
-    public function changePassword($data)
+    public function changePassword(Parameters $data): bool
     {
         $form = $this->getPasswordForm();
 
@@ -325,11 +336,11 @@ class User
     /**
      * Log the user in.
      *
-     * @param array $data Login data
+     * @param Parameters $data Login data
      *
      * @return UserModel|null Authenticated user. Null if not authenticated.
      */
-    public function login(array $data): ?UserModel
+    public function login(Parameters $data): ?UserModel
     {
         $form = $this->getLoginForm();
         $form->setData($data);
@@ -355,11 +366,11 @@ class User
     /**
      * Login using a pin code.
      *
-     * @param array $data
+     * @param Parameters $data
      *
      * @return UserModel|null Authenticated user. Null if not authenticated.
      */
-    public function pinLogin($data)
+    public function pinLogin(Parameters $data): ?UserModel
     {
         if (!$this->aclService->isAllowed('pin_login', 'user')) {
             throw new NotAllowedException(
@@ -381,7 +392,7 @@ class User
     /**
      * Log the user out.
      */
-    public function logout()
+    public function logout(): void
     {
         // clear the user identity
         $this->authService->clearIdentity();
@@ -394,7 +405,7 @@ class User
      *
      * @return NewUserModel
      */
-    public function getNewUser($code)
+    public function getNewUser(string $code): NewUserModel
     {
         return $this->newUserMapper->getByCode($code);
     }
@@ -406,7 +417,7 @@ class User
      *
      * @return string
      */
-    public static function generateCode($length = 20)
+    public static function generateCode(int $length = 20): string
     {
         $ret = '';
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -421,9 +432,9 @@ class User
     /**
      * Get the activate form.
      *
-     * @return Activate Activate form
+     * @return ActivateForm Activate form
      */
-    public function getActivateForm()
+    public function getActivateForm(): ActivateForm
     {
         return $this->activateForm;
     }
@@ -433,7 +444,7 @@ class User
      *
      * @return RegisterForm Register form
      */
-    public function getRegisterForm()
+    public function getRegisterForm(): RegisterForm
     {
         return $this->registerForm;
     }
@@ -441,9 +452,9 @@ class User
     /**
      * Get the password form.
      *
-     * @return Password Password change form
+     * @return PasswordForm Password change form
      */
-    public function getPasswordForm()
+    public function getPasswordForm(): PasswordForm
     {
         if (!$this->aclService->isAllowed('password_change', 'user')) {
             throw new NotAllowedException(
@@ -457,9 +468,9 @@ class User
     /**
      * Get the login form.
      *
-     * @return Login Login form
+     * @return LoginForm Login form
      */
-    public function getLoginForm()
+    public function getLoginForm(): LoginForm
     {
         return $this->loginForm;
     }
