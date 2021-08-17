@@ -407,13 +407,13 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * If this object contains an translation for a given locale, it is returned, otherwise null is returned.
+     * If this object contains a translation for a given locale, it is returned, otherwise null is returned.
      *
-     * @param $locale
+     * @param string $locale
      *
      * @return mixed|null
      */
-    public function getTranslationFromLocale($locale)
+    public function getTranslationFromLocale(string $locale)
     {
         $companyLanguages = $this->getAvailableLanguages();
 

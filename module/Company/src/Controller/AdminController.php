@@ -175,13 +175,11 @@ class AdminController extends AbstractActionController
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $files = $request->getFiles();
-
             if (
                 $this->companyService->insertPackageForCompanySlugNameByData(
                     $companyName,
                     $request->getPost(),
-                    $files['banner'],
+                    $request->getFiles(),
                     $type
                 )
             ) {
@@ -220,7 +218,7 @@ class AdminController extends AbstractActionController
      */
     public function addJobAction()
     {
-        // Get useful stuf
+        // Get useful stuff
         $companyForm = $this->companyService->getJobForm();
 
         // Get parameters
