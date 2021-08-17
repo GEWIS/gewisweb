@@ -1,3 +1,25 @@
+## [v2.4.1](https://github.com/GEWIS/gewisweb/tree/v2.4.1) (2021-08-17)
+
+* Fixed issue where users were unable to log out.
+* Fixed issue where updating a company profile would delete it's language profiles.
+* Several bug fixes and stability improvements.
+
+---
+
+## [v2.4](https://github.com/GEWIS/gewisweb/tree/v2.4) (2021-07-21)
+
+* Upgraded to PHP 8.0 🎉.
+* Several bug fixes.
+
+---
+
+## [v2.3](https://github.com/GEWIS/gewisweb/tree/v2.3) (2021-07-16)
+
+* Upgraded to Laminas MVC.
+* Several bug fixes.
+
+---
+
 ## [v2.2.3](https://github.com/GEWIS/gewisweb/tree/v2.2.3) (2021-07-16)
 
 * Re-added Infima.
