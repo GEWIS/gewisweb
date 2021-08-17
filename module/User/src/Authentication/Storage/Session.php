@@ -93,6 +93,15 @@ class Session extends SessionStorage
             return false;
         }
 
+        // Stop validation if we are destroying the session.
+        if ($this->response->getHeaders()->has('set-cookie')) {
+            foreach ($this->response->getHeaderS()->get('set-cookie') as $cookie) {
+                if ($cookie->getName() === 'GEWISSESSTOKEN' && $cookie->getValue() === 'deleted') {
+                    return false;
+                }
+            }
+        }
+
         try {
             $session = JWT::decode($cookies->GEWISSESSTOKEN, $key, ['RS256']);
         } catch (UnexpectedValueException $e) {
@@ -164,6 +173,8 @@ class Session extends SessionStorage
     public function clear(): void
     {
         // Clear the session
+        $this->setRememberMe(false);
+        parent::write(null);
         parent::clear();
         $this->clearCookie();
     }
