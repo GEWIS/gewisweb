@@ -2,14 +2,13 @@
 
 namespace Activity\Form;
 
-use Activity\Model\SignupField;
-use Activity\Model\UserSignup;
+use Activity\Model\{
+    SignupField as SignupFieldModel,
+    SignupList as SignupListModel,
+};
 use Laminas\Captcha\Image as ImageCaptcha;
 use Laminas\Form\Form;
-use Laminas\Hydrator\ClassMethodsHydrator;
 use Laminas\InputFilter\InputFilterProviderInterface;
-
-//input filter
 
 class Signup extends Form implements InputFilterProviderInterface
 {
@@ -17,15 +16,20 @@ class Signup extends Form implements InputFilterProviderInterface
     public const EXTERNAL_USER = 2;
     public const EXTERNAL_ADMIN = 3;
 
-    protected $type;
-    protected $signupList;
+    /**
+     * @var int
+     */
+    protected int $type;
+
+    /**
+     * @var SignupListModel
+     */
+    protected SignupListModel $signupList;
 
     public function __construct()
     {
         parent::__construct('activitysignup');
         $this->setAttribute('method', 'post');
-        $this->setHydrator(new ClassMethodsHydrator(false))
-            ->setObject(new UserSignup());
 
         $this->add(
             [
@@ -45,12 +49,18 @@ class Signup extends Form implements InputFilterProviderInterface
         );
     }
 
-    public function getType()
+    /**
+     * @return int
+     */
+    public function getType(): int
     {
         return $this->type;
     }
 
-    public function initialiseExternalForm($signupList)
+    /**
+     * @param SignupListModel $signupList
+     */
+    public function initialiseExternalForm(SignupListModel $signupList): void
     {
         $this->add(
             [
@@ -67,6 +77,7 @@ class Signup extends Form implements InputFilterProviderInterface
                 ],
             ]
         );
+
         $this->initialiseExternalAdminForm($signupList);
         $this->type = Signup::EXTERNAL_USER;
     }
@@ -75,9 +86,9 @@ class Signup extends Form implements InputFilterProviderInterface
      * Initialize the form for external subscriptions by admin, i.e. set the language and the fields
      * Add every field in $signupList to the form.
      *
-     * @param \Activity\Model\SignupList $signupList
+     * @param SignupListModel $signupList
      */
-    public function initialiseExternalAdminForm($signupList)
+    public function initialiseExternalAdminForm(SignupListModel $signupList): void
     {
         $this->add(
             [
@@ -85,12 +96,14 @@ class Signup extends Form implements InputFilterProviderInterface
                 'type' => 'Text',
             ]
         );
+
         $this->add(
             [
                 'name' => 'email',
                 'type' => 'Text',
             ]
         );
+
         $this->initialiseForm($signupList);
         $this->type = Signup::EXTERNAL_ADMIN;
     }
@@ -99,9 +112,9 @@ class Signup extends Form implements InputFilterProviderInterface
      * Initialize the form, i.e. set the language and the fields
      * Add every field in $signupList to the form.
      *
-     * @param \Activity\Model\SignupList $signupList
+     * @param SignupListModel $signupList
      */
-    public function initialiseForm($signupList)
+    public function initialiseForm(SignupListModel $signupList): void
     {
         foreach ($signupList->getFields() as $field) {
             $this->add($this->createSignupFieldElementArray($field));
@@ -115,15 +128,16 @@ class Signup extends Form implements InputFilterProviderInterface
      * Creates an array of the form element specification for the given $field,
      * to be used by the factory.
      *
-     * @param SignupField $field
+     * @param SignupFieldModel $field
      *
      * @return array
      */
-    protected function createSignupFieldElementArray($field)
+    protected function createSignupFieldElementArray(SignupFieldModel $field): array
     {
         $result = [
             'name' => $field->getId(),
         ];
+
         switch ($field->getType()) {
             case 0: //'Text'
                 $result['type'] = 'Text';
@@ -166,7 +180,7 @@ class Signup extends Form implements InputFilterProviderInterface
      *
      * @return array
      */
-    public function getInputFilterSpecification()
+    public function getInputFilterSpecification(): array
     {
         $filter = [];
         if (

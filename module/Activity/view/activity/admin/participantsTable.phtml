@@ -101,7 +101,7 @@
             <h2><?= $this->translate('Additional actions') ?></h2>
         </div>
         <div class="col-md-12">
-            <a href="mailto:?bcc=<?= implode(array_unique($allEmailAddresses), '; ') ?>">
+            <a href="mailto:?bcc=<?= implode('; ', array_unique($allEmailAddresses)) ?>">
                 <?= $this->translate('Mail everybody') ?>
             </a>
         </div>
