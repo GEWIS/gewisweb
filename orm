@@ -10,4 +10,8 @@ chdir(__DIR__);
 
 require 'bootstrap.php';
 
-include 'vendor/doctrine/doctrine-module/bin/doctrine-module';
+$application = ConsoleRunner::getApplication();
+
+/* @var $cli \Symfony\Component\Console\Application */
+$cli = $application->getServiceManager()->get('doctrine.cli');
+exit($cli->run());
