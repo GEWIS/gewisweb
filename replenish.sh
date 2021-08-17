@@ -12,5 +12,10 @@ cp -R -u gewisweb-${BRANCH}/data/* /code/data/
 chown -R  www-data:www-data /code/data
 rm -R /tmp/gewisweb-${BRANCH}
 cd /code
-php composer.phar dump-autoload -o --no-dev
+if [ ${APP_ENV} == 'production' ]
+then
+    php composer.phar dump-autoload -o --no-dev
+else
+    php composer.phar dump-autoload -o
+fi
 ./orm orm:generate-proxies
