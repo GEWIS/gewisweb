@@ -99,7 +99,7 @@ $this->headScript()
                                data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>">
                                 <div class="card-img">
                                     <img
-                                        src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
+                                        src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)?->getLogo()) ?>"
                                         alt="<?= $this->escapeHtmlAttr($company->getName()) ?>"/>
                                 </div>
                                 <h2 class="card-title"><?= $job->getName() ?></h2>

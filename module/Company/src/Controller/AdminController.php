@@ -113,15 +113,20 @@ class AdminController extends AbstractActionController
      */
     public function addCompanyAction()
     {
+        if (!$this->aclService->isAllowed('insert', 'company')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to create a company'));
+        }
+
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
             // Check if data is valid, and insert when it is
             $company = $this->companyService->insertCompanyByData(
                 $request->getPost(),
-                $request->getFiles()
+                $request->getFiles(),
             );
-            if (!is_null($company)) {
+
+            if ($company) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/default',
@@ -170,13 +175,11 @@ class AdminController extends AbstractActionController
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $files = $request->getFiles();
-
             if (
                 $this->companyService->insertPackageForCompanySlugNameByData(
                     $companyName,
                     $request->getPost(),
-                    $files['banner'],
+                    $request->getFiles(),
                     $type
                 )
             ) {
@@ -215,7 +218,7 @@ class AdminController extends AbstractActionController
      */
     public function addJobAction()
     {
-        // Get useful stuf
+        // Get useful stuff
         $companyForm = $this->companyService->getJobForm();
 
         // Get parameters
@@ -418,11 +421,12 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $post = $request->getPost();
+
             if (
                 $this->companyService->saveCompanyByData(
                     $company,
                     $post,
-                    $request->getFiles()
+                    $request->getFiles(),
                 )
             ) {
                 $companyName = $request->getPost()['slugName'];

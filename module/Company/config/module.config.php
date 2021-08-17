@@ -160,7 +160,7 @@ return [
                                         'action' => 'editPackage',
                                     ],
                                     'constraints' => [
-                                        'packageId' => '[a-zA-Z0-9_-]*',
+                                        'packageId' => '[0-9]*',
                                     ],
                                 ],
                                 'may_terminate' => true,

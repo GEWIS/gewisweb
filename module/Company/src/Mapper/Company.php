@@ -2,11 +2,17 @@
 
 namespace Company\Mapper;
 
-use Company\Model\Company as CompanyModel;
-use Company\Model\CompanyI18n;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query;
+use Company\Model\{
+    Company as CompanyModel,
+    CompanyI18n as CompanyI18nModel,
+};
+use Doctrine\ORM\{
+    EntityManager,
+    EntityRepository,
+    OptimisticLockException,
+    ORMException,
+    Query,
+};
 
 /**
  * Mappers for companies.
@@ -33,8 +39,10 @@ class Company
 
     /**
      * Saves all unsaved entities, that are marked persistent.
+     *
+     * @throws ORMException
      */
-    public function save()
+    public function save(): void
     {
         $this->em->flush();
     }
@@ -68,7 +76,7 @@ class Company
         $company = new CompanyModel();
 
         foreach ($languages as $language) {
-            $translation = new CompanyI18n($language, $company);
+            $translation = new CompanyI18nModel($language, $company);
             if (is_null($translation->getLogo())) {
                 $translation->setLogo('');
             }
@@ -161,7 +169,7 @@ class Company
     {
         $result = $this->getRepository()->findBy(['slugName' => $slugName]);
 
-        return empty($result) ? null : $result[0];
+        return empty($result) ? NULL : $result[0];
     }
 
     /**
@@ -172,6 +180,18 @@ class Company
     public function remove($company)
     {
         $this->em->remove($company);
+        $this->em->flush();
+    }
+
+    /**
+     * @param CompanyI18nModel $translation
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function removeTranslation(CompanyI18nModel $translation): void
+    {
+        $this->em->remove($translation);
         $this->em->flush();
     }
 

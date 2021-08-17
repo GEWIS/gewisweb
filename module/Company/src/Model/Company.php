@@ -88,8 +88,6 @@ class Company // implements ArrayHydrator (for zend2 form)
      */
     protected $packages;
 
-    private $languageNeutralId;
-
     /**
      * Constructor.
      */
@@ -112,15 +110,11 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Get the company's translations.
      *
-     * @return Collection|array
+     * @return Collection
      */
     public function getTranslations()
     {
-        if (!is_null($this->translations)) {
-            return $this->translations;
-        }
-
-        return [];
+        return $this->translations;
     }
 
     /**
@@ -399,47 +393,35 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * Get the company's language.
+     * Returns the available languages (translations) for this company.
      *
-     * @return int
+     * @return Collection
      */
-    public function getLanguageNeutralId()
+    public function getAvailableLanguages(): Collection
     {
-        return $this->languageNeutralId;
-    }
-
-    /**
-     * Set the company's language neutral id.
-     *
-     * @param int $language
-     */
-    public function setLanguageNeutralId($language)
-    {
-        $this->languageNeutralId = $language;
-    }
-
-    /**
-     * If this object contains an translation for a given locale, it is returned, otherwise null is returned.
-     */
-    public function getTranslationFromLocale($locale)
-    {
-        $companyLanguages = $this->getTranslations()->map(
+        return $this->getTranslations()->map(
             function ($value) {
                 return $value->getLanguage();
             }
         );
+    }
+
+    /**
+     * If this object contains a translation for a given locale, it is returned, otherwise null is returned.
+     *
+     * @param string $locale
+     *
+     * @return mixed|null
+     */
+    public function getTranslationFromLocale(string $locale)
+    {
+        $companyLanguages = $this->getAvailableLanguages();
 
         if ($companyLanguages->contains($locale)) {
             return $this->getTranslations()[$companyLanguages->indexOf($locale)];
         }
 
-        throw new Exception(
-            sprintf(
-                'Requested non-existent translation for locale %s of company with language neutral id %d',
-                $locale,
-                $this->getLanguageNeutralId()
-            )
-        );
+        return null;
     }
 
     /**
@@ -466,7 +448,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      * @param mixed $data
      * @param mixed $language
      */
-    public function getTranslationFromArray($data, $language)
+    public function updateTranslationFromArray($data, $language)
     {
         if ('' !== $language) {
             $translation = $this->getTranslationFromLocale($language);
@@ -495,19 +477,10 @@ class Company // implements ArrayHydrator (for zend2 form)
     {
         $languages = $data['languages'];
 
-        $newTranslations = new ArrayCollection();
-
         foreach ($languages as $language) {
-            $newTranslationObject = $this->getTranslationFromArray($data, $language);
-            $newTranslations->add($newTranslationObject);
+            $this->updateTranslationFromArray($data, $language);
         }
 
-        // Delete old translations
-        foreach ($this->getTranslations() as $translation) {
-            if (!$newTranslations->contains($translation)) {
-                $translation->remove();
-            }
-        }
         $this->setName($this->updateIfSet($data['name'], ''));
         $this->setContactName($this->updateIfSet($data['contactName'], ''));
         $this->setSlugName($this->updateIfSet($data['slugName'], ''));
@@ -515,7 +488,6 @@ class Company // implements ArrayHydrator (for zend2 form)
         $this->setEmail($this->updateIfSet($data['email'], ''));
         $this->setPhone($this->updateIfSet($data['phone'], ''));
         $this->setHidden($this->updateIfSet($data['hidden'], ''));
-        $this->translations = $newTranslations;
     }
 
     /**
