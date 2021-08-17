@@ -18,7 +18,7 @@ use Education\Model\{
     Summary as SummaryModel,
 };
 use Exception;
-use Laminas\Form\Form;
+use Laminas\Form\Fieldset;
 use Laminas\Http\Response\Stream;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Stdlib\Parameters;
@@ -423,7 +423,7 @@ class Exam
         }
 
         $form = $this->bulkForm->get('exams');
-        if (!$form instanceof Form) {
+        if (!$form instanceof Fieldset) {
             throw new RuntimeException('The form could not be retrieved');
         }
         $form->populateValues($data);
