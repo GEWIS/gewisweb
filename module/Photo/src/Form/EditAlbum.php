@@ -28,6 +28,7 @@ class EditAlbum extends Form
                 'name' => 'startDateTime',
                 'type' => 'Laminas\Form\Element\DateTime',
                 'options' => [
+                    'format' => 'Y/m/d H:i',
                     'label' => $translate->translate('Start date'),
                 ],
             ]
@@ -38,6 +39,7 @@ class EditAlbum extends Form
                 'name' => 'endDateTime',
                 'type' => 'Laminas\Form\Element\DateTime',
                 'options' => [
+                    'format' => 'Y/m/d H:i',
                     'label' => $translate->translate('End date'),
                 ],
             ]
