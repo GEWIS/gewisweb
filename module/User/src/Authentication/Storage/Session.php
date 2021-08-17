@@ -164,16 +164,10 @@ class Session extends Storage\Session
      *
      * @return void
      */
-    protected function saveCookie($jwt)
+    protected function saveCookie(string $jwt): void
     {
         $sessionToken = new SetCookie('GEWISSESSTOKEN', $jwt, strtotime('+2 weeks'), '/');
-
-        // Use secure cookies in production
-        if (APP_ENV === 'production') {
-            $sessionToken->setSecure(true)->setHttponly(true);
-        }
-
-        $sessionToken->setDomain($this->config['cookie_domain']);
+        $sessionToken = $this->setCookieParameters($sessionToken);
 
         $this->response->getHeaders()->addHeader($sessionToken);
     }
@@ -183,16 +177,29 @@ class Session extends Storage\Session
      *
      * @return void
      */
-    protected function clearCookie()
+    protected function clearCookie(): void
     {
         $sessionToken = new SetCookie('GEWISSESSTOKEN', 'deleted', strtotime('-1 Year'), '/');
+        $sessionToken = $this->setCookieParameters($sessionToken);
 
+        $this->response->getHeaders()->addHeader($sessionToken);
+    }
+
+    /**
+     * @param SetCookie $sessionToken
+     *
+     * @return SetCookie
+     */
+    private function setCookieParameters(SetCookie $sessionToken): SetCookie
+    {
         // Use secure cookies in production
         if (APP_ENV === 'production') {
             $sessionToken->setSecure(true)->setHttponly(true);
         }
 
-        $this->response->getHeaders()->addHeader($sessionToken);
+        $sessionToken->setDomain($this->config['cookie_domain']);
+
+        return $sessionToken;
     }
 
     /**
