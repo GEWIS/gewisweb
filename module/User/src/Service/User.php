@@ -329,7 +329,7 @@ class User
      *
      * @return UserModel|null Authenticated user. Null if not authenticated.
      */
-    public function login($data)
+    public function login(array $data): ?UserModel
     {
         $form = $this->getLoginForm();
         $form->setData($data);
@@ -339,6 +339,7 @@ class User
         }
 
         // Try to authenticate the user.
+        $this->authService->setRememberMe($data['remember'] === 1);
         $result = $this->authService->authenticate($data['login'], $data['password']);
 
         // Check if authentication was successful.
@@ -347,8 +348,6 @@ class User
 
             return null;
         }
-
-        $this->authService->setRememberMe($data['remember'] === 1);
 
         return $this->authService->getIdentity();
     }

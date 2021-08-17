@@ -4,36 +4,41 @@ namespace User\Authentication\Storage;
 
 use DateTime;
 use Firebase\JWT\JWT;
-use Laminas\Authentication\Storage;
-use Laminas\Http\Header\SetCookie;
-use Laminas\Http\Request;
-use Laminas\Http\Response;
+use Laminas\Authentication\Storage\Session as SessionStorage;
+use Laminas\Http\{
+    Header\SetCookie,
+    Request,
+    Response,
+};
 use UnexpectedValueException;
 
-class Session extends Storage\Session
+class Session extends SessionStorage
 {
     /**
      * @var bool indicating whether we should remember the user
      */
-    protected $rememberMe;
+    protected bool $rememberMe;
 
     /**
      * @var Request
      */
-    private $request;
+    private Request $request;
 
     /**
      * @var Response
      */
-    private $response;
+    private Response $response;
 
     /**
      * @var array
      */
-    private $config;
+    private array $config;
 
-    public function __construct($request, $response, array $config)
-    {
+    public function __construct(
+        Request $request,
+        Response $response,
+        array $config,
+    ) {
         $this->request = $request;
         $this->response = $response;
         $this->config = $config;
@@ -46,7 +51,7 @@ class Session extends Storage\Session
      *
      * @param bool $rememberMe
      */
-    public function setRememberMe($rememberMe = false)
+    public function setRememberMe(bool $rememberMe): void
     {
         $this->rememberMe = $rememberMe;
 
@@ -60,7 +65,7 @@ class Session extends Storage\Session
      *
      * @return bool
      */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         if (!parent::isEmpty()) {
             return false;
@@ -74,7 +79,7 @@ class Session extends Storage\Session
      *
      * @return bool indicating whether a session was loaded
      */
-    protected function validateSession()
+    protected function validateSession(): bool
     {
         $key = $this->getPublicKey();
 
@@ -107,7 +112,7 @@ class Session extends Storage\Session
      *
      * @return void
      */
-    public function write($contents)
+    public function write($contents): void
     {
         parent::write($contents);
 
@@ -123,7 +128,7 @@ class Session extends Storage\Session
      *
      * @return void
      */
-    protected function saveSession($lidnr)
+    protected function saveSession(int $lidnr): void
     {
         $key = $this->getPrivateKey();
 
@@ -150,7 +155,7 @@ class Session extends Storage\Session
      *
      * @return void
      */
-    public function clear()
+    public function clear(): void
     {
         // Clear the session
         parent::clear();
@@ -207,7 +212,7 @@ class Session extends Storage\Session
      *
      * @return string|bool returns false if the private key is not readable
      */
-    protected function getPrivateKey()
+    protected function getPrivateKey(): bool|string
     {
         if (!is_readable($this->config['jwt_key_path'])) {
             return false;
@@ -221,7 +226,7 @@ class Session extends Storage\Session
      *
      * @return string|bool returns false if the public key is not readable
      */
-    protected function getPublicKey()
+    protected function getPublicKey(): bool|string
     {
         if (!is_readable($this->config['jwt_pub_key_path'])) {
             return false;
