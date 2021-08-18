@@ -40,15 +40,11 @@ abstract class GenericAclService extends AbstractAclService
     protected function getRole()
     {
         if ($this->authService->hasIdentity()) {
-            $user = $this->authService->getIdentity();
-
-            return $user->getRoleId();
+            return $this->authService->getIdentity();
         }
 
         if ($this->apiAuthService->hasIdentity()) {
-            $user = $this->apiAuthService->getIdentity();
-
-            return $user->getRoleId();
+            return $this->apiAuthService->getIdentity();
         }
 
         // TODO: We could create an assertion for this.
