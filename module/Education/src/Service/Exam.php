@@ -225,18 +225,18 @@ class Exam
 
                 $exam->setDate(new DateTime($examData['date']));
                 $exam->setCourse($this->getCourse($examData['course']));
-                if ($exam instanceof SummaryModel) {
+
+                if (get_class($exam) === SummaryModel::class) {
                     $exam->setAuthor($examData['author']);
                     $exam->setExamType(ExamModel::EXAM_TYPE_SUMMARY);
                 }
 
-                if ($exam instanceof ExamModel) {
+                if (get_class($exam) === ExamModel::class) {
                     $exam->setExamType($examData['examType']);
                 }
+
                 $exam->setLanguage($examData['language']);
-
                 $localFile = $config['upload_' . $type . '_dir'] . '/' . $examData['file'];
-
                 $exam->setFilename($storageService->storeFile($localFile));
 
                 $mapper->persist($exam);
