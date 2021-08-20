@@ -450,7 +450,6 @@ class Activity
 
         $em = $this->entityManager;
 
-        // TODO: ->count and ->unwrap are undefined
         if (0 !== $currentActivity->getUpdateProposal()->count()) {
             $proposal = $currentActivity->getUpdateProposal()->unwrap()->first();
             //Remove old update proposal
@@ -499,7 +498,7 @@ class Activity
      *
      * @return bool
      */
-    protected function isUpdateProposalNew($current, $proposal)
+    protected function isUpdateProposalNew(array $current, array $proposal): bool
     {
         unset($current['id']);
 
@@ -509,6 +508,16 @@ class Activity
                 $v = $v->format('Y/m/d H:i');
             }
         });
+
+        // Change Organs and Companies to be their ids to prevent the form from accidentally submitting, as the Activity
+        // entity uses the Organ and Company entities.
+        if (isset($current['organ'])) {
+            $current['organ'] = $current['organ']->getId();
+        }
+
+        if (isset($current['company'])) {
+            $current['company'] = $current['company']->getId();
+        }
 
         // We do not need the ActivityCategory models, hence we replace it with the ids of each one. However, it is no
         // longer a model and requires array access to get the id.

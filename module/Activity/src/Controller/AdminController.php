@@ -97,7 +97,6 @@ class AdminController extends AbstractActionController
     public function updateAction()
     {
         $activityId = (int)$this->params('id');
-
         $activity = $this->activityQueryService->getActivityWithDetails($activityId);
 
         if (is_null($activity)) {
@@ -156,6 +155,9 @@ class AdminController extends AbstractActionController
         $languages = $this->activityQueryService->getAvailableLanguages($activity);
         $activityData['language_dutch'] = $languages['nl'];
         $activityData['language_english'] = $languages['en'];
+
+        $activityData['organ'] = $activity->getOrgan()?->getId();
+        $activityData['company'] = $activity->getCompany()?->getId();
 
         $allowSignupList = true;
         if (ActivityModel::STATUS_APPROVED === $activity->getStatus() || (isset($participants) && 0 !== $participants)) {
