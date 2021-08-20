@@ -86,7 +86,7 @@ class Poll implements ResourceInterface
      */
     #[ManyToOne(targetEntity: UserModel::class)]
     #[JoinColumn(referencedColumnName: "lidnr")]
-    protected UserModel $approver;
+    protected ?UserModel $approver = null;
 
     /**
      * Constructor.
@@ -146,9 +146,9 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @return UserModel
+     * @return UserModel|null
      */
-    public function getApprover(): UserModel
+    public function getApprover(): ?UserModel
     {
         return $this->approver;
     }

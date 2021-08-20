@@ -3,11 +3,14 @@
 namespace Frontpage\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
+use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use Frontpage\Model\Poll as PollModel;
-use Frontpage\Model\PollOption;
-use Frontpage\Model\PollVote;
+use Frontpage\Model\{
+    Poll as PollModel,
+    PollOption as PollOptionModel,
+    PollVote as PollVoteModel,
+};
 
 /**
  * Mappers for Polls.
@@ -19,11 +22,13 @@ class Poll extends BaseMapper
      *
      * @param int $optionId
      *
-     * @return PollOption|null
+     * @return PollOptionModel|null
+     *
+     * @throws ORMException
      */
-    public function findPollOptionById($optionId)
+    public function findPollOptionById(int $optionId): ?PollOptionModel
     {
-        return $this->em->find(PollOption::class, $optionId);
+        return $this->em->find(PollOptionModel::class, $optionId);
     }
 
     /**
@@ -32,11 +37,11 @@ class Poll extends BaseMapper
      * @param int $pollId
      * @param int $lidnr
      *
-     * @return PollVote|null
+     * @return PollVoteModel|null
      */
-    public function findVote($pollId, $lidnr)
+    public function findVote(int $pollId, int $lidnr): ?PollVoteModel
     {
-        return $this->em->getRepository(PollVote::class)->findOneBy(
+        return $this->em->getRepository(PollVoteModel::class)->findOneBy(
             [
                 'poll' => $pollId,
                 'respondent' => $lidnr,
@@ -49,7 +54,6 @@ class Poll extends BaseMapper
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('p')
-            ->from($this->getRepositoryName(), 'p')
             ->where('p.approver IS NULL')
             ->orderBy('p.expiryDate', 'DESC');
 
@@ -57,16 +61,16 @@ class Poll extends BaseMapper
     }
 
     /**
-     * Returns the latest poll if one is available.
+     * Returns the latest poll if one is available. Please note that this returns the poll which has its expiryDate
+     * furthest into the future, and thus not necessarily the 'newest' poll.
      *
      * @return PollModel|null
      */
-    public function getNewestPoll()
+    public function getNewestPoll(): ?PollModel
     {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('p')
-            ->from($this->getRepositoryName(), 'p')
             ->where('p.approver IS NOT NULL')
             ->andWhere('p.expiryDate > CURRENT_DATE()')
             ->setMaxResults(1)
@@ -82,15 +86,18 @@ class Poll extends BaseMapper
      *
      * @return DoctrineAdapter
      */
-    public function getPaginatorAdapter()
+    public function getPaginatorAdapter(): DoctrineAdapter
     {
         $qb = $this->getRepository()->createQueryBuilder('poll');
         $qb->where('poll.approver IS NOT NULL');
         $qb->orderBy('poll.expiryDate', 'DESC');
 
-        return new DoctrineAdapter(new ORMPaginator($qb));
+        return new DoctrineAdapter(new Paginator($qb));
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function getRepositoryName(): string
     {
         return PollModel::class;
