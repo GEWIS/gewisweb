@@ -29,11 +29,12 @@ class PageController extends AbstractActionController
         $subCategory = $this->params()->fromRoute('sub_category');
         $name = $this->params()->fromRoute('name');
         $page = $this->pageService->getPage($category, $subCategory, $name);
-        $parents = $this->pageService->getPageParents($page);
 
         if (is_null($page)) {
             return $this->notFoundAction();
         }
+
+        $parents = $this->pageService->getPageParents($page);
 
         return new ViewModel(
             [

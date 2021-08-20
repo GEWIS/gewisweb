@@ -4,14 +4,9 @@ namespace Frontpage\Service;
 
 class AclService extends \User\Service\AclService
 {
-    private array $pages;
-
     public function setPages(array $pages)
     {
-        // Recreate the ACL to erase old page permissions.
-        $this->createAcl();
-        $this->pages = $pages;
-        foreach ($this->pages as $page) {
+        foreach ($pages as $page) {
             $requiredRole = $page->getRequiredRole();
             $this->acl->addResource($page);
             $this->acl->allow($requiredRole, $page, 'view');

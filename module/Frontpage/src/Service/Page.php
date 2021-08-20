@@ -3,12 +3,18 @@
 namespace Frontpage\Service;
 
 use Application\Service\FileStorage;
+use Doctrine\ORM\ORMException;
 use Exception;
+use Frontpage\Form\Page as PageForm;
+use Frontpage\Mapper\Page as PageMapper;
 use Frontpage\Model\Page as PageModel;
 use InvalidArgumentException;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\File\Extension;
-use Laminas\Validator\File\IsImage;
+use Laminas\Validator\File\{
+    Extension,
+    IsImage,
+};
+use Laminas\Stdlib\Parameters;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -19,34 +25,38 @@ class Page
     /**
      * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
      * @var FileStorage
      */
-    private $storageService;
+    private FileStorage $storageService;
 
     /**
-     * @var \Frontpage\Mapper\Page
+     * @var PageMapper
      */
-    private $pageMapper;
+    private PageMapper $pageMapper;
 
     /**
-     * @var \Frontpage\Form\Page
+     * @var PageForm
      */
-    private $pageForm;
+    private PageForm $pageForm;
 
     /**
      * @var array
      */
-    private $storageConfig;
+    private array $storageConfig;
+
+    /**
+     * @var AclService
+     */
     private AclService $aclService;
 
     public function __construct(
         Translator $translator,
         FileStorage $storageService,
-        \Frontpage\Mapper\Page $pageMapper,
-        \Frontpage\Form\Page $pageForm,
+        PageMapper $pageMapper,
+        PageForm $pageForm,
         array $storageConfig,
         AclService $aclService
     ) {
@@ -63,7 +73,7 @@ class Page
      *
      * @return Translator
      */
-    public function getTranslator()
+    public function getTranslator(): Translator
     {
         return $this->translator;
     }
@@ -72,15 +82,16 @@ class Page
      * Returns a single page.
      *
      * @param string $category
-     * @param string $subCategory
-     * @param string $name
+     * @param string|null $subCategory
+     * @param string|null $name
      *
      * @return PageModel|null
      */
-    public function getPage($category, $subCategory, $name)
+    public function getPage(string $category, ?string $subCategory = null, ?string $name = null): ?PageModel
     {
         $page = $this->pageMapper->findPage($category, $subCategory, $name);
-        if (!(is_null($page) || $this->aclService->isAllowed('view', $page))) {
+
+        if (!$this->aclService->isAllowed('view', $page)) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view this page.'));
         }
 
@@ -94,11 +105,13 @@ class Page
      *
      * @return array
      */
-    public function getPageParents($page)
+    public function getPageParents(PageModel $page): array
     {
         $parents = [];
-        if (!is_null($page) && !is_null($page->getSubCategory())) {
+
+        if (!is_null($page->getSubCategory())) {
             $parents[] = $this->pageMapper->findPage($page->getCategory());
+
             if (!is_null($page->getName())) {
                 $parents[] = $this->pageMapper->findPage($page->getCategory(), $page->getSubCategory());
             }
@@ -114,7 +127,7 @@ class Page
      *
      * @return PageModel|null
      */
-    public function getPageById($pageId)
+    public function getPageById(int $pageId): ?PageModel
     {
         return $this->pageMapper->find($pageId);
     }
@@ -124,19 +137,22 @@ class Page
      *
      * @return array
      */
-    public function getPages()
+    public function getPages(): array
     {
         if (!$this->aclService->isAllowed('list', 'page')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view the list of pages.')
             );
         }
+
         $pages = $this->pageMapper->findAll();
+
         $pageArray = [];
         foreach ($pages as $page) {
             $category = $page->getCategory();
             $subCategory = $page->getSubCategory();
             $name = $page->getName();
+
             if (is_null($name)) {
                 if (is_null($subCategory)) {
                     // Page url is /$category
@@ -157,38 +173,65 @@ class Page
     /**
      * Creates a new Page.
      *
-     * @param array $data form post data
+     * @param Parameters $data form post data
      *
-     * @return bool|PageModel false if creation was not successful
+     * @return bool
+     *
+     * @throws ORMException
      */
-    public function createPage($data)
+    public function createPage(Parameters $data): bool
     {
         $form = $this->getPageForm();
-        $page = new PageModel();
-        $form->bind($page);
         $form->setData($data);
 
         if (!$form->isValid()) {
             return false;
         }
 
+        $page = $this->savePageData($form->getData());
+
         $this->pageMapper->persist($page);
         $this->pageMapper->flush();
+
+        return true;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return PageModel
+     */
+    public function savePageData(array $data): PageModel
+    {
+        $page = new PageModel();
+        $page->setCategory($data['category']);
+        $page->setSubCategory($data['subCategory'] ?? null);
+        $page->setName($data['name'] ?? null);
+
+        $page->setDutchTitle($data['dutchTitle']);
+        $page->setDutchContent($data['dutchContent']);
+        $page->setEnglishTitle($data['englishTitle']);
+        $page->setEnglishContent($data['englishContent']);
+
+        $page->setRequiredRole($data['requiredRole']);
 
         return $page;
     }
 
     /**
      * @param int $pageId
-     * @param array $data form post data
+     * @param Parameters $data form post data
      *
      * @return bool
+     *
+     * @throws ORMException
      */
-    public function updatePage($pageId, $data)
+    public function updatePage(int $pageId, Parameters $data): bool
     {
         if (!$this->aclService->isAllowed('edit', 'page')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit pages.'));
         }
+
         $form = $this->getPageForm($pageId);
         $form->setData($data);
 
@@ -205,10 +248,13 @@ class Page
      * Removes a page.
      *
      * @param int $pageId the id of the page to remove
+     *
+     * @throws ORMException
      */
-    public function deletePage($pageId)
+    public function deletePage(int $pageId): void
     {
         $page = $this->getPageById($pageId);
+
         $this->pageMapper->remove($page);
         $this->pageMapper->flush();
     }
@@ -216,13 +262,13 @@ class Page
     /**
      * Upload an image to be displayed on a page.
      *
-     * @param array $files
+     * @param Parameters $files
      *
      * @return string
      *
      * @throws Exception
      */
-    public function uploadImage($files)
+    public function uploadImage(Parameters $files): string
     {
         $imageValidator = new IsImage(
             ['magicFile' => false]
@@ -251,17 +297,18 @@ class Page
     /**
      * Get the Page form.
      *
-     * @param int $pageId
+     * @param int|null $pageId
      *
-     * @return \Frontpage\Form\Page
+     * @return PageForm
      */
-    public function getPageForm($pageId = null)
+    public function getPageForm(int $pageId = null): PageForm
     {
         if (!$this->aclService->isAllowed('create', 'page')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to create new pages.')
             );
         }
+
         $form = $this->pageForm;
 
         if (!is_null($pageId)) {

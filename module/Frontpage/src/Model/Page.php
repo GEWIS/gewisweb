@@ -30,18 +30,6 @@ class Page implements ResourceInterface
     protected ?int $id = null;
 
     /**
-     * Dutch title of the page.
-     */
-    #[Column(type: "string")]
-    protected string $dutchTitle;
-
-    /**
-     * English title of the page.
-     */
-    #[Column(type: "string")]
-    protected string $englishTitle;
-
-    /**
      * Category of the page.
      */
     #[Column(type: "string")]
@@ -54,7 +42,7 @@ class Page implements ResourceInterface
         type: "string",
         nullable: true,
     )]
-    protected ?string $subCategory;
+    protected ?string $subCategory = null;
 
     /**
      * Name of the page.
@@ -63,19 +51,31 @@ class Page implements ResourceInterface
         type: "string",
         nullable: true,
     )]
-    protected ?string $name;
+    protected ?string $name = null;
 
     /**
-     * The english HTML content of the page.
+     * Dutch title of the page.
      */
     #[Column(type: "string")]
-    protected string $englishContent;
+    protected string $dutchTitle;
 
     /**
      * The english HTML content of the page.
      */
     #[Column(type: "string")]
     protected string $dutchContent;
+
+    /**
+     * English title of the page.
+     */
+    #[Column(type: "string")]
+    protected string $englishTitle;
+
+    /**
+     * The english HTML content of the page.
+     */
+    #[Column(type: "string")]
+    protected string $englishContent;
 
     /**
      * The minimal role required to view a page.
@@ -188,17 +188,17 @@ class Page implements ResourceInterface
     }
 
     /**
-     * @param string $subCategory
+     * @param string|null $subCategory
      */
-    public function setSubCategory(string $subCategory): void
+    public function setSubCategory(?string $subCategory): void
     {
         $this->subCategory = $subCategory;
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      */
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
