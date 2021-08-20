@@ -151,10 +151,10 @@ class ActivityController extends AbstractActionController
         $fields = $signupList->getFields();
         $form = $this->prepareSignupForm($signupList, $activitySession);
 
-        $identity = $this->aclService->getIdentityOrThrowException();
         $isSignedUp = false;
         // TODO: you are passing a signup list while an activity is expected (repeated multiple times)
         if ($this->signupService->isAllowedToInternalSubscribe()) {
+            $identity = $this->aclService->getIdentityOrThrowException();
             $isSignedUp = $isAllowedToSubscribe
                 && $this->signupService->isSignedUp($signupList, $identity->getMember());
         }

@@ -423,13 +423,11 @@ class AdminController extends AbstractActionController
      */
     public function viewAction()
     {
-        $admin = false;
-        $identity = $this->aclService->getIdentityOrThrowException();
-
         if (!$this->aclService->isAllowed('viewAdmin', 'activity')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to administer activities'));
         }
 
+        $admin = false;
         $disapprovedActivities = null;
         $unapprovedActivities = null;
         $approvedActivities = null;
@@ -441,9 +439,11 @@ class AdminController extends AbstractActionController
             $approvedActivities = $this->activityQueryService->getApprovedActivities();
         }
 
+        $identity = $this->aclService->getIdentityOrThrowException();
         $paginator = new Paginator($this->activityQueryService->getOldCreatedActivitiesPaginator($identity));
         $paginator->setDefaultItemCountPerPage(15);
         $page = $this->params()->fromRoute('page');
+
         if ($page && 0 !== $paginator->count()) {
             $paginator->setCurrentPageNumber($paginator->normalizePageNumber($page));
         }
