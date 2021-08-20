@@ -117,13 +117,6 @@ $this->headScript()
                                 </div>
                                 <div class="card-footer">
                                     <button class="btn btn-link"><?= $this->translate('View') ?></button>
-                                    <span class="small">
-                                <?php if ($job->getTimestamp()->isToday()): ?>
-                                    <?= $this->translate('Posted today') ?>
-                                <?php else: ?>
-                                    <?= sprintf($this->translate('Posted %s'), $job->getTimestamp()->diffForHumans()) ?>
-                                <?php endif ?>
-                            </span>
                                 </div>
                             </a>
                         <?php endforeach; ?>
