@@ -62,7 +62,7 @@ class PollComment implements ResourceInterface
     /**
      * Comment content.
      */
-    #[Column(type: "string")]
+    #[Column(type: "text")]
     protected string $content;
 
     /**

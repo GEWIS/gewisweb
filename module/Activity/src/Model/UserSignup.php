@@ -16,13 +16,12 @@ use User\Model\User as UserModel;
 class UserSignup extends Signup
 {
     /**
-     * Who is subscribed.
+     * Who is subscribed. This association cannot be nonnullable, as this breaks {@link ExternalSignup}.
      */
     #[ManyToOne(targetEntity: UserModel::class)]
     #[JoinColumn(
         name: "user_lidnr",
         referencedColumnName: "lidnr",
-        nullable: false,
     )]
     protected UserModel $user;
 

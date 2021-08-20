@@ -121,7 +121,7 @@ class Job
      * The job's category.
      */
     #[ManyToOne(targetEntity: JobCategory::class)]
-    protected string $category;
+    protected JobCategory $category;
 
     /**
      * The category id.
