@@ -2,7 +2,8 @@
 $this->headTitle($action);
 
 $this->headScript()
-    ->prependFile($this->basePath() . '/js/activity-create.js');
+    ->prependFile($this->basePath() . '/js/activity-create.js')
+    ->appendFile($this->basePath() . '/js/bootstrap/tooltip.js');
 
 $form->prepare();
 $form->setAttribute('class', 'form-activity');
