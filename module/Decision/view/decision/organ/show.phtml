@@ -30,7 +30,7 @@ $this->headTitle($organ->getName()); ?>
             <div class="col-md-8">
                 <h2><?= $this->translate('Organ mutations') ?></h2>
                 <ul>
-                    <?php foreach ($organ->getSubDecisionsUploadOrdered() as $subdecision): ?>
+                    <?php foreach ($organ->getOrderedSubdecisions() as $subdecision): ?>
                         <li><?= $subdecision->getContent() ?></li>
                     <?php endforeach ?>
                 </ul>
