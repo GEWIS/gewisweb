@@ -47,7 +47,7 @@ class OrganInformation
         type: "string",
         nullable: true,
     )]
-    protected ?string $email;
+    protected ?string $email = null;
 
     /**
      * The website of the organ if available.
@@ -56,7 +56,7 @@ class OrganInformation
         type: "string",
         nullable: true,
     )]
-    protected ?string $website;
+    protected ?string $website = null;
 
     /**
      * A short description of the organ in dutch.
@@ -65,7 +65,7 @@ class OrganInformation
         type: "string",
         nullable: true,
     )]
-    protected ?string $shortDutchDescription;
+    protected ?string $shortDutchDescription = null;
 
     /**
      * A description of the organ in dutch.
@@ -74,7 +74,7 @@ class OrganInformation
         type: "text",
         nullable: true,
     )]
-    protected ?string $dutchDescription;
+    protected ?string $dutchDescription = null;
 
     /**
      * A short description of the organ in english.
@@ -83,7 +83,7 @@ class OrganInformation
         type: "string",
         nullable: true,
     )]
-    protected ?string $shortEnglishDescription;
+    protected ?string $shortEnglishDescription = null;
 
     /**
      * A description of the organ in english.
@@ -92,7 +92,7 @@ class OrganInformation
         type: "text",
         nullable: true,
     )]
-    protected ?string $englishDescription;
+    protected ?string $englishDescription = null;
 
     /**
      * The cover photo to display for this organ.
@@ -101,7 +101,7 @@ class OrganInformation
         type: "string",
         nullable: true,
     )]
-    protected ?string $coverPath;
+    protected ?string $coverPath = null;
 
     /**
      * The thumbnail photo to display for this organ.
@@ -110,7 +110,7 @@ class OrganInformation
         type: "string",
         nullable: true,
     )]
-    protected ?string $thumbnailPath;
+    protected ?string $thumbnailPath = null;
 
     /**
      * Who was the last one to approve this information. If null then nobody approved it.

@@ -154,7 +154,8 @@ class Member
         type: "string",
         nullable: true,
     )]
-    protected ?string $iban;
+    protected ?string $iban = null;
+
     /**
      * If the member receives a 'supremum'.
      */
@@ -162,7 +163,7 @@ class Member
         type: "string",
         nullable: true,
     )]
-    protected string $supremum;
+    protected ?string $supremum = null;
 
     /**
      * Addresses of this member.
@@ -548,6 +549,46 @@ class Member
     public function setPaid(int $paid): void
     {
         $this->paid = $paid;
+    }
+
+    /**
+     * Get the IBAN.
+     *
+     * @return string|null
+     */
+    public function getIban(): ?string
+    {
+        return $this->iban;
+    }
+
+    /**
+     * Set the IBAN.
+     *
+     * @param string|null $iban
+     */
+    public function setIban(?string $iban): void
+    {
+        $this->iban = $iban;
+    }
+
+    /**
+     * Get if the member wants a supremum.
+     *
+     * @return string|null
+     */
+    public function getSupremum(): ?string
+    {
+        return $this->supremum;
+    }
+
+    /**
+     * Set if the member wants a supremum.
+     *
+     * @param string|null $supremum
+     */
+    public function setSupremum(?string $supremum): void
+    {
+        $this->supremum = $supremum;
     }
 
     /**

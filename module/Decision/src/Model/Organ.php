@@ -104,7 +104,7 @@ class Organ
         type: "date",
         nullable: true,
     )]
-    protected ?DateTime $abrogationDate;
+    protected ?DateTime $abrogationDate = null;
 
     /**
      * Reference to members.
@@ -305,9 +305,9 @@ class Organ
     /**
      * Set the abrogation date.
      *
-     * @param DateTime $abrogationDate
+     * @param DateTime|null $abrogationDate
      */
-    public function setAbrogationDate(DateTime $abrogationDate): void
+    public function setAbrogationDate(?DateTime $abrogationDate): void
     {
         $this->abrogationDate = $abrogationDate;
     }

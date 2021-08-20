@@ -92,7 +92,7 @@ class BoardMember
         type: "date",
         nullable: true,
     )]
-    protected ?DateTime $dischargeDate;
+    protected ?DateTime $dischargeDate = null;
 
     /**
      * Get the ID.
@@ -195,9 +195,9 @@ class BoardMember
     /**
      * Set the discharge date.
      *
-     * @param DateTime $dischargeDate
+     * @param DateTime|null $dischargeDate
      */
-    public function setDischargeDate(DateTime $dischargeDate): void
+    public function setDischargeDate(?DateTime $dischargeDate): void
     {
         $this->dischargeDate = $dischargeDate;
     }

@@ -61,7 +61,7 @@ class Job
         type: "string",
         nullable: true,
     )]
-    protected ?string $attachment;
+    protected ?string $attachment = null;
 
     /**
      * The job's contact's name.
@@ -94,7 +94,7 @@ class Job
         type: "text",
         nullable: true,
     )]
-    protected ?string $location;
+    protected ?string $location = null;
 
     /**
      * The job's timestamp.
@@ -115,7 +115,7 @@ class Job
         targetEntity: CompanyJobPackage::class,
         inversedBy: "jobs",
     )]
-    protected CompanyPackage $package;
+    protected CompanyJobPackage $package;
 
     /**
      * The job's category.
@@ -206,9 +206,9 @@ class Job
     /**
      * Get the job's category.
      *
-     * @return string
+     * @return JobCategory
      */
-    public function getCategory(): string
+    public function getCategory(): JobCategory
     {
         return $this->category;
     }
@@ -216,9 +216,9 @@ class Job
     /**
      * Set the job's category.
      *
-     * @param string $category
+     * @param JobCategory $category
      */
-    public function setCategory(string $category): void
+    public function setCategory(JobCategory $category): void
     {
         $this->category = $category;
     }
@@ -431,9 +431,9 @@ class Job
     /**
      * Get the job's package.
      *
-     * @return CompanyPackage
+     * @return CompanyJobPackage
      */
-    public function getPackage(): CompanyPackage
+    public function getPackage(): CompanyJobPackage
     {
         return $this->package;
     }
@@ -487,9 +487,9 @@ class Job
     }
 
     /**
-     * @param CompanyPackage $package
+     * @param CompanyJobPackage $package
      */
-    public function setPackage(CompanyPackage $package): void
+    public function setPackage(CompanyJobPackage $package): void
     {
         $this->package = $package;
     }
@@ -511,9 +511,9 @@ class Job
     /**
      * Sets the job's location.
      *
-     * @param string $location
+     * @param string|null $location
      */
-    public function setLocation(string $location): void
+    public function setLocation(?string $location): void
     {
         $this->location = $location;
     }

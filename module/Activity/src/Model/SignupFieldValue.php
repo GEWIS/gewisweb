@@ -57,7 +57,7 @@ class SignupFieldValue
         type: "string",
         nullable: true,
     )]
-    protected ?string $value;
+    protected ?string $value = null;
 
     /**
      * The option chosen.

@@ -44,7 +44,7 @@ class Photo implements ResourceInterface
         type: "string",
         nullable: true,
     )]
-    protected ?string $artist;
+    protected ?string $artist = null;
 
     /**
      * The type of camera used.
@@ -53,7 +53,7 @@ class Photo implements ResourceInterface
         type: "string",
         nullable: true,
     )]
-    protected ?string $camera;
+    protected ?string $camera = null;
 
     /**
      * Whether a flash has been used.
@@ -62,7 +62,7 @@ class Photo implements ResourceInterface
         type: "boolean",
         nullable: true,
     )]
-    protected ?bool $flash;
+    protected ?bool $flash = null;
 
     /**
      * The focal length of the lens, in mm.
@@ -71,7 +71,7 @@ class Photo implements ResourceInterface
         type: "float",
         nullable: true,
     )]
-    protected ?float $focalLength;
+    protected ?float $focalLength = null;
 
     /**
      * The exposure time, in seconds.
@@ -80,7 +80,7 @@ class Photo implements ResourceInterface
         type: "float",
         nullable: true,
     )]
-    protected ?float $exposureTime;
+    protected ?float $exposureTime = null;
 
     /**
      * The shutter speed.
@@ -89,7 +89,7 @@ class Photo implements ResourceInterface
         type: "string",
         nullable: true,
     )]
-    protected ?string $shutterSpeed;
+    protected ?string $shutterSpeed = null;
 
     /**
      * The lens aperture.
@@ -98,7 +98,7 @@ class Photo implements ResourceInterface
         type: "string",
         nullable: true,
     )]
-    protected ?string $aperture;
+    protected ?string $aperture = null;
 
     /**
      * Indicates the ISO Speed and ISO Latitude of the camera.
@@ -107,7 +107,7 @@ class Photo implements ResourceInterface
         type: "smallint",
         nullable: true,
     )]
-    protected ?int $iso;
+    protected ?int $iso = null;
 
     /**
      * Album in which the photo is.
@@ -150,7 +150,7 @@ class Photo implements ResourceInterface
         type: "float",
         nullable: true,
     )]
-    protected ?float $longitude;
+    protected ?float $longitude = null;
 
     /**
      * The GPS latitude of the location where the photo was taken.
@@ -159,7 +159,7 @@ class Photo implements ResourceInterface
         type: "float",
         nullable: true,
     )]
-    protected ?float $latitude;
+    protected ?float $latitude = null;
 
     /**
      * All the hits of this photo.
@@ -200,7 +200,7 @@ class Photo implements ResourceInterface
         mappedBy: "photo",
         cascade: ["persist", "remove"],
     )]
-    protected ?WeeklyPhoto $weeklyPhoto;
+    protected ?WeeklyPhoto $weeklyPhoto = null;
 
     /**
      * The aspect ratio of the photo width/height.
@@ -209,7 +209,7 @@ class Photo implements ResourceInterface
         type: "float",
         nullable: true,
     )]
-    protected ?float $aspectRatio;
+    protected ?float $aspectRatio = null;
 
     /**
      * Get the ID.
@@ -435,9 +435,9 @@ class Photo implements ResourceInterface
     /**
      * Set the artist.
      *
-     * @param string $artist
+     * @param string|null $artist
      */
-    public function setArtist(string $artist): void
+    public function setArtist(?string $artist): void
     {
         $this->artist = $artist;
     }
@@ -445,9 +445,9 @@ class Photo implements ResourceInterface
     /**
      * Set the camera.
      *
-     * @param string $camera
+     * @param string|null $camera
      */
-    public function setCamera(string $camera): void
+    public function setCamera(?string $camera): void
     {
         $this->camera = $camera;
     }
@@ -455,9 +455,9 @@ class Photo implements ResourceInterface
     /**
      * Set the flash.
      *
-     * @param bool $flash
+     * @param bool|null $flash
      */
-    public function setFlash(bool $flash): void
+    public function setFlash(?bool $flash): void
     {
         $this->flash = $flash;
     }
@@ -465,9 +465,9 @@ class Photo implements ResourceInterface
     /**
      * Set the focal length.
      *
-     * @param string $focalLength
+     * @param string|null $focalLength
      */
-    public function setFocalLength(string $focalLength): void
+    public function setFocalLength(?string $focalLength): void
     {
         $this->focalLength = $focalLength;
     }
@@ -475,9 +475,9 @@ class Photo implements ResourceInterface
     /**
      * Set the exposure time.
      *
-     * @param string $exposureTime
+     * @param string|null $exposureTime
      */
-    public function setExposureTime(string $exposureTime): void
+    public function setExposureTime(?string $exposureTime): void
     {
         $this->exposureTime = $exposureTime;
     }
@@ -485,9 +485,9 @@ class Photo implements ResourceInterface
     /**
      * Set the shutter speed.
      *
-     * @param string $shutterSpeed
+     * @param string|null $shutterSpeed
      */
-    public function setShutterSpeed(string $shutterSpeed): void
+    public function setShutterSpeed(?string $shutterSpeed): void
     {
         $this->shutterSpeed = $shutterSpeed;
     }
@@ -495,9 +495,9 @@ class Photo implements ResourceInterface
     /**
      * Set the aperture.
      *
-     * @param string $aperture
+     * @param string|null $aperture
      */
-    public function setAperture(string $aperture): void
+    public function setAperture(?string $aperture): void
     {
         $this->aperture = $aperture;
     }
@@ -505,9 +505,9 @@ class Photo implements ResourceInterface
     /**
      * Set the ISO.
      *
-     * @param int $iso
+     * @param int|null $iso
      */
-    public function setIso(int $iso): void
+    public function setIso(?int $iso): void
     {
         $this->iso = $iso;
     }
@@ -555,9 +555,9 @@ class Photo implements ResourceInterface
     /**
      * Set the GPS longitude of the location where the photo was taken.
      *
-     * @param float $longitude
+     * @param float|null $longitude
      */
-    public function setLongitude(float $longitude): void
+    public function setLongitude(?float $longitude): void
     {
         $this->longitude = $longitude;
     }
@@ -565,9 +565,9 @@ class Photo implements ResourceInterface
     /**
      * Set the GPS latitude of the location where the photo was taken.
      *
-     * @param float $latitude
+     * @param float|null $latitude
      */
-    public function setLatitude(float $latitude): void
+    public function setLatitude(?float $latitude): void
     {
         $this->latitude = $latitude;
     }
@@ -575,9 +575,9 @@ class Photo implements ResourceInterface
     /**
      * Sets the aspect ratio.
      *
-     * @param float $ratio
+     * @param float|null $ratio
      */
-    public function setAspectRatio(float $ratio): void
+    public function setAspectRatio(?float $ratio): void
     {
         $this->aspectRatio = $ratio;
     }

@@ -65,7 +65,7 @@ class ActivityOptionProposal implements OrganResourceInterface
         referencedColumnName: "id",
         nullable: true,
     )]
-    protected ?OrganModel $organ;
+    protected ?OrganModel $organ = null;
 
     /**
      * Who created this activity proposal, if not an organ.
@@ -74,7 +74,7 @@ class ActivityOptionProposal implements OrganResourceInterface
         type: "string",
         nullable: true,
     )]
-    protected ?string $organAlt;
+    protected ?string $organAlt = null;
 
     /**
      * @return string

@@ -92,11 +92,11 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     protected LocalisedText $costs;
 
     /**
-     * Who did approve this activity.
+     * Who (dis)approved this activity?
      */
     #[ManyToOne(targetEntity: UserModel::class)]
     #[JoinColumn(referencedColumnName: "lidnr")]
-    protected UserModel $approver;
+    protected ?UserModel $approver = null;
 
     /**
      * Who created this activity.
@@ -162,7 +162,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         referencedColumnName: "id",
         nullable: true,
     )]
-    protected ?OrganModel $organ;
+    protected ?OrganModel $organ = null;
 
     /**
      * Which company organises this activity.
@@ -172,7 +172,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         referencedColumnName: "id",
         nullable: true,
     )]
-    protected ?CompanyModel $company;
+    protected ?CompanyModel $company = null;
 
     /**
      * Is this a My Future related activity.
@@ -194,13 +194,16 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return UserModel
+     * @return UserModel|null
      */
-    public function getApprover(): UserModel
+    public function getApprover(): ?UserModel
     {
         return $this->approver;
     }
-
+    
+    /**
+     * @param UserModel|null $approver
+     */
     public function setApprover(?UserModel $approver): void
     {
         $this->approver = $approver;

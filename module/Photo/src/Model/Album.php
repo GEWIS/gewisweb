@@ -107,7 +107,7 @@ class Album implements ResourceInterface
         type: "string",
         nullable: true,
     )]
-    protected ?string $coverPath;
+    protected ?string $coverPath = null;
 
     public function __construct()
     {
@@ -220,8 +220,10 @@ class Album implements ResourceInterface
 
     /**
      * Set the start date.
+     *
+     * @param DateTime|null $startDateTime
      */
-    public function setStartDateTime(DateTime $startDateTime): void
+    public function setStartDateTime(?DateTime $startDateTime): void
     {
         $this->startDateTime = $startDateTime;
     }
@@ -238,8 +240,10 @@ class Album implements ResourceInterface
 
     /**
      * Set the end date.
+     *
+     * @param DateTime|null $endDateTime
      */
-    public function setEndDateTime(DateTime $endDateTime): void
+    public function setEndDateTime(?DateTime $endDateTime): void
     {
         $this->endDateTime = $endDateTime;
     }
@@ -297,9 +301,9 @@ class Album implements ResourceInterface
     /**
      * Set the cover photo for the album.
      *
-     * @param string $photo
+     * @param string|null $photo
      */
-    public function setCoverPath(string $photo): void
+    public function setCoverPath(?string $photo): void
     {
         $this->coverPath = $photo;
     }

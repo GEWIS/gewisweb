@@ -69,7 +69,7 @@ class SignupField
         type: "integer",
         nullable: true,
     )]
-    protected ?int $minimumValue;
+    protected ?int $minimumValue = null;
 
     /**
      * The maximal value constraint for the ``number'' type.
@@ -78,7 +78,7 @@ class SignupField
         type: "integer",
         nullable: true,
     )]
-    protected ?int $maximumValue;
+    protected ?int $maximumValue = null;
 
     /**
      * The allowed options for the SignupField of the ``option'' type.

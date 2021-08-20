@@ -32,7 +32,7 @@ class LocalisedText
         type: "text",
         nullable: true,
     )]
-    protected ?string $valueEN;
+    protected ?string $valueEN = null;
 
     /**
      * Dutch text.
@@ -41,7 +41,7 @@ class LocalisedText
         type: "text",
         nullable: true,
     )]
-    protected ?string $valueNL;
+    protected ?string $valueNL = null;
 
     /**
      * LocalisedText constructor.

@@ -55,7 +55,7 @@ class NewUser
         type: "datetime",
         nullable: true,
     )]
-    protected ?DateTime $time;
+    protected ?DateTime $time = null;
 
     /**
      * Constructor.
@@ -156,9 +156,9 @@ class NewUser
     /**
      * Set the registration time.
      *
-     * @param DateTime $time
+     * @param DateTime|null $time
      */
-    public function setTime(DateTime $time): void
+    public function setTime(?DateTime $time): void
     {
         $this->time = $time;
     }
