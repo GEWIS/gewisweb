@@ -11,7 +11,7 @@ use Laminas\Validator\File\MimeType;
 use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
 
-class EditJob extends CollectionBaseFieldsetAwareForm
+class Job extends CollectionBaseFieldsetAwareForm
 {
     private $translator;
     private $companySlug;

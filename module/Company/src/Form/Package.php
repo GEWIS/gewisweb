@@ -6,7 +6,7 @@ use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Mvc\I18n\Translator;
 
-class EditPackage extends Form
+class Package extends Form
 {
     public function __construct(Translator $translate, $type)
     {

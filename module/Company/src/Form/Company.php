@@ -10,7 +10,7 @@ use Laminas\Validator\File\Extension;
 use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
 
-class EditCompany extends Form
+class Company extends Form
 {
     private $mapper;
 

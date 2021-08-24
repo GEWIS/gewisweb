@@ -4,7 +4,7 @@ namespace Company\Form;
 
 use Laminas\Mvc\I18n\Translator;
 
-class EditLabel extends CollectionBaseFieldsetAwareForm
+class JobCategory extends CollectionBaseFieldsetAwareForm
 {
     private $languages;
     private $mapper;
@@ -14,20 +14,20 @@ class EditLabel extends CollectionBaseFieldsetAwareForm
         // we want to ignore the name passed
         parent::__construct();
         $this->mapper = $mapper;
-
         $this->setHydrator($hydrator);
+
         $this->setAttribute('method', 'post');
         $this->setLanguages($languages);
 
         $this->add(
             [
                 'type' => '\Company\Form\FixedKeyDictionaryCollection',
-                'name' => 'labels',
+                'name' => 'categories',
                 'hydrator' => $this->getHydrator(),
                 'options' => [
                     'use_as_base_fieldset' => true,
                     'count' => count($languages),
-                    'target_element' => new LabelFieldset($translate, $this->getHydrator()),
+                    'target_element' => new CategoryFieldset($translate, $this->getHydrator()),
                     'items' => $languages,
                 ],
             ]
