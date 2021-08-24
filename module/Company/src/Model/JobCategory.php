@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping\{
     Entity,
     GeneratedValue,
     Id,
+    OneToOne,
 };
 
 /**
@@ -26,38 +27,40 @@ class JobCategory
     /**
      * The name of the category.
      */
-    #[Column(type: "string")]
-    protected string $name;
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    protected CompanyLocalisedText $name;
+
 
     /**
      * The name of the category.
      */
-    #[Column(type: "string")]
-    protected string $pluralName;
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    protected CompanyLocalisedText $pluralName;
+
 
     /**
      * The slug of the category.
      */
-    #[Column(type: "string")]
-    protected string $slug;
-
-    /**
-     * The language of the category.
-     */
-    #[Column(type: "string")]
-    protected string $language;
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    protected CompanyLocalisedText $slug;
 
     /**
      * If the category is hidden.
      */
     #[Column(type: "boolean")]
     protected bool $hidden;
-
-    /**
-     * The category id.
-     */
-    #[Column(type: "integer")]
-    protected int $languageNeutralId;
 
     /**
      * @return bool
@@ -78,34 +81,7 @@ class JobCategory
     }
 
     /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
-     * Get's the id.
-     *
-     * @return int
-     */
-    public function getLanguageNeutralId(): int
-    {
-        return $this->languageNeutralId;
-    }
-
-    /**
-     * Set's the id.
-     *
-     * @param int $languageNeutralId
-     */
-    public function setLanguageNeutralId(int $languageNeutralId): void
-    {
-        $this->languageNeutralId = $languageNeutralId;
-    }
-
-    /**
-     * Get's the id.
+     * Gets the id.
      *
      * @return int|null
      */
@@ -115,7 +91,7 @@ class JobCategory
     }
 
     /**
-     * Set's the id.
+     * Sets the id.
      *
      * @param int $id
      */
@@ -125,80 +101,62 @@ class JobCategory
     }
 
     /**
-     * Get's the name.
+     * Gets the name.
      *
-     * @return string
+     * @return CompanyLocalisedText
      */
-    public function getName(): string
+    public function getName(): CompanyLocalisedText
     {
         return $this->name;
     }
 
     /**
-     * Get's the plural name.
+     * Sets the name.
      *
-     * @return string
+     * @param CompanyLocalisedText $name
      */
-    public function getPluralName(): string
-    {
-        return $this->pluralName;
-    }
-
-    /**
-     * Set's the name.
-     *
-     * @param string $name
-     */
-    public function setPluralName(string $name): void
-    {
-        $this->pluralName = $name;
-    }
-
-    /**
-     * Set's the name.
-     *
-     * @param string $name
-     */
-    public function setName(string $name): void
+    public function setName(CompanyLocalisedText $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * Get's the slug.
+     * Gets the plural name.
      *
-     * @return string
+     * @return CompanyLocalisedText
      */
-    public function getSlug(): string
+    public function getPluralName(): CompanyLocalisedText
+    {
+        return $this->pluralName;
+    }
+
+    /**
+     * Sets the name.
+     *
+     * @param CompanyLocalisedText $name
+     */
+    public function setPluralName(CompanyLocalisedText $name): void
+    {
+        $this->pluralName = $name;
+    }
+
+    /**
+     * Gets the slug.
+     *
+     * @return CompanyLocalisedText
+     */
+    public function getSlug(): CompanyLocalisedText
     {
         return $this->slug;
     }
 
     /**
-     * Set's the slug.
+     * Sets the slug.
+     *
+     * @param CompanyLocalisedText $slug
      */
-    public function setSlug($slug): void
+    public function setSlug(CompanyLocalisedText $slug): void
     {
         $this->slug = $slug;
-    }
-
-    /**
-     * Get's the language.
-     *
-     * @return string
-     */
-    public function getLanguage(): string
-    {
-        return $this->language;
-    }
-
-    /**
-     * Set's the language.
-     *
-     * @param string $language
-     */
-    public function setLanguage(string $language): void
-    {
-        $this->language = $language;
     }
 }

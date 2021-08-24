@@ -4,7 +4,7 @@ namespace Activity\Service;
 
 use Activity\Form\ActivityCategory as CategoryForm;
 use Activity\Model\ActivityCategory as CategoryModel;
-use Activity\Model\LocalisedText;
+use Activity\Model\ActivityLocalisedText;
 use Doctrine\ORM\EntityManager;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
@@ -96,7 +96,7 @@ class ActivityCategory
         }
 
         $category = new CategoryModel();
-        $category->setName(new LocalisedText($data['nameEn'], $data['name']));
+        $category->setName(new ActivityLocalisedText($data['nameEn'], $data['name']));
 
         $em = $this->entityManager;
         $em->persist($category);

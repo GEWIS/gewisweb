@@ -11,7 +11,8 @@ use Doctrine\ORM\Mapping\{
     Entity,
     GeneratedValue,
     Id,
-    OneToMany,
+    ManyToMany,
+    OneToOne,
 };
 
 /**
@@ -31,65 +32,43 @@ class JobLabel
     /**
      * The name of the label.
      */
-    #[Column(type: "string")]
-    protected string $name;
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    protected CompanyLocalisedText $name;
 
     /**
      * The slug of the label.
      */
-    #[Column(type: "string")]
-    protected string $slug;
-
-    /**
-     * The language of the label.
-     */
-    #[Column(type: "string")]
-    protected string $language;
-
-    /**
-     * The label id.
-     */
-    #[Column(type: "integer")]
-    protected int $languageNeutralId;
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    protected CompanyLocalisedText $slug;
 
     /**
      * The Assignments this Label belongs to.
      */
-    #[OneToMany(
-        targetEntity: JobLabelAssignment::class,
-        mappedBy: "label",
+    #[ManyToMany(
+        targetEntity: Job::class,
+        mappedBy: "labels",
         cascade: ["persist"],
     )]
-    protected Collection $assignments;
+    protected Collection $jobs;
 
     /**
      * Constructor.
      */
     public function __construct()
     {
-        $this->assignments = new ArrayCollection();
+        $this->jobs = new ArrayCollection();
     }
 
     /**
-     * Get's the id.
-     */
-    public function getLanguageNeutralId(): int
-    {
-        return $this->languageNeutralId;
-    }
-
-    /**
-     * Set's the id.
-     *
-     * @param int $languageNeutralId
-     */
-    public function setLanguageNeutralId(int $languageNeutralId): void
-    {
-        $this->languageNeutralId = $languageNeutralId;
-    }
-
-    /**
-     * Get's the id.
+     * Gets the id.
      *
      * @return int|null
      */
@@ -99,7 +78,7 @@ class JobLabel
     }
 
     /**
-     * Set's the id.
+     * Sets the id.
      *
      * @param int $id
      */
@@ -109,62 +88,76 @@ class JobLabel
     }
 
     /**
-     * Get's the name.
+     * Gets the name.
      *
-     * @return string
+     * @return CompanyLocalisedText
      */
-    public function getName(): string
+    public function getName(): CompanyLocalisedText
     {
         return $this->name;
     }
 
     /**
-     * Set's the name.
+     * Sets the name.
      *
-     * @param string $name
+     * @param CompanyLocalisedText $name
      */
-    public function setName(string $name): void
+    public function setName(CompanyLocalisedText $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * Get's the slug.
+     * Gets the slug.
      *
-     * @return string
+     * @return CompanyLocalisedText
      */
-    public function getSlug(): string
+    public function getSlug(): CompanyLocalisedText
     {
         return $this->slug;
     }
 
     /**
-     * Set's the slug.
+     * Sets the slug.
      *
-     * @param string $slug
+     * @param CompanyLocalisedText $slug
      */
-    public function setSlug(string $slug): void
+    public function setSlug(CompanyLocalisedText $slug): void
     {
         $this->slug = $slug;
     }
 
     /**
-     * Get's the language.
+     * Gets the jobs associated with this label.
      *
-     * @return string
+     * @return Collection
      */
-    public function getLanguage(): string
+    public function getJobs(): Collection
     {
-        return $this->language;
+        return $this->jobs;
     }
 
     /**
-     * Set's the language.
-     *
-     * @param string $language
+     * @param Job $job
      */
-    public function setLanguage(string $language): void
+    public function addJob(Job $job): void
     {
-        $this->language = $language;
+        if ($this->jobs->contains($job)) {
+            return;
+        }
+
+        $this->jobs->add($job);
+    }
+
+    /**
+     * @param Job $job
+     */
+    public function removeJob(Job $job): void
+    {
+        if (!$this->jobs->contains($job)) {
+            return;
+        }
+
+        $this->jobs->removeElement($job);
     }
 }

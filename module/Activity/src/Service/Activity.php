@@ -4,8 +4,8 @@ namespace Activity\Service;
 
 use Activity\Form\Activity as ActivityForm;
 use Activity\Model\Activity as ActivityModel;
+use Activity\Model\ActivityLocalisedText;
 use Activity\Model\ActivityUpdateProposal as ActivityProposalModel;
-use Activity\Model\LocalisedText;
 use Activity\Model\SignupField as SignupFieldModel;
 use Activity\Model\SignupList as SignupListModel;
 use Activity\Model\SignupOption as SignupOptionModel;
@@ -181,10 +181,10 @@ class Activity
         $activity->setBeginTime(new DateTime($data['beginTime']));
         $activity->setEndTime(new DateTime($data['endTime']));
 
-        $activity->setName(new LocalisedText($data['nameEn'], $data['name']));
-        $activity->setLocation(new LocalisedText($data['locationEn'], $data['location']));
-        $activity->setCosts(new LocalisedText($data['costsEn'], $data['costs']));
-        $activity->setDescription(new LocalisedText($data['descriptionEn'], $data['description']));
+        $activity->setName(new ActivityLocalisedText($data['nameEn'], $data['name']));
+        $activity->setLocation(new ActivityLocalisedText($data['locationEn'], $data['location']));
+        $activity->setCosts(new ActivityLocalisedText($data['costsEn'], $data['costs']));
+        $activity->setDescription(new ActivityLocalisedText($data['descriptionEn'], $data['description']));
 
         $activity->setIsMyFuture($data['isMyFuture']);
         $activity->setRequireGEFLITST($data['requireGEFLITST']);
@@ -247,7 +247,7 @@ class Activity
         $signupList = new SignupListModel();
 
         $signupList->setActivity($activity);
-        $signupList->setName(new LocalisedText($data['nameEn'], $data['name']));
+        $signupList->setName(new ActivityLocalisedText($data['nameEn'], $data['name']));
         $signupList->setOpenDate(new DateTime($data['openDate']));
         $signupList->setCloseDate(new DateTime($data['closeDate']));
 
@@ -283,7 +283,7 @@ class Activity
         $field = new SignupFieldModel();
 
         $field->setSignupList($signupList);
-        $field->setName(new LocalisedText($data['nameEn'], $data['name']));
+        $field->setName(new ActivityLocalisedText($data['nameEn'], $data['name']));
         $field->setType($data['type']);
 
         if ('2' === $data['type']) {
@@ -327,7 +327,7 @@ class Activity
 
         for ($i = 0; $i < $numOptions; ++$i) {
             $option = new SignupOptionModel();
-            $option->setValue(new LocalisedText(
+            $option->setValue(new ActivityLocalisedText(
                 isset($optionsEn) ? $optionsEn[$i] : null,
                 isset($options) ? $options[$i] : null
             ));

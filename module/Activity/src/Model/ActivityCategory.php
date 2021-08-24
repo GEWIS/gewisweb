@@ -43,11 +43,11 @@ class ActivityCategory
      * Name for the Category.
      */
     #[OneToOne(
-        targetEntity: LocalisedText::class,
+        targetEntity: ActivityLocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
-    protected LocalisedText $name;
+    protected ActivityLocalisedText $name;
 
     public function __construct()
     {
@@ -87,19 +87,19 @@ class ActivityCategory
     }
 
     /**
-     * @return LocalisedText
+     * @return ActivityLocalisedText
      */
-    public function getName(): LocalisedText
+    public function getName(): ActivityLocalisedText
     {
         return $this->name;
     }
 
     /**
-     * @param LocalisedText $name
+     * @param ActivityLocalisedText $name
      */
-    public function setName(LocalisedText $name): void
+    public function setName(ActivityLocalisedText $name): void
     {
-        $this->name = $name->copy();
+        $this->name = $name;
     }
 
     /**

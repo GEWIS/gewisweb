@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping\{
     GeneratedValue,
     Id,
     OneToMany,
+    OneToOne,
 };
 use Exception;
 
@@ -20,7 +21,7 @@ use Exception;
  * Company model.
  */
 #[Entity]
-class Company // implements ArrayHydrator (for zend2 form)
+class Company
 {
     /**
      * The company id.
@@ -31,22 +32,14 @@ class Company // implements ArrayHydrator (for zend2 form)
     protected ?int $id = null;
 
     /**
-     * Translations of details of the company.
-     * Are of type \Company\Model\CompanyI18n.
+     * The company's display name.
      */
-    #[OneToMany(
-        targetEntity: CompanyI18n::class,
-        mappedBy: "company",
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
-    protected Collection $translations;
-
-    /**
-     * The company's display name.
-     */
-    #[Column(type: "string")]
-    protected string $name;
+    protected CompanyLocalisedText $name;
 
     /**
      * The company's slug version of the name. (username).
@@ -79,6 +72,46 @@ class Company // implements ArrayHydrator (for zend2 form)
     protected string $phone;
 
     /**
+     * Company slogan.
+     */
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    protected CompanyLocalisedText $slogan;
+
+    /**
+     * Company logo.
+     */
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    protected CompanyLocalisedText $logo;
+
+    /**
+     * Company description.
+     */
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    protected CompanyLocalisedText $description;
+
+    /**
+     * Company website.
+     */
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    protected CompanyLocalisedText $website;
+
+    /**
      * Whether the company is hidden.
      */
     #[Column(type: "boolean")]
@@ -100,7 +133,6 @@ class Company // implements ArrayHydrator (for zend2 form)
     public function __construct()
     {
         $this->packages = new ArrayCollection();
-        $this->translations = new ArrayCollection();
     }
 
     /**
@@ -114,41 +146,11 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * Get the company's translations.
-     *
-     * @return Collection|array
-     */
-    public function getTranslations(): Collection|array
-    {
-        return $this->translations;
-    }
-
-    /**
-     * Add a translation.
-     *
-     * @param CompanyI18n $translation
-     */
-    public function addTranslation(CompanyI18n $translation): void
-    {
-        $this->translations->add($translation);
-    }
-
-    /**
-     * Remove a translation.
-     *
-     * @param CompanyI18n $translation Translation to remove
-     */
-    public function removeTranslation(CompanyI18n $translation): void
-    {
-        $this->translations->removeElement($translation);
-    }
-
-    /**
      * Get the company's name.
      *
-     * @return string
+     * @return CompanyLocalisedText
      */
-    public function getName(): string
+    public function getName(): CompanyLocalisedText
     {
         return $this->name;
     }
@@ -156,9 +158,9 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Set the company's name.
      *
-     * @param string $name
+     * @param CompanyLocalisedText $name
      */
-    public function setName(string $name): void
+    public function setName(CompanyLocalisedText $name): void
     {
         $this->name = $name;
     }
@@ -264,6 +266,86 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
+     * Get the company's slogan.
+     *
+     * @return CompanyLocalisedText
+     */
+    public function getSlogan(): CompanyLocalisedText
+    {
+        return $this->slogan;
+    }
+
+    /**
+     * Set the company's slogan.
+     *
+     * @param CompanyLocalisedText $slogan
+     */
+    public function setSlogan(CompanyLocalisedText $slogan): void
+    {
+        $this->slogan = $slogan;
+    }
+
+    /**
+     * Get the company's logo.
+     *
+     * @return CompanyLocalisedText
+     */
+    public function getLogo(): CompanyLocalisedText
+    {
+        return $this->logo;
+    }
+
+    /**
+     * Set the company's logo.
+     *
+     * @param CompanyLocalisedText $logo
+     */
+    public function setLogo(CompanyLocalisedText $logo): void
+    {
+        $this->logo = $logo;
+    }
+
+    /**
+     * Get the company's description.
+     *
+     * @return CompanyLocalisedText
+     */
+    public function getDescription(): CompanyLocalisedText
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set the company's description.
+     *
+     * @param CompanyLocalisedText $description
+     */
+    public function setDescription(CompanyLocalisedText $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * Get the company's website.
+     *
+     * @return CompanyLocalisedText
+     */
+    public function getWebsite(): CompanyLocalisedText
+    {
+        return $this->website;
+    }
+
+    /**
+     * Set the company's description.
+     *
+     * @param CompanyLocalisedText $website
+     */
+    public function setWebsite(CompanyLocalisedText $website): void
+    {
+        $this->website = $website;
+    }
+
+    /**
      * Return true if the company should not be visible to the user, and false if it should be visible to the user.
      *
      * @return bool
@@ -291,7 +373,6 @@ class Company // implements ArrayHydrator (for zend2 form)
     public function getHidden(): bool
     {
         return $this->hidden;
-        // TODO check whether package is not expired
     }
 
     /**
@@ -416,39 +497,6 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * Returns the available languages (translations) for this company.
-     *
-     * @return Collection
-     */
-    public function getAvailableLanguages(): Collection
-    {
-        return $this->getTranslations()->map(
-            function ($value) {
-                return $value->getLanguage();
-            }
-        );
-    }
-
-    /**
-     * If this object contains a translation for a given locale, it is returned, otherwise null is returned.
-     *
-     * @param string $locale
-     *
-     * // TODO: Determine correct return type.
-     * @return mixed|null
-     */
-    public function getTranslationFromLocale(string $locale): mixed
-    {
-        $companyLanguages = $this->getAvailableLanguages();
-
-        if ($companyLanguages->contains($locale)) {
-            return $this->getTranslations()[$companyLanguages->indexOf($locale)];
-        }
-
-        return null;
-    }
-
-    /**
      * Updates the variable if the first argument is set, Otherwise, it will
      * use the second argument.
      *
@@ -467,43 +515,6 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * Returns the translation identified by $language.
-     *
-     * Note, does not set $logo, the user should set this property himself
-     *
-     * @param array $data
-     * @param string $language
-     *
-     * @return CompanyI18n|null
-     *
-     * @throws Exception
-     */
-    public function updateTranslationFromArray(array $data, string $language): ?CompanyI18n
-    {
-        if ('' !== $language) {
-            $translation = $this->getTranslationFromLocale($language);
-
-            if (is_null($translation)) {
-                $translation = new CompanyI18n($language, $this);
-                $this->addTranslation($translation);
-            }
-
-            $language = $language . '_';
-
-            // Translated properties. If set, return value otherwise, default to null.
-            $translation->setWebsite($data[$language . 'website'] ?? null);
-            $translation->setSlogan($data[$language . 'slogan'] ?? null);
-            $translation->setDescription($data[$language . 'description'] ?? null);
-
-            // Do not set logo, because most likely, $data[logo] is bogus.
-            // Instead, the user should set this property himself later.
-            return $translation;
-        }
-
-        return null;
-    }
-
-    /**
      * Updates this object with values in the form of getArrayCopy().
      *
      * @param array $data
@@ -513,10 +524,6 @@ class Company // implements ArrayHydrator (for zend2 form)
     public function exchangeArray(array $data): void
     {
         $languages = $data['languages'];
-
-        foreach ($languages as $language) {
-            $this->updateTranslationFromArray($data, $language);
-        }
 
         $this->setName($this->updateIfSet($data['name'], ''));
         $this->setContactName($this->updateIfSet($data['contactName'], ''));

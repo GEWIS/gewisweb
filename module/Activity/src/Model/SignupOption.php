@@ -46,11 +46,11 @@ class SignupOption
      * The value of the option.
      */
     #[OneToOne(
-        targetEntity: LocalisedText::class,
+        targetEntity: ActivityLocalisedText::class,
         cascade: ["persist"],
         orphanRemoval: true,
     )]
-    protected LocalisedText $value;
+    protected ActivityLocalisedText $value;
 
     /**
      * @return int|null
@@ -79,9 +79,9 @@ class SignupOption
     }
 
     /**
-     * @return LocalisedText
+     * @return ActivityLocalisedText
      */
-    public function getValue(): LocalisedText
+    public function getValue(): ActivityLocalisedText
     {
         return $this->value;
     }
@@ -89,11 +89,11 @@ class SignupOption
     /**
      * Set the value of the option.
      *
-     * @param LocalisedText $value
+     * @param ActivityLocalisedText $value
      */
-    public function setValue(LocalisedText $value): void
+    public function setValue(ActivityLocalisedText $value): void
     {
-        $this->value = $value->copy();
+        $this->value = $value;
     }
 
     /**

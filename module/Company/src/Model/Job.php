@@ -12,8 +12,9 @@ use Doctrine\ORM\Mapping\{
     Entity,
     GeneratedValue,
     Id,
+    JoinTable,
+    ManyToMany,
     ManyToOne,
-    OneToMany,
 };
 
 /**
@@ -124,20 +125,14 @@ class Job
     protected JobCategory $category;
 
     /**
-     * The category id.
-     */
-    #[Column(type: "integer")]
-    protected int $languageNeutralId;
-
-    /**
      * Job labels.
      */
-    #[OneToMany(
-        targetEntity: JobLabelAssignment::class,
-        mappedBy: "job",
-        cascade: ["persist", "remove"],
-        fetch: "EAGER",
+    #[ManyToMany(
+        targetEntity: JobLabel::class,
+        inversedBy: "jobs",
+        cascade: ["persist"],
     )]
+    #[JoinTable(name: "JobLabelAssignment")]
     protected Collection $labels;
 
     /**
@@ -146,31 +141,6 @@ class Job
     public function __construct()
     {
         $this->labels = new ArrayCollection();
-    }
-
-    /**
-     * Get's the id.
-     *
-     * @return int
-     */
-    public function getLanguageNeutralId(): int
-    {
-        $lnid = $this->languageNeutralId;
-        if (0 == $lnid) {
-            return $this->id;
-        }
-
-        return $lnid;
-    }
-
-    /**
-     * Set's the id.
-     *
-     * @param int $languageNeutralId
-     */
-    public function setLanguageNeutralId(int $languageNeutralId): void
-    {
-        $this->languageNeutralId = $languageNeutralId;
     }
 
     /**
@@ -459,31 +429,49 @@ class Job
     }
 
     /**
-     * Sets all labels.
-     *
      * @param array $labels
      */
-    public function setLabels(array $labels): void
+    public function addLabels(array $labels): void
     {
-        $this->labels->clear();
-
         foreach ($labels as $label) {
-            $this->labels->add($label);
+            $this->addLabel($label);
         }
     }
 
     /**
-     * Adds a label.
-     *
-     * @param JobLabelAssignment $label
+     * @param JobLabel $label
      */
-    public function addLabel(JobLabelAssignment $label): void
+    public function addLabel(JobLabel $label): void
     {
-        if (null === $this->labels) {
-            $this->labels = new ArrayCollection();
+        if ($this->labels->contains($label)) {
+            return;
         }
-        $label->setJob($this);
+
         $this->labels->add($label);
+        $label->addJob($this);
+    }
+
+    /**
+     * @param array $labels
+     */
+    public function removeLabels(array $labels): void
+    {
+        foreach ($labels as $label) {
+            $this->removeLabel($label);
+        }
+    }
+
+    /**
+     * @param JobLabel $label
+     */
+    public function removeLabel(JobLabel $label): void
+    {
+        if (!$this->labels->contains($label)) {
+            return;
+        }
+
+        $this->labels->removeElement($label);
+        $label->removeJob($this);
     }
 
     /**

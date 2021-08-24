@@ -1,10 +1,9 @@
 <?php
 
-namespace Activity\Model;
+namespace Application\Model;
 
 use Doctrine\ORM\Mapping\{
     Column,
-    Entity,
     GeneratedValue,
     Id,
 };
@@ -14,8 +13,7 @@ use Laminas\Session\Container as SessionContainer;
 /**
  * Class LocalisedText: stores Dutch and English versions of text fields.
  */
-#[Entity]
-class LocalisedText
+abstract class LocalisedText
 {
     /**
      * ID for the LocalisedText.
@@ -118,14 +116,11 @@ class LocalisedText
             $locale = $this->getPreferredLocale();
         }
 
-        switch ($locale) {
-            case 'nl':
-                return !is_null($this->valueNL) ? $this->valueNL : $this->valueEN;
-            case 'en':
-                return !is_null($this->valueEN) ? $this->valueEN : $this->valueNL;
-            default:
-                throw new InvalidArgumentException('Locale not supported: ' . $locale);
-        }
+        return match ($locale) {
+            'nl' => !is_null($this->valueNL) ? $this->valueNL : $this->valueEN,
+            'en' => !is_null($this->valueEN) ? $this->valueEN : $this->valueNL,
+            default => throw new InvalidArgumentException('Locale not supported: ' . $locale),
+        };
     }
 
     /**
@@ -151,21 +146,10 @@ class LocalisedText
             $locale = $this->getPreferredLocale();
         }
 
-        switch ($locale) {
-            case 'nl':
-                return $this->valueNL;
-            case 'en':
-                return $this->valueEN;
-            default:
-                throw new InvalidArgumentException('Locale not supported: ' . $locale);
-        }
-    }
-
-    /**
-     * @return LocalisedText
-     */
-    public function copy(): LocalisedText
-    {
-        return new LocalisedText($this->valueEN, $this->valueNL);
+        return match ($locale) {
+            'nl' => $this->valueNL,
+            'en' => $this->valueEN,
+            default => throw new InvalidArgumentException('Locale not supported: ' . $locale),
+        };
     }
 }

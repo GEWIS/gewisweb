@@ -53,11 +53,11 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      * Name for the activity.
      */
     #[OneToOne(
-        targetEntity: LocalisedText::class,
+        targetEntity: ActivityLocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
-    protected LocalisedText $name;
+    protected ActivityLocalisedText $name;
 
     /**
      * The date and time the activity starts.
@@ -75,21 +75,21 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      * The location the activity is held at.
      */
     #[OneToOne(
-        targetEntity: LocalisedText::class,
+        targetEntity: ActivityLocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
-    protected LocalisedText $location;
+    protected ActivityLocalisedText $location;
 
     /**
      * How much does it cost.
      */
     #[OneToOne(
-        targetEntity: LocalisedText::class,
+        targetEntity: ActivityLocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
-    protected LocalisedText $costs;
+    protected ActivityLocalisedText $costs;
 
     /**
      * Who (dis)approved this activity?
@@ -127,11 +127,11 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      * Activity description.
      */
     #[OneToOne(
-        targetEntity: LocalisedText::class,
+        targetEntity: ActivityLocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
-    protected LocalisedText $description;
+    protected ActivityLocalisedText $description;
 
     /**
      * All additional Categories belonging to this activity.
@@ -348,19 +348,19 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return LocalisedText
+     * @return ActivityLocalisedText
      */
-    public function getName(): LocalisedText
+    public function getName(): ActivityLocalisedText
     {
         return $this->name;
     }
 
     /**
-     * @param LocalisedText $name
+     * @param ActivityLocalisedText $name
      */
-    public function setName(LocalisedText $name): void
+    public function setName(ActivityLocalisedText $name): void
     {
-        $this->name = $name->copy();
+        $this->name = $name;
     }
 
     /**
@@ -396,51 +396,51 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return LocalisedText
+     * @return ActivityLocalisedText
      */
-    public function getLocation(): LocalisedText
+    public function getLocation(): ActivityLocalisedText
     {
         return $this->location;
     }
 
     /**
-     * @param LocalisedText $location
+     * @param ActivityLocalisedText $location
      */
-    public function setLocation(LocalisedText $location): void
+    public function setLocation(ActivityLocalisedText $location): void
     {
-        $this->location = $location->copy();
+        $this->location = $location;
     }
 
     /**
-     * @return LocalisedText
+     * @return ActivityLocalisedText
      */
-    public function getCosts(): LocalisedText
+    public function getCosts(): ActivityLocalisedText
     {
         return $this->costs;
     }
 
     /**
-     * @param LocalisedText $costs
+     * @param ActivityLocalisedText $costs
      */
-    public function setCosts(LocalisedText $costs): void
+    public function setCosts(ActivityLocalisedText $costs): void
     {
-        $this->costs = $costs->copy();
+        $this->costs = $costs;
     }
 
     /**
-     * @return LocalisedText
+     * @return ActivityLocalisedText
      */
-    public function getDescription(): LocalisedText
+    public function getDescription(): ActivityLocalisedText
     {
         return $this->description;
     }
 
     /**
-     * @param LocalisedText $description
+     * @param ActivityLocalisedText $description
      */
-    public function setDescription(LocalisedText $description): void
+    public function setDescription(ActivityLocalisedText $description): void
     {
-        $this->description = $description->copy();
+        $this->description = $description;
     }
 
     /**

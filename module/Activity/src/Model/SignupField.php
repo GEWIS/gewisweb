@@ -50,11 +50,11 @@ class SignupField
      * The name of the SignupField.
      */
     #[OneToOne(
-        targetEntity: LocalisedText::class,
+        targetEntity: ActivityLocalisedText::class,
         cascade: ["persist"],
         orphanRemoval: true,
     )]
-    protected LocalisedText $name;
+    protected ActivityLocalisedText $name;
 
     /**
      * The type of the SignupField.
@@ -127,19 +127,19 @@ class SignupField
     }
 
     /**
-     * @return LocalisedText
+     * @return ActivityLocalisedText
      */
-    public function getName(): LocalisedText
+    public function getName(): ActivityLocalisedText
     {
         return $this->name;
     }
 
     /**
-     * @param LocalisedText $name
+     * @param ActivityLocalisedText $name
      */
-    public function setName(LocalisedText $name): void
+    public function setName(ActivityLocalisedText $name): void
     {
-        $this->name = $name->copy();
+        $this->name = $name;
     }
 
     /**
