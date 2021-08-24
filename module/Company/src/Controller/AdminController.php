@@ -126,7 +126,7 @@ class AdminController extends AbstractActionController
                 $request->getFiles(),
             );
 
-            if ($company) {
+            if (false !== $company) {
                 // Redirect to edit page
                 return $this->redirect()->toRoute(
                     'admin_company/default',
@@ -279,6 +279,10 @@ class AdminController extends AbstractActionController
      */
     public function editCategoryAction()
     {
+        if (!$this->aclService->isAllowed('edit', 'company')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to edit job categories'));
+        }
+
         // Get useful stuff
         $categoryForm = $this->companyService->getCategoryForm();
 

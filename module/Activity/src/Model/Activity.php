@@ -200,7 +200,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     {
         return $this->approver;
     }
-    
+
     /**
      * @param UserModel|null $approver
      */

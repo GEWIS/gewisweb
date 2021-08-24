@@ -3,6 +3,7 @@
 namespace Company\Service;
 
 use Application\Service\FileStorage;
+use Doctrine\ORM\ORMException;
 use Company\Form\{
     EditCategory as EditCategoryForm,
     EditCompany as EditCompanyForm,
@@ -356,10 +357,6 @@ class Company
      */
     public function saveCategoryData(?int $languageNeutralId, array $categories, Parameters $data)
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to edit job categories'));
-        }
-
         $categoryForm = $this->getCategoryForm();
         $categoryForm->bind($categories);
         $categoryForm->setData($data);
@@ -564,7 +561,7 @@ class Company
         $companyForm->setData($mergedData);
 
         if ($companyForm->isValid()) {
-            $company->exchangeArray($data);
+            $company->exchangeArray($dataArray);
 
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
@@ -578,14 +575,14 @@ class Company
                     $newPath = $this->storageService->storeUploadedFile($file);
                     $translation->setLogo($newPath);
 
-                    if ('' !== $oldPath && $oldPath != $newPath) {
+                    if (null !== $oldPath && $oldPath != $newPath) {
                         $this->storageService->removeFile($oldPath);
                     }
                 }
             }
 
             // Save the company data, removing any translations cannot be done in the same UnitOfWork.
-            $this->saveCompany();
+            $this->persistCompany($company);
 
             // Remove translations if necessary.
             $enabledLanguages = $data['languages'];
@@ -635,6 +632,16 @@ class Company
     }
 
     /**
+     * @param CompanyModel $company
+     *
+     * @throws ORMException
+     */
+    public function persistCompany(CompanyModel $company): void
+    {
+        $this->companyMapper->persist($company);
+    }
+
+    /**
      * Saves all modified packages.
      */
     public function savePackage()
@@ -649,10 +656,10 @@ class Company
      * @param Parameters $data
      * @param Parameters $files
      *
-     * @return CompanyModel|false|null
+     * @return CompanyModel|bool
      * @throws Exception
      */
-    public function insertCompanyByData(Parameters $data, Parameters $files)
+    public function insertCompanyByData(Parameters $data, Parameters $files): CompanyModel|bool
     {
         $companyForm = $this->editCompanyForm;
 
@@ -666,7 +673,7 @@ class Company
 
         if ($companyForm->isValid()) {
             $company = $this->insertCompany($data['languages']);
-            $company->exchangeArray($data);
+            $company->exchangeArray($dataArray);
 
             foreach ($company->getTranslations() as $translation) {
                 $file = $files[$translation->getLanguage() . '_logo'];
@@ -680,20 +687,24 @@ class Company
                     $translation->setLogo($newPath);
                 }
             }
+
             $this->saveCompany();
 
             return $company;
         }
 
-        return null;
+        return false;
     }
 
     /**
      * Inserts the company and initializes translations for the given languages.
      *
-     * @param mixed $languages
+     * @param array $languages
+     *
+     * @return CompanyModel
+     * @throws ORMException
      */
-    public function insertCompany($languages)
+    public function insertCompany(array $languages): CompanyModel
     {
         if (!$this->aclService->isAllowed('insert', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to insert a company'));

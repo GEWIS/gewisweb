@@ -39,26 +39,38 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
     /**
      * The company's slogan.
      */
-    #[Column(type: "string")]
-    protected string $slogan;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $slogan = null;
 
     /**
      * The company's logo.
      */
-    #[Column(type: "string")]
-    protected string $logo;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $logo = null;
 
     /**
      * The company's (HTML) description.
      */
-    #[Column(type: "text")]
-    protected string $description;
+    #[Column(
+        type: "text",
+        nullable: true,
+    )]
+    protected ?string $description = null;
 
     /**
      * The company's website.
      */
-    #[Column(type: "string")]
-    protected string $website;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $website = null;
 
     /**
      * The language that this company record is written in.
@@ -74,8 +86,6 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
      */
     public function __construct($locale, $company)
     {
-        $this->description = '';
-        $this->website = '';
         $this->setLanguage($locale);
         $this->setCompany($company);
     }
@@ -113,9 +123,9 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
     /**
      * Get the company's slogan.
      *
-     * @return string
+     * @return string|null
      */
-    public function getSlogan(): string
+    public function getSlogan(): ?string
     {
         return $this->slogan;
     }
@@ -123,9 +133,9 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
     /**
      * Set the company's slogan.
      *
-     * @param string $slogan
+     * @param string|null $slogan
      */
-    public function setSlogan(string $slogan): void
+    public function setSlogan(?string $slogan): void
     {
         $this->slogan = $slogan;
     }
@@ -133,9 +143,9 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
     /**
      * Get the company's logo.
      *
-     * @return string
+     * @return string|null
      */
-    public function getLogo(): string
+    public function getLogo(): ?string
     {
         return $this->logo;
     }
@@ -143,9 +153,9 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
     /**
      * Set the company's logo.
      *
-     * @param string $logo
+     * @param string|null $logo
      */
-    public function setLogo(string $logo): void
+    public function setLogo(?string $logo): void
     {
         $this->logo = $logo;
     }
@@ -153,9 +163,9 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
     /**
      * Get the company's description.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -163,9 +173,9 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
     /**
      * Set the company's description.
      *
-     * @param string $description
+     * @param string|null $description
      */
-    public function setDescription(string $description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
@@ -173,9 +183,9 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
     /**
      * Get the company's website.
      *
-     * @return string
+     * @return string|null
      */
-    public function getWebsite(): string
+    public function getWebsite(): ?string
     {
         return $this->website;
     }
@@ -183,9 +193,9 @@ class CompanyI18n //implements ArrayHydrator (for zend2 form)
     /**
      * Set the company's website.
      *
-     * @param string $website
+     * @param string|null $website
      */
-    public function setWebsite(string $website): void
+    public function setWebsite(?string $website): void
     {
         $this->website = $website;
     }

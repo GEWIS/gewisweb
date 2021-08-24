@@ -94,8 +94,6 @@ class Company // implements ArrayHydrator (for zend2 form)
     )]
     protected Collection $packages;
 
-    private int $languageNeutralId;
-
     /**
      * Constructor.
      */
@@ -487,14 +485,15 @@ class Company // implements ArrayHydrator (for zend2 form)
 
             if (is_null($translation)) {
                 $translation = new CompanyI18n($language, $this);
+                $this->addTranslation($translation);
             }
 
             $language = $language . '_';
 
-            // Translated properties
-            $translation->setWebsite($this->updateIfSet($data[($language) . 'website'], ''));
-            $translation->setSlogan($this->updateIfSet($data[$language . 'slogan'], ''));
-            $translation->setDescription($this->updateIfSet($data[$language . 'description'], ''));
+            // Translated properties. If set, return value otherwise, default to null.
+            $translation->setWebsite($data[$language . 'website'] ?? null);
+            $translation->setSlogan($data[$language . 'slogan'] ?? null);
+            $translation->setDescription($data[$language . 'description'] ?? null);
 
             // Do not set logo, because most likely, $data[logo] is bogus.
             // Instead, the user should set this property himself later.
@@ -507,9 +506,11 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Updates this object with values in the form of getArrayCopy().
      *
+     * @param array $data
+     *
      * @throws Exception
      */
-    public function exchangeArray($data): void
+    public function exchangeArray(array $data): void
     {
         $languages = $data['languages'];
 

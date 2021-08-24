@@ -7,7 +7,10 @@ use Company\Model\{
     Company as CompanyModel,
     CompanyI18n as CompanyI18nModel,
 };
-use Doctrine\ORM\Query;
+use Doctrine\ORM\{
+    ORMException,
+    Query,
+};
 
 /**
  * Mappers for companies.
@@ -39,17 +42,18 @@ class Company extends BaseMapper
      * Inserts a company into the datebase, and initializes the given
      * translations as empty translations for them.
      *
-     * @param mixed $languages
+     * @param array $languages
+     *
+     * @return CompanyModel
+     * @throws ORMException
      */
-    public function insert($languages)
+    public function insert(array $languages): CompanyModel
     {
         $company = new CompanyModel();
 
         foreach ($languages as $language) {
             $translation = new CompanyI18nModel($language, $company);
-            if (is_null($translation->getLogo())) {
-                $translation->setLogo('');
-            }
+
             $this->em->persist($translation);
             $company->addTranslation($translation);
         }
