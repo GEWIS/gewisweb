@@ -15,35 +15,35 @@ class FileNode
      *
      * @var string either 'file' or 'dir'
      */
-    protected $kind;
+    protected string $kind;
 
     /**
      * The path of the parent containing this node.
      *
      * @var string a valid path relative to some root
      */
-    protected $fullPath;
+    protected string $fullPath;
 
     /**
      * The name of this file or dir.
      *
      * @var string valid name in filesystem
      */
-    protected $name;
+    protected string $name;
 
     /**
      * The extension (according to the file name).
      *
      * @var string extension according to the filesystem
      */
-    protected $extension;
+    protected string $extension;
 
     /**
      * File extensions per FontAwesome icon.
      *
      * @var array of array of string
      */
-    private $iconExtensions = [
+    private array $iconExtensions = [
         'fa-file-word' => ['docx', 'docm', 'doc', 'dotx', 'dotm', 'dot', 'odt', 'rtf', 'wpd'],
         'fa-file-powerpoint' => ['pptx', 'pptm', 'ppt', 'potx', 'potm', 'pot', 'ppsx', 'ppsm', 'pps', 'odp', 'ods'],
         'fa-file-excel' => ['xlsx', 'xlsm', 'xls', 'xlsb', 'xltx', 'xltm', 'xlt'],
@@ -80,9 +80,11 @@ class FileNode
         if ('dir' !== $kind && 'file' !== $kind) {
             throw new RuntimeException('Kind is not supported.');
         }
+
         $this->kind = $kind;
         $this->fullPath = $fullPath;
         $this->name = $name;
+
         if ('dir' === $kind) {
             $this->extension = 'folder';
         } else {
@@ -96,7 +98,7 @@ class FileNode
      *
      * @return string either 'file' or 'dir'
      */
-    public function getKind()
+    public function getKind(): string
     {
         return $this->kind;
     }
@@ -106,7 +108,7 @@ class FileNode
      *
      * @return string valid path
      */
-    public function getFullPath()
+    public function getFullPath(): string
     {
         return $this->fullPath;
     }
@@ -116,7 +118,7 @@ class FileNode
      *
      * @return string valid name
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -126,7 +128,7 @@ class FileNode
      *
      * @return string valid name
      */
-    public function getExtension()
+    public function getExtension(): string
     {
         return $this->extension;
     }
@@ -136,7 +138,7 @@ class FileNode
      *
      * @return string valid FontAwesome 5 icon
      */
-    public function getFileIcon()
+    public function getFileIcon(): string
     {
         foreach ($this->iconExtensions as $icon => $extensions) {
             if (in_array($this->getExtension(), $extensions)) {

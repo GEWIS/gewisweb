@@ -191,9 +191,10 @@ class DecisionController extends AbstractActionController
                 ]
             );
         }
+
         //download the file
         $result = $fileReader->downloadFile($path);
 
-        return $result ? $this->notFoundAction() : $result;
+        return (false === $result) ? $this->notFoundAction() : $result;
     }
 }
