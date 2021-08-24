@@ -737,12 +737,19 @@ class Company
             $package = $this->insertPackageForCompanySlugName($companySlugName, $type);
 
             if ('banner' === $type) {
-                // TODO: Check if a file is uploaded.
-                $newPath = $this->storageService->storeUploadedFile($files['banner']);
-                $package->setImage($newPath);
+                $file = $files['banner'];
+
+                if (UPLOAD_ERR_NO_FILE !== $file['error']) {
+                    if (UPLOAD_ERR_OK !== $file['error']) {
+                        return false;
+                    }
+
+                    $newPath = $this->storageService->storeUploadedFile($file);
+                    $package->setImage($newPath);
+                }
             }
 
-            $package->exchangeArray($data);
+            $package->exchangeArray($data->toArray());
             $this->savePackage();
 
             return true;
