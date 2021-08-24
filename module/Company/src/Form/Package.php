@@ -2,13 +2,26 @@
 
 namespace Company\Form;
 
+use Laminas\Form\Element\{
+    Checkbox,
+    Date,
+    File,
+    Radio,
+    Submit,
+    Textarea,
+};
+use Laminas\Filter\{
+    StringTrim,
+    StripTags,
+};
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilter;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\Date as DateValidator;
 
-class Package extends Form
+class Package extends Form implements InputFilterProviderInterface
 {
-    public function __construct(Translator $translate, $type)
+    public function __construct(Translator $translator, string $type)
     {
         // we want to ignore the name passed
         parent::__construct();
@@ -17,21 +30,10 @@ class Package extends Form
 
         $this->add(
             [
-                'name' => 'id',
-                'type' => 'hidden',
-            ]
-        );
-
-        $this->add(
-            [
                 'name' => 'startDate',
-                'type' => 'Laminas\Form\Element\Date',
+                'type' => Date::class,
                 'attributes' => [
-                    'required' => 'required',
                     'step' => '1',
-                ],
-                'options' => [
-                    'label' => $translate->translate('Start date'),
                 ],
             ]
         );
@@ -39,13 +41,9 @@ class Package extends Form
         $this->add(
             [
                 'name' => 'expirationDate',
-                'type' => 'Laminas\Form\Element\Date',
+                'type' => Date::class,
                 'attributes' => [
-                    'required' => 'required',
                     'step' => '1',
-                ],
-                'options' => [
-                    'label' => $translate->translate('Expiration date'),
                 ],
             ]
         );
@@ -53,11 +51,8 @@ class Package extends Form
         $this->add(
             [
                 'name' => 'published',
-                'type' => 'Laminas\Form\Element\Checkbox',
-                'attributes' => [
-                ],
+                'type' => Checkbox::class,
                 'options' => [
-                    'label' => $translate->translate('Published'),
                     'value_options' => [
                         '0' => 'Enabled',
                     ],
@@ -69,25 +64,19 @@ class Package extends Form
             $this->add(
                 [
                     'name' => 'article',
-                    'type' => 'Laminas\Form\Element\Textarea',
-                    'options' => [
-                        'label' => $translate->translate('Article'),
-                    ],
-                    'attributes' => [
-                        'type' => 'textarea',
-                    ],
+                    'type' => Textarea::class,
                 ]
             );
 
             $this->add(
                 [
-                    'type' => 'Laminas\Form\Element\Radio',
                     'name' => 'language',
+                    'type' => Radio::class,
                     'options' => [
                         'label' => 'Language',
                         'value_options' => [
-                            'nl' => $translate->translate('Dutch'),
-                            'en' => $translate->translate('English'),
+                            'nl' => $translator->translate('Dutch'),
+                            'en' => $translator->translate('English'),
                         ],
                     ],
                 ]
@@ -98,13 +87,7 @@ class Package extends Form
             $this->add(
                 [
                     'name' => 'banner',
-                    'type' => '\Laminas\Form\Element\File',
-                    'attributes' => [
-                        'type' => 'file',
-                    ],
-                    'options' => [
-                        'label' => $translate->translate('Banner'),
-                    ],
+                    'type' => File::class,
                 ]
             );
         }
@@ -112,49 +95,49 @@ class Package extends Form
         $this->add(
             [
                 'name' => 'submit',
-                'attributes' => [
-                    'type' => 'submit',
-                    'value' => $translate->translate('Submit changes'),
-                    'id' => 'submitbutton',
-                ],
+                'type' => Submit::class,
             ]
         );
-
-        $this->initFilters();
     }
 
-    protected function initFilters()
+    /**
+     * @return array
+     */
+    public function getInputFilterSpecification(): array
     {
-        $filter = new InputFilter();
-
-        $filter->add(
-            [
-                'name' => 'startDate',
+        return [
+            'startDate' => [
                 'required' => true,
                 'validators' => [
-                    ['name' => 'date'],
+                    [
+                        'name' => DateValidator::class,
+                    ],
                 ],
                 'filters' => [
-                    ['name' => 'StripTags'],
-                    ['name' => 'StringTrim'],
+                    [
+                        'name' => StripTags::class,
+                    ],
+                    [
+                        'name' => StringTrim::class,
+                    ],
                 ],
-            ]
-        );
-
-        $filter->add(
-            [
-                'name' => 'expirationDate',
+            ],
+            'expirationDate' => [
                 'required' => true,
                 'validators' => [
-                    ['name' => 'date'],
+                    [
+                        'name' => DateValidator::class,
+                    ],
                 ],
                 'filters' => [
-                    ['name' => 'StripTags'],
-                    ['name' => 'StringTrim'],
+                    [
+                        'name' => StripTags::class,
+                    ],
+                    [
+                        'name' => StringTrim::class,
+                    ],
                 ],
-            ]
-        );
-
-        $this->setInputFilter($filter);
+            ],
+        ];
     }
 }

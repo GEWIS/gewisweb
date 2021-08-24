@@ -2,33 +2,77 @@
 
 namespace Company\Form;
 
-use Laminas\Mvc\I18n\Translator;
+use Company\Mapper\Category as CategoryMapper;
+use Laminas\Filter\{
+    StringTrim,
+    StripTags,
+};
+use Laminas\Form\Element\{
+    Checkbox,
+    Submit,
+    Text,
+};
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Validator\{
+    Callback,
+    StringLength,
+};
 
-class JobCategory extends CollectionBaseFieldsetAwareForm
+class JobCategory extends Form implements InputFilterProviderInterface
 {
-    private $languages;
-    private $mapper;
+    /**
+     * @var CategoryMapper
+     */
+    private CategoryMapper $mapper;
 
-    public function __construct($mapper, Translator $translate, $languages, $hydrator)
+    /**
+     * @var string|null
+     */
+    private ?string $currentEnglishPluralName = null;
+
+    public function __construct(CategoryMapper $mapper)
     {
         // we want to ignore the name passed
         parent::__construct();
         $this->mapper = $mapper;
-        $this->setHydrator($hydrator);
-
         $this->setAttribute('method', 'post');
-        $this->setLanguages($languages);
 
         $this->add(
             [
-                'type' => '\Company\Form\FixedKeyDictionaryCollection',
-                'name' => 'categories',
-                'hydrator' => $this->getHydrator(),
+                'name' => 'name',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'nameEn',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'namePlural',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'namePluralEn',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'hidden',
+                'type' => Checkbox::class,
                 'options' => [
-                    'use_as_base_fieldset' => true,
-                    'count' => count($languages),
-                    'target_element' => new CategoryFieldset($translate, $this->getHydrator()),
-                    'items' => $languages,
+                    'checked_value' => 1,
+                    'unchecked_value' => 0,
                 ],
             ]
         );
@@ -36,29 +80,89 @@ class JobCategory extends CollectionBaseFieldsetAwareForm
         $this->add(
             [
                 'name' => 'submit',
-                'attributes' => [
-                    'type' => 'submit',
-                    'value' => $translate->translate('Submit changes'),
-                    'id' => 'submitbutton',
-                ],
+                'type' => Submit::class,
             ]
         );
     }
 
-    public function setLanguages($languages)
+    /**
+     * @return array
+     */
+    public function getInputFilterSpecification(): array
     {
-        $this->languages = $languages;
+        $filter = [
+            'hidden' => [
+                'required' => true,
+            ],
+        ];
+
+        foreach (['', 'En'] as $languageSuffix) {
+            $filter['name' . $languageSuffix] = [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => StringLength::class,
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 2,
+                            'max' => 127,
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StripTags::class,
+                    ],
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
+
+            ];
+            $filter['namePlural' . $languageSuffix] = [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => StringLength::class,
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 2,
+                            'max' => 127,
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StripTags::class,
+                    ],
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
+            ];
+        }
+
+        $filter['namePluralEn']['validators'][] = [
+            'name' => Callback::class,
+            ''
+        ];
+
+        return $filter;
     }
 
-    public function getLanguages()
+    /**
+     * Determine if the plural of the name in English is unique.
+     *
+     * @param string $value
+     *
+     * @return bool
+     */
+    public function isEnglishPluralUnique(string $value): bool
     {
-        return $this->languages;
-    }
+        if ($this->currentEnglishPluralName === $value) {
+            return true;
+        }
 
-    public function slugNameUnique($slugName, $context)
-    {
-        $cid = $context['id'];
-
-        return $this->mapper->isSlugNameUnique($slugName, $cid);
+        return null === $this->mapper->findCategoryBySlug($value);
     }
 }

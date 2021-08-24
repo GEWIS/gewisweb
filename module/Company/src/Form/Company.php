@@ -2,450 +2,485 @@
 
 namespace Company\Form;
 
+use Company\Mapper\Company as CompanyMapper;
+use Laminas\Filter\{
+    StringTrim,
+    StripTags,
+    ToNull,
+};
+use Laminas\Form\Element\{
+    Checkbox,
+    Email,
+    File,
+    Submit,
+    Text,
+    Textarea,
+};
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilter;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\Callback;
-use Laminas\Validator\File\Extension;
-use Laminas\Validator\Regex;
-use Laminas\Validator\StringLength;
+use Laminas\Validator\{
+    Callback,
+    EmailAddress,
+    File\Extension,
+    File\MimeType,
+    Regex,
+    StringLength,
+    Uri,
+};
 
-class Company extends Form
+class Company extends Form implements InputFilterProviderInterface
 {
-    private $mapper;
+    /**
+     * @var CompanyMapper
+     */
+    private CompanyMapper $mapper;
 
-    public function __construct($mapper, Translator $translate)
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
+    /**
+     * @var string|null $currentSlug
+     */
+    private ?string $currentSlug = null;
+
+    public function __construct(CompanyMapper $mapper, Translator $translator)
     {
         // we want to ignore the name passed
         parent::__construct();
         $this->mapper = $mapper;
+        $this->translator = $translator;
 
         $this->setAttribute('method', 'post');
 
         $this->add(
             [
-                'name' => 'id',
-                'attributes' => [
-                    'type' => 'hidden',
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'translations',
-                'attributes' => [
-                    'type' => 'hidden',
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'languageNeutralId',
-                'attributes' => [
-                    'type' => 'hidden',
-                ],
-            ]
-        );
-
-        $this->add(
-            [
                 'name' => 'slugName',
-                'attributes' => [
-                    'type' => 'text',
-                    'required' => 'required',
-                ],
-                'options' => [
-                    'label' => $translate->translate('Permalink'),
-                    'required' => 'required',
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'name',
-                'attributes' => [
-                    'type' => 'text',
-                    'required' => 'required',
-                ],
-                'options' => [
-                    'label' => $translate->translate('Name'),
-                    'required' => 'required',
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'languages',
-                'type' => 'MultiCheckbox',
-                'options' => [
-                    'label' => $translate->translate('Languages'),
-                    'value_options' => [
-                        'en' => $translate->translate('English'),
-                        'nl' => $translate->translate('Dutch'),
-                    ],
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'address',
-                'type' => 'Laminas\Form\Element\Textarea',
-                'attributes' => [
-                    'type' => 'textarea',
-                ],
-                'options' => [
-                    'label' => $translate->translate('Location'),
-                ],
-            ]
-        );
-
-        // English version
-        $this->add(
-            [
-                'name' => 'en_website',
-                'type' => 'Laminas\Form\Element\Url',
-                'attributes' => [
-                ],
-                'options' => [
-                    'label' => $translate->translate('Website'),
-                ],
-            ]
-        );
-
-        // Dutch version
-        $this->add(
-            [
-                'name' => 'nl_website',
-                'type' => 'Laminas\Form\Element\Url',
-                'attributes' => [
-                ],
-                'options' => [
-                    'label' => $translate->translate('Website'),
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'en_slogan',
-                'attributes' => [
-                    'type' => 'text',
-                ],
-                'options' => [
-                    'label' => $translate->translate('Slogan'),
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'nl_slogan',
-                'attributes' => [
-                    'type' => 'text',
-                ],
-                'options' => [
-                    'label' => $translate->translate('Slogan'),
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'email',
-                'type' => 'Laminas\Form\Element\Email',
-                'attributes' => [
-                ],
-                'options' => [
-                    'label' => $translate->translate('Email'),
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'contactName',
-                'attributes' => [
-                    'type' => 'text',
-                ],
-                'options' => [
-                    'label' => $translate->translate('Contact name'),
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'phone',
-                'attributes' => [
-                    'type' => 'text',
-                ],
-                'options' => [
-                    'label' => $translate->translate('Phone'),
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'nl_logo',
-                'type' => '\Laminas\Form\Element\File',
-                'attributes' => [
-                    'type' => 'file',
-                ],
-                'options' => [
-                    'label' => $translate->translate('Logo'),
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'en_logo',
-                'type' => '\Laminas\Form\Element\File',
-                'attributes' => [
-                    'type' => 'file',
-                ],
-                'options' => [
-                    'label' => $translate->translate('Logo'),
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'en_description',
-                'type' => 'Laminas\Form\Element\Textarea',
-                'options' => [
-                    'label' => $translate->translate('Description'),
-                ],
-                'attributes' => [
-                    'type' => 'textarea',
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'nl_description',
-                'type' => 'Laminas\Form\Element\Textarea',
-                'options' => [
-                    'label' => $translate->translate('Description'),
-                ],
-                'attributes' => [
-                    'type' => 'textarea',
-                ],
+                'type' => Text::class,
             ]
         );
 
         $this->add(
             [
                 'name' => 'hidden',
-                'type' => 'Laminas\Form\Element\Checkbox',
-                'attributes' => [
-                ],
+                'type' => Checkbox::class,
                 'options' => [
-                    'label' => $translate->translate('Hide this company'),
+                    'checked_value' => 1,
+                    'unchecked_value' => 0,
                 ],
             ]
         );
 
         $this->add(
             [
-                'name' => 'submit',
-                'attributes' => [
-                    'type' => 'submit',
-                    'value' => $translate->translate('Submit changes'),
-                    'id' => 'submitbutton',
+                'name' => 'contactName',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'contactAddress',
+                'type' => Textarea::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'contactEmail',
+                'type' => Email::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'contactPhone',
+                'type' => Text::class,
+            ]
+        );
+
+        // All language attributes.
+        $this->add(
+            [
+                'name' => 'language_dutch',
+                'type' => Checkbox::class,
+                'options' => [
+                    'checked_value' => 1,
+                    'unchecked_value' => 0,
                 ],
             ]
         );
 
-        $this->initFilters($translate);
-    }
+        $this->add(
+            [
+                'name' => 'language_english',
+                'type' => Checkbox::class,
+                'options' => [
+                    'checked_value' => 1,
+                    'unchecked_value' => 0,
+                ],
+            ]
+        );
 
-    protected function initFilters($translate)
-    {
-        $filter = new InputFilter();
-
-        $filter->add(
+        $this->add(
             [
                 'name' => 'name',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'nameEn',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'slogan',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'sloganEn',
+                'type' => Text::class,
+            ]
+        );
+
+        /**
+         * {@link \Laminas\Form\Element\Url} defaults to '`required` => true', which breaks our custom language
+         * validation. Hence, we use {@link \Laminas\Form\Element\Text} with the proper validator.
+         */
+        $this->add(
+            [
+                'name' => 'website',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'websiteEn',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'description',
+                'type' => Textarea::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'descriptionEn',
+                'type' => Textarea::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'logo',
+                'type' => File::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'logoEn',
+                'type' => File::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'submit',
+                'type' => Submit::class,
+            ]
+        );
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @return array
+     */
+    public function getInputFilterSpecification(): array
+    {
+        $filter = [
+            'slugName' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => Callback::class,
+                        'options' => [
+                            'callback' => [$this, 'isSlugNameUnique'],
+                            'messages' => [
+                                Callback::INVALID_VALUE => $this->translator->translate('This slug is already taken'),
+                            ],
+                        ],
+                    ],
+                    [
+                        'name' => Regex::class,
+                        'options' => [
+                            'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
+                            'messages' => [
+                                Regex::ERROROUS => $this->translator->translate('This slug contains invalid characters'),
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'hidden' => [
+                'required' => true,
+            ],
+            'contactName' => [
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => StringLength::class,
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'max' => 200,
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StripTags::class,
+                    ],
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
+            ],
+            'contactEmail' => [
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => EmailAddress::class,
+                        'options' => [
+                            'messages' => [
+                                'emailAddressInvalidFormat' => $this->translator->translate(
+                                    'E-mail address format is not valid'
+                                ),
+                            ],
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                    [
+                        'name' => ToNull::class,
+                    ],
+                ],
+            ],
+            'contactPhone' => [
+                'required' => false,
+                'filters' => [
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                    [
+                        'name' => ToNull::class,
+                    ],
+                ],
+            ],
+            'contactAddress' => [
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => StringLength::class,
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'max' => 127,
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                    [
+                        'name' => ToNull::class,
+                    ],
+                ],
+            ],
+        ];
+
+        if (
+            isset($this->data['language_english'])
+            && $this->data['language_english']
+        ) {
+            $filter += $this->inputFilterGeneric('En');
+        }
+
+        if (
+            isset($this->data['language_dutch'])
+            && $this->data['language_dutch']
+        ) {
+            $filter += $this->inputFilterGeneric();
+        }
+
+        // One of the language_dutch or language_english needs to set. If not, display a message at both, indicating
+        // that they need to be set.
+        if (
+            (isset($this->data['language_dutch']) && !$this->data['language_dutch'])
+            && (isset($this->data['language_english']) && !$this->data['language_english'])
+        ) {
+            unset($this->data['language_dutch'], $this->data['language_english']);
+
+            $filter += [
+                'language_dutch' => [
+                    'required' => true,
+                ],
+                'language_english' => [
+                    'required' => true,
+                ],
+            ];
+        }
+
+        return $filter;
+    }
+
+    /**
+     * Build a generic input filter.
+     *
+     * @param string $languageSuffix Suffix that is used for language fields to indicate that a field belongs to that
+     * language
+     *
+     * @return array
+     */
+    protected function inputFilterGeneric(string $languageSuffix = ''): array
+    {
+        return [
+            'name' . $languageSuffix => [
                 'required' => true,
                 'validators' => [
                     [
                         'name' => StringLength::class,
                         'options' => [
+                            'encoding' => 'UTF-8',
                             'min' => 2,
                             'max' => 127,
                         ],
                     ],
                 ],
                 'filters' => [
-                    ['name' => 'StripTags'],
-                    ['name' => 'StringTrim'],
+                    [
+                        'name' => StripTags::class,
+                    ],
+                    [
+                        'name' => StringTrim::class,
+                    ],
                 ],
-            ]
-        );
-
-        $filter->add(
-            [
-                'name' => 'slugName',
+            ],
+            'slogan' . $languageSuffix => [
+                'required' => false,
+                'filters' => [
+                    [
+                        'name' => StripTags::class,
+                    ],
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                    [
+                        'name' => ToNull::class,
+                    ],
+                ],
+            ],
+            'website' . $languageSuffix => [
                 'required' => true,
                 'validators' => [
-                    new Callback(
-                        [
-                            'callback' => [$this, 'slugNameUnique'],
-                            'message' => $translate->translate('This slug is already taken'),
-                        ]
-                    ),
-                    new Regex(
-                        [
-                            'message' => $translate->translate('This slug contains invalid characters'),
-                            'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
-                        ]
-                    ),
+                    [
+                        'name' => Uri::class,
+                        'options' => [
+                            'allowRelative' => false,
+                        ],
+                    ],
                 ],
                 'filters' => [
+                    [
+                        'name' => StringTrim::class,
+                    ],
                 ],
-            ]
-        );
-
-        $filter->add(
-            [
-                'name' => 'en_website',
-                'required' => false,
-                'filters' => [
-                    ['name' => 'StripTags'],
-                    ['name' => 'StringTrim'],
-                ],
-                'validators' => [
-                ],
-            ]
-        );
-
-        $filter->add(
-            [
-                'name' => 'nl_website',
-                'required' => false,
-                'filters' => [
-                    ['name' => 'StripTags'],
-                    ['name' => 'StringTrim'],
-                ],
-                'validators' => [
-                ],
-            ]
-        );
-
-        $filter->add(
-            [
-                'name' => 'en_description',
-                'required' => false,
+            ],
+            'description' . $languageSuffix => [
+                'required' => true,
                 'validators' => [
                     [
                         'name' => StringLength::class,
                         'options' => [
+                            'encoding' => 'UTF-8',
                             'min' => 2,
                             'max' => 10000,
                         ],
                     ],
                 ],
-            ]
-        );
-
-        $filter->add(
-            [
-                'name' => 'nl_description',
+            ],
+            'logo' . $languageSuffix => [
                 'required' => false,
                 'validators' => [
                     [
-                        'name' => StringLength::class,
+                        'name' => Extension::class,
                         'options' => [
-                            'min' => 2,
-                            'max' => 10000,
-                        ],
-                    ],
-                ],
-            ]
-        );
-
-        $filter->add(
-            [
-                'name' => 'contactName',
-                'required' => false,
-                'validators' => [
-                    [
-                        'name' => StringLength::class,
-                        'options' => [
-                            'max' => 200,
-                        ],
-                    ],
-                ],
-            ]
-        );
-
-        $filter->add(
-            [
-                'name' => 'email',
-                'required' => false,
-                'validators' => [
-                    [
-                        'name' => 'EmailAddress',
-                        'options' => [
-                            'messages' => [
-                                'emailAddressInvalidFormat' => 'Email address format is not valid',
+                            'extension' => [
+                                'png',
+                                'jpg',
+                                'jpeg',
+                                'gif',
+                                'bmp',
                             ],
                         ],
                     ],
+                    [
+                        'name' => MimeType::class,
+                        'options' => [
+                            'image/png',
+                            'image/jpeg',
+                            'image/gif',
+                            'image/bmp',
+                        ],
+                    ],
                 ],
                 'filters' => [
-                    ['name' => 'StripTags'],
-                    ['name' => 'StringTrim'],
-                ],
-            ]
-        );
-
-        $filter->add(
-            [
-                'name' => 'en_logo',
-                'required' => false,
-                'validators' => [
                     [
-                        'name' => Extension::class,
-                        'options' => [
-                            'extension' => ['png', 'jpg', 'gif', 'bmp'],
-                        ],
-                    ],
+                        'name' => ToNull::class,
+                    ]
                 ],
-            ]
-        );
-
-        $filter->add(
-            [
-                'name' => 'nl_logo',
-                'required' => false,
-                'validators' => [
-                    [
-                        'name' => Extension::class,
-                        'options' => [
-                            'extension' => ['png', 'jpg', 'gif', 'bmp'],
-                        ],
-                    ],
-                ],
-            ]
-        );
-
-        $this->setInputFilter($filter);
+            ],
+        ];
     }
 
-    public function slugNameUnique($slugName, $context)
+    /**
+     * @param string $slugName
+     */
+    public function setCurrentSlug(string $slugName): void
     {
-        $cid = $context['id'];
+        $this->currentSlug = $slugName;
+    }
 
-        return $this->mapper->isSlugNameUnique($slugName, $cid);
+    /**
+     * Determine if the slug is unique.
+     *
+     * @param string $slugName
+     *
+     * @return bool
+     */
+    public function isSlugNameUnique(string $slugName): bool
+    {
+        if ($this->currentSlug === $slugName) {
+            return true;
+        }
+
+        return null === $this->mapper->findCompanyBySlug($slugName);
     }
 }

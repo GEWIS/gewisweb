@@ -2,63 +2,116 @@
 
 namespace Company\Form;
 
-use Laminas\Mvc\I18n\Translator;
+use Laminas\Filter\{
+    StringTrim,
+    StripTags,
+};
+use Laminas\Form\Element\{
+    Submit,
+    Text,
+};
+use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Validator\StringLength;
 
-class JobLabel extends CollectionBaseFieldsetAwareForm
+class JobLabel extends Form implements InputFilterProviderInterface
 {
-    private $languages;
-    private $mapper;
-
-    public function __construct($mapper, Translator $translate, $languages, $hydrator)
+    public function __construct()
     {
         // we want to ignore the name passed
         parent::__construct();
-        $this->mapper = $mapper;
-
-        $this->setHydrator($hydrator);
         $this->setAttribute('method', 'post');
-        $this->setLanguages($languages);
 
         $this->add(
             [
-                'type' => '\Company\Form\FixedKeyDictionaryCollection',
-                'name' => 'labels',
-                'hydrator' => $this->getHydrator(),
-                'options' => [
-                    'use_as_base_fieldset' => true,
-                    'count' => count($languages),
-                    'target_element' => new LabelFieldset($translate, $this->getHydrator()),
-                    'items' => $languages,
-                ],
+                'name' => 'name',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'nameEn',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'abbreviation',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'abbreviationEn',
+                'type' => Text::class,
             ]
         );
 
         $this->add(
             [
                 'name' => 'submit',
-                'attributes' => [
-                    'type' => 'submit',
-                    'value' => $translate->translate('Submit changes'),
-                    'id' => 'submitbutton',
-                ],
+                'type' => Submit::class,
             ]
         );
     }
 
-    public function setLanguages($languages)
+    /**
+     * @inheritDoc
+     *
+     * @return array
+     */
+    public function getInputFilterSpecification(): array
     {
-        $this->languages = $languages;
-    }
+        $filter = [];
 
-    public function getLanguages()
-    {
-        return $this->languages;
-    }
+        foreach (['', 'En'] as $languageSuffix) {
+            $filter['name' . $languageSuffix] = [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => StringLength::class,
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 2,
+                            'max' => 127,
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StripTags::class,
+                    ],
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
+            ];
+            $filter['abbreviation' . $languageSuffix] = [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => StringLength::class,
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 2,
+                            'max' => 127,
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StripTags::class,
+                    ],
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
+            ];
+        }
 
-    public function slugNameUnique($slugName, $context)
-    {
-        $cid = $context['id'];
-
-        return $this->mapper->isSlugNameUnique($slugName, $cid);
+        return $filter;
     }
 }

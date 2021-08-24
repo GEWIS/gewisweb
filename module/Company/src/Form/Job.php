@@ -2,64 +2,227 @@
 
 namespace Company\Form;
 
-use Laminas\InputFilter\InputFilter;
+use Company\Mapper\Job as JobMapper;
+use Laminas\Filter\{
+    StringTrim,
+    StripTags,
+    ToNull,
+};
+use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Form\Element\{
+    Checkbox,
+    Email,
+    File,
+    MultiCheckbox,
+    Select,
+    Submit,
+    Text,
+    Textarea,
+};
+use Laminas\Form\Form;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\Callback;
-use Laminas\Validator\EmailAddress;
-use Laminas\Validator\File\Extension;
-use Laminas\Validator\File\MimeType;
-use Laminas\Validator\Regex;
-use Laminas\Validator\StringLength;
+use Laminas\Validator\{
+    Callback,
+    EmailAddress,
+    File\Extension,
+    File\MimeType,
+    Regex,
+    StringLength,
+    Uri,
+};
 
-class Job extends CollectionBaseFieldsetAwareForm
+class Job extends Form implements InputFilterProviderInterface
 {
-    private $translator;
-    private $companySlug;
-    private $currentSlug;
-    private $languages;
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
 
-    protected $extraInputFilter;
-    private $mapper;
+    /**
+     * @var JobMapper
+     */
+    private JobMapper $mapper;
 
-    public function __construct($mapper, Translator $translator, $languages, $hydrator, $labels)
+    /**
+     * @var string
+     */
+    private string $companySlug;
+
+    /**
+     * @var string|null
+     */
+    private ?string $currentSlug = null;
+
+    public function __construct(JobMapper $mapper, Translator $translator, array $categories, array $labels)
     {
         // we want to ignore the name passed
         parent::__construct();
         $this->translator = $translator;
         $this->mapper = $mapper;
 
-        $this->setHydrator($hydrator);
         $this->setAttribute('method', 'post');
+
+        $categoryOptions = [];
+        foreach ($categories as $category) {
+            $categoryOptions[$category->getId()] = $category->getName();
+        }
 
         $labelOptions = [];
         foreach ($labels as $label) {
-            $labelOptions[] = ['value' => $label->getId(),
-                'label' => $label->getName(),
-                'label_attributes' => ['class' => 'checkbox'],
-            ];
+            $labelOptions[$label->getId()] = $label->getName();
         }
 
-        $this->setLanguages($languages);
         $this->add(
             [
-                'type' => '\Company\Form\FixedKeyDictionaryCollection',
-                'name' => 'jobs',
-                'hydrator' => $this->getHydrator(),
+                'name' => 'slug',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'category',
+                'type' => Select::class,
                 'options' => [
-                    'use_as_base_fieldset' => true,
-                    'count' => count($languages),
-                    'target_element' => new JobFieldset($mapper, $translator, $this->getHydrator()),
-                    'items' => $languages,
+                    'value_options' => $categoryOptions,
                 ],
             ]
         );
 
         $this->add(
             [
-                'name' => 'labels',
-                'type' => 'Laminas\Form\Element\MultiCheckbox',
+                'name' => 'active',
+                'type' => Checkbox::class,
                 'options' => [
-                    'label' => $translator->translate('What labels apply to this job?'),
+                    'checked_value' => 1,
+                    'unchecked_value' => 0,
+                ],
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'contactName',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'contactEmail',
+                'type' => Email::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'contactPhone',
+                'type' => Text::class,
+            ]
+        );
+
+        // All language attributes.
+        $this->add(
+            [
+                'name' => 'language_dutch',
+                'type' => Checkbox::class,
+                'options' => [
+                    'checked_value' => 1,
+                    'unchecked_value' => 0,
+                ],
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'language_english',
+                'type' => Checkbox::class,
+                'options' => [
+                    'checked_value' => 1,
+                    'unchecked_value' => 0,
+                ],
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'name',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'nameEn',
+                'type' => Text::class,
+            ]
+        );
+
+        /**
+         * {@link \Laminas\Form\Element\Url} defaults to '`required` => true', which breaks our custom language
+         * validation. Hence, we use {@link \Laminas\Form\Element\Text} with the proper validator.
+         */
+        $this->add(
+            [
+                'name' => 'website',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'websiteEn',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'location',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'locationEn',
+                'type' => Text::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'description',
+                'type' => Textarea::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'descriptionEn',
+                'type' => Textarea::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'attachment',
+                'type' => File::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'attachmentEn',
+                'type' => File::class,
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'labels',
+                'type' => MultiCheckbox::class,
+                'options' => [
                     'value_options' => $labelOptions,
                 ],
             ]
@@ -68,229 +231,283 @@ class Job extends CollectionBaseFieldsetAwareForm
         $this->add(
             [
                 'name' => 'submit',
-                'attributes' => [
-                    'type' => 'submit',
-                    'value' => $translator->translate('Submit changes'),
-                    'id' => 'submitbutton',
-                ],
+                'type' => Submit::class,
             ]
         );
-
-        $this->initFilters();
     }
 
-    protected function initFilters()
-    {
-        $parentFilter = new InputFilter();
-        $rootFilter = new InputFilter();
-
-        foreach ($this->languages as $lang) {
-            $filter = new JobInputFilter();
-
-            $filter->add(
-                [
-                    'name' => 'id',
-                    'required' => false,
-                ]
-            );
-
-            $filter->add(
-                [
-                    'name' => 'name',
-                    'required' => true,
-                    'validators' => [
-                        [
-                            'name' => StringLength::class,
-                            'options' => [
-                                'min' => 2,
-                                'max' => 127,
-                            ],
-                        ],
-                    ],
-                ]
-            );
-
-            $filter->add(
-                [
-                    'name' => 'slugName',
-                    'required' => true,
-                    'validators' => [
-                        new Callback(
-                            [
-                                'callback' => [$this, 'slugNameUnique'],
-                                'message' => $this->translator->translate('This slug is already taken'),
-                            ]
-                        ),
-                        new Regex(
-                            [
-                                'message' => $this->translator->translate('This slug contains invalid characters'),
-                                'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
-                            ]
-                        ),
-                    ],
-                    'filters' => [
-                    ],
-                ]
-            );
-
-            $filter->add(
-                [
-                    'name' => 'website',
-                    'required' => false,
-                    'validators' => [
-                        [
-                            'name' => 'uri',
-                        ],
-                    ],
-                ]
-            );
-
-            $filter->add(
-                [
-                    'name' => 'description',
-                    'required' => false,
-                    'validators' => [
-                        [
-                            'name' => StringLength::class,
-                            'options' => [
-                                'min' => 2,
-                                'max' => 10000,
-                            ],
-                        ],
-                    ],
-                ]
-            );
-
-            $filter->add(
-                [
-                    'name' => 'contactName',
-                    'required' => false,
-                    'validators' => [
-                        [
-                            'name' => StringLength::class,
-                            'options' => [
-                                'max' => 200,
-                            ],
-                        ],
-                    ],
-                ]
-            );
-
-            $filter->add(
-                [
-                    'name' => 'email',
-                    'required' => false,
-                    'validators' => [
-                        ['name' => EmailAddress::class],
-                    ],
-                ]
-            );
-
-            $filter->add(
-                [
-                    'name' => 'phone',
-                    'required' => false,
-                ]
-            );
-
-            $filter->add(
-                [
-                    'name' => 'active',
-                    'required' => false,
-                ]
-            );
-
-            $filter->add(
-                [
-                    'name' => 'attachment_file',
-                    'required' => false,
-                    'validators' => [
-                        [
-                            'name' => Callback::class,
-                            'options' => [
-                                'callback' => function ($value) {
-                                    // If no file is uploaded, we don't care, because it is optional
-                                    if (4 == $value['error']) {
-                                        return true;
-                                    }
-                                    $extensionValidator = new Extension('pdf');
-                                    if (!$extensionValidator->isValid($value)) {
-                                        return false;
-                                    }
-                                    $mimeValidator = new MimeType('application/pdf');
-
-                                    return $mimeValidator->isValid($value);
-                                },
-                            ],
-                        ],
-                    ],
-                ]
-            );
-
-            $filter->add(
-                [
-                    'name' => 'category',
-                    'required' => false,
-                ]
-            );
-
-            $rootFilter->add($filter, $lang);
-        }
-
-        $parentFilter->add($rootFilter, $this->baseFieldset->getName());
-        $this->extraInputFilter = $parentFilter;
-        $this->setInputFilter($parentFilter);
-    }
-
-    public function getInputFilter()
-    {
-        return $this->extraInputFilter;
-    }
-
-    public function setLanguages($languages)
-    {
-        $this->languages = $languages;
-    }
-
-    public function setLabels($labels)
-    {
-        $labelsElement = $this->get('labels');
-        $options = [];
-
-        foreach ($labels as $label) {
-            $options[] = $label->getId();
-        }
-
-        $labelsElement->setValue(array_values($options));
-    }
-
-    public function getLanguages()
-    {
-        return $this->languages;
-    }
-
-    public function setCompanySlug($companySlug)
+    /**
+     * @param string $companySlug
+     */
+    public function setCompanySlug(string $companySlug): void
     {
         $this->companySlug = $companySlug;
     }
 
-    public function setCurrentSlug($currentSlug)
+    /**
+     * @param string $currentSlug
+     */
+    public function setCurrentSlug(string $currentSlug): void
     {
         $this->currentSlug = $currentSlug;
     }
 
     /**
-     * Checks if a given slugName is unique. (Callback for validation).
+     * @return array
      */
-    public function slugNameUnique($slugName, $context)
+    public function getInputFilterSpecification(): array
     {
-        $jid = $context['id'];
-        $cat = $context['category'];
+        $filter = [
+            'slug' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => Callback::class,
+                        'options' => [
+                            'callback' => [$this, 'isSlugUnique'],
+                            'messages' => [
+                                Callback::INVALID_VALUE => $this->translator->translate('This slug is already taken'),
+                            ],
+                        ],
+                    ],
+                    [
+                        'name' => Regex::class,
+                        'options' => [
+                            'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
+                            'messages' => [
+                                Regex::ERROROUS => $this->translator->translate('This slug contains invalid characters'),
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'category' => [
+                'required' => true,
+            ],
+            'active' => [
+                'required' => true,
+            ],
+            'contactName' => [
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => StringLength::class,
+                        'options' => [
+                            'max' => 200,
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StripTags::class,
+                    ],
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                    [
+                        'name' => ToNull::class,
+                    ],
+                ],
+            ],
+            'contactEmail' => [
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => EmailAddress::class,
+                        'options' => [
+                            'messages' => [
+                                'emailAddressInvalidFormat' => $this->translator->translate(
+                                    'E-mail address format is not valid'
+                                ),
+                            ],
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                    [
+                        'name' => ToNull::class,
+                    ],
+                ],
+            ],
+            'contactPhone' => [
+                'required' => false,
+                'filters' => [
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                    [
+                        'name' => ToNull::class,
+                    ],
+                ],
+            ],
+        ];
 
-        if ($this->currentSlug === $slugName) {
+        if (
+            isset($this->data['language_english'])
+            && $this->data['language_english']
+        ) {
+            $filter += $this->inputFilterGeneric('En');
+        }
+
+        if (
+            isset($this->data['language_dutch'])
+            && $this->data['language_dutch']
+        ) {
+            $filter += $this->inputFilterGeneric();
+        }
+
+        // One of the language_dutch or language_english needs to set. If not, display a message at both, indicating
+        // that they need to be set.
+        if (
+            (isset($this->data['language_dutch']) && !$this->data['language_dutch'])
+            && (isset($this->data['language_english']) && !$this->data['language_english'])
+        ) {
+            unset($this->data['language_dutch'], $this->data['language_english']);
+
+            $filter += [
+                'language_dutch' => [
+                    'required' => true,
+                ],
+                'language_english' => [
+                    'required' => true,
+                ],
+            ];
+        }
+
+        return $filter;
+    }
+
+    /**
+     * Build a generic input filter.
+     *
+     * @param string $languageSuffix Suffix that is used for language fields to indicate that a field belongs to that
+     * language
+     *
+     * @return array
+     */
+    public function inputFilterGeneric(string $languageSuffix = ''): array
+    {
+        return [
+            'name' . $languageSuffix => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => StringLength::class,
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 2,
+                            'max' => 127,
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StripTags::class,
+                    ],
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
+            ],
+            'website' . $languageSuffix => [
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => Uri::class,
+                        'options' => [
+                            'allowRelative' => false,
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                    [
+                        'name' => ToNull::class,
+                    ],
+                ],
+            ],
+            'location' . $languageSuffix => [
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => StringLength::class,
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'max' => 127,
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StripTags::class,
+                    ],
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                    [
+                        'name' => ToNull::class,
+                    ],
+                ],
+            ],
+            'description' . $languageSuffix => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => StringLength::class,
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 2,
+                            'max' => 10000,
+                        ],
+                    ],
+                ],
+            ],
+            'attachment' . $languageSuffix => [
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => Extension::class,
+                        'options' => [
+                            'pdf',
+                        ],
+                    ],
+                    [
+                        'name' => MimeType::class,
+                        'options' => [
+                            'application/pdf',
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => ToNull::class,
+                    ]
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Checks if a given `slug` is unique. (Callback for validation).
+     *
+     * @param string $value
+     * @param array $context
+     *
+     * @return bool
+     */
+    public function isSlugUnique(string $value, array $context): bool
+    {
+        $category = $context['category'];
+
+        if ($this->currentSlug === $value) {
             return true;
         }
 
-        return $this->mapper->isSlugNameUnique($this->companySlug, $slugName, $jid, $cat);
+        return $this->mapper->isSlugNameUnique($this->companySlug, $value, $category);
     }
 }
