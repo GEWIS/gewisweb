@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace Decision\Controller\FileBrowser;
 
 use Laminas\Http\Headers;
@@ -23,14 +17,14 @@ class LocalFileReader implements FileReader
      *
      * @var string
      */
-    private $root;
+    private string $root;
 
     /**
      * A regex pattern matching all valid filepaths.
      *
      * @var string
      */
-    private $validFilepath;
+    private string $validFilepath;
 
     public function __construct($root, $validFilepath)
     {
@@ -38,19 +32,29 @@ class LocalFileReader implements FileReader
         $this->validFilepath = $validFilepath;
     }
 
-    public function downloadFile($path)
+    /**
+     * @param string $path
+     *
+     * @return bool|Stream
+     */
+    public function downloadFile(string $path): bool|Stream
     {
         $fullPath = $this->root . $path;
+
         if (!is_file($fullPath) || !$this->isValidPathName($fullPath)) {
             return false;
         }
+
         $contentType = mime_content_type($fullPath);
+
         if (str_starts_with($contentType, 'text')) {
             $contentType = 'text/plain';
         }
+
         $response = new Stream();
         $response->setStream(fopen('file://' . $fullPath, 'r'));
         $response->setStatusCode(200);
+
         $headers = new Headers();
         $array = explode('/', $fullPath);
         $headers->addHeaderLine('Content-Type', $contentType)
@@ -58,81 +62,119 @@ class LocalFileReader implements FileReader
             ->addHeaderLine('Content-Length', filesize($fullPath));
         $response->setHeaders($headers);
 
-        return true;
+        return $response;
     }
 
-    public function listDir($path)
+    /**
+     * @param string $path
+     *
+     * @return array|null
+     */
+    public function listDir(string $path): ?array
     {
         //remove the trailing slash from the dir
         $fullPath = $this->root . $path;
+
         if (!is_dir($fullPath)) {
             return null;
         }
+
         //We can insert an additional /, except when when $path is the root
         $delimiter = '' !== $path ? '/' : '';
-        $dircontents = scandir($fullPath);
+        $dirContents = scandir($fullPath);
         $files = [];
-        foreach ($dircontents as $dircontent) {
-            $kind = $this->interpretDircontent($dircontent, $fullPath . '/' . $dircontent);
+
+        foreach ($dirContents as $dirContent) {
+            $kind = $this->interpretDircontent($dirContent, $fullPath . '/' . $dirContent);
+
             if (false === $kind) {
                 continue;
             }
+
             $files[] = new FileNode(
                 $kind,
-                $path . $delimiter . $dircontent,
-                $dircontent
+                $path . $delimiter . $dirContent,
+                $dirContent
             );
         }
 
         return $files;
     }
 
-    protected function interpretDircontent($dircontent, $fullPath)
+    /**
+     * @param string $dirContent
+     * @param string $fullPath
+     *
+     * @return false|string
+     */
+    protected function interpretDirContent(string $dirContent, string $fullPath): bool|string
     {
-        if ('.' === $dircontent[0] || !$this->isValidPathName($fullPath)) {
+        if ('.' === $dirContent[0] || !$this->isValidPathName($fullPath)) {
             return false;
         }
+
         if (is_link($fullPath)) {
             //symlink could point to illegal location, we must check this
             if (!$this->isAllowed(substr($fullPath, strlen($this->root)))) {
                 return false;
             }
 
-            return $this->interpretDircontent($dircontent, realpath($fullPath));
+            return $this->interpretDirContent($dirContent, realpath($fullPath));
         }
+
         if (is_dir($fullPath)) {
             return 'dir';
         }
+
         if (is_file($fullPath)) {
             return 'file';
         }
+
         //Unknown filesystem entity
         //(likely, the path doesn't resolve to a valid entry in the filesystem at all)
         return false;
     }
 
-    public function isDir($path)
+    /**
+     * @param string $path
+     *
+     * @return bool
+     */
+    public function isDir(string $path): bool
     {
         return is_dir($this->root . $path);
     }
 
-    public function isAllowed($path)
+    /**
+     * @param string $path
+     *
+     * @return bool
+     */
+    public function isAllowed(string $path): bool
     {
         $fullPath = $this->root . $path;
+
         if (!is_readable($fullPath) || !$this->isValidPathName($path)) {
             return false;
         }
+
         $realFullPath = realpath($fullPath);
         $realRoot = realpath($this->root);
+
         //Check whether the real location of fullPath is in a subdir of our 'root'.
-        if (substr($realFullPath, 0, strlen($realRoot)) !== $realRoot) {
+        if (!str_starts_with($realFullPath, $realRoot)) {
             return false;
         }
 
         return true;
     }
 
-    protected function isValidPathName($path)
+    /**
+     * @param string $path
+     *
+     * @return bool
+     */
+    protected function isValidPathName(string $path): bool
     {
         return 1 === preg_match('#^' . $this->validFilepath . '$#', $path);
     }

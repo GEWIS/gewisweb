@@ -2,6 +2,8 @@
 
 namespace Decision\Controller\FileBrowser;
 
+use Laminas\Http\Response\Stream;
+
 /**
  * Interface describing the operations required for reading browsing files (read-only).
  * Different implementations can fetch files from different locations.
@@ -17,18 +19,17 @@ interface FileReader
      *
      * @return array|null of FileNode
      */
-    public function listDir($path);
+    public function listDir(string $path): ?array;
 
     /**
      * Either redirects the user to a location to download the file in $path or
-     * directly sends this file to the user.
-     * Returns true on success, false on failure.
+     * directly sends this file to the user. Returns false on failure.
      *
      * @param string $path
      *
-     * @return bool
+     * @return bool|Stream
      */
-    public function downloadFile($path);
+    public function downloadFile(string $path): bool|Stream;
 
     /**
      * Returns whether the given $path is valid
@@ -38,7 +39,7 @@ interface FileReader
      *
      * @return bool
      */
-    public function isDir($path);
+    public function isDir(string $path): bool;
 
     /**
      * Returns whether the given $path is allowed to be accessed.
@@ -47,5 +48,5 @@ interface FileReader
      *
      * @return bool
      */
-    public function isAllowed($path);
+    public function isAllowed(string $path): bool;
 }
