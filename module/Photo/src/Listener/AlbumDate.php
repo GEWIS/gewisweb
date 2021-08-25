@@ -30,17 +30,21 @@ class AlbumDate
     {
         $parent = $album->getParent();
         if (!is_null($parent)) {
-            if (
-                is_null($parent->getStartDateTime()) || $parent->getStartDateTime()->getTimestamp() >
-                $album->getStartDateTime()->getTimeStamp()
-            ) {
-                $parent->setStartDateTime($album->getStartDateTime());
+            if (!is_null($album->getStartDateTime())) {
+                if (
+                    is_null($parent->getStartDateTime()) || $parent->getStartDateTime()->getTimestamp() >
+                    $album->getStartDateTime()->getTimeStamp()
+                ) {
+                    $parent->setStartDateTime($album->getStartDateTime());
+                }
             }
-            if (
-                is_null($parent->getEndDateTime()) || $parent->getEndDateTime()->getTimestamp() <
-                $album->getEndDateTime()->getTimeStamp()
-            ) {
-                $parent->setEndDateTime($album->getEndDateTime());
+            if (!is_null($album->getEndDateTime())) {
+                if (
+                    is_null($parent->getEndDateTime()) || $parent->getEndDateTime()->getTimestamp() <
+                    $album->getEndDateTime()->getTimeStamp()
+                ) {
+                    $parent->setEndDateTime($album->getEndDateTime());
+                }
             }
         }
     }
