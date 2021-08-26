@@ -183,7 +183,7 @@ class Decision
             throw new NotAllowedException($this->translator->translate('You are not allowed to view meetings.'));
         }
 
-        return $this->meetingMapper->find($type, $number);
+        return $this->meetingMapper->findMeeting($type, $number);
     }
 
     /**

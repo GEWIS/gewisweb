@@ -122,7 +122,7 @@ class Meeting extends BaseMapper
      *
      * @return MeetingModel
      */
-    public function find($type, $number)
+    public function findMeeting($type, $number)
     {
         $qb = $this->em->createQueryBuilder();
 
