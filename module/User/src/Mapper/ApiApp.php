@@ -26,6 +26,6 @@ class ApiApp extends BaseMapper
      */
     protected function getRepositoryName(): string
     {
-        return 'User\Model\ApiUser';
+        return ApiAppModel::class;
     }
 }

@@ -3,6 +3,7 @@
 namespace User\Mapper;
 
 use Application\Mapper\BaseMapper;
+use User\Model\LoginAttempt as LoginAttemptModel;
 
 class LoginAttempt extends BaseMapper
 {
@@ -31,6 +32,6 @@ class LoginAttempt extends BaseMapper
      */
     protected function getRepositoryName(): string
     {
-        return 'User\Model\LoginAttempt';
+        return LoginAttemptModel::class;
     }
 }

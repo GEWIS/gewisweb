@@ -72,6 +72,6 @@ class User extends BaseMapper
      */
     protected function getRepositoryName(): string
     {
-        return 'User\Model\User';
+        return UserModel::class;
     }
 }

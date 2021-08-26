@@ -72,6 +72,6 @@ class NewUser extends BaseMapper
      */
     protected function getRepositoryName(): string
     {
-        return 'User\Model\NewUser';
+        return NewUserModel::class;
     }
 }
