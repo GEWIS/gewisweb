@@ -3,8 +3,10 @@
 namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Company\Model\Company as CompanyModel;
-use Company\Model\CompanyI18n;
+use Company\Model\{
+    Company as CompanyModel,
+    CompanyI18n as CompanyI18nModel,
+};
 use Doctrine\ORM\Query;
 
 /**
@@ -44,7 +46,7 @@ class Company extends BaseMapper
         $company = new CompanyModel();
 
         foreach ($languages as $language) {
-            $translation = new CompanyI18n($language, $company);
+            $translation = new CompanyI18nModel($language, $company);
             if (is_null($translation->getLogo())) {
                 $translation->setLogo('');
             }
@@ -115,7 +117,7 @@ class Company extends BaseMapper
     {
         $result = $this->getRepository()->findBy(['slugName' => $slugName]);
 
-        return empty($result) ? null : $result[0];
+        return empty($result) ? NULL : $result[0];
     }
 
     /**
