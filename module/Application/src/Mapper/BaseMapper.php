@@ -28,7 +28,8 @@ abstract class BaseMapper
      * @param object $entity
      * @throws ORMException
      */
-    public function persist(object $entity) {
+    public function persist(object $entity): void
+    {
         $this->em->persist($entity);
         $this->em->flush();
     }
@@ -37,7 +38,8 @@ abstract class BaseMapper
      * @param object $entity
      * @throws ORMException
      */
-    public function remove(object $entity) {
+    public function remove(object $entity): void
+    {
         $this->em->remove($entity);
         $this->em->flush();
     }
@@ -48,7 +50,7 @@ abstract class BaseMapper
      * @param mixed $id
      * @throws ORMException
      */
-    public function removeById($id)
+    public function removeById($id): void
     {
         $entity = $this->find($id);
         $this->em->remove($entity);
@@ -59,7 +61,8 @@ abstract class BaseMapper
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function flush() {
+    public function flush(): void
+    {
         $this->em->flush();
     }
 
@@ -68,7 +71,8 @@ abstract class BaseMapper
      *
      * @param object $entity
      */
-    public function detach(object $entity) {
+    public function detach(object $entity): void
+    {
         $this->em->detach($entity);
     }
 
@@ -130,5 +134,5 @@ abstract class BaseMapper
      * @return string the name of the entity repository
      * e.g. "User/Model/User"
      */
-    protected abstract function getRepositoryName() : string;
+    protected abstract function getRepositoryName(): string;
 }
