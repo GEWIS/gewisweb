@@ -140,7 +140,7 @@ class Decision
             throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings.'));
         }
 
-        return $this->meetingMapper->findAll($limit);
+        return $this->meetingMapper->findAllMeetings($limit);
     }
 
     /**
@@ -341,7 +341,7 @@ class Decision
 
         $document->setDisplayPosition($position);
 
-        $this->meetingMapper->persistDocument($document);
+        $this->meetingMapper->persist($document);
 
         return true;
     }
@@ -414,7 +414,7 @@ class Decision
 
             $document->setDisplayPosition($position);
 
-            $this->meetingMapper->persistDocument($document);
+            $this->meetingMapper->persist($document);
         });
     }
 
@@ -459,7 +459,7 @@ class Decision
             );
         }
 
-        return $this->authorizationMapper->find($meetingNumber);
+        return $this->authorizationMapper->findNotRevoked($meetingNumber);
     }
 
     /**

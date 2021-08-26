@@ -2,27 +2,14 @@
 
 namespace Decision\Mapper;
 
+use Application\Mapper\BaseMapper;
 use Decision\Model\MeetingNotes;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Decision\Model\Decision as DecisionModel;
 
-class Decision
+class Decision extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * Search decisions.
      *
@@ -46,23 +33,10 @@ class Decision
     }
 
     /**
-     * Persist an entity.
-     *
-     * @param MeetingNotes $entity to persist
+     * @inheritDoc
      */
-    public function persist($entity)
+    protected function getRepositoryName(): string
     {
-        $this->em->persist($entity);
-        $this->em->flush();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Decision\Model\Decision');
+        return DecisionModel::class;
     }
 }

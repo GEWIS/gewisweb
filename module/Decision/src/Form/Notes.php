@@ -21,7 +21,7 @@ class Notes extends Form implements InputFilterProviderInterface
         $this->translator = $translator;
 
         $options = [];
-        foreach ($mapper->findAll() as $meeting) {
+        foreach ($mapper->findAllMeetings() as $meeting) {
             $meeting = $meeting[0];
             $name = $meeting->getType() . '/' . $meeting->getNumber();
             $options[$name] = $meeting->getType() . ' ' . $meeting->getNumber()
