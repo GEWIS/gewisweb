@@ -16,12 +16,14 @@ use Decision\Controller\Factory\{
     OrganAdminControllerFactory,
     OrganControllerFactory,
 };
+use Laminas\Router\Http\Literal;
+use Laminas\Router\Http\Segment;
 
 return [
     'router' => [
         'routes' => [
             'decision' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/decision',
                     'defaults' => [
@@ -32,7 +34,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'default' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[/:action]',
                             'constraints' => [
@@ -41,7 +43,7 @@ return [
                         ],
                     ],
                     'search' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/search',
                             'defaults' => [
@@ -50,7 +52,7 @@ return [
                         ],
                     ],
                     'meeting' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/:type/:number',
                             'constraints' => [
@@ -64,7 +66,7 @@ return [
                         'may_terminate' => true,
                         'child_routes' => [
                             'notes' => [
-                                'type' => 'Segment',
+                                'type' => Segment::class,
                                 'options' => [
                                     'route' => '/notes',
                                     'defaults' => [
@@ -75,7 +77,7 @@ return [
                         ],
                     ],
                     'document' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/document/:id',
                             'constraints' => [
@@ -87,7 +89,7 @@ return [
                         ],
                     ],
                     'authorizations' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/authorizations',
                             'defaults' => [
@@ -109,7 +111,7 @@ return [
                 'priority' => 100,
             ],
             'admin_decision' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/admin/decision',
                     'defaults' => [
@@ -120,7 +122,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'default' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[/:action]',
                             'constraints' => [
@@ -129,7 +131,7 @@ return [
                         ],
                     ],
                     'notes' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/notes',
                             'defaults' => [
@@ -138,7 +140,7 @@ return [
                         ],
                     ],
                     'document' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/document[/:type][/:number]',
                             'constraints' => [
@@ -151,7 +153,7 @@ return [
                         ],
                     ],
                     'delete_document' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/document/delete',
                             'defaults' => [
@@ -160,7 +162,7 @@ return [
                         ],
                     ],
                     'position_document' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/document/position',
                             'defaults' => [
@@ -169,7 +171,7 @@ return [
                         ],
                     ],
                     'authorizations' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/authorizations[/:number]',
                             'constraints' => [
@@ -184,7 +186,7 @@ return [
                 'priority' => 100,
             ],
             'organ' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/organ',
                     'defaults' => [
@@ -195,7 +197,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'show' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/show/:organ',
                             'constraints' => [
@@ -210,7 +212,7 @@ return [
                 'priority' => 100,
             ],
             'member' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/member',
                     'defaults' => [
@@ -221,7 +223,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'search' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/search',
                             'defaults' => [
@@ -230,7 +232,7 @@ return [
                         ],
                     ],
                     'canauth' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/canauth',
                             'defaults' => [
@@ -239,7 +241,7 @@ return [
                         ],
                     ],
                     'birthdays' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/birthdays',
                             'defaults' => [
@@ -248,7 +250,7 @@ return [
                         ],
                     ],
                     'dreamspark' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/dreamspark',
                             'defaults' => [
@@ -257,7 +259,7 @@ return [
                         ],
                     ],
                     'view' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/:lidnr',
                             'constraints' => [
@@ -269,7 +271,7 @@ return [
                         ],
                     ],
                     'self' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/self',
                             'defaults' => [
@@ -278,7 +280,7 @@ return [
                         ],
                     ],
                     'regulations' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/regulations/:regulation',
                             'constraints' => [
@@ -293,7 +295,7 @@ return [
                 'priority' => 100,
             ],
             'member_api' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/api/member',
                     'defaults' => [
@@ -304,7 +306,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'lidnr' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/lidnr/:lidnr',
                             'defaults' => [
@@ -316,7 +318,7 @@ return [
                 'priority' => 100,
             ],
             'admin_organ' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/admin/organ',
                     'defaults' => [
@@ -327,7 +329,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'default' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[/:action]',
                             'constraints' => [
@@ -336,7 +338,7 @@ return [
                         ],
                     ],
                     'edit' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[/:organ_id]/edit',
                             'constraints' => [

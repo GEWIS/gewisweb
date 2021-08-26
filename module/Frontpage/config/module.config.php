@@ -20,12 +20,14 @@ use Frontpage\Controller\Factory\{
     PollAdminControllerFactory,
     PollControllerFactory,
 };
+use Laminas\Router\Http\Literal;
+use Laminas\Router\Http\Segment;
 
 return [
     'router' => [
         'routes' => [
             'home' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/',
                     'defaults' => [
@@ -36,7 +38,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'page' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[:category[/:sub_category][/:name]][/]',
                             'constraints' => [
@@ -52,7 +54,7 @@ return [
                         'priority' => -1,
                     ],
                     'organ' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => 'association/:type/:abbr',
                             'constraints' => [
@@ -67,7 +69,7 @@ return [
                         'priority' => 100,
                     ],
                     'committee_list' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => 'association/committees',
                             'defaults' => [
@@ -78,7 +80,7 @@ return [
                         'priority' => 100,
                     ],
                     'fraternity_list' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => 'association/fraternities',
                             'defaults' => [
@@ -91,7 +93,7 @@ return [
                 ],
             ],
             'admin_page' => [
-                'type' => 'Segment',
+                'type' => Segment::class,
                 'options' => [
                     'route' => '/admin/page',
                     'defaults' => [
@@ -102,7 +104,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'create' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/create',
                             'defaults' => [
@@ -111,7 +113,7 @@ return [
                         ],
                     ],
                     'edit' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[/:page_id]/edit',
                             'constraints' => [
@@ -123,7 +125,7 @@ return [
                         ],
                     ],
                     'delete' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[/:page_id]/delete',
                             'constraints' => [
@@ -135,7 +137,7 @@ return [
                         ],
                     ],
                     'upload' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/upload',
                             'defaults' => [
@@ -147,7 +149,7 @@ return [
                 'priority' => 100,
             ],
             'poll' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/poll',
                     'defaults' => [
@@ -158,7 +160,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'history' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/history[/:page]',
                             'constraints' => [
@@ -170,7 +172,7 @@ return [
                         ],
                     ],
                     'request' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/request',
                             'defaults' => [
@@ -179,7 +181,7 @@ return [
                         ],
                     ],
                     'view' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[/:poll_id]/view',
                             'constraints' => [
@@ -191,7 +193,7 @@ return [
                         ],
                     ],
                     'vote' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[/:poll_id]/vote',
                             'constraints' => [
@@ -203,7 +205,7 @@ return [
                         ],
                     ],
                     'comment' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[/:poll_id]/comment',
                             'constraints' => [
@@ -218,7 +220,7 @@ return [
                 'priority' => 100,
             ],
             'admin_poll' => [
-                'type' => 'Segment',
+                'type' => Segment::class,
                 'options' => [
                     'route' => '/admin/poll',
                     'defaults' => [
@@ -229,7 +231,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'list' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/list[/:page]',
                             'constraints' => [
@@ -241,7 +243,7 @@ return [
                         ],
                     ],
                     'delete' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[/:poll_id]/delete',
                             'constraints' => [
@@ -253,7 +255,7 @@ return [
                         ],
                     ],
                     'approve' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[/:poll_id]/approve',
                             'constraints' => [
@@ -268,7 +270,7 @@ return [
                 'priority' => 100,
             ],
             'admin_news' => [
-                'type' => 'Segment',
+                'type' => Segment::class,
                 'options' => [
                     'route' => '/admin/news',
                     'defaults' => [
@@ -279,7 +281,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'list' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/list[/:page]',
                             'constraints' => [
@@ -291,7 +293,7 @@ return [
                         ],
                     ],
                     'create' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/create',
                             'defaults' => [
@@ -300,7 +302,7 @@ return [
                         ],
                     ],
                     'edit' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[/:item_id]/edit',
                             'constraints' => [
@@ -312,7 +314,7 @@ return [
                         ],
                     ],
                     'delete' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[/:item_id]/delete',
                             'constraints' => [
@@ -327,7 +329,7 @@ return [
                 'priority' => 100,
             ],
             'admin' => [
-                'type' => 'Segment',
+                'type' => Segment::class,
                 'options' => [
                     'route' => '/admin[/]',
                     'defaults' => [

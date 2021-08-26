@@ -1,5 +1,7 @@
 <?php
 
+use Laminas\Router\Http\Literal;
+use Laminas\Router\Http\Segment;
 use Photo\Command\WeeklyPhoto;
 use Photo\Controller\{
     AlbumAdminController,
@@ -24,7 +26,7 @@ return [
     'router' => [
         'routes' => [
             'photo' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/photo',
                     'defaults' => [
@@ -35,7 +37,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'member' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/member/:lidnr[/:page]',
                             'constraints' => [
@@ -50,7 +52,7 @@ return [
                         'may_terminate' => true,
                         'child_routes' => [
                             'photo' => [
-                                'type' => 'Segment',
+                                'type' => Segment::class,
                                 'options' => [
                                     'route' => '/photo/:photo_id',
                                     'constraints' => [
@@ -65,7 +67,7 @@ return [
                         ],
                     ],
                     'album' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/album[/:album_id][/:page]',
                             'constraints' => [
@@ -79,7 +81,7 @@ return [
                         ],
                     ],
                     'album_beta' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/beta/:album_type/:album_id',
                             'constraints' => [
@@ -93,9 +95,9 @@ return [
                         ],
                     ],
                     'photo' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
-                            'route' => '/view[/:photo_id]',
+                            'route' => '/view/:photo_id',
                             'constraints' => [
                                 'photo_id' => '[0-9]+',
                             ],
@@ -106,9 +108,9 @@ return [
                         'may_terminate' => true,
                         'child_routes' => [
                             'tag' => [
-                                'type' => 'Segment',
+                                'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/tag[/:lidnr]',
+                                    'route' => '/tag/:lidnr',
                                     'constraints' => [
                                         'lidnr' => '[0-9]+',
                                     ],
@@ -116,10 +118,10 @@ return [
                                         'controller' => 'Tag',
                                     ],
                                 ],
-                                'may_terminate' => true,
+                                'may_terminate' => false,
                                 'child_routes' => [
                                     'add' => [
-                                        'type' => 'Literal',
+                                        'type' => Literal::class,
                                         'options' => [
                                             'route' => '/add',
                                             'defaults' => [
@@ -128,7 +130,7 @@ return [
                                         ],
                                     ],
                                     'remove' => [
-                                        'type' => 'Literal',
+                                        'type' => Literal::class,
                                         'options' => [
                                             'route' => '/remove',
                                             'defaults' => [
@@ -139,7 +141,7 @@ return [
                                 ],
                             ],
                             'vote' => [
-                                'type' => 'Literal',
+                                'type' => Literal::class,
                                 'options' => [
                                     'route' => '/vote',
                                     'defaults' => [
@@ -150,7 +152,7 @@ return [
                         ],
                     ],
                     'photo_download' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/download[/:photo_id]',
                             'constraints' => [
@@ -163,7 +165,7 @@ return [
                     ],
                     // Route for categorizing albums by association year.
                     'year' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[/:year]',
                             'constraints' => [
@@ -175,7 +177,7 @@ return [
                         ],
                     ],
                     'weekly' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/weekly',
                             'defaults' => [
@@ -184,7 +186,7 @@ return [
                         ],
                     ],
                     'set_profile_photo' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/setprofilephoto/:photo_id',
                             'constraints' => [
@@ -196,7 +198,7 @@ return [
                         ],
                     ],
                     'remove_profile_photo' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/removeprofilephoto[/:photo_id]',
                             'constraints' => [
@@ -211,7 +213,7 @@ return [
                 'priority' => 100,
             ],
             'admin_photo' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/admin/photo',
                     'defaults' => [
@@ -222,13 +224,13 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'default' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/index',
                         ],
                     ],
                     'album' => [
-                        'type' => 'literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/album',
                             'defaults' => [
@@ -237,7 +239,7 @@ return [
                         ],
                     ],
                     'album_index' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/album[/:album_id]',
                             'defaults' => [
@@ -249,7 +251,7 @@ return [
                         ],
                     ],
                     'album_page' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/album[/:album_id][/:page]',
                             'defaults' => [
@@ -262,7 +264,7 @@ return [
                         ],
                     ],
                     'album_edit' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/album[/:album_id]/edit',
                             'defaults' => [
@@ -274,7 +276,7 @@ return [
                         ],
                     ],
                     'album_create' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/album[/:album_id]/create',
                             'defaults' => [
@@ -286,7 +288,7 @@ return [
                         ],
                     ],
                     'album_add' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/album[/:album_id]/add',
                             'defaults' => [
@@ -298,7 +300,7 @@ return [
                         ],
                     ],
                     'album_import' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/album[/:album_id]/import',
                             'defaults' => [
@@ -310,7 +312,7 @@ return [
                         ],
                     ],
                     'album_upload' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/album[/:album_id]/upload',
                             'defaults' => [
@@ -322,7 +324,7 @@ return [
                         ],
                     ],
                     'album_move' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/album[/:album_id]/move',
                             'defaults' => [
@@ -334,7 +336,7 @@ return [
                         ],
                     ],
                     'album_delete' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/album[/:album_id]/delete',
                             'defaults' => [
@@ -346,7 +348,7 @@ return [
                         ],
                     ],
                     'album_cover' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/album[/:album_id]/cover',
                             'defaults' => [
@@ -358,7 +360,7 @@ return [
                         ],
                     ],
                     'photo_index' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/photo[/:photo_id]',
                             'defaults' => [
@@ -371,7 +373,7 @@ return [
                         ],
                     ],
                     'photo_move' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/photo[/:photo_id]/move',
                             'defaults' => [
@@ -384,7 +386,7 @@ return [
                         ],
                     ],
                     'photo_delete' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/photo[/:photo_id]/delete',
                             'defaults' => [
@@ -400,7 +402,7 @@ return [
                 'priority' => 100,
             ],
             'api_photo' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/api/photo',
                     'defaults' => [
@@ -411,7 +413,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'album_list' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/album/:album_id',
                             'defaults' => [
