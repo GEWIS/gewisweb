@@ -7,9 +7,6 @@ use Activity\Model\ActivityOptionOption;
 use Activity\Model\ActivityOptionProposal as ActivityOptionProposalModel;
 use Application\Mapper\BaseMapper;
 use DateTime;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Exception;
 
 class ActivityCalendarOption extends BaseMapper

@@ -4,8 +4,6 @@ namespace Activity\Mapper;
 
 use Activity\Model\SignupFieldValue as SignupFieldValueModel;
 use Application\Mapper\BaseMapper;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 
 class SignupFieldValue extends BaseMapper
 {

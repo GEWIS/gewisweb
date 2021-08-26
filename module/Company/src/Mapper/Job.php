@@ -4,8 +4,6 @@ namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Company\Model\Job as JobModel;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for jobs.

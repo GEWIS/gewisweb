@@ -3,8 +3,6 @@
 namespace Company\Mapper;
 
 use Company\Model\CompanyBannerPackage;
-use Company\Model\CompanyJobPackage;
-use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for package.

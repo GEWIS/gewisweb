@@ -6,7 +6,6 @@ use Activity\Model\Activity as ActivityModel;
 use Application\Mapper\BaseMapper;
 use DateTime;
 use Decision\Model\Organ;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;

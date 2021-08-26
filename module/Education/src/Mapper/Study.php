@@ -3,8 +3,6 @@
 namespace Education\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Education\Model\Study as StudyModel;
 
 /**

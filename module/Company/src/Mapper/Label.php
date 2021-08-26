@@ -4,9 +4,6 @@ namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Company\Model\JobLabel;
-use Company\Model\JobLabel as LabelModel;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for labels.

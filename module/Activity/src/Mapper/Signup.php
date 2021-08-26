@@ -4,7 +4,6 @@ namespace Activity\Mapper;
 
 use Activity\Model\Signup as SignupModel;
 use Application\Mapper\BaseMapper;
-use Doctrine\ORM\EntityManager;
 
 class Signup extends BaseMapper
 {

@@ -3,8 +3,6 @@
 namespace Frontpage\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Frontpage\Model\Page as PageModel;
 
 /**
@@ -19,7 +17,7 @@ class Page extends BaseMapper
      * @param string $subCategory
      * @param string $name
      *
-     * @return \Frontpage\Model\Page|null
+     * @return PageModel|null
      */
     public function findPage($category, $subCategory = null, $name = null)
     {

@@ -3,9 +3,6 @@
 namespace Education\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\ORMException;
 use Education\Model\Course as CourseModel;
 
 /**

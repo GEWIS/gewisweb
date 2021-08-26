@@ -4,8 +4,6 @@ namespace Activity\Mapper;
 
 use Activity\Model\MaxActivities as MaxActivitiesModel;
 use Application\Mapper\BaseMapper;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 
 class MaxActivities extends BaseMapper
 {

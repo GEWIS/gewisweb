@@ -5,8 +5,6 @@ namespace Company\Mapper;
 use Application\Mapper\BaseMapper;
 use Company\Model\JobCategory;
 use Company\Model\JobCategory as CategoryModel;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for cateogry.

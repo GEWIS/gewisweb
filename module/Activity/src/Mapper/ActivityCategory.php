@@ -4,7 +4,6 @@ namespace Activity\Mapper;
 
 use Activity\Model\ActivityCategory as ActivityCategoryModel;
 use Application\Mapper\BaseMapper;
-use Doctrine\ORM\EntityManager;
 
 class ActivityCategory extends BaseMapper
 {

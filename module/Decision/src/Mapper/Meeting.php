@@ -7,8 +7,6 @@ use DateInterval;
 use DateTime;
 use Decision\Model\Meeting as MeetingModel;
 use Decision\Model\MeetingDocument;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use InvalidArgumentException;
 
 class Meeting extends BaseMapper

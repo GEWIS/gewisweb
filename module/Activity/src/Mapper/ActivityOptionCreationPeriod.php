@@ -5,8 +5,6 @@ namespace Activity\Mapper;
 use Activity\Model\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodModel;
 use Application\Mapper\BaseMapper;
 use DateTime;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Exception;
 
 class ActivityOptionCreationPeriod extends BaseMapper

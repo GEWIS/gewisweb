@@ -3,10 +3,8 @@
 namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
-use Photo\Model\Tag as TagModel;
 use Photo\Model\Photo as PhotoModel;
+use Photo\Model\Tag as TagModel;
 
 /**
  * Mappers for Tags.
@@ -37,7 +35,7 @@ class Tag extends BaseMapper
      *
      * @param array $members
      *
-     * @return \Photo\Model\Tag|null
+     * @return TagModel|null
      */
     public function getMostActiveMemberTag($members)
     {

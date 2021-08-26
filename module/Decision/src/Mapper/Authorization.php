@@ -3,8 +3,6 @@
 namespace Decision\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Decision\Model\Authorization as AuthorizationModel;
 
 /**
@@ -30,7 +28,7 @@ class Authorization extends BaseMapper
      * @param int $meetingNumber
      * @param int $authorizer
      *
-     * @return \Decision\Model\Authorization|null
+     * @return AuthorizationModel|null
      */
     public function findUserAuthorization($meetingNumber, $authorizer)
     {

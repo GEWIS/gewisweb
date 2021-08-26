@@ -5,10 +5,6 @@ namespace Decision\Mapper;
 use Application\Mapper\BaseMapper;
 use Decision\Model\Member as MemberModel;
 use Decision\Model\Organ as OrganModel;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 class Member extends BaseMapper

@@ -4,8 +4,6 @@ namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
 use DateTime;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Photo\Model\Album as AlbumModel;
 
 /**

@@ -8,8 +8,6 @@ use Company\Model\CompanyFeaturedPackage as FeaturedPackageModel;
 use Company\Model\CompanyJobPackage;
 use Company\Model\CompanyJobPackage as PackageModel;
 use DateTime;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for package.

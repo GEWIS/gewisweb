@@ -4,8 +4,6 @@ namespace Education\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Closure;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Education\Model\Exam as ExamModel;
 
 /**

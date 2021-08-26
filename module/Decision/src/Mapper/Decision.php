@@ -3,9 +3,6 @@
 namespace Decision\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Decision\Model\MeetingNotes;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Decision\Model\Decision as DecisionModel;
 
 class Decision extends BaseMapper

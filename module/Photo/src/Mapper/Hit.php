@@ -3,10 +3,8 @@
 namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Photo\Model\Hit as HitModel;
 use DateTime;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
+use Photo\Model\Hit as HitModel;
 
 /**
  * Mappers for Hit.

@@ -3,9 +3,6 @@
 namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Doctrine\DBAL\Connection;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Photo\Model\MemberAlbum;
 use Photo\Model\Photo as PhotoModel;
 

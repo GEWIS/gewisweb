@@ -5,8 +5,6 @@ namespace Company\Mapper;
 use Application\Mapper\BaseMapper;
 use Company\Model\Company as CompanyModel;
 use Company\Model\CompanyI18n;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
 /**

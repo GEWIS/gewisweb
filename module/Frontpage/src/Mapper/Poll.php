@@ -3,13 +3,11 @@
 namespace Frontpage\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
+use Frontpage\Model\Poll as PollModel;
 use Frontpage\Model\PollOption;
 use Frontpage\Model\PollVote;
-use Frontpage\Model\Poll as PollModel;
 
 /**
  * Mappers for Polls.
@@ -61,7 +59,7 @@ class Poll extends BaseMapper
     /**
      * Returns the latest poll if one is available.
      *
-     * @return \Frontpage\Model\Poll|null
+     * @return PollModel|null
      */
     public function getNewestPoll()
     {

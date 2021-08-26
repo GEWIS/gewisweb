@@ -3,10 +3,8 @@
 namespace Decision\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\NoResultException;
 use Decision\Model\Organ as OrganModel;
+use Doctrine\ORM\NoResultException;
 
 /**
  * Mappers for organs.
@@ -61,7 +59,7 @@ class Organ extends BaseMapper
      *
      * @param int $id
      *
-     * @return \Decision\Model\Organ
+     * @return OrganModel
      */
     public function findOrgan($id)
     {
@@ -89,7 +87,7 @@ class Organ extends BaseMapper
      * @param bool $latest
      *                       Whether to retrieve the latest occurence of an organ or not
      *
-     * @return \Decision\Model\Organ
+     * @return OrganModel
      */
     public function findByAbbr($abbr, $type = null, $latest = false)
     {
