@@ -36,12 +36,40 @@ abstract class BaseMapper
     }
 
     /**
+     * Persist multiple studies.
+     *
+     * @param array $entities
+     * @throws ORMException
+     */
+    public function persistMultiple(array $entities)
+    {
+        foreach ($entities as $entity) {
+            $this->em->persist($entity);
+        }
+        $this->em->flush();
+    }
+
+    /**
      * @param object $entity
      * @throws ORMException
      */
     public function remove(object $entity): void
     {
         $this->em->remove($entity);
+        $this->em->flush();
+    }
+
+    /**
+     * Removes multiple studies.
+     *
+     * @param array $entities
+     * @throws ORMException
+     */
+    public function removeMultiple(array $entities)
+    {
+        foreach ($entities as $entity) {
+            $this->em->remove($entity);
+        }
         $this->em->flush();
     }
 
