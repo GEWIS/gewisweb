@@ -288,7 +288,7 @@ class Company
             throw new NotAllowedException($this->translator->translate('You are not allowed to list the companies'));
         }
 
-        return $this->companyMapper->findById($id);
+        return $this->companyMapper->find($id);
     }
 
     public function categoryForSlug($slug)
@@ -556,7 +556,7 @@ class Company
      */
     public function saveCategory()
     {
-        $this->categoryMapper->save();
+        $this->categoryMapper->flush();
     }
 
     /**
@@ -564,7 +564,7 @@ class Company
      */
     public function saveLabel()
     {
-        $this->labelMapper->save();
+        $this->labelMapper->flush();
     }
 
     /**
@@ -580,7 +580,7 @@ class Company
      */
     public function saveCompany()
     {
-        $this->companyMapper->save();
+        $this->companyMapper->flush();
     }
 
     /**
@@ -588,7 +588,7 @@ class Company
      */
     public function savePackage()
     {
-        $this->packageMapper->save();
+        $this->packageMapper->flush();
     }
 
     /**
@@ -877,8 +877,8 @@ class Company
         if (!$this->aclService->isAllowed('delete', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete packages'));
         }
-        $this->packageMapper->delete($packageId);
-        $this->bannerPackageMapper->delete($packageId);
+        $this->packageMapper->deletePackage($packageId);
+        $this->bannerPackageMapper->deletePackage($packageId);
     }
 
     /**

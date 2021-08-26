@@ -2,6 +2,7 @@
 
 namespace Company\Mapper;
 
+use Application\Mapper\BaseMapper;
 use Company\Model\Company as CompanyModel;
 use Company\Model\CompanyI18n;
 use Doctrine\ORM\EntityManager;
@@ -14,31 +15,8 @@ use Doctrine\ORM\Query;
  * NOTE: Companies will be modified externally by a script. Modifycations will be
  * overwritten.
  */
-class Company
+class Company extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
-    /**
-     * Saves all unsaved entities, that are marked persistent.
-     */
-    public function save()
-    {
-        $this->em->flush();
-    }
-
     /**
      * Checks if $slugName is only used by object identified with $cid.
      *
@@ -107,28 +85,6 @@ class Company
     }
 
     /**
-     * Find a specific company by its id.
-     *
-     * @param int $id The id of the company
-     *
-     * @return CompanyModel|null
-     */
-    public function findById($id)
-    {
-        return $this->getRepository()->find($id);
-    }
-
-    /**
-     * Find all companies.
-     *
-     * @return array
-     */
-    public function findAll()
-    {
-        return $this->getRepository()->findAll();
-    }
-
-    /**
      * Find the company with the given slugName.
      *
      * @param string $slugName the 'username' of the company to get
@@ -165,23 +121,10 @@ class Company
     }
 
     /**
-     * Removes a company.
-     *
-     * @param CompanyModel $company
+     * @inheritDoc
      */
-    public function remove($company)
+    protected function getRepositoryName(): string
     {
-        $this->em->remove($company);
-        $this->em->flush();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Company\Model\Company');
+        return CompanyModel::class;
     }
 }
