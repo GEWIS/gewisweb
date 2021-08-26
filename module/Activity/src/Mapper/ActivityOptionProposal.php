@@ -3,49 +3,13 @@
 namespace Activity\Mapper;
 
 use Activity\Model\ActivityOptionProposal as ActivityOptionProposalModel;
+use Application\Mapper\BaseMapper;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
-class ActivityOptionProposal
+class ActivityOptionProposal extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
-    /**
-     * Finds the ActivityOptionProposal model with the given id.
-     *
-     * @param int $id
-     *
-     * @return ActivityOptionProposalModel
-     */
-    public function getActivityOptionProposalById($id)
-    {
-        return $this->getRepository()->find($id);
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Activity\Model\ActivityOptionProposal');
-    }
-
     /**
      * Get activity proposals within a given period and associated with given organ.
      *
@@ -72,5 +36,13 @@ class ActivityOptionProposal
             ->setParameter('organ', $organId);
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getRepositoryName(): string
+    {
+        return ActivityOptionProposalModel::class;
     }
 }

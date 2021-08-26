@@ -3,48 +3,12 @@
 namespace Activity\Mapper;
 
 use Activity\Model\MaxActivities as MaxActivitiesModel;
+use Application\Mapper\BaseMapper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
-class MaxActivities
+class MaxActivities extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
-    /**
-     * Finds the MaxActivityOptions model with the given id.
-     *
-     * @param int $id
-     *
-     * @return MaxActivitiesModel
-     */
-    public function getMaxActivityOptionsById($id)
-    {
-        return $this->getRepository()->find($id);
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Activity\Model\MaxActivities');
-    }
-
     /**
      * Finds the MaxActivityOptions model with the given organ and period.
      *
@@ -67,5 +31,13 @@ class MaxActivities
         $res = $qb->getQuery()->getResult();
 
         return empty($res) ? null : $res[0];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getRepositoryName(): string
+    {
+        return MaxActivitiesModel::class;
     }
 }

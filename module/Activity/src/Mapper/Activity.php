@@ -3,6 +3,7 @@
 namespace Activity\Mapper;
 
 use Activity\Model\Activity as ActivityModel;
+use Application\Mapper\BaseMapper;
 use DateTime;
 use Decision\Model\Organ;
 use Doctrine\ORM\EntityManager;
@@ -11,23 +12,8 @@ use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use User\Model\User;
 
-class Activity
+class Activity extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * @param int $id
      *
@@ -37,26 +23,12 @@ class Activity
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
-            ->from('Activity\Model\Activity', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->where('a.id = :id')
             ->setParameter('id', $id);
         $result = $qb->getQuery()->getResult();
 
         return count($result) > 0 ? $result[0] : null;
-    }
-
-    /**
-     * get all activities including options.
-     *
-     * @return array
-     */
-    public function getAllActivities()
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\Activity', 'a');
-
-        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -71,7 +43,7 @@ class Activity
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
-            ->from('Activity\Model\Activity', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->where('a.endTime > :now')
             ->andWhere('a.status = :status')
             ->orderBy('a.beginTime', 'ASC');
@@ -154,7 +126,7 @@ class Activity
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
-            ->from('Activity\Model\Activity', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->from('Activity\Model\SignupList', 'b')
             ->from('Activity\Model\UserSignup', 'c')
             ->where('a.endTime > :now')
@@ -180,7 +152,7 @@ class Activity
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
-            ->from('Activity\Model\Activity', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->where('a.endTime > :now')
             ->setParameter('now', new DateTime())
             ->andWhere('a.creator = :user')
@@ -200,7 +172,7 @@ class Activity
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
-            ->from('Activity\Model\Activity', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->where('a.endTime > :now')
             ->setParameter('now', new DateTime())
             ->andWhere('a.organ = :organ')
@@ -234,7 +206,7 @@ class Activity
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
-            ->from('Activity\Model\Activity', 'a');
+            ->from($this->getRepositoryName(), 'a');
         if (!is_null($status)) {
             $qb->where('a.status = :status')
                 ->setParameter('status', $status);
@@ -319,7 +291,7 @@ class Activity
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
-            ->from('Activity\Model\Activity', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->andWhere('a.status = :status')
             ->andWhere('a.beginTime IS NOT NULL');
         $qb->setParameter('status', ActivityModel::STATUS_APPROVED);
@@ -357,5 +329,13 @@ class Activity
             ->orderBy('a.beginTime', 'ASC');
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getRepositoryName(): string
+    {
+        return ActivityModel::class;
     }
 }

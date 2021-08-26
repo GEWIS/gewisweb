@@ -3,50 +3,14 @@
 namespace Activity\Mapper;
 
 use Activity\Model\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodModel;
+use Application\Mapper\BaseMapper;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Exception;
 
-class ActivityOptionCreationPeriod
+class ActivityOptionCreationPeriod extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
-    /**
-     * Finds the ActivityOptionCreationPeriod model with the given id.
-     *
-     * @param int $id
-     *
-     * @return ActivityOptionCreationPeriodModel
-     */
-    public function getActivityOptionCreationPeriodById($id)
-    {
-        return $this->getRepository()->find($id);
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Activity\Model\ActivityOptionCreationPeriod');
-    }
-
     /**
      * Finds the ActivityOptionCreationPeriod model that is currently active.
      *
@@ -59,7 +23,7 @@ class ActivityOptionCreationPeriod
         $qb = $this->em->createQueryBuilder();
         $today = new DateTime();
         $qb->select('x')
-            ->from('Activity\Model\ActivityOptionCreationPeriod', 'x')
+            ->from($this->getRepositoryName(), 'x')
             ->andWhere('x.beginPlanningTime < :today')
             ->andWhere('x.endPlanningTime > :today')
             ->orderBy('x.beginPlanningTime', 'ASC')
@@ -83,12 +47,20 @@ class ActivityOptionCreationPeriod
         $qb = $this->em->createQueryBuilder();
         $today = new DateTime();
         $qb->select('x')
-            ->from('Activity\Model\ActivityOptionCreationPeriod', 'x')
+            ->from($this->getRepositoryName(), 'x')
             ->where('x.beginPlanningTime > :today')
             ->orderBy('x.beginPlanningTime', 'ASC')
             ->setParameter('today', $today)
             ->setMaxResults(1);
 
         return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getRepositoryName(): string
+    {
+        return ActivityOptionCreationPeriodModel::class;
     }
 }

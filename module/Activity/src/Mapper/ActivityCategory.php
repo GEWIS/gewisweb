@@ -2,31 +2,18 @@
 
 namespace Activity\Mapper;
 
+use Activity\Model\ActivityCategory as ActivityCategoryModel;
+use Application\Mapper\BaseMapper;
 use Doctrine\ORM\EntityManager;
 
-class ActivityCategory
+class ActivityCategory extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * Get a Category by an Id.
      *
      * @param int $id
      *
-     * @return \Activity\Model\ActivityCategory
+     * @return ActivityCategoryModel
      */
     public function getCategoryById($id)
     {
@@ -41,16 +28,10 @@ class ActivityCategory
     }
 
     /**
-     * Get all Categories.
-     *
-     * @return array
+     * @inheritDoc
      */
-    public function getAllCategories()
+    protected function getRepositoryName(): string
     {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\ActivityCategory', 'a');
-
-        return $qb->getQuery()->getResult();
+        return ActivityCategoryModel::class;
     }
 }

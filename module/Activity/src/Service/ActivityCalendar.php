@@ -233,7 +233,7 @@ class ActivityCalendar
         }
 
         $mapper = $this->calendarOptionMapper;
-        $option = $mapper->find($id);
+        $option = $mapper->findOption($id);
 
         $em = $this->entityManager;
         $option->setModifiedBy($this->aclService->getIdentityOrThrowException());
@@ -263,7 +263,7 @@ class ActivityCalendar
     public function deleteOption($id)
     {
         $mapper = $this->calendarOptionMapper;
-        $option = $mapper->find($id);
+        $option = $mapper->findOption($id);
         if (!$this->canDeleteOption($option)) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete this option'));
         }
