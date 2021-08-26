@@ -19,3 +19,4 @@ else
     php composer.phar dump-autoload -o
 fi
 ./orm orm:generate-proxies
+rm -Rf /code/data/cache/*
