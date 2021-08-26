@@ -2,6 +2,7 @@
 
 namespace Photo\Mapper;
 
+use Application\Mapper\BaseMapper;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -11,23 +12,8 @@ use Photo\Model\ProfilePhoto as ProfilePhotoModel;
 /**
  * Mappers for ProfilePhoto.
  */
-class ProfilePhoto
+class ProfilePhoto extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * Checks if the specified photo exists in the database already and returns
      * it if it does.
@@ -47,47 +33,8 @@ class ProfilePhoto
         );
     }
 
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
+    protected function getRepositoryName(): string
     {
-        return $this->em->getRepository('Photo\Model\ProfilePhoto');
-    }
-
-    /**
-     * Removes a photo.
-     */
-    public function remove(ProfilePhotoModel $profilePhoto)
-    {
-        $this->em->remove($profilePhoto);
-    }
-
-    /**
-     * Persist photo.
-     */
-    public function persist(ProfilePhotoModel $profilePhoto)
-    {
-        $this->em->persist($profilePhoto);
-    }
-
-    /**
-     * Flush.
-     */
-    public function flush()
-    {
-        $this->em->flush();
-    }
-
-    /**
-     * Get the entity manager connection.
-     *
-     * @return Connection
-     */
-    public function getConnection()
-    {
-        return $this->em->getConnection();
+        return ProfilePhotoModel::class;
     }
 }

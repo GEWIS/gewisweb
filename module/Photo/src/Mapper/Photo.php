@@ -2,6 +2,7 @@
 
 namespace Photo\Mapper;
 
+use Application\Mapper\BaseMapper;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -11,23 +12,8 @@ use Photo\Model\Photo as PhotoModel;
 /**
  * Mappers for Photo.
  */
-class Photo
+class Photo extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * Returns all the photos in an album.
      *
@@ -47,7 +33,7 @@ class Photo
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
-            ->from('Photo\Model\Photo', 'a');
+            ->from($this->getRepositoryName(), 'a');
         if ($album instanceof MemberAlbum) {
             $qb->innerJoin('a.tags', 't')
                 ->where('t.member = ?1')
@@ -84,7 +70,7 @@ class Photo
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
-            ->from('Photo\Model\Photo', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->where('a.album = ?1')
             ->setParameter(1, $album)
             ->addSelect('RAND() as HIDDEN rand')
@@ -107,7 +93,7 @@ class Photo
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
-            ->from('Photo\Model\Photo', 'a');
+            ->from($this->getRepositoryName(), 'a');
         if ($album instanceof MemberAlbum) {
             $qb->innerJoin('a.tags', 't')
                 ->where('t.member = ?1 AND a.dateTime > ?2')
@@ -139,7 +125,7 @@ class Photo
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
-            ->from('Photo\Model\Photo', 'a');
+            ->from($this->getRepositoryName(), 'a');
         if ($album instanceof MemberAlbum) {
             $qb->innerJoin('a.tags', 't')
                 ->where('t.member = ?1 AND a.dateTime < ?2')
@@ -177,59 +163,8 @@ class Photo
         );
     }
 
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
+    protected function getRepositoryName(): string
     {
-        return $this->em->getRepository('Photo\Model\Photo');
-    }
-
-    /**
-     * Retrieves a photo by id from the database.
-     *
-     * @param int $photoId the id of the photo
-     *
-     * @return PhotoModel
-     */
-    public function getPhotoById($photoId)
-    {
-        return $this->getRepository()->find($photoId);
-    }
-
-    /**
-     * Removes a photo.
-     */
-    public function remove(PhotoModel $photo)
-    {
-        $this->em->remove($photo);
-    }
-
-    /**
-     * Persist photo.
-     */
-    public function persist(PhotoModel $photo)
-    {
-        $this->em->persist($photo);
-    }
-
-    /**
-     * Flush.
-     */
-    public function flush()
-    {
-        $this->em->flush();
-    }
-
-    /**
-     * Get the entity manager connection.
-     *
-     * @return Connection
-     */
-    public function getConnection()
-    {
-        return $this->em->getConnection();
+        return PhotoModel::class;
     }
 }

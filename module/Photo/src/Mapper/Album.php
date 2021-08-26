@@ -2,6 +2,7 @@
 
 namespace Photo\Mapper;
 
+use Application\Mapper\BaseMapper;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -10,45 +11,8 @@ use Photo\Model\Album as AlbumModel;
 /**
  * Mappers for Album.
  */
-class Album
+class Album extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
-    /**
-     * Retrieves an album by id from the database.
-     *
-     * @param int $albumId the id of the album
-     *
-     * @return AlbumModel|null
-     */
-    public function getAlbumById($albumId)
-    {
-        return $this->getRepository()->find($albumId);
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Photo\Model\Album');
-    }
-
     /**
      * Returns all the subalbums of a given album.
      *
@@ -65,7 +29,7 @@ class Album
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
-            ->from('Photo\Model\Album', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->where('a.parent = ?1')
             ->setParameter(1, $parent)
             ->setFirstResult($start)
@@ -87,7 +51,7 @@ class Album
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
-            ->from('Photo\Model\Album', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->where('a.parent IS NULL')
             ->orderBy('a.startDateTime', 'DESC');
 
@@ -107,7 +71,7 @@ class Album
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
-            ->from('Photo\Model\Album', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->where('a.parent IS NULL')
             ->andWhere('a.startDateTime BETWEEN ?1 AND ?2')
             ->setParameter(1, $start)
@@ -128,7 +92,7 @@ class Album
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
-            ->from('Photo\Model\Album', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->where('a.parent IS NULL')
             ->andWhere('a.startDateTime IS NULL');
 
@@ -145,7 +109,7 @@ class Album
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
-            ->from('Photo\Model\Album', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->where('a.parent IS NULL')
             ->andWhere('a.startDateTime IS NOT NULL')
             ->setMaxResults(1)
@@ -166,7 +130,7 @@ class Album
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
-            ->from('Photo\Model\Album', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->where('a.parent IS NULL')
             ->andWhere('a.startDateTime IS NOT NULL')
             ->setMaxResults(1)
@@ -177,27 +141,8 @@ class Album
         return empty($res) ? null : $res[0];
     }
 
-    /**
-     * Removes an album.
-     */
-    public function remove(AlbumModel $album)
+    protected function getRepositoryName(): string
     {
-        $this->em->remove($album);
-    }
-
-    /**
-     * Persist album.
-     */
-    public function persist(AlbumModel $album)
-    {
-        $this->em->persist($album);
-    }
-
-    /**
-     * Flush.
-     */
-    public function flush()
-    {
-        $this->em->flush();
+        return AlbumModel::class;
     }
 }

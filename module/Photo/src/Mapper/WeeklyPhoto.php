@@ -2,29 +2,16 @@
 
 namespace Photo\Mapper;
 
+use Application\Mapper\BaseMapper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
 
 /**
  * Mappers for WeeklyPhoto.
  */
-class WeeklyPhoto
+class WeeklyPhoto extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * Check whether the given photo has been a photo of the week.
      *
@@ -42,7 +29,7 @@ class WeeklyPhoto
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('w')
-            ->from('Photo\Model\WeeklyPhoto', 'w')
+            ->from($this->getRepositoryName(), 'w')
             ->setMaxResults(1)
             ->orderBy('w.week', 'DESC');
 
@@ -61,35 +48,14 @@ class WeeklyPhoto
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('w')
-            ->from('Photo\Model\WeeklyPhoto', 'w')
+            ->from($this->getRepositoryName(), 'w')
             ->orderBy('w.week', 'DESC');
 
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * Persist weeklyPhoto.
-     */
-    public function persist(\Photo\Model\WeeklyPhoto $weeklyPhoto)
+    protected function getRepositoryName(): string
     {
-        $this->em->persist($weeklyPhoto);
-    }
-
-    /**
-     * Flush.
-     */
-    public function flush()
-    {
-        $this->em->flush();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Photo\Model\WeeklyPhoto');
+        return WeeklyPhotoModel::class;
     }
 }

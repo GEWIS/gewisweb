@@ -2,30 +2,17 @@
 
 namespace Photo\Mapper;
 
+use Application\Mapper\BaseMapper;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Photo\Model\Vote as VoteModel;
 
 /**
  * Mappers for Vote.
  */
-class Vote
+class Vote extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * Get the amount of votes of all photos that have been visited
      * in the specified time range.
@@ -39,7 +26,7 @@ class Vote
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('IDENTITY(vote.photo)', 'Count(vote.photo)')
-            ->from('Photo\Model\Vote', 'vote')
+            ->from($this->getRepositoryName(), 'vote')
             ->where('vote.dateTime BETWEEN ?1 AND ?2')
             ->groupBy('vote.photo')
             ->setParameter(1, $startDate)
@@ -66,26 +53,8 @@ class Vote
         );
     }
 
-    /**
-     * Flush.
-     */
-    public function flush()
+    protected function getRepositoryName(): string
     {
-        $this->em->flush();
-    }
-
-    public function persist($vote)
-    {
-        $this->em->persist($vote);
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Photo\Model\Vote');
+        return VoteModel::class;
     }
 }

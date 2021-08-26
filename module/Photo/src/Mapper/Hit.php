@@ -2,6 +2,8 @@
 
 namespace Photo\Mapper;
 
+use Application\Mapper\BaseMapper;
+use Photo\Model\Hit as HitModel;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -9,22 +11,8 @@ use Doctrine\ORM\EntityRepository;
 /**
  * Mappers for Hit.
  */
-class Hit
+class Hit extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
 
     /**
      * Get the amount of hits of all photos that have been visited
@@ -40,7 +28,7 @@ class Hit
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('IDENTITY(hit.photo)', 'Count(hit.photo)')
-            ->from('Photo\Model\Hit', 'hit')
+            ->from($this->getRepositoryName(), 'hit')
             ->where('hit.dateTime BETWEEN ?1 AND ?2')
             ->groupBy('hit.photo')
             ->setParameter(1, $begindate)
@@ -49,21 +37,8 @@ class Hit
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * Flush.
-     */
-    public function flush()
+    protected function getRepositoryName(): string
     {
-        $this->em->flush();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Photo\Model\Hit');
+        return HitModel::class;
     }
 }

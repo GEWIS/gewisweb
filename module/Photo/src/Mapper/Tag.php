@@ -2,41 +2,17 @@
 
 namespace Photo\Mapper;
 
+use Application\Mapper\BaseMapper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Photo\Model\Tag as TagModel;
+use Photo\Model\Photo as PhotoModel;
 
 /**
  * Mappers for Tags.
  */
-class Tag
+class Tag extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
-    /**
-     * Retrieves a tag by id from the database.
-     *
-     * @param int $tagId the id of the tag
-     *
-     * @return \Photo\Model\Tag
-     */
-    public function getTagById($tagId)
-    {
-        return $this->getRepository()->find($tagId);
-    }
-
     public function findTag($photoId, $lidnr)
     {
         return $this->getRepository()->findOneBy(
@@ -69,7 +45,7 @@ class Tag
 
         // Retrieve the lidnr of the member with the most tags
         $qb->select('IDENTITY(t.member), COUNT(t.member) as tag_count')
-            ->from('Photo\Model\Tag', 't')
+            ->from($this->getRepositoryName(), 't')
             ->where('t.member IN (?1)')
             ->setParameter(1, $members)
             ->groupBy('t.member')
@@ -87,8 +63,8 @@ class Tag
         // Retrieve the most recent tag of a member
         $qb2 = $this->em->createQueryBuilder();
         $qb2->select('t')
-            ->from('Photo\Model\Tag', 't')
-            ->join('Photo\Model\Photo', 'p', 'WITH', 'p.id = t.photo')
+            ->from($this->getRepositoryName(), 't')
+            ->join(PhotoModel::class, 'p', 'WITH', 'p.id = t.photo')
             ->where('t.member = ?1')
             ->setParameter(1, $lidnr)
             ->setMaxResults(1)
@@ -103,31 +79,8 @@ class Tag
         return $res[0];
     }
 
-    /**
-     * Removes a tag.
-     *
-     * @param \Photo\Model\Tag $tag
-     */
-    public function remove($tag)
+    protected function getRepositoryName(): string
     {
-        $this->em->remove($tag);
-    }
-
-    /**
-     * Flush.
-     */
-    public function flush()
-    {
-        $this->em->flush();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Photo\Model\Tag');
+        return TagModel::class;
     }
 }
