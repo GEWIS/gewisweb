@@ -547,6 +547,15 @@ class Company
             }
             $this->saveCompany();
 
+            // Remove translations if necessary.
+            $enabledLanguages = $data['languages'];
+            foreach ($company->getTranslations() as $translation) {
+                if (!in_array($translation->getLanguage(), $enabledLanguages)) {
+                    $company->removeTranslation($translation);
+                    $this->companyMapper->remove($translation);
+                }
+            }
+
             return true;
         }
     }
@@ -572,7 +581,7 @@ class Company
      */
     public function saveJob()
     {
-        $this->jobMapper->save();
+        $this->jobMapper->flush();
     }
 
     /**
@@ -829,7 +838,7 @@ class Company
         $mapper = $this->labelAssignmentMapper;
         foreach ($labels as $label) {
             $toRemove = $mapper->findAssignmentByJobIdAndLabelId($job->getId(), $label);
-            $mapper->delete($toRemove);
+            $mapper->remove($toRemove);
         }
     }
 
