@@ -2,45 +2,20 @@
 
 namespace Frontpage\Mapper;
 
+use Application\Mapper\BaseMapper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Frontpage\Model\PollOption;
 use Frontpage\Model\PollVote;
+use Frontpage\Model\Poll as PollModel;
 
 /**
  * Mappers for Polls.
  */
-class Poll
+class Poll extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
-    /**
-     * Returns a poll based on its id.
-     *
-     * @param int $pollId
-     *
-     * @return \Frontpage\Model\Poll|null
-     */
-    public function findPollById($pollId)
-    {
-        return $this->getRepository()->find($pollId);
-    }
-
     /**
      * Returns a poll based on its id.
      *
@@ -50,7 +25,7 @@ class Poll
      */
     public function findPollOptionById($optionId)
     {
-        return $this->em->find('Frontpage\Model\PollOption', $optionId);
+        return $this->em->find(PollOption::class, $optionId);
     }
 
     /**
@@ -63,7 +38,7 @@ class Poll
      */
     public function findVote($pollId, $lidnr)
     {
-        return $this->em->getRepository('Frontpage\Model\PollVote')->findOneBy(
+        return $this->em->getRepository(PollVote::class)->findOneBy(
             [
                 'poll' => $pollId,
                 'respondent' => $lidnr,
@@ -76,7 +51,7 @@ class Poll
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('p')
-            ->from('Frontpage\Model\Poll', 'p')
+            ->from($this->getRepositoryName(), 'p')
             ->where('p.approver IS NULL')
             ->orderBy('p.expiryDate', 'DESC');
 
@@ -93,7 +68,7 @@ class Poll
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('p')
-            ->from('Frontpage\Model\Poll', 'p')
+            ->from($this->getRepositoryName(), 'p')
             ->where('p.approver IS NOT NULL')
             ->andWhere('p.expiryDate > CURRENT_DATE()')
             ->setMaxResults(1)
@@ -118,41 +93,8 @@ class Poll
         return new DoctrineAdapter(new ORMPaginator($qb));
     }
 
-    /**
-     * Removes a poll.
-     *
-     * @param \Frontpage\Model\Poll $poll
-     */
-    public function remove($poll)
+    protected function getRepositoryName(): string
     {
-        $this->em->remove($poll);
-    }
-
-    /**
-     * Persist.
-     *
-     * @param \Frontpage\Model\Poll|PollOption $entity an entity to persist
-     */
-    public function persist($entity)
-    {
-        $this->em->persist($entity);
-    }
-
-    /**
-     * Flush.
-     */
-    public function flush()
-    {
-        $this->em->flush();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Frontpage\Model\Poll');
+        return PollModel::class;
     }
 }

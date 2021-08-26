@@ -116,7 +116,7 @@ class Page
      */
     public function getPageById($pageId)
     {
-        return $this->pageMapper->findPageById($pageId);
+        return $this->pageMapper->find($pageId);
     }
 
     /**
@@ -131,7 +131,7 @@ class Page
                 $this->translator->translate('You are not allowed to view the list of pages.')
             );
         }
-        $pages = $this->pageMapper->getAllPages();
+        $pages = $this->pageMapper->findAll();
         $pageArray = [];
         foreach ($pages as $page) {
             $category = $page->getCategory();
