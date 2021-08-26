@@ -11,7 +11,7 @@ class LoginAttempt extends BaseMapper
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('count(a)')
-            ->from('User\Model\LoginAttempt', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->where('a.type = :type')
             ->andWhere('a.time > :since')
             ->andWhere('a.ip = :ip')

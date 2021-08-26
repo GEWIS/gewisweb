@@ -2,6 +2,7 @@
 
 namespace Application\Mapper;
 
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\OptimisticLockException;
@@ -50,7 +51,7 @@ abstract class BaseMapper
      * @param mixed $id
      * @throws ORMException
      */
-    public function removeById($id): void
+    public function removeById(mixed $id): void
     {
         $entity = $this->find($id);
         $this->em->remove($entity);
@@ -84,6 +85,16 @@ abstract class BaseMapper
     protected function getRepository(): EntityRepository
     {
         return $this->em->getRepository($this->getRepositoryName());
+    }
+
+    /**
+     * Get the entity manager connection.
+     *
+     * @return Connection
+     */
+    public function getConnection(): Connection
+    {
+        return $this->em->getConnection();
     }
 
     /**

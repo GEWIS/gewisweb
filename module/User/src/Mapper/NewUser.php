@@ -19,7 +19,7 @@ class NewUser extends BaseMapper
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('u, m')
-            ->from('User\Model\NewUser', 'u')
+            ->from($this->getRepositoryName(), 'u')
             ->join('u.member', 'm')
             ->where('u.lidnr = ?1');
         $qb->setParameter(1, $lidnr);
@@ -41,7 +41,7 @@ class NewUser extends BaseMapper
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('u, m')
-            ->from('User\Model\NewUser', 'u')
+            ->from($this->getRepositoryName(), 'u')
             ->join('u.member', 'm')
             ->where('u.code = ?1');
         $qb->setParameter(1, $code);
@@ -60,7 +60,7 @@ class NewUser extends BaseMapper
     public function deleteByMember(Member $member)
     {
         $qb = $this->em->createQueryBuilder();
-        $qb->delete('User\Model\NewUser', 'u');
+        $qb->delete($this->getRepositoryName(), 'u');
         $qb->where('u.member = :member');
         $qb->setParameter('member', $member);
 
