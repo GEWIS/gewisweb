@@ -2,8 +2,10 @@
 
 namespace Education\Mapper;
 
+use Application\Mapper\BaseMapper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Education\Model\Study as StudyModel;
 
 /**
  * Mappers for Study.
@@ -11,50 +13,13 @@ use Doctrine\ORM\EntityRepository;
  * NOTE: Organs will be modified externally by a script. Modifycations will be
  * overwritten.
  */
-class Study
+class Study extends BaseMapper
 {
     /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
+     * @inheritDoc
      */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
+    protected function getRepositoryName(): string
     {
-        $this->em = $em;
-    }
-
-    /**
-     * Persist multiple studies.
-     *
-     * @param array $studies Array of StudyModel
-     */
-    public function persistMultiple(array $studies)
-    {
-        foreach ($studies as $study) {
-            $this->em->persist($study);
-        }
-    }
-
-    /**
-     * Flush.
-     */
-    public function flush()
-    {
-        $this->em->flush();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Education\Model\Study');
+        return StudyModel::class;
     }
 }

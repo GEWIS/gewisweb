@@ -2,6 +2,7 @@
 
 namespace Education\Mapper;
 
+use Application\Mapper\BaseMapper;
 use Closure;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -10,23 +11,8 @@ use Education\Model\Exam as ExamModel;
 /**
  * Mapper for Exam.
  */
-class Exam
+class Exam extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * Transactional Doctrine wrapper.
      *
@@ -43,33 +29,10 @@ class Exam
     }
 
     /**
-     * Find an exam.
-     *
-     * @param int $id
-     *
-     * @return ExamModel
+     * @inheritDoc
      */
-    public function find($id)
+    protected function getRepositoryName(): string
     {
-        return $this->getRepository()->find($id);
-    }
-
-    /**
-     * Persist an exam.
-     */
-    public function persist(ExamModel $exam)
-    {
-        $this->em->persist($exam);
-        $this->em->flush();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Education\Model\Exam');
+        return ExamModel::class;
     }
 }
