@@ -115,7 +115,7 @@ return [
                                         'lidnr' => '[0-9]+',
                                     ],
                                     'defaults' => [
-                                        'controller' => 'Tag',
+                                        'controller' => TagController::class
                                     ],
                                 ],
                                 'may_terminate' => false,
