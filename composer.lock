@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e55688d1d16405ced87ea143e4d6aedb",
+    "content-hash": "1136d52c351ab6801b5bb53bf3a88543",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -51,16 +51,16 @@
         },
         {
             "name": "composer/package-versions-deprecated",
-            "version": "1.11.99.2",
+            "version": "1.11.99.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/package-versions-deprecated.git",
-                "reference": "c6522afe5540d5fc46675043d3ed5a45a740b27c"
+                "reference": "fff576ac850c045158a250e7e27666e146e78d18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/package-versions-deprecated/zipball/c6522afe5540d5fc46675043d3ed5a45a740b27c",
-                "reference": "c6522afe5540d5fc46675043d3ed5a45a740b27c",
+                "url": "https://api.github.com/repos/composer/package-versions-deprecated/zipball/fff576ac850c045158a250e7e27666e146e78d18",
+                "reference": "fff576ac850c045158a250e7e27666e146e78d18",
                 "shasum": ""
             },
             "require": {
@@ -104,7 +104,7 @@
             "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
             "support": {
                 "issues": "https://github.com/composer/package-versions-deprecated/issues",
-                "source": "https://github.com/composer/package-versions-deprecated/tree/1.11.99.2"
+                "source": "https://github.com/composer/package-versions-deprecated/tree/1.11.99.3"
             },
             "funding": [
                 {
@@ -120,7 +120,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-24T07:46:03+00:00"
+            "time": "2021-08-17T13:49:14+00:00"
         },
         {
             "name": "container-interop/container-interop",
@@ -1340,16 +1340,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "2.9.4",
+            "version": "2.9.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "b19a13f4edfaa5806109cd899f5912a7df1547b5"
+                "reference": "77cc86ed880e3f1f6c9c5819e131a8aaeeeee0da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/b19a13f4edfaa5806109cd899f5912a7df1547b5",
-                "reference": "b19a13f4edfaa5806109cd899f5912a7df1547b5",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/77cc86ed880e3f1f6c9c5819e131a8aaeeeee0da",
+                "reference": "77cc86ed880e3f1f6c9c5819e131a8aaeeeee0da",
                 "shasum": ""
             },
             "require": {
@@ -1428,9 +1428,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/2.9.4"
+                "source": "https://github.com/doctrine/orm/tree/2.9.5"
             },
-            "time": "2021-08-11T20:53:03+00:00"
+            "time": "2021-08-23T10:20:22+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -3062,16 +3062,16 @@
         },
         {
             "name": "laminas/laminas-i18n",
-            "version": "2.11.1",
+            "version": "2.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-i18n.git",
-                "reference": "5e85a8facc5534e856cc7f5b4326533eede84b8a"
+                "reference": "78adb53ebf6c0bc63f92273fd7809dabc554f786"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-i18n/zipball/5e85a8facc5534e856cc7f5b4326533eede84b8a",
-                "reference": "5e85a8facc5534e856cc7f5b4326533eede84b8a",
+                "url": "https://api.github.com/repos/laminas/laminas-i18n/zipball/78adb53ebf6c0bc63f92273fd7809dabc554f786",
+                "reference": "78adb53ebf6c0bc63f92273fd7809dabc554f786",
                 "shasum": ""
             },
             "require": {
@@ -3143,7 +3143,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-04-07T21:10:50+00:00"
+            "time": "2021-08-20T08:23:04+00:00"
         },
         {
             "name": "laminas/laminas-inputfilter",
@@ -4907,16 +4907,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "2.2.2",
+            "version": "2.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "629cd411b1eb56808ce85b1dd6f9b5bf422932ad"
+                "reference": "811bdc2d52a07eafbb6cb68a7b368b0668b362c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/629cd411b1eb56808ce85b1dd6f9b5bf422932ad",
-                "reference": "629cd411b1eb56808ce85b1dd6f9b5bf422932ad",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/811bdc2d52a07eafbb6cb68a7b368b0668b362c8",
+                "reference": "811bdc2d52a07eafbb6cb68a7b368b0668b362c8",
                 "shasum": ""
             },
             "require": {
@@ -4972,7 +4972,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/2.2.2"
+                "source": "https://github.com/thephpleague/flysystem/tree/2.2.3"
             },
             "funding": [
                 {
@@ -4988,7 +4988,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-08-18T08:51:30+00:00"
+            "time": "2021-08-18T19:59:31+00:00"
         },
         {
             "name": "league/glide",
@@ -5339,16 +5339,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.51.1",
+            "version": "2.52.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "8619c299d1e0d4b344e1f98ca07a1ce2cfbf1922"
+                "reference": "369c0e2737c56a0f39c946dd261855255a6fccbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/8619c299d1e0d4b344e1f98ca07a1ce2cfbf1922",
-                "reference": "8619c299d1e0d4b344e1f98ca07a1ce2cfbf1922",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/369c0e2737c56a0f39c946dd261855255a6fccbe",
+                "reference": "369c0e2737c56a0f39c946dd261855255a6fccbe",
                 "shasum": ""
             },
             "require": {
@@ -5429,7 +5429,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-28T13:16:28+00:00"
+            "time": "2021-08-14T19:10:52+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -7885,16 +7885,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.94",
+            "version": "0.12.96",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "3d0ba4c198a24e3c3fc489f3ec6ac9612c4be5d6"
+                "reference": "a98bdc51318f20fcae8c953d266f81a70254917f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/3d0ba4c198a24e3c3fc489f3ec6ac9612c4be5d6",
-                "reference": "3d0ba4c198a24e3c3fc489f3ec6ac9612c4be5d6",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a98bdc51318f20fcae8c953d266f81a70254917f",
+                "reference": "a98bdc51318f20fcae8c953d266f81a70254917f",
                 "shasum": ""
             },
             "require": {
@@ -7925,7 +7925,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.94"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.96"
             },
             "funding": [
                 {
@@ -7945,20 +7945,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-30T09:05:27+00:00"
+            "time": "2021-08-21T11:55:13+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
-            "version": "0.12.42",
+            "version": "0.12.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-doctrine.git",
-                "reference": "e3173175dcdaf808d5ca6408528dca669e4de19f"
+                "reference": "134ecca0a50742575c2da22c3f65b79eff6b9427"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/e3173175dcdaf808d5ca6408528dca669e4de19f",
-                "reference": "e3173175dcdaf808d5ca6408528dca669e4de19f",
+                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/134ecca0a50742575c2da22c3f65b79eff6b9427",
+                "reference": "134ecca0a50742575c2da22c3f65b79eff6b9427",
                 "shasum": ""
             },
             "require": {
@@ -8011,9 +8011,9 @@
             "description": "Doctrine extensions for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-doctrine/issues",
-                "source": "https://github.com/phpstan/phpstan-doctrine/tree/0.12.42"
+                "source": "https://github.com/phpstan/phpstan-doctrine/tree/0.12.43"
             },
-            "time": "2021-07-08T08:41:15+00:00"
+            "time": "2021-08-19T14:46:51+00:00"
         },
         {
             "name": "san/san-session-toolbar",
