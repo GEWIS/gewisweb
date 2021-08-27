@@ -3,6 +3,7 @@
 namespace Company\Form;
 
 use Company\Mapper\Category as CategoryMapper;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Filter\{
     StringTrim,
     StripTags,
@@ -27,21 +28,30 @@ class JobCategory extends Form implements InputFilterProviderInterface
     private CategoryMapper $mapper;
 
     /**
+     * @var Translator
+     */
+    private Translator $translator;
+
+    /**
      * @var string|null
      */
     private ?string $currentEnglishPluralName = null;
 
-    public function __construct(CategoryMapper $mapper)
+    public function __construct(CategoryMapper $mapper, Translator $translator)
     {
         // we want to ignore the name passed
         parent::__construct();
         $this->mapper = $mapper;
+        $this->translator = $translator;
         $this->setAttribute('method', 'post');
 
         $this->add(
             [
                 'name' => 'name',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Name'),
+                ],
             ]
         );
 
@@ -49,6 +59,9 @@ class JobCategory extends Form implements InputFilterProviderInterface
             [
                 'name' => 'nameEn',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Name'),
+                ],
             ]
         );
 
@@ -56,6 +69,9 @@ class JobCategory extends Form implements InputFilterProviderInterface
             [
                 'name' => 'namePlural',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Name (Plural)'),
+                ],
             ]
         );
 
@@ -63,6 +79,9 @@ class JobCategory extends Form implements InputFilterProviderInterface
             [
                 'name' => 'namePluralEn',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Name (Plural)'),
+                ],
             ]
         );
 
@@ -71,6 +90,7 @@ class JobCategory extends Form implements InputFilterProviderInterface
                 'name' => 'hidden',
                 'type' => Checkbox::class,
                 'options' => [
+                    'label' => $this->translator->translate('Hidden'),
                     'checked_value' => 1,
                     'unchecked_value' => 0,
                 ],

@@ -2,6 +2,7 @@
 
 namespace Company\Form;
 
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Filter\{
     StringTrim,
     StripTags,
@@ -16,16 +17,25 @@ use Laminas\Validator\StringLength;
 
 class JobLabel extends Form implements InputFilterProviderInterface
 {
-    public function __construct()
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
+    public function __construct(Translator $translator)
     {
         // we want to ignore the name passed
         parent::__construct();
+        $this->translator = $translator;
         $this->setAttribute('method', 'post');
 
         $this->add(
             [
                 'name' => 'name',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Name'),
+                ],
             ]
         );
 
@@ -33,6 +43,9 @@ class JobLabel extends Form implements InputFilterProviderInterface
             [
                 'name' => 'nameEn',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Name'),
+                ],
             ]
         );
 
@@ -40,6 +53,9 @@ class JobLabel extends Form implements InputFilterProviderInterface
             [
                 'name' => 'abbreviation',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Abbreviation'),
+                ],
             ]
         );
 
@@ -47,6 +63,9 @@ class JobLabel extends Form implements InputFilterProviderInterface
             [
                 'name' => 'abbreviationEn',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Abbreviation'),
+                ],
             ]
         );
 

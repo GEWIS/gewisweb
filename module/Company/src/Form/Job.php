@@ -76,6 +76,9 @@ class Job extends Form implements InputFilterProviderInterface
             [
                 'name' => 'slug',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Slug'),
+                ],
             ]
         );
 
@@ -84,6 +87,8 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'category',
                 'type' => Select::class,
                 'options' => [
+                    'label' => $this->translator->translate('Category'),
+                    'empty_option' => $this->translator->translate('Select a job category'),
                     'value_options' => $categoryOptions,
                 ],
             ]
@@ -94,6 +99,7 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'active',
                 'type' => Checkbox::class,
                 'options' => [
+                    'label' => $this->translator->translate('Active'),
                     'checked_value' => 1,
                     'unchecked_value' => 0,
                 ],
@@ -104,6 +110,9 @@ class Job extends Form implements InputFilterProviderInterface
             [
                 'name' => 'contactName',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Name'),
+                ],
             ]
         );
 
@@ -111,6 +120,9 @@ class Job extends Form implements InputFilterProviderInterface
             [
                 'name' => 'contactEmail',
                 'type' => Email::class,
+                'options' => [
+                    'label' => $this->translator->translate('E-mail Address'),
+                ],
             ]
         );
 
@@ -118,6 +130,9 @@ class Job extends Form implements InputFilterProviderInterface
             [
                 'name' => 'contactPhone',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Phone Number'),
+                ],
             ]
         );
 
@@ -127,6 +142,7 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'language_dutch',
                 'type' => Checkbox::class,
                 'options' => [
+                    'label' => $this->translator->translate('Enable Dutch Translations'),
                     'checked_value' => 1,
                     'unchecked_value' => 0,
                 ],
@@ -138,6 +154,7 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'language_english',
                 'type' => Checkbox::class,
                 'options' => [
+                    'label' => $this->translator->translate('Enable English Translations'),
                     'checked_value' => 1,
                     'unchecked_value' => 0,
                 ],
@@ -148,6 +165,9 @@ class Job extends Form implements InputFilterProviderInterface
             [
                 'name' => 'name',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Name'),
+                ],
             ]
         );
 
@@ -155,6 +175,9 @@ class Job extends Form implements InputFilterProviderInterface
             [
                 'name' => 'nameEn',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Name'),
+                ],
             ]
         );
 
@@ -166,6 +189,9 @@ class Job extends Form implements InputFilterProviderInterface
             [
                 'name' => 'website',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Website'),
+                ],
             ]
         );
 
@@ -173,6 +199,9 @@ class Job extends Form implements InputFilterProviderInterface
             [
                 'name' => 'websiteEn',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Website'),
+                ],
             ]
         );
 
@@ -180,6 +209,9 @@ class Job extends Form implements InputFilterProviderInterface
             [
                 'name' => 'location',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Location'),
+                ],
             ]
         );
 
@@ -187,6 +219,9 @@ class Job extends Form implements InputFilterProviderInterface
             [
                 'name' => 'locationEn',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Location'),
+                ],
             ]
         );
 
@@ -194,6 +229,9 @@ class Job extends Form implements InputFilterProviderInterface
             [
                 'name' => 'description',
                 'type' => Textarea::class,
+                'options' => [
+                    'label' => $this->translator->translate('Description'),
+                ],
             ]
         );
 
@@ -201,6 +239,9 @@ class Job extends Form implements InputFilterProviderInterface
             [
                 'name' => 'descriptionEn',
                 'type' => Textarea::class,
+                'options' => [
+                    'label' => $this->translator->translate('Description'),
+                ],
             ]
         );
 
@@ -208,6 +249,9 @@ class Job extends Form implements InputFilterProviderInterface
             [
                 'name' => 'attachment',
                 'type' => File::class,
+                'options' => [
+                    'label' => $this->translator->translate('Attachment'),
+                ],
             ]
         );
 
@@ -215,6 +259,9 @@ class Job extends Form implements InputFilterProviderInterface
             [
                 'name' => 'attachmentEn',
                 'type' => File::class,
+                'options' => [
+                    'label' => $this->translator->translate('Attachment'),
+                ],
             ]
         );
 
@@ -223,6 +270,7 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'labels',
                 'type' => MultiCheckbox::class,
                 'options' => [
+                    'label' => $this->translator->translate('Labels'),
                     'value_options' => $labelOptions,
                 ],
             ]

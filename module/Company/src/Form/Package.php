@@ -21,10 +21,16 @@ use Laminas\Validator\Date as DateValidator;
 
 class Package extends Form implements InputFilterProviderInterface
 {
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
     public function __construct(Translator $translator, string $type)
     {
         // we want to ignore the name passed
         parent::__construct();
+        $this->translator = $translator;
 
         $this->setAttribute('method', 'post');
 
@@ -32,6 +38,9 @@ class Package extends Form implements InputFilterProviderInterface
             [
                 'name' => 'startDate',
                 'type' => Date::class,
+                'options' => [
+                    'label' => $this->translator->translate('Start Date'),
+                ],
                 'attributes' => [
                     'step' => '1',
                 ],
@@ -42,6 +51,9 @@ class Package extends Form implements InputFilterProviderInterface
             [
                 'name' => 'expirationDate',
                 'type' => Date::class,
+                'options' => [
+                    'label' => $this->translator->translate('Expiration Date'),
+                ],
                 'attributes' => [
                     'step' => '1',
                 ],
@@ -51,8 +63,10 @@ class Package extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'published',
+
                 'type' => Checkbox::class,
                 'options' => [
+                    'label' => $this->translator->translate('Published'),
                     'value_options' => [
                         '0' => 'Enabled',
                     ],
@@ -65,6 +79,9 @@ class Package extends Form implements InputFilterProviderInterface
                 [
                     'name' => 'article',
                     'type' => Textarea::class,
+                    'options' => [
+                        'label' => $this->translator->translate('Article'),
+                    ],
                 ]
             );
 
@@ -73,10 +90,10 @@ class Package extends Form implements InputFilterProviderInterface
                     'name' => 'language',
                     'type' => Radio::class,
                     'options' => [
-                        'label' => 'Language',
+                        'label' => $this->translator->translate('Language'),
                         'value_options' => [
-                            'nl' => $translator->translate('Dutch'),
-                            'en' => $translator->translate('English'),
+                            'nl' => $this->translator->translate('Dutch'),
+                            'en' => $this->translator->translate('English'),
                         ],
                     ],
                 ]
@@ -88,6 +105,9 @@ class Package extends Form implements InputFilterProviderInterface
                 [
                     'name' => 'banner',
                     'type' => File::class,
+                    'options' => [
+                        'label' => $this->translator->translate('Banner'),
+                    ],
                 ]
             );
         }

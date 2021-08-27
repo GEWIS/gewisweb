@@ -59,6 +59,9 @@ class Company extends Form implements InputFilterProviderInterface
             [
                 'name' => 'slugName',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Slug'),
+                ],
             ]
         );
 
@@ -67,6 +70,7 @@ class Company extends Form implements InputFilterProviderInterface
                 'name' => 'hidden',
                 'type' => Checkbox::class,
                 'options' => [
+                    'label' => $this->translator->translate('Hidden'),
                     'checked_value' => 1,
                     'unchecked_value' => 0,
                 ],
@@ -77,6 +81,9 @@ class Company extends Form implements InputFilterProviderInterface
             [
                 'name' => 'contactName',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Name'),
+                ],
             ]
         );
 
@@ -84,6 +91,9 @@ class Company extends Form implements InputFilterProviderInterface
             [
                 'name' => 'contactAddress',
                 'type' => Textarea::class,
+                'options' => [
+                    'label' => $this->translator->translate('Address'),
+                ],
             ]
         );
 
@@ -91,6 +101,9 @@ class Company extends Form implements InputFilterProviderInterface
             [
                 'name' => 'contactEmail',
                 'type' => Email::class,
+                'options' => [
+                    'label' => $this->translator->translate('E-mail Address'),
+                ],
             ]
         );
 
@@ -98,6 +111,9 @@ class Company extends Form implements InputFilterProviderInterface
             [
                 'name' => 'contactPhone',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Phone Number'),
+                ],
             ]
         );
 
@@ -107,6 +123,7 @@ class Company extends Form implements InputFilterProviderInterface
                 'name' => 'language_dutch',
                 'type' => Checkbox::class,
                 'options' => [
+                    'label' => $this->translator->translate('Enable Dutch Translations'),
                     'checked_value' => 1,
                     'unchecked_value' => 0,
                 ],
@@ -118,6 +135,7 @@ class Company extends Form implements InputFilterProviderInterface
                 'name' => 'language_english',
                 'type' => Checkbox::class,
                 'options' => [
+                    'label' => $this->translator->translate('Enable English Translations'),
                     'checked_value' => 1,
                     'unchecked_value' => 0,
                 ],
@@ -128,6 +146,9 @@ class Company extends Form implements InputFilterProviderInterface
             [
                 'name' => 'name',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Name'),
+                ],
             ]
         );
 
@@ -135,6 +156,9 @@ class Company extends Form implements InputFilterProviderInterface
             [
                 'name' => 'nameEn',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Name'),
+                ],
             ]
         );
 
@@ -142,6 +166,9 @@ class Company extends Form implements InputFilterProviderInterface
             [
                 'name' => 'slogan',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Slogan'),
+                ],
             ]
         );
 
@@ -149,6 +176,9 @@ class Company extends Form implements InputFilterProviderInterface
             [
                 'name' => 'sloganEn',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Slogan'),
+                ],
             ]
         );
 
@@ -160,6 +190,9 @@ class Company extends Form implements InputFilterProviderInterface
             [
                 'name' => 'website',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Website'),
+                ],
             ]
         );
 
@@ -167,6 +200,9 @@ class Company extends Form implements InputFilterProviderInterface
             [
                 'name' => 'websiteEn',
                 'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Website'),
+                ],
             ]
         );
 
@@ -174,6 +210,9 @@ class Company extends Form implements InputFilterProviderInterface
             [
                 'name' => 'description',
                 'type' => Textarea::class,
+                'options' => [
+                    'label' => $this->translator->translate('Description'),
+                ],
             ]
         );
 
@@ -181,6 +220,9 @@ class Company extends Form implements InputFilterProviderInterface
             [
                 'name' => 'descriptionEn',
                 'type' => Textarea::class,
+                'options' => [
+                    'label' => $this->translator->translate('Description'),
+                ],
             ]
         );
 
@@ -188,6 +230,9 @@ class Company extends Form implements InputFilterProviderInterface
             [
                 'name' => 'logo',
                 'type' => File::class,
+                'options' => [
+                    'label' => $this->translator->translate('Logo'),
+                ],
             ]
         );
 
@@ -195,6 +240,9 @@ class Company extends Form implements InputFilterProviderInterface
             [
                 'name' => 'logoEn',
                 'type' => File::class,
+                'options' => [
+                    'label' => $this->translator->translate('Logo'),
+                ],
             ]
         );
 
