@@ -129,7 +129,7 @@ class User implements RoleInterface, ResourceInterface
     /**
      * Get the member information of this user.
      *
-     * @return Member
+     * @return Member|null
      */
     public function getMember()
     {

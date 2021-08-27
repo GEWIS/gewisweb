@@ -27,13 +27,20 @@ class UserSignup extends Signup
      */
     public function getFullName()
     {
-        return is_null($this->getUser()) ? null : $this->getUser()->getMember()->getFullName();
+        if (is_null($this->user)) {
+            return null;
+        }
+        $member = $this->user->getMember();
+        if (is_null($member)) {
+            return null;
+        }
+        return $this->getUser()->getMember()->getFullName();
     }
 
     /**
      * Get the user that is signed up.
      *
-     * @return User
+     * @return User|null
      */
     public function getUser()
     {
