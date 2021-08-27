@@ -166,7 +166,7 @@ class Module
                 'frontpage_service_acl' => function (ContainerInterface $container, $requestedName, array $options = null) {
                     $aclService = (new AclServiceFactory())->__invoke($container, $requestedName, $options);
                     if ($aclService instanceof AclService) {
-                        $pages = $container->get('frontpage_mapper_page')->getAllPages();
+                        $pages = $container->get('frontpage_mapper_page')->findAll();
                         $aclService->setPages($pages);
                         return $aclService;
                     }
