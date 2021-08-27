@@ -17,12 +17,16 @@ use Activity\Controller\Factory\{
     AdminControllerFactory,
     ApiControllerFactory,
 };
+use Laminas\Router\Http\{
+    Literal,
+    Segment,
+};
 
 return [
     'router' => [
         'routes' => [
             'activity' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/activity',
                     'defaults' => [
@@ -33,7 +37,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'view' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/view/:id',
                             'constraints' => [
@@ -46,7 +50,7 @@ return [
                         'may_terminate' => true,
                         'child_routes' => [
                             'signuplist' => [
-                                'type' => 'Segment',
+                                'type' => Segment::class,
                                 'options' => [
                                     'route' => '/:signupList',
                                     'constraints' => [
@@ -60,7 +64,7 @@ return [
                         ],
                     ],
                     'signup' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/signup/:id/:signupList',
                             'constraints' => [
@@ -73,7 +77,7 @@ return [
                         ],
                     ],
                     'externalSignup' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/externalSignup/:id/:signupList',
                             'constraints' => [
@@ -86,7 +90,7 @@ return [
                         ],
                     ],
                     'signoff' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/signoff/:id/:signupList',
                             'constraints' => [
@@ -99,7 +103,7 @@ return [
                         ],
                     ],
                     'create' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/create',
                             'defaults' => [
@@ -108,7 +112,7 @@ return [
                         ],
                     ],
                     'career' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/career',
                             'defaults' => [
@@ -118,7 +122,7 @@ return [
                         ],
                     ],
                     'my' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/my',
                             'defaults' => [
@@ -128,7 +132,7 @@ return [
                         ],
                     ],
                     'archive' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/archive',
                             'defaults' => [
@@ -138,7 +142,7 @@ return [
                     ],
                     // Route for categorizing activities by association year.
                     'year' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/archive[/:year]',
                             'constraints' => [
@@ -154,7 +158,7 @@ return [
             ],
             'activity_admin' => [
                 'priority' => 100,
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/admin/activity',
                     'defaults' => [
@@ -165,7 +169,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'index' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[/:page]',
                             'constraints' => [
@@ -177,7 +181,7 @@ return [
                         ],
                     ],
                     'participants' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/participants/:id[/:signupList]',
                             'constraints' => [
@@ -190,7 +194,7 @@ return [
                         ],
                     ],
                     'adminSignup' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/adminSignup/:id/:signupList',
                             'constraints' => [
@@ -203,7 +207,7 @@ return [
                         ],
                     ],
                     'externalSignoff' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/externalSignoff/:id',
                             'constraints' => [
@@ -215,7 +219,7 @@ return [
                         ],
                     ],
                     'update' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/update/:id',
                             'constraints' => [
@@ -229,7 +233,7 @@ return [
                 ],
             ],
             'activity_calendar' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/activity/calendar/',
                     'defaults' => [
@@ -240,7 +244,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'delete' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => 'delete',
                             'defaults' => [
@@ -249,7 +253,7 @@ return [
                         ],
                     ],
                     'approve' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => 'approve',
                             'defaults' => [
@@ -258,7 +262,7 @@ return [
                         ],
                     ],
                     'create' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => 'create',
                             'defaults' => [
@@ -270,7 +274,7 @@ return [
             ],
             'activity_admin_approval' => [
                 'priority' => 150,
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/admin/activity/approval',
                     'defaults' => [
@@ -280,7 +284,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'view' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/view/[:id]',
                             'defaults' => [
@@ -289,7 +293,7 @@ return [
                         ],
                     ],
                     'proposal' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/proposal/[:id]',
                             'defaults' => [
@@ -298,7 +302,7 @@ return [
                         ],
                     ],
                     'apply_proposal' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/proposal/[:id]/apply',
                             'defaults' => [
@@ -307,7 +311,7 @@ return [
                         ],
                     ],
                     'revoke_proposal' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/proposal/[:id]/revoke',
                             'defaults' => [
@@ -316,7 +320,7 @@ return [
                         ],
                     ],
                     'approve' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/approve/[:id]',
                             'defaults' => [
@@ -325,7 +329,7 @@ return [
                         ],
                     ],
                     'disapprove' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/disapprove/[:id]',
                             'defaults' => [
@@ -334,7 +338,7 @@ return [
                         ],
                     ],
                     'reset' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/reset/[:id]',
                             'defaults' => [
@@ -345,7 +349,7 @@ return [
                 ],
             ],
             'activity_admin_categories' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/admin/activity/categories',
                     'defaults' => [
@@ -356,7 +360,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'add' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/add',
                             'defaults' => [
@@ -365,7 +369,7 @@ return [
                         ],
                     ],
                     'delete' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/delete/:id',
                             'constraints' => [
@@ -377,7 +381,7 @@ return [
                         ],
                     ],
                     'edit' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/edit/:id',
                             'constraints' => [
@@ -391,7 +395,7 @@ return [
                 ],
             ],
             'activity_api' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/api/activity',
                     'defaults' => [
@@ -402,7 +406,7 @@ return [
                 'may_terminate' => false,
                 'child_routes' => [
                     'list' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/list',
                             'defaults' => [
@@ -411,7 +415,7 @@ return [
                         ],
                     ],
                     'view' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/view/[:id]',
                             'constraints' => [
@@ -423,7 +427,7 @@ return [
                         ],
                     ],
                     'signup' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/signup/[:id]',
                             'constraints' => [
@@ -435,7 +439,7 @@ return [
                         ],
                     ],
                     'signoff' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/signoff/[:id]',
                             'constraints' => [
@@ -447,7 +451,7 @@ return [
                         ],
                     ],
                     'signedup' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/signedup',
                             'defaults' => [

@@ -9,12 +9,16 @@ use Company\Controller\Factory\{
     AdminControllerFactory,
     CompanyControllerFactory,
 };
+use Laminas\Router\Http\{
+    Literal,
+    Segment,
+};
 
 return [
     'router' => [
         'routes' => [
             'company' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/career',
                     'priority' => 2,
@@ -27,7 +31,7 @@ return [
                 'child_routes' => [
                     'jobList' => [
                         'priority' => 3,
-                        'type' => 'segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/:category',
                             'constraints' => [
@@ -40,7 +44,7 @@ return [
                     ],
                     'spotlight' => [
                         'priority' => 3,
-                        'type' => 'literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/spotlight',
                             'defaults' => [
@@ -50,7 +54,7 @@ return [
                     ],
                     'list' => [
                         'priority' => 3,
-                        'type' => 'literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/list',
                             'defaults' => [
@@ -62,7 +66,7 @@ return [
                     ],
                     'companyItem' => [
                         'priority' => 2,
-                        'type' => 'segment',
+                        'type' => Segment::class,
                         'options' => [
                             'defaults' => [
                                 'action' => 'show',
@@ -83,7 +87,7 @@ return [
                         'may_terminate' => true,
                         'child_routes' => [
                             'joblist' => [
-                                'type' => 'segment',
+                                'type' => Segment::class,
                                 'options' => [
                                     'route' => '/:category',
                                     'defaults' => [
@@ -93,7 +97,7 @@ return [
                                 'may_terminate' => true,
                                 'child_routes' => [
                                     'job_item' => [
-                                        'type' => 'segment',
+                                        'type' => Segment::class,
                                         'options' => [
                                             'route' => '/:slugJobName',
                                             'constraints' => [
@@ -113,7 +117,7 @@ return [
             ],
             'admin_company' => [
                 'priority' => 1000,
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/admin/company',
                     'defaults' => [
@@ -125,7 +129,7 @@ return [
                 'child_routes' => [
                     'deleteCompany' => [
                         'priority' => 3,
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/delete/[:slugCompanyName]',
                             'defaults' => [
@@ -139,7 +143,7 @@ return [
                     ],
                     'editCompany' => [
                         'priority' => 3,
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/edit/[:slugCompanyName]',
                             'defaults' => [
@@ -153,7 +157,7 @@ return [
 
                         'child_routes' => [
                             'editPackage' => [
-                                'type' => 'segment',
+                                'type' => Segment::class,
                                 'options' => [
                                     'route' => '/package/:packageId',
                                     'defaults' => [
@@ -166,7 +170,7 @@ return [
                                 'may_terminate' => true,
                                 'child_routes' => [
                                     'addJob' => [
-                                        'type' => 'segment',
+                                        'type' => Segment::class,
                                         'options' => [
                                             'route' => '/addJob',
                                             'defaults' => [
@@ -176,7 +180,7 @@ return [
                                         'may_terminate' => true,
                                     ],
                                     'deletePackage' => [
-                                        'type' => 'segment',
+                                        'type' => Segment::class,
                                         'options' => [
                                             'route' => '/delete',
                                             'defaults' => [
@@ -186,7 +190,7 @@ return [
                                         'may_terminate' => true,
                                     ],
                                     'editJob' => [
-                                        'type' => 'segment',
+                                        'type' => Segment::class,
                                         'options' => [
                                             'route' => '/job/:languageNeutralJobId',
                                             'defaults' => [
@@ -199,7 +203,7 @@ return [
                                         ],
                                     ],
                                     'deleteJob' => [
-                                        'type' => 'segment',
+                                        'type' => Segment::class,
                                         'options' => [
                                             'route' => '/job/:languageNeutralJobId/delete',
                                             'defaults' => [
@@ -211,7 +215,7 @@ return [
                                 ],
                             ],
                             'addPackage' => [
-                                'type' => 'segment',
+                                'type' => Segment::class,
                                 'options' => [
                                     'route' => '/addPackage/:type',
                                     'defaults' => [
@@ -224,7 +228,7 @@ return [
                                 ],
                             ],
                             'addJob' => [
-                                'type' => 'segment',
+                                'type' => Segment::class,
                                 'options' => [
                                     'route' => '/addJob',
                                     'defaults' => [
@@ -234,7 +238,7 @@ return [
                                 ],
                             ],
                             'editJob' => [
-                                'type' => 'segment',
+                                'type' => Segment::class,
                                 'options' => [
                                     'route' => '/job/:jobName',
                                     'defaults' => [
@@ -250,7 +254,7 @@ return [
                     ],
                     'editCategory' => [
                         'priority' => 3,
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/editCategory/:languageNeutralCategoryId',
                             'defaults' => [
@@ -263,7 +267,7 @@ return [
                     ],
                     'editLabel' => [
                         'priority' => 3,
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/editLabel/:languageNeutralLabelId',
                             'defaults' => [
@@ -276,7 +280,7 @@ return [
                     ],
                     'default' => [
                         'priority' => 2,
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[/:action[/:slugCompanyName[/:slugJobName]]]',
                             'constraints' => [

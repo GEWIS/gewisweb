@@ -2,17 +2,23 @@
 
 use Application\Controller\IndexController;
 use Application\Controller\Factory\IndexControllerFactory;
-use Application\View\Helper\BootstrapElementError;
-use Application\View\Helper\FeaturedCompanyPackage;
-use Application\View\Helper\LocalisedTextElement;
+use Application\View\Helper\{
+    BootstrapElementError,
+    FeaturedCompanyPackage,
+    LocalisedTextElement,
+};
 use Doctrine\Common\Cache\MemcachedCache;
 use Interop\Container\ContainerInterface;
+use Laminas\Router\Http\{
+    Literal,
+    Segment,
+};
 
 return [
     'router' => [
         'routes' => [
             'lang' => [
-                'type' => 'Segment',
+                'type' => Segment::class,
                 'options' => [
                     'route' => '/lang/:lang/',
                     'defaults' => [
@@ -24,7 +30,7 @@ return [
                 'priority' => 100,
             ],
             'teapot' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/coffee',
                     'defaults' => [

@@ -8,12 +8,16 @@ use Education\Controller\Factory\{
     AdminControllerFactory,
     EducationControllerFactory,
 };
+use Laminas\Router\Http\{
+    Literal,
+    Segment,
+};
 
 return [
     'router' => [
         'routes' => [
             'education' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/education',
                     'defaults' => [
@@ -24,7 +28,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'course' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/course[/:code]',
                             'constraints' => [
@@ -37,7 +41,7 @@ return [
                         'may_terminate' => true,
                         'child_routes' => [
                             'download' => [
-                                'type' => 'Segment',
+                                'type' => Segment::class,
                                 'options' => [
                                     'route' => '/download/:id',
                                     'constraints' => [
@@ -51,7 +55,7 @@ return [
                         ],
                     ],
                     'default' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[/:action]',
                             'constraints' => [
@@ -63,7 +67,7 @@ return [
                 'priority' => 100,
             ],
             'admin_education' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/admin/education',
                     'defaults' => [
@@ -74,7 +78,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'default' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[/:action]',
                             'constraints' => [
@@ -83,7 +87,7 @@ return [
                         ],
                     ],
                     'add_course' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/add/course',
                             'defaults' => [
@@ -92,7 +96,7 @@ return [
                         ],
                     ],
                     'bulk_upload_exam' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/bulk/exam',
                             'defaults' => [
@@ -101,7 +105,7 @@ return [
                         ],
                     ],
                     'bulk_upload_summary' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/bulk/summary',
                             'defaults' => [
@@ -110,7 +114,7 @@ return [
                         ],
                     ],
                     'bulk_edit_exam' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/edit/exam',
                             'defaults' => [
@@ -119,7 +123,7 @@ return [
                         ],
                     ],
                     'bulk_edit_summary' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/edit/summary',
                             'defaults' => [
@@ -128,7 +132,7 @@ return [
                         ],
                     ],
                     'delete_temp' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/:type/:filename/delete',
                             'constraints' => [

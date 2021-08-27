@@ -1,5 +1,9 @@
 <?php
 
+use Laminas\Router\Http\{
+    Literal,
+    Segment,
+};
 use User\Controller\{
     ApiAdminController,
     ApiAuthenticationController,
@@ -17,7 +21,7 @@ return [
     'router' => [
         'routes' => [
             'user' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/user',
                     'defaults' => [
@@ -28,7 +32,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'default' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '[/:action]',
                             'constraints' => [
@@ -37,13 +41,13 @@ return [
                         ],
                     ],
                     'login' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/login',
                         ],
                     ],
                     'logout' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/logout',
                             'defaults' => [
@@ -52,7 +56,7 @@ return [
                         ],
                     ],
                     'pinlogin' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/pinlogin',
                             'defaults' => [
@@ -61,7 +65,7 @@ return [
                         ],
                     ],
                     'activate_reset' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/reset/:code',
                             'constraints' => [
@@ -74,7 +78,7 @@ return [
                         ],
                     ],
                     'activate' => [
-                        'type' => 'Segment',
+                        'type' => Segment::class,
                         'options' => [
                             'route' => '/activate/:code',
                             'constraints' => [
@@ -90,14 +94,14 @@ return [
                 'priority' => 100,
             ],
             'user_admin' => [
-                'type' => 'Literal',
+                'type' => Literal::class,
                 'options' => [
                     'route' => '/admin/user',
                 ],
                 'may_terminate' => false,
                 'child_routes' => [
                     'api' => [
-                        'type' => 'Literal',
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/api',
                             'defaults' => [
@@ -108,7 +112,7 @@ return [
                         'may_terminate' => true,
                         'child_routes' => [
                             'remove' => [
-                                'type' => 'Segment',
+                                'type' => Segment::class,
                                 'options' => [
                                     'route' => '/remove/:id',
                                     'constraints' => [
@@ -120,7 +124,7 @@ return [
                                 ],
                             ],
                             'default' => [
-                                'type' => 'Segment',
+                                'type' => Segment::class,
                                 'options' => [
                                     'route' => '/:action',
                                     'constraints' => [
@@ -134,7 +138,7 @@ return [
                 'priority' => 100,
             ],
             'user_token' => [
-                'type' => 'segment',
+                'type' => Segment::class,
                 'options' => [
                     'route' => '/token/:appId',
                     'defaults' => [
@@ -145,7 +149,7 @@ return [
                 'priority' => 100,
             ],
             'validate_login' => [
-                'type' => 'segment',
+                'type' => Segment::class,
                 'options' => [
                     'route' => '/api/validateLogin',
                     'defaults' => [
