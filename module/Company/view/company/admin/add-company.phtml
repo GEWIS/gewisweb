@@ -1,14 +1,42 @@
-<h1><?= $this->translate('Add Company'); ?></h1>
-<?php $form->prepare(); ?>
-<?= $this->form()->openTag($form) ?>
-<?= $this->partial('partial/company/admin/editors/company.phtml', ['form' => $form]) ?>
-<br>
 <?php
-$submit = $form->get('submit');
-$submit->setLabel($this->translate('Save'));
-$submit->setAttribute('class', 'btn btn-primary pull-right');
+$this->headTitle($this->translate('Create Company'));
+
+$this->headScript()
+    ->appendFile($this->basePath() . '/js/company-create.js');
+
+$form->prepare();
+$form->setAttribute('class', 'form-company');
 ?>
-<div class="form-group">
-    <?= $this->formButton($submit) ?>
-</div>
-<?= $this->form()->closeTag(); ?>
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1><?= $this->translate('Create Company') ?></h1>
+            </div>
+        </div>
+        <hr>
+        <?= $this->form()->openTag($form) ?>
+        <?= $this->partial(
+            'partial/company/admin/editors/company.phtml',
+            [
+                'form' => $form,
+            ],
+        ) ?>
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                $submit = $form->get('submit')
+                    ->setValue($this->translate('Create Company'))
+                    ->setAttribute('class', 'btn btn-primary pull-right');
+                ?>
+                <div class="form-group">
+                    <?= $this->formSubmit($submit) ?>
+                </div>
+            </div>
+        </div>
+        <?= $this->form()->closeTag() ?>
+    </div>
+</section>
+<script>
+    Company.updateForm();
+</script>
