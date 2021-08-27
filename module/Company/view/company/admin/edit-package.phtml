@@ -1,9 +1,9 @@
 <?php
 $this->scriptUrl()->requireUrls(
     [
-        'admin_company/editCompany/editPackage/deleteJob',
+        'company_admin/company/edit/package/edit/job/delete',
     ],
-    ['slugCompanyName', 'packageId', 'languageNeutralJobId']
+    ['slugCompanyName', 'packageId', 'jobId']
 );
 ?>
 <?php if ($type === 'banner'): ?>
@@ -30,13 +30,13 @@ $form->prepare()
     <h2>
         <?= $this->translate('Jobs') ?>
         <a class="btn btn-success pull-right"
-           href="<?= $this->url("admin_company/editCompany/editPackage/addJob",
+           href="<?= $this->url('company_admin/company/edit/package/edit/job/add',
                [
-                   "slugCompanyName" => $companyName,
+                   'slugCompanyName' => $companyName,
                    'packageId' => $package->getId()
                ]); ?>">
             <i class="fas fa-plus"></i>
-            <?= $this->translate('Add job'); ?>
+            <?= $this->translate('Add Job'); ?>
         </a>
     </h2>
     <table class="table table-striped">
@@ -57,10 +57,10 @@ $form->prepare()
         <?php $lniDoneList = [] ?>
         <?php foreach ($package->getJobs() as $job): ?>
             <?php
-            if (array_key_exists($job->getLanguageNeutralId(), $lniDoneList)) {
+            if (array_key_exists($job->getId(), $lniDoneList)) {
                 continue;
             }
-            $lniDoneList[$job->getLanguageNeutralId()] = $job;
+            $lniDoneList[$job->getId()] = $job;
             ?>
             <tr>
                 <td>
@@ -71,17 +71,17 @@ $form->prepare()
                 </td>
                 <td>
                     <a class="btn btn-xs btn-primary"
-                       href="<?= $this->url("admin_company/editCompany/editPackage/editJob",
+                       href="<?= $this->url("company_admin/company/edit/package/edit/job/edit",
                            [
                                "slugCompanyName" => $companyName,
                                "packageId" => $package->getId(),
-                               "languageNeutralJobId" => $job->getLanguageNeutralId(),
+                               "jobId" => $job->getId(),
                            ]
                        ); ?>">
                         <?= $this->translate('edit'); ?>
                     </a>
                     <button type="button" class="btn btn-danger btn-xs"
-                            onclick="deleteJob(<?= $job->getLanguageNeutralId() ?>)" data-toggle="modal"
+                            onclick="deleteJob(<?= $job->getId() ?>)" data-toggle="modal"
                             data-target="#deleteModal">
                         <?= $this->translate('Delete') ?>
                     </button>
@@ -117,10 +117,10 @@ $form->prepare()
 </div>
 <script>
     deleteJob = function (id) {
-        $("#deleteForm").attr('action', URLHelper.url('admin_company/editCompany/editPackage/deleteJob', {
+        $("#deleteForm").attr('action', URLHelper.url('company_admin/company/edit/package/edit/job/delete', {
             'slugCompanyName': '<?= $companyName ?>',
             'packageId': '<?= $package->getId() ?>',
-            'languageNeutralJobId': id
+            'jobId': id
         }));
     };
 </script>

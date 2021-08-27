@@ -1,9 +1,37 @@
 <?php
-$form->setAttribute('class', 'form-horizontal');
+$this->headTitle($this->translate('Add Package'));
+
 $form->prepare();
-echo $this->form()->openTag($form);
-echo $this->partial('partial/company/admin/editors/package.phtml', ['form' => $form, 'type' => $type]);
-echo $this->form()->closeTag($form);
-
-
-
+$form->setAttribute('class', 'form-company');
+?>
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1><?= $this->translate('Add Package') ?></h1>
+            </div>
+        </div>
+        <hr>
+        <?= $this->form()->openTag($form) ?>
+        <?= $this->partial(
+            'partial/company/admin/editors/package.phtml',
+            [
+                'form' => $form,
+                'type' => $type,
+            ],
+        ) ?>
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                $submit = $form->get('submit')
+                    ->setValue($this->translate('Add Package'))
+                    ->setAttribute('class', 'btn btn-primary');
+                ?>
+                <div class="form-group">
+                    <?= $this->formSubmit($submit) ?>
+                </div>
+            </div>
+        </div>
+        <?= $this->form()->closeTag() ?>
+    </div>
+</section>
