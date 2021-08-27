@@ -23,7 +23,7 @@ class UserSignup extends Signup
     /**
      * Get the full name of the user whom signed up for the activity.
      *
-     * @return string
+     * @return string|null
      */
     public function getFullName()
     {
