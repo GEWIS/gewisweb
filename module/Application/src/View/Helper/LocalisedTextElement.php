@@ -10,9 +10,11 @@ class LocalisedTextElement extends AbstractHelper
     /**
      * Determines the correct value for an element.
      *
-     * @return string The real value of the $element
+     * @param ElementInterface $element
+     *
+     * @return string The real value of the `$element`
      */
-    public function __invoke(ElementInterface $element)
+    public function __invoke(ElementInterface $element): string
     {
         $currentValue = $element->getValue();
 

@@ -8,6 +8,7 @@ use Application\View\Helper\{
     BootstrapElementError,
     FeaturedCompanyPackage,
     LocalisedTextElement,
+    LocaliseText,
 };
 use Doctrine\Common\Cache\MemcachedCache;
 use Interop\Container\ContainerInterface;
@@ -123,6 +124,9 @@ return [
             },
             'localisedTextElement' => function () {
                 return new LocalisedTextElement();
+            },
+            'localiseText' => function () {
+                return new LocaliseText();
             },
         ],
     ],
