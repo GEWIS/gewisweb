@@ -118,11 +118,11 @@ return [
                 ],
                 'priority' => 100,
             ],
-            'admin_company' => [
+            'company_admin' => [
                 'priority' => 1000,
                 'type' => Literal::class,
                 'options' => [
-                    'route' => '/admin/company',
+                    'route' => '/admin/career',
                     'defaults' => [
                         'controller' => AdminController::class,
                         'action' => 'index',
@@ -130,164 +130,231 @@ return [
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
-                    'deleteCompany' => [
-                        'priority' => 3,
-                        'type' => Segment::class,
+                    'company' => [
+                        'type' => Literal::class,
                         'options' => [
-                            'route' => '/delete/[:slugCompanyName]',
-                            'defaults' => [
-                                'action' => 'deleteCompany',
-                            ],
-                            'constraints' => [
-                                'slugCompanyName' => '[a-zA-Z0-9_\-\.]*',
-                            ],
+                            'route' => '/company',
                         ],
-                        'may_terminate' => true,
-                    ],
-                    'editCompany' => [
-                        'priority' => 3,
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '/edit/[:slugCompanyName]',
-                            'defaults' => [
-                                'action' => 'editCompany',
-                            ],
-                            'constraints' => [
-                                'slugCompanyName' => '[a-zA-Z0-9_\-\.]*',
-                            ],
-                        ],
-                        'may_terminate' => true,
-
+                        'may_terminate' => false,
                         'child_routes' => [
-                            'editPackage' => [
+                            'add' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/add',
+                                    'defaults' => [
+                                        'action' => 'addCompany',
+                                    ],
+                                ],
+                                'may_terminate' => true,
+                            ],
+                            'delete' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/package/:packageId',
+                                    'route' => '/delete/[:slugCompanyName]',
                                     'defaults' => [
-                                        'action' => 'editPackage',
+                                        'action' => 'deleteCompany',
                                     ],
                                     'constraints' => [
-                                        'packageId' => '[0-9]*',
+                                        'slugCompanyName' => '[a-zA-Z0-9_\-\.]*',
+                                    ],
+                                ],
+                                'may_terminate' => true,
+                            ],
+                            'edit' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/edit/[:slugCompanyName]',
+                                    'defaults' => [
+                                        'action' => 'editCompany',
+                                    ],
+                                    'constraints' => [
+                                        'slugCompanyName' => '[a-zA-Z0-9_\-\.]*',
                                     ],
                                 ],
                                 'may_terminate' => true,
                                 'child_routes' => [
-                                    'addJob' => [
-                                        'type' => Segment::class,
+                                    'package' => [
+                                        'type' => Literal::class,
                                         'options' => [
-                                            'route' => '/addJob',
-                                            'defaults' => [
-                                                'action' => 'addJob',
-                                            ],
+                                            'route' => '/package',
                                         ],
-                                        'may_terminate' => true,
-                                    ],
-                                    'deletePackage' => [
-                                        'type' => Segment::class,
-                                        'options' => [
-                                            'route' => '/delete',
-                                            'defaults' => [
-                                                'action' => 'deletePackage',
+                                        'may_terminate' => false,
+                                        'child_routes' => [
+                                            'add' => [
+                                                'type' => Segment::class,
+                                                'options' => [
+                                                    'route' => '/add/:type',
+                                                    'defaults' => [
+                                                        'action' => 'addPackage',
+                                                    ],
+                                                    'constraints' => [
+                                                        'type' => '[a-zA-Z0-9_-]*',
+                                                    ],
+                                                    'may_terminate' => true,
+                                                ],
                                             ],
-                                        ],
-                                        'may_terminate' => true,
-                                    ],
-                                    'editJob' => [
-                                        'type' => Segment::class,
-                                        'options' => [
-                                            'route' => '/job/:languageNeutralJobId',
-                                            'defaults' => [
-                                                'action' => 'editJob',
+                                            'delete' => [
+                                                'type' => Segment::class,
+                                                'options' => [
+                                                    'route' => '/delete/:packageId',
+                                                    'defaults' => [
+                                                        'action' => 'deletePackage',
+                                                    ],
+                                                    'constraints' => [
+                                                        'packageId' => '[0-9]*',
+                                                    ],
+                                                ],
+                                                'may_terminate' => true,
                                             ],
-                                            'constraints' => [
-                                                'languageNeutralJobId' => '[0-9]*',
+                                            'edit' => [
+                                                'type' => Segment::class,
+                                                'options' => [
+                                                    'route' => '/edit/:packageId',
+                                                    'defaults' => [
+                                                        'action' => 'editPackage',
+                                                    ],
+                                                    'constraints' => [
+                                                        'packageId' => '[0-9]*',
+                                                    ],
+                                                ],
+                                                'may_terminate' => true,
+                                                'child_routes' => [
+                                                    'job' => [
+                                                        'type' => Literal::class,
+                                                        'options' => [
+                                                            'route' => '/job',
+                                                        ],
+                                                        'may_terminate' => false,
+                                                        'child_routes' => [
+                                                            'add' => [
+                                                                'type' => Segment::class,
+                                                                'options' => [
+                                                                    'route' => '/add',
+                                                                    'defaults' => [
+                                                                        'action' => 'addJob',
+                                                                    ],
+                                                                ],
+                                                                'may_terminate' => true,
+                                                            ],
+                                                            'delete' => [
+                                                                'type' => Segment::class,
+                                                                'options' => [
+                                                                    'route' => '/delete/:jobId',
+                                                                    'defaults' => [
+                                                                        'action' => 'deleteJob',
+                                                                    ],
+                                                                    'constraints' => [
+                                                                        'jobId' => '[0-9]*',
+                                                                    ],
+                                                                    'may_terminate' => true,
+                                                                ],
+                                                            ],
+                                                            'edit' => [
+                                                                'type' => Segment::class,
+                                                                'options' => [
+                                                                    'route' => '/edit/:jobId',
+                                                                    'defaults' => [
+                                                                        'action' => 'editJob',
+                                                                    ],
+                                                                    'constraints' => [
+                                                                        'jobId' => '[0-9]*',
+                                                                    ],
+                                                                    'may_terminate' => true,
+                                                                ],
+                                                            ],
+                                                        ],
+                                                    ],
+                                                ],
                                             ],
-                                            'may_terminate' => true,
-                                        ],
-                                    ],
-                                    'deleteJob' => [
-                                        'type' => Segment::class,
-                                        'options' => [
-                                            'route' => '/job/:languageNeutralJobId/delete',
-                                            'defaults' => [
-                                                'action' => 'deleteJob',
-                                            ],
-                                            'may_terminate' => true,
                                         ],
                                     ],
                                 ],
                             ],
-                            'addPackage' => [
+                        ],
+                    ],
+                    'category' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/category',
+                        ],
+                        'may_terminte' => false,
+                        'child_routes' => [
+                            'addCategory' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/add',
+                                    'defaults' => [
+                                        'action' => 'addCategory',
+                                    ],
+                                ],
+                            ],
+                            'deleteCategory' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/addPackage/:type',
+                                    'route' => '/delete/:categoryId',
                                     'defaults' => [
-                                        'action' => 'addPackage',
+                                        'action' => 'deleteCategory',
                                     ],
                                     'constraints' => [
-                                        'type' => '[a-zA-Z0-9_-]*',
+                                        'categoryId' => '[0-9]*',
                                     ],
-                                    'may_terminate' => true,
                                 ],
                             ],
-                            'addJob' => [
+                            'editCategory' => [
+                                'priority' => 3,
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/addJob',
+                                    'route' => '/edit/:categoryId',
                                     'defaults' => [
-                                        'action' => 'addJob',
-                                    ],
-                                    'may_terminate' => true,
-                                ],
-                            ],
-                            'editJob' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/job/:jobName',
-                                    'defaults' => [
-                                        'action' => 'editJob',
+                                        'action' => 'editCategory',
                                     ],
                                     'constraints' => [
-                                        'jobName' => '[a-zA-Z0-9_-]*',
+                                        'categoryId' => '[0-9]*',
                                     ],
-                                    'may_terminate' => true,
                                 ],
                             ],
                         ],
                     ],
-                    'editCategory' => [
-                        'priority' => 3,
-                        'type' => Segment::class,
+                    'label' => [
+                        'type' => Literal::class,
                         'options' => [
-                            'route' => '/editCategory/:languageNeutralCategoryId',
-                            'defaults' => [
-                                'action' => 'editCategory',
-                            ],
-                            'constraints' => [
-                                'languageNeutralCategoryId' => '\d+',
-                            ],
+                            'route' => '/label',
                         ],
-                    ],
-                    'editLabel' => [
-                        'priority' => 3,
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '/editLabel/:languageNeutralLabelId',
-                            'defaults' => [
-                                'action' => 'editLabel',
+                        'may_terminte' => false,
+                        'child_routes' => [
+                            'addLabel' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/add',
+                                    'defaults' => [
+                                        'action' => 'addLabel',
+                                    ],
+                                ],
                             ],
-                            'constraints' => [
-                                'languageNeutralLabelId' => '\d+',
+                            'deleteLabel' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/delete/:labelId',
+                                    'defaults' => [
+                                        'action' => 'deleteLabel',
+                                    ],
+                                    'constraints' => [
+                                        'labelId' => '[0-9]*',
+                                    ],
+                                ],
                             ],
-                        ],
-                    ],
-                    'default' => [
-                        'priority' => 2,
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '[/:action[/:slugCompanyName[/:slugJobName]]]',
-                            'constraints' => [
-                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            'editLabel' => [
+                                'priority' => 3,
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/edit/:labelId',
+                                    'defaults' => [
+                                        'action' => 'editLabel',
+                                    ],
+                                    'constraints' => [
+                                        'labelId' => '[0-9]*',
+                                    ],
+                                ],
                             ],
                         ],
                     ],
