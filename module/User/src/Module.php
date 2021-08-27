@@ -14,7 +14,8 @@ use User\Authentication\Adapter\PinMapper;
 use User\Authentication\ApiAuthenticationService;
 use User\Authorization\AclServiceFactory;
 use User\Mapper\User;
-use User\Service\Factory\ApiAppFactory;
+use User\Mapper\Factory\ApiAppFactory as ApiAppMapperFactory;
+use User\Service\Factory\ApiAppFactory as ApiAppServiceFactory;
 use User\Form\Activate;
 use User\Form\ApiToken;
 use User\Form\Login;
@@ -25,7 +26,8 @@ use User\Mapper\LoginAttempt;
 use User\Mapper\NewUser;
 use User\Mapper\Session;
 use User\Permissions\NotAllowedException;
-use User\Service\ApiApp;
+use User\Mapper\ApiApp as ApiAppMapper;
+use User\Service\ApiApp as ApiAppService;
 use User\Service\Email;
 
 class Module
@@ -157,7 +159,8 @@ class Module
 
                     return new Email($translator, $renderer, $transport, $emailConfig);
                 },
-                ApiApp::class => ApiAppFactory::class,
+                ApiAppMapper::class => ApiAppMapperFactory::class,
+                ApiAppService::class => ApiAppServiceFactory::class,
                 'user_auth_storage' => function (ContainerInterface $container) {
                     $request = $container->get('Request');
                     $response = $container->get('Response');
