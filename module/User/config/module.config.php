@@ -1,5 +1,9 @@
 <?php
 
+use Laminas\Router\Http\{
+    Literal,
+    Segment,
+};
 use User\Controller\{
     ApiAdminController,
     ApiAuthenticationController,
@@ -12,8 +16,6 @@ use User\Controller\Factory\{
     ApiControllerFactory,
     UserControllerFactory,
 };
-use Laminas\Router\Http\Literal;
-use Laminas\Router\Http\Segment;
 
 return [
     'router' => [

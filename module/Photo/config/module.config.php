@@ -1,7 +1,9 @@
 <?php
 
-use Laminas\Router\Http\Literal;
-use Laminas\Router\Http\Segment;
+use Laminas\Router\Http\{
+    Literal,
+    Segment,
+};
 use Photo\Command\WeeklyPhoto;
 use Photo\Controller\{
     AlbumAdminController,

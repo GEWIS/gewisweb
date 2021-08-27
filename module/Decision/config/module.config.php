@@ -16,8 +16,10 @@ use Decision\Controller\Factory\{
     OrganAdminControllerFactory,
     OrganControllerFactory,
 };
-use Laminas\Router\Http\Literal;
-use Laminas\Router\Http\Segment;
+use Laminas\Router\Http\{
+    Literal,
+    Segment,
+};
 
 return [
     'router' => [
