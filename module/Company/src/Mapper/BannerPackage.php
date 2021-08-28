@@ -2,7 +2,7 @@
 
 namespace Company\Mapper;
 
-use Doctrine\ORM\EntityRepository;
+use Company\Model\CompanyBannerPackage;
 
 /**
  * Mappers for package.
@@ -23,12 +23,10 @@ class BannerPackage extends Package
     }
 
     /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
+     * @inheritDoc
      */
-    public function getRepository()
+    protected function getRepositoryName(): string
     {
-        return $this->em->getRepository('Company\Model\CompanyBannerPackage');
+        return CompanyBannerPackage::class;
     }
 }

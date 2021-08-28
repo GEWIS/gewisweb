@@ -107,7 +107,7 @@ class Organ
             throw new NotAllowedException($this->translator->translate('Not allowed to view organ information'));
         }
 
-        return $this->organMapper->find($id);
+        return $this->organMapper->findOrgan($id);
     }
 
     /**

@@ -2,40 +2,24 @@
 
 namespace User\Mapper;
 
+use Application\Mapper\BaseMapper;
 use Decision\Model\Member;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use User\Model\NewUser as NewUserModel;
 
-class NewUser
+class NewUser extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * Get the new user by lidnr.
      *
      * @param int $lidnr
      *
-     * @return NewUserModel
+     * @return NewUserModel|null
      */
-    public function getByLidnr($lidnr)
+    public function getByLidnr($lidnr): ?NewUserModel
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('u, m')
-            ->from('User\Model\NewUser', 'u')
+            ->from($this->getRepositoryName(), 'u')
             ->join('u.member', 'm')
             ->where('u.lidnr = ?1');
         $qb->setParameter(1, $lidnr);
@@ -51,13 +35,13 @@ class NewUser
      *
      * @param string $code
      *
-     * @return NewUserModel
+     * @return NewUserModel|null
      */
-    public function getByCode($code)
+    public function getByCode($code): ?NewUserModel
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('u, m')
-            ->from('User\Model\NewUser', 'u')
+            ->from($this->getRepositoryName(), 'u')
             ->join('u.member', 'm')
             ->where('u.code = ?1');
         $qb->setParameter(1, $code);
@@ -76,7 +60,7 @@ class NewUser
     public function deleteByMember(Member $member)
     {
         $qb = $this->em->createQueryBuilder();
-        $qb->delete('User\Model\NewUser', 'u');
+        $qb->delete($this->getRepositoryName(), 'u');
         $qb->where('u.member = :member');
         $qb->setParameter('member', $member);
 
@@ -84,23 +68,10 @@ class NewUser
     }
 
     /**
-     * Persist a user model.
-     *
-     * @param NewUserModel $user user to persist
+     * @inheritDoc
      */
-    public function persist(NewUserModel $user)
+    protected function getRepositoryName(): string
     {
-        $this->em->persist($user);
-        $this->em->flush();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('User\Model\NewUser');
+        return NewUserModel::class;
     }
 }

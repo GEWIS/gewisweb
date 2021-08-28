@@ -2,31 +2,15 @@
 
 namespace Decision\Mapper;
 
+use Application\Mapper\BaseMapper;
 use DateInterval;
 use DateTime;
 use Decision\Model\Meeting as MeetingModel;
 use Decision\Model\MeetingDocument;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use InvalidArgumentException;
 
-class Meeting
+class Meeting extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * Find all meetings.
      *
@@ -34,12 +18,12 @@ class Meeting
      *
      * @return array Of all meetings
      */
-    public function findAll($limit = null)
+    public function findAllMeetings($limit = null)
     {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('m, COUNT(d)')
-            ->from('Decision\Model\Meeting', 'm')
+            ->from($this->getRepositoryName(), 'm')
             ->leftJoin('m.decisions', 'd')
             ->groupBy('m')
             ->orderBy('m.date', 'DESC');
@@ -63,7 +47,7 @@ class Meeting
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('m')
-            ->from('Decision\Model\Meeting', 'm')
+            ->from($this->getRepositoryName(), 'm')
             ->where('m.type = :type')
             ->orderBy('m.date', 'DESC')
             ->setParameter(':type', $type);
@@ -87,7 +71,7 @@ class Meeting
         $date->add(DateInterval::createFromDateString('yesterday'));
 
         $qb->select('m, COUNT(d)')
-            ->from('Decision\Model\Meeting', 'm')
+            ->from($this->getRepositoryName(), 'm')
             ->where('m.date <= :date')
             ->leftJoin('m.decisions', 'd')
             ->groupBy('m')
@@ -136,12 +120,12 @@ class Meeting
      *
      * @return MeetingModel
      */
-    public function find($type, $number)
+    public function findMeeting($type, $number)
     {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('m, d, db')
-            ->from('Decision\Model\Meeting', 'm')
+            ->from($this->getRepositoryName(), 'm')
             ->where('m.type = :type')
             ->andWhere('m.number = :number')
             ->leftJoin('m.decisions', 'd')
@@ -190,7 +174,7 @@ class Meeting
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('MAX(d.displayPosition)')
-            ->from('Decision\Model\Meeting', 'm')
+            ->from($this->getRepositoryName(), 'm')
             ->join('m.documents', 'd')
             ->where('m.type = :type')
             ->andWhere('m.number = :number');
@@ -199,49 +183,6 @@ class Meeting
         $qb->setParameter(':number', $meeting->getNumber());
 
         return $qb->getQuery()->getSingleScalarResult();
-    }
-
-    /**
-     * Persist a meeting model.
-     *
-     * @param MeetingModel $meeting meeting to persist
-     */
-    public function persist(MeetingModel $meeting)
-    {
-        $this->em->persist($meeting);
-        $this->em->flush();
-    }
-
-    /**
-     * Persist a document model.
-     *
-     * @param MeetingDocument $document document to persist
-     */
-    public function persistDocument(MeetingDocument $document)
-    {
-        $this->em->persist($document);
-        $this->em->flush();
-    }
-
-    /**
-     * Removes an entity.
-     *
-     * @param MeetingModel $entity
-     */
-    public function remove($entity)
-    {
-        $this->em->remove($entity);
-        $this->em->flush();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Decision\Model\Meeting');
     }
 
     /**
@@ -260,7 +201,7 @@ class Meeting
         $maxDate = $today->sub(new DateInterval('P1D'));
 
         $qb->select('m')
-            ->from('Decision\Model\Meeting', 'm')
+            ->from($this->getRepositoryName(), 'm')
             ->where('m.type = :type')
             ->where('m.date >= :date')
             ->orderBy('m.date', $order)
@@ -276,5 +217,13 @@ class Meeting
         $qb->andWhere("m.type = 'AV'");
 
         return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getRepositoryName(): string
+    {
+        return MeetingModel::class;
     }
 }

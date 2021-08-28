@@ -141,7 +141,7 @@ class Module
 
                     $categoryService = $container->get('activity_service_category');
                     try {
-                        $categories = $categoryService->getAllCategories();
+                        $categories = $categoryService->findAll();
                     } catch (NotAllowedException $e) {
                         $categories = [];
                     }

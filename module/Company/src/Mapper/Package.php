@@ -2,12 +2,12 @@
 
 namespace Company\Mapper;
 
+use Application\Mapper\BaseMapper;
 use Company\Model\CompanyBannerPackage as BannerPackageModel;
 use Company\Model\CompanyFeaturedPackage as FeaturedPackageModel;
+use Company\Model\CompanyJobPackage;
 use Company\Model\CompanyJobPackage as PackageModel;
 use DateTime;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for package.
@@ -15,31 +15,8 @@ use Doctrine\ORM\EntityRepository;
  * NOTE: Packages will be modified externally by a script. Modifycations will be
  * overwritten.
  */
-class Package
+class Package extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
-    /**
-     * Saves all packages.
-     */
-    public function save()
-    {
-        $this->em->flush();
-    }
-
     /**
      * Finds the package with the given id.
      *
@@ -53,7 +30,7 @@ class Package
     /**
      * Deletes the given package.
      */
-    public function delete($packageId)
+    public function deletePackage($packageId)
     {
         $package = $this->findEditablePackage($packageId);
         if (is_null($package)) {
@@ -102,16 +79,6 @@ class Package
             ->setParameter('date', $date);
 
         return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Find all Packages.
-     *
-     * @return array
-     */
-    public function findAll()
-    {
-        return $this->getRepository()->findAll();
     }
 
     protected function getVisiblePackagesQueryBuilder()
@@ -186,12 +153,10 @@ class Package
     }
 
     /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
+     * @inheritDoc
      */
-    public function getRepository()
+    protected function getRepositoryName(): string
     {
-        return $this->em->getRepository('Company\Model\CompanyJobPackage');
+        return CompanyJobPackage::class;
     }
 }

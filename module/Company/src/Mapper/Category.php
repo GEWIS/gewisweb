@@ -2,44 +2,15 @@
 
 namespace Company\Mapper;
 
+use Application\Mapper\BaseMapper;
+use Company\Model\JobCategory;
 use Company\Model\JobCategory as CategoryModel;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for cateogry.
  */
-class Category
+class Category extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
-    public function persist($label)
-    {
-        $this->em->persist($label);
-        $this->em->flush();
-    }
-
-    /**
-     * Saves all categories.
-     */
-    public function save()
-    {
-        $this->em->flush();
-    }
-
     /**
      * Finds the category with the given id.
      *
@@ -102,33 +73,10 @@ class Category
     }
 
     /**
-     * Deletes the given category.
-     *
-     * @param CategoryModel $category
+     * @inheritDoc
      */
-    public function delete($category)
+    protected function getRepositoryName(): string
     {
-        $this->em->remove($category);
-        $this->em->flush();
-    }
-
-    /**
-     * Find all Categories.
-     *
-     * @return array
-     */
-    public function findAll()
-    {
-        return $this->getRepository()->findAll();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Company\Model\JobCategory');
+        return JobCategory::class;
     }
 }

@@ -90,7 +90,7 @@ class Poll
      */
     public function getPoll($pollId)
     {
-        $poll = $this->pollMapper->findPollById($pollId);
+        $poll = $this->pollMapper->find($pollId);
         if (is_null($poll->getApprover()) && !$this->aclService->isAllowed('view_unapproved', 'poll')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view unnapproved polls')

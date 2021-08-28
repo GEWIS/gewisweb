@@ -2,31 +2,16 @@
 
 namespace User\Mapper;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
+use Application\Mapper\BaseMapper;
+use User\Model\LoginAttempt as LoginAttemptModel;
 
-class LoginAttempt
+class LoginAttempt extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     public function getFailedAttemptCount($since, $type, $ip, $user = null)
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('count(a)')
-            ->from('User\Model\LoginAttempt', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->where('a.type = :type')
             ->andWhere('a.time > :since')
             ->andWhere('a.ip = :ip')
@@ -43,21 +28,10 @@ class LoginAttempt
     }
 
     /**
-     * Persist a login attempt model.
+     * @inheritDoc
      */
-    public function persist($loginAttempt)
+    protected function getRepositoryName(): string
     {
-        $this->em->persist($loginAttempt);
-        $this->em->flush();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('User\Model\LoginAttempt');
+        return LoginAttemptModel::class;
     }
 }

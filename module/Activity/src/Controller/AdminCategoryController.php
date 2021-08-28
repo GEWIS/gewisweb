@@ -39,7 +39,7 @@ class AdminCategoryController extends AbstractActionController
      */
     public function indexAction()
     {
-        $categories = $this->categoryService->getAllCategories();
+        $categories = $this->categoryService->findAll();
 
         return ['categories' => $categories];
     }

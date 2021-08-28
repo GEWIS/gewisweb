@@ -62,7 +62,7 @@ class News
      */
     public function getNewsItemById($newsItem)
     {
-        return $this->newsItemMapper->findNewsItemById($newsItem);
+        return $this->newsItemMapper->find($newsItem);
     }
 
     /**

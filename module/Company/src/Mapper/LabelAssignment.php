@@ -2,55 +2,14 @@
 
 namespace Company\Mapper;
 
-use Company\Model\JobLabelAssignment as LabelAssignmentModel;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
+use Application\Mapper\BaseMapper;
+use Company\Model\JobLabelAssignment;
 
 /**
  * Mappers for labels assignments.
  */
-class LabelAssignment
+class LabelAssignment extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
-    public function persist($labelAssignment)
-    {
-        $this->em->persist($labelAssignment);
-        $this->em->flush();
-    }
-
-    /**
-     * Saves all label assignments.
-     */
-    public function save()
-    {
-        $this->em->flush();
-    }
-
-    /**
-     * Deletes the given label assignment.
-     *
-     * @param LabelAssignmentModel $labelAssignment
-     */
-    public function delete($labelAssignment)
-    {
-        $this->em->remove($labelAssignment);
-        $this->em->flush();
-    }
-
     /**
      * @param int $jobId
      *
@@ -87,22 +46,10 @@ class LabelAssignment
     }
 
     /**
-     * Find all Labels assignments.
-     *
-     * @return array
+     * @inheritDoc
      */
-    public function findAll()
+    protected function getRepositoryName(): string
     {
-        return $this->getRepository()->findAll();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Company\Model\JobLabelAssignment');
+        return JobLabelAssignment::class;
     }
 }

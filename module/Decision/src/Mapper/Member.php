@@ -2,30 +2,13 @@
 
 namespace Decision\Mapper;
 
+use Application\Mapper\BaseMapper;
 use Decision\Model\Member as MemberModel;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
+use Decision\Model\Organ as OrganModel;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
-class Member
+class Member extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * Find a member by its membership number.
      *
@@ -50,7 +33,7 @@ class Member
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('m')
-            ->from('Decision\Model\Member', 'm')
+            ->from($this->getRepositoryName(), 'm')
             ->where("CONCAT(LOWER(m.firstName), ' ', LOWER(m.lastName)) LIKE :name")
             ->orWhere("CONCAT(LOWER(m.firstName), ' ', LOWER(m.middleName), ' ', LOWER(m.lastName)) LIKE :name")
             ->setMaxResults($maxResults)
@@ -75,7 +58,7 @@ class Member
         // unfortunately, there is no support for functions like DAY() and MONTH()
         // in doctrine2, thus we have to use the NativeSQL here
         $builder = new ResultSetMappingBuilder($this->em);
-        $builder->addRootEntityFromClassMetadata('Decision\Model\Member', 'm');
+        $builder->addRootEntityFromClassMetadata($this->getRepositoryName(), 'm');
 
         $select = $builder->generateSelectClause(['m' => 't1']);
 
@@ -101,7 +84,7 @@ class Member
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('DISTINCT o')
-            ->from('Decision\Model\Organ', 'o')
+            ->from(OrganModel::class, 'o')
             ->join('o.members', 'om')
             ->join('om.member', 'm')
             ->where('m.lidnr = :lidnr')
@@ -113,25 +96,10 @@ class Member
     }
 
     /**
-     * Persist a member model.
-     *
-     * @param MemberModel $user
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * @inheritDoc
      */
-    public function persist(MemberModel $user)
+    protected function getRepositoryName(): string
     {
-        $this->em->persist($user);
-        $this->em->flush();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Decision\Model\Member');
+        return MemberModel::class;
     }
 }

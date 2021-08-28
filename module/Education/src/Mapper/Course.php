@@ -2,9 +2,7 @@
 
 namespace Education\Mapper;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\ORMException;
+use Application\Mapper\BaseMapper;
 use Education\Model\Course as CourseModel;
 
 /**
@@ -13,55 +11,8 @@ use Education\Model\Course as CourseModel;
  * NOTE: Organs will be modified externally by a script. Modifycations will be
  * overwritten.
  */
-class Course
+class Course extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
-    /**
-     * Persist multiple studies.
-     *
-     * @param array $courses
-     * @throws ORMException
-     */
-    public function persistMultiple(array $courses)
-    {
-        foreach ($courses as $course) {
-            $this->em->persist($course);
-        }
-    }
-
-    /**
-     * Persist course.
-     *
-     * @param CourseModel $course of CourseModel
-     */
-    public function persist($course)
-    {
-        $this->em->persist($course);
-        $this->flush();
-    }
-
-    /**
-     * Flush.
-     */
-    public function flush()
-    {
-        $this->em->flush();
-    }
-
     /**
      * Find a course by code.
      *
@@ -74,7 +25,7 @@ class Course
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('c, e, p, ch, ce')
-            ->from('Education\Model\Course', 'c')
+            ->from($this->getRepositoryName(), 'c')
             ->where('c.code = ?1')
             ->leftJoin('c.exams', 'e')
             ->leftJoin('c.parent', 'p')
@@ -100,7 +51,7 @@ class Course
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('c')
-            ->from('Education\Model\Course', 'c')
+            ->from($this->getRepositoryName(), 'c')
             ->where('c.code LIKE ?1')
             ->orWhere('c.name LIKE ?1');
         $qb->setParameter(1, $query);
@@ -109,12 +60,10 @@ class Course
     }
 
     /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
+     * @inheritDoc
      */
-    public function getRepository()
+    protected function getRepositoryName(): string
     {
-        return $this->em->getRepository('Education\Model\Course');
+        return CourseModel::class;
     }
 }

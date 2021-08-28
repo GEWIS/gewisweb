@@ -286,7 +286,7 @@ class Signup
                     $fieldValue->setValue(($value) ? 'Yes' : 'No');
                     break;
                 case 3://'Choice'
-                    $fieldValue->setOption($optionMapper->getOptionById((int)$value));
+                    $fieldValue->setOption($optionMapper->find((int)$value));
                     break;
             }
             $fieldValue->setSignup($signup);

@@ -2,45 +2,16 @@
 
 namespace Activity\Mapper;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
+use Activity\Model\SignupOption as SignupOptionModel;
+use Application\Mapper\BaseMapper;
 
-class SignupOption
+class SignupOption extends BaseMapper
 {
     /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
+     * @inheritDoc
      */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
+    protected function getRepositoryName(): string
     {
-        $this->em = $em;
-    }
-
-    /**
-     * Finds the option of with the given id.
-     *
-     * @param int $id
-     *
-     * @return \Activity\Model\SignupOption
-     */
-    public function getOptionById($id)
-    {
-        return $this->getRepository()->find($id);
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Activity\Model\SignupOption');
+        return SignupOptionModel::class;
     }
 }

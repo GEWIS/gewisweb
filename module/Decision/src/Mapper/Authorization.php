@@ -2,29 +2,14 @@
 
 namespace Decision\Mapper;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
+use Application\Mapper\BaseMapper;
+use Decision\Model\Authorization as AuthorizationModel;
 
 /**
  * Mappers for authorizations.
  */
-class Authorization
+class Authorization extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * Find all authorizations for a meeting.
      *
@@ -32,7 +17,7 @@ class Authorization
      *
      * @return array
      */
-    public function find($meetingNumber)
+    public function findNotRevoked($meetingNumber)
     {
         return $this->getRepository()->findBy(['meetingNumber' => $meetingNumber, 'revoked' => false]);
     }
@@ -43,14 +28,14 @@ class Authorization
      * @param int $meetingNumber
      * @param int $authorizer
      *
-     * @return \Decision\Model\Authorization|null
+     * @return AuthorizationModel|null
      */
     public function findUserAuthorization($meetingNumber, $authorizer)
     {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
-            ->from('Decision\Model\Authorization', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->where('a.meetingNumber = :meetingNumber')
             ->andWhere('a.authorizer = :authorizer')
             ->andWhere('a.revoked = 0')
@@ -73,7 +58,7 @@ class Authorization
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('a')
-            ->from('Decision\Model\Authorization', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->where('a.meetingNumber = :meetingNumber')
             ->andWhere('a.recipient = :recipient')
             ->andWhere('a.revoked = 0')
@@ -83,24 +68,11 @@ class Authorization
         return $qb->getQuery()->getResult();
     }
 
-    public function persist($authorization)
-    {
-        $this->em->persist($authorization);
-        $this->em->flush();
-    }
-
-    public function flush()
-    {
-        $this->em->flush();
-    }
-
     /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
+     * @inheritDoc
      */
-    public function getRepository()
+    protected function getRepositoryName(): string
     {
-        return $this->em->getRepository('Decision\Model\Authorization');
+        return AuthorizationModel::class;
     }
 }

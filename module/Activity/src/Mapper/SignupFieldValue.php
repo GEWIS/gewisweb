@@ -2,26 +2,11 @@
 
 namespace Activity\Mapper;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
+use Activity\Model\SignupFieldValue as SignupFieldValueModel;
+use Application\Mapper\BaseMapper;
 
-class SignupFieldValue
+class SignupFieldValue extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * Finds all field values associated with the $signup.
      *
@@ -33,12 +18,10 @@ class SignupFieldValue
     }
 
     /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
+     * @inheritDoc
      */
-    public function getRepository()
+    protected function getRepositoryName(): string
     {
-        return $this->em->getRepository('Activity\Model\SignupFieldValue');
+        return SignupFieldValueModel::class;
     }
 }

@@ -278,7 +278,7 @@ class Album
         $album = null;
         switch ($type) {
             case 'album':
-                $album = $this->albumMapper->getAlbumById($albumId);
+                $album = $this->albumMapper->find($albumId);
                 break;
             case 'member':
                 $album = $this->getMemberAlbum($albumId);

@@ -2,44 +2,14 @@
 
 namespace Company\Mapper;
 
-use Company\Model\JobLabel as LabelModel;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
+use Application\Mapper\BaseMapper;
+use Company\Model\JobLabel;
 
 /**
  * Mappers for labels.
  */
-class Label
+class Label extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
-    public function persist($label)
-    {
-        $this->em->persist($label);
-        $this->em->flush();
-    }
-
-    /**
-     * Saves all labels.
-     */
-    public function save()
-    {
-        $this->em->flush();
-    }
-
     /**
      * Finds the label with the given slug.
      *
@@ -97,33 +67,10 @@ class Label
     }
 
     /**
-     * Deletes the given label.
-     *
-     * @param LabelModel $label
+     * @inheritDoc
      */
-    public function delete($label)
+    protected function getRepositoryName(): string
     {
-        $this->em->remove($label);
-        $this->em->flush();
-    }
-
-    /**
-     * Find all Labels.
-     *
-     * @return array
-     */
-    public function findAll()
-    {
-        return $this->getRepository()->findAll();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Company\Model\JobLabel');
+        return JobLabel::class;
     }
 }

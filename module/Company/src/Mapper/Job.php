@@ -2,9 +2,8 @@
 
 namespace Company\Mapper;
 
+use Application\Mapper\BaseMapper;
 use Company\Model\Job as JobModel;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 
 /**
  * Mappers for jobs.
@@ -12,31 +11,8 @@ use Doctrine\ORM\EntityRepository;
  * NOTE: Jobs will be modified externally by a script. Modifications will be
  * overwritten.
  */
-class Job
+class Job extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
-    /**
-     * Saves all modified entities that are marked persistant.
-     */
-    public function save()
-    {
-        $this->em->flush();
-    }
-
     /**
      * Checks if $slugName is only used by object identified with $cid.
      *
@@ -146,20 +122,6 @@ class Job
         return $qb->getQuery()->getResult();
     }
 
-    public function persist($job)
-    {
-        $this->em->persist($job);
-        $this->em->flush();
-    }
-
-    /**
-     * Flush.
-     */
-    public function flush()
-    {
-        $this->em->flush();
-    }
-
     /**
      * Deletes the jobs corresponding to the given language neutral id.
      */
@@ -171,16 +133,6 @@ class Job
         }
 
         $this->em->flush();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Company\Model\Job');
     }
 
     public function createObjectSelectConfig($targetClass, $property, $label, $name, $locale)
@@ -206,5 +158,13 @@ class Job
             //'class' => 'form-control input-sm'
             //]
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getRepositoryName(): string
+    {
+        return JobModel::class;
     }
 }

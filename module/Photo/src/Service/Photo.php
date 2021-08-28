@@ -163,7 +163,7 @@ class Photo
             throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
         }
 
-        return $this->photoMapper->getPhotoById($id);
+        return $this->photoMapper->find($id);
     }
 
     /**
@@ -368,7 +368,7 @@ class Photo
         $bestRating = -1;
         $bestPhoto = null;
         foreach ($results as $res) {
-            $photo = $this->photoMapper->getPhotoById($res[1]);
+            $photo = $this->photoMapper->find($res[1]);
             $rating = $this->ratePhoto($photo, $res[2]);
             if (
                 !$this->weeklyPhotoMapper->hasBeenPhotoOfTheWeek($photo)

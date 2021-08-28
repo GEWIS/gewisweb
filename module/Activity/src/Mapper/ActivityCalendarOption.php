@@ -2,49 +2,25 @@
 
 namespace Activity\Mapper;
 
+use Activity\Model\ActivityCalendarOption as ActivityCalendarOptionModel;
+use Activity\Model\ActivityOptionOption;
+use Activity\Model\ActivityOptionProposal as ActivityOptionProposalModel;
+use Application\Mapper\BaseMapper;
 use DateTime;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Exception;
 
-class ActivityCalendarOption
+class ActivityCalendarOption extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * Find an option by its id.
      *
      * @param int $optionId Option id
      *
-     * @return \Activity\Model\ActivityCalendarOption
+     * @return ActivityCalendarOptionModel
      */
-    public function find($optionId)
+    public function findOption($optionId)
     {
         return $this->getRepository()->findOneBy(['id' => $optionId]);
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
-     */
-    public function getRepository()
-    {
-        return $this->em->getRepository('Activity\Model\ActivityCalendarOption');
     }
 
     /**
@@ -57,8 +33,8 @@ class ActivityCalendarOption
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
-            ->from('Activity\Model\ActivityCalendarOption', 'a')
-            ->from('Activity\Model\ActivityOptionProposal', 'b')
+            ->from($this->getRepositoryName(), 'a')
+            ->from(ActivityOptionProposalModel::class, 'b')
             ->where('a.proposal = b.id')
             ->andWhere('a.endTime > :now')
             ->andWhere('b.organ IN (:organs)')
@@ -83,7 +59,7 @@ class ActivityCalendarOption
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
-            ->from('Activity\Model\ActivityCalendarOption', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->where('a.endTime > :now')
             ->orderBy('a.beginTime', 'ASC');
 
@@ -108,8 +84,8 @@ class ActivityCalendarOption
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
-            ->from('Activity\Model\ActivityCalendarOption', 'a')
-            ->from('Activity\Model\ActivityOptionProposal', 'b')
+            ->from($this->getRepositoryName(), 'a')
+            ->from(ActivityOptionProposalModel::class, 'b')
             ->where('a.proposal = b.id')
             ->andWhere('a.beginTime > :now')
             ->andWhere('b.creationTime < :before')
@@ -136,7 +112,7 @@ class ActivityCalendarOption
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
-            ->from('Activity\Model\ActivityCalendarOption', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->andWhere('a.proposal = :proposal')
             ->setParameter('proposal', $proposalId);
 
@@ -155,7 +131,7 @@ class ActivityCalendarOption
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
-            ->from('Activity\Model\ActivityCalendarOption', 'a')
+            ->from($this->getRepositoryName(), 'a')
             ->andWhere('a.proposal = :proposal')
             ->setParameter('proposal', $proposalId)
             ->setParameter('organ', $organId);
@@ -164,20 +140,10 @@ class ActivityCalendarOption
     }
 
     /**
-     * Persist an option.
-     *
-     * @param \Activity\Model\ActivityCalendarOption $option
+     * @inheritDoc
      */
-    public function persist($option)
+    protected function getRepositoryName(): string
     {
-        $this->em->persist($option);
-    }
-
-    /**
-     * Flush.
-     */
-    public function flush()
-    {
-        $this->em->flush();
+        return ActivityCalendarOptionModel::class;
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Decision\Mapper;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
+use Application\Mapper\BaseMapper;
+use Decision\Model\Organ as OrganModel;
 use Doctrine\ORM\NoResultException;
 
 /**
@@ -12,23 +12,8 @@ use Doctrine\ORM\NoResultException;
  * NOTE: Organs will be modified externally by a script. Modifycations will be
  * overwritten.
  */
-class Organ
+class Organ extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * Find all active organs.
      *
@@ -70,23 +55,13 @@ class Organ
     }
 
     /**
-     * Find all organs.
-     *
-     * @return array
-     */
-    public function findAll()
-    {
-        return $this->getRepository()->findAll();
-    }
-
-    /**
      * Find an organ with all information.
      *
      * @param int $id
      *
-     * @return \Decision\Model\Organ
+     * @return OrganModel
      */
-    public function find($id)
+    public function findOrgan($id)
     {
         $qb = $this->getRepository()->createQueryBuilder('o');
 
@@ -112,7 +87,7 @@ class Organ
      * @param bool $latest
      *                       Whether to retrieve the latest occurence of an organ or not
      *
-     * @return \Decision\Model\Organ
+     * @return OrganModel
      */
     public function findByAbbr($abbr, $type = null, $latest = false)
     {
@@ -144,12 +119,10 @@ class Organ
     }
 
     /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
+     * @inheritDoc
      */
-    public function getRepository()
+    protected function getRepositoryName(): string
     {
-        return $this->em->getRepository('Decision\Model\Organ');
+        return OrganModel::class;
     }
 }

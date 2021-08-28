@@ -72,7 +72,7 @@ class ActivityQuery
      */
     public function getProposal($id)
     {
-        return $this->proposalMapper->getProposalById($id);
+        return $this->proposalMapper->find($id);
     }
 
     /**
@@ -82,7 +82,7 @@ class ActivityQuery
      */
     public function getAllProposals()
     {
-        return $this->proposalMapper->getAllProposals();
+        return $this->proposalMapper->findAll();
     }
 
     /**
@@ -141,7 +141,7 @@ class ActivityQuery
      *
      * @return array Array of activities
      */
-    public function getAllActivities()
+    public function findAll()
     {
         if (!$this->aclService->isAllowed('view', 'activity')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view the activities'));
@@ -149,7 +149,7 @@ class ActivityQuery
 
         $activityMapper = $this->activityMapper;
 
-        return $activityMapper->getAllActivities();
+        return $activityMapper->findAll();
     }
 
     /**

@@ -2,29 +2,15 @@
 
 namespace Activity\Mapper;
 
-use Doctrine\ORM\EntityManager;
+use Activity\Model\Signup as SignupModel;
+use Application\Mapper\BaseMapper;
 
-class Signup
+class Signup extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
      * @param int $id
      *
-     * @return \Activity\Model\Signup
+     * @return SignupModel
      */
     public function getSignupById($id)
     {
@@ -57,7 +43,7 @@ class Signup
      * @param int $signupListId
      * @param int $userId
      *
-     * @return \Activity\Model\Signup
+     * @return SignupModel
      */
     public function getSignUp($signupListId, $userId)
     {
@@ -84,7 +70,7 @@ class Signup
      *
      * @param int $userId
      *
-     * @return \Activity\Model\Signup
+     * @return SignupModel
      */
     public function getSignedUpActivities($userId)
     {
@@ -109,5 +95,13 @@ class Signup
         $result = $qb->getQuery()->getResult();
 
         return $result[0];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getRepositoryName(): string
+    {
+        return SignupModel::class;
     }
 }

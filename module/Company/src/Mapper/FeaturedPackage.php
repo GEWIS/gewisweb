@@ -2,7 +2,7 @@
 
 namespace Company\Mapper;
 
-use Doctrine\ORM\EntityRepository;
+use Company\Model\CompanyFeaturedPackage;
 
 /**
  * Mappers for package.
@@ -41,12 +41,10 @@ class FeaturedPackage extends Package
     }
 
     /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
+     * @inheritDoc
      */
-    public function getRepository()
+    protected function getRepositoryName(): string
     {
-        return $this->em->getRepository('Company\Model\CompanyFeaturedPackage');
+        return CompanyFeaturedPackage::class;
     }
 }

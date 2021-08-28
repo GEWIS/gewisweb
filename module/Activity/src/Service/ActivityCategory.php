@@ -69,7 +69,7 @@ class ActivityCategory
      *
      * @return array
      */
-    public function getAllCategories()
+    public function findAll()
     {
         if (!$this->aclService->isAllowed('listCategories', 'activity')) {
             throw new NotAllowedException(
@@ -77,7 +77,7 @@ class ActivityCategory
             );
         }
 
-        return $this->categoryMapper->getAllCategories();
+        return $this->categoryMapper->findAll();
     }
 
     public function createCategory($data)
