@@ -403,9 +403,9 @@ class User
      *
      * @param string $code
      *
-     * @return NewUserModel
+     * @return NewUserModel|null
      */
-    public function getNewUser(string $code): NewUserModel
+    public function getNewUser(string $code): ?NewUserModel
     {
         return $this->newUserMapper->getByCode($code);
     }
