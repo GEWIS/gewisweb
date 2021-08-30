@@ -166,7 +166,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         return $this->approver;
     }
 
-    public function setApprover(User $approver)
+    public function setApprover(?User $approver)
     {
         $this->approver = $approver;
     }
