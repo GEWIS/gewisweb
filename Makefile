@@ -64,21 +64,22 @@ copyconf:
 		cp config/autoload/laminas-developer-tools.local.php.dist config/autoload/laminas-developer-tools.local.php
 
 phpstan:
+		@echo "" > phpstan/phpstan-baseline-pr.neon
 		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon
 
 phpstanpr:
 		@git checkout --detach master
 		@cp phpstan/phpstan-baseline.neon phpstan/phpstan-baseline-temp.neon
 		@echo "" > phpstan/phpstan-baseline.neon
+		@echo "" > phpstan/phpstan-baseline-pr.neon
 		@make rundev
 		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon --generate-baseline phpstan/phpstan-baseline-pr.neon
 		@git checkout -
-		@docker cp gewisweb_web_1:/code/phpstan/phpstan-baseline-pr.neon ./phpstan/phpstan-baseline-pr.neon
-		@make rundev
-		@docker cp ./phpstan/phpstan-baseline-pr.neon gewisweb_web_1:/code/phpstan/phpstan-baseline.neon
-		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon
 		@cp phpstan/phpstan-baseline-temp.neon phpstan/phpstan-baseline.neon
 		@rm phpstan/phpstan-baseline-temp.neon
+		@docker cp gewisweb_web_1:/code/phpstan/phpstan-baseline-pr.neon ./phpstan/phpstan-baseline-pr.neon
+		@make rundev
+		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon
 
 phpcs:
 		@vendor/bin/phpcs -p --standard=PSR1,PSR12 --extensions=php,dist module config
