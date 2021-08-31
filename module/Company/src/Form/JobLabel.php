@@ -8,6 +8,7 @@ use Laminas\Filter\{
     StripTags,
 };
 use Laminas\Form\Element\{
+    Checkbox,
     Submit,
     Text,
 };
@@ -28,6 +29,31 @@ class JobLabel extends Form implements InputFilterProviderInterface
         parent::__construct();
         $this->translator = $translator;
         $this->setAttribute('method', 'post');
+
+        // All language attributes.
+        $this->add(
+            [
+                'name' => 'language_dutch',
+                'type' => Checkbox::class,
+                'options' => [
+                    'label' => $this->translator->translate('Enable Dutch Translations'),
+                    'checked_value' => 1,
+                    'unchecked_value' => 0,
+                ],
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'language_english',
+                'type' => Checkbox::class,
+                'options' => [
+                    'label' => $this->translator->translate('Enable English Translations'),
+                    'checked_value' => 1,
+                    'unchecked_value' => 0,
+                ],
+            ]
+        );
 
         $this->add(
             [
