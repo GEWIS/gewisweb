@@ -127,22 +127,15 @@ class ActivityCalendar
     }
 
     /**
-     * @param array $data
+     * @param array $validatedData
      *
      * @return ProposalModel|bool
      *
      * @throws Exception
      */
-    public function createProposal($data)
+    public function createProposal(array $validatedData): bool|ProposalModel
     {
-        $form = $this->getCreateProposalForm();
         $proposal = new ProposalModel();
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return false;
-        }
-        $validatedData = $form->getData();
 
         $organ = $validatedData['organ'];
         if (!$this->calendarFormService->canOrganCreateProposal($organ)) {
@@ -170,7 +163,7 @@ class ActivityCalendar
         $options = $validatedData['options'];
         foreach ($options as $option) {
             $result = $this->createOption($option, $proposal);
-            if (false == $result) {
+            if (!$result) {
                 return false;
             }
         }
