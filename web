@@ -1,1 +1,15 @@
-./vendor/bin/laminas
+#!/usr/bin/env php
+<?php
+// Redefine the `APP_ENV`.
+define('APP_ENV', getenv('APP_ENV') ?: 'production');
+
+// This script should only be executed via cli.
+if (php_sapi_name() != 'cli') {
+    throw new RuntimeException("This script can only be called from the command line.");
+}
+
+// Make sure we are in the correct directory.
+chdir(dirname(__DIR__));
+
+require 'vendor/bin/laminas';
+
