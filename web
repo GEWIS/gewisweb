@@ -1,15 +1,51 @@
 #!/usr/bin/env php
 <?php
-// Redefine the `APP_ENV`.
-define('APP_ENV', getenv('APP_ENV') ?: 'production');
 
-// This script should only be executed via cli.
 if (php_sapi_name() != 'cli') {
     throw new RuntimeException("This script can only be called from the command line.");
 }
 
-// Make sure we are in the correct directory.
-chdir(dirname(__DIR__));
+// make sure we are in the correct directory
+chdir(__DIR__);
 
-require 'vendor/bin/laminas';
+require 'bootstrap.php';
+
+use Laminas\Cli\ApplicationProvisioner;
+use Laminas\Cli\ApplicationFactory;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
+
+$app = (new ApplicationFactory())();
+$definition = $app->getDefinition();
+$output = new ConsoleOutput();
+$containerNotFoundMessage = '';
+$input = new ArgvInput();
+
+try {
+    $input->bind($definition);
+} catch (\Symfony\Component\Console\Exception\RuntimeException $exception) {
+    // Ignore validation issues as we did not yet have the commands definition
+    // As we only need the `--container` option, we are good to go until it is passed *before* the first command argument
+    // Symfony parses the `argv` in its direct order and raises an error when more arguments or options are passed
+    // than described by the default definition.
+}
+
+try {
+    $serviceManager = ConsoleRunner::getServiceManager();
+    $app = (new ApplicationProvisioner())($app, $serviceManager);
+} catch (RuntimeException | InvalidArgumentException $exception) {
+    // Usage information provided by the `ContainerResolver` should be passed to the CLI output
+    $containerNotFoundMessage = sprintf('<error>%s</error>', $exception->getMessage());
+}
+
+// By running the app even if its not provisioned allows symfony/console to report problems
+// and/or display available options (like `--container`)
+$exitCode = $app->run(null, $output);
+
+if ($containerNotFoundMessage) {
+    $output->writeln($containerNotFoundMessage);
+    $exitCode = 255;
+}
+
+exit($exitCode);
 
