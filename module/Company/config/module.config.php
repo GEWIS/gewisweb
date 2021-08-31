@@ -145,7 +145,6 @@ return [
                                         'action' => 'addCompany',
                                     ],
                                 ],
-                                'may_terminate' => true,
                             ],
                             'delete' => [
                                 'type' => Segment::class,
@@ -158,7 +157,6 @@ return [
                                         'slugCompanyName' => '[a-zA-Z0-9_\-\.]*',
                                     ],
                                 ],
-                                'may_terminate' => true,
                             ],
                             'edit' => [
                                 'type' => Segment::class,
@@ -190,7 +188,6 @@ return [
                                                     'constraints' => [
                                                         'type' => '[a-zA-Z0-9_-]*',
                                                     ],
-                                                    'may_terminate' => true,
                                                 ],
                                             ],
                                             'delete' => [
@@ -204,7 +201,6 @@ return [
                                                         'packageId' => '[0-9]*',
                                                     ],
                                                 ],
-                                                'may_terminate' => true,
                                             ],
                                             'edit' => [
                                                 'type' => Segment::class,
@@ -234,7 +230,6 @@ return [
                                                                         'action' => 'addJob',
                                                                     ],
                                                                 ],
-                                                                'may_terminate' => true,
                                                             ],
                                                             'delete' => [
                                                                 'type' => Segment::class,
@@ -246,7 +241,6 @@ return [
                                                                     'constraints' => [
                                                                         'jobId' => '[0-9]*',
                                                                     ],
-                                                                    'may_terminate' => true,
                                                                 ],
                                                             ],
                                                             'edit' => [
@@ -259,7 +253,6 @@ return [
                                                                     'constraints' => [
                                                                         'jobId' => '[0-9]*',
                                                                     ],
-                                                                    'may_terminate' => true,
                                                                 ],
                                                             ],
                                                         ],
@@ -277,9 +270,9 @@ return [
                         'options' => [
                             'route' => '/category',
                         ],
-                        'may_terminte' => false,
+                        'may_terminate' => false,
                         'child_routes' => [
-                            'addCategory' => [
+                            'add' => [
                                 'type' => Literal::class,
                                 'options' => [
                                     'route' => '/add',
@@ -288,7 +281,7 @@ return [
                                     ],
                                 ],
                             ],
-                            'deleteCategory' => [
+                            'delete' => [
                                 'type' => Segment::class,
                                 'options' => [
                                     'route' => '/delete/:categoryId',
@@ -300,7 +293,7 @@ return [
                                     ],
                                 ],
                             ],
-                            'editCategory' => [
+                            'edit' => [
                                 'priority' => 3,
                                 'type' => Segment::class,
                                 'options' => [
@@ -320,9 +313,9 @@ return [
                         'options' => [
                             'route' => '/label',
                         ],
-                        'may_terminte' => false,
+                        'may_terminate' => false,
                         'child_routes' => [
-                            'addLabel' => [
+                            'add' => [
                                 'type' => Literal::class,
                                 'options' => [
                                     'route' => '/add',
@@ -331,7 +324,7 @@ return [
                                     ],
                                 ],
                             ],
-                            'deleteLabel' => [
+                            'delete' => [
                                 'type' => Segment::class,
                                 'options' => [
                                     'route' => '/delete/:labelId',
@@ -343,7 +336,7 @@ return [
                                     ],
                                 ],
                             ],
-                            'editLabel' => [
+                            'edit' => [
                                 'priority' => 3,
                                 'type' => Segment::class,
                                 'options' => [

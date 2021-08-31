@@ -92,7 +92,7 @@ $form->setAttribute('class', 'form-company');
                             </td>
                             <td>
                                 <?php if ($package->getType() === 'banner') {
-                                    echo $this->translate('Banner package');
+                                    echo $this->translate('Banner Package');
                                 } else {
                                     if ($package->getType() == 'featured') {
                                         echo $this->translate('Featured Package');
@@ -102,10 +102,11 @@ $form->setAttribute('class', 'form-company');
                                 } ?>
                             </td>
                             <td>
-                                <a class="btn btn-xs btn-primary" href="<?= $this->url("company_admin/company/edit/editPackage",
+                                <a class="btn btn-xs btn-primary" href="<?= $this->url(
+                                    'company_admin/company/edit/package/edit',
                                     [
-                                        "slugCompanyName" => $company->getSlugName(),
-                                        "packageId" => $package->getId(),
+                                        'slugCompanyName' => $company->getSlugName(),
+                                        'packageId' => $package->getId(),
                                     ]
                                 ); ?>">
                                     <?= $this->translate('edit'); ?></a>

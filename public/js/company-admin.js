@@ -47,12 +47,12 @@ Company.Admin = {
     },
 
     deleteCompany: function (slugCompanyName) {
-        $("#deleteForm").attr('action', URLHelper.url('admin_company/deleteCompany', {'slugCompanyName': slugCompanyName}));
+        $("#deleteForm").attr('action', URLHelper.url('company_admin/company/delete', {'slugCompanyName': slugCompanyName}));
         $("#deleteCompanyName").html(slugCompanyName);
     },
 
     deletePackage: function (slugCompanyName, packageId) {
-        $("#deleteForm").attr('action', URLHelper.url('admin_company/editCompany/editPackage/deletePackage', {
+        $("#deleteForm").attr('action', URLHelper.url('company_admin/company/edit/package/delete', {
             'slugCompanyName': slugCompanyName,
             'packageId': packageId
         }));

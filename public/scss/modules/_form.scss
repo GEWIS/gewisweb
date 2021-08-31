@@ -1,0 +1,26 @@
+& > .row:last-child {
+    margin-top: 2rem;
+}
+
+h1 {
+    margin-bottom: 0;
+}
+
+h2 {
+    margin-top: 2rem;
+    margin-bottom: 0;
+}
+
+hr {
+    margin: 0.5rem 0;
+}
+
+.label-required::after {
+    content: " *";
+    color: $brand-primary;
+}
+
+.language-control {
+    margin-right: 0.5rem;
+    vertical-align: top;
+}
