@@ -1,10 +1,12 @@
 parameters:
     ignoreErrors:
-        - '#Call to an undefined method Laminas\\Stdlib\\RequestInterface::[a-zA-Z0-9_]+\(\).#'
-        - '#Call to an undefined method Laminas\\Stdlib\\ResponseInterface::[a-zA-Z0-9_]+\(\).#'
-        - "#^Strict comparison using \\=\\=\\= between 'development' and 'production' will always evaluate to false\\.$#"
-        - "#^Strict comparison using \\=\\=\\= between 'development' and 'development' will always evaluate to true\\.$#"
-        - "#^Strict comparison using \\=\\=\\= between 'production' and 'production' will always evaluate to true\\.$#"
-        - "#^Strict comparison using \\=\\=\\= between 'production' and 'development' will always evaluate to false\\.$#"
-        - "#^Method [a-zA-Z0-9_]+\\\\Controller\\\\[a-zA-Z0-9_]+\\:\\:indexAction\\(\\) should return Laminas\\\\View\\\\Model\\\\ViewModel but returns Laminas\\\\Http\\\\Response\\.$#"
-        - "#^Call to an undefined method Laminas\\\\I18n\\\\Translator\\\\TranslatorInterface\\:\\:getLocale\\(\\)\\.$#"
+        - '#Call to an undefined method Laminas\\Stdlib\\RequestInterface::[a-zA-Z0-9_]+\(\)\.#'
+        - '#Call to an undefined method Laminas\\Stdlib\\ResponseInterface::[a-zA-Z0-9_]+\(\)\.#'
+        - "#Strict comparison using \\=\\=\\= between 'development' and 'production' will always evaluate to false\\.$#"
+        - "#Strict comparison using \\=\\=\\= between 'development' and 'development' will always evaluate to true\\.$#"
+        - "#Strict comparison using \\=\\=\\= between 'production' and 'production' will always evaluate to true\\.$#"
+        - "#Strict comparison using \\=\\=\\= between 'production' and 'development' will always evaluate to false\\.$#"
+        - '#Method [a-zA-Z0-9_]+\\Controller\\[a-zA-Z0-9_]+\:\:indexAction\(\) should return Laminas\\View\\Model\\ViewModel but returns Laminas\\Http\\Response\.$#'
+        - '#Call to an undefined method Laminas\\I18n\\Translator\\TranslatorInterface\:\:getLocale\(\)\.$#'
+        - '#Property [a-zA-Z0-9\\_]+\:\:\$[a-zA-Z0-9_]+ type mapping mismatch\: property can contain Doctrine\\Common\\Collections\\Collection but database expects Doctrine\\Common\\Collections\\Collection\&iterable\<[a-zA-Z0-9\\_]+\>\.$#'
+        - '#Property [a-zA-Z0-9\\_]+\:\:\$[a-zA-Z0-9_]+ type mapping mismatch\: database can contain [a-zA-Z0-9\\_]+\|null but property expects [a-zA-Z0-9\\_]+\.$#'
