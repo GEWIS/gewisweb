@@ -25,9 +25,7 @@ autoload_classmap.php
 .vs/
 config/bash.env
 *.cache
-
 .idea/sonarlint.xml
-
 .idea/sonarlint-state.xml
-
 phpstan/phpstan-baseline-temp.neon
+phpstan/phpstan-baseline-pr.neon

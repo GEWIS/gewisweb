@@ -64,7 +64,7 @@ copyconf:
 		cp config/autoload/laminas-developer-tools.local.php.dist config/autoload/laminas-developer-tools.local.php
 
 phpstan:
-		@echo "" > phpstan/phpstan-baseline-pr.neon
+		@docker-compose exec web echo "" > phpstan/phpstan-baseline-pr.neon
 		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon
 
 phpstanpr:
