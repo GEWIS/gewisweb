@@ -7,6 +7,20 @@
             </div>
             <div class="col-md-12">
                 <?php
+                $name = $form->get('name')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'name');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($name) ?>">
+                    <label for="<?= $name->getAttribute('id') ?>" class="control-label label-required">
+                        <?= $name->getLabel() ?>
+                    </label>
+                    <?= $this->formInput($name) ?>
+                    <?= $this->formElementErrors($name) ?>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <?php
                 $slugName = $form->get('slugName')
                     ->setAttribute('class', 'form-control')
                     ->setAttribute('id', 'slug-name');
@@ -17,6 +31,20 @@
                     </label>
                     <?= $this->formText($slugName) ?>
                     <?= $this->formElementErrors($slugName) ?>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <?php
+                $logo = $form->get('logo')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'logo');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($logo) ?>">
+                    <label for="<?= $logo->getAttribute('id') ?>" class="control-label">
+                        <?= $logo->getLabel() ?>
+                    </label>
+                    <?= $this->formFile($logo) ?>
+                    <?= $this->formElementErrors($logo) ?>
                 </div>
             </div>
             <div class="col-md-12">
@@ -127,20 +155,6 @@
         </div>
         <hr>
         <?php
-        $name = $form->get('name')
-            ->setAttribute('disabled', 'disabled')
-            ->setAttribute('class', 'form-control form-control-dutch')
-            ->setAttribute('id', 'name-nl');
-        $name->setValue($this->localisedTextElement($name));
-        ?>
-        <div class="form-group <?= $this->bootstrapElementError($name) ?>">
-            <label for="<?= $name->getAttribute('id') ?>" class="control-label">
-                <?= $name->getLabel() ?>
-            </label>
-            <?= $this->formInput($name) ?>
-            <?= $this->formElementErrors($name) ?>
-        </div>
-        <?php
         // A slogan is not required, to prevent the field from being marked required, add `not-required` to its `id`.
         $slogan = $form->get('slogan')
             ->setAttribute('disabled', 'disabled')
@@ -184,20 +198,6 @@
             <?= $this->formTextarea($description) ?>
             <?= $this->formElementErrors($description) ?>
         </div>
-        <?php
-        // A logo is not required, to prevent the field from being marked required, add `not-required` to its `id`.
-        $logo = $form->get('logo')
-            ->setAttribute('disabled', 'disabled')
-            ->setAttribute('class', 'form-control form-control-dutch')
-            ->setAttribute('id', 'logo-nl-not-required');
-        ?>
-        <div class="form-group <?= $this->bootstrapElementError($logo) ?>">
-            <label for="<?= $logo->getAttribute('id') ?>" class="control-label">
-                <?= $logo->getLabel() ?>
-            </label>
-            <?= $this->formFile($logo) ?>
-            <?= $this->formElementErrors($logo) ?>
-        </div>
     </div>
     <div class="col-md-6">
         <?php
@@ -216,20 +216,6 @@
             <?= $this->formElementErrors($checkboxEnglish) ?>
         </div>
         <hr>
-        <?php
-        $nameEn = $form->get('nameEn')
-            ->setAttribute('disabled', 'disabled')
-            ->setAttribute('class', 'form-control form-control-english')
-            ->setAttribute('id', 'name-en');
-        $nameEn->setValue($this->localisedTextElement($nameEn));
-        ?>
-        <div class="form-group <?= $this->bootstrapElementError($nameEn) ?>">
-            <label for="<?= $nameEn->getAttribute('id') ?>" class="control-label">
-                <?= $nameEn->getLabel() ?>
-            </label>
-            <?= $this->formInput($nameEn) ?>
-            <?= $this->formElementErrors($nameEn) ?>
-        </div>
         <?php
         // A slogan is not required, to prevent the field from being marked required, add `not-required` to its `id`.
         $sloganEn = $form->get('sloganEn')
@@ -273,20 +259,6 @@
             </label>
             <?= $this->formTextarea($descriptionEn) ?>
             <?= $this->formElementErrors($descriptionEn) ?>
-        </div>
-        <?php
-        // A logo is not required, to prevent the field from being marked required, add `not-required` to its `id`.
-        $logoEn = $form->get('logoEn')
-            ->setAttribute('disabled', 'disabled')
-            ->setAttribute('class', 'form-control form-control-english')
-            ->setAttribute('id', 'logo-en-not-required');
-        ?>
-        <div class="form-group <?= $this->bootstrapElementError($logoEn) ?>">
-            <label for="<?= $logoEn->getAttribute('id') ?>" class="control-label">
-                <?= $logo->getLabel() ?>
-            </label>
-            <?= $this->formFile($logoEn) ?>
-            <?= $this->formElementErrors($logoEn) ?>
         </div>
     </div>
 </div>

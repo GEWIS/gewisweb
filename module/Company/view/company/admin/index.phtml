@@ -164,7 +164,7 @@ $this->scriptUrl()->requireUrls(
                                <?= $company->getNumberOfExpiredPackages() > 0 ? ' warning' : '' ?>">
                             <td class="company-name">
                                 <a href=<?= $editUrl; ?>>
-                                    <?= $this->escapeHtml($this->localiseText($company->getName())); ?>
+                                    <?= $this->escapeHtml($company->getName()); ?>
                                 </a>
                             </td>
                             <td><?= $company->getNumberOfJobs(); ?></td>

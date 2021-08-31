@@ -34,12 +34,8 @@ class Company
     /**
      * The company's display name.
      */
-    #[OneToOne(
-        targetEntity: CompanyLocalisedText::class,
-        cascade: ["persist", "remove"],
-        orphanRemoval: true,
-    )]
-    protected CompanyLocalisedText $name;
+    #[Column(type: "string")]
+    protected string $name;
 
     /**
      * The company's slug version of the name. (username).
@@ -84,12 +80,11 @@ class Company
     /**
      * Company logo.
      */
-    #[OneToOne(
-        targetEntity: CompanyLocalisedText::class,
-        cascade: ["persist", "remove"],
-        orphanRemoval: true,
+    #[Column(
+        type: "string",
+        nullable: true,
     )]
-    protected CompanyLocalisedText $logo;
+    protected ?string $logo;
 
     /**
      * Company description.
@@ -148,9 +143,9 @@ class Company
     /**
      * Get the company's name.
      *
-     * @return CompanyLocalisedText
+     * @return string
      */
-    public function getName(): CompanyLocalisedText
+    public function getName(): string
     {
         return $this->name;
     }
@@ -158,9 +153,9 @@ class Company
     /**
      * Set the company's name.
      *
-     * @param CompanyLocalisedText $name
+     * @param string $name
      */
-    public function setName(CompanyLocalisedText $name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -288,9 +283,9 @@ class Company
     /**
      * Get the company's logo.
      *
-     * @return CompanyLocalisedText
+     * @return string|null
      */
-    public function getLogo(): CompanyLocalisedText
+    public function getLogo(): ?string
     {
         return $this->logo;
     }
@@ -298,9 +293,9 @@ class Company
     /**
      * Set the company's logo.
      *
-     * @param CompanyLocalisedText $logo
+     * @param string|null $logo
      */
-    public function setLogo(CompanyLocalisedText $logo): void
+    public function setLogo(?string $logo): void
     {
         $this->logo = $logo;
     }
@@ -538,16 +533,16 @@ class Company
      * Returns an array copy with varName=> var for all variables except the
      * translation.
      *
-     * It will aso add keys in the form $lan_varName=>$this->getTranslationFromLocale($lang)=>var
-     *
      * @return array
      */
     public function getArrayCopy(): array
     {
         $arraycopy = [];
+
         $arraycopy['id'] = $this->getId();
         $arraycopy['name'] = $this->getName();
         $arraycopy['slugName'] = $this->getSlugName();
+        $arraycopy['logo'] = $this->getLogo();
         $arraycopy['contactName'] = $this->getContactName();
         $arraycopy['email'] = $this->getEmail();
         $arraycopy['address'] = $this->getAddress();
@@ -555,14 +550,12 @@ class Company
         $arraycopy['hidden'] = $this->getHidden();
 
         // Languages
-        $arraycopy['languages'] = [];
-        foreach ($this->getTranslations() as $translation) {
-            $arraycopy[$translation->getLanguage() . '_' . 'slogan'] = $translation->getSlogan();
-            $arraycopy[$translation->getLanguage() . '_' . 'website'] = $translation->getWebsite();
-            $arraycopy[$translation->getLanguage() . '_' . 'description'] = $translation->getDescription();
-            $arraycopy[$translation->getLanguage() . '_' . 'logo'] = $translation->getLogo();
-            $arraycopy['languages'][] = $translation->getLanguage();
-        }
+        $arraycopy['slogan'] = $this->getSlogan()->getValueNL();
+        $arraycopy['sloganEn'] = $this->getSlogan()->getValueEN();
+        $arraycopy['website'] = $this->getWebsite()->getValueNL();
+        $arraycopy['websiteEn'] = $this->getWebsite()->getValueEN();
+        $arraycopy['description'] = $this->getDescription()->getValueNL();
+        $arraycopy['descriptionEn'] = $this->getDescription()->getValueEN();
 
         return $arraycopy;
     }

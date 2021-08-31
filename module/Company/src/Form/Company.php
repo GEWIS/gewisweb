@@ -57,10 +57,30 @@ class Company extends Form implements InputFilterProviderInterface
 
         $this->add(
             [
+                'name' => 'name',
+                'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Name'),
+                ],
+            ]
+        );
+
+        $this->add(
+            [
                 'name' => 'slugName',
                 'type' => Text::class,
                 'options' => [
                     'label' => $this->translator->translate('Slug'),
+                ],
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'logo',
+                'type' => File::class,
+                'options' => [
+                    'label' => $this->translator->translate('Logo'),
                 ],
             ]
         );
@@ -144,26 +164,6 @@ class Company extends Form implements InputFilterProviderInterface
 
         $this->add(
             [
-                'name' => 'name',
-                'type' => Text::class,
-                'options' => [
-                    'label' => $this->translator->translate('Name'),
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'nameEn',
-                'type' => Text::class,
-                'options' => [
-                    'label' => $this->translator->translate('Name'),
-                ],
-            ]
-        );
-
-        $this->add(
-            [
                 'name' => 'slogan',
                 'type' => Text::class,
                 'options' => [
@@ -228,26 +228,6 @@ class Company extends Form implements InputFilterProviderInterface
 
         $this->add(
             [
-                'name' => 'logo',
-                'type' => File::class,
-                'options' => [
-                    'label' => $this->translator->translate('Logo'),
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'logoEn',
-                'type' => File::class,
-                'options' => [
-                    'label' => $this->translator->translate('Logo'),
-                ],
-            ]
-        );
-
-        $this->add(
-            [
                 'name' => 'submit',
                 'type' => Submit::class,
             ]
@@ -262,6 +242,27 @@ class Company extends Form implements InputFilterProviderInterface
     public function getInputFilterSpecification(): array
     {
         $filter = [
+            'name' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => StringLength::class,
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 2,
+                            'max' => 127,
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StripTags::class,
+                    ],
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
+            ],
             'slugName' => [
                 'required' => true,
                 'validators' => [
@@ -283,6 +284,37 @@ class Company extends Form implements InputFilterProviderInterface
                             ],
                         ],
                     ],
+                ],
+            ],
+            'logo' => [
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => Extension::class,
+                        'options' => [
+                            'extension' => [
+                                'png',
+                                'jpg',
+                                'jpeg',
+                                'gif',
+                                'bmp',
+                            ],
+                        ],
+                    ],
+                    [
+                        'name' => MimeType::class,
+                        'options' => [
+                            'image/png',
+                            'image/jpeg',
+                            'image/gif',
+                            'image/bmp',
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => ToNull::class,
+                    ]
                 ],
             ],
             'hidden' => [
@@ -410,27 +442,6 @@ class Company extends Form implements InputFilterProviderInterface
     protected function inputFilterGeneric(string $languageSuffix = ''): array
     {
         return [
-            'name' . $languageSuffix => [
-                'required' => true,
-                'validators' => [
-                    [
-                        'name' => StringLength::class,
-                        'options' => [
-                            'encoding' => 'UTF-8',
-                            'min' => 2,
-                            'max' => 127,
-                        ],
-                    ],
-                ],
-                'filters' => [
-                    [
-                        'name' => StripTags::class,
-                    ],
-                    [
-                        'name' => StringTrim::class,
-                    ],
-                ],
-            ],
             'slogan' . $languageSuffix => [
                 'required' => false,
                 'filters' => [
@@ -472,37 +483,6 @@ class Company extends Form implements InputFilterProviderInterface
                             'max' => 10000,
                         ],
                     ],
-                ],
-            ],
-            'logo' . $languageSuffix => [
-                'required' => false,
-                'validators' => [
-                    [
-                        'name' => Extension::class,
-                        'options' => [
-                            'extension' => [
-                                'png',
-                                'jpg',
-                                'jpeg',
-                                'gif',
-                                'bmp',
-                            ],
-                        ],
-                    ],
-                    [
-                        'name' => MimeType::class,
-                        'options' => [
-                            'image/png',
-                            'image/jpeg',
-                            'image/gif',
-                            'image/bmp',
-                        ],
-                    ],
-                ],
-                'filters' => [
-                    [
-                        'name' => ToNull::class,
-                    ]
                 ],
             ],
         ];
