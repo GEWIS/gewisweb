@@ -162,10 +162,7 @@ class ActivityCalendar
 
         $options = $validatedData['options'];
         foreach ($options as $option) {
-            $result = $this->createOption($option, $proposal);
-            if (!$result) {
-                return false;
-            }
+            $this->createOption($option, $proposal);
         }
 
         return $proposal;
