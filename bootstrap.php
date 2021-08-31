@@ -42,10 +42,7 @@ class ConsoleRunner
 
     public static function getServiceManager(): ServiceManager
     {
-        $appConfig = require __DIR__ . '/config/application.config.php';
-        if (APP_ENV === 'development' && file_exists(__DIR__ . '/config/development.config.php')) {
-            $appConfig = ArrayUtils::merge($appConfig, require __DIR__ . '/config/development.config.php');
-        }
+        $appConfig = self::getConfig();
 
         $servicesConfig = $appConfig['service_manager'] ?? [];
 
