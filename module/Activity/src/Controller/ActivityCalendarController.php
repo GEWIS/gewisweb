@@ -2,12 +2,14 @@
 
 namespace Activity\Controller;
 
-use Activity\Service\{
+use Activity\Form\ActivityCalendarProposal;
+use Activity\Service\{AclService,
     ActivityCalendar as ActivityCalendarService,
-    ActivityCalendarForm as ActivityCalendarFormService,
-};
+    ActivityCalendarForm as ActivityCalendarFormService};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
+use User\Permissions\NotAllowedException;
+use Laminas\Mvc\I18n\Translator;
 
 class ActivityCalendarController extends AbstractActionController
 {
@@ -21,10 +23,19 @@ class ActivityCalendarController extends AbstractActionController
      */
     private ActivityCalendarFormService $calendarFormService;
 
+    private AclService $aclService;
+
+    /**
+     * @var ActivityCalendarProposal
+     */
+    private $calendarProposalForm;
+
     /**
      * @var array
      */
     private array $calendarConfig;
+
+    private Translator $translator;
 
     /**
      * ActivityCalendarController constructor.
@@ -36,11 +47,17 @@ class ActivityCalendarController extends AbstractActionController
     public function __construct(
         ActivityCalendarService $calendarService,
         ActivityCalendarFormService $calendarFormService,
-        array $calendarConfig
+        AclService $aclService,
+        ActivityCalendarProposal $calendarProposalForm,
+        array $calendarConfig,
+        Translator $translator
     ) {
         $this->calendarService = $calendarService;
         $this->calendarFormService = $calendarFormService;
+        $this->aclService = $aclService;
+        $this->calendarProposalForm = $calendarProposalForm;
         $this->calendarConfig = $calendarConfig;
+        $this->translator = $translator;
     }
 
     public function indexAction()
@@ -82,7 +99,9 @@ class ActivityCalendarController extends AbstractActionController
 
     public function createAction()
     {
-        $form = $this->calendarService->getCreateProposalForm();
+        if (!$this->aclService->isAllowed('create', 'activity_calendar_proposal')) {
+            throw new NotAllowedException($this->translator->translate('Not allowed to create activity proposals.'));
+        }
 
         if ($this->getRequest()->isPost()) {
             $postData = $this->getRequest()->getPost();
@@ -90,7 +109,7 @@ class ActivityCalendarController extends AbstractActionController
 
             if (false === $success) {
                 $this->getResponse()->setStatusCode(400);
-                $form->setData($postData);
+                $this->calendarProposalForm->setData($postData);
             } else {
                 $this->redirect()->toRoute('activity_calendar', [], ['query' => ['success' => 'true']]);
             }
@@ -101,7 +120,7 @@ class ActivityCalendarController extends AbstractActionController
         return new ViewModel(
             [
                 'period' => $period,
-                'form' => $form,
+                'form' => $this->calendarProposalForm,
             ]
         );
     }
