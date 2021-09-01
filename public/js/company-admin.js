@@ -46,14 +46,14 @@ Company.Admin = {
         companies.detach().appendTo($('.company-list'));
     },
 
-    deleteCompany: function (slugCompanyName) {
-        $("#deleteForm").attr('action', URLHelper.url('company_admin/company/delete', {'slugCompanyName': slugCompanyName}));
-        $("#deleteCompanyName").html(slugCompanyName);
+    deleteCompany: function (companySlugName) {
+        $("#deleteForm").attr('action', URLHelper.url('company_admin/company/delete', {'companySlugName': companySlugName}));
+        $("#deleteCompanyName").html(companySlugName);
     },
 
-    deletePackage: function (slugCompanyName, packageId) {
+    deletePackage: function (companySlugName, packageId) {
         $("#deleteForm").attr('action', URLHelper.url('company_admin/company/edit/package/delete', {
-            'slugCompanyName': slugCompanyName,
+            'companySlugName': companySlugName,
             'packageId': packageId
         }));
     }

@@ -46,26 +46,38 @@ class Company
     /**
      * The company's contact's name.
      */
-    #[Column(type: "string")]
-    protected string $contactName;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $contactName;
 
     /**
      * The company's address.
      */
-    #[Column(type: "string")]
-    protected string $address;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $contactAddress;
 
     /**
      * The company's email.
      */
-    #[Column(type: "string")]
-    protected string $email;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $contactEmail;
 
     /**
      * The company's phone.
      */
-    #[Column(type: "string")]
-    protected string $phone;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $contactPhone;
 
     /**
      * Company slogan.
@@ -183,9 +195,9 @@ class Company
     /**
      * Get the company's contact's name.
      *
-     * @return string
+     * @return string|null
      */
-    public function getContactName(): string
+    public function getContactName(): ?string
     {
         return $this->contactName;
     }
@@ -193,9 +205,9 @@ class Company
     /**
      * Set the company's contact's name.
      *
-     * @param string $name
+     * @param string|null $name
      */
-    public function setContactName(string $name): void
+    public function setContactName(?string $name): void
     {
         $this->contactName = $name;
     }
@@ -203,61 +215,61 @@ class Company
     /**
      * Get the company's address.
      *
-     * @return string
+     * @return string|null
      */
-    public function getAddress(): string
+    public function getContactAddress(): ?string
     {
-        return $this->address;
+        return $this->contactAddress;
     }
 
     /**
      * Set the company's address.
      *
-     * @param string $address
+     * @param string|null $contactAddress
      */
-    public function setAddress(string $address): void
+    public function setContactAddress(?string $contactAddress): void
     {
-        $this->address = $address;
+        $this->contactAddress = $contactAddress;
     }
 
     /**
      * Get the company's email.
      *
-     * @return string
+     * @return string|null
      */
-    public function getEmail(): string
+    public function getContactEmail(): ?string
     {
-        return $this->email;
+        return $this->contactEmail;
     }
 
     /**
      * Set the company's email.
      *
-     * @param string $email
+     * @param string|null $contactEmail
      */
-    public function setEmail(string $email): void
+    public function setContactEmail(?string $contactEmail): void
     {
-        $this->email = $email;
+        $this->contactEmail = $contactEmail;
     }
 
     /**
      * Get the company's phone.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPhone(): string
+    public function getContactPhone(): ?string
     {
-        return $this->phone;
+        return $this->contactPhone;
     }
 
     /**
      * Set the company's phone.
      *
-     * @param string $phone
+     * @param string|null $contactPhone
      */
-    public function setPhone(string $phone): void
+    public function setContactPhone(?string $contactPhone): void
     {
-        $this->phone = $phone;
+        $this->contactPhone = $contactPhone;
     }
 
     /**
@@ -492,25 +504,7 @@ class Company
     }
 
     /**
-     * Updates the variable if the first argument is set, Otherwise, it will
-     * use the second argument.
-     *
-     * @param mixed $object
-     * @param mixed $default
-     *
-     * @return mixed
-     */
-    private static function updateIfSet(mixed $object, mixed $default): mixed
-    {
-        if (isset($object)) {
-            return $object;
-        }
-
-        return $default;
-    }
-
-    /**
-     * Updates this object with values in the form of getArrayCopy().
+     * Updates this object with values in the form of getArrayCopy(). This does not include the logo.
      *
      * @param array $data
      *
@@ -518,20 +512,21 @@ class Company
      */
     public function exchangeArray(array $data): void
     {
-        $languages = $data['languages'];
+        $this->setName($data['name']);
+        $this->setSlugName($data['slugName']);
+        $this->setContactName($data['contactName']);
+        $this->setContactAddress($data['contactAddress']);
+        $this->setContactEmail($data['contactEmail']);
+        $this->setContactPhone($data['contactPhone']);
+        $this->setHidden($data['hidden']);
 
-        $this->setName($this->updateIfSet($data['name'], ''));
-        $this->setContactName($this->updateIfSet($data['contactName'], ''));
-        $this->setSlugName($this->updateIfSet($data['slugName'], ''));
-        $this->setAddress($this->updateIfSet($data['address'], ''));
-        $this->setEmail($this->updateIfSet($data['email'], ''));
-        $this->setPhone($this->updateIfSet($data['phone'], ''));
-        $this->setHidden($this->updateIfSet($data['hidden'], ''));
+        $this->getSlogan()->updateValues($data['sloganEn'], $data['slogan']);
+        $this->getWebsite()->updateValues($data['websiteEn'], $data['website']);
+        $this->getDescription()->updateValues($data['descriptionEn'], $data['description']);
     }
 
     /**
-     * Returns an array copy with varName=> var for all variables except the
-     * translation.
+     * Returns an array copy with all attributes.
      *
      * @return array
      */
@@ -544,9 +539,9 @@ class Company
         $arraycopy['slugName'] = $this->getSlugName();
         $arraycopy['logo'] = $this->getLogo();
         $arraycopy['contactName'] = $this->getContactName();
-        $arraycopy['email'] = $this->getEmail();
-        $arraycopy['address'] = $this->getAddress();
-        $arraycopy['phone'] = $this->getPhone();
+        $arraycopy['contactEmail'] = $this->getContactEmail();
+        $arraycopy['contactAddress'] = $this->getContactAddress();
+        $arraycopy['contactPhone'] = $this->getContactPhone();
         $arraycopy['hidden'] = $this->getHidden();
 
         // Languages

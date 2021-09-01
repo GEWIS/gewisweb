@@ -11,7 +11,7 @@ $this->scriptUrl()->requireUrls(
     [
         'company_admin/company/edit/package/delete'
     ],
-    ['slugCompanyName', 'packageId']
+    ['companySlugName', 'packageId']
 );
 
 $form->prepare();
@@ -34,7 +34,7 @@ $form->setAttribute('class', 'form-company');
                     'company_admin/company/edit/package/add',
                     [
                         'type' => 'job',
-                        'slugCompanyName' => $company->getSlugName(),
+                        'companySlugName' => $company->getSlugName(),
                     ],
                 ); ?>">
                     <span class="fas fa-plus"></span>
@@ -44,7 +44,7 @@ $form->setAttribute('class', 'form-company');
                     'company_admin/company/edit/package/add',
                     [
                         'type' => 'featured',
-                        'slugCompanyName' => $company->getSlugName(),
+                        'companySlugName' => $company->getSlugName(),
                     ],
                 ); ?>">
                     <span class="fas fa-asterisk"></span>
@@ -54,7 +54,7 @@ $form->setAttribute('class', 'form-company');
                     'company_admin/company/edit/package/add',
                     [
                         'type' => 'banner',
-                        'slugCompanyName' => $company->getSlugName(),
+                        'companySlugName' => $company->getSlugName(),
                     ],
                 ); ?>">
                     <span class="fas fa-image"></span>
@@ -111,7 +111,7 @@ $form->setAttribute('class', 'form-company');
                                     <a class="btn btn-xs btn-primary" href="<?= $this->url(
                                         'company_admin/company/edit/package/edit',
                                         [
-                                            'slugCompanyName' => $company->getSlugName(),
+                                            'companySlugName' => $company->getSlugName(),
                                             'packageId' => $package->getId(),
                                         ]
                                     ); ?>">

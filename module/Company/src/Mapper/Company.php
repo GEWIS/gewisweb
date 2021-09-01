@@ -3,13 +3,11 @@
 namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Company\Model\{
-    Company as CompanyModel,
-    CompanyI18n as CompanyI18nModel,
-};
+use Company\Model\Company as CompanyModel;
 use Doctrine\ORM\{
+    EntityManager,
+    EntityRepository,
     ORMException,
-    Query,
 };
 
 /**
@@ -21,47 +19,39 @@ use Doctrine\ORM\{
 class Company extends BaseMapper
 {
     /**
-     * Checks if $slugName is only used by object identified with $cid.
+     * Doctrine entity manager.
      *
-     * @param string $slugName The slugName to be checked
-     * @param int $cid The id to ignore
+     * @var EntityManager
      */
-    public function isSlugNameUnique($slugName, $cid)
-    {
-        $objects = $this->findEditableCompaniesBySlugName($slugName, true);
-        foreach ($objects as $company) {
-            if ($company->getId() != $cid) {
-                return false;
-            }
-        }
+    protected $em;
 
-        return true;
+    /**
+     * Constructor.
+     */
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
     }
 
     /**
-     * Inserts a company into the datebase, and initializes the given
-     * translations as empty translations for them.
+     * Saves all unsaved entities, that are marked persistent.
      *
-     * @param array $languages
-     *
-     * @return CompanyModel
      * @throws ORMException
      */
-    public function insert(array $languages): CompanyModel
+    public function save(): void
     {
-        $company = new CompanyModel();
+        $this->em->flush();
+    }
 
-        foreach ($languages as $language) {
-            $translation = new CompanyI18nModel($language, $company);
-
-            $this->em->persist($translation);
-            $company->addTranslation($translation);
-        }
-
-        $company->setHidden(false);
-        $this->em->persist($company);
-
-        return $company;
+    /**
+     * @param CompanyModel $entity
+     *
+     * @throws ORMException
+     */
+    public function persist(CompanyModel $entity): void
+    {
+        $this->em->persist($entity);
+        $this->em->flush();
     }
 
     /**
@@ -69,15 +59,12 @@ class Company extends BaseMapper
      *
      * @return array
      */
-    public function findPublicByLocale($locale)
+    public function findAllPublic(): array
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('c');
         $qb->select('c')
-            ->join('c.translations', 't')
-            ->where('c.hidden=0')
-            ->andWhere('t.language = ?1')
-            ->setParameter(1, $locale)
+            ->where('c.hidden = 0')
             ->orderBy('c.name', 'ASC');
 
         return array_filter(
@@ -89,25 +76,25 @@ class Company extends BaseMapper
     }
 
     /**
-     * Find the company with the given slugName.
+     * Find a specific company by its id.
      *
-     * @param string $slugName the 'username' of the company to get
-     * @param bool $asObject if yes, returns the company as an object in an array, otherwise returns the company as an array of an array
+     * @param int $id The id of the company
      *
-     * @return array An array of companies with the given slugName
+     * @return CompanyModel|null
      */
-    public function findEditableCompaniesBySlugName($slugName, $asObject)
+    public function findById(int $id): ?CompanyModel
     {
-        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('c');
-        $qb->select('c')->where('c.slugName=:slugCompanyName');
-        $qb->setParameter('slugCompanyName', $slugName);
-        $qb->setMaxResults(1);
-        if ($asObject) {
-            return $qb->getQuery()->getResult();
-        }
+        return $this->getRepository()->find($id);
+    }
 
-        return $qb->getQuery()->getResult(Query::HYDRATE_ARRAY);
+    /**
+     * Find all companies.
+     *
+     * @return array
+     */
+    public function findAll(): array
+    {
+        return $this->getRepository()->findAll();
     }
 
     /**
@@ -115,17 +102,32 @@ class Company extends BaseMapper
      *
      * @param string $slugName the slugname to find
      *
-     * @return CompanyModel | null
+     * @return CompanyModel|null
      */
-    public function findCompanyBySlugName($slugName)
+    public function findCompanyBySlugName(string $slugName): ?CompanyModel
     {
         $result = $this->getRepository()->findBy(['slugName' => $slugName]);
 
-        return empty($result) ? NULL : $result[0];
+        return empty($result) ? null : $result[0];
     }
 
     /**
-     * @inheritDoc
+     * Removes a company.
+     *
+     * @param CompanyModel $company
+     *
+     * @throws ORMException
+     */
+    public function remove(CompanyModel $company)
+    {
+        $this->em->remove($company);
+        $this->em->flush();
+    }
+
+    /**
+     * Get the repository for this mapper.
+     *
+     * @return EntityRepository
      */
     protected function getRepositoryName(): string
     {

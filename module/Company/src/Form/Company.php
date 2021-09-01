@@ -509,6 +509,6 @@ class Company extends Form implements InputFilterProviderInterface
             return true;
         }
 
-        return null === $this->mapper->findCompanyBySlug($slugName);
+        return null === $this->mapper->findCompanyBySlugName($slugName);
     }
 }
