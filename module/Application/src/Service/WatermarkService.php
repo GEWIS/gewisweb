@@ -42,16 +42,16 @@ class WatermarkService
         $newPath = tempnam($this->storageConfig['watermark_dir'], (new DateTime())->format('Y-m-d') . '-');
         $newPath = $newPath . '.pdf';
 
-        $fillPixelRed = new ImagickPixel('red');
-        $fillPixelBlack = new ImagickPixel('black');
+        $fillPixelLight = new ImagickPixel('rgb(200, 200, 200)');
+        $fillPixelDark = new ImagickPixel('rgb(50, 50, 50)');
 
         $drawSettings = new ImagickDraw();
         $drawSettings->setFontSize(self::FONT_SIZE);
         $drawSettings->setTextAlignment(Imagick::ALIGN_CENTER);
-        $drawSettings->setFillColor($fillPixelRed);
+        $drawSettings->setFillColor($fillPixelLight);
         $drawSettings->setFillOpacity(0.20);
         $drawSettings->setStrokeWidth(1);
-        $drawSettings->setStrokeColor($fillPixelBlack);
+        $drawSettings->setStrokeColor($fillPixelDark);
         $drawSettings->setStrokeOpacity(0.20);
 
         $pdf = new Imagick();
