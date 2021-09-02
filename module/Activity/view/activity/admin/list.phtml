@@ -50,7 +50,7 @@
                 </td>
             <?php endif ?>
             <td>
-                <?php if ($activity->getSignupLists()->count() === 0 || $activity->getStatus() !== $activity::STATUS_APPROVED): ?>
+                <?php if ($activity->getStatus() !== $activity::STATUS_APPROVED): ?>
                     <a class="btn btn-primary btn-xs"
                        href="<?= $this->url('activity_admin/update', ['id' => $activity->getId()]) ?>"><?= $this->translate('Edit') ?></a>
                 <?php endif; ?>

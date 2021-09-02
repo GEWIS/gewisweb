@@ -61,48 +61,50 @@ $form->setAttribute('class', 'form-activity');
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2><?= $this->translate('Date and time') ?></h2>
-                        <p><?= $this->translate('Enter the start and end date and time of this activity.') ?></p>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <?php
-                                $beginTime = $form->get('beginTime')
-                                    ->setAttribute('class', 'form-control')
-                                    ->setAttribute('id', 'begin-time');
-                                ?>
-                                <div class="form-group <?= $this->bootstrapElementError($beginTime) ?>">
-                                    <label for="<?= $beginTime->getAttribute('id') ?>"
-                                           class="control-label label-required">
-                                        <?= $this->translate('Start date and time') ?>
-                                    </label>
-                                    <?= $this->formInput($beginTime) ?>
-                                    <?= $this->formElementErrors($beginTime) ?>
+            <?php if (!$editing): ?>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2><?= $this->translate('Date and time') ?></h2>
+                            <p><?= $this->translate('Enter the start and end date and time of this activity.') ?></p>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <?php
+                                    $beginTime = $form->get('beginTime')
+                                        ->setAttribute('class', 'form-control')
+                                        ->setAttribute('id', 'begin-time');
+                                    ?>
+                                    <div class="form-group <?= $this->bootstrapElementError($beginTime) ?>">
+                                        <label for="<?= $beginTime->getAttribute('id') ?>"
+                                               class="control-label label-required">
+                                            <?= $this->translate('Start date and time') ?>
+                                        </label>
+                                        <?= $this->formInput($beginTime) ?>
+                                        <?= $this->formElementErrors($beginTime) ?>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <?php
-                                $endTime = $form->get('endTime')
-                                    ->setAttribute('class', 'form-control')
-                                    ->setAttribute('id', 'end-time');
-                                ?>
-                                <div class="form-group <?= $this->bootstrapElementError($endTime) ?>">
-                                    <label for="<?= $endTime->getAttribute('id') ?>"
-                                           class="control-label label-required">
-                                        <?= $this->translate('End date and time') ?>
-                                    </label>
-                                    <?= $this->formInput($endTime) ?>
-                                    <?= $this->formElementErrors($endTime) ?>
+                                <div class="col-md-6">
+                                    <?php
+                                    $endTime = $form->get('endTime')
+                                        ->setAttribute('class', 'form-control')
+                                        ->setAttribute('id', 'end-time');
+                                    ?>
+                                    <div class="form-group <?= $this->bootstrapElementError($endTime) ?>">
+                                        <label for="<?= $endTime->getAttribute('id') ?>"
+                                               class="control-label label-required">
+                                            <?= $this->translate('End date and time') ?>
+                                        </label>
+                                        <?= $this->formInput($endTime) ?>
+                                        <?= $this->formElementErrors($endTime) ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            <?php endif; ?>
         </div>
         <?= $this->partial('partial/create', ['form' => $form]) ?>
         <div class="row">
@@ -151,65 +153,67 @@ $form->setAttribute('class', 'form-activity');
                 <?php endif; ?>
             </div>
         </div>
-        <?php if (isset($allowSignupList) && $allowSignupList): // Do not allow updates to change SignupLists. This is very complicated. ?>
-            <div class="row">
-                <div class="col-md-12">
-                    <h2><?= $this->translate('Sign-up Lists') ?></h2>
-                    <p><?= $this->translate('Add sign-up lists to allow people to sign up for this activity. Each list can have optional fields to collect specific information from the participants.') ?></p>
-                </div>
-                <div class="col-md-12">
-                    <div class="row signup-lists-header">
-                        <div class="col-md-3 col-md-offset-6">
-                            <span class="flag-icon flag-icon-nl"></span>
-                            <strong><?= $this->translate('Dutch') ?></strong>
-                            <hr/>
-                        </div>
-                        <div class="col-md-3">
-                            <span class="flag-icon flag-icon-en"></span>
-                            <strong><?= $this->translate('English') ?></strong>
-                            <hr/>
-                        </div>
+        <?php if (!$editing): ?>
+            <?php if (isset($allowSignupList) && $allowSignupList): // Do not allow updates to change SignupLists. This is very complicated. ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2><?= $this->translate('Sign-up Lists') ?></h2>
+                        <p><?= $this->translate('Add sign-up lists to allow people to sign up for this activity. Each list can have optional fields to collect specific information from the participants.') ?></p>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <?php
-                            // Render template for SignupLists
-                            $signupListsTemplate = $form->get('signupLists')->getTemplateElement();
-                            ob_start();
-                            echo $this->partial('partial/signuplist.phtml', ['signupList' => $signupListsTemplate, 'index' => '__signuplist__']);
-                            $signupListsTemplateData = trim(ob_get_clean());
-                            ?>
-                            <fieldset class="signup-lists">
-                                <span class="template"
-                                      data-template="<?= $this->escapeHtmlAttr($signupListsTemplateData) ?>"></span>
+                    <div class="col-md-12">
+                        <div class="row signup-lists-header">
+                            <div class="col-md-3 col-md-offset-6">
+                                <span class="flag-icon flag-icon-nl"></span>
+                                <strong><?= $this->translate('Dutch') ?></strong>
+                                <hr/>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="flag-icon flag-icon-en"></span>
+                                <strong><?= $this->translate('English') ?></strong>
+                                <hr/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
                                 <?php
-                                $index = 0;
-                                foreach ($form->get('signupLists')->getIterator() as $signupList) {
-                                    echo $this->partial('partial/signuplist.phtml', ['signupList' => $signupList, 'index' => $index]);
-                                    $index++;
-                                }
+                                // Render template for SignupLists
+                                $signupListsTemplate = $form->get('signupLists')->getTemplateElement();
+                                ob_start();
+                                echo $this->partial('partial/signuplist.phtml', ['signupList' => $signupListsTemplate, 'index' => '__signuplist__']);
+                                $signupListsTemplateData = trim(ob_get_clean());
                                 ?>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group signup-list-controls">
-                                            <button class="btn btn-danger" type="button"
-                                                    onclick="return Activity.removeSignupList()">
-                                                <i class="fas fa-minus"></i>
-                                                <?= $this->translate('Remove the last sign-up list') ?>
-                                            </button>
-                                            <button class="btn btn-success" type="button"
-                                                    onclick="return Activity.addSignupList()">
-                                                <i class="fas fa-plus"></i>
-                                                <?= $this->translate('Add a sign-up list') ?>
-                                            </button>
+                                <fieldset class="signup-lists">
+                                    <span class="template"
+                                          data-template="<?= $this->escapeHtmlAttr($signupListsTemplateData) ?>"></span>
+                                    <?php
+                                    $index = 0;
+                                    foreach ($form->get('signupLists')->getIterator() as $signupList) {
+                                        echo $this->partial('partial/signuplist.phtml', ['signupList' => $signupList, 'index' => $index]);
+                                        $index++;
+                                    }
+                                    ?>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group signup-list-controls">
+                                                <button class="btn btn-danger" type="button"
+                                                        onclick="return Activity.removeSignupList()">
+                                                    <i class="fas fa-minus"></i>
+                                                    <?= $this->translate('Remove the last sign-up list') ?>
+                                                </button>
+                                                <button class="btn btn-success" type="button"
+                                                        onclick="return Activity.addSignupList()">
+                                                    <i class="fas fa-plus"></i>
+                                                    <?= $this->translate('Add a sign-up list') ?>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </fieldset>
+                                </fieldset>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            <?php endif; ?>
         <?php endif; ?>
         <div class="row">
             <div class="col-md-12">
