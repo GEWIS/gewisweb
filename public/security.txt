@@ -1,0 +1,3 @@
+Contact: mailto:web@gewis.nl
+Preferred-Languages: en, nl
+Policy: https://github.com/GEWIS/gewisweb/blob/master/SECURITY.md
