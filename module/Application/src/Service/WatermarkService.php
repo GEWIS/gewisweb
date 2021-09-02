@@ -3,7 +3,6 @@
 namespace Application\Service;
 
 use DateTime;
-use Howtomakeaturn\PDFInfo\PDFInfo;
 use Imagick;
 use ImagickDraw;
 use ImagickDrawException;
@@ -14,7 +13,7 @@ use User\Authentication\AuthenticationService;
 class WatermarkService
 {
     // The font size of the watermark
-    private const FONT_SIZE = 48;
+    private const FONT_SIZE = 32;
 
     // The quality of the produced PDFs
     private const DPI = 150;
@@ -65,7 +64,7 @@ class WatermarkService
             $sizeX = $sizes['width'];
             $sizeY = $sizes['height'];
 
-            $pdfPage->annotateImage($drawSettings, $sizeX / 2, $sizeY / 2, 55, $watermarkText);
+            $pdfPage->annotateImage($drawSettings, $sizeX / 2, $sizeY / 2, 60, $watermarkText);
             $pdfPage->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
 
             $pdf->addImage($pdfPage);
