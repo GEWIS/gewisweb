@@ -42,7 +42,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         </a>
                     </li>
                     <li class="pull-right">
-                        <a href="/become-member"><?= $this->translate('Subscribe') ?></a>
+                        <a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'lidworden']) ?>"><?= $this->translate('Subscribe') ?></a>
                     </li>
                 <?php else: ?>
                     <?php $member = $this->identity()->getMember() ?>
