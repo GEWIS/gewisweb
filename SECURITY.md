@@ -1,8 +1,16 @@
 # Security Policy
 
+## Discovering vulnerabilities
+
+It is forbidden to do any testing for, scanning for, or exploitation of vulnerabilities on the [live website](https://gewis.nl).
+
+The [wiki](https://github.com/GEWIS/gewisweb/wiki) contains sufficient guidance on how to set up your own deployment version for such activities.
+
 ## Supported Versions
 
 Only vulnerabilities in the most recently released version and in the version currently on the master branch are considered to be significant.
+This does always include the currently deployed version (although you should not test this).
+
 If you discover a vulnerability in an earlier version that may still be present in the most recently released version, you can still report it.
 
 ## Supported Configuration
