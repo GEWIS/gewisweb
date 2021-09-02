@@ -163,7 +163,7 @@ class Exam
 
         $exam = $this->examMapper->find($id);
 
-        return $this->storageService->downloadFile($exam->getFilename(), $this->examToFilename($exam));
+        return $this->storageService->downloadFile($exam->getFilename(), $this->examToFilename($exam), true);
     }
 
     /**

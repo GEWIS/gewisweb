@@ -16,6 +16,7 @@ use Application\Service\{
     FileStorage as FileStorageService,
     Infimum as InfimumService,
     Legacy as LegacyService,
+    WatermarkService,
 };
 use Application\View\Helper\{
     Acl,
@@ -130,8 +131,16 @@ class Module
                 'application_service_storage' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
                     $storageConfig = $container->get('config')['storage'];
+                    $watermarkService = $container->get('application_service_watermark');
 
-                    return new FileStorageService($translator, $storageConfig);
+                    return new FileStorageService($translator, $storageConfig, $watermarkService);
+                },
+                'application_service_watermark' => function (ContainerInterface $container) {
+                    $storageConfig = $container->get('config')['storage'];
+                    $authService = $container->get('user_auth_service');
+                    $remoteAddress = $container->get('user_remoteaddress');
+
+                    return new WatermarkService($storageConfig, $authService, $remoteAddress);
                 },
                 'application_get_languages' => function () {
                     return ['nl', 'en'];
