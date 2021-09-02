@@ -2,14 +2,23 @@
 
 namespace Application\Service;
 
+use DateTime;
+use Howtomakeaturn\PDFInfo\PDFInfo;
 use Imagick;
 use ImagickDraw;
+use ImagickDrawException;
 use ImagickException;
-use Laminas\Mvc\I18n\Translator;
+use ImagickPixel;
 use User\Authentication\AuthenticationService;
 
 class WatermarkService
 {
+    // The font size of the watermark
+    private const FONT_SIZE = 48;
+
+    // The quality of the produced PDFs
+    private const DPI = 150;
+
     private array $storageConfig;
     private AuthenticationService $authService;
     private string $remoteAddress;
@@ -25,32 +34,71 @@ class WatermarkService
      * @param string $path The CFS path of the file to watermark
      * @return string The CFS path of the watermarked file
      * @throws ImagickException
+     * @throws ImagickDrawException
      */
     public function watermarkPdf(string $path): string
     {
-        $pdf = new Imagick($path);
         $watermarkText = $this->getWatermarkText();
+        $newPath = tempnam($this->storageConfig['watermark_dir'], (new DateTime())->format('Y-m-d') . '-');
+        $newPath = $newPath . '.pdf';
+
+        $fillPixelRed = new ImagickPixel('red');
+        $fillPixelBlack = new ImagickPixel('black');
+
         $drawSettings = new ImagickDraw();
-        $pdf->annotateImage($drawSettings, 0, 0, 45, $watermarkText);
-        $newPath = tempnam($this->storageConfig['storage_temp_dir'], 'watermark');
-        $pdf->writeImage($newPath);
+        $drawSettings->setFontSize(self::FONT_SIZE);
+        $drawSettings->setTextAlignment(Imagick::ALIGN_CENTER);
+        $drawSettings->setFillColor($fillPixelRed);
+        $drawSettings->setFillOpacity(0.20);
+        $drawSettings->setStrokeWidth(1);
+        $drawSettings->setStrokeColor($fillPixelBlack);
+        $drawSettings->setStrokeOpacity(0.20);
+
+        $pdf = new Imagick();
+        $pages = (new Imagick($path))->getNumberImages();
+        for ($page = 0; $page < $pages; $page++) {
+            $pdfPage = new Imagick();
+            $pdfPage->setResolution(self::DPI, self::DPI);
+            $pdfPage->readImage($path . '[' . $page . ']');
+
+            $sizes = $pdfPage->getImagePage();
+            $sizeX = $sizes['width'];
+            $sizeY = $sizes['height'];
+
+            $pdfPage->annotateImage($drawSettings, $sizeX / 2, $sizeY / 2, 55, $watermarkText);
+            $pdfPage->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
+
+            $pdf->addImage($pdfPage);
+        }
+
+        $pdf->setCompression(Imagick::COMPRESSION_ZIP);
+
+        $pdf->writeImages($newPath, true);
+
         return $newPath;
     }
 
-    private function getWatermarkText()
+    /**
+     * Uses the identity of the user when signed in or the IP address from which the download is performed.
+     *
+     * @return string The text containing details on the user who performs the download
+     */
+    private function getWatermarkText(): string
     {
-        $date = (new \DateTime())->format('Y-m-d H-i-s');
+        $dateTime = (new DateTime())->format('Y-m-d H-i-s');
         $user = $this->authService->getIdentity();
+
         if ($user !== null) {
             return sprintf(
                 "This pdf was downloaded on %s by %s from https://gewis.nl",
-                $date,
+                $dateTime,
                 $user->getMember()->getFullName()
             );
         }
+
         return sprintf(
             "This pdf was downloaded on %s from %s from https://gewis.nl",
-            $date,
+            $dateTime,
             $this->remoteAddress
         );
     }

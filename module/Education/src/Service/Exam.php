@@ -225,7 +225,7 @@ class Exam
 
                 $exam->setDate(new DateTime($examData['date']));
                 $exam->setCourse($this->getCourse($examData['course']));
-                
+
                 if ($exam instanceof SummaryModel) {
                     $exam->setAuthor($examData['author']);
                     $exam->setExamType(ExamModel::EXAM_TYPE_SUMMARY);

@@ -52,7 +52,7 @@ return [
     ],
     'storage' => [
         'storage_dir' => 'public/data',
-        'storage_temp_dir' => 'public/data/temp',
+        'watermark_dir' => 'public/data/watermark',
         'public_dir' => 'data',
         'cache_dir' => 'data/cache',
         'dir_mode' => 0777, // rwx by default
