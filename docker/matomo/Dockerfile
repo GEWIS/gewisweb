@@ -3,7 +3,7 @@ FROM matomo:latest as gewisweb_matomo
 RUN apt update && apt install -y \
     gettext-base \
     unzip \
-    apt upgrade -y \
+    && apt upgrade -y \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -o LogViewer.zip \
