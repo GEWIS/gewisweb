@@ -2,7 +2,9 @@ FROM matomo:latest as gewisweb_matomo
 
 RUN apt update && apt install -y \
     gettext-base \
-    unzip
+    unzip \
+    apt upgrade -y \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN curl -o LogViewer.zip \
       https://plugins.matomo.org/api/2.0/plugins/LogViewer/download/latest \
