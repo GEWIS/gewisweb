@@ -1,7 +1,7 @@
 FROM php:8.0-fpm as gewisweb_web_development
 
 RUN apt-get update \
-    && apt-get install -y \
+    && apt-get install -y --no-install-recommends \
         cron \
         git \
         libfreetype6-dev \
@@ -18,7 +18,7 @@ RUN apt-get update \
         sshpass \
         unzip \
         zip \
-    && apt-get upgrade -y \
+    && apt-get upgrade -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-configure \
@@ -50,8 +50,10 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
     && apt-get update \
-    && apt-get install -y \
-        nodejs
+    && apt-get install -y --no-install-recommends \
+        nodejs \
+    && apt-get upgrade -y --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY --chown=www-data:www-data ./composer.json ./
 RUN php composer.phar install

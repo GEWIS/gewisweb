@@ -1,9 +1,9 @@
 FROM matomo:latest as gewisweb_matomo
 
-RUN apt update && apt install -y \
+RUN apt update && apt install -y --no-install-recommends \
     gettext-base \
     unzip \
-    && apt upgrade -y \
+    && apt upgrade -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -o LogViewer.zip \
