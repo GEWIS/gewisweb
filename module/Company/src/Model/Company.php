@@ -92,11 +92,8 @@ class Company
     /**
      * Company logo.
      */
-    #[Column(
-        type: "string",
-        nullable: true,
-    )]
-    protected ?string $logo;
+    #[Column(type: "string")]
+    protected ?string $logo = null;
 
     /**
      * Company description.

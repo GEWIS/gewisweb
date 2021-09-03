@@ -3,16 +3,19 @@
 namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Company\Model\CompanyBannerPackage as BannerPackageModel;
-use Company\Model\CompanyFeaturedPackage as FeaturedPackageModel;
-use Company\Model\CompanyJobPackage;
-use Company\Model\CompanyJobPackage as PackageModel;
+use Company\Model\{
+    CompanyBannerPackage as CompanyBannerPackageModel,
+    CompanyFeaturedPackage as CompanyFeaturedPackageModel,
+    CompanyJobPackage as CompanyJobPackageModel,
+    CompanyPackage as CompanyPackageModel,
+};
 use DateTime;
+use Exception;
 
 /**
  * Mappers for package.
  *
- * NOTE: Packages will be modified externally by a script. Modifycations will be
+ * NOTE: Packages will be modified externally by a script. Modifications will be
  * overwritten.
  */
 class Package extends BaseMapper
@@ -25,20 +28,6 @@ class Package extends BaseMapper
     public function findPackage($packageId)
     {
         return $this->getRepository()->findOneBy(['id' => $packageId]);
-    }
-
-    /**
-     * Deletes the given package.
-     */
-    public function deletePackage($packageId)
-    {
-        $package = $this->findEditablePackage($packageId);
-        if (is_null($package)) {
-            return;
-        }
-
-        $this->em->remove($package);
-        $this->em->flush();
     }
 
     /**
@@ -108,7 +97,7 @@ class Package extends BaseMapper
     /**
      * Find all packages, and returns an editable version of them.
      *
-     * @return PackageModel|null
+     * @return CompanyPackageModel|null
      */
     public function findEditablePackage($packageId)
     {
@@ -127,29 +116,21 @@ class Package extends BaseMapper
         return $packages[0];
     }
 
-    private function createPackage($type)
-    {
-        if ('job' === $type) {
-            return new PackageModel();
-        }
-
-        if ('featured' === $type) {
-            return new FeaturedPackageModel();
-        }
-
-        return new BannerPackageModel();
-    }
-
     /**
-     * Inserts a new package into the given company.
+     * @param string $type
+     *
+     * @return CompanyPackageModel
+     *
+     * @throws Exception
      */
-    public function insertPackageIntoCompany($company, $type)
+    public function createPackage(string $type): CompanyPackageModel
     {
-        $package = $this->createPackage($type);
-        $package->setCompany($company);
-        $this->em->persist($package);
-
-        return $package;
+        return match ($type) {
+            'banner' => new CompanyBannerPackageModel(),
+            'featured' => new CompanyFeaturedPackageModel(),
+            'job' => new CompanyJobPackageModel(),
+            default => throw new Exception('Unknown type for class that extends CompanyPackage'),
+        };
     }
 
     /**
@@ -157,6 +138,6 @@ class Package extends BaseMapper
      */
     protected function getRepositoryName(): string
     {
-        return CompanyJobPackage::class;
+        return CompanyJobPackageModel::class;
     }
 }

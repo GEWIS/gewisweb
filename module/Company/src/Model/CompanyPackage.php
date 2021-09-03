@@ -179,20 +179,20 @@ abstract class CompanyPackage
     }
 
     /**
-     * Get's the type of the package.
+     * Gets the type of the package.
      *
      * @return string
+     *
+     * @throws Exception
      */
     public function getType(): string
     {
-        switch (get_class($this)) {
-            case "Company\Model\CompanyBannerPackage":
-                return 'banner';
-            case "Company\Model\CompanyJobPackage":
-                return 'job';
-            case "Company\Model\CompanyFeaturedPackage":
-                return 'featured';
-        }
+        return match (get_class($this)) {
+            CompanyBannerPackage::class => 'banner',
+            CompanyJobPackage::class => 'job',
+            CompanyFeaturedPackage::class => 'featured',
+            default => throw new Exception('Unknown type for class that extends CompanyPackage'),
+        };
     }
 
     /**
@@ -229,14 +229,12 @@ abstract class CompanyPackage
         return true;
     }
 
-    // For zend2 forms
     /**
      * @return array
      */
-    public function getArrayCopy(): array
+    public function toArray(): array
     {
         return [
-            'id' => $this->id,
             'startDate' => $this->getStartingDate()->format('Y-m-d'),
             'expirationDate' => $this->getExpirationDate()->format('Y-m-d'),
             'published' => $this->isPublished(),
@@ -250,7 +248,6 @@ abstract class CompanyPackage
      */
     public function exchangeArray(array $data): void
     {
-        $this->id = (isset($data['id'])) ? $data['id'] : $this->getId();
         $this->setStartingDate(
             (isset($data['startDate'])) ? new DateTime($data['startDate']) : $this->getStartingDate()
         );

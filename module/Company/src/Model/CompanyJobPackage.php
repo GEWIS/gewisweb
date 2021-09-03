@@ -2,6 +2,7 @@
 
 namespace Company\Model;
 
+use Company\Model\JobCategory as JobCategoryModel;
 use Doctrine\Common\Collections\{
     ArrayCollection,
     Collection,
@@ -49,7 +50,7 @@ class CompanyJobPackage extends CompanyPackage
     /**
      * Get the number of jobs in the package.
      *
-     * @param $category
+     * @param JobCategoryModel|null $category
      *
      * @return int of jobs in the package
      */
@@ -61,25 +62,18 @@ class CompanyJobPackage extends CompanyPackage
     /**
      * Get the jobs that are part of the given category.
      *
-     * @param $category
+     * @param JobCategoryModel|null $category
      *
      * @return array
      */
-    public function getJobsInCategory($category): array
+    public function getJobsInCategory(?JobCategory $category = null): array
     {
         $filter = function ($job) use ($category) {
             if (null === $category) {
                 return $job->isActive();
             }
-            if (null === $job->getCategory() && null === $category->getLanguageNeutralId()) {
-                return $job->isActive();
-            }
-            if (null === $job->getCategory()) {
-                return false;
-            }
 
-            return $job->getCategory()->getLanguageNeutralId() === $category->getLanguageNeutralId()
-                && $job->isActive() && $job->getLanguage() === $category->getLanguage();
+            return $job->getCategory() === $category && $job->isActive();
         };
 
         return array_filter($this->jobs->toArray(), $filter);

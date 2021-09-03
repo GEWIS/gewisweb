@@ -2,7 +2,7 @@
 
 namespace Company\Mapper;
 
-use Company\Model\CompanyBannerPackage;
+use Company\Model\CompanyBannerPackage as CompanyBannerPackageModel;
 
 /**
  * Mappers for package.
@@ -27,6 +27,6 @@ class BannerPackage extends Package
      */
     protected function getRepositoryName(): string
     {
-        return CompanyBannerPackage::class;
+        return CompanyBannerPackageModel::class;
     }
 }

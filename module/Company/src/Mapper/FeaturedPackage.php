@@ -2,7 +2,7 @@
 
 namespace Company\Mapper;
 
-use Company\Model\CompanyFeaturedPackage;
+use Company\Model\CompanyFeaturedPackage as CompanyFeaturedPackageModel;
 
 /**
  * Mappers for package.
@@ -45,6 +45,6 @@ class FeaturedPackage extends Package
      */
     protected function getRepositoryName(): string
     {
-        return CompanyFeaturedPackage::class;
+        return CompanyFeaturedPackageModel::class;
     }
 }

@@ -70,9 +70,9 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
     /**
      * @return array
      */
-    public function getArrayCopy(): array
+    public function toArray(): array
     {
-        $array = parent::getArrayCopy();
+        $array = parent::toArray();
         $array['language'] = $this->getLanguage();
         $array['article'] = $this->getArticle();
 

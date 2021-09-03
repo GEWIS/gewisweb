@@ -14,23 +14,23 @@ use Doctrine\ORM\Mapping\{
 class CompanyBannerPackage extends CompanyPackage //implements RoleInterface, ResourceInterface
 {
     /**
-     * The banner's image's URL.
+     * The banner's image URL.
      */
     #[Column(type: "string")]
-    protected string $image;
+    protected ?string $image = null;
 
     /**
-     * Get the banner's image's URL.
+     * Get the banner's image URL.
      *
-     * @return string
+     * @return string|null
      */
-    public function getImage(): string
+    public function getImage(): ?string
     {
         return $this->image;
     }
 
     /**
-     * Set the banner's image's URL.
+     * Set the banner's image URL.
      *
      * @param string $image
      */

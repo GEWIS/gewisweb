@@ -186,7 +186,7 @@ return [
                                                         'action' => 'addPackage',
                                                     ],
                                                     'constraints' => [
-                                                        'type' => '[a-zA-Z0-9_-]*',
+                                                        'type' => '(banner|featured|job)',
                                                     ],
                                                 ],
                                             ],

@@ -1,116 +1,121 @@
 <?php
+$this->headTitle($this->translate('Edit Package'));
+
 $this->scriptUrl()->requireUrls(
     [
         'company_admin/company/edit/package/edit/job/delete',
     ],
-    ['slugCompanyName', 'packageId', 'jobId']
+    ['companySlugName', 'packageId', 'jobId']
 );
+
+$form->prepare();
+$form->setAttribute('class', 'form-company');
 ?>
-<?php if ($type === 'banner'): ?>
-    <h2><?= $this->translate('Banner') ?></h2>
-    <div class="row">
-        <div class="col-md-6">
-            <h3><?= $this->translate('Company Logo') ?></h3>
-            <img class="img-responsive" src="<?= $this->fileUrl($package->getImage()) ?>"/>
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1><?= $this->translate('Edit Package') ?></h1>
+            </div>
         </div>
-    </div>
-    <hr>
-<?php endif; ?>
-<?php
-$form->setAttribute('class', 'form-horizontal');
-$form->prepare()
-?>
-<?= $this->form()->openTag($form) ?>
-<?php $element = $form->get('id') ?>
-<?= $this->formElement($element) ?>
-<?= $this->partial('partial/company/admin/editors/package.phtml', ['form' => $form, 'type' => $type]); ?>
-<?= $this->form()->closeTag(); ?>
-
-<?php if ($type === 'job'): ?>
-    <h2>
-        <?= $this->translate('Jobs') ?>
-        <a class="btn btn-success pull-right"
-           href="<?= $this->url('company_admin/company/edit/package/edit/job/add',
-               [
-                   'slugCompanyName' => $companyName,
-                   'packageId' => $package->getId()
-               ]); ?>">
-            <i class="fas fa-plus"></i>
-            <?= $this->translate('Add Job'); ?>
-        </a>
-    </h2>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>
-                <?= $this->translate('Name'); ?>
-            </th>
-            <th>
-                <?= $this->translate('Active'); ?>
-            </th>
-            <th>
-                <?= $this->translate('Actions'); ?>
-            </th>
-        </tr>
-        </thead>
-
-        <?php $lniDoneList = [] ?>
-        <?php foreach ($package->getJobs() as $job): ?>
-            <?php
-            if (array_key_exists($job->getId(), $lniDoneList)) {
-                continue;
-            }
-            $lniDoneList[$job->getId()] = $job;
-            ?>
-            <tr>
-                <td>
-                    <?= $job->getName() ?>
-                </td>
-                <td>
-                    <?php echo $job->isActive() ? 'Yes' : 'No' ?>
-                </td>
-                <td>
-                    <a class="btn btn-xs btn-primary"
-                       href="<?= $this->url("company_admin/company/edit/package/edit/job/edit",
-                           [
-                               "slugCompanyName" => $companyName,
-                               "packageId" => $package->getId(),
-                               "jobId" => $job->getId(),
-                           ]
-                       ); ?>">
-                        <?= $this->translate('edit'); ?>
-                    </a>
-                    <button type="button" class="btn btn-danger btn-xs"
-                            onclick="deleteJob(<?= $job->getId() ?>)" data-toggle="modal"
-                            data-target="#deleteModal">
-                        <?= $this->translate('Delete') ?>
-                    </button>
-                </td>
-            </tr>
-        <?php endforeach ?>
-    </table>
-<?php endif ?>
+        <hr>
+        <?= $this->form()->openTag($form) ?>
+        <?= $this->partial(
+            'partial/company/admin/editors/package.phtml',
+            [
+                'form' => $form,
+                'type' => $type,
+            ],
+        ) ?>
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                $submit = $form->get('submit')
+                    ->setValue($this->translate('Update Package'))
+                    ->setAttribute('class', 'btn btn-primary pull-right');
+                ?>
+                <div class="form-group">
+                    <?= $this->formSubmit($submit) ?>
+                </div>
+            </div>
+        </div>
+        <?= $this->form()->closeTag() ?>
+        <hr>
+        <?php if ('banner' === $type): ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2><?= $this->translate('Banner') ?></h2>
+                </div>
+                <div class="col-md-6">
+                    <img class="img-responsive" src="<?= $this->fileUrl($package->getImage()) ?>">
+                </div>
+            </div>
+            <hr>
+        <?php elseif ('job' === $type): ?>
+            <h2><?= $this->translate('Jobs') ?></h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th><?= $this->translate('Name'); ?></th>
+                        <th><?= $this->translate('Active'); ?></th>
+                        <th><?= $this->translate('Actions'); ?></th>
+                    </tr>
+                </thead>
+                <?php foreach ($package->getJobs() as $job): ?>
+                    <tr>
+                        <td><?= $this->escapeHtml($this->localiseText($job->getName())) ?></td>
+                        <td><?= $job->isActive() ? $this->translate('Yes') : $this->translate('No') ?></td>
+                        <td>
+                            <a class="btn btn-xs btn-primary"
+                               href="<?= $this->url(
+                                   'company_admin/company/edit/package/edit/job/edit',
+                                   [
+                                       'companySlugName' => $companySlugName,
+                                       'packageId' => $package->getId(),
+                                       'jobId' => $job->getId(),
+                                   ]
+                               ); ?>">
+                                <?= $this->translate('edit'); ?>
+                            </a>
+                            <button class="btn btn-danger btn-xs" data-target="#deleteModal"
+                                    data-toggle="modal" onclick="deleteJob(<?= $job->getId() ?>)"
+                                    type="button">
+                                <?= $this->translate('Delete') ?>
+                            </button>
+                        </td>
+                    </tr>
+                <?php endforeach ?>
+            </table>
+            <a class="btn btn-success pull-right" href="<?= $this->url(
+                'company_admin/company/edit/package/edit/job/add',
+                [
+                    'companySlugName' => $companySlugName,
+                    'packageId' => $package->getId(),
+                ]
+            ); ?>">
+                <i class="fas fa-plus"></i>
+                <?= $this->translate('Add Job'); ?>
+            </a>
+        <?php endif ?>
 <!-- Delete job modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
                 <h4 class="modal-title"><?= $this->translate('Delete confirmation') ?></h4>
             </div>
             <div class="modal-body">
                 <p><?= $this->translate('Are you sure you want to delete this job?') ?> </p>
-                <p class="options">
-                </p>
             </div>
             <div class="modal-footer">
                 <form id="deleteForm" method="POST">
-                    <input type="submit" name="submit" value="<?= $this->translate('Delete job') ?>"
-                           class="btn btn-danger"/>
+                    <input class="btn btn-danger" name="submit" type="submit"
+                           value="<?= $this->translate('Delete job') ?>">
                     <button type="button" class="btn" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
                 </form>
-
             </div>
         </div>
     </div>
@@ -118,7 +123,7 @@ $form->prepare()
 <script>
     deleteJob = function (id) {
         $("#deleteForm").attr('action', URLHelper.url('company_admin/company/edit/package/edit/job/delete', {
-            'slugCompanyName': '<?= $companyName ?>',
+            'companySlugName': '<?= $companySlugName ?>',
             'packageId': '<?= $package->getId() ?>',
             'jobId': id
         }));
