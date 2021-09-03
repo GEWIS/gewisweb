@@ -67,6 +67,8 @@ class WatermarkService
             $pdfPage->annotateImage($drawSettings, $sizeX / 2, $sizeY / 2, 60, $watermarkText);
             $pdfPage->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
 
+            $pdfPage->profileImage('icc', null);
+
             $pdf->addImage($pdfPage);
         }
 
