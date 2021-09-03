@@ -1,16 +1,33 @@
-<?= sprintf($this->translate('Dear %s,'), $member->getFullName()) . "\n" ?>
+<?php $lang = 'en'; ?>
+For English, please see below.<br/><br/>
 
-<?= $this->translate('You have been registered on the website of Study association GEWIS, with the following information:') . "\n" ?>
 
-- <?= $this->translate('Membership number:') ?> <?= $user->getLidnr() . "\n" ?>
-- <?= $this->translate('Email address:') ?> <?= $user->getEmail() . "\n" ?>
+<?= sprintf($this->translate('Beste %s,'), $member->getFullName()) ?><br/><br/>
 
-<?= $this->translate('You can activate your account on the following link:') . "\n" ?>
+Je bent geregistreerd op de website van de Studievereniging GEWIS, met de volgende informatie:
+Lidnummer: <?= $user->getLidnr() ?>
+Email adres: <?= $user->getEmail() ?>
 
-<?= $this->serverUrl($this->url('user/activate', ['code' => $user->getCode()])) . "\n" ?>
+Je kunt je account activeren met de volgende link:
+<?= $this->serverUrl($this->url('user/activate', ['code' => $user->getCode()])) ?>
 
-<?= $this->translate('Your activation code is:') ?> <?= $user->getCode() . "\n" ?>
+Je activatie code is: <?= $user->getCode() ?>
 
-<?= $this->translate('Best Regards,') . "\n" ?>
+Met vriendelijke groeten,<br/>
+De Web Commissie
+<hr/>
 
-<?= $this->translate('WebCommissie GEWIS') ?>
+<?= sprintf($this->translate('Dear %s,'), $member->getFullName()) ?><br/><br/>
+
+You have been registered on the website of Study association GEWIS, with the following information:
+Membership number: <?= $user->getLidnr() ?>
+Email address: <?= $user->getEmail() ?>
+
+You can activate your account on the following link:
+<?= $this->serverUrl($this->url('user/activate', ['code' => $user->getCode()])) ?>
+
+Your activation code is: <?= $user->getCode() ?>
+
+With kind regards,<br/>
+The Web Committee
+<hr/>
