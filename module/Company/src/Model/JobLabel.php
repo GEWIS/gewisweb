@@ -40,14 +40,14 @@ class JobLabel
     protected CompanyLocalisedText $name;
 
     /**
-     * The slug of the label.
+     * The abbreviation of the label.
      */
     #[OneToOne(
         targetEntity: CompanyLocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
-    protected CompanyLocalisedText $slug;
+    protected CompanyLocalisedText $abbreviation;
 
     /**
      * The Assignments this Label belongs to.
@@ -112,9 +112,9 @@ class JobLabel
      *
      * @return CompanyLocalisedText
      */
-    public function getSlug(): CompanyLocalisedText
+    public function getAbbreviation(): CompanyLocalisedText
     {
-        return $this->slug;
+        return $this->abbreviation;
     }
 
     /**
@@ -122,9 +122,9 @@ class JobLabel
      *
      * @param CompanyLocalisedText $slug
      */
-    public function setSlug(CompanyLocalisedText $slug): void
+    public function setAbbreviation(CompanyLocalisedText $slug): void
     {
-        $this->slug = $slug;
+        $this->abbreviation = $slug;
     }
 
     /**
@@ -159,5 +159,15 @@ class JobLabel
         }
 
         $this->jobs->removeElement($job);
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'name' => $this->getName()->getValueNL(),
+            'nameEn' => $this->getName()->getValueEN(),
+            'abbreviation' => $this->getAbbreviation()->getValueNL(),
+            'abbreviationEn' => $this->getAbbreviation()->getValueEN(),
+        ];
     }
 }

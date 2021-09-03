@@ -67,7 +67,7 @@ class JobCategory extends Form implements InputFilterProviderInterface
 
         $this->add(
             [
-                'name' => 'namePlural',
+                'name' => 'pluralName',
                 'type' => Text::class,
                 'options' => [
                     'label' => $this->translator->translate('Name (Plural)'),
@@ -77,7 +77,7 @@ class JobCategory extends Form implements InputFilterProviderInterface
 
         $this->add(
             [
-                'name' => 'namePluralEn',
+                'name' => 'pluralNameEn',
                 'type' => Text::class,
                 'options' => [
                     'label' => $this->translator->translate('Name (Plural)'),
@@ -139,7 +139,7 @@ class JobCategory extends Form implements InputFilterProviderInterface
                 ],
 
             ];
-            $filter['namePlural' . $languageSuffix] = [
+            $filter['pluralName' . $languageSuffix] = [
                 'required' => true,
                 'validators' => [
                     [
@@ -162,12 +162,25 @@ class JobCategory extends Form implements InputFilterProviderInterface
             ];
         }
 
-        $filter['namePluralEn']['validators'][] = [
+        $filter['pluralNameEn']['validators'][] = [
             'name' => Callback::class,
-            ''
+            'options' => [
+                'callback' => [$this, 'isEnglishPluralUnique'],
+                Callback::INVALID_VALUE => $this->translator->translate(
+                    'This plural of the English name is already taken'
+                ),
+            ],
         ];
 
         return $filter;
+    }
+
+    /**
+     * @param string|null $currentEnglishPluralName
+     */
+    public function setCurrentEnglishPluralName(?string $currentEnglishPluralName): void
+    {
+        $this->currentEnglishPluralName = $currentEnglishPluralName;
     }
 
     /**

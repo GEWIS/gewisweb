@@ -285,12 +285,12 @@ return [
                                 'priority' => 3,
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/edit/:categoryId',
+                                    'route' => '/edit/:jobCategoryId',
                                     'defaults' => [
                                         'action' => 'editCategory',
                                     ],
                                     'constraints' => [
-                                        'categoryId' => '[0-9]*',
+                                        'jobCategoryId' => '[0-9]*',
                                     ],
                                 ],
                             ],
@@ -316,12 +316,12 @@ return [
                                 'priority' => 3,
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/edit/:labelId',
+                                    'route' => '/edit/:jobLabelId',
                                     'defaults' => [
                                         'action' => 'editLabel',
                                     ],
                                     'constraints' => [
-                                        'labelId' => '[0-9]*',
+                                        'jobLabelId' => '[0-9]*',
                                     ],
                                 ],
                             ],

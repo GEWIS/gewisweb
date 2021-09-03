@@ -112,51 +112,95 @@ class JobLabel extends Form implements InputFilterProviderInterface
     {
         $filter = [];
 
-        foreach (['', 'En'] as $languageSuffix) {
-            $filter['name' . $languageSuffix] = [
-                'required' => true,
-                'validators' => [
-                    [
-                        'name' => StringLength::class,
-                        'options' => [
-                            'encoding' => 'UTF-8',
-                            'min' => 2,
-                            'max' => 127,
-                        ],
-                    ],
+        if (
+            isset($this->data['language_english'])
+            && $this->data['language_english']
+        ) {
+            $filter += $this->inputFilterGeneric('En');
+        }
+
+        if (
+            isset($this->data['language_dutch'])
+            && $this->data['language_dutch']
+        ) {
+            $filter += $this->inputFilterGeneric();
+        }
+
+        // One of the language_dutch or language_english needs to set. If not, display a message at both, indicating
+        // that they need to be set.
+        if (
+            (isset($this->data['language_dutch']) && !$this->data['language_dutch'])
+            && (isset($this->data['language_english']) && !$this->data['language_english'])
+        ) {
+            unset($this->data['language_dutch'], $this->data['language_english']);
+
+            $filter += [
+                'language_dutch' => [
+                    'required' => true,
                 ],
-                'filters' => [
-                    [
-                        'name' => StripTags::class,
-                    ],
-                    [
-                        'name' => StringTrim::class,
-                    ],
-                ],
-            ];
-            $filter['abbreviation' . $languageSuffix] = [
-                'required' => true,
-                'validators' => [
-                    [
-                        'name' => StringLength::class,
-                        'options' => [
-                            'encoding' => 'UTF-8',
-                            'min' => 2,
-                            'max' => 127,
-                        ],
-                    ],
-                ],
-                'filters' => [
-                    [
-                        'name' => StripTags::class,
-                    ],
-                    [
-                        'name' => StringTrim::class,
-                    ],
+                'language_english' => [
+                    'required' => true,
                 ],
             ];
         }
 
         return $filter;
+    }
+
+
+    /**
+     * Build a generic input filter.
+     *
+     * @param string $languageSuffix Suffix that is used for language fields to indicate that a field belongs to that
+     * language
+     *
+     * @return array
+     */
+    protected function inputFilterGeneric(string $languageSuffix = ''): array
+    {
+        return [
+            'name' . $languageSuffix => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => StringLength::class,
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 2,
+                            'max' => 127,
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StripTags::class,
+                    ],
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
+            ],
+            'abbreviation' . $languageSuffix => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => StringLength::class,
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 2,
+                            'max' => 127,
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StripTags::class,
+                    ],
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
+            ]
+        ];
     }
 }

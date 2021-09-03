@@ -159,4 +159,18 @@ class JobCategory
     {
         $this->slug = $slug;
     }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'name' => $this->getName()->getValueNL(),
+            'nameEn' => $this->getName()->getValueEN(),
+            'pluralName' => $this->getPluralName()->getValueNL(),
+            'pluralNameEn' => $this->getPluralName()->getValueEN(),
+            'hidden' => $this->getHidden(),
+        ];
+    }
 }

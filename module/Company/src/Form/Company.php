@@ -489,9 +489,9 @@ class Company extends Form implements InputFilterProviderInterface
     }
 
     /**
-     * @param string $slugName
+     * @param string|null $slugName
      */
-    public function setCurrentSlug(string $slugName): void
+    public function setCurrentSlug(?string $slugName): void
     {
         $this->currentSlug = $slugName;
     }

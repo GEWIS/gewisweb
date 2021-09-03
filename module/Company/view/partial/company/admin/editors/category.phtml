@@ -21,7 +21,7 @@
             <?= $this->formElementErrors($name) ?>
         </div>
         <?php
-        $namePlural = $form->get('namePlural')
+        $namePlural = $form->get('pluralName')
             ->setAttribute('class', 'form-control form-control-dutch')
             ->setAttribute('id', 'name-plural-nl');
         $namePlural->setValue($this->localisedTextElement($namePlural));
@@ -53,7 +53,7 @@
             <?= $this->formElementErrors($nameEn) ?>
         </div>
         <?php
-        $namePluralEn = $form->get('namePluralEn')
+        $namePluralEn = $form->get('pluralNameEn')
             ->setAttribute('class', 'form-control form-control-english')
             ->setAttribute('id', 'name-plural-en');
         $namePluralEn->setValue($this->localisedTextElement($namePluralEn));

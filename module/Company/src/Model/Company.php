@@ -530,11 +530,10 @@ class Company
      *
      * @return array
      */
-    public function getArrayCopy(): array
+    public function toArray(): array
     {
         $arraycopy = [];
 
-        $arraycopy['id'] = $this->getId();
         $arraycopy['name'] = $this->getName();
         $arraycopy['slugName'] = $this->getSlugName();
         $arraycopy['logo'] = $this->getLogo();
