@@ -1,0 +1,47 @@
+<?php
+$this->headTitle($this->translate('Add Job'));
+
+$this->headScript()
+    ->appendFile($this->basePath() . '/js/company-create.js')
+    ->appendFile($this->basePath() . '/js/job-create.js');
+
+$form->prepare();
+$form->setAttribute('class', 'form-company');
+?>
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1><?= $this->translate('Add Job') ?></h1>
+            </div>
+        </div>
+        <hr>
+        <?= $this->form()->openTag($form) ?>
+        <?= $this->partial(
+            'partial/company/admin/editors/job.phtml',
+            [
+                'form' => $form,
+            ],
+        ) ?>
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                $submit = $form->get('submit')
+                    ->setValue($this->translate('Add Job'))
+                    ->setAttribute('class', 'btn btn-primary pull-right');
+                ?>
+                <div class="form-group">
+                    <?= $this->formSubmit($submit) ?>
+                </div>
+            </div>
+        </div>
+        <?= $this->form()->closeTag() ?>
+    </div>
+</section>
+<script>
+    Company.updateForm();
+    Job.updateAllLabels();
+    $('label[for^="labels-"]').on('click', function () {
+        Job.toggleLabel($(this).data('label-id'));
+    });
+</script>

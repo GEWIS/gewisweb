@@ -1,0 +1,356 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <h2><?= $this->translate('Identifier') ?></h2>
+                <p><?= $this->translate('Specify the permanent link (identifier) for this company, it should be unique X.') ?></p>
+            </div>
+            <div class="col-md-12">
+                <?php
+                $slugName = $form->get('slugName')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'slug-name');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($slugName) ?>">
+                    <label for="<?= $slugName->getAttribute('id') ?>" class="control-label label-required">
+                        <?= $slugName->getLabel() ?>
+                    </label>
+                    <?= $this->formText($slugName) ?>
+                    <?= $this->formElementErrors($slugName) ?>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <?php
+                $category = $form->get('category')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'category');
+                $category->setValueOptions(array_map(
+                    function ($option) {
+                        return $this->escapeHtml($this->localiseText($option));
+                    },
+                    $category->getValueOptions(),
+                ));
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($category) ?>">
+                    <label for="<?= $category->getAttribute('id') ?>" class="control-label label-required">
+                        <?= $category->getLabel() ?>
+                    </label>
+                    <?= $this->formSelect($category) ?>
+                    <?= $this->formElementErrors($category) ?>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <?php
+                $active = $form->get('active')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'active');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($active) ?>">
+                    <label for="<?= $active->getAttribute('id') ?>" class="control-label label-required">
+                        <?= $active->getLabel() ?>
+                    </label>
+                    <?= $this->formCheckbox($active) ?>
+                    <?= $this->formElementErrors($active) ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <h2><?= $this->translate('Contact Information') ?></h2>
+                <p><?= $this->translate('Enter how someone can contact the person responsible for this job.') ?></p>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php
+                        $contactName = $form->get('contactName')
+                            ->setAttribute('class', 'form-control')
+                            ->setAttribute('id', 'contact-name');
+                        ?>
+                        <div class="form-group <?= $this->bootstrapElementError($contactName) ?>">
+                            <label for="<?= $contactName->getAttribute('id') ?>" class="control-label">
+                                <?= $contactName->getLabel() ?>
+                            </label>
+                            <?= $this->formText($contactName) ?>
+                            <?= $this->formElementErrors($contactName) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <?php
+                        $contactEmail = $form->get('contactEmail')
+                            ->setAttribute('class', 'form-control')
+                            ->setAttribute('id', 'email');
+                        ?>
+                        <div class="form-group <?= $this->bootstrapElementError($contactEmail) ?>">
+                            <label for="<?= $contactEmail->getAttribute('id') ?>" class="control-label">
+                                <?= $contactEmail->getLabel() ?>
+                            </label>
+                            <?= $this->formText($contactEmail) ?>
+                            <?= $this->formElementErrors($contactEmail) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <?php
+                        $contactPhone = $form->get('contactPhone')
+                            ->setAttribute('class', 'form-control')
+                            ->setAttribute('id', 'phone');
+                        ?>
+                        <div class="form-group <?= $this->bootstrapElementError($contactPhone) ?>">
+                            <label for="<?= $contactPhone->getAttribute('id') ?>" class="control-label">
+                                <?= $contactPhone->getLabel() ?>
+                            </label>
+                            <?= $this->formText($contactPhone) ?>
+                            <?= $this->formElementErrors($contactPhone) ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Information') ?></h2>
+        <p><?= $this->translate('What is this company about? Fill in the blanks below, please note that at least one language must be used.') ?></p>
+    </div>
+    <div class="col-md-6">
+        <?php
+        $checkboxDutch = $form->get('language_dutch')
+            ->setAttribute('onchange', 'Company.updateForm()')
+            ->setAttribute('id', 'dutch-check')
+            ->setAttribute('class', 'language-control');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($checkboxDutch) ?>">
+            <label for="<?= $checkboxDutch->getAttribute('id') ?>" class="control-label"
+                   title="<?= $checkboxDutch->getLabel() ?>">
+                <?= $this->formCheckbox($checkboxDutch) ?>
+                <span class="flag-icon flag-icon-nl"></span>
+                <?= $this->translate('Dutch') ?>
+            </label>
+            <?= $this->formElementErrors($checkboxDutch) ?>
+        </div>
+        <hr>
+        <?php
+        $name = $form->get('name')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('id', 'name-nl');
+        $name->setValue($this->localisedTextElement($name));
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($name) ?>">
+            <label for="<?= $name->getAttribute('id') ?>" class="control-label">
+                <?= $name->getLabel() ?>
+            </label>
+            <?= $this->formText($name) ?>
+            <?= $this->formElementErrors($name) ?>
+        </div>
+        <?php
+        // A location is not required, to prevent the field from being marked required, add `not-required` to its `id`.
+        $location = $form->get('location')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('id', 'location-nl-not-required');
+        $location->setValue($this->localisedTextElement($location));
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($location) ?>">
+            <label for="<?= $location->getAttribute('id') ?>" class="control-label">
+                <?= $location->getLabel() ?>
+            </label>
+            <?= $this->formInput($location) ?>
+            <?= $this->formElementErrors($location) ?>
+        </div>
+        <?php
+        // A website is not required, to prevent the field from being marked required, add `not-required` to its `id`.
+        $website = $form->get('website')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('id', 'website-nl-not-required');
+        $website->setValue($this->localisedTextElement($website));
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($website) ?>">
+            <label for="<?= $website->getAttribute('id') ?>" class="control-label">
+                <?= $website->getLabel() ?>
+            </label>
+            <?= $this->formUrl($website) ?>
+            <?= $this->formElementErrors($website) ?>
+        </div>
+        <?php
+        $description = $form->get('description')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('style', 'width:100%; height:10em; resize:none')
+            ->setAttribute('id', 'description-nl');
+        $description->setValue($this->localisedTextElement($description));
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($description) ?>">
+            <label for="<?= $description->getAttribute('id') ?>" class="control-label">
+                <?= $description->getLabel() ?>
+            </label>
+            <?= $this->formTextarea($description) ?>
+            <?= $this->formElementErrors($description) ?>
+        </div>
+        <?php
+        $attachment = $form->get('attachment')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('id', 'logo-nl-not-required');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($attachment) ?>">
+            <label for="<?= $attachment->getAttribute('id') ?>" class="control-label">
+                <?= $attachment->getLabel() ?>
+            </label>
+            <?= $this->formFile($attachment) ?>
+            <?= $this->formElementErrors($attachment) ?>
+            <?php if (isset($attachments) && null !== $attachments->getValueNL()): ?>
+                <a class="btn btn-default" href="<?= $this->fileUrl($attachments->getValueNL()); ?>">
+                    <?= $this->translate('View current attachment'); ?>
+                </a>
+            <?php endif; ?>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <?php
+        $checkboxEnglish = $form->get('language_english')
+            ->setAttribute('onchange', 'Company.updateForm()')
+            ->setAttribute('id', 'english-check')
+            ->setAttribute('class', 'language-control');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($checkboxEnglish) ?>">
+            <label for="<?= $checkboxEnglish->getAttribute('id') ?>" class="control-label"
+                   title="<?= $checkboxEnglish->getLabel() ?>">
+                <?= $this->formCheckbox($checkboxEnglish) ?>
+                <span class="flag-icon flag-icon-en"></span>
+                <?= $this->translate('English') ?>
+            </label>
+            <?= $this->formElementErrors($checkboxEnglish) ?>
+        </div>
+        <hr>
+        <?php
+        $nameEn = $form->get('nameEn')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('id', 'name-en');
+        $nameEn->setValue($this->localisedTextElement($nameEn));
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($nameEn) ?>">
+            <label for="<?= $nameEn->getAttribute('id') ?>" class="control-label">
+                <?= $nameEn->getLabel() ?>
+            </label>
+            <?= $this->formText($nameEn) ?>
+            <?= $this->formElementErrors($nameEn) ?>
+        </div>
+        <?php
+        // A slogan is not required, to prevent the field from being marked required, add `not-required` to its `id`.
+        $locationEn = $form->get('locationEn')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('id', 'slogan-en-not-required');
+        $locationEn->setValue($this->localisedTextElement($locationEn));
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($locationEn) ?>">
+            <label for="<?= $locationEn->getAttribute('id') ?>" class="control-label">
+                <?= $locationEn->getLabel() ?>
+            </label>
+            <?= $this->formInput($locationEn) ?>
+            <?= $this->formElementErrors($locationEn) ?>
+        </div>
+        <?php
+        // A website is not required, to prevent the field from being marked required, add `not-required` to its `id`.
+        $websiteEn = $form->get('websiteEn')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('id', 'website-en-not-required');
+        $websiteEn->setValue($this->localisedTextElement($websiteEn));
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($websiteEn) ?>">
+            <label for="<?= $websiteEn->getAttribute('id') ?>" class="control-label">
+                <?= $websiteEn->getLabel() ?>
+            </label>
+            <?= $this->formUrl($websiteEn) ?>
+            <?= $this->formElementErrors($websiteEn) ?>
+        </div>
+        <?php
+        $descriptionEn = $form->get('descriptionEn')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('style', 'width:100%; height:10em; resize:none')
+            ->setAttribute('id', 'description-en');
+        $descriptionEn->setValue($this->localisedTextElement($descriptionEn));
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($descriptionEn) ?>">
+            <label for="<?= $descriptionEn->getAttribute('id') ?>" class="control-label">
+                <?= $descriptionEn->getLabel() ?>
+            </label>
+            <?= $this->formTextarea($descriptionEn) ?>
+            <?= $this->formElementErrors($descriptionEn) ?>
+        </div>
+        <?php
+        $attachmentEn = $form->get('attachmentEn')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('id', 'logo-en-not-required');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($attachmentEn) ?>">
+            <label for="<?= $attachmentEn->getAttribute('id') ?>" class="control-label">
+                <?= $attachmentEn->getLabel() ?>
+            </label>
+            <?= $this->formFile($attachmentEn) ?>
+            <?= $this->formElementErrors($attachmentEn) ?>
+            <?php
+            if (isset($attachments) && null !== $attachments->getValueEN()):
+            ?>
+                <a class="btn btn-default" href="<?= $this->fileUrl($attachments->getValueEN()); ?>">
+                    <?= $this->translate('View current attachment'); ?>
+                </a>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Job Labels') ?></h2>
+        <p><?= $this->translate('Add job labels to your job to give viewers a better understanding of the job is about.') ?></p>
+    </div>
+    <div class="col-md-12">
+        <?php
+        $labels = $form->get('labels');
+        $labelsName = $labels->getName();
+        $labelOptions = $labels->getValueOptions();
+        $labelSelectedValues = $labels->getValue();
+
+        if (!empty($labelSelectedValues)) {
+            $selectedLabelIds = [];
+
+            // To prevent issues with Zend's form parsing, we must access `id` as an array attribute and not via
+            // `ActivityCategory->getId()`.
+            foreach ($labelSelectedValues as $label) {
+                $selectedLabelIds[] = is_string($label) ? $label : $label['id'];
+            }
+        }
+        ?>
+        <?php if (empty($labelOptions)): ?>
+            <p><i><?= $this->translate('There are currently no job labels...') ?></i></p>
+        <?php else: ?>
+            <fieldset>
+                <?php foreach ($labelOptions as $option => $value): ?>
+                    <?php
+                    $checked = (isset($selectedLabelIds) && in_array($option, $selectedLabelIds)) ?
+                        'checked="checked"' : '';
+                    ?>
+                    <div class="chip chip-clickable chip-outlined">
+                        <span class="chip-icon chip-check-icon fas fa-check-circle hidden"></span>
+                        <label for="<?= $labelsName ?>-<?= $option ?>" data-label-id="<?= $option ?>"
+                               class="chip-label">
+                            <?= $this->escapeHtml($this->localiseText($value)) ?>
+                        </label>
+                        <input type="checkbox" name="<?= $labelsName ?>[]"
+                               id="<?= $labelsName ?>-<?= $option; ?>"
+                               value="<?= $option ?>" class="chip-checkbox" <?= $checked ?>>
+                    </div>
+                <?php endforeach; ?>
+            </fieldset>
+        <?php endif; ?>
+    </div>
+</div>

@@ -161,9 +161,13 @@ class JobLabel
         $this->jobs->removeElement($job);
     }
 
+    /**
+     * @return array
+     */
     public function toArray(): array
     {
         return [
+            'id' => $this->getId(),
             'name' => $this->getName()->getValueNL(),
             'nameEn' => $this->getName()->getValueEN(),
             'abbreviation' => $this->getAbbreviation()->getValueNL(),

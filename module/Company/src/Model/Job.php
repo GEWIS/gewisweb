@@ -12,10 +12,11 @@ use Doctrine\ORM\Mapping\{
     Entity,
     GeneratedValue,
     Id,
+    JoinColumn,
     JoinTable,
     ManyToMany,
     ManyToOne,
-};
+    OneToOne};
 
 /**
  * Job model.
@@ -32,12 +33,6 @@ class Job
     protected ?int $id = null;
 
     /**
-     * The job's display name.
-     */
-    #[Column(type: "string")]
-    protected string $name;
-
-    /**
      * The job's slug name.
      */
     #[Column(type: "string")]
@@ -50,52 +45,81 @@ class Job
     protected bool $active;
 
     /**
-     * The job's website.
-     */
-    #[Column(type: "string")]
-    protected string $website;
-
-    /**
-     * The location(url) of an attachment describing the job.
+     * The job's contact's name.
      */
     #[Column(
         type: "string",
         nullable: true,
     )]
-    protected ?string $attachment = null;
-
-    /**
-     * The job's contact's name.
-     */
-    #[Column(type: "string")]
-    protected string $contactName;
+    protected ?string $contactName;
 
     /**
      * The job's phone.
      */
-    #[Column(type: "string")]
-    protected string $phone;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $contactPhone;
 
     /**
      * The job's email.
      */
-    #[Column(type: "string")]
-    protected string $email;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $contactEmail;
 
     /**
-     * The job's description.
+     * The job's display name.
      */
-    #[Column(type: "text")]
-    protected string $description;
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    protected CompanyLocalisedText $name;
 
     /**
      * The job's location.
      */
-    #[Column(
-        type: "text",
-        nullable: true,
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
     )]
-    protected ?string $location = null;
+    protected CompanyLocalisedText $location;
+
+    /**
+     * The job's website.
+     */
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    protected CompanyLocalisedText $website;
+
+    /**
+     * The job's description.
+     */
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    protected CompanyLocalisedText $description;
+
+    /**
+     * The location(url) of an attachment describing the job.
+     */
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    protected CompanyLocalisedText $attachment;
 
     /**
      * The job's timestamp.
@@ -104,17 +128,16 @@ class Job
     protected DateTime $timestamp;
 
     /**
-     * The job's language.
-     */
-    #[Column(type: "string")]
-    protected string $language;
-
-    /**
      * The job's package.
      */
     #[ManyToOne(
         targetEntity: CompanyJobPackage::class,
         inversedBy: "jobs",
+    )]
+    #[JoinColumn(
+        name: "package_id",
+        referencedColumnName: "id",
+        nullable: false,
     )]
     protected CompanyJobPackage $package;
 
@@ -122,6 +145,11 @@ class Job
      * The job's category.
      */
     #[ManyToOne(targetEntity: JobCategory::class)]
+    #[JoinColumn(
+        name: "category_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
     protected JobCategory $category;
 
     /**
@@ -156,9 +184,9 @@ class Job
     /**
      * Get the job's name.
      *
-     * @return string
+     * @return CompanyLocalisedText
      */
-    public function getName(): string
+    public function getName(): CompanyLocalisedText
     {
         return $this->name;
     }
@@ -166,9 +194,9 @@ class Job
     /**
      * Set the job's name.
      *
-     * @param string $name
+     * @param CompanyLocalisedText $name
      */
-    public function setName(string $name): void
+    public function setName(CompanyLocalisedText $name): void
     {
         $this->name = $name;
     }
@@ -241,9 +269,9 @@ class Job
     /**
      * Get the job's website.
      *
-     * @return string
+     * @return CompanyLocalisedText
      */
-    public function getWebsite(): string
+    public function getWebsite(): CompanyLocalisedText
     {
         return $this->website;
     }
@@ -251,9 +279,9 @@ class Job
     /**
      * Set the job's website.
      *
-     * @param string $website
+     * @param CompanyLocalisedText $website
      */
-    public function setWebsite(string $website)
+    public function setWebsite(CompanyLocalisedText $website)
     {
         $this->website = $website;
     }
@@ -261,9 +289,9 @@ class Job
     /**
      * Get the job's attachment.
      *
-     * @return string|null
+     * @return CompanyLocalisedText
      */
-    public function getAttachment(): ?string
+    public function getAttachment(): CompanyLocalisedText
     {
         return $this->attachment;
     }
@@ -271,9 +299,9 @@ class Job
     /**
      * Set the job's attachment.
      *
-     * @param string|null $attachment
+     * @param CompanyLocalisedText $attachment
      */
-    public function setAttachment(?string $attachment): void
+    public function setAttachment(CompanyLocalisedText $attachment): void
     {
         $this->attachment = $attachment;
     }
@@ -281,9 +309,9 @@ class Job
     /**
      * Get the job's contact's name.
      *
-     * @return string
+     * @return string|null
      */
-    public function getContactName(): string
+    public function getContactName(): ?string
     {
         return $this->contactName;
     }
@@ -291,51 +319,51 @@ class Job
     /**
      * Set the job's contact's name.
      *
-     * @param string $name
+     * @param string|null $name
      */
-    public function setContactName(string $name): void
+    public function setContactName(?string $name): void
     {
         $this->contactName = $name;
     }
 
     /**
-     * Get the job's phone.
+     * Get the job's contact's phone.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPhone(): string
+    public function getContactPhone(): ?string
     {
-        return $this->phone;
+        return $this->contactPhone;
     }
 
     /**
-     * Set the job's phone.
+     * Set the job's contact's phone.
      *
-     * @param string $phone
+     * @param string|null $contactPhone
      */
-    public function setPhone(string $phone): void
+    public function setContactPhone(?string $contactPhone): void
     {
-        $this->phone = $phone;
+        $this->contactPhone = $contactPhone;
     }
 
     /**
-     * Get the job's email.
+     * Get the job's contact's email.
      *
-     * @return string
+     * @return string|null
      */
-    public function getEmail(): string
+    public function getContactEmail(): ?string
     {
-        return $this->email;
+        return $this->contactEmail;
     }
 
     /**
-     * Set the job's email.
+     * Set the job's contact's email.
      *
-     * @param string $email
+     * @param string|null $contactEmail
      */
-    public function setEmail(string $email): void
+    public function setContactEmail(?string $contactEmail): void
     {
-        $this->email = $email;
+        $this->contactEmail = $contactEmail;
     }
 
     /**
@@ -361,9 +389,9 @@ class Job
     /**
      * Get the job's description.
      *
-     * @return string
+     * @return CompanyLocalisedText
      */
-    public function getDescription(): string
+    public function getDescription(): CompanyLocalisedText
     {
         return $this->description;
     }
@@ -371,31 +399,11 @@ class Job
     /**
      * Set the job's description.
      *
-     * @param string $description
+     * @param CompanyLocalisedText $description
      */
-    public function setDescription(string $description): void
+    public function setDescription(CompanyLocalisedText $description): void
     {
         $this->description = $description;
-    }
-
-    /**
-     * Get the job's language.
-     *
-     * @return string language of the job
-     */
-    public function getLanguage(): string
-    {
-        return $this->language;
-    }
-
-    /**
-     * Set the job's language.
-     *
-     * @param string $language language of the job
-     */
-    public function setLanguage(string $language): void
-    {
-        $this->language = $language;
     }
 
     /**
@@ -489,9 +497,9 @@ class Job
      * this job is intended. This location may not be equal to the company's
      * address.
      *
-     * @return string|null
+     * @return CompanyLocalisedText
      */
-    public function getLocation(): ?string
+    public function getLocation(): CompanyLocalisedText
     {
         return $this->location;
     }
@@ -499,10 +507,41 @@ class Job
     /**
      * Sets the job's location.
      *
-     * @param string|null $location
+     * @param CompanyLocalisedText $location
      */
-    public function setLocation(?string $location): void
+    public function setLocation(CompanyLocalisedText $location): void
     {
         $this->location = $location;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        $labels = [];
+        foreach ($this->getLabels() as $label) {
+            $labels[] = $label->toArray();
+        }
+
+        return [
+            'slugName' => $this->getSlugName(),
+            'category' => $this->getCategory(),
+            'contactName' => $this->getContactName(),
+            'contactEmail' => $this->getContactEmail(),
+            'contactPhone' => $this->getContactPhone(),
+            'active' => $this->getActive(),
+            'name' => $this->getName()->getValueNL(),
+            'nameEn' => $this->getName()->getValueEN(),
+            'location' => $this->getLocation()->getValueNL(),
+            'locationEn' => $this->getLocation()->getValueEN(),
+            'website' => $this->getWebsite()->getValueNL(),
+            'websiteEn' => $this->getWebsite()->getValueEN(),
+            'description' => $this->getDescription()->getValueNL(),
+            'descriptionEn' => $this->getDescription()->getValueEN(),
+            'attachment' => $this->getAttachment()->getValueNL(),
+            'attachmentEn' => $this->getAttachment()->getValueEN(),
+            'labels' => $labels,
+        ];
     }
 }

@@ -74,7 +74,7 @@ class Job extends Form implements InputFilterProviderInterface
 
         $this->add(
             [
-                'name' => 'slug',
+                'name' => 'slugName',
                 'type' => Text::class,
                 'options' => [
                     'label' => $this->translator->translate('Slug'),
@@ -306,7 +306,7 @@ class Job extends Form implements InputFilterProviderInterface
     public function getInputFilterSpecification(): array
     {
         $filter = [
-            'slug' => [
+            'slugName' => [
                 'required' => true,
                 'validators' => [
                     [
@@ -331,6 +331,11 @@ class Job extends Form implements InputFilterProviderInterface
             ],
             'category' => [
                 'required' => true,
+                'filters' => [
+                    [
+                        'name' => ToNull::class,
+                    ],
+                ],
             ],
             'active' => [
                 'required' => true,
@@ -390,6 +395,9 @@ class Job extends Form implements InputFilterProviderInterface
                         'name' => ToNull::class,
                     ],
                 ],
+            ],
+            'labels' => [
+                'required' => false,
             ],
         ];
 
@@ -551,6 +559,12 @@ class Job extends Form implements InputFilterProviderInterface
     public function isSlugUnique(string $value, array $context): bool
     {
         $category = $context['category'];
+
+        // Don't validate if the job category is empty. Note that this is an empty string, null only exists after
+        // validation of the form.
+        if ('' === $category) {
+            return false;
+        }
 
         if ($this->currentSlug === $value) {
             return true;
