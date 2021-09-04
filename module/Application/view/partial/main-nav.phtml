@@ -35,11 +35,30 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     </ul>
                 </li>
                 <?php if (null === $this->identity()): ?>
-                    <li class="pull-right">
-                        <a href="<?= $this->url('user') ?>">
-                            <span class="fas fa-user"></span>
-                            <?= $this->translate('Login') ?>
+                    <li class="dropdown pull-right">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user"></i>
+                            <?= $this->translate('Members') ?>
+                            <span class="caret"></span>
                         </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="<?= $this->url('user') ?>">
+                                    <?= $this->translate('Login') ?>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?= $this->url(
+                                    'home/page',
+                                    [
+                                        'category' => 'vereniging',
+                                        'sub_category' => 'lidworden',
+                                    ],
+                                ) ?>">
+                                    <?= $this->translate('Subscribe') ?>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 <?php else: ?>
                     <?php $member = $this->identity()->getMember() ?>
