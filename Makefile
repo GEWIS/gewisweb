@@ -8,6 +8,7 @@ help:
 		@echo "updatepackage"
 		@echo "updatecss"
 		@echo "updateglide"
+		@echo "updatedocker"
 		@echo "getvendordir"
 		@echo "phpstan"
 		@echo "phpcs"
@@ -53,7 +54,7 @@ replenish:
 		@docker-compose exec web php composer.phar dump-autoload --dev
 		@docker-compose exec web ./orm orm:generate-proxies
 
-update: updatecomposer updatepackage updatecss updateglide
+update: updatecomposer updatepackage updatecss updateglide updatedocker
 
 loadenv:
 		@export $$(grep -v '^#' .env | xargs -d '\n')
@@ -122,11 +123,23 @@ updateglide:
 		@docker-compose exec glide php composer.phar update -W
 		@docker cp gewisweb_glide_1:/glide/composer.lock ./docker/glide/composer.lock
 
+updatedocker:
+		@docker-compose pull
+		@docker build --pull --no-cache -t web.docker-registry.gewis.nl/gewisweb_web:production -f docker/web/production/Dockerfile .
+		@docker build --pull --no-cache -t web.docker-registry.gewis.nl/gewisweb_web:development -f docker/web/development/Dockerfile .
+		@docker build --pull --no-cache -t web.docker-registry.gewis.nl/gewisweb_glide:latest -f docker/glide/Dockerfile docker/glide
+		@docker build --pull --no-cache -t web.docker-registry.gewis.nl/gewisweb_matomo:latest -f docker/matomo/Dockerfile docker/matomo
+		@docker build --pull --no-cache -t web.docker-registry.gewis.nl/gewisweb_nginx:latest -f docker/nginx/Dockerfile docker/nginx
+
 all: build login push
 
 prod: buildprod login pushprod
 
 dev: builddev login pushdev
+
+webprod: buildwebprod login pushwebprod
+
+webdev: buildwebdev login pushwebdev
 
 build: buildweb buildglide buildmatomo buildnginx
 
