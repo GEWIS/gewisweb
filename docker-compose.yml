@@ -33,6 +33,7 @@ services:
 #            - GLIDE_KEY=
 #            - DOCKER_GOOGLE_API_KEY=
 #            - DOCKER_GOOGLE_CALENDAR_KEY=
+#            - DOCKER_SUPREMUM_API_KEY=
 #            - DOCKER_DB_HOST=
 #            - DOCKER_DB_PORT=
 #            - DOCKER_DB_USERNAME=

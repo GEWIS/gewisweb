@@ -3,6 +3,7 @@
 use Frontpage\Controller\{
     AdminController,
     FrontpageController,
+    InfimumController,
     NewsAdminController,
     OrganController,
     PageAdminController,
@@ -13,6 +14,7 @@ use Frontpage\Controller\{
 use Frontpage\Controller\Factory\{
     AdminControllerFactory,
     FrontpageControllerFactory,
+    InfimumControllerFactory,
     NewsAdminControllerFactory,
     OrganControllerFactory,
     PageAdminControllerFactory,
@@ -342,12 +344,24 @@ return [
                 'may_terminate' => true,
                 'priority' => 100,
             ],
+            'infimum' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/api/infimum',
+                    'defaults' => [
+                        'controller' => InfimumController::class,
+                        'action' => 'show',
+                    ],
+                ],
+                'priority' => 100,
+            ],
         ],
     ],
     'controllers' => [
         'factories' => [
             AdminController::class => AdminControllerFactory::class,
             FrontpageController::class => FrontpageControllerFactory::class,
+            InfimumController::class => InfimumControllerFactory::class,
             NewsAdminController::class => NewsAdminControllerFactory::class,
             OrganController::class => OrganControllerFactory::class,
             PageAdminController::class => PageAdminControllerFactory::class,

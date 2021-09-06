@@ -14,7 +14,7 @@
 
 return [
     /**
-     * Proxy configuration, used when determinining user roles.
+     * Proxy configuration, used when determining user roles.
      */
     'proxy' => [
         'enabled' => true,
@@ -50,6 +50,16 @@ return [
         'google_api_key' => getenv('DOCKER_GOOGLE_API_KEY'),
         'google_calendar_key' => getenv('DOCKER_GOOGLE_CALENDAR_KEY')
     ],
+
+    /**
+     * API key for retrieving an Infimum from Supremum.
+     */
+    'infimum' => [
+        'supremum_api_url' => 'https://supremum.gewis.nl/api/random_infimum',
+        'supremum_api_header' => 'X-Api-Key',
+        'supremum_api_key' => getenv('DOCKER_SUPREMUM_API_KEY'),
+    ],
+
     /*
      * Path to folder in local filesystem available for browsing
      */
