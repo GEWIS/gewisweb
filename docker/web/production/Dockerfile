@@ -12,7 +12,7 @@ RUN npm run scss
 FROM php:8.0-fpm as php-target
 
 RUN apt-get update \
-    && apt-get install -y \
+    && apt-get install -y --no-install-recommends \
         cron \
         git \
         libfreetype6-dev \
@@ -27,7 +27,8 @@ RUN apt-get update \
         rsync \
         sshpass \
         unzip \
-    && apt-get upgrade -y
+    && apt-get upgrade -y --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-configure \
         gd --with-freetype --with-jpeg \

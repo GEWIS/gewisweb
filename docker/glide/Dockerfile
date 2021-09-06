@@ -1,7 +1,7 @@
 FROM php:8.0-fpm as php-target
 
 RUN apt-get update \
-    && apt-get install -y \
+    && apt-get install -y --no-install-recommends \
         libfreetype6-dev \
         libicu-dev \
         libjpeg62-turbo-dev \
@@ -10,7 +10,8 @@ RUN apt-get update \
         libxml2-dev \
         libzip-dev \
         unzip \
-    && apt-get upgrade -y
+    && apt-get upgrade -y --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-install \
         fileinfo \
