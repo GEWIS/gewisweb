@@ -1,13 +1,28 @@
-<?= sprintf($this->translate('Dear %s,'), $member->getFullName()) . "\n" ?>
+For English, please see below.<br/><br/>
 
-<?= $this->translate('A password reset was requested for your account.') . "\n" ?>
 
-<?= $this->translate('You can reset your password on the following link:') . "\n" ?>
+<?= sprintf('Beste %s,', $member->getFullName()) ?><br/><br/>
 
-<?= $this->serverUrl($this->url('user/activate', ['code' => $user->getCode()])) . "\n" ?>
+Er is geprobeerd het wachtwoord van je account te resetten.
 
-<?= $this->translate('Your reset code is:') ?> <?= $user->getCode() . "\n" ?>
+Je kunt je account resetten met de volgende link:
+<?= $this->serverUrl($this->url('user/activate', ['code' => $user->getCode()])) ?>
 
-<?= $this->translate('Best Regards,') . "\n" ?>
+Je reset code is: <?= $user->getCode() ?>
 
-<?= $this->translate('WebCommissie GEWIS') ?>
+Met vriendelijke groeten,<br/>
+De Web Commissie
+<hr/>
+
+<?= sprintf('Dear %s,', $member->getFullName()) ?><br/><br/>
+
+A password reset was requested for your account.
+
+You can reset your password on the following link:
+<?= $this->serverUrl($this->url('user/activate', ['code' => $user->getCode()])) ?>
+
+Your reset code is: <?= $user->getCode() ?>
+
+With kind regards,<br/>
+The Web Committee
+<hr/>
