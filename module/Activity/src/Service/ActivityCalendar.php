@@ -3,7 +3,6 @@
 namespace Activity\Service;
 
 use Activity\Form\ActivityCalendarOption;
-use Activity\Form\ActivityCalendarProposal;
 use Activity\Model\ActivityCalendarOption as OptionModel;
 use Activity\Model\ActivityOptionProposal as ProposalModel;
 use Application\Service\Email;
@@ -46,10 +45,6 @@ class ActivityCalendar
      * @var ActivityCalendarOption
      */
     private $calendarOptionForm;
-    /**
-     * @var ActivityCalendarProposal
-     */
-    private $calendarProposalForm;
     private AclService $aclService;
     private ActivityCalendarForm $calendarFormService;
 
@@ -61,7 +56,6 @@ class ActivityCalendar
         \Activity\Mapper\ActivityCalendarOption $calendarOptionMapper,
         Member $memberMapper,
         ActivityCalendarOption $calendarOptionForm,
-        ActivityCalendarProposal $calendarProposalForm,
         AclService $aclService,
         ActivityCalendarForm $calendarFormService
     ) {
@@ -72,7 +66,6 @@ class ActivityCalendar
         $this->calendarOptionMapper = $calendarOptionMapper;
         $this->memberMapper = $memberMapper;
         $this->calendarOptionForm = $calendarOptionForm;
-        $this->calendarProposalForm = $calendarProposalForm;
         $this->aclService = $aclService;
         $this->calendarFormService = $calendarFormService;
     }
@@ -134,22 +127,15 @@ class ActivityCalendar
     }
 
     /**
-     * @param array $data
+     * @param array $validatedData
      *
      * @return ProposalModel|bool
      *
      * @throws Exception
      */
-    public function createProposal($data)
+    public function createProposal(array $validatedData): bool|ProposalModel
     {
-        $form = $this->getCreateProposalForm();
         $proposal = new ProposalModel();
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return false;
-        }
-        $validatedData = $form->getData();
 
         $organ = $validatedData['organ'];
         if (!$this->calendarFormService->canOrganCreateProposal($organ)) {
@@ -176,27 +162,10 @@ class ActivityCalendar
 
         $options = $validatedData['options'];
         foreach ($options as $option) {
-            $result = $this->createOption($option, $proposal);
-            if (false == $result) {
-                return false;
-            }
+            $this->createOption($option, $proposal);
         }
 
         return $proposal;
-    }
-
-    /**
-     * Retrieves the form for creating a new calendar activity option proposal.
-     *
-     * @return ActivityCalendarProposal
-     */
-    public function getCreateProposalForm()
-    {
-        if (!$this->aclService->isAllowed('create', 'activity_calendar_proposal')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to create activity proposals.'));
-        }
-
-        return $this->calendarProposalForm;
     }
 
     /**
