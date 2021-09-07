@@ -157,15 +157,15 @@ use Activity\Model\Activity;
                         </div>
                     </div>
                 <?php endif; ?>
-                <?php if ($this->acl('decision_service_acl')->isAllowed('member', 'birthdays')): ?>
+                <?php if ($this->acl('frontpage_service_acl')->isAllowed('infimum', 'view')): ?>
                     <div class="panel panel-default">
                         <div class="panel-heading panel-heading--full-height">
-                            <h3><?= $this->translate('Infima') ?></h3>
+                            <h3><?= $this->translate('Infimum') ?></h3>
                         </div>
                         <div class="panel-body">
                             <p id="infima"></p>
                             <script>
-                                $.getJSON("https://supremum.gewis.nl/api/random", function(data) {
+                                $.getJSON("<?= $this->url('infimum') ?>", function(data) {
                                     $("#infima")[0].textContent = data['content'];
                                 });
                             </script>

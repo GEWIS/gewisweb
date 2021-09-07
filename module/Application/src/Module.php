@@ -11,18 +11,25 @@
 
 namespace Application;
 
-use Application\Service\Email;
-use Application\Service\FileStorage;
-use Application\Service\Legacy;
-use Application\View\Helper\Acl;
-use Application\View\Helper\FileUrl;
-use Application\View\Helper\Infima;
-use Application\View\Helper\JobCategories;
-use Application\View\Helper\ModuleIsActive;
-use Application\View\Helper\ScriptUrl;
+use Application\Service\{
+    Email as EmailService,
+    FileStorage as FileStorageService,
+    Infimum as InfimumService,
+    Legacy as LegacyService,
+};
+use Application\View\Helper\{
+    Acl,
+    FileUrl,
+    JobCategories,
+    ModuleIsActive,
+    ScriptUrl,
+};
 use Carbon\Carbon;
-use Laminas\Mvc\ModuleRouteListener;
-use Laminas\Mvc\MvcEvent;
+use Laminas\Cache\Storage\Adapter\Memcached;
+use Laminas\Mvc\{
+    ModuleRouteListener,
+    MvcEvent,
+};
 use Interop\Container\ContainerInterface;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\Validator\AbstractValidator;
@@ -104,23 +111,40 @@ class Module
         return [
             'factories' => [
                 'application_service_legacy' => function () {
-                    return new Legacy();
+                    return new LegacyService();
                 },
                 'application_service_email' => function (ContainerInterface $container) {
                     $renderer = $container->get('ViewRenderer');
                     $transport = $container->get('user_mail_transport');
                     $emailConfig = $container->get('config')['email'];
 
-                    return new Email($renderer, $transport, $emailConfig);
+                    return new EmailService($renderer, $transport, $emailConfig);
+                },
+                'application_service_infimum' => function (ContainerInterface $container) {
+                    $infimumCache = $container->get('application_cache_infimum');
+                    $translator = $container->get('translator');
+                    $infimumConfig = $container->get('config')['infimum'];
+
+                    return new InfimumService($infimumCache, $translator, $infimumConfig);
                 },
                 'application_service_storage' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
                     $storageConfig = $container->get('config')['storage'];
 
-                    return new FileStorage($translator, $storageConfig);
+                    return new FileStorageService($translator, $storageConfig);
                 },
                 'application_get_languages' => function () {
                     return ['nl', 'en'];
+                },
+                'application_cache_infimum' => function () {
+                    $cache = new Memcached();
+                    // The TTL is 5 minutes (60 seconds * 5), as Supremum has a 5 minute cache on their end too. There
+                    // is no need to keep requesting an infimum if we get the same one back for 5 minutes.
+                    $cache->getOptions()
+                        ->setTtl(60 * 5)
+                        ->setServers(['memcached', '11211']);
+
+                    return $cache;
                 },
                 'logger' => function (ContainerInterface $container) {
                     $logger = new Logger('gewisweb');
