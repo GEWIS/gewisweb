@@ -9,6 +9,7 @@ use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Callback;
 use Laminas\Validator\StringLength;
+use User\Permissions\NotAllowedException;
 
 class ActivityCalendarProposal extends Form implements InputFilterProviderInterface
 {
@@ -35,7 +36,12 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
         $this->translator = $translator;
         $this->calendarFormService = $calendarFormService;
 
-        $organs = $calendarFormService->getEditableOrgans();
+        try {
+            $organs = $calendarFormService->getEditableOrgans();
+        } catch (NotAllowedException $e) {
+            $organs = [];
+        }
+
         $organOptions = [];
         foreach ($organs as $organ) {
             $organOptions[$organ->getId()] = $organ->getAbbr();

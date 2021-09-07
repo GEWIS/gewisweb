@@ -127,17 +127,17 @@ class ActivityCalendar
     }
 
     /**
-     * @param array $validatedData
+     * @param array $data
      *
      * @return ProposalModel|bool
      *
      * @throws Exception
      */
-    public function createProposal(array $validatedData): bool|ProposalModel
+    public function createProposal(array $data): bool|ProposalModel
     {
         $proposal = new ProposalModel();
 
-        $organ = $validatedData['organ'];
+        $organ = $data['organ'];
         if (!$this->calendarFormService->canOrganCreateProposal($organ)) {
             return false;
         }
@@ -145,9 +145,9 @@ class ActivityCalendar
         $proposal->setCreationTime(new DateTime());
         $em = $this->entityManager;
         $proposal->setCreator($this->aclService->getIdentityOrThrowException());
-        $name = $validatedData['name'];
+        $name = $data['name'];
         $proposal->setName($name);
-        $description = $validatedData['description'];
+        $description = $data['description'];
         $proposal->setDescription($description);
 //        See /Activity/Form/ActivityCalendarProposal for more details on the definition of these options
         if ($organ > -1) {
@@ -160,7 +160,7 @@ class ActivityCalendar
         $em->persist($proposal);
         $em->flush();
 
-        $options = $validatedData['options'];
+        $options = $data['options'];
         foreach ($options as $option) {
             $this->createOption($option, $proposal);
         }
@@ -179,15 +179,16 @@ class ActivityCalendar
     public function createOption($data, $proposal)
     {
         $option = new OptionModel();
-        $validatedData = $data;
+
+        var_dump($data);
 
         $em = $this->entityManager;
         $option->setProposal($proposal);
-        $beginTime = $this->calendarFormService->toDateTime($validatedData['beginTime']);
+        $beginTime = $this->calendarFormService->toDateTime($data['beginTime']);
         $option->setBeginTime($beginTime);
-        $endTime = $this->calendarFormService->toDateTime($validatedData['endTime']);
+        $endTime = $this->calendarFormService->toDateTime($data['endTime']);
         $option->setEndTime($endTime);
-        $type = $validatedData['type'];
+        $type = $data['type'];
         $option->setType($type);
         $em->persist($option);
         $em->flush();

@@ -2,11 +2,12 @@
 
 namespace Activity\Controller;
 
-use Activity\Form\ActivityCalendarProposal;
-use Activity\Service\{AclService,
+use Activity\Form\ActivityCalendarProposal as ActivityCalendarProposalForm;
+use Activity\Service\{
+    AclService,
     ActivityCalendar as ActivityCalendarService,
-    ActivityCalendarForm as ActivityCalendarFormService};
-use Activity\Model\ActivityOptionProposal as ProposalModel;
+    ActivityCalendarForm as ActivityCalendarFormService,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
@@ -27,9 +28,9 @@ class ActivityCalendarController extends AbstractActionController
     private AclService $aclService;
 
     /**
-     * @var ActivityCalendarProposal
+     * @var ActivityCalendarProposalForm
      */
-    private $calendarProposalForm;
+    private ActivityCalendarProposalForm $calendarProposalForm;
 
     /**
      * @var array
@@ -43,13 +44,16 @@ class ActivityCalendarController extends AbstractActionController
      *
      * @param ActivityCalendarService $calendarService
      * @param ActivityCalendarFormService $calendarFormService
+     * @param AclService $aclService
+     * @param ActivityCalendarProposalForm $calendarProposalForm
      * @param array $calendarConfig
+     * @param Translator $translator
      */
     public function __construct(
         ActivityCalendarService $calendarService,
         ActivityCalendarFormService $calendarFormService,
         AclService $aclService,
-        ActivityCalendarProposal $calendarProposalForm,
+        ActivityCalendarProposalForm $calendarProposalForm,
         array $calendarConfig,
         Translator $translator
     ) {
@@ -84,8 +88,10 @@ class ActivityCalendarController extends AbstractActionController
 
         if ($request->isPost()) {
             $this->calendarService->deleteOption($request->getPost()['option_id']);
-            $this->redirect()->toRoute('activity_calendar');
+            return $this->redirect()->toRoute('activity_calendar');
         }
+
+        return $this->notFoundAction();
     }
 
     public function approveAction()
@@ -94,8 +100,10 @@ class ActivityCalendarController extends AbstractActionController
 
         if ($request->isPost()) {
             $this->calendarService->approveOption($request->getPost()['option_id']);
-            $this->redirect()->toRoute('activity_calendar');
+            return $this->redirect()->toRoute('activity_calendar');
         }
+
+        return $this->notFoundAction();
     }
 
     public function createAction()
@@ -104,22 +112,22 @@ class ActivityCalendarController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('Not allowed to create activity proposals.'));
         }
 
-        if ($this->getRequest()->isPost()) {
-            $postData = $this->getRequest()->getPost();
-            $this->calendarProposalForm->setData($postData);
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $this->calendarProposalForm->setData($request->getPost()->toArray());
 
-            if (!$this->calendarProposalForm->isValid()) {
-                $success = false;
-            } else {
-                $validatedData = $this->calendarProposalForm->getData();
-                $success = $this->calendarService->createProposal($validatedData);
-            }
-
-            if (false === $success) {
-                $this->getResponse()->setStatusCode(400);
-                $this->calendarProposalForm->setData($postData);
-            } else {
-                $this->redirect()->toRoute('activity_calendar', [], ['query' => ['success' => 'true']]);
+            if ($this->calendarProposalForm->isValid()) {
+                if ($this->calendarService->createProposal($this->calendarProposalForm->getData())) {
+                    return $this->redirect()->toRoute(
+                        'activity_calendar',
+                        [],
+                        [
+                            'query' => [
+                                'success' => 'true',
+                            ],
+                        ],
+                    );
+                }
             }
         }
 
