@@ -109,7 +109,9 @@ class ActivityCalendarController extends AbstractActionController
     public function createAction()
     {
         if (!$this->aclService->isAllowed('create', 'activity_calendar_proposal')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to create activity proposals.'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to create activity proposals')
+            );
         }
 
         $request = $this->getRequest();
