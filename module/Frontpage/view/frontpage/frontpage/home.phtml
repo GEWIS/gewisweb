@@ -165,7 +165,7 @@ use Activity\Model\Activity;
                         <div class="panel-body">
                             <p id="infima"></p>
                             <script>
-                                $.getJSON("https://gewis.nl/api/infimum", function(data) {
+                                $.getJSON("<?= $this->url('infimum') ?>", function(data) {
                                     $("#infima")[0].textContent = data['content'];
                                 });
                             </script>
