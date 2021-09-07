@@ -25,6 +25,7 @@ use Application\View\Helper\{
     ScriptUrl,
 };
 use Carbon\Carbon;
+use Laminas\Cache\Storage\Adapter\Memcached;
 use Laminas\Mvc\{
     ModuleRouteListener,
     MvcEvent,
@@ -120,10 +121,11 @@ class Module
                     return new EmailService($renderer, $transport, $emailConfig);
                 },
                 'application_service_infimum' => function (ContainerInterface $container) {
+                    $infimumCache = $container->get('application_cache_infimum');
                     $translator = $container->get('translator');
                     $infimumConfig = $container->get('config')['infimum'];
 
-                    return new InfimumService($translator, $infimumConfig);
+                    return new InfimumService($infimumCache, $translator, $infimumConfig);
                 },
                 'application_service_storage' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
@@ -133,6 +135,16 @@ class Module
                 },
                 'application_get_languages' => function () {
                     return ['nl', 'en'];
+                },
+                'application_cache_infimum' => function () {
+                    $cache = new Memcached();
+                    // The TTL is 5 minutes (60 seconds * 5), as Supremum has a 5 minute cache on their end too. There
+                    // is no need to keep requesting an infimum if we get the same one back for 5 minutes.
+                    $cache->getOptions()
+                        ->setTtl(60 * 5)
+                        ->setServers(['memcached', '11211']);
+
+                    return $cache;
                 },
                 'logger' => function (ContainerInterface $container) {
                     $logger = new Logger('gewisweb');
