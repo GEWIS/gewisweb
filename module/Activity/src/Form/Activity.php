@@ -285,13 +285,9 @@ class Activity extends Form implements InputFilterProviderInterface
     public function isValid()
     {
         $valid = parent::isValid();
+
         /*
-         * This might seem like a bit of a hack, but this is probably the only way zend framework
-         * allows us to do this.
-         *
-         * TODO: Move this to an actual InputFilter to add messages, because
-         * marking inputs as invalid (and adding messages) cannot be done from
-         * this function.
+         * This might seem like a bit of a hack, but this is probably the only way Laminas allows us to do this.
          */
         if (isset($this->data['language_dutch']) && isset($this->data['language_english'])) {
             // Check for each SignupList whether the required fields have data.
@@ -299,7 +295,11 @@ class Activity extends Form implements InputFilterProviderInterface
                 // Check the Dutch name of the SignupLists.
                 if ($this->data['language_dutch']) {
                     if (!(new NotEmpty())->isValid($signupList->get('name')->getValue())) {
-                        // TODO: Return error messages
+                        $signupList->get('name')->setMessages(
+                            [
+                                $this->translator->translate('Value is required and can\'t be empty'),
+                            ],
+                        );
                         $valid = false;
                     }
                 }
@@ -307,7 +307,11 @@ class Activity extends Form implements InputFilterProviderInterface
                 // Check the English name of the SignupLists.
                 if ($this->data['language_english']) {
                     if (!(new NotEmpty())->isValid($signupList->get('nameEn')->getValue())) {
-                        // TODO: Return error messages
+                        $signupList->get('nameEn')->setMessages(
+                            [
+                                $this->translator->translate('Value is required and can\'t be empty'),
+                            ],
+                        );
                         $valid = false;
                     }
                 }
@@ -317,7 +321,11 @@ class Activity extends Form implements InputFilterProviderInterface
                     // Check the Dutch name of the SignupField and the "Options" option.
                     if ($this->data['language_dutch']) {
                         if (!(new NotEmpty())->isValid($field->get('name')->getValue())) {
-                            // TODO: Return error messages
+                            $field->get('name')->setMessages(
+                                [
+                                    $this->translator->translate('Value is required and can\'t be empty'),
+                                ],
+                            );
                             $valid = false;
                         }
 
@@ -325,7 +333,11 @@ class Activity extends Form implements InputFilterProviderInterface
                             '3' === $field->get('type')->getValue()
                             && !(new NotEmpty())->isValid($field->get('options')->getValue())
                         ) {
-                            // TODO: Return error messages
+                            $field->get('options')->setMessages(
+                                [
+                                    $this->translator->translate('Value is required and can\'t be empty'),
+                                ],
+                            );
                             $valid = false;
                         }
                     }
@@ -333,7 +345,11 @@ class Activity extends Form implements InputFilterProviderInterface
                     // Check the English name of the SignupField and the "Options" option.
                     if ($this->data['language_english']) {
                         if (!(new NotEmpty())->isValid($field->get('nameEn')->getValue())) {
-                            // TODO: Return error messages
+                            $field->get('nameEn')->setMessages(
+                                [
+                                    $this->translator->translate('Value is required and can\'t be empty'),
+                                ],
+                            );
                             $valid = false;
                         }
 
@@ -341,7 +357,11 @@ class Activity extends Form implements InputFilterProviderInterface
                             '3' === $field->get('type')->getValue()
                             && !(new NotEmpty())->isValid($field->get('optionsEn')->getValue())
                         ) {
-                            // TODO: Return error messages
+                            $field->get('optionsEn')->setMessages(
+                                [
+                                    $this->translator->translate('Value is required and can\'t be empty'),
+                                ],
+                            );
                             $valid = false;
                         }
                     }
