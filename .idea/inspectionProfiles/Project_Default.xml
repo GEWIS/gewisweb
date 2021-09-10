@@ -2,5 +2,15 @@
   <profile version="1.0">
     <option name="myName" value="Project Default" />
     <inspection_tool class="LongLine" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+    <inspection_tool class="PhpCSFixerValidationInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+    <inspection_tool class="PhpCSValidationInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="CODING_STANDARD" value="PSR12" />
+      <option name="SHOW_SNIFF_NAMES" value="true" />
+      <option name="EXTENSIONS" value="php" />
+    </inspection_tool>
+    <inspection_tool class="PhpStanGlobal" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="level" value="5" />
+      <option name="config" value="$PROJECT_DIR$/phpstan.neon" />
+    </inspection_tool>
   </profile>
 </component>
