@@ -9,6 +9,7 @@
       <option name="EXTENSIONS" value="php" />
     </inspection_tool>
     <inspection_tool class="PhpStanGlobal" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="FULL_PROJECT" value="true" />
       <option name="level" value="5" />
       <option name="config" value="$PROJECT_DIR$/phpstan.neon" />
     </inspection_tool>
