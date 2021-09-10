@@ -67,7 +67,9 @@ class WatermarkService
             $pdfPage->annotateImage($drawSettings, $sizeX / 2, $sizeY / 2, 60, $watermarkText);
             $pdfPage->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
 
-            $pdfPage->profileImage('icc', null);
+            // The next line should be removed after we have upgraded to a more recent version of Imagick.
+            // This basically is a workaround for a known bug. See the PR in which this was merged for more details.
+            $pdfPage->removeImageProfile('icc');
 
             $pdf->addImage($pdfPage);
         }
