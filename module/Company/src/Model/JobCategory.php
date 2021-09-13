@@ -170,6 +170,8 @@ class JobCategory
             'nameEn' => $this->getName()->getValueEN(),
             'pluralName' => $this->getPluralName()->getValueNL(),
             'pluralNameEn' => $this->getPluralName()->getValueEN(),
+            'slug' => $this->getSlug()->getValueNL(),
+            'slugEn' => $this->getSlug()->getValueEN(),
             'hidden' => $this->getHidden(),
         ];
     }

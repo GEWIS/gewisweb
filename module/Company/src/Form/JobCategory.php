@@ -3,6 +3,8 @@
 namespace Company\Form;
 
 use Company\Mapper\Category as CategoryMapper;
+use Company\Model\CompanyLocalisedText as CompanyLocalisedTextModel;
+use Doctrine\ORM\NonUniqueResultException;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Filter\{
     StringTrim,
@@ -17,6 +19,7 @@ use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator\{
     Callback,
+    Regex,
     StringLength,
 };
 
@@ -33,9 +36,16 @@ class JobCategory extends Form implements InputFilterProviderInterface
     private Translator $translator;
 
     /**
+     *
      * @var string|null
      */
-    private ?string $currentEnglishPluralName = null;
+    private ?string $currentSlug = null;
+
+    /**
+     *
+     * @var string|null
+     */
+    private ?string $currentSlugEn = null;
 
     public function __construct(CategoryMapper $mapper, Translator $translator)
     {
@@ -81,6 +91,26 @@ class JobCategory extends Form implements InputFilterProviderInterface
                 'type' => Text::class,
                 'options' => [
                     'label' => $this->translator->translate('Name (Plural)'),
+                ],
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'slug',
+                'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Slug'),
+                ],
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'slugEn',
+                'type' => Text::class,
+                'options' => [
+                    'label' => $this->translator->translate('Slug'),
                 ],
             ]
         );
@@ -160,39 +190,75 @@ class JobCategory extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ];
+            $filter['slug' . $languageSuffix] = [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => StringLength::class,
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 2,
+                            'max' => 63,
+                        ],
+                    ],
+                    [
+                        'name' => Callback::class,
+                        'options' => [
+                            'callback' => [$this, 'isSlugUnique'],
+                            'callbackOptions' => [
+                                'languageSuffix' => $languageSuffix,
+                            ],
+                            'messages' => [
+                                Callback::INVALID_VALUE => $this->translator->translate('This slug is already taken'),
+                            ],
+                        ],
+                    ],
+                    [
+                        'name' => Regex::class,
+                        'options' => [
+                            'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
+                            'messages' => [
+                                Regex::ERROROUS => $this->translator->translate('This slug contains invalid characters'),
+                            ],
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StripTags::class,
+                    ],
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
+            ];
         }
-
-        $filter['pluralNameEn']['validators'][] = [
-            'name' => Callback::class,
-            'options' => [
-                'callback' => [$this, 'isEnglishPluralUnique'],
-                Callback::INVALID_VALUE => $this->translator->translate(
-                    'This plural of the English name is already taken'
-                ),
-            ],
-        ];
 
         return $filter;
     }
 
     /**
-     * @param string|null $currentEnglishPluralName
+     * @param CompanyLocalisedTextModel $currentSlug
      */
-    public function setCurrentEnglishPluralName(?string $currentEnglishPluralName): void
+    public function setCurrentSlug(CompanyLocalisedTextModel $currentSlug): void
     {
-        $this->currentEnglishPluralName = $currentEnglishPluralName;
+        $this->currentSlug = $currentSlug->getValueNL();
+        $this->currentSlugEn = $currentSlug->getValueEN();
     }
 
     /**
-     * Determine if the plural of the name in English is unique.
+     * Determine if the given slug is unique (in Dutch and English).
      *
      * @param string $value
+     * @param array $context
+     * @param string $languageSuffix
      *
      * @return bool
+     * @throws NonUniqueResultException
      */
-    public function isEnglishPluralUnique(string $value): bool
+    public function isSlugUnique(string $value, array $context, string $languageSuffix): bool
     {
-        if ($this->currentEnglishPluralName === $value) {
+        if ($this->{'currentSlug' . $languageSuffix} === $value) {
             return true;
         }
 

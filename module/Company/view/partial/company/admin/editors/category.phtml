@@ -33,6 +33,19 @@
             <?= $this->formText($namePlural) ?>
             <?= $this->formElementErrors($namePlural) ?>
         </div>
+        <?php
+        $slug = $form->get('slug')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('id', 'slug-nl');
+        $slug->setValue($this->localisedTextElement($slug));
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($slug) ?>">
+            <label for="<?= $slug->getAttribute('id') ?>" class="control-label label-required">
+                <?= $slug->getLabel() ?>
+            </label>
+            <?= $this->formText($slug) ?>
+            <?= $this->formElementErrors($slug) ?>
+        </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
@@ -64,6 +77,19 @@
             </label>
             <?= $this->formText($namePluralEn) ?>
             <?= $this->formElementErrors($namePluralEn) ?>
+        </div>
+        <?php
+        $slugEn = $form->get('slugEn')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('id', 'slug-en');
+        $slugEn->setValue($this->localisedTextElement($slugEn));
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($slugEn) ?>">
+            <label for="<?= $slugEn->getAttribute('id') ?>" class="control-label label-required">
+                <?= $slugEn->getLabel() ?>
+            </label>
+            <?= $this->formText($slugEn) ?>
+            <?= $this->formElementErrors($slugEn) ?>
         </div>
     </div>
     <div class="col-md-12">

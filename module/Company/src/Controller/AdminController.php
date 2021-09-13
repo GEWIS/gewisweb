@@ -653,7 +653,7 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $categoryForm->setData($request->getPost()->toArray());
-            $categoryForm->setCurrentEnglishPluralName($jobCategory->getPluralName()->getValueEN());
+            $categoryForm->setCurrentSlug($jobCategory->getPluralName());
 
             if ($categoryForm->isValid()) {
                 $this->companyService->updateJobCategory($jobCategory, $categoryForm->getData());

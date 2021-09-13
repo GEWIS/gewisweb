@@ -4,7 +4,10 @@ namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Company\Model\JobCategory as JobCategoryModel;
-use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\{
+    NonUniqueResultException,
+    Query\Expr\Join,
+};
 
 /**
  * Mappers for category.
@@ -36,6 +39,8 @@ class Category extends BaseMapper
     }
 
     /**
+     * Searches for a JobCategory based on its slug. The value is always converted to lowercase to ensure no weird
+     * routing issues occur.
      *
      * @param string $value
      *
@@ -44,10 +49,18 @@ class Category extends BaseMapper
      */
     public function findCategoryBySlug(string $value): ?JobCategoryModel
     {
-        $qb = $this->getRepository()->createQueryBuilder('c')
-            ->select('c')
-            ->innerJoin('c.pluralName', 'l', 'WITH', 'l.valueEN = :value')
-            ->setParameter(':value', $value);
+        $qb = $this->getRepository()->createQueryBuilder('c');
+        $qb->select('c')
+            ->innerJoin(
+                'c.slug',
+                'l',
+                Join::WITH,
+                $qb->expr()->orX(
+                    'LOWER(l.valueEN) = :value',
+                    'LOWER(l.valueNL) = :value',
+                )
+            )
+            ->setParameter(':value', strtolower($value));
 
         return $qb->getQuery()->getOneOrNullResult();
     }
