@@ -193,7 +193,7 @@ class Company
             );
         }
 
-        return $this->featuredPackageMapper->getFeaturedPackage($this->translator->getTranslator()->getLocale());
+        return $this->featuredPackageMapper->getFeaturedPackage();
     }
 
     private function getFuturePackageStartsBeforeDate($date)

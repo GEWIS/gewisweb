@@ -47,32 +47,70 @@
     ?>
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <?php
-                    $language = $form->get('language')
-                        ->setAttribute('class', 'form-control')
-                        ->setAttribute('id', 'language');
+                    $checkboxDutch = $form->get('language_dutch')
+                        ->setAttribute('onchange', 'Company.updateForm()')
+                        ->setAttribute('id', 'dutch-check')
+                        ->setAttribute('class', 'language-control');
                     ?>
-                    <div class="form-group <?= $this->bootstrapElementError($language) ?>">
-                        <label for="<?= $language->getAttribute('id') ?>" class="control-label label-required">
-                            <?= $language->getLabel() ?>
+                    <div class="form-group <?= $this->bootstrapElementError($checkboxDutch) ?>">
+                        <label for="<?= $checkboxDutch->getAttribute('id') ?>" class="control-label"
+                               title="<?= $checkboxDutch->getLabel() ?>">
+                            <?= $this->formCheckbox($checkboxDutch) ?>
+                            <span class="flag-icon flag-icon-nl"></span>
+                            <?= $this->translate('Dutch') ?>
                         </label>
-                        <?= $this->formRadio($language) ?>
-                        <?= $this->formElementErrors($language) ?>
+                        <?= $this->formElementErrors($checkboxDutch) ?>
                     </div>
-                </div>
-                <div class="col-md-9">
+                    <hr>
                     <?php
                     $article = $form->get('article')
-                        ->setAttribute('class', 'form-control')
-                        ->setAttribute('id', 'article');
+                        ->setAttribute('disabled', 'disabled')
+                        ->setAttribute('class', 'form-control form-control-dutch')
+                        ->setAttribute('style', 'width:100%; height:10em; resize:none')
+                        ->setAttribute('id', 'article-nl');
+                    $article->setValue($this->localisedTextElement($article));
                     ?>
                     <div class="form-group <?= $this->bootstrapElementError($article) ?>">
-                        <label for="<?= $article->getAttribute('id') ?>" class="control-label label-required">
+                        <label for="<?= $article->getAttribute('id') ?>" class="control-label">
                             <?= $article->getLabel() ?>
                         </label>
                         <?= $this->formTextarea($article) ?>
                         <?= $this->formElementErrors($article) ?>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <?php
+                    $checkboxEnglish = $form->get('language_english')
+                        ->setAttribute('onchange', 'Company.updateForm()')
+                        ->setAttribute('id', 'english-check')
+                        ->setAttribute('class', 'language-control');
+                    ?>
+                    <div class="form-group <?= $this->bootstrapElementError($checkboxEnglish) ?>">
+                        <label for="<?= $checkboxEnglish->getAttribute('id') ?>" class="control-label"
+                               title="<?= $checkboxEnglish->getLabel() ?>">
+                            <?= $this->formCheckbox($checkboxEnglish) ?>
+                            <span class="flag-icon flag-icon-en"></span>
+                            <?= $this->translate('English') ?>
+                        </label>
+                        <?= $this->formElementErrors($checkboxEnglish) ?>
+                    </div>
+                    <hr>
+                    <?php
+                    $articleEn = $form->get('articleEn')
+                        ->setAttribute('disabled', 'disabled')
+                        ->setAttribute('class', 'form-control form-control-english')
+                        ->setAttribute('style', 'width:100%; height:10em; resize:none')
+                        ->setAttribute('id', 'article-en');
+                    $articleEn->setValue($this->localisedTextElement($articleEn));
+                    ?>
+                    <div class="form-group <?= $this->bootstrapElementError($articleEn) ?>">
+                        <label for="<?= $articleEn->getAttribute('id') ?>" class="control-label">
+                            <?= $articleEn->getLabel() ?>
+                        </label>
+                        <?= $this->formTextarea($articleEn) ?>
+                        <?= $this->formElementErrors($articleEn) ?>
                     </div>
                 </div>
             </div>

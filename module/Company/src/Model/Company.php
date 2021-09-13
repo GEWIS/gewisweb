@@ -467,23 +467,20 @@ class Company
     }
 
     /**
-     * Returns true if a banner is active, and false when there is no banner active.
+     * Returns true if company is featured.
      *
-     * @return array
+     * @return bool
      */
-    public function getFeaturedLanguages(): array
+    public function isFeatured(): bool
     {
-        return array_map(
+        $featuredPackages = array_filter(
+            $this->getPackages()->toArray(),
             function ($package) {
-                return $package->getLanguage();
-            },
-            array_filter(
-                $this->getPackages()->toArray(),
-                function ($package) {
-                    return 'featured' === $package->getType() && $package->isActive();
-                }
-            )
+                return 'featured' === $package->getType() && $package->isActive();
+            }
         );
+
+        return !empty($featuredPackages);
     }
 
     /**

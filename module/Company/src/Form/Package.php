@@ -77,6 +77,30 @@ class Package extends Form implements InputFilterProviderInterface
         if ('featured' === $type) {
             $this->add(
                 [
+                    'name' => 'language_dutch',
+                    'type' => Checkbox::class,
+                    'options' => [
+                        'label' => $this->translator->translate('Enable Dutch Translations'),
+                        'checked_value' => 1,
+                        'unchecked_value' => 0,
+                    ],
+                ]
+            );
+
+            $this->add(
+                [
+                    'name' => 'language_english',
+                    'type' => Checkbox::class,
+                    'options' => [
+                        'label' => $this->translator->translate('Enable English Translations'),
+                        'checked_value' => 1,
+                        'unchecked_value' => 0,
+                    ],
+                ]
+            );
+
+            $this->add(
+                [
                     'name' => 'article',
                     'type' => Textarea::class,
                     'options' => [
@@ -87,14 +111,10 @@ class Package extends Form implements InputFilterProviderInterface
 
             $this->add(
                 [
-                    'name' => 'language',
-                    'type' => Radio::class,
+                    'name' => 'articleEn',
+                    'type' => Textarea::class,
                     'options' => [
-                        'label' => $this->translator->translate('Language'),
-                        'value_options' => [
-                            'nl' => $this->translator->translate('Dutch'),
-                            'en' => $this->translator->translate('English'),
-                        ],
+                        'label' => $this->translator->translate('Article'),
                     ],
                 ]
             );

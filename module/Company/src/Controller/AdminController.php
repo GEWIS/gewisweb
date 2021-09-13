@@ -338,6 +338,12 @@ class AdminController extends AbstractActionController
 
         // Initialize form
         $packageData = $package->toArray();
+
+        if ('featured' === $type) {
+            $packageData['language_dutch'] = null !== $packageData['article'];
+            $packageData['language_english'] = null !== $packageData['articleEn'];
+        }
+
         $packageForm->setData($packageData);
         $packageForm->setAttribute(
             'action',

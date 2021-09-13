@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping\{
     InheritanceType,
     ManyToOne,
 };
+use Doctrine\Common\Util\ClassUtils;
 use Exception;
 
 /**
@@ -33,13 +34,6 @@ use Exception;
 )]
 abstract class CompanyPackage
 {
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-    }
-
     /**
      * The package's id.
      */
@@ -74,6 +68,13 @@ abstract class CompanyPackage
         inversedBy: "packages",
     )]
     protected Company $company;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+    }
 
     /**
      * Get the package's id.
@@ -187,7 +188,7 @@ abstract class CompanyPackage
      */
     public function getType(): string
     {
-        return match (get_class($this)) {
+        return match (ClassUtils::getClass($this)) {
             CompanyBannerPackage::class => 'banner',
             CompanyJobPackage::class => 'job',
             CompanyFeaturedPackage::class => 'featured',

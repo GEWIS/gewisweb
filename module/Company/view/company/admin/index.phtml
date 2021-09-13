@@ -133,7 +133,7 @@ $this->scriptUrl()->requireUrls(
                                 </a>
                             </th>
                             <th>
-                                <?= $this->translate('Featured in language') ?>
+                                <?= $this->translate('Featured') ?>
                                 <a onclick="Company.Admin.sortCompaniesByColumn(1, 4)">
                                     <span class="fa fa-arrow-up"></span></a>
                                 <a onclick="Company.Admin.sortCompaniesByColumn(-1, 4)">
@@ -169,9 +169,8 @@ $this->scriptUrl()->requireUrls(
                             </td>
                             <td><?= $company->getNumberOfJobs(); ?></td>
                             <td><?= $company->getNumberOfActiveJobs(); ?></td>
-                            <td><?= $company->isBannerActive() ? $this->translate('Yes') : $this->translate('No'); ?></td>
-                            <td><?php $languages = $company->getFeaturedLanguages();
-                                echo $languages ? implode(' ' . $this->translate('and') . ' ', $languages) : $this->translate('none'); ?></td>
+                            <td><?= $company->isBannerActive() ? $this->translate('Yes') : $this->translate('No') ?></td>
+                            <td><?= $company->isFeatured() ? $this->translate('Yes') : $this->translate('No'); ?></td>
                             <td><?= $company->getNumberOfExpiredPackages(); ?></td>
                             <td>
                                 <button type="button" class="btn btn-danger btn-xs"

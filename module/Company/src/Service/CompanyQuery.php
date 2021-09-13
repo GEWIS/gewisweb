@@ -68,42 +68,59 @@ class CompanyQuery
      * Returns all jobs with a $jobSlugName, owned by a company with a
      * $companySlugName, and a specific $category.
      *
-     * @param array $dict
-     * @return int|mixed|string
+     * @param int|null $jobCategoryId
+     * @param string|null $jobCategorySlug
+     * @param int|null $jobLabelId
+     * @param string|null $jobSlugName
+     * @param string|null $companySlugName
+     *
+     * @return array
      */
-    public function getJobs($dict)
-    {
-        if (array_key_exists('jobCategory', $dict) && null === $dict['jobCategory']) {
-            $jobs = $this->jobMapper->findJobsWithoutCategory($this->translator->getTranslator()->getLocale());
-            foreach ($jobs as $job) {
-                $job->setCategory($this->categoryMapper
-                    ->createNullCategory($this->translator->getTranslator()->getLocale(), $this->translator));
-            }
-
-            return $jobs;
-        }
-        $locale = $this->translator->getTranslator()->getLocale();
-        $dict['language'] = $locale;
-
-        return $this->jobMapper->findJob($dict);
+    public function getJobs(
+        int $jobCategoryId = null,
+        string $jobCategorySlug = null,
+        int $jobLabelId = null,
+        string $jobSlugName = null,
+        string $companySlugName = null,
+    ): array {
+        return $this->jobMapper->findJob(
+            jobCategoryId: $jobCategoryId,
+            jobCategorySlug: $jobCategorySlug,
+            jobLabelId: $jobLabelId,
+            jobSlugName: $jobSlugName,
+            companySlugName: $companySlugName,
+        );
     }
 
     /**
      * Returns all jobs that are active.
      *
+     * @param int|null $jobCategoryId
+     * @param string|null $jobCategorySlug
+     * @param int|null $jobLabelId
+     * @param string|null $jobSlugName
+     * @param string|null $companySlugName
+     *
      * @return array
      */
-    public function getActiveJobList($dict = [])
-    {
-        $jobList = $this->getJobs($dict);
-        $array = [];
-        foreach ($jobList as $job) {
-            if ($job->isActive()) {
-                $array[] = $job;
-            }
-        }
+    public function getActiveJobList(
+        int $jobCategoryId = null,
+        string $jobCategorySlug = null,
+        int $jobLabelId = null,
+        string $jobSlugName = null,
+        string $companySlugName = null,
+    ): array {
+        $jobList = $this->getJobs(
+            jobCategoryId: $jobCategoryId,
+            jobCategorySlug: $jobCategorySlug,
+            jobLabelId: $jobLabelId,
+            jobSlugName: $jobSlugName,
+            companySlugName: $companySlugName,
+        );
 
-        return $array;
+        return array_filter($jobList, function ($job) {
+            return $job->getActive();
+        });
     }
 
     /**
@@ -146,7 +163,7 @@ class CompanyQuery
         $nonEmptyCategories = [];
 
         foreach ($categories as $category) {
-            if (count($this->getActiveJobList(['jobCategoryId' => $category->getId()])) > 0) {
+            if (count($this->getActiveJobList(jobCategoryId: $category->getId())) > 0) {
                 $nonEmptyCategories[] = $category;
             }
         }
@@ -194,7 +211,7 @@ class CompanyQuery
         $nonEmptyLabels = [];
 
         foreach ($labels as $label) {
-            if (count($this->getActiveJobList(['jobCategoryId' => $label->getId()])) > 0) {
+            if (count($this->getActiveJobList(jobLabelId: $label->getId())) > 0) {
                 $nonEmptyLabels[] = $label;
             }
         }

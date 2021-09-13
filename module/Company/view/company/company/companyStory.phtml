@@ -86,5 +86,7 @@ $companyURL = $this->url(
 </div>
 <div class="col-md-9">
     <h4><?= $this->translate('Article') ?></h4>
-    <div class="company-description text-justify markdown"><?= $this->markdown($featuredPackage->getArticle()) ?></div>
+    <div class="company-description text-justify markdown">
+        <?= $this->markdown($this->localiseText($featuredPackage->getArticle())) ?>
+    </div>
 </div>

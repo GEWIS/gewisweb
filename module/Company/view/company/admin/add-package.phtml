@@ -1,6 +1,9 @@
 <?php
 $this->headTitle($this->translate('Add Package'));
 
+$this->headScript()
+    ->appendFile($this->basePath() . '/js/company-create.js');
+
 $form->prepare();
 $form->setAttribute('class', 'form-company');
 ?>
@@ -35,3 +38,7 @@ $form->setAttribute('class', 'form-company');
         <?= $this->form()->closeTag() ?>
     </div>
 </section>
+<script>
+    Company.updateForm();
+</script>
+

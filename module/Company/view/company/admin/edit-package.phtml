@@ -1,6 +1,9 @@
 <?php
 $this->headTitle($this->translate('Edit Package'));
 
+$this->headScript()
+    ->appendFile($this->basePath() . '/js/company-create.js');
+
 $this->scriptUrl()->requireUrls(
     [
         'company_admin/company/edit/package/edit/job/delete',
@@ -121,6 +124,7 @@ $form->setAttribute('class', 'form-company');
     </div>
 </div>
 <script>
+    Company.updateForm();
     deleteJob = function (id) {
         $("#deleteForm").attr('action', URLHelper.url('company_admin/company/edit/package/edit/job/delete', {
             'companySlugName': '<?= $companySlugName ?>',

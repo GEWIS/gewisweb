@@ -3,8 +3,8 @@
 namespace Company\Model;
 
 use Doctrine\ORM\Mapping\{
-    Column,
     Entity,
+    OneToOne,
 };
 use Exception;
 
@@ -12,26 +12,33 @@ use Exception;
  * CompanyFeaturedPackage model.
  */
 #[Entity]
-class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, ResourceInterface
+class CompanyFeaturedPackage extends CompanyPackage
 {
     /**
      * The featured package content article.
      */
-    #[Column(type: "text")]
-    protected string $article;
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    protected CompanyLocalisedText $article;
 
     /**
-     * The package's language.
+     * CompanyFeaturedPackage constructor.
      */
-    #[Column(type: "string")]
-    protected string $language;
+    public function __construct()
+    {
+        parent::__construct();
+        $this->article = new CompanyLocalisedText(null, null);
+    }
 
     /**
      * Get the featured package's article text.
      *
-     * @return string
+     * @return CompanyLocalisedText
      */
-    public function getArticle(): string
+    public function getArticle(): CompanyLocalisedText
     {
         return $this->article;
     }
@@ -39,42 +46,21 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
     /**
      * Set the featured package's article text.
      *
-     * @param string $article
+     * @param CompanyLocalisedText $article
      */
-    public function setArticle(string $article): void
+    public function setArticle(CompanyLocalisedText $article): void
     {
         $this->article = $article;
     }
 
-    /**
-     * Get the package's language.
-     *
-     * @return string language of the package
-     */
-    public function getLanguage(): string
-    {
-        return $this->language;
-    }
-
-    /**
-     * Set the package's language.
-     *
-     * @param string $language language of the package
-     */
-    public function setLanguage(string $language): void
-    {
-        $this->language = $language;
-    }
-
-    // For zend2 forms
     /**
      * @return array
      */
     public function toArray(): array
     {
         $array = parent::toArray();
-        $array['language'] = $this->getLanguage();
-        $array['article'] = $this->getArticle();
+        $array['article'] = $this->getArticle()->getValueNL();
+        $array['articleEn'] = $this->getArticle()->getValueEN();
 
         return $array;
     }
@@ -87,7 +73,6 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
     public function exchangeArray(array $data): void
     {
         parent::exchangeArray($data);
-        $this->setLanguage((isset($data['language'])) ? $data['language'] : $this->getLanguage());
-        $this->setArticle((isset($data['article'])) ? $data['article'] : $this->getArticle());
+        $this->getArticle()->updateValues($data['articleEn'], $data['article']);
     }
 }
