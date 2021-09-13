@@ -92,7 +92,10 @@ class Company
     /**
      * Company logo.
      */
-    #[Column(type: "string")]
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
     protected ?string $logo = null;
 
     /**

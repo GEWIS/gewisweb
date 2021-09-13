@@ -17,7 +17,7 @@ class AclService extends \User\Service\AclService
         $this->acl->allow('guest', 'company', 'listVisibleCategories');
         $this->acl->allow('guest', 'company', 'listVisibleLabels');
         $this->acl->allow('guest', 'company', 'showBanner');
-        $this->acl->allow('company_admin', 'company', ['insert', 'edit', 'delete']);
+        $this->acl->allow('company_admin', 'company', ['create', 'edit', 'delete']);
         $this->acl->allow('company_admin', 'company', ['listall', 'listAllCategories', 'listAllLabels']);
     }
 }

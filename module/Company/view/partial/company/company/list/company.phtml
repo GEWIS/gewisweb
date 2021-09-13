@@ -1,65 +1,89 @@
 <?php
-// If multiple companies are on display, the title should redirect to the company page, else, it should redirect to the website
-$companyURL = $company->getTranslationFromLocale($locale)->getWebsite();
+$escaper = new Laminas\Escaper\Escaper('utf-8');
 
+// If multiple companies are on display, the title should redirect to the company page, else, it should redirect to the website
+$companyURL = $escaper->escapeHtmlAttr($this->localiseText($company->getWebsite()));
 ?>
 <div id="company-<?= $company->getId(); ?>">
-    <h1 class="company-name"><a href="<?= $companyURL ?>"><?= $company->getName() ?></a></h1>
-    <p class="company-slogan"><em><?= $company->getTranslationFromLocale($locale)->getSlogan(); ?></em></p>
+    <h1 class="company-name">
+        <a href="<?= $companyURL ?>"><?= $this->escapeHtml($company->getName()) ?></a>
+    </h1>
+    <p class="company-slogan">
+        <em><?= $this->escapeHtml($this->localiseText($company->getSlogan())) ?></em>
+    </p>
     <div class="row">
         <div class="col-md-3">
             <a href="<?= $companyURL ?>">
-                <img class="company-logo img-responsive center-block"
-                     src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)->getLogo()) ?>"
-                     alt="<?= $this->translate('Logo of') ?> <?= $this->escapeHtmlAttr($company->getName()) ?>"/>
+                <img alt="<?= $this->translate('Logo of') ?> <?= $this->escapeHtmlAttr($company->getName()) ?>"
+                     class="company-logo img-responsive center-block"
+                     src="<?= $this->fileUrl($company->getLogo()) ?>"/>
             </a>
-            <div class="">
+            <div>
                 <h4><?= $this->translate('Contact') ?></h4>
-                <?php if ($company->getContactName()): ?>
-                    <p class="company-contactName"><?= $company->getContactName() ?></p>
+                <?php if (null !== $company->getContactName()): ?>
+                    <p class="company-contactName"><?= $this->escapeHtml($company->getContactName()) ?></p>
                 <?php endif ?>
-                <p class="company-address"><?= nl2br($company->getAddress()) ?></p>
-                <p class="company-phone"><a
-                        href="tel:<?= rawurlencode($company->getPhone()) ?>"><?= $company->getPhone() ?></a></p>
-                <p class="company-website"><a href="<?= $companyURL ?>">Visit website</a></p>
-                <p class="company-email"><a
-                        href="mailto:<?= rawurlencode($company->getEmail()) ?>"><?= $company->getEmail() ?></a></p>
+                <?php if (null !== $company->getContactAddress()): ?>
+                    <p class="company-address"><?= nl2br($this->escapeHtml($company->getContactAddress())) ?></p>
+                <?php endif ?>
+                <?php if (null !== $company->getContactPhone()): ?>
+                    <p class="company-phone">
+                        <a href="tel:<?= $escaper->escapeUrl($company->getContactPhone()) ?>">
+                            <?= $this->escapeHtml($company->getContactPhone()) ?>
+                        </a>
+                    </p>
+                <?php endif ?>
+                <?php if (null !== $company->getContactEmail()): ?>
+                    <p class="company-email">
+                        <a href="mailto:<?= $escaper->escapeUrl($company->getContactEmail()) ?>">
+                            <?= $this->escapeHtml($company->getContactEmail()) ?>
+                        </a>
+                    </p>
+                <?php endif ?>
+                <p class="company-website"><a href="<?= $companyURL ?>"><?= $this->translate('Visit Website') ?></a></p>
             </div>
-            <div class="company-jobs" data-amount="<?= $company->getNumberOfJobs() ?>">
-                <ul class="company-jobs-list">
-                    <?php // TODO: jobs sorted by package, which is not useful for visitor, possibily change sorting here to be useful
-                    foreach ($company->getPackages() as $package):
-                        if ($package->getType() === 'job'):
-                            $categories = $this->jobCategories();
-                            foreach ($categories as $category):
-                                $jobs = $package->getJobsInCategory($category);
-                                if (count($jobs) > 0):
-                                    ?>
-                                    <h4><?= $category->getPluralName() ?></h4>
-                                <?php
-                                endif;
-                                foreach ($jobs as $job):
-                                    ?>
-                                    <li class="company-jobs-job">
-                                        <a href="<?= $this->url('company/companyItem/joblist/job_item',
-                                            ['slugCompanyName' => $company->getSlugName(),
-                                                'slugJobName' => $job->getSlugName(),
-                                                'category' => $category->getSlug(),
-                                            ], [], true) ?>"><?= $job->getName(); ?></a>
-                                    </li>
-                                <?php
+            <?php foreach ($this->jobCategories() as $category): ?>
+                <div class="company-jobs" data-amount="<?= $company->getNumberOfJobs($category) ?>">
+                    <?php if ($company->getNumberOfJobs($category) > 0) { ?>
+                        <h4><?= $this->escapeHtml($this->localiseText($category->getPluralName())) ?></h4>
+                    <?php } ?>
+                    <ul class="company-jobs-list">
+                        <?php // TODO: jobs sorted by package, which is not useful for visitor, possibly change sorting here to be useful
+                        foreach ($company->getPackages() as $package):
+                            if ($package->getType() === 'job'):
+                                $categories = $this->jobCategories();
+                                foreach ($categories as $category):
+                                    $jobs = $package->getJobsInCategory($category);
+
+                                    foreach ($jobs as $job):
+                                        ?>
+                                        <li class="company-jobs-job">
+                                            <a href="<?= $this->url(
+                                                'company/companyItem/joblist/job_item',
+                                                [
+                                                    'companySlugName' => $company->getSlugName(),
+                                                    'jobSlugName' => $job->getSlugName(),
+                                                    'category' => $this->localiseText($category->getSlug()),
+                                                ],
+                                                [],
+                                                true
+                                            ) ?>"><?= $this->escapeHtml($this->localiseText($job->getName())) ?></a>
+                                        </li>
+                                    <?php
+                                    endforeach;
                                 endforeach;
-                            endforeach;
-                        endif;
-                    endforeach;
-                    ?>
-                </ul>
-            </div>
+                            endif;
+                        endforeach;
+                        ?>
+                    </ul>
+                </div>
+            <?php endforeach; ?>
         </div>
         <div class="col-md-9">
             <h2><?= $this->translate('Description') ?></h2>
-            <div
-                class="company-description text-justify markdown"><?= $this->markdown($company->getTranslationFromLocale($locale)->getDescription()) ?></div>
+            <div class="company-description text-justify markdown">
+                <?= $this->markdown($this->localiseText($company->getDescription())) ?>
+            </div>
         </div>
     </div>
 </div>

@@ -2,9 +2,11 @@
 
 namespace Company\Service;
 
-use Company\Mapper\Category;
-use Company\Mapper\Job;
-use Company\Mapper\Label;
+use Company\Mapper\{
+    Category as CategoryMapper,
+    Job as JobMapper,
+    Label as LabelMapper,
+};
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
 
@@ -16,29 +18,33 @@ class CompanyQuery
     /**
      * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
-     * @var Job
+     * @var JobMapper
      */
-    private $jobMapper;
+    private JobMapper $jobMapper;
 
     /**
-     * @var Category
+     * @var CategoryMapper
      */
-    private $categoryMapper;
+    private CategoryMapper $categoryMapper;
 
     /**
-     * @var Label
+     * @var LabelMapper
      */
-    private $labelMapper;
+    private LabelMapper $labelMapper;
+
+    /**
+     * @var AclService
+     */
     private AclService $aclService;
 
     public function __construct(
         Translator $translator,
-        Job $jobMapper,
-        Category $categoryMapper,
-        Label $labelMapper,
+        JobMapper $jobMapper,
+        CategoryMapper $categoryMapper,
+        LabelMapper $labelMapper,
         AclService $aclService
     ) {
         $this->translator = $translator;
@@ -53,7 +59,7 @@ class CompanyQuery
      *
      * @return Translator
      */
-    public function getTranslator()
+    public function getTranslator(): Translator
     {
         return $this->translator;
     }
@@ -101,7 +107,7 @@ class CompanyQuery
     }
 
     /**
-     * Returns all categories if $visible is false, only returns visible categories if $visible is false.
+     * Returns all categories if $visible is false, only returns visible categories if $visible is true.
      *
      * @param bool $visible
      *
@@ -112,32 +118,20 @@ class CompanyQuery
         if (!$visible) {
             if (!$this->aclService->isAllowed('listAllCategories', 'company')) {
                 throw new NotAllowedException(
-                    $this->translator->translate('You are not allowed to access the admin interface')
+                    $this->translator->translate('You are not allowed to list all job categories')
                 );
             }
-            $results = $this->categoryMapper->findAll();
 
-            return $this->getUniqueInArray($results, function ($a) {
-                return $a->getLanguageNeutralId();
-            });
+            return $this->categoryMapper->findAll();
         }
+
         if (!$this->aclService->isAllowed('listVisibleCategories', 'company')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to list all categories'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to list job categories'));
         }
 
-        $categories = $this->categoryMapper->findVisibleCategoryByLanguage($this->translator->getTranslator()->getLocale());
-        $jobsWithoutCategory = $this->jobMapper->findJobsWithoutCategory($this->translator->getTranslator()->getLocale());
-        $filteredCategories = $this->filterCategories($categories);
-        $noVacancyCategory = count(array_filter($filteredCategories, function ($el) {
-            return 'jobs' == $el->getSlug();
-        }));
+        $categories = $this->categoryMapper->findVisibleCategories();
 
-        if (count($jobsWithoutCategory) > 0 && 0 == $noVacancyCategory) {
-            $filteredCategories[] = $this->categoryMapper
-                ->createNullCategory($this->translator->getTranslator()->getLocale(), $this->translator);
-        }
-
-        return $filteredCategories;
+        return $this->filterCategories($categories);
     }
 
     /**
@@ -147,36 +141,43 @@ class CompanyQuery
      *
      * @return array
      */
-    private function filterCategories($categories)
+    private function filterCategories(array $categories): array
     {
-        $nonemptyCategories = [];
+        $nonEmptyCategories = [];
+
         foreach ($categories as $category) {
             if (count($this->getActiveJobList(['jobCategoryId' => $category->getId()])) > 0) {
-                $nonemptyCategories[] = $category;
+                $nonEmptyCategories[] = $category;
             }
         }
 
-        return $nonemptyCategories;
+        return $nonEmptyCategories;
     }
 
     /**
-     * Returns all labels if $visible is false, only returns visible labels if $visible is false.
+     * Returns all labels if $visible is false, only returns visible labels if $visible is true.
      *
      * @param bool $visible
      *
      * @return array
      */
-    public function getLabelList($visible)
+    public function getLabelList(bool $visible): array
     {
         if (!$visible) {
-            $results = $this->labelMapper->findAll();
+            if (!$this->aclService->isAllowed('listAllLabels', 'company')) {
+                throw new NotAllowedException(
+                    $this->translator->translate('You are not allowed to list all job labels')
+                );
+            }
 
-            return $this->getUniqueInArray($results, function ($a) {
-                return $a->getLanguageNeutralId();
-            });
+            return $this->labelMapper->findAll();
         }
 
-        $labels = $this->labelMapper->findVisibleLabelByLanguage($this->translator->getTranslator()->getLocale());
+        if (!$this->aclService->isAllowed('listVisibleLabels', 'company')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to list job labels'));
+        }
+
+        $labels = $this->labelMapper->findVisibleLabels();
 
         return $this->filterLabels($labels);
     }
@@ -188,30 +189,16 @@ class CompanyQuery
      *
      * @return array
      */
-    private function filterLabels($labels)
+    private function filterLabels(array $labels): array
     {
-        $nonemptyLabels = [];
+        $nonEmptyLabels = [];
+
         foreach ($labels as $label) {
             if (count($this->getActiveJobList(['jobCategoryId' => $label->getId()])) > 0) {
-                $nonemptyLabels[] = $label;
+                $nonEmptyLabels[] = $label;
             }
         }
 
-        return $nonemptyLabels;
-    }
-
-    private static function getUniqueInArray($array, $callback)
-    {
-        $tempResults = [];
-        $resultArray = [];
-        foreach ($array as $x) {
-            $newVar = $callback($x);
-            if (!array_key_exists($newVar, $tempResults)) {
-                $resultArray[] = $x;
-                $tempResults[$newVar] = $x;
-            }
-        }
-
-        return $resultArray;
+        return $nonEmptyLabels;
     }
 }

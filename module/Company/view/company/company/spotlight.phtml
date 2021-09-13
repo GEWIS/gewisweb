@@ -1,11 +1,13 @@
 <?php
-$locale = $this->translator->getTranslator()->getLocale();
 $escaper = new Laminas\Escaper\Escaper('utf-8');
 
 $companyURL = $this->url('company/companyItem', // Route url
-    ['slugCompanyName' => $company->getSlugName()], // Url parameters
+    [
+        'companySlugName' => $company->getSlugName(),
+    ], // Url parameters
     [], // routeOptions
-    true); // Reuse matched parameters
+    true // Reuse matched parameters
+);
 ?>
 <section class="section section-breadcrumb">
     <div class="container">
@@ -19,7 +21,7 @@ $companyURL = $this->url('company/companyItem', // Route url
                 <?= $this->translate('Featured company') ?>
             </li>
             <li class="active">
-                <?= $this->company->getName() ?>
+                <?= $this->escapeHtml($company->getName()) ?>
             </li>
         </ol>
     </div>
@@ -27,15 +29,12 @@ $companyURL = $this->url('company/companyItem', // Route url
 <section class="section">
     <div class="container">
         <h1>
-            <a href="<?= $companyURL ?>"><?= $this->company->getName() ?></a>
+            <a href="<?= $companyURL ?>"><?= $this->escapeHtml($company->getName()) ?></a>
             <small><?= $this->translate('in the spotlight') ?></small>
         </h1>
-        <?=
-        $this->partial('./companyStory.phtml', [
+        <?= $this->partial('./companyStory.phtml', [
             'company' => $company,
             'featuredPackage' => $featuredPackage,
-            'translator' => $this->translator,
-        ]);
-        ?>
+        ]); ?>
     </div>
 </section>

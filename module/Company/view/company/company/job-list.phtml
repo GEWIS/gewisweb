@@ -1,16 +1,14 @@
 <?php
+$escaper = new Laminas\Escaper\Escaper('utf-8');
 
-$locale = $this->translator->getTranslator()->getLocale();
-
-// set title
 if (isset($this->company)) {
     $this->headTitle($this->company->getName());
 }
-$this->headTitle($this->category->getPluralName());
+
+$this->headTitle($this->localiseText($jobCategory->getPluralName()));
 
 $this->headScript()
     ->appendFile($this->basePath() . '/js/bootstrap/tooltip.js');
-
 ?>
 <section class="section section-breadcrumb">
     <div class="container">
@@ -22,13 +20,18 @@ $this->headScript()
             </li>
             <?php if (isset($this->company)): ?>
                 <li>
-                    <a href="<?= $this->url('company/companyItem', ['slugCompanyName' => $this->company->getSlugName()]) ?>">
-                        <?= $this->company->getName(); ?>
+                    <a href="<?= $this->url(
+                        'company/companyItem',
+                        [
+                            'companySlugName' => $company->getSlugName(),
+                        ]
+                    ) ?>">
+                        <?= $this->escapeHtml($company->getName()) ?>
                     </a>
                 </li>
             <?php endif; ?>
             <li class="active">
-                <?= $category->getPluralName() ?>
+                <?= $this->escapeHtml($this->localiseText($jobCategory->getPluralName())) ?>
             </li>
         </ol>
     </div>
@@ -38,7 +41,7 @@ $this->headScript()
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1><?= $category->getPluralName() ?></h1>
+                <h1><?= $this->escapeHtml($this->localiseText($jobCategory->getPluralName())) ?></h1>
             </div>
         </div>
         <div class="row">
@@ -62,10 +65,14 @@ $this->headScript()
                     <?php if (isset($this->company)): ?>
                         <div class="form-group">
                             <label><?= $this->translate('Company') ?></label>
-                            <a href="<?= $this->url('company/jobList', ['category' => $category->getSlug()]) ?>"
-                               class="btn btn-default btn-filter align-middle">
-                                <span class="btn-text" title="<?= $company->getName() ?>">
-                                    <?= $company->getName() ?>
+                            <a href="<?= $this->url(
+                                'company/jobList',
+                                [
+                                    'category' => $this->localiseText($jobCategory->getSlug()),
+                                ]
+                            ) ?>" class="btn btn-default btn-filter align-middle">
+                                <span class="btn-text" title="<?= $escaper->escapeHtmlAttr($company->getName()) ?>">
+                                    <?= $this->escapeHtml($company->getName()) ?>
                                 </span>
                                 <span class="far fa-trash-alt"></span>
                             </a>
@@ -78,7 +85,12 @@ $this->headScript()
             <div class="row">
                 <div class="col-md-12" style="margin-top: 1em">
                     <h4>No Results</h4>
-                    <p><?= sprintf($this->translate("Unfortunately, there aren't any %s at the moment."), strtolower($category->getPluralName())) ?></p>
+                    <p>
+                        <?= sprintf(
+                            $this->translate("Unfortunately, there aren't any %s at the moment."),
+                            strtolower($this->escapeHtml($this->localiseText($jobCategory->getPluralName()))),
+                        ) ?>
+                    </p>
                 </div>
             </div>
         <?php else: ?>
@@ -90,29 +102,35 @@ $this->headScript()
                             $company = $job->getPackage()->getCompany();
 
                             $jobUrl = $this->url('company/companyItem/joblist/job_item', [
-                                'slugCompanyName' => $company->getSlugName(),
-                                'slugJobName' => $job->getSlugName(),
-                                'category' => $job->getCategory()->getSlug(),
+                                'companySlugName' => $company->getSlugName(),
+                                'jobSlugName' => $job->getSlugName(),
+                                'category' => $this->localiseText($jobCategory->getSlug()),
                             ]);
                             ?>
                             <a href="<?= $jobUrl ?>" class="card job-card" data-index="<?= $index ?>"
                                data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>">
                                 <div class="card-img">
                                     <img
-                                        src="<?= $this->fileUrl($company->getTranslationFromLocale($locale)?->getLogo()) ?>"
+                                        src="<?= $this->fileUrl($company->getLogo()) ?>"
                                         alt="<?= $this->escapeHtmlAttr($company->getName()) ?>"/>
                                 </div>
-                                <h2 class="card-title"><?= $job->getName() ?></h2>
-                                <p class="card-subtitle text-muted"><?= $company->getName() ?></p>
-                                <?php if (!is_null($job->getLocation())): ?>
-                                    <p class="job-location"><?= $job->getLocation() ?></p>
+                                <h2 class="card-title">
+                                    <?= $this->escapeHtml($this->localiseText($job->getName())) ?>
+                                </h2>
+                                <p class="card-subtitle text-muted"><?= $this->escapeHtml($company->getName()) ?></p>
+                                <?php if (null !== $this->localiseText($job->getLocation())): ?>
+                                    <p class="job-location">
+                                        <?= $this->escapeHtml($this->localiseText($job->getLocation())) ?>
+                                    </p>
                                 <?php endif; ?>
                                 <div>
-                                    <?php foreach ($job->getLabels() as $labelAsg): ?>
-                                        <?php $label = $labelAsg->getLabel(); ?>
+                                    <?php foreach ($job->getLabels() as $label): ?>
                                         <span class="label label-default job-label"
-                                              data-label="<?= $label->getSlug(); ?>" data-toggle="tooltip"
-                                              title="<?= $label->getName(); ?>"><?= $label->getSlug(); ?></span>
+                                              data-label="<?= $escaper->escapeHtmlAttr($this->localiseText($label->getAbbreviation())) ?>"
+                                              data-toggle="tooltip"
+                                              title="<?= $escaper->escapeHtmlAttr($this->localiseText($label->getName())) ?>">
+                                            <?= $this->escapeHtml($this->localiseText($label->getAbbreviation())) ?>
+                                        </span>
                                     <?php endforeach; ?>
                                 </div>
                                 <div class="card-footer">
@@ -128,7 +146,7 @@ $this->headScript()
         $alternatives = [];
         foreach ($this->jobCategories() as $c) {
             // Don't include current category in list of alternative job categories
-            if ($category->getId() === $c->getId()) {
+            if ($jobCategory->getId() === $c->getId()) {
                 continue;
             }
 

@@ -12,9 +12,9 @@ class LocaliseText extends AbstractHelper
      *
      * @param LocalisedTextModel $localisedText
      *
-     * @return string The localised value of `$localisedText`
+     * @return string|null The localised value of `$localisedText` or null if no translation exists.
      */
-    public function __invoke(LocalisedTextModel $localisedText): string
+    public function __invoke(LocalisedTextModel $localisedText): ?string
     {
         return $localisedText->getText();
     }

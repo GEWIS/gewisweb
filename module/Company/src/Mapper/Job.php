@@ -4,6 +4,7 @@ namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Company\Model\Job as JobModel;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * Mappers for jobs.
@@ -16,123 +17,85 @@ class Job extends BaseMapper
     /**
      * Checks if $slugName is only used by object identified with $cid.
      *
-     * @param string $companySlug
-     * @param string $jobSlug The slugName to be checked
-     * @param int $jobCategory
+     * @param string $companySlugName
+     * @param string $jobSlugName
+     * @param int $jobCategoryId
      *
      * @return bool
      */
-    public function isSlugNameUnique(string $companySlug, string $jobSlug, int $jobCategory): bool
+    public function isSlugNameUnique(string $companySlugName, string $jobSlugName, int $jobCategoryId): bool
     {
-        // A slug in unique if there is no other slug of the same category and same language
-        $objects = $this->findJob(
-            [
-                'companySlugName' => $companySlug,
-                'jobSlug' => $jobSlug,
-                'jobCategoryId' => $jobCategory,
-            ]
+        // A slug in unique if there is no other slug of the same category and same company.
+        $jobs = $this->findJob(
+            jobCategoryId: $jobCategoryId,
+            jobSlugName: $jobSlugName,
+            companySlugName: $companySlugName,
         );
 
-        return !(count($objects) > 0);
-    }
-
-    /**
-     * Inserts a job into a given package.
-     *
-     * @param mixed $package
-     */
-    public function insertIntoPackage($package, $lang, $languageNeutralId)
-    {
-        $job = new JobModel();
-        $job->setLanguage($lang);
-        $job->setLanguageNeutralId($languageNeutralId);
-        $job->setPackage($package);
-
-        return $job;
+        return !(count($jobs) > 0);
     }
 
     /**
      * Find all jobs identified by $jobSlugName that are owned by a company
      * identified with $companySlugName.
      *
-     * @param array $dict
-     * @return int|mixed|string
+     * @param int|null $jobCategoryId
+     * @param string|null $jobCategorySlug
+     * @param int|null $jobLabelId
+     * @param string|null $jobSlugName
+     * @param string|null $companySlugName
+     *
+     * @return array
      */
-    public function findJob($dict)
-    {
+    public function findJob(
+        int $jobCategoryId = null,
+        string $jobCategorySlug = null,
+        int $jobLabelId = null,
+        string $jobSlugName = null,
+        string $companySlugName = null,
+    ): array {
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')->join('j.package', 'p')->join('p.company', 'c');
+        $qb->select('j');
 
-        if (
-            array_key_exists('jobCategory', $dict)
-            || array_key_exists('jobCategoryId', $dict)
-        ) {
-            $qb->join('j.category', 'cat');
+        if (null !== $jobCategoryId) {
+            $qb->join('j.category', 'cat')
+                ->andWhere('cat.id = :jobCategoryId')
+                ->setParameter('jobCategoryId', $jobCategoryId);
         }
 
-        if (array_key_exists('jobSlug', $dict)) {
-            $jobSlugName = $dict['jobSlug'];
-            $qb->andWhere('j.slugName=:jobId');
-            $qb->setParameter('jobId', $jobSlugName);
+        if (null !== $jobCategorySlug) {
+            $qb->innerJoin('j.category', 'cat')
+                ->innerJoin(
+                    'cat.slug',
+                    'loc',
+                    Join::WITH,
+                    $qb->expr()->orX(
+                        'LOWER(loc.valueEN) = :jobCategorySlug',
+                        'LOWER(loc.valueNL) = :jobCategorySlug',
+                    )
+                )
+                ->setParameter('jobCategorySlug', $jobCategorySlug);
         }
 
-        if (array_key_exists('jobCategory', $dict)) {
-            $category = $dict['jobCategory'];
-            $qb->andWhere('cat.slug=:category');
-            $qb->setParameter('category', $category);
+        if (null !== $jobLabelId) {
+            $qb->join('j.labels', 'l')
+                ->andWhere('l.id = :jobLabelId')
+                ->setParameter('jobLabelId', $jobLabelId);
         }
 
-        if (array_key_exists('jobCategoryId', $dict)) {
-            $category = $dict['jobCategoryId'];
-            $qb->andWhere('cat.id=:category');
-            $qb->setParameter('category', $category);
+        if (null !== $jobSlugName) {
+            $qb->andWhere('j.slugName = :jobSlugName')
+                ->setParameter('jobSlugName', $jobSlugName);
         }
 
-        if (array_key_exists('companySlugName', $dict)) {
-            $companySlugName = $dict['companySlugName'];
-            $qb->andWhere('c.slugName=:companySlugName');
-            $qb->setParameter('companySlugName', $companySlugName);
+        if (null !== $companySlugName) {
+            $qb->join('j.package', 'p')
+                ->join('p.company', 'c')
+                ->andWhere('c.slugName=:companySlugName')
+                ->setParameter('companySlugName', $companySlugName);
         }
 
         return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Deletes the jobs corresponding to the given language neutral id.
-     */
-    public function deleteByLanguageNeutralId($jobId)
-    {
-        $jobs = $this->getRepository()->findBy(['languageNeutralId' => $jobId]);
-        foreach ($jobs as $job) {
-            $this->em->remove($job);
-        }
-
-        $this->em->flush();
-    }
-
-    public function createObjectSelectConfig($targetClass, $property, $label, $name, $locale)
-    {
-        return [
-            'name' => $name,
-            'type' => 'DoctrineModule\Form\Element\ObjectSelect',
-            'options' => [
-                'label' => $label,
-                'object_manager' => $this->em,
-                'target_class' => $targetClass,
-                'property' => $property,
-                'find_method' => [
-                    'name' => 'findBy',
-                    'params' => [
-                        'criteria' => ['language' => $locale],
-                        // Use key 'orderBy' if using ORM
-                        //'orderBy'  => ['lastname' => 'ASC'],
-                    ],
-                ],
-            ],
-            //'attributes' => [
-            //'class' => 'form-control input-sm'
-            //]
-        ];
     }
 
     /**
