@@ -3,7 +3,7 @@ $this->inlineScript()
     ->appendFile($this->basePath() . '/js/company-admin.js');
 $this->scriptUrl()->requireUrls(
     ['company_admin/company/delete'],
-    ['slugCompanyName']
+    ['companySlugName']
 );
 ?>
 <?php if (array_sum(array_map("count", $packageFuture)) != 0): ?>
@@ -42,7 +42,7 @@ $this->scriptUrl()->requireUrls(
                         <?php
                         foreach ($categoryList as $category):
                             $editUrl = $this->url('company_admin/category/edit',
-                                ['categoryId' => $category->getId()]);
+                                ['jobCategoryId' => $category->getId()]);
                             ?>
                             <tr>
                                 <td>
@@ -74,7 +74,7 @@ $this->scriptUrl()->requireUrls(
                     <tbody>
                         <?php
                         foreach ($labelList as $label):
-                            $editUrl = $this->url('company_admin/label/edit', ['labelId' => $label->getId()]);
+                            $editUrl = $this->url('company_admin/label/edit', ['jobLabelId' => $label->getId()]);
                         ?>
                             <tr>
                                 <td>
@@ -157,7 +157,7 @@ $this->scriptUrl()->requireUrls(
                     <?php
                     foreach ($companyList as $company):
                         $editUrl = $this->url('company_admin/company/edit',
-                            ['slugCompanyName' => $company->getSlugName()]);
+                            ['companySlugName' => $company->getSlugName()]);
                         ?>
                         <tr class="company-list-item
                                <?= $company->getHidden() ? ' danger' : '' ?>
@@ -258,8 +258,8 @@ $this->scriptUrl()->requireUrls(
                             ?>
                             <?= sprintf(
                                 $this->translate("%s for company %s will start at %s"),
-                                "<a href='" . $this->url('company_admin/company/edit/package/edit', ['slugCompanyName' => $companySlugName, 'packageId' => $package->getId()]) . "'> " . $packageType . "</a>",
-                                "<a href=" . $this->url('company_admin/company/edit', ['slugCompanyName' => $companySlugName]) . ">" . $companyName . "</a>",
+                                "<a href='" . $this->url('company_admin/company/edit/package/edit', ['companySlugName' => $companySlugName, 'packageId' => $package->getId()]) . "'> " . $packageType . "</a>",
+                                "<a href=" . $this->url('company_admin/company/edit', ['companySlugName' => $companySlugName]) . ">" . $companyName . "</a>",
                                 $package->getStartingDate()->format("l d M"))
                             ?>
                         </div>
@@ -290,8 +290,8 @@ $this->scriptUrl()->requireUrls(
                             ?>
                             <?= sprintf(
                                 $this->translate("%s for company %s will expire at %s"),
-                                "<a href='" . $this->url('company_admin/company/edit/package/edit', ['slugCompanyName' => $companySlugName, 'packageId' => $package->getId()]) . "'> " . $packageType . "</a>",
-                                "<a href=" . $this->url('company_admin/company/edit', ['slugCompanyName' => $companySlugName]) . ">" . $companyName . "</a>",
+                                "<a href='" . $this->url('company_admin/company/edit/package/edit', ['companySlugName' => $companySlugName, 'packageId' => $package->getId()]) . "'> " . $packageType . "</a>",
+                                "<a href=" . $this->url('company_admin/company/edit', ['companySlugName' => $companySlugName]) . ">" . $companyName . "</a>",
                                 $package->getExpirationDate()->format("l d M"))
                             ?>
                         </div>

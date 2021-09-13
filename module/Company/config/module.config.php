@@ -149,7 +149,7 @@ return [
                             'delete' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/delete/[:companySlugName]',
+                                    'route' => '/delete/:companySlugName',
                                     'defaults' => [
                                         'action' => 'deleteCompany',
                                     ],
@@ -161,7 +161,7 @@ return [
                             'edit' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/edit/[:companySlugName]',
+                                    'route' => '/edit/:companySlugName',
                                     'defaults' => [
                                         'action' => 'editCompany',
                                     ],
