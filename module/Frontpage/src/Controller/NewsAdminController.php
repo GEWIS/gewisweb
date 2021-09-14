@@ -2,10 +2,13 @@
 
 namespace Frontpage\Controller;
 
+use Frontpage\Service\AclService;
 use Frontpage\Service\News as NewsService;
 use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Paginator\Paginator;
 use Laminas\View\Model\ViewModel;
+use User\Permissions\NotAllowedException;
 
 class NewsAdminController extends AbstractActionController
 {
@@ -15,13 +18,28 @@ class NewsAdminController extends AbstractActionController
     private NewsService $newsService;
 
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
+    /**
      * NewsAdminController constructor.
      *
      * @param NewsService $newsService
      */
-    public function __construct(NewsService $newsService)
-    {
+    public function __construct(
+        NewsService $newsService,
+        AclService $aclService,
+        Translator $translator,
+    ) {
         $this->newsService = $newsService;
+        $this->aclService = $aclService;
+        $this->translator = $translator;
     }
 
     public function listAction()
@@ -48,14 +66,22 @@ class NewsAdminController extends AbstractActionController
      */
     public function createAction()
     {
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            if ($this->newsService->createNewsItem($request->getPost())) {
-                $this->redirect()->toUrl($this->url()->fromRoute('admin_news'));
-            }
+        if (!$this->aclService->isAllowed('create', 'news_item')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to create news items'));
         }
 
         $form = $this->newsService->getNewsItemForm();
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $form->setData($request->getPost()->toArray());
+
+            if ($form->isValid()) {
+                if ($this->newsService->createNewsItem($form->getData())) {
+                    return $this->redirect()->toUrl($this->url()->fromRoute('admin_news'));
+                }
+            }
+        }
 
         $view = new ViewModel(
             [
@@ -75,15 +101,31 @@ class NewsAdminController extends AbstractActionController
      */
     public function editAction()
     {
+        if (!$this->aclService->isAllowed('edit', 'news_item')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to edit news items'));
+        }
+
         $newsItemId = $this->params()->fromRoute('item_id');
+        $newsItem = $this->newsService->getNewsItemById($newsItemId);
+
+        if (null === $newsItem) {
+            return $this->notFoundAction();
+        }
+
+        $form = $this->newsService->getNewsItemForm();
+
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($this->newsService->updateNewsItem($newsItemId, $request->getPost())) {
-                $this->redirect()->toUrl($this->url()->fromRoute('admin_news'));
+            $form->setData($request->getPost()->toArray());
+
+            if ($form->isValid()) {
+                if ($this->newsService->updateNewsItem($newsItem, $form->getData())) {
+                    return $this->redirect()->toUrl($this->url()->fromRoute('admin_news'));
+                }
             }
         }
 
-        $form = $this->newsService->getNewsItemForm($newsItemId);
+        $form->bind($newsItem);
 
         return new ViewModel(
             [
@@ -97,11 +139,23 @@ class NewsAdminController extends AbstractActionController
 
     /**
      * Delete a news item.
+     *
+     * TODO: Non-idempotent requests should be done via POST, not GET.
      */
     public function deleteAction()
     {
+        if (!$this->aclService->isAllowed('delete', 'news_item')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to delete news items'));
+        }
+
         $newsItemId = $this->params()->fromRoute('item_id');
-        $this->newsService->deleteNewsItem($newsItemId);
+        $newsItem = $this->newsService->getNewsItemById($newsItemId);
+
+        if (null === $newsItem) {
+            return $this->notFoundAction();
+        }
+
+        $this->newsService->deleteNewsItem($newsItem);
         $this->redirect()->toUrl($this->url()->fromRoute('admin_news'));
     }
 }
