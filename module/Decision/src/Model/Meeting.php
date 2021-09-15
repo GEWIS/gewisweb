@@ -74,7 +74,7 @@ class Meeting
         targetEntity: MeetingNotes::class,
         mappedBy: "meeting",
     )]
-    protected MeetingNotes $meetingNotes;
+    protected ?MeetingNotes $meetingNotes = null;
 
     /**
      * Get all allowed meeting types.
@@ -97,6 +97,7 @@ class Meeting
     public function __construct()
     {
         $this->decisions = new ArrayCollection();
+        $this->documents = new ArrayCollection();
     }
 
     /**
@@ -120,9 +121,9 @@ class Meeting
     }
 
     /**
-     * @return MeetingNotes
+     * @return MeetingNotes|null
      */
-    public function getNotes(): MeetingNotes
+    public function getNotes(): ?MeetingNotes
     {
         return $this->meetingNotes;
     }

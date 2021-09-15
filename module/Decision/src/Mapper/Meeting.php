@@ -5,8 +5,17 @@ namespace Decision\Mapper;
 use Application\Mapper\BaseMapper;
 use DateInterval;
 use DateTime;
-use Decision\Model\Meeting as MeetingModel;
-use Decision\Model\MeetingDocument;
+use Decision\Model\{
+    Meeting as MeetingModel,
+    MeetingDocument as MeetingDocumentModel,
+};
+use Doctrine\ORM\{
+    EntityManager,
+    EntityRepository,
+    NonUniqueResultException,
+    NoResultException,
+    ORMException,
+};
 use InvalidArgumentException;
 
 class Meeting extends BaseMapper
@@ -38,11 +47,11 @@ class Meeting extends BaseMapper
     /**
      * Find all meetings which have the given type.
      *
-     * @param int $type AV|BV|VV|Virt
+     * @param string $type AV|BV|VV|Virt
      *
      * @return array
      */
-    public function findByType($type)
+    public function findByType(string $type): array
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -59,10 +68,11 @@ class Meeting extends BaseMapper
      * Find all meetings that have taken place.
      *
      * @param int|null $limit The amount of results, default is all
+     * @param string|null $type
      *
      * @return array Meetings that have taken place
      */
-    public function findPast($limit = null, $type = null)
+    public function findPast(int $limit = null, string $type = null): array
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -96,8 +106,9 @@ class Meeting extends BaseMapper
      * away is returned.
      *
      * @return MeetingModel|null
+     * @throws NonUniqueResultException
      */
-    public function findLatestAV()
+    public function findLatestAV(): ?MeetingModel
     {
         return $this->findFutureMeeting('DESC');
     }
@@ -106,8 +117,9 @@ class Meeting extends BaseMapper
      * Returns the closest upcoming AV.
      *
      * @return MeetingModel|null
+     * @throws NonUniqueResultException
      */
-    public function findUpcomingMeeting()
+    public function findUpcomingMeeting(): ?MeetingModel
     {
         return $this->findFutureMeeting('ASC', true);
     }
@@ -115,12 +127,13 @@ class Meeting extends BaseMapper
     /**
      * Find a meeting with all decisions.
      *
-     * @param string $type
-     * @param int $number
+     * @param string|null $type
+     * @param int|null $number
      *
-     * @return MeetingModel
+     * @return MeetingModel|null
+     * @throws NonUniqueResultException
      */
-    public function findMeeting($type, $number)
+    public function findMeeting(?string $type, ?int $number): ?MeetingModel
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -136,10 +149,16 @@ class Meeting extends BaseMapper
         $qb->setParameter(':type', $type);
         $qb->setParameter(':number', $number);
 
-        return $qb->getQuery()->getSingleResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
-    public function findDocument($id)
+    /**
+     * @param int $id
+     *
+     * @return MeetingDocumentModel|null
+     * @throws ORMException
+     */
+    public function findDocument(int $id): ?MeetingDocumentModel
     {
         return $this->em->find('Decision\Model\MeetingDocument', $id);
     }
@@ -149,11 +168,12 @@ class Meeting extends BaseMapper
      *
      * @param int $id Document ID
      *
-     * @return MeetingDocument
+     * @return MeetingDocumentModel
      *
      * @throws InvalidArgumentException If the document does not exist
+     * @throws ORMException
      */
-    public function findDocumentOrFail($id)
+    public function findDocumentOrFail($id): MeetingDocumentModel
     {
         $document = $this->findDocument($id);
 
@@ -167,9 +187,13 @@ class Meeting extends BaseMapper
     /**
      * Returns the maximum document position for the given meeting.
      *
-     * @return string|null NULL if no documents are associated to the meeting
+     * @param MeetingModel $meeting
+     *
+     * @return int|null NULL if no documents are associated to the meeting
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
-    public function findMaxDocumentPosition(MeetingModel $meeting)
+    public function findMaxDocumentPosition(MeetingModel $meeting): ?int
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -192,6 +216,7 @@ class Meeting extends BaseMapper
      * @param bool $vvs If VV's are included in this
      *
      * @return MeetingModel|null
+     * @throws NonUniqueResultException
      */
     private function findFutureMeeting($order, $vvs = false)
     {

@@ -30,21 +30,30 @@ class AdminController extends AbstractActionController
      */
     public function notesAction()
     {
-        $request = $this->getRequest();
+        $form = $this->decisionService->getNotesForm();
 
+        $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($this->decisionService->uploadNotes($request->getPost(), $request->getFiles())) {
-                return new ViewModel(
-                    [
-                        'success' => true,
-                    ]
-                );
+            $post = array_merge_recursive(
+                $request->getPost()->toArray(),
+                $request->getFiles()->toArray(),
+            );
+            $form->setData($post);
+
+            if ($form->isValid()) {
+                if ($this->decisionService->uploadNotes($form->getData())) {
+                    return new ViewModel(
+                        [
+                            'success' => true,
+                        ]
+                    );
+                }
             }
         }
 
         return new ViewModel(
             [
-                'form' => $this->decisionService->getNotesForm(),
+                'form' => $form,
             ]
         );
     }
@@ -58,22 +67,35 @@ class AdminController extends AbstractActionController
         $number = $this->params()->fromRoute('number');
         $meetings = $this->decisionService->getMeetingsByType('AV');
         $meetings = array_merge($meetings, $this->decisionService->getMeetingsByType('VV'));
-        if (is_null($number) && !empty($meetings)) {
+
+        if (null === $number && !empty($meetings)) {
             $number = $meetings[0]->getNumber();
             $type = $meetings[0]->getType();
         }
+
+        $form = $this->decisionService->getDocumentForm();
+
         $request = $this->getRequest();
         $success = false;
         if ($request->isPost()) {
-            if ($this->decisionService->uploadDocument($request->getPost(), $request->getFiles())) {
-                $success = true;
+            $post = array_merge_recursive(
+                $request->getPost()->toArray(),
+                $request->getFiles()->toArray(),
+            );
+            $form->setData($post);
+
+            if ($form->isValid()) {
+                if ($this->decisionService->uploadDocument($form->getData())) {
+                    $success = true;
+                }
             }
         }
+
         $meeting = $this->decisionService->getMeeting($type, $number);
 
         return new ViewModel(
             [
-                'form' => $this->decisionService->getDocumentForm(),
+                'form' => $form,
                 'meetings' => $meetings,
                 'meeting' => $meeting,
                 'number' => $number,
@@ -83,9 +105,12 @@ class AdminController extends AbstractActionController
         );
     }
 
+    /**
+     * TODO: Non-idempotent requests should be POST, not GET.
+     */
     public function deleteDocumentAction()
     {
-        $this->decisionService->deleteDocument($this->getRequest()->getPost());
+        $this->decisionService->deleteDocument($this->getRequest()->getPost()->toArray());
 
         return $this->redirect()->toRoute('admin_decision/document');
     }
@@ -120,11 +145,12 @@ class AdminController extends AbstractActionController
         $meetings = $this->decisionService->getMeetingsByType('AV');
         $number = $this->params()->fromRoute('number');
         $authorizations = [];
-        if (is_null($number) && !empty($meetings)) {
+
+        if (null === $number && !empty($meetings)) {
             $number = $meetings[0]->getNumber();
         }
 
-        if (!is_null($number)) {
+        if (null !== $number) {
             $authorizations = $this->decisionService->getAllAuthorizations($number);
         }
 
