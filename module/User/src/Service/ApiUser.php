@@ -2,9 +2,9 @@
 
 namespace User\Service;
 
+use Doctrine\ORM\ORMException;
 use Laminas\Mvc\I18n\Translator;
-use RuntimeException;
-use User\Form\ApiToken;
+use User\Form\ApiToken as ApiTokenForm;
 use User\Mapper\ApiUser as ApiUserMapper;
 use User\Model\ApiUser as ApiUserModel;
 use User\Permissions\NotAllowedException;
@@ -15,32 +15,43 @@ use User\Permissions\NotAllowedException;
 class ApiUser
 {
     /**
-     * @var Translator
-     */
-    private $translator;
-
-    /**
      * @var ApiUserMapper
      */
-    private $apiUserMapper;
+    private ApiUserMapper $apiUserMapper;
 
     /**
-     * @var ApiToken
+     * @var ApiTokenForm
      */
-    private $apiTokenForm;
+    private ApiTokenForm $apiTokenForm;
 
+    /**
+     * @var AclService
+     */
     private AclService $aclService;
 
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
+    /**
+     * Identity storage.
+     *
+     * @var ApiUserModel
+     */
+    protected ApiUserModel $identity;
+
+
     public function __construct(
-        Translator $translator,
         ApiUserMapper $apiUserMapper,
-        ApiToken $apiTokenForm,
-        AclService $aclService
+        ApiTokenForm $apiTokenForm,
+        AclService $aclService,
+        Translator $translator,
     ) {
-        $this->translator = $translator;
         $this->apiUserMapper = $apiUserMapper;
         $this->apiTokenForm = $apiTokenForm;
         $this->aclService = $aclService;
+        $this->translator = $translator;
     }
 
     /**
@@ -48,24 +59,17 @@ class ApiUser
      *
      * @return Translator
      */
-    public function getTranslator()
+    public function getTranslator(): Translator
     {
         return $this->translator;
     }
-
-    /**
-     * Identity storage.
-     *
-     * @var ApiUserModel
-     */
-    protected $identity;
 
     /**
      * Obtain all tokens.
      *
      * @return array Of tokens
      */
-    public function getTokens()
+    public function getTokens(): array
     {
         if (!$this->aclService->isAllowed('list', 'apiuser')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view API tokens'));
@@ -75,26 +79,29 @@ class ApiUser
     }
 
     /**
-     * Remove a token by it's ID.
+     * Remove a token by its ID.
      *
      * @param int $id
+     *
+     * @throws ORMException
      */
-    public function removeToken($id)
+    public function removeToken(int $id): void
     {
         if (!$this->aclService->isAllowed('remove', 'apiuser')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to remove API tokens'));
         }
+
         $this->apiUserMapper->removeById($id);
     }
 
     /**
-     * Obtain a token by it's ID.
+     * Obtain a token by its ID.
      *
      * @param int $id
      *
      * @return ApiUserModel Token
      */
-    public function getToken($id)
+    public function getToken(int $id): ApiUserModel
     {
         if (!$this->aclService->isAllowed('view', 'apiuser')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view API tokens'));
@@ -107,25 +114,15 @@ class ApiUser
      * Add an API token.
      *
      * @param array $data
+     *
+     * @return ApiUserModel
+     * @throws ORMException
      */
-    public function addToken($data)
+    public function addToken(array $data): ApiUserModel
     {
-        $form = $this->getApiTokenForm();
+        $apiUser = new ApiUserModel();
 
-        $form->setData($data);
-
-        $form->bind(new ApiUserModel());
-
-        if (!$form->isValid()) {
-            return false;
-        }
-
-        $apiUser = $form->getData();
-
-        if (!$apiUser instanceof ApiUserModel) {
-            throw new RuntimeException('The ApiUser model could not be retrieved from the form.');
-        }
-
+        $apiUser->setName($data['name']);
         $apiUser->setToken($this->generateToken());
 
         $this->apiUserMapper->persist($apiUser);
@@ -138,7 +135,7 @@ class ApiUser
      *
      * @return string
      */
-    public static function generateToken()
+    public static function generateToken(): string
     {
         return base64_encode(openssl_random_pseudo_bytes(32));
     }
@@ -146,9 +143,9 @@ class ApiUser
     /**
      * Get the API token form.
      *
-     * @return ApiToken
+     * @return ApiTokenForm
      */
-    public function getApiTokenForm()
+    public function getApiTokenForm(): ApiTokenForm
     {
         if (!$this->aclService->isAllowed('add', 'apiuser')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to add API tokens'));
