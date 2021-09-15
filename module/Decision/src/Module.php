@@ -50,7 +50,6 @@ class Module
                     $aclService = $container->get('decision_service_acl');
 
                     return new Service\Organ(
-                        $translator,
                         $entityManager,
                         $storageService,
                         $emailService,
@@ -58,7 +57,8 @@ class Module
                         $organMapper,
                         $organInformationForm,
                         $organInformationConfig,
-                        $aclService
+                        $aclService,
+                        $translator,
                     );
                 },
                 'decision_service_decision' => function (ContainerInterface $container) {
