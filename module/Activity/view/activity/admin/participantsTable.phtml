@@ -1,4 +1,3 @@
-<?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
 <table class="table table-bordered" style="width: 100%" border="1">
     <thead>
     <tr>
@@ -11,7 +10,7 @@
         <?php endif; ?>
         <?php if (isset($detailed) && isset($signupList)): ?>
             <?php foreach ($signupList->getFields() as $field): ?>
-                <th><?= $this->escapeHtml($field->getName()->getText($lang)) ?></th>
+                <th><?= $this->escapeHtml($this->localiseText($field->getName())) ?></th>
             <?php endforeach; ?>
         <?php endif; ?>
     </tr>
@@ -59,7 +58,7 @@
                 </td>
             <?php endif; ?>
             <?php if (!isset($signupList)): ?>
-                <td><?= $this->escapeHtml($signup->getSignupList()->getName()->getText($lang)) ?></td>
+                <td><?= $this->escapeHtml($this->localiseText($signup->getSignupList()->getName())) ?></td>
             <?php endif; ?>
             <?php if (isset($detailed)): ?>
                 <?php foreach ($signupList->getFields() as $field): ?>
@@ -82,7 +81,7 @@
                                         echo $fieldValue->getValue();
                                         break;
                                     case 3:
-                                        echo $fieldValue->getOption()->getValue()->getText($lang);
+                                        echo $this->localiseText($fieldValue->getOption()->getValue());
                                         break;
                                 }
                                 ?>

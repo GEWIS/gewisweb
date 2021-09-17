@@ -1,4 +1,3 @@
-<?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
 <ul class="list-group">
     <?php foreach ($activities as $activity): ?>
         <li class="list-group-item agenda-item">
@@ -15,7 +14,7 @@
                         <div class="col-md-12">
                             <h4>
                                 <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
-                                    <?= $this->escapeHtml($activity->getName()->getText($lang)) ?>
+                                    <?= $this->escapeHtml($this->localiseText($activity->getName())) ?>
                                 </a>
                             </h4>
                         </div>
@@ -23,13 +22,13 @@
                             <?php foreach ($activity->getCategories() as $category): ?>
                                 <div class="chip chip-small chip-outlined">
                                     <span class="chip-label">
-                                        <?= $this->escapeHtml($category->getName()->getText($lang)) ?>
+                                        <?= $this->escapeHtml($this->localiseText($category->getName())) ?>
                                     </span>
                                 </div>
                             <?php endforeach; ?>
                         </div>
                         <div class="col-md-8 reveal reveal-10">
-                            <p><?= strip_tags($this->markdown($activity->getDescription()->getText($lang))) ?></p>
+                            <p><?= strip_tags($this->markdown($this->localiseText($activity->getDescription()))) ?></p>
                             <a class="reveal-button"><?= $this->translate('Continue reading') ?></a>
                         </div>
                         <div class="col-md-4">
@@ -40,10 +39,10 @@
                                 <dd><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT); ?></dd>
 
                                 <dt><?= $this->translate('Location') ?></dt>
-                                <dd><?= $this->escapeHtml($activity->getLocation()->getText($lang)) ?></dd>
+                                <dd><?= $this->escapeHtml($this->localiseTexT($activity->getLocation())) ?></dd>
 
                                 <dt><?= $this->translate('Costs') ?></dt>
-                                <dd><?= $this->escapeHtml($activity->getCosts()->getText($lang)) ?></dd>
+                                <dd><?= $this->escapeHtml($this->localiseText($activity->getCosts())) ?></dd>
                             </dl>
                         </div>
                     </div>

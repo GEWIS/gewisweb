@@ -2,9 +2,7 @@
 
 use Activity\Model\Activity;
 
-$lang = $this->plugin('translate')->getTranslator()->getLocale();
-
-$this->headTitle($this->escapeHtml($activity->getName()->getText($lang)));
+$this->headTitle($this->escapeHtml($this->localiseText($activity->getName())));
 $this->headTitle($this->translate('Approval'));
 ?>
 <div class="row admin-activity admin-activity-overview">
@@ -144,7 +142,7 @@ $this->headTitle($this->translate('Approval'));
             <?php foreach ($activity->getCategories() as $category): ?>
                 <div class="chip">
                 <span class="chip-label">
-                    <?= $this->escapeHtml($category->getName()->getText($lang)) ?>
+                    <?= $this->escapeHtml($this->localiseText($category->getName())) ?>
                 </span>
                 </div>
             <?php endforeach; ?>

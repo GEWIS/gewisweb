@@ -1,7 +1,6 @@
-<?php $lang = $this->plugin('translate')->getTranslator()->getLocale();
-
+<?php
 // set title
-$this->headTitle($this->escapeHtml($activity->getName()->getText($lang)));
+$this->headTitle($this->escapeHtml($this->localiseText($activity->getName())));
 $this->headTitle($this->translate('Activities')); ?>
 
 <?php if (!isset($breadcrumb)): // only show breadcrumbs if they were not yet shown ?>
@@ -15,16 +14,16 @@ $this->headTitle($this->translate('Activities')); ?>
                 </li>
                 <?php if (!isset($signupList)): ?>
                     <li class="active">
-                        <?= $this->escapeHtml($activity->getName()->getText($lang)) ?>
+                        <?= $this->escapeHtml($this->localiseText($activity->getName())) ?>
                     </li>
                 <?php else: ?>
                     <li>
                         <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
-                            <?= $this->escapeHtml($activity->getName()->getText($lang)) ?>
+                            <?= $this->escapeHtml($this->localiseText($activity->getName())) ?>
                         </a>
                     </li>
                     <li class="active">
-                        <?= $this->escapeHtml($signupList->getName()->getText($lang)) ?>
+                        <?= $this->escapeHtml($this->localiseText($signupList->getName())) ?>
                     </li>
                 <?php endif; ?>
             </ol>
@@ -45,13 +44,13 @@ $this->headTitle($this->translate('Activities')); ?>
                 </div>
             <?php endif; ?>
             <div class="col-md-12">
-                <h1><?= $this->escapeHtml($activity->getName()->getText($lang)) ?></h1>
+                <h1><?= $this->escapeHtml($this->localiseText($activity->getName())) ?></h1>
             </div>
             <div class="col-md-12">
                 <?php foreach ($activity->getCategories() as $category): ?>
                     <div class="chip chip-small chip-outlined">
                                     <span class="chip-label">
-                                        <?= $this->escapeHtml($category->getName()->getText($lang)) ?>
+                                        <?= $this->escapeHtml($this->localiseText($category->getName())) ?>
                                     </span>
                     </div>
                 <?php endforeach; ?>
@@ -60,7 +59,7 @@ $this->headTitle($this->translate('Activities')); ?>
                 <div class="row agenda-item">
                     <div class="col-md-9">
                         <div class="agenda-item-body">
-                            <p><?= $this->markdown($activity->getDescription()->getText($lang)) ?></p>
+                            <p><?= $this->markdown($this->localiseText($activity->getDescription())) ?></p>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -73,10 +72,10 @@ $this->headTitle($this->translate('Activities')); ?>
                                 <dd><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT); ?></dd>
 
                                 <dt><?= $this->translate('Location') ?></dt>
-                                <dd><?= $this->escapeHtml($activity->getLocation()->getText($lang)) ?></dd>
+                                <dd><?= $this->escapeHtml($this->localiseText($activity->getLocation())) ?></dd>
 
                                 <dt><?= $this->translate('Costs') ?></dt>
-                                <dd><?= $this->escapeHtml($activity->getCosts()->getText($lang)) ?></dd>
+                                <dd><?= $this->escapeHtml($this->localiseText($activity->getCosts())) ?></dd>
                                 <?php if ($activity->getIsMyFuture()): ?>
                                     <a href="https://myfuture.tue.nl/">
                                         <img
@@ -92,9 +91,9 @@ $this->headTitle($this->translate('Activities')); ?>
                                 $end = $activity->getEndTime()->format('Ymd\THis');
                                 $link = 'https://calendar.google.com/calendar/render?action=TEMPLATE&';
                                 $link .= http_build_query([
-                                    'text' => $activity->getName()->getText($lang),
+                                    'text' => $this->localiseText($activity->getName()),
                                     'dates' => $begin . '/' . $end,
-                                    'location' => $activity->getLocation()->getText($lang),
+                                    'location' => $this->localiseText($activity->getLocation()),
                                 ]);
                                 ?>
 
@@ -115,7 +114,7 @@ $this->headTitle($this->translate('Activities')); ?>
                     <ul class="nav nav-tabs">
                         <?php foreach ($signupLists as $list): ?>
                             <li role="presentation" <?= isset($signupList) ? ($signupList->getId() === $list['id'] ? 'class="active"' : '') : '' ?>>
-                                <a href="<?= $this->url('activity/view/signuplist', ['id' => $activity->getId(), 'signupList' => $list['id']]) ?>"><?= $this->escapeHtml($list['name']->getText($lang)) ?></a>
+                                <a href="<?= $this->url('activity/view/signuplist', ['id' => $activity->getId(), 'signupList' => $list['id']]) ?>"><?= $this->escapeHtml($this->localiseText($list['name'])) ?></a>
                             </li>
                         <?php endforeach; ?>
                     </ul>
@@ -232,7 +231,7 @@ $this->headTitle($this->translate('Activities')); ?>
                             <th></th>
                             <th><?= $this->translate('Name') ?> </th>
                             <?php foreach ($fields as $field): ?>
-                                <th><?= $this->escapeHtml($field->getName()->getText($lang)) ?></th>
+                                <th><?= $this->escapeHtml($this->localiseText($field->getName())) ?></th>
                             <?php endforeach; ?>
                         </tr>
                         </thead>
@@ -274,7 +273,7 @@ $this->headTitle($this->translate('Activities')); ?>
                                                                 echo $fieldValue->getValue();
                                                                 break;
                                                             case 3:
-                                                                echo $fieldValue->getOption()->getValue()->getText($lang);
+                                                                echo $this->localiseText($fieldValue->getOption()->getValue());
                                                                 break;
                                                         }
                                                         ?>
