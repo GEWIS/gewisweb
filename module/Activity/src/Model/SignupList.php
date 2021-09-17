@@ -115,7 +115,8 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     #[OrderBy(value: ["id" => "ASC"])]
     protected Collection $signUps;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->signUps = new ArrayCollection();
     }
 

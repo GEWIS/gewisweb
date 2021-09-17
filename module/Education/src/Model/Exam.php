@@ -25,11 +25,11 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
     name: "type",
     type: "string",
 )]
-#[DiscriminatorMap(value:
-    [
+#[DiscriminatorMap(
+    value: [
         "exam" => Exam::class,
         "summary" => Summary::class,
-    ]
+    ],
 )]
 class Exam implements ResourceInterface
 {

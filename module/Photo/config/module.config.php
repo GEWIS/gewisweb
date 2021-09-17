@@ -120,7 +120,7 @@ return [
                                         'lidnr' => '[0-9]+',
                                     ],
                                     'defaults' => [
-                                        'controller' => TagController::class
+                                        'controller' => TagController::class,
                                     ],
                                 ],
                                 'may_terminate' => false,

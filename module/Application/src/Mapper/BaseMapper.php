@@ -3,10 +3,12 @@
 namespace Application\Mapper;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\{
+    EntityManager,
+    EntityRepository,
+    OptimisticLockException,
+    ORMException,
+};
 
 abstract class BaseMapper
 {
@@ -173,5 +175,5 @@ abstract class BaseMapper
      * @return string the name of the entity repository
      * e.g. "User/Model/User"
      */
-    protected abstract function getRepositoryName(): string;
+    abstract protected function getRepositoryName(): string;
 }

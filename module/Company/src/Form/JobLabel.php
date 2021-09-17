@@ -200,7 +200,7 @@ class JobLabel extends Form implements InputFilterProviderInterface
                         'name' => StringTrim::class,
                     ],
                 ],
-            ]
+            ],
         ];
     }
 }

@@ -11,5 +11,4 @@ use Doctrine\ORM\Mapping\Entity;
 #[Entity]
 class CompanyLocalisedText extends LocalisedText
 {
-
 }

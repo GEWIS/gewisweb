@@ -36,8 +36,8 @@ use Decision\Model\SubDecision\{
     name: "type",
     type: "string",
 )]
-#[DiscriminatorMap(value:
-    [
+#[DiscriminatorMap(
+    value: [
         "foundation" => Foundation::class,
         "abrogation" => Abrogation::class,
         "installation" => Installation::class,
@@ -50,7 +50,7 @@ use Decision\Model\SubDecision\{
         "board_release" => BoardRelease::class,
         "board_discharge" => BoardDischarge::class,
         "foundationreference" => FoundationReference::class,
-    ]
+    ],
 )]
 abstract class SubDecision
 {

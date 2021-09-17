@@ -28,11 +28,11 @@ use Doctrine\ORM\Mapping\{
     name: "type",
     type: "string",
 )]
-#[DiscriminatorMap(value:
-    [
+#[DiscriminatorMap(
+    value: [
         "user" => UserSignup::class,
         "external" => ExternalSignup::class,
-    ]
+    ],
 )]
 abstract class Signup
 {

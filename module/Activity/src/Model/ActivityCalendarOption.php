@@ -32,8 +32,8 @@ class ActivityCalendarOption
      */
     #[Column(
         type: "string",
-        nullable: true)
-    ]
+        nullable: true,
+    )]
     protected ?string $type;
 
     /**
@@ -41,8 +41,8 @@ class ActivityCalendarOption
      */
     #[Column(
         type: "string",
-        nullable: true)
-    ]
+        nullable: true,
+    )]
     protected ?string $status;
 
     /**

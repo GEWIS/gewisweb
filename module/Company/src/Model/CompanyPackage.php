@@ -25,12 +25,12 @@ use Exception;
     name: "packageType",
     type: "string",
 )]
-#[DiscriminatorMap(value:
-    [
+#[DiscriminatorMap(
+    value: [
         "job" => CompanyJobPackage::class,
         "banner" => CompanyBannerPackage::class,
         "featured" => CompanyFeaturedPackage::class,
-    ]
+    ],
 )]
 abstract class CompanyPackage
 {

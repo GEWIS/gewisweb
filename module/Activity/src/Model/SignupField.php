@@ -95,7 +95,8 @@ class SignupField
     )]
     protected Collection $options;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->options = new ArrayCollection();
     }
 

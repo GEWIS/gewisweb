@@ -314,7 +314,7 @@ class Company extends Form implements InputFilterProviderInterface
                 'filters' => [
                     [
                         'name' => ToNull::class,
-                    ]
+                    ],
                 ],
             ],
             'hidden' => [

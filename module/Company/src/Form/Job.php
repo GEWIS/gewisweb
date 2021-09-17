@@ -542,7 +542,7 @@ class Job extends Form implements InputFilterProviderInterface
                 'filters' => [
                     [
                         'name' => ToNull::class,
-                    ]
+                    ],
                 ],
             ],
         ];
