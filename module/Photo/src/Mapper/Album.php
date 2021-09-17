@@ -139,6 +139,9 @@ class Album extends BaseMapper
         return empty($res) ? null : $res[0];
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function getRepositoryName(): string
     {
         return AlbumModel::class;

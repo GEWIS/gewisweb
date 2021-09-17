@@ -69,7 +69,7 @@ class Album implements ResourceInterface
         name: "parent_id",
         referencedColumnName: "id",
     )]
-    protected ?Album $parent;
+    protected ?Album $parent = null;
 
     /**
      * all the subalbums
@@ -122,7 +122,7 @@ class Album implements ResourceInterface
      */
     public function getChildren(): Collection
     {
-        return $this->children->toArray();
+        return $this->children;
     }
 
     /**

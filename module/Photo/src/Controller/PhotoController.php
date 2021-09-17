@@ -50,6 +50,7 @@ class PhotoController extends AbstractActionController
         } else {
             $year = (int)$year;
         }
+
         $albums = $this->albumService->getAlbumsByYear($year);
 
         return new ViewModel(

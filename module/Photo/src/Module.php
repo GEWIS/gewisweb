@@ -53,7 +53,6 @@ class Module
         return [
             'factories' => [
                 'photo_service_album' => function (ContainerInterface $container) {
-                    $translator = $container->get('translator');
                     $photoService = $container->get('photo_service_photo');
                     $albumCoverService = $container->get('photo_service_album_cover');
                     $memberService = $container->get('decision_service_member');
@@ -62,9 +61,9 @@ class Module
                     $createAlbumForm = $container->get('photo_form_album_create');
                     $editAlbumForm = $container->get('photo_form_album_edit');
                     $aclService = $container->get('photo_service_acl');
+                    $translator = $container->get('translator');
 
                     return new Album(
-                        $translator,
                         $photoService,
                         $albumCoverService,
                         $memberService,
@@ -72,7 +71,8 @@ class Module
                         $albumMapper,
                         $createAlbumForm,
                         $editAlbumForm,
-                        $aclService
+                        $aclService,
+                        $translator,
                     );
                 },
                 'photo_service_metadata' => function () {

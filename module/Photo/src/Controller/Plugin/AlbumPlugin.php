@@ -56,7 +56,7 @@ class AlbumPlugin extends AbstractPlugin
      *
      * @throws Exception
      */
-    public function getAlbumAsArray($albumId)
+    public function getAlbumAsArray(int $albumId): ?array
     {
         $album = $this->albumService->getAlbum($albumId);
 
@@ -90,12 +90,14 @@ class AlbumPlugin extends AbstractPlugin
      *
      * @throws Exception
      */
-    public function getAlbumPageAsArray($albumId, $activePage)
+    public function getAlbumPageAsArray(int $albumId, int $activePage): ?array
     {
         $page = $this->getAlbumPage($albumId, $activePage);
-        if (is_null($page)) {
+
+        if (null === $page) {
             return null;
         }
+
         $paginator = $page['paginator'];
         $photos = [];
         $albums = [];
@@ -128,12 +130,14 @@ class AlbumPlugin extends AbstractPlugin
      *
      * @throws Exception
      */
-    public function getAlbumPage($albumId, $activePage, $type = 'album')
+    public function getAlbumPage(int $albumId, int $activePage, string $type = 'album'): ?array
     {
         $album = $this->albumService->getAlbum($albumId, $type);
-        if (is_null($album)) {
+
+        if (null === $album) {
             return null;
         }
+
         $paginator = new Paginator\Paginator(
             new AlbumPaginatorAdapter(
                 $album,
@@ -141,10 +145,9 @@ class AlbumPlugin extends AbstractPlugin
                 $this->albumService
             )
         );
+
         $paginator->setCurrentPageNumber($activePage);
-
         $paginator->setItemCountPerPage($this->photoConfig['max_photos_page']);
-
         $basedir = $this->photoService->getBaseDirectory();
 
         return [
