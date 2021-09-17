@@ -4,6 +4,7 @@ namespace Company\Model;
 
 use Doctrine\ORM\Mapping\{
     Entity,
+    JoinColumn,
     OneToOne,
 };
 use Exception;
@@ -15,12 +16,17 @@ use Exception;
 class CompanyFeaturedPackage extends CompanyPackage
 {
     /**
-     * The featured package content article.
+     * The featured package content article. This column should be nullable (the default), as this entity is part of the
+     * {@link \Company\Model\CompanyPackage} discriminator map.
      */
     #[OneToOne(
         targetEntity: CompanyLocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "article_id",
+        referencedColumnName: "id",
     )]
     protected CompanyLocalisedText $article;
 

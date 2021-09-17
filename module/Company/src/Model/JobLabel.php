@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping\{
     Entity,
     GeneratedValue,
     Id,
+    JoinColumn,
     ManyToMany,
     OneToOne,
 };
@@ -37,6 +38,11 @@ class JobLabel
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
+    #[JoinColumn(
+        name: "name_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
     protected CompanyLocalisedText $name;
 
     /**
@@ -46,6 +52,11 @@ class JobLabel
         targetEntity: CompanyLocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "abbreviation_id",
+        referencedColumnName: "id",
+        nullable: false,
     )]
     protected CompanyLocalisedText $abbreviation;
 

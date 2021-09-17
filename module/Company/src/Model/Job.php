@@ -79,6 +79,11 @@ class Job
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
+    #[JoinColumn(
+        name: "name_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
     protected CompanyLocalisedText $name;
 
     /**
@@ -88,6 +93,11 @@ class Job
         targetEntity: CompanyLocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "location_id",
+        referencedColumnName: "id",
+        nullable: false,
     )]
     protected CompanyLocalisedText $location;
 
@@ -99,6 +109,11 @@ class Job
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
+    #[JoinColumn(
+        name: "website_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
     protected CompanyLocalisedText $website;
 
     /**
@@ -109,6 +124,11 @@ class Job
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
+    #[JoinColumn(
+        name: "description_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
     protected CompanyLocalisedText $description;
 
     /**
@@ -118,6 +138,11 @@ class Job
         targetEntity: CompanyLocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "attachment_id",
+        referencedColumnName: "id",
+        nullable: false,
     )]
     protected CompanyLocalisedText $attachment;
 

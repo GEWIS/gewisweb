@@ -62,6 +62,11 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
         cascade: ["persist"],
         orphanRemoval: true,
     )]
+    #[JoinColumn(
+        name: "name_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
     protected ActivityLocalisedText $name;
 
     /**

@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping\{
     Entity,
     GeneratedValue,
     Id,
+    JoinColumn,
     ManyToMany,
     OneToOne,
 };
@@ -46,6 +47,11 @@ class ActivityCategory
         targetEntity: ActivityLocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "name_id",
+        referencedColumnName: "id",
+        nullable: false,
     )]
     protected ActivityLocalisedText $name;
 

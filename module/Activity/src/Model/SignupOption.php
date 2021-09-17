@@ -50,6 +50,11 @@ class SignupOption
         cascade: ["persist"],
         orphanRemoval: true,
     )]
+    #[JoinColumn(
+        name: "value_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
     protected ActivityLocalisedText $value;
 
     /**

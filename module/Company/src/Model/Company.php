@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping\{
     Entity,
     GeneratedValue,
     Id,
+    JoinColumn,
     OneToMany,
     OneToOne,
 };
@@ -87,6 +88,11 @@ class Company
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
+    #[JoinColumn(
+        name: "slogan_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
     protected CompanyLocalisedText $slogan;
 
     /**
@@ -106,6 +112,11 @@ class Company
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
+    #[JoinColumn(
+        name: "description_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
     protected CompanyLocalisedText $description;
 
     /**
@@ -115,6 +126,11 @@ class Company
         targetEntity: CompanyLocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "website_id",
+        referencedColumnName: "id",
+        nullable: false,
     )]
     protected CompanyLocalisedText $website;
 

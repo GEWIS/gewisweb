@@ -57,6 +57,11 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
+    #[JoinColumn(
+        name: "name_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
     protected ActivityLocalisedText $name;
 
     /**
@@ -79,6 +84,11 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         cascade: ["persist", "remove"],
         orphanRemoval: true,
     )]
+    #[JoinColumn(
+        name: "location_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
     protected ActivityLocalisedText $location;
 
     /**
@@ -88,6 +98,11 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         targetEntity: ActivityLocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "costs_id",
+        referencedColumnName: "id",
+        nullable: false,
     )]
     protected ActivityLocalisedText $costs;
 
@@ -130,6 +145,11 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         targetEntity: ActivityLocalisedText::class,
         cascade: ["persist", "remove"],
         orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "description_id",
+        referencedColumnName: "id",
+        nullable: false,
     )]
     protected ActivityLocalisedText $description;
 
