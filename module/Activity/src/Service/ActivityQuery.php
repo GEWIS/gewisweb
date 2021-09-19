@@ -68,9 +68,9 @@ class ActivityQuery
      *
      * @param int $id The proposal id to be searched for
      *
-     * @return ActivityUpdateProposal or null if the proposal does not exist
+     * @return ActivityUpdateProposal|null or null if the proposal does not exist
      */
-    public function getProposal($id)
+    public function getProposal(int $id): ?ActivityUpdateProposal
     {
         return $this->proposalMapper->find($id);
     }
@@ -80,7 +80,7 @@ class ActivityQuery
      *
      * @return array a Collection of \Activity\Model\ActivityUpdateProposal
      */
-    public function getAllProposals()
+    public function getAllProposals(): array
     {
         return $this->proposalMapper->findAll();
     }
@@ -106,9 +106,9 @@ class ActivityQuery
      *
      * @param int $id
      *
-     * @return ActivityModel
+     * @return ActivityModel|null
      */
-    public function getActivityWithDetails($id)
+    public function getActivityWithDetails(int $id): ?ActivityModel
     {
         if (!$this->aclService->isAllowed('viewDetails', $this->getActivity($id))) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view this activity'));
@@ -122,9 +122,9 @@ class ActivityQuery
      *
      * @param int $id The activity id to be searched for
      *
-     * @return ActivityModel Activity or null if the activity does not exist
+     * @return ActivityModel|null Activity or null if the activity does not exist
      */
-    public function getActivity($id)
+    public function getActivity(int $id): ?ActivityModel
     {
         if (!$this->aclService->isAllowed('view', 'activity')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view the activities'));
@@ -302,7 +302,8 @@ class ActivityQuery
     public function getActivityArchiveYears()
     {
         $oldest = $this->getActivityMapper()->getOldestActivity();
-        if (is_null($oldest) || is_null($oldest->getBeginTime())) {
+
+        if (null === $oldest) {
             return [null];
         }
 

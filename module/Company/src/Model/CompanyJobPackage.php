@@ -54,7 +54,7 @@ class CompanyJobPackage extends CompanyPackage
      *
      * @return int of jobs in the package
      */
-    public function getNumberOfActiveJobs($category = null): int
+    public function getNumberOfActiveJobs(?JobCategoryModel $category = null): int
     {
         return count($this->getJobsInCategory($category));
     }
@@ -66,7 +66,7 @@ class CompanyJobPackage extends CompanyPackage
      *
      * @return array
      */
-    public function getJobsInCategory(?JobCategory $category = null): array
+    public function getJobsInCategory(?JobCategoryModel $category = null): array
     {
         $filter = function ($job) use ($category) {
             if (null === $category) {

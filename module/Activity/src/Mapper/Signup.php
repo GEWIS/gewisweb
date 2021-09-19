@@ -8,33 +8,16 @@ use Application\Mapper\BaseMapper;
 class Signup extends BaseMapper
 {
     /**
-     * @param int $id
-     *
-     * @return SignupModel
-     */
-    public function getSignupById($id)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\Signup', 'a')
-            ->where('a.id = :id')
-            ->setParameter('id', $id);
-        $result = $qb->getQuery()->getResult();
-
-        return !empty($result) ? $result[0] : null;
-    }
-
-    /**
      * Check if a user is signed up for an activity.
      *
-     * @param int $activityId
+     * @param int $signupListId
      * @param int $userId
      *
      * @return bool
      */
-    public function isSignedUp($activityId, $userId)
+    public function isSignedUp(int $signupListId, int $userId): bool
     {
-        return null !== $this->getSignUp($activityId, $userId);
+        return null !== $this->getSignUp($signupListId, $userId);
     }
 
     /**
@@ -43,9 +26,9 @@ class Signup extends BaseMapper
      * @param int $signupListId
      * @param int $userId
      *
-     * @return SignupModel
+     * @return SignupModel|null
      */
-    public function getSignUp($signupListId, $userId)
+    public function getSignUp(int $signupListId, int $userId): ?SignupModel
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')
@@ -70,9 +53,9 @@ class Signup extends BaseMapper
      *
      * @param int $userId
      *
-     * @return SignupModel
+     * @return array
      */
-    public function getSignedUpActivities($userId)
+    public function getSignedUpActivities(int $userId): array
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('a')

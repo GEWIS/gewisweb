@@ -306,7 +306,7 @@ class Decision
     public function uploadNotes(array $data): bool
     {
         $parts = explode('/', $data['meeting']);
-        $meeting = $this->getMeeting($parts[0], $parts[1]);
+        $meeting = $this->getMeeting($parts[0], intval($parts[1]));
         $path = $this->storageService->storeUploadedFile($data['upload']);
 
         $meetingNotes = $meeting->getNotes();
@@ -336,7 +336,7 @@ class Decision
         $path = $this->storageService->storeUploadedFile($data['upload']);
 
         $meeting = explode('/', $data['meeting']);
-        $meeting = $this->getMeeting($meeting[0], $meeting[1]);
+        $meeting = $this->getMeeting($meeting[0], intval($meeting[1]));
 
         $document = new MeetingDocumentModel();
         $document->setPath($path);
@@ -498,7 +498,7 @@ class Decision
      * @param array $data
      *
      * @return AuthorizationModel|false
-     * @throws NonUniqueResultException
+     * @throws ORMException
      */
     public function createAuthorization(array $data): AuthorizationModel|bool
     {

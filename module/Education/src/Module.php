@@ -3,15 +3,23 @@
 namespace Education;
 
 use Doctrine\Laminas\Hydrator\DoctrineObject;
-use Education\Form\AddCourse;
-use Education\Form\Bulk;
-use Education\Form\SearchCourse;
-use Education\Form\SummaryUpload;
-use Education\Form\TempUpload;
-use Education\Mapper\Course;
-use Education\Mapper\Exam;
-use Education\Mapper\Study;
-use Education\Model\Summary;
+use Education\Form\{
+    AddCourse as AddCourseForm,
+    Bulk as BulkForm,
+    SearchCourse as SearchCourseForm,
+    SummaryUpload as SummaryUploadForm,
+    TempUpload as TempUploadForm,
+};
+use Education\Mapper\{
+    Course as CourseMapper,
+    Exam as ExamMapper,
+    Study as StudyMapper,
+};
+use Education\Model\{
+    Exam as ExamModel,
+    Summary as SummaryModel,
+};
+use Education\Service\Exam as ExamService;
 use Education\View\Helper\ExamUrl;
 use Interop\Container\ContainerInterface;
 use User\Authorization\AclServiceFactory;
@@ -33,7 +41,7 @@ class Module
      *
      * @return array Service configuration
      */
-    public function getServiceConfig()
+    public function getServiceConfig(): array
     {
         return [
             'factories' => [
@@ -50,7 +58,7 @@ class Module
                     $config = $container->get('config');
                     $aclService = $container->get('education_service_acl');
 
-                    return new Service\Exam(
+                    return new ExamService(
                         $translator,
                         $storageService,
                         $courseMapper,
@@ -65,12 +73,12 @@ class Module
                     );
                 },
                 'education_form_tempupload' => function (ContainerInterface $container) {
-                    return new TempUpload(
+                    return new TempUploadForm(
                         $container->get('translator')
                     );
                 },
                 'education_form_summaryupload' => function (ContainerInterface $container) {
-                    $form = new SummaryUpload(
+                    $form = new SummaryUploadForm(
                         $container->get('translator')
                     );
                     $form->setHydrator($container->get('education_hydrator'));
@@ -78,24 +86,24 @@ class Module
                     return $form;
                 },
                 'education_form_add_course' => function (ContainerInterface $container) {
-                    return new AddCourse(
+                    return new AddCourseForm(
                         $container->get('translator')
                     );
                 },
                 'education_form_bulk_exam' => function (ContainerInterface $container) {
-                    return new Bulk(
+                    return new BulkForm(
                         $container->get('translator'),
                         $container->get('education_form_fieldset_exam')
                     );
                 },
                 'education_form_bulk_summary' => function (ContainerInterface $container) {
-                    return new Bulk(
+                    return new BulkForm(
                         $container->get('translator'),
                         $container->get('education_form_fieldset_summary')
                     );
                 },
                 'education_form_searchcourse' => function (ContainerInterface $container) {
-                    return new SearchCourse(
+                    return new SearchCourseForm(
                         $container->get('translator')
                     );
                 },
@@ -104,7 +112,7 @@ class Module
                         $container->get('translator')
                     );
                     $fieldset->setConfig($container->get('config'));
-                    $fieldset->setObject(new Model\Exam());
+                    $fieldset->setObject(new ExamModel());
                     $fieldset->setHydrator($container->get('education_hydrator_exam'));
 
                     return $fieldset;
@@ -114,36 +122,24 @@ class Module
                         $container->get('translator')
                     );
                     $fieldset->setConfig($container->get('config'));
-                    $fieldset->setObject(new Summary());
+                    $fieldset->setObject(new SummaryModel());
                     $fieldset->setHydrator($container->get('education_hydrator'));
 
                     return $fieldset;
                 },
                 'education_mapper_exam' => function (ContainerInterface $container) {
-                    return new Exam(
+                    return new ExamMapper(
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
                 'education_mapper_course' => function (ContainerInterface $container) {
-                    return new Course(
+                    return new CourseMapper(
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
                 'education_mapper_study' => function (ContainerInterface $container) {
-                    return new Study(
+                    return new StudyMapper(
                         $container->get('doctrine.entitymanager.orm_default')
-                    );
-                },
-                'education_hydrator_study' => function (ContainerInterface $container) {
-                    return new DoctrineObject(
-                        $container->get('doctrine.entitymanager.orm_default'),
-                        'Education\Model\Study'
-                    );
-                },
-                'education_hydrator_course' => function (ContainerInterface $container) {
-                    return new DoctrineObject(
-                        $container->get('doctrine.entitymanager.orm_default'),
-                        'Education\Model\Course'
                     );
                 },
                 'education_hydrator' => function (ContainerInterface $container) {
@@ -167,7 +163,7 @@ class Module
      *
      * @return array
      */
-    public function getViewHelperConfig()
+    public function getViewHelperConfig(): array
     {
         return [
             'factories' => [

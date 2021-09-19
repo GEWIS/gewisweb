@@ -99,7 +99,7 @@ class AdminController extends AbstractActionController
         $activityId = (int)$this->params('id');
         $activity = $this->activityQueryService->getActivityWithDetails($activityId);
 
-        if (is_null($activity)) {
+        if (null === $activity) {
             return $this->notFoundAction();
         }
 
@@ -135,7 +135,7 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            if ($this->activityService->createUpdateProposal($activity, $request->getPost())) {
+            if ($this->activityService->createUpdateProposal($activity, $request->getPost()->toArray())) {
                 $message = $this->translator->translate('You have successfully created an update proposal for the activity! If the activity was already approved, the proposal will be applied after it has been approved by the board. Otherwise, the update has already been applied to the activity.');
 
                 $this->redirectActivityAdmin(true, $message);
@@ -200,7 +200,7 @@ class AdminController extends AbstractActionController
         if (0 === $signupListId) {
             $activity = $this->activityQueryService->getActivity($activityId);
 
-            if (is_null($activity)) {
+            if (null === $activity) {
                 return $this->notFoundAction();
             }
 
@@ -218,7 +218,7 @@ class AdminController extends AbstractActionController
         } else {
             $signupList = $this->signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
-            if (is_null($signupList)) {
+            if (null === $signupList) {
                 return $this->notFoundAction();
             }
 
@@ -281,7 +281,7 @@ class AdminController extends AbstractActionController
         $signupListId = (int)$this->params('signupList');
         $signupList = $this->signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
-        if (is_null($signupList)) {
+        if (null === $signupList) {
             return $this->notFoundAction();
         }
 
@@ -344,14 +344,14 @@ class AdminController extends AbstractActionController
         string $message,
         AbstractContainer $session = null
     ): Response {
-        if (is_null($session)) {
+        if (null === $session) {
             $session = new SessionContainer('activityAdminRequest');
         }
 
         $session->success = $success;
         $session->message = $message;
 
-        $this->redirect()->toRoute(
+        return $this->redirect()->toRoute(
             'activity_admin/participants',
             [
                 'id' => $activityId,
@@ -365,9 +365,9 @@ class AdminController extends AbstractActionController
         $signupId = (int)$this->params('id');
         $signupMapper = $this->signupMapper;
 
-        $signup = $signupMapper->getSignupById($signupId);
+        $signup = $signupMapper->find($signupId);
 
-        if (is_null($signup)) {
+        if (null === $signup) {
             return $this->notFoundAction();
         }
 

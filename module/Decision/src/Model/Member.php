@@ -618,7 +618,7 @@ class Member
      */
     public function getCurrentOrganInstallations(): Collection
     {
-        if (is_null($this->getOrganInstallations())) {
+        if ($this->getOrganInstallations()->isEmpty()) {
             return new ArrayCollection();
         }
 

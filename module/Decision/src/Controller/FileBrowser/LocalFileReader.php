@@ -59,7 +59,7 @@ class LocalFileReader implements FileReader
         $array = explode('/', $fullPath);
         $headers->addHeaderLine('Content-Type', $contentType)
             ->addHeaderLine('Content-Disposition', 'filename="' . end($array) . '"')
-            ->addHeaderLine('Content-Length', filesize($fullPath));
+            ->addHeaderLine('Content-Length', strval(filesize($fullPath)));
         $response->setHeaders($headers);
 
         return $response;

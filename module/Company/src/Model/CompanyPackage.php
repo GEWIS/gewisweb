@@ -2,6 +2,7 @@
 
 namespace Company\Model;
 
+use Company\Model\JobCategory as JobCategoryModel;
 use DateTime;
 use Doctrine\ORM\Mapping\{
     Column,
@@ -140,11 +141,11 @@ abstract class CompanyPackage
      * Get the number of jobs in the package.
      * This method can be overridden in subclasses.
      *
-     * @param $category
+     * @param JobCategoryModel|null $category
      *
      * @return integer 0
      */
-    public function getNumberOfActiveJobs($category): int
+    public function getNumberOfActiveJobs(?JobCategoryModel $category): int
     {
         return 0;
     }

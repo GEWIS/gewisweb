@@ -171,6 +171,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         targetEntity: SignupList::class,
         mappedBy: "activity",
         cascade: ["remove"],
+        orphanRemoval: true,
     )]
     protected Collection $signupLists;
 
@@ -346,7 +347,6 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         }
 
         $this->signupLists->removeElement($signupList);
-        $signupList->setActivity(null);
     }
 
     /**

@@ -449,7 +449,7 @@ class Company
      * file.
      *
      * @param CompanyModel|CompanyBannerPackageModel|JobModel $entity
-     * @param array|null $image
+     * @param array|null $file
      * @param string $languageSuffix
      *
      * @return bool
@@ -822,7 +822,9 @@ class Company
     /**
      * Returns a persistent package.
      *
-     * @param mixed $packageId
+     * @param int $packageId
+     *
+     * @return CompanyPackageModel|null
      */
     public function getPackageById(int $packageId): ?CompanyPackageModel
     {

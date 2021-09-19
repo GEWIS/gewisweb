@@ -51,10 +51,9 @@ class Poll extends BaseMapper
 
     public function getUnapprovedPolls()
     {
-        $qb = $this->em->createQueryBuilder();
+        $qb = $this->getRepository()->createQueryBuilder('p');
 
-        $qb->select('p')
-            ->where('p.approver IS NULL')
+        $qb->where('p.approver IS NULL')
             ->orderBy('p.expiryDate', 'DESC');
 
         return $qb->getQuery()->getResult();
@@ -68,10 +67,9 @@ class Poll extends BaseMapper
      */
     public function getNewestPoll(): ?PollModel
     {
-        $qb = $this->em->createQueryBuilder();
+        $qb = $this->getRepository()->createQueryBuilder('p');
 
-        $qb->select('p')
-            ->where('p.approver IS NOT NULL')
+        $qb->where('p.approver IS NOT NULL')
             ->andWhere('p.expiryDate > CURRENT_DATE()')
             ->setMaxResults(1)
             ->orderBy('p.expiryDate', 'DESC');
@@ -88,9 +86,10 @@ class Poll extends BaseMapper
      */
     public function getPaginatorAdapter(): DoctrineAdapter
     {
-        $qb = $this->getRepository()->createQueryBuilder('poll');
-        $qb->where('poll.approver IS NOT NULL');
-        $qb->orderBy('poll.expiryDate', 'DESC');
+        $qb = $this->getRepository()->createQueryBuilder('p');
+
+        $qb->where('p.approver IS NOT NULL')
+            ->orderBy('p.expiryDate', 'DESC');
 
         return new DoctrineAdapter(new Paginator($qb));
     }

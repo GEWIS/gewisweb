@@ -88,6 +88,7 @@ class Activity
             throw new NotAllowedException($this->translator->translate('You are not allowed to create an activity'));
         }
 
+        // TODO: Move the form check to the controller.
         $form = $this->getActivityForm();
         $form->setData($data);
 
@@ -391,18 +392,19 @@ class Activity
      * Create a new update proposal from user form.
      *
      * @param ActivityModel $currentActivity
-     * @param Parameters $data
+     * @param array $data
      *
      * @return bool indicating whether the update was applied or is pending
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function createUpdateProposal(ActivityModel $currentActivity, Parameters $data)
+    public function createUpdateProposal(ActivityModel $currentActivity, array $data)
     {
         if (!$this->aclService->isAllowed('update', $currentActivity)) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to update this activity'));
         }
 
+        // TODO: Move the form check to the controller.
         $form = $this->getActivityForm();
         $form->setData($data);
 
@@ -431,7 +433,7 @@ class Activity
         }
 
         $currentActivityArray = $currentActivity->toArray();
-        $proposalActivityArray = $data->toArray();
+        $proposalActivityArray = $data;
 
         $proposalActivityArray['company'] = is_null($company) ? null : $company->getId();
         $proposalActivityArray['organ'] = is_null($organ) ? null : $organ->getId();
@@ -441,7 +443,7 @@ class Activity
         }
 
         $newActivity = $this->saveActivityData(
-            $data,
+            $proposalActivityArray,
             $user,
             $organ,
             $company,

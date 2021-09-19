@@ -9,7 +9,6 @@ use Laminas\View\Model\{
     JsonModel,
     ViewModel,
 };
-use Laminas\View\View;
 
 class AdminController extends AbstractActionController
 {
@@ -47,7 +46,7 @@ class AdminController extends AbstractActionController
 
     public function indexAction()
     {
-        return new View();
+        return new ViewModel();
     }
 
     public function addCourseAction()

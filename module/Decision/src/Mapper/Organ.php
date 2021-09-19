@@ -4,6 +4,7 @@ namespace Decision\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Decision\Model\Organ as OrganModel;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 
 /**
@@ -60,6 +61,8 @@ class Organ extends BaseMapper
      * @param int $id
      *
      * @return OrganModel
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function findOrgan($id)
     {
@@ -79,17 +82,18 @@ class Organ extends BaseMapper
      * Find an organ by its abbreviation.
      *
      * It is possible that multiple organs with the same abbreviation exist,
-     * for example, through the reinstatement of an previously abrogated organ.
-     * To retrieve the latest occurence of such an organ use `$latest`.
+     * for example, through the reinstatement of a previously abrogated organ.
+     * To retrieve the latest occurrence of such an organ use `$latest`.
      *
      * @param string $abbr
-     * @param string $type
-     * @param bool $latest
-     *                       Whether to retrieve the latest occurence of an organ or not
+     * @param bool $latest Whether to retrieve the latest occurrence of an organ or not
+     * @param string|null $type
      *
      * @return OrganModel
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
-    public function findByAbbr($abbr, $type = null, $latest = false)
+    public function findByAbbr(string $abbr, bool $latest, ?string $type = null): OrganModel
     {
         $qb = $this->getRepository()->createQueryBuilder('o');
 
@@ -98,10 +102,12 @@ class Organ extends BaseMapper
             ->leftJoin('om.member', 'm')
             ->where('o.abbr = :abbr')
             ->setParameter('abbr', $abbr);
+
         if (!is_null($type)) {
             $qb->andWhere('o.type = :type')
                 ->setParameter('type', $type);
         }
+
         if ($latest) {
             $qb->orderBy('o.foundationDate', 'DESC');
             $queryResult = $qb->getQuery()->getResult();

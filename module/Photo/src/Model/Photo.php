@@ -465,9 +465,9 @@ class Photo implements ResourceInterface
     /**
      * Set the focal length.
      *
-     * @param string|null $focalLength
+     * @param float|null $focalLength
      */
-    public function setFocalLength(?string $focalLength): void
+    public function setFocalLength(?float $focalLength): void
     {
         $this->focalLength = $focalLength;
     }
@@ -475,9 +475,9 @@ class Photo implements ResourceInterface
     /**
      * Set the exposure time.
      *
-     * @param string|null $exposureTime
+     * @param float|null $exposureTime
      */
-    public function setExposureTime(?string $exposureTime): void
+    public function setExposureTime(?float $exposureTime): void
     {
         $this->exposureTime = $exposureTime;
     }
@@ -596,7 +596,7 @@ class Photo implements ResourceInterface
     /**
      * Add a vote for this photo.
      *
-     * @param Vote @vote
+     * @param Vote $vote
      */
     public function addVote(Vote $vote): void
     {

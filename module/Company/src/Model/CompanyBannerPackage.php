@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping\{
  * CompanyBannerPackage model.
  */
 #[Entity]
-class CompanyBannerPackage extends CompanyPackage //implements RoleInterface, ResourceInterface
+class CompanyBannerPackage extends CompanyPackage
 {
     /**
      * The banner's image URL.

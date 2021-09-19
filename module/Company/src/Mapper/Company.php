@@ -4,11 +4,6 @@ namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Company\Model\Company as CompanyModel;
-use Doctrine\ORM\{
-    EntityManager,
-    EntityRepository,
-    ORMException,
-};
 
 /**
  * Mappers for companies.
@@ -18,42 +13,6 @@ use Doctrine\ORM\{
  */
 class Company extends BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
-    /**
-     * Saves all unsaved entities, that are marked persistent.
-     *
-     * @throws ORMException
-     */
-    public function save(): void
-    {
-        $this->em->flush();
-    }
-
-    /**
-     * @param CompanyModel $entity
-     *
-     * @throws ORMException
-     */
-    public function persist(CompanyModel $entity): void
-    {
-        $this->em->persist($entity);
-        $this->em->flush();
-    }
-
     /**
      * Find all public companies with a certain locale.
      *
@@ -112,22 +71,7 @@ class Company extends BaseMapper
     }
 
     /**
-     * Removes a company.
-     *
-     * @param CompanyModel $company
-     *
-     * @throws ORMException
-     */
-    public function remove(CompanyModel $company)
-    {
-        $this->em->remove($company);
-        $this->em->flush();
-    }
-
-    /**
-     * Get the repository for this mapper.
-     *
-     * @return EntityRepository
+     * @inheritDoc
      */
     protected function getRepositoryName(): string
     {

@@ -2,9 +2,11 @@
 
 namespace Decision\Service;
 
+use Decision\Mapper\Member as MemberMapper;
 use Decision\Model\Member as MemberModel;
+use Exception;
 use Laminas\Mvc\I18n\Translator;
-use Photo\Service\Photo;
+use Photo\Service\Photo as PhotoService;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -15,23 +17,27 @@ class MemberInfo
     /**
      * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
-     * @var Photo
+     * @var PhotoService
      */
-    private $photoService;
+    private PhotoService $photoService;
 
     /**
-     * @var \Decision\Mapper\Member
+     * @var MemberMapper
      */
-    private $memberMapper;
+    private MemberMapper $memberMapper;
+
+    /**
+     * @var AclService
+     */
     private AclService $aclService;
 
     public function __construct(
         Translator $translator,
-        Photo $photoService,
-        \Decision\Mapper\Member $memberMapper,
+        PhotoService $photoService,
+        MemberMapper $memberMapper,
         AclService $aclService
     ) {
         $this->translator = $translator;
@@ -43,9 +49,12 @@ class MemberInfo
     /**
      * Obtain information about the current user.
      *
+     * @param int|null $lidnr
+     *
      * @return array|null
+     * @throws Exception
      */
-    public function getMembershipInfo($lidnr = null)
+    public function getMembershipInfo(?int $lidnr = null): ?array
     {
         if (null === $lidnr && !$this->aclService->isAllowed('view_self', 'member')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view membership info.'));
@@ -90,17 +99,19 @@ class MemberInfo
      *
      * @return array
      */
-    public function getOrganMemberships($member)
+    public function getOrganMemberships(MemberModel $member): array
     {
         $memberships = [];
         foreach ($member->getOrganInstallations() as $install) {
             if (null !== $install->getDischargeDate()) {
                 continue;
             }
+
             if (!isset($memberships[$install->getOrgan()->getAbbr()])) {
                 $memberships[$install->getOrgan()->getAbbr()] = [];
                 $memberships[$install->getOrgan()->getAbbr()]['organ'] = $install->getOrgan();
             }
+
             if ('Lid' != $install->getFunction()) {
                 $function = $this->translator->translate($install->getFunction());
                 $memberships[$install->getOrgan()->getAbbr()]['functions'] = $function;

@@ -155,9 +155,9 @@ class Photo
      *
      * @param int $id the id of the album
      *
-     * @return PhotoModel photo matching the given id
+     * @return PhotoModel|null photo matching the given id
      */
-    public function getPhoto($id)
+    public function getPhoto($id): ?PhotoModel
     {
         if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
@@ -643,13 +643,16 @@ class Photo
      */
     public function countVote($photoId)
     {
-        $member = $this->aclService->getIdentity()->getMember();
-        if (null !== $this->voteMapper->findVote($photoId, $member->getLidnr())) {
+        $identity = $this->aclService->getIdentity();
+
+        if (null !== $this->voteMapper->findVote($photoId, $identity->getLidnr())) {
             // Already voted
             return;
         }
+
         $photo = $this->getPhoto($photoId);
-        $vote = new VoteModel($photo, $member);
+        $vote = new VoteModel($photo, $identity);
+
         $this->voteMapper->persist($vote);
         $this->voteMapper->flush();
     }

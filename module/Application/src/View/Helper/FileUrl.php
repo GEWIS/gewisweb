@@ -2,15 +2,15 @@
 
 namespace Application\View\Helper;
 
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\View\Helper\AbstractHelper;
+use Interop\Container\ContainerInterface;
 
 class FileUrl extends AbstractHelper
 {
     /**
      * Service locator.
      *
-     * @var ServiceLocatorInterface
+     * @var ContainerInterface
      */
     protected $locator;
 
@@ -32,7 +32,7 @@ class FileUrl extends AbstractHelper
     /**
      * Get the service locator.
      *
-     * @return ServiceLocatorInterface
+     * @return ContainerInterface
      */
     protected function getServiceLocator()
     {
@@ -42,7 +42,7 @@ class FileUrl extends AbstractHelper
     /**
      * Set the service locator.
      *
-     * @param ServiceLocatorInterface $locator
+     * @param ContainerInterface $locator
      */
     public function setServiceLocator($locator)
     {

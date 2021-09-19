@@ -211,7 +211,7 @@ class ActivityCalendar
         $em->flush();
 
         $proposal = $option->getProposal();
-        $options = $mapper->findOptionsByProposal($proposal);
+        $options = $mapper->findOptionsByProposal($proposal->getId());
 
         foreach ($options as $option) {
             // Can't add two options at the same time

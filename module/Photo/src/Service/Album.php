@@ -187,6 +187,7 @@ class Album
     {
         $oldest = $this->albumMapper->getOldestAlbum();
         $newest = $this->albumMapper->getNewestAlbum();
+
         if (
             is_null($oldest)
             || is_null($newest)

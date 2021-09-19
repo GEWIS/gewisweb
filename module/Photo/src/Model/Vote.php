@@ -65,7 +65,7 @@ class Vote implements ResourceInterface
      * Vote constructor.
      *
      * @param Photo $photo
-     * @param UserModel $voter The member whom voted
+     * @param UserModel $voter The member who voted
      */
     public function __construct(Photo $photo, UserModel $voter)
     {

@@ -2,6 +2,7 @@
 
 namespace Company\Model;
 
+use Company\Model\JobCategory as JobCategoryModel;
 use DateTime;
 use Doctrine\Common\Collections\{
     ArrayCollection,
@@ -451,12 +452,11 @@ class Company
      * Returns the number of jobs that are contained in all active packages of this
      * company.
      *
-     * // TODO: Determine correct type of parameter.
-     * @param $category
+     * @param JobCategoryModel|null $category
      *
      * @return int
      */
-    public function getNumberOfActiveJobs($category = null): int
+    public function getNumberOfActiveJobs(?JobCategoryModel $category = null): int
     {
         $jobCount = function ($package) use ($category) {
             return $package->getNumberOfActiveJobs($category);

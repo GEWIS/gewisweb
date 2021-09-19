@@ -2,16 +2,20 @@
 
 namespace Education\Service;
 
-use Application\Service\FileStorage;
+use Application\Service\FileStorage as FileStorageService;
 use DateTime;
 use DirectoryIterator;
 use Education\Form\{
-    AddCourse,
-    Bulk,
-    SearchCourse,
-    TempUpload,
+    AddCourse as AddCourseForm,
+    Bulk as BulkForm,
+    SearchCourse as SearchCourseForm,
+    TempUpload as TempUploadForm,
 };
-use Education\Mapper\Course;
+use Doctrine\ORM\ORMException;
+use Education\Mapper\{
+    Exam as ExamMapper,
+    Course as CourseMapper,
+};
 use Education\Model\{
     Course as CourseModel,
     Exam as ExamModel,
@@ -33,64 +37,75 @@ class Exam
     /**
      * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
-     * @var FileStorage
+     * @var FileStorageService
      */
-    private $storageService;
+    private FileStorageService $storageService;
 
     /**
-     * @var Course
+     * @var CourseMapper
      */
-    private $courseMapper;
+    private CourseMapper $courseMapper;
 
     /**
-     * @var \Education\Mapper\Exam
+     * @var ExamMapper
      */
-    private $examMapper;
+    private ExamMapper $examMapper;
 
     /**
-     * @var AddCourse
+     * @var AddCourseForm
      */
-    private $addCourseForm;
+    private AddCourseForm $addCourseForm;
 
     /**
-     * @var SearchCourse
+     * @var SearchCourseForm
      */
-    private $searchCourseForm;
+    private SearchCourseForm $searchCourseForm;
 
     /**
-     * @var TempUpload
+     * @var TempUploadForm
      */
-    private $tempUploadForm;
+    private TempUploadForm $tempUploadForm;
 
     /**
-     * @var Bulk
+     * @var BulkForm
      */
-    private $bulkSummaryForm;
+    private BulkForm $bulkSummaryForm;
 
     /**
-     * @var Bulk
+     * @var BulkForm
      */
-    private $bulkExamForm;
+    private BulkForm $bulkExamForm;
 
     /**
      * @var array
      */
-    private $config;
+    private array $config;
+
+    /**
+     * @var AclService
+     */
     private AclService $aclService;
+
+    /**
+     * Bulk form.
+     *
+     * @var BulkForm|null
+     */
+    protected ?BulkForm $bulkForm = null;
 
     public function __construct(
         Translator $translator,
-        FileStorage $storageService,
-        Course $courseMapper,
-        \Education\Mapper\Exam $examMapper,
-        AddCourse $addCourseForm,
-        SearchCourse $searchCourseForm,
-        TempUpload $tempUploadForm,
-        Bulk $bulkSummaryForm,
-        Bulk $bulkExamForm,
+        FileStorageService $storageService,
+        CourseMapper $courseMapper,
+        ExamMapper $examMapper,
+        AddCourseForm $addCourseForm,
+        SearchCourseForm $searchCourseForm,
+        TempUploadForm $tempUploadForm,
+        BulkForm $bulkSummaryForm,
+        BulkForm $bulkExamForm,
         array $config,
         AclService $aclService
     ) {
@@ -108,20 +123,13 @@ class Exam
     }
 
     /**
-     * Bulk form.
-     *
-     * @var Bulk
-     */
-    protected $bulkForm;
-
-    /**
      * Search for a course.
      *
      * @param array $data
      *
      * @return array|null Courses, null if form is not valid
      */
-    public function searchCourse($data)
+    public function searchCourse(array $data): ?array
     {
         $form = $this->searchCourseForm;
         $form->setData($data);
@@ -141,9 +149,9 @@ class Exam
      *
      * @param string $code
      *
-     * @return CourseModel
+     * @return CourseModel|null
      */
-    public function getCourse($code)
+    public function getCourse(string $code): ?CourseModel
     {
         return $this->courseMapper->findByCode($code);
     }
@@ -155,7 +163,7 @@ class Exam
      *
      * @return Stream|null
      */
-    public function getExamDownload($id)
+    public function getExamDownload(int $id): ?Stream
     {
         if (!$this->aclService->isAllowed('download', 'exam')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to download exams'));
@@ -170,10 +178,12 @@ class Exam
      * Finish the bulk edit.
      *
      * @param array $data POST Data
+     * @param string $type
      *
      * @return bool
+     * @throws Exception
      */
-    protected function bulkEdit($data, $type)
+    protected function bulkEdit(array $data, string $type): bool
     {
         $form = $this->getBulkForm($type);
 
@@ -246,12 +256,24 @@ class Exam
         return true;
     }
 
-    public function bulkExamEdit($data)
+    /**
+     * @param array $data
+     *
+     * @return bool
+     * @throws Exception
+     */
+    public function bulkExamEdit(array $data): bool
     {
         return $this->bulkEdit($data, 'exam');
     }
 
-    public function bulkSummaryEdit($data)
+    /**
+     * @param array $data
+     *
+     * @return bool
+     * @throws Exception
+     */
+    public function bulkSummaryEdit(array $data): bool
     {
         return $this->bulkEdit($data, 'summary');
     }
@@ -267,7 +289,7 @@ class Exam
      *
      * @return bool
      */
-    protected function tempUpload($post, $files, $uploadDirectory)
+    protected function tempUpload(array $post, array $files, string $uploadDirectory): bool
     {
         $form = $this->getTempUploadForm();
 
@@ -333,7 +355,7 @@ class Exam
      *
      * @return string Filename
      */
-    public function examToFilename(ExamModel $exam)
+    public function examToFilename(ExamModel $exam): string
     {
         $code = $exam->getCourse()->getCode();
 
@@ -356,13 +378,13 @@ class Exam
     /**
      * Get the education config, as used by this service.
      *
+     * @param string $key
+     *
      * @return array
      */
-    public function getConfig($key = 'education')
+    public function getConfig(string $key = 'education'): array
     {
-        $config = $this->config;
-
-        return $config[$key];
+        return $this->config[$key];
     }
 
     /**
@@ -371,11 +393,12 @@ class Exam
      * @param string $filename The file to delete
      * @param string $type The type to delete (exam/summary)
      */
-    public function deleteTempExam($filename, $type = 'exam')
+    public function deleteTempExam(string $filename, string $type = 'exam'): void
     {
         if (!$this->aclService->isAllowed('delete', 'exam')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete exams'));
         }
+
         $config = $this->getConfig('education_temp');
         $dir = $config['upload_' . $type . '_dir'];
         unlink($dir . '/' . stripslashes($filename));
@@ -384,15 +407,17 @@ class Exam
     /**
      * Get the bulk edit form.
      *
-     * @return Bulk
+     * @param string $type
      *
-     * @throws NotAllowedException When not allowed to upload
+     * @return BulkForm
+     * @throws Exception
      */
-    protected function getBulkForm($type)
+    protected function getBulkForm(string $type): BulkForm
     {
         if (!$this->aclService->isAllowed('upload', 'exam')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to upload exams'));
         }
+
         if (null !== $this->bulkForm) {
             return $this->bulkForm;
         }
@@ -412,20 +437,24 @@ class Exam
         $data = [];
 
         foreach ($dir as $file) {
-            if ($file->isFile() && '.' != substr($file->getFilename(), 0, 1)) {
+            if ($file->isFile() && !str_starts_with($file->getFilename(), '.')) {
                 $examData = $this->guessExamData($file->getFilename());
+
                 if ('summary' === $type) {
                     $examData['author'] = $this->guessSummaryAuthor($file->getFilename());
                 }
+
                 $examData['file'] = $file->getFilename();
                 $data[] = $examData;
             }
         }
 
         $form = $this->bulkForm->get('exams');
+
         if (!$form instanceof Fieldset) {
             throw new RuntimeException('The form could not be retrieved');
         }
+
         $form->populateValues($data);
 
         return $this->bulkForm;
@@ -434,17 +463,21 @@ class Exam
     /**
      * Get the bulk summary edit form.
      *
-     * @return Bulk
+     * @return BulkForm
+     * @throws Exception
      */
-    public function getBulkSummaryForm()
+    public function getBulkSummaryForm(): BulkForm
     {
         return $this->getBulkForm('summary');
     }
 
     /**
      * Get the bulk exam edit form.
+     *
+     * @return BulkForm
+     * @throws Exception
      */
-    public function getBulkExamForm()
+    public function getBulkExamForm(): BulkForm
     {
         return $this->getBulkForm('exam');
     }
@@ -456,7 +489,7 @@ class Exam
      *
      * @return array
      */
-    public function guessExamData($filename)
+    public function guessExamData(string $filename): array
     {
         $matches = [];
         $course = preg_match('/\d[a-zA-Z][0-9a-zA-Z]{3,4}/', $filename, $matches) ? $matches[0] : '';
@@ -485,7 +518,7 @@ class Exam
      *
      * @return array|string
      */
-    public static function guessSummaryAuthor($filename)
+    public static function guessSummaryAuthor(string $filename): array|string
     {
         $parts = explode('.', $filename);
         foreach ($parts as $part) {
@@ -501,11 +534,10 @@ class Exam
     /**
      * Get the Temporary Upload form.
      *
-     * @return TempUpload
-     *
+     * @return TempUploadForm
      * @throws NotAllowedException When not allowed to upload
      */
-    public function getTempUploadForm()
+    public function getTempUploadForm(): TempUploadForm
     {
         if (!$this->aclService->isAllowed('upload', 'exam')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to upload exams'));
@@ -517,11 +549,10 @@ class Exam
     /**
      * Get the add course form.
      *
-     * @return AddCourse
-     *
+     * @return AddCourseForm
      * @throws NotAllowedException When not allowed to upload
      */
-    public function getAddCourseForm()
+    public function getAddCourseForm(): AddCourseForm
     {
         if (!$this->aclService->isAllowed('upload', 'exam')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to add courses'));
@@ -536,8 +567,9 @@ class Exam
      * @param array $data Course data
      *
      * @return CourseModel|null New course. Null when the course could not be added.
+     * @throws ORMException
      */
-    public function addCourse($data)
+    public function addCourse(array $data): ?CourseModel
     {
         $form = $this->getAddCourseForm();
         $form->setData($data);

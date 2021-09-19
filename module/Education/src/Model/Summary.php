@@ -17,7 +17,7 @@ class Summary extends Exam
      * Author of the summary.
      */
     #[Column(type: "string")]
-    protected $author;
+    protected string $author;
 
     /**
      * Get the author.

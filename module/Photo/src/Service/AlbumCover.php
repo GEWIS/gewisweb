@@ -140,7 +140,7 @@ class AlbumCover
      * @param Imagick $target the target object to draw to
      * @param int $columns The amount of columns to fill
      * @param int $rows The amount of rows to fill
-     * @param Collection $images of Imagick the list of images to fill the mosaic with
+     * @param array $images of Imagick the list of images to fill the mosaic with
      */
     protected function drawComposition($target, $columns, $rows, $images)
     {

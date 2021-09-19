@@ -10,13 +10,21 @@ use Laminas\Mvc\MvcEvent;
 use Interop\Container\ContainerInterface;
 use League\Glide\Urls\UrlBuilderFactory;
 use Photo\Command\WeeklyPhoto;
-use Photo\Listener\AlbumDate as AlbumDateListener;
-use Photo\Listener\Remove as RemoveListener;
-use Photo\Service\Admin;
-use Photo\Service\Album;
-use Photo\Service\AlbumCover;
-use Photo\Service\Metadata;
-use Photo\Service\Photo;
+use Photo\Form\{
+    CreateAlbum as CreateAlbumForm,
+    EditAlbum as EditAlbumForm,
+};
+use Photo\Listener\{
+    AlbumDate as AlbumDateListener,
+    Remove as RemoveListener,
+};
+use Photo\Service\{
+    Admin as AdminService,
+    Album as AlbumService,
+    AlbumCover as AlbumCoverService,
+    Metadata as MetadataService,
+    Photo as PhotoService,
+};
 use Photo\View\Helper\GlideUrl;
 use User\Authorization\AclServiceFactory;
 
@@ -48,7 +56,7 @@ class Module
      *
      * @return array Service configuration
      */
-    public function getServiceConfig()
+    public function getServiceConfig(): array
     {
         return [
             'factories' => [
@@ -63,7 +71,7 @@ class Module
                     $aclService = $container->get('photo_service_acl');
                     $translator = $container->get('translator');
 
-                    return new Album(
+                    return new AlbumService(
                         $photoService,
                         $albumCoverService,
                         $memberService,
@@ -76,7 +84,7 @@ class Module
                     );
                 },
                 'photo_service_metadata' => function () {
-                    return new Metadata();
+                    return new MetadataService();
                 },
                 'photo_service_photo' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
@@ -91,7 +99,7 @@ class Module
                     $photoConfig = $container->get('config')['photo'];
                     $aclService = $container->get('photo_service_acl');
 
-                    return new Photo(
+                    return new PhotoService(
                         $translator,
                         $memberService,
                         $storageService,
@@ -112,7 +120,13 @@ class Module
                     $photoConfig = $container->get('config')['photo'];
                     $storageConfig = $container->get('config')['storage'];
 
-                    return new AlbumCover($photoMapper, $albumMapper, $storage, $photoConfig, $storageConfig);
+                    return new AlbumCoverService(
+                        $photoMapper,
+                        $albumMapper,
+                        $storage,
+                        $photoConfig,
+                        $storageConfig,
+                    );
                 },
                 'photo_service_admin' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
@@ -124,7 +138,7 @@ class Module
                     $photoConfig = $container->get('config')['photo'];
                     $aclService = $container->get('photo_service_acl');
 
-                    return new Admin(
+                    return new AdminService(
                         $translator,
                         $photoService,
                         $albumService,
@@ -136,7 +150,7 @@ class Module
                     );
                 },
                 'photo_form_album_edit' => function (ContainerInterface $container) {
-                    $form = new Form\EditAlbum(
+                    $form = new EditAlbumForm(
                         $container->get('translator')
                     );
                     $form->setHydrator($container->get('photo_hydrator_album'));
@@ -144,7 +158,7 @@ class Module
                     return $form;
                 },
                 'photo_form_album_create' => function (ContainerInterface $container) {
-                    $form = new Form\CreateAlbum(
+                    $form = new CreateAlbumForm(
                         $container->get('translator')
                     );
                     $form->setHydrator($container->get('photo_hydrator_album'));
@@ -221,7 +235,10 @@ class Module
         ];
     }
 
-    public function getViewHelperConfig()
+    /**
+     * @return array
+     */
+    public function getViewHelperConfig(): array
     {
         return [
             'factories' => [

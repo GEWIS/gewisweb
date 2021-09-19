@@ -75,16 +75,18 @@ class AdminApprovalController extends AbstractActionController
 
         $activity = $this->activityQueryService->getActivity($id);
 
-        if (is_null($activity)) {
+        if (null === $activity) {
             return $this->notFoundAction();
         }
 
-        return [
-            'activity' => $activity,
-            'approvalForm' => new RequestForm('updateApprovalStatus', 'Approve'),
-            'disapprovalForm' => new RequestForm('updateApprovalStatus', 'Disapprove'),
-            'resetForm' => new RequestForm('updateApprovalStatus', 'Reset'),
-        ];
+        return new ViewModel(
+            [
+                'activity' => $activity,
+                'approvalForm' => new RequestForm('updateApprovalStatus', 'Approve'),
+                'disapprovalForm' => new RequestForm('updateApprovalStatus', 'Disapprove'),
+                'resetForm' => new RequestForm('updateApprovalStatus', 'Reset'),
+            ]
+        );
     }
 
     /**
@@ -98,26 +100,29 @@ class AdminApprovalController extends AbstractActionController
     /**
      * Set the approval status of the activity requested.
      *
-     * @param int $status
+     * @param string $status
      *
      * @return ViewModel|Response
      */
-    protected function setApprovalStatus($status)
+    protected function setApprovalStatus(string $status)
     {
-        $id = (int)$this->params('id');
-
-        $activity = $this->activityQueryService->getActivity($id);
-
         //Assure the form is used
         if (!$this->getRequest()->isPost()) {
             return $this->notFoundAction();
         }
-        $form = new RequestForm('updateApprovalStatus');
 
+        $id = (int) $this->params('id');
+        $activity = $this->activityQueryService->getActivity($id);
+
+        if (null === $activity) {
+            return $this->notFoundAction();
+        }
+
+        $form = new RequestForm('updateApprovalStatus');
         $form->setData($this->getRequest()->getPost());
 
         //Assure the form is valid
-        if (!$form->isValid() || is_null($activity)) {
+        if (!$form->isValid()) {
             return $this->notFoundAction();
         }
 
@@ -163,7 +168,7 @@ class AdminApprovalController extends AbstractActionController
 
         $proposal = $this->activityQueryService->getProposal($id);
 
-        if (is_null($proposal)) {
+        if (null === $proposal) {
             return $this->notFoundAction();
         }
 
@@ -195,7 +200,7 @@ class AdminApprovalController extends AbstractActionController
         }
 
         $proposal = $this->activityQueryService->getProposal($id);
-        if (is_null($proposal)) {
+        if (null === $proposal) {
             return $this->notFoundAction();
         }
         $newId = $proposal->getNew()->getId();
@@ -229,7 +234,7 @@ class AdminApprovalController extends AbstractActionController
         }
 
         $proposal = $this->activityQueryService->getProposal($id);
-        if (is_null($proposal)) {
+        if (null === $proposal) {
             return $this->notFoundAction();
         }
 

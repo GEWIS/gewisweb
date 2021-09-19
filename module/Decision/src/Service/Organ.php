@@ -4,6 +4,7 @@ namespace Decision\Service;
 
 use ImagickException;
 use Doctrine\ORM\{
+    NonUniqueResultException,
     NoResultException,
     ORMException,
     EntityManager,
@@ -118,7 +119,7 @@ class Organ
      *
      * @return OrganModel|null
      */
-    public function getOrgan($id): ?OrganModel
+    public function getOrgan(int $id): ?OrganModel
     {
         if (!$this->aclService->isAllowed('view', 'organ')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view organ information'));
@@ -214,11 +215,16 @@ class Organ
      * @return OrganModel
      *
      * @throws NoResultException
+     * @throws NonUniqueResultException
      * @see Decision/Mapper/Organ::findByAbbr()
      */
     public function findOrganByAbbr(string $abbr, string $type = null, bool $latest = false): OrganModel
     {
-        return $this->organMapper->findByAbbr($abbr, $type, $latest);
+        return $this->organMapper->findByAbbr(
+            $abbr,
+            $latest,
+            $type,
+        );
     }
 
     /**
@@ -227,6 +233,7 @@ class Organ
      *
      * @return bool
      * @throws ORMException
+     * @throws ImagickException
      */
     public function updateOrganInformation(OrganInformationModel $organInformation, array $data): bool
     {
@@ -359,12 +366,12 @@ class Organ
     }
 
     /**
-     * @param $organId
+     * @param int $organId
      *
      * @return OrganInformationModel|bool
      * @throws ORMException
      */
-    public function getEditableOrganInformation($organId): OrganInformationModel|bool
+    public function getEditableOrganInformation(int $organId): OrganInformationModel|bool
     {
         $organ = $this->getOrgan($organId); //TODO: catch exception
 
