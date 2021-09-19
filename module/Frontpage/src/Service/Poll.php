@@ -250,39 +250,22 @@ class Poll
     /**
      * Creates a comment on the given poll.
      *
-     * @param int $pollId
-     * @param Parameters $data
+     * @param PollModel $poll
+     * @param array $data
      *
      * @return bool
      *
      * @throws ORMException
      */
-    public function createComment(int $pollId, Parameters $data): bool
+    public function createComment(PollModel $poll, array $data): bool
     {
-        if (!$this->aclService->isAllowed('create', 'poll_comment')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create comments on this poll')
-            );
-        }
-
-        $form = $this->pollCommentForm;
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return false;
-        }
-
         $user = $this->aclService->getIdentity();
-        $comment = $this->saveCommentData($form->getData(), $user);
+        $comment = $this->saveCommentData($data, $poll, $user);
 
-        $poll = $this->getPoll($pollId);
         $poll->addComment($comment);
 
         $this->pollMapper->persist($poll);
         $this->pollMapper->flush();
-
-        // reset the form
-        $form->setData(['author' => '', 'content' => '']);
 
         return true;
     }
@@ -291,15 +274,18 @@ class Poll
      * Save data for a poll comment.
      *
      * @param array $data
+     * @param PollModel $poll
      * @param UserModel $user
      *
      * @return PollCommentModel
      *
      * @throws ORMException
      */
-    public function saveCommentData(array $data, UserModel $user): PollCommentModel
+    public function saveCommentData(array $data, PollModel $poll, UserModel $user): PollCommentModel
     {
         $comment = new PollCommentModel();
+
+        $comment->setPoll($poll);
         $comment->setAuthor($data['author']);
         $comment->setContent($data['content']);
         $comment->setCreatedOn(new DateTime());
@@ -359,13 +345,13 @@ class Poll
         $poll->setDutchQuestion($data['dutchQuestion']);
         $poll->setEnglishQuestion($data['englishQuestion']);
 
+        $poll->setExpiryDate(new DateTime());
+        $poll->setCreator($user);
+
         foreach ($data['options'] as $option) {
             $pollOption = $this->createPollOption($option, $poll);
             $this->pollMapper->persist($pollOption);
         }
-
-        $poll->setExpiryDate(new DateTime());
-        $poll->setCreator($user);
 
         return $poll;
     }

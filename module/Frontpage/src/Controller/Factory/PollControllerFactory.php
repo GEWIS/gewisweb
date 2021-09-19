@@ -23,6 +23,8 @@ class PollControllerFactory implements FactoryInterface
         return new PollController(
             $container->get('frontpage_form_poll_comment'),
             $container->get('frontpage_service_poll'),
+            $container->get('frontpage_service_acl'),
+            $container->get('translator'),
         );
     }
 }

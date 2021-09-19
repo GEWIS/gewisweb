@@ -34,6 +34,7 @@ class PollOption implements ResourceInterface
     #[ManyToOne(
         targetEntity: Poll::class,
         inversedBy: "options",
+        cascade: ["persist"],
     )]
     #[JoinColumn(
         name: "poll_id",
