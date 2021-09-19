@@ -82,18 +82,18 @@ class Module
                     );
                 },
                 'activity_service_category' => function (ContainerInterface $container) {
-                    $translator = $container->get('translator');
                     $entityManager = $container->get('doctrine.entitymanager.orm_default');
                     $categoryMapper = $container->get('activity_mapper_category');
                     $categoryForm = $container->get('activity_form_category');
                     $aclService = $container->get('activity_service_acl');
+                    $translator = $container->get('translator');
 
                     return new Service\ActivityCategory(
-                        $translator,
                         $entityManager,
                         $categoryMapper,
                         $categoryForm,
-                        $aclService
+                        $aclService,
+                        $translator,
                     );
                 },
                 'activity_service_signupListQuery' => function (ContainerInterface $container) {

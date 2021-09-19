@@ -400,18 +400,6 @@ class Activity
      */
     public function createUpdateProposal(ActivityModel $currentActivity, array $data)
     {
-        if (!$this->aclService->isAllowed('update', $currentActivity)) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to update this activity'));
-        }
-
-        // TODO: Move the form check to the controller.
-        $form = $this->getActivityForm();
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return false;
-        }
-
         // Find the creator
         $user = $this->aclService->getIdentityOrThrowException();
 
@@ -433,17 +421,16 @@ class Activity
         }
 
         $currentActivityArray = $currentActivity->toArray();
-        $proposalActivityArray = $data;
 
-        $proposalActivityArray['company'] = is_null($company) ? null : $company->getId();
-        $proposalActivityArray['organ'] = is_null($organ) ? null : $organ->getId();
+        $data['company'] = is_null($company) ? null : $company->getId();
+        $data['organ'] = is_null($organ) ? null : $organ->getId();
 
-        if (!$this->isUpdateProposalNew($currentActivityArray, $proposalActivityArray)) {
+        if (!$this->isUpdateProposalNew($currentActivityArray, $data)) {
             return false;
         }
 
         $newActivity = $this->saveActivityData(
-            $proposalActivityArray,
+            $data,
             $user,
             $organ,
             $company,

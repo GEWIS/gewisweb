@@ -119,7 +119,7 @@ class AdminController extends AbstractActionController
             if (min($openingDates) < new DateTime() || ActivityModel::STATUS_APPROVED === $activity->getStatus()) {
                 $message = $this->translator->translate('Activities that have sign-up lists which are open or approved cannot be updated.');
 
-                $this->redirectActivityAdmin(false, $message);
+                return $this->redirectActivityAdmin(false, $message);
             }
         }
 
@@ -128,17 +128,21 @@ class AdminController extends AbstractActionController
         if ($activity->getBeginTime() < new DateTime()) {
             $message = $this->translator->translate('This activity has already started/ended and can no longer be updated.');
 
-            $this->redirectActivityAdmin(false, $message);
+            return $this->redirectActivityAdmin(false, $message);
         }
 
         $form = $this->activityService->getActivityForm();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            if ($this->activityService->createUpdateProposal($activity, $request->getPost()->toArray())) {
-                $message = $this->translator->translate('You have successfully created an update proposal for the activity! If the activity was already approved, the proposal will be applied after it has been approved by the board. Otherwise, the update has already been applied to the activity.');
+            $form->setData($request->getPost()->toArray());
 
-                $this->redirectActivityAdmin(true, $message);
+            if ($form->isValid()) {
+                if ($this->activityService->createUpdateProposal($activity, $form->getData())) {
+                    $message = $this->translator->translate('You have successfully created an update proposal for the activity! If the activity was already approved, the proposal will be applied after it has been approved by the board. Otherwise, the update has already been applied to the activity.');
+
+                    return $this->redirectActivityAdmin(true, $message);
+                }
             }
         }
 
@@ -184,7 +188,8 @@ class AdminController extends AbstractActionController
         $activityAdminSession = new SessionContainer('activityAdmin');
         $activityAdminSession->success = $success;
         $activityAdminSession->message = $message;
-        $this->redirect()->toRoute('activity_admin');
+
+        return $this->redirect()->toRoute('activity_admin');
     }
 
     /**

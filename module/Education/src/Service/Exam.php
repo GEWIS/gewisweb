@@ -131,6 +131,7 @@ class Exam
      */
     public function searchCourse(array $data): ?array
     {
+        // TODO: Move the form check to the controller.
         $form = $this->searchCourseForm;
         $form->setData($data);
 
@@ -188,7 +189,7 @@ class Exam
         $form = $this->getBulkForm($type);
 
         $form->setData($data);
-
+        // TODO: Move the form check to the controller.
         if (!$form->isValid()) {
             return false;
         }
@@ -296,7 +297,7 @@ class Exam
         $data = array_merge_recursive($post, $files);
 
         $form->setData($data);
-
+        // TODO: Move the form check to the controller.
         if (!$form->isValid()) {
             return false;
         }
@@ -571,6 +572,7 @@ class Exam
      */
     public function addCourse(array $data): ?CourseModel
     {
+        // TODO: Move the form check to the controller.
         $form = $this->getAddCourseForm();
         $form->setData($data);
 
