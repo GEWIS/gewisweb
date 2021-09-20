@@ -228,8 +228,11 @@ $form->setAttribute('class', 'form-activity');
 </section>
 
 <script>
-    $('[name="beginTime"]').datetimepicker();
-    $('[name="endTime"]').datetimepicker();
+    var dtpOptions = {
+        dayOfWeekStart: 1,
+    };
+    $('[name="beginTime"]').datetimepicker(dtpOptions);
+    $('[name="endTime"]').datetimepicker(dtpOptions);
     $('.markdown-editor').each(function () {
         $(this).markdown(
             {
