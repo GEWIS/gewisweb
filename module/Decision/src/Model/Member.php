@@ -325,9 +325,9 @@ class Member
     /**
      * Set the lidnr.
      *
-     * @param string $lidnr
+     * @param int $lidnr
      */
-    public function setLidnr(string $lidnr): void
+    public function setLidnr(int $lidnr): void
     {
         $this->lidnr = $lidnr;
     }
