@@ -46,7 +46,7 @@ class Vote extends BaseMapper
         return $this->getRepository()->findOneBy(
             [
                 'photo' => $photoId,
-                'member' => $lidnr,
+                'voter' => $lidnr,
             ]
         );
     }
