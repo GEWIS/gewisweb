@@ -114,7 +114,7 @@ $this->headScript()
                             <?php endif; ?>
                             <?php if (null !== $this->localiseText($job->getAttachment())): ?>
                                 <p class="job-vacancy">
-                                    <a href="<?= $escaper->escapeUrl($this->fileUrl($this->localiseText($job->getAttachment()))) ?>">
+                                    <a href="<?= $this->fileUrl($this->localiseText($job->getAttachment())) ?>">
                                         <?= $this->translate('View') . " " . $this->escapeHtml($this->localiseText($job->getCategory()->getName())) ?>
                                     </a>
                                 </p>
