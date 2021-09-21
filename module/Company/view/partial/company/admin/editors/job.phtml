@@ -204,7 +204,7 @@
             <?= $this->formFile($attachment) ?>
             <?= $this->formElementErrors($attachment) ?>
             <?php if (isset($attachments) && null !== $attachments->getValueNL()): ?>
-                <a class="btn btn-default" href="<?= $this->fileUrl($attachments->getValueNL()); ?>">
+                <a href="<?= $this->fileUrl($attachments->getValueNL()); ?>" target="_blank">
                     <?= $this->translate('View current attachment'); ?>
                 </a>
             <?php endif; ?>
@@ -301,7 +301,7 @@
             <?php
             if (isset($attachments) && null !== $attachments->getValueEN()):
             ?>
-                <a class="btn btn-default" href="<?= $this->fileUrl($attachments->getValueEN()); ?>">
+                <a href="<?= $this->fileUrl($attachments->getValueEN()); ?>" target="_blank">
                     <?= $this->translate('View current attachment'); ?>
                 </a>
             <?php endif; ?>

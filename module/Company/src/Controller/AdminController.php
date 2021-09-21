@@ -438,7 +438,12 @@ class AdminController extends AbstractActionController
         // Handle incoming form results
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $jobForm->setData($request->getPost()->toArray());
+            $post = array_merge_recursive(
+                $request->getPost()->toArray(),
+                $request->getFiles()->toArray(),
+            );
+
+            $jobForm->setData($post);
             $jobForm->setCompanySlug($companySlugName);
 
             // Check if data is valid, and insert when it is
