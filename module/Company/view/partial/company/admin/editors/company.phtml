@@ -40,11 +40,19 @@
                     ->setAttribute('id', 'logo');
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($logo) ?>">
-                    <label for="<?= $logo->getAttribute('id') ?>" class="control-label">
+                    <label for="<?= $logo->getAttribute('id') ?>"
+                           class="control-label <?= $companyLogo ?? 'label-required' ?>">
                         <?= $logo->getLabel() ?>
                     </label>
                     <?= $this->formFile($logo) ?>
                     <?= $this->formElementErrors($logo) ?>
+                    <?php
+                    if (isset($companyLogo)):
+                    ?>
+                        <a href="<?= $this->fileUrl($companyLogo); ?>" target="_blank">
+                            <?= $this->translate('View current logo'); ?>
+                        </a>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="col-md-12">
