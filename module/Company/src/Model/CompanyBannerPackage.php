@@ -16,7 +16,10 @@ class CompanyBannerPackage extends CompanyPackage
     /**
      * The banner's image URL.
      */
-    #[Column(type: "string")]
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
     protected ?string $image = null;
 
     /**

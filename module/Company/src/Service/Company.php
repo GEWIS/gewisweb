@@ -448,7 +448,7 @@ class Company
      * of jobs. It assumes that if the file is null (i.e. no image has been submitted) it should not touch the old
      * file.
      *
-     * @param CompanyModel|CompanyBannerPackageModel|JobModel $entity
+     * @param CompanyModel|CompanyPackageModel|JobModel $entity
      * @param array|null $file
      * @param string $languageSuffix
      *
@@ -456,7 +456,7 @@ class Company
      * @throws Exception
      */
     private function uploadFile(
-        CompanyModel|CompanyBannerPackageModel|JobModel $entity,
+        CompanyModel|CompanyPackageModel|JobModel $entity,
         ?array $file,
         string $languageSuffix = ''
     ): bool {
