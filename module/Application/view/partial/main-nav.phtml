@@ -1,7 +1,26 @@
 <?php
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 ?>
-<nav class="navbar navbar-gewis navbar-static-top" role="navigation">
+<?php if ($this->identity()?->getMember()->isBoardMember()): ?>
+    <?php $this->headStyle()->captureStart(); ?>
+        .rainbow {
+            background: linear-gradient(to right bottom, #ff334d, #ff338b);
+            animation: rainbow 6s steps(128, end) infinite;
+        }
+
+        @keyframes rainbow {
+            from {
+                filter: hue-rotate(0deg);
+            }
+
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+    <?php $this->headStyle()->captureEnd(); ?>
+    <?= $this->headStyle() ?>
+<?php endif; ?>
+<nav class="navbar navbar-gewis navbar-static-top rainbow" role="navigation">
     <div class="container">
         <div class="navbar-header navbar-left pull-left">
             <a href="<?= $this->url('home') ?>" class="navbar-brand">
