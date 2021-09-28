@@ -153,7 +153,7 @@ class Module
                     $form = new EditAlbumForm(
                         $container->get('translator')
                     );
-                    $form->setHydrator($container->get('photo_hydrator_album'));
+                    $form->setHydrator($container->get('photo_hydrator'));
 
                     return $form;
                 },
@@ -161,14 +161,13 @@ class Module
                     $form = new CreateAlbumForm(
                         $container->get('translator')
                     );
-                    $form->setHydrator($container->get('photo_hydrator_album'));
+                    $form->setHydrator($container->get('photo_hydrator'));
 
                     return $form;
                 },
-                'photo_hydrator_album' => function (ContainerInterface $container) {
+                'photo_hydrator' => function (ContainerInterface $container) {
                     return new DoctrineObject(
-                        $container->get('doctrine.entitymanager.orm_default'),
-                        'Photo\Model\Album'
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
                 'photo_mapper_album' => function (ContainerInterface $container) {

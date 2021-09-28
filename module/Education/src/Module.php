@@ -113,7 +113,7 @@ class Module
                     );
                     $fieldset->setConfig($container->get('config'));
                     $fieldset->setObject(new ExamModel());
-                    $fieldset->setHydrator($container->get('education_hydrator_exam'));
+                    $fieldset->setHydrator($container->get('education_hydrator'));
 
                     return $fieldset;
                 },
@@ -145,12 +145,6 @@ class Module
                 'education_hydrator' => function (ContainerInterface $container) {
                     return new DoctrineObject(
                         $container->get('doctrine.entitymanager.orm_default')
-                    );
-                },
-                'education_hydrator_exam' => function (ContainerInterface $container) {
-                    return new DoctrineObject(
-                        $container->get('doctrine.entitymanager.orm_default'),
-                        'Education\Model\Exam'
                     );
                 },
                 'education_service_acl' => AclServiceFactory::class,
