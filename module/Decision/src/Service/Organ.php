@@ -307,10 +307,10 @@ class Organ
         int $thumbHeight,
     ): string {
         $size = getimagesize($file);
-        $x = round($x * $size[0]);
-        $y = round($y * $size[1]);
-        $width = round($width * $size[0]);
-        $height = round($height * $size[1]);
+        $x = (int) round($x * $size[0]);
+        $y = (int) round($y * $size[1]);
+        $width = (int) round($width * $size[0]);
+        $height = (int) round($height * $size[1]);
 
         $image = new Imagick($file);
         $image->cropImage($width, $height, $x, $y);

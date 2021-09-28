@@ -167,14 +167,14 @@ class AlbumCover
             for ($y = 0; $y < $rows; ++$y) {
                 $image = $this->resizeCropImage(
                     $images[$x * $rows + $y],
-                    $imageWidth,
-                    $imageHeight
+                    (int) $imageWidth,
+                    (int) $imageHeight
                 );
                 $target->compositeImage(
                     $image,
                     Imagick::COMPOSITE_COPY,
-                    ($imageWidth + $innerBorder) * $x + $outerBorderX,
-                    ($imageHeight + $innerBorder) * $y + $outerBorderY
+                    (int) ($imageWidth + $innerBorder) * $x + $outerBorderX,
+                    (int) ($imageHeight + $innerBorder) * $y + $outerBorderY
                 );
             }
         }

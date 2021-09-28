@@ -244,10 +244,10 @@ class Activity extends Form implements InputFilterProviderInterface
     public static function beforeEndTime($value, $context = [])
     {
         try {
-            $thisTime = new DateTime($value);
-            $endTime = isset($context['endTime']) ? new DateTime($context['endTime']) : new DateTime('now');
+            $endTime = $context['endTime'];
+            $endTime = isset($endTime) ? new DateTime($endTime) : new DateTime('now');
 
-            return $thisTime <= $endTime;
+            return $value <= $endTime;
         } catch (Exception $e) {
             // An exception is an indication that one of the times was not valid
             return false;
@@ -265,10 +265,9 @@ class Activity extends Form implements InputFilterProviderInterface
     public static function beforeBeginTime($value, $context = [])
     {
         try {
-            $thisTime = new DateTime($value);
             $beginTime = isset($context['beginTime']) ? new DateTime($context['beginTime']) : new DateTime('now');
 
-            return $thisTime <= $beginTime;
+            return $value <= $beginTime;
         } catch (Exception $e) {
             // An exception is an indication that one of the DateTimes was not valid
             return false;
