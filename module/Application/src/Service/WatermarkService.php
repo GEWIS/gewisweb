@@ -51,7 +51,7 @@ class WatermarkService
         $drawSettings->setFont(self::FONT);
         $drawSettings->setTextAlignment(Imagick::ALIGN_CENTER);
         $drawSettings->setFillColor($fillPixelLight);
-        $drawSettings->setFillOpacity(0.40);
+        $drawSettings->setFillOpacity(0.30);
         $drawSettings->setStrokeWidth(1);
         $drawSettings->setStrokeColor($fillPixelDark);
         $drawSettings->setStrokeOpacity(0.20);
