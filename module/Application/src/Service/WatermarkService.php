@@ -51,7 +51,7 @@ class WatermarkService
         $drawSettings->setFont(self::FONT);
         $drawSettings->setTextAlignment(Imagick::ALIGN_CENTER);
         $drawSettings->setFillColor($fillPixelLight);
-        $drawSettings->setFillOpacity(0.20);
+        $drawSettings->setFillOpacity(0.40);
         $drawSettings->setStrokeWidth(1);
         $drawSettings->setStrokeColor($fillPixelDark);
         $drawSettings->setStrokeOpacity(0.20);
@@ -70,9 +70,14 @@ class WatermarkService
             $pdfPage->annotateImage($drawSettings, $sizeX / 2, $sizeY / 2, 60, $watermarkText);
             $pdfPage->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
 
-            // The next line should be removed after we have upgraded to a more recent version of Imagick.
-            // This basically is a workaround for a known bug. See the PR in which this was merged for more details.
-            $pdfPage->removeImageProfile('icc');
+            // The following lines should be removed after we have upgraded to a more recent version of ImageMagick.
+            // This is a workaround for https://github.com/ImageMagick/ImageMagick/issues/2070.
+            $profiles = $pdfPage->getImageProfiles('*', false);
+
+            if (in_array('icc', $profiles)) {
+                $pdfPage->removeImageProfile('icc');
+            }
+            // End of workaround.
 
             $pdf->addImage($pdfPage);
         }
