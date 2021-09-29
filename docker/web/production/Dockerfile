@@ -15,6 +15,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         cron \
         git \
+        ghostscript \
         libcurl4-openssl-dev \
         libfreetype6-dev \
         libicu-dev \
