@@ -15,6 +15,8 @@ class WatermarkService
     // The font size of the watermark
     private const FONT_SIZE = 32;
 
+    private const FONT = 'public/fonts/bitstream-vera/Vera.ttf';
+
     // The quality of the produced PDFs
     private const DPI = 150;
 
@@ -46,6 +48,7 @@ class WatermarkService
 
         $drawSettings = new ImagickDraw();
         $drawSettings->setFontSize(self::FONT_SIZE);
+        $drawSettings->setFont(self::FONT);
         $drawSettings->setTextAlignment(Imagick::ALIGN_CENTER);
         $drawSettings->setFillColor($fillPixelLight);
         $drawSettings->setFillOpacity(0.20);
