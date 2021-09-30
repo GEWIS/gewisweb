@@ -24,10 +24,16 @@ class FileStorage
      */
     private $storageConfig;
 
-    public function __construct(Translator $translator, array $storageConfig)
-    {
+    private WatermarkService $watermarkService;
+
+    public function __construct(
+        Translator $translator,
+        array $storageConfig,
+        WatermarkService $watermarkService
+    ) {
         $this->translator = $translator;
         $this->storageConfig = $storageConfig;
+        $this->watermarkService = $watermarkService;
     }
 
     /**
@@ -139,10 +145,10 @@ class FileStorage
      *
      * @param string $path The CFS path of the file to download
      * @param string $fileName The file name to give the downloaded file
-     *
+     * @param bool $watermarkPdf Parameter to require addition of a watermark to the pdf before download. False by default
      * @return Stream|null If the given file is not found, null is returned
      */
-    public function downloadFile($path, $fileName)
+    public function downloadFile($path, $fileName, $watermarkPdf = false)
     {
         $config = $this->storageConfig;
 
@@ -155,6 +161,13 @@ class FileStorage
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $type = finfo_file($finfo, $file);
         finfo_close($finfo);
+
+        if ($watermarkPdf) {
+            if ($type !== 'application/pdf') {
+                throw new RuntimeException('Cannot watermark file that is not pdf.');
+            }
+            $file = $this->watermarkService->watermarkPdf($file);
+        }
 
         $response = new Stream();
         $response->setStream(fopen($file, 'r'));
@@ -169,7 +182,6 @@ class FileStorage
                 'Content-Length' => filesize($file),
                 // zf2 parses date as a string for a \DateTime() object:
                 'Expires' => '+1 year',
-                'Cache-Control' => 'public',
                 'Pragma' => '',
             ]
         );

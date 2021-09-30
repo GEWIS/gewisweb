@@ -163,7 +163,7 @@ class Exam
 
         $exam = $this->examMapper->find($id);
 
-        return $this->storageService->downloadFile($exam->getFilename(), $this->examToFilename($exam));
+        return $this->storageService->downloadFile($exam->getFilename(), $this->examToFilename($exam), true);
     }
 
     /**
@@ -225,14 +225,14 @@ class Exam
 
                 $exam->setDate(new DateTime($examData['date']));
                 $exam->setCourse($this->getCourse($examData['course']));
+
                 if ($exam instanceof SummaryModel) {
                     $exam->setAuthor($examData['author']);
                     $exam->setExamType(ExamModel::EXAM_TYPE_SUMMARY);
-                }
-
-                if ($exam instanceof ExamModel) {
+                } else {
                     $exam->setExamType($examData['examType']);
                 }
+
                 $exam->setLanguage($examData['language']);
 
                 $localFile = $config['upload_' . $type . '_dir'] . '/' . $examData['file'];

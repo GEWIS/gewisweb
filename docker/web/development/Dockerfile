@@ -4,6 +4,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         cron \
         git \
+        ghostscript \
         libcurl4-openssl-dev \
         libfreetype6-dev \
         libicu-dev \
@@ -15,6 +16,7 @@ RUN apt-get update \
         libxml2-dev \
         libzip-dev \
         nano \
+        poppler-utils \
         rsync \
         sshpass \
         unzip \
@@ -43,6 +45,8 @@ RUN pecl install imagick \
     && docker-php-ext-enable memcached \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug
+
+RUN sed -i 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/g' /etc/ImageMagick-6/policy.xml
 
 WORKDIR /code
 
