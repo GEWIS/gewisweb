@@ -1,3 +1,12 @@
+## [v2.4.2](https://github.com/GEWIS/gewisweb/tree/v2.4.2) (2021-09-30)
+
+* Added watermarking system to give downloaded exams and summaries a unique watermark.
+* Added some more 🌈
+* Changed datepicker to always start on Monday instead of Sunday.
+* Fixed issue where videos on company profile did not work due to restrictive CSP.
+
+---
+
 ## [v2.4.1](https://github.com/GEWIS/gewisweb/tree/v2.4.1) (2021-08-17)
 
 * Fixed issue where users were unable to log out.
