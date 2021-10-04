@@ -62,7 +62,7 @@ class Page implements ResourceInterface
     /**
      * The english HTML content of the page.
      */
-    #[Column(type: "string")]
+    #[Column(type: "text")]
     protected string $dutchContent;
 
     /**
@@ -74,7 +74,7 @@ class Page implements ResourceInterface
     /**
      * The english HTML content of the page.
      */
-    #[Column(type: "string")]
+    #[Column(type: "text")]
     protected string $englishContent;
 
     /**
