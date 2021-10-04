@@ -2,7 +2,7 @@ FROM node:14-alpine as node-build
 WORKDIR /code
 
 COPY ./package.json ./package-lock.json ./
-RUN npm install
+RUN npm install --production
 
 RUN mkdir public && mkdir public/scss && mkdir public/css
 

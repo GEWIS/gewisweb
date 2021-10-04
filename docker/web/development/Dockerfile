@@ -65,7 +65,7 @@ COPY --chown=www-data:www-data ./composer.json ./
 RUN php composer.phar install
 
 COPY --chown=www-data:www-data ./package.json ./package-lock.json ./
-RUN npm install
+RUN npm install --production=false
 
 COPY --chown=www-data:www-data ./public/scss ./public/scss/
 RUN npm run scss
