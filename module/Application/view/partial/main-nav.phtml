@@ -179,16 +179,16 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                 <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['company']) ? 'active default' : '' ?>">
                     <a href="<?= $this->url('company') ?>" role="button" aria-haspopup="true" aria-expanded="false"
                        class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown">
-                        <?= $this->translate('Companies') ?>
+                        <?= $this->translate('Career') ?>
                         <span class="caret"></span>
                     </a>
                     <a href="<?= $this->url('company') ?>" role="button" class="hidden-sm hidden-xs">
-                        <?= $this->translate('Companies') ?>
+                        <?= $this->translate('Career') ?>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="visible-sm visible-xs">
                             <a href="<?= $this->url('company') ?>">
-                                <?= $this->translate('Companies') ?>
+                                <?= $this->translate('Career') ?>
                             </a>
                         </li>
                         <?php if (!is_null($this->featuredCompanyPackage())): ?>
