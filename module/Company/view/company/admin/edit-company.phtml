@@ -88,7 +88,7 @@ $form->setAttribute('class', 'form-company');
                         <?php foreach ($company->getPackages() as $package): ?>
                             <tr>
                                 <td>
-                                    <?php echo $package->isActive() ? 'Yes' : 'No' ?>
+                                    <?= $package->isActive() ? $this->translate('Yes') : $this->translate('No') ?>
                                 </td>
                                 <td>
                                     <?= $package->getStartingDate()->format('d-m-Y') ?>

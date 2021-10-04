@@ -119,7 +119,7 @@ $meetings = $this->meetings;
                 </form>
                 <hr/>
                 <?php foreach ($meetingsCollection as $type => $meetings): ?>
-                    <p><?= sprintf($this->translate('The latest %s meetings that took place:'), $type) ?></p>
+                    <p><?= sprintf($this->translate('The latest %s that took place:'), $type) ?></p>
                     <ul>
                         <?php foreach ($meetings as $meeting): ?>
                             <li>
