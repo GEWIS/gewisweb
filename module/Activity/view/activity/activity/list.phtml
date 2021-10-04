@@ -39,7 +39,7 @@
                                 <dd><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT); ?></dd>
 
                                 <dt><?= $this->translate('Location') ?></dt>
-                                <dd><?= $this->escapeHtml($this->localiseTexT($activity->getLocation())) ?></dd>
+                                <dd><?= $this->escapeHtml($this->localiseText($activity->getLocation())) ?></dd>
 
                                 <dt><?= $this->translate('Costs') ?></dt>
                                 <dd><?= $this->escapeHtml($this->localiseText($activity->getCosts())) ?></dd>
