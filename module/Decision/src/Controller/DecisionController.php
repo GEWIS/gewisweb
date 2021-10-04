@@ -124,24 +124,28 @@ class DecisionController extends AbstractActionController
     {
         $meeting = $this->decisionService->getLatestAV();
         $authorization = null;
-        if (!is_null($meeting)) {
+
+        if (null !== $meeting) {
             $authorization = $this->decisionService->getUserAuthorization($meeting->getNumber());
         }
 
+        $form = $this->decisionService->getAuthorizationForm();
+
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $authorization = $this->decisionService->createAuthorization($request->getPost());
-            if ($authorization) {
-                return new ViewModel(
-                    [
-                        'meeting' => $meeting,
-                        'authorization' => $authorization,
-                    ]
-                );
+            $form->setData($request->getPost()->toArray());
+
+            if ($form->isValid()) {
+                if ($this->decisionService->createAuthorization($form->getData())) {
+                    return new ViewModel(
+                        [
+                            'meeting' => $meeting,
+                            'authorization' => $authorization,
+                        ]
+                    );
+                }
             }
         }
-
-        $form = $this->decisionService->getAuthorizationForm();
 
         return new ViewModel(
             [

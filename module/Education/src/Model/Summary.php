@@ -2,28 +2,29 @@
 
 namespace Education\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+};
 
 /**
  * Summary.
- *
- * @ORM\Entity
  */
+#[Entity]
 class Summary extends Exam
 {
     /**
      * Author of the summary.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $author;
+    #[Column(type: "string")]
+    protected string $author;
 
     /**
      * Get the author.
      *
      * @return string
      */
-    public function getAuthor()
+    public function getAuthor(): string
     {
         return $this->author;
     }
@@ -33,7 +34,7 @@ class Summary extends Exam
      *
      * @param string $author
      */
-    public function setAuthor($author)
+    public function setAuthor(string $author): void
     {
         $this->author = $author;
     }

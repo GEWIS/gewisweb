@@ -4,10 +4,13 @@ namespace Frontpage\Controller;
 
 use Frontpage\Form\PollComment as PollCommentForm;
 use Frontpage\Model\Poll as PollModel;
+use Frontpage\Service\AclService;
 use Frontpage\Service\Poll as PollService;
 use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Paginator\Paginator;
 use Laminas\View\Model\ViewModel;
+use User\Permissions\NotAllowedException;
 
 class PollController extends AbstractActionController
 {
@@ -22,17 +25,33 @@ class PollController extends AbstractActionController
     private PollService $pollService;
 
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
+    /**
      * PollController constructor.
      *
      * @param PollCommentForm $pollCommentForm
      * @param PollService $pollService
+     * @param AclService $aclService
+     * @param Translator $translator
      */
     public function __construct(
         PollCommentForm $pollCommentForm,
-        PollService $pollService
+        PollService $pollService,
+        AclService $aclService,
+        Translator $translator,
     ) {
         $this->pollCommentForm = $pollCommentForm;
         $this->pollService = $pollService;
+        $this->aclService = $aclService;
+        $this->translator = $translator;
     }
 
     /**
@@ -100,11 +119,28 @@ class PollController extends AbstractActionController
      */
     public function commentAction()
     {
-        $request = $this->getRequest();
+        if (!$this->aclService->isAllowed('create', 'poll_comment')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to create comments on this poll')
+            );
+        }
 
+        $pollId = $this->params()->fromRoute('poll_id');
+        $poll = $this->pollService->getPoll($pollId);
+
+        if (null === $poll) {
+            return $this->notFoundAction();
+        }
+
+        $request = $this->getRequest();
         if ($request->isPost()) {
-            $pollId = $this->params()->fromRoute('poll_id');
-            $this->pollService->createComment($pollId, $request->getPost());
+            $this->pollCommentForm->setData($request->getPost()->toArray());
+
+            if ($this->pollCommentForm->isValid()) {
+                if ($this->pollService->createComment($poll, $this->pollCommentForm->getData())) {
+                    $this->pollCommentForm->setData(['author' => '', 'content' => '']);
+                }
+            }
         }
 
         // execute the index action and show the poll

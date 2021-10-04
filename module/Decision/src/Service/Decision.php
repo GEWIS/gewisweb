@@ -2,22 +2,37 @@
 
 namespace Decision\Service;
 
-use Application\Service\Email;
-use Application\Service\FileStorage;
-use Decision\Form\Authorization;
-use Decision\Form\Document;
-use Decision\Form\Notes;
-use Decision\Form\ReorderDocument;
-use Decision\Form\SearchDecision;
-use Decision\Model\Authorization as AuthorizationModel;
-use Decision\Model\Meeting;
-use Decision\Model\MeetingDocument;
-use Decision\Model\MeetingNotes as NotesModel;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\ORMException;
+use Application\Service\{
+    Email as EmailService,
+    FileStorage as FileStorageService,
+};
+use Decision\Form\{
+    Authorization as AuthorizationForm,
+    Document as DocumentForm,
+    Notes as NotesForm,
+    ReorderDocument as ReorderDocumentForm,
+    SearchDecision as SearchDecisionForm,
+};
+use Decision\Mapper\{
+    Authorization as AuthorizationMapper,
+    Decision as DecisionMapper,
+    Member as MemberMapper,
+    Meeting as MeetingMapper,
+};
+use Decision\Model\{
+    Authorization as AuthorizationModel,
+    Meeting as MeetingModel,
+    MeetingDocument as MeetingDocumentModel,
+    MeetingNotes as MeetingNotesModel,
+};
 use Doctrine\ORM\PersistentCollection;
+use Exception;
 use InvalidArgumentException;
 use Laminas\Http\Response\Stream;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Stdlib\ParametersInterface;
 use Traversable;
 use User\Permissions\NotAllowedException;
 
@@ -27,82 +42,85 @@ use User\Permissions\NotAllowedException;
 class Decision
 {
     /**
-     * @var Translator
+     * @var FileStorageService
      */
-    private $translator;
+    private FileStorageService $storageService;
 
     /**
-     * @var FileStorage
+     * @var EmailService
      */
-    private $storageService;
+    private EmailService $emailService;
 
     /**
-     * @var Email
+     * @var MemberMapper
      */
-    private $emailService;
+    private MemberMapper $memberMapper;
 
     /**
-     * @var \Decision\Mapper\Member
+     * @var MeetingMapper
      */
-    private $memberMapper;
+    private MeetingMapper $meetingMapper;
 
     /**
-     * @var \Decision\Mapper\Meeting
+     * @var DecisionMapper
      */
-    private $meetingMapper;
+    private DecisionMapper $decisionMapper;
 
     /**
-     * @var \Decision\Mapper\Decision
+     * @var AuthorizationMapper
      */
-    private $decisionMapper;
+    private AuthorizationMapper $authorizationMapper;
 
     /**
-     * @var \Decision\Mapper\Authorization
+     * @var NotesForm
      */
-    private $authorizationMapper;
+    private NotesForm $notesForm;
 
     /**
-     * @var Notes
+     * @var DocumentForm
      */
-    private $notesForm;
+    private DocumentForm $documentForm;
 
     /**
-     * @var Document
+     * @var ReorderDocumentForm
      */
-    private $documentForm;
+    private ReorderDocumentForm $reorderDocumentForm;
 
     /**
-     * @var ReorderDocument
+     * @var SearchDecisionForm
      */
-    private $reorderDocumentForm;
+    private SearchDecisionForm $searchDecisionForm;
 
     /**
-     * @var SearchDecision
+     * @var AuthorizationForm
      */
-    private $searchDecisionForm;
+    private AuthorizationForm $authorizationForm;
 
     /**
-     * @var Authorization
+     * @var AclService
      */
-    private $authorizationForm;
     private AclService $aclService;
 
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
     public function __construct(
+        FileStorageService $storageService,
+        EmailService $emailService,
+        MemberMapper $memberMapper,
+        MeetingMapper $meetingMapper,
+        DecisionMapper $decisionMapper,
+        AuthorizationMapper $authorizationMapper,
+        NotesForm $notesForm,
+        DocumentForm $documentForm,
+        ReorderDocumentForm $reorderDocumentForm,
+        SearchDecisionForm $searchDecisionForm,
+        AuthorizationForm $authorizationForm,
+        AclService $aclService,
         Translator $translator,
-        FileStorage $storageService,
-        Email $emailService,
-        \Decision\Mapper\Member $memberMapper,
-        \Decision\Mapper\Meeting $meetingMapper,
-        \Decision\Mapper\Decision $decisionMapper,
-        \Decision\Mapper\Authorization $authorizationMapper,
-        Notes $notesForm,
-        Document $documentForm,
-        ReorderDocument $reorderDocumentForm,
-        SearchDecision $searchDecisionForm,
-        Authorization $authorizationForm,
-        AclService $aclService
     ) {
-        $this->translator = $translator;
         $this->storageService = $storageService;
         $this->emailService = $emailService;
         $this->memberMapper = $memberMapper;
@@ -115,6 +133,7 @@ class Decision
         $this->searchDecisionForm = $searchDecisionForm;
         $this->authorizationForm = $authorizationForm;
         $this->aclService = $aclService;
+        $this->translator = $translator;
     }
 
     /**
@@ -122,7 +141,7 @@ class Decision
      *
      * @return Translator
      */
-    public function getTranslator()
+    public function getTranslator(): Translator
     {
         return $this->translator;
     }
@@ -134,7 +153,7 @@ class Decision
      *
      * @return array Of all meetings
      */
-    public function getMeetings($limit = null)
+    public function getMeetings(int $limit = null): array
     {
         if (!$this->aclService->isAllowed('list_meetings', 'decision')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings.'));
@@ -151,7 +170,7 @@ class Decision
      *
      * @return array Of all meetings
      */
-    public function getPastMeetings($limit = null, $type = null)
+    public function getPastMeetings(int $limit = null, string $type = null): array
     {
         if (!$this->aclService->isAllowed('list_meetings', 'decision')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings.'));
@@ -160,7 +179,12 @@ class Decision
         return $this->meetingMapper->findPast($limit, $type);
     }
 
-    public function getMeetingsByType($type)
+    /**
+     * @param string $type
+     *
+     * @return array
+     */
+    public function getMeetingsByType(string $type): array
     {
         if (!$this->aclService->isAllowed('list_meetings', 'decision')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings.'));
@@ -172,12 +196,13 @@ class Decision
     /**
      * Get information about one meeting.
      *
-     * @param string $type
-     * @param int $number
+     * @param string|null $type
+     * @param int|null $number
      *
-     * @return Meeting
+     * @return MeetingModel|null
+     * @throws NonUniqueResultException
      */
-    public function getMeeting($type, $number)
+    public function getMeeting(?string $type, ?int $number): ?MeetingModel
     {
         if (!$this->aclService->isAllowed('view', 'meeting')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view meetings.'));
@@ -189,9 +214,10 @@ class Decision
     /**
      * Returns the latest upcoming AV or null if there is none.
      *
-     * @return Meeting|null
+     * @return MeetingModel|null
+     * @throws NonUniqueResultException
      */
-    public function getLatestAV()
+    public function getLatestAV(): ?MeetingModel
     {
         return $this->meetingMapper->findLatestAV();
     }
@@ -199,9 +225,10 @@ class Decision
     /**
      * Returns the closest upcoming meeting for members.
      *
-     * @return Meeting|null
+     * @return MeetingModel|null
+     * @throws NonUniqueResultException
      */
-    public function getUpcomingMeeting()
+    public function getUpcomingMeeting(): ?MeetingModel
     {
         return $this->meetingMapper->findUpcomingMeeting();
     }
@@ -211,9 +238,10 @@ class Decision
      *
      * @param int $id
      *
-     * @return MeetingDocument
+     * @return MeetingDocumentModel|null
+     * @throws ORMException
      */
-    public function getMeetingDocument($id)
+    public function getMeetingDocument(int $id): ?MeetingDocumentModel
     {
         return $this->meetingMapper->findDocument($id);
     }
@@ -221,11 +249,11 @@ class Decision
     /**
      * Returns a download for a meeting document.
      *
-     * @param MeetingDocument $meetingDocument
+     * @param MeetingDocumentModel|null $meetingDocument
      *
      * @return Stream|null
      */
-    public function getMeetingDocumentDownload($meetingDocument)
+    public function getMeetingDocumentDownload(?MeetingDocumentModel $meetingDocument): ?Stream
     {
         if (!$this->aclService->isAllowed('view_documents', 'meeting')) {
             throw new NotAllowedException(
@@ -247,9 +275,11 @@ class Decision
     /**
      * Returns a download for meeting notes.
      *
+     * @param MeetingModel $meeting
+     *
      * @return Stream|null
      */
-    public function getMeetingNotesDownload(Meeting $meeting)
+    public function getMeetingNotesDownload(MeetingModel $meeting): ?Stream
     {
         if (!$this->aclService->isAllowed('view_notes', 'meeting')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view meeting notes.'));
@@ -268,33 +298,23 @@ class Decision
     /**
      * Upload meeting notes.
      *
-     * @param ParametersInterface $post
-     * @param ParametersInterface $files
+     * @param array $data
      *
      * @return bool If uploading was a success
+     * @throws Exception
      */
-    public function uploadNotes($post, $files)
+    public function uploadNotes(array $data): bool
     {
-        $form = $this->getNotesForm();
-
-        $data = array_merge_recursive($post->toArray(), $files->toArray());
-
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return false;
-        }
-
-        $data = $form->getData();
         $parts = explode('/', $data['meeting']);
-        $meeting = $this->getMeeting($parts[0], $parts[1]);
+        $meeting = $this->getMeeting($parts[0], intval($parts[1]));
         $path = $this->storageService->storeUploadedFile($data['upload']);
 
         $meetingNotes = $meeting->getNotes();
         if (is_null($meetingNotes)) {
-            $meetingNotes = new NotesModel();
+            $meetingNotes = new MeetingNotesModel();
             $meetingNotes->setMeeting($meeting);
         }
+
         $meetingNotes->setPath($path);
 
         $mapper = $this->decisionMapper;
@@ -306,31 +326,19 @@ class Decision
     /**
      * Upload a meeting document.
      *
-     * @param ParametersInterface $post
-     * @param ParametersInterface $files
+     * @param array $data
      *
      * @return bool If uploading was a success
+     * @throws Exception
      */
-    public function uploadDocument($post, $files)
+    public function uploadDocument(array $data): bool
     {
-        $form = $this->getDocumentForm();
-
-        $data = array_merge_recursive($post->toArray(), $files->toArray());
-
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return false;
-        }
-
-        $data = $form->getData();
-
         $path = $this->storageService->storeUploadedFile($data['upload']);
 
         $meeting = explode('/', $data['meeting']);
-        $meeting = $this->getMeeting($meeting[0], $meeting[1]);
+        $meeting = $this->getMeeting($meeting[0], intval($meeting[1]));
 
-        $document = new MeetingDocument();
+        $document = new MeetingDocumentModel();
         $document->setPath($path);
         $document->setName($data['name']);
         $document->setMeeting($meeting);
@@ -346,15 +354,21 @@ class Decision
         return true;
     }
 
-    public function deleteDocument($post)
+    /**
+     * @param array $data
+     *
+     * @throws ORMException
+     */
+    public function deleteDocument(array $data): void
     {
         if (!$this->aclService->isAllowed('delete_document', 'meeting')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to delete meeting documents.')
             );
         }
-        $id = $post->toArray()['document'];
-        $document = $this->getMeetingDocument($id);
+
+        // TODO: The actual file is never deleted.
+        $document = $this->getMeetingDocument($data['document']);
         $this->meetingMapper->remove($document);
     }
 
@@ -392,7 +406,7 @@ class Decision
 
         // Create data structure to derive ordering, key is position and value
         // is document ID
-        $ordering = $documents->map(function (MeetingDocument $document) {
+        $ordering = $documents->map(function (MeetingDocumentModel $document) {
             return $document->getId();
         });
 
@@ -409,7 +423,7 @@ class Decision
         $ordering->set($newPosition, $id);
 
         // Persist new positions
-        $documents->map(function (MeetingDocument $document) use ($ordering) {
+        $documents->map(function (MeetingDocumentModel $document) use ($ordering) {
             $position = $ordering->indexOf($document->getId());
 
             $document->setDisplayPosition($position);
@@ -451,7 +465,7 @@ class Decision
      *
      * @return array
      */
-    public function getAllAuthorizations($meetingNumber)
+    public function getAllAuthorizations(int $meetingNumber): array
     {
         if (!$this->aclService->isAllowed('view_all', 'authorization')) {
             throw new NotAllowedException(
@@ -469,7 +483,7 @@ class Decision
      *
      * @return AuthorizationModel|null
      */
-    public function getUserAuthorization($meetingNumber)
+    public function getUserAuthorization(int $meetingNumber): ?AuthorizationModel
     {
         if (!$this->aclService->isAllowed('view_own', 'authorization')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view authorizations.'));
@@ -480,24 +494,28 @@ class Decision
         return $this->authorizationMapper->findUserAuthorization($meetingNumber, $lidnr);
     }
 
-    public function createAuthorization($data)
+    /**
+     * @param array $data
+     *
+     * @return AuthorizationModel|false
+     * @throws ORMException
+     */
+    public function createAuthorization(array $data): AuthorizationModel|bool
     {
-        $form = $this->getAuthorizationForm();
         $authorization = new AuthorizationModel();
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return false;
-        }
         $user = $this->aclService->getIdentityOrThrowException();
         $authorizer = $user->getMember();
+
         $recipient = $this->memberMapper->findByLidnr($data['recipient']);
-        if (is_null($recipient) || $recipient->getLidnr() === $authorizer->getLidnr()) {
+        if (
+            null === $recipient
+            || $recipient->getLidnr() === $authorizer->getLidnr()
+        ) {
             return false;
         }
 
         $meeting = $this->getLatestAV();
-        if (is_null($meeting)) {
+        if (null === $meeting) {
             return false;
         }
 
@@ -530,9 +548,9 @@ class Decision
     /**
      * Get the Notes form.
      *
-     * @return Notes
+     * @return NotesForm
      */
-    public function getNotesForm()
+    public function getNotesForm(): NotesForm
     {
         if (!$this->aclService->isAllowed('upload_notes', 'meeting')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to upload notes.'));
@@ -544,9 +562,9 @@ class Decision
     /**
      * Get the Document form.
      *
-     * @return Document
+     * @return DocumentForm
      */
-    public function getDocumentForm()
+    public function getDocumentForm(): DocumentForm
     {
         if (!$this->aclService->isAllowed('upload_document', 'meeting')) {
             throw new NotAllowedException(
@@ -557,7 +575,10 @@ class Decision
         return $this->documentForm;
     }
 
-    public function getReorderDocumentForm()
+    /**
+     * @return ReorderDocumentForm
+     */
+    public function getReorderDocumentForm(): ReorderDocumentForm
     {
         $errorMessage = 'You are not allowed to modify meeting documents.';
 
@@ -569,9 +590,9 @@ class Decision
     /**
      * Get the SearchDecision form.
      *
-     * @return SearchDecision
+     * @return SearchDecisionForm
      */
-    public function getSearchDecisionForm()
+    public function getSearchDecisionForm(): SearchDecisionForm
     {
         return $this->searchDecisionForm;
     }
@@ -579,9 +600,9 @@ class Decision
     /**
      * Get the Authorization form.
      *
-     * @return Authorization
+     * @return AuthorizationForm
      */
-    public function getAuthorizationForm()
+    public function getAuthorizationForm(): AuthorizationForm
     {
         if (!$this->aclService->isAllowed('create', 'authorization')) {
             throw new NotAllowedException($this->translator->translate('You are not authorize people.'));
@@ -595,7 +616,7 @@ class Decision
      *
      * @return bool
      */
-    public function isAllowedToBrowseFiles()
+    public function isAllowedToBrowseFiles(): bool
     {
         return $this->aclService->isAllowed('browse', 'files');
     }
@@ -609,7 +630,7 @@ class Decision
      *
      * @throws NotAllowedException If the user doesn't have permission
      */
-    private function isAllowedOrFail($operation, $resource, $errorMessage)
+    private function isAllowedOrFail(string $operation, string $resource, string $errorMessage): void
     {
         if (!$this->aclService->isAllowed($operation, $resource)) {
             throw new NotAllowedException($this->translator->translate($errorMessage));

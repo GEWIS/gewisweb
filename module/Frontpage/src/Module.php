@@ -101,7 +101,7 @@ class Module
                     $newsItemForm = $container->get('frontpage_form_news_item');
                     $aclService = $container->get('frontpage_service_acl');
 
-                    return new News($translator, $newsItemMapper, $newsItemForm, $aclService);
+                    return new News($newsItemMapper, $newsItemForm, $aclService, $translator);
                 },
                 'frontpage_form_page' => function (ContainerInterface $container) {
                     $form = new Page(

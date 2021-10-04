@@ -8,25 +8,6 @@ use Application\Mapper\BaseMapper;
 class ActivityCategory extends BaseMapper
 {
     /**
-     * Get a Category by an Id.
-     *
-     * @param int $id
-     *
-     * @return ActivityCategoryModel
-     */
-    public function getCategoryById($id)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\ActivityCategory', 'a')
-            ->where('a.id = :id')
-            ->setParameter('id', $id);
-        $result = $qb->getQuery()->getResult();
-
-        return count($result) > 0 ? $result[0] : null;
-    }
-
-    /**
      * @inheritDoc
      */
     protected function getRepositoryName(): string

@@ -2,9 +2,11 @@
 
 namespace Company\Service;
 
-use Company\Mapper\Category;
-use Company\Mapper\Job;
-use Company\Mapper\Label;
+use Company\Mapper\{
+    Category as CategoryMapper,
+    Job as JobMapper,
+    Label as LabelMapper,
+};
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
 
@@ -16,29 +18,33 @@ class CompanyQuery
     /**
      * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
-     * @var Job
+     * @var JobMapper
      */
-    private $jobMapper;
+    private JobMapper $jobMapper;
 
     /**
-     * @var Category
+     * @var CategoryMapper
      */
-    private $categoryMapper;
+    private CategoryMapper $categoryMapper;
 
     /**
-     * @var Label
+     * @var LabelMapper
      */
-    private $labelMapper;
+    private LabelMapper $labelMapper;
+
+    /**
+     * @var AclService
+     */
     private AclService $aclService;
 
     public function __construct(
         Translator $translator,
-        Job $jobMapper,
-        Category $categoryMapper,
-        Label $labelMapper,
+        JobMapper $jobMapper,
+        CategoryMapper $categoryMapper,
+        LabelMapper $labelMapper,
         AclService $aclService
     ) {
         $this->translator = $translator;
@@ -53,7 +59,7 @@ class CompanyQuery
      *
      * @return Translator
      */
-    public function getTranslator()
+    public function getTranslator(): Translator
     {
         return $this->translator;
     }
@@ -62,46 +68,63 @@ class CompanyQuery
      * Returns all jobs with a $jobSlugName, owned by a company with a
      * $companySlugName, and a specific $category.
      *
-     * @param array $dict
-     * @return int|mixed|string
+     * @param int|null $jobCategoryId
+     * @param string|null $jobCategorySlug
+     * @param int|null $jobLabelId
+     * @param string|null $jobSlugName
+     * @param string|null $companySlugName
+     *
+     * @return array
      */
-    public function getJobs($dict)
-    {
-        if (array_key_exists('jobCategory', $dict) && null === $dict['jobCategory']) {
-            $jobs = $this->jobMapper->findJobsWithoutCategory($this->translator->getTranslator()->getLocale());
-            foreach ($jobs as $job) {
-                $job->setCategory($this->categoryMapper
-                    ->createNullCategory($this->translator->getTranslator()->getLocale(), $this->translator));
-            }
-
-            return $jobs;
-        }
-        $locale = $this->translator->getTranslator()->getLocale();
-        $dict['language'] = $locale;
-
-        return $this->jobMapper->findJob($dict);
+    public function getJobs(
+        int $jobCategoryId = null,
+        string $jobCategorySlug = null,
+        int $jobLabelId = null,
+        string $jobSlugName = null,
+        string $companySlugName = null,
+    ): array {
+        return $this->jobMapper->findJob(
+            jobCategoryId: $jobCategoryId,
+            jobCategorySlug: $jobCategorySlug,
+            jobLabelId: $jobLabelId,
+            jobSlugName: $jobSlugName,
+            companySlugName: $companySlugName,
+        );
     }
 
     /**
      * Returns all jobs that are active.
      *
+     * @param int|null $jobCategoryId
+     * @param string|null $jobCategorySlug
+     * @param int|null $jobLabelId
+     * @param string|null $jobSlugName
+     * @param string|null $companySlugName
+     *
      * @return array
      */
-    public function getActiveJobList($dict = [])
-    {
-        $jobList = $this->getJobs($dict);
-        $array = [];
-        foreach ($jobList as $job) {
-            if ($job->isActive()) {
-                $array[] = $job;
-            }
-        }
+    public function getActiveJobList(
+        int $jobCategoryId = null,
+        string $jobCategorySlug = null,
+        int $jobLabelId = null,
+        string $jobSlugName = null,
+        string $companySlugName = null,
+    ): array {
+        $jobList = $this->getJobs(
+            jobCategoryId: $jobCategoryId,
+            jobCategorySlug: $jobCategorySlug,
+            jobLabelId: $jobLabelId,
+            jobSlugName: $jobSlugName,
+            companySlugName: $companySlugName,
+        );
 
-        return $array;
+        return array_filter($jobList, function ($job) {
+            return $job->getActive();
+        });
     }
 
     /**
-     * Returns all categories if $visible is false, only returns visible categories if $visible is false.
+     * Returns all categories if $visible is false, only returns visible categories if $visible is true.
      *
      * @param bool $visible
      *
@@ -112,32 +135,20 @@ class CompanyQuery
         if (!$visible) {
             if (!$this->aclService->isAllowed('listAllCategories', 'company')) {
                 throw new NotAllowedException(
-                    $this->translator->translate('You are not allowed to access the admin interface')
+                    $this->translator->translate('You are not allowed to list all job categories')
                 );
             }
-            $results = $this->categoryMapper->findAll();
 
-            return $this->getUniqueInArray($results, function ($a) {
-                return $a->getLanguageNeutralId();
-            });
+            return $this->categoryMapper->findAll();
         }
+
         if (!$this->aclService->isAllowed('listVisibleCategories', 'company')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to list all categories'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to list job categories'));
         }
 
-        $categories = $this->categoryMapper->findVisibleCategoryByLanguage($this->translator->getTranslator()->getLocale());
-        $jobsWithoutCategory = $this->jobMapper->findJobsWithoutCategory($this->translator->getTranslator()->getLocale());
-        $filteredCategories = $this->filterCategories($categories);
-        $noVacancyCategory = count(array_filter($filteredCategories, function ($el) {
-            return 'jobs' == $el->getSlug();
-        }));
+        $categories = $this->categoryMapper->findVisibleCategories();
 
-        if (count($jobsWithoutCategory) > 0 && 0 == $noVacancyCategory) {
-            $filteredCategories[] = $this->categoryMapper
-                ->createNullCategory($this->translator->getTranslator()->getLocale(), $this->translator);
-        }
-
-        return $filteredCategories;
+        return $this->filterCategories($categories);
     }
 
     /**
@@ -147,36 +158,43 @@ class CompanyQuery
      *
      * @return array
      */
-    private function filterCategories($categories)
+    private function filterCategories(array $categories): array
     {
-        $nonemptyCategories = [];
+        $nonEmptyCategories = [];
+
         foreach ($categories as $category) {
-            if (count($this->getActiveJobList(['jobCategoryId' => $category->getId()])) > 0) {
-                $nonemptyCategories[] = $category;
+            if (count($this->getActiveJobList(jobCategoryId: $category->getId())) > 0) {
+                $nonEmptyCategories[] = $category;
             }
         }
 
-        return $nonemptyCategories;
+        return $nonEmptyCategories;
     }
 
     /**
-     * Returns all labels if $visible is false, only returns visible labels if $visible is false.
+     * Returns all labels if $visible is false, only returns visible labels if $visible is true.
      *
      * @param bool $visible
      *
      * @return array
      */
-    public function getLabelList($visible)
+    public function getLabelList(bool $visible): array
     {
         if (!$visible) {
-            $results = $this->labelMapper->findAll();
+            if (!$this->aclService->isAllowed('listAllLabels', 'company')) {
+                throw new NotAllowedException(
+                    $this->translator->translate('You are not allowed to list all job labels')
+                );
+            }
 
-            return $this->getUniqueInArray($results, function ($a) {
-                return $a->getLanguageNeutralId();
-            });
+            return $this->labelMapper->findAll();
         }
 
-        $labels = $this->labelMapper->findVisibleLabelByLanguage($this->translator->getTranslator()->getLocale());
+        if (!$this->aclService->isAllowed('listVisibleLabels', 'company')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to list job labels'));
+        }
+
+        $labels = $this->labelMapper->findVisibleLabels();
 
         return $this->filterLabels($labels);
     }
@@ -188,30 +206,16 @@ class CompanyQuery
      *
      * @return array
      */
-    private function filterLabels($labels)
+    private function filterLabels(array $labels): array
     {
-        $nonemptyLabels = [];
+        $nonEmptyLabels = [];
+
         foreach ($labels as $label) {
-            if (count($this->getActiveJobList(['jobCategoryId' => $label->getId()])) > 0) {
-                $nonemptyLabels[] = $label;
+            if (count($this->getActiveJobList(jobLabelId: $label->getId())) > 0) {
+                $nonEmptyLabels[] = $label;
             }
         }
 
-        return $nonemptyLabels;
-    }
-
-    private static function getUniqueInArray($array, $callback)
-    {
-        $tempResults = [];
-        $resultArray = [];
-        foreach ($array as $x) {
-            $newVar = $callback($x);
-            if (!array_key_exists($newVar, $tempResults)) {
-                $resultArray[] = $x;
-                $tempResults[$newVar] = $x;
-            }
-        }
-
-        return $resultArray;
+        return $nonEmptyLabels;
     }
 }

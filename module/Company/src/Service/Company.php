@@ -3,12 +3,16 @@
 namespace Company\Service;
 
 use Application\Service\FileStorage;
+use Doctrine\ORM\{
+    NonUniqueResultException,
+    ORMException,
+};
 use Company\Form\{
-    EditCategory as EditCategoryForm,
-    EditCompany as EditCompanyForm,
-    EditJob as EditJobForm,
-    EditLabel as EditLabelForm,
-    EditPackage as EditPackageForm,
+    JobCategory as EditCategoryForm,
+    Company as CompanyForm,
+    Job as EditJobForm,
+    JobLabel as EditLabelForm,
+    Package as EditPackageForm,
 };
 use Company\Mapper\{
     BannerPackage as BannerPackageMapper,
@@ -17,21 +21,21 @@ use Company\Mapper\{
     FeaturedPackage as FeaturedPackageMapper,
     Job as JobMapper,
     Label as LabelMapper,
-    LabelAssignment as LabelAssignmentMapper,
     Package as PackageMapper,
 };
 use Company\Model\{
     Company as CompanyModel,
+    CompanyLocalisedText,
+    CompanyBannerPackage as CompanyBannerPackageModel,
+    CompanyJobPackage as CompanyJobPackageModel,
+    CompanyPackage as CompanyPackageModel,
     Job as JobModel,
     JobCategory as JobCategoryModel,
     JobLabel as JobLabelModel,
-    JobLabelAssignment as JobLabelAssignmentModel,
 };
 use DateTime;
 use Exception;
-use InvalidArgumentException;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Stdlib\Parameters;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -85,14 +89,9 @@ class Company
     private LabelMapper $labelMapper;
 
     /**
-     * @var LabelAssignmentMapper
+     * @var CompanyForm
      */
-    private LabelAssignmentMapper $labelAssignmentMapper;
-
-    /**
-     * @var EditCompanyForm
-     */
-    private EditCompanyForm $editCompanyForm;
+    private CompanyForm $companyForm;
 
     /**
      * @var EditPackageForm
@@ -144,8 +143,7 @@ class Company
         JobMapper $jobMapper,
         CategoryMapper $categoryMapper,
         LabelMapper $labelMapper,
-        LabelAssignmentMapper $labelAssignmentMapper,
-        EditCompanyForm $editCompanyForm,
+        CompanyForm $companyForm,
         EditPackageForm $editPackageForm,
         EditPackageForm $editBannerPackageForm,
         EditPackageForm $editFeaturedPackageForm,
@@ -164,8 +162,7 @@ class Company
         $this->jobMapper = $jobMapper;
         $this->categoryMapper = $categoryMapper;
         $this->labelMapper = $labelMapper;
-        $this->labelAssignmentMapper = $labelAssignmentMapper;
-        $this->editCompanyForm = $editCompanyForm;
+        $this->companyForm = $companyForm;
         $this->editPackageForm = $editPackageForm;
         $this->editBannerPackageForm = $editBannerPackageForm;
         $this->editFeaturedPackageForm = $editFeaturedPackageForm;
@@ -196,7 +193,7 @@ class Company
             );
         }
 
-        return $this->featuredPackageMapper->getFeaturedPackage($this->translator->getTranslator()->getLocale());
+        return $this->featuredPackageMapper->getFeaturedPackage();
     }
 
     private function getFuturePackageStartsBeforeDate($date)
@@ -261,23 +258,25 @@ class Company
     }
 
     /**
-     * Returns an list of all companies (excluding hidden companies).
+     * Returns a list of all companies (excluding hidden companies).
+     *
+     * @return array
      */
-    public function getCompanyList()
+    public function getCompanyList(): array
     {
         if (!$this->aclService->isAllowed('list', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list the companies'));
         }
 
-        return $this->companyMapper->findPublicByLocale($this->translator->getTranslator()->getLocale());
+        return $this->companyMapper->findAllPublic();
     }
-
-    // Company list for admin interface
 
     /**
      * Returns a list of all companies (including hidden companies).
+     *
+     * @return array
      */
-    public function getHiddenCompanyList()
+    public function getHiddenCompanyList(): array
     {
         if (!$this->aclService->isAllowed('listall', 'company')) {
             throw new NotAllowedException(
@@ -295,7 +294,7 @@ class Company
      *
      * @return CompanyModel|null
      */
-    public function getCompanyById($id)
+    public function getCompanyById(int $id): ?CompanyModel
     {
         if (!$this->aclService->isAllowed('listall', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list the companies'));
@@ -304,693 +303,474 @@ class Company
         return $this->companyMapper->find($id);
     }
 
-    public function categoryForSlug($slug)
+    /**
+     * @param string $slug
+     *
+     * @return JobCategoryModel|null
+     * @throws NonUniqueResultException
+     */
+    public function getJobCategoryBySlug(string $slug): ?JobCategoryModel
     {
-        $mapper = $this->categoryMapper;
-        $category = $mapper->findCategory($slug);
-        $locale = $this->translator->getTranslator()->getLocale();
-
-        if (null === $category && 'jobs' == $slug) {
-            $category = $mapper->createNullCategory($this->translator->getTranslator()->getLocale(), $this->translator);
-        }
-        if (null === $category || $category->getLanguage() == $locale) {
-            return $category;
-        }
-
-        return $mapper->siblingCategory($category, $locale);
+        return $this->categoryMapper->findCategoryBySlug($slug);
     }
 
     /**
      * Creates a new JobCategoryModel.
      *
-     * @param Parameters $data Category data from the EditCategory form
+     * @param array $data Category data from the JobCategory form
      *
-     * @return bool|int Returns false on failure, and the languageNeutralId on success
-     *
-     * @throws NotAllowedException When a user is not allowed to create a job category
+     * @return JobCategoryModel
      */
-    public function createCategory(Parameters $data)
+    public function createJobCategory(array $data): JobCategoryModel
     {
-        if (!$this->aclService->isAllowed('insert', 'company')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to insert a job category'));
-        }
+        $jobCategory = new JobCategoryModel();
 
-        $categoryDict = [];
-        foreach ($this->languages as $lang) {
-            $category = new JobCategoryModel();
-            $category->setLanguage($lang);
-            $categoryDict[$lang] = $category;
-        }
+        $jobCategory->setName(new CompanyLocalisedText($data['nameEn'], $data['name']));
+        $jobCategory->setPluralName(new CompanyLocalisedText($data['pluralNameEn'], $data['pluralName']));
+        $jobCategory->setSlug(new CompanyLocalisedText($data['slugEn'], $data['slug']));
+        $jobCategory->setHidden($data['hidden']);
 
-        return $this->saveCategoryData(null, $categoryDict, $data);
+        $this->persistJobCategory($jobCategory);
+
+        return $jobCategory;
     }
 
     /**
-     * Checks if the data is valid, and if it is, saves the JobCategoryModel.
-     *
-     * @param int|null $languageNeutralId Identifier of the JobCategories to save
-     * @param array $categories The JobCategories to save
-     * @param Parameters $data The (new) data to save
-     *
-     * @return bool|int Returns false on failure, and the languageNeutralId on success
+     * @param JobCategoryModel $jobCategory The JobCategoryModel to update
+     * @param array $data The (new) data to save
      */
-    public function saveCategoryData(?int $languageNeutralId, array $categories, Parameters $data)
+    public function updateJobCategory(JobCategoryModel $jobCategory, array $data): void
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to edit job categories'));
-        }
+        $jobCategory->getName()->updateValues($data['nameEn'], $data['name']);
+        $jobCategory->getPluralName()->updateValues($data['pluralNameEn'], $data['pluralName']);
+        $jobCategory->getSlug()->updateValues($data['slugEn'], $data['slug']);
+        $jobCategory->setHidden($data['hidden']);
 
-        $categoryForm = $this->getCategoryForm();
-        $categoryForm->bind($categories);
-        $categoryForm->setData($data);
-
-        if (!$categoryForm->isValid()) {
-            return false;
-        }
-
-        $id = -1;
-        foreach ($categories as $category) {
-            $id = $this->setLanguageNeutralCategoryId($id, $category, $languageNeutralId);
-            $this->categoryMapper->persist($category);
-            $this->saveCategory();
-        }
-
-        return (null === $languageNeutralId) ? $id : $languageNeutralId;
-    }
-
-    /**
-     * Sets the languageNeutralId for this JobCategoryModel.
-     *
-     * @param int $id The id of the JobCategoryModel
-     * @param JobCategoryModel $category The JobCategoryModel
-     * @param int|null $languageNeutralId The languageNeutralId of the JobCategoryModel
-     *
-     * @return int
-     */
-    private function setLanguageNeutralCategoryId(int $id, JobCategoryModel $category, ?int $languageNeutralId): int
-    {
-        if (null === $languageNeutralId) {
-            $category->setLanguageNeutralId($id);
-            $this->categoryMapper->persist($category);
-            $this->saveCategory();
-
-            if (-1 === $id) {
-                $id = $category->getId();
-            }
-
-            $category->setLanguageNeutralId($id);
-
-            return $id;
-        }
-
-        $category->setLanguageNeutralId($languageNeutralId);
-
-        return $id;
+        $this->persistJobCategory($jobCategory);
     }
 
     /**
      * Creates a new JobLabelModel.
      *
-     * @param Parameters $data Label data from the EditLabel form
+     * @param array $data Label data from the JobLabelForm
      *
-     * @return bool|int Returns false on failure, and the languageNeutralId on success
-     *
-     * @throws NotAllowedException When a user is not allowed to create a job label
+     * @return JobLabelModel
      */
-    public function createLabel(Parameters $data)
+    public function createJobLabel(array $data): JobLabelModel
     {
-        if (!$this->aclService->isAllowed('insert', 'company')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to insert a job label'));
-        }
+        $jobLabel = new JobLabelModel();
 
-        $labelDict = [];
-        foreach ($this->languages as $lang) {
-            $label = new JobLabelModel();
-            $label->setLanguage($lang);
-            $labelDict[$lang] = $label;
-        }
+        $jobLabel->setName(new CompanyLocalisedText($data['nameEn'], $data['name']));
+        $jobLabel->setAbbreviation(new CompanyLocalisedText($data['abbreviationEn'], $data['abbreviation']));
 
-        return $this->saveLabelData(null, $labelDict, $data);
+        $this->persistJobLabel($jobLabel);
+
+        return $jobLabel;
     }
 
     /**
-     * Checks if the data is valid, and if it is, saves the JobLabelModel.
+     * Updates the JobLabelModel.
      *
-     * @param int|null $languageNeutralId Identifier of the JobLabelModel to save
-     * @param array $labels The JobLabelModels to save
-     * @param Parameters $data The data to validate, and apply to the label
-     *
-     * @return bool|int
+     * @param JobLabelModel $jobLabel
+     * @param array $data The data to validate, and apply to the label
      */
-    public function saveLabelData(?int $languageNeutralId, array $labels, Parameters $data)
+    public function updateJobLabel(JobLabelModel $jobLabel, array $data): void
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to edit job labels'));
-        }
+        $jobLabel->getName()->updateValues($data['nameEn'], $data['name']);
+        $jobLabel->getAbbreviation()->updateValues($data['abbreviationEn'], $data['abbreviation']);
 
-        $labelForm = $this->getLabelForm();
-        $labelForm->bind($labels);
-        $labelForm->setData($data);
-
-        if (!$labelForm->isValid()) {
-            return false;
-        }
-
-        $id = -1;
-        foreach ($labels as $label) {
-            $id = $this->setLanguageNeutralLabelId($id, $label, $languageNeutralId);
-            $this->labelMapper->persist($label);
-            $this->saveLabel();
-        }
-
-        return (null === $languageNeutralId) ? $id : $languageNeutralId;
-    }
-
-    /**
-     * Sets the languageNeutralId for this JobLabelModel.
-     *
-     * @param int $id The id of the JobLabelModel
-     * @param JobLabelModel $label The JobLabelModel
-     * @param int|null $languageNeutralId The languageNeutralId of the JobLabelModel
-     *
-     * @return int
-     */
-    private function setLanguageNeutralLabelId(int $id, JobLabelModel $label, ?int $languageNeutralId): int
-    {
-        if (null === $languageNeutralId) {
-            $label->setLanguageNeutralId($id);
-            $this->labelMapper->persist($label);
-            $this->saveLabel();
-
-            if (-1 === $id) {
-                $id = $label->getId();
-            }
-
-            $label->setLanguageNeutralId($id);
-
-            return $id;
-        }
-
-        $label->setLanguageNeutralId($languageNeutralId);
-
-        return $id;
-    }
-
-    /**
-     * Checks if the data is valid, and if it is saves the package.
-     *
-     * @param mixed $package
-     * @param Parameters $data
-     * @param Parameters $files
-     *
-     * @return bool
-     * @throws Exception
-     */
-    public function savePackageByData($package, Parameters $data, Parameters $files): bool
-    {
-        $packageForm = $this->getPackageForm();
-        $packageForm->setData($data);
-
-        if ($packageForm->isValid()) {
-            $package->exchangeArray($data);
-
-            if ('banner' == $package->getType()) {
-                $file = $files['banner'];
-
-                if (UPLOAD_ERR_NO_FILE !== $file['error']) {
-                    if (UPLOAD_ERR_OK !== $file['error']) {
-                        return false;
-                    }
-
-                    $oldPath = $package->getImage();
-                    $newPath = $this->storageService->storeUploadedFile($file);
-                    $package->setImage($newPath);
-
-                    if ('' !== $oldPath && $oldPath !== $newPath) {
-                        $this->storageService->removeFile($oldPath);
-                    }
-                }
-            }
-
-            $this->savePackage();
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Checks if the data is valid, and if it is, saves the Company.
-     *
-     * @param CompanyModel $company
-     * @param Parameters $data
-     * @param Parameters $files
-     *
-     * @return bool
-     *
-     * @throws Exception
-     */
-    public function saveCompanyByData(CompanyModel $company, Parameters $data, Parameters $files): bool
-    {
-        $companyForm = $this->editCompanyForm;
-
-        $dataArray = $data->toArray();
-        $filesArray = $files->toArray();
-        $mergedData = array_merge_recursive(
-            $dataArray,
-            $filesArray,
-        );
-        $companyForm->setData($mergedData);
-
-        if ($companyForm->isValid()) {
-            $company->exchangeArray($data);
-
-            foreach ($company->getTranslations() as $translation) {
-                $file = $files[$translation->getLanguage() . '_logo'];
-
-                if (UPLOAD_ERR_NO_FILE !== $file['error']) {
-                    if (UPLOAD_ERR_OK !== $file['error']) {
-                        return false;
-                    }
-
-                    $oldPath = $translation->getLogo();
-                    $newPath = $this->storageService->storeUploadedFile($file);
-                    $translation->setLogo($newPath);
-
-                    if ('' !== $oldPath && $oldPath != $newPath) {
-                        $this->storageService->removeFile($oldPath);
-                    }
-                }
-            }
-
-            // Save the company data, removing any translations cannot be done in the same UnitOfWork.
-            $this->saveCompany();
-
-            // Remove translations if necessary.
-            $enabledLanguages = $data['languages'];
-            foreach ($company->getTranslations() as $translation) {
-                if (!in_array($translation->getLanguage(), $enabledLanguages)) {
-                    $company->removeTranslation($translation);
-                    $this->companyMapper->remove($translation);
-                }
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Saves all modified categories.
-     */
-    public function saveCategory()
-    {
-        $this->categoryMapper->flush();
-    }
-
-    /**
-     * Saves all modified labels.
-     */
-    public function saveLabel()
-    {
-        $this->labelMapper->flush();
-    }
-
-    /**
-     * Saves all modified jobs.
-     */
-    public function saveJob()
-    {
-        $this->jobMapper->flush();
-    }
-
-    /**
-     * Saves all modified companies.
-     */
-    public function saveCompany(): void
-    {
-        $this->companyMapper->flush();
-    }
-
-    /**
-     * Saves all modified packages.
-     */
-    public function savePackage()
-    {
-        $this->packageMapper->flush();
-    }
-
-    /**
-     * Checks if the data is valid, and if it is, inserts the company, and sets
-     * all data.
-     *
-     * @param Parameters $data
-     * @param Parameters $files
-     *
-     * @return CompanyModel|false|null
-     * @throws Exception
-     */
-    public function insertCompanyByData(Parameters $data, Parameters $files)
-    {
-        $companyForm = $this->editCompanyForm;
-
-        $dataArray = $data->toArray();
-        $filesArray = $files->toArray();
-        $mergedData = array_merge_recursive(
-            $dataArray,
-            $filesArray,
-        );
-        $companyForm->setData($mergedData);
-
-        if ($companyForm->isValid()) {
-            $company = $this->insertCompany($data['languages']);
-            $company->exchangeArray($data);
-
-            foreach ($company->getTranslations() as $translation) {
-                $file = $files[$translation->getLanguage() . '_logo'];
-
-                if (UPLOAD_ERR_NO_FILE !== $file['error']) {
-                    if (UPLOAD_ERR_OK !== $file['error']) {
-                        return false;
-                    }
-
-                    $newPath = $this->storageService->storeUploadedFile($file);
-                    $translation->setLogo($newPath);
-                }
-            }
-            $this->saveCompany();
-
-            return $company;
-        }
-
-        return null;
+        $this->persistJobLabel($jobLabel);
     }
 
     /**
      * Inserts the company and initializes translations for the given languages.
      *
-     * @param mixed $languages
+     * @param array $data
+     *
+     * @return CompanyModel|bool
+     *
+     * @throws ORMException
      */
-    public function insertCompany($languages)
+    public function createCompany(array $data): CompanyModel|bool
     {
-        if (!$this->aclService->isAllowed('insert', 'company')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to insert a company'));
+        $company = new CompanyModel();
+
+        // Set attributes that are not L10n-able.
+        $company->setName($data['name']);
+        $company->setSlugName($data['slugName']);
+        $company->setHidden($data['hidden']);
+        $company->setContactName($data['contactName']);
+        $company->setContactEmail($data['contactEmail']);
+        $company->setContactPhone($data['contactPhone']);
+        $company->setContactAddress($data['contactAddress']);
+
+        // Set all attributes that are L10n-able.
+        $company->setSlogan(new CompanyLocalisedText($data['sloganEn'], $data['slogan']));
+        $company->setWebsite(new CompanyLocalisedText($data['websiteEn'], $data['website']));
+        $company->setDescription(new CompanyLocalisedText($data['descriptionEn'], $data['description']));
+
+        // Upload the logo of the company.
+        if (!$this->uploadFile($company, $data['logo'])) {
+            return false;
         }
 
-        return $this->companyMapper->insert($languages);
+        $this->persistCompany($company);
+
+        return $company;
     }
 
     /**
-     * Checks if the data is valid, and if it is, inserts the package, and assigns it to the given company.
+     * Updates a company with the provided data.
      *
-     * @param string $companySlugName
-     * @param Parameters $data
-     * @param Parameters $files
-     * @param string $type
+     * @param CompanyModel $company
+     * @param array $data
+     *
+     * @return bool
+     *
+     * @throws Exception
+     */
+    public function updateCompany(CompanyModel $company, array $data): bool
+    {
+        $company->exchangeArray($data);
+
+        // Upload the logo of the company.
+        if (!$this->uploadFile($company, $data['logo'])) {
+            return false;
+        }
+
+        $this->persistCompany($company);
+
+        return true;
+    }
+
+    /**
+     * A function which uploads an image. Is used for uploading company logos, banner package banners, and attachments
+     * of jobs. It assumes that if the file is null (i.e. no image has been submitted) it should not touch the old
+     * file.
+     *
+     * @param CompanyModel|CompanyPackageModel|JobModel $entity
+     * @param array|null $file
+     * @param string $languageSuffix
      *
      * @return bool
      * @throws Exception
      */
-    public function insertPackageForCompanySlugNameByData(
-        string $companySlugName,
-        Parameters $data,
-        Parameters $files,
-        string $type = 'job',
+    private function uploadFile(
+        CompanyModel|CompanyPackageModel|JobModel $entity,
+        ?array $file,
+        string $languageSuffix = ''
     ): bool {
-        $packageForm = $this->getPackageForm($type);
-        $packageForm->setData($data);
-
-        if ($packageForm->isValid()) {
-            $package = $this->insertPackageForCompanySlugName($companySlugName, $type);
-
-            if ('banner' === $type) {
-                // TODO: Check if a file is uploaded.
-                $newPath = $this->storageService->storeUploadedFile($files['banner']);
-                $package->setImage($newPath);
-            }
-
-            $package->exchangeArray($data);
-            $this->savePackage();
-
+        if (null === $file) {
             return true;
         }
 
-        return false;
-    }
-
-    /**
-     * Inserts a package and assigns it to the given company.
-     *
-     * @param mixed $companySlugName
-     */
-    public function insertPackageForCompanySlugName($companySlugName, $type = 'job')
-    {
-        if (!$this->aclService->isAllowed('insert', 'company')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to insert a package'));
-        }
-
-        $companies = $this->getEditableCompaniesBySlugName($companySlugName);
-        $company = $companies[0];
-
-        return $this->packageMapper->insertPackageIntoCompany($company, $type);
-    }
-
-    /**
-     * Creates a new job and adds it to the specified package.
-     *
-     * @param int $packageId
-     * @param Parameters $data
-     * @param Parameters $files
-     *
-     * @return bool
-     */
-    public function createJob(int $packageId, Parameters $data, Parameters $files): bool
-    {
-        $package = $this->packageMapper->findPackage($packageId);
-        $jobs = [];
-
-        foreach ($this->languages as $lang) {
-            $job = new JobModel();
-            $job->setPackage($package);
-            $job->setLanguage($lang);
-            $jobs[$lang] = $job;
-        }
-
-        return $this->saveJobData(null, $jobs, $data, $files);
-    }
-
-    /**
-     * Checks if the data is valid, and if it is, saves the Job.
-     *
-     * @param int|null $languageNeutralId Identifier of the Job to save
-     * @param array $jobs The Job to save
-     * @param Parameters $data The (new) data to save
-     * @param Parameters $files The (new) files to save
-     *
-     * @return bool
-     */
-    public function saveJobData(?int $languageNeutralId, array $jobs, Parameters $data, Parameters $files): bool
-    {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to edit jobs'));
-        }
-
-        $jobForm = $this->getJobForm();
-        $dataArray = $data->toArray();
-        $filesArray = $files->toArray();
-        $mergedData = array_merge_recursive(
-            $dataArray,
-            $filesArray,
-        );
-        $jobForm->setCompanySlug(current($jobs)->getCompany()->getSlugName());
-        $jobForm->setCurrentSlug($data['slugName']);
-        $jobForm->bind($jobs);
-        $jobForm->setData($mergedData);
-
-        if (!$jobForm->isValid()) {
-            return false;
-        }
-        $id = -1;
-
-        $labelIds = $data['labels'];
-        if (is_null($labelIds)) {
-            $labelIds = [];
-        }
-
-        foreach ($jobs as $lang => $job) {
-            $file = $files['jobs'][$lang]['attachment_file'];
-
-            if (null !== $file && UPLOAD_ERR_NO_FILE !== $file['error']) {
-                $oldPath = $job->getAttachment();
-
-                try {
-                    $newPath = $this->storageService->storeUploadedFile($file);
-                } catch (Exception $e) {
-                    return false;
-                }
-
-                if (!is_null($oldPath) && $oldPath != $newPath) {
-                    $this->storageService->removeFile($oldPath);
-                }
-
-                $job->setAttachment($newPath);
+        // Check if there is an actual file and no errors occurred during the upload.
+        if (UPLOAD_ERR_NO_FILE !== $file['error']) {
+            if (UPLOAD_ERR_OK !== $file['error']) {
+                return false;
             }
 
-            $job->setTimeStamp(new DateTime());
-            $id = $this->setLanguageNeutralJobId($id, $job, $languageNeutralId);
-            $this->jobMapper->persist($job);
-            $this->saveJob();
+            // Save the file to persistent storage.
+            $path = $this->storageService->storeUploadedFile($file);
 
-            $mapper = $this->labelMapper;
-            $lang = $job->getLanguage();
-            // Contains language specific labels
-            $labelsLangBased = [];
-            foreach ($labelIds as $labelId) {
-                $label = $mapper->findLabelById($labelId);
-                $labelsLangBased[] = $mapper->siblingLabel($label, $lang)->getId();
+            if ($entity instanceof CompanyModel) {
+                $oldPath = $entity->getLogo();
+                $entity->setLogo($path);
             }
-            $this->setLabelsForJob($job, $labelsLangBased);
+
+            if ($entity instanceof CompanyBannerPackageModel) {
+                $oldPath = $entity->getImage();
+                $entity->setImage($path);
+            }
+
+            if ($entity instanceof JobModel) {
+                if ('' === $languageSuffix) {
+                    $oldPath = $entity->getAttachment()->getValueNL();
+                    $entity->getAttachment()->updateValueNL($path);
+                } elseif ('En' === $languageSuffix) {
+                    $oldPath = $entity->getAttachment()->getValueEN();
+                    $entity->getAttachment()->updateValueEN($path);
+                }
+            }
+
+            // Remove the old logo from storage.
+            if (null !== $oldPath && $oldPath !== $path) {
+                $this->storageService->removeFile($oldPath);
+            }
         }
 
         return true;
     }
 
     /**
-     * @param JobModel $job
-     * @param array $labels
+     * Saves the modified JobCategoryModel.
      */
-    private function setLabelsForJob(JobModel $job, array $labels): void
+    public function persistJobCategory(JobCategoryModel $jobCategory): void
     {
-        $mapper = $this->labelAssignmentMapper;
-        $currentAssignments = $mapper->findAssignmentsByJobId($job->getId());
-        $currentLabels = [];
-        foreach ($currentAssignments as $labelAsg) {
-            $currentLabels[] = $labelAsg->getLabel()->getId();
-        }
-        $intersection = array_intersect($labels, $currentLabels);
-        $toRemove = array_diff($currentLabels, $labels);
-        $toAdd = array_diff($labels, $intersection);
-
-        $this->removeLabelsFromJob($job, $toRemove);
-        $this->addLabelsToJob($job, $toAdd);
+        $this->categoryMapper->persist($jobCategory);
     }
 
     /**
-     * @param JobModel $job
-     * @param array $labels
+     * Saves the modified JobLabelModel.
      */
-    private function addLabelsToJob(JobModel $job, array $labels): void
+    public function persistJobLabel(JobLabelModel $jobLabel): void
     {
-        $mapperLabel = $this->labelMapper;
-        $mapperLabelAssignment = $this->labelAssignmentMapper;
-        $mapperJob = $this->jobMapper;
-
-        foreach ($labels as $label) {
-            $jobLabelAssignment = new JobLabelAssignmentModel();
-            $labelModel = $mapperLabel->findLabelById($label);
-            $jobLabelAssignment->setLabel($labelModel);
-            $job->addLabel($jobLabelAssignment);
-            $mapperLabelAssignment->persist($jobLabelAssignment);
-            $mapperJob->flush();
-        }
+        $this->labelMapper->persist($jobLabel);
     }
 
     /**
-     * @param JobModel $job
-     * @param array $labels
-     */
-    private function removeLabelsFromJob(JobModel $job, array $labels): void
-    {
-        $mapper = $this->labelAssignmentMapper;
-
-        foreach ($labels as $label) {
-            $toRemove = $mapper->findAssignmentByJobIdAndLabelId($job->getId(), $label);
-            $mapper->remove($toRemove);
-        }
-    }
-
-    /**
-     * @param int $id
-     * @param JobModel $job
-     * @param int|null $languageNeutralId
+     * Saves all modified jobs.
      *
-     * @return int
+     * @param JobModel $job
+     *
+     * @throws ORMException
      */
-    private function setLanguageNeutralJobId(int $id, JobModel $job, ?int $languageNeutralId): int
-    {
-        if (null === $languageNeutralId) {
-            $job->setLanguageNeutralId($id);
-            $this->jobMapper->persist($job);
-            $this->saveJob();
 
-            if (-1 === $id) {
-                $id = $job->getId();
+    public function persistJob(JobModel $job)
+    {
+        $this->jobMapper->persist($job);
+    }
+
+    /**
+     * @param CompanyModel $company
+     *
+     * @throws ORMException
+     */
+    public function persistCompany(CompanyModel $company): void
+    {
+        $this->companyMapper->persist($company);
+    }
+
+    /**
+     * Saves all modified packages.
+     *
+     * @param CompanyPackageModel $package
+     *
+     * @throws ORMException
+     */
+    public function persistPackage(CompanyPackageModel $package)
+    {
+        $this->packageMapper->persist($package);
+    }
+
+    /**
+     * Creates a new package, and assigns it to the given company.
+     *
+     * @param CompanyModel $company
+     * @param array $data
+     * @param string $type
+     *
+     * @return bool
+     * @throws Exception
+     */
+    public function createPackage(CompanyModel $company, array $data, string $type = 'job'): bool {
+        $package = $this->packageMapper->createPackage($type);
+        $package->setCompany($company);
+
+        if (CompanyBannerPackageModel::class === get_class($package)) {
+            if (!$this->uploadFile($package, $data['banner'])) {
+                return false;
+            }
+        }
+
+        $package->exchangeArray($data);
+        $this->persistPackage($package);
+
+        return true;
+    }
+
+    /**
+     * Updates the package.
+     *
+     * @param CompanyPackageModel $package
+     * @param array $data
+     *
+     * @return bool
+     * @throws Exception
+     */
+    public function updatePackage(CompanyPackageModel $package, array $data): bool
+    {
+        if (CompanyBannerPackageModel::class === get_class($package)) {
+            if (!$this->uploadFile($package, $data['banner'])) {
+                return false;
+            }
+        }
+
+        $package->exchangeArray($data);
+        $this->persistPackage($package);
+
+        return true;
+    }
+
+    /**
+     * Creates a new job and adds it to the specified package.
+     *
+     * @param CompanyJobPackageModel $package
+     * @param array $data
+     *
+     * @return bool
+     * @throws ORMException
+     */
+    public function createJob(CompanyJobPackageModel $package, array $data): bool
+    {
+        $job = new JobModel();
+
+        $category = $this->categoryMapper->find($data['category']);
+        if (null === $category) {
+            return false;
+        }
+
+        $job->setSlugName($data['slugName']);
+        $job->setCategory($category);
+        $job->setActive($data['active']);
+        $job->setContactName($data['contactName']);
+        $job->setContactEmail($data['contactEmail']);
+        $job->setContactPhone($data['contactPhone']);
+
+        $job->setName(new CompanyLocalisedText($data['nameEn'], $data['name']));
+        $job->setLocation(new CompanyLocalisedText($data['locationEn'], $data['location']));
+        $job->setWebsite(new CompanyLocalisedText($data['websiteEn'], $data['website']));
+        $job->setDescription(new CompanyLocalisedText($data['descriptionEn'], $data['description']));
+        $job->setAttachment(new CompanyLocalisedText(null, null));
+
+        if (isset($data['labels'])) {
+            foreach ($data['labels'] as $label) {
+                $label = $this->getJobLabelById($label);
+
+                if (null !== $label) {
+                    $job->addLabel($label);
+                }
+            }
+        }
+
+        $job->setPackage($package);
+        $package->addJob($job);
+
+        // Upload the attachments.
+        if (!$this->uploadFile($job, $data['attachment'])) {
+            return false;
+        }
+
+        if (!$this->uploadFile($job, $data['attachmentEn'], 'En')) {
+            return false;
+        }
+
+        $job->setTimeStamp(new DateTime());
+
+        $this->persistJob($job);
+
+        return true;
+    }
+
+    /**
+     * @param JobModel $job
+     * @param array $data
+     *
+     * @return bool
+     * @throws ORMException
+     */
+    public function updateJob(JobModel $job, array $data): bool
+    {
+        $category = $this->categoryMapper->find($data['category']);
+        if (null === $category) {
+            return false;
+        }
+
+        $job->setSlugName($data['slugName']);
+        $job->setCategory($category);
+        $job->setActive($data['active']);
+        $job->setContactName($data['contactName']);
+        $job->setContactEmail($data['contactEmail']);
+        $job->setContactPhone($data['contactPhone']);
+
+        $job->getName()->updateValues($data['nameEn'], $data['name']);
+        $job->getLocation()->updateValues($data['locationEn'], $data['location']);
+        $job->getWebsite()->updateValues($data['websiteEn'], $data['website']);
+        $job->getDescription()->updateValues($data['descriptionEn'], $data['description']);
+
+        if (isset($data['labels'])) {
+            $newLabels = $data['labels'];
+            $currentLabels = $job->getLabels()->map(function ($label) { return $label->getId(); })->toArray();
+
+            $intersection = array_intersect($newLabels, $currentLabels);
+            $toRemove = array_diff($currentLabels, $newLabels);
+            $toAdd = array_diff($newLabels, $intersection);
+
+            foreach ($toRemove as $label) {
+                $label = $this->getJobLabelById($label);
+                $job->removeLabel($label);
             }
 
-            $job->setLanguageNeutralId($id);
+            foreach ($toAdd as $label) {
+                $label = $this->getJobLabelById($label);
 
-            return $id;
+                if (null !== $label) {
+                    $job->addLabel($label);
+                }
+            }
         }
 
-        $job->setLanguageNeutralId($languageNeutralId);
-
-        return $id;
-    }
-
-    /**
-     * Inserts a job, and binds it to the given package.
-     *
-     * @param mixed $packageId
-     */
-    public function insertJobIntoPackageId($packageId, $lang, $languageNeutralId)
-    {
-        if (!$this->aclService->isAllowed('insert', 'company')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to insert a job'));
+        // Upload the attachments.
+        if (!$this->uploadFile($job, $data['attachment'])) {
+            return false;
         }
-        $package = $this->getEditablePackage($packageId);
 
-        return $this->jobMapper->insertIntoPackage($package, $lang, $languageNeutralId);
+        if (!$this->uploadFile($job, $data['attachmentEn'], 'En')) {
+            return false;
+        }
+
+        $job->setTimeStamp(new DateTime());
+
+        $this->persistJob($job);
+
+        return true;
     }
 
     /**
      * Deletes the given package.
      *
-     * @param mixed $packageId
+     * @param CompanyPackageModel $package
+     *
+     * @throws ORMException
      */
-    public function deletePackage($packageId)
+    public function deletePackage(CompanyPackageModel $package): void
     {
         if (!$this->aclService->isAllowed('delete', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete packages'));
         }
-        $this->packageMapper->deletePackage($packageId);
-        $this->bannerPackageMapper->deletePackage($packageId);
+
+        $this->packageMapper->remove($package);
     }
 
     /**
      * Deletes the given job.
      *
-     * @param int $jobId
+     * @param JobModel $job
+     *
+     * @throws ORMException
      */
-    public function deleteJob($jobId)
+    public function deleteJob($job): void
     {
         if (!$this->aclService->isAllowed('delete', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete jobs'));
         }
-        $this->jobMapper->deleteByLanguageNeutralId($jobId);
+
+        $this->jobMapper->remove($job);
     }
 
     /**
      * Deletes the company identified with $slug.
      *
-     * @param mixed $slug
+     * @param string $slug
+     *
+     * @throws ORMException
      */
-    public function deleteCompaniesBySlug($slug)
+    public function deleteCompanyBySlug(string $slug): void
     {
         if (!$this->aclService->isAllowed('delete', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete companies'));
         }
+
         $company = $this->getCompanyBySlugName($slug);
         $this->companyMapper->remove($company);
     }
@@ -999,8 +779,10 @@ class Company
      * Return the company identified by $slugName.
      *
      * @param string $slugName
+     *
+     * @return CompanyModel|null
      */
-    public function getCompanyBySlugName($slugName)
+    public function getCompanyBySlugName(string $slugName): ?CompanyModel
     {
         return $this->companyMapper->findCompanyBySlugName($slugName);
     }
@@ -1008,48 +790,54 @@ class Company
     /**
      * Returns a persistent category.
      *
-     * @param int $categoryId
+     * @param int $jobCategoryId
+     *
+     * @return JobCategoryModel|null
      */
-    public function getAllCategoriesById($categoryId)
+    public function getJobCategoryById(int $jobCategoryId): ?JobCategoryModel
     {
         if (!$this->aclService->isAllowed('edit', 'company')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to edit packages'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to edit job categories'));
         }
 
-        return $this->categoryMapper->findAllCategoriesById($categoryId);
+        return $this->categoryMapper->find($jobCategoryId);
     }
 
     /**
      * Returns a persistent label.
      *
-     * @param int $labelId
+     * @param int $jobLabelId
+     *
+     * @return JobLabelModel|null
      */
-    public function getAllLabelsById($labelId)
+    public function getJobLabelById(int $jobLabelId): ?JobLabelModel
     {
         if (!$this->aclService->isAllowed('edit', 'company')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to edit packages'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to edit job labels'));
         }
 
-        return $this->labelMapper->findAllLabelsById($labelId);
+        return $this->labelMapper->find($jobLabelId);
     }
 
     /**
      * Returns a persistent package.
      *
-     * @param mixed $packageId
+     * @param int $packageId
+     *
+     * @return CompanyPackageModel|null
      */
-    public function getEditablePackage($packageId)
+    public function getPackageById(int $packageId): ?CompanyPackageModel
     {
         if (!$this->aclService->isAllowed('edit', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit packages'));
         }
-        if (is_null($packageId)) {
-            throw new InvalidArgumentException('Invalid argument');
-        }
+
         $package = $this->packageMapper->findEditablePackage($packageId);
+
         if (is_null($package)) {
             $package = $this->bannerPackageMapper->findEditablePackage($packageId);
         }
+
         if (is_null($package)) {
             $package = $this->featuredPackageMapper->findEditablePackage($packageId);
         }
@@ -1058,33 +846,20 @@ class Company
     }
 
     /**
-     * Returns all companies with a given $slugName and makes them persistent.
-     *
-     * @param mixed $slugName
-     */
-    public function getEditableCompaniesBySlugName($slugName)
-    {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to edit companies'));
-        }
-
-        return $this->companyMapper->findEditableCompaniesBySlugName($slugName, true);
-    }
-
-    /**
      * Returns all jobs with a given slugname, owned by a company with
      * $companySlugName.
      *
-     * @param int $languageNeutralId
-     * @return int|mixed|string
+     * @param int $jobId
+     *
+     * @return JobModel|null
      */
-    public function getEditableJobsByLanguageNeutralId($languageNeutralId)
+    public function getJobById(int $jobId): ?JobModel
     {
         if (!$this->aclService->isAllowed('edit', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit jobs'));
         }
 
-        return $this->jobMapper->findJob(['languageNeutralId' => $languageNeutralId]);
+        return $this->jobMapper->find($jobId);
     }
 
     /**
@@ -1148,21 +923,14 @@ class Company
     }
 
     /**
-     * Get the default resource Id.
-     *
-     * @return string
+     * @return CompanyForm
      */
-    protected function getDefaultResourceId(): string
+    public function getCompanyForm(): CompanyForm
     {
-        return 'company';
-    }
-
-    public static function getLanguageDescription($lang): string
-    {
-        if ('en' === $lang) {
-            return 'English';
+        if (!$this->aclService->isAllowed('create', 'company')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to create a company'));
         }
 
-        return 'Dutch';
+        return $this->companyForm;
     }
 }

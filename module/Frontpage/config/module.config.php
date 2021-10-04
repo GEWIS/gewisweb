@@ -1,5 +1,8 @@
 <?php
 
+namespace Frontpage;
+
+use Application\Extensions\Doctrine\AttributeDriver;
 use Frontpage\Controller\{
     AdminController,
     FrontpageController,
@@ -383,14 +386,15 @@ return [
     ],
     'doctrine' => [
         'driver' => [
-            'frontpage_entities' => [
-                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
-                'cache' => 'array',
-                'paths' => [__DIR__ . '/../src/Model/'],
+            __NAMESPACE__ . '_driver' => [
+                'class' => AttributeDriver::class,
+                'paths' => [
+                    __DIR__ . '/../src/Model/',
+                ],
             ],
             'orm_default' => [
                 'drivers' => [
-                    'Frontpage\Model' => 'frontpage_entities',
+                    __NAMESPACE__ . '\Model' => __NAMESPACE__ . '_driver',
                 ],
             ],
         ],

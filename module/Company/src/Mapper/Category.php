@@ -3,11 +3,14 @@
 namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Company\Model\JobCategory;
-use Company\Model\JobCategory as CategoryModel;
+use Company\Model\JobCategory as JobCategoryModel;
+use Doctrine\ORM\{
+    NonUniqueResultException,
+    Query\Expr\Join,
+};
 
 /**
- * Mappers for cateogry.
+ * Mappers for category.
  */
 class Category extends BaseMapper
 {
@@ -21,55 +24,45 @@ class Category extends BaseMapper
         return $this->getRepository()->findOneBy(['slug' => $categorySlug]);
     }
 
-    public function findVisibleCategoryByLanguage($categoryLanguage)
+    /**
+     * @return array
+     */
+    public function findVisibleCategories(): array
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('c')
-            ->select('c')->where('c.language=:lang')
-            ->andWhere('c.hidden=:hidden')
-            ->setParameter('lang', $categoryLanguage)
+            ->select('c')
+            ->where('c.hidden = :hidden')
             ->setParameter('hidden', false);
 
         return $qb->getQuery()->getResult();
     }
 
-    public function createNullCategory($lang, $translator)
-    {
-        $categoryForJobsWithoutCategory = new CategoryModel();
-        $categoryForJobsWithoutCategory->setHidden(false);
-        $categoryForJobsWithoutCategory->setLanguageNeutralId(null);
-        $categoryForJobsWithoutCategory->setLanguage($lang);
-        $categoryForJobsWithoutCategory->setSlug('jobs');
-        $categoryForJobsWithoutCategory->setName($translator->translate('Job'));
-        $categoryForJobsWithoutCategory->setPluralName($translator->translate('Jobs'));
-
-        return $categoryForJobsWithoutCategory;
-    }
-
     /**
-     * Find the same category, but in the given language.
+     * Searches for a JobCategory based on its slug. The value is always converted to lowercase to ensure no weird
+     * routing issues occur.
+     *
+     * @param string $value
+     *
+     * @return JobCategoryModel|null
+     * @throws NonUniqueResultException
      */
-    public function siblingCategory($category, $lang)
+    public function findCategoryBySlug(string $value): ?JobCategoryModel
     {
-        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('c')
-            ->select('c')->where('c.languageNeutralId=:categoryId')->andWhere('c.language=:language')
-            ->setParameter('categoryId', $category->getLanguageNeutralId())
-            ->setParameter('language', $lang);
+        $qb = $this->getRepository()->createQueryBuilder('c');
+        $qb->select('c')
+            ->innerJoin(
+                'c.slug',
+                'loc',
+                Join::WITH,
+                $qb->expr()->orX(
+                    'LOWER(loc.valueEN) = :value',
+                    'LOWER(loc.valueNL) = :value',
+                )
+            )
+            ->setParameter(':value', strtolower($value));
 
-        $categories = $qb->getQuery()->getResult();
-
-        return $categories[0];
-    }
-
-    public function findAllCategoriesById($categoryId)
-    {
-        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('c')
-            ->select('c')->where('c.languageNeutralId=:categoryId')
-            ->setParameter('categoryId', $categoryId);
-
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
@@ -77,6 +70,6 @@ class Category extends BaseMapper
      */
     protected function getRepositoryName(): string
     {
-        return JobCategory::class;
+        return JobCategoryModel::class;
     }
 }

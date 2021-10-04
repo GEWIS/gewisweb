@@ -2,18 +2,26 @@
 
 namespace Decision\Model\SubDecision;
 
-use Decision\Model\Organ;
-use Decision\Model\SubDecision;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Decision\Model\{
+    Organ,
+    SubDecision,
+};
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    OneToMany,
+    OneToOne,
+};
 use InvalidArgumentException;
 
 /**
  * Foundation of an organ.
- *
- * @ORM\Entity
  */
+#[Entity]
 class Foundation extends SubDecision
 {
     public const ORGAN_TYPE_COMMITTEE = 'committee';
@@ -25,38 +33,39 @@ class Foundation extends SubDecision
 
     /**
      * Abbreviation (only for when organs are created).
-     *
-     * @ORM\Column(type="string")
      */
-    protected $abbr;
+    #[Column(type: "string")]
+    protected string $abbr;
 
     /**
      * Name (only for when organs are created).
-     *
-     * @ORM\Column(type="string")
      */
-    protected $name;
+    #[Column(type: "string")]
+    protected string $name;
 
     /**
      * Type of the organ.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $organType;
+    #[Column(type: "string")]
+    protected string $organType;
 
     /**
      * References from other subdecisions to this organ.
-     *
-     * @ORM\OneToMany(targetEntity="FoundationReference", mappedBy="foundation")
      */
-    protected $references;
+    #[OneToMany(
+        targetEntity: FoundationReference::class,
+        mappedBy: "foundation",
+    )]
+    protected Collection $references;
 
     /**
      * Organ entry for this organ.
-     *
-     * @ORM\OneToOne(targetEntity="Decision\Model\Organ", mappedBy="foundation")
      */
-    protected $organ;
+    #[OneToOne(
+        targetEntity: Organ::class,
+        mappedBy: "foundation",
+    )]
+    protected Organ $organ;
 
     /**
      * Constructor.
@@ -71,7 +80,7 @@ class Foundation extends SubDecision
      *
      * @return array
      */
-    public static function getOrganTypes()
+    public static function getOrganTypes(): array
     {
         return [
             self::ORGAN_TYPE_COMMITTEE,
@@ -88,7 +97,7 @@ class Foundation extends SubDecision
      *
      * @return string
      */
-    public function getAbbr()
+    public function getAbbr(): string
     {
         return $this->abbr;
     }
@@ -98,7 +107,7 @@ class Foundation extends SubDecision
      *
      * @param string $abbr
      */
-    public function setAbbr($abbr)
+    public function setAbbr(string $abbr): void
     {
         $this->abbr = $abbr;
     }
@@ -108,7 +117,7 @@ class Foundation extends SubDecision
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -118,7 +127,7 @@ class Foundation extends SubDecision
      *
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -128,7 +137,7 @@ class Foundation extends SubDecision
      *
      * @return string
      */
-    public function getOrganType()
+    public function getOrganType(): string
     {
         return $this->organType;
     }
@@ -140,7 +149,7 @@ class Foundation extends SubDecision
      *
      * @throws InvalidArgumentException if the type is wrong
      */
-    public function setOrganType($organType)
+    public function setOrganType(string $organType): void
     {
         if (!in_array($organType, self::getOrganTypes())) {
             throw new InvalidArgumentException('Given type does not exist.');
@@ -153,7 +162,7 @@ class Foundation extends SubDecision
      *
      * @return Collection of references
      */
-    public function getReferences()
+    public function getReferences(): Collection
     {
         return $this->references;
     }
@@ -163,7 +172,7 @@ class Foundation extends SubDecision
      *
      * @return Organ
      */
-    public function getOrgan()
+    public function getOrgan(): Organ
     {
         return $this->organ;
     }
@@ -175,7 +184,7 @@ class Foundation extends SubDecision
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $decision = $this->getDecision();
 

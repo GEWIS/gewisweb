@@ -140,7 +140,7 @@ class AlbumCover
      * @param Imagick $target the target object to draw to
      * @param int $columns The amount of columns to fill
      * @param int $rows The amount of rows to fill
-     * @param Collection $images of Imagick the list of images to fill the mosaic with
+     * @param array $images of Imagick the list of images to fill the mosaic with
      */
     protected function drawComposition($target, $columns, $rows, $images)
     {
@@ -167,14 +167,14 @@ class AlbumCover
             for ($y = 0; $y < $rows; ++$y) {
                 $image = $this->resizeCropImage(
                     $images[$x * $rows + $y],
-                    $imageWidth,
-                    $imageHeight
+                    (int) $imageWidth,
+                    (int) $imageHeight
                 );
                 $target->compositeImage(
                     $image,
                     Imagick::COMPOSITE_COPY,
-                    ($imageWidth + $innerBorder) * $x + $outerBorderX,
-                    ($imageHeight + $innerBorder) * $y + $outerBorderY
+                    (int) ($imageWidth + $innerBorder) * $x + $outerBorderX,
+                    (int) ($imageHeight + $innerBorder) * $y + $outerBorderY
                 );
             }
         }

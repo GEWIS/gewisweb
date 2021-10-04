@@ -2,182 +2,193 @@
 
 namespace Company\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    OneToOne,
+};
 
 /**
  * Job Category model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class JobCategory
 {
     /**
      * The category id.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected ?int $id = null;
 
     /**
      * The name of the category.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $name;
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "name_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected CompanyLocalisedText $name;
+
 
     /**
      * The name of the category.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $pluralName;
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "pluralName_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected CompanyLocalisedText $pluralName;
+
 
     /**
      * The slug of the category.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $slug;
-
-    /**
-     * The language of the category.
-     *
-     * @ORM\Column(type="string")
-     */
-    protected $language;
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "slug_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected CompanyLocalisedText $slug;
 
     /**
      * If the category is hidden.
-     *
-     * @ORM\Column(type="boolean")
      */
-    protected $hidden;
+    #[Column(type: "boolean")]
+    protected bool $hidden;
 
     /**
-     * The category id.
-     *
-     * @ORM\Column(type="integer")
+     * @return bool
      */
-    protected $languageNeutralId;
-
-    /**
-     * Get's the id.
-     */
-    public function getHidden()
+    public function getHidden(): bool
     {
         return $this->hidden;
     }
 
     /**
      * Set's the id.
+     *
+     * @param bool $hidden
      */
-    public function setHidden($hidden)
+    public function setHidden(bool $hidden): void
     {
         $this->hidden = $hidden;
     }
 
     /**
-     * Constructor.
+     * Gets the id.
+     *
+     * @return int|null
      */
-    public function __construct()
-    {
-    }
-
-    /**
-     * Get's the id.
-     */
-    public function getLanguageNeutralId()
-    {
-        return $this->languageNeutralId;
-    }
-
-    /**
-     * Set's the id.
-     */
-    public function setLanguageNeutralId($languageNeutralId)
-    {
-        $this->languageNeutralId = $languageNeutralId;
-    }
-
-    /**
-     * Get's the id.
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * Set's the id.
+     * Sets the id.
+     *
+     * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
 
     /**
-     * Get's the name.
+     * Gets the name.
+     *
+     * @return CompanyLocalisedText
      */
-    public function getName()
+    public function getName(): CompanyLocalisedText
     {
         return $this->name;
     }
 
     /**
-     * Get's the plural name.
+     * Sets the name.
+     *
+     * @param CompanyLocalisedText $name
      */
-    public function getPluralName()
-    {
-        return $this->pluralName;
-    }
-
-    /**
-     * Set's the name.
-     */
-    public function setPluralName($name)
-    {
-        $this->pluralName = $name;
-    }
-
-    /**
-     * Set's the name.
-     */
-    public function setName($name)
+    public function setName(CompanyLocalisedText $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * Get's the slug.
+     * Gets the plural name.
+     *
+     * @return CompanyLocalisedText
      */
-    public function getSlug()
+    public function getPluralName(): CompanyLocalisedText
+    {
+        return $this->pluralName;
+    }
+
+    /**
+     * Sets the name.
+     *
+     * @param CompanyLocalisedText $name
+     */
+    public function setPluralName(CompanyLocalisedText $name): void
+    {
+        $this->pluralName = $name;
+    }
+
+    /**
+     * Gets the slug.
+     *
+     * @return CompanyLocalisedText
+     */
+    public function getSlug(): CompanyLocalisedText
     {
         return $this->slug;
     }
 
     /**
-     * Set's the slug.
+     * Sets the slug.
+     *
+     * @param CompanyLocalisedText $slug
      */
-    public function setSlug($slug)
+    public function setSlug(CompanyLocalisedText $slug): void
     {
         $this->slug = $slug;
     }
 
     /**
-     * Get's the language.
+     * @return array
      */
-    public function getLanguage()
+    public function toArray(): array
     {
-        return $this->language;
-    }
-
-    /**
-     * Set's the language.
-     */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
+        return [
+            'name' => $this->getName()->getValueNL(),
+            'nameEn' => $this->getName()->getValueEN(),
+            'pluralName' => $this->getPluralName()->getValueNL(),
+            'pluralNameEn' => $this->getPluralName()->getValueEN(),
+            'slug' => $this->getSlug()->getValueNL(),
+            'slugEn' => $this->getSlug()->getValueEN(),
+            'hidden' => $this->getHidden(),
+        ];
     }
 }

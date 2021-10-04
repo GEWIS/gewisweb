@@ -8,7 +8,7 @@ use Education\Model\Course as CourseModel;
 /**
  * Mappers for Course.
  *
- * NOTE: Organs will be modified externally by a script. Modifycations will be
+ * NOTE: Organs will be modified externally by a script. Modifications will be
  * overwritten.
  */
 class Course extends BaseMapper
@@ -18,9 +18,9 @@ class Course extends BaseMapper
      *
      * @param string $code
      *
-     * @return CourseModel
+     * @return CourseModel|null
      */
-    public function findByCode($code)
+    public function findByCode(string $code): ?CourseModel
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -45,7 +45,7 @@ class Course extends BaseMapper
      *
      * @return array
      */
-    public function search($query)
+    public function search(string $query): array
     {
         $query = '%' . $query . '%';
         $qb = $this->em->createQueryBuilder();

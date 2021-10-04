@@ -2,12 +2,26 @@
 
 namespace Decision\Service;
 
-use Application\Service\Email;
-use Application\Service\FileStorage;
-use Decision\Mapper\Organ as OrganMapper;
-use Decision\Model\Organ as OrganModel;
-use Decision\Model\OrganInformation;
-use Doctrine\ORM\EntityManager;
+use ImagickException;
+use Doctrine\ORM\{
+    NonUniqueResultException,
+    NoResultException,
+    ORMException,
+    EntityManager,
+};
+use Application\Service\{
+    Email as EmailService,
+    FileStorage as FileStorageService,
+};
+use Decision\Form\OrganInformation as OrganInformationForm;
+use Decision\Mapper\{
+    Organ as OrganMapper,
+    Member as MemberMapper,
+};
+use Decision\Model\{
+    Organ as OrganModel,
+    OrganInformation as OrganInformationModel,
+};
 use Imagick;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
@@ -18,56 +32,60 @@ use User\Permissions\NotAllowedException;
 class Organ
 {
     /**
-     * @var Translator
-     */
-    private $translator;
-
-    /**
      * @var EntityManager
      */
-    private $entityManager;
+    private EntityManager $entityManager;
 
     /**
-     * @var FileStorage
+     * @var FileStorageService
      */
-    private $storageService;
+    private FileStorageService $storageService;
 
     /**
-     * @var Email
+     * @var EmailService
      */
-    private $emailService;
+    private EmailService $emailService;
 
     /**
-     * @var \Decision\Mapper\Member
+     * @var MemberMapper
      */
-    private $memberMapper;
+    private MemberMapper $memberMapper;
 
     /**
      * @var OrganMapper
      */
-    private $organMapper;
+    private OrganMapper $organMapper;
 
     /**
-     * @var \Decision\Form\OrganInformation
+     * @var OrganInformationForm
      */
-    private $organInformationForm;
+    private OrganInformationForm $organInformationForm;
 
     /**
      * @var array
      */
-    private $organInformationConfig;
+    private array $organInformationConfig;
+
+    /**
+     * @var AclService
+     */
     private AclService $aclService;
 
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
     public function __construct(
-        Translator $translator,
         EntityManager $entityManager,
-        FileStorage $storageService,
-        Email $emailService,
-        \Decision\Mapper\Member $memberMapper,
+        FileStorageService $storageService,
+        EmailService $emailService,
+        MemberMapper $memberMapper,
         OrganMapper $organMapper,
-        \Decision\Form\OrganInformation $organInformationForm,
+        OrganInformationForm $organInformationForm,
         array $organInformationConfig,
-        AclService $aclService
+        AclService $aclService,
+        Translator $translator,
     ) {
         $this->translator = $translator;
         $this->entityManager = $entityManager;
@@ -85,10 +103,10 @@ class Organ
      *
      * @return array of organs
      */
-    public function getOrgans()
+    public function getOrgans(): array
     {
         if (!$this->aclService->isAllowed('list', 'organ')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view the list of organs.'));
+            throw new NotAllowedException($this->translator->translate('Not allowed to view the list of organs'));
         }
 
         return $this->organMapper->findActive();
@@ -99,9 +117,9 @@ class Organ
      *
      * @param int $id
      *
-     * @return OrganModel
+     * @return OrganModel|null
      */
-    public function getOrgan($id)
+    public function getOrgan(int $id): ?OrganModel
     {
         if (!$this->aclService->isAllowed('view', 'organ')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view organ information'));
@@ -115,7 +133,7 @@ class Organ
      *
      * @return array
      */
-    public function getEditableOrgans()
+    public function getEditableOrgans(): array
     {
         if (!$this->aclService->isAllowed('edit', 'organ')) {
             throw new NotAllowedException(
@@ -142,9 +160,11 @@ class Organ
     /**
      * Checks if the current user is allowed to edit the given organ.
      *
+     * @param OrganModel $organ
+     *
      * @return bool
      */
-    public function canEditOrgan($organ)
+    public function canEditOrgan(OrganModel $organ): bool
     {
         if (!$this->aclService->isAllowed('edit', 'organ')) {
             return false;
@@ -170,7 +190,7 @@ class Organ
      *
      * @return array
      */
-    public function findActiveOrgansByType($type)
+    public function findActiveOrgansByType(string $type): array
     {
         return $this->organMapper->findActive($type);
     }
@@ -180,7 +200,7 @@ class Organ
      *
      * @return array
      */
-    public function findAbrogatedOrgansByType($type)
+    public function findAbrogatedOrgansByType(string $type): array
     {
         return $this->organMapper->findAbrogated($type);
     }
@@ -189,42 +209,39 @@ class Organ
      * Finds an organ by its abbreviation.
      *
      * @param string $abbr
-     * @param string $type
-     * @param bool $latest
-     *                       Whether to retrieve the latest occurence of an organ or not
+     * @param string|null $type
+     * @param bool $latest  Whether to retrieve the latest occurrence of an organ or not
      *
      * @return OrganModel
      *
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      * @see Decision/Mapper/Organ::findByAbbr()
      */
-    public function findOrganByAbbr($abbr, $type = null, $latest = false)
+    public function findOrganByAbbr(string $abbr, string $type = null, bool $latest = false): OrganModel
     {
-        return $this->organMapper->findByAbbr($abbr, $type, $latest);
+        return $this->organMapper->findByAbbr(
+            $abbr,
+            $latest,
+            $type,
+        );
     }
 
     /**
-     * @param int $organId
-     * @param array $post POST Data
-     * @param array $files FILES Data
+     * @param OrganInformationModel $organInformation
+     * @param array $data
      *
      * @return bool
+     * @throws ORMException
+     * @throws ImagickException
      */
-    public function updateOrganInformation($organId, $post, $files)
+    public function updateOrganInformation(OrganInformationModel $organInformation, array $data): bool
     {
-        $organInformation = $this->getEditableOrganInformation($organId);
-        $form = $this->getOrganInformationForm($organInformation);
-
-        $data = array_merge_recursive($post, $files);
-
-        $form->setData($data);
-        if (!$form->isValid()) {
-            return false;
-        }
-
         $config = $this->organInformationConfig;
-        if ($files['cover']['size'] > 0) {
+
+        if ($data['cover']['size'] > 0) {
             $coverPath = $this->makeOrganInformationImage(
-                $files['cover']['tmp_name'],
+                $data['cover']['tmp_name'],
                 $data['coverCropX'],
                 $data['coverCropY'],
                 $data['coverCropWidth'],
@@ -232,12 +249,13 @@ class Organ
                 $config['cover_width'],
                 $config['cover_height']
             );
+
             $organInformation->setCoverPath($coverPath);
         }
 
-        if ($files['thumbnail']['size'] > 0) {
+        if ($data['thumbnail']['size'] > 0) {
             $thumbnailPath = $this->makeOrganInformationImage(
-                $files['thumbnail']['tmp_name'],
+                $data['thumbnail']['tmp_name'],
                 $data['thumbnailCropX'],
                 $data['thumbnailCropY'],
                 $data['thumbnailCropWidth'],
@@ -245,6 +263,7 @@ class Organ
                 $config['thumbnail_width'],
                 $config['thumbnail_height']
             );
+
             $organInformation->setThumbnailPath($thumbnailPath);
         }
 
@@ -276,14 +295,22 @@ class Organ
      * @param int $thumbHeight The height of the final thumbnail
      *
      * @return string path of where the thumbnail is stored
+     * @throws ImagickException
      */
-    public function makeOrganInformationImage($file, $x, $y, $width, $height, $thumbWidth, $thumbHeight)
-    {
+    public function makeOrganInformationImage(
+        string $file,
+        string $x,
+        string $y,
+        string $width,
+        string $height,
+        int $thumbWidth,
+        int $thumbHeight,
+    ): string {
         $size = getimagesize($file);
-        $x = round($x * $size[0]);
-        $y = round($y * $size[1]);
-        $width = round($width * $size[0]);
-        $height = round($height * $size[1]);
+        $x = (int) round($x * $size[0]);
+        $y = (int) round($y * $size[1]);
+        $width = (int) round($width * $size[0]);
+        $height = (int) round($height * $size[1]);
 
         $image = new Imagick($file);
         $image->cropImage($width, $height, $x, $y);
@@ -297,13 +324,20 @@ class Organ
         return $this->storageService->storeFile($tempFileName);
     }
 
-    public function approveOrganInformation($organInformation)
+    /**
+     * @param OrganInformationModel $organInformation
+     *
+     * @throws ORMException
+     */
+    public function approveOrganInformation(OrganInformationModel $organInformation): void
     {
         $em = $this->entityManager;
         $oldInformation = $organInformation->getOrgan()->getApprovedOrganInformation();
-        if (!is_null($oldInformation)) {
+
+        if (null !== $oldInformation) {
             $em->remove($oldInformation);
         }
+
         $user = $em->merge($this->aclService->getIdentityOrThrowException());
         $organInformation->setApprover($user);
         $em->flush();
@@ -312,11 +346,12 @@ class Organ
     /**
      * Get the OrganInformation form.
      *
-     * @param OrganInformation $organInformation
      *
-     * @return \Decision\Form\OrganInformation
+     * @param OrganInformationModel $organInformation
+     *
+     * @return OrganInformationForm
      */
-    public function getOrganInformationForm($organInformation)
+    public function getOrganInformationForm(OrganInformationModel $organInformation): OrganInformationForm
     {
         if (!$this->canEditOrgan($organInformation->getOrgan())) {
             throw new NotAllowedException(
@@ -330,26 +365,35 @@ class Organ
         return $form;
     }
 
-    public function getEditableOrganInformation($organId)
+    /**
+     * @param int $organId
+     *
+     * @return OrganInformationModel|bool
+     * @throws ORMException
+     */
+    public function getEditableOrganInformation(int $organId): OrganInformationModel|bool
     {
         $organ = $this->getOrgan($organId); //TODO: catch exception
-        if (is_null($organ)) {
+
+        if (null === $organ) {
             return false;
         }
+
         $em = $this->entityManager;
         $organInformation = null;
+
         foreach ($organ->getOrganInformation() as $information) {
-            if (is_null($information->getApprover())) {
+            if (null === $information->getApprover()) {
                 return $information;
             }
+
             $organInformation = $information;
         }
 
-        if (is_null($organInformation)) {
-            $organInformation = new OrganInformation();
+        if (null === $organInformation) {
+            $organInformation = new OrganInformationModel();
             $organInformation->setOrgan($organ);
             $em->persist($organInformation);
-            // TODO: ->add is undefined
             $organ->getOrganInformation()->add($organInformation);
 
             return $organInformation;
@@ -362,7 +406,6 @@ class Organ
         $organInformation->setApprover(null);
         $em->detach($organInformation);
         $em->persist($organInformation);
-        // TODO: ->add is undefined
         $organ->getOrganInformation()->add($organInformation);
 
         return $organInformation;
@@ -375,7 +418,7 @@ class Organ
      *
      * @return array
      */
-    public function getOrganMemberInformation($organ)
+    public function getOrganMemberInformation(OrganModel $organ): array
     {
         $oldMembers = [];
         $currentMembers = [];
@@ -388,6 +431,7 @@ class Organ
                         'functions' => [],
                     ];
                 }
+
                 if ('Lid' != $install->getFunction()) {
                     $function = $this->translator->translate($install->getFunction());
                     $currentMembers[$install->getMember()->getLidnr()]['functions'][] = $function;
@@ -399,6 +443,7 @@ class Organ
                 }
             }
         }
+
         $oldMembers = array_filter($oldMembers, function ($member) use ($currentMembers) {
             return !isset($currentMembers[$member->getLidnr()]);
         });

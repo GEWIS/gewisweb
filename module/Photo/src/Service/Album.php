@@ -2,18 +2,26 @@
 
 namespace Photo\Service;
 
-use Application\Service\FileStorage;
+use Application\Service\FileStorage as FileStorageService;
 use DateInterval;
 use DateTime;
-use Decision\Service\Member;
-use Doctrine\Common\Collections\Collection;
+use Decision\Service\Member as MemberService;
 use Exception;
 use Laminas\Mvc\I18n\Translator;
-use Photo\Form\CreateAlbum;
-use Photo\Form\EditAlbum;
-use Photo\Model\Album as AlbumModel;
-use Photo\Model\MemberAlbum;
-use Photo\Model\VirtualAlbum;
+use Photo\Form\{
+    CreateAlbum as CreateAlbumForm,
+    EditAlbum as EditAlbumForm,
+};
+use Photo\Mapper\Album as AlbumMapper;
+use Photo\Model\{
+    Album as AlbumModel,
+    MemberAlbum as MemberAlbumModel,
+    VirtualAlbum as VirtualAlbumModel,
+};
+use Photo\Service\{
+    AlbumCover as AlbumCoverService,
+    Photo as PhotoService,
+};
 use User\Permissions\NotAllowedException;
 
 /**
@@ -22,58 +30,61 @@ use User\Permissions\NotAllowedException;
 class Album
 {
     /**
-     * @var Translator
+     * @var PhotoService
      */
-    private $translator;
+    private PhotoService $photoService;
 
     /**
-     * @var Photo
+     * @var AlbumCoverService
      */
-    private $photoService;
+    private AlbumCoverService $albumCoverService;
 
     /**
-     * @var AlbumCover
+     * @var MemberService
      */
-    private $albumCoverService;
+    private MemberService $memberService;
 
     /**
-     * @var Member
+     * @var FileStorageService
      */
-    private $memberService;
+    private FileStorageService $storageService;
 
     /**
-     * @var FileStorage
+     * @var AlbumMapper
      */
-    private $storageService;
+    private AlbumMapper $albumMapper;
 
     /**
-     * @var \Photo\Mapper\Album
+     * @var CreateAlbumForm
      */
-    private $albumMapper;
+    private CreateAlbumForm $createAlbumForm;
 
     /**
-     * @var CreateAlbum
+     * @var EditAlbumForm
      */
-    private $createAlbumForm;
+    private EditAlbumForm $editAlbumForm;
 
     /**
-     * @var EditAlbum
+     * @var AclService
      */
-    private $editAlbumForm;
     private AclService $aclService;
 
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
     public function __construct(
+        PhotoService $photoService,
+        AlbumCoverService $albumCoverService,
+        MemberService $memberService,
+        FileStorageService $storageService,
+        AlbumMapper $albumMapper,
+        CreateAlbumForm $createAlbumForm,
+        EditAlbumForm $editAlbumForm,
+        AclService $aclService,
         Translator $translator,
-        Photo $photoService,
-        AlbumCover $albumCoverService,
-        Member $memberService,
-        FileStorage $storageService,
-        \Photo\Mapper\Album $albumMapper,
-        CreateAlbum $createAlbumForm,
-        EditAlbum $editAlbumForm,
-        AclService $aclService
     ) {
-        $this->translator = $translator;
         $this->photoService = $photoService;
         $this->albumCoverService = $albumCoverService;
         $this->memberService = $memberService;
@@ -82,6 +93,7 @@ class Album
         $this->createAlbumForm = $createAlbumForm;
         $this->editAlbumForm = $editAlbumForm;
         $this->aclService = $aclService;
+        $this->translator = $translator;
     }
 
     /**
@@ -95,21 +107,20 @@ class Album
      * album.
      *
      * @param int $start the result to start at
-     * @param int $maxResults max amount of results to return,
-     *                               null for infinite
-     * @param AlbumModel $album The album to retrieve sub-albums
-     *                               of
+     * @param int|null $maxResults max amount of results to return, null for infinite
+     * @param AlbumModel|null $album The album to retrieve sub-albums of
      *
-     * @return array|Collection
+     * @return array
      */
-    public function getAlbums($album = null, $start = 0, $maxResults = null)
+    public function getAlbums(AlbumModel $album = null, int $start = 0, int $maxResults = null): array
     {
         if (!$this->aclService->isAllowed('view', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view albums'));
         }
+
         if (null == $album) {
             return $this->albumMapper->getRootAlbums();
-        } elseif ($album instanceof VirtualAlbum) {
+        } elseif ($album instanceof VirtualAlbumModel) {
             return [];
         } else {
             return $this->albumMapper->getSubAlbums(
@@ -127,17 +138,14 @@ class Album
      *
      * Example: A value of 2010 would represent the association year 2010/2011
      *
-     * @param integer $year the year in which the albums have been created
+     * @param int $year the year in which the albums have been created
      *
-     * @return array|Collection
+     * @return array
      */
-    public function getAlbumsByYear($year)
+    public function getAlbumsByYear(int $year): array
     {
         if (!$this->aclService->isAllowed('view', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view albums'));
-        }
-        if (!is_int($year)) {
-            return [];
         }
 
         $start = DateTime::createFromFormat(
@@ -155,9 +163,9 @@ class Album
      * Retrieves all root albums which do not have a startDateTime specified.
      * This is in most cases analogous to returning all empty albums.
      *
-     * @return array of \Photo\Model\Album
+     * @return array
      */
-    public function getAlbumsWithoutDate()
+    public function getAlbumsWithoutDate(): array
     {
         if (!$this->aclService->isAllowed('nodate', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view albums without dates'));
@@ -175,12 +183,14 @@ class Album
      *
      * @return array of integers representing years
      */
-    public function getAlbumYears()
+    public function getAlbumYears(): array
     {
         $oldest = $this->albumMapper->getOldestAlbum();
         $newest = $this->albumMapper->getNewestAlbum();
+
         if (
-            is_null($oldest) || is_null($newest)
+            is_null($oldest)
+            || is_null($newest)
             || is_null($oldest->getStartDateTime())
             || is_null($newest->getEndDateTime())
         ) {
@@ -205,7 +215,7 @@ class Album
      *
      * @return int representing an association year
      */
-    public function getAssociationYear($date)
+    public function getAssociationYear(DateTime $date): int
     {
         if ($date->format('n') < self::ASSOCIATION_YEAR_START_MONTH) {
             return (int) $date->format('Y') - 1;
@@ -217,29 +227,26 @@ class Album
     /**
      * Creates a new album.
      *
-     * @param int $parentId the id of the parent album
+     * @param int|null $parentId the id of the parent album
      * @param array $data The post data to use for the album
      *
-     * @return AlbumModel|bool
+     * @return AlbumModel
      *
      * @throws Exception
      */
-    public function createAlbum($parentId, $data)
+    public function createAlbum(?int $parentId, array $data): AlbumModel
     {
         if (!$this->aclService->isAllowed('create', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to create albums'));
         }
-        $form = $this->getCreateAlbumForm();
-        $album = new AlbumModel();
-        $form->bind($album);
-        $form->setData($data);
 
-        if (!$form->isValid()) {
-            return false;
-        }
-        if (!is_null($parentId)) {
+        $album = new AlbumModel();
+        $album->setName($data['name']);
+
+        if (null !== $parentId) {
             $album->setParent($this->getAlbum($parentId));
         }
+
         $this->albumMapper->persist($album);
         $this->albumMapper->flush();
 
@@ -249,9 +256,9 @@ class Album
     /**
      * Retrieves the form for creating a new album.
      *
-     * @return CreateAlbum
+     * @return CreateAlbumForm
      */
-    public function getCreateAlbumForm()
+    public function getCreateAlbumForm(): CreateAlbumForm
     {
         if (!$this->aclService->isAllowed('create', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to create albums.'));
@@ -266,37 +273,37 @@ class Album
      * @param int $albumId the id of the album
      * @param string $type "album"|"member"|"year"
      *
-     * @return AlbumModel album matching the given id
+     * @return MemberAlbumModel|AlbumModel|null album matching the given id
      *
      * @throws Exception If there are not sufficient permissions
      */
-    public function getAlbum($albumId, $type = 'album')
+    public function getAlbum(int $albumId, string $type = 'album'): MemberAlbumModel|AlbumModel|null
     {
         if (!$this->aclService->isAllowed('view', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view albums'));
         }
-        $album = null;
-        switch ($type) {
-            case 'album':
-                $album = $this->albumMapper->find($albumId);
-                break;
-            case 'member':
-                $album = $this->getMemberAlbum($albumId);
-                break;
-            default:
-                throw new Exception('Album type not allowed');
-        }
 
-        return $album;
+        return match ($type) {
+            'album' => $this->albumMapper->find($albumId),
+            'member' => $this->getMemberAlbum($albumId),
+            default => throw new Exception('Album type not allowed'),
+        };
     }
 
-    public function getMemberAlbum($lidNr)
+    /**
+     * @param int $lidNr
+     *
+     * @return MemberAlbumModel|null
+     */
+    public function getMemberAlbum(int $lidNr): ?MemberAlbumModel
     {
         $member = $this->memberService->findMemberByLidnr($lidNr);
-        if (null == $member) {
+
+        if (null === $member) {
             return null;
         }
-        $album = new MemberAlbum($lidNr, $member);
+
+        $album = new MemberAlbumModel($lidNr, $member);
         $album->setName($member->getFullName());
         $album->setStartDateTime($member->getBirth()); // ugly fix
         $album->setEndDateTime(new DateTime());
@@ -308,21 +315,13 @@ class Album
     /**
      * Updates the metadata of an album using post data.
      *
-     * @param int $albumId the id of the album to modify
-     * @param array $data The post data to update
-     *
      * @return bool indicating if the update was successful
+     * @throws Exception
      */
-    public function updateAlbum($albumId, $data)
+    public function updateAlbum(): bool
     {
         if (!$this->aclService->isAllowed('edit', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to edit albums'));
-        }
-        $form = $this->getEditAlbumForm($albumId);
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return false;
         }
 
         $this->albumMapper->flush();
@@ -335,13 +334,15 @@ class Album
      *
      * @param int $albumId of the album
      *
-     * @return EditAlbum
+     * @return EditAlbumForm
+     * @throws Exception
      */
-    public function getEditAlbumForm($albumId)
+    public function getEditAlbumForm(int $albumId): EditAlbumForm
     {
         if (!$this->aclService->isAllowed('edit', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to edit albums.'));
         }
+
         $form = $this->editAlbumForm;
         $album = $this->getAlbum($albumId);
         $form->bind($album);
@@ -359,14 +360,19 @@ class Album
      *
      * @throws Exception
      */
-    public function moveAlbum($albumId, $parentId)
+    public function moveAlbum(int $albumId, int $parentId): bool
     {
         if (!$this->aclService->isAllowed('move', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to move albums'));
         }
+
         $album = $this->getAlbum($albumId);
         $parent = $this->getAlbum($parentId);
-        if (is_null($album) || $albumId == $parentId) {
+
+        if (
+            null === $album
+            || $albumId === $parentId
+        ) {
             return false;
         }
 
@@ -383,13 +389,15 @@ class Album
      *
      * @throws Exception
      */
-    public function deleteAlbum($albumId)
+    public function deleteAlbum(int $albumId): void
     {
         if (!$this->aclService->isAllowed('delete', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to delete albums.'));
         }
+
         $album = $this->getAlbum($albumId);
-        if (!is_null($album)) {
+
+        if (null !== $album) {
             $this->albumMapper->remove($album);
             $this->albumMapper->flush();
         }
@@ -402,17 +410,20 @@ class Album
      *
      * @throws Exception
      */
-    public function generateAlbumCover($albumId)
+    public function generateAlbumCover(int $albumId): void
     {
         if (!$this->aclService->isAllowed('edit', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to generate album covers.'));
         }
+
         $album = $this->getAlbum($albumId);
         //if an existing cover photo was generated earlier, delete it.
         $coverPath = $this->albumCoverService->createCover($album);
-        if (!is_null($album->getCoverPath())) {
+
+        if (null !== $album->getCoverPath()) {
             $this->storageService->removeFile($album->getCoverPath());
         }
+
         $album->setCoverPath($coverPath);
         $this->albumMapper->flush();
     }
@@ -422,7 +433,7 @@ class Album
      *
      * @param AlbumModel $album
      */
-    public function deleteAlbumCover($album)
+    public function deleteAlbumCover(AlbumModel $album)
     {
         $this->photoService->deletePhotoFile($album->getCoverPath());
     }
@@ -437,7 +448,7 @@ class Album
      *
      * @throws Exception
      */
-    public function movePhoto($photoId, $albumId)
+    public function movePhoto(int $photoId, int $albumId): bool
     {
         if (!$this->aclService->isAllowed('move', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to move photos'));
@@ -445,7 +456,11 @@ class Album
 
         $photo = $this->photoService->getPhoto($photoId);
         $album = $this->getAlbum($albumId);
-        if (is_null($photo) || is_null($album)) {
+
+        if (
+            null === $photo
+            || null === $album
+        ) {
             return false;
         }
 

@@ -196,16 +196,19 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 <a href="<?= $this->url('company/spotlight') ?>">
                                     <span class="fas fa-star"></span>
                                     <?= $this->translate('Featured') ?>:
-                                    <?= $this->featuredCompanyPackage()->getCompany()->getName() ?>
+                                    <?= $this->escapeHtml($this->featuredCompanyPackage()->getCompany()->getName()) ?>
                                 </a>
                             </li>
                         <?php endif; ?>
                         <?php foreach ($this->jobCategories() as $category):
                             ?>
                             <li>
-                            <li>
-                                <a href="<?= $this->url('company/jobList', ['category' => $category->getSlug()]) ?>"><?= $category->getPluralName() ?></a>
-                            </li>
+                                <a href="<?= $this->url(
+                                    'company/jobList',
+                                    [
+                                        'category' => $this->localiseText($category->getSlug()),
+                                    ]
+                                ) ?>"><?= $this->escapeHtml($this->localiseText($category->getPluralName())) ?></a>
                             </li>
                         <?php
                         endforeach ?>

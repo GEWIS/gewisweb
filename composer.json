@@ -75,7 +75,6 @@
         "firebase/php-jwt": "^5.4.0",
         "monolog/monolog": "^2.3.0",
         "league/glide": "^2.0.0",
-        "nesbot/carbon": "^2.50.0",
         "fortawesome/font-awesome": "^5.15.3",
         "slowprog/composer-copy-file": "^0.3.0",
         "cweagans/composer-patches": "^1.7.1"

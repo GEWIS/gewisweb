@@ -1,10 +1,8 @@
 <?php
-$lang = $this->plugin('translate')->getTranslator()->getLocale();
-
 $old = $proposal->getOld();
 $new = $proposal->getNew();
 
-$this->headTitle($this->escapeHtml($old->getName()->getText($lang)));
+$this->headTitle($this->escapeHtml($this->localiseText($old->getName())));
 $this->headTitle($this->translate('Update Proposal'));
 
 function diff($oldValue, $newValue)
@@ -241,7 +239,7 @@ function diff($oldValue, $newValue)
             <?php foreach ($old->getCategories() as $category): ?>
                 <div class="chip <?= (in_array($category, $newCategories)) ? '' : 'diff-old' ?>">
                     <span class="chip-label">
-                        <?= $this->escapeHtml($category->getName()->getText($lang)) ?>
+                        <?= $this->escapeHtml($this->localiseText($category->getName())) ?>
                     </span>
                 </div>
             <?php endforeach; ?>
@@ -249,7 +247,7 @@ function diff($oldValue, $newValue)
                 <?php if (!in_array($category, $oldCategories)): ?>
                     <div class="chip diff-new">
                         <span class="chip-label">
-                            <?= $this->escapeHtml($category->getName()->getText($lang)) ?>
+                            <?= $this->escapeHtml($this->localiseText($category->getName())) ?>
                         </span>
                     </div>
                 <?php endif; ?>

@@ -10,13 +10,21 @@ use Laminas\Mvc\MvcEvent;
 use Interop\Container\ContainerInterface;
 use League\Glide\Urls\UrlBuilderFactory;
 use Photo\Command\WeeklyPhoto;
-use Photo\Listener\AlbumDate as AlbumDateListener;
-use Photo\Listener\Remove as RemoveListener;
-use Photo\Service\Admin;
-use Photo\Service\Album;
-use Photo\Service\AlbumCover;
-use Photo\Service\Metadata;
-use Photo\Service\Photo;
+use Photo\Form\{
+    CreateAlbum as CreateAlbumForm,
+    EditAlbum as EditAlbumForm,
+};
+use Photo\Listener\{
+    AlbumDate as AlbumDateListener,
+    Remove as RemoveListener,
+};
+use Photo\Service\{
+    Admin as AdminService,
+    Album as AlbumService,
+    AlbumCover as AlbumCoverService,
+    Metadata as MetadataService,
+    Photo as PhotoService,
+};
 use Photo\View\Helper\GlideUrl;
 use User\Authorization\AclServiceFactory;
 
@@ -48,12 +56,11 @@ class Module
      *
      * @return array Service configuration
      */
-    public function getServiceConfig()
+    public function getServiceConfig(): array
     {
         return [
             'factories' => [
                 'photo_service_album' => function (ContainerInterface $container) {
-                    $translator = $container->get('translator');
                     $photoService = $container->get('photo_service_photo');
                     $albumCoverService = $container->get('photo_service_album_cover');
                     $memberService = $container->get('decision_service_member');
@@ -62,9 +69,9 @@ class Module
                     $createAlbumForm = $container->get('photo_form_album_create');
                     $editAlbumForm = $container->get('photo_form_album_edit');
                     $aclService = $container->get('photo_service_acl');
+                    $translator = $container->get('translator');
 
-                    return new Album(
-                        $translator,
+                    return new AlbumService(
                         $photoService,
                         $albumCoverService,
                         $memberService,
@@ -72,11 +79,12 @@ class Module
                         $albumMapper,
                         $createAlbumForm,
                         $editAlbumForm,
-                        $aclService
+                        $aclService,
+                        $translator,
                     );
                 },
                 'photo_service_metadata' => function () {
-                    return new Metadata();
+                    return new MetadataService();
                 },
                 'photo_service_photo' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
@@ -91,7 +99,7 @@ class Module
                     $photoConfig = $container->get('config')['photo'];
                     $aclService = $container->get('photo_service_acl');
 
-                    return new Photo(
+                    return new PhotoService(
                         $translator,
                         $memberService,
                         $storageService,
@@ -112,7 +120,13 @@ class Module
                     $photoConfig = $container->get('config')['photo'];
                     $storageConfig = $container->get('config')['storage'];
 
-                    return new AlbumCover($photoMapper, $albumMapper, $storage, $photoConfig, $storageConfig);
+                    return new AlbumCoverService(
+                        $photoMapper,
+                        $albumMapper,
+                        $storage,
+                        $photoConfig,
+                        $storageConfig,
+                    );
                 },
                 'photo_service_admin' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
@@ -124,7 +138,7 @@ class Module
                     $photoConfig = $container->get('config')['photo'];
                     $aclService = $container->get('photo_service_acl');
 
-                    return new Admin(
+                    return new AdminService(
                         $translator,
                         $photoService,
                         $albumService,
@@ -136,25 +150,24 @@ class Module
                     );
                 },
                 'photo_form_album_edit' => function (ContainerInterface $container) {
-                    $form = new Form\EditAlbum(
+                    $form = new EditAlbumForm(
                         $container->get('translator')
                     );
-                    $form->setHydrator($container->get('photo_hydrator_album'));
+                    $form->setHydrator($container->get('photo_hydrator'));
 
                     return $form;
                 },
                 'photo_form_album_create' => function (ContainerInterface $container) {
-                    $form = new Form\CreateAlbum(
+                    $form = new CreateAlbumForm(
                         $container->get('translator')
                     );
-                    $form->setHydrator($container->get('photo_hydrator_album'));
+                    $form->setHydrator($container->get('photo_hydrator'));
 
                     return $form;
                 },
-                'photo_hydrator_album' => function (ContainerInterface $container) {
+                'photo_hydrator' => function (ContainerInterface $container) {
                     return new DoctrineObject(
-                        $container->get('doctrine.entitymanager.orm_default'),
-                        'Photo\Model\Album'
+                        $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
                 'photo_mapper_album' => function (ContainerInterface $container) {
@@ -221,7 +234,10 @@ class Module
         ];
     }
 
-    public function getViewHelperConfig()
+    /**
+     * @return array
+     */
+    public function getViewHelperConfig(): array
     {
         return [
             'factories' => [

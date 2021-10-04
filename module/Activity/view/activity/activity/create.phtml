@@ -10,8 +10,6 @@ $this->headScript()
 $this->headScript()
     ->appendFile($this->basePath() . '/js/bootstrap/tooltip.js');
 
-$lang = $this->plugin('translate')->getTranslator()->getLocale();
-
 $form->prepare();
 $form->setAttribute('class', 'form-activity');
 ?>
@@ -140,7 +138,7 @@ $form->setAttribute('class', 'form-activity');
                                 <span class="chip-icon chip-check-icon fas fa-check-circle hidden"></span>
                                 <label for="<?= $categoriesName ?>-<?= $option ?>" data-category-id="<?= $option ?>"
                                        class="chip-label">
-                                    <?= $value->getText($lang) ?>
+                                    <?= $this->escapeHtml($this->localiseText($value)) ?>
                                 </label>
                                 <input type="checkbox" name="<?= $categoriesName ?>[]"
                                        id="<?= $categoriesName ?>-<?= $option; ?>"

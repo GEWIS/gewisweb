@@ -41,7 +41,11 @@ class AdminCategoryController extends AbstractActionController
     {
         $categories = $this->categoryService->findAll();
 
-        return ['categories' => $categories];
+        return new ViewModel(
+            [
+                'categories' => $categories,
+            ]
+        );
     }
 
     /**
@@ -60,10 +64,12 @@ class AdminCategoryController extends AbstractActionController
             }
         }
 
-        return [
-            'form' => $this->categoryService->getCategoryForm(),
-            'action' => $translator->translate('Create Activity Category'),
-        ];
+        return new ViewModel(
+            [
+                'form' => $this->categoryService->getCategoryForm(),
+                'action' => $translator->translate('Create Activity Category'),
+            ]
+        );
     }
 
     protected function redirectWithNotice($success, $message)
@@ -83,10 +89,10 @@ class AdminCategoryController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $categoryId = (int)$this->params('id');
-
+            $categoryId = (int) $this->params('id');
             $category = $this->categoryService->getCategoryById($categoryId);
-            if (is_null($category)) {
+
+            if (null === $category) {
                 return $this->notFoundAction();
             }
 
@@ -104,9 +110,9 @@ class AdminCategoryController extends AbstractActionController
     public function editAction()
     {
         $categoryId = (int)$this->params('id');
-
         $category = $this->categoryService->getCategoryById($categoryId);
-        if (is_null($category)) {
+
+        if (null === $category) {
             return $this->notFoundAction();
         }
 
@@ -125,8 +131,8 @@ class AdminCategoryController extends AbstractActionController
         $categoryData = $category->toArray();
         unset($categoryData['id'], $categoryData['activities']);
 
-        $categoryData['language_dutch'] = !is_null($categoryData['name']);
-        $categoryData['language_english'] = !is_null($categoryData['nameEn']);
+        $categoryData['language_dutch'] = null !== $categoryData['name'];
+        $categoryData['language_english'] = null !== $categoryData['nameEn'];
         $form->setData($categoryData);
 
         $viewModel = new ViewModel(['form' => $form, 'action' => $translator->translate('Update Activity Category')]);

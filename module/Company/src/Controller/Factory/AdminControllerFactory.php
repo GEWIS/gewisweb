@@ -23,9 +23,7 @@ class AdminControllerFactory implements FactoryInterface
         return new AdminController(
             $container->get('company_service_company'),
             $container->get('company_service_companyquery'),
-            $container->get('company_mapper_label'),
-            $container->get('company_admin_edit_company_form'),
-            $container->get('application_get_languages'),
+            $container->get('company_mapper_joblabel'),
             $container->get('company_service_acl'),
             $container->get('translator'),
         );

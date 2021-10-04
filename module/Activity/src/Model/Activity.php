@@ -2,20 +2,35 @@
 
 namespace Activity\Model;
 
+use Company\Model\Company as CompanyModel;
 use DateTime;
-use Decision\Model\Organ;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use User\Model\User;
-use User\Permissions\Resource\CreatorResourceInterface;
-use User\Permissions\Resource\OrganResourceInterface;
+use Decision\Model\Organ as OrganModel;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    JoinTable,
+    ManyToMany,
+    ManyToOne,
+    OneToMany,
+    OneToOne,
+};
+use User\Model\User as UserModel;
+use User\Permissions\Resource\{
+    CreatorResourceInterface,
+    OrganResourceInterface,
+};
 
 /**
  * Activity model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class Activity implements OrganResourceInterface, CreatorResourceInterface
 {
     /**
@@ -28,145 +43,189 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
 
     /**
      * ID for the activity.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "IDENTITY")]
+    protected ?int $id = null;
 
     /**
      * Name for the activity.
-     *
-     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist", "remove"})
      */
-    protected $name;
+    #[OneToOne(
+        targetEntity: ActivityLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "name_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected ActivityLocalisedText $name;
 
     /**
      * The date and time the activity starts.
-     *
-     * @ORM\Column(type="datetime")
      */
-    protected $beginTime;
+    #[Column(type: "datetime")]
+    protected DateTime $beginTime;
 
     /**
      * The date and time the activity ends.
-     *
-     * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $endTime;
+    #[Column(type: "datetime")]
+    protected DateTime $endTime;
 
     /**
      * The location the activity is held at.
-     *
-     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist", "remove"})
      */
-    protected $location;
+    #[OneToOne(
+        targetEntity: ActivityLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "location_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected ActivityLocalisedText $location;
 
     /**
      * How much does it cost.
-     *
-     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist", "remove"})
      */
-    protected $costs;
+    #[OneToOne(
+        targetEntity: ActivityLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "costs_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected ActivityLocalisedText $costs;
 
     /**
-     * Who did approve this activity.
-     *
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(referencedColumnName="lidnr")
+     * Who (dis)approved this activity?
      */
-    protected $approver;
+    #[ManyToOne(targetEntity: UserModel::class)]
+    #[JoinColumn(referencedColumnName: "lidnr")]
+    protected ?UserModel $approver = null;
 
     /**
      * Who created this activity.
-     *
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(referencedColumnName="lidnr", nullable=false)
      */
-    protected $creator;
+    #[ManyToOne(targetEntity: UserModel::class)]
+    #[JoinColumn(
+        referencedColumnName: "lidnr",
+        nullable: false,
+    )]
+    protected UserModel $creator;
 
     /**
      * What is the approval status      .
-     *
-     * @ORM\Column(type="integer")
      */
-    protected $status;
+    #[Column(type: "integer")]
+    protected int $status;
 
     /**
      * The update proposal associated with this activity.
-     *
-     * @ORM\OneToMany(targetEntity="Activity\Model\ActivityUpdateProposal", mappedBy="old")
      */
-    protected $updateProposal;
+    #[OneToMany(
+        targetEntity: ActivityUpdateProposal::class,
+        mappedBy: "old",
+    )]
+    protected Collection $updateProposal;
 
     /**
      * Activity description.
-     *
-     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist", "remove"})
      */
-    protected $description;
+    #[OneToOne(
+        targetEntity: ActivityLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "description_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected ActivityLocalisedText $description;
 
     /**
      * All additional Categories belonging to this activity.
-     *
-     * @ORM\ManyToMany(targetEntity="Activity\Model\ActivityCategory", inversedBy="activities", cascade={"persist"})
-     * @ORM\JoinTable(name="ActivityCategoryAssignment")
      */
-    protected $categories;
+    #[ManyToMany(
+        targetEntity: ActivityCategory::class,
+        inversedBy: "activities",
+        cascade: ["persist"],
+    )]
+    #[JoinTable(name: "ActivityCategoryAssignment")]
+    protected Collection $categories;
 
     /**
      * All additional SignupLists belonging to this activity.
-     *
-     * @ORM\OneToMany(targetEntity="Activity\Model\SignupList", mappedBy="activity", cascade={"remove"})
      */
-    protected $signupLists;
+    #[OneToMany(
+        targetEntity: SignupList::class,
+        mappedBy: "activity",
+        cascade: ["remove"],
+        orphanRemoval: true,
+    )]
+    protected Collection $signupLists;
 
     /**
      * Which organ organises this activity.
-     *
-     * @ORM\ManyToOne(targetEntity="Decision\Model\Organ")
-     * @ORM\JoinColumn(referencedColumnName="id", nullable=true)
      */
-    protected $organ;
+    #[ManyToOne(targetEntity: OrganModel::class)]
+    #[JoinColumn(
+        referencedColumnName: "id",
+        nullable: true,
+    )]
+    protected ?OrganModel $organ = null;
 
     /**
      * Which company organises this activity.
-     *
-     * @ORM\ManyToOne(targetEntity="Company\Model\Company")
-     * @ORM\JoinColumn(referencedColumnName="id", nullable=true)
      */
-    protected $company;
+    #[ManyToOne(targetEntity: CompanyModel::class)]
+    #[JoinColumn(
+        referencedColumnName: "id",
+        nullable: true,
+    )]
+    protected ?CompanyModel $company = null;
 
     /**
      * Is this a My Future related activity.
-     *
-     * @ORM\Column(type="boolean")
      */
-    protected $isMyFuture;
+    #[Column(type: "boolean")]
+    protected bool $isMyFuture;
 
     /**
      * Whether this activity needs a GEFLITST photographer.
-     *
-     * @ORM\Column(type="boolean")
      */
-    protected $requireGEFLITST;
+    #[Column(type: "boolean")]
+    protected bool $requireGEFLITST;
 
     public function __construct()
     {
+        $this->updateProposal = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->signupLists = new ArrayCollection();
     }
 
     /**
-     * @return User
+     * @return UserModel|null
      */
-    public function getApprover()
+    public function getApprover(): ?UserModel
     {
         return $this->approver;
     }
 
-    public function setApprover(?User $approver)
+    /**
+     * @param UserModel|null $approver
+     */
+    public function setApprover(?UserModel $approver): void
     {
         $this->approver = $approver;
     }
@@ -174,7 +233,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * @return int
      */
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
@@ -182,15 +241,15 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * @param int $status
      */
-    public function setStatus($status)
+    public function setStatus(int $status): void
     {
         $this->status = $status;
     }
 
     /**
-     * @return ActivityUpdateProposal
+     * @return Collection
      */
-    public function getUpdateProposal()
+    public function getUpdateProposal(): Collection
     {
         return $this->updateProposal;
     }
@@ -198,7 +257,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * @param array $categories
      */
-    public function addCategories($categories)
+    public function addCategories(array $categories): void
     {
         foreach ($categories as $category) {
             $this->addCategory($category);
@@ -208,7 +267,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * @param ActivityCategory $category
      */
-    public function addCategory($category)
+    public function addCategory(ActivityCategory $category): void
     {
         if ($this->categories->contains($category)) {
             return;
@@ -221,7 +280,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * @param array $categories
      */
-    public function removeCategories($categories)
+    public function removeCategories(array $categories): void
     {
         foreach ($categories as $category) {
             $this->removeCategory($category);
@@ -231,7 +290,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * @param ActivityCategory $category
      */
-    public function removeCategory($category)
+    public function removeCategory(ActivityCategory $category): void
     {
         if (!$this->categories->contains($category)) {
             return;
@@ -246,7 +305,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      *
      * @param array $signupLists
      */
-    public function addSignupLists($signupLists)
+    public function addSignupLists(array $signupLists): void
     {
         foreach ($signupLists as $signupList) {
             $this->addSignupList($signupList);
@@ -256,7 +315,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * @param SignupList $signupList
      */
-    public function addSignupList($signupList)
+    public function addSignupList(SignupList $signupList): void
     {
         if ($this->signupLists->contains($signupList)) {
             return;
@@ -271,7 +330,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      *
      * @param array $signupLists
      */
-    public function removeSignupLists($signupLists)
+    public function removeSignupLists(array $signupLists): void
     {
         foreach ($signupLists as $signupList) {
             $this->removeSignupList($signupList);
@@ -281,54 +340,53 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * @param SignupList $signupList
      */
-    public function removeSignupList($signupList)
+    public function removeSignupList(SignupList $signupList): void
     {
         if (!$this->signupLists->contains($signupList)) {
             return;
         }
 
         $this->signupLists->removeElement($signupList);
-        $signupList->setActivity(null);
     }
 
     /**
-     * Returns an ArrayCollection of SignupLists associated with this activity.
+     * Returns an Collection of SignupLists associated with this activity.
      *
      * @return Collection
      */
-    public function getSignupLists()
+    public function getSignupLists(): Collection
     {
         return $this->signupLists;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * @return LocalisedText
+     * @return ActivityLocalisedText
      */
-    public function getName()
+    public function getName(): ActivityLocalisedText
     {
         return $this->name;
     }
 
     /**
-     * @param LocalisedText $name
+     * @param ActivityLocalisedText $name
      */
-    public function setName($name)
+    public function setName(ActivityLocalisedText $name): void
     {
-        $this->name = $name->copy();
+        $this->name = $name;
     }
 
     /**
      * @return DateTime
      */
-    public function getBeginTime()
+    public function getBeginTime(): DateTime
     {
         return $this->beginTime;
     }
@@ -336,7 +394,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * @param DateTime $beginTime
      */
-    public function setBeginTime($beginTime)
+    public function setBeginTime(DateTime $beginTime): void
     {
         $this->beginTime = $beginTime;
     }
@@ -344,7 +402,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * @return DateTime
      */
-    public function getEndTime()
+    public function getEndTime(): DateTime
     {
         return $this->endTime;
     }
@@ -352,119 +410,119 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * @param DateTime $endTime
      */
-    public function setEndTime($endTime)
+    public function setEndTime(DateTime $endTime): void
     {
         $this->endTime = $endTime;
     }
 
     /**
-     * @return LocalisedText
+     * @return ActivityLocalisedText
      */
-    public function getLocation()
+    public function getLocation(): ActivityLocalisedText
     {
         return $this->location;
     }
 
     /**
-     * @param LocalisedText $location
+     * @param ActivityLocalisedText $location
      */
-    public function setLocation($location)
+    public function setLocation(ActivityLocalisedText $location): void
     {
-        $this->location = $location->copy();
+        $this->location = $location;
     }
 
     /**
-     * @return LocalisedText
+     * @return ActivityLocalisedText
      */
-    public function getCosts()
+    public function getCosts(): ActivityLocalisedText
     {
         return $this->costs;
     }
 
     /**
-     * @param LocalisedText $costs
+     * @param ActivityLocalisedText $costs
      */
-    public function setCosts($costs)
+    public function setCosts(ActivityLocalisedText $costs): void
     {
-        $this->costs = $costs->copy();
+        $this->costs = $costs;
     }
 
     /**
-     * @return LocalisedText
+     * @return ActivityLocalisedText
      */
-    public function getDescription()
+    public function getDescription(): ActivityLocalisedText
     {
         return $this->description;
     }
 
     /**
-     * @param LocalisedText $description
+     * @param ActivityLocalisedText $description
      */
-    public function setDescription($description)
+    public function setDescription(ActivityLocalisedText $description): void
     {
-        $this->description = $description->copy();
+        $this->description = $description;
     }
 
     /**
-     * @return mixed
+     * @return OrganModel|null
      */
-    public function getOrgan()
+    public function getOrgan(): ?OrganModel
     {
         return $this->organ;
     }
 
     /**
-     * @param mixed $organ
+     * @param OrganModel|null $organ
      */
-    public function setOrgan($organ)
+    public function setOrgan(?OrganModel $organ): void
     {
         $this->organ = $organ;
     }
 
     /**
-     * @return mixed
+     * @return CompanyModel|null
      */
-    public function getCompany()
+    public function getCompany(): ?CompanyModel
     {
         return $this->company;
     }
 
     /**
-     * @param mixed $company
+     * @param CompanyModel|null $company
      */
-    public function setCompany($company)
+    public function setCompany(?CompanyModel $company): void
     {
         $this->company = $company;
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getIsMyFuture()
+    public function getIsMyFuture(): bool
     {
         return $this->isMyFuture;
     }
 
     /**
-     * @param mixed $isMyFuture
+     * @param bool $isMyFuture
      */
-    public function setIsMyFuture($isMyFuture)
+    public function setIsMyFuture(bool $isMyFuture): void
     {
         $this->isMyFuture = $isMyFuture;
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getRequireGEFLITST()
+    public function getRequireGEFLITST(): bool
     {
         return $this->requireGEFLITST;
     }
 
     /**
-     * @param mixed $requireGEFLITST
+     * @param bool $requireGEFLITST
      */
-    public function setRequireGEFLITST($requireGEFLITST)
+    public function setRequireGEFLITST(bool $requireGEFLITST): void
     {
         $this->requireGEFLITST = $requireGEFLITST;
     }
@@ -472,20 +530,20 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * @return Collection
      */
-    public function getCategories()
+    public function getCategories(): Collection
     {
         return $this->categories;
     }
 
     /**
-     * @return User
+     * @return UserModel
      */
-    public function getCreator()
+    public function getCreator(): UserModel
     {
         return $this->creator;
     }
 
-    public function setCreator(User $creator)
+    public function setCreator(UserModel $creator): void
     {
         $this->creator = $creator;
     }
@@ -495,7 +553,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $signupLists = [];
         foreach ($this->getSignupLists() as $signupList) {
@@ -533,7 +591,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      *
      * @return string
      */
-    public function getResourceId()
+    public function getResourceId(): string
     {
         return 'activity';
     }
@@ -541,9 +599,9 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Get the organ of this resource.
      *
-     * @return Organ
+     * @return OrganModel|null
      */
-    public function getResourceOrgan()
+    public function getResourceOrgan(): ?OrganModel
     {
         return $this->getOrgan();
     }
@@ -551,9 +609,9 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Get the creator of this resource.
      *
-     * @return User
+     * @return UserModel
      */
-    public function getResourceCreator()
+    public function getResourceCreator(): UserModel
     {
         return $this->getCreator();
     }

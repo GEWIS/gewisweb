@@ -1,9 +1,8 @@
-<?php $lang = $this->plugin('translate')->getTranslator()->getLocale();
-
+<?php
 // set title
-$this->headTitle($this->escapeHtml($activity->getName()->getText($lang)));
-$this->headTitle($this->translate('Participants')); ?>
-
+$this->headTitle($this->escapeHtml($this->localiseText($activity->getName())));
+$this->headTitle($this->translate('Participants'));
+?>
 <div class="row admin-activity">
     <?php if (isset($success)): // Display the signup/signoff message. ?>
         <div class="col-md-12">
@@ -15,7 +14,7 @@ $this->headTitle($this->translate('Participants')); ?>
         </div>
     <?php endif; ?>
     <div class="col-md-12">
-        <h1><?= $this->escapeHtml($activity->getName()->getText($lang)) ?></h1>
+        <h1><?= $this->escapeHtml($this->localiseText($activity->getName())) ?></h1>
     </div>
 </div>
 <?php if (isset($signupLists)): ?>
@@ -27,7 +26,7 @@ $this->headTitle($this->translate('Participants')); ?>
                 </li>
                 <?php foreach ($signupLists as $list): ?>
                     <li role="presentation" <?= isset($signupList) ? ($signupList->getId() === $list['id'] ? 'class="active"' : '') : '' ?>>
-                        <a href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId(), 'signupList' => $list['id']]) ?>"><?= $this->escapeHtml($list['name']->getText($lang)) ?></a>
+                        <a href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId(), 'signupList' => $list['id']]) ?>"><?= $this->escapeHtml($this->localiseText($list['name'])) ?></a>
                     </li>
                 <?php endforeach; ?>
             </ul>

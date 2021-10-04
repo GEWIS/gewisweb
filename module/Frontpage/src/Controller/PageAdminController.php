@@ -41,6 +41,7 @@ class PageAdminController extends AbstractActionController
     public function createAction()
     {
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             if ($this->pageService->createPage($request->getPost())) {
                 $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));
@@ -66,6 +67,7 @@ class PageAdminController extends AbstractActionController
     {
         $pageId = $this->params()->fromRoute('page_id');
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             if ($this->pageService->updatePage($pageId, $request->getPost())) {
                 $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));
@@ -95,6 +97,7 @@ class PageAdminController extends AbstractActionController
         $request = $this->getRequest();
         $result = [];
         $result['uploaded'] = 0;
+
         if ($request->isPost()) {
             try {
                 $path = $this->pageService->uploadImage($request->getFiles());

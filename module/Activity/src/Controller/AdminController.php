@@ -97,10 +97,9 @@ class AdminController extends AbstractActionController
     public function updateAction()
     {
         $activityId = (int)$this->params('id');
-
         $activity = $this->activityQueryService->getActivityWithDetails($activityId);
 
-        if (is_null($activity)) {
+        if (null === $activity) {
             return $this->notFoundAction();
         }
 
@@ -120,7 +119,7 @@ class AdminController extends AbstractActionController
             if (min($openingDates) < new DateTime() || ActivityModel::STATUS_APPROVED === $activity->getStatus()) {
                 $message = $this->translator->translate('Activities that have sign-up lists which are open or approved cannot be updated.');
 
-                $this->redirectActivityAdmin(false, $message);
+                return $this->redirectActivityAdmin(false, $message);
             }
         }
 
@@ -129,17 +128,21 @@ class AdminController extends AbstractActionController
         if ($activity->getBeginTime() < new DateTime()) {
             $message = $this->translator->translate('This activity has already started/ended and can no longer be updated.');
 
-            $this->redirectActivityAdmin(false, $message);
+            return $this->redirectActivityAdmin(false, $message);
         }
 
         $form = $this->activityService->getActivityForm();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            if ($this->activityService->createUpdateProposal($activity, $request->getPost())) {
-                $message = $this->translator->translate('You have successfully created an update proposal for the activity! If the activity was already approved, the proposal will be applied after it has been approved by the board. Otherwise, the update has already been applied to the activity.');
+            $form->setData($request->getPost()->toArray());
 
-                $this->redirectActivityAdmin(true, $message);
+            if ($form->isValid()) {
+                if ($this->activityService->createUpdateProposal($activity, $form->getData())) {
+                    $message = $this->translator->translate('You have successfully created an update proposal for the activity! If the activity was already approved, the proposal will be applied after it has been approved by the board. Otherwise, the update has already been applied to the activity.');
+
+                    return $this->redirectActivityAdmin(true, $message);
+                }
             }
         }
 
@@ -156,6 +159,9 @@ class AdminController extends AbstractActionController
         $languages = $this->activityQueryService->getAvailableLanguages($activity);
         $activityData['language_dutch'] = $languages['nl'];
         $activityData['language_english'] = $languages['en'];
+
+        $activityData['organ'] = $activity->getOrgan()?->getId();
+        $activityData['company'] = $activity->getCompany()?->getId();
 
         $allowSignupList = true;
         if (ActivityModel::STATUS_APPROVED === $activity->getStatus() || (isset($participants) && 0 !== $participants)) {
@@ -182,7 +188,8 @@ class AdminController extends AbstractActionController
         $activityAdminSession = new SessionContainer('activityAdmin');
         $activityAdminSession->success = $success;
         $activityAdminSession->message = $message;
-        $this->redirect()->toRoute('activity_admin');
+
+        return $this->redirect()->toRoute('activity_admin');
     }
 
     /**
@@ -198,7 +205,7 @@ class AdminController extends AbstractActionController
         if (0 === $signupListId) {
             $activity = $this->activityQueryService->getActivity($activityId);
 
-            if (is_null($activity)) {
+            if (null === $activity) {
                 return $this->notFoundAction();
             }
 
@@ -216,7 +223,7 @@ class AdminController extends AbstractActionController
         } else {
             $signupList = $this->signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
-            if (is_null($signupList)) {
+            if (null === $signupList) {
                 return $this->notFoundAction();
             }
 
@@ -279,7 +286,7 @@ class AdminController extends AbstractActionController
         $signupListId = (int)$this->params('signupList');
         $signupList = $this->signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
-        if (is_null($signupList)) {
+        if (null === $signupList) {
             return $this->notFoundAction();
         }
 
@@ -342,14 +349,14 @@ class AdminController extends AbstractActionController
         string $message,
         AbstractContainer $session = null
     ): Response {
-        if (is_null($session)) {
+        if (null === $session) {
             $session = new SessionContainer('activityAdminRequest');
         }
 
         $session->success = $success;
         $session->message = $message;
 
-        $this->redirect()->toRoute(
+        return $this->redirect()->toRoute(
             'activity_admin/participants',
             [
                 'id' => $activityId,
@@ -363,9 +370,9 @@ class AdminController extends AbstractActionController
         $signupId = (int)$this->params('id');
         $signupMapper = $this->signupMapper;
 
-        $signup = $signupMapper->getSignupById($signupId);
+        $signup = $signupMapper->find($signupId);
 
-        if (is_null($signup)) {
+        if (null === $signup) {
             return $this->notFoundAction();
         }
 

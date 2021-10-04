@@ -1,5 +1,8 @@
 <?php
 
+namespace Photo;
+
+use Application\Extensions\Doctrine\AttributeDriver;
 use Laminas\Router\Http\{
     Literal,
     Segment,
@@ -117,7 +120,7 @@ return [
                                         'lidnr' => '[0-9]+',
                                     ],
                                     'defaults' => [
-                                        'controller' => TagController::class
+                                        'controller' => TagController::class,
                                     ],
                                 ],
                                 'may_terminate' => false,
@@ -459,14 +462,15 @@ return [
     ],
     'doctrine' => [
         'driver' => [
-            'photo_entities' => [
-                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
-                'cache' => 'array',
-                'paths' => [__DIR__ . '/../src/Model/'],
+            __NAMESPACE__ . '_driver' => [
+                'class' => AttributeDriver::class,
+                'paths' => [
+                    __DIR__ . '/../src/Model/',
+                ],
             ],
             'orm_default' => [
                 'drivers' => [
-                    'Photo\Model' => 'photo_entities',
+                    __NAMESPACE__ . '\Model' => __NAMESPACE__ . '_driver',
                 ],
             ],
         ],

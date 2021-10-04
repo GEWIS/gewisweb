@@ -1,11 +1,14 @@
 <?php
 
+namespace Application;
+
 use Application\Controller\IndexController;
 use Application\Controller\Factory\IndexControllerFactory;
 use Application\View\Helper\{
     BootstrapElementError,
     FeaturedCompanyPackage,
     LocalisedTextElement,
+    LocaliseText,
 };
 use Doctrine\Common\Cache\MemcachedCache;
 use Interop\Container\ContainerInterface;
@@ -13,6 +16,7 @@ use Laminas\Router\Http\{
     Literal,
     Segment,
 };
+use Memcached;
 
 return [
     'router' => [
@@ -120,6 +124,9 @@ return [
             },
             'localisedTextElement' => function () {
                 return new LocalisedTextElement();
+            },
+            'localiseText' => function () {
+                return new LocaliseText();
             },
         ],
     ],

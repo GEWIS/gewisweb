@@ -14,12 +14,12 @@ class Page extends BaseMapper
      * Returns a page.
      *
      * @param string $category
-     * @param string $subCategory
-     * @param string $name
+     * @param string|null $subCategory
+     * @param string|null $name
      *
      * @return PageModel|null
      */
-    public function findPage($category, $subCategory = null, $name = null)
+    public function findPage(string $category, ?string $subCategory = null, ?string $name = null): ?PageModel
     {
         return $this->getRepository()->findOneBy(
             [
@@ -30,6 +30,9 @@ class Page extends BaseMapper
         );
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function getRepositoryName(): string
     {
         return PageModel::class;

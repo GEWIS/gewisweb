@@ -9,7 +9,6 @@ use Laminas\View\Model\{
     JsonModel,
     ViewModel,
 };
-use Laminas\View\View;
 
 class AdminController extends AbstractActionController
 {
@@ -47,7 +46,7 @@ class AdminController extends AbstractActionController
 
     public function indexAction()
     {
-        return new View();
+        return new ViewModel();
     }
 
     public function addCourseAction()
@@ -56,7 +55,7 @@ class AdminController extends AbstractActionController
 
         if ($request->isPost()) {
             // try uploading
-            if ($this->examService->addCourse($request->getPost())) {
+            if ($this->examService->addCourse($request->getPost()->toArray())) {
                 $this->getResponse()->setStatusCode(200);
 
                 return new ViewModel(
@@ -150,7 +149,7 @@ class AdminController extends AbstractActionController
     {
         $request = $this->getRequest();
 
-        if ($request->isPost() && $this->examService->bulkExamEdit($request->getPost())) {
+        if ($request->isPost() && $this->examService->bulkExamEdit($request->getPost()->toArray())) {
             return new ViewModel(
                 [
                     'success' => true,
@@ -175,7 +174,7 @@ class AdminController extends AbstractActionController
     {
         $request = $this->getRequest();
 
-        if ($request->isPost() && $this->examService->bulkSummaryEdit($request->getPost())) {
+        if ($request->isPost() && $this->examService->bulkSummaryEdit($request->getPost()->toArray())) {
             return new ViewModel(
                 [
                     'success' => true,

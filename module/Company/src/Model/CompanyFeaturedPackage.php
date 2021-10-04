@@ -2,28 +2,49 @@
 
 namespace Company\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Entity,
+    JoinColumn,
+    OneToOne,
+};
+use Exception;
 
 /**
  * CompanyFeaturedPackage model.
- *
- * @ORM\Entity
  */
-class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, ResourceInterface
+#[Entity]
+class CompanyFeaturedPackage extends CompanyPackage
 {
     /**
-     * The featured package content article.
-     *
-     * @ORM\Column(type="text")
+     * The featured package content article. This column should be nullable (the default), as this entity is part of the
+     * {@link \Company\Model\CompanyPackage} discriminator map.
      */
-    protected $article;
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "article_id",
+        referencedColumnName: "id",
+    )]
+    protected CompanyLocalisedText $article;
+
+    /**
+     * CompanyFeaturedPackage constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->article = new CompanyLocalisedText(null, null);
+    }
 
     /**
      * Get the featured package's article text.
      *
-     * @return string
+     * @return CompanyLocalisedText
      */
-    public function getArticle()
+    public function getArticle(): CompanyLocalisedText
     {
         return $this->article;
     }
@@ -31,54 +52,33 @@ class CompanyFeaturedPackage extends CompanyPackage //implements RoleInterface, 
     /**
      * Set the featured package's article text.
      *
-     * @param string $article
+     * @param CompanyLocalisedText $article
      */
-    public function setArticle($article)
+    public function setArticle(CompanyLocalisedText $article): void
     {
         $this->article = $article;
     }
 
     /**
-     * The package's language.
-     *
-     * @ORM\Column(type="string")
+     * @return array
      */
-    protected $language;
-
-    /**
-     * Get the package's language.
-     *
-     * @return string language of the package
-     */
-    public function getLanguage()
+    public function toArray(): array
     {
-        return $this->language;
-    }
-
-    /**
-     * Set the package's language.
-     *
-     * @param string $language language of the package
-     */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
-    }
-
-    // For zend2 forms
-    public function getArrayCopy()
-    {
-        $array = parent::getArrayCopy();
-        $array['language'] = $this->getLanguage();
-        $array['article'] = $this->getArticle();
+        $array = parent::toArray();
+        $array['article'] = $this->getArticle()->getValueNL();
+        $array['articleEn'] = $this->getArticle()->getValueEN();
 
         return $array;
     }
 
-    public function exchangeArray($data)
+    /**
+     * @param array $data
+     *
+     * @throws Exception
+     */
+    public function exchangeArray(array $data): void
     {
         parent::exchangeArray($data);
-        $this->setLanguage((isset($data['language'])) ? $data['language'] : $this->getLanguage());
-        $this->setArticle((isset($data['article'])) ? $data['article'] : $this->getArticle());
+        $this->getArticle()->updateValues($data['articleEn'], $data['article']);
     }
 }

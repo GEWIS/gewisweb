@@ -3,7 +3,7 @@
 namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Company\Model\JobLabel;
+use Company\Model\JobLabel as JobLabelModel;
 
 /**
  * Mappers for labels.
@@ -11,57 +11,15 @@ use Company\Model\JobLabel;
 class Label extends BaseMapper
 {
     /**
-     * Finds the label with the given slug.
-     *
-     * @param int $labelSlug
+     * @return array
      */
-    public function findLabel($labelSlug)
-    {
-        return $this->getRepository()->findOneBy(['slug' => $labelSlug]);
-    }
-
-    /**
-     * Finds the label with the given id.
-     *
-     * @param int $labelId
-     */
-    public function findLabelById($labelId)
-    {
-        return $this->getRepository()->findOneBy(['id' => $labelId]);
-    }
-
-    public function findVisibleLabelByLanguage($labelLanguage)
+    public function findVisibleLabels(): array
     {
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('c')
-            ->select('c')->where('c.language=:lang')
-            ->setParameter('lang', $labelLanguage);
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Find the same label, but in the given language.
-     */
-    public function siblingLabel($label, $lang)
-    {
-        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('c');
-        $qb->select('c')
-            ->where('c.languageNeutralId=:labelId')
-            ->andWhere('c.language=:language')
-            ->setParameter('labelId', $label->getLanguageNeutralId())
-            ->setParameter('language', $lang);
-
-        return $qb->getQuery()->getOneOrNullResult();
-    }
-
-    public function findAllLabelsById($labelId)
-    {
-        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('c')
-            ->select('c')->where('c.languageNeutralId=:labelId')
-            ->setParameter('labelId', $labelId);
+            ->select('c')
+            ->where('c.hidden = :hidden')
+            ->setParameter('hidden', false);
 
         return $qb->getQuery()->getResult();
     }
@@ -71,6 +29,6 @@ class Label extends BaseMapper
      */
     protected function getRepositoryName(): string
     {
-        return JobLabel::class;
+        return JobLabeLModel::class;
     }
 }

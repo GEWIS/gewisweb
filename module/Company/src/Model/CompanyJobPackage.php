@@ -2,17 +2,32 @@
 
 namespace Company\Model;
 
-use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Company\Model\JobCategory as JobCategoryModel;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
+use Doctrine\ORM\Mapping\{
+    Entity,
+    OneToMany,
+};
 
 /**
  * CompanyPackage model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class CompanyJobPackage extends CompanyPackage
 {
+    /**
+     * The package's jobs.
+     */
+    #[OneToMany(
+        targetEntity: Job::class,
+        mappedBy: "package",
+        cascade: ["persist", "remove"],
+    )]
+    protected Collection $jobs;
+
     /**
      * Constructor.
      */
@@ -23,18 +38,11 @@ class CompanyJobPackage extends CompanyPackage
     }
 
     /**
-     * The package's jobs.
-     *
-     * @ORM\OneToMany(targetEntity="\Company\Model\Job", mappedBy="package", cascade={"persist", "remove"})
-     */
-    protected $jobs;
-
-    /**
      * Get the jobs in the package.
      *
      * @return Collection jobs in the package
      */
-    public function getJobs()
+    public function getJobs(): Collection
     {
         return $this->jobs;
     }
@@ -42,31 +50,30 @@ class CompanyJobPackage extends CompanyPackage
     /**
      * Get the number of jobs in the package.
      *
-     * @return number of jobs in the package
+     * @param JobCategoryModel|null $category
+     *
+     * @return int of jobs in the package
      */
-    public function getNumberOfActiveJobs($category = null)
+    public function getNumberOfActiveJobs(?JobCategoryModel $category = null): int
     {
         return count($this->getJobsInCategory($category));
     }
 
     /**
      * Get the jobs that are part of the given category.
+     *
+     * @param JobCategoryModel|null $category
+     *
+     * @return array
      */
-    public function getJobsInCategory($category)
+    public function getJobsInCategory(?JobCategoryModel $category = null): array
     {
         $filter = function ($job) use ($category) {
             if (null === $category) {
                 return $job->isActive();
             }
-            if (null === $job->getCategory() && null === $category->getLanguageNeutralId()) {
-                return $job->isActive();
-            }
-            if (null === $job->getCategory()) {
-                return false;
-            }
 
-            return $job->getCategory()->getLanguageNeutralId() === $category->getLanguageNeutralId()
-                && $job->isActive() && $job->getLanguage() === $category->getLanguage();
+            return $job->getCategory() === $category && $job->isActive();
         };
 
         return array_filter($this->jobs->toArray(), $filter);
@@ -77,7 +84,7 @@ class CompanyJobPackage extends CompanyPackage
      *
      * @param Job $job job to be added
      */
-    public function addJob(Job $job)
+    public function addJob(Job $job): void
     {
         $this->jobs->add($job);
     }
@@ -87,7 +94,7 @@ class CompanyJobPackage extends CompanyPackage
      *
      * @param Job $job job to be removed
      */
-    public function removeJob(Job $job)
+    public function removeJob(Job $job): void
     {
         $this->jobs->removeElement($job);
     }

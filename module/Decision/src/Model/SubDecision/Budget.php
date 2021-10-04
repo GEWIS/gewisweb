@@ -3,74 +3,82 @@
 namespace Decision\Model\SubDecision;
 
 use DateTime;
-use Decision\Model\Member;
-use Decision\Model\SubDecision;
-use Doctrine\ORM\Mapping as ORM;
+use Decision\Model\{
+    Member,
+    SubDecision,
+};
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    JoinColumn,
+    ManyToOne,
+};
 
 /**
  * Budget decision.
- *
- * @ORM\Entity
  */
+#[Entity]
 class Budget extends SubDecision
 {
     /**
      * Budget author.
-     *
-     * @ORM\ManyToOne(targetEntity="Decision\Model\Member")
-     * @ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")
      */
-    protected $author;
+    #[ManyToOne(targetEntity: Member::class)]
+    #[JoinColumn(
+        name: "lidnr",
+        referencedColumnName: "lidnr",
+    )]
+    protected Member $author;
 
     /**
      * Name of the budget.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $name;
+    #[Column(type: "string")]
+    protected string $name;
 
     /**
      * Version of the budget.
-     *
-     * @ORM\Column(type="string", length=32)
      */
-    protected $version;
+    #[Column(
+        type: "string",
+        length: 32,
+    )]
+    protected string $version;
 
     /**
      * Date of the budget.
-     *
-     * @ORM\Column(type="date")
      */
-    protected $date;
+    #[Column(type: "date")]
+    protected DateTime $date;
 
     /**
      * If the budget was approved.
-     *
-     * @ORM\Column(type="boolean")
      */
-    protected $approval;
+    #[Column(type: "boolean")]
+    protected bool $approval;
 
     /**
      * If there were changes made.
-     *
-     * @ORM\Column(type="boolean")
      */
-    protected $changes;
+    #[Column(type: "boolean")]
+    protected bool $changes;
 
     /**
      * Get the author.
      *
      * @return Member
      */
-    public function getAuthor()
+    public function getAuthor(): Member
     {
         return $this->author;
     }
 
     /**
      * Set the author.
+     *
+     * @param Member $author
      */
-    public function setAuthor(Member $author)
+    public function setAuthor(Member $author): void
     {
         $this->author = $author;
     }
@@ -80,7 +88,7 @@ class Budget extends SubDecision
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -90,7 +98,7 @@ class Budget extends SubDecision
      *
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -100,7 +108,7 @@ class Budget extends SubDecision
      *
      * @return string
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
@@ -110,7 +118,7 @@ class Budget extends SubDecision
      *
      * @param string $version
      */
-    public function setVersion($version)
+    public function setVersion(string $version): void
     {
         $this->version = $version;
     }
@@ -120,15 +128,17 @@ class Budget extends SubDecision
      *
      * @return DateTime
      */
-    public function getDate()
+    public function getDate(): DateTime
     {
         return $this->date;
     }
 
     /**
      * Set the date.
+     *
+     * @param DateTime $date
      */
-    public function setDate(DateTime $date)
+    public function setDate(DateTime $date): void
     {
         $this->date = $date;
     }
@@ -138,7 +148,7 @@ class Budget extends SubDecision
      *
      * @return bool
      */
-    public function getApproval()
+    public function getApproval(): bool
     {
         return $this->approval;
     }
@@ -148,7 +158,7 @@ class Budget extends SubDecision
      *
      * @param bool $approval
      */
-    public function setApproval($approval)
+    public function setApproval(bool $approval): void
     {
         $this->approval = $approval;
     }
@@ -158,7 +168,7 @@ class Budget extends SubDecision
      *
      * @return bool
      */
-    public function getChanges()
+    public function getChanges(): bool
     {
         return $this->changes;
     }
@@ -168,7 +178,7 @@ class Budget extends SubDecision
      *
      * @param bool $changes
      */
-    public function setChanges($changes)
+    public function setChanges(bool $changes): void
     {
         $this->changes = $changes;
     }

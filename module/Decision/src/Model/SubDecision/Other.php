@@ -3,13 +3,12 @@
 namespace Decision\Model\SubDecision;
 
 use Decision\Model\SubDecision;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
 
 /**
  * Entity for undefined decisions.
- *
- * @ORM\Entity
  */
+#[Entity]
 class Other extends SubDecision
 {
 }

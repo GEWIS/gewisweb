@@ -12,7 +12,7 @@
                 <?php endforeach; ?>
             </select>
         </div>
-        <?php if (!is_null($number)): ?>
+        <?php if (null !== $number): ?>
             <h3><?= sprintf($this->translate('Authorizations for AV %s'), $number) ?></h3>
             <table class="table table-bordered">
                 <thead>

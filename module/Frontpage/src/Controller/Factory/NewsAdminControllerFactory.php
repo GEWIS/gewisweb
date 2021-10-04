@@ -22,6 +22,8 @@ class NewsAdminControllerFactory implements FactoryInterface
     ): NewsAdminController {
         return new NewsAdminController(
             $container->get('frontpage_service_news'),
+            $container->get('frontpage_service_acl'),
+            $container->get('translator'),
         );
     }
 }

@@ -3,24 +3,30 @@
 namespace Decision\Model\SubDecision\Board;
 
 use DateTime;
-use Decision\Model\BoardMember;
-use Decision\Model\Member;
-use Decision\Model\SubDecision;
-use Doctrine\ORM\Mapping as ORM;
+use Decision\Model\{
+    BoardMember,
+    Member,
+    SubDecision,
+};
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    JoinColumn,
+    ManyToOne,
+    OneToOne,
+};
 
 /**
  * Installation as board member.
- *
- * @ORM\Entity
  */
+#[Entity]
 class Installation extends SubDecision
 {
     /**
      * Function in the board.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $function;
+    #[Column(type: "string")]
+    protected string $function;
 
     /**
      * Member.
@@ -28,48 +34,54 @@ class Installation extends SubDecision
      * Note that only members that are older than 18 years can be board members.
      * Also, honorary, external and extraordinary members cannot be board members.
      * (See the Statuten, Art. 13 Lid 2.
-     *
-     * @todo Inversed relation
-     *
-     * @ORM\ManyToOne(targetEntity="Decision\Model\Member")
-     * @ORM\JoinColumn(name="lidnr", referencedColumnName="lidnr")
      */
-    protected $member;
+    // TODO: Inversed relation
+    #[ManyToOne(targetEntity: Member::class)]
+    #[JoinColumn(
+        name: "lidnr",
+        referencedColumnName: "lidnr",
+    )]
+    protected Member $member;
 
     /**
      * The date at which the installation is in effect.
-     *
-     * @ORM\Column(type="date")
      */
-    protected $date;
+    #[Column(type: "date")]
+    protected DateTime $date;
 
     /**
      * Discharge.
-     *
-     * @ORM\OneToOne(targetEntity="Discharge", mappedBy="installation")
      */
-    protected $discharge;
+    #[OneToOne(
+        targetEntity: Discharge::class,
+        mappedBy: "installation",
+    )]
+    protected Discharge $discharge;
 
     /**
      * Release.
-     *
-     * @ORM\OneToOne(targetEntity="Release", mappedBy="installation")
      */
-    protected $release;
+    #[OneToOne(
+        targetEntity: Release::class,
+        mappedBy: "installation",
+    )]
+    protected Release $release;
 
     /**
      * Board member reference.
-     *
-     * @ORM\OneToOne(targetEntity="Decision\Model\BoardMember", mappedBy="installationDec")
      */
-    protected $boardMember;
+    #[OneToOne(
+        targetEntity: BoardMember::class,
+        mappedBy: "installationDec",
+    )]
+    protected BoardMember $boardMember;
 
     /**
      * Get the function.
      *
      * @return string
      */
-    public function getFunction()
+    public function getFunction(): string
     {
         return $this->function;
     }
@@ -79,7 +91,7 @@ class Installation extends SubDecision
      *
      * @param string $function
      */
-    public function setFunction($function)
+    public function setFunction(string $function): void
     {
         $this->function = $function;
     }
@@ -89,15 +101,17 @@ class Installation extends SubDecision
      *
      * @return Member
      */
-    public function getMember()
+    public function getMember(): Member
     {
         return $this->member;
     }
 
     /**
      * Set the member.
+     *
+     * @param Member $member
      */
-    public function setMember(Member $member)
+    public function setMember(Member $member): void
     {
         $this->member = $member;
     }
@@ -107,7 +121,7 @@ class Installation extends SubDecision
      *
      * @return DateTime
      */
-    public function getDate()
+    public function getDate(): DateTime
     {
         return $this->date;
     }
@@ -117,7 +131,7 @@ class Installation extends SubDecision
      *
      * @param DateTime $date
      */
-    public function setDate($date)
+    public function setDate(DateTime $date): void
     {
         $this->date = $date;
     }
@@ -127,7 +141,7 @@ class Installation extends SubDecision
      *
      * @return Discharge
      */
-    public function getDischarge()
+    public function getDischarge(): Discharge
     {
         return $this->discharge;
     }
@@ -137,7 +151,7 @@ class Installation extends SubDecision
      *
      * @return Release
      */
-    public function getRelease()
+    public function getRelease(): Release
     {
         return $this->release;
     }
@@ -147,7 +161,7 @@ class Installation extends SubDecision
      *
      * @return BoardMember
      */
-    public function getBoardMember()
+    public function getBoardMember(): BoardMember
     {
         return $this->boardMember;
     }

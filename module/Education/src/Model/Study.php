@@ -2,16 +2,22 @@
 
 namespace Education\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    Id,
+    ManyToMany,
+};
 use InvalidArgumentException;
 
 /**
  * Study.
- *
- * @ORM\Entity
  */
+#[Entity]
 class Study
 {
     public const PHASE_BACHELOR = 'bachelor';
@@ -21,39 +27,37 @@ class Study
      * Study ID.
      *
      * This is given by the OASE API.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    protected int $id;
 
     /**
      * Study name.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $name;
+    #[Column(type: "string")]
+    protected string $name;
 
     /**
      * Phase of the study.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $phase;
+    #[Column(type: "string")]
+    protected string $phase;
 
     /**
      * Group ID from OASE.
-     *
-     * @ORM\Column(type="integer")
      */
-    protected $groupId;
+    #[Column(type: "integer")]
+    protected int $groupId;
 
     /**
      * Courses belonging to this study.
-     *
-     * @ORM\ManyToMany(targetEntity="Education\Model\Course", mappedBy="studies")
      */
-    protected $courses;
+    #[ManyToMany(
+        targetEntity: Course::class,
+        mappedBy: "studies",
+    )]
+    protected Collection $courses;
 
     /**
      * Constructor.
@@ -68,7 +72,7 @@ class Study
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -78,7 +82,7 @@ class Study
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -88,7 +92,7 @@ class Study
      *
      * @return string
      */
-    public function getPhase()
+    public function getPhase(): string
     {
         return $this->phase;
     }
@@ -98,7 +102,7 @@ class Study
      *
      * @return int
      */
-    public function getGroupId()
+    public function getGroupId(): int
     {
         return $this->groupId;
     }
@@ -108,7 +112,7 @@ class Study
      *
      * @return Collection
      */
-    public function getCourses()
+    public function getCourses(): Collection
     {
         return $this->courses;
     }
@@ -118,7 +122,7 @@ class Study
      *
      * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -128,7 +132,7 @@ class Study
      *
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -137,8 +141,10 @@ class Study
      * Set the phase.
      *
      * @param string $phase
+     *
+     * @throws InvalidArgumentException
      */
-    public function setPhase($phase)
+    public function setPhase(string $phase): void
     {
         if (
             !in_array(
@@ -159,23 +165,27 @@ class Study
      *
      * @param int $group
      */
-    public function setGroupId($group)
+    public function setGroupId(int $group): void
     {
         $this->groupId = $group;
     }
 
     /**
      * Add a course.
+     *
+     * @param Course $course
      */
-    public function addCourse(Course $course)
+    public function addCourse(Course $course): void
     {
         $this->courses[] = $course;
     }
 
     /**
      * Remove a course.
+     *
+     * @param Course $course
      */
-    public function removeCourse(Course $course)
+    public function removeCourse(Course $course): void
     {
         $this->courses->removeElement($course);
     }

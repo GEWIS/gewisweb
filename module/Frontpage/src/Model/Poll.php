@@ -3,79 +3,90 @@
 namespace Frontpage\Model;
 
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToOne,
+    OneToMany,
+};
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
-use User\Model\User;
+use User\Model\User as UserModel;
 
 /**
  * Poll.
- *
- * @ORM\Entity
- * @ORM\Table(name="Poll")
  */
+#[Entity]
 class Poll implements ResourceInterface
 {
     /**
      * Poll ID.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected ?int $id = null;
 
     /**
      * The date the poll expires.
-     *
-     * @ORM\Column(type="date")
      */
-    protected $expiryDate;
+    #[Column(type: "date")]
+    protected DateTime $expiryDate;
 
     /**
      * The dutch question for the poll.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $dutchQuestion;
+    #[Column(type: "string")]
+    protected string $dutchQuestion;
 
     /**
-     * The english translation of the question if available.
-     *
-     * @ORM\Column(type="string", nullable=true)
+     * The english question for the poll.
      */
-    protected $englishQuestion;
+    #[Column(type: "string")]
+    protected string $englishQuestion;
 
     /**
      * Poll options.
-     *
-     * @ORM\OneToMany(targetEntity="PollOption", mappedBy="poll", cascade={"persist", "remove"})
      */
-    protected $options;
+    #[OneToMany(
+        targetEntity: PollOption::class,
+        mappedBy: "poll",
+        cascade: ["persist", "remove"],
+    )]
+    protected Collection $options;
 
     /**
      * Poll comments.
-     *
-     * @ORM\OneToMany(targetEntity="PollComment", mappedBy="poll", cascade={"persist", "remove"})
      */
-    protected $comments;
+    #[OneToMany(
+        targetEntity: PollComment::class,
+        mappedBy: "poll",
+        cascade: ["persist", "remove"],
+    )]
+    protected Collection $comments;
 
     /**
      * Who approved this poll. If null then nobody approved it.
-     *
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(referencedColumnName="lidnr")
      */
-    protected $creator;
+    #[ManyToOne(targetEntity: UserModel::class)]
+    #[JoinColumn(
+        referencedColumnName: "lidnr",
+        nullable: false,
+    )]
+    protected UserModel $creator;
 
     /**
      * Who approved this poll. If null then nobody approved it.
-     *
-     * @ORM\ManyToOne(targetEntity="User\Model\User")
-     * @ORM\JoinColumn(referencedColumnName="lidnr", nullable=true)
      */
-    protected $approver;
+    #[ManyToOne(targetEntity: UserModel::class)]
+    #[JoinColumn(referencedColumnName: "lidnr")]
+    protected ?UserModel $approver = null;
 
     /**
      * Constructor.
@@ -87,9 +98,9 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -97,7 +108,7 @@ class Poll implements ResourceInterface
     /**
      * @return DateTime
      */
-    public function getExpiryDate()
+    public function getExpiryDate(): DateTime
     {
         return $this->expiryDate;
     }
@@ -105,7 +116,7 @@ class Poll implements ResourceInterface
     /**
      * @return string
      */
-    public function getDutchQuestion()
+    public function getDutchQuestion(): string
     {
         return $this->dutchQuestion;
     }
@@ -113,7 +124,7 @@ class Poll implements ResourceInterface
     /**
      * @return string
      */
-    public function getEnglishQuestion()
+    public function getEnglishQuestion(): string
     {
         return $this->englishQuestion;
     }
@@ -121,7 +132,7 @@ class Poll implements ResourceInterface
     /**
      * @return Collection
      */
-    public function getOptions()
+    public function getOptions(): Collection
     {
         return $this->options;
     }
@@ -129,23 +140,23 @@ class Poll implements ResourceInterface
     /**
      * @return Collection
      */
-    public function getComments()
+    public function getComments(): Collection
     {
         return $this->comments;
     }
 
     /**
-     * @return User
+     * @return UserModel|null
      */
-    public function getApprover()
+    public function getApprover(): ?UserModel
     {
         return $this->approver;
     }
 
     /**
-     * @return User
+     * @return UserModel
      */
-    public function getCreator()
+    public function getCreator(): UserModel
     {
         return $this->creator;
     }
@@ -153,7 +164,7 @@ class Poll implements ResourceInterface
     /**
      * @param DateTime $expiryDate
      */
-    public function setExpiryDate($expiryDate)
+    public function setExpiryDate(DateTime $expiryDate): void
     {
         $this->expiryDate = $expiryDate;
     }
@@ -161,7 +172,7 @@ class Poll implements ResourceInterface
     /**
      * @param string $englishQuestion
      */
-    public function setEnglishQuestion($englishQuestion)
+    public function setEnglishQuestion(string $englishQuestion): void
     {
         $this->englishQuestion = $englishQuestion;
     }
@@ -169,7 +180,7 @@ class Poll implements ResourceInterface
     /**
      * @param string $dutchQuestion
      */
-    public function setDutchQuestion($dutchQuestion)
+    public function setDutchQuestion(string $dutchQuestion): void
     {
         $this->dutchQuestion = $dutchQuestion;
     }
@@ -179,7 +190,7 @@ class Poll implements ResourceInterface
      *
      * @param ArrayCollection $options
      */
-    public function addOptions($options)
+    public function addOptions(ArrayCollection $options): void
     {
         foreach ($options as $option) {
             $option->setPoll($this);
@@ -188,17 +199,17 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @param User $approver
+     * @param UserModel $approver
      */
-    public function setApprover($approver)
+    public function setApprover(UserModel $approver): void
     {
         $this->approver = $approver;
     }
 
     /**
-     * @param User $creator
+     * @param UserModel $creator
      */
-    public function setCreator($creator)
+    public function setCreator(UserModel $creator): void
     {
         $this->creator = $creator;
     }
@@ -208,7 +219,7 @@ class Poll implements ResourceInterface
      *
      * @param ArrayCollection $options
      */
-    public function removeOptions($options)
+    public function removeOptions(ArrayCollection $options): void
     {
         foreach ($options as $option) {
             $option->setPoll(null);
@@ -218,8 +229,10 @@ class Poll implements ResourceInterface
 
     /**
      * Add a comment to the poll.
+     *
+     * @param PollComment $comment
      */
-    public function addComment(PollComment $comment)
+    public function addComment(PollComment $comment): void
     {
         $comment->setPoll($this);
         $this->comments[] = $comment;
@@ -230,7 +243,7 @@ class Poll implements ResourceInterface
      *
      * @param array $comments
      */
-    public function addComments($comments)
+    public function addComments(array $comments): void
     {
         foreach ($comments as $comment) {
             $this->addComment($comment);
@@ -242,7 +255,7 @@ class Poll implements ResourceInterface
      *
      * @return string
      */
-    public function getResourceId()
+    public function getResourceId(): string
     {
         return 'poll';
     }
@@ -253,7 +266,7 @@ class Poll implements ResourceInterface
      *
      * @return bool true if poll is approved; false otherwise
      */
-    public function isApproved()
+    public function isApproved(): bool
     {
         return null !== $this->getApprover();
     }
@@ -261,7 +274,7 @@ class Poll implements ResourceInterface
     /**
      * Check to see if the poll is currently displayed.
      */
-    public function isActive()
+    public function isActive(): bool
     {
         return $this->getExpiryDate() > new DateTime();
     }

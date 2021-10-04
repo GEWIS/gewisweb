@@ -65,15 +65,19 @@ class AlbumAdminController extends AbstractActionController
      */
     public function createAction()
     {
+        $form = $this->albumService->getCreateAlbumForm();
+
         $request = $this->getRequest();
         if ($request->isPost()) {
             $albumId = $this->params()->fromRoute('album_id');
-            $album = $this->albumService->createAlbum($albumId, $request->getPost());
-            if ($album) {
-                $this->redirect()->toUrl($this->url()->fromRoute('admin_photo') . '#' . $album->getId());
+            $form->setData($request->getPost()->toArray());
+
+            if ($form->isValid()) {
+                if (null !== ($album = $this->albumService->createAlbum($albumId, $form->getData()))) {
+                    return $this->redirect()->toUrl($this->url()->fromRoute('admin_photo') . '#' . $album->getId());
+                }
             }
         }
-        $form = $this->albumService->getCreateAlbumForm();
 
         return new ViewModel(
             [
@@ -88,13 +92,17 @@ class AlbumAdminController extends AbstractActionController
     public function pageAction()
     {
         $albumId = $this->params()->fromRoute('album_id');
-        $activePage = (int)$this->params()->fromRoute('page');
-        $albumPage = $this->plugin('AlbumPlugin')->getAlbumPageAsArray($albumId, $activePage);
-        if (is_null($albumPage)) {
-            return $this->notFoundAction();
+        $activePage = (int) $this->params()->fromRoute('page');
+
+        if (null !== $albumId) {
+            $albumPage = $this->plugin('AlbumPlugin')->getAlbumPageAsArray($albumId, $activePage);
+
+            if (null !== $albumPage) {
+                return new JsonModel($albumPage);
+            }
         }
 
-        return new JsonModel($albumPage);
+        return $this->notFoundAction();
     }
 
     /**
@@ -102,14 +110,19 @@ class AlbumAdminController extends AbstractActionController
      */
     public function editAction()
     {
-        $request = $this->getRequest();
         $albumId = $this->params()->fromRoute('album_id');
+        $form = $this->albumService->getEditAlbumForm($albumId);
+
+        $request = $this->getRequest();
         if ($request->isPost()) {
-            if ($this->albumService->updateAlbum($albumId, $request->getPost())) {
-                $this->redirect()->toUrl($this->url()->fromRoute('admin_photo') . '#' . $albumId);
+            $form->setData($request->getPost()->toArray());
+
+            if ($form->isValid()) {
+                if ($this->albumService->updateAlbum()) {
+                    return $this->redirect()->toUrl($this->url()->fromRoute('admin_photo') . '#' . $albumId);
+                }
             }
         }
-        $form = $this->albumService->getEditAlbumForm($albumId);
 
         return new ViewModel(
             [

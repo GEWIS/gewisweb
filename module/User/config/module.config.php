@@ -1,5 +1,7 @@
 <?php
 
+namespace User;
+
 use Laminas\Router\Http\{
     Literal,
     Segment,
@@ -16,6 +18,7 @@ use User\Controller\Factory\{
     ApiControllerFactory,
     UserControllerFactory,
 };
+use Application\Extensions\Doctrine\AttributeDriver;
 
 return [
     'router' => [
@@ -179,14 +182,15 @@ return [
     ],
     'doctrine' => [
         'driver' => [
-            'user_entities' => [
-                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
-                'cache' => 'array',
-                'paths' => [__DIR__ . '/../src/Model/'],
+            __NAMESPACE__ . '_driver' => [
+                'class' => AttributeDriver::class,
+                'paths' => [
+                    __DIR__ . '/../src/Model/',
+                ],
             ],
             'orm_default' => [
                 'drivers' => [
-                    'User\Model' => 'user_entities',
+                    __NAMESPACE__ . '\Model' => __NAMESPACE__ . '_driver',
                 ],
             ],
         ],

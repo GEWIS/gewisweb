@@ -301,9 +301,9 @@ class Activity extends BaseMapper
     /**
      * Returns the oldest activity that has taken place.
      *
-     * @return ActivityModel
+     * @return ActivityModel|null
      */
-    public function getOldestActivity()
+    public function getOldestActivity(): ?ActivityModel
     {
         $qb = $this->getArchivedActivityQueryBuilder()
             ->where('a.status = :status')

@@ -2,145 +2,187 @@
 
 namespace Company\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToMany,
+    OneToOne,
+};
 
 /**
  * Job Label model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class JobLabel
 {
     /**
      * The label id.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected ?int $id = null;
 
     /**
      * The name of the label.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $name;
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "name_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected CompanyLocalisedText $name;
 
     /**
-     * The slug of the label.
-     *
-     * @ORM\Column(type="string")
+     * The abbreviation of the label.
      */
-    protected $slug;
-
-    /**
-     * The language of the label.
-     *
-     * @ORM\Column(type="string")
-     */
-    protected $language;
-
-    /**
-     * The label id.
-     *
-     * @ORM\Column(type="integer")
-     */
-    protected $languageNeutralId;
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "abbreviation_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected CompanyLocalisedText $abbreviation;
 
     /**
      * The Assignments this Label belongs to.
-     *
-     * @ORM\OneToMany(targetEntity="Company\Model\JobLabelAssignment", mappedBy="label", cascade={"persist"})
      */
-    protected $assignments;
+    #[ManyToMany(
+        targetEntity: Job::class,
+        mappedBy: "labels",
+        cascade: ["persist"],
+    )]
+    protected Collection $jobs;
 
     /**
      * Constructor.
      */
     public function __construct()
     {
-        $this->assignments = new ArrayCollection();
+        $this->jobs = new ArrayCollection();
     }
 
     /**
-     * Get's the id.
+     * Gets the id.
+     *
+     * @return int|null
      */
-    public function getLanguageNeutralId()
-    {
-        return $this->languageNeutralId;
-    }
-
-    /**
-     * Set's the id.
-     */
-    public function setLanguageNeutralId($languageNeutralId)
-    {
-        $this->languageNeutralId = $languageNeutralId;
-    }
-
-    /**
-     * Get's the id.
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * Set's the id.
+     * Sets the id.
+     *
+     * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
 
     /**
-     * Get's the name.
+     * Gets the name.
+     *
+     * @return CompanyLocalisedText
      */
-    public function getName()
+    public function getName(): CompanyLocalisedText
     {
         return $this->name;
     }
 
     /**
-     * Set's the name.
+     * Sets the name.
+     *
+     * @param CompanyLocalisedText $name
      */
-    public function setName($name)
+    public function setName(CompanyLocalisedText $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * Get's the slug.
+     * Gets the slug.
+     *
+     * @return CompanyLocalisedText
      */
-    public function getSlug()
+    public function getAbbreviation(): CompanyLocalisedText
     {
-        return $this->slug;
+        return $this->abbreviation;
     }
 
     /**
-     * Set's the slug.
+     * Sets the slug.
+     *
+     * @param CompanyLocalisedText $slug
      */
-    public function setSlug($slug)
+    public function setAbbreviation(CompanyLocalisedText $slug): void
     {
-        $this->slug = $slug;
+        $this->abbreviation = $slug;
     }
 
     /**
-     * Get's the language.
+     * Gets the jobs associated with this label.
+     *
+     * @return Collection
      */
-    public function getLanguage()
+    public function getJobs(): Collection
     {
-        return $this->language;
+        return $this->jobs;
     }
 
     /**
-     * Set's the language.
+     * @param Job $job
      */
-    public function setLanguage($language)
+    public function addJob(Job $job): void
     {
-        $this->language = $language;
+        if ($this->jobs->contains($job)) {
+            return;
+        }
+
+        $this->jobs->add($job);
+    }
+
+    /**
+     * @param Job $job
+     */
+    public function removeJob(Job $job): void
+    {
+        if (!$this->jobs->contains($job)) {
+            return;
+        }
+
+        $this->jobs->removeElement($job);
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName()->getValueNL(),
+            'nameEn' => $this->getName()->getValueEN(),
+            'abbreviation' => $this->getAbbreviation()->getValueNL(),
+            'abbreviationEn' => $this->getAbbreviation()->getValueEN(),
+        ];
     }
 }

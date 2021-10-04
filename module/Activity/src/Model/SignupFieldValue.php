@@ -2,83 +2,121 @@
 
 namespace Activity\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToOne,
+};
 
 /**
  * SignupFieldValue model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class SignupFieldValue
 {
     /**
      * ID for the field value.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "IDENTITY")]
+    protected ?int $id = null;
 
     /**
      * Field which the value belongs to.
-     *
-     * @ORM\ManyToOne(targetEntity="SignupField")
-     * @ORM\JoinColumn(name="field_id", referencedColumnName="id")
      */
-    protected $field;
+    #[ManyToOne(targetEntity: SignupField::class)]
+    #[JoinColumn(
+        name: "field_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected SignupField $field;
 
     /**
      * Signup which the value belongs to.
-     *
-     * @ORM\ManyToOne(targetEntity="Signup", inversedBy="fieldValues")
-     * @ORM\JoinColumn(name="signup_id", referencedColumnName="id")
      */
-    protected $signup;
+    #[ManyToOne(
+        targetEntity: Signup::class,
+        inversedBy: "fieldValues",
+    )]
+    #[JoinColumn(
+        name: "signup_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected Signup $signup;
 
     /**
-     * The value of the assoctiated field, is not an option.
-     *
-     * @ORM\Column(type="string", nullable=true)
+     * The value of the associated field, is not an option.
      */
-    protected $value;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $value = null;
 
     /**
      * The option chosen.
-     *
-     * @ORM\ManyToOne(targetEntity="SignupOption")
-     * @ORM\JoinColumn(name="option_id", referencedColumnName="id")
      */
-    protected $option;
+    #[ManyToOne(targetEntity: SignupOption::class)]
+    #[JoinColumn(
+        name: "option_id",
+        referencedColumnName: "id",
+    )]
+    protected ?SignupOption $option;
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     /**
      * @return SignupField
      */
-    public function getField()
+    public function getField(): SignupField
     {
         return $this->field;
     }
 
     /**
      * Set the field.
+     *
+     * @param SignupField $field
      */
-    public function setField(SignupField $field)
+    public function setField(SignupField $field): void
     {
         $this->field = $field;
     }
 
     /**
-     * Set the signup.
+     * @return Signup
      */
-    public function setSignup(Signup $signup)
+    public function getSignup(): Signup
+    {
+        return $this->signup;
+    }
+
+    /**
+     * Set the signup.
+     *
+     * @param Signup $signup
+     */
+    public function setSignup(Signup $signup): void
     {
         $this->signup = $signup;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getValue()
+    public function getValue(): ?string
     {
         return $this->value;
     }
@@ -86,25 +124,25 @@ class SignupFieldValue
     /**
      * Set the value.
      *
-     * @param string $value
+     * @param string|null $value
      */
-    public function setValue($value)
+    public function setValue(?string $value): void
     {
         $this->value = $value;
     }
 
     /**
-     * @return SignupOption
+     * @return SignupOption|null
      */
-    public function getOption()
+    public function getOption(): ?SignupOption
     {
         return $this->option;
     }
 
     /**
-     * @param SignupOption $option
+     * @param SignupOption|null $option
      */
-    public function setOption($option)
+    public function setOption(?SignupOption $option): void
     {
         $this->option = $option;
     }

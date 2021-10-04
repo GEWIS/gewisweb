@@ -2,49 +2,82 @@
 
 namespace Activity\Model;
 
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
+use Doctrine\ORM\Mapping\{
+    Column,
+    DiscriminatorColumn,
+    DiscriminatorMap,
+    Entity,
+    GeneratedValue,
+    Id,
+    InheritanceType,
+    JoinColumn,
+    ManyToOne,
+    OneToMany,
+};
 
 /**
  * Signup model.
- *
- * @ORM\Entity
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"user": "UserSignup", "external": "ExternalSignup"})
  */
+#[Entity]
+#[InheritanceType(value: "SINGLE_TABLE")]
+#[DiscriminatorColumn(
+    name: "type",
+    type: "string",
+)]
+#[DiscriminatorMap(
+    value: [
+        "user" => UserSignup::class,
+        "external" => ExternalSignup::class,
+    ],
+)]
 abstract class Signup
 {
     /**
      * ID for the signup.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "IDENTITY")]
+    protected ?int $id = null;
 
     /**
      * The SignupList the signup is for.
-     *
-     * @ORM\ManyToOne(targetEntity="Activity\Model\SignupList", inversedBy="signUps")
-     * @ORM\JoinColumn(name="signuplist_id", referencedColumnName="id")
      */
-    protected $signupList;
+    #[ManyToOne(
+        targetEntity: SignupList::class,
+        inversedBy: "signUps",
+    )]
+    #[JoinColumn(
+        name: "signuplist_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected SignupList $signupList;
 
     /**
      * Additional field values for this Signup.
-     *
-     * @ORM\OneToMany(targetEntity="Activity\Model\SignupFieldValue", mappedBy="signup", cascade={"persist", "remove"})
      */
-    protected $fieldValues;
+    #[OneToMany(
+        targetEntity: SignupFieldValue::class,
+        mappedBy: "signup",
+        cascade: ["persist", "remove"],
+    )]
+    protected Collection $fieldValues;
+
+    public function __construct() {
+        $this->fieldValues = new ArrayCollection();
+    }
 
     /**
      * Get the signup id.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -54,7 +87,7 @@ abstract class Signup
      *
      * @return SignupList
      */
-    public function getSignupList()
+    public function getSignupList(): SignupList
     {
         return $this->signupList;
     }
@@ -62,7 +95,7 @@ abstract class Signup
     /**
      * Set the SignupList that the user signed up for.
      */
-    public function setSignupList(SignupList $signupList)
+    public function setSignupList(SignupList $signupList): void
     {
         $this->signupList = $signupList;
     }
@@ -72,7 +105,7 @@ abstract class Signup
      *
      * @return Collection
      */
-    public function getFieldValues()
+    public function getFieldValues(): Collection
     {
         return $this->fieldValues;
     }
@@ -82,12 +115,12 @@ abstract class Signup
      *
      * @return string
      */
-    abstract public function getFullName();
+    abstract public function getFullName(): string;
 
     /**
      * Get the email address of the user whom signed up for the SignupList.
      *
      * @return string
      */
-    abstract public function getEmail();
+    abstract public function getEmail(): string;
 }

@@ -1,8 +1,6 @@
 <?php
 $this->headTitle($this->translate('Activity Categories'));
 $this->scriptUrl()->requireUrls(['activity_admin_categories/delete'], ['id']);
-
-$lang = $this->plugin('translate')->getTranslator()->getLocale();
 ?>
 <div class="row admin-activity">
     <div class="col-md-12">
@@ -17,7 +15,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
             <?php foreach ($categories as $category): ?>
                 <a class="chip chip-clickable chip-deletable"
                    href="<?= $this->url('activity_admin_categories/edit', ['id' => $category->getId()]) ?>">
-                    <span class="chip-label"><?= $category->getName()->getText($lang) ?></span>
+                    <span class="chip-label"><?= $this->escapeHtml($this->localiseText($category->getName())) ?></span>
                     <span class="chip-icon chip-delete-icon fas fa-times-circle"
                           onclick="deleteActivityCategory(<?= $category->getId() ?>)"
                           data-toggle="modal"

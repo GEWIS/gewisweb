@@ -3,8 +3,10 @@
 namespace Decision\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Decision\Model\Member as MemberModel;
-use Decision\Model\Organ as OrganModel;
+use Decision\Model\{
+    Member as MemberModel,
+    Organ as OrganModel,
+};
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 class Member extends BaseMapper
@@ -14,9 +16,9 @@ class Member extends BaseMapper
      *
      * @param int $number Membership number
      *
-     * @return MemberModel
+     * @return MemberModel|null
      */
-    public function findByLidnr($number)
+    public function findByLidnr(int $number): ?MemberModel
     {
         return $this->getRepository()->findOneBy(['lidnr' => $number]);
     }
@@ -26,11 +28,17 @@ class Member extends BaseMapper
      *
      * @param string $query (part of) the full name of a member
      * @param int $maxResults
+     * @param string $orderColumn
+     * @param string $orderDirection
      *
      * @return array
      */
-    public function searchByName($query, $maxResults = 32, $orderColumn = 'generation', $orderDirection = 'DESC')
-    {
+    public function searchByName(
+        string $query,
+        int $maxResults = 32,
+        string $orderColumn = 'generation',
+        string $orderDirection = 'DESC'
+    ): array {
         $qb = $this->em->createQueryBuilder();
         $qb->select('m')
             ->from($this->getRepositoryName(), 'm')
@@ -53,7 +61,7 @@ class Member extends BaseMapper
      *
      * @return array Of members sorted by birthday
      */
-    public function findBirthdayMembers($days)
+    public function findBirthdayMembers(int $days): array
     {
         // unfortunately, there is no support for functions like DAY() and MONTH()
         // in doctrine2, thus we have to use the NativeSQL here
@@ -79,7 +87,7 @@ class Member extends BaseMapper
      *
      * @return array Of organs
      */
-    public function findOrgans(MemberModel $member)
+    public function findOrgans(MemberModel $member): array
     {
         $qb = $this->em->createQueryBuilder();
 

@@ -1,11 +1,8 @@
 <?php
-
-$locale = $this->translator->getTranslator()->getLocale();
 $escaper = new Laminas\Escaper\Escaper('utf-8');
 
 $this->headTitle($company->getName());
 $this->headTitle($this->translate('Companies'));
-
 ?>
 <section class="section section-breadcrumb">
     <div class="container">
@@ -16,7 +13,7 @@ $this->headTitle($this->translate('Companies'));
                 </a>
             </li>
             <li class="active">
-                <?= $company->getName(); ?>
+                <?= $this->escapeHtml($company->getName()) ?>
             </li>
         </ol>
     </div>
@@ -24,8 +21,12 @@ $this->headTitle($this->translate('Companies'));
 <section class="section">
     <div class="container">
         <div class="company-list">
-            <?= $this->partial('partial/company/company/list/company.phtml',
-                ['company' => $company, 'locale' => $locale]) ?>
+            <?= $this->partial(
+                'partial/company/company/list/company.phtml',
+                [
+                    'company' => $company,
+                ]
+            ) ?>
         </div>
     </div>
 </section>

@@ -2,20 +2,25 @@
 
 namespace Activity\Service;
 
-use Activity\Mapper\SignupFieldValue;
-use Activity\Mapper\SignupOption;
-use Activity\Model\Activity as ActivityModel;
-use Activity\Model\ExternalSignup as ExternalSignupModel;
-use Activity\Model\Signup as SignupModel;
-use Activity\Model\SignupFieldValue as SignupFieldValueModel;
-use Activity\Model\SignupList as SignupListModel;
-use Activity\Model\UserSignup as UserSignupModel;
+use Activity\Mapper\{
+    SignupFieldValue,
+    SignupOption,
+};
+use Activity\Model\{
+    ExternalSignup as ExternalSignupModel,
+    Signup as SignupModel,
+    SignupFieldValue as SignupFieldValueModel,
+    SignupList as SignupListModel,
+    UserSignup as UserSignupModel,
+};
 use DateTime;
-use Decision\Model\Member;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\{
+    EntityManager,
+    OptimisticLockException,
+    ORMException,
+};
 use Laminas\Mvc\I18n\Translator;
+use User\Model\User as UserModel;
 use User\Permissions\NotAllowedException;
 
 class Signup
@@ -115,27 +120,6 @@ class Signup
     }
 
     /**
-     * Get a list of all the members that are signed up for an activity.
-     *
-     * @param ActivityModel $activity
-     *
-     * @return array
-     */
-    public function getSignedUpUsers($activity)
-    {
-        if (!$this->aclService->isAllowed('view', 'signupList')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view who is signed up for this activity')
-            );
-        }
-
-        $signUpMapper = $this->signupMapper;
-
-        // TODO: ->getSignedUp is not defined
-        return $signUpMapper->getSignedUp($activity->getId());
-    }
-
-    /**
      * Gets an array of the signed up users and the associated data.
      *
      * @return array
@@ -200,19 +184,18 @@ class Signup
     /**
      * Check if a member is signed up for an activity.
      *
-     * @param ActivityModel $activity
+     * @param SignupListModel $signupList
+     * @param UserModel $user
      *
      * @return bool
      */
-    public function isSignedUp($activity, Member $user)
+    public function isSignedUp(SignupListModel $signupList, UserModel $user): bool
     {
         if (!$this->aclService->isAllowed('checkUserSignedUp', 'signupList')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view the activities'));
         }
 
-        $signUpMapper = $this->signupMapper;
-
-        return $signUpMapper->isSignedUp($activity->getId(), $user->getLidnr());
+        return $this->signupMapper->isSignedUp($signupList->getId(), $user->getLidnr());
     }
 
     /**
@@ -227,11 +210,11 @@ class Signup
                 $this->translator->translate('You are not allowed to view activities which you signed up for')
             );
         }
+
         $user = $this->aclService->getIdentityOrThrowException();
-        $activitySignups = $this->signupMapper->getSignedUpActivities(
-            $user->getLidnr()
-        );
+        $activitySignups = $this->signupMapper->getSignedUpActivities($user->getLidnr());
         $activities = [];
+
         foreach ($activitySignups as $activitySignup) {
             $activities[] = $activitySignup->getActivity()->getId();
         }
@@ -355,7 +338,7 @@ class Signup
     /**
      * Undo an activity sign up.
      */
-    public function signOff(SignupListModel $signupList, Member $user)
+    public function signOff(SignupListModel $signupList, UserModel $user)
     {
         if (!$this->aclService->isAllowed('signoff', 'signupList')) {
             throw new NotAllowedException(
@@ -389,10 +372,9 @@ class Signup
 
     public function externalSignOff(ExternalSignupModel $signup)
     {
-        // TODO: $signup->getActivity() is undefined
         if (
             !($this->aclService->isAllowed('adminSignup', 'activity') ||
-            $this->aclService->isAllowed('adminSignup', $signup->getActivity()))
+            $this->aclService->isAllowed('adminSignup', $signup->getSignupList()))
         ) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to remove external signups for this activity')

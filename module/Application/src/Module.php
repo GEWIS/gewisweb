@@ -25,13 +25,14 @@ use Application\View\Helper\{
     ModuleIsActive,
     ScriptUrl,
 };
-use Carbon\Carbon;
 use Laminas\Cache\Storage\Adapter\Memcached;
 use Laminas\Mvc\{
+    I18n\Translator as MvcTranslator,
     ModuleRouteListener,
-    MvcEvent,
+    MvcEvent
 };
 use Interop\Container\ContainerInterface;
+use Laminas\I18n\Translator\Translator as I18nTranslator;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\Validator\AbstractValidator;
 use Locale;
@@ -49,17 +50,20 @@ class Module
 
         $locale = $this->determineLocale($e);
 
-        $translator = $e->getApplication()->getServiceManager()->get('translator');
-        $translator->setlocale($locale);
+        /** @var MvcTranslator $mvcTranslator */
+        $mvcTranslator = $e->getApplication()->getServiceManager()->get('translator');
+        $translator = $mvcTranslator->getTranslator();
+        if ($translator instanceof I18nTranslator) {
+            $translator->setlocale($locale);
+        }
 
-        Carbon::setLocale($locale);
         Locale::setDefault($locale);
 
         $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'logError']);
         $eventManager->attach(MvCEvent::EVENT_RENDER_ERROR, [$this, 'logError']);
 
         // enable Laminas\Validate default translator
-        AbstractValidator::setDefaultTranslator($translator, 'validate');
+        AbstractValidator::setDefaultTranslator($mvcTranslator, 'validate');
     }
 
     public function logError(MvCEvent $e)

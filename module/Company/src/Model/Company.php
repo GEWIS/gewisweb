@@ -2,91 +2,154 @@
 
 namespace Company\Model;
 
+use Company\Model\JobCategory as JobCategoryModel;
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    OneToMany,
+    OneToOne,
+};
 use Exception;
 
 /**
  * Company model.
- *
- * @ORM\Entity
  */
-class Company // implements ArrayHydrator (for zend2 form)
+#[Entity]
+class Company
 {
     /**
      * The company id.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
-
-    /**
-     * Translations of details of the company.
-     * Are of type \Company\Model\CompanyI18n.
-     *
-     * @ORM\OneToMany(targetEntity="\Company\Model\CompanyI18n", mappedBy="company", cascade={"persist", "remove"}, orphanRemoval=true)
-     */
-    protected $translations;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected ?int $id = null;
 
     /**
      * The company's display name.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $name;
+    #[Column(type: "string")]
+    protected string $name;
 
     /**
      * The company's slug version of the name. (username).
-     *
-     * @ORM\Column(type="string")
      */
-    protected $slugName;
+    #[Column(type: "string")]
+    protected string $slugName;
 
     /**
      * The company's contact's name.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $contactName;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $contactName;
 
     /**
      * The company's address.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $address;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $contactAddress;
 
     /**
      * The company's email.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $email;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $contactEmail;
 
     /**
      * The company's phone.
-     *
-     * @ORM\Column(type="string")
      */
-    protected $phone;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $contactPhone;
+
+    /**
+     * Company slogan.
+     */
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "slogan_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected CompanyLocalisedText $slogan;
+
+    /**
+     * Company logo.
+     */
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $logo = null;
+
+    /**
+     * Company description.
+     */
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "description_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected CompanyLocalisedText $description;
+
+    /**
+     * Company website.
+     */
+    #[OneToOne(
+        targetEntity: CompanyLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "website_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected CompanyLocalisedText $website;
 
     /**
      * Whether the company is hidden.
-     *
-     * @ORM\Column(type="boolean")
      */
-    protected $hidden;
+    #[Column(type: "boolean")]
+    protected bool $hidden;
 
     /**
      * The company's packages.
-     *
-     * @ORM\OneToMany(targetEntity="\Company\Model\CompanyPackage", mappedBy="company", cascade={"persist", "remove"})
      */
-    protected $packages;
+    #[OneToMany(
+        targetEntity: CompanyPackage::class,
+        mappedBy: "company",
+        cascade: ["persist", "remove"],
+    )]
+    protected Collection $packages;
 
     /**
      * Constructor.
@@ -94,45 +157,16 @@ class Company // implements ArrayHydrator (for zend2 form)
     public function __construct()
     {
         $this->packages = new ArrayCollection();
-        $this->translations = new ArrayCollection();
     }
 
     /**
      * Get the company's id.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * Get the company's translations.
-     *
-     * @return Collection
-     */
-    public function getTranslations()
-    {
-        return $this->translations;
-    }
-
-    /**
-     * Add a translation.
-     */
-    public function addTranslation(CompanyI18n $translation)
-    {
-        $this->translations->add($translation);
-    }
-
-    /**
-     * Remove a translation.
-     *
-     * @param CompanyI18n $translation Translation to remove
-     */
-    public function removeTranslation(CompanyI18n $translation)
-    {
-        $this->translations->removeElement($translation);
     }
 
     /**
@@ -140,7 +174,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -150,7 +184,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -160,7 +194,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @return string the company's slug name
      */
-    public function getSlugName()
+    public function getSlugName(): string
     {
         return $this->slugName;
     }
@@ -170,7 +204,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @param string $slugName the new slug name
      */
-    public function setSlugName($slugName)
+    public function setSlugName(string $slugName): void
     {
         $this->slugName = $slugName;
     }
@@ -178,9 +212,9 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Get the company's contact's name.
      *
-     * @return string
+     * @return string|null
      */
-    public function getContactName()
+    public function getContactName(): ?string
     {
         return $this->contactName;
     }
@@ -188,9 +222,9 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Set the company's contact's name.
      *
-     * @param string $name
+     * @param string|null $name
      */
-    public function setContactName($name)
+    public function setContactName(?string $name): void
     {
         $this->contactName = $name;
     }
@@ -198,67 +232,149 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Get the company's address.
      *
-     * @return string
+     * @return string|null
      */
-    public function getAddress()
+    public function getContactAddress(): ?string
     {
-        return $this->address;
+        return $this->contactAddress;
     }
 
     /**
      * Set the company's address.
      *
-     * @param string $address
+     * @param string|null $contactAddress
      */
-    public function setAddress($address)
+    public function setContactAddress(?string $contactAddress): void
     {
-        $this->address = $address;
+        $this->contactAddress = $contactAddress;
     }
 
     /**
      * Get the company's email.
      *
-     * @return string
+     * @return string|null
      */
-    public function getEmail()
+    public function getContactEmail(): ?string
     {
-        return $this->email;
+        return $this->contactEmail;
     }
 
     /**
      * Set the company's email.
      *
-     * @param string $email
+     * @param string|null $contactEmail
      */
-    public function setEmail($email)
+    public function setContactEmail(?string $contactEmail): void
     {
-        $this->email = $email;
+        $this->contactEmail = $contactEmail;
     }
 
     /**
      * Get the company's phone.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPhone()
+    public function getContactPhone(): ?string
     {
-        return $this->phone;
+        return $this->contactPhone;
     }
 
     /**
      * Set the company's phone.
      *
-     * @param string $phone
+     * @param string|null $contactPhone
      */
-    public function setPhone($phone)
+    public function setContactPhone(?string $contactPhone): void
     {
-        $this->phone = $phone;
+        $this->contactPhone = $contactPhone;
+    }
+
+    /**
+     * Get the company's slogan.
+     *
+     * @return CompanyLocalisedText
+     */
+    public function getSlogan(): CompanyLocalisedText
+    {
+        return $this->slogan;
+    }
+
+    /**
+     * Set the company's slogan.
+     *
+     * @param CompanyLocalisedText $slogan
+     */
+    public function setSlogan(CompanyLocalisedText $slogan): void
+    {
+        $this->slogan = $slogan;
+    }
+
+    /**
+     * Get the company's logo.
+     *
+     * @return string|null
+     */
+    public function getLogo(): ?string
+    {
+        return $this->logo;
+    }
+
+    /**
+     * Set the company's logo.
+     *
+     * @param string|null $logo
+     */
+    public function setLogo(?string $logo): void
+    {
+        $this->logo = $logo;
+    }
+
+    /**
+     * Get the company's description.
+     *
+     * @return CompanyLocalisedText
+     */
+    public function getDescription(): CompanyLocalisedText
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set the company's description.
+     *
+     * @param CompanyLocalisedText $description
+     */
+    public function setDescription(CompanyLocalisedText $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * Get the company's website.
+     *
+     * @return CompanyLocalisedText
+     */
+    public function getWebsite(): CompanyLocalisedText
+    {
+        return $this->website;
+    }
+
+    /**
+     * Set the company's description.
+     *
+     * @param CompanyLocalisedText $website
+     */
+    public function setWebsite(CompanyLocalisedText $website): void
+    {
+        $this->website = $website;
     }
 
     /**
      * Return true if the company should not be visible to the user, and false if it should be visible to the user.
+     *
+     * @return bool
      */
-    public function isHidden()
+    public function isHidden(): bool
     {
         $visible = false;
 
@@ -278,18 +394,17 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @return bool
      */
-    public function getHidden()
+    public function getHidden(): bool
     {
         return $this->hidden;
-        // TODO check whether package is not expired
     }
 
     /**
      * Set the company's hidden status.
      *
-     * @param string $hidden
+     * @param bool $hidden
      */
-    public function setHidden($hidden)
+    public function setHidden(bool $hidden): void
     {
         $this->hidden = $hidden;
     }
@@ -299,7 +414,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @return Collection of CompanyPackages
      */
-    public function getPackages()
+    public function getPackages(): Collection
     {
         return $this->packages;
     }
@@ -309,7 +424,7 @@ class Company // implements ArrayHydrator (for zend2 form)
      *
      * @return integer the number of packages
      */
-    public function getNumberOfPackages()
+    public function getNumberOfPackages(): int
     {
         return count($this->packages);
     }
@@ -317,8 +432,10 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Returns the number of jobs that are contained in all packages of this
      * company.
+     *
+     * @return int
      */
-    public function getNumberOfJobs()
+    public function getNumberOfJobs(): int
     {
         $jobCount = function ($package) {
             if ('job' == $package->getType()) {
@@ -334,8 +451,12 @@ class Company // implements ArrayHydrator (for zend2 form)
     /**
      * Returns the number of jobs that are contained in all active packages of this
      * company.
+     *
+     * @param JobCategoryModel|null $category
+     *
+     * @return int
      */
-    public function getNumberOfActiveJobs($category = null)
+    public function getNumberOfActiveJobs(?JobCategoryModel $category = null): int
     {
         $jobCount = function ($package) use ($category) {
             return $package->getNumberOfActiveJobs($category);
@@ -346,8 +467,10 @@ class Company // implements ArrayHydrator (for zend2 form)
 
     /**
      * Returns the number of expired packages.
+     *
+     * @return int
      */
-    public function getNumberOfExpiredPackages()
+    public function getNumberOfExpiredPackages(): int
     {
         return count(
             array_filter(
@@ -360,27 +483,28 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * Returns true if a banner is active, and false when there is no banner active.
+     * Returns true if company is featured.
+     *
+     * @return bool
      */
-    public function getFeaturedLanguages()
+    public function isFeatured(): bool
     {
-        return array_map(
+        $featuredPackages = array_filter(
+            $this->getPackages()->toArray(),
             function ($package) {
-                return $package->getLanguage();
-            },
-            array_filter(
-                $this->getPackages()->toArray(),
-                function ($package) {
-                    return 'featured' === $package->getType() && $package->isActive();
-                }
-            )
+                return 'featured' === $package->getType() && $package->isActive();
+            }
         );
+
+        return !empty($featuredPackages);
     }
 
     /**
      * Returns true if a banner is active, and false when there is no banner active.
+     *
+     * @return bool
      */
-    public function isBannerActive()
+    public function isBannerActive(): bool
     {
         $banners = array_filter(
             $this->getPackages()->toArray(),
@@ -393,130 +517,52 @@ class Company // implements ArrayHydrator (for zend2 form)
     }
 
     /**
-     * Returns the available languages (translations) for this company.
+     * Updates this object with values in the form of getArrayCopy(). This does not include the logo.
      *
-     * @return Collection
+     * @param array $data
+     *
+     * @throws Exception
      */
-    public function getAvailableLanguages(): Collection
+    public function exchangeArray(array $data): void
     {
-        return $this->getTranslations()->map(
-            function ($value) {
-                return $value->getLanguage();
-            }
-        );
+        $this->setName($data['name']);
+        $this->setSlugName($data['slugName']);
+        $this->setContactName($data['contactName']);
+        $this->setContactAddress($data['contactAddress']);
+        $this->setContactEmail($data['contactEmail']);
+        $this->setContactPhone($data['contactPhone']);
+        $this->setHidden($data['hidden']);
+
+        $this->getSlogan()->updateValues($data['sloganEn'], $data['slogan']);
+        $this->getWebsite()->updateValues($data['websiteEn'], $data['website']);
+        $this->getDescription()->updateValues($data['descriptionEn'], $data['description']);
     }
 
     /**
-     * If this object contains a translation for a given locale, it is returned, otherwise null is returned.
+     * Returns an array copy with all attributes.
      *
-     * @param string $locale
-     *
-     * @return mixed|null
+     * @return array
      */
-    public function getTranslationFromLocale(string $locale)
-    {
-        $companyLanguages = $this->getAvailableLanguages();
-
-        if ($companyLanguages->contains($locale)) {
-            return $this->getTranslations()[$companyLanguages->indexOf($locale)];
-        }
-
-        return null;
-    }
-
-    /**
-     * Updates the variable if the first argument is set, Otherwise, it will
-     * use the second argument.
-     *
-     * @param mixed $object
-     * @param mixed $default
-     */
-    private static function updateIfSet($object, $default)
-    {
-        if (isset($object)) {
-            return $object;
-        }
-
-        return $default;
-    }
-
-    /**
-     * Returns the translation identified by $language.
-     *
-     * Note, does not set $logo, the user should set this property himself
-     *
-     * @param mixed $data
-     * @param mixed $language
-     */
-    public function updateTranslationFromArray($data, $language)
-    {
-        if ('' !== $language) {
-            $translation = $this->getTranslationFromLocale($language);
-
-            if (is_null($translation)) {
-                $translation = new CompanyI18n($language, $this);
-            }
-
-            $language = $language . '_';
-
-            // Translated properties
-            $translation->setWebsite($this->updateIfSet($data[($language) . 'website'], ''));
-            $translation->setSlogan($this->updateIfSet($data[$language . 'slogan'], ''));
-            $translation->setDescription($this->updateIfSet($data[$language . 'description'], ''));
-
-            // Do not set logo, because most likely, $data[logo] is bogus.
-            // Instead, the user should set this property himself later.
-            return $translation;
-        }
-    }
-
-    /**
-     * Updates this object with values in the form of getArrayCopy().
-     */
-    public function exchangeArray($data)
-    {
-        $languages = $data['languages'];
-
-        foreach ($languages as $language) {
-            $this->updateTranslationFromArray($data, $language);
-        }
-
-        $this->setName($this->updateIfSet($data['name'], ''));
-        $this->setContactName($this->updateIfSet($data['contactName'], ''));
-        $this->setSlugName($this->updateIfSet($data['slugName'], ''));
-        $this->setAddress($this->updateIfSet($data['address'], ''));
-        $this->setEmail($this->updateIfSet($data['email'], ''));
-        $this->setPhone($this->updateIfSet($data['phone'], ''));
-        $this->setHidden($this->updateIfSet($data['hidden'], ''));
-    }
-
-    /**
-     * Returns an array copy with varName=> var for all variables except the
-     * translation.
-     *
-     * It will aso add keys in the form $lan_varName=>$this->getTranslationFromLocale($lang)=>var
-     */
-    public function getArrayCopy()
+    public function toArray(): array
     {
         $arraycopy = [];
-        $arraycopy['id'] = $this->getId();
+
         $arraycopy['name'] = $this->getName();
         $arraycopy['slugName'] = $this->getSlugName();
+        $arraycopy['logo'] = $this->getLogo();
         $arraycopy['contactName'] = $this->getContactName();
-        $arraycopy['email'] = $this->getEmail();
-        $arraycopy['address'] = $this->getAddress();
-        $arraycopy['phone'] = $this->getPhone();
+        $arraycopy['contactEmail'] = $this->getContactEmail();
+        $arraycopy['contactAddress'] = $this->getContactAddress();
+        $arraycopy['contactPhone'] = $this->getContactPhone();
         $arraycopy['hidden'] = $this->getHidden();
 
         // Languages
-        $arraycopy['languages'] = [];
-        foreach ($this->getTranslations() as $translation) {
-            $arraycopy[$translation->getLanguage() . '_' . 'slogan'] = $translation->getSlogan();
-            $arraycopy[$translation->getLanguage() . '_' . 'website'] = $translation->getWebsite();
-            $arraycopy[$translation->getLanguage() . '_' . 'description'] = $translation->getDescription();
-            $arraycopy[$translation->getLanguage() . '_' . 'logo'] = $translation->getLogo();
-            $arraycopy['languages'][] = $translation->getLanguage();
-        }
+        $arraycopy['slogan'] = $this->getSlogan()->getValueNL();
+        $arraycopy['sloganEn'] = $this->getSlogan()->getValueEN();
+        $arraycopy['website'] = $this->getWebsite()->getValueNL();
+        $arraycopy['websiteEn'] = $this->getWebsite()->getValueEN();
+        $arraycopy['description'] = $this->getDescription()->getValueNL();
+        $arraycopy['descriptionEn'] = $this->getDescription()->getValueEN();
 
         return $arraycopy;
     }

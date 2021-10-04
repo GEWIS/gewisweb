@@ -4,8 +4,8 @@ namespace Activity\Service;
 
 use Activity\Form\Activity as ActivityForm;
 use Activity\Model\Activity as ActivityModel;
+use Activity\Model\ActivityLocalisedText;
 use Activity\Model\ActivityUpdateProposal as ActivityProposalModel;
-use Activity\Model\LocalisedText;
 use Activity\Model\SignupField as SignupFieldModel;
 use Activity\Model\SignupList as SignupListModel;
 use Activity\Model\SignupOption as SignupOptionModel;
@@ -88,6 +88,7 @@ class Activity
             throw new NotAllowedException($this->translator->translate('You are not allowed to create an activity'));
         }
 
+        // TODO: Move the form check to the controller.
         $form = $this->getActivityForm();
         $form->setData($data);
 
@@ -181,10 +182,10 @@ class Activity
         $activity->setBeginTime(new DateTime($data['beginTime']));
         $activity->setEndTime(new DateTime($data['endTime']));
 
-        $activity->setName(new LocalisedText($data['nameEn'], $data['name']));
-        $activity->setLocation(new LocalisedText($data['locationEn'], $data['location']));
-        $activity->setCosts(new LocalisedText($data['costsEn'], $data['costs']));
-        $activity->setDescription(new LocalisedText($data['descriptionEn'], $data['description']));
+        $activity->setName(new ActivityLocalisedText($data['nameEn'], $data['name']));
+        $activity->setLocation(new ActivityLocalisedText($data['locationEn'], $data['location']));
+        $activity->setCosts(new ActivityLocalisedText($data['costsEn'], $data['costs']));
+        $activity->setDescription(new ActivityLocalisedText($data['descriptionEn'], $data['description']));
 
         $activity->setIsMyFuture($data['isMyFuture']);
         $activity->setRequireGEFLITST($data['requireGEFLITST']);
@@ -247,7 +248,7 @@ class Activity
         $signupList = new SignupListModel();
 
         $signupList->setActivity($activity);
-        $signupList->setName(new LocalisedText($data['nameEn'], $data['name']));
+        $signupList->setName(new ActivityLocalisedText($data['nameEn'], $data['name']));
         $signupList->setOpenDate(new DateTime($data['openDate']));
         $signupList->setCloseDate(new DateTime($data['closeDate']));
 
@@ -283,7 +284,7 @@ class Activity
         $field = new SignupFieldModel();
 
         $field->setSignupList($signupList);
-        $field->setName(new LocalisedText($data['nameEn'], $data['name']));
+        $field->setName(new ActivityLocalisedText($data['nameEn'], $data['name']));
         $field->setType($data['type']);
 
         if ('2' === $data['type']) {
@@ -327,7 +328,7 @@ class Activity
 
         for ($i = 0; $i < $numOptions; ++$i) {
             $option = new SignupOptionModel();
-            $option->setValue(new LocalisedText(
+            $option->setValue(new ActivityLocalisedText(
                 isset($optionsEn) ? $optionsEn[$i] : null,
                 isset($options) ? $options[$i] : null
             ));
@@ -391,25 +392,14 @@ class Activity
      * Create a new update proposal from user form.
      *
      * @param ActivityModel $currentActivity
-     * @param Parameters $data
+     * @param array $data
      *
      * @return bool indicating whether the update was applied or is pending
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function createUpdateProposal(ActivityModel $currentActivity, Parameters $data)
+    public function createUpdateProposal(ActivityModel $currentActivity, array $data)
     {
-        if (!$this->aclService->isAllowed('update', $currentActivity)) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to update this activity'));
-        }
-
-        $form = $this->getActivityForm();
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return false;
-        }
-
         // Find the creator
         $user = $this->aclService->getIdentityOrThrowException();
 
@@ -431,12 +421,11 @@ class Activity
         }
 
         $currentActivityArray = $currentActivity->toArray();
-        $proposalActivityArray = $data->toArray();
 
-        $proposalActivityArray['company'] = is_null($company) ? null : $company->getId();
-        $proposalActivityArray['organ'] = is_null($organ) ? null : $organ->getId();
+        $data['company'] = is_null($company) ? null : $company->getId();
+        $data['organ'] = is_null($organ) ? null : $organ->getId();
 
-        if (!$this->isUpdateProposalNew($currentActivityArray, $proposalActivityArray)) {
+        if (!$this->isUpdateProposalNew($currentActivityArray, $data)) {
             return false;
         }
 
@@ -450,7 +439,6 @@ class Activity
 
         $em = $this->entityManager;
 
-        // TODO: ->count and ->unwrap are undefined
         if (0 !== $currentActivity->getUpdateProposal()->count()) {
             $proposal = $currentActivity->getUpdateProposal()->unwrap()->first();
             //Remove old update proposal
@@ -499,7 +487,7 @@ class Activity
      *
      * @return bool
      */
-    protected function isUpdateProposalNew($current, $proposal)
+    protected function isUpdateProposalNew(array $current, array $proposal): bool
     {
         unset($current['id']);
 
@@ -509,6 +497,16 @@ class Activity
                 $v = $v->format('Y/m/d H:i');
             }
         });
+
+        // Change Organs and Companies to be their ids to prevent the form from accidentally submitting, as the Activity
+        // entity uses the Organ and Company entities.
+        if (isset($current['organ'])) {
+            $current['organ'] = $current['organ']->getId();
+        }
+
+        if (isset($current['company'])) {
+            $current['company'] = $current['company']->getId();
+        }
 
         // We do not need the ActivityCategory models, hence we replace it with the ids of each one. However, it is no
         // longer a model and requires array access to get the id.

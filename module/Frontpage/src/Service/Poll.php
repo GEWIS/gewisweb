@@ -2,17 +2,28 @@
 
 namespace Frontpage\Service;
 
-use Application\Service\Email;
+use Application\Service\Email as EmailService;
 use DateTime;
+use Doctrine\ORM\ORMException;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
-use Frontpage\Form\PollApproval;
-use Frontpage\Model\Poll as PollModel;
-use Frontpage\Model\PollComment;
-use Frontpage\Model\PollOption;
-use Frontpage\Model\PollVote as PollVoteModel;
+use Laminas\Stdlib\Parameters;
+use Frontpage\Form\{
+    Poll as PollForm,
+    PollApproval as PollApprovalForm,
+    PollComment as PollCommentForm,
+};
+use Frontpage\Mapper\{
+    Poll as PollMapper,
+};
+use Frontpage\Model\{
+    Poll as PollModel,
+    PollComment as PollCommentModel,
+    PollOption as PollOptionModel,
+    PollOption,
+    PollVote as PollVoteModel};
 use Laminas\Mvc\I18n\Translator;
 use RuntimeException;
-use User\Model\User;
+use User\Model\User as UserModel;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -23,41 +34,45 @@ class Poll
     /**
      * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
-     * @var Email
+     * @var EmailService
      */
-    private $emailService;
+    private EmailService $emailService;
 
     /**
-     * @var \Frontpage\Mapper\Poll
+     * @var PollMapper
      */
-    private $pollMapper;
+    private PollMapper $pollMapper;
 
     /**
-     * @var \Frontpage\Form\Poll
+     * @var PollForm
      */
-    private $pollForm;
+    private PollForm $pollForm;
 
     /**
-     * @var \Frontpage\Form\PollComment
+     * @var PollCommentForm
      */
-    private $pollCommentForm;
+    private PollCommentForm $pollCommentForm;
 
     /**
-     * @var PollApproval
+     * @var PollApprovalForm
      */
-    private $pollApprovalForm;
+    private PollApprovalForm $pollApprovalForm;
+
+    /**
+     * @var AclService
+     */
     private AclService $aclService;
 
     public function __construct(
         Translator $translator,
-        Email $emailService,
-        \Frontpage\Mapper\Poll $pollMapper,
-        \Frontpage\Form\Poll $pollForm,
-        \Frontpage\Form\PollComment $pollCommentForm,
-        PollApproval $pollApprovalForm,
+        EmailService $emailService,
+        PollMapper $pollMapper,
+        PollForm $pollForm,
+        PollCommentForm $pollCommentForm,
+        PollApprovalForm $pollApprovalForm,
         AclService $aclService
     ) {
         $this->translator = $translator;
@@ -74,7 +89,7 @@ class Poll
      *
      * @return PollModel|null
      */
-    public function getNewestPoll()
+    public function getNewestPoll(): ?PollModel
     {
         return $this->pollMapper->getNewestPoll();
     }
@@ -88,12 +103,13 @@ class Poll
      *
      * @throws NotAllowedException if the user isn't allowed to see unapproved polls
      */
-    public function getPoll($pollId)
+    public function getPoll(int $pollId): ?PollModel
     {
         $poll = $this->pollMapper->find($pollId);
+
         if (is_null($poll->getApprover()) && !$this->aclService->isAllowed('view_unapproved', 'poll')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view unnapproved polls')
+                $this->translator->translate('You are not allowed to view unapproved polls')
             );
         }
 
@@ -105,9 +121,11 @@ class Poll
      *
      * @param int $optionId The id of the poll option to retrieve
      *
-     * @return PollOption|null
+     * @return PollOptionModel|null
+     *
+     * @throws ORMException
      */
-    public function getPollOption($optionId)
+    public function getPollOption(int $optionId): ?PollOptionModel
     {
         return $this->pollMapper->findPollOptionById($optionId);
     }
@@ -117,7 +135,7 @@ class Poll
      *
      * @return DoctrinePaginator
      */
-    public function getPaginatorAdapter()
+    public function getPaginatorAdapter(): DoctrinePaginator
     {
         return $this->pollMapper->getPaginatorAdapter();
     }
@@ -127,7 +145,7 @@ class Poll
      *
      * @return array
      */
-    public function getUnapprovedPolls()
+    public function getUnapprovedPolls(): array
     {
         return $this->pollMapper->getUnapprovedPolls();
     }
@@ -135,11 +153,11 @@ class Poll
     /**
      * Returns details about a poll.
      *
-     * @param PollModel $poll
+     * @param PollModel|null $poll
      *
      * @return array|null
      */
-    public function getPollDetails($poll)
+    public function getPollDetails(?PollModel $poll): ?array
     {
         if (is_null($poll)) {
             return null;
@@ -161,7 +179,7 @@ class Poll
      *
      * @return bool
      */
-    public function canVote($poll)
+    public function canVote(PollModel $poll): bool
     {
         if (!$this->aclService->isAllowed('vote', 'poll')) {
             return false;
@@ -186,12 +204,13 @@ class Poll
      *
      * @param PollModel $poll
      *
-     * @return PollVoteModel | null
+     * @return PollVoteModel|null
      */
-    public function getVote($poll)
+    public function getVote(PollModel $poll): ?PollVoteModel
     {
         $user = $this->aclService->getIdentity();
-        if ($user instanceof User) {
+
+        if ($user instanceof UserModel) {
             return $this->pollMapper->findVote($poll->getId(), $user->getLidnr());
         }
 
@@ -201,17 +220,19 @@ class Poll
     /**
      * Stores a vote for the current user.
      *
-     * @param PollOption $pollOption The option to vote on
+     * @param PollOptionModel|null $pollOption The option to vote on
      *
      * @return bool indicating whether the vote was submitted
+     *
+     * @throws ORMException
      */
-    public function submitVote($pollOption)
+    public function submitVote(?PollOptionModel $pollOption): bool
     {
-        $poll = $pollOption->getPoll();
-        if (is_null($poll) || is_null($pollOption)) {
+        if (is_null($pollOption)) {
             return false;
         }
 
+        $poll = $pollOption->getPoll();
         if (!$this->canVote($poll)) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to vote on this poll.'));
         }
@@ -222,72 +243,81 @@ class Poll
         $pollOption->addVote($pollVote);
         $this->pollMapper->persist($pollOption);
         $this->pollMapper->flush();
+
         return true;
     }
 
     /**
      * Creates a comment on the given poll.
      *
-     * @param int $pollId
+     * @param PollModel $poll
      * @param array $data
+     *
+     * @return bool
+     *
+     * @throws ORMException
      */
-    public function createComment($pollId, $data)
+    public function createComment(PollModel $poll, array $data): bool
     {
-        if (!$this->aclService->isAllowed('create', 'poll_comment')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create comments on this poll')
-            );
-        }
-
-        $poll = $this->getPoll($pollId);
-
-        $form = $this->pollCommentForm;
-
-        $form->bind(new PollComment());
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return;
-        }
-
-        $comment = $form->getData();
-
-        if (!$comment instanceof PollComment) {
-            throw new RuntimeException('The PollComment model could not be retrieved from the form.');
-        }
-
-        $comment->setUser($this->aclService->getIdentity());
-        $comment->setCreatedOn(new DateTime());
+        $user = $this->aclService->getIdentity();
+        $comment = $this->saveCommentData($data, $poll, $user);
 
         $poll->addComment($comment);
 
         $this->pollMapper->persist($poll);
         $this->pollMapper->flush();
 
-        // reset the form
-        $form->setData(['author' => '', 'content' => '']);
+        return true;
+    }
+
+    /**
+     * Save data for a poll comment.
+     *
+     * @param array $data
+     * @param PollModel $poll
+     * @param UserModel $user
+     *
+     * @return PollCommentModel
+     *
+     * @throws ORMException
+     */
+    public function saveCommentData(array $data, PollModel $poll, UserModel $user): PollCommentModel
+    {
+        $comment = new PollCommentModel();
+
+        $comment->setPoll($poll);
+        $comment->setAuthor($data['author']);
+        $comment->setContent($data['content']);
+        $comment->setCreatedOn(new DateTime());
+        $comment->setUser($user);
+
+        $this->pollMapper->persist($comment);
+
+        return $comment;
     }
 
     /**
      * Saves a new poll request.
      *
-     * @param array $data
+     * @param Parameters $data
      *
      * @return bool indicating whether the request succeeded
+     *
+     * @throws ORMException
      */
-    public function requestPoll($data)
+    public function requestPoll(Parameters $data): bool
     {
         $form = $this->getPollForm();
-        $poll = new PollModel();
-        $form->bind($poll);
-
         $form->setData($data);
+
         if (!$form->isValid()) {
             return false;
         }
 
-        $poll->setExpiryDate(new DateTime());
-        $poll->setCreator($this->aclService->getIdentity());
+        // TODO: Change to {@link getIdentityOrThrowException()}.
+        $user = $this->aclService->getIdentity();
+        $poll = $this->savePollData($form->getData(), $user);
+
         $this->pollMapper->persist($poll);
         $this->pollMapper->flush();
 
@@ -302,11 +332,52 @@ class Poll
     }
 
     /**
+     * @param array $data
+     * @param UserModel $user
+     *
+     * @return PollModel
+     *
+     * @throws ORMException
+     */
+    public function savePollData(array $data, UserModel $user): PollModel
+    {
+        $poll = new PollModel();
+        $poll->setDutchQuestion($data['dutchQuestion']);
+        $poll->setEnglishQuestion($data['englishQuestion']);
+
+        $poll->setExpiryDate(new DateTime());
+        $poll->setCreator($user);
+
+        foreach ($data['options'] as $option) {
+            $pollOption = $this->createPollOption($option, $poll);
+            $this->pollMapper->persist($pollOption);
+        }
+
+        return $poll;
+    }
+
+    /**
+     * @param array $data
+     * @param PollModel $poll
+     *
+     * @return PollOptionModel
+     */
+    public function createPollOption(array $data, PollModel $poll): PollOption
+    {
+        $pollOption = new PollOptionModel();
+        $pollOption->setDutchText($data['dutchText']);
+        $pollOption->setEnglishText($data['englishText']);
+        $pollOption->setPoll($poll);
+
+        return $pollOption;
+    }
+
+    /**
      * Returns the poll request/creation form.
      *
-     * @return \Frontpage\Form\Poll
+     * @return PollForm
      */
-    public function getPollForm()
+    public function getPollForm(): PollForm
     {
         if (!$this->aclService->isAllowed('request', 'poll')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to request polls'));
@@ -319,8 +390,10 @@ class Poll
      * Deletes the given poll.
      *
      * @param PollModel $poll The poll to delete
+     *
+     * @throws ORMException
      */
-    public function deletePoll($poll)
+    public function deletePoll(PollModel $poll): void
     {
         if (!$this->aclService->isAllowed('delete', 'poll')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete polls'));
@@ -342,15 +415,18 @@ class Poll
      * Approves the given poll.
      *
      * @param PollModel $poll The poll to approve
-     * @param array $data The data from the poll approval form
+     * @param Parameters $data The data from the poll approval form
      *
      * @return bool indicating whether the approval succeeded
+     *
+     * @throws ORMException
      */
-    public function approvePoll($poll, $data)
+    public function approvePoll(PollModel $poll, Parameters $data): bool
     {
         $approvalForm = $this->getPollApprovalForm();
         $approvalForm->bind($poll);
         $approvalForm->setData($data);
+
         if (!$approvalForm->isValid()) {
             return false;
         }
@@ -363,9 +439,9 @@ class Poll
     /**
      * Returns the poll approval form.
      *
-     * @return PollApproval
+     * @return PollApprovalForm
      */
-    public function getPollApprovalForm()
+    public function getPollApprovalForm(): PollApprovalForm
     {
         if (!$this->aclService->isAllowed('approve', 'poll')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to approve polls'));

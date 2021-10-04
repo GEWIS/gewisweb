@@ -4,7 +4,8 @@ namespace Frontpage\Service;
 
 use DateTime;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
-use Frontpage\Mapper\NewsItem;
+use Frontpage\Form\NewsItem as NewsItemForm;
+use Frontpage\Mapper\NewsItem as NewsItemMapper;
 use Frontpage\Model\NewsItem as NewsItemModel;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
@@ -16,41 +17,35 @@ use User\Service\AclService;
 class News
 {
     /**
-     * @var Translator
+     * @var NewsItemMapper
      */
-    private $translator;
+    private NewsItemMapper $newsItemMapper;
 
     /**
-     * @var NewsItem
+     * @var NewsItemForm
      */
-    private $newsItemMapper;
+    private NewsItemForm $newsItemForm;
 
     /**
-     * @var \Frontpage\Form\NewsItem
+     * @var AclService
      */
-    private $newsItemForm;
     private AclService $aclService;
 
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
     public function __construct(
+        NewsItemMapper $newsItemMapper,
+        NewsItemForm $newsItemForm,
+        AclService $aclService,
         Translator $translator,
-        NewsItem $newsItemMapper,
-        \Frontpage\Form\NewsItem $newsItemForm,
-        AclService $aclService
     ) {
         $this->translator = $translator;
         $this->newsItemMapper = $newsItemMapper;
         $this->newsItemForm = $newsItemForm;
         $this->aclService = $aclService;
-    }
-
-    /**
-     * Get the translator.
-     *
-     * @return Translator
-     */
-    public function getTranslator()
-    {
-        return $this->translator;
     }
 
     /**
@@ -60,7 +55,7 @@ class News
      *
      * @return NewsItemModel|null
      */
-    public function getNewsItemById($newsItem)
+    public function getNewsItemById(int $newsItem): ?NewsItemModel
     {
         return $this->newsItemMapper->find($newsItem);
     }
@@ -70,7 +65,7 @@ class News
      *
      * @return DoctrinePaginator
      */
-    public function getPaginatorAdapter()
+    public function getPaginatorAdapter(): DoctrinePaginator
     {
         if (!$this->aclService->isAllowed('list', 'news_item')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list all news items.'));
@@ -86,7 +81,7 @@ class News
      *
      * @return array
      */
-    public function getLatestNewsItems($count)
+    public function getLatestNewsItems(int $count): array
     {
         return $this->newsItemMapper->getLatestNewsItems($count);
     }
@@ -96,44 +91,33 @@ class News
      *
      * @param array $data form post data
      *
-     * @return bool|NewsItemModel false if creation was not successful
+     * @return bool
      */
-    public function createNewsItem($data)
+    public function createNewsItem(array $data): bool
     {
-        $form = $this->getNewsItemForm();
         $newsItem = new NewsItemModel();
-        $form->bind($newsItem);
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return false;
-        }
-
         $newsItem->setDate(new DateTime());
-        $this->newsItemMapper->persist($newsItem);
-        $this->newsItemMapper->flush();
 
-        return $newsItem;
+        $this->updateNewsItem($newsItem, $data);
+
+        return true;
     }
 
     /**
-     * @param int $newsItemId
+     * @param NewsItemModel $newsItem
      * @param array $data form post data
      *
      * @return bool
      */
-    public function updateNewsItem($newsItemId, $data)
+    public function updateNewsItem(NewsItemModel $newsItem, array $data): bool
     {
-        if (!$this->aclService->isAllowed('edit', 'news_item')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to edit news items.'));
-        }
-        $form = $this->getNewsItemForm($newsItemId);
-        $form->setData($data);
+        $newsItem->setEnglishContent($data['englishContent']);
+        $newsItem->setEnglishTitle($data['englishTitle']);
+        $newsItem->setDutchContent($data['dutchContent']);
+        $newsItem->setDutchTitle($data['dutchTitle']);
+        $newsItem->setPinned($data['pinned']);
 
-        if (!$form->isValid()) {
-            return false;
-        }
-
+        $this->newsItemMapper->persist($newsItem);
         $this->newsItemMapper->flush();
 
         return true;
@@ -142,34 +126,21 @@ class News
     /**
      * Removes a news item.
      *
-     * @param int $newsItemId the id of the news item to remove
+     * @param NewsItemModel $newsItem the id of the news item to remove
      */
-    public function deleteNewsItem($newsItemId)
+    public function deleteNewsItem(NewsItemModel $newsItem): void
     {
-        $newsItem = $this->getNewsItemById($newsItemId);
         $this->newsItemMapper->remove($newsItem);
         $this->newsItemMapper->flush();
     }
 
     /**
      * Get the NewsItem form.
-     *
-     * @param int $newsItemId
-     *
-     * @return \Frontpage\Form\NewsItem
+     **
+     * @return NewsItemForm
      */
-    public function getNewsItemForm($newsItemId = null)
+    public function getNewsItemForm(): NewsItemForm
     {
-        if (!$this->aclService->isAllowed('create', 'news_item')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to create news items.'));
-        }
-        $form = $this->newsItemForm;
-
-        if (!is_null($newsItemId)) {
-            $newsItem = $this->getNewsItemById($newsItemId);
-            $form->bind($newsItem);
-        }
-
-        return $form;
+        return $this->newsItemForm;
     }
 }

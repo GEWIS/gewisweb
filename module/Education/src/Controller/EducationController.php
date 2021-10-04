@@ -40,7 +40,7 @@ class EducationController extends AbstractActionController
         $query = $request->getQuery();
 
         if (isset($query['query'])) {
-            $courses = $this->examService->searchCourse($query);
+            $courses = $this->examService->searchCourse($query->toArray());
 
             if (null !== $courses) {
                 return new ViewModel(
@@ -65,12 +65,12 @@ class EducationController extends AbstractActionController
         $course = $this->examService->getCourse($code);
 
         // if the course did not exist, trigger 404
-        if (is_null($course)) {
+        if (null === $course) {
             return $this->notFoundAction();
         }
 
         // when there is a parent course, redirect to that course
-        if (!is_null($course->getParent())) {
+        if (null !== $course->getParent()) {
             return $this->redirect()->toRoute(
                 'education/course',
                 [

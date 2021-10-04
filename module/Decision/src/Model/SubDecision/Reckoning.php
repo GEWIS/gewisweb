@@ -2,11 +2,12 @@
 
 namespace Decision\Model\SubDecision;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
 
 /**
- * @ORM\Entity
+ *
  */
+#[Entity]
 class Reckoning extends Budget
 {
 }

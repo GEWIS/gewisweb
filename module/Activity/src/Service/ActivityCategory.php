@@ -4,18 +4,13 @@ namespace Activity\Service;
 
 use Activity\Form\ActivityCategory as CategoryForm;
 use Activity\Model\ActivityCategory as CategoryModel;
-use Activity\Model\LocalisedText;
+use Activity\Model\ActivityLocalisedText;
 use Doctrine\ORM\EntityManager;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
 
 class ActivityCategory
 {
-    /**
-     * @var Translator
-     */
-    private $translator;
-
     /**
      * @var EntityManager
      */
@@ -30,20 +25,29 @@ class ActivityCategory
      * @var CategoryForm
      */
     private $categoryForm;
+
+    /**
+     * @var AclService
+     */
     private AclService $aclService;
 
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
     public function __construct(
-        Translator $translator,
         EntityManager $entityManager,
         \Activity\Mapper\ActivityCategory $categoryMapper,
         CategoryForm $categoryForm,
-        AclService $aclService
+        AclService $aclService,
+        Translator $translator,
     ) {
-        $this->translator = $translator;
         $this->entityManager = $entityManager;
         $this->categoryMapper = $categoryMapper;
         $this->categoryForm = $categoryForm;
         $this->aclService = $aclService;
+        $this->translator = $translator;
     }
 
     /**
@@ -51,9 +55,9 @@ class ActivityCategory
      *
      * @param int $id
      *
-     * @return CategoryModel
+     * @return CategoryModel|null
      */
-    public function getCategoryById($id)
+    public function getCategoryById(int $id): ?CategoryModel
     {
         if (!$this->aclService->isAllowed('listCategories', 'activity')) {
             throw new NotAllowedException(
@@ -61,7 +65,7 @@ class ActivityCategory
             );
         }
 
-        return $this->categoryMapper->getCategoryById($id);
+        return $this->categoryMapper->find($id);
     }
 
     /**
@@ -69,7 +73,7 @@ class ActivityCategory
      *
      * @return array
      */
-    public function findAll()
+    public function findAll(): array
     {
         if (!$this->aclService->isAllowed('listCategories', 'activity')) {
             throw new NotAllowedException(
@@ -96,7 +100,7 @@ class ActivityCategory
         }
 
         $category = new CategoryModel();
-        $category->setName(new LocalisedText($data['nameEn'], $data['name']));
+        $category->setName(new ActivityLocalisedText($data['nameEn'], $data['name']));
 
         $em = $this->entityManager;
         $em->persist($category);

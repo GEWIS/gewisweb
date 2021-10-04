@@ -92,7 +92,12 @@ class ActivityController extends AbstractActionController
     {
         $activities = $this->activityQueryService->getUpcomingActivities($this->params('category'));
 
-        return ['activities' => $activities, 'category' => $this->params('category')];
+        return new ViewModel(
+            [
+                'activities' => $activities,
+                'category' => $this->params('category'),
+            ]
+        );
     }
 
     /**
@@ -103,7 +108,7 @@ class ActivityController extends AbstractActionController
         $activityId = (int)$this->params('id');
         $activity = $this->activityQueryService->getActivity($activityId);
 
-        if (is_null($activity)) {
+        if (null === $activity) {
             return $this->notFoundAction();
         }
 
@@ -119,9 +124,11 @@ class ActivityController extends AbstractActionController
             );
         }
 
-        return [
-            'activity' => $activity,
-        ];
+        return new ViewModel(
+            [
+                'activity' => $activity,
+            ]
+        );
     }
 
     public function viewSignupListAction()
@@ -130,7 +137,7 @@ class ActivityController extends AbstractActionController
         $signupListId = (int)$this->params('signupList');
         $signupList = $this->signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
-        if (is_null($signupList)) {
+        if (null === $signupList) {
             return $this->notFoundAction();
         }
 
@@ -156,7 +163,7 @@ class ActivityController extends AbstractActionController
         if ($this->signupService->isAllowedToInternalSubscribe()) {
             $identity = $this->aclService->getIdentityOrThrowException();
             $isSignedUp = $isAllowedToSubscribe
-                && $this->signupService->isSignedUp($signupList, $identity->getMember());
+                && $this->signupService->isSignedUp($signupList, $identity);
         }
 
         $subscriptionOpenDatePassed = $signupList->getOpenDate() < new DateTime();
@@ -204,7 +211,7 @@ class ActivityController extends AbstractActionController
      * @param SignupListModel $signupList
      * @param SessionContainer $activitySession
      *
-     * @return SignupForm $form
+     * @return SignupForm|null $form
      */
     protected function prepareSignupForm(SignupListModel $signupList, SessionContainer $activitySession)
     {
@@ -268,7 +275,7 @@ class ActivityController extends AbstractActionController
         $signupListId = (int)$this->params('signupList');
         $signupList = $this->signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
-        if (is_null($signupList)) {
+        if (null === $signupList) {
             return $this->notFoundAction();
         }
 
@@ -306,10 +313,9 @@ class ActivityController extends AbstractActionController
             }
 
             $identity = $this->aclService->getIdentityOrThrowException();
-            $user = $identity->getMember();
 
             // Check if the user is not already subscribed
-            if ($this->signupService->isSignedUp($signupList, $user)) {
+            if ($this->signupService->isSignedUp($signupList, $identity)) {
                 $error = $this->translator->translate('You have already been subscribed for this activity');
 
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
@@ -346,7 +352,7 @@ class ActivityController extends AbstractActionController
         string $message,
         AbstractContainer $session = null
     ): Response {
-        if (is_null($session)) {
+        if (null === $session) {
             $session = new SessionContainer('activityRequest');
         }
 
@@ -368,7 +374,7 @@ class ActivityController extends AbstractActionController
         $signupListId = (int)$this->params('signupList');
         $signupList = $this->signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
-        if (is_null($signupList)) {
+        if (null === $signupList) {
             return $this->notFoundAction();
         }
 
@@ -430,7 +436,7 @@ class ActivityController extends AbstractActionController
         $signupListId = (int)$this->params('signupList');
         $signupList = $this->signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
-        if (is_null($signupList)) {
+        if (null === $signupList) {
             return $this->notFoundAction();
         }
 
@@ -465,16 +471,15 @@ class ActivityController extends AbstractActionController
             }
 
             $identity = $this->aclService->getIdentityOrThrowException();
-            $user = $identity->getMember();
 
             // Check if the user is subscribed
-            if (!$this->signupService->isSignedUp($signupList, $user)) {
+            if (!$this->signupService->isSignedUp($signupList, $identity)) {
                 $message = $this->translator->translate('You are not subscribed to this activity!');
 
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $message);
             }
 
-            $this->signupService->signOff($signupList, $user);
+            $this->signupService->signOff($signupList, $identity);
             $message = $this->translator->translate('Successfully unsubscribed');
 
             return $this->redirectActivityRequest($activityId, $signupListId, true, $message);
@@ -496,7 +501,7 @@ class ActivityController extends AbstractActionController
         $year = $this->params()->fromRoute('year');
 
         // If no year is supplied, use the latest year.
-        if (is_null($year)) {
+        if (null === $year) {
             $year = max($years);
         }
 

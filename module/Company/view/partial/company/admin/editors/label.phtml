@@ -1,31 +1,97 @@
 <div class="row">
-    <?php foreach ($form->getLanguages() as $lang): ?>
-        <?php $langDesc = $languages[$lang] ?>
-        <div class="col-md-6">
-            <h1><?= $this->translate($langDesc) ?></h1>
-            <?php $fieldset = $this->form->get("labels")->get($lang); ?>
-            <?php
-            $element = $fieldset->get('name');
-            $element->setAttribute('class', 'form-control');
-            ?>
-            <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-                <label for="<?= $element->getName() ?>" class="control-label col-sm-4">
-                    <?= $element->getOption('label') ?>
-                </label>
-                <?= $this->formInput($element) ?>
-                <?= $this->formElementErrors($element) ?>
-            </div>
-            <?php
-            $element = $fieldset->get('slug');
-            $element->setAttribute('class', 'form-control');
-            ?>
-            <div class="form-group <?= $this->bootstrapElementError($element) ?>">
-                <label for="<?= $element->getName() ?>" class="control-label col-sm-4">
-                    <?= $element->getOption('label') ?>
-                </label>
-                <?= $this->formInput($element) ?>
-                <?= $this->formElementErrors($element) ?>
-            </div>
+    <div class="col-md-12">
+        <h2><?= $this->translate('Information') ?></h2>
+    </div>
+    <div class="col-md-6">
+        <?php
+        $checkboxDutch = $form->get('language_dutch')
+            ->setAttribute('onchange', 'Company.updateForm()')
+            ->setAttribute('id', 'dutch-check')
+            ->setAttribute('class', 'language-control');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($checkboxDutch) ?>">
+            <label for="<?= $checkboxDutch->getAttribute('id') ?>" class="control-label"
+                   title="<?= $checkboxDutch->getLabel() ?>">
+                <?= $this->formCheckbox($checkboxDutch) ?>
+                <span class="flag-icon flag-icon-nl"></span>
+                <?= $this->translate('Dutch') ?>
+            </label>
+            <?= $this->formElementErrors($checkboxDutch) ?>
         </div>
-    <?php endforeach ?>
+        <hr>
+        <?php
+        $name = $form->get('name')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('id', 'name-nl');
+        $name->setValue($this->localisedTextElement($name));
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($name) ?>">
+            <label for="<?= $name->getAttribute('id') ?>" class="control-label">
+                <?= $name->getLabel() ?>
+            </label>
+            <?= $this->formText($name) ?>
+            <?= $this->formElementErrors($name) ?>
+        </div>
+        <?php
+        $abbreviation = $form->get('abbreviation')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('id', 'abbreviation-nl');
+        $abbreviation->setValue($this->localisedTextElement($abbreviation));
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($abbreviation) ?>">
+            <label for="<?= $abbreviation->getAttribute('id') ?>" class="control-label">
+                <?= $abbreviation->getLabel() ?>
+            </label>
+            <?= $this->formText($abbreviation) ?>
+            <?= $this->formElementErrors($abbreviation) ?>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <?php
+        $checkboxEnglish = $form->get('language_english')
+            ->setAttribute('onchange', 'Company.updateForm()')
+            ->setAttribute('id', 'english-check')
+            ->setAttribute('class', 'language-control');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($checkboxEnglish) ?>">
+            <label for="<?= $checkboxEnglish->getAttribute('id') ?>" class="control-label"
+                   title="<?= $checkboxEnglish->getLabel() ?>">
+                <?= $this->formCheckbox($checkboxEnglish) ?>
+                <span class="flag-icon flag-icon-en"></span>
+                <?= $this->translate('English') ?>
+            </label>
+            <?= $this->formElementErrors($checkboxEnglish) ?>
+        </div>
+        <hr>
+        <?php
+        $nameEn = $form->get('nameEn')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('id', 'name-en');
+        $nameEn->setValue($this->localisedTextElement($nameEn));
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($nameEn) ?>">
+            <label for="<?= $nameEn->getAttribute('id') ?>" class="control-label">
+                <?= $nameEn->getLabel() ?>
+            </label>
+            <?= $this->formText($nameEn) ?>
+            <?= $this->formElementErrors($nameEn) ?>
+        </div>
+        <?php
+        $abbreviationEn = $form->get('abbreviationEn')
+            ->setAttribute('disabled', 'disabled')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('id', 'abbreviation-en');
+        $abbreviationEn->setValue($this->localisedTextElement($abbreviationEn));
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($abbreviationEn) ?>">
+            <label for="<?= $abbreviationEn->getAttribute('id') ?>" class="control-label">
+                <?= $abbreviationEn->getLabel() ?>
+            </label>
+            <?= $this->formText($abbreviationEn) ?>
+            <?= $this->formElementErrors($abbreviationEn) ?>
+        </div>
+    </div>
 </div>

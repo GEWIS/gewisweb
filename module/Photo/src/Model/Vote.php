@@ -3,58 +3,99 @@
 namespace Photo\Model;
 
 use DateTime;
-use Decision\Model\Member;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    HasLifecycleCallbacks,
+    Id,
+    JoinColumn,
+    ManyToOne,
+};
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use User\Model\User as UserModel;
 
 /**
  * Vote, represents a vote for a photo of the week.
- *
- * @ORM\Entity
- * @ORM\HasLifecycleCallbacks
  */
+#[Entity]
+#[HasLifecycleCallbacks]
 class Vote implements ResourceInterface
 {
     /**
      * Vote ID.
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "AUTO")]
+    protected ?int $id = null;
 
     /**
      * Date and time when the photo was voted for.
-     *
-     * @ORM\Column(type="datetime")
      */
-    protected $dateTime;
+    #[Column(type: "datetime")]
+    protected DateTime $dateTime;
 
     /**
-     * The photo which was viewed.
-     *
-     * @ORM\ManyToOne(targetEntity="Photo\Model\Photo", inversedBy="hits")
-     * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
+     * The photo which was voted for.
      */
-    protected $photo;
+    #[ManyToOne(
+        targetEntity: Photo::class,
+        inversedBy: "votes",
+    )]
+    #[JoinColumn(
+        name: "photo_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected Photo $photo;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Decision\Model\Member")
-     * @ORM\JoinColumn(name="member_id", referencedColumnName="lidnr")
+     * The member who voted.
      */
-    protected $member;
+    #[ManyToOne(targetEntity: UserModel::class)]
+    #[JoinColumn(
+        name: "voter_id",
+        referencedColumnName: "lidnr",
+        nullable: false,
+    )]
+    protected UserModel $voter;
 
     /**
      * Vote constructor.
      *
-     * @param Member $member The member whom voted
+     * @param Photo $photo
+     * @param UserModel $voter The member who voted
      */
-    public function __construct($photo, $member)
+    public function __construct(Photo $photo, UserModel $voter)
     {
         $this->dateTime = new DateTime();
-        $this->member = $member;
+        $this->voter = $voter;
         $this->photo = $photo;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param Photo $photo
+     */
+    public function setPhoto(Photo $photo): void
+    {
+        $this->photo = $photo;
+    }
+
+    /**
+     * @return Photo
+     */
+    public function getPhoto(): Photo
+    {
+        return $this->photo;
     }
 
     /**
@@ -62,7 +103,7 @@ class Vote implements ResourceInterface
      *
      * @return string
      */
-    public function getResourceId()
+    public function getResourceId(): string
     {
         return 'vote';
     }

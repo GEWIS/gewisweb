@@ -2,38 +2,58 @@
 
 namespace Activity\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
+use Doctrine\ORM\Mapping\{
+    Column,
+    Entity,
+    GeneratedValue,
+    Id,
+    JoinColumn,
+    ManyToMany,
+    OneToOne,
+};
 
 /**
  * Activity Category model.
- *
- * @ORM\Entity
  */
+#[Entity]
 class ActivityCategory
 {
     /**
      * Id for the Category.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    #[Id]
+    #[Column(type: "integer")]
+    #[GeneratedValue(strategy: "IDENTITY")]
+    protected ?int $id = null;
 
     /**
      * The Activities this Category belongs to.
-     *
-     * @ORM\ManyToMany(targetEntity="Activity\Model\Activity", mappedBy="categories", cascade={"persist"})
      */
-    protected $activities;
+    #[ManyToMany(
+        targetEntity: Activity::class,
+        mappedBy: "categories",
+        cascade: ["persist"],
+    )]
+    protected Collection $activities;
 
     /**
      * Name for the Category.
-     *
-     * @ORM\OneToOne(targetEntity="Activity\Model\LocalisedText", orphanRemoval=true, cascade={"persist", "remove"})
      */
-    protected $name;
+    #[OneToOne(
+        targetEntity: ActivityLocalisedText::class,
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: "name_id",
+        referencedColumnName: "id",
+        nullable: false,
+    )]
+    protected ActivityLocalisedText $name;
 
     public function __construct()
     {
@@ -43,7 +63,7 @@ class ActivityCategory
     /**
      * @param Activity $activity
      */
-    public function addActivity($activity)
+    public function addActivity(Activity $activity): void
     {
         if ($this->activities->contains($activity)) {
             return;
@@ -55,7 +75,7 @@ class ActivityCategory
     /**
      * @param Activity $activity
      */
-    public function removeActivity($activity)
+    public function removeActivity(Activity $activity): void
     {
         if (!$this->activities->contains($activity)) {
             return;
@@ -65,33 +85,33 @@ class ActivityCategory
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * @return LocalisedText
+     * @return ActivityLocalisedText
      */
-    public function getName()
+    public function getName(): ActivityLocalisedText
     {
         return $this->name;
     }
 
     /**
-     * @param LocalisedText $name
+     * @param ActivityLocalisedText $name
      */
-    public function setName($name)
+    public function setName(ActivityLocalisedText $name): void
     {
-        $this->name = $name->copy();
+        $this->name = $name;
     }
 
     /**
      * @return array
      */
-    public function getActivities()
+    public function getActivities(): array
     {
         return $this->activities->toArray();
     }
@@ -99,7 +119,7 @@ class ActivityCategory
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id' => $this->getId(),
