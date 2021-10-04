@@ -166,7 +166,9 @@ $this->headLink()
 </section>
 
 <script type="text/javascript">
-    $('.datepicker').datetimepicker();
+    $('.datepicker').datetimepicker({
+        dayOfWeekStart: 1,
+    });
     var calendar;
     var timeMin = new Date();
     timeMin.setDate(timeMin.getDate() - 180);

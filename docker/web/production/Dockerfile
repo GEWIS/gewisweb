@@ -15,6 +15,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         cron \
         git \
+        ghostscript \
         libcurl4-openssl-dev \
         libfreetype6-dev \
         libicu-dev \
@@ -25,6 +26,7 @@ RUN apt-get update \
         libpq-dev \
         libxml2-dev \
         libzip-dev \
+        poppler-utils \
         rsync \
         sshpass \
         unzip \
@@ -50,6 +52,8 @@ RUN pecl install -o imagick \
     && docker-php-ext-enable imagick \
     && pecl install -o memcached \
     && docker-php-ext-enable memcached
+
+RUN sed -i 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/g' /etc/ImageMagick-6/policy.xml
 
 FROM php-target as gewisweb_web_production
 WORKDIR /code

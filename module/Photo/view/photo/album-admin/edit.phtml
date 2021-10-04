@@ -71,6 +71,9 @@ $form->prepare();
 <?= $this->form()->closeTag(); ?>
 
 <script>
-    $('[name="startDateTime"]').datetimepicker();
-    $('[name="endDateTime"]').datetimepicker();
+    var dtpOptions = {
+        dayOfWeekStart: 1,
+    };
+    $('[name="startDateTime"]').datetimepicker(dtpOptions);
+    $('[name="endDateTime"]').datetimepicker(dtpOptions);
 </script>
