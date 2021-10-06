@@ -119,7 +119,7 @@ class CompanyQuery
         );
 
         return array_filter($jobList, function ($job) {
-            return $job->getActive();
+            return $job->isActive();
         });
     }
 
