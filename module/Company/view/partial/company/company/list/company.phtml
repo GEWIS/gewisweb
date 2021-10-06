@@ -5,13 +5,19 @@ $escaper = new Laminas\Escaper\Escaper('utf-8');
 $companyURL = $escaper->escapeHtmlAttr($this->localiseText($company->getWebsite()));
 ?>
 <div id="company-<?= $company->getId(); ?>">
-    <h1 class="company-name">
-        <a href="<?= $companyURL ?>"><?= $this->escapeHtml($company->getName()) ?></a>
-    </h1>
-    <p class="company-slogan">
-        <em><?= $this->escapeHtml($this->localiseText($company->getSlogan())) ?></em>
-    </p>
     <div class="row">
+        <div class="col-md-12">
+            <h1 class="company-name">
+                <a href="<?= $companyURL ?>"><?= $this->escapeHtml($company->getName()) ?></a>
+                <?php
+                if (null !== $this->localiseText($company->getSlogan())):
+                ?>
+                    <small>&#124; <?= $this->escapeHtml($this->localiseText($company->getSlogan())) ?></small>
+                <?php
+                endif;
+                ?>
+            </h1>
+        </div>
         <div class="col-md-3">
             <a href="<?= $companyURL ?>">
                 <img alt="<?= $this->translate('Logo of') ?> <?= $this->escapeHtmlAttr($company->getName()) ?>"
