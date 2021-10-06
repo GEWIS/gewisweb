@@ -49,17 +49,13 @@ $companyURL = $escaper->escapeHtmlAttr($this->localiseText($company->getWebsite(
                 <p class="company-website"><a href="<?= $companyURL ?>"><?= $this->translate('Visit Website') ?></a></p>
             </div>
             <?php foreach ($this->jobCategories() as $category): ?>
-                <div class="company-jobs" data-amount="<?= $company->getNumberOfJobs($category) ?>">
-                    <?php if ($company->getNumberOfJobs($category) > 0) { ?>
+                <?php if ($company->getNumberOfActiveJobs($category) > 0): ?>
+                    <div class="company-jobs" data-amount="<?= $company->getNumberOfJobs($category) ?>">
                         <h4><?= $this->escapeHtml($this->localiseText($category->getPluralName())) ?></h4>
-                    <?php } ?>
-                    <ul class="company-jobs-list">
-                        <?php // TODO: jobs sorted by package, which is not useful for visitor, possibly change sorting here to be useful
-                        foreach ($company->getPackages() as $package):
-                            if ($package->getType() === 'job'):
-                                $categories = $this->jobCategories();
-
-                                foreach ($categories as $category):
+                        <ul class="company-jobs-list">
+                            <?php // TODO: jobs sorted by package, which is not useful for visitor, possibly change sorting here to be useful
+                            foreach ($company->getPackages() as $package):
+                                if ($package->getType() === 'job'):
                                     $jobs = $package->getJobsInCategory($category);
 
                                     foreach ($jobs as $job):
@@ -78,12 +74,12 @@ $companyURL = $escaper->escapeHtmlAttr($this->localiseText($company->getWebsite(
                                         </li>
                                     <?php
                                     endforeach;
-                                endforeach;
-                            endif;
-                        endforeach;
-                        ?>
-                    </ul>
-                </div>
+                                endif;
+                            endforeach;
+                            ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
             <?php endforeach; ?>
         </div>
         <div class="col-md-9">
