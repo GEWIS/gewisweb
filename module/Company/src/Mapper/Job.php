@@ -55,7 +55,11 @@ class Job extends BaseMapper
         string $companySlugName = null,
     ): array {
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j');
+        $qb->select('j')
+            ->join('j.package', 'p')
+            ->addSelect('p')
+            ->join('p.company', 'c')
+            ->addSelect('c');
 
         if (null !== $jobCategoryId) {
             $qb->join('j.category', 'cat')
@@ -89,9 +93,7 @@ class Job extends BaseMapper
         }
 
         if (null !== $companySlugName) {
-            $qb->join('j.package', 'p')
-                ->join('p.company', 'c')
-                ->andWhere('c.slugName=:companySlugName')
+            $qb->andWhere('c.slugName=:companySlugName')
                 ->setParameter('companySlugName', $companySlugName);
         }
 
