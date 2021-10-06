@@ -151,8 +151,8 @@ $this->headScript()
             }
 
             $alternatives[] = vsprintf('<a href="%s">%s</a>', [
-                $this->url('company/jobList', ['category' => $c->getSlug()]),
-                strtolower($c->getPluralName())
+                $this->url('company/jobList', ['category' => $this->localiseText($c->getSlug())]),
+                strtolower($this->escapeHtml($this->localiseText($c->getPluralName()))),
             ]);
         }
 

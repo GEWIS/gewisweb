@@ -58,6 +58,7 @@ $companyURL = $escaper->escapeHtmlAttr($this->localiseText($company->getWebsite(
                         foreach ($company->getPackages() as $package):
                             if ($package->getType() === 'job'):
                                 $categories = $this->jobCategories();
+
                                 foreach ($categories as $category):
                                     $jobs = $package->getJobsInCategory($category);
 

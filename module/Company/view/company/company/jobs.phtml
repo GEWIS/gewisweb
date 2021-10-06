@@ -92,15 +92,15 @@ $this->headScript()
                         <?php endif; ?>
                         <?php if (null !== $job->getContactPhone()): ?>
                         <p class="job-phone">
-                            <a href="tel:<?= $escaper->escapeUrl($job->getPhone()) ?>">
-                                <?= $this->escapeHtml($job->getPhone()) ?>
+                            <a href="tel:<?= $escaper->escapeUrl($job->getContactPhone()) ?>">
+                                <?= $this->escapeHtml($job->getContactPhone()) ?>
                             </a>
                         </p>
                         <?php endif; ?>
                         <?php if (null !== $job->getContactEmail()): ?>
                         <p class="job-email">
-                            <a href="mailto:<?= $escaper->escapeUrl($job->getEmail()) ?>">
-                                <?= $this->escapeHtml($job->getEmail()) ?>
+                            <a href="mailto:<?= $escaper->escapeUrl($job->getContactEmail()) ?>">
+                                <?= $this->escapeHtml($job->getContactEmail()) ?>
                             </a>
                         </p>
                         <?php endif; ?>
