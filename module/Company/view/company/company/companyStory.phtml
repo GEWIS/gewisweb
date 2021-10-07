@@ -47,45 +47,9 @@ $companyURL = $this->url(
             <a href="<?= $this->localiseText($company->getWebsite()) ?>"><?= $this->translate('Visit Website') ?></a>
         </p>
     </div>
-    <?php foreach ($this->jobCategories() as $category): ?>
-        <div class="company-jobs" data-amount="<?= $company->getNumberOfJobs($category) ?>">
-            <?php if ($company->getNumberOfJobs($category) > 0) { ?>
-                <h4><?= $this->escapeHtml($this->localiseText($category->getPluralName())) ?></h4>
-            <?php } ?>
-            <ul class="company-jobs-list">
-                <?php // TODO: jobs sorted by package, which is not useful for visitor, possibly change sorting here to be useful
-                foreach ($company->getPackages() as $package):
-                    if ($package->getType() === 'job'):
-                        $categories = $this->jobCategories();
-                        foreach ($categories as $category):
-                            $jobs = $package->getJobsInCategory($category);
-
-                            foreach ($jobs as $job):
-                                ?>
-                                <li class="company-jobs-job">
-                                    <a href="<?= $this->url(
-                                        'company/companyItem/joblist/job_item',
-                                        [
-                                            'companySlugName' => $company->getSlugName(),
-                                            'jobSlugName' => $job->getSlugName(),
-                                            'category' => $this->localiseText($category->getSlug()),
-                                        ],
-                                        [],
-                                        true
-                                    ) ?>"><?= $this->escapeHtml($this->localiseText($job->getName())) ?></a>
-                                </li>
-                            <?php
-                            endforeach;
-                        endforeach;
-                    endif;
-                endforeach;
-                ?>
-            </ul>
-        </div>
-    <?php endforeach; ?>
 </div>
 <div class="col-md-9">
-    <h4><?= $this->translate('Article') ?></h4>
+    <h4><?= $this->translate('Highlighted') ?></h4>
     <div class="company-description text-justify markdown">
         <?= $this->markdown($this->localiseText($featuredPackage->getArticle())) ?>
     </div>
