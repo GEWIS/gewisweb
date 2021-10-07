@@ -21,7 +21,7 @@ $form->setAttribute('class', 'form-company');
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1><?= $this->translate('Edit Company') ?></h1>
+                <h1><?= sprintf($this->translate('Edit %s'), $this->escapeHtml($company->getName())) ?></h1>
             </div>
         </div>
         <hr>

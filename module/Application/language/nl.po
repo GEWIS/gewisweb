@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-04 18:05+0200\n"
-"PO-Revision-Date: 2021-10-04 19:44+0200\n"
+"POT-Creation-Date: 2021-10-07 11:15+0200\n"
+"PO-Revision-Date: 2021-10-07 11:16+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -140,27 +140,27 @@ msgstr ""
 "verantwoordelijk is voor dit bedrijf."
 
 #: module/Company/view/partial/company/company/grid/company.phtml:16
-#: module/Company/view/partial/company/company/list/company.phtml:17
-#: module/Company/view/company/company/jobs.phtml:80
+#: module/Company/view/partial/company/company/list/company.phtml:23
+#: module/Company/view/company/company/jobs.phtml:79
 #: module/Company/view/company/company/companyStory.phtml:18
 msgid "Logo of"
 msgstr "Logo van"
 
-#: module/Company/view/partial/company/company/list/company.phtml:22
-#: module/Company/view/company/company/jobs.phtml:90
+#: module/Company/view/partial/company/company/list/company.phtml:28
+#: module/Company/view/company/company/jobs.phtml:89
 #: module/Company/view/company/company/companyStory.phtml:21
 #: module/Application/view/partial/footer.phtml:24
 #: module/Application/view/partial/main-nav.phtml:175
 msgid "Contact"
 msgstr "Contact"
 
-#: module/Company/view/partial/company/company/list/company.phtml:43
+#: module/Company/view/partial/company/company/list/company.phtml:49
 #: module/Company/view/company/company/companyStory.phtml:47
 msgid "Visit Website"
 msgstr "Website bezoeken"
 
-#: module/Company/view/partial/company/company/list/company.phtml:83
-#: module/Company/view/company/company/jobs.phtml:125
+#: module/Company/view/partial/company/company/list/company.phtml:86
+#: module/Company/view/company/company/jobs.phtml:124
 #: module/Activity/view/partial/create.phtml:75
 #: module/Activity/view/partial/create.phtml:150
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:189
@@ -293,6 +293,7 @@ msgstr "Acties"
 #: module/Company/view/company/admin/index.phtml:172
 #: module/Company/view/company/admin/index.phtml:173
 #: module/Company/view/company/admin/edit-package.phtml:70
+#: module/Company/view/company/admin/edit-company.phtml:91
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -306,6 +307,7 @@ msgstr "Ja"
 #: module/Company/view/company/admin/index.phtml:172
 #: module/Company/view/company/admin/index.phtml:173
 #: module/Company/view/company/admin/edit-package.phtml:70
+#: module/Company/view/company/admin/edit-company.phtml:91
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -416,13 +418,12 @@ msgid "Update Package"
 msgstr "Pakket bijwerken"
 
 #: module/Company/view/company/admin/edit-package.phtml:50
-#: module/Company/src/Form/Package.php:129
+#: module/Company/src/Form/Package.php:128
 msgid "Banner"
 msgstr "Banner"
 
 #: module/Company/view/company/admin/edit-package.phtml:63
 #: module/Company/view/company/admin/edit-company.phtml:72
-#: module/Company/src/Form/Job.php:102
 msgid "Active"
 msgstr "Actief"
 
@@ -442,9 +443,13 @@ msgid "Delete job"
 msgstr "Verwijder vacature"
 
 #: module/Company/view/company/admin/edit-company.phtml:2
-#: module/Company/view/company/admin/edit-company.phtml:24
 msgid "Edit Company"
 msgstr "Wijzig bedrijf"
+
+#: module/Company/view/company/admin/edit-company.phtml:24
+#, php-format
+msgid "Edit %s"
+msgstr "%s bewerken"
 
 #: module/Company/view/company/admin/edit-company.phtml:30
 msgid "Packages"
@@ -553,15 +558,17 @@ msgstr "Bedrijven"
 msgid "in the spotlight"
 msgstr "uitgelicht"
 
-#: module/Company/view/company/company/jobs.phtml:61
+#: module/Company/view/company/company/jobs.phtml:60
 msgid "job_at_company"
 msgstr "bij"
 
-#: module/Company/view/company/company/jobs.phtml:111
-#: module/Company/view/company/company/jobs.phtml:118
-#: module/Company/view/company/company/job-list.phtml:137
-msgid "View"
-msgstr "Toon"
+#: module/Company/view/company/company/jobs.phtml:110
+msgid "View Website"
+msgstr "Website bezoeken"
+
+#: module/Company/view/company/company/jobs.phtml:117
+msgid "View Attachment"
+msgstr "Bijlage bekijken"
 
 #: module/Company/view/company/company/job-list.phtml:56
 msgid "What are you looking for?"
@@ -591,16 +598,18 @@ msgstr "Bedrijf"
 msgid "Unfortunately, there aren't any %s at the moment."
 msgstr "Helaas zijn er momenteel geen %s."
 
-#: module/Company/view/company/company/job-list.phtml:168
+#: module/Company/view/company/company/job-list.phtml:134
+msgid "View"
+msgstr "Toon"
+
+#: module/Company/view/company/company/job-list.phtml:165
 #, php-format
 msgid "Still haven't found what you're looking for? Take a look at %s."
 msgstr "Niet gevonden wat je zoekt? Bekijk ook %s."
 
-#: module/Company/view/company/company/companyStory.phtml:88
-#: module/Company/src/Form/Package.php:107
-#: module/Company/src/Form/Package.php:117
-msgid "Article"
-msgstr "Artikel"
+#: module/Company/view/company/company/companyStory.phtml:52
+msgid "Highlighted"
+msgstr "Uitgelicht"
 
 #: module/Company/view/company/company/spotlight.phtml:21
 msgid "Featured company"
@@ -770,7 +779,7 @@ msgstr ""
 #: module/Activity/view/partial/create.phtml:15
 #: module/Activity/view/activity/admin-category/add.phtml:27
 #: module/Company/src/Form/Job.php:145 module/Company/src/Form/Company.php:146
-#: module/Company/src/Form/Package.php:83
+#: module/Company/src/Form/Package.php:82
 #: module/Company/src/Form/JobLabel.php:39
 msgid "Enable Dutch Translations"
 msgstr "Nederlandse vertalingen inschakelen"
@@ -806,7 +815,7 @@ msgstr "Kosten"
 #: module/Activity/view/partial/create.phtml:90
 #: module/Activity/view/activity/admin-category/add.phtml:65
 #: module/Company/src/Form/Job.php:157 module/Company/src/Form/Company.php:158
-#: module/Company/src/Form/Package.php:95
+#: module/Company/src/Form/Package.php:94
 #: module/Company/src/Form/JobLabel.php:51
 msgid "Enable English Translations"
 msgstr "Engelse vertalingen inschakelen"
@@ -3437,6 +3446,11 @@ msgstr "Categorie"
 msgid "Select a job category"
 msgstr "Selecteer een vacaturecategorie"
 
+#: module/Company/src/Form/Job.php:102 module/Company/src/Form/Company.php:93
+#: module/Company/src/Form/Package.php:68
+msgid "Published"
+msgstr "Gepubliceerd"
+
 #: module/Company/src/Form/Job.php:124 module/Company/src/Form/Company.php:125
 msgid "E-mail Address"
 msgstr "E-mailadres"
@@ -3467,11 +3481,6 @@ msgstr "E-mailadres formaat is niet geldig"
 msgid "Logo"
 msgstr "Logo"
 
-#: module/Company/src/Form/Company.php:93
-#: module/Company/src/Form/JobCategory.php:123
-msgid "Hidden"
-msgstr "Verborgen"
-
 #: module/Company/src/Form/Company.php:115
 msgid "Address"
 msgstr "Adres"
@@ -3486,6 +3495,10 @@ msgstr "Slogan"
 msgid "Name (Plural)"
 msgstr "Naam (meervoud)"
 
+#: module/Company/src/Form/JobCategory.php:123
+msgid "Hidden"
+msgstr "Verborgen"
+
 #: module/Company/src/Form/Package.php:42
 msgid "Start Date"
 msgstr "Startdatum"
@@ -3494,9 +3507,10 @@ msgstr "Startdatum"
 msgid "Expiration Date"
 msgstr "Afloopdatum"
 
-#: module/Company/src/Form/Package.php:69
-msgid "Published"
-msgstr "Gepubliceerd"
+#: module/Company/src/Form/Package.php:106
+#: module/Company/src/Form/Package.php:116
+msgid "Article"
+msgstr "Artikel"
 
 #: module/Company/src/Service/Company.php:182
 msgid "You are not allowed to view the banner"
@@ -4553,9 +4567,6 @@ msgstr "Inactief Lid"
 
 #~ msgid "Banner package"
 #~ msgstr "Banner pakket"
-
-#~ msgid "View attachment"
-#~ msgstr "Bekijk bijlage"
 
 #~ msgid "Posted today"
 #~ msgstr "Vandaag geplaatst"
