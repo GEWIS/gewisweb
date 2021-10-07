@@ -125,12 +125,9 @@ $this->headScript()
                                 <?php endif; ?>
                                 <div>
                                     <?php foreach ($job->getLabels() as $label): ?>
-                                        <span class="label label-default job-label"
-                                              data-label="<?= $escaper->escapeHtmlAttr($this->localiseText($label->getAbbreviation())) ?>"
+                                        <span class="label label-default job-label" data-label="<?= $escaper->escapeHtmlAttr($this->localiseText($label->getAbbreviation())) ?>"
                                               data-toggle="tooltip"
-                                              title="<?= $escaper->escapeHtmlAttr($this->localiseText($label->getName())) ?>">
-                                            <?= $this->escapeHtml($this->localiseText($label->getAbbreviation())) ?>
-                                        </span>
+                                              title="<?= $escaper->escapeHtmlAttr($this->localiseText($label->getName())) ?>"><?= $escaper->escapeHtmlAttr($this->localiseText($label->getAbbreviation())) ?></span>
                                     <?php endforeach; ?>
                                 </div>
                                 <div class="card-footer">
