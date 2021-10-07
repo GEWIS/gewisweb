@@ -173,8 +173,8 @@ class AlbumCover
                 $target->compositeImage(
                     $image,
                     Imagick::COMPOSITE_COPY,
-                    (int) ($imageWidth + $innerBorder) * $x + $outerBorderX,
-                    (int) ($imageHeight + $innerBorder) * $y + $outerBorderY
+                    (int) (($imageWidth + $innerBorder) * $x + $outerBorderX),
+                    (int) (($imageHeight + $innerBorder) * $y + $outerBorderY)
                 );
             }
         }

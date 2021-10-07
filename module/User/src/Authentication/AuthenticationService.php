@@ -58,7 +58,7 @@ class AuthenticationService implements AuthenticationServiceInterface
      *
      * @return self Provides a fluent interface
      */
-    public function setAdapter(AdapterInterface $adapter): static
+    public function setAdapter(AdapterInterface $adapter): self
     {
         if (
             $adapter instanceof Mapper
@@ -91,7 +91,7 @@ class AuthenticationService implements AuthenticationServiceInterface
      *
      * @return self Provides a fluent interface
      */
-    public function setStorage(StorageInterface $storage): static
+    public function setStorage(StorageInterface $storage): self
     {
         if ($storage instanceof Session) {
             $this->storage = $storage;
@@ -125,9 +125,8 @@ class AuthenticationService implements AuthenticationServiceInterface
         }
 
         // Load the credentials into the authentication adapter and authenticate.
-        $adapter = $this->getAdapter();
-        $adapter->setCredentials($login, $securityCode);
-        $result = $adapter->authenticate();
+        $this->getAdapter()->setCredentials($login, $securityCode);
+        $result = $this->getAdapter()->authenticate();
 
         // Remove any existing identity to ensure we are starting from a blank slate.
         if ($this->hasIdentity()) {

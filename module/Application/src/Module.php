@@ -32,12 +32,14 @@ use Laminas\Mvc\{
     MvcEvent
 };
 use Interop\Container\ContainerInterface;
+use Laminas\Cache\Storage\Adapter\MemcachedOptions;
 use Laminas\I18n\Translator\Translator as I18nTranslator;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\Validator\AbstractValidator;
 use Locale;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
+use RuntimeException;
 use User\Permissions\NotAllowedException;
 
 class Module
@@ -153,9 +155,12 @@ class Module
                     $cache = new Memcached();
                     // The TTL is 5 minutes (60 seconds * 5), as Supremum has a 5 minute cache on their end too. There
                     // is no need to keep requesting an infimum if we get the same one back for 5 minutes.
-                    $cache->getOptions()
-                        ->setTtl(60 * 5)
-                        ->setServers(['memcached', '11211']);
+                    $options = $cache->getOptions();
+                    if (!($options instanceof MemcachedOptions)) {
+                        throw new RuntimeException('Unable to retrieve and set options for Memcached');
+                    }
+                    $options->setTtl(60 * 5);
+                    $options->setServers(['memcached', '11211']);
 
                     return $cache;
                 },

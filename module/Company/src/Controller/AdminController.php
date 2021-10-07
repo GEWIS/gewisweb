@@ -8,11 +8,13 @@ use Company\Service\{
     Company as CompanyService,
     CompanyQuery as CompanyQueryService,
 };
+use Company\Model\CompanyJobPackage;
 use DateInterval;
 use DateTime;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
+use RuntimeException;
 use User\Permissions\NotAllowedException;
 
 class AdminController extends AbstractActionController
@@ -427,7 +429,7 @@ class AdminController extends AbstractActionController
         if (
             null === $package
             || $package->getCompany()->getSlugName() !== $companySlugName
-            || 'job' !== $package->getType()
+            || !($package instanceof CompanyJobPackage)
         ) {
             return $this->notFoundAction();
         }

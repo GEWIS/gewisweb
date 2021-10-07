@@ -39,7 +39,7 @@ class ApiController extends AbstractActionController
             $response = $this->getResponse();
             $response->setStatusCode(200);
             $headers = $response->getHeaders();
-            $headers->addHeaderLine('GEWIS-MemberID', $identity->getLidnr());
+            $headers->addHeaderLine('GEWIS-MemberID', (string) $identity->getLidnr());
             if (null != $identity->getMember()) {
                 $member = $identity->getMember();
                 $name = $member->getFullName();

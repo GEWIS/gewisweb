@@ -494,7 +494,7 @@ class Company
             }
 
             // Remove the old logo from storage.
-            if (null !== $oldPath && $oldPath !== $path) {
+            if (isset($oldPath) && $oldPath !== $path) {
                 $this->storageService->removeFile($oldPath);
             }
         }
