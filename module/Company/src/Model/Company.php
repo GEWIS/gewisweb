@@ -386,7 +386,7 @@ class Company
         }
 
         // Except when it is explicitly marked as hidden.
-        return !$visible || $this->isPublished();
+        return !$visible || !$this->isPublished();
     }
 
     /**

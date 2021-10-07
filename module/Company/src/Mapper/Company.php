@@ -23,7 +23,7 @@ class Company extends BaseMapper
         $objectRepository = $this->getRepository(); // From clause is integrated in this statement
         $qb = $objectRepository->createQueryBuilder('c');
         $qb->select('c')
-            ->where('c.hidden = 0')
+            ->where('c.published = 1')
             ->orderBy('c.name', 'ASC');
 
         return array_filter(
