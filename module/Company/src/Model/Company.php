@@ -136,10 +136,10 @@ class Company
     protected CompanyLocalisedText $website;
 
     /**
-     * Whether the company is hidden.
+     * Whether the company is published or not.
      */
     #[Column(type: "boolean")]
-    protected bool $hidden;
+    protected bool $published;
 
     /**
      * The company's packages.
@@ -386,7 +386,7 @@ class Company
         }
 
         // Except when it is explicitly marked as hidden.
-        return !$visible || $this->getHidden();
+        return !$visible || $this->isPublished();
     }
 
     /**
@@ -394,19 +394,19 @@ class Company
      *
      * @return bool
      */
-    public function getHidden(): bool
+    public function isPublished(): bool
     {
-        return $this->hidden;
+        return $this->published;
     }
 
     /**
      * Set the company's hidden status.
      *
-     * @param bool $hidden
+     * @param bool $published
      */
-    public function setHidden(bool $hidden): void
+    public function setPublished(bool $published): void
     {
-        $this->hidden = $hidden;
+        $this->published = $published;
     }
 
     /**
@@ -531,7 +531,7 @@ class Company
         $this->setContactAddress($data['contactAddress']);
         $this->setContactEmail($data['contactEmail']);
         $this->setContactPhone($data['contactPhone']);
-        $this->setHidden($data['hidden']);
+        $this->setPublished($data['published']);
 
         $this->getSlogan()->updateValues($data['sloganEn'], $data['slogan']);
         $this->getWebsite()->updateValues($data['websiteEn'], $data['website']);
@@ -554,7 +554,7 @@ class Company
         $arraycopy['contactEmail'] = $this->getContactEmail();
         $arraycopy['contactAddress'] = $this->getContactAddress();
         $arraycopy['contactPhone'] = $this->getContactPhone();
-        $arraycopy['hidden'] = $this->getHidden();
+        $arraycopy['published'] = $this->isPublished();
 
         // Languages
         $arraycopy['slogan'] = $this->getSlogan()->getValueNL();

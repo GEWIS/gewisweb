@@ -160,7 +160,7 @@ $this->scriptUrl()->requireUrls(
                             ['companySlugName' => $company->getSlugName()]);
                         ?>
                         <tr class="company-list-item
-                               <?= $company->getHidden() ? ' danger' : '' ?>
+                               <?= $company->isPublished() ? '' : ' danger' ?>
                                <?= $company->getNumberOfExpiredPackages() > 0 ? ' warning' : '' ?>">
                             <td class="company-name">
                                 <a href=<?= $editUrl; ?>>

@@ -398,7 +398,7 @@ class Company
         // Set attributes that are not L10n-able.
         $company->setName($data['name']);
         $company->setSlugName($data['slugName']);
-        $company->setHidden($data['hidden']);
+        $company->setPublished($data['published']);
         $company->setContactName($data['contactName']);
         $company->setContactEmail($data['contactEmail']);
         $company->setContactPhone($data['contactPhone']);
@@ -622,7 +622,7 @@ class Company
 
         $job->setSlugName($data['slugName']);
         $job->setCategory($category);
-        $job->setActive($data['active']);
+        $job->setPublished($data['published']);
         $job->setContactName($data['contactName']);
         $job->setContactEmail($data['contactEmail']);
         $job->setContactPhone($data['contactPhone']);
@@ -678,7 +678,7 @@ class Company
 
         $job->setSlugName($data['slugName']);
         $job->setCategory($category);
-        $job->setActive($data['active']);
+        $job->setPublished($data['published']);
         $job->setContactName($data['contactName']);
         $job->setContactEmail($data['contactEmail']);
         $job->setContactPhone($data['contactPhone']);

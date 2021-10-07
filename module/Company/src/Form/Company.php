@@ -87,10 +87,10 @@ class Company extends Form implements InputFilterProviderInterface
 
         $this->add(
             [
-                'name' => 'hidden',
+                'name' => 'published',
                 'type' => Checkbox::class,
                 'options' => [
-                    'label' => $this->translator->translate('Hidden'),
+                    'label' => $this->translator->translate('Published'),
                     'checked_value' => 1,
                     'unchecked_value' => 0,
                 ],
@@ -317,7 +317,7 @@ class Company extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'hidden' => [
+            'published' => [
                 'required' => true,
             ],
             'contactName' => [

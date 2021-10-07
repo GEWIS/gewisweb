@@ -96,10 +96,10 @@ class Job extends Form implements InputFilterProviderInterface
 
         $this->add(
             [
-                'name' => 'active',
+                'name' => 'published',
                 'type' => Checkbox::class,
                 'options' => [
-                    'label' => $this->translator->translate('Active'),
+                    'label' => $this->translator->translate('Published'),
                     'checked_value' => 1,
                     'unchecked_value' => 0,
                 ],
@@ -337,7 +337,7 @@ class Job extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'active' => [
+            'published' => [
                 'required' => true,
             ],
             'contactName' => [

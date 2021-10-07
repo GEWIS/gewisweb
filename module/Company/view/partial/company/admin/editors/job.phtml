@@ -45,16 +45,16 @@
             </div>
             <div class="col-md-12">
                 <?php
-                $active = $form->get('active')
+                $published = $form->get('published')
                     ->setAttribute('class', 'form-control')
                     ->setAttribute('id', 'active');
                 ?>
-                <div class="form-group <?= $this->bootstrapElementError($active) ?>">
-                    <label for="<?= $active->getAttribute('id') ?>" class="control-label label-required">
-                        <?= $active->getLabel() ?>
+                <div class="form-group <?= $this->bootstrapElementError($published) ?>">
+                    <label for="<?= $published->getAttribute('id') ?>" class="control-label label-required">
+                        <?= $published->getLabel() ?>
                     </label>
-                    <?= $this->formCheckbox($active) ?>
-                    <?= $this->formElementErrors($active) ?>
+                    <?= $this->formCheckbox($published) ?>
+                    <?= $this->formElementErrors($published) ?>
                 </div>
             </div>
         </div>

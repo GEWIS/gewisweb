@@ -61,16 +61,16 @@
             </div>
             <div class="col-md-12">
                 <?php
-                $hidden = $form->get('hidden')
+                $published = $form->get('published')
                     ->setAttribute('class', 'form-control')
-                    ->setAttribute('id', 'hidden');
+                    ->setAttribute('id', 'published');
                 ?>
-                <div class="form-group <?= $this->bootstrapElementError($hidden) ?>">
-                    <label for="<?= $hidden->getAttribute('id') ?>" class="control-label label-required">
-                        <?= $hidden->getLabel() ?>
+                <div class="form-group <?= $this->bootstrapElementError($published) ?>">
+                    <label for="<?= $published->getAttribute('id') ?>" class="control-label label-required">
+                        <?= $published->getLabel() ?>
                     </label>
-                    <?= $this->formCheckbox($hidden) ?>
-                    <?= $this->formElementErrors($hidden) ?>
+                    <?= $this->formCheckbox($published) ?>
+                    <?= $this->formElementErrors($published) ?>
                 </div>
             </div>
         </div>

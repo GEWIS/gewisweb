@@ -63,7 +63,6 @@ class Package extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'published',
-
                 'type' => Checkbox::class,
                 'options' => [
                     'label' => $this->translator->translate('Published'),

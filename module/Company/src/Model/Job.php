@@ -42,7 +42,7 @@ class Job
      * The job's status.
      */
     #[Column(type: "boolean")]
-    protected bool $active;
+    protected bool $published;
 
     /**
      * The job's contact's name.
@@ -271,24 +271,24 @@ class Job
      *
      * @return bool
      */
-    public function getActive(): bool
+    public function isPublished(): bool
     {
-        return $this->active;
+        return $this->published;
     }
 
     public function isActive(): bool
     {
-        return $this->getActive() && $this->getPackage()->isActive() && !$this->getPackage()->getCompany()->isHidden();
+        return $this->isPublished() && $this->getPackage()->isActive() && !$this->getPackage()->getCompany()->isHidden();
     }
 
     /**
      * Set the job's status.
      *
-     * @param bool $active
+     * @param bool $published
      */
-    public function setActive(bool $active): void
+    public function setPublished(bool $published): void
     {
-        $this->active = $active;
+        $this->published = $published;
     }
 
     /**
@@ -555,7 +555,7 @@ class Job
             'contactName' => $this->getContactName(),
             'contactEmail' => $this->getContactEmail(),
             'contactPhone' => $this->getContactPhone(),
-            'active' => $this->getActive(),
+            'published' => $this->isPublished(),
             'name' => $this->getName()->getValueNL(),
             'nameEn' => $this->getName()->getValueEN(),
             'location' => $this->getLocation()->getValueNL(),
