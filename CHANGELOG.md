@@ -1,3 +1,13 @@
+## [v2.4.3](https://github.com/GEWIS/gewisweb/tree/v2.4.3) (2021-10-09)
+
+* Added the activity language system to companies, this allows for easier management of companies and vacancies.
+* Updated layout and styling of company admin pages (forms).
+* Updated layout and styling of company profiles.
+* Fixed issue where organ pages did not show mutations.
+* Several bug fixes and speed improvements.
+
+---
+
 ## [v2.4.2](https://github.com/GEWIS/gewisweb/tree/v2.4.2) (2021-09-30)
 
 * Added watermarking system to give downloaded exams and summaries a unique watermark.
