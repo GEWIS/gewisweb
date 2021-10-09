@@ -18,8 +18,8 @@ RUN curl -o SecurityInfo.zip \
       && rm SecurityInfo.zip \
       && mv SecurityInfo /usr/src/matomo/plugins
 
-RUN curl -o TrackingOptOut.zip \
-      https://github.com/GEWIS/gewisweb-analytics-opt-out/archive/refs/tags/v1.0.0-gewisweb.zip \
+RUN curl -L -o TrackingOptOut.zip \
+      https://github.com/GEWIS/gewisweb-analytics-opt-out/archive/refs/tags/v1.0.2-gewisweb.zip \
       && unzip -j TrackingOptOut.zip -d "TrackingOptOut" \
       && rm TrackingOptOut.zip \
       && mv TrackingOptOut /usr/src/matomo/plugins
