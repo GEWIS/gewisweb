@@ -1,3 +1,9 @@
+## [v2.4.4](https://github.com/GEWIS/gewisweb/tree/v2.4.4) (2021-10-12)
+
+* Fixed issue where creation of an organ profile was not possible.
+
+---
+
 ## [v2.4.3](https://github.com/GEWIS/gewisweb/tree/v2.4.3) (2021-10-09)
 
 * Added the activity language system to companies, this allows for easier management of companies and vacancies.
