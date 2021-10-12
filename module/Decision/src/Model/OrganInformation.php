@@ -24,7 +24,7 @@ class OrganInformation
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id;
+    protected ?int $id = null;
 
     /**
      *
