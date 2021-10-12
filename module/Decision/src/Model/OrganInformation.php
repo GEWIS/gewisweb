@@ -117,7 +117,7 @@ class OrganInformation
      */
     #[ManyToOne(targetEntity: UserModel::class)]
     #[JoinColumn(referencedColumnName: "lidnr")]
-    protected ?UserModel $approver;
+    protected ?UserModel $approver = null;
 
     /**
      * @return int|null
