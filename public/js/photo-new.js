@@ -37,11 +37,14 @@ Photo = {
         Photo.initTagSearch();
     },
     initTagSearch: function () {
+        let request = null;
         $('.tagSearch').each(function(item) {
             $(this).autocomplete({
                 lookup: function (query, done) {
                     if (query.length >= 2) {
-                        $.getJSON(URLHelper.url('member/search') + '?q=' + query, function (data) {
+                        if (request) request.abort();
+                        request = $.getJSON(URLHelper.url('member/search') + '?q=' + query, function (data) {
+                            request = null;
                             var result = {suggestions: []};
 
                             $.each(data.members, function (i, member) {
@@ -56,9 +59,11 @@ Photo = {
                 },
                 orientation: 'top',
                 onSelect: function (suggestion) {
-                    $.post($(this).data('url').replace('lidnr', suggestion.data),
-                        {lidnr: suggestion.data}
+                    if (request) request.abort();
+                    request = $.post($(this).data('url').replace('lidnr', suggestion.data),
+                        { lidnr: suggestion.data }
                         , function (data) {
+                            request = null;
                             if (data.success) {
                                 var removeURL = URLHelper.url('photo/photo/tag/remove', {
                                     'photo_id': data.tag.photo_id,
