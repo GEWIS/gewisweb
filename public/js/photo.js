@@ -28,7 +28,7 @@ Photo = {
         let request = null;
         $('#tagSearch').autocomplete({
             minChars: 2,
-            deferRequestBy: 150,
+            deferRequestBy: 100,
             lookup: function (query, done) {
                 if (request) request.abort();
                 request = $.getJSON(URLHelper.url('member/search') + '?q=' + query, function (data) {
