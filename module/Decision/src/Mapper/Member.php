@@ -52,13 +52,11 @@ class Member extends BaseMapper
         FROM `Member`
         WHERE CONCAT(LOWER(`firstName`), ' ', LOWER(`lastName`)) LIKE :name
         OR CONCAT(LOWER(`firstName`), ' ', LOWER(`middleName`), ' ', LOWER(`lastName`)) LIKE :name
-        ORDER BY :order_by :order_direction LIMIT :limit
+        ORDER BY $orderColumn $orderDirection LIMIT :limit
         QUERY;
 
         $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
         $query->setParameter(':name', '%' . strtolower($name) . '%')
-            ->setParameter(':order_by', $orderColumn)
-            ->setParameter(':order_direction', $orderDirection)
             ->setParameter(':limit', $maxResults);
 
         return $query->getArrayResult();
