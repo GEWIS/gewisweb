@@ -40,22 +40,22 @@ Photo = {
         let request = null;
         $('.tagSearch').each(function(item) {
             $(this).autocomplete({
+                minChars: 2,
+                deferRequestBy: 100,
                 lookup: function (query, done) {
-                    if (query.length >= 2) {
-                        if (request) request.abort();
-                        request = $.getJSON(URLHelper.url('member/search') + '?q=' + query, function (data) {
-                            request = null;
-                            var result = {suggestions: []};
+                    if (request) request.abort();
+                    request = $.getJSON(URLHelper.url('member/search') + '?q=' + query, function (data) {
+                        request = null;
+                        var result = {suggestions: []};
 
-                            $.each(data.members, function (i, member) {
-                                result.suggestions.push({
-                                    'value': member.fullName, 'data': member.lidnr
-                                })
-                            });
-
-                            done(result);
+                        $.each(data.members, function (i, member) {
+                            result.suggestions.push({
+                                'value': member.fullName, 'data': member.lidnr
+                            })
                         });
-                    }
+
+                        done(result);
+                    });
                 },
                 orientation: 'top',
                 onSelect: function (suggestion) {

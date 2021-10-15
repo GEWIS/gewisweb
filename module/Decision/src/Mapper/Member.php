@@ -7,7 +7,10 @@ use Decision\Model\{
     Member as MemberModel,
     Organ as OrganModel,
 };
-use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Doctrine\ORM\Query\{
+    ResultSetMapping,
+    ResultSetMappingBuilder,
+};
 
 class Member extends BaseMapper
 {
@@ -24,9 +27,9 @@ class Member extends BaseMapper
     }
 
     /**
-     * Finds members by (part of) their name.
+     * Finds members (lidnr, full name, and generation) by (part of) their name.
      *
-     * @param string $query (part of) the full name of a member
+     * @param string $name (part of) the full name of a member
      * @param int $maxResults
      * @param string $orderColumn
      * @param string $orderDirection
@@ -34,22 +37,29 @@ class Member extends BaseMapper
      * @return array
      */
     public function searchByName(
-        string $query,
+        string $name,
         int $maxResults = 32,
         string $orderColumn = 'generation',
         string $orderDirection = 'DESC'
     ): array {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('m')
-            ->from($this->getRepositoryName(), 'm')
-            ->where("CONCAT(LOWER(m.firstName), ' ', LOWER(m.lastName)) LIKE :name")
-            ->orWhere("CONCAT(LOWER(m.firstName), ' ', LOWER(m.middleName), ' ', LOWER(m.lastName)) LIKE :name")
-            ->setMaxResults($maxResults)
-            ->orderBy("m.$orderColumn", $orderDirection)
-            ->setFirstResult(0);
-        $qb->setParameter(':name', '%' . strtolower($query) . '%');
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('lidnr', 'lidnr', 'integer')
+            ->addScalarResult('fullName', 'fullName')
+            ->addScalarResult('generation', 'generation', 'integer');
 
-        return $qb->getQuery()->getResult();
+        $sql = <<<QUERY
+        SELECT `lidnr`, CONCAT_WS(' ', `firstName`, IF(LENGTH(`middleName`), `middleName`, NULL), `lastName`) as `fullName`, `generation`
+        FROM `Member`
+        WHERE CONCAT(LOWER(`firstName`), ' ', LOWER(`lastName`)) LIKE :name
+        OR CONCAT(LOWER(`firstName`), ' ', LOWER(`middleName`), ' ', LOWER(`lastName`)) LIKE :name
+        ORDER BY $orderColumn $orderDirection LIMIT :limit
+        QUERY;
+
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+        $query->setParameter(':name', '%' . strtolower($name) . '%')
+            ->setParameter(':limit', $maxResults);
+
+        return $query->getArrayResult();
     }
 
     /**
@@ -65,7 +75,7 @@ class Member extends BaseMapper
     {
         // unfortunately, there is no support for functions like DAY() and MONTH()
         // in doctrine2, thus we have to use the NativeSQL here
-        $builder = new ResultSetMappingBuilder($this->em);
+        $builder = new ResultSetMappingBuilder($this->getEntityManager());
         $builder->addRootEntityFromClassMetadata($this->getRepositoryName(), 'm');
 
         $select = $builder->generateSelectClause(['m' => 't1']);
@@ -76,7 +86,7 @@ class Member extends BaseMapper
             . ' AND t1.expiration >= CURDATE()'
             . 'ORDER BY DATE_SUB(t1.birth, INTERVAL YEAR(t1.birth) YEAR) ASC';
 
-        $query = $this->em->createNativeQuery($sql, $builder);
+        $query = $this->getEntityManager()->createNativeQuery($sql, $builder);
         $query->setParameter('days', $days);
 
         return $query->getResult();
@@ -89,7 +99,7 @@ class Member extends BaseMapper
      */
     public function findOrgans(MemberModel $member): array
     {
-        $qb = $this->em->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->select('DISTINCT o')
             ->from(OrganModel::class, 'o')

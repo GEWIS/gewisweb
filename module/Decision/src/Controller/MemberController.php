@@ -115,18 +115,9 @@ class MemberController extends AbstractActionController
         $name = $this->params()->fromQuery('q');
 
         if (!empty($name)) {
-            $members = [];
-            foreach ($this->memberService->searchMembersByName($name) as $member) {
-                $members[] = [
-                    'lidnr' => $member->getLidnr(),
-                    'fullName' => $member->getFullname(),
-                    'generation' => $member->getGeneration(),
-                ];
-            }
-
             return new JsonModel(
                 [
-                    'members' => $members,
+                    'members' => $this->memberService->searchMembersByName($name),
                 ]
             );
         }

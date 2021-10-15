@@ -108,6 +108,16 @@ abstract class BaseMapper
     }
 
     /**
+     * Get the entity manager.
+     *
+     * @return EntityManager
+     */
+    public function getEntityManager(): EntityManager
+    {
+        return $this->em;
+    }
+
+    /**
      * Get the repository for this mapper.
      *
      * @return EntityRepository
