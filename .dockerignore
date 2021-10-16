@@ -43,6 +43,7 @@ docker/nginx/
 docker/matomo
 Dockerfile
 docker-compose.*
+docs/*
 gewisweb-vagrant/
 nbproject
 node_modules/

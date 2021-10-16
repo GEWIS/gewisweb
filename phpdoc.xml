@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdocumentor
+        configVersion="3.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://www.phpdoc.org"
+        xsi:noNamespaceSchemaLocation="https://docs.phpdoc.org/latest/phpdoc.xsd"
+>
+    <paths>
+        <output>docs</output>
+        <cache>docs/cache</cache>
+    </paths>
+    <version number="latest">
+        <api format="php">
+            <source dsn=".">
+                <path>module</path>
+            </source>
+            <extensions>
+                <extension>php</extension>
+            </extensions>
+            <default-package-name>gewisweb</default-package-name>
+        </api>
+    </version>
+</phpdocumentor>
