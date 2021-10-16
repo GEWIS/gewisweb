@@ -131,13 +131,31 @@ class Activity
      *
      * @return ActivityForm
      */
-    public function getActivityForm()
+    public function getActivityForm(): ActivityForm
     {
         if (!$this->aclService->isAllowed('create', 'activity')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create an activity'));
         }
 
-        return $this->activityForm;
+        try {
+            $organs = $this->organService->getEditableOrgans();
+        } catch (NotAllowedException $e) {
+            $organs = [];
+        }
+
+        try {
+            $companies = $this->companyService->getHiddenCompanyList();
+        } catch (NotAllowedException $e) {
+            $companies = [];
+        }
+
+        try {
+            $categories = $this->categoryService->findAll();
+        } catch (NotAllowedException $e) {
+            $categories = [];
+        }
+
+        return $this->activityForm->setAllOptions($organs, $companies, $categories);
     }
 
     /**

@@ -556,7 +556,7 @@ class Decision
             throw new NotAllowedException($this->translator->translate('You are not allowed to upload notes.'));
         }
 
-        return $this->notesForm;
+        return $this->notesForm->setMeetings($this->meetingMapper->findAllMeetings());
     }
 
     /**

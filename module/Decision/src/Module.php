@@ -122,53 +122,52 @@ class Module
                 },
                 'decision_mapper_member' => function (ContainerInterface $container) {
                     return new Member(
-                        $container->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
                 'decision_mapper_organ' => function (ContainerInterface $container) {
                     return new Organ(
-                        $container->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
                 'decision_mapper_meeting' => function (ContainerInterface $container) {
                     return new Meeting(
-                        $container->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
                 'decision_mapper_decision' => function (ContainerInterface $container) {
                     return new Decision(
-                        $container->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
                 'decision_mapper_authorization' => function (ContainerInterface $container) {
                     return new Mapper\Authorization(
-                        $container->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
                 'decision_form_searchdecision' => function (ContainerInterface $container) {
                     return new SearchDecision(
-                        $container->get('translator')
+                        $container->get('translator'),
                     );
                 },
                 'decision_form_document' => function (ContainerInterface $container) {
                     return new Document(
-                        $container->get('translator')
+                        $container->get('translator'),
                     );
                 },
                 'decision_form_notes' => function (ContainerInterface $container) {
                     return new Notes(
                         $container->get('translator'),
-                        $container->get('decision_mapper_meeting')
                     );
                 },
                 'decision_form_authorization' => function (ContainerInterface $container) {
                     return new Authorization(
-                        $container->get('translator')
+                        $container->get('translator'),
                     );
                 },
                 'decision_form_organ_information' => function (ContainerInterface $container) {
                     $form = new OrganInformation(
-                        $container->get('translator')
+                        $container->get('translator'),
                     );
                     $form->setHydrator($container->get('decision_hydrator'));
 
@@ -183,7 +182,7 @@ class Module
                 },
                 'decision_hydrator' => function (ContainerInterface $container) {
                     return new DoctrineObject(
-                        $container->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
                 'decision_fileReader' => function (ContainerInterface $container) {
@@ -193,7 +192,7 @@ class Module
 
                     return new LocalFileReader(
                         $config['filebrowser_folder'],
-                        $validFile
+                        $validFile,
                     );
                 },
                 'decision_service_acl' => AclServiceFactory::class,
