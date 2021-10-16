@@ -2,40 +2,41 @@
 
 namespace Decision\Form;
 
-use Decision\Mapper\Meeting as MeetingMapper;
+use Laminas\Form\Element\{
+    File,
+    Select,
+    Submit,
+};
 use Laminas\Form\Form;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
-use Laminas\Validator\File\Extension;
-use Laminas\Validator\File\MimeType;
+use Laminas\Validator\File\{
+    Extension,
+    MimeType,
+};
 
 class Notes extends Form implements InputFilterProviderInterface
 {
     public const ERROR_FILE_EXISTS = 'file_exists';
 
-    protected $translator;
+    /**
+     * @var Translator
+     */
+    protected Translator $translator;
 
-    public function __construct(Translator $translator, MeetingMapper $mapper)
+    public function __construct(Translator $translator)
     {
         parent::__construct();
         $this->translator = $translator;
 
-        $options = [];
-        foreach ($mapper->findAllMeetings() as $meeting) {
-            $meeting = $meeting[0];
-            $name = $meeting->getType() . '/' . $meeting->getNumber();
-            $options[$name] = $meeting->getType() . ' ' . $meeting->getNumber()
-                . ' (' . $meeting->getDate()->format('Y-m-d') . ')';
-        }
-
         $this->add(
             [
                 'name' => 'meeting',
-                'type' => 'select',
+                'type' => Select::class,
                 'options' => [
-                    'label' => $translator->translate('Meeting'),
-                    'empty_option' => $translator->translate('Choose a meeting'),
-                    'value_options' => $options,
+                    'label' => $this->translator->translate('Meeting'),
+                    'empty_option' => $this->translator->translate('Choose a meeting'),
+                    'value_options' => [],
                 ],
             ]
         );
@@ -43,18 +44,17 @@ class Notes extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'upload',
-                'type' => 'file',
+                'type' => File::class,
                 'option' => [
                     'label' => $translator->translate('Notes to upload'),
                 ],
             ]
         );
-        $this->get('upload')->setLabel($translator->translate('Notes to upload'));
 
         $this->add(
             [
                 'name' => 'submit',
-                'type' => 'submit',
+                'type' => Submit::class,
                 'attributes' => [
                     'value' => $translator->translate('Submit'),
                 ],
@@ -63,11 +63,31 @@ class Notes extends Form implements InputFilterProviderInterface
     }
 
     /**
+     * @param array $meetings
+     *
+     * @return Notes
+     */
+    public function setMeetings(array $meetings): static
+    {
+        $options = [];
+        foreach ($meetings as $meeting) {
+            $meeting = $meeting[0];
+            $name = $meeting->getType() . '/' . $meeting->getNumber();
+            $options[$name] = $meeting->getType() . ' ' . $meeting->getNumber()
+                . ' (' . $meeting->getDate()->format('Y-m-d') . ')';
+        }
+
+        $this->get('meeting')->setValueOptions($options);
+
+        return $this;
+    }
+
+    /**
      * Set an error.
      *
      * @param string $error
      */
-    public function setError($error)
+    public function setError(string $error): void
     {
         if (self::ERROR_FILE_EXISTS == $error) {
             $this->setMessages(
@@ -83,7 +103,7 @@ class Notes extends Form implements InputFilterProviderInterface
     /**
      * Input filter specification.
      */
-    public function getInputFilterSpecification()
+    public function getInputFilterSpecification(): array
     {
         return [
             'upload' => [

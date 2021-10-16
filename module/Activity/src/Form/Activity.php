@@ -3,50 +3,50 @@
 namespace Activity\Form;
 
 use DateTime;
-use Decision\Model\Organ;
 use DomainException;
 use Exception;
+use Laminas\Form\Element\{
+    Checkbox,
+    Collection,
+    DateTime as DateTimeElement,
+    MultiCheckbox,
+    Select,
+    Submit,
+    Text,
+    Textarea,
+};
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\Callback;
-use Laminas\Validator\NotEmpty;
+use Laminas\Validator\{
+    Callback,
+    NotEmpty,
+};
 
 class Activity extends Form implements InputFilterProviderInterface
 {
-    protected $organs;
-    protected $translator;
+    /**
+     * @var Translator
+     */
+    protected Translator $translator;
 
     /**
-     * @param Organ[] $organs
+     * @param Translator $translator
      */
-    public function __construct(array $organs, array $companies, array $categories, Translator $translator)
+    public function __construct(Translator $translator)
     {
         parent::__construct('activity');
         $this->translator = $translator;
 
         $this->setAttribute('method', 'post');
 
-        // all the organs that the user belongs to in organId => name pairs
-        $organOptions = [0 => $translator->translate('No organ')];
-        foreach ($organs as $organ) {
-            $organOptions[$organ->getId()] = $organ->getAbbr();
-        }
-
-        $companyOptions = [0 => $translator->translate('No Company')];
-        foreach ($companies as $company) {
-            $companyOptions[$company->getId()] = $company->getName();
-        }
-
-        $categoryOptions = [];
-        foreach ($categories as $category) {
-            $categoryOptions[$category->getId()] = $category->getName();
-        }
+        $organOptions = [0 => $this->translator->translate('No organ')];
+        $companyOptions = [0 => $this->translator->translate('No Company')];
 
         $this->add(
             [
                 'name' => 'organ',
-                'type' => 'select',
+                'type' => Select::class,
                 'options' => [
                     'value_options' => $organOptions,
                 ],
@@ -56,7 +56,7 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'company',
-                'type' => 'select',
+                'type' => Select::class,
                 'options' => [
                     'value_options' => $companyOptions,
                 ],
@@ -66,7 +66,7 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'beginTime',
-                'type' => 'datetime',
+                'type' => DateTimeElement::class,
                 'options' => [
                     'format' => 'Y/m/d H:i',
                 ],
@@ -76,7 +76,7 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'endTime',
-                'type' => 'datetime',
+                'type' => DateTimeElement::class,
                 'options' => [
                     'format' => 'Y/m/d H:i',
                 ],
@@ -86,7 +86,7 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'language_dutch',
-                'type' => 'Laminas\Form\Element\Checkbox',
+                'type' => Checkbox::class,
                 'options' => [
                     'checked_value' => 1,
                     'unchecked_value' => 0,
@@ -97,7 +97,7 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'language_english',
-                'type' => 'Laminas\Form\Element\Checkbox',
+                'type' => Checkbox::class,
                 'options' => [
                     'checked_value' => 1,
                     'unchecked_value' => 0,
@@ -108,78 +108,62 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'name',
-                'attributes' => [
-                    'type' => 'text',
-                ],
+                'type' => Text::class,
             ]
         );
 
         $this->add(
             [
                 'name' => 'nameEn',
-                'attributes' => [
-                    'type' => 'text',
-                ],
+                'type' => Text::class,
             ]
         );
 
         $this->add(
             [
                 'name' => 'location',
-                'attributes' => [
-                    'type' => 'text',
-                ],
+                'type' => Text::class,
             ]
         );
 
         $this->add(
             [
                 'name' => 'locationEn',
-                'attributes' => [
-                    'type' => 'text',
-                ],
+                'type' => Text::class,
             ]
         );
 
         $this->add(
             [
                 'name' => 'costs',
-                'attributes' => [
-                    'type' => 'text',
-                ],
+                'type' => Text::class,
             ]
         );
         $this->add(
             [
                 'name' => 'costsEn',
-                'attributes' => [
-                    'type' => 'text',
-                ],
+                'type' => Text::class,
             ]
         );
 
         $this->add(
             [
                 'name' => 'description',
-                'attributes' => [
-                    'type' => 'textarea',
-                ],
+                'type' => Textarea::class,
             ]
         );
 
         $this->add(
             [
                 'name' => 'descriptionEn',
-                'attributes' => [
-                    'type' => 'textarea',
-                ],
+                'type' => Textarea::class,
             ]
         );
 
         $this->add(
             [
                 'name' => 'isMyFuture',
-                'type' => 'Laminas\Form\Element\Checkbox',
+                'type' => Checkbox::class,
                 'options' => [
                     'checked_value' => 1,
                     'unchecked_value' => 0,
@@ -190,7 +174,7 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'requireGEFLITST',
-                'type' => 'Laminas\Form\Element\Checkbox',
+                'type' => Checkbox::class,
                 'options' => [
                     'checked_value' => 1,
                     'unchecked_value' => 0,
@@ -201,9 +185,9 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'categories',
-                'type' => 'Laminas\Form\Element\MultiCheckbox',
+                'type' => MultiCheckbox::class,
                 'options' => [
-                    'value_options' => $categoryOptions,
+                    'value_options' => [],
                 ],
             ]
         );
@@ -211,7 +195,7 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'signupLists',
-                'type' => 'Laminas\Form\Element\Collection',
+                'type' => Collection::class,
                 'options' => [
                     'count' => 0,
                     'should_create_template' => true,
@@ -225,12 +209,45 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'submit',
+                'type' => Submit::class,
                 'attributes' => [
-                    'type' => 'submit',
                     'value' => 'Create',
                 ],
             ]
         );
+    }
+
+    /**
+     * @param array $organs
+     * @param array $companies
+     * @param array $categories
+     *
+     * @return Activity
+     */
+    public function setAllOptions(array $organs, array $companies, array $categories): static
+    {
+        $organOptions = $this->get('organ')->getValueOptions();
+        foreach ($organs as $organ) {
+            $organOptions[$organ->getId()] = $organ->getAbbr();
+        }
+
+        $this->get('organ')->setValueOptions($organOptions);
+
+        $companyOptions = $this->get('company')->getValueOptions();
+        foreach ($companies as $company) {
+            $companyOptions[$company->getId()] = $company->getName();
+        }
+
+        $this->get('company')->setValueOptions($companyOptions);
+
+        $categoryOptions = [];
+        foreach ($categories as $category) {
+            $categoryOptions[$category->getId()] = $category->getName();
+        }
+
+        $this->get('categories')->setValueOptions($categoryOptions);
+
+        return $this;
     }
 
     /**

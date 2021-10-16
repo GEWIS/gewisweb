@@ -125,29 +125,8 @@ class Module
                     return $form;
                 },
                 'activity_form_activity' => function (ContainerInterface $container) {
-                    $organService = $container->get('decision_service_organ');
-                    try {
-                        $organs = $organService->getEditableOrgans();
-                    } catch (NotAllowedException $e) {
-                        $organs = [];
-                    }
-
-                    $companyService = $container->get('company_service_company');
-                    try {
-                        $companies = $companyService->getHiddenCompanyList();
-                    } catch (NotAllowedException $e) {
-                        $companies = [];
-                    }
-
-                    $categoryService = $container->get('activity_service_category');
-                    try {
-                        $categories = $categoryService->findAll();
-                    } catch (NotAllowedException $e) {
-                        $categories = [];
-                    }
-
                     $translator = $container->get('translator');
-                    $form = new Form\Activity($organs, $companies, $categories, $translator);
+                    $form = new Form\Activity($translator);
                     $form->setHydrator($container->get('activity_hydrator'));
 
                     return $form;
