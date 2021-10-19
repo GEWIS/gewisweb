@@ -1,3 +1,10 @@
+## [v2.4.5](https://github.com/GEWIS/gewisweb/tree/v2.4.5) (2021-10-19)
+
+- Improved layout of the main navbar, fixes overlap between members link and user's name.
+- Fixed issue where most pages under `/member` were very slow. This significantly speeds up member lookups.
+
+---
+
 ## [v2.4.4](https://github.com/GEWIS/gewisweb/tree/v2.4.4) (2021-10-12)
 
 * Fixed issue where creation of an organ profile was not possible.
