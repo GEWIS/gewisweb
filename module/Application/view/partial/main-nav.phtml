@@ -136,10 +136,14 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <li>
                             <a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'bestuur']) ?>"><?= $this->translate('Board 2015/2016') ?></a>
                         </li>
-                        <li><a href="<?= $this->url('home/committee_list') ?>"><?= $this->translate('Committees') ?></a>
+                        <li>
+                            <a href="<?= $this->url('home/committee_list') ?>"><?= $this->translate('Committees') ?></a>
                         </li>
                         <li>
                             <a href="<?= $this->url('home/fraternity_list') ?>"><?= $this->translate('Fraternities') ?></a>
+                        </li>
+                        <li>
+                            <a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'exceptionalmembers'])?>"><?= $this->translate('Exceptional Members')?></a>
                         </li>
                         <li>
                             <a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'lied']) ?>"><?= $this->translate('GEWIS song') ?></a>

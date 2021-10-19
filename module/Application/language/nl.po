@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-07 11:15+0200\n"
-"PO-Revision-Date: 2021-10-07 11:16+0200\n"
+"POT-Creation-Date: 2021-10-19 15:04+0200\n"
+"PO-Revision-Date: 2021-10-19 15:05+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -150,7 +150,7 @@ msgstr "Logo van"
 #: module/Company/view/company/company/jobs.phtml:89
 #: module/Company/view/company/company/companyStory.phtml:21
 #: module/Application/view/partial/footer.phtml:24
-#: module/Application/view/partial/main-nav.phtml:175
+#: module/Application/view/partial/main-nav.phtml:179
 msgid "Contact"
 msgstr "Contact"
 
@@ -274,7 +274,7 @@ msgid "Banner active"
 msgstr "Banner actief"
 
 #: module/Company/view/company/admin/index.phtml:136
-#: module/Application/view/partial/main-nav.phtml:198
+#: module/Application/view/partial/main-nav.phtml:202
 msgid "Featured"
 msgstr "Uitgelicht"
 
@@ -1278,9 +1278,9 @@ msgstr "Verzend"
 #: module/Activity/view/activity/activity/view.phtml:12
 #: module/Decision/view/decision/member/index.phtml:155
 #: module/Application/view/partial/admin-nav.phtml:15
-#: module/Application/view/partial/main-nav.phtml:225
 #: module/Application/view/partial/main-nav.phtml:229
-#: module/Application/view/partial/main-nav.phtml:234
+#: module/Application/view/partial/main-nav.phtml:233
+#: module/Application/view/partial/main-nav.phtml:238
 msgid "Activities"
 msgstr "Activiteiten"
 
@@ -1446,7 +1446,7 @@ msgstr "Voeg een inschrijflijst toe"
 #: module/Education/view/education/education/index.phtml:17
 #: module/Education/view/education/education/course.phtml:5
 #: module/Application/view/partial/admin-nav.phtml:68
-#: module/Application/view/partial/main-nav.phtml:219
+#: module/Application/view/partial/main-nav.phtml:223
 msgid "Education"
 msgstr "Onderwijs"
 
@@ -1730,7 +1730,7 @@ msgstr "Het vak is niet toegevoegd, controleer de opgegeven informatie."
 #: module/Decision/view/decision/member/view.phtml:4
 #: module/Decision/view/decision/member/search.phtml:4
 #: module/Application/view/partial/main-nav.phtml:60
-#: module/Application/view/partial/main-nav.phtml:304
+#: module/Application/view/partial/main-nav.phtml:308
 msgid "Members"
 msgstr "Leden"
 
@@ -1753,7 +1753,7 @@ msgid "Profile"
 msgstr "Profiel"
 
 #: module/Decision/view/decision/member/index.phtml:38
-#: module/Application/view/partial/main-nav.phtml:293
+#: module/Application/view/partial/main-nav.phtml:297
 msgid "My photo's"
 msgstr "Mijn foto’s"
 
@@ -1790,7 +1790,7 @@ msgid "Find a member"
 msgstr "Vind een lid"
 
 #: module/Decision/view/decision/member/index.phtml:75
-#: module/Application/view/partial/main-nav.phtml:164
+#: module/Application/view/partial/main-nav.phtml:168
 msgid "Links"
 msgstr "Links"
 
@@ -1865,7 +1865,7 @@ msgid "Administrator"
 msgstr "Administrator"
 
 #: module/Decision/view/decision/member/index.phtml:178
-#: module/Application/view/partial/main-nav.phtml:148
+#: module/Application/view/partial/main-nav.phtml:152
 msgid "Regulations"
 msgstr "Reguleringen"
 
@@ -2126,7 +2126,7 @@ msgid "Meeting notes uploaded"
 msgstr "Notulen geupload"
 
 #: module/Decision/view/decision/admin/notes.phtml:19
-#: module/Decision/src/Form/Notes.php:36
+#: module/Decision/src/Form/Notes.php:37
 #: module/Decision/src/Form/Document.php:23
 msgid "Meeting"
 msgstr "Vergadering"
@@ -2378,9 +2378,9 @@ msgid "Overview"
 msgstr "Overzicht"
 
 #: module/Application/view/partial/admin-nav.phtml:32
-#: module/Application/view/partial/main-nav.phtml:182
 #: module/Application/view/partial/main-nav.phtml:186
-#: module/Application/view/partial/main-nav.phtml:191
+#: module/Application/view/partial/main-nav.phtml:190
+#: module/Application/view/partial/main-nav.phtml:195
 msgid "Career"
 msgstr "Carri&egrave;re"
 
@@ -2407,10 +2407,10 @@ msgid "News"
 msgstr "Nieuws"
 
 #: module/Application/view/partial/admin-nav.phtml:106
-#: module/Application/view/partial/main-nav.phtml:269
 #: module/Application/view/partial/main-nav.phtml:273
 #: module/Application/view/partial/main-nav.phtml:277
-#: module/Application/view/partial/main-nav.phtml:284
+#: module/Application/view/partial/main-nav.phtml:281
+#: module/Application/view/partial/main-nav.phtml:288
 #: module/Photo/view/photo/album/index.phtml:13
 #: module/Photo/view/photo/album/index.phtml:25
 #: module/Photo/view/photo/album/index-new.phtml:12
@@ -2478,54 +2478,58 @@ msgstr "Klap navigatie in/uit"
 msgid "Board 2015/2016"
 msgstr "Bestuur"
 
-#: module/Application/view/partial/main-nav.phtml:139
+#: module/Application/view/partial/main-nav.phtml:140
 #: module/Frontpage/view/frontpage/organ/organ.phtml:45
 #: module/Frontpage/view/frontpage/organ/committee-list.phtml:3
 #: module/Frontpage/view/frontpage/organ/committee-list.phtml:9
 msgid "Committees"
 msgstr "Commissies"
 
-#: module/Application/view/partial/main-nav.phtml:142
+#: module/Application/view/partial/main-nav.phtml:143
 #: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:3
 #: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:7
 #: module/Frontpage/view/frontpage/organ/organ.phtml:41
 msgid "Fraternities"
 msgstr "Disputen"
 
-#: module/Application/view/partial/main-nav.phtml:145
+#: module/Application/view/partial/main-nav.phtml:146
+msgid "Exceptional Members"
+msgstr "Uitzonderlijke leden"
+
+#: module/Application/view/partial/main-nav.phtml:149
 msgid "GEWIS song"
 msgstr "GEWIS-lied"
 
-#: module/Application/view/partial/main-nav.phtml:154
-#: module/Application/view/partial/main-nav.phtml:159
+#: module/Application/view/partial/main-nav.phtml:158
+#: module/Application/view/partial/main-nav.phtml:163
 msgid "Useful Information"
 msgstr "Praktische informatie"
 
-#: module/Application/view/partial/main-nav.phtml:167
+#: module/Application/view/partial/main-nav.phtml:171
 msgid "Well-being"
 msgstr "Welzijn"
 
-#: module/Application/view/partial/main-nav.phtml:170
+#: module/Application/view/partial/main-nav.phtml:174
 msgid "FAQ"
 msgstr "FAQ"
 
-#: module/Application/view/partial/main-nav.phtml:238
+#: module/Application/view/partial/main-nav.phtml:242
 msgid "My activities"
 msgstr "Mijn activiteiten"
 
-#: module/Application/view/partial/main-nav.phtml:243
+#: module/Application/view/partial/main-nav.phtml:247
 msgid "Activity Archive"
 msgstr "Archief"
 
-#: module/Application/view/partial/main-nav.phtml:248
+#: module/Application/view/partial/main-nav.phtml:252
 msgid "Create an activity"
 msgstr "Maak een activiteit"
 
-#: module/Application/view/partial/main-nav.phtml:253
+#: module/Application/view/partial/main-nav.phtml:257
 msgid "Activity Information COVID-19"
 msgstr "Activiteitsinformatie COVID-19"
 
-#: module/Application/view/partial/main-nav.phtml:257
+#: module/Application/view/partial/main-nav.phtml:261
 msgid ""
 "Option\n"
 "                            calendar"
@@ -2533,11 +2537,11 @@ msgstr ""
 "Optie\n"
 "Kalender"
 
-#: module/Application/view/partial/main-nav.phtml:261
+#: module/Application/view/partial/main-nav.phtml:265
 msgid "Career related"
 msgstr "Carri&egrave;re gerelateerd"
 
-#: module/Application/view/partial/main-nav.phtml:288
+#: module/Application/view/partial/main-nav.phtml:292
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:143
 #: module/Photo/view/photo/photo/view.phtml:154
 msgid "Photo of the week"
@@ -3374,66 +3378,66 @@ msgstr "Je bent uitgelogd."
 msgid "Password changed successfully"
 msgstr "Wachtwoord succesvol gewijzigd"
 
-#: module/Company/src/Controller/AdminController.php:75
+#: module/Company/src/Controller/AdminController.php:77
 msgid "You are not allowed to administer career settings"
 msgstr "Je hebt niet de rechten om carri&egrave;re-instellingen te beheren"
 
-#: module/Company/src/Controller/AdminController.php:100
+#: module/Company/src/Controller/AdminController.php:102
 msgid "You are not allowed to create companies"
 msgstr "Je hebt niet de rechten om bedrijven toe te voegen"
 
-#: module/Company/src/Controller/AdminController.php:141
+#: module/Company/src/Controller/AdminController.php:143
 msgid "You are not allowed to edit companies"
 msgstr "Je hebt niet de rechten om bedrijven te wijzigen"
 
-#: module/Company/src/Controller/AdminController.php:203
+#: module/Company/src/Controller/AdminController.php:205
 #: module/Company/src/Service/Company.php:771
 msgid "You are not allowed to delete companies"
 msgstr "Je hebt niet de rechten om bedrijven te verwijderen"
 
-#: module/Company/src/Controller/AdminController.php:226
+#: module/Company/src/Controller/AdminController.php:228
 msgid "You are not allowed to create packages"
 msgstr "Je hebt niet de rechten om pakketten toe te voegen"
 
-#: module/Company/src/Controller/AdminController.php:293
+#: module/Company/src/Controller/AdminController.php:295
 #: module/Company/src/Service/Company.php:832
 msgid "You are not allowed to edit packages"
 msgstr "Je hebt niet de rechten om pakketten te wijzigen"
 
-#: module/Company/src/Controller/AdminController.php:376
+#: module/Company/src/Controller/AdminController.php:378
 #: module/Company/src/Service/Company.php:739
 msgid "You are not allowed to delete packages"
 msgstr "Je hebt niet de rechten om pakketten te verwijderen"
 
-#: module/Company/src/Controller/AdminController.php:416
+#: module/Company/src/Controller/AdminController.php:418
 msgid "You are not allowed to create jobs"
 msgstr "Je hebt niet de rechten om vacatures toe te voegen"
 
-#: module/Company/src/Controller/AdminController.php:489
+#: module/Company/src/Controller/AdminController.php:491
 #: module/Company/src/Service/Company.php:859
 #: module/Company/src/Service/Company.php:919
 msgid "You are not allowed to edit jobs"
 msgstr "Je hebt niet de rechten om vacatures te wijzigen"
 
-#: module/Company/src/Controller/AdminController.php:558
+#: module/Company/src/Controller/AdminController.php:560
 #: module/Company/src/Service/Company.php:755
 msgid "You are not allowed to delete jobs"
 msgstr "Je hebt niet de rechten om vacatures te verwijderen"
 
-#: module/Company/src/Controller/AdminController.php:598
+#: module/Company/src/Controller/AdminController.php:600
 msgid "You are not allowed to create job categories"
 msgstr "Je hebt niet de rechten om vacaturecategorieën te wijzigen"
 
-#: module/Company/src/Controller/AdminController.php:646
+#: module/Company/src/Controller/AdminController.php:648
 #: module/Company/src/Service/Company.php:800
 msgid "You are not allowed to edit job categories"
 msgstr "Je hebt niet de rechten om vacature categorieën te wijzigen"
 
-#: module/Company/src/Controller/AdminController.php:684
+#: module/Company/src/Controller/AdminController.php:686
 msgid "You are not allowed to create job labels"
 msgstr "Je hebt niet de rechten om vacature-labels te wijzigen"
 
-#: module/Company/src/Controller/AdminController.php:731
+#: module/Company/src/Controller/AdminController.php:733
 #: module/Company/src/Service/Company.php:816
 msgid "You are not allowed to edit job labels"
 msgstr "Je hebt niet de rechten om vacature labels te wijzigen"
@@ -3771,24 +3775,24 @@ msgstr ""
 "De openingsdatum en -tijd van de inschrijflijst moeten v&oacute;&oacute;r de "
 "sluitingsdatum en-tijd van de inschrijflijst vallen."
 
-#: module/Activity/src/Form/Activity.php:31
+#: module/Activity/src/Form/Activity.php:43
 msgid "No organ"
 msgstr "Geen orgaan"
 
-#: module/Activity/src/Form/Activity.php:36
+#: module/Activity/src/Form/Activity.php:44
 msgid "No Company"
 msgstr "Geen bedrijf"
 
-#: module/Activity/src/Form/Activity.php:299
-#: module/Activity/src/Form/Activity.php:311
-#: module/Activity/src/Form/Activity.php:325
-#: module/Activity/src/Form/Activity.php:337
-#: module/Activity/src/Form/Activity.php:349
-#: module/Activity/src/Form/Activity.php:361
+#: module/Activity/src/Form/Activity.php:316
+#: module/Activity/src/Form/Activity.php:328
+#: module/Activity/src/Form/Activity.php:342
+#: module/Activity/src/Form/Activity.php:354
+#: module/Activity/src/Form/Activity.php:366
+#: module/Activity/src/Form/Activity.php:378
 msgid "Value is required and can't be empty"
 msgstr "Waarde is vereist en kan niet leeg zijn"
 
-#: module/Activity/src/Form/Activity.php:398
+#: module/Activity/src/Form/Activity.php:415
 msgid "The activity must start before it ends."
 msgstr "De activiteit moet beginnen voordat deze eindigt."
 
@@ -3912,13 +3916,13 @@ msgstr "Je hebt niet de rechten om inschrijflijsten te bekijken"
 msgid "You are not allowed to create an activity"
 msgstr "Je hebt niet de rechten om een activiteit te maken"
 
-#: module/Activity/src/Service/Activity.php:159
+#: module/Activity/src/Service/Activity.php:177
 msgid "You are not allowed to create an activity for this organ"
 msgstr "Je hebt niet de rechten om een activiteit aan te maken voor dit orgaan"
 
-#: module/Activity/src/Service/Activity.php:711
 #: module/Activity/src/Service/Activity.php:729
 #: module/Activity/src/Service/Activity.php:747
+#: module/Activity/src/Service/Activity.php:765
 msgid "You are not allowed to change the status of the activity"
 msgstr "Je hebt niet de rechten om de status van deze activiteit te wijzigen"
 
@@ -4054,15 +4058,15 @@ msgstr "Profiel foto"
 msgid "Cover photo to upload"
 msgstr "Coverfoto om te uploaden"
 
-#: module/Decision/src/Form/Notes.php:37
+#: module/Decision/src/Form/Notes.php:38
 msgid "Choose a meeting"
 msgstr "Kies een vergadering"
 
-#: module/Decision/src/Form/Notes.php:48 module/Decision/src/Form/Notes.php:52
+#: module/Decision/src/Form/Notes.php:49
 msgid "Notes to upload"
 msgstr "Te uploaden notulen"
 
-#: module/Decision/src/Form/Notes.php:76
+#: module/Decision/src/Form/Notes.php:96
 msgid "There already are notes for this meeting"
 msgstr "Er zijn al notulen voor deze vergadering"
 
