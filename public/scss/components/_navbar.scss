@@ -23,6 +23,11 @@ Styleguide: navbar
     font-weight: 500;
     font-size: 16px;
 
+    .container {
+        padding-left: $navbar-padding-horizontal;
+        padding-right: $navbar-padding-horizontal;
+    }
+
     a.disabled {
         background-color: #eee !important;
         color: #999 !important;
@@ -34,6 +39,13 @@ Styleguide: navbar
 
     padding: 10px 15px;
     height: 80px;
+
+    @media (min-width: $grid-float-breakpoint) {
+        .navbar > .container &,
+        .navbar > .container-fluid & {
+            margin-left: -$navbar-brand-margin;
+        }
+    }
 }
 
 a.navbar-brand  {
@@ -187,7 +199,7 @@ a.navbar-brand  {
             background-color: darken(#fff, 3%);
         }
     }
-    
+
     .navbar-nav > li .dropdown-menu .dropdown-submenu {
         position: relative;
 

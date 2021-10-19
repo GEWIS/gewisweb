@@ -82,6 +82,12 @@ $btn-danger-color: $brand-danger;
 $btn-danger-bg: transparent;
 $btn-danger-border: $brand-danger;
 
-/* Collapse navbar on medium */
+/* Collapse navbar on medium screensizes (original: $screen-sm-min). */
 $grid-float-breakpoint: $screen-md-min;
+
+/* Make everything a bit smaller by increasing the gutter width (original: 30px). */
 $grid-gutter-width: 50px;
+
+/* Compensate navbar collapse padding when increasing gutter width (original: floor($grid-gutter-width / 2)). */
+$navbar-padding-horizontal: 15px;
+$navbar-brand-margin: 54px;
