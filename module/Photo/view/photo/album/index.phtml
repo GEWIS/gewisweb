@@ -127,7 +127,8 @@ $this->scriptUrl()->requireUrl('member/search')
                 ];
                 ?>
                 <figure
-                    class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
+                    class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>"
+                    data-id="<?= $item->getId() ?>">
                     <a
                         href="<?= $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
                         data-size="<?= $largeSize['w'] . 'x' . $largeSize['h'] ?>"

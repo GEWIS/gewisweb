@@ -44,10 +44,11 @@ return [
                     'album' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/:album_type/:album_id',
+                            'route' => '/:album_type/:album_id[#&gid=1&pid=:photo_id]',
                             'constraints' => [
                                 'album_id' => '[0-9]+',
                                 'album_type' => '(album|member)',
+                                'photo_id' => '[0-9]+',
                             ],
                             'defaults' => [
                                 'controller' => AlbumController::class,

@@ -10,7 +10,14 @@ $this->headTitle($this->translate('Picture of the week')); ?>
             <hr>
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                    <a href="<?= $this->url('photo/photo', ['photo_id' => $weeklyPhotos[0]->getPhoto()->getId()]); ?>">
+                    <a href="<?= $this->url(
+                        'photo/album',
+                        [
+                            'album_id' => $weeklyPhotos[0]->getPhoto()->getAlbum()->getId(),
+                            'album_type' => 'album',
+                            'photo_id' => $weeklyPhotos[0]->getPhoto()->getId(),
+                        ],
+                    ) ?>">
                         <img
                             class="img-responsive"
                             src="<?= $this->fileUrl($weeklyPhotos[0]->getPhoto()->getLargeThumbPath()) ?>"
@@ -29,8 +36,14 @@ $this->headTitle($this->translate('Picture of the week')); ?>
                     <div class="photo-grid-item">
                         <a
                             class="thumbnail"
-                            href="<?= $this->url('photo/photo', ['photo_id' => $weeklyPhoto->getPhoto()->getId()]); ?>"
-                        >
+                            href="<?= $this->url(
+                                'photo/album',
+                                [
+                                    'album_id' => $weeklyPhoto->getPhoto()->getAlbum()->getId(),
+                                    'album_type' => 'album',
+                                    'photo_id' => $weeklyPhoto->getPhoto()->getId(),
+                                ],
+                            ) ?>">
                             <img src="<?= $this->fileUrl($weeklyPhoto->getPhoto()->getSmallThumbPath()) ?>">
                             <div class="caption">
                                 <?= $this->translate('Week') ?> <?= $weeklyPhoto->getWeek()->format('W'); ?>

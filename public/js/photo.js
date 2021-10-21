@@ -150,29 +150,30 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             items = [],
             figureEl,
             linkEl,
+            id,
             size,
             item;
 
         for(var i = 0; i < numNodes; i++) {
-
             figureEl = thumbElements[i]; // <figure> element
+
             // include only element nodes
             if(figureEl.nodeType !== 1 || figureEl.tagName !== 'FIGURE') {
                 continue;
             }
 
-            linkEl = figureEl.children[0]; // <a> element
+            id = figureEl.dataset.id;
 
+            linkEl = figureEl.children[0]; // <a> element
             size = linkEl.getAttribute('data-size').split('x');
 
             // create slide object
             item = {
                 src: linkEl.getAttribute('href'),
                 w: parseInt(size[0], 10),
-                h: parseInt(size[1], 10)
+                h: parseInt(size[1], 10),
+                pid: parseInt(id, 10),
             };
-
-
 
             if(figureEl.children.length > 1) {
                 // <figcaption> content
@@ -299,6 +300,8 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
             infoEl: true,
 
+            // Enable custom PIDs to allow for directly linking to image.
+            galleryPIDs: true,
         };
 
         // PhotoSwipe opened from URL
