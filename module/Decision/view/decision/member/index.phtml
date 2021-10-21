@@ -32,8 +32,13 @@ $meetings = $this->meetings;
                         <div class="big-icon fas fa-lock"></div>
                         <div class="panel-heading"><?= $this->translate('Change password') ?></div>
                     </a>
-                    <a href="<?= $this->url('photo/member', ['lidnr' => $member->getLidnr(), 'page' => null]) ?>"
-                       class="panel panel-image align-middle">
+                    <a class="panel panel-image align-middle"
+                       href="<?= $this->url('photo/album',
+                        [
+                            'albumd_id' => $member->getLidnr(),
+                            'album_type' => 'member',
+                        ],
+                    ) ?>">
                         <div class="big-icon fas fa-image"></div>
                         <div class="panel-heading"><?= $this->translate('My photo\'s') ?></div>
                     </a>

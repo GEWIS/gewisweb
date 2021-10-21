@@ -293,7 +293,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             </li>
                             <?php if (null != $this->identity()): ?>
                                 <li>
-                                    <a href="<?= $this->url('photo/member', ['lidnr' => $this->identity()->getMember()->getLidnr(), 'page' => null]) ?>">
+                                    <a href="<?= $this->url('photo/album', ['album_id' => $this->identity()->getMember()->getLidnr(), 'album_type' => 'member']) ?>">
                                         <?= $this->translate('My photo\'s') ?>
                                     </a>
                                 </li>

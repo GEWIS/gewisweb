@@ -1,7 +1,6 @@
 <?php
 // set title
 use Decision\Model\AssociationYear;
-use Photo\Model\Album;
 use Photo\Model\MemberAlbum;
 
 $this->headTitle($album->getName());
@@ -13,9 +12,18 @@ while (!is_null($currentAlbum->getParent())) {
 $this->headTitle($this->translate('Photos'));
 ?>
 <?php $this->headScript()
-    ->appendFile($this->basePath() . '/js/imagesloaded.pkgd.min.js')
+    ->appendFile($this->basePath() . '/js/jquery.autocomplete.js')
+    ->appendFile($this->basePath() . '/js/photo.js')
     ->appendFile($this->basePath() . '/js/masonry.pkgd.min.js')
-    ->appendFile($this->basePath() . '/js/photo.js');
+    ->appendFile($this->basePath() . '/js/imagesloaded.pkgd.min.js')
+    ->appendFile($this->basePath() . '/js/lazyload.min.js')
+    ->appendFile($this->basePath() . '/js/photoswipe.min.js')
+    ->appendFile($this->basePath() . '/js/photoswipe-ui-default.min.js');
+$this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
+    ->appendStylesheet($this->basePath() . '/css/photoswipe-skin/default-skin.css');
+
+$this->scriptUrl()->requireUrl('member/search')
+    ->requireUrl('photo/photo/vote', ['photo_id']);
 ?>
 <section class="section section-breadcrumb">
     <div class="container">
@@ -70,19 +78,9 @@ $this->headTitle($this->translate('Photos'));
 </section>
 
 <section class="section">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <div class="alert alert-danger" role="alert">
-                    <?= $this->translate('Do you want to help test new features of the website?') ?>
-                    <?php
-                    if ($album instanceof MemberAlbum) {
-                        echo sprintf($this->translate('Then try the new photo viewer %sHERE%s!'), '<a href="' . $this->url('photo/album_beta', ['album_id' => $currentAlbum->getId(), 'album_type' => 'member']) . '">', '</a>');
-                    } else {
-                        echo sprintf($this->translate('Then try the new photo viewer %sHERE%s!'), '<a href="' . $this->url('photo/album_beta', ['album_id' => $currentAlbum->getId(), 'album_type' => 'album']) . '">', '</a>');
-                    }
-                    ?>
-                </div>
                 <h1 class="page-header">
                     <?= $this->escapeHtml($album->getName()); ?>
                     <small>
@@ -93,32 +91,14 @@ $this->headTitle($this->translate('Photos'));
                         <?php else: ?>
                             <?= $album->getStartDateTime()->format('d-m-Y') ?>
                         <?php endif; ?>
-                    </small></h1>
+                    </small>
+                </h1>
             </div>
         </div>
-        <?php
-        $path = '';
-        if ($album instanceof MemberAlbum) {
-            $path = $this->url('photo/member', ['lidnr' => $album->getMember()->getLidnr()]);
-        } else {
-            $path = $this->url('photo/album', ['album_id' => $album->getId()]);
-        }
-        $this->paginationControl(
-            $this->paginator,
-            // the scrolling style
-            'elastic',
-            'paginator/default',
-            [
-                'path' => $path
-            ]
-        )
-        ?>
-        <div class="photo-grid">
-            <div class="grid-sizer"></div>
-            <div class="gutter-sizer"></div>
-            <?php foreach ($paginator as $item): ?>
-                <?php if ($item instanceof Album): ?>
-                    <div class="photo-grid-item photo-grid-item-album">
+        <?php if ($album->getAlbumCount() > 0): ?>
+            <div class="row">
+                <?php foreach ($album->getChildren() as $item): ?>
+                    <div class="col-lg-2 col-md-3 col-xs-6 thumb">
                         <a class="thumbnail" href="<?= $this->url('photo/album', ['album_id' => $item->getId()]); ?>">
                             <img src="<?= $this->fileUrl($item->getCoverPath()); ?>">
                             <div class="caption">
@@ -126,49 +106,133 @@ $this->headTitle($this->translate('Photos'));
                             </div>
                         </a>
                     </div>
-                <?php else: ?>
-                    <div
-                        class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
-                        <a href="<?php
-                        if ($album instanceof MemberAlbum) {
-                            echo $this->url('photo/member/photo', [
-                                'lidnr' => $album->getMember()->getLidnr(),
-                                'page' => isset($paginator->current) ? $paginator->current : 0,
-                                'photo_id' => $item->getId()]);
-                        } else {
-                            echo $this->url('photo/photo', ['photo_id' => $item->getId()]);
-                        }
-                        ?>">
-                            <?php
-                            $image = is_null($item->getWeeklyPhoto()) ?
-                                $item->getSmallThumbPath()
-                                : $item->getLargeThumbPath();
-                            $size = getimagesize('public/data/' . $image);
-                            ?>
-                            <img data-width="<?= $size[0] ?>" data-height="<?= $size[1] ?>"
-                                 src="<?= $this->fileUrl($image); ?>">
-                        </a>
-                    </div>
-                <?php endif; ?>
+                <?php endforeach ?>
+            </div>
+        <?php endif; ?>
+        <div class="photo-grid">
+            <div class="grid-sizer"></div>
+            <div class="gutter-sizer"></div>
+            <?php foreach ($album->getPhotos() as $item): ?>
+                <?php
+                $ar = $item->getAspectRatio();
+                $width = $config['small_thumb_size']['width'];
+                $containerallSize = [
+                    'w' => $width,
+                    'h' => round($width * $ar)
+                ];
+
+                $width = $config['large_thumb_size']['width'];
+                $largeSize = [
+                    'w' => $width,
+                    'h' => round($width * $ar)
+                ];
+                ?>
+                <figure
+                    class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
+                    <a
+                        href="<?= $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
+                        data-size="<?= $largeSize['w'] . 'x' . $largeSize['h'] ?>"
+                        data-author="GEWIS"
+                        class="gallery-image"
+                        data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]); ?>"
+                        data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]); ?>"
+                    >
+                        <img
+                            class="lazy-load"
+                            data-width="<?= $containerallSize['w'] ?>" data-height="<?= $containerallSize['h'] ?>"
+                            data-src="<?= $this->glideUrl()->getUrl($item->getPath(), $containerallSize) ?>"
+                            alt=""
+                            data-size="<?= $containerallSize['w'] . 'x' . $containerallSize['h'] ?>"
+                        >
+                    </a>
+                    <figcaption style="display:none">
+                        <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
+                    </figcaption>
+                    <figtags style="display:none">
+                        <?= $this->partial('partial/tags.phtml', ['photo' => $item]) ?>
+                    </figtags>
+                </figure>
             <?php endforeach; ?>
         </div>
-        <div class="pull-right">
-            <?= $this->paginationControl(
-                $this->paginator,
-                // the scrolling style
-                'elastic',
-                'paginator/default',
-                [
-                    'path' => $path
-                ]
-            )
-            ?>
+    </div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+        <div class="pswp__bg"></div>
+
+        <!-- Slides wrapper with overflow:hidden. -->
+        <div class="pswp__scroll-wrap">
+
+            <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+
+            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+            <div class="pswp__ui pswp__ui--hidden">
+
+                <div class="pswp__top-bar">
+
+                    <div class="pswp__counter"></div>
+
+                    <button class="button_top pswp__button--close fas fa-times" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                    <button class="button_top pswp__button--download fas fa-file-download"
+                            title="<?= $this->translate('Download') ?>" data-toggle="tooltip"
+                            data-placement="bottom"></button>
+                    <button class="button_top pswp__button--like fas fa-thumbs-up"
+                            title="<?= $this->translate('Vote for photo of the week') ?>" data-toggle="tooltip"
+                            data-placement="bottom"></button>
+                    <button class="button_top pswp__button--info fas fa-info-circle"
+                            title="<?= $this->translate('Metadata') ?>" data-toggle="tooltip"
+                            data-placement="bottom"></button>
+
+                    <!-- Preloader -->
+                    <!-- element will get class pswp__preloader--active when preloader is running -->
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+
+            </div>
+
         </div>
+
     </div>
 </section>
 
 <script>
     $(document).ready(function () {
         Photo.initGrid();
+    });
+    initPhotoSwipeFromDOM('.photo-grid');
+    var lazyLoadInstance = new LazyLoad({
+        elements_selector: ".lazy-load"
     });
 </script>

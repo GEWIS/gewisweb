@@ -112,11 +112,21 @@ use Decision\Model\Address;
                 <?php endif; ?>
                 <div class="row">
                     <div class="col-sm-6 col-xs-6">
-                        <a href="<?= $this->url('photo/member', ['lidnr' => $member->getLidnr(), 'page' => null]) ?>"
-                           class="panel panel-image">
+                        <a class="panel panel-image"
+                           href="<?= $this->url('photo/album',
+                            [
+                                'album_id' => $member->getLidnr(),
+                                'album_type' => 'member',
+                            ],
+                        ) ?>">
                             <div class="panel-body">
                                 <div class="far fa-image big-icon"></div>
-                                <h4><?= sprintf($this->translate("Photo's of %s"), $member->getFirstName()); ?></h4>
+                                <h4>
+                                    <?= sprintf(
+                                        $this->translate("Photo's of %s"),
+                                        $this->escapeHtml($member->getFirstName()),
+                                    ) ?>
+                                </h4>
                             </div>
                         </a>
                     </div>

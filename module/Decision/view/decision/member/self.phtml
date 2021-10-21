@@ -169,8 +169,14 @@ $this->headTitle($member->getFullName());
                 <?php endif; ?>
                 <div class="row">
                     <div class="col-sm-6 col-xs-6">
-                        <a href="<?= $this->url('photo/member', ['lidnr' => $member->getLidnr(), 'page' => null]) ?>"
-                           class="panel panel-image">
+                        <a class="panel panel-image"
+                           href="<?= $this->url(
+                            'photo/album',
+                            [
+                                'album_id' => $member->getLidnr(),
+                                'album_type' => 'member',
+                            ],
+                        ) ?>">
                             <div class="panel-body">
                                 <div class="far fa-image big-icon"></div>
                                 <h4><?= $this->translate("More of my photo's"); ?></h4>
