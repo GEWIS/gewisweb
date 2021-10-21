@@ -2,7 +2,6 @@
 
 namespace Decision;
 
-use Application\Extensions\Doctrine\AttributeDriver;
 use Decision\Controller\{
     AdminController,
     DecisionController,
@@ -19,6 +18,7 @@ use Decision\Controller\Factory\{
     OrganAdminControllerFactory,
     OrganControllerFactory,
 };
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Router\Http\{
     Literal,
     Segment,

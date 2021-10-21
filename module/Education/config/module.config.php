@@ -2,7 +2,7 @@
 
 namespace Education;
 
-use Application\Extensions\Doctrine\AttributeDriver;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Education\Controller\{
     AdminController,
     EducationController,

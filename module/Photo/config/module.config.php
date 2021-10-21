@@ -2,7 +2,7 @@
 
 namespace Photo;
 
-use Application\Extensions\Doctrine\AttributeDriver;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Router\Http\{
     Literal,
     Segment,
