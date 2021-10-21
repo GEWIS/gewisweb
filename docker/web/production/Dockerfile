@@ -28,6 +28,7 @@ RUN apt-get update \
         libzip-dev \
         poppler-utils \
         rsync \
+        ssh \
         sshpass \
         unzip \
     && apt-get upgrade -y --no-install-recommends \

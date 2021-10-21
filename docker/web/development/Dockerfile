@@ -18,6 +18,7 @@ RUN apt-get update \
         nano \
         poppler-utils \
         rsync \
+        ssh \
         sshpass \
         unzip \
         zip \
