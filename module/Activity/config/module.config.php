@@ -19,7 +19,7 @@ use Activity\Controller\Factory\{
     AdminControllerFactory,
     ApiControllerFactory,
 };
-use Application\Extensions\Doctrine\AttributeDriver;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Router\Http\{
     Literal,
     Segment,

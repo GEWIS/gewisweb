@@ -2,7 +2,6 @@
 
 namespace Company;
 
-use Application\Extensions\Doctrine\AttributeDriver;
 use Application\View\Helper\Truncate;
 use Company\Controller\{
     AdminController,
@@ -12,6 +11,7 @@ use Company\Controller\Factory\{
     AdminControllerFactory,
     CompanyControllerFactory,
 };
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Router\Http\{
     Literal,
     Segment,

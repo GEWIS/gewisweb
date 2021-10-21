@@ -2,7 +2,7 @@
 
 namespace Frontpage;
 
-use Application\Extensions\Doctrine\AttributeDriver;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Frontpage\Controller\{
     AdminController,
     FrontpageController,

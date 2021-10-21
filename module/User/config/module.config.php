@@ -2,6 +2,7 @@
 
 namespace User;
 
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Router\Http\{
     Literal,
     Segment,
@@ -18,7 +19,6 @@ use User\Controller\Factory\{
     ApiControllerFactory,
     UserControllerFactory,
 };
-use Application\Extensions\Doctrine\AttributeDriver;
 
 return [
     'router' => [
