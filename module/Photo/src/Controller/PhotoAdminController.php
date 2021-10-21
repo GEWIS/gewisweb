@@ -49,14 +49,18 @@ class PhotoAdminController extends AbstractActionController
 
     /**
      * Shows an admin page for the specified photo.
+     *
+     * TODO: Potentially remove, as the admin interface can already move/delete images from the global view.
      */
     public function indexAction()
     {
         $photoId = $this->params()->fromRoute('photo_id');
         $data = $this->photoService->getPhotoData($photoId);
+
         if (is_null($data)) {
             return $this->notFoundAction();
         }
+
         $path = []; //The path to use in the breadcrumb navigation bar
         $parent = $data['photo']->getAlbum();
         while (!is_null($parent)) {

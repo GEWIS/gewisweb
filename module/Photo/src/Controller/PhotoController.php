@@ -62,60 +62,6 @@ class PhotoController extends AbstractActionController
         );
     }
 
-    /**
-     * Called on viewing a photo.
-     */
-    public function viewAction()
-    {
-        $photoId = $this->params()->fromRoute('photo_id');
-        $photoData = $this->photoService->getPhotoData($photoId);
-
-        if (is_null($photoData)) {
-            return $this->notFoundAction();
-        }
-
-        $this->photoService->countHit($photoData['photo']);
-
-        return new ViewModel($photoData);
-    }
-
-    /**
-     * Called on viewing a photo in an album for a member.
-     *
-     * @return ViewModel
-     */
-    public function memberAction()
-    {
-        $lidnr = $this->params()->fromRoute('lidnr');
-        $page = $this->params()->fromRoute('page');
-        $photoId = $this->params()->fromRoute('photo_id');
-        try {
-            $memberAlbum = $this->albumService->getAlbum($lidnr, 'member');
-        } catch (Exception $e) {
-            return $this->notFoundAction();
-        }
-        $photoData = $this->photoService->getPhotoData($photoId, $memberAlbum);
-
-        if (is_null($photoData)) {
-            return $this->notFoundAction();
-        }
-
-        $photoData = array_merge(
-            $photoData,
-            [
-                'memberAlbum' => $memberAlbum,
-                'memberAlbumPage' => $page,
-            ]
-        );
-
-        $this->photoService->countHit($photoData['photo']);
-
-        $vm = new ViewModel($photoData);
-        $vm->setTemplate('photo/view');
-
-        return $vm;
-    }
-
     public function downloadAction()
     {
         $photoId = $this->params()->fromRoute('photo_id');

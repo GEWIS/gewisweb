@@ -2,27 +2,31 @@
 
 namespace Photo\Service;
 
-use Application\Service\FileStorage;
+use Application\Service\FileStorage as FileStorageService;
 use DateInterval;
 use DateTime;
-use Decision\Model\Member;
+use Decision\Model\Member as MemberModel;
+use Decision\Service\Member as MemberService;
+use Doctrine\ORM\ORMException;
 use Exception;
 use Laminas\Http\Response\Stream;
 use Laminas\I18n\Filter\Alnum;
 use Laminas\Mvc\I18n\Translator;
-use Photo\Mapper\Hit;
-use Photo\Mapper\ProfilePhoto as ProfilePhotoMapper;
-use Photo\Mapper\Tag;
-use Photo\Mapper\Tag as TagMapper;
-use Photo\Mapper\Vote;
-use Photo\Mapper\WeeklyPhoto as WeeklyPhotoMapper;
-use Photo\Model\Album as AlbumModel;
-use Photo\Model\Hit as HitModel;
-use Photo\Model\Photo as PhotoModel;
-use Photo\Model\ProfilePhoto as ProfilePhotoModel;
-use Photo\Model\Tag as TagModel;
-use Photo\Model\Vote as VoteModel;
-use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
+use Photo\Mapper\{
+    PHoto as PhotoMapper,
+    ProfilePhoto as ProfilePhotoMapper,
+    Tag as TagMapper,
+    Vote as VoteMapper,
+    WeeklyPhoto as WeeklyPhotoMapper,
+};
+use Photo\Model\{
+    Album as AlbumModel,
+    Photo as PhotoModel,
+    ProfilePhoto as ProfilePhotoModel,
+    Tag as TagModel,
+    Vote as VoteModel,
+    WeeklyPhoto as WeeklyPhotoModel,
+};
 use User\Permissions\NotAllowedException;
 
 /**
@@ -33,62 +37,60 @@ class Photo
     /**
      * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
-     * @var \Decision\Service\Member
+     * @var MemberService
      */
-    private $memberService;
+    private MemberService $memberService;
 
     /**
-     * @var FileStorage
+     * @var FileStorageService
      */
-    private $storageService;
+    private FileStorageService $storageService;
 
     /**
-     * @var \Photo\Mapper\Photo
+     * @var PhotoMapper
      */
-    private $photoMapper;
+    private PhotoMapper $photoMapper;
 
     /**
      * @var TagMapper
      */
-    private $tagMapper;
+    private TagMapper $tagMapper;
 
     /**
-     * @var Hit
+     * @var VoteMapper
      */
-    private $hitMapper;
-
-    /**
-     * @var Vote
-     */
-    private $voteMapper;
+    private VoteMapper $voteMapper;
 
     /**
      * @var WeeklyPhotoMapper
      */
-    private $weeklyPhotoMapper;
+    private WeeklyPhotoMapper $weeklyPhotoMapper;
 
     /**
      * @var ProfilePhotoMapper
      */
-    private $profilePhotoMapper;
+    private ProfilePhotoMapper $profilePhotoMapper;
 
     /**
      * @var array
      */
-    private $photoConfig;
+    private array $photoConfig;
+
+    /**
+     * @var AclService
+     */
     private AclService $aclService;
 
     public function __construct(
         Translator $translator,
-        \Decision\Service\Member $memberService,
-        FileStorage $storageService,
-        \Photo\Mapper\Photo $photoMapper,
-        Tag $tagMapper,
-        Hit $hitMapper,
-        Vote $voteMapper,
+        MemberService $memberService,
+        FileStorageService $storageService,
+        PhotoMapper $photoMapper,
+        TagMapper $tagMapper,
+        VoteMapper $voteMapper,
         WeeklyPhotoMapper $weeklyPhotoMapper,
         ProfilePhotoMapper $profilePhotoMapper,
         array $photoConfig,
@@ -99,7 +101,6 @@ class Photo
         $this->storageService = $storageService;
         $this->photoMapper = $photoMapper;
         $this->tagMapper = $tagMapper;
-        $this->hitMapper = $hitMapper;
         $this->voteMapper = $voteMapper;
         $this->weeklyPhotoMapper = $weeklyPhotoMapper;
         $this->profilePhotoMapper = $profilePhotoMapper;
@@ -112,12 +113,11 @@ class Photo
      *
      * @param AlbumModel $album the album to get the photos from
      * @param int $start the result to start at
-     * @param int $maxResults max amount of results to return,
-     *                               null for infinite
+     * @param int|null $maxResults max amount of results to return, null for infinite
      *
-     * @return array of Photo\Model\Album
+     * @return array of AlbumModel
      */
-    public function getPhotos($album, $start = 0, $maxResults = null)
+    public function getPhotos(AlbumModel $album, int $start = 0, ?int $maxResults = null): array
     {
         if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
@@ -135,9 +135,9 @@ class Photo
      *
      * @param int $photoId
      *
-     * @return Stream
+     * @return Stream|null
      */
-    public function getPhotoDownload($photoId)
+    public function getPhotoDownload(int $photoId): ?Stream
     {
         if (!$this->aclService->isAllowed('download', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to download photos'));
@@ -157,7 +157,7 @@ class Photo
      *
      * @return PhotoModel|null photo matching the given id
      */
-    public function getPhoto($id): ?PhotoModel
+    public function getPhoto(int $id): ?PhotoModel
     {
         if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
@@ -173,7 +173,7 @@ class Photo
      *
      * @return string
      */
-    public function getPhotoFileName($photo)
+    public function getPhotoFileName(PhotoModel $photo): string
     {
         // filtering is required to prevent invalid characters in file names.
         $filter = new Alnum(true);
@@ -181,24 +181,23 @@ class Photo
 
         // don't put spaces in file names
         $albumName = str_replace(' ', '-', $albumName);
-
         $extension = substr($photo->getPath(), strpos($photo->getPath(), '.'));
 
-        return $albumName . '-' . $photo->getDateTime()->format('Y') . '-'
-            . $photo->getId() . $extension;
+        return $albumName . '-' . $photo->getDateTime()->format('Y') . '-' . $photo->getId() . $extension;
     }
 
     /**
      * Get the photo data belonging to a certain photo.
      *
      * @param int $photoId the id of the photo to retrieve
+     * @param AlbumModel|null $album
      *
      * @return array|null of data about the photo, which is useful inside a view
      *                    or null if the photo was not found
      *
      * @throws Exception
      */
-    public function getPhotoData($photoId, AlbumModel $album = null)
+    public function getPhotoData(int $photoId, ?AlbumModel $album = null): ?array
     {
         if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
@@ -224,6 +223,7 @@ class Photo
         $profilePhoto = $this->getStoredProfilePhoto($lidnr);
         $isProfilePhoto = false;
         $isExplicitProfilePhoto = false;
+
         if (null != $profilePhoto) {
             $isExplicitProfilePhoto = $profilePhoto->isExplicit();
             if ($photoId == $profilePhoto->getPhoto()->getId()) {
@@ -244,12 +244,13 @@ class Photo
     /**
      * Returns the next photo in the album to display.
      *
-     * @return PhotoModel the next photo
+     * @return PhotoModel|null the next photo
      */
     public function getNextPhoto(
         PhotoModel $photo,
         AlbumModel $album
-    ) {
+    ): ?PhotoModel
+    {
         if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
         }
@@ -260,12 +261,13 @@ class Photo
     /**
      * Returns the previous photo in the album to display.
      *
-     * @return PhotoModel the next photo
+     * @return PhotoModel|null the next photo
      */
     public function getPreviousPhoto(
         PhotoModel $photo,
         AlbumModel $album
-    ) {
+    ): ?PhotoModel
+    {
         if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
         }
@@ -280,8 +282,9 @@ class Photo
      * @param int $photoId the id of the photo to delete
      *
      * @return bool indicating whether the delete was successful
+     * @throws ORMException
      */
-    public function deletePhoto($photoId)
+    public function deletePhoto(int $photoId): bool
     {
         if (!$this->aclService->isAllowed('delete', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to delete photos.'));
@@ -291,6 +294,7 @@ class Photo
         if (is_null($photo)) {
             return false;
         }
+
         $this->photoMapper->remove($photo);
         $this->photoMapper->flush();
 
@@ -302,7 +306,7 @@ class Photo
      *
      * @param PhotoModel $photo
      */
-    public function deletePhotoFiles($photo)
+    public function deletePhotoFiles(PhotoModel $photo): void
     {
         $this->deletePhotoFile($photo->getPath());
         $this->deletePhotoFile($photo->getLargeThumbPath());
@@ -316,7 +320,7 @@ class Photo
      *
      * @return bool indicated whether deleting the photo was successful
      */
-    public function deletePhotoFile($path)
+    public function deletePhotoFile(string $path): bool
     {
         return $this->storageService->removeFile($path);
     }
@@ -326,21 +330,25 @@ class Photo
      * if at least one photo has been viewed in the specified time.
      * The parameters determine the week to check the photos of.
      *
-     * @param DateTime $begindate
-     * @param DateTime $enddate
+     * @param DateTime|null $begindate
+     * @param DateTime|null $enddate
      *
      * @return WeeklyPhotoModel|null
+     * @throws ORMException
+     * @throws Exception
      */
-    public function generatePhotoOfTheWeek($begindate = null, $enddate = null)
+    public function generatePhotoOfTheWeek(?DateTime $begindate = null, ?DateTime $enddate = null): ?WeeklyPhotoModel
     {
         if (is_null($begindate) || is_null($enddate)) {
             $begindate = (new DateTime())->sub(new DateInterval('P1W'));
             $enddate = new DateTime();
         }
+
         $bestPhoto = $this->determinePhotoOfTheWeek($begindate, $enddate);
         if (is_null($bestPhoto)) {
             return null;
         }
+
         $weeklyPhoto = new WeeklyPhotoModel();
         $weeklyPhoto->setPhoto($bestPhoto);
         $weeklyPhoto->setWeek($begindate);
@@ -358,18 +366,23 @@ class Photo
      * @param DateTime $enddate
      *
      * @return PhotoModel|null
+     * @throws Exception
      */
-    public function determinePhotoOfTheWeek($begindate, $enddate)
+    public function determinePhotoOfTheWeek(DateTime $begindate, DateTime $enddate): ?PhotoModel
     {
-        $results = $this->hitMapper->getHitsInRange($begindate, $enddate);
+        $results = $this->voteMapper->getVotesInRange($begindate, $enddate);
+
         if (empty($results)) {
             return null;
         }
+
         $bestRating = -1;
         $bestPhoto = null;
+
         foreach ($results as $res) {
             $photo = $this->photoMapper->find($res[1]);
             $rating = $this->ratePhoto($photo, $res[2]);
+
             if (
                 !$this->weeklyPhotoMapper->hasBeenPhotoOfTheWeek($photo)
                 && $rating > $bestRating
@@ -391,10 +404,11 @@ class Photo
      *
      * @throws Exception
      */
-    public function getProfilePhoto($lidnr)
+    public function getProfilePhoto(int $lidnr): ?PhotoModel
     {
         $profilePhoto = $this->getStoredProfilePhoto($lidnr);
-        if (null != $profilePhoto) {
+
+        if (null !== $profilePhoto) {
             return $profilePhoto->getPhoto();
         }
 
@@ -410,15 +424,17 @@ class Photo
      *
      * @throws Exception
      */
-    private function getStoredProfilePhoto($lidnr)
+    private function getStoredProfilePhoto(int $lidnr): ?ProfilePhotoModel
     {
         $profilePhoto = $this->profilePhotoMapper->getProfilePhotoByLidnr($lidnr);
-        if (null != $profilePhoto) {
+
+        if (null !== $profilePhoto) {
             if ($profilePhoto->getDateTime() < new DateTime()) {
                 $this->removeProfilePhoto($profilePhoto);
 
                 return null;
             }
+
             if (!$this->isTaggedIn($profilePhoto->getPhoto()->getId(), $lidnr)) {
                 $this->removeProfilePhoto($profilePhoto);
 
@@ -436,14 +452,15 @@ class Photo
      *
      * @throws Exception
      */
-    public function removeProfilePhoto(ProfilePhotoModel $profilePhoto = null)
+    public function removeProfilePhoto(ProfilePhotoModel $profilePhoto = null): void
     {
-        if (null == $profilePhoto) {
+        if (null === $profilePhoto) {
             $member = $this->aclService->getIdentity()->getMember();
             $lidnr = $member->getLidnr();
             $profilePhoto = $this->getStoredProfilePhoto($lidnr);
         }
-        if (null != $profilePhoto) {
+
+        if (null !== $profilePhoto) {
             $mapper = $this->profilePhotoMapper;
             $mapper->remove($profilePhoto);
             $mapper->flush();
@@ -454,10 +471,9 @@ class Photo
      * @param int $lidnr
      *
      * @return PhotoModel|null
-     *
      * @throws Exception
      */
-    private function determineProfilePhoto($lidnr)
+    private function determineProfilePhoto(int $lidnr): ?PhotoModel
     {
         $results = $this->tagMapper->getTagsByLidnr($lidnr);
 
@@ -471,6 +487,7 @@ class Photo
         foreach ($results as $res) {
             $photo = $res->getPhoto();
             $rating = $this->ratePhotoForMember($photo);
+
             if ($rating > $bestRating) {
                 $bestPhoto = $photo;
                 $bestRating = $rating;
@@ -484,12 +501,14 @@ class Photo
 
     /**
      * @param int $lidnr
+     * @param PhotoModel $photo
      *
-     * @throws Exception
+     * @throws ORMException
      */
-    private function cacheProfilePhoto($lidnr, PhotoModel $photo)
+    private function cacheProfilePhoto(int $lidnr, PhotoModel $photo): void
     {
         $member = $this->memberService->findMemberByLidnr($lidnr);
+
         $now = new DateTime();
         if ($member->isActive()) {
             $dateTime = $now->add(new DateInterval('P1D'));
@@ -501,14 +520,24 @@ class Photo
     }
 
     /**
+     * @param PhotoModel $photo
+     * @param MemberModel $member
      * @param DateTime $dateTime
      * @param bool $explicit
+     *
+     * @throws ORMException
      */
-    private function storeProfilePhoto(PhotoModel $photo, Member $member, $dateTime, $explicit = false)
+    private function storeProfilePhoto(
+        PhotoModel $photo,
+        MemberModel $member,
+        DateTime $dateTime,
+        bool $explicit = false,
+    ): void
     {
         if (!$this->isTaggedIn($photo->getId(), $member->getLidnr())) {
             return;
         }
+
         $profilePhotoModel = new ProfilePhotoModel();
         $profilePhotoModel->setMember($member);
         $profilePhotoModel->setPhoto($photo);
@@ -524,15 +553,17 @@ class Photo
      *
      * @throws Exception
      */
-    public function setProfilePhoto($photoId)
+    public function setProfilePhoto(int $photoId): void
     {
         $photo = $this->getPhoto($photoId);
         $member = $this->aclService->getIdentity()->getMember();
         $lidnr = $member->getLidnr();
         $profilePhoto = $this->getStoredProfilePhoto($lidnr);
-        if (null != $profilePhoto) {
+
+        if (null !== $profilePhoto) {
             $this->removeProfilePhoto($profilePhoto);
         }
+
         $dateTime = (new DateTime())->add(new DateInterval('P1Y'));
         $this->storeProfilePhoto($photo, $member, $dateTime, true);
     }
@@ -541,10 +572,9 @@ class Photo
      * @param int $lidnr
      *
      * @return bool
-     *
      * @throws Exception
      */
-    public function hasExplicitProfilePhoto($lidnr)
+    public function hasExplicitProfilePhoto(int $lidnr): bool
     {
         $profilePhoto = $this->getStoredProfilePhoto($lidnr);
         if (null != $profilePhoto) {
@@ -560,11 +590,9 @@ class Photo
      * @param PhotoModel $photo
      * @param int $occurences
      *
-     * @return float
-     *
-     * @throws Exception
+     * @return float|int
      */
-    public function ratePhoto($photo, $occurences)
+    public function ratePhoto(PhotoModel $photo, int $occurences): float|int
     {
         $tagged = count($photo->getTags()) > 0;
         $now = new DateTime();
@@ -579,19 +607,17 @@ class Photo
      *
      * @param PhotoModel $photo
      *
-     * @return float
-     *
-     * @throws Exception
+     * @return float|int
      */
-    public function ratePhotoForMember($photo)
+    public function ratePhotoForMember(PhotoModel $photo): float|int
     {
         $now = new DateTime();
         $age = $now->diff($photo->getDateTime(), true)->days;
 
-        $hits = $photo->getHitCount();
+        $votes = $photo->getVoteCount();
         $tags = $photo->getTagCount();
 
-        $baseRating = $hits / pow($tags, 1.25);
+        $baseRating = $votes / pow($tags, 1.25);
         // Prevent division by zero.
         if ($age < 14) {
             return $baseRating * (14 - $age);
@@ -605,7 +631,7 @@ class Photo
      *
      * @return array
      */
-    public function getPhotosOfTheWeek()
+    public function getPhotosOfTheWeek(): array
     {
         if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException(
@@ -616,32 +642,22 @@ class Photo
         return $this->weeklyPhotoMapper->getPhotosOfTheWeek();
     }
 
-    public function getCurrentPhotoOfTheWeek()
+    /**
+     * @return WeeklyPhotoModel|null
+     */
+    public function getCurrentPhotoOfTheWeek(): ?WeeklyPhotoModel
     {
         return $this->weeklyPhotoMapper->getCurrentPhotoOfTheWeek();
-    }
-
-    /**
-     * Count a hit for the specified photo. Should be called whenever a photo
-     * is viewed.
-     *
-     * @param PhotoModel $photo
-     */
-    public function countHit($photo)
-    {
-        $hit = new HitModel();
-        $hit->setDateTime(new DateTime());
-        $photo->addHit($hit);
-
-        $this->photoMapper->flush();
     }
 
     /**
      * Count a vote for the specified photo.
      *
      * @param int $photoId
+     *
+     * @throws ORMException
      */
-    public function countVote($photoId)
+    public function countVote(int $photoId): void
     {
         $identity = $this->aclService->getIdentity();
 
@@ -664,14 +680,15 @@ class Photo
      * @param int $lidnr
      *
      * @return TagModel|null
+     * @throws ORMException
      */
-    public function addTag($photoId, $lidnr)
+    public function addTag(int $photoId, int $lidnr): ?TagModel
     {
         if (!$this->aclService->isAllowed('add', 'tag')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to add tags.'));
         }
 
-        if (is_null($this->findTag($photoId, $lidnr))) {
+        if (null === $this->findTag($photoId, $lidnr)) {
             $photo = $this->getPhoto($photoId);
             $member = $this->memberService->findMemberByLidnr($lidnr);
             $tag = new TagModel();
@@ -681,10 +698,9 @@ class Photo
             $this->photoMapper->flush();
 
             return $tag;
-        } else {
-            // Tag exists
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -695,7 +711,7 @@ class Photo
      *
      * @return TagModel|null
      */
-    public function findTag($photoId, $lidnr)
+    public function findTag(int $photoId, int $lidnr): ?TagModel
     {
         if (!$this->aclService->isAllowed('view', 'tag')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view tags.'));
@@ -712,7 +728,7 @@ class Photo
      *
      * @return bool
      */
-    public function isTaggedIn($photoId, $lidnr)
+    public function isTaggedIn(int $photoId, int $lidnr): bool
     {
         $tag = $this->findTag($photoId, $lidnr);
         if (null != $tag) {
@@ -729,32 +745,34 @@ class Photo
      * @param int $lidnr
      *
      * @return bool indicating whether removing the tag succeeded
+     * @throws ORMException
      */
-    public function removeTag($photoId, $lidnr)
+    public function removeTag(int $photoId, int $lidnr): bool
     {
         if (!$this->aclService->isAllowed('remove', 'tag')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to remove tags.'));
         }
 
         $tag = $this->findTag($photoId, $lidnr);
-        if (!is_null($tag)) {
+
+        if (null !== $tag) {
             $this->tagMapper->remove($tag);
             $this->tagMapper->flush();
 
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
      * Gets all photos in which a member has been tagged.
      *
-     * @param Member $member
+     * @param MemberModel $member
      *
      * @return array
      */
-    public function getTagsForMember($member)
+    public function getTagsForMember(MemberModel $member): array
     {
         if (!$this->aclService->isAllowed('view', 'tag')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view tags.'));
@@ -768,7 +786,7 @@ class Photo
      *
      * @return string
      */
-    public function getBaseDirectory()
+    public function getBaseDirectory(): string
     {
         return str_replace('public', '', $this->photoConfig['upload_dir']);
     }

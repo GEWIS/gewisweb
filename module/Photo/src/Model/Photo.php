@@ -4,7 +4,8 @@ namespace Photo\Model;
 
 use DateTime;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping\{Column,
+use Doctrine\ORM\Mapping\{
+    Column,
     Entity,
     GeneratedValue,
     HasLifecycleCallbacks,
@@ -160,16 +161,6 @@ class Photo implements ResourceInterface
         nullable: true,
     )]
     protected ?float $latitude = null;
-
-    /**
-     * All the hits of this photo.
-     */
-    #[OneToMany(
-        targetEntity: Hit::class,
-        mappedBy: "photo",
-        cascade: ["persist", "remove"],
-    )]
-    protected Collection $hits;
 
     /**
      * All the votes for this photo.
@@ -390,14 +381,6 @@ class Photo implements ResourceInterface
     /**
      * @return int
      */
-    public function getHitCount(): int
-    {
-        return $this->hits->count();
-    }
-
-    /**
-     * @return int
-     */
     public function getVoteCount(): int
     {
         return $this->votes->count();
@@ -580,17 +563,6 @@ class Photo implements ResourceInterface
     public function setAspectRatio(?float $ratio): void
     {
         $this->aspectRatio = $ratio;
-    }
-
-    /**
-     * Add a hit to a photo.
-     *
-     * @param Hit $hit
-     */
-    public function addHit(Hit $hit): void
-    {
-        $hit->setPhoto($this);
-        $this->hits[] = $hit;
     }
 
     /**
