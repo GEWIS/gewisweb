@@ -15,7 +15,6 @@ $this->headTitle($this->translate('Photos'));
     ->appendFile($this->basePath() . '/js/jquery.autocomplete.js')
     ->appendFile($this->basePath() . '/js/photo.js')
     ->appendFile($this->basePath() . '/js/masonry.pkgd.min.js')
-    ->appendFile($this->basePath() . '/js/imagesloaded.pkgd.min.js')
     ->appendFile($this->basePath() . '/js/lazyload.min.js')
     ->appendFile($this->basePath() . '/js/photoswipe.min.js')
     ->appendFile($this->basePath() . '/js/photoswipe-ui-default.min.js');
@@ -231,8 +230,6 @@ $this->scriptUrl()->requireUrl('member/search')
     $(document).ready(function () {
         Photo.initGrid();
     });
+
     initPhotoSwipeFromDOM('.photo-grid');
-    var lazyLoadInstance = new LazyLoad({
-        elements_selector: ".lazy-load"
-    });
 </script>

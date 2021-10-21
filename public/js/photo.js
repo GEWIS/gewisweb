@@ -117,13 +117,17 @@ Photo = {
             }
         });
 
+        let lazyLoadInstance = new LazyLoad({
+            elements_selector: '.lazy-load',
+        });
+
         $('.photo-grid').masonry({
             itemSelector: '.photo-grid-item',
             columnWidth: '.grid-sizer',
             percentPosition: true,
             gutter: '.gutter-sizer',
             transitionDuration: 0,
-            resize: true
+            resize: true,
         });
     },
     removeTag: function (e) {

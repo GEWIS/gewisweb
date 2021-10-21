@@ -5,11 +5,6 @@ use Decision\Model\Address;
 
 $this->headTitle($member->getFullName());
 ?>
-<?php $this->headScript()
-    ->appendFile($this->basePath() . '/js/imagesloaded.pkgd.min.js')
-    ->appendFile($this->basePath() . '/js/masonry.pkgd.min.js')
-    ->appendFile($this->basePath() . '/js/photo.js');
-?>
 <section class="section">
     <div class="container">
         <div class="row">
@@ -188,9 +183,3 @@ $this->headTitle($member->getFullName());
         </div>
     </div>
 </section>
-
-<script>
-    $(document).ready(function () {
-        Photo.initGrid();
-    });
-</script>

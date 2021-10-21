@@ -1,17 +1,11 @@
 <?php
-// set title
-$this->headTitle($member->getFullName());
-$this->headTitle($this->translate('Members')); ?>
-<?php $this->headScript()
-    ->appendFile($this->basePath() . '/js/imagesloaded.pkgd.min.js')
-    ->appendFile($this->basePath() . '/js/masonry.pkgd.min.js')
-    ->appendFile($this->basePath() . '/js/photo.js');
-?>
-<?php
 
 use Decision\Model\Member;
 use Decision\Model\Address;
 
+// set title
+$this->headTitle($member->getFullName());
+$this->headTitle($this->translate('Members'));
 ?>
 <section class="section">
     <div class="container">
@@ -135,9 +129,3 @@ use Decision\Model\Address;
         </div>
     </div>
 </section>
-
-<script>
-    $(document).ready(function () {
-        Photo.initGrid();
-    });
-</script>
