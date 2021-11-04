@@ -1,6 +1,10 @@
 <?php
 $this->headTitle($this->translate('Activity Categories'));
 $this->scriptUrl()->requireUrls(['activity_admin_categories/delete'], ['id']);
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Activity Categories'));
+
 ?>
 <div class="row admin-activity">
     <div class="col-md-12">

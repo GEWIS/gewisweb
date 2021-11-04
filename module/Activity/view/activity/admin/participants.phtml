@@ -2,6 +2,16 @@
 // set title
 $this->headTitle($this->escapeHtml($this->localiseText($activity->getName())));
 $this->headTitle($this->translate('Participants'));
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Activities'), true, $this->url('activity_admin'))
+    ->addBreadcrumb($this->localiseText($activity->getName()), true, $this->url(
+        'activity_admin_approval/view',
+        [
+            'id' => $activity->getId()
+        ],
+    ))
+    ->addBreadcrumb($this->translate('Participants'));
 ?>
 <div class="row admin-activity">
     <?php if (isset($success)): // Display the signup/signoff message. ?>

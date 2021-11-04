@@ -1,5 +1,13 @@
 <?php
 $this->headTitle($this->translate('Edit Company'));
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Career'), true, $this->url('company_admin'))
+    ->addBreadcrumb($company->getName(), true, $this->url(
+        'company_admin/company/edit',
+        [
+            'companySlugName' => $company->getSlugName(),
+        ],
+    ));
 
 $this->headScript()
     ->appendFile($this->basePath() . '/js/company-create.js');

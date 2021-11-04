@@ -5,6 +5,16 @@ $new = $proposal->getNew();
 $this->headTitle($this->escapeHtml($this->localiseText($old->getName())));
 $this->headTitle($this->translate('Update Proposal'));
 
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Activities'), true, $this->url('activity_admin'))
+    ->addBreadcrumb($this->localiseText($activity->getName()), true, $this->url(
+        'activity_admin_approval/view',
+        [
+            'id' => $activity->getId()
+        ],
+    ))
+    ->addBreadcrumb($this->translate('Update Proposal'));
+
 function diff($oldValue, $newValue)
 {
     if ($oldValue === $newValue) {

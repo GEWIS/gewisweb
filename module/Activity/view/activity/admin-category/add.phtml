@@ -1,5 +1,8 @@
 <?php
 $this->headTitle($action);
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Activity Categories'), true, $this->url('activity_admin_categories'))
+    ->addBreadcrumb($action);
 
 $this->headScript()
     ->prependFile($this->basePath() . '/js/activity-create.js')

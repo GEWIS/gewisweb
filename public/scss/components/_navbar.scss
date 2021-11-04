@@ -389,6 +389,7 @@ a.navbar-brand  {
     border: 0;
     border-radius: 0;
     background-color: darken($brand-primary, 5%);
+    box-shadow: inset 0 1px 5px -3px rgba(0, 0, 0, 0.3), -1px 0 5px -3px rgba(0, 0, 0, 0.3);
 
     > .container {
         position: sticky;

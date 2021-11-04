@@ -1,4 +1,8 @@
 <?php
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Career'), true, $this->url('company_admin'))
+    ->addBreadcrumb($this->translate('Companies'));
+
 $this->inlineScript()
     ->appendFile($this->basePath() . '/js/company-admin.js');
 $this->scriptUrl()->requireUrls(

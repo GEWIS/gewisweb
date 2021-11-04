@@ -1,3 +1,8 @@
+<?php
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Activities'), true, $this->url('activity_admin'))
+    ->addBreadcrumb($this->translate('Overview'));
+?>
 <div class="container">
 
     <?php if (isset($success)): // Display messages ?>
