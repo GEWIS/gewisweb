@@ -13,6 +13,32 @@ body {
     }
 }
 
+body > .admin-container {
+    display: flex;
+    flex-direction: row;
+    height: calc(100% - 81px); // main navbar is 81px high
+
+    > .content-container {
+        display: flex;
+        flex-direction: column;
+        flex: 1 0 auto;
+        overflow: hidden;
+
+        @media (max-width: $screen-sm-max) {
+            width: calc(100% - #{$navbar-sidebar-width-sm});
+        }
+
+        @media (min-width: $screen-md-min) {
+            width: calc(100% - #{$navbar-sidebar-width-md});
+        }
+
+        > .section:not(.section-breadcrumb) {
+            overflow-x: scroll;
+            height: 100%;
+        }
+    }
+}
+
 body > .content-container {
     flex: 1 0 auto;
     padding-bottom: 2em;

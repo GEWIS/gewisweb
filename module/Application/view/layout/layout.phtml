@@ -39,17 +39,18 @@
 <body>
 <?= $this->partial('partial/main-nav.phtml') ?>
 
-<div class="content-container">
-    <?php $viewModel = current($this->viewModel()->getCurrent()->getChildren());
-    if (strstr($viewModel->getTemplate(), 'admin')) {
-        echo $this->partial('partial/admin-nav.phtml', ['content' => $this->content]);
-    } else {
-        echo $this->content;
-    }
-    ?>
-</div>
+<?php
+$viewModel = current($this->viewModel()->getCurrent()->getChildren());
 
-<?= $this->partial('partial/footer.phtml') ?>
+if (strstr($viewModel->getTemplate(), 'admin')): ?>
+    <?= $this->partial('partial/admin.phtml', ['content' => $this->content]) ?>
+<?php else: ?>
+    <div class="content-container">
+        <?= $this->content ?>
+    </div>
+
+    <?= $this->partial('partial/footer.phtml') ?>
+<?php endif; ?>
 
 <!-- Scripts -->
 <?= $this->inlineScript()
