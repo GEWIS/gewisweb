@@ -16,13 +16,11 @@ body {
 body > .admin-container {
     display: flex;
     flex-direction: row;
-    // height: calc(100% - 81px); // main navbar is 81px high
 
     > .content-container {
         display: flex;
         flex-direction: column;
         flex: 1 0 auto;
-        //overflow: hidden;
         width: calc(100% - #{$navbar-sidebar-width-md});
 
         > .section-breadcrumb {
