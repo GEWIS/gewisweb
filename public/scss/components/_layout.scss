@@ -16,14 +16,20 @@ body {
 body > .admin-container {
     display: flex;
     flex-direction: row;
-    height: calc(100% - 81px); // main navbar is 81px high
+    // height: calc(100% - 81px); // main navbar is 81px high
 
     > .content-container {
         display: flex;
         flex-direction: column;
         flex: 1 0 auto;
-        overflow: hidden;
+        //overflow: hidden;
         width: calc(100% - #{$navbar-sidebar-width-md});
+
+        > .section-breadcrumb {
+            position: sticky;
+            top: 0;
+            z-index: ceil($zindex-navbar / 2);
+        }
 
         > .section:not(.section-breadcrumb) {
             overflow-x: scroll;

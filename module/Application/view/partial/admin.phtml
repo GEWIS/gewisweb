@@ -11,6 +11,13 @@
             </div>
             <div id="navbar-admin" class="navbar-collapse collapse width" aria-expanded="false">
                 <ul class="nav navbar-nav">
+                    <?php if (null === $this->identity()): ?>
+                        <li>
+                            <a href="<?= $this->url('user') ?>">
+                                <?= $this->translate('Login') ?>
+                            </a>
+                        </li>
+                    <?php endif; ?>
                     <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'viewAdmin')): ?>
                         <li class="dropdown <?= $this->moduleIsActive(['activity']) ? 'active' : '' ?>">
                             <a href="<?= $this->url('activity_admin') ?>" class="dropdown-toggle" data-toggle="dropdown"
