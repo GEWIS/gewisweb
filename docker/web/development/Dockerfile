@@ -90,6 +90,9 @@ ENV PHP_IDE_CONFIG="serverName=gewis.nl"
 
 RUN php composer.phar dump-autoload
 
+ARG GIT_COMMIT
+ENV GIT_COMMIT=${GIT_COMMIT}
+
 VOLUME ["/code/data", "/code/public"]
 
 ENTRYPOINT ["/bin/sh", "/code/docker-entrypoint.sh"]

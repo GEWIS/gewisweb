@@ -414,6 +414,12 @@ a.navbar-brand  {
     .navbar-nav > li {
         width: 100%;
 
+        &.stick-to-bottom {
+            position: fixed;
+            bottom: 0;
+            width: $navbar-sidebar-width-md;
+        }
+
         > a {
             padding: 15px;
         }
