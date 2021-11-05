@@ -388,7 +388,6 @@ a.navbar-brand  {
     flex-shrink: 0;
     border: 0;
     border-radius: 0;
-    background-color: darken($brand-primary, 5%);
     box-shadow: inset 0 1px 5px -3px rgba(0, 0, 0, 0.3), -1px 0 5px -3px rgba(0, 0, 0, 0.3);
 
     > .container {
@@ -400,32 +399,50 @@ a.navbar-brand  {
 
     .navbar-collapse {
         padding: 0;
+        margin: 0;
+        height: 100%;
+
+        &.width {
+            @include transition(width $transition-duration ease);
+        }
+
+        &.in > .navbar-nav {
+            margin: 0;
+        }
     }
 
     .navbar-nav > li {
         width: 100%;
 
-        &.active > a {
-            background-color: darken($brand-primary, 10%);
-        }
-
         > a {
-            color: #FFFFFF;
             padding: 15px;
+        }
+    }
 
-            &:hover,
-            &:focus {
-                background-color: darken($brand-primary, 10%);
-            }
+    .navbar-header {
+        margin: 0;
+
+        > .navbar-toggle {
+            padding: 9px;
+            margin: 10px 6px;
+            float: left;
         }
     }
 
     @media (max-width: $screen-sm-max) {
-        width: $navbar-sidebar-width-sm;
+        .navbar-collapse {
+            width: $navbar-sidebar-width-sm;
+
+            &.in {
+                width: $navbar-sidebar-width-md;
+            }
+        }
     }
 
     @media (min-width: $screen-md-min) {
-        width: $navbar-sidebar-width-md;
+        .navbar-collapse {
+            width: $navbar-sidebar-width-md;
+        }
 
         .dropdown {
             .dropdown-menu {
@@ -443,6 +460,39 @@ a.navbar-brand  {
                     border-right: none;
                 }
             }
+        }
+    }
+}
+
+.navbar-gewis-admin {
+    background-color: darken($brand-primary, 5%);
+
+    .navbar-nav > li {
+        &.active > a {
+            background-color: darken($brand-primary, 10%);
+        }
+
+        > a {
+            color: #FFFFFF;
+
+            &:hover,
+            &:focus {
+                background-color: darken($brand-primary, 10%);
+            }
+        }
+    }
+
+    .navbar-header > .navbar-toggle {
+        background-color: darken($brand-primary, 8%);
+
+        > .icon-bar {
+            background-color: #FFFFFF;
+        }
+    }
+
+    @media (max-width: $screen-sm-max) {
+        .navbar-nav .open .dropdown-menu > li > a {
+            color: #FFFFFF;
         }
     }
 }
