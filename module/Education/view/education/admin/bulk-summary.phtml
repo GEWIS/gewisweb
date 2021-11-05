@@ -3,6 +3,10 @@ $this->inlineScript()
     ->appendFile($this->basePath() . '/js/dropzone.js');
 $this->headLink()
     ->appendStylesheet($this->basePath() . '/css/dropzone.css');
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Education'), true, $this->url('admin_education'))
+    ->addBreadcrumb($this->translate('Upload Summaries'));
 ?>
 <div class="row">
     <div class="col-md-12">

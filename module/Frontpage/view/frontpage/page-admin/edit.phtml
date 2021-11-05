@@ -2,6 +2,10 @@
 $this->headScript()
     ->appendFile($this->basePath() . '/ckeditor/ckeditor.js');
 $this->scriptUrl()->requireUrl('admin_page/upload');
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Pages'), true, $this->url('admin_page'))
+    ->addBreadcrumb($this->translate('Edit'));
 ?>
 <?php
 $form = $this->form;

@@ -1,5 +1,9 @@
 <?php use Laminas\Form\Form;
 
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Meetings'))
+    ->addBreadcrumb($this->translate('Documents'));
+
 if (isset($success) && $success): ?>
     <?= $this->translate('Meeting document uploaded'); ?>
 <?php endif; ?>

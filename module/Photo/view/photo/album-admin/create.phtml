@@ -1,4 +1,8 @@
 <?php
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Photos'), true, $this->url('admin_photo'))
+    ->addBreadcrumb($this->translate('Create Album'));
+
 $form->prepare();
 $form->setAttribute('method', 'post');
 $form->setAttribute('role', 'form');

@@ -8,6 +8,9 @@ $this->scriptUrl()->requireUrls(
     ],
     ['poll_id']
 );
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Polls'));
 ?>
 <h1><?= $this->translate('Polls awaiting approval') ?></h1>
 <table class="table table-striped">

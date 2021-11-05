@@ -1,3 +1,8 @@
+<?php
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('API Tokens'), true, $this->url('user_admin/api'))
+    ->addBreadcrumb($this->translate('Add Token'));
+?>
 <h2><?= $this->translate('Add a token') ?></h2>
 <?php if (isset($form)): ?>
     <?php
