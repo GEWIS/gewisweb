@@ -14,15 +14,28 @@ class Breadcrumbs extends AbstractStandalone
 {
     public function __construct()
     {
+        parent::__construct();
+
         return $this;
     }
 
+    /**
+     * Add a breadcrumb to the container. By default, the breadcrumb is placed after the last breadcrumb (or first if no
+     * other breadcrumbs have been added). This behaviour can be changed by setting `$setType`.
+     *
+     * @param string $breadcrumb
+     * @param bool $active
+     * @param string $url
+     * @param string|null $setType
+     *
+     * @return $this
+     */
     public function addBreadcrumb(
         string $breadcrumb = '',
         bool $active = true,
         string $url = '',
         ?string $setType = null,
-    ) {
+    ): self {
         if (null === $setType) {
             $setType = AbstractContainer::APPEND;
         }
