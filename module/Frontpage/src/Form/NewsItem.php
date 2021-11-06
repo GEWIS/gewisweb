@@ -58,8 +58,8 @@ class NewsItem extends Form implements InputFilterProviderInterface
                 'name' => 'pinned',
                 'type' => 'Laminas\Form\Element\Checkbox',
                 'options' => [
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
                 ],
             ]
         );

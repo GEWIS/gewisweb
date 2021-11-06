@@ -88,8 +88,8 @@ class Activity extends Form implements InputFilterProviderInterface
                 'name' => 'language_dutch',
                 'type' => Checkbox::class,
                 'options' => [
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
                 ],
             ]
         );
@@ -99,8 +99,8 @@ class Activity extends Form implements InputFilterProviderInterface
                 'name' => 'language_english',
                 'type' => Checkbox::class,
                 'options' => [
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
                 ],
             ]
         );
@@ -165,8 +165,8 @@ class Activity extends Form implements InputFilterProviderInterface
                 'name' => 'isMyFuture',
                 'type' => Checkbox::class,
                 'options' => [
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
                 ],
             ]
         );
@@ -176,8 +176,8 @@ class Activity extends Form implements InputFilterProviderInterface
                 'name' => 'requireGEFLITST',
                 'type' => Checkbox::class,
                 'options' => [
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
                 ],
             ]
         );

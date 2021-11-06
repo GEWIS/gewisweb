@@ -91,8 +91,8 @@ class Company extends Form implements InputFilterProviderInterface
                 'type' => Checkbox::class,
                 'options' => [
                     'label' => $this->translator->translate('Published'),
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
                 ],
             ]
         );
@@ -144,8 +144,8 @@ class Company extends Form implements InputFilterProviderInterface
                 'type' => Checkbox::class,
                 'options' => [
                     'label' => $this->translator->translate('Enable Dutch Translations'),
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
                 ],
             ]
         );
@@ -156,8 +156,8 @@ class Company extends Form implements InputFilterProviderInterface
                 'type' => Checkbox::class,
                 'options' => [
                     'label' => $this->translator->translate('Enable English Translations'),
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
                 ],
             ]
         );

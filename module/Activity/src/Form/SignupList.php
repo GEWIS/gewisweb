@@ -69,8 +69,8 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 'name' => 'onlyGEWIS',
                 'type' => 'Laminas\Form\Element\Checkbox',
                 'options' => [
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
                 ],
                 'attributes' => [
                     'value' => 1,
@@ -83,8 +83,8 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 'name' => 'displaySubscribedNumber',
                 'type' => 'Laminas\Form\Element\Checkbox',
                 'options' => [
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
                 ],
             ]
         );

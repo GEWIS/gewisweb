@@ -25,8 +25,8 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
                 'name' => 'language_dutch',
                 'type' => 'Laminas\Form\Element\Checkbox',
                 'options' => [
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
                 ],
             ]
         );
@@ -36,8 +36,8 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
                 'name' => 'language_english',
                 'type' => 'Laminas\Form\Element\Checkbox',
                 'options' => [
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
                 ],
             ]
         );
