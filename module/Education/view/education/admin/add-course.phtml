@@ -3,6 +3,10 @@ $this->headScript()
     ->appendFile($this->basePath() . '/js/jquery.autocomplete.js')
     ->appendFile($this->basePath() . '/js/course.js');
 $this->scriptUrl()->requireUrl('member/search');
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Education'), true, $this->url('admin_education'))
+    ->addBreadcrumb($this->translate('Add Course'));
 ?>
 
 <?php

@@ -3,6 +3,10 @@ $this->inlineScript()
     ->appendFile($this->basePath() . '/js/education-admin.js');
 
 $this->scriptUrl()->requireUrl('admin_education/delete_temp', ['type', 'filename']);
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Education'), true, $this->url('admin_education'))
+    ->addBreadcrumb($this->translate('Edit Exam'));
 ?>
 <?php if (isset($success) && $success): ?>
     <?= $this->translate('Upload of all exams was finished.') ?>

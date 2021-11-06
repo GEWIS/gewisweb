@@ -5,6 +5,9 @@ $this->headScript()
 $this->headLink()
     ->appendStylesheet($this->basePath() . '/css/tree.css');
 
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Photos'));
+
 $this->scriptUrl()->requireUrl('admin_photo/album_page', ['album_id', 'page'])
     ->requireUrls(
         [

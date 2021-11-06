@@ -30,6 +30,8 @@ help:
 
 .DEFAULT_GOAL := all
 
+LAST_WEB_COMMIT := $(shell git rev-parse --short HEAD)
+
 runprod:
 		@docker-compose -f docker-compose.yml up -d --force-recreate --remove-orphans
 
@@ -150,10 +152,10 @@ builddev: buildwebdev buildglide buildmatomo buildnginx
 buildweb: buildwebprod buildwebdev
 
 buildwebprod:
-		@docker build -t web.docker-registry.gewis.nl/gewisweb_web:production -f docker/web/production/Dockerfile .
+		@docker build --build-arg GIT_COMMIT="$(LAST_WEB_COMMIT)" -t web.docker-registry.gewis.nl/gewisweb_web:production -f docker/web/production/Dockerfile .
 
 buildwebdev:
-		@docker build -t web.docker-registry.gewis.nl/gewisweb_web:development -f docker/web/development/Dockerfile .
+		@docker build --build-arg GIT_COMMIT="$(LAST_WEB_COMMIT)" -t web.docker-registry.gewis.nl/gewisweb_web:development -f docker/web/development/Dockerfile .
 
 buildglide:
 		@docker build -t web.docker-registry.gewis.nl/gewisweb_glide:latest -f docker/glide/Dockerfile docker/glide

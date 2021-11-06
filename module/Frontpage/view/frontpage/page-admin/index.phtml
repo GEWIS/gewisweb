@@ -1,7 +1,10 @@
 <?php
 $this->headScript()
     ->appendFile($this->basePath() . '/js/tree.js');
-$this->headLink()->appendStylesheet($this->basePath() . '/css/tree.css')
+$this->headLink()->appendStylesheet($this->basePath() . '/css/tree.css');
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Pages'));
 ?>
 <h3><?= $this->translate('Pages') ?></h3>
 

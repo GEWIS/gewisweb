@@ -1,3 +1,7 @@
+<?php
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('News'));
+?>
 <h1><?= $this->translate('News items') ?></h1>
 <a class="btn btn-primary" href="<?= $this->url('admin_news/create') ?>"><?= $this->translate('Create news item') ?></a>
 <?= $this->paginationControl(

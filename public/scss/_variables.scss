@@ -8,7 +8,6 @@ $screen-sm-min: 768px;
 $screen-md-min: 992px;
 $screen-lg-min: 1200px;
 
-
 $panel-color: #414141;
 
 // Grid
@@ -17,6 +16,10 @@ $grid-gap: 1rem;
 // Card
 $card-border-color: #f2f2f2;
 $card-active-color: #f8f8f8;
+
+// Admin Side-Navbar
+$navbar-sidebar-width-sm: 54px;
+$navbar-sidebar-width-md: 186px;
 
 // FontAwesome
 $fa-font-path: "../fonts/fontawesome";

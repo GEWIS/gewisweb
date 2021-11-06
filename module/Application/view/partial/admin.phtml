@@ -1,0 +1,156 @@
+<div class="admin-container">
+    <nav class="navbar navbar-gewis-admin navbar-fixed-left">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" id="admin-collapsable" data-toggle="collapse" data-target="#navbar-admin" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="navbar-admin" class="navbar-collapse collapse width" aria-expanded="false">
+                <ul class="nav navbar-nav">
+                    <?php if (null === $this->identity()): ?>
+                        <li>
+                            <a href="<?= $this->url('user') ?>">
+                                <?= $this->translate('Login') ?>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                    <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'viewAdmin')): ?>
+                        <li class="dropdown <?= $this->moduleIsActive(['activity']) ? 'active' : '' ?>">
+                            <a href="<?= $this->url('activity_admin') ?>" class="dropdown-toggle" data-toggle="dropdown"
+                               role="button" aria-haspopup="true" aria-expanded="false">
+                                <?= $this->translate('Activities') ?> <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="<?= $this->url('activity_admin') ?>"><?= $this->translate('Overview') ?></a>
+                                </li>
+                                <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'listCategories')): ?>
+                                    <li>
+                                        <a href="<?= $this->url('activity_admin_categories') ?>"><?= $this->translate('Categories') ?></a>
+                                    </li>
+                                <?php endif; ?>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
+                    <?php if ($this->acl('company_service_acl')->isAllowed('company', 'listall')): ?>
+                        <li class="<?= $this->moduleIsActive(['company']) ? 'active' : '' ?>">
+                            <a href="<?= $this->url('company_admin') ?>">
+                                <?= $this->translate('Career') ?>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                    <?php if ($this->acl('education_service_acl')->isAllowed('exam', 'upload')): ?>
+                        <li class="dropdown <?= $this->moduleIsActive(['frontpage', 'exam']) ? 'active' : '' ?>">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">
+                                <?= $this->translate('Education') ?> <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="<?= $this->url('admin_education/bulk_upload_exam') ?>">
+                                        <?= $this->translate('Upload exams') ?>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= $this->url('admin_education/bulk_upload_summary') ?>">
+                                        <?= $this->translate('Upload summaries') ?>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= $this->url('admin_education/add_course') ?>">
+                                        <?= $this->translate('Add courses') ?>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
+                    <?php if ($this->acl('decision_service_acl')->isAllowed('meeting', 'upload_notes')): ?>
+                        <li class="dropdown">
+                            <a href="<?= $this->url('admin_decision') ?>" class="dropdown-toggle" data-toggle="dropdown"
+                               role="button" aria-haspopup="true" aria-expanded="false">
+                                <?= $this->translate('Meetings') ?> <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="<?= $this->url('admin_decision/notes') ?>"><?= $this->translate('Notes') ?></a>
+                                </li>
+                                <li>
+                                    <a href="<?= $this->url('admin_decision/document') ?>"><?= $this->translate('Documents') ?></a>
+                                </li>
+                                <li>
+                                    <a href="<?= $this->url('admin_decision/authorizations') ?>"><?= $this->translate('Authorizations') ?></a>
+                                </li>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
+                    <?php if ($this->acl('decision_service_acl')->isAllowed('organ', 'viewAdmin')): ?>
+                        <li>
+                            <a href="<?= $this->url('admin_organ') ?>">
+                                <?= $this->translate('Organs') ?>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                    <?php if ($this->acl('frontpage_service_acl')->isAllowed('news_item', 'create')): ?>
+                        <li class="<?= $this->moduleIsActive(['frontpage', 'news']) ? 'active' : '' ?>">
+                            <a href="<?= $this->url('admin_news') ?>"><?= $this->translate('News') ?></a>
+                        </li>
+                    <?php endif; ?>
+                    <?php if ($this->acl('frontpage_service_acl')->isAllowed('page', 'create')): ?>
+                        <li class="<?= $this->moduleIsActive(['frontpage', 'page']) ? 'active' : '' ?>">
+                            <a href="<?= $this->url('admin_page') ?>"><?= $this->translate('Pages') ?></a>
+                        </li>
+                    <?php endif; ?>
+                    <?php if ($this->acl('photo_service_acl')->isAllowed('album', 'nodate')): ?>
+                        <li>
+                            <a href="<?= $this->url('admin_photo') ?>"><?= $this->translate('Photos') ?></a>
+                        </li>
+                    <?php endif; ?>
+                    <?php if ($this->acl('frontpage_service_acl')->isAllowed('poll', 'approve')): ?>
+                        <li class="<?= $this->moduleIsActive(['frontpage', 'poll']) ? 'active' : '' ?>">
+                            <a href="<?= $this->url('admin_poll') ?>"><?= $this->translate('Polls') ?></a>
+                        </li>
+                    <?php endif; ?>
+                    <?php if ($this->acl('user_service_acl')->isAllowed('apiuser', 'add')): ?>
+                        <li class="dropdown <?= $this->moduleIsActive(['user']) ? 'active' : '' ?>">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">
+                                <?= $this->translate('Users') ?> <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="<?= $this->url('user_admin/api') ?>"><?= $this->translate('API Users') ?></a>
+                                </li>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
+                    <li class="stick-to-bottom">
+                        <a href="https://github.com/gewis/gewisweb">
+                            <i class="fab fa-github"></i> <?= getenv('GIT_COMMIT') ?>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="content-container">
+        <section class="section section-breadcrumb">
+            <div class="container-admin">
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <a href="<?= $this->url('admin') ?>"><?= $this->translate('Admin') ?></a>
+                    </li>
+                    <?= $this->breadcrumbs() ?>
+                </ol>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container-admin">
+                <?= $this->content ?>
+            </div>
+        </section>
+    </div>
+</div>

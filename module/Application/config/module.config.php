@@ -6,6 +6,7 @@ use Application\Controller\IndexController;
 use Application\Controller\Factory\IndexControllerFactory;
 use Application\View\Helper\{
     BootstrapElementError,
+    Breadcrumbs,
     FeaturedCompanyPackage,
     LocalisedTextElement,
     LocaliseText,
@@ -118,6 +119,9 @@ return [
                 $companyService = $container->get('company_service_company');
 
                 return new FeaturedCompanyPackage($companyService);
+            },
+            'breadcrumbs' => function () {
+                return new Breadcrumbs();
             },
             'bootstrapElementError' => function () {
                 return new BootstrapElementError();

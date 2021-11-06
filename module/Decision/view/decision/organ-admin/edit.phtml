@@ -6,6 +6,10 @@ $this->headScript()
 $this->headLink()
     ->appendStylesheet($this->basePath() . '/css/jquery.Jcrop.min.css');
 $this->scriptUrl()->requireUrl('admin_page/upload');
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Organs'), true, $this->url('admin_organ'))
+    ->addBreadcrumb($this->translate('Edit'));
 ?>
 <style>
     .cover-crop {

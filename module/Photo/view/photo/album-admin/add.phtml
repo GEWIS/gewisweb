@@ -3,7 +3,18 @@ $this->inlineScript()
     ->appendFile($this->basePath() . '/js/dropzone.js')
     ->appendFile($this->basePath() . '/js/photo.js')
     ->appendFile($this->basePath() . '/js/photo-admin.js');
-$this->headLink()->appendStylesheet($this->basePath() . '/css/dropzone.css')
+$this->headLink()->appendStylesheet($this->basePath() . '/css/dropzone.css');
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Photos'), true, $this->url('admin_photo'))
+    ->addBreadcrumb($album->getName(), true, $this->url(
+        'admin_photo',
+        [],
+        [
+            'fragment' => $album->getId(),
+        ],
+    ))
+    ->addBreadcrumb($this->translate('Upload Photos'));
 ?>
 <h1><?= sprintf($this->translate('Uploading photos to %s'), $album->getName()) ?></h1>
 <hr>

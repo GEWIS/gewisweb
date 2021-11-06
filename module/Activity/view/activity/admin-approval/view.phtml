@@ -4,6 +4,16 @@ use Activity\Model\Activity;
 
 $this->headTitle($this->escapeHtml($this->localiseText($activity->getName())));
 $this->headTitle($this->translate('Approval'));
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Activities'), true, $this->url('activity_admin'))
+    ->addBreadcrumb($this->localiseText($activity->getName()), true, $this->url(
+        'activity_admin_approval/view',
+        [
+            'id' => $activity->getId()
+        ],
+    ))
+    ->addBreadcrumb($this->translate('Approval'));
 ?>
 <div class="row admin-activity admin-activity-overview">
     <div class="col-md-12">

@@ -4,6 +4,24 @@ $this->headScript()
     ->appendFile($this->basePath() . '/js/photo.js')
     ->appendFile($this->basePath() . '/js/photo-admin.js');
 
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Photos'), true, $this->url('admin_photo/album_index'));
+
+foreach ($path as $album) {
+    $this->breadcrumbs()->addBreadcrumb($album->getName(), true, $this->url(
+        'admin_photo',
+        [],
+        [
+            'fragment' => $album->getId(),
+        ],
+    ));
+}
+$this->breadcrumbs()
+    ->addBreadcrumb(sprintf(
+        $this->translate('Photo #%d'),
+        $photo->getId(),
+    ));
+
 $this->scriptUrl()->requireUrls(
     ['admin_photo/photo_index', 'admin_photo/photo_delete', 'admin_photo/photo_move'],
     ['photo_id']
@@ -37,13 +55,6 @@ $this->scriptUrl()->requireUrls(
     </div>
 
     <div class="col-lg-9">
-        <ol class="breadcrumb">
-            <?php foreach ($path as $album): ?>
-                <li><a href="<?= $this->url('admin_photo', [], ["fragment" => $album->getId()]); ?>">
-                        <?= $this->escapeHtml($album->getName()) ?></a></li>
-            <?php endforeach; ?>
-            <li class="active">Photo #<?= $photo->getId() ?></li>
-        </ol>
         <button type="button" data-toggle="modal" data-target="#movePhotoModal" class="btn btn-primary"><span
                 class="fas fa-file-export"></span>&nbsp;<?= $this->translate('Move photo') ?></button>
         <button type="button" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger"><span
