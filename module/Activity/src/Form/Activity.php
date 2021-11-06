@@ -8,7 +8,7 @@ use Exception;
 use Laminas\Form\Element\{
     Checkbox,
     Collection,
-    DateTime as DateTimeElement,
+    DateTimeLocal,
     MultiCheckbox,
     Select,
     Submit,
@@ -66,9 +66,9 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'beginTime',
-                'type' => DateTimeElement::class,
+                'type' => DateTimeLocal::class,
                 'options' => [
-                    'format' => 'Y/m/d H:i',
+                    'format' => 'Y-m-d\TH:i',
                 ],
             ]
         );
@@ -76,9 +76,9 @@ class Activity extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'endTime',
-                'type' => DateTimeElement::class,
+                'type' => DateTimeLocal::class,
                 'options' => [
-                    'format' => 'Y/m/d H:i',
+                    'format' => 'Y-m-d\TH:i',
                 ],
             ]
         );
@@ -258,7 +258,7 @@ class Activity extends Form implements InputFilterProviderInterface
      *
      * @return bool
      */
-    public static function beforeEndTime($value, $context = [])
+    public static function beforeEndTime($value, $context = []): bool
     {
         try {
             $endTime = $context['endTime'];
@@ -279,7 +279,7 @@ class Activity extends Form implements InputFilterProviderInterface
      *
      * @return bool
      */
-    public static function beforeBeginTime($value, $context = [])
+    public static function beforeBeginTime($value, $context = []): bool
     {
         try {
             $beginTime = isset($context['beginTime']) ? new DateTime($context['beginTime']) : new DateTime('now');
@@ -298,7 +298,7 @@ class Activity extends Form implements InputFilterProviderInterface
      *
      * @throws DomainException
      */
-    public function isValid()
+    public function isValid(): bool
     {
         $valid = parent::isValid();
 
@@ -396,7 +396,7 @@ class Activity extends Form implements InputFilterProviderInterface
      *
      * @return array
      */
-    public function getInputFilterSpecification()
+    public function getInputFilterSpecification(): array
     {
         $filter = [
             'organ' => [
@@ -467,7 +467,7 @@ class Activity extends Form implements InputFilterProviderInterface
      *
      * @return array
      */
-    public function inputFilterEnglish()
+    public function inputFilterEnglish(): array
     {
         return $this->inputFilterGeneric('En');
     }
@@ -475,12 +475,12 @@ class Activity extends Form implements InputFilterProviderInterface
     /**
      * Build a generic input filter.
      *
-     * @input string $languagePostFix Postfix that is used for language fields to indicate that a field belongs to that
+     * @param string $languagePostFix Postfix that is used for language fields to indicate that a field belongs to that
      * language
      *
      * @return array
      */
-    protected function inputFilterGeneric($languagePostFix)
+    protected function inputFilterGeneric(string $languagePostFix): array
     {
         return [
             'name' . $languagePostFix => [
@@ -543,7 +543,7 @@ class Activity extends Form implements InputFilterProviderInterface
      *
      * @return array
      */
-    public function inputFilterDutch()
+    public function inputFilterDutch(): array
     {
         return $this->inputFilterGeneric('');
     }

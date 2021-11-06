@@ -2,9 +2,14 @@
 
 namespace User\Form;
 
+use Laminas\Form\Element\{
+    Submit,
+    Text,
+};
 use Laminas\Form\Form;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Validator\StringLength;
 
 class ApiToken extends Form implements InputFilterProviderInterface
 {
@@ -15,7 +20,7 @@ class ApiToken extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'name',
-                'type' => 'text',
+                'type' => Text::class,
                 'options' => [
                     'label' => $translator->translate('Name'),
                 ],
@@ -25,7 +30,7 @@ class ApiToken extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'submit',
-                'type' => 'submit',
+                'type' => Submit::class,
                 'attributes' => [
                     'value' => $translator->translate('Create API token'),
                 ],
@@ -33,14 +38,17 @@ class ApiToken extends Form implements InputFilterProviderInterface
         );
     }
 
-    public function getInputFilterSpecification()
+    /**
+     * @return array
+     */
+    public function getInputFilterSpecification(): array
     {
         return [
             'name' => [
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'StringLength',
+                        'name' => StringLength::class,
                         'options' => [
                             'min' => 2,
                             'max' => 64,

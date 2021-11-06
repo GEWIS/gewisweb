@@ -2,6 +2,12 @@
 
 namespace Frontpage\Form;
 
+use Laminas\Form\Element\{
+    Checkbox,
+    Submit,
+    Text,
+    Textarea,
+};
 use Laminas\Form\Form;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
@@ -16,7 +22,7 @@ class NewsItem extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'dutchTitle',
-                'type' => 'text',
+                'type' => Text::class,
                 'options' => [
                     'label' => $translator->translate('Dutch title'),
                 ],
@@ -26,7 +32,7 @@ class NewsItem extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'englishTitle',
-                'type' => 'text',
+                'type' => Text::class,
                 'options' => [
                     'label' => $translator->translate('English title'),
                 ],
@@ -36,7 +42,7 @@ class NewsItem extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'dutchContent',
-                'type' => 'text',
+                'type' => Textarea::class,
                 'options' => [
                     'label' => $translator->translate('Dutch content'),
                 ],
@@ -46,7 +52,7 @@ class NewsItem extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'englishContent',
-                'type' => 'text',
+                'type' => Textarea::class,
                 'options' => [
                     'label' => $translator->translate('English content'),
                 ],
@@ -56,7 +62,7 @@ class NewsItem extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'pinned',
-                'type' => 'Laminas\Form\Element\Checkbox',
+                'type' => Checkbox::class,
                 'options' => [
                     'checked_value' => '1',
                     'unchecked_value' => '0',
@@ -67,7 +73,7 @@ class NewsItem extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'submit',
-                'type' => 'submit',
+                'type' => Submit::class,
                 'attributes' => [
                     'value' => $translator->translate('Save'),
                 ],
@@ -81,7 +87,7 @@ class NewsItem extends Form implements InputFilterProviderInterface
      *
      * @return array
      */
-    public function getInputFilterSpecification()
+    public function getInputFilterSpecification(): array
     {
         return [
             'dutchTitle' => [

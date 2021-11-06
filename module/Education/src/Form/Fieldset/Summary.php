@@ -4,11 +4,19 @@ namespace Education\Form\Fieldset;
 
 use Education\Model\Exam as ExamModel;
 use Laminas\Filter\StringToUpper;
+use Laminas\Form\Element\{
+    Date,
+    Hidden,
+    Select,
+    Text,
+};
 use Laminas\Form\Fieldset;
+use Laminas\I18n\Validator\Alnum;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\{
     Callback,
+    Date as DateValidator,
     File\Exists,
     Regex,
     StringLength,
@@ -25,14 +33,14 @@ class Summary extends Fieldset implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'file',
-                'type' => 'hidden',
+                'type' => Hidden::class,
             ]
         );
 
         $this->add(
             [
                 'name' => 'course',
-                'type' => 'text',
+                'type' => Text::class,
                 'options' => [
                     'label' => $translator->translate('Course code'),
                 ],
@@ -42,9 +50,10 @@ class Summary extends Fieldset implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'date',
-                'type' => 'date',
+                'type' => Date::class,
                 'options' => [
                     'label' => $translator->translate('Summary date'),
+                    'format' => 'Y-m-d',
                 ],
             ]
         );
@@ -52,7 +61,7 @@ class Summary extends Fieldset implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'author',
-                'type' => 'text',
+                'type' => Text::class,
                 'options' => [
                     'label' => $translator->translate('Author'),
                 ],
@@ -61,8 +70,8 @@ class Summary extends Fieldset implements InputFilterProviderInterface
 
         $this->add(
             [
-                'type' => 'Laminas\Form\Element\Select',
                 'name' => 'language',
+                'type' => Select::class,
                 'options' => [
                     'label' => $translator->translate('Language'),
                     'value_options' => [
@@ -79,12 +88,15 @@ class Summary extends Fieldset implements InputFilterProviderInterface
      *
      * @param array $config
      */
-    public function setConfig($config)
+    public function setConfig($config): void
     {
         $this->config = $config['education_temp'];
     }
 
-    public function getInputFilterSpecification()
+    /**
+     * @return array
+     */
+    public function getInputFilterSpecification(): array
     {
         $dir = $this->config['upload_summary_dir'];
 
@@ -125,7 +137,9 @@ class Summary extends Fieldset implements InputFilterProviderInterface
                             'max' => 6,
                         ],
                     ],
-                    ['name' => 'alnum'],
+                    [
+                        'name' => Alnum::class,
+                    ],
                 ],
                 'filters' => [
                     [
@@ -150,7 +164,9 @@ class Summary extends Fieldset implements InputFilterProviderInterface
             'date' => [
                 'required' => true,
                 'validators' => [
-                    ['name' => 'date'],
+                    [
+                        'name' => DateValidator::class,
+                    ],
                 ],
             ],
         ];

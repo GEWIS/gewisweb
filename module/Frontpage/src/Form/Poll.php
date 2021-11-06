@@ -2,6 +2,12 @@
 
 namespace Frontpage\Form;
 
+use Frontpage\Form\PollOption as PollOptionFieldset;
+use Laminas\Form\Element\{
+    Collection,
+    Submit,
+    Text,
+};
 use Laminas\Form\Form;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
@@ -16,7 +22,7 @@ class Poll extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'dutchQuestion',
-                'type' => 'text',
+                'type' => Text::class,
                 'options' => [
                     'label' => $translator->translate('Dutch question'),
                 ],
@@ -26,7 +32,7 @@ class Poll extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'englishQuestion',
-                'type' => 'text',
+                'type' => Text::class,
                 'options' => [
                     'label' => $translator->translate('English question'),
                 ],
@@ -36,13 +42,13 @@ class Poll extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'options',
-                'type' => 'Laminas\Form\Element\Collection',
+                'type' => Collection::class,
                 'options' => [
                     'count' => 2,
                     'should_create_template' => true,
                     'allow_add' => true,
                     'target_element' => [
-                        'type' => 'Frontpage\Form\PollOption',
+                        'type' => PollOptionFieldset::class,
                     ],
                 ],
             ]
@@ -51,7 +57,7 @@ class Poll extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'submit',
-                'type' => 'submit',
+                'type' => Submit::class,
                 'attributes' => [
                     'value' => $translator->translate('Submit'),
                 ],
@@ -65,7 +71,7 @@ class Poll extends Form implements InputFilterProviderInterface
      *
      * @return array
      */
-    public function getInputFilterSpecification()
+    public function getInputFilterSpecification(): array
     {
         return [
             'dutchQuestion' => [

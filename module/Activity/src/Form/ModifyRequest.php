@@ -2,6 +2,10 @@
 
 namespace Activity\Form;
 
+use Laminas\Form\Element\{
+    Csrf,
+    Submit,
+};
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 
@@ -20,22 +24,25 @@ class ModifyRequest extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'security',
-                'type' => 'Laminas\Form\Element\Csrf',
+                'type' => Csrf::class,
             ]
         );
 
         $this->add(
             [
                 'name' => 'submit',
+                'type' => Submit::class,
                 'attributes' => [
-                    'type' => 'submit',
                     'value' => $buttonvalue,
                 ],
             ]
         );
     }
 
-    public function getInputFilterSpecification()
+    /**
+     * @return array
+     */
+    public function getInputFilterSpecification(): array
     {
         return [];
     }

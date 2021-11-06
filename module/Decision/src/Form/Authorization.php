@@ -2,6 +2,11 @@
 
 namespace Decision\Form;
 
+use Laminas\Form\Element\{
+    Checkbox,
+    Hidden,
+    Submit,
+};
 use Laminas\Form\Form;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
@@ -15,14 +20,14 @@ class Authorization extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'recipient',
-                'type' => 'hidden',
+                'type' => Hidden::class,
             ]
         );
 
         $this->add(
             [
                 'name' => 'agree',
-                'type' => 'checkbox',
+                'type' => Checkbox::class,
                 'options' => [
                     'use_hidden_element' => false,
                 ],
@@ -32,7 +37,7 @@ class Authorization extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'submit',
-                'type' => 'submit',
+                'type' => Submit::class,
                 'attributes' => [
                     'label' => $translate->translate('Authorize'),
                 ],
@@ -43,7 +48,7 @@ class Authorization extends Form implements InputFilterProviderInterface
     /**
      * Input filter specification.
      */
-    public function getInputFilterSpecification()
+    public function getInputFilterSpecification(): array
     {
         return [
             'agree' => [

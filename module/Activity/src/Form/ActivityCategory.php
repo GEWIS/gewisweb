@@ -2,18 +2,21 @@
 
 namespace Activity\Form;
 
+use Laminas\Form\Element\{
+    Checkbox,
+    Submit,
+    Text,
+};
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-
-// use Laminas\Hydrator\ClassMethodsHydrator;
 
 class ActivityCategory extends Form implements InputFilterProviderInterface
 {
     /**
      * @var Translator
      */
-    protected $translator;
+    protected Translator $translator;
 
     public function __construct(Translator $translator)
     {
@@ -23,7 +26,7 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'language_dutch',
-                'type' => 'Laminas\Form\Element\Checkbox',
+                'type' => Checkbox::class,
                 'options' => [
                     'checked_value' => '1',
                     'unchecked_value' => '0',
@@ -34,7 +37,7 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'language_english',
-                'type' => 'Laminas\Form\Element\Checkbox',
+                'type' => Checkbox::class,
                 'options' => [
                     'checked_value' => '1',
                     'unchecked_value' => '0',
@@ -45,9 +48,7 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'name',
-                'attributes' => [
-                    'type' => 'text',
-                ],
+                'type' => Text::class,
                 'options' => [
                     'label' => $translator->translate('Name'),
                 ],
@@ -57,9 +58,7 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'nameEn',
-                'attributes' => [
-                    'type' => 'text',
-                ],
+                'type' => Text::class,
                 'options' => [
                     'label' => $translator->translate('Name'),
                 ],
@@ -69,8 +68,8 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'submit',
+                'type' => Submit::class,
                 'attributes' => [
-                    'type' => 'submit',
                     'value' => 'Create',
                 ],
             ]
@@ -82,7 +81,7 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
      *
      * @return array
      */
-    public function getInputFilterSpecification()
+    public function getInputFilterSpecification(): array
     {
         $filter = [];
 
@@ -129,7 +128,7 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
      *
      * @return array
      */
-    protected function inputFilterGeneric($languagePostFix)
+    protected function inputFilterGeneric($languagePostFix): array
     {
         return [
             'name' . $languagePostFix => [
@@ -153,7 +152,7 @@ class ActivityCategory extends Form implements InputFilterProviderInterface
      *
      * @return bool
      */
-    public function isValid()
+    public function isValid(): bool
     {
         $valid = parent::isValid();
         $this->isValid = $valid;

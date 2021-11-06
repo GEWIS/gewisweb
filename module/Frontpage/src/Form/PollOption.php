@@ -3,6 +3,7 @@
 namespace Frontpage\Form;
 
 use Frontpage\Model\PollOption as PollOptionModel;
+use Laminas\Form\Element\Text;
 use Laminas\Form\Fieldset;
 use Laminas\Hydrator\ClassMethodsHydrator;
 use Laminas\InputFilter\InputFilterProviderInterface;
@@ -20,7 +21,7 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'dutchText',
-                'type' => 'text',
+                'type' => Text::class,
                 'options' => [
                     'label' => 'Dutch option',
                 ],
@@ -30,7 +31,7 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'englishText',
-                'type' => 'text',
+                'type' => Text::class,
                 'options' => [
                     'label' => 'English option',
                 ],
@@ -41,7 +42,7 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
     /**
      * @return array
      */
-    public function getInputFilterSpecification()
+    public function getInputFilterSpecification(): array
     {
         return [
             'dutchText' => [

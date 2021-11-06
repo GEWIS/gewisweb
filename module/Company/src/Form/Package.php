@@ -40,6 +40,7 @@ class Package extends Form implements InputFilterProviderInterface
                 'type' => Date::class,
                 'options' => [
                     'label' => $this->translator->translate('Start Date'),
+                    'format' => 'Y-m-d',
                 ],
                 'attributes' => [
                     'step' => '1',
@@ -53,6 +54,7 @@ class Package extends Form implements InputFilterProviderInterface
                 'type' => Date::class,
                 'options' => [
                     'label' => $this->translator->translate('Expiration Date'),
+                    'format' => 'Y-m-d',
                 ],
                 'attributes' => [
                     'step' => '1',

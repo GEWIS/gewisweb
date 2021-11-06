@@ -2,22 +2,28 @@
 
 namespace Decision\Form;
 
-use Laminas\Filter\ToInt;
-use Laminas\Filter\ToNull;
-use Laminas\Form\Element\Hidden;
-use Laminas\Form\Element\Radio;
+use Laminas\Filter\{
+    ToInt,
+    ToNull,
+};
+use Laminas\Form\Element\{
+    Hidden,
+    Radio,
+};
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\InArray;
-use Laminas\Validator\NotEmpty;
+use Laminas\Validator\{
+    InArray,
+    NotEmpty,
+};
 
 class ReorderDocument extends Form implements InputFilterProviderInterface
 {
     /**
      * @var Translator
      */
-    protected $translator;
+    protected Translator $translator;
 
     public function __construct($name = null, $options = [])
     {
@@ -26,12 +32,15 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
         $this->setAttribute('method', 'post');
     }
 
-    public function setupElements()
+    /**
+     * @return self
+     */
+    public function setupElements(): self
     {
         $this->add(
             [
-                'type' => Radio::class,
                 'name' => 'direction',
+                'type' => Radio::class,
                 'options' => [
                     'label' => 'Label',
                     'value_options' => [
@@ -56,8 +65,8 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
 
         $this->add(
             [
-                'type' => Hidden::class,
                 'name' => 'document',
+                'type' => Hidden::class,
                 'attributes' => [
                     'value' => null, // Value should be populated in the view
                 ],
@@ -67,7 +76,10 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
         return $this;
     }
 
-    public function getInputFilterSpecification()
+    /**
+     * @return array
+     */
+    public function getInputFilterSpecification(): array
     {
         return [
             'direction' => [
@@ -89,7 +101,12 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
         ];
     }
 
-    public function setTranslator(Translator $translator)
+    /**
+     * @param Translator $translator
+     *
+     * @return self
+     */
+    public function setTranslator(Translator $translator): self
     {
         $this->translator = $translator;
 
@@ -107,7 +124,7 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
      *
      * @return string
      */
-    private static function generateIcon($className, $title)
+    private static function generateIcon($className, $title): string
     {
         return "<span class=\"fa {$className}\" title=\"{$title}\"></span>";
     }
