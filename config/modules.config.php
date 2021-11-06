@@ -7,7 +7,7 @@
  */
 
 return [
-    'Laminas\I18n\Module',
+    'Laminas\I18n',
     'Laminas\Mvc\I18n',
     'Laminas\Serializer',
     'Laminas\Mail',

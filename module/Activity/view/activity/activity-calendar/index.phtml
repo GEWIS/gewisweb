@@ -183,7 +183,7 @@ $this->headLink()
             "title": "<?= $this->escapeHtml($option->getProposal()->getName()) ?>",
             "organizer": "<?= $option->getCreatorAlt()?>",
             "url": "#",
-            "class": "event-info",
+            "class": "<?= $option->getStatus() === 'approved' ? 'event-approved' : 'event-info' ?>",
             "start": <?= $option->getBeginTime()->getTimestamp() * 1000 ?>,
             "end": <?= $option->getEndTime()->getTimestamp() * 1000 ?>
         },

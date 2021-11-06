@@ -55,12 +55,15 @@ class DecisionController extends AbstractActionController
         $number = $this->params()->fromRoute('number');
 
         $meeting = $this->decisionService->getMeeting($type, $number);
-        $response = $this->decisionService->getMeetingNotesDownload($meeting);
-        if (is_null($response)) {
-            return $this->notFoundAction();
+        if (null !== $meeting) {
+            $response = $this->decisionService->getMeetingNotesDownload($meeting);
+
+            if (null !== $response) {
+                return $response;
+            }
         }
 
-        return $response;
+        return $this->notFoundAction();
     }
 
     public function documentAction()
@@ -68,12 +71,15 @@ class DecisionController extends AbstractActionController
         $id = $this->params()->fromRoute('id');
 
         $meetingDocument = $this->decisionService->getMeetingDocument($id);
-        $response = $this->decisionService->getMeetingDocumentDownload($meetingDocument);
-        if (is_null($response)) {
-            return $this->notFoundAction();
+        if (null !== $meetingDocument) {
+            $response = $this->decisionService->getMeetingDocumentDownload($meetingDocument);
+
+            if (null !== $response) {
+                return $response;
+            }
         }
 
-        return $response;
+        return $this->notFoundAction();
     }
 
     /**
@@ -85,6 +91,9 @@ class DecisionController extends AbstractActionController
         $number = $this->params()->fromRoute('number');
 
         $meeting = $this->decisionService->getMeeting($type, $number);
+        if (null === $meeting) {
+            return $this->notFoundAction();
+        }
 
         return new ViewModel(
             [

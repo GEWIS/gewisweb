@@ -29,6 +29,8 @@ return [
                     'user'     => getenv('DOCKER_DB_USERNAME'),
                     'password' => getenv('DOCKER_DB_PASSWORD'),
                     'dbname'   => getenv('DOCKER_DB_DATABASE'),
+                    'charset' => 'utf8mb4',
+                    'collate' => 'utf8mb4_unicode_ci',
                 ]
             ],
         ],

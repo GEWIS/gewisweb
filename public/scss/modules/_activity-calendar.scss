@@ -8,6 +8,16 @@
 
     .calendar-control {
         margin-top: 20px;
+
+        .event {
+            border: 0;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+
+            &.event-approved {
+                background-color: #DB5CFF;
+            }
+        }
     }
 
     .dropdown .dropdown-menu {
