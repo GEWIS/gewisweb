@@ -1,11 +1,9 @@
 <?php
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js')
     ->appendFile($this->basePath() . '/js/underscore-min.js')
     ->appendFile($this->basePath() . '/js/language/nl-NL.js')
     ->appendFile($this->basePath() . '/js/calendar.min.js');
 $this->headLink()
-    ->appendStylesheet($this->basePath() . '/css/jquery.datetimepicker.css')
     ->appendStylesheet($this->basePath() . '/css/calendar.min.css');
 ?>
 
@@ -166,9 +164,6 @@ $this->headLink()
 </section>
 
 <script type="text/javascript">
-    $('.datepicker').datetimepicker({
-        dayOfWeekStart: 1,
-    });
     var calendar;
     var timeMin = new Date();
     timeMin.setDate(timeMin.getDate() - 180);

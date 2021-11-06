@@ -1,9 +1,6 @@
 <?php
 $this->headTitle($this->translate('Create activity proposal'));
-$this->headLink()
-    ->appendStylesheet($this->basePath() . '/css/jquery.datetimepicker.css');
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js')
     ->appendFile($this->basePath() . '/js/proposal-create.js');
 
 $form->prepare();

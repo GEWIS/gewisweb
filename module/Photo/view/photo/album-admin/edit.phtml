@@ -1,9 +1,4 @@
 <?php
-$this->headLink()
-    ->appendStylesheet($this->basePath() . '/css/jquery.datetimepicker.css');
-$this->headScript()
-    ->appendFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js');
-
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Photos'), true, $this->url('admin_photo'))
     ->addBreadcrumb($this->translate('Edit Album'));
@@ -74,10 +69,3 @@ $form->prepare();
 </div>
 <?= $this->form()->closeTag(); ?>
 
-<script>
-    var dtpOptions = {
-        dayOfWeekStart: 1,
-    };
-    $('[name="startDateTime"]').datetimepicker(dtpOptions);
-    $('[name="endDateTime"]').datetimepicker(dtpOptions);
-</script>
