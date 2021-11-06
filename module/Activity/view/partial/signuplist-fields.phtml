@@ -31,7 +31,7 @@
                         <?= $name->getLabel() ?>
                         <span class="flag-icon flag-icon-nl"></span>
                     </label>
-                    <?= $this->formInput($name) ?>
+                    <?= $this->formText($name) ?>
                     <?= $this->formElementErrors($name) ?>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                         <?= $nameEn->getLabel() ?>
                         <span class="flag-icon flag-icon-en"></span>
                     </label>
-                    <?= $this->formInput($nameEn) ?>
+                    <?= $this->formText($nameEn) ?>
                     <?= $this->formElementErrors($nameEn) ?>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                     <label for="<?= $element->getAttribute('id') ?>" class="control-label label-required">
                         <?= $element->getLabel() ?>
                     </label>
-                    <?= $this->formInput($element) ?>
+                    <?= $this->formNumber($element) ?>
                     <?= $this->formElementErrors($element) ?>
                 </div>
             </div>
@@ -77,7 +77,7 @@
                     <label for="<?= $element->getAttribute('id') ?>" class="control-label label-required">
                         <?= $element->getLabel() ?>
                     </label>
-                    <?= $this->formInput($element) ?>
+                    <?= $this->formNumber($element) ?>
                     <?= $this->formElementErrors($element) ?>
                 </div>
             </div>
@@ -105,7 +105,7 @@
                     <label for="<?= $options->getAttribute('id') ?>" class="control-label">
                         <?= $options->getLabel() ?>
                     </label>
-                    <?= $this->formInput($options) ?>
+                    <?= $this->formText($options) ?>
                     <?= $this->formElementErrors($options) ?>
                 </div>
             </div>
@@ -128,7 +128,7 @@
                     <label for="<?= $optionsEn->getAttribute('id') ?>" class="control-label">
                         <?= $optionsEn->getLabel() ?>
                     </label>
-                    <?= $this->formInput($optionsEn) ?>
+                    <?= $this->formText($optionsEn) ?>
                     <?= $this->formElementErrors($optionsEn) ?>
                 </div>
             </div>

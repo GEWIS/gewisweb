@@ -101,7 +101,7 @@ $form->prepare();
                         class="control-label<?= $form->getInputFilter()->get('name')->isRequired() ? ' label-required' : '' ?>">
                         <?= $this->translate('Name') ?>
                     </label>
-                    <?= $this->formInput($inputName) ?>
+                    <?= $this->formText($inputName) ?>
                     <?= $this->formElementErrors($inputName) ?>
                 </div>
             </div>

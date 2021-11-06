@@ -36,9 +36,9 @@ $form->setAttribute('role', 'form');
     ?>
     <strong>
         <?= $this->serverUrl($this->basePath()) ?>/
-        <?= $this->formInput($category); ?>/
-        <?= $this->formInput($subCategory); ?>/
-        <?= $this->formInput($name); ?>
+        <?= $this->formText($category); ?>/
+        <?= $this->formText($subCategory); ?>/
+        <?= $this->formText($name); ?>
     </strong>
 </div>
 
@@ -55,7 +55,7 @@ $form->setAttribute('role', 'form');
     $element->setAttribute('required', 'required');
     ?>
     <?= $this->formLabel($element); ?>
-    <?= $this->formInput($element); ?>
+    <?= $this->formText($element); ?>
     <?= $this->formElementErrors($element); ?>
 </div>
 
@@ -79,7 +79,7 @@ $form->setAttribute('role', 'form');
     $element->setAttribute('required', 'required');
     ?>
     <?= $this->formLabel($element); ?>
-    <?= $this->formInput($element); ?>
+    <?= $this->formText($element); ?>
     <?= $this->formElementErrors($element); ?>
 </div>
 
@@ -104,7 +104,7 @@ Set the minimal role required to view this page. All visitors whom have this rol
     $element->setAttribute('required', 'required');
     ?>
     <?= $this->formLabel($element); ?>
-    <?= $this->formInput($element); ?>
+    <?= $this->formText($element); ?>
     <?= $this->formElementErrors($element); ?>
 </div>
 <hr>

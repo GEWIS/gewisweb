@@ -31,7 +31,7 @@
             <label for="<?= $name->getAttribute('id') ?>" class="control-label">
                 <?= $this->translate('Name') ?>
             </label>
-            <?= $this->formInput($name) ?>
+            <?= $this->formText($name) ?>
             <?= $this->formElementErrors($name) ?>
         </div>
         <?php
@@ -45,7 +45,7 @@
             <label for="<?= $location->getAttribute('id') ?>" class="control-label">
                 <?= $this->translate('Location') ?>
             </label>
-            <?= $this->formInput($location) ?>
+            <?= $this->formText($location) ?>
             <?= $this->formElementErrors($location) ?>
         </div>
         <?php
@@ -59,7 +59,7 @@
             <label for="<?= $costs->getAttribute('id') ?>" class="control-label">
                 <?= $this->translate('Costs') ?>
             </label>
-            <?= $this->formInput($costs) ?>
+            <?= $this->formText($costs) ?>
             <?= $this->formElementErrors($costs) ?>
         </div>
         <?php
@@ -74,7 +74,7 @@
             <label for="<?= $description->getAttribute('id') ?>" class="control-label">
                 <?= $this->translate('Description') ?>
             </label>
-            <?= $this->formRow($description) ?>
+            <?= $this->formTextarea($description) ?>
             <?= $this->formElementErrors($description) ?>
         </div>
     </div>
@@ -106,7 +106,7 @@
             <label for="<?= $nameEn->getAttribute('id') ?>" class="control-label">
                 <?= $this->translate('Name') ?>
             </label>
-            <?= $this->formInput($nameEn) ?>
+            <?= $this->formText($nameEn) ?>
             <?= $this->formElementErrors($nameEn) ?>
         </div>
         <?php
@@ -120,7 +120,7 @@
             <label for="<?= $locationEn->getAttribute('id') ?>" class="control-label">
                 <?= $this->translate('Location') ?>
             </label>
-            <?= $this->formInput($locationEn) ?>
+            <?= $this->formText($locationEn) ?>
             <?= $this->formElementErrors($locationEn) ?>
         </div>
         <?php
@@ -134,7 +134,7 @@
             <label for="<?= $costsEn->getAttribute('id') ?>" class="control-label">
                 <?= $this->translate('Costs') ?>
             </label>
-            <?= $this->formInput($costsEn) ?>
+            <?= $this->formText($costsEn) ?>
             <?= $this->formElementErrors($costsEn) ?>
         </div>
         <?php
@@ -149,7 +149,7 @@
             <label for="<?= $descriptionEn->getAttribute('id') ?>" class="control-label">
                 <?= $this->translate('Description') ?>
             </label>
-            <?= $this->formRow($descriptionEn) ?>
+            <?= $this->formTextarea($descriptionEn) ?>
             <?= $this->formElementErrors($descriptionEn) ?>
         </div>
     </div>

@@ -68,7 +68,7 @@ $this->headTitle($this->translate('Current poll')); ?>
                 ?>
                 <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
                     <label for="<?= $element->getName() ?>" class="control-label"><?= $element->getLabel() ?></label>
-                    <?= $this->formInput($element) ?>
+                    <?= $this->formText($element) ?>
                     <?= $this->formElementErrors($element) ?>
                 </div>
 

@@ -27,7 +27,7 @@ $form->prepare();
                     <label for="<?= $name->getAttribute('id') ?>" class="control-label label-required">
                         <?= $this->translate('Name') ?>
                     </label>
-                    <?= $this->formInput($name) ?>
+                    <?= $this->formText($name) ?>
                     <?= $this->formElementErrors($name) ?>
                 </div>
             </div>
@@ -41,7 +41,7 @@ $form->prepare();
                     <label for="<?= $startDateTime->getAttribute('id') ?>">
                         <?= $startDateTime->getLabel() ?>
                     </label>
-                    <?= $this->formInput($startDateTime) ?>
+                    <?= $this->formDateTimeLocal($startDateTime) ?>
                     <?= $this->formElementErrors($startDateTime) ?>
                 </div>
             </div>
@@ -55,7 +55,7 @@ $form->prepare();
                     <label for="<?= $endDateTime->getAttribute('id') ?>">
                         <?= $endDateTime->getLabel() ?>
                     </label>
-                    <?= $this->formInput($endDateTime) ?>
+                    <?= $this->formDateTimeLocal($endDateTime) ?>
                     <?= $this->formElementErrors($endDateTime) ?>
                 </div>
                 <br>

@@ -25,7 +25,7 @@ $this->breadcrumbs()
     <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
         <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
         <div class="col-sm-10">
-            <?= $this->formInput($element) ?>
+            <?= $this->formText($element) ?>
             <?= $this->formElementErrors($element) ?>
         </div>
     </div>
@@ -38,7 +38,7 @@ $this->breadcrumbs()
     <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
         <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
         <div class="col-sm-10">
-            <?= $this->formInput($element) ?>
+            <?= $this->formDate($element) ?>
             <?= $this->formElementErrors($element) ?>
         </div>
     </div>
@@ -51,7 +51,7 @@ $this->breadcrumbs()
     <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
         <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
         <div class="col-sm-10">
-            <?= $this->formInput($element) ?>
+            <?= $this->formText($element) ?>
             <?= $this->formElementErrors($element) ?>
         </div>
     </div>
