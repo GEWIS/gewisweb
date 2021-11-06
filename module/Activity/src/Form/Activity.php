@@ -2,6 +2,7 @@
 
 namespace Activity\Form;
 
+use Application\Form\Localisable as LocalisableForm;
 use DateTime;
 use DomainException;
 use Exception;
@@ -15,7 +16,6 @@ use Laminas\Form\Element\{
     Text,
     Textarea,
 };
-use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\{
@@ -23,25 +23,19 @@ use Laminas\Validator\{
     NotEmpty,
 };
 
-class Activity extends Form implements InputFilterProviderInterface
+class Activity extends LocalisableForm implements InputFilterProviderInterface
 {
-    /**
-     * @var Translator
-     */
-    protected Translator $translator;
-
     /**
      * @param Translator $translator
      */
     public function __construct(Translator $translator)
     {
-        parent::__construct('activity');
-        $this->translator = $translator;
+        parent::__construct($translator);
 
         $this->setAttribute('method', 'post');
 
-        $organOptions = [0 => $this->translator->translate('No organ')];
-        $companyOptions = [0 => $this->translator->translate('No Company')];
+        $organOptions = [0 => $this->getTranslator()->translate('No organ')];
+        $companyOptions = [0 => $this->getTranslator()->translate('No Company')];
 
         $this->add(
             [
@@ -79,28 +73,6 @@ class Activity extends Form implements InputFilterProviderInterface
                 'type' => DateTimeLocal::class,
                 'options' => [
                     'format' => 'Y-m-d\TH:i',
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'language_dutch',
-                'type' => Checkbox::class,
-                'options' => [
-                    'checked_value' => '1',
-                    'unchecked_value' => '0',
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'language_english',
-                'type' => Checkbox::class,
-                'options' => [
-                    'checked_value' => '1',
-                    'unchecked_value' => '0',
                 ],
             ]
         );
@@ -313,7 +285,7 @@ class Activity extends Form implements InputFilterProviderInterface
                     if (!(new NotEmpty())->isValid($signupList->get('name')->getValue())) {
                         $signupList->get('name')->setMessages(
                             [
-                                $this->translator->translate('Value is required and can\'t be empty'),
+                                $this->getTranslator()->translate('Value is required and can\'t be empty'),
                             ],
                         );
                         $valid = false;
@@ -325,7 +297,7 @@ class Activity extends Form implements InputFilterProviderInterface
                     if (!(new NotEmpty())->isValid($signupList->get('nameEn')->getValue())) {
                         $signupList->get('nameEn')->setMessages(
                             [
-                                $this->translator->translate('Value is required and can\'t be empty'),
+                                $this->getTranslator()->translate('Value is required and can\'t be empty'),
                             ],
                         );
                         $valid = false;
@@ -339,7 +311,7 @@ class Activity extends Form implements InputFilterProviderInterface
                         if (!(new NotEmpty())->isValid($field->get('name')->getValue())) {
                             $field->get('name')->setMessages(
                                 [
-                                    $this->translator->translate('Value is required and can\'t be empty'),
+                                    $this->getTranslator()->translate('Value is required and can\'t be empty'),
                                 ],
                             );
                             $valid = false;
@@ -351,7 +323,7 @@ class Activity extends Form implements InputFilterProviderInterface
                         ) {
                             $field->get('options')->setMessages(
                                 [
-                                    $this->translator->translate('Value is required and can\'t be empty'),
+                                    $this->getTranslator()->translate('Value is required and can\'t be empty'),
                                 ],
                             );
                             $valid = false;
@@ -363,7 +335,7 @@ class Activity extends Form implements InputFilterProviderInterface
                         if (!(new NotEmpty())->isValid($field->get('nameEn')->getValue())) {
                             $field->get('nameEn')->setMessages(
                                 [
-                                    $this->translator->translate('Value is required and can\'t be empty'),
+                                    $this->getTranslator()->translate('Value is required and can\'t be empty'),
                                 ],
                             );
                             $valid = false;
@@ -375,7 +347,7 @@ class Activity extends Form implements InputFilterProviderInterface
                         ) {
                             $field->get('optionsEn')->setMessages(
                                 [
-                                    $this->translator->translate('Value is required and can\'t be empty'),
+                                    $this->getTranslator()->translate('Value is required and can\'t be empty'),
                                 ],
                             );
                             $valid = false;
@@ -398,7 +370,8 @@ class Activity extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification(): array
     {
-        $filter = [
+        $filter = parent::getInputFilterSpecification();
+        $filter += [
             'organ' => [
                 'required' => true,
             ],
@@ -412,7 +385,7 @@ class Activity extends Form implements InputFilterProviderInterface
                         'name' => Callback::class,
                         'options' => [
                             'messages' => [
-                                Callback::INVALID_VALUE => $this->translator->translate('The activity must start before it ends.'),
+                                Callback::INVALID_VALUE => $this->getTranslator()->translate('The activity must start before it ends.'),
                             ],
                             'callback' => [$this, 'beforeEndTime'],
                         ],
@@ -427,63 +400,16 @@ class Activity extends Form implements InputFilterProviderInterface
             ],
         ];
 
-        if (
-            isset($this->data['language_english'])
-            && $this->data['language_english']
-        ) {
-            $filter += $this->inputFilterEnglish();
-        }
-
-        if (
-            isset($this->data['language_dutch'])
-            && $this->data['language_dutch']
-        ) {
-            $filter += $this->inputFilterDutch();
-        }
-        // One of the language_dutch or language_english needs to set. If not, display a message at both, indicating that
-        // they need to be set
-
-        if (
-            (isset($this->data['language_dutch']) && !$this->data['language_dutch'])
-            && (isset($this->data['language_english']) && !$this->data['language_english'])
-        ) {
-            unset($this->data['language_dutch'], $this->data['language_english']);
-
-            $filter += [
-                'language_dutch' => [
-                    'required' => true,
-                ],
-                'language_english' => [
-                    'required' => true,
-                ],
-            ];
-        }
-
         return $filter;
     }
 
-    /***
-     * Add  the input filter for the English language
-     *
-     * @return array
-     */
-    public function inputFilterEnglish(): array
-    {
-        return $this->inputFilterGeneric('En');
-    }
-
     /**
-     * Build a generic input filter.
-     *
-     * @param string $languagePostFix Postfix that is used for language fields to indicate that a field belongs to that
-     * language
-     *
-     * @return array
+     * @inheritDoc
      */
-    protected function inputFilterGeneric(string $languagePostFix): array
+    protected function createLocalisedInputFilterSpecification(string $suffix = ''): array
     {
         return [
-            'name' . $languagePostFix => [
+            'name' . $suffix => [
                 'required' => true,
                 'validators' => [
                     [
@@ -496,7 +422,7 @@ class Activity extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'location' . $languagePostFix => [
+            'location' . $suffix => [
                 'required' => true,
                 'validators' => [
                     [
@@ -509,7 +435,7 @@ class Activity extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'costs' . $languagePostFix => [
+            'costs' . $suffix => [
                 'required' => true,
                 'validators' => [
                     [
@@ -522,7 +448,7 @@ class Activity extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'description' . $languagePostFix => [
+            'description' . $suffix => [
                 'required' => true,
                 'validators' => [
                     [
@@ -536,15 +462,5 @@ class Activity extends Form implements InputFilterProviderInterface
                 ],
             ],
         ];
-    }
-
-    /***
-     * Add  the input filter for the Dutch language
-     *
-     * @return array
-     */
-    public function inputFilterDutch(): array
-    {
-        return $this->inputFilterGeneric('');
     }
 }

@@ -2,36 +2,34 @@
 
 namespace Company\Form;
 
+use Application\Form\Localisable as LocalisableForm;
 use Laminas\Form\Element\{
     Checkbox,
     Date,
     File,
-    Radio,
     Submit,
     Textarea,
 };
+use Laminas\Validator\StringLength;
 use Laminas\Filter\{
     StringTrim,
     StripTags,
 };
-use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Date as DateValidator;
 
-class Package extends Form implements InputFilterProviderInterface
+class Package extends LocalisableForm implements InputFilterProviderInterface
 {
     /**
-     * @var Translator
+     * @var string
      */
-    private Translator $translator;
+    private string $type;
 
     public function __construct(Translator $translator, string $type)
     {
-        // we want to ignore the name passed
-        parent::__construct();
-        $this->translator = $translator;
-
+        parent::__construct($translator);
+        $this->type = $type;
         $this->setAttribute('method', 'post');
 
         $this->add(
@@ -39,7 +37,7 @@ class Package extends Form implements InputFilterProviderInterface
                 'name' => 'startDate',
                 'type' => Date::class,
                 'options' => [
-                    'label' => $this->translator->translate('Start Date'),
+                    'label' => $translator->translate('Start Date'),
                     'format' => 'Y-m-d',
                 ],
                 'attributes' => [
@@ -53,7 +51,7 @@ class Package extends Form implements InputFilterProviderInterface
                 'name' => 'expirationDate',
                 'type' => Date::class,
                 'options' => [
-                    'label' => $this->translator->translate('Expiration Date'),
+                    'label' => $translator->translate('Expiration Date'),
                     'format' => 'Y-m-d',
                 ],
                 'attributes' => [
@@ -67,7 +65,7 @@ class Package extends Form implements InputFilterProviderInterface
                 'name' => 'published',
                 'type' => Checkbox::class,
                 'options' => [
-                    'label' => $this->translator->translate('Published'),
+                    'label' => $translator->translate('Published'),
                     'value_options' => [
                         '0' => 'Enabled',
                     ],
@@ -78,34 +76,10 @@ class Package extends Form implements InputFilterProviderInterface
         if ('featured' === $type) {
             $this->add(
                 [
-                    'name' => 'language_dutch',
-                    'type' => Checkbox::class,
-                    'options' => [
-                        'label' => $this->translator->translate('Enable Dutch Translations'),
-                        'checked_value' => '1',
-                        'unchecked_value' => '0',
-                    ],
-                ]
-            );
-
-            $this->add(
-                [
-                    'name' => 'language_english',
-                    'type' => Checkbox::class,
-                    'options' => [
-                        'label' => $this->translator->translate('Enable English Translations'),
-                        'checked_value' => '1',
-                        'unchecked_value' => '0',
-                    ],
-                ]
-            );
-
-            $this->add(
-                [
                     'name' => 'article',
                     'type' => Textarea::class,
                     'options' => [
-                        'label' => $this->translator->translate('Article'),
+                        'label' => $translator->translate('Article'),
                     ],
                 ]
             );
@@ -115,7 +89,7 @@ class Package extends Form implements InputFilterProviderInterface
                     'name' => 'articleEn',
                     'type' => Textarea::class,
                     'options' => [
-                        'label' => $this->translator->translate('Article'),
+                        'label' => $translator->translate('Article'),
                     ],
                 ]
             );
@@ -127,7 +101,7 @@ class Package extends Form implements InputFilterProviderInterface
                     'name' => 'banner',
                     'type' => File::class,
                     'options' => [
-                        'label' => $this->translator->translate('Banner'),
+                        'label' => $translator->translate('Banner'),
                     ],
                 ]
             );
@@ -146,7 +120,13 @@ class Package extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification(): array
     {
-        return [
+        $filter = [];
+
+        if ('featured' === $this->type) {
+            $filter = parent::getInputFilterSpecification();
+        }
+
+        $filter += [
             'startDate' => [
                 'required' => true,
                 'validators' => [
@@ -176,6 +156,30 @@ class Package extends Form implements InputFilterProviderInterface
                     ],
                     [
                         'name' => StringTrim::class,
+                    ],
+                ],
+            ],
+        ];
+
+        return $filter;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function createLocalisedInputFilterSpecification(string $suffix = ''): array
+    {
+        return [
+            'article' . $suffix => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => StringLength::class,
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'min' => 2,
+                            'max' => 10000,
+                        ],
                     ],
                 ],
             ],
