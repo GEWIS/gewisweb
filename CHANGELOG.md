@@ -1,3 +1,15 @@
+## [v2.4.6](https://github.com/GEWIS/gewisweb/tree/v2.4.6) (2021-11-06)
+
+- Updated design and layout of the administration pages.
+- Improved distinguishability of options in the activity option calendar.
+- Switched from `utf8` to `utf8mb4`, allowing proper use of the full Unicode range (including new emojis).
+- Privileges from old boards are automatically removed after July 1.
+- Updated dependencies and removed unused dependencies.
+- Fixed issue where visiting non-existent meetings would result in an exception.
+- Fixed issue where the public archive would not be up-to-date.
+
+---
+
 ## [v2.4.5](https://github.com/GEWIS/gewisweb/tree/v2.4.5) (2021-10-19)
 
 - Improved layout of the main navbar, fixes overlap between members link and user's name.
