@@ -6,7 +6,7 @@ use Activity\Service\ActivityCalendarForm;
 use DateTime;
 use Exception;
 use Laminas\Form\Element\{
-    DateTimeLocal,
+    Date,
     Select,
 };
 use Laminas\Form\Fieldset;
@@ -50,9 +50,9 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
         $this->add(
             [
                 'name' => 'beginTime',
-                'type' => DateTimeLocal::class,
+                'type' => Date::class,
                 'options' => [
-                    'format' => 'Y-m-d\TH:i',
+                    'format' => 'Y-m-d',
                 ],
             ]
         );
@@ -60,9 +60,9 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
         $this->add(
             [
                 'name' => 'endTime',
-                'type' => DateTimeLocal::class,
+                'type' => Date::class,
                 'options' => [
-                    'format' => 'Y-m-d\TH:i',
+                    'format' => 'Y-m-d',
                 ],
             ]
         );

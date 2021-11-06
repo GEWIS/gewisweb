@@ -180,8 +180,6 @@ class ActivityCalendar
     {
         $option = new OptionModel();
 
-        var_dump($data);
-
         $em = $this->entityManager;
         $option->setProposal($proposal);
         $beginTime = $this->calendarFormService->toDateTime($data['beginTime']);

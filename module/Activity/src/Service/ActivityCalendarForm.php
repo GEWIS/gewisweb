@@ -164,7 +164,7 @@ class ActivityCalendarForm
         return $max;
     }
 
-    public static function toDateTime($value, $format = 'Y/m/d')
+    public static function toDateTime($value, $format = 'Y-m-d')
     {
         return DateTime::createFromFormat($format, $value);
     }

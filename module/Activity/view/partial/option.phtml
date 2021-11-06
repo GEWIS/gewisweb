@@ -22,7 +22,7 @@
                 <label for="<?= $inputBeginTime->getAttribute('id') ?>" class="control-label label-required">
                     <?= $this->translate('From') ?>
                 </label>
-                <?= $this->formDateTimeLocal($inputBeginTime) ?>
+                <?= $this->formDate($inputBeginTime) ?>
                 <?= $this->formElementErrors($inputBeginTime) ?>
             </div>
         </div>
@@ -35,7 +35,7 @@
                 <label for="<?= $inputEndTime->getAttribute('id') ?>" class="control-label label-required">
                     <?= $this->translate('Until') ?>
                 </label>
-                <?= $this->formDateTimeLocal($inputEndTime) ?>
+                <?= $this->formDate($inputEndTime) ?>
                 <?= $this->formElementErrors($inputEndTime) ?>
             </div>
         </div>
