@@ -20,7 +20,7 @@ try {
     $params = $doctrineConf['doctrine']['connection']['orm_default']['params'];
 
     $myconn = new PDO(
-        'mysql:host=' . $params['host'] . ';dbname=' . $params['dbname'],
+        'mysql:host=' . $params['host'] . ';dbname=' . $params['dbname'] . ';charset=' . $params['charset'],
         $params['user'],
         $params['password']
     );
