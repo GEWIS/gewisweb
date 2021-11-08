@@ -33,6 +33,11 @@
                                         <a href="<?= $this->url('activity_admin_categories') ?>"><?= $this->translate('Categories') ?></a>
                                     </li>
                                 <?php endif; ?>
+                                <?php if ($this->acl('activity_service_acl')->isAllowed('activity_calendar_period', 'view')): ?>
+                                    <li>
+                                        <a href="<?= $this->url('activity_admin_options') ?>"><?= $this->translate('Option Calendar') ?></a>
+                                    </li>
+                                <?php endif; ?>
                             </ul>
                         </li>
                     <?php endif; ?>
