@@ -6,8 +6,12 @@ use Activity\Form\{
     ActivityCalendarOption,
     ActivityCalendarPeriod as ActivityCalendarPeriodForm,
 };
-use Activity\Model\ActivityCalendarOption as OptionModel;
-use Activity\Model\ActivityOptionProposal as ProposalModel;
+use Activity\Model\{
+    ActivityCalendarOption as OptionModel,
+    ActivityOptionCreationPeriod as ActivityOptionCreationPeriodModel,
+    ActivityOptionProposal as ProposalModel,
+    MaxActivities as MaxActivitiesModel,
+};
 use Application\Service\Email;
 use DateInterval;
 use DateTime;
@@ -306,6 +310,43 @@ class ActivityCalendar
         $options = $mapper->findOptionsByProposalAndOrgan($proposalId, $organId);
 
         return count($options);
+    }
+
+    /**
+     * @param array $data
+     */
+    public function createOptionPlanningPeriod(array $data): bool
+    {
+        $activityOptionCreationPeriod = new ActivityOptionCreationPeriodModel();
+
+        $activityOptionCreationPeriod->setBeginPlanningTime(new DateTime($data['beginPlanningTime']));
+        $activityOptionCreationPeriod->setEndPlanningTime(new DateTime($data['endPlanningTime']));
+        $activityOptionCreationPeriod->setBeginOptionTime(new DateTime($data['beginOptionTime']));
+        $activityOptionCreationPeriod->setEndOptionTime(new DateTime($data['endOptionTime']));
+
+        // Persist the ActivityOptionCreationPeriodModel here, such that we can use its id for the MaxActivitiesModel.
+        $this->entityManager->persist($activityOptionCreationPeriod);
+        $this->entityManager->flush();
+
+        foreach ($data['maxActivities'] as $maxActivity) {
+            // Check if the organ really exists.
+            $organ = $this->organService->findActiveOrganById($maxActivity['id']);
+
+            if (null !== $organ) {
+                $maxActivities = new MaxActivitiesModel();
+
+                $maxActivities->setValue($maxActivity['value']);
+                $maxActivities->setOrgan($organ);
+                $maxActivities->setPeriod($activityOptionCreationPeriod);
+
+                $this->entityManager->persist($maxActivities);
+            }
+        }
+
+        // Flush all MaxActivitiesModels.
+        $this->entityManager->flush();
+
+        return true;
     }
 
     /**

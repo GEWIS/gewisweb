@@ -100,7 +100,6 @@ $form->setAttribute('class', 'form-activity');
                         <?= $this->translate('Global Value') ?>
                     </label>
                     <input type="number" name="global-value" id="global-value" class="form-control" min="0">
-                    <input type="checkbox" name="global" id="global" class="form-control" checked>
                 </div>
             </div>
             <div class="col-md-10">
@@ -114,8 +113,7 @@ $form->setAttribute('class', 'form-activity');
                         $id = $organ->get('id');
                         $name = $organ->get('name');
                         $value = $organ->get('value')
-                            ->setAttribute('class', 'form-control organ-value')
-                            ->setAttribute('disabled', 'disabled');
+                            ->setAttribute('class', 'form-control organ-value');
                         ?>
                         <div class="col-md-3">
                             <div class="form-group <?= $this->bootstrapElementError($value) ?>">
@@ -150,11 +148,6 @@ $form->setAttribute('class', 'form-activity');
 document.getElementById('global-value').addEventListener('input', (e) => {
     document.querySelectorAll('.organ-value').forEach(el => {
         el.value = (e.currentTarget.value < 0) ? 0 : e.currentTarget.value;
-    });
-});
-document.getElementById('global').addEventListener('change', () => {
-    document.querySelectorAll('.organ-value').forEach(el => {
-        el.disabled = !el.disabled;
     });
 });
 </script>

@@ -79,7 +79,9 @@ class AdminOptionController extends AbstractActionController
             $form->setData($request->getPost()->toArray());
 
             if ($form->isValid()) {
-                // do something
+                if ($this->activityCalendarService->createOptionPlanningPeriod($form->getData())) {
+                    return $this->redirect()->toRoute('activity_admin_options');
+                }
             }
         }
 

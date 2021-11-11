@@ -35,6 +35,23 @@ class Organ extends BaseMapper
     }
 
     /**
+     * Check if an organ with id `$id` is not abrogated.
+     *
+     * @param int $id
+     *
+     * @return OrganModel|null
+     */
+    public function findActiveById(int $id): ?OrganModel
+    {
+        $criteria = [
+            'id' => $id,
+            'abrogationDate' => null,
+        ];
+
+        return $this->getRepository()->findOneBy($criteria);
+    }
+
+    /**
      * Find all abrogated organs.
      *
      * @param string $type

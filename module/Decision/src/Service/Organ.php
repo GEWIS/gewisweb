@@ -196,6 +196,16 @@ class Organ
     }
 
     /**
+     * @param int $id
+     *
+     * @return OrganModel|null
+     */
+    public function findActiveOrganById(int $id): ?OrganModel
+    {
+        return $this->organMapper->findActiveById($id);
+    }
+
+    /**
      * @param string $type either committee, avc or fraternity
      *
      * @return array
