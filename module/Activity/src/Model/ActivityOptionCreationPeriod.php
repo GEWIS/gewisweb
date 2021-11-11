@@ -8,7 +8,9 @@ use Doctrine\ORM\Mapping\{
     Entity,
     GeneratedValue,
     Id,
-};
+    OneToMany};
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Activity Options Creation Period
@@ -48,6 +50,22 @@ class ActivityOptionCreationPeriod
      */
     #[Column(type: "datetime")]
     protected DateTime $endOptionTime;
+
+    /**
+     * The number of activities an organ can create in a period.
+     */
+    #[OneToMany(
+        targetEntity: MaxActivities::class,
+        mappedBy: "period",
+        cascade: ["remove"],
+        orphanRemoval: true,
+    )]
+    protected Collection $maxActivities;
+
+    public function __construct()
+    {
+        $this->maxActivities = new ArrayCollection();
+    }
 
     /**
      * @return int|null
@@ -122,18 +140,32 @@ class ActivityOptionCreationPeriod
     }
 
     /**
+     * @return Collection
+     */
+    public function getMaxActivities(): Collection
+    {
+        return $this->maxActivities;
+    }
+
+    /**
      * Returns an associative array representation of this object.
      *
      * @return array
      */
     public function toArray(): array
     {
+        $maxActivities = [];
+        foreach ($this->getMaxActivities() as $maxActivity) {
+            $maxActivities[] = $maxActivity->toArray();
+        }
+
         return [
             'id' => $this->getId(),
             'beginPlanningTime' => $this->getBeginPlanningTime(),
             'endPlanningTime' => $this->getEndPlanningTime(),
             'beginOptionTime' => $this->getBeginOptionTime(),
             'endOptionTime' => $this->getEndOptionTime(),
+            'maxActivities' => $maxActivities,
         ];
     }
 }

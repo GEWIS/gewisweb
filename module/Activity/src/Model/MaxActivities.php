@@ -46,7 +46,10 @@ class MaxActivities
     /**
      * The associated period.
      */
-    #[ManyToOne(targetEntity: ActivityOptionCreationPeriod::class)]
+    #[ManyToOne(
+        targetEntity: ActivityOptionCreationPeriod::class,
+        inversedBy: "maxActivities",
+    )]
     protected ActivityOptionCreationPeriod $period;
 
     /**
