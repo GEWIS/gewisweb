@@ -18,6 +18,11 @@
                 background-color: #DB5CFF;
             }
         }
+
+        .day-highlight.dh-event-approved,
+        .day-highlight.dh-event-approved:hover {
+            background-color: #FCF1FF;
+        }
     }
 
     .dropdown .dropdown-menu {
