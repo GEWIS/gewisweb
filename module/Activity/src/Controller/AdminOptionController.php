@@ -7,9 +7,12 @@ use Activity\Service\{
     ActivityCalendar as ActivityCalendarService,
 };
 use Activity\Mapper\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodMapper;
+use DateTime;
 use Decision\Service\Organ as OrganService;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Session\Container as SessionContainer;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
@@ -92,7 +95,7 @@ class AdminOptionController extends AbstractActionController
 
             if ($form->isValid()) {
                 if ($this->activityCalendarService->createOptionPlanningPeriod($form->getData())) {
-                    return $this->redirect()->toRoute('activity_admin_options');
+                    return $this->redirectWithMessage(true, $this->translator->translate('Option planning period created successfully.'));
                 }
             }
         }
@@ -128,7 +131,7 @@ class AdminOptionController extends AbstractActionController
             if (null !== $optionCreationPeriod) {
                 $this->activityCalendarService->deleteOptionCreationPeriod($optionCreationPeriod);
 
-                return $this->redirect()->toRoute('activity_admin_options');
+                return $this->redirectWithMessage(true, $this->translator->translate('Option planning period removed.'));
             }
         }
 
@@ -141,6 +144,62 @@ class AdminOptionController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit option calendar periods'));
         }
 
-        return new ViewModel();
+        $optionCreationPeriodId = $this->params('id');
+        $optionCreationPeriod = $this->activityCalendarService->getOptionCreationPeriod($optionCreationPeriodId);
+
+        if (null === $optionCreationPeriod) {
+            return $this->notFoundAction();
+        }
+
+        if ($optionCreationPeriod->getBeginPlanningTime() < new DateTime('now')) {
+            return $this->redirectWithMessage(false, $this->translator->translate('This option planning period cannot be edited.'));
+        }
+
+        $form = $this->activityCalendarService->getCalendarPeriodForm();
+        $organCount = $optionCreationPeriod->getMaxActivities()->count();
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $form->get('maxActivities')->setCount($organCount);
+            $form->setData($request->getPost()->toArray());
+
+            if ($form->isValid()) {
+                if ($this->activityCalendarService->updateOptionPlanningPeriod($optionCreationPeriod, $form->getData())) {
+                    return $this->redirectWithMessage(true, $this->translator->translate('Option planning period has been updated.'));
+                }
+            }
+        }
+
+        $optionCreationPeriodData = $optionCreationPeriod->toArray();
+        unset($optionCreationPeriodData['id']);
+
+        // Fix organ names.
+        foreach ($optionCreationPeriodData['maxActivities'] as &$maxActivity) {
+            $maxActivity['name'] = $maxActivity['organ']->getName();
+            unset($maxActivity['organ']);
+        }
+
+        $form->get('maxActivities')->setCount($organCount);
+        $form->setData($optionCreationPeriodData);
+
+        $viewModel = new ViewModel(['form' => $form]);
+        $viewModel->setTemplate('activity/admin-option/add.phtml');
+
+        return $viewModel;
+    }
+
+    /**
+     * @param bool $success
+     * @param string $message
+     *
+     * @return Response
+     */
+    private function redirectWithMessage(bool $success, string $message): Response
+    {
+        $optionAdminSession = new SessionContainer('activityAdmin');
+        $optionAdminSession->success = $success;
+        $optionAdminSession->message = $message;
+
+        return $this->redirect()->toRoute('activity_admin_options');
     }
 }

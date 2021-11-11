@@ -358,6 +358,13 @@ class ActivityCalendar
         return true;
     }
 
+    public function updateOptionPlanningPeriod(
+        ActivityOptionCreationPeriodModel $activityOptionCreationPeriod,
+        array $data,
+    ): bool {
+        return true;
+    }
+
     /**
      * @param int $id
      *
