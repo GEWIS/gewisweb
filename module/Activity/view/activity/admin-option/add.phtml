@@ -2,7 +2,159 @@
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Option Calendar'), true, $this->url('activity_admin_options'))
     ->addBreadcrumb($this->translate('Add Option Period'));
-?>
-<div class="row">
 
+$form->prepare();
+$form->setAttribute('class', 'form-activity');
+?>
+<?= $this->form()->openTag($form) ?>
+<div class="row">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Planning Period') ?></h2>
+        <p><?= $this->translate('Enter the start and end date and time of the planning period.') ?></p>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <?php
+                $beginPlanningTime = $form->get('beginPlanningTime')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'begin-planning-time');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($beginPlanningTime) ?>">
+                    <label for="<?= $beginPlanningTime->getAttribute('id') ?>"
+                           class="control-label label-required">
+                        <?= $beginPlanningTime->getLabel() ?>
+                    </label>
+                    <?= $this->formDateTimeLocal($beginPlanningTime) ?>
+                    <?= $this->formElementErrors($beginPlanningTime) ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <?php
+                $endPlanningTime = $form->get('endPlanningTime')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'end-planning-time');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($endPlanningTime) ?>">
+                    <label for="<?= $endPlanningTime->getAttribute('id') ?>"
+                           class="control-label label-required">
+                        <?= $endPlanningTime->getLabel() ?>
+                    </label>
+                    <?= $this->formDateTimeLocal($endPlanningTime) ?>
+                    <?= $this->formElementErrors($endPlanningTime) ?>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Option Period') ?></h2>
+        <p><?= $this->translate('Enter the start and end date and time of the option period.') ?></p>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <?php
+                $beginOptionTime = $form->get('beginOptionTime')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'begin-option-time');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($beginOptionTime) ?>">
+                    <label for="<?= $beginOptionTime->getAttribute('id') ?>"
+                           class="control-label label-required">
+                        <?= $beginOptionTime->getLabel() ?>
+                    </label>
+                    <?= $this->formDateTimeLocal($beginOptionTime) ?>
+                    <?= $this->formElementErrors($beginOptionTime) ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <?php
+                $endOptionTime = $form->get('endOptionTime')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'end-option-time');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($endOptionTime) ?>">
+                    <label for="<?= $endOptionTime->getAttribute('id') ?>"
+                           class="control-label label-required">
+                        <?= $endOptionTime->getLabel() ?>
+                    </label>
+                    <?= $this->formDateTimeLocal($endOptionTime) ?>
+                    <?= $this->formElementErrors($endOptionTime) ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Max Activities') ?></h2>
+        <p><?= $this->translate('Enter the maximum number of activities for which options can be created. You can either set the number globally or individually for each organ.') ?></p>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="global-value" class="control-label label-required">
+                        <?= $this->translate('Global Value') ?>
+                    </label>
+                    <input type="number" name="global-value" id="global-value" class="form-control" min="0">
+                    <input type="checkbox" name="global" id="global" class="form-control" checked>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <fieldset class="max-activities">
+                    <?php
+                    $maxActivitiesIterator = $form->get('maxActivities')->getIterator();
+
+                    foreach ($maxActivitiesIterator as $organ):
+                    ?>
+                        <?php
+                        $id = $organ->get('id');
+                        $name = $organ->get('name');
+                        $value = $organ->get('value')
+                            ->setAttribute('class', 'form-control organ-value')
+                            ->setAttribute('disabled', 'disabled');
+                        ?>
+                        <div class="col-md-3">
+                            <div class="form-group <?= $this->bootstrapElementError($value) ?>">
+                                <?= $this->formHidden($id) ?>
+                                <?= $this->formHidden($name) ?>
+                                <label for="<?= $value->getName() ?>" class="control-label label-required">
+                                    <?= $name->getValue() ?>
+                                </label>
+                                <?= $this->formNumber($value) ?>
+                                <?= $this->formElementErrors($value) ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <?php
+        $submit = $form->get('submit')
+            ->setAttribute('class', 'btn btn-primary');
+        ?>
+        <div class="form-group">
+            <?= $this->formSubmit($submit) ?>
+        </div>
+    </div>
+    <?= $this->form()->closeTag(); ?>
+</div>
+<script>
+document.getElementById('global-value').addEventListener('input', (e) => {
+    document.querySelectorAll('.organ-value').forEach(el => {
+        el.value = (e.currentTarget.value < 0) ? 0 : e.currentTarget.value;
+    });
+});
+document.getElementById('global').addEventListener('change', () => {
+    document.querySelectorAll('.organ-value').forEach(el => {
+        el.disabled = !el.disabled;
+    });
+});
+</script>

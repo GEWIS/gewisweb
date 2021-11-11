@@ -3,6 +3,7 @@
 namespace Activity;
 
 use Activity\Command\CalendarNotify;
+use Activity\Form\ActivityCalendarPeriod;
 use Activity\Form\ActivityCategory as CategoryForm;
 use Activity\Form\SignupList as SignupListForm;
 use Activity\Form\SignupListField;
@@ -22,7 +23,6 @@ use Activity\Service\SignupListQuery;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Interop\Container\ContainerInterface;
 use User\Authorization\AclServiceFactory;
-use User\Permissions\NotAllowedException;
 
 class Module
 {
@@ -144,6 +144,9 @@ class Module
 
                     return new Form\ActivityCalendarOption($translator, $calendarFormService);
                 },
+                'activity_form_calendar_period' => function (ContainerInterface $container) {
+                    return new ActivityCalendarPeriod($container->get('translator'));
+                },
                 'activity_form_category' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
 
@@ -179,6 +182,7 @@ class Module
                     $calendarOptionMapper = $container->get('activity_mapper_calendar_option');
                     $memberMapper = $container->get('decision_mapper_member');
                     $calendarOptionForm = $container->get('activity_form_calendar_option');
+                    $calendarPeriodForm = $container->get('activity_form_calendar_period');
                     $aclService = $container->get('activity_service_acl');
                     $calendarFormService = $container->get('activity_service_calendar_form');
 
@@ -190,6 +194,7 @@ class Module
                         $calendarOptionMapper,
                         $memberMapper,
                         $calendarOptionForm,
+                        $calendarPeriodForm,
                         $aclService,
                         $calendarFormService
                     );

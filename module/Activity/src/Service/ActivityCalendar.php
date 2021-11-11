@@ -2,7 +2,10 @@
 
 namespace Activity\Service;
 
-use Activity\Form\ActivityCalendarOption;
+use Activity\Form\{
+    ActivityCalendarOption,
+    ActivityCalendarPeriod as ActivityCalendarPeriodForm,
+};
 use Activity\Model\ActivityCalendarOption as OptionModel;
 use Activity\Model\ActivityOptionProposal as ProposalModel;
 use Application\Service\Email;
@@ -45,6 +48,12 @@ class ActivityCalendar
      * @var ActivityCalendarOption
      */
     private $calendarOptionForm;
+
+    /**
+     * @var ActivityCalendarPeriodForm
+     */
+    private ActivityCalendarPeriodForm $calendarPeriodForm;
+
     private AclService $aclService;
     private ActivityCalendarForm $calendarFormService;
 
@@ -56,6 +65,7 @@ class ActivityCalendar
         \Activity\Mapper\ActivityCalendarOption $calendarOptionMapper,
         Member $memberMapper,
         ActivityCalendarOption $calendarOptionForm,
+        ActivityCalendarPeriodForm $calendarPeriodForm,
         AclService $aclService,
         ActivityCalendarForm $calendarFormService
     ) {
@@ -66,6 +76,7 @@ class ActivityCalendar
         $this->calendarOptionMapper = $calendarOptionMapper;
         $this->memberMapper = $memberMapper;
         $this->calendarOptionForm = $calendarOptionForm;
+        $this->calendarPeriodForm = $calendarPeriodForm;
         $this->aclService = $aclService;
         $this->calendarFormService = $calendarFormService;
     }
@@ -295,5 +306,13 @@ class ActivityCalendar
         $options = $mapper->findOptionsByProposalAndOrgan($proposalId, $organId);
 
         return count($options);
+    }
+
+    /**
+     * @return ActivityCalendarPeriodForm
+     */
+    public function getCalendarPeriodForm(): ActivityCalendarPeriodForm
+    {
+        return $this->calendarPeriodForm;
     }
 }
