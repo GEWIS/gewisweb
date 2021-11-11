@@ -23,6 +23,7 @@ class AdminOptionControllerFactory implements FactoryInterface
         return new AdminOptionController(
             $container->get('activity_service_calendar'),
             $container->get('decision_service_organ'),
+            $container->get('activity_mapper_period'),
             $container->get('activity_service_acl'),
             $container->get('translator'),
         );

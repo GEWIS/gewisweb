@@ -12,11 +12,11 @@ class ActivityOptionCreationPeriod extends BaseMapper
     /**
      * Finds the ActivityOptionCreationPeriod model that is currently active.
      *
-     * @return ActivityOptionCreationPeriodModel
+     * @return ActivityOptionCreationPeriodModel|null
      *
      * @throws Exception
      */
-    public function getCurrentActivityOptionCreationPeriod()
+    public function getCurrentActivityOptionCreationPeriod(): ?ActivityOptionCreationPeriodModel
     {
         $qb = $this->em->createQueryBuilder();
         $today = new DateTime();
@@ -36,11 +36,11 @@ class ActivityOptionCreationPeriod extends BaseMapper
     /**
      * Finds the ActivityOptionCreationPeriod model that will be active next.
      *
-     * @return ActivityOptionCreationPeriod
+     * @return ActivityOptionCreationPeriodModel|null
      *
      * @throws Exception
      */
-    public function getUpcomingActivityOptionCreationPeriod()
+    public function getUpcomingActivityOptionCreationPeriod(): ?ActivityOptionCreationPeriodModel
     {
         $qb = $this->em->createQueryBuilder();
         $today = new DateTime();

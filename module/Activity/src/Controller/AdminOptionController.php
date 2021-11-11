@@ -6,6 +6,7 @@ use Activity\Service\{
     AclService,
     ActivityCalendar as ActivityCalendarService,
 };
+use Activity\Mapper\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodMapper;
 use Decision\Service\Organ as OrganService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
@@ -25,6 +26,11 @@ class AdminOptionController extends AbstractActionController
     private OrganService $organService;
 
     /**
+     * @var ActivityOptionCreationPeriodMapper
+     */
+    private ActivityOptionCreationPeriodMapper $activityOptionCreationPeriodMapper;
+
+    /**
      * @var AclService
      */
     private AclService $aclService;
@@ -39,17 +45,20 @@ class AdminOptionController extends AbstractActionController
      *
      * @param ActivityCalendarService $activityCalendarService
      * @param OrganService $organService
+     * @param ActivityOptionCreationPeriodMapper $activityOptionCreationPeriodMapper
      * @param AclService $aclService
      * @param Translator $translator
      */
     public function __construct(
         ActivityCalendarService $activityCalendarService,
         OrganService $organService,
+        ActivityOptionCreationPeriodMapper $activityOptionCreationPeriodMapper,
         AclService $aclService,
         Translator $translator,
     ) {
         $this->activityCalendarService = $activityCalendarService;
         $this->organService = $organService;
+        $this->activityOptionCreationPeriodMapper = $activityOptionCreationPeriodMapper;
         $this->aclService = $aclService;
         $this->translator = $translator;
     }
@@ -60,7 +69,10 @@ class AdminOptionController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('You are not allowed to administer option calendar periods'));
         }
 
-        return new ViewModel();
+        return new ViewModel([
+            'current' => $this->activityOptionCreationPeriodMapper->getCurrentActivityOptionCreationPeriod(),
+            'upcoming' => $this->activityOptionCreationPeriodMapper->getUpcomingActivityOptionCreationPeriod(),
+        ]);
     }
 
     public function addAction()

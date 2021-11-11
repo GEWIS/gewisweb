@@ -5,5 +5,37 @@ $this->breadcrumbs()
 
 ?>
 <div class="row">
-
+    <div class="col-md-12">
+        <p>
+            <?php if (null !== $current): ?>
+                <?= sprintf(
+                    $this->translate('Options can be proposed from <b>%s</b> till <b>%s</b> for the period <b>%s</b> to <b>%s</b>.'),
+                    $this->dateFormat($current->getBeginPlanningTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
+                    $this->dateFormat($current->getEndPlanningTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
+                    $this->dateFormat($current->getBeginOptionTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
+                    $this->dateFormat($current->getEndOptionTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
+                ) ?>
+            <?php elseif (null !== $upcoming): ?>
+                <?= sprintf(
+                    $this->translate('The next option creation period will from <b>%s</b> till <b>%s</b>.'),
+                    $this->dateFormat($upcoming->getBeginPlanningTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
+                    $this->dateFormat($upcoming->getEndPlanningTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
+                ) ?>
+            <?php else: ?>
+                <?= $this->translate('There is currently no option creation period planned.') ?>
+            <?php endif; ?>
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <a href="<?= $this->url('activity_admin_options/add') ?>" class="btn btn-primary">
+            <?= $this->translate('Add Option Period')?>
+        </a>
+        <?php if (null !== $upcoming): ?>
+            <a href="<?= $this->url('activity_admin_options/edit', ['id' => $upcoming->getId()]) ?>" class="btn btn-primary">
+                <?= $this->translate('Edit Upcoming Period')?>
+            </a>
+        <?php endif; ?>
+    </div>
 </div>
