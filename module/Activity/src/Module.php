@@ -183,6 +183,7 @@ class Module
                     $memberMapper = $container->get('decision_mapper_member');
                     $calendarOptionForm = $container->get('activity_form_calendar_option');
                     $calendarPeriodForm = $container->get('activity_form_calendar_period');
+                    $calendarPeriodMapper = $container->get('activity_mapper_period');
                     $aclService = $container->get('activity_service_acl');
                     $calendarFormService = $container->get('activity_service_calendar_form');
 
@@ -195,6 +196,7 @@ class Module
                         $memberMapper,
                         $calendarOptionForm,
                         $calendarPeriodForm,
+                        $calendarPeriodMapper,
                         $aclService,
                         $calendarFormService
                     );

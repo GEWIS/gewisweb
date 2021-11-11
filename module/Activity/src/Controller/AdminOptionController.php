@@ -109,7 +109,18 @@ class AdminOptionController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete option calendar periods'));
         }
 
-        return new ViewModel();
+        if ($this->getRequest()->isPost()) {
+            $optionCreationPeriodId = $this->params('id');
+            $optionCreationPeriod = $this->activityCalendarService->getOptionCreationPeriod($optionCreationPeriodId);
+
+            if (null !== $optionCreationPeriod) {
+                $this->activityCalendarService->deleteOptionCreationPeriod($optionCreationPeriod);
+
+                return $this->redirect()->toRoute('activity_admin_options');
+            }
+        }
+
+        return $this->notFoundAction();
     }
 
     public function editAction()

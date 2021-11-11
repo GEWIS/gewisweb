@@ -2,10 +2,12 @@
 
 namespace Activity\Service;
 
+use Activity\Mapper\ActivityOptionCreationPeriod;
 use Activity\Form\{
     ActivityCalendarOption,
     ActivityCalendarPeriod as ActivityCalendarPeriodForm,
 };
+use Activity\Mapper\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodMapper;
 use Activity\Model\{
     ActivityCalendarOption as OptionModel,
     ActivityOptionCreationPeriod as ActivityOptionCreationPeriodModel,
@@ -58,6 +60,11 @@ class ActivityCalendar
      */
     private ActivityCalendarPeriodForm $calendarPeriodForm;
 
+    /**
+     * @var ActivityOptionCreationPeriodMapper
+     */
+    private ActivityOptionCreationPeriodMapper $calendarCreationPeriodMapper;
+
     private AclService $aclService;
     private ActivityCalendarForm $calendarFormService;
 
@@ -70,6 +77,7 @@ class ActivityCalendar
         Member $memberMapper,
         ActivityCalendarOption $calendarOptionForm,
         ActivityCalendarPeriodForm $calendarPeriodForm,
+        ActivityOptionCreationPeriodMapper $calendarCreationPeriodMapper,
         AclService $aclService,
         ActivityCalendarForm $calendarFormService
     ) {
@@ -81,6 +89,7 @@ class ActivityCalendar
         $this->memberMapper = $memberMapper;
         $this->calendarOptionForm = $calendarOptionForm;
         $this->calendarPeriodForm = $calendarPeriodForm;
+        $this->calendarCreationPeriodMapper = $calendarCreationPeriodMapper;
         $this->aclService = $aclService;
         $this->calendarFormService = $calendarFormService;
     }
@@ -325,8 +334,8 @@ class ActivityCalendar
         $activityOptionCreationPeriod->setEndOptionTime(new DateTime($data['endOptionTime']));
 
         // Persist the ActivityOptionCreationPeriodModel here, such that we can use its id for the MaxActivitiesModel.
-        $this->entityManager->persist($activityOptionCreationPeriod);
-        $this->entityManager->flush();
+        $this->calendarCreationPeriodMapper->persist($activityOptionCreationPeriod);
+        $this->calendarCreationPeriodMapper->flush();
 
         foreach ($data['maxActivities'] as $maxActivity) {
             // Check if the organ really exists.
@@ -339,14 +348,35 @@ class ActivityCalendar
                 $maxActivities->setOrgan($organ);
                 $maxActivities->setPeriod($activityOptionCreationPeriod);
 
-                $this->entityManager->persist($maxActivities);
+                $this->calendarCreationPeriodMapper->persist($maxActivities);
             }
         }
 
         // Flush all MaxActivitiesModels.
-        $this->entityManager->flush();
+        $this->calendarCreationPeriodMapper->flush();
 
         return true;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return ActivityOptionCreationPeriodModel|null
+     */
+    public function getOptionCreationPeriod(int $id): ?ActivityOptionCreationPeriodModel
+    {
+        return $this->calendarCreationPeriodMapper->find($id);
+    }
+
+    /**
+     * TODO: How do we actually want to delete the OptionCreationPeriod, does this include OptionProposals,
+     * MaxActivities, etc.? And should there be a limited with regards to the current time (and the defined periods).
+     *
+     * @param ActivityOptionCreationPeriodModel $activityOptionCreationPeriod
+     */
+    public function deleteOptionCreationPeriod(ActivityOptionCreationPeriodModel $activityOptionCreationPeriod): void
+    {
+        $this->calendarCreationPeriodMapper->remove($activityOptionCreationPeriod);
     }
 
     /**
