@@ -7,8 +7,8 @@ use Exception;
 use Laminas\Form\Element\{
     Collection,
     DateTimeLocal,
-    Number,
-    Submit};
+    Submit,
+};
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
@@ -114,16 +114,6 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
                         'options' => [
                             'format' => 'Y-m-d\TH:i',
                         ]
-                    ],
-                    [
-                        'name' => Callback::class,
-                        'options' => [
-                            'messages' => [
-                                Callback::INVALID_VALUE => $this->translator->translate('The planning period must start after now.'),
-                            ],
-                            'callback' => [$this, 'afterOtherTime'],
-                            'callbackOptions' => ['now'],
-                        ],
                     ],
                 ],
             ],
