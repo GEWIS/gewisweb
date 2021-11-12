@@ -185,9 +185,11 @@ class AdminController extends AbstractActionController
 
     protected function redirectActivityAdmin($success, $message)
     {
-        $activityAdminSession = new SessionContainer('activityAdmin');
-        $activityAdminSession->success = $success;
-        $activityAdminSession->message = $message;
+        if ($success) {
+            $this->flashMessenger()->addSuccessMessage($message);
+        } else {
+            $this->flashMessenger()->addErrorMessage($message);
+        }
 
         return $this->redirect()->toRoute('activity_admin');
     }

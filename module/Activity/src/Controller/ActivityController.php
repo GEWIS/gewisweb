@@ -292,7 +292,7 @@ class ActivityController extends AbstractActionController
                 $activityRequestSession = new SessionContainer('activityRequest');
                 $activityRequestSession->signupData = $postData->toArray();
 
-                return $this->redirectActivityRequest($activityId, $signupListId, false, $error, $activityRequestSession);
+                return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
             }
 
             // Ensure the user is allowed to subscribe
@@ -350,14 +350,12 @@ class ActivityController extends AbstractActionController
         int $signupListId,
         bool $success,
         string $message,
-        AbstractContainer $session = null
     ): Response {
-        if (null === $session) {
-            $session = new SessionContainer('activityRequest');
+        if ($success) {
+            $this->flashMessenger()->addSuccessMessage($message);
+        } else {
+            $this->flashMessenger()->addErrorMessage($message);
         }
-
-        $session->success = $success;
-        $session->message = $message;
 
         return $this->redirect()->toRoute(
             'activity/view/signuplist',
@@ -391,7 +389,7 @@ class ActivityController extends AbstractActionController
                 $activityRequestSession = new SessionContainer('activityRequest');
                 $activityRequestSession->signupData = $postData->toArray();
 
-                return $this->redirectActivityRequest($activityId, $signupListId, false, $error, $activityRequestSession);
+                return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
             }
 
             // Ensure the user is allowed to subscribe

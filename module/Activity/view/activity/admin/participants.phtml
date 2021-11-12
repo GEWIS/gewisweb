@@ -14,15 +14,6 @@ $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Participants'));
 ?>
 <div class="row admin-activity">
-    <?php if (isset($success)): // Display the signup/signoff message. ?>
-        <div class="col-md-12">
-            <div class="<?= $success ? 'alert alert-success' : 'alert alert-danger'; ?>" role="alert">
-                <div class="container">
-                    <span class="fas <?= $success ? 'fa-check' : 'fa-times'; ?>"></span>&nbsp;<?= $message ?>
-                </div>
-            </div>
-        </div>
-    <?php endif; ?>
     <div class="col-md-12">
         <h1><?= $this->escapeHtml($this->localiseText($activity->getName())) ?></h1>
     </div>

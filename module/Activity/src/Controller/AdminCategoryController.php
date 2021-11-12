@@ -74,9 +74,11 @@ class AdminCategoryController extends AbstractActionController
 
     protected function redirectWithNotice($success, $message)
     {
-        $categoryAdminSession = new SessionContainer('activityAdmin');
-        $categoryAdminSession->success = $success;
-        $categoryAdminSession->message = $message;
+        if ($success) {
+            $this->flashMessenger()->addSuccessMessage($message);
+        } else {
+            $this->flashMessenger()->addErrorMessage($message);
+        }
 
         return $this->redirect()->toRoute('activity_admin_categories');
     }

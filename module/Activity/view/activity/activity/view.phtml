@@ -1,8 +1,10 @@
 <?php
 // set title
 $this->headTitle($this->escapeHtml($this->localiseText($activity->getName())));
-$this->headTitle($this->translate('Activities')); ?>
+$this->headTitle($this->translate('Activities'));
 
+$flash = $this->flashMessenger();
+?>
 <?php if (!isset($breadcrumb)): // only show breadcrumbs if they were not yet shown ?>
     <section class="section section-breadcrumb">
         <div class="container">
@@ -34,15 +36,11 @@ $this->headTitle($this->translate('Activities')); ?>
 <section class="section">
     <div class="container">
         <div class="row">
-            <?php if (isset($success)): // Display the signup/signoff message. ?>
-                <div class="col-md-12">
-                    <div class="<?= $success ? 'alert alert-success' : 'alert alert-danger'; ?>" role="alert">
-                        <div class="container">
-                            <span class="fas <?= $success ? 'fa-check' : 'fa-times'; ?>"></span>&nbsp;<?= $message ?>
-                        </div>
-                    </div>
-                </div>
-            <?php endif; ?>
+            <?= $flash->render('default', ['alert', 'alert-dismissible', 'alert-info']) ?>
+            <?= $flash->render('error', ['alert', 'alert-dismissible', 'alert-danger']) ?>
+            <?= $flash->render('info', ['alert', 'alert-dismissible', 'alert-info']) ?>
+            <?= $flash->render('success', ['alert', 'alert-dismissible', 'alert-success']) ?>
+            <?= $flash->render('warning', ['alert', 'alert-dismissible', 'alert-warning']) ?>
             <div class="col-md-12">
                 <h1><?= $this->escapeHtml($this->localiseText($activity->getName())) ?></h1>
             </div>
