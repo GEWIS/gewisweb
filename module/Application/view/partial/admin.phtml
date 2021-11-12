@@ -1,3 +1,7 @@
+<?php
+// The FlashMessenger config does allow for namespaced options, hence we need to define all classes below.
+$flash = $this->flashMessenger();
+?>
 <div class="admin-container">
     <nav class="navbar navbar-gewis-admin navbar-fixed-left rainbow">
         <div class="container">
@@ -154,6 +158,11 @@
         </section>
         <section class="section">
             <div class="container-admin">
+                <?= $flash->render('default', ['alert', 'alert-dismissible', 'alert-info']) ?>
+                <?= $flash->render('error', ['alert', 'alert-dismissible', 'alert-danger']) ?>
+                <?= $flash->render('info', ['alert', 'alert-dismissible', 'alert-info']) ?>
+                <?= $flash->render('success', ['alert', 'alert-dismissible', 'alert-success']) ?>
+                <?= $flash->render('warning', ['alert', 'alert-dismissible', 'alert-warning']) ?>
                 <?= $this->content ?>
             </div>
         </section>

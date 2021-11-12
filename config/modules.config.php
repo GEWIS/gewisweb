@@ -21,6 +21,7 @@ return [
     'Laminas\Form',
     'Laminas\Router',
     'Laminas\Validator',
+    'Laminas\Mvc\Plugin\FlashMessenger',
     'DoctrineModule',
     'DoctrineORMModule',
     'User',

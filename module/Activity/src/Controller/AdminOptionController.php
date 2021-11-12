@@ -12,7 +12,6 @@ use Decision\Service\Organ as OrganService;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Session\Container as SessionContainer;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
@@ -197,9 +196,11 @@ class AdminOptionController extends AbstractActionController
      */
     private function redirectWithMessage(bool $success, string $message): Response
     {
-        $optionAdminSession = new SessionContainer('activityAdmin');
-        $optionAdminSession->success = $success;
-        $optionAdminSession->message = $message;
+        if ($success) {
+            $this->flashMessenger()->addSuccessMessage($message);
+        } else {
+            $this->flashMessenger()->addErrorMessage($message);
+        }
 
         return $this->redirect()->toRoute('activity_admin_options');
     }
