@@ -362,6 +362,26 @@ class ActivityCalendar
         ActivityOptionCreationPeriodModel $activityOptionCreationPeriod,
         array $data,
     ): bool {
+        $activityOptionCreationPeriod->setBeginPlanningTime(new DateTime($data['beginPlanningTime']));
+        $activityOptionCreationPeriod->setEndPlanningTime(new DateTime($data['endPlanningTime']));
+        $activityOptionCreationPeriod->setBeginOptionTime(new DateTime($data['beginOptionTime']));
+        $activityOptionCreationPeriod->setEndOptionTime(new DateTime($data['endOptionTime']));
+
+        // Update maxActivities, if the form has been altered (by hand) those changes will not be persisted. We get an
+        // array indexed by the organ ids, last value is used if organ is present more than once (i.e. someone tampered
+        // with the form).
+        $ids = array_flip(array_map(function ($val) { return $val['id']; }, $data['maxActivities']));
+        foreach ($activityOptionCreationPeriod->getMaxActivities() as $maxActivity) {
+            $organId = $maxActivity->getOrgan()->getId();
+
+            if (array_key_exists($organId, $ids)) {
+                $offset = $ids[$organId];
+                $maxActivity->setValue($data['maxActivities'][$offset]['value']);
+            }
+        }
+
+        $this->calendarCreationPeriodMapper->flush();
+
         return true;
     }
 

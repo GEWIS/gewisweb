@@ -175,6 +175,7 @@ class AdminOptionController extends AbstractActionController
 
         // Fix organ names.
         foreach ($optionCreationPeriodData['maxActivities'] as &$maxActivity) {
+            $maxActivity['id'] = $maxActivity['organ']->getId();
             $maxActivity['name'] = $maxActivity['organ']->getName();
             unset($maxActivity['organ']);
         }
