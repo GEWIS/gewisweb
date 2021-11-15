@@ -2,11 +2,18 @@
 
 namespace User\Form;
 
+use Laminas\Form\Element\{
+    Password as PasswordElement,
+    Submit,
+};
 use Laminas\Form\Form;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
-use Laminas\Validator\NotEmpty;
-use Laminas\Validator\StringLength;
+use Laminas\Validator\{
+    Identical,
+    NotEmpty,
+    StringLength,
+};
 
 class Password extends Form implements InputFilterProviderInterface
 {
@@ -17,7 +24,7 @@ class Password extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'old_password',
-                'type' => 'password',
+                'type' => PasswordElement::class,
                 'options' => [
                     'label' => $translate->translate('Old password'),
                 ],
@@ -27,7 +34,7 @@ class Password extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'password',
-                'type' => 'password',
+                'type' => PasswordElement::class,
                 'options' => [
                     'label' => $translate->translate('New password'),
                 ],
@@ -37,7 +44,7 @@ class Password extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'password_verify',
-                'type' => 'password',
+                'type' => PasswordElement::class,
                 'options' => [
                     'label' => $translate->translate('Verify new password'),
                 ],
@@ -47,7 +54,7 @@ class Password extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'submit',
-                'type' => 'submit',
+                'type' => Submit::class,
                 'attributes' => [
                     'value' => $translate->translate('Change password'),
                 ],
@@ -55,13 +62,18 @@ class Password extends Form implements InputFilterProviderInterface
         );
     }
 
-    public function getInputFilterSpecification()
+    /**
+     * @return array
+     */
+    public function getInputFilterSpecification(): array
     {
         return [
             'password' => [
                 'required' => true,
                 'validators' => [
-                    ['name' => NotEmpty::class],
+                    [
+                        'name' => NotEmpty::class,
+                    ],
                     [
                         'name' => StringLength::class,
                         'options' => [
@@ -73,7 +85,9 @@ class Password extends Form implements InputFilterProviderInterface
             'password_verify' => [
                 'required' => true,
                 'validators' => [
-                    ['name' => NotEmpty::class],
+                    [
+                        'name' => NotEmpty::class,
+                    ],
                     [
                         'name' => StringLength::class,
                         'options' => [
@@ -81,7 +95,7 @@ class Password extends Form implements InputFilterProviderInterface
                         ],
                     ],
                     [
-                        'name' => 'identical',
+                        'name' => Identical::class,
                         'options' => [
                             'token' => 'password',
                         ],

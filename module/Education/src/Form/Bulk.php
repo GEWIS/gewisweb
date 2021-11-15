@@ -2,6 +2,10 @@
 
 namespace Education\Form;
 
+use Laminas\Form\Element\{
+    Collection,
+    Submit,
+};
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
 use Laminas\Mvc\I18n\Translator;
@@ -16,7 +20,7 @@ class Bulk extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'exams',
-                'type' => 'Collection',
+                'type' => Collection::class,
                 'options' => [
                     'count' => 0,
                     'allow_add' => true,
@@ -29,14 +33,18 @@ class Bulk extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'submit',
-                'type' => 'submit',
+                'type' => Submit::class,
+                'attributes' => [
+                    'value' => $translator->translate('Finalize uploads'),
+                ],
             ]
         );
-
-        $this->get('submit')->setLabel($translator->translate('Finalize uploads'));
     }
 
-    public function getInputFilterSpecification()
+    /**
+     * @return array
+     */
+    public function getInputFilterSpecification(): array
     {
         return [];
     }

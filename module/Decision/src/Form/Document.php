@@ -2,12 +2,20 @@
 
 namespace Decision\Form;
 
+use Laminas\Form\Element\{
+    File,
+    Hidden,
+    Submit,
+    Text,
+};
 use Laminas\Form\Form;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
-use Laminas\Validator\File\Extension;
-use Laminas\Validator\File\MimeType;
-use Laminas\Validator\StringLength;
+use Laminas\Validator\{
+    File\Extension,
+    File\MimeType,
+    StringLength,
+};
 
 class Document extends Form implements InputFilterProviderInterface
 {
@@ -18,7 +26,7 @@ class Document extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'meeting',
-                'type' => 'hidden',
+                'type' => Hidden::class,
                 'options' => [
                     'label' => $translator->translate('Meeting'),
                 ],
@@ -28,23 +36,27 @@ class Document extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'name',
-                'type' => 'text',
+                'type' => Text::class,
+                'options' => [
+                    'label' => $translator->translate('Document name'),
+                ],
             ]
         );
-        $this->get('name')->setLabel($translator->translate('Document name'));
 
         $this->add(
             [
                 'name' => 'upload',
-                'type' => 'file',
+                'type' => File::class,
+                'options' => [
+                    'label' => $translator->translate('Document to upload'),
+                ],
             ]
         );
-        $this->get('upload')->setLabel($translator->translate('Document to upload'));
 
         $this->add(
             [
                 'name' => 'submit',
-                'type' => 'submit',
+                'type' => Submit::class,
                 'attributes' => [
                     'value' => $translator->translate('Upload document'),
                 ],
@@ -54,8 +66,10 @@ class Document extends Form implements InputFilterProviderInterface
 
     /**
      * Input filter specification.
+     *
+     * @return array
      */
-    public function getInputFilterSpecification()
+    public function getInputFilterSpecification(): array
     {
         return [
             'name' => [

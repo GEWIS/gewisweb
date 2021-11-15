@@ -3,15 +3,28 @@
 namespace User\Form;
 
 use Laminas\Authentication\Result;
+use Laminas\Form\Element\{
+    Checkbox,
+    Csrf,
+    Hidden,
+    Password,
+    Submit,
+    Text,
+};
 use Laminas\Form\Form;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilter;
-use Laminas\Validator\NotEmpty;
-use Laminas\Validator\StringLength;
+use Laminas\Validator\{
+    NotEmpty,
+    StringLength,
+};
 
 class Login extends Form
 {
-    protected $translate;
+    /**
+     * @var Translator
+     */
+    protected Translator $translate;
 
     public function __construct(Translator $translate)
     {
@@ -21,7 +34,7 @@ class Login extends Form
         $this->add(
             [
                 'name' => 'login',
-                'type' => 'text',
+                'type' => Text::class,
                 'options' => [
                     'label' => $translate->translate('Membership number or email address'),
                 ],
@@ -31,7 +44,7 @@ class Login extends Form
         $this->add(
             [
                 'name' => 'password',
-                'type' => 'password',
+                'type' => Password::class,
                 'options' => [
                     'label' => $translate->translate('Your password'),
                 ],
@@ -41,7 +54,7 @@ class Login extends Form
         $this->add(
             [
                 'name' => 'submit',
-                'type' => 'submit',
+                'type' => Submit::class,
                 'attributes' => [
                     'value' => $translate->translate('Login'),
                 ],
@@ -51,11 +64,11 @@ class Login extends Form
         $this->add(
             [
                 'name' => 'remember',
-                'type' => 'checkbox',
+                'type' => Checkbox::class,
                 'options' => [
                     'label' => $translate->translate('Remember me'),
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
                     'checked' => true,
                 ],
             ]
@@ -64,14 +77,14 @@ class Login extends Form
         $this->add(
             [
                 'name' => 'redirect',
-                'type' => 'hidden',
+                'type' => Hidden::class,
             ]
         );
 
         $this->add(
             [
                 'name' => 'security',
-                'type' => 'Laminas\Form\Element\Csrf',
+                'type' => Csrf::class,
             ]
         );
 
@@ -125,7 +138,9 @@ class Login extends Form
                 'name' => 'login',
                 'required' => true,
                 'validators' => [
-                    ['name' => NotEmpty::class],
+                    [
+                        'name' => NotEmpty::class,
+                    ],
                 ],
             ]
         );
@@ -135,7 +150,9 @@ class Login extends Form
                 'name' => 'password',
                 'required' => true,
                 'validators' => [
-                    ['name' => NotEmpty::class],
+                    [
+                        'name' => NotEmpty::class,
+                    ],
                     [
                         'name' => StringLength::class,
                         'options' => [

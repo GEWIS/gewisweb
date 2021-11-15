@@ -4,6 +4,12 @@ namespace Activity\Form;
 
 use DateTime;
 use Exception;
+use Laminas\Form\Element\{
+    Checkbox,
+    Collection,
+    DateTimeLocal,
+    Text,
+};
 use Laminas\Form\Fieldset;
 use Laminas\Hydrator\ClassMethodsHydrator;
 use Laminas\InputFilter\InputFilterProviderInterface;
@@ -23,9 +29,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'name',
-                'attributes' => [
-                    'type' => 'text',
-                ],
+                'type' => Text::class,
                 'options' => [
                     'label' => $translator->translate('Name'),
                 ],
@@ -35,9 +39,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'nameEn',
-                'attributes' => [
-                    'type' => 'text',
-                ],
+                'type' => Text::class,
                 'options' => [
                     'label' => $translator->translate('Name'),
                 ],
@@ -47,9 +49,9 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'openDate',
-                'type' => 'datetime',
+                'type' => DateTimeLocal::class,
                 'options' => [
-                    'format' => 'Y/m/d H:i',
+                    'format' => 'Y-m-d\TH:i',
                 ],
             ]
         );
@@ -57,9 +59,9 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'closeDate',
-                'type' => 'datetime',
+                'type' => DateTimeLocal::class,
                 'options' => [
-                    'format' => 'Y/m/d H:i',
+                    'format' => 'Y-m-d\TH:i',
                 ],
             ]
         );
@@ -67,10 +69,10 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'onlyGEWIS',
-                'type' => 'Laminas\Form\Element\Checkbox',
+                'type' => Checkbox::class,
                 'options' => [
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
                 ],
                 'attributes' => [
                     'value' => 1,
@@ -81,10 +83,10 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'displaySubscribedNumber',
-                'type' => 'Laminas\Form\Element\Checkbox',
+                'type' => Checkbox::class,
                 'options' => [
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
                 ],
             ]
         );
@@ -92,7 +94,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'fields',
-                'type' => 'Laminas\Form\Element\Collection',
+                'type' => Collection::class,
                 'options' => [
                     'count' => 0,
                     'should_create_template' => true,
@@ -113,7 +115,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
      *
      * @return bool
      */
-    public static function beforeCloseDate($value, $context = [])
+    public static function beforeCloseDate($value, $context = []): bool
     {
         try {
             $thisTime = new DateTime($value);
@@ -129,7 +131,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
     /**
      * @return array
      */
-    public function getInputFilterSpecification()
+    public function getInputFilterSpecification(): array
     {
         return [
             'name' => [

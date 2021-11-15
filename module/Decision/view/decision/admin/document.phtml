@@ -42,7 +42,7 @@ $element = $form->get('meeting');
     ?>
     <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
     <div class="col-sm-10">
-        <?= $this->formElement($element); ?>
+        <?= $this->formText($element); ?>
         <?= $this->formElementErrors($element); ?>
     </div>
 </div>

@@ -2,6 +2,7 @@
 
 namespace Company\Form;
 
+use Application\Form\Localisable as LocalisableForm;
 use Company\Mapper\Job as JobMapper;
 use Laminas\Filter\{
     StringTrim,
@@ -19,7 +20,6 @@ use Laminas\Form\Element\{
     Text,
     Textarea,
 };
-use Laminas\Form\Form;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\{
     Callback,
@@ -31,13 +31,8 @@ use Laminas\Validator\{
     Uri,
 };
 
-class Job extends Form implements InputFilterProviderInterface
+class Job extends LocalisableForm implements InputFilterProviderInterface
 {
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
     /**
      * @var JobMapper
      */
@@ -55,9 +50,7 @@ class Job extends Form implements InputFilterProviderInterface
 
     public function __construct(JobMapper $mapper, Translator $translator, array $categories, array $labels)
     {
-        // we want to ignore the name passed
-        parent::__construct();
-        $this->translator = $translator;
+        parent::__construct($translator);
         $this->mapper = $mapper;
 
         $this->setAttribute('method', 'post');
@@ -77,7 +70,7 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'slugName',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $this->translator->translate('Slug'),
+                    'label' => $this->getTranslator()->translate('Slug'),
                 ],
             ]
         );
@@ -87,8 +80,8 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'category',
                 'type' => Select::class,
                 'options' => [
-                    'label' => $this->translator->translate('Category'),
-                    'empty_option' => $this->translator->translate('Select a job category'),
+                    'label' => $this->getTranslator()->translate('Category'),
+                    'empty_option' => $this->getTranslator()->translate('Select a job category'),
                     'value_options' => $categoryOptions,
                 ],
             ]
@@ -99,9 +92,9 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'published',
                 'type' => Checkbox::class,
                 'options' => [
-                    'label' => $this->translator->translate('Published'),
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
+                    'label' => $this->getTranslator()->translate('Published'),
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
                 ],
             ]
         );
@@ -111,7 +104,7 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'contactName',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $this->translator->translate('Name'),
+                    'label' => $this->getTranslator()->translate('Name'),
                 ],
             ]
         );
@@ -121,7 +114,7 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'contactEmail',
                 'type' => Email::class,
                 'options' => [
-                    'label' => $this->translator->translate('E-mail Address'),
+                    'label' => $this->getTranslator()->translate('E-mail Address'),
                 ],
             ]
         );
@@ -131,7 +124,7 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'contactPhone',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $this->translator->translate('Phone Number'),
+                    'label' => $this->getTranslator()->translate('Phone Number'),
                 ],
             ]
         );
@@ -139,34 +132,10 @@ class Job extends Form implements InputFilterProviderInterface
         // All language attributes.
         $this->add(
             [
-                'name' => 'language_dutch',
-                'type' => Checkbox::class,
-                'options' => [
-                    'label' => $this->translator->translate('Enable Dutch Translations'),
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'language_english',
-                'type' => Checkbox::class,
-                'options' => [
-                    'label' => $this->translator->translate('Enable English Translations'),
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
-                ],
-            ]
-        );
-
-        $this->add(
-            [
                 'name' => 'name',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $this->translator->translate('Name'),
+                    'label' => $this->getTranslator()->translate('Name'),
                 ],
             ]
         );
@@ -176,7 +145,7 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'nameEn',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $this->translator->translate('Name'),
+                    'label' => $this->getTranslator()->translate('Name'),
                 ],
             ]
         );
@@ -190,7 +159,7 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'website',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $this->translator->translate('Website'),
+                    'label' => $this->getTranslator()->translate('Website'),
                 ],
             ]
         );
@@ -200,7 +169,7 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'websiteEn',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $this->translator->translate('Website'),
+                    'label' => $this->getTranslator()->translate('Website'),
                 ],
             ]
         );
@@ -210,7 +179,7 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'location',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $this->translator->translate('Location'),
+                    'label' => $this->getTranslator()->translate('Location'),
                 ],
             ]
         );
@@ -220,7 +189,7 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'locationEn',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $this->translator->translate('Location'),
+                    'label' => $this->getTranslator()->translate('Location'),
                 ],
             ]
         );
@@ -230,7 +199,7 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'description',
                 'type' => Textarea::class,
                 'options' => [
-                    'label' => $this->translator->translate('Description'),
+                    'label' => $this->getTranslator()->translate('Description'),
                 ],
             ]
         );
@@ -240,7 +209,7 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'descriptionEn',
                 'type' => Textarea::class,
                 'options' => [
-                    'label' => $this->translator->translate('Description'),
+                    'label' => $this->getTranslator()->translate('Description'),
                 ],
             ]
         );
@@ -250,7 +219,7 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'attachment',
                 'type' => File::class,
                 'options' => [
-                    'label' => $this->translator->translate('Attachment'),
+                    'label' => $this->getTranslator()->translate('Attachment'),
                 ],
             ]
         );
@@ -260,7 +229,7 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'attachmentEn',
                 'type' => File::class,
                 'options' => [
-                    'label' => $this->translator->translate('Attachment'),
+                    'label' => $this->getTranslator()->translate('Attachment'),
                 ],
             ]
         );
@@ -270,7 +239,7 @@ class Job extends Form implements InputFilterProviderInterface
                 'name' => 'labels',
                 'type' => MultiCheckbox::class,
                 'options' => [
-                    'label' => $this->translator->translate('Labels'),
+                    'label' => $this->getTranslator()->translate('Labels'),
                     'value_options' => $labelOptions,
                 ],
             ]
@@ -305,7 +274,9 @@ class Job extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification(): array
     {
-        $filter = [
+        $filter = parent::getInputFilterSpecification();
+
+        $filter += [
             'slugName' => [
                 'required' => true,
                 'validators' => [
@@ -314,7 +285,7 @@ class Job extends Form implements InputFilterProviderInterface
                         'options' => [
                             'callback' => [$this, 'isSlugUnique'],
                             'messages' => [
-                                Callback::INVALID_VALUE => $this->translator->translate('This slug is already taken'),
+                                Callback::INVALID_VALUE => $this->getTranslator()->translate('This slug is already taken'),
                             ],
                         ],
                     ],
@@ -323,7 +294,7 @@ class Job extends Form implements InputFilterProviderInterface
                         'options' => [
                             'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
                             'messages' => [
-                                Regex::ERROROUS => $this->translator->translate('This slug contains invalid characters'),
+                                Regex::ERROROUS => $this->getTranslator()->translate('This slug contains invalid characters'),
                             ],
                         ],
                     ],
@@ -369,7 +340,7 @@ class Job extends Form implements InputFilterProviderInterface
                         'name' => EmailAddress::class,
                         'options' => [
                             'messages' => [
-                                'emailAddressInvalidFormat' => $this->translator->translate(
+                                'emailAddressInvalidFormat' => $this->getTranslator()->translate(
                                     'E-mail address format is not valid'
                                 ),
                             ],
@@ -401,53 +372,16 @@ class Job extends Form implements InputFilterProviderInterface
             ],
         ];
 
-        if (
-            isset($this->data['language_english'])
-            && $this->data['language_english']
-        ) {
-            $filter += $this->inputFilterGeneric('En');
-        }
-
-        if (
-            isset($this->data['language_dutch'])
-            && $this->data['language_dutch']
-        ) {
-            $filter += $this->inputFilterGeneric();
-        }
-
-        // One of the language_dutch or language_english needs to set. If not, display a message at both, indicating
-        // that they need to be set.
-        if (
-            (isset($this->data['language_dutch']) && !$this->data['language_dutch'])
-            && (isset($this->data['language_english']) && !$this->data['language_english'])
-        ) {
-            unset($this->data['language_dutch'], $this->data['language_english']);
-
-            $filter += [
-                'language_dutch' => [
-                    'required' => true,
-                ],
-                'language_english' => [
-                    'required' => true,
-                ],
-            ];
-        }
-
         return $filter;
     }
 
     /**
-     * Build a generic input filter.
-     *
-     * @param string $languageSuffix Suffix that is used for language fields to indicate that a field belongs to that
-     * language
-     *
-     * @return array
+     * @inheritDoc
      */
-    public function inputFilterGeneric(string $languageSuffix = ''): array
+    public function createLocalisedInputFilterSpecification(string $suffix = ''): array
     {
         return [
-            'name' . $languageSuffix => [
+            'name' . $suffix => [
                 'required' => true,
                 'validators' => [
                     [
@@ -468,7 +402,7 @@ class Job extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'website' . $languageSuffix => [
+            'website' . $suffix => [
                 'required' => false,
                 'validators' => [
                     [
@@ -487,7 +421,7 @@ class Job extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'location' . $languageSuffix => [
+            'location' . $suffix => [
                 'required' => false,
                 'validators' => [
                     [
@@ -510,7 +444,7 @@ class Job extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'description' . $languageSuffix => [
+            'description' . $suffix => [
                 'required' => true,
                 'validators' => [
                     [
@@ -523,7 +457,7 @@ class Job extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'attachment' . $languageSuffix => [
+            'attachment' . $suffix => [
                 'required' => false,
                 'validators' => [
                     [

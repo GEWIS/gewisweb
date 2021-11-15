@@ -2,6 +2,7 @@
 
 namespace Company\Form;
 
+use Application\Form\Localisable as LocalisableForm;
 use Company\Mapper\Company as CompanyMapper;
 use Laminas\Filter\{
     StringTrim,
@@ -16,7 +17,6 @@ use Laminas\Form\Element\{
     Text,
     Textarea,
 };
-use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\{
@@ -29,17 +29,12 @@ use Laminas\Validator\{
     Uri,
 };
 
-class Company extends Form implements InputFilterProviderInterface
+class Company extends LocalisableForm implements InputFilterProviderInterface
 {
     /**
      * @var CompanyMapper
      */
     private CompanyMapper $mapper;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
 
     /**
      * @var string|null $currentSlug
@@ -49,9 +44,8 @@ class Company extends Form implements InputFilterProviderInterface
     public function __construct(CompanyMapper $mapper, Translator $translator)
     {
         // we want to ignore the name passed
-        parent::__construct();
+        parent::__construct($translator);
         $this->mapper = $mapper;
-        $this->translator = $translator;
 
         $this->setAttribute('method', 'post');
 
@@ -60,7 +54,7 @@ class Company extends Form implements InputFilterProviderInterface
                 'name' => 'name',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $this->translator->translate('Name'),
+                    'label' => $this->getTranslator()->translate('Name'),
                 ],
             ]
         );
@@ -70,7 +64,7 @@ class Company extends Form implements InputFilterProviderInterface
                 'name' => 'slugName',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $this->translator->translate('Slug'),
+                    'label' => $this->getTranslator()->translate('Slug'),
                 ],
             ]
         );
@@ -80,7 +74,7 @@ class Company extends Form implements InputFilterProviderInterface
                 'name' => 'logo',
                 'type' => File::class,
                 'options' => [
-                    'label' => $this->translator->translate('Logo'),
+                    'label' => $this->getTranslator()->translate('Logo'),
                 ],
             ]
         );
@@ -90,9 +84,9 @@ class Company extends Form implements InputFilterProviderInterface
                 'name' => 'published',
                 'type' => Checkbox::class,
                 'options' => [
-                    'label' => $this->translator->translate('Published'),
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
+                    'label' => $this->getTranslator()->translate('Published'),
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
                 ],
             ]
         );
@@ -102,7 +96,7 @@ class Company extends Form implements InputFilterProviderInterface
                 'name' => 'contactName',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $this->translator->translate('Name'),
+                    'label' => $this->getTranslator()->translate('Name'),
                 ],
             ]
         );
@@ -112,7 +106,7 @@ class Company extends Form implements InputFilterProviderInterface
                 'name' => 'contactAddress',
                 'type' => Textarea::class,
                 'options' => [
-                    'label' => $this->translator->translate('Address'),
+                    'label' => $this->getTranslator()->translate('Address'),
                 ],
             ]
         );
@@ -122,7 +116,7 @@ class Company extends Form implements InputFilterProviderInterface
                 'name' => 'contactEmail',
                 'type' => Email::class,
                 'options' => [
-                    'label' => $this->translator->translate('E-mail Address'),
+                    'label' => $this->getTranslator()->translate('E-mail Address'),
                 ],
             ]
         );
@@ -132,7 +126,7 @@ class Company extends Form implements InputFilterProviderInterface
                 'name' => 'contactPhone',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $this->translator->translate('Phone Number'),
+                    'label' => $this->getTranslator()->translate('Phone Number'),
                 ],
             ]
         );
@@ -140,34 +134,10 @@ class Company extends Form implements InputFilterProviderInterface
         // All language attributes.
         $this->add(
             [
-                'name' => 'language_dutch',
-                'type' => Checkbox::class,
-                'options' => [
-                    'label' => $this->translator->translate('Enable Dutch Translations'),
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
-                ],
-            ]
-        );
-
-        $this->add(
-            [
-                'name' => 'language_english',
-                'type' => Checkbox::class,
-                'options' => [
-                    'label' => $this->translator->translate('Enable English Translations'),
-                    'checked_value' => 1,
-                    'unchecked_value' => 0,
-                ],
-            ]
-        );
-
-        $this->add(
-            [
                 'name' => 'slogan',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $this->translator->translate('Slogan'),
+                    'label' => $this->getTranslator()->translate('Slogan'),
                 ],
             ]
         );
@@ -177,7 +147,7 @@ class Company extends Form implements InputFilterProviderInterface
                 'name' => 'sloganEn',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $this->translator->translate('Slogan'),
+                    'label' => $this->getTranslator()->translate('Slogan'),
                 ],
             ]
         );
@@ -191,7 +161,7 @@ class Company extends Form implements InputFilterProviderInterface
                 'name' => 'website',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $this->translator->translate('Website'),
+                    'label' => $this->getTranslator()->translate('Website'),
                 ],
             ]
         );
@@ -201,7 +171,7 @@ class Company extends Form implements InputFilterProviderInterface
                 'name' => 'websiteEn',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $this->translator->translate('Website'),
+                    'label' => $this->getTranslator()->translate('Website'),
                 ],
             ]
         );
@@ -211,7 +181,7 @@ class Company extends Form implements InputFilterProviderInterface
                 'name' => 'description',
                 'type' => Textarea::class,
                 'options' => [
-                    'label' => $this->translator->translate('Description'),
+                    'label' => $this->getTranslator()->translate('Description'),
                 ],
             ]
         );
@@ -221,7 +191,7 @@ class Company extends Form implements InputFilterProviderInterface
                 'name' => 'descriptionEn',
                 'type' => Textarea::class,
                 'options' => [
-                    'label' => $this->translator->translate('Description'),
+                    'label' => $this->getTranslator()->translate('Description'),
                 ],
             ]
         );
@@ -241,7 +211,9 @@ class Company extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification(): array
     {
-        $filter = [
+        $filter = parent::getInputFilterSpecification();
+
+        $filter += [
             'name' => [
                 'required' => true,
                 'validators' => [
@@ -271,7 +243,7 @@ class Company extends Form implements InputFilterProviderInterface
                         'options' => [
                             'callback' => [$this, 'isSlugNameUnique'],
                             'messages' => [
-                                Callback::INVALID_VALUE => $this->translator->translate('This slug is already taken'),
+                                Callback::INVALID_VALUE => $this->getTranslator()->translate('This slug is already taken'),
                             ],
                         ],
                     ],
@@ -280,7 +252,7 @@ class Company extends Form implements InputFilterProviderInterface
                         'options' => [
                             'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
                             'messages' => [
-                                Regex::ERROROUS => $this->translator->translate('This slug contains invalid characters'),
+                                Regex::ERROROUS => $this->getTranslator()->translate('This slug contains invalid characters'),
                             ],
                         ],
                     ],
@@ -347,7 +319,7 @@ class Company extends Form implements InputFilterProviderInterface
                         'name' => EmailAddress::class,
                         'options' => [
                             'messages' => [
-                                'emailAddressInvalidFormat' => $this->translator->translate(
+                                'emailAddressInvalidFormat' => $this->getTranslator()->translate(
                                     'E-mail address format is not valid'
                                 ),
                             ],
@@ -396,53 +368,16 @@ class Company extends Form implements InputFilterProviderInterface
             ],
         ];
 
-        if (
-            isset($this->data['language_english'])
-            && $this->data['language_english']
-        ) {
-            $filter += $this->inputFilterGeneric('En');
-        }
-
-        if (
-            isset($this->data['language_dutch'])
-            && $this->data['language_dutch']
-        ) {
-            $filter += $this->inputFilterGeneric();
-        }
-
-        // One of the language_dutch or language_english needs to set. If not, display a message at both, indicating
-        // that they need to be set.
-        if (
-            (isset($this->data['language_dutch']) && !$this->data['language_dutch'])
-            && (isset($this->data['language_english']) && !$this->data['language_english'])
-        ) {
-            unset($this->data['language_dutch'], $this->data['language_english']);
-
-            $filter += [
-                'language_dutch' => [
-                    'required' => true,
-                ],
-                'language_english' => [
-                    'required' => true,
-                ],
-            ];
-        }
-
         return $filter;
     }
 
     /**
-     * Build a generic input filter.
-     *
-     * @param string $languageSuffix Suffix that is used for language fields to indicate that a field belongs to that
-     * language
-     *
-     * @return array
+     * @inheritDoc
      */
-    protected function inputFilterGeneric(string $languageSuffix = ''): array
+    protected function createLocalisedInputFilterSpecification(string $suffix = ''): array
     {
         return [
-            'slogan' . $languageSuffix => [
+            'slogan' . $suffix => [
                 'required' => false,
                 'filters' => [
                     [
@@ -456,7 +391,7 @@ class Company extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'website' . $languageSuffix => [
+            'website' . $suffix => [
                 'required' => true,
                 'validators' => [
                     [
@@ -472,7 +407,7 @@ class Company extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'description' . $languageSuffix => [
+            'description' . $suffix => [
                 'required' => true,
                 'validators' => [
                     [

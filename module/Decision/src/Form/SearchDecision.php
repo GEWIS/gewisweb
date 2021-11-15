@@ -2,6 +2,10 @@
 
 namespace Decision\Form;
 
+use Laminas\Form\Element\{
+    Submit,
+    Text,
+};
 use Laminas\Form\Form;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
@@ -16,7 +20,7 @@ class SearchDecision extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'query',
-                'type' => 'text',
+                'type' => Text::class,
                 'options' => [
                     'label' => $translate->translate('Search query'),
                 ],
@@ -26,7 +30,7 @@ class SearchDecision extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'submit',
-                'type' => 'submit',
+                'type' => Submit::class,
                 'attributes' => [
                     'value' => $translate->translate('Search'),
                     'label' => $translate->translate('Search'),
@@ -37,8 +41,10 @@ class SearchDecision extends Form implements InputFilterProviderInterface
 
     /**
      * Input filter specification.
+     *
+     * @return array
      */
-    public function getInputFilterSpecification()
+    public function getInputFilterSpecification(): array
     {
         return [
             'query' => [

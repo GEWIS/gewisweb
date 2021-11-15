@@ -5,6 +5,10 @@ namespace Activity\Form;
 use Activity\Service\ActivityCalendarForm;
 use DateTime;
 use Exception;
+use Laminas\Form\Element\{
+    Date,
+    Select,
+};
 use Laminas\Form\Fieldset;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
@@ -12,12 +16,15 @@ use Laminas\Validator\Callback;
 
 class ActivityCalendarOption extends Fieldset implements InputFilterProviderInterface
 {
-    protected $translator;
+    /**
+     * @var Translator
+     */
+    protected Translator $translator;
 
     /**
      * @var ActivityCalendarForm
      */
-    private $calendarFormService;
+    private ActivityCalendarForm $calendarFormService;
 
     /**
      * ActivityCalendarOption constructor.
@@ -43,9 +50,9 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
         $this->add(
             [
                 'name' => 'beginTime',
-                'type' => 'datetime',
+                'type' => Date::class,
                 'options' => [
-                    'format' => 'Y/m/d',
+                    'format' => 'Y-m-d',
                 ],
             ]
         );
@@ -53,9 +60,9 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
         $this->add(
             [
                 'name' => 'endTime',
-                'type' => 'datetime',
+                'type' => Date::class,
                 'options' => [
-                    'format' => 'Y/m/d',
+                    'format' => 'Y-m-d',
                 ],
             ]
         );
@@ -63,7 +70,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
         $this->add(
             [
                 'name' => 'type',
-                'type' => 'select',
+                'type' => Select::class,
                 'options' => [
                     'empty_option' => [
                         'label' => $translator->translate('Select a type'),
@@ -76,7 +83,10 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
         );
     }
 
-    public function getInputFilterSpecification()
+    /**
+     * @return array
+     */
+    public function getInputFilterSpecification(): array
     {
         return [
             'beginTime' => [
@@ -135,7 +145,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
      *
      * @return bool
      */
-    public function beforeEndTime($value, $context = [])
+    public function beforeEndTime($value, $context = []): bool
     {
         try {
             $endTime = isset($context['endTime']) ? $this->calendarFormService->toDateTime($context['endTime']) : new DateTime('now');
@@ -154,7 +164,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
      *
      * @return bool
      */
-    public function isFutureTime($value, $context = [])
+    public function isFutureTime($value, $context = []): bool
     {
         try {
             $today = new DateTime();
@@ -173,7 +183,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
      *
      * @return bool
      */
-    public function cannotPlanInPeriod($value, $context = [])
+    public function cannotPlanInPeriod($value, $context = []): bool
     {
         try {
             $beginTime = $this->calendarFormService->toDateTime($value);

@@ -2,9 +2,14 @@
 
 namespace Frontpage\Form;
 
+use Laminas\Form\Element\{
+    Date,
+    Submit,
+};
 use Laminas\Form\Form;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Validator\Date as DateValidator;
 
 class PollApproval extends Form implements InputFilterProviderInterface
 {
@@ -15,9 +20,10 @@ class PollApproval extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'expiryDate',
-                'type' => 'Laminas\Form\Element\Date',
+                'type' => Date::class,
                 'options' => [
                     'label' => $translator->translate('Expiration date for the poll (YYYY-MM-DD)'),
+                    'format' => 'Y-m-d',
                 ],
             ]
         );
@@ -25,7 +31,7 @@ class PollApproval extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'submit',
-                'type' => 'submit',
+                'type' => Submit::class,
                 'options' => [
                     'label' => $translator->translate('Approve poll'),
                 ],
@@ -39,14 +45,14 @@ class PollApproval extends Form implements InputFilterProviderInterface
      *
      * @return array
      */
-    public function getInputFilterSpecification()
+    public function getInputFilterSpecification(): array
     {
         return [
             'expiryDate' => [
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'date',
+                        'name' => DateValidator::class,
                     ],
                 ],
             ],

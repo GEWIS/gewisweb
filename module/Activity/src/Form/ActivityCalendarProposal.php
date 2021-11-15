@@ -4,26 +4,36 @@ namespace Activity\Form;
 
 use Activity\Service\ActivityCalendarForm;
 use Exception;
+use Laminas\Form\Element\{
+    Collection,
+    Select,
+    Text,
+};
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\Callback;
-use Laminas\Validator\StringLength;
+use Laminas\Validator\{
+    Callback,
+    StringLength,
+};
 use User\Permissions\NotAllowedException;
 
 class ActivityCalendarProposal extends Form implements InputFilterProviderInterface
 {
-    protected $translator;
+    /**
+     * @var Translator
+     */
+    protected Translator $translator;
 
     /**
      * @var ActivityCalendarForm
      */
-    private $calendarFormService;
+    private ActivityCalendarForm $calendarFormService;
 
     /**
      * @var int
      */
-    private $maxOptions;
+    private int $maxOptions;
 
     /**
      * @param Translator $translator
@@ -56,7 +66,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
         $this->add(
             [
                 'name' => 'organ',
-                'type' => 'select',
+                'type' => Select::class,
                 'options' => [
                     'empty_option' => [
                         'label' => $translator->translate('Select an option'),
@@ -71,25 +81,21 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
         $this->add(
             [
                 'name' => 'name',
-                'attributes' => [
-                    'type' => 'text',
-                ],
+                'type' => Text::class,
             ]
         );
 
         $this->add(
             [
                 'name' => 'description',
-                'attributes' => [
-                    'type' => 'text',
-                ],
+                'type' => Text::class,
             ]
         );
 
         $this->add(
             [
                 'name' => 'options',
-                'type' => 'Laminas\Form\Element\Collection',
+                'type' => Collection::class,
                 'options' => [
                     'count' => 1,
                     'should_create_template' => true,
@@ -103,7 +109,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
     /**
      * Input filter specification.
      */
-    public function getInputFilterSpecification()
+    public function getInputFilterSpecification(): array
     {
         return [
             'organ' => [
@@ -162,7 +168,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
      *
      * @return bool
      */
-    public function isGoodOptionCount($value, $context = [])
+    public function isGoodOptionCount($value, $context = []): bool
     {
         if (count($value) < 1) {
             return false;
@@ -182,7 +188,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
      *
      * @return bool
      */
-    public function areGoodOptionDates($value, $context = [])
+    public function areGoodOptionDates($value, $context = []): bool
     {
         $final = true;
         foreach ($value as $option) {

@@ -2,6 +2,11 @@
 
 namespace Frontpage\Form;
 
+use Laminas\Form\Element\{
+    Submit,
+    Text,
+    Textarea,
+};
 use Laminas\Form\Form;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
@@ -16,7 +21,7 @@ class PollComment extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'author',
-                'type' => 'text',
+                'type' => Text::class,
                 'options' => [
                     'label' => $translator->translate('Author'),
                 ],
@@ -26,7 +31,7 @@ class PollComment extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'content',
-                'type' => 'textarea',
+                'type' => Textarea::class,
                 'options' => [
                     'label' => $translator->translate('Content'),
                 ],
@@ -36,13 +41,12 @@ class PollComment extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'submit',
-                'type' => 'submit',
+                'type' => Submit::class,
                 'attributes' => [
                     'value' => $translator->translate('Comment'),
                 ],
             ]
         );
-        $this->get('submit')->setLabel($translator->translate('Comment'));
     }
 
     /**
@@ -51,7 +55,7 @@ class PollComment extends Form implements InputFilterProviderInterface
      *
      * @return array
      */
-    public function getInputFilterSpecification()
+    public function getInputFilterSpecification(): array
     {
         return [
             'author' => [

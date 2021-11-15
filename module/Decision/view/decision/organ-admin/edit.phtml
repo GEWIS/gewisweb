@@ -44,7 +44,7 @@ $form->setAttribute('id', 'editForm');
     $element->setAttribute('class', 'form-control');
     ?>
     <?= $this->formLabel($element); ?>
-    <?= $this->formInput($element); ?>
+    <?= $this->formUrl($element); ?>
     <?= $this->formElementErrors($element); ?>
 </div>
 
@@ -55,7 +55,7 @@ $form->setAttribute('id', 'editForm');
     $element->setAttribute('required', 'required');
     ?>
     <?= $this->formLabel($element); ?>
-    <?= $this->formInput($element); ?>
+    <?= $this->formEmail($element); ?>
     <?= $this->formElementErrors($element); ?>
 </div>
 
@@ -65,7 +65,7 @@ $form->setAttribute('id', 'editForm');
     $element->setAttribute('class', 'form-control');
     ?>
     <?= $this->formLabel($element); ?>
-    <?= $this->formInput($element); ?>
+    <?= $this->formText($element); ?>
     <?= $this->formElementErrors($element); ?>
 </div>
 
@@ -75,7 +75,7 @@ $form->setAttribute('id', 'editForm');
     $element->setAttribute('class', 'form-control');
     ?>
     <?= $this->formLabel($element); ?>
-    <?= $this->formInput($element); ?>
+    <?= $this->formText($element); ?>
     <?= $this->formElementErrors($element); ?>
 </div>
 

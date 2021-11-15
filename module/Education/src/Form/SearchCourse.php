@@ -35,7 +35,9 @@ class SearchCourse extends Form
                 'name' => 'query',
                 'required' => true,
                 'validators' => [
-                    ['name' => NotEmpty::class],
+                    [
+                        'name' => NotEmpty::class,
+                    ],
                 ],
             ]
         );

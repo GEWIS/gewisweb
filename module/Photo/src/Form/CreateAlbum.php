@@ -2,6 +2,10 @@
 
 namespace Photo\Form;
 
+use Laminas\Form\Element\{
+    Submit,
+    Text,
+};
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Mvc\I18n\Translator;
@@ -16,7 +20,7 @@ class CreateAlbum extends Form
         $this->add(
             [
                 'name' => 'name',
-                'type' => 'Laminas\Form\Element\Text',
+                'type' => Text::class,
                 'options' => [
                     'label' => $translate->translate('Album title'),
                 ],
@@ -26,7 +30,7 @@ class CreateAlbum extends Form
         $this->add(
             [
                 'name' => 'submit',
-                'type' => 'submit',
+                'type' => Submit::class,
                 'options' => [
                     'label' => $translate->translate('Create'),
                 ],

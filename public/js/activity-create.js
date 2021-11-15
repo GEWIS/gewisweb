@@ -3,10 +3,6 @@
  */
 
 Activity = {
-    dtpOptions: {
-        dayOfWeekStart: 1,
-    },
-
     /**
      * Adds a new (empty) SignupList to the Activity.
      */
@@ -20,8 +16,6 @@ Activity = {
 
         template = template.replace(/__signuplist__/g, currentCount);
         $(template).insertBefore('fieldset.signup-lists div.signup-list-controls');
-        $('[name="signupLists[' + currentCount + '][openDate]"]').datetimepicker(Activity.dtpOptions);
-        $('[name="signupLists[' + currentCount + '][closeDate]"]').datetimepicker(Activity.dtpOptions);
         Activity.updateForm();
 
         return false;
@@ -34,8 +28,6 @@ Activity = {
         var currentCount = $('fieldset.signup-lists div.signup-list').length - 1;
 
         if (currentCount >= 0){
-            $('[name="signupLists[' + currentCount + '][openDate]"]').datetimepicker('destroy');
-            $('[name="signupLists[' + currentCount + '][closeDate]"]').datetimepicker('destroy');
             $('#signupList' + currentCount).remove();
         }
 
@@ -81,14 +73,6 @@ Activity = {
             categoryLabel.parent().removeClass('chip-outlined');
         }
     },
-
-    /**
-     * Update SignupLists to have a datetimepicker.
-     */
-     updateLists: function () {
-         $('[name$="[openDate]"]').datetimepicker(Activity.dtpOptions);
-         $('[name$="[closeDate]"]').datetimepicker(Activity.dtpOptions);
-     },
 
     /**
      * Updates the form to accomodate changes in the language checkboxes.

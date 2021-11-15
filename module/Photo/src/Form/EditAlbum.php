@@ -2,6 +2,11 @@
 
 namespace Photo\Form;
 
+use Laminas\Form\Element\{
+    DateTimeLocal,
+    Submit,
+    Text,
+};
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Mvc\I18n\Translator;
@@ -16,7 +21,7 @@ class EditAlbum extends Form
         $this->add(
             [
                 'name' => 'name',
-                'type' => 'Laminas\Form\Element\Text',
+                'type' => Text::class,
                 'options' => [
                     'label' => $translate->translate('Album title'),
                 ],
@@ -26,10 +31,10 @@ class EditAlbum extends Form
         $this->add(
             [
                 'name' => 'startDateTime',
-                'type' => 'Laminas\Form\Element\DateTime',
+                'type' => DateTimeLocal::class,
                 'options' => [
-                    'format' => 'Y/m/d H:i',
                     'label' => $translate->translate('Start date'),
+                    'format' => 'Y-m-d\TH:i',
                 ],
             ]
         );
@@ -37,10 +42,10 @@ class EditAlbum extends Form
         $this->add(
             [
                 'name' => 'endDateTime',
-                'type' => 'Laminas\Form\Element\DateTime',
+                'type' => DateTimeLocal::class,
                 'options' => [
-                    'format' => 'Y/m/d H:i',
                     'label' => $translate->translate('End date'),
+                    'format' => 'Y-m-d\TH:i',
                 ],
             ]
         );
@@ -48,7 +53,7 @@ class EditAlbum extends Form
         $this->add(
             [
                 'name' => 'submit',
-                'type' => 'submit',
+                'type' => Submit::class,
                 'options' => [
                     'label' => $translate->translate('Save'),
                 ],

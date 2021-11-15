@@ -1,10 +1,8 @@
 <?php
 $this->headTitle($action);
 $this->headLink()
-    ->appendStylesheet($this->basePath() . '/css/jquery.datetimepicker.css')
     ->appendStylesheet($this->basePath() . '/css/bootstrap-markdown.min.css');
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/jquery.datetimepicker.full.min.js')
     ->appendFile($this->basePath() . '/js/activity-create.js')
     ->appendFile($this->basePath() . '/js/bootstrap-markdown.js');
 $this->headScript()
@@ -78,7 +76,7 @@ $form->setAttribute('class', 'form-activity');
                                            class="control-label label-required">
                                         <?= $this->translate('Start date and time') ?>
                                     </label>
-                                    <?= $this->formInput($beginTime) ?>
+                                    <?= $this->formDateTimeLocal($beginTime) ?>
                                     <?= $this->formElementErrors($beginTime) ?>
                                 </div>
                             </div>
@@ -93,7 +91,7 @@ $form->setAttribute('class', 'form-activity');
                                            class="control-label label-required">
                                         <?= $this->translate('End date and time') ?>
                                     </label>
-                                    <?= $this->formInput($endTime) ?>
+                                    <?= $this->formDateTimeLocal($endTime) ?>
                                     <?= $this->formElementErrors($endTime) ?>
                                 </div>
                             </div>
@@ -226,11 +224,6 @@ $form->setAttribute('class', 'form-activity');
 </section>
 
 <script>
-    var dtpOptions = {
-        dayOfWeekStart: 1,
-    };
-    $('[name="beginTime"]').datetimepicker(dtpOptions);
-    $('[name="endTime"]').datetimepicker(dtpOptions);
     $('.markdown-editor').each(function () {
         $(this).markdown(
             {
@@ -241,7 +234,6 @@ $form->setAttribute('class', 'form-activity');
     });
     Activity.updateForm();
     Activity.updateAllFields();
-    Activity.updateLists();
     Activity.updateAllCategories();
     $('label[for^="categories-"]').on('click', function () {
         Activity.toggleCategory($(this).data('category-id'));

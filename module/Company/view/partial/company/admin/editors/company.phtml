@@ -19,7 +19,7 @@
                     <label for="<?= $name->getAttribute('id') ?>" class="control-label label-required">
                         <?= $name->getLabel() ?>
                     </label>
-                    <?= $this->formInput($name) ?>
+                    <?= $this->formText($name) ?>
                     <?= $this->formElementErrors($name) ?>
                 </div>
             </div>
@@ -178,7 +178,7 @@
             <label for="<?= $slogan->getAttribute('id') ?>" class="control-label">
                 <?= $slogan->getLabel() ?>
             </label>
-            <?= $this->formInput($slogan) ?>
+            <?= $this->formText($slogan) ?>
             <?= $this->formElementErrors($slogan) ?>
         </div>
         <?php
@@ -240,7 +240,7 @@
             <label for="<?= $sloganEn->getAttribute('id') ?>" class="control-label">
                 <?= $sloganEn->getLabel() ?>
             </label>
-            <?= $this->formInput($sloganEn) ?>
+            <?= $this->formText($sloganEn) ?>
             <?= $this->formElementErrors($sloganEn) ?>
         </div>
         <?php

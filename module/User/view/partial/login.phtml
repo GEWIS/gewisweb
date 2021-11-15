@@ -14,22 +14,32 @@ $form->setAttribute('class', 'form-horizontal');
     </div>
     <div class="panel-body">
         <?= $this->form()->openTag($form) ?>
-
-        <?php foreach (['login', 'password'] as $field): ?>
-            <?php
-            $element = $form->get($field);
-            $element->setAttribute('id', $field);
-            $element->setAttribute('class', 'form-control');
-            ?>
-            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-                <label for="<?= $element->getAttribute('id') ?>"
-                       class="control-label col-sm-5"><?= $element->getLabel() ?></label>
-                <div class="col-sm-7">
-                    <?= $this->formInput($element) ?>
-                    <?= $this->formElementErrors($element, array('class' => 'help-block')); ?>
-                </div>
+        <?php
+        $element = $form->get('login');
+        $element->setAttribute('id', 'login');
+        $element->setAttribute('class', 'form-control');
+        ?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getAttribute('id') ?>"
+                   class="control-label col-sm-5"><?= $element->getLabel() ?></label>
+            <div class="col-sm-7">
+                <?= $this->formText($element) ?>
+                <?= $this->formElementErrors($element, array('class' => 'help-block')); ?>
             </div>
-        <?php endforeach; ?>
+        </div>
+        <?php
+        $element = $form->get('password');
+        $element->setAttribute('id', 'password');
+        $element->setAttribute('class', 'form-control');
+        ?>
+        <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <label for="<?= $element->getAttribute('id') ?>"
+                   class="control-label col-sm-5"><?= $element->getLabel() ?></label>
+            <div class="col-sm-7">
+                <?= $this->formPassword($element) ?>
+                <?= $this->formElementErrors($element, array('class' => 'help-block')); ?>
+            </div>
+        </div>
         <?php
         $element = $form->get('remember');
         $element->setAttribute('checked', 'checked');

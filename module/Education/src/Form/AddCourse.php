@@ -3,7 +3,14 @@
 namespace Education\Form;
 
 use Laminas\Filter\StringToUpper;
+use Laminas\Form\Element\{
+    Select,
+    Submit,
+    Text,
+    Url,
+};
 use Laminas\Form\Form;
+use Laminas\I18n\Validator\Alnum;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator\StringLength;
@@ -25,7 +32,7 @@ class AddCourse extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'code',
-                'type' => 'text',
+                'type' => Text::class,
                 'options' => [
                     'label' => $translator->translate('Course code'),
                 ],
@@ -34,7 +41,7 @@ class AddCourse extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'parent',
-                'type' => 'text',
+                'type' => Text::class,
                 'options' => [
                     'label' => $translator->translate('Parent course code'),
                 ],
@@ -43,7 +50,7 @@ class AddCourse extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'name',
-                'type' => 'text',
+                'type' => Text::class,
                 'options' => [
                     'label' => $translator->translate('Name'),
                 ],
@@ -52,7 +59,7 @@ class AddCourse extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'url',
-                'type' => 'Laminas\Form\Element\Url',
+                'type' => Url::class,
                 'options' => [
                     'label' => $translator->translate('URL'),
                 ],
@@ -61,7 +68,7 @@ class AddCourse extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'year',
-                'type' => 'text',
+                'type' => Text::class,
                 'options' => [
                     'label' => $translator->translate('Year'),
                     'value' => date('Y'),
@@ -71,7 +78,7 @@ class AddCourse extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'quartile',
-                'type' => 'select',
+                'type' => Select::class,
                 'options' => [
                     'label' => $translator->translate('Quartile'),
                     'value_options' => $qOptions,
@@ -82,14 +89,18 @@ class AddCourse extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'submit',
-                'type' => 'submit',
+                'type' => Submit::class,
+                'attributes' => [
+                    'value' => $translator->translate('Add course'),
+                ],
             ]
         );
-
-        $this->get('submit')->setLabel($translator->translate('Add course'));
     }
 
-    public function getInputFilterSpecification()
+    /**
+     * @return array
+     */
+    public function getInputFilterSpecification(): array
     {
         return [
             'code' => [
@@ -103,7 +114,7 @@ class AddCourse extends Form implements InputFilterProviderInterface
                         ],
                     ],
                     [
-                        'name' => 'alnum',
+                        'name' => Alnum::class,
                     ],
                 ],
                 'filters' => [
@@ -111,13 +122,17 @@ class AddCourse extends Form implements InputFilterProviderInterface
                         'name' => StringToUpper::class,
                     ],
                 ],
-            ], 'name' => [
+            ],
+            'name' => [
                 'required' => true,
-            ], 'url' => [
+            ],
+            'url' => [
                 'required' => false,
-            ], 'quartile' => [
+            ],
+            'quartile' => [
                 'required' => true,
-            ], 'year' => [
+            ],
+            'year' => [
                 'required' => true,
             ],
         ];

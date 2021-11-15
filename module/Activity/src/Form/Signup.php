@@ -7,6 +7,13 @@ use Activity\Model\{
     SignupList as SignupListModel,
 };
 use Laminas\Captcha\Image as ImageCaptcha;
+use Laminas\Form\Element\{
+    Captcha,
+    Csrf,
+    Email,
+    Submit,
+    Text,
+};
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 
@@ -34,15 +41,15 @@ class Signup extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'security',
-                'type' => 'Laminas\Form\Element\Csrf',
+                'type' => Csrf::class,
             ]
         );
 
         $this->add(
             [
                 'name' => 'submit',
+                'type' => Submit::class,
                 'attributes' => [
-                    'type' => 'submit',
                     'value' => 'Subscribe',
                 ],
             ]
@@ -65,7 +72,7 @@ class Signup extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'captcha',
-                'type' => 'Laminas\Form\Element\Captcha',
+                'type' => Captcha::class,
                 'options' => [
                     'captcha' => new ImageCaptcha(
                         [
@@ -93,14 +100,14 @@ class Signup extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'fullName',
-                'type' => 'Text',
+                'type' => Text::class,
             ]
         );
 
         $this->add(
             [
                 'name' => 'email',
-                'type' => 'Text',
+                'type' => Email::class,
             ]
         );
 

@@ -4,7 +4,15 @@ namespace Education\Form;
 
 use Education\Model\Exam as ExamModel;
 use Laminas\Filter\StringToUpper;
+use Laminas\Form\Element\{
+    Date,
+    File,
+    Select,
+    Submit,
+    Text,
+};
 use Laminas\Form\Form;
+use Laminas\I18n\Validator\Alnum;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator\{
@@ -26,7 +34,7 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'course',
-                'type' => 'text',
+                'type' => Text::class,
                 'options' => [
                     'label' => $translator->translate('Course code'),
                 ],
@@ -36,9 +44,10 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'date',
-                'type' => 'date',
+                'type' => Date::class,
                 'options' => [
                     'label' => $translator->translate('Summary date'),
+                    'format' => 'Y-m-d',
                 ],
             ]
         );
@@ -46,7 +55,7 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'author',
-                'type' => 'text',
+                'type' => Text::class,
                 'options' => [
                     'label' => $translator->translate('Author'),
                 ],
@@ -55,8 +64,8 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
 
         $this->add(
             [
-                'type' => 'Laminas\Form\Element\Select',
                 'name' => 'language',
+                'type' => Select::class,
                 'options' => [
                     'label' => $translator->translate('Language'),
                     'value_options' => [
@@ -70,18 +79,17 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'upload',
-                'type' => 'file',
-                'option' => [
+                'type' => File::class,
+                'options' => [
                     'label' => $translator->translate('Summary to upload'),
                 ],
             ]
         );
-        $this->get('upload')->setLabel($translator->translate('Summary to upload'));
 
         $this->add(
             [
                 'name' => 'submit',
-                'type' => 'submit',
+                'type' => Submit::class,
                 'attributes' => [
                     'value' => $translator->translate('Submit'),
                 ],
@@ -89,7 +97,10 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
         );
     }
 
-    public function getInputFilterSpecification()
+    /**
+     * @return array
+     */
+    public function getInputFilterSpecification(): array
     {
         return [
             'course' => [
@@ -102,7 +113,9 @@ class SummaryUpload extends Form implements InputFilterProviderInterface
                             'max' => 6,
                         ],
                     ],
-                    ['name' => 'alnum'],
+                    [
+                        'name' => Alnum::class,
+                    ],
                 ],
                 'filters' => [
                     [

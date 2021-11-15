@@ -2,11 +2,14 @@
 
 namespace Education\Form;
 
+use Laminas\Form\Element\File;
 use Laminas\Form\Form;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
-use Laminas\Validator\File\Extension;
-use Laminas\Validator\File\MimeType;
+use Laminas\Validator\File\{
+    Extension,
+    MimeType,
+};
 
 class TempUpload extends Form implements InputFilterProviderInterface
 {
@@ -17,16 +20,18 @@ class TempUpload extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'file',
-                'type' => 'file',
-                'option' => [
+                'type' => File::class,
+                'options' => [
                     'label' => $translator->translate('Exam to upload'),
                 ],
             ]
         );
-        $this->get('file')->setLabel($translator->translate('Exam to upload'));
     }
 
-    public function getInputFilterSpecification()
+    /**
+     * @return array[]
+     */
+    public function getInputFilterSpecification(): array
     {
         return [
             'file' => [
