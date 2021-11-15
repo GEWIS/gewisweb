@@ -114,7 +114,10 @@ class AdminOptionController extends AbstractActionController
             $form->get('maxActivities')->populateValues($organArray);
         }
 
-        return new ViewModel(['form' => $form]);
+        return new ViewModel([
+            'form' => $form,
+            'action' => $this->translator->translate('Add Option Period'),
+        ]);
     }
 
     public function deleteAction()
@@ -182,7 +185,10 @@ class AdminOptionController extends AbstractActionController
         $form->get('maxActivities')->setCount($organCount);
         $form->setData($optionCreationPeriodData);
 
-        $viewModel = new ViewModel(['form' => $form]);
+        $viewModel = new ViewModel([
+            'form' => $form,
+            'action' => $this->translator->translate('Edit Option Period'),
+        ]);
         $viewModel->setTemplate('activity/admin-option/add.phtml');
 
         return $viewModel;

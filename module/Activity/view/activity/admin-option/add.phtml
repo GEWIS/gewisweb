@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Option Calendar'), true, $this->url('activity_admin_options'))
-    ->addBreadcrumb($this->translate('Add Option Period'));
+    ->addBreadcrumb($action);
 
 $form->prepare();
 $form->setAttribute('class', 'form-activity');
@@ -136,7 +136,8 @@ $form->setAttribute('class', 'form-activity');
     <div class="col-md-12">
         <?php
         $submit = $form->get('submit')
-            ->setAttribute('class', 'btn btn-primary');
+            ->setAttribute('class', 'btn btn-primary')
+            ->setValue($action);
         ?>
         <div class="form-group">
             <?= $this->formSubmit($submit) ?>
