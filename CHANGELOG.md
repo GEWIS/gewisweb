@@ -1,3 +1,16 @@
+## [v2.4.7](https://github.com/GEWIS/gewisweb/tree/v2.4.7) (2021-11-16)
+
+- Added admin interface to allow for management of activity calendar option periods.
+- Added approve button to the activity calendar slide-out and fixed colour of original approve button.
+- Improved option data in the activity calendar by displaying option type instead of creation time.
+- Updated dependencies and removed the jQuery datetimepicker.
+- Changed "lunch lecture" option type to "lunch break".
+- Fixed issue where "My Activities" was shown to users who were not logged in.
+- Fixed issue where the background of approved options in the activity calendar was not correctly coloured.
+- Fixed issue where incorrectly encoded characters where displayed in imported or old data.
+
+---
+
 ## [v2.4.6](https://github.com/GEWIS/gewisweb/tree/v2.4.6) (2021-11-06)
 
 - Updated design and layout of the administration pages.
