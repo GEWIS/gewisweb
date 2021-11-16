@@ -39,9 +39,9 @@ class Vote extends BaseMapper
      * @param int $photoId The photo
      * @param int $lidnr The tag
      *
-     * @return object|null
+     * @return VoteModel|null
      */
-    public function findVote($photoId, $lidnr)
+    public function findVote(int $photoId, int $lidnr): ?VoteModel
     {
         return $this->getRepository()->findOneBy(
             [

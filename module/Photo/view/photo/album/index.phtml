@@ -136,6 +136,7 @@ $this->scriptUrl()->requireUrl('member/search')
                         class="gallery-image"
                         data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]); ?>"
                         data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]); ?>"
+                        data-voted="<?= $this->hasVoted($item->getId(), $this->identity()->getLidnr()) ? 'true' : 'false' ?>"
                     >
                         <img
                             class="lazy-load"

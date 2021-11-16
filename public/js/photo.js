@@ -6,24 +6,35 @@
 
 Photo = {
     vote: function(item) {
-        if (item.voted) {
+        item = item.el.querySelector('a.gallery-image');
+
+        if ('true' === item.dataset.voted) {
             return;
         }
+
         $('.pswp__button--like').css({'color': '#D40026'});
-        var url = $('a[href="' + item.src + '"]').data('vote-url');
-        $.post(url, function(data) {
+
+        $.post(item.data('vote-url'), function(data) {
             $('.pswp__button--like')
                 .attr('title', 'Voted!')
                 .tooltip('fixTitle')
                 .tooltip('show');
         });
+
         item.voted = true;
     },
     updateVoteButton: function(item) {
-        if (item.voted) {
-            $('.pswp__button--like').css({'color': '#D40026'});
+        item = item.el.querySelector('a.gallery-image');
+
+        if ('true' === item.dataset.voted) {
+            $('.pswp__button--like')
+                .attr('title', 'Already voted!')
+                .css({'color': '#D40026'})
+                .tooltip('hide')
+                .tooltip('fixTitle');
             return;
         }
+
         $('.pswp__button--like')
             .attr('title', 'Vote for photo of the week')
             .css({'color': '#FFF'})
@@ -335,12 +346,12 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
         // Pass data to PhotoSwipe and initialize it
         gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
         gallery.init();
-        gallery.listen('afterChange', function(item) {
+        gallery.listen('afterChange', function() {
             // Allow the captions to hide again (in case tagging made them permanent)
             //$('.pswp__caption').attr('style', '')
             Photo.initTagging();
             // Reset the like button
-            Photo.updateVoteButton(item)
+            Photo.updateVoteButton(gallery.currItem);
         });
         Photo.initTagging();
         $(function () {

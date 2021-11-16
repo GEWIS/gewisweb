@@ -25,7 +25,10 @@ use Photo\Service\{
     Metadata as MetadataService,
     Photo as PhotoService,
 };
-use Photo\View\Helper\GlideUrl;
+use Photo\View\Helper\{
+    GlideUrl,
+    HasVoted,
+};
 use User\Authorization\AclServiceFactory;
 
 class Module
@@ -251,6 +254,9 @@ class Module
                     $helper->setUrlBuilder($urlBuilder);
 
                     return $helper;
+                },
+                'hasVoted' => function (ContainerInterface $container) {
+                    return new HasVoted($container->get('photo_mapper_vote'));
                 },
             ],
         ];
