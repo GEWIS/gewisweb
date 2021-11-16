@@ -151,13 +151,13 @@ class ActivityCalendarForm
      *
      * @throws Exception
      */
-    protected function getMaxActivities($organId, $periodId)
+    protected function getMaxActivities(int $organId, int $periodId): int
     {
         $mapper = $this->maxActivitiesMapper;
         $maxActivities = $mapper->getMaxActivityOptionsByOrganPeriod($organId, $periodId);
-        // TODO: The initial value of $max below represents a default value for when no appropriate MaxActivities instance exists.
-        $max = 2;
-        if ($maxActivities) {
+
+        $max = 0;
+        if (null !== $maxActivities) {
             $max = $maxActivities->getValue();
         }
 

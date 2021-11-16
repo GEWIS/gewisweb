@@ -2,9 +2,18 @@
 
 namespace Activity\Service;
 
-use Activity\Form\ActivityCalendarOption;
-use Activity\Model\ActivityCalendarOption as OptionModel;
-use Activity\Model\ActivityOptionProposal as ProposalModel;
+use Activity\Mapper\ActivityOptionCreationPeriod;
+use Activity\Form\{
+    ActivityCalendarOption,
+    ActivityCalendarPeriod as ActivityCalendarPeriodForm,
+};
+use Activity\Mapper\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodMapper;
+use Activity\Model\{
+    ActivityCalendarOption as OptionModel,
+    ActivityOptionCreationPeriod as ActivityOptionCreationPeriodModel,
+    ActivityOptionProposal as ProposalModel,
+    MaxActivities as MaxActivitiesModel,
+};
 use Application\Service\Email;
 use DateInterval;
 use DateTime;
@@ -45,6 +54,17 @@ class ActivityCalendar
      * @var ActivityCalendarOption
      */
     private $calendarOptionForm;
+
+    /**
+     * @var ActivityCalendarPeriodForm
+     */
+    private ActivityCalendarPeriodForm $calendarPeriodForm;
+
+    /**
+     * @var ActivityOptionCreationPeriodMapper
+     */
+    private ActivityOptionCreationPeriodMapper $calendarCreationPeriodMapper;
+
     private AclService $aclService;
     private ActivityCalendarForm $calendarFormService;
 
@@ -56,6 +76,8 @@ class ActivityCalendar
         \Activity\Mapper\ActivityCalendarOption $calendarOptionMapper,
         Member $memberMapper,
         ActivityCalendarOption $calendarOptionForm,
+        ActivityCalendarPeriodForm $calendarPeriodForm,
+        ActivityOptionCreationPeriodMapper $calendarCreationPeriodMapper,
         AclService $aclService,
         ActivityCalendarForm $calendarFormService
     ) {
@@ -66,6 +88,8 @@ class ActivityCalendar
         $this->calendarOptionMapper = $calendarOptionMapper;
         $this->memberMapper = $memberMapper;
         $this->calendarOptionForm = $calendarOptionForm;
+        $this->calendarPeriodForm = $calendarPeriodForm;
+        $this->calendarCreationPeriodMapper = $calendarCreationPeriodMapper;
         $this->aclService = $aclService;
         $this->calendarFormService = $calendarFormService;
     }
@@ -295,5 +319,98 @@ class ActivityCalendar
         $options = $mapper->findOptionsByProposalAndOrgan($proposalId, $organId);
 
         return count($options);
+    }
+
+    /**
+     * @param array $data
+     */
+    public function createOptionPlanningPeriod(array $data): bool
+    {
+        $activityOptionCreationPeriod = new ActivityOptionCreationPeriodModel();
+
+        $activityOptionCreationPeriod->setBeginPlanningTime(new DateTime($data['beginPlanningTime']));
+        $activityOptionCreationPeriod->setEndPlanningTime(new DateTime($data['endPlanningTime']));
+        $activityOptionCreationPeriod->setBeginOptionTime(new DateTime($data['beginOptionTime']));
+        $activityOptionCreationPeriod->setEndOptionTime(new DateTime($data['endOptionTime']));
+
+        // Persist the ActivityOptionCreationPeriodModel here, such that we can use its id for the MaxActivitiesModel.
+        $this->calendarCreationPeriodMapper->persist($activityOptionCreationPeriod);
+        $this->calendarCreationPeriodMapper->flush();
+
+        foreach ($data['maxActivities'] as $maxActivity) {
+            // Check if the organ really exists.
+            $organ = $this->organService->findActiveOrganById($maxActivity['id']);
+
+            if (null !== $organ) {
+                $maxActivities = new MaxActivitiesModel();
+
+                $maxActivities->setValue($maxActivity['value']);
+                $maxActivities->setOrgan($organ);
+                $maxActivities->setPeriod($activityOptionCreationPeriod);
+
+                $this->calendarCreationPeriodMapper->persist($maxActivities);
+            }
+        }
+
+        // Flush all MaxActivitiesModels.
+        $this->calendarCreationPeriodMapper->flush();
+
+        return true;
+    }
+
+    public function updateOptionPlanningPeriod(
+        ActivityOptionCreationPeriodModel $activityOptionCreationPeriod,
+        array $data,
+    ): bool {
+        $activityOptionCreationPeriod->setBeginPlanningTime(new DateTime($data['beginPlanningTime']));
+        $activityOptionCreationPeriod->setEndPlanningTime(new DateTime($data['endPlanningTime']));
+        $activityOptionCreationPeriod->setBeginOptionTime(new DateTime($data['beginOptionTime']));
+        $activityOptionCreationPeriod->setEndOptionTime(new DateTime($data['endOptionTime']));
+
+        // Update maxActivities, if the form has been altered (by hand) those changes will not be persisted. We get an
+        // array indexed by the organ ids, last value is used if organ is present more than once (i.e. someone tampered
+        // with the form).
+        $ids = array_flip(array_map(function ($val) { return $val['id']; }, $data['maxActivities']));
+        foreach ($activityOptionCreationPeriod->getMaxActivities() as $maxActivity) {
+            $organId = $maxActivity->getOrgan()->getId();
+
+            if (array_key_exists($organId, $ids)) {
+                $offset = $ids[$organId];
+                $maxActivity->setValue($data['maxActivities'][$offset]['value']);
+            }
+        }
+
+        $this->calendarCreationPeriodMapper->flush();
+
+        return true;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return ActivityOptionCreationPeriodModel|null
+     */
+    public function getOptionCreationPeriod(int $id): ?ActivityOptionCreationPeriodModel
+    {
+        return $this->calendarCreationPeriodMapper->find($id);
+    }
+
+    /**
+     * TODO: How do we actually want to delete the OptionCreationPeriod, does this include OptionProposals,
+     * MaxActivities, etc.? And should there be a limited with regards to the current time (and the defined periods).
+     *
+     * @param ActivityOptionCreationPeriodModel $activityOptionCreationPeriod
+     */
+    public function deleteOptionCreationPeriod(ActivityOptionCreationPeriodModel $activityOptionCreationPeriod): void
+    {
+        $this->calendarCreationPeriodMapper->remove($activityOptionCreationPeriod);
+    }
+
+    /**
+     * @return ActivityCalendarPeriodForm
+     */
+    public function getCalendarPeriodForm(): ActivityCalendarPeriodForm
+    {
+        return $this->calendarPeriodForm;
     }
 }

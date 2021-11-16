@@ -2,6 +2,7 @@
 
 namespace Activity\Controller;
 
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\Session\AbstractContainer;
 use Activity\Form\{
     ModifyRequest as RequestForm,
@@ -292,7 +293,7 @@ class ActivityController extends AbstractActionController
                 $activityRequestSession = new SessionContainer('activityRequest');
                 $activityRequestSession->signupData = $postData->toArray();
 
-                return $this->redirectActivityRequest($activityId, $signupListId, false, $error, $activityRequestSession);
+                return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
             }
 
             // Ensure the user is allowed to subscribe
@@ -341,8 +342,6 @@ class ActivityController extends AbstractActionController
      * @param int $signupListId
      * @param bool $success Whether the request was successful
      * @param string $message
-     * @param AbstractContainer|null $session
-     *
      * @return Response
      */
     protected function redirectActivityRequest(
@@ -350,14 +349,12 @@ class ActivityController extends AbstractActionController
         int $signupListId,
         bool $success,
         string $message,
-        AbstractContainer $session = null
     ): Response {
-        if (null === $session) {
-            $session = new SessionContainer('activityRequest');
+        if ($success) {
+            $this->plugin('FlashMessenger')->addSuccessMessage($message);
+        } else {
+            $this->plugin('FlashMessenger')->addErrorMessage($message);
         }
-
-        $session->success = $success;
-        $session->message = $message;
 
         return $this->redirect()->toRoute(
             'activity/view/signuplist',
@@ -391,7 +388,7 @@ class ActivityController extends AbstractActionController
                 $activityRequestSession = new SessionContainer('activityRequest');
                 $activityRequestSession->signupData = $postData->toArray();
 
-                return $this->redirectActivityRequest($activityId, $signupListId, false, $error, $activityRequestSession);
+                return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
             }
 
             // Ensure the user is allowed to subscribe

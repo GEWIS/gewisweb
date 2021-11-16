@@ -9,6 +9,7 @@ use Activity\Controller\{
     AdminApprovalController,
     AdminCategoryController,
     AdminController,
+    AdminOptionController,
     ApiController,
 };
 use Activity\Controller\Factory\{
@@ -17,6 +18,7 @@ use Activity\Controller\Factory\{
     AdminApprovalControllerFactory,
     AdminCategoryControllerFactory,
     AdminControllerFactory,
+    AdminOptionControllerFactory,
     ApiControllerFactory,
 };
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
@@ -397,6 +399,52 @@ return [
                     ],
                 ],
             ],
+            'activity_admin_options' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/admin/activity/calendar',
+                    'defaults' => [
+                        'controller' => AdminOptionController::class,
+                        'action' => 'index',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'add' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/add',
+                            'defaults' => [
+                                'action' => 'add',
+                            ],
+                        ],
+                    ],
+                    'delete' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/delete/:id',
+                            'constraints' => [
+                                'id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'delete',
+                            ],
+                        ],
+                    ],
+                    'edit' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/edit/:id',
+                            'constraints' => [
+                                'id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'edit',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
             'activity_api' => [
                 'type' => Literal::class,
                 'options' => [
@@ -474,6 +522,7 @@ return [
             AdminApprovalController::class => AdminApprovalControllerFactory::class,
             AdminCategoryController::class => AdminCategoryControllerFactory::class,
             AdminController::class => AdminControllerFactory::class,
+            AdminOptionController::class => AdminOptionControllerFactory::class,
             ApiController::class => ApiControllerFactory::class,
         ],
     ],

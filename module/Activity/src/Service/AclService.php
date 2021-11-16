@@ -14,11 +14,14 @@ class AclService extends \User\Service\AclService
         $this->acl->addResource('activityApi');
         $this->acl->addResource('myActivities');
         $this->acl->addResource('model');
+        $this->acl->addResource('activity_calendar_period');
         $this->acl->addResource('activity_calendar_proposal');
         $this->acl->addResource('signupList');
 
         $this->acl->allow('guest', 'activity', ['view', 'viewCategory']);
         $this->acl->allow('guest', 'signupList', ['view', 'externalSignup']);
+
+        $this->acl->allow('admin', 'activity_calendar_period', ['create', 'edit', 'delete', 'view']);
 
         $this->acl->allow('user', 'activity_calendar_proposal', ['create', 'delete_own']);
         $this->acl->allow('admin', 'activity_calendar_proposal', ['create_always', 'delete_all', 'approve']);

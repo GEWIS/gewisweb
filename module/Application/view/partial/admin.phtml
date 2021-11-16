@@ -1,3 +1,7 @@
+<?php
+// The FlashMessenger config does allow for namespaced options, hence we need to define all classes below.
+$flash = $this->plugin('FlashMessenger');
+?>
 <div class="admin-container">
     <nav class="navbar navbar-gewis-admin navbar-fixed-left rainbow">
         <div class="container">
@@ -31,6 +35,11 @@
                                 <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'listCategories')): ?>
                                     <li>
                                         <a href="<?= $this->url('activity_admin_categories') ?>"><?= $this->translate('Categories') ?></a>
+                                    </li>
+                                <?php endif; ?>
+                                <?php if ($this->acl('activity_service_acl')->isAllowed('activity_calendar_period', 'view')): ?>
+                                    <li>
+                                        <a href="<?= $this->url('activity_admin_options') ?>"><?= $this->translate('Option Calendar') ?></a>
                                     </li>
                                 <?php endif; ?>
                             </ul>
@@ -149,6 +158,11 @@
         </section>
         <section class="section">
             <div class="container-admin">
+                <?= $flash->render('default', ['alert', 'alert-dismissible', 'alert-info']) ?>
+                <?= $flash->render('error', ['alert', 'alert-dismissible', 'alert-danger']) ?>
+                <?= $flash->render('info', ['alert', 'alert-dismissible', 'alert-info']) ?>
+                <?= $flash->render('success', ['alert', 'alert-dismissible', 'alert-success']) ?>
+                <?= $flash->render('warning', ['alert', 'alert-dismissible', 'alert-warning']) ?>
                 <?= $this->content ?>
             </div>
         </section>
