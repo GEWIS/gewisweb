@@ -39,8 +39,8 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
         $this->calendarFormService = $calendarFormService;
 
         $typeOptions = [
-            'Lunch Lecture' => $translator->translate('Lunch lecture'),
             'Morning' => $translator->translate('Morning'),
+            'Lunch break' => $translator->translate('Lunch break'),
             'Afternoon' => $translator->translate('Afternoon'),
             'Evening' => $translator->translate('Evening'),
             'Day' => $translator->translate('Day'),
