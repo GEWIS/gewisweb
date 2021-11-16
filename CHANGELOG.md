@@ -1,3 +1,10 @@
+## [v2.4.8](https://github.com/GEWIS/gewisweb/tree/v2.4.8) (2021-11-17)
+
+- Fixed issue where it was impossible to comment on polls. 
+- Fixed issue where it was impossible to subscribe to a sign-up list when it contained sign-up options.
+
+---
+
 ## [v2.4.7](https://github.com/GEWIS/gewisweb/tree/v2.4.7) (2021-11-16)
 
 - Added admin interface to allow for management of activity calendar option periods.
