@@ -180,7 +180,8 @@ $this->headLink()
             "url": "#",
             "class": "<?= $option->getStatus() === 'approved' ? 'event-approved' : 'event-info' ?>",
             "start": <?= $option->getBeginTime()->getTimestamp() * 1000 ?>,
-            "end": <?= $option->getEndTime()->getTimestamp() * 1000 ?>
+            "end": <?= $option->getEndTime()->getTimestamp() * 1000 ?>,
+            "type": "<?= $this->translate($option->getType()) ?>"
         },
         <?php endif ?>
         <?php endforeach ?>
