@@ -11,11 +11,18 @@ use Laminas\Form\Element\{
     Captcha,
     Csrf,
     Email,
+    Number,
+    Radio,
+    Select,
     Submit,
     Text,
 };
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Validator\{
+    EmailAddress,
+    StringLength,
+};
 
 class Signup extends Form implements InputFilterProviderInterface
 {
@@ -142,7 +149,7 @@ class Signup extends Form implements InputFilterProviderInterface
     protected function createSignupFieldElementArray(SignupFieldModel $field): array
     {
         $result = [
-            'name' => $field->getId(),
+            'name' => strval($field->getId()),
         ];
 
         switch ($field->getType()) {
@@ -150,7 +157,7 @@ class Signup extends Form implements InputFilterProviderInterface
                 $result['type'] = 'Text';
                 break;
             case 1: //'Yes/No'
-                $result['type'] = 'Laminas\Form\Element\Radio';
+                $result['type'] = Radio::class;
                 $result['options'] = [
                     'value_options' => [
                         '1' => 'Yes',
@@ -159,7 +166,7 @@ class Signup extends Form implements InputFilterProviderInterface
                 ];
                 break;
             case 2: //'Number'
-                $result['type'] = 'Laminas\Form\Element\Number';
+                $result['type'] = Number::class;
                 $result['attributes'] = [
                     'min' => $field->getMinimumValue(),
                     'max' => $field->getMaximumValue(),
@@ -171,7 +178,7 @@ class Signup extends Form implements InputFilterProviderInterface
                 foreach ($field->getOptions() as $option) {
                     $values[$option->getId()] = $option->getValue()->getText();
                 }
-                $result['type'] = 'Laminas\Form\Element\Select';
+                $result['type'] = Select::class;
                 $result['options'] = [
                     //'empty_option' => 'Make a choice',
                     'value_options' => $values,
@@ -198,7 +205,7 @@ class Signup extends Form implements InputFilterProviderInterface
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'StringLength',
+                        'name' => StringLength::class,
                         'options' => [
                             'encoding' => 'UTF-8',
                             'min' => 1,
@@ -211,7 +218,7 @@ class Signup extends Form implements InputFilterProviderInterface
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => 'StringLength',
+                        'name' => StringLength::class,
                         'options' => [
                             'encoding' => 'UTF-8',
                             'min' => 1,
@@ -219,7 +226,7 @@ class Signup extends Form implements InputFilterProviderInterface
                         ],
                     ],
                     [
-                        'name' => 'EmailAddress',
+                        'name' => EmailAddress::class,
                     ],
                 ],
             ];
