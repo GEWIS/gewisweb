@@ -12,6 +12,7 @@ use Decision\Service\Organ as OrganService;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
@@ -203,9 +204,9 @@ class AdminOptionController extends AbstractActionController
     private function redirectWithMessage(bool $success, string $message): Response
     {
         if ($success) {
-            $this->flashMessenger()->addSuccessMessage($message);
+            $this->plugin('FlashMessenger')->addSuccessMessage($message);
         } else {
-            $this->flashMessenger()->addErrorMessage($message);
+            $this->plugin('FlashMessenger')->addErrorMessage($message);
         }
 
         return $this->redirect()->toRoute('activity_admin_options');

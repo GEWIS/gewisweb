@@ -2,6 +2,7 @@
 
 namespace Activity\Controller;
 
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\Session\AbstractContainer;
 use Activity\Form\{
     ModifyRequest as RequestForm,
@@ -341,8 +342,6 @@ class ActivityController extends AbstractActionController
      * @param int $signupListId
      * @param bool $success Whether the request was successful
      * @param string $message
-     * @param AbstractContainer|null $session
-     *
      * @return Response
      */
     protected function redirectActivityRequest(
@@ -352,9 +351,9 @@ class ActivityController extends AbstractActionController
         string $message,
     ): Response {
         if ($success) {
-            $this->flashMessenger()->addSuccessMessage($message);
+            $this->plugin('FlashMessenger')->addSuccessMessage($message);
         } else {
-            $this->flashMessenger()->addErrorMessage($message);
+            $this->plugin('FlashMessenger')->addErrorMessage($message);
         }
 
         return $this->redirect()->toRoute(

@@ -5,6 +5,7 @@ namespace Activity\Controller;
 use Activity\Service\ActivityCategory as ActivityCategoryService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\View\Model\ViewModel;
 
@@ -75,9 +76,9 @@ class AdminCategoryController extends AbstractActionController
     protected function redirectWithNotice($success, $message)
     {
         if ($success) {
-            $this->flashMessenger()->addSuccessMessage($message);
+            $this->plugin('FlashMessenger')->addSuccessMessage($message);
         } else {
-            $this->flashMessenger()->addErrorMessage($message);
+            $this->plugin('FlashMessenger')->addErrorMessage($message);
         }
 
         return $this->redirect()->toRoute('activity_admin_categories');

@@ -17,6 +17,7 @@ use Laminas\Form\FormInterface;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\Paginator\Paginator;
 use Laminas\Session\AbstractContainer;
 use Laminas\Session\Container as SessionContainer;
@@ -186,9 +187,9 @@ class AdminController extends AbstractActionController
     protected function redirectActivityAdmin($success, $message)
     {
         if ($success) {
-            $this->flashMessenger()->addSuccessMessage($message);
+            $this->plugin('FlashMessenger')->addSuccessMessage($message);
         } else {
-            $this->flashMessenger()->addErrorMessage($message);
+            $this->plugin('FlashMessenger')->addErrorMessage($message);
         }
 
         return $this->redirect()->toRoute('activity_admin');
