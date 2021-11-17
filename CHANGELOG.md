@@ -1,3 +1,9 @@
+## [v2.4.9](https://github.com/GEWIS/gewisweb/tree/v2.4.9) (2021-11-17)
+
+- Fixed issue where it was not possible to create or edit job or banner packages for companies.
+
+---
+
 ## [v2.4.8](https://github.com/GEWIS/gewisweb/tree/v2.4.8) (2021-11-17)
 
 - Fixed issue where it was impossible to comment on polls. 
