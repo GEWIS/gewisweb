@@ -28,7 +28,7 @@ class Package extends LocalisableForm implements InputFilterProviderInterface
 
     public function __construct(Translator $translator, string $type)
     {
-        parent::__construct($translator);
+        parent::__construct($translator, ('featured' === $type));
         $this->type = $type;
         $this->setAttribute('method', 'post');
 

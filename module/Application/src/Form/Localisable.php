@@ -17,35 +17,36 @@ abstract class Localisable extends Form implements InputFilterProviderInterface
      */
     private Translator $translator;
 
-    public function __construct(Translator $translator)
+    public function __construct(Translator $translator, bool $addElements = true)
     {
         parent::__construct();
-
         $this->translator = $translator;
 
-        $this->add(
-            [
-                'name' => 'language_dutch',
-                'type' => Checkbox::class,
-                'options' => [
-                    'label' => $this->getTranslator()->translate('Enable Dutch Translations'),
-                    'checked_value' => '1',
-                    'unchecked_value' => '0',
-                ],
-            ]
-        );
+        if ($addElements) {
+            $this->add(
+                [
+                    'name' => 'language_dutch',
+                    'type' => Checkbox::class,
+                    'options' => [
+                        'label' => $this->getTranslator()->translate('Enable Dutch Translations'),
+                        'checked_value' => '1',
+                        'unchecked_value' => '0',
+                    ],
+                ]
+            );
 
-        $this->add(
-            [
-                'name' => 'language_english',
-                'type' => Checkbox::class,
-                'options' => [
-                    'label' => $this->getTranslator()->translate('Enable English Translations'),
-                    'checked_value' => '1',
-                    'unchecked_value' => '0',
-                ],
-            ]
-        );
+            $this->add(
+                [
+                    'name' => 'language_english',
+                    'type' => Checkbox::class,
+                    'options' => [
+                        'label' => $this->getTranslator()->translate('Enable English Translations'),
+                        'checked_value' => '1',
+                        'unchecked_value' => '0',
+                    ],
+                ]
+            );
+        }
     }
 
     /**
