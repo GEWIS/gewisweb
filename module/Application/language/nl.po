@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-16 20:23+0100\n"
-"PO-Revision-Date: 2021-11-16 20:33+0100\n"
+"POT-Creation-Date: 2021-11-22 14:56+0100\n"
+"PO-Revision-Date: 2021-11-22 14:57+0100\n"
 "Last-Translator: Koen Teuwen <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -341,11 +341,11 @@ msgstr "Alle Activiteiten"
 msgid "Career Activities"
 msgstr "Carrière Activiteiten"
 
-#: module/Activity/view/activity/activity/index.phtml:20
+#: module/Activity/view/activity/activity/index.phtml:21
 msgid "My Activities"
 msgstr "Mijn Activiteiten"
 
-#: module/Activity/view/activity/activity/index.phtml:30
+#: module/Activity/view/activity/activity/index.phtml:32
 #: module/Activity/src/Controller/ActivityController.php:265
 msgid "Create Activity"
 msgstr "Maak nieuwe activiteit"
@@ -618,10 +618,10 @@ msgstr "en"
 
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:79
 #: module/Activity/view/activity/admin-approval/view.phtml:37
-#, php-format
+#, fuzzy, php-format
 msgid ""
-"This is activity <b>#%d</b>, organised by <b>%s</b>, and it will start on <b>"
-"%s</b> and end on <b>%s</b>."
+"This is activity <strong>#%d</strong>, organised by <strong>%s</strong>, and "
+"it will start on <strong>%s</strong> and end on <strong>%s</strong>."
 msgstr ""
 "Dit is activiteit <b>#%d</b>, georganiseerd door <b>%s</b>, en deze zal "
 "beginnen op <b>%s</b> en eindigen op <b>%s</b>."
@@ -926,17 +926,19 @@ msgid "Global Value"
 msgstr "Globale waarde"
 
 #: module/Activity/view/activity/admin-option/index.phtml:12
-#, php-format
+#, fuzzy, php-format
 msgid ""
-"Options can be proposed from <b>%s</b> till <b>%s</b> for the period <b>%s</"
-"b> to <b>%s</b>."
+"Options can be proposed from <strong>%s</strong> till <strong>%s</strong> "
+"for the period <strong>%s</strong> to <strong>%s</strong>."
 msgstr ""
 "Opties kunnen voorgesteld worden van <b>%s</b> tot <b>%s</b> voor de periode "
 "<b>%s</b> tot <b>%s</b>."
 
 #: module/Activity/view/activity/admin-option/index.phtml:20
-#, php-format
-msgid "The next option creation period will from <b>%s</b> till <b>%s</b>."
+#, fuzzy, php-format
+msgid ""
+"The next option creation period will from <strong>%s</strong> till <strong>"
+"%s</strong>."
 msgstr ""
 "De volgende periode voor het voorstellen van opties is van <b>%s</b> tot <b>"
 "%s</b>."
@@ -3224,9 +3226,10 @@ msgid "Move"
 msgstr "Verplaats"
 
 #: module/Photo/view/photo/album-admin/index.phtml:185
+#, fuzzy
 msgid ""
 "Are you sure you want to delete this album including all photos inside of "
-"it? <b>This action can not be reverted.</b>"
+"it? <strong>This action can not be reverted.</strong>"
 msgstr ""
 "Weet je zeker dat je dit album met alle foto's wil verwijderen? <strong>Deze "
 "actie kan niet ongedaan gemaakt worden</strong>"
@@ -3240,9 +3243,10 @@ msgid "The album has been deleted"
 msgstr "Dit album kan verwijderd worden"
 
 #: module/Photo/view/photo/album-admin/index.phtml:217
+#, fuzzy
 msgid ""
-"Are you sure you want to delete the selected items? <b>This action can not "
-"be reverted.</b>"
+"Are you sure you want to delete the selected items? <strong>This action can "
+"not be reverted.</strong>"
 msgstr ""
 "Weet je zeker dat je de geselecteerde items wil verwijderen? <strong>Deze "
 "actie kan niet ongedaan gemaakt worden</strong>"
@@ -3344,9 +3348,10 @@ msgid "The photo has been moved"
 msgstr "De foto is verplaatst"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:113
+#, fuzzy
 msgid ""
-"Are you sure you want to delete this photo? <b>This action can not be "
-"reverted.</b>"
+"Are you sure you want to delete this photo? <strong>This action can not be "
+"reverted.</strong>"
 msgstr ""
 "Weet je zeker dat je deze foto wil verwijderen? <strong>Deze actie kan niet "
 "ongedaan gemaakt worden</strong>"
