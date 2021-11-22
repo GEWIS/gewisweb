@@ -2,26 +2,26 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-2 overview-sidebar">
-                <b><?= $this->translate('Name') ?></b>
+                <strong><?= $this->translate('Name') ?></strong>
             </div>
             <div class="col-md-5">
                 <span class="activity-property">
                     <span class="flag-icon flag-icon-nl"></span>
-                    <b><?= $this->translate('Name') ?>:</b>
+                    <strong><?= $this->translate('Name') ?>:</strong>
                 </span>
                 <?= $this->escapeHtml($signupList->getName()->getValueNL()) ?>
             </div>
             <div class="col-md-5">
                 <span class="activity-property">
                     <span class="flag-icon flag-icon-en"></span>
-                    <b><?= $this->translate('Name') ?>:</b>
+                    <strong><?= $this->translate('Name') ?>:</strong>
                 </span>
                 <?= $this->escapeHtml($signupList->getName()->getValueEN()) ?>
             </div>
         </div>
         <div class="row">
             <div class="col-md-2">
-                <b><?= $this->translate('Open date and time') ?></b>
+                <strong><?= $this->translate('Open date and time') ?></strong>
             </div>
             <div class="col-md-5">
                 <?= $this->dateFormat($signupList->getOpenDate(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT) ?>
@@ -32,7 +32,7 @@
         </div>
         <div class="row">
             <div class="col-md-2">
-                <b><?= $this->translate('Close date and time') ?></b>
+                <strong><?= $this->translate('Close date and time') ?></strong>
             </div>
             <div class="col-md-5">
                 <?= $this->dateFormat($signupList->getCloseDate(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT) ?>
@@ -43,7 +43,7 @@
         </div>
         <div class="row">
             <div class="col-md-2">
-                <b><?= $this->translate('GEWIS members only') ?></b>
+                <strong><?= $this->translate('GEWIS members only') ?></strong>
             </div>
             <div class="col-md-5">
                 <?= $signupList->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No") ?>
@@ -54,7 +54,7 @@
         </div>
         <div class="row">
             <div class="col-md-2">
-                <b><?= $this->translate('Display GEWIS member count') ?></b>
+                <strong><?= $this->translate('Display GEWIS member count') ?></strong>
             </div>
             <div class="col-md-5">
                 <?= $signupList->getDisplaySubscribedNumber() ? $this->translate("Yes") : $this->translate("No") ?>
@@ -66,7 +66,7 @@
         <?php if ($signupList->getFields()->count() > 0): ?>
             <div class="row">
                 <div class="col-md-10 col-md-offset-2">
-                    <i><?= $this->translate('This sign-up list contains additional fields which require input from subscribers, they are shown below.') ?></i>
+                    <em><?= $this->translate('This sign-up list contains additional fields which require input from subscribers, they are shown below.') ?></em>
                 </div>
             </div>
             <?php foreach ($signupList->getFields() as $field): ?>
@@ -75,26 +75,26 @@
                         <hr>
                     </div>
                     <div class="col-md-2 overview-sidebar">
-                        <b><?= $this->translate('Name') ?></b>
+                        <strong><?= $this->translate('Name') ?></strong>
                     </div>
                     <div class="col-md-5">
                         <span class="activity-property">
                             <span class="flag-icon flag-icon-nl"></span>
-                            <b><?= $this->translate('Name') ?>:</b>
+                            <strong><?= $this->translate('Name') ?>:</strong>
                         </span>
                         <?= $this->escapeHtml($field->getName()->getValueNL()) ?>
                     </div>
                     <div class="col-md-5">
                         <span class="activity-property">
                             <span class="flag-icon flag-icon-en"></span>
-                            <b><?= $this->translate('Name') ?>:</b>
+                            <strong><?= $this->translate('Name') ?>:</strong>
                         </span>
                         <?= $this->escapeHtml($field->getName()->getValueEN()) ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">
-                        <b><?= $this->translate('Type') ?></b>
+                        <strong><?= $this->translate('Type') ?></strong>
                     </div>
                     <?php for ($i = 0; $i < 2; $i++): ?>
                         <div class="col-md-5 <?= ($i == 1) ? 'overview-sidebar' : '' ?>">
@@ -120,7 +120,7 @@
                 <?php if ($field->getType() === 2): ?>
                     <div class="row">
                         <div class="col-md-2">
-                            <b><?= $this->translate('Min. value') ?></b>
+                            <strong><?= $this->translate('Min. value') ?></strong>
                         </div>
                         <?php for ($i = 0; $i < 2; $i++): ?>
                             <div class="col-md-5 <?= ($i == 1) ? 'overview-sidebar' : '' ?>">
@@ -130,7 +130,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-2">
-                            <b><?= $this->translate('Max. value') ?></b>
+                            <strong><?= $this->translate('Max. value') ?></strong>
                         </div>
                         <?php for ($i = 0; $i < 2; $i++): ?>
                             <div class="col-md-5 <?= ($i == 1) ? 'overview-sidebar' : '' ?>">
@@ -142,7 +142,7 @@
                 <?php if ($field->getType() === 3): ?>
                     <div class="row">
                         <div class="col-md-2">
-                            <b><?= $this->translate('Options') ?></b>
+                            <strong><?= $this->translate('Options') ?></strong>
                         </div>
                         <div class="col-md-10">
                             <div class="row">

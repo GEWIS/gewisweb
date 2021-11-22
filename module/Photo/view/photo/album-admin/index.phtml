@@ -85,7 +85,7 @@ $this->scriptUrl()->requireUrl('admin_photo/album_page', ['album_id', 'page'])
     <div class="col-lg-9">
 
         <a id="btnCreate" class="btn btn-primary" href="<?= $this->url('admin_photo/album_create'); ?>">
-            <i class="fas fa-plus"></i>&nbsp;<?= $this->translate('Create new album') ?></a>
+            <em class="fas fa-plus"></em>&nbsp;<?= $this->translate('Create new album') ?></a>
         <hr>
         <div id="albumControls">
             <ol id="breadcrumb" class="breadcrumb"></ol>
@@ -182,7 +182,7 @@ $this->scriptUrl()->requireUrl('admin_photo/album_page', ['album_id', 'page'])
             </div>
             <div class="modal-body">
                 <div id="deleteConfirm">
-                    <p><?= $this->translate('Are you sure you want to delete this album including all photos inside of it? <b>This action can not be reverted.</b>') ?> </p>
+                    <p><?= $this->translate('Are you sure you want to delete this album including all photos inside of it? <strong>This action can not be reverted.</strong>') ?> </p>
                 </div>
                 <div id="deleteProgress" style="display:none">
                     <center><p><?= $this->translate('Please wait while the album is being deleted.') ?></p></center>
@@ -214,7 +214,7 @@ $this->scriptUrl()->requireUrl('admin_photo/album_page', ['album_id', 'page'])
             </div>
             <div class="modal-body">
                 <div id="multipleDeleteConfirm">
-                    <p><?= $this->translate('Are you sure you want to delete the selected items? <b>This action can not be reverted.</b>') ?> </p>
+                    <p><?= $this->translate('Are you sure you want to delete the selected items? <strong>This action can not be reverted.</strong>') ?> </p>
                 </div>
                 <div id="multipleDeleteProgress" style="display:none">
                     <center><p><?= $this->translate('Please wait while the photos are being deleted.') ?></p></center>

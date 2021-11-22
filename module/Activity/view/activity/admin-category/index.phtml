@@ -13,7 +13,7 @@ $this->breadcrumbs()
     </div>
     <div class="col-md-12">
         <?php if (empty($categories)): ?>
-            <p><i><?= $this->translate('There are currently no activity categories...') ?></i></p>
+            <p><em><?= $this->translate('There are currently no activity categories...') ?></em></p>
         <?php else: ?>
             <?php // When there are too many categories a search function should be added that searches client-side ?>
             <?php foreach ($categories as $category): ?>
