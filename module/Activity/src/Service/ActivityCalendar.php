@@ -125,7 +125,7 @@ class ActivityCalendar
     {
         $date = new DateTime();
         $date->sub(new DateInterval('P3W'));
-        $oldOptions = $this->calendarOptionMapper->getPastOptions($date);
+        $oldOptions = $this->calendarOptionMapper->getOverdueOptions($date);
         if (!empty($oldOptions)) {
             $this->emailService->sendEmail(
                 'activity_calendar',
