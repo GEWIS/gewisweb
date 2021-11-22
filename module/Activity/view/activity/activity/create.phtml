@@ -124,7 +124,7 @@ $form->setAttribute('class', 'form-activity');
                 }
                 ?>
                 <?php if (empty($categoryOptions)): ?>
-                    <p><i><?= $this->translate('There are currently no activity categories...') ?></i></p>
+                    <p><em><?= $this->translate('There are currently no activity categories...') ?></em></p>
                 <?php else: ?>
                     <fieldset>
                         <?php foreach ($categoryOptions as $option => $value): ?>
@@ -190,12 +190,12 @@ $form->setAttribute('class', 'form-activity');
                                         <div class="form-group signup-list-controls">
                                             <button class="btn btn-danger" type="button"
                                                     onclick="return Activity.removeSignupList()">
-                                                <i class="fas fa-minus"></i>
+                                                <span class="fas fa-minus"></span>
                                                 <?= $this->translate('Remove the last sign-up list') ?>
                                             </button>
                                             <button class="btn btn-success" type="button"
                                                     onclick="return Activity.addSignupList()">
-                                                <i class="fas fa-plus"></i>
+                                                <span class="fas fa-plus"></span>
                                                 <?= $this->translate('Add a sign-up list') ?>
                                             </button>
                                         </div>

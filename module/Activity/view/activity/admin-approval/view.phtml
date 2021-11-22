@@ -34,7 +34,7 @@ $this->breadcrumbs()
             }
 
             echo sprintf(
-                $this->translate('This is activity <b>#%d</b>, organised by <b>%s</b>, and it will start on <b>%s</b> and end on <b>%s</b>.'),
+                $this->translate('This is activity <strong>#%d</strong>, organised by <strong>%s</strong>, and it will start on <strong>%s</strong> and end on <strong>%s</strong>.'),
                 $activity->getId(),
                 $organisingParty,
                 $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
@@ -48,12 +48,12 @@ $this->breadcrumbs()
         <div class="row">
             <div class="col-md-6">
                 <span class="flag-icon flag-icon-nl"></span>
-                <b><?= $this->translate('Dutch') ?></b>
+                <strong><?= $this->translate('Dutch') ?></strong>
                 <hr>
             </div>
             <div class="col-md-6">
                 <span class="flag-icon flag-icon-en"></span>
-                <b><?= $this->translate('English') ?></b>
+                <strong><?= $this->translate('English') ?></strong>
                 <hr>
             </div>
         </div>
@@ -61,76 +61,76 @@ $this->breadcrumbs()
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-2 overview-sidebar">
-                <b><?= $this->translate('Name') ?></b>
+                <strong><?= $this->translate('Name') ?></strong>
             </div>
             <div class="col-md-5">
                 <span class="activity-property">
                     <span class="flag-icon flag-icon-nl"></span>
-                    <b><?= $this->translate('Name') ?>:</b>
+                    <strong><?= $this->translate('Name') ?>:</strong>
                 </span>
                 <?= $this->escapeHtml($activity->getName()->getValueNL()) ?>
             </div>
             <div class="col-md-5">
                 <span class="activity-property">
                     <span class="flag-icon flag-icon-en"></span>
-                    <b><?= $this->translate('Name') ?>:</b>
+                    <strong><?= $this->translate('Name') ?>:</strong>
                 </span>
                 <?= $this->escapeHtml($activity->getName()->getValueEN()) ?>
             </div>
         </div>
         <div class="row">
             <div class="col-md-2 overview-sidebar">
-                <b><?= $this->translate('Location') ?></b>
+                <strong><?= $this->translate('Location') ?></strong>
             </div>
             <div class="col-md-5">
                 <span class="activity-property">
                     <span class="flag-icon flag-icon-nl"></span>
-                    <b><?= $this->translate('Location') ?>:</b>
+                    <strong><?= $this->translate('Location') ?>:</strong>
                 </span>
                 <?= $this->escapeHtml($activity->getLocation()->getValueNL()) ?>
             </div>
             <div class="col-md-5">
                 <span class="activity-property">
                     <span class="flag-icon flag-icon-en"></span>
-                    <b><?= $this->translate('Location') ?>:</b>
+                    <strong><?= $this->translate('Location') ?>:</strong>
                 </span>
                 <?= $this->escapeHtml($activity->getLocation()->getValueEN()) ?>
             </div>
         </div>
         <div class="row">
             <div class="col-md-2 overview-sidebar">
-                <b><?= $this->translate('Costs') ?></b>
+                <strong><?= $this->translate('Costs') ?></strong>
             </div>
             <div class="col-md-5">
                 <span class="activity-property">
                     <span class="flag-icon flag-icon-nl"></span>
-                    <b><?= $this->translate('Costs') ?>:</b>
+                    <strong><?= $this->translate('Costs') ?>:</strong>
                 </span>
                 <?= $this->escapeHtml($activity->getCosts()->getValueNL()) ?>
             </div>
             <div class="col-md-5">
                 <span class="activity-property">
                     <span class="flag-icon flag-icon-en"></span>
-                    <b><?= $this->translate('Costs') ?>:</b>
+                    <strong><?= $this->translate('Costs') ?>:</strong>
                 </span>
                 <?= $this->escapeHtml($activity->getCosts()->getValueEN()) ?>
             </div>
         </div>
         <div class="row">
             <div class="col-md-2 overview-sidebar">
-                <b><?= $this->translate('Description') ?></b>
+                <strong><?= $this->translate('Description') ?></strong>
             </div>
             <div class="col-md-5">
                 <span class="activity-property">
                     <span class="flag-icon flag-icon-nl"></span>
-                    <b><?= $this->translate('Description') ?>:</b>
+                    <strong><?= $this->translate('Description') ?>:</strong>
                 </span>
                 <?= $this->escapeHtml($activity->getDescription()->getValueNL()) ?>
             </div>
             <div class="col-md-5">
                 <span class="activity-property">
                     <span class="flag-icon flag-icon-en"></span>
-                    <b><?= $this->translate('Description') ?>:</b>
+                    <strong><?= $this->translate('Description') ?>:</strong>
                 </span>
                 <?= $this->escapeHtml($activity->getDescription()->getValueEN()) ?>
             </div>
@@ -166,12 +166,12 @@ $this->breadcrumbs()
             <div class="row">
                 <div class="col-md-6">
                     <span class="flag-icon flag-icon-nl"></span>
-                    <b><?= $this->translate('Dutch') ?></b>
+                    <strong><?= $this->translate('Dutch') ?></strong>
                     <hr>
                 </div>
                 <div class="col-md-6">
                     <span class="flag-icon flag-icon-en"></span>
-                    <b><?= $this->translate('English') ?></b>
+                    <strong><?= $this->translate('English') ?></strong>
                     <hr>
                 </div>
             </div>

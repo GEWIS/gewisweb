@@ -10,19 +10,19 @@ Er is een activiteit aangepast op de GEWIS website.
 
 <table>
     <tr>
-        <td><b>Starttijd:</b></td>
+        <td><strong>Starttijd:</strong></td>
         <td><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, 'nl'); ?></td>
     </tr>
     <tr>
-        <td><b>Eindtijd</b></td>
+        <td><strong>Eindtijd</strong></td>
         <td><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT), 'nl'; ?></td>
     </tr>
     <tr>
-        <td><b>Locatie:</b></td>
+        <td><strong>Locatie:</strong></td>
         <td><?= $this->escapeHtml($activity->getLocation()->getText("nl")) ?></td>
     </tr>
     <tr>
-        <td><b>Kosten:</b></td>
+        <td><strong>Kosten:</strong></td>
         <td><?= $this->escapeHtml($activity->getCosts()->getText("nl")) ?></td>
     </tr>
 </table>
@@ -45,19 +45,19 @@ An activity was updated on the GEWIS website. See below for details.
 
 <table>
     <tr>
-        <td><b>Starting time:</b></td>
+        <td><strong>Starting time:</strong></td>
         <td><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, 'en'); ?></td>
     </tr>
     <tr>
-        <td><b>Ending time:</b></td>
+        <td><strong>Ending time:</strong></td>
         <td><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, 'en'); ?></td>
     </tr>
     <tr>
-        <td><b>Location:</b></td>
+        <td><strong>Location:</strong></td>
         <td><?= $this->escapeHtml($activity->getLocation()->getText("en")) ?></td>
     </tr>
     <tr>
-        <td><b>Costs:</b></td>
+        <td><strong>Costs:</strong></td>
         <td><?= $this->escapeHtml($activity->getCosts()->getText("en")) ?></td>
     </tr>
 </table>
