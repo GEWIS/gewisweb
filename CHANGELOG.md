@@ -1,3 +1,10 @@
+## [v2.4.10](https://github.com/GEWIS/gewisweb/tree/v2.4.10) (2021-11-22)
+
+- Improved accessibility by replacing `<i></i>` and `<b></b>` tags with more appropriate alternatives.
+- Fixes issue where old, already approved, options would be considered 'overdue'.
+
+---
+
 ## [v2.4.9](https://github.com/GEWIS/gewisweb/tree/v2.4.9) (2021-11-17)
 
 - Fixed issue where it was not possible to create or edit job or banner packages for companies.
