@@ -73,28 +73,20 @@ class ActivityCalendarOption extends BaseMapper
     }
 
     /**
-     * Get upcoming activity options sorted by begin date.
+     * Get overdue options, which are created before `$before`, start after now, and are not yet modified.
      *
      * @param DateTime $before the date to get the options before
-     * @param bool $withDeleted Whether to include deleted options
      *
      * @return array
      */
-    public function getPastOptions($before, $withDeleted = false)
+    public function getOverdueOptions(DateTime $before): array
     {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
-            ->from(ActivityOptionProposalModel::class, 'b')
-            ->where('a.proposal = b.id')
-            ->andWhere('a.beginTime > :now')
-            ->andWhere('b.creationTime < :before')
-            ->orderBy('b.creationTime', 'ASC');
-
-        if (!$withDeleted) {
-            $qb->andWhere('a.modifiedBy IS NULL')
-                ->orWhere("a.status = 'approved'");
-        }
+        $qb = $this->getRepository()->createQueryBuilder('o');
+        $qb->leftJoin('o.proposal', 'p')
+            ->andWhere('o.beginTime > :now')
+            ->andWhere('p.creationTime < :before')
+            ->andWhere('o.modifiedBy IS NULL')
+            ->orderBy('p.creationTime', 'ASC');
 
         $qb->setParameter('now', new DateTime());
         $qb->setParameter('before', $before);
