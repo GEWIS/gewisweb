@@ -452,6 +452,25 @@ div.pswp__img--placeholder,
 
 /*
 
+  Metadata UI
+
+ */
+.pswp__metadata-ui {
+    background: #FFF;
+    top: 56px;
+    position: absolute;
+    right: 56px;
+    border-radius: 5px;
+    width: auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+}
+
+.pswp__metadata-ui:not(.pswp__metadata-ui-open) {
+    display: none;
+}
+
+/*
+
   Tags UI
 
  */
@@ -467,4 +486,5 @@ div.pswp__img--placeholder,
     left: 50%;
     bottom: 16px;
     transform: translateX(-50%);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
 }

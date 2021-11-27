@@ -210,7 +210,7 @@ $this->scriptUrl()->requireUrl('member/search')
 
                 link.click();
                 link.remove();
-            }
+            },
         });
         lightbox.pswp.ui.registerElement({
             name: 'metadata-button',
@@ -223,8 +223,14 @@ $this->scriptUrl()->requireUrl('member/search')
             },
             position: 'bar',
             onClick: (event, el, pswp) => {
-                // TODO: Add popup for metadata.
-            }
+                let metadata = document.querySelector('.pswp__metadata-ui');
+
+                if (metadata.classList.contains('pswp__metadata-ui-open')) {
+                    metadata.classList.remove('pswp__metadata-ui-open');
+                } else {
+                    metadata.classList.add('pswp__metadata-ui-open');
+                }
+            },
         });
         lightbox.pswp.ui.registerElement({
             name: 'like-button',
@@ -265,13 +271,30 @@ $this->scriptUrl()->requireUrl('member/search')
                             // An error occurred somewhere along the way, perhaps we should notify the user.
                         });
                 }
-            }
+            },
+        });
+
+        // Register the metadata UI.
+        lightbox.pswp.ui.registerElement({
+            name: 'metadata-ui',
+            order: 4,
+            isButton: false,
+            html: '<?= $this->translate('Cannot load metadata') ?>',
+            appendTo: 'root',
+            onInit: (el, pswp) => {
+                lightbox.pswp.on('change', () => {
+                    let currentSlide = pswp.currSlide.data.element;
+
+                    // Copy all HTML.
+                    el.innerHTML = currentSlide.querySelector('figcaption').innerHTML;
+                });
+            },
         });
 
         // Register the tagging system.
         lightbox.pswp.ui.registerElement({
             name: 'tags-ui',
-            order: 4,
+            order: 3,
             isButton: false,
             html: '<?= $this->translate('Cannot load tags') ?>',
             appendTo: 'root',
