@@ -6,23 +6,21 @@
 
 Course = {
     initCourseAdding: function () {
-        $('#parent').autocomplete({
+        new VanillaAutocomplete(document.querySelector('#parent'), {
+            minChars: 2,
             lookup: function (query, done) {
-                if (query.length >= 2) {
-                    $.getJSON(URLHelper.url('add/course') + '?q=' + query, function (data) {
-                        var result = {suggestions: []};
+                $.getJSON(URLHelper.url('add/course') + '?q=' + query, function (data) {
+                    var result = {suggestions: []};
 
-                        $.each(data.courses, function (i, course) {
-                            result.suggestions.push({
-                                'value': course.code, 'data': course.code
-                            })
-                        });
-
-                        done(result);
+                    $.each(data.courses, function (i, course) {
+                        result.suggestions.push({
+                            'value': course.code, 'data': course.code
+                        })
                     });
-                }
+
+                    done(result);
+                });
             }
         });
-
     }
 }

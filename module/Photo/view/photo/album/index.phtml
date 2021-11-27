@@ -12,14 +12,11 @@ while (!is_null($currentAlbum->getParent())) {
 $this->headTitle($this->translate('Photos'));
 ?>
 <?php $this->headScript()
-    ->appendFile($this->basePath() . '/js/jquery.autocomplete.js')
+    ->appendFile($this->basePath() . '/js/autocomplete.min.js')
     ->appendFile($this->basePath() . '/js/photo.js')
     ->appendFile($this->basePath() . '/js/masonry.pkgd.min.js')
-    ->appendFile($this->basePath() . '/js/lazyload.min.js')
-    ->appendFile($this->basePath() . '/js/photoswipe.min.js')
-    ->appendFile($this->basePath() . '/js/photoswipe-ui-default.min.js');
-$this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css')
-    ->appendStylesheet($this->basePath() . '/css/photoswipe-skin/default-skin.css');
+    ->appendFile($this->basePath() . '/js/lazyload.min.js');
+$this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css');
 
 $this->scriptUrl()->requireUrl('member/search')
     ->requireUrl('photo/photo/vote', ['photo_id']);
@@ -108,14 +105,14 @@ $this->scriptUrl()->requireUrl('member/search')
                 <?php endforeach ?>
             </div>
         <?php endif; ?>
-        <div class="photo-grid">
+        <div class="pswp-gallery">
             <div class="grid-sizer"></div>
             <div class="gutter-sizer"></div>
             <?php foreach ($album->getPhotos() as $item): ?>
                 <?php
                 $ar = $item->getAspectRatio();
                 $width = $config['small_thumb_size']['width'];
-                $containerallSize = [
+                $thumbnailSize = [
                     'w' => $width,
                     'h' => round($width * $ar)
                 ];
@@ -127,23 +124,24 @@ $this->scriptUrl()->requireUrl('member/search')
                 ];
                 ?>
                 <figure
-                    class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>"
-                    data-id="<?= $item->getId() ?>">
-                    <a
-                        href="<?= $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
-                        data-size="<?= $largeSize['w'] . 'x' . $largeSize['h'] ?>"
-                        data-author="GEWIS"
-                        class="gallery-image"
-                        data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]); ?>"
-                        data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]); ?>"
-                        data-voted="<?= $this->hasVoted($item->getId(), $this->identity()->getLidnr()) ? 'true' : 'false' ?>"
+                    class="pswp-gallery__item<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>"
+                    data-id="<?= $item->getId() ?>"
+                    data-author="GEWIS"
+                    data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]); ?>"
+                    data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]); ?>"
+                    data-voted="<?= $this->hasVoted($item->getId(), $this->identity()->getLidnr()) ? 'true' : 'false' ?>"
+                >
+                    <a href="<?= $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
+                       target="_blank"
+                       data-pswp-height="<?= $largeSize['h'] ?>"
+                       data-pswp-width="<?= $largeSize['w'] ?>"
                     >
                         <img
                             class="lazy-load"
-                            data-width="<?= $containerallSize['w'] ?>" data-height="<?= $containerallSize['h'] ?>"
-                            data-src="<?= $this->glideUrl()->getUrl($item->getPath(), $containerallSize) ?>"
+                            data-height="<?= $thumbnailSize['h'] ?>"
+                            data-width="<?= $thumbnailSize['w'] ?>"
+                            data-src="<?= $this->glideUrl()->getUrl($item->getPath(), $thumbnailSize) ?>"
                             alt=""
-                            data-size="<?= $containerallSize['w'] . 'x' . $containerallSize['h'] ?>"
                         >
                     </a>
                     <figcaption style="display:none">
@@ -156,82 +154,224 @@ $this->scriptUrl()->requireUrl('member/search')
             <?php endforeach; ?>
         </div>
     </div>
-    <!-- Root element of PhotoSwipe. Must have class pswp. -->
-    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-        <!-- Background of PhotoSwipe.
-             It's a separate element as animating opacity is faster than rgba(). -->
-        <div class="pswp__bg"></div>
-
-        <!-- Slides wrapper with overflow:hidden. -->
-        <div class="pswp__scroll-wrap">
-
-            <!-- Container that holds slides.
-                PhotoSwipe keeps only 3 of them in the DOM to save memory.
-                Don't modify these 3 pswp__item elements, data is added later on. -->
-            <div class="pswp__container">
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-            </div>
-
-            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-            <div class="pswp__ui pswp__ui--hidden">
-
-                <div class="pswp__top-bar">
-
-                    <div class="pswp__counter"></div>
-
-                    <button class="button_top pswp__button--close fas fa-times" title="Close (Esc)"></button>
-                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                    <button class="button_top pswp__button--download fas fa-file-download"
-                            title="<?= $this->translate('Download') ?>" data-toggle="tooltip"
-                            data-placement="bottom"></button>
-                    <button class="button_top pswp__button--like fas fa-thumbs-up"
-                            title="<?= $this->translate('Vote for photo of the week') ?>" data-toggle="tooltip"
-                            data-placement="bottom"></button>
-                    <button class="button_top pswp__button--info fas fa-info-circle"
-                            title="<?= $this->translate('Metadata') ?>" data-toggle="tooltip"
-                            data-placement="bottom"></button>
-
-                    <!-- Preloader -->
-                    <!-- element will get class pswp__preloader--active when preloader is running -->
-                    <div class="pswp__preloader">
-                        <div class="pswp__preloader__icn">
-                            <div class="pswp__preloader__cut">
-                                <div class="pswp__preloader__donut"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                    <div class="pswp__share-tooltip"></div>
-                </div>
-
-                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-                </button>
-
-                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-                </button>
-
-                <div class="pswp__caption">
-                    <div class="pswp__caption__center"></div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
 </section>
-
 <script>
     $(document).ready(function () {
         Photo.initGrid();
     });
+</script>
+<script type="module">
+    import PhotoSwipeLightbox from '<?= $this->basePath() ?>/js/photoswipe-lightbox.esm.min.js';
 
-    initPhotoSwipeFromDOM('.photo-grid');
+    const leftArrowSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 50 30" width="50" height="30"><use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#chevron-left"></use></svg>';
+    const rightArrowSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 50 30" width="50" height="30"><use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#chevron-right"></use></svg>';
+    const closeSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#times"></use></svg>';
+    const zoomSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use class="pswp__icn-zoom-plus" href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#search-plus"></use><use class="pswp__icn-zoom-minus" href="<? $this->basePath() ?>/sprites/fontawesome/solid.svg#search-minus"></use></svg>';
+
+    const lightbox = new PhotoSwipeLightbox({
+        gallery: '.pswp-gallery',
+        children: '.pswp-gallery__item',
+        bgOpacity: 0.9,
+
+        // Use FontAwesome for all icons.
+        arrowPrevSVG: leftArrowSVGString,
+        arrowNextSVG: leftArrowSVGString,
+        closeSVG: closeSVGString,
+        zoomSVG: zoomSVGString,
+
+        // Update translations.
+        closeTitle: '<?= $this->translate('Close') ?>',
+        zoomTitle: '<?= $this->translate('Zoom (z)') ?>',
+        arrowPrevTitle: '<?=  $this->translate('Previous') ?>',
+        arrowNextTitle: '<?=  $this->translate('Next') ?>',
+
+        pswpModule: '<? $this->basePath() ?>/js/photoswipe.esm.min.js',
+    });
+
+    lightbox.on('uiRegister', () => {
+        // Register custom buttons.
+        lightbox.pswp.ui.registerElement({
+            name: 'download-button',
+            order: 9,
+            isButton: true,
+            title: '<?= $this->translate('Download') ?>',
+            html: {
+                isCustomSVG: true,
+                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#file-download"></use>',
+            },
+            position: 'bar',
+            onClick: (event, el, pswp) => {
+                let downloadUrl = pswp.currSlide.data.element.dataset.rawUrl;
+                let link = document.createElement('a');
+
+                link.href = downloadUrl;
+                link.download = '';
+                document.body.appendChild(link);
+
+                link.click();
+                link.remove();
+            }
+        });
+        lightbox.pswp.ui.registerElement({
+            name: 'metadata-button',
+            order: 8,
+            isButton: true,
+            title: '<?= $this->translate('Information') ?>',
+            html: {
+                isCustomSVG: true,
+                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#info-circle"></use>',
+            },
+            position: 'bar',
+            onClick: (event, el, pswp) => {
+                // TODO: Add popup for metadata.
+            }
+        });
+        lightbox.pswp.ui.registerElement({
+            name: 'like-button',
+            order: 7,
+            isButton: true,
+            title: '<?= $this->translate('Vote for photo of the week') ?>',
+            html: {
+                isCustomSVG: true,
+                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#thumbs-up"></use>',
+            },
+            position: 'bar',
+            onInit: (el, pswp) => {
+                lightbox.pswp.on('change', () => {
+                    let currentSlide = pswp.currSlide.data.element;
+                    let hasVoted = currentSlide.dataset.voted;
+
+                    if ('true' === hasVoted) {
+                        el.firstChild.classList.add('pswp__icn-red');
+                        el.title = '<?= $this->translate('Already voted!') ?>';
+                    } else {
+                        el.firstChild.classList.remove('pswp__icn-red');
+                        el.title = '<?= $this->translate('Vote for photo of the week') ?>';
+                    }
+                });
+            },
+            onClick: (event, el, pswp) => {
+                let currentSlide = pswp.currSlide.data.element;
+                let hasVoted = currentSlide.dataset.voted;
+
+                if ('false' === hasVoted) {
+                    fetch(currentSlide.dataset.voteUrl, { method: 'POST' })
+                        .then(response => response.json())
+                        .then(result => {
+                            currentSlide.dataset.voted = 'true';
+                            el.firstChild.classList.add('pswp__icn-red');
+                            el.title = '<?= $this->translate('Voted!') ?>';
+                        }).catch(error => {
+                            // An error occurred somewhere along the way, perhaps we should notify the user.
+                        });
+                }
+            }
+        });
+
+        // Register the tagging system.
+        lightbox.pswp.ui.registerElement({
+            name: 'tags-ui',
+            order: 4,
+            isButton: false,
+            html: '<?= $this->translate('Cannot load tags') ?>',
+            appendTo: 'root',
+            onInit: (el, pswp) => {
+                lightbox.pswp.on('change', () => {
+                    let currentSlide = pswp.currSlide.data.element;
+
+                    // Copy all HTML.
+                    el.innerHTML = currentSlide.querySelector('figtags').innerHTML;
+
+                    // Make it possible to add new tags.
+                    let tagSearch = el.querySelector('.tagSearch');
+                    new VanillaAutocomplete(tagSearch, {
+                        minChars: 2,
+                        lookup: function (query, done) {
+                            $.getJSON(URLHelper.url('member/search') + '?q=' + query, function (data) {
+                                var result = {suggestions: []};
+
+                                $.each(data.members, function (i, member) {
+                                    result.suggestions.push({
+                                        'value': member.fullName, 'data': member.lidnr
+                                    })
+                                });
+
+                                done(result);
+                            });
+                        },
+                        orientation: 'top',
+                        onSelect: function (suggestion) {
+                            $.post($(this).data('url').replace('lidnr', suggestion.data),
+                                { lidnr: suggestion.data }
+                                , function (data) {
+                                    if (data.success) {
+                                        let removeURL = URLHelper.url('photo/photo/tag/remove', {
+                                            'photo_id': data.tag.photo_id,
+                                            'lidnr': data.tag.member_id
+                                        });
+
+                                        let memberURL = URLHelper.url('member/view', {
+                                            'lidnr': data.tag.member_id
+                                        });
+
+                                        let id = 'removeTag' + data.tag.id;
+
+                                        el.querySelector('.tagList-' + data.tag.photo_id).insertAdjacentHTML(
+                                            'afterbegin',
+                                            '<a href="' + memberURL + '">' + suggestion.value + '</a>' +
+                                                '<a href="' + removeURL + '" id="' + id + '">' +
+                                                '<span class="fas fa-times" aria-hidden="true">' +
+                                                '</span></a>, '
+                                        );
+                                        Photo.initRemoveTag(el.querySelector('#' + id));
+                                        tagSearch.focus();
+                                    }
+                                    tagSearch.value = '';
+                                });
+                        },
+                        zIndex: 100000,
+                    });
+
+                    // Make tags removable.
+                    el.querySelectorAll('.remove-tag').forEach(element => {
+                        Photo.initRemoveTag(element);
+                    });
+                });
+            },
+        });
+    });
+
+    lightbox.init();
+
+    // Check if the hash is present in the URL, if so, parse and try to open the lightbox for the provided image.
+    if (typeof window.location.hash !== "undefined") {
+        let hash = window.location.hash.substring(1), params = {};
+
+        if (hash.length > 5) {
+            let vars = hash.split('&');
+
+            for (let i = 0; i < vars.length; i++) {
+                if (!vars[i]) {
+                    continue;
+                }
+
+                let pair = vars[i].split('=');
+                if (pair.length < 2) {
+                    continue;
+                }
+
+                params[pair[0]] = pair[1];
+            }
+
+            if (params.pid) {
+                let expectedImage = parseInt(params.pid, 10);
+
+                document.querySelectorAll('.pswp-gallery__item').forEach(element => {
+                    if (parseInt(element.dataset.id, 10) === expectedImage) {
+                        element.click(); // lightbox.loadAndOpen does not work, so simulate clicking the image.
+                    }
+                });
+            }
+        }
+    }
 </script>

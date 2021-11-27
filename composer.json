@@ -127,7 +127,8 @@
     "extra": {
         "copy-file": {
             "vendor/fortawesome/font-awesome/scss/": "public/scss/fontawesome/",
-            "vendor/fortawesome/font-awesome/webfonts/": "public/fonts/fontawesome/"
+            "vendor/fortawesome/font-awesome/webfonts/": "public/fonts/fontawesome/",
+            "vendor/fortawesome/font-awesome/sprites/": "public/sprites/fontawesome/"
         },
         "patches": {
             "doctrine/orm": {

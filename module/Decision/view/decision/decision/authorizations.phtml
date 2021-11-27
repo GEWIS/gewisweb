@@ -2,7 +2,7 @@
 // set title
 $this->headTitle($this->translate('Authorizations')); ?>
 <?php $this->inlineScript()
-    ->appendFile($this->basePath() . '/js/jquery.autocomplete.js'); ?>
+    ->appendFile($this->basePath() . '/js/autocomplete.min.js'); ?>
 <br>
 <section class='section'>
     <div class='container'>
@@ -79,27 +79,25 @@ You may still be able to authorize someone or revoke an authorization by contact
 </section>
 <script>
     $(document).ready(function () {
-        $('#memberSearch').autocomplete({
+        new VanillaAutocomplete(document.querySelector('#memberSearch'), {
+            minChars: 2,
             lookup: function (query, done) {
-                if (query.length >= 2) {
-                    $.getJSON('<?= $this->url('member/search') ?>' + '?q=' + query, function (data) {
-                        var result = {suggestions: []};
+                $.getJSON('<?= $this->url('member/search') ?>' + '?q=' + query, function (data) {
+                    var result = {suggestions: []};
 
-                        $.each(data.members, function (i, member) {
-                            result.suggestions.push({
-                                'value': member.fullName, 'data': member.lidnr
-                            })
-                        });
-
-                        done(result);
+                    $.each(data.members, function (i, member) {
+                        result.suggestions.push({
+                            'value': member.fullName, 'data': member.lidnr
+                        })
                     });
-                }
+
+                    done(result);
+                });
             },
             onSelect: function (suggestion) {
                 $("[name='recipient']").val(suggestion.data);
             }
         });
-
     });
 </script>
 

@@ -125,6 +125,7 @@ class PhotoController extends AbstractActionController
     public function voteAction()
     {
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
             $this->photoService->countVote($photoId);
@@ -132,6 +133,6 @@ class PhotoController extends AbstractActionController
             return new JsonModel(['success' => true]);
         }
 
-        return $this->getResponse();
+        return $this->notFoundAction();
     }
 }
