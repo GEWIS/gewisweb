@@ -305,6 +305,11 @@ $this->scriptUrl()->requireUrl('member/search')
                     // Copy all HTML.
                     el.innerHTML = currentSlide.querySelector('figtags').innerHTML;
 
+                    // Remove any old autocomplete suggestion boxes.
+                    document.querySelectorAll('.autocomplete-suggestions').forEach(element => {
+                        element.remove();
+                    });
+
                     // Make it possible to add new tags.
                     let tagSearch = el.querySelector('.tagSearch');
                     new VanillaAutocomplete(tagSearch, {
@@ -361,6 +366,13 @@ $this->scriptUrl()->requireUrl('member/search')
                     });
                 });
             },
+        });
+    });
+
+    lightbox.on('close', () => {
+        // Remove all remaining autocomplete suggestion elements.
+        document.querySelectorAll('.autocomplete-suggestions').forEach(element => {
+            element.remove();
         });
     });
 
