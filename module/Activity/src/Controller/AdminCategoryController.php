@@ -29,8 +29,9 @@ class AdminCategoryController extends AbstractActionController
      */
     public function __construct(
         ActivityCategoryService $categoryService,
-        Translator $translator
-    ) {
+        Translator              $translator
+    )
+    {
         $this->categoryService = $categoryService;
         $this->translator = $translator;
     }
@@ -55,11 +56,10 @@ class AdminCategoryController extends AbstractActionController
     public function addAction()
     {
         $request = $this->getRequest();
-        $translator = $this->translator;
 
         if ($request->isPost()) {
             if ($this->categoryService->createCategory($request->getPost())) {
-                $message = $translator->translate('The activity category was created successfully!');
+                $message = $this->translator->translate('The activity category was created successfully!');
 
                 return $this->redirectWithNotice(true, $message);
             }
@@ -68,7 +68,7 @@ class AdminCategoryController extends AbstractActionController
         return new ViewModel(
             [
                 'form' => $this->categoryService->getCategoryForm(),
-                'action' => $translator->translate('Create Activity Category'),
+                'action' => $this->translator->translate('Create Activity Category'),
             ]
         );
     }
@@ -92,7 +92,7 @@ class AdminCategoryController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $categoryId = (int) $this->params('id');
+            $categoryId = (int)$this->params('id');
             $category = $this->categoryService->getCategoryById($categoryId);
 
             if (null === $category) {
@@ -121,11 +121,10 @@ class AdminCategoryController extends AbstractActionController
 
         $form = $this->categoryService->getCategoryForm();
         $request = $this->getRequest();
-        $translator = $this->translator;
 
         if ($request->isPost()) {
             if ($this->categoryService->updateCategory($category, $request->getPost())) {
-                $message = $translator->translate('The activity category was successfully updated!');
+                $message = $this->translator->translate('The activity category was successfully updated!');
 
                 return $this->redirectWithNotice(true, $message);
             }
@@ -138,7 +137,12 @@ class AdminCategoryController extends AbstractActionController
         $categoryData['language_english'] = null !== $categoryData['nameEn'];
         $form->setData($categoryData);
 
-        $viewModel = new ViewModel(['form' => $form, 'action' => $translator->translate('Update Activity Category')]);
+        $viewModel = new ViewModel(
+            [
+                'form' => $form,
+                'action' => $this->translator->translate('Update Activity Category')
+            ]
+        );
         $viewModel->setTemplate('activity/admin-category/add.phtml');
 
         return $viewModel;

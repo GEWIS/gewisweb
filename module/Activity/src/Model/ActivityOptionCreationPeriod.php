@@ -154,9 +154,9 @@ class ActivityOptionCreationPeriod
      */
     public function toArray(): array
     {
-        $maxActivities = [];
+        $maxActivitiesArrays = [];
         foreach ($this->getMaxActivities() as $maxActivity) {
-            $maxActivities[] = $maxActivity->toArray();
+            $maxActivitiesArrays[] = $maxActivity->toArray();
         }
 
         return [
@@ -165,7 +165,7 @@ class ActivityOptionCreationPeriod
             'endPlanningTime' => $this->getEndPlanningTime(),
             'beginOptionTime' => $this->getBeginOptionTime(),
             'endOptionTime' => $this->getEndOptionTime(),
-            'maxActivities' => $maxActivities,
+            'maxActivities' => $maxActivitiesArrays,
         ];
     }
 }

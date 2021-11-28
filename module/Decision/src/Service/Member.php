@@ -85,7 +85,7 @@ class Member
         $user = $this->aclService->getIdentityOrThrowException();
 
         $sslcapath = $this->config['sslcapath'];
-        $config = $this->config['dreamspark'];
+        $dreamsparkConfig = $this->config['dreamspark'];
 
         // determine groups for dreamspark
         $groups = [];
@@ -99,9 +99,9 @@ class Member
             $groups[] = 'staff';
         }
 
-        $url = $config['url'];
-        $url = str_replace('%ACCOUNT%', $config['account'], $url);
-        $url = str_replace('%KEY%', $config['key'], $url);
+        $url = $dreamsparkConfig['url'];
+        $url = str_replace('%ACCOUNT%', $dreamsparkConfig['account'], $url);
+        $url = str_replace('%KEY%', $dreamsparkConfig['key'], $url);
         $url = str_replace('%EMAIL%', $user->getEmail(), $url);
         $url = str_replace('%GROUPS%', implode(',', $groups), $url);
 

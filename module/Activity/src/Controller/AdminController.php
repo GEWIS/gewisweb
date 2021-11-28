@@ -371,9 +371,8 @@ class AdminController extends AbstractActionController
     public function externalSignoffAction()
     {
         $signupId = (int)$this->params('id');
-        $signupMapper = $this->signupMapper;
 
-        $signup = $signupMapper->find($signupId);
+        $signup = $this->signupMapper->find($signupId);
 
         if (null === $signup) {
             return $this->notFoundAction();

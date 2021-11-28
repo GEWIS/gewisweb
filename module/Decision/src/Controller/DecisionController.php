@@ -179,15 +179,14 @@ class DecisionController extends AbstractActionController
             $path = '';
         }
 
-        $fileReader = $this->fileReader;
-        if (!$fileReader->isAllowed($path) || 1 === preg_match('(\/\.\.\/|\/\.\.$)', $path)) {
+        if (!$this->fileReader->isAllowed($path) || 1 === preg_match('(\/\.\.\/|\/\.\.$)', $path)) {
             //File location isn't legal or path contains /../ or /.. at the end.
             //This is illegal for security reasons
             return $this->notFoundAction();
         }
-        if ($fileReader->isDir($path)) {
+        if ($this->fileReader->isDir($path)) {
             //display the contents of a dir
-            $folder = $fileReader->listDir($path);
+            $folder = $this->fileReader->listDir($path);
             if (is_null($folder)) {
                 return $this->notFoundAction();
             }
@@ -206,7 +205,7 @@ class DecisionController extends AbstractActionController
         }
 
         //download the file
-        $result = $fileReader->downloadFile($path);
+        $result = $this->fileReader->downloadFile($path);
 
         return (false === $result) ? $this->notFoundAction() : $result;
     }
