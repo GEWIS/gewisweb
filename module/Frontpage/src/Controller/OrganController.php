@@ -62,9 +62,8 @@ class OrganController extends AbstractActionController
     {
         $type = $this->params()->fromRoute('type');
         $abbr = $this->params()->fromRoute('abbr');
-        $organService = $this->organService;
-        $organ = $organService->findOrganByAbbr($abbr, $type, true);
-        $organMemberInformation = $organService->getOrganMemberInformation($organ);
+        $organ = $this->organService->findOrganByAbbr($abbr, $type, true);
+        $organMemberInformation = $this->organService->getOrganMemberInformation($organ);
 
         $activities = $this->activityQueryService->getOrganActivities($organ, 3);
 

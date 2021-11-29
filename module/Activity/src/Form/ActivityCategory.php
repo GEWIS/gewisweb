@@ -48,16 +48,6 @@ class ActivityCategory extends LocalisableForm implements InputFilterProviderInt
     }
 
     /**
-     * Get the input filter.
-     *
-     * @return array
-     */
-    public function getInputFilterSpecification(): array
-    {
-        return parent::getInputFilterSpecification();
-    }
-
-    /**
      * @inheritDoc
      */
     protected function createLocalisedInputFilterSpecification(string $suffix = ''): array

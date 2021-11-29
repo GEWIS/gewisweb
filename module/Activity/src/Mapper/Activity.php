@@ -27,7 +27,7 @@ class Activity extends BaseMapper
             ->setParameter('id', $id);
         $result = $qb->getQuery()->getResult();
 
-        return count($result) > 0 ? $result[0] : null;
+        return !empty($result) ? $result[0] : null;
     }
 
     /**

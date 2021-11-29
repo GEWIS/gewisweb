@@ -285,9 +285,9 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      */
     public function toArray(): array
     {
-        $fields = [];
+        $fieldsArrays = [];
         foreach ($this->getFields() as $field) {
-            $fields[] = $field->toArray();
+            $fieldsArrays[] = $field->toArray();
         }
 
         return [
@@ -298,7 +298,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
             'closeDate' => $this->getCloseDate(),
             'onlyGEWIS' => $this->getOnlyGEWIS(),
             'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
-            'fields' => $fields,
+            'fields' => $fieldsArrays,
         ];
     }
 

@@ -97,7 +97,7 @@ class AdminController extends AbstractActionController
 
     public function updateAction()
     {
-        $activityId = (int)$this->params('id');
+        $activityId = (int) $this->params('id');
         $activity = $this->activityQueryService->getActivityWithDetails($activityId);
 
         if (null === $activity) {
@@ -118,7 +118,9 @@ class AdminController extends AbstractActionController
             }
 
             if (min($openingDates) < new DateTime() || ActivityModel::STATUS_APPROVED === $activity->getStatus()) {
-                $message = $this->translator->translate('Activities that have sign-up lists which are open or approved cannot be updated.');
+                $message = $this->translator->translate(
+                    'Activities that have sign-up lists which are open or approved cannot be updated.'
+                );
 
                 return $this->redirectActivityAdmin(false, $message);
             }
@@ -127,7 +129,9 @@ class AdminController extends AbstractActionController
         // Can also be `elseif` as SignupLists are guaranteed to be before the
         // Activity begin date and time.
         if ($activity->getBeginTime() < new DateTime()) {
-            $message = $this->translator->translate('This activity has already started/ended and can no longer be updated.');
+            $message = $this->translator->translate(
+                'This activity has already started/ended and can no longer be updated.'
+            );
 
             return $this->redirectActivityAdmin(false, $message);
         }
@@ -140,7 +144,9 @@ class AdminController extends AbstractActionController
 
             if ($form->isValid()) {
                 if ($this->activityService->createUpdateProposal($activity, $form->getData())) {
-                    $message = $this->translator->translate('You have successfully created an update proposal for the activity! If the activity was already approved, the proposal will be applied after it has been approved by the board. Otherwise, the update has already been applied to the activity.');
+                    $message = $this->translator->translate(
+                        'You have successfully created an update proposal for the activity! If the activity was already approved, the proposal will be applied after it has been approved by the board. Otherwise, the update has already been applied to the activity.'
+                    );
 
                     return $this->redirectActivityAdmin(true, $message);
                 }
@@ -165,7 +171,10 @@ class AdminController extends AbstractActionController
         $activityData['company'] = $activity->getCompany()?->getId();
 
         $allowSignupList = true;
-        if (ActivityModel::STATUS_APPROVED === $activity->getStatus() || (isset($participants) && 0 !== $participants)) {
+        if (
+            ActivityModel::STATUS_APPROVED === $activity->getStatus(
+            ) || (isset($participants) && 0 !== $participants)
+        ) {
             $allowSignupList = false;
             unset($activityData['signupLists']);
         }
@@ -202,8 +211,8 @@ class AdminController extends AbstractActionController
      */
     public function participantsAction()
     {
-        $activityId = (int)$this->params('id');
-        $signupListId = (int)$this->params('signupList');
+        $activityId = (int) $this->params('id');
+        $signupListId = (int) $this->params('signupList');
 
         if (0 === $signupListId) {
             $activity = $this->activityQueryService->getActivity($activityId);
@@ -285,8 +294,8 @@ class AdminController extends AbstractActionController
 
     public function externalSignupAction()
     {
-        $activityId = (int)$this->params('id');
-        $signupListId = (int)$this->params('signupList');
+        $activityId = (int) $this->params('id');
+        $signupListId = (int) $this->params('signupList');
         $signupList = $this->signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
         if (null === $signupList) {
@@ -370,10 +379,8 @@ class AdminController extends AbstractActionController
 
     public function externalSignoffAction()
     {
-        $signupId = (int)$this->params('id');
-        $signupMapper = $this->signupMapper;
-
-        $signup = $signupMapper->find($signupId);
+        $signupId = (int) $this->params('id');
+        $signup = $this->signupMapper->find($signupId);
 
         if (null === $signup) {
             return $this->notFoundAction();

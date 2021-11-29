@@ -544,9 +544,9 @@ class Job
      */
     public function toArray(): array
     {
-        $labels = [];
+        $labelsArrays = [];
         foreach ($this->getLabels() as $label) {
-            $labels[] = $label->toArray();
+            $labelsArrays[] = $label->toArray();
         }
 
         return [
@@ -566,7 +566,7 @@ class Job
             'descriptionEn' => $this->getDescription()->getValueEN(),
             'attachment' => $this->getAttachment()->getValueNL(),
             'attachmentEn' => $this->getAttachment()->getValueEN(),
-            'labels' => $labels,
+            'labels' => $labelsArrays,
         ];
     }
 }

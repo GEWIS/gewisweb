@@ -72,16 +72,6 @@ class JobLabel extends LocalisableForm implements InputFilterProviderInterface
         );
     }
 
-    /**
-     * @inheritDoc
-     *
-     * @return array
-     */
-    public function getInputFilterSpecification(): array
-    {
-        return parent::getInputFilterSpecification();
-    }
-
 
     /**
      * @inheritDoc

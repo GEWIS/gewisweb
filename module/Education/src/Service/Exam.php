@@ -196,7 +196,7 @@ class Exam
 
         $data = $form->getData();
 
-        $config = $this->getConfig('education_temp');
+        $temporaryEducationConfig = $this->getConfig('education_temp');
 
         $messages = [];
 
@@ -225,8 +225,8 @@ class Exam
          * to process the upload. This does allow us to get the ID of the
          * exam, which we need in the upload process.
          */
-        $storageService = $this->storageService;
-        $this->examMapper->transactional(function ($mapper) use ($data, $type, $config, $storageService) {
+        $storage = $this->storageService;
+        $this->examMapper->transactional(function ($mapper) use ($data, $type, $temporaryEducationConfig, $storage) {
             foreach ($data['exams'] as $examData) {
                 // finalize exam upload
                 $exam = new ExamModel();
@@ -247,8 +247,8 @@ class Exam
                 }
 
                 $exam->setLanguage($examData['language']);
-                $localFile = $config['upload_' . $type . '_dir'] . '/' . $examData['file'];
-                $exam->setFilename($storageService->storeFile($localFile));
+                $localFile = $temporaryEducationConfig['upload_' . $type . '_dir'] . '/' . $examData['file'];
+                $exam->setFilename($storage->storeFile($localFile));
 
                 $mapper->persist($exam);
             }
@@ -325,9 +325,9 @@ class Exam
      */
     public function tempExamUpload(Parameters $post, Parameters $files): bool
     {
-        $config = $this->getConfig('education_temp');
+        $temporaryEducationConfig = $this->getConfig('education_temp');
 
-        return $this->tempUpload($post->toArray(), $files->toArray(), $config['upload_exam_dir']);
+        return $this->tempUpload($post->toArray(), $files->toArray(), $temporaryEducationConfig['upload_exam_dir']);
     }
 
     /**
@@ -338,9 +338,9 @@ class Exam
      */
     public function tempSummaryUpload(Parameters $post, Parameters $files): bool
     {
-        $config = $this->getConfig('education_temp');
+        $temporaryEducationConfig = $this->getConfig('education_temp');
 
-        return $this->tempUpload($post->toArray(), $files->toArray(), $config['upload_summary_dir']);
+        return $this->tempUpload($post->toArray(), $files->toArray(), $temporaryEducationConfig['upload_summary_dir']);
     }
 
     /**
@@ -400,8 +400,8 @@ class Exam
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete exams'));
         }
 
-        $config = $this->getConfig('education_temp');
-        $dir = $config['upload_' . $type . '_dir'];
+        $temporaryEducationConfig = $this->getConfig('education_temp');
+        $dir = $temporaryEducationConfig['upload_' . $type . '_dir'];
         unlink($dir . '/' . stripslashes($filename));
     }
 
@@ -432,9 +432,9 @@ class Exam
             throw new Exception('Unsupported bulk form type');
         }
 
-        $config = $this->getConfig('education_temp');
+        $temporaryEducationConfig = $this->getConfig('education_temp');
 
-        $dir = new DirectoryIterator($config['upload_' . $type . '_dir']);
+        $dir = new DirectoryIterator($temporaryEducationConfig['upload_' . $type . '_dir']);
         $data = [];
 
         foreach ($dir as $file) {

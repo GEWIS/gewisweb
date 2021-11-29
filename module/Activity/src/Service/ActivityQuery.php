@@ -130,9 +130,7 @@ class ActivityQuery
             throw new NotAllowedException($this->translator->translate('You are not allowed to view the activities'));
         }
 
-        $activityMapper = $this->activityMapper;
-
-        return $activityMapper->getActivityById($id);
+        return $this->activityMapper->getActivityById($id);
     }
 
     /**
@@ -147,9 +145,7 @@ class ActivityQuery
             throw new NotAllowedException($this->translator->translate('You are not allowed to view the activities'));
         }
 
-        $activityMapper = $this->activityMapper;
-
-        return $activityMapper->findAll();
+        return $this->activityMapper->findAll();
     }
 
     /**
@@ -165,9 +161,7 @@ class ActivityQuery
             );
         }
 
-        $activityMapper = $this->activityMapper;
-
-        return $activityMapper->getAllUpcomingActivities(null, null, ActivityModel::STATUS_TO_APPROVE);
+        return $this->activityMapper->getAllUpcomingActivities(null, null, ActivityModel::STATUS_TO_APPROVE);
     }
 
     /**
@@ -181,9 +175,7 @@ class ActivityQuery
             throw new NotAllowedException($this->translator->translate('You are not allowed to view activities'));
         }
 
-        $activityMapper = $this->activityMapper;
-
-        return $activityMapper->getAllUpcomingActivities(null, null, ActivityModel::STATUS_APPROVED);
+        return $this->activityMapper->getAllUpcomingActivities(null, null, ActivityModel::STATUS_APPROVED);
     }
 
     /**
@@ -196,17 +188,7 @@ class ActivityQuery
      */
     public function getOrganActivities($organ, $count = null)
     {
-        return $this->getActivityMapper()->getUpcomingActivities($count, $organ);
-    }
-
-    /**
-     * Get the activity mapper.
-     *
-     * @return \Activity\Mapper\Activity
-     */
-    public function getActivityMapper()
-    {
-        return $this->activityMapper;
+        return $this->activityMapper->getUpcomingActivities($count, $organ);
     }
 
     /**
@@ -264,14 +246,13 @@ class ActivityQuery
      */
     public function getUpcomingCreatedActivities($user)
     {
-        $activityMapper = $this->getActivityMapper();
         if ($this->aclService->isAllowed('viewDetails', 'activity')) {
             //Only admins are allowed to unconditionally view activity details
-            return $activityMapper->getAllUpcomingActivities();
+            return $this->activityMapper->getAllUpcomingActivities();
         }
         $organs = $this->organService->getEditableOrgans();
 
-        return $activityMapper->getAllUpcomingActivities($organs, $user->getLidnr());
+        return $this->activityMapper->getAllUpcomingActivities($organs, $user->getLidnr());
     }
 
     /**
@@ -284,14 +265,13 @@ class ActivityQuery
      */
     public function getOldCreatedActivitiesPaginator($user)
     {
-        $activityMapper = $this->getActivityMapper();
         if ($this->aclService->isAllowed('viewDetails', 'activity')) {
             //Only admins are allowed to unconditionally view activity details
-            return $activityMapper->getOldActivityPaginatorAdapterByOrganizer();
+            return $this->activityMapper->getOldActivityPaginatorAdapterByOrganizer();
         }
         $organs = $this->organService->getEditableOrgans();
 
-        return $activityMapper->getOldActivityPaginatorAdapterByOrganizer($organs, $user->getLidnr());
+        return $this->activityMapper->getOldActivityPaginatorAdapterByOrganizer($organs, $user->getLidnr());
     }
 
     /**
@@ -301,7 +281,7 @@ class ActivityQuery
      */
     public function getActivityArchiveYears()
     {
-        $oldest = $this->getActivityMapper()->getOldestActivity();
+        $oldest = $this->activityMapper->getOldestActivity();
 
         if (null === $oldest) {
             return [null];
@@ -331,6 +311,6 @@ class ActivityQuery
 
         $endDate = $associationYear->getEndDate() < new DateTime() ? $associationYear->getEndDate() : new DateTime();
 
-        return $this->getActivityMapper()->getArchivedActivitiesInRange($associationYear->getStartDate(), $endDate);
+        return $this->activityMapper->getArchivedActivitiesInRange($associationYear->getStartDate(), $endDate);
     }
 }

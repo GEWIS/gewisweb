@@ -555,14 +555,14 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      */
     public function toArray(): array
     {
-        $signupLists = [];
+        $signupListsArrays = [];
         foreach ($this->getSignupLists() as $signupList) {
-            $signupLists[] = $signupList->toArray();
+            $signupListsArrays[] = $signupList->toArray();
         }
 
-        $categories = [];
+        $categoriesArrays = [];
         foreach ($this->getCategories() as $category) {
-            $categories[] = $category->toArray();
+            $categoriesArrays[] = $category->toArray();
         }
 
         return [
@@ -581,8 +581,8 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
             'company' => $this->getCompany(),
             'isMyFuture' => $this->getIsMyFuture(),
             'requireGEFLITST' => $this->getRequireGEFLITST(),
-            'categories' => $categories,
-            'signupLists' => $signupLists,
+            'categories' => $categoriesArrays,
+            'signupLists' => $signupListsArrays,
         ];
     }
 

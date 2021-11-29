@@ -203,12 +203,12 @@ class SignupField
      */
     public function toArray(): array
     {
-        $options = [];
+        $optionsArrays = [];
         $optionsEn = [];
 
         foreach ($this->getOptions() as $option) {
             $optionData = $option->toArray();
-            $options[] = $optionData['value'];
+            $optionsArrays[] = $optionData['value'];
             $optionsEn[] = $optionData['valueEn'];
         }
 
@@ -219,7 +219,7 @@ class SignupField
             'type' => $this->getType(),
             'minimumValue' => $this->getMinimumValue(),
             'maximumValue' => $this->getMaximumValue(),
-            'options' => $options,
+            'options' => $optionsArrays,
             'optionsEn' => $optionsEn,
         ];
     }
