@@ -1,4 +1,5 @@
 <?php
+
 define('APP_ENV', getenv('APP_ENV') ?: 'production');
 
 // make sure we are in the correct directory

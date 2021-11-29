@@ -171,8 +171,10 @@ class AdminController extends AbstractActionController
         $activityData['company'] = $activity->getCompany()?->getId();
 
         $allowSignupList = true;
-        if (ActivityModel::STATUS_APPROVED === $activity->getStatus(
-            ) || (isset($participants) && 0 !== $participants)) {
+        if (
+            ActivityModel::STATUS_APPROVED === $activity->getStatus(
+            ) || (isset($participants) && 0 !== $participants)
+        ) {
             $allowSignupList = false;
             unset($activityData['signupLists']);
         }
