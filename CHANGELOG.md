@@ -1,3 +1,10 @@
+## [v2.4.11](https://github.com/GEWIS/gewisweb/tree/v2.4.11) (2021-11-29)
+
+- Added security policy and [security.txt](https://gewis.nl/.well-known/security.txt).
+- General improvements. 
+
+---
+
 ## [v2.4.10](https://github.com/GEWIS/gewisweb/tree/v2.4.10) (2021-11-22)
 
 - Improved accessibility by replacing `<i></i>` and `<b></b>` tags with more appropriate alternatives where necessary.
