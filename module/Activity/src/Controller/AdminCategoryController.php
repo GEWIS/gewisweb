@@ -29,9 +29,8 @@ class AdminCategoryController extends AbstractActionController
      */
     public function __construct(
         ActivityCategoryService $categoryService,
-        Translator              $translator
-    )
-    {
+        Translator $translator
+    ) {
         $this->categoryService = $categoryService;
         $this->translator = $translator;
     }
@@ -92,7 +91,7 @@ class AdminCategoryController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $categoryId = (int)$this->params('id');
+            $categoryId = (int) $this->params('id');
             $category = $this->categoryService->getCategoryById($categoryId);
 
             if (null === $category) {
@@ -112,7 +111,7 @@ class AdminCategoryController extends AbstractActionController
      */
     public function editAction()
     {
-        $categoryId = (int)$this->params('id');
+        $categoryId = (int) $this->params('id');
         $category = $this->categoryService->getCategoryById($categoryId);
 
         if (null === $category) {
@@ -140,7 +139,7 @@ class AdminCategoryController extends AbstractActionController
         $viewModel = new ViewModel(
             [
                 'form' => $form,
-                'action' => $this->translator->translate('Update Activity Category')
+                'action' => $this->translator->translate('Update Activity Category'),
             ]
         );
         $viewModel->setTemplate('activity/admin-category/add.phtml');
