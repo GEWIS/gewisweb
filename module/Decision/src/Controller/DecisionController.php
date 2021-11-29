@@ -179,7 +179,10 @@ class DecisionController extends AbstractActionController
             $path = '';
         }
 
-        if (!$this->fileReader->isAllowed($path) || 1 === preg_match('(\/\.\.\/|\/\.\.$)', $path)) {
+        if (
+            !$this->fileReader->isAllowed($path)
+            || 1 === preg_match('(\/\.\.\/|\/\.\.$)', $path)
+        ) {
             //File location isn't legal or path contains /../ or /.. at the end.
             //This is illegal for security reasons
             return $this->notFoundAction();
