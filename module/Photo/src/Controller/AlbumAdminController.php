@@ -201,7 +201,12 @@ class AlbumAdminController extends AbstractActionController
         $result = [];
         if ($request->isPost()) {
             $albumId = $this->params()->fromRoute('album_id');
-            $parentId = $request->getPost()['parent_id'];
+            $parentId = (int) $request->getPost()['parent_id'];
+
+            if (0 === $parentId) {
+                $parentId = null;
+            }
+
             $result['success'] = $this->albumService->moveAlbum($albumId, $parentId);
         }
 

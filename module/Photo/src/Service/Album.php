@@ -354,20 +354,19 @@ class Album
      * Moves an album to new parent album.
      *
      * @param int $albumId the id of the album to be moved
-     * @param int $parentId the id of the new parent
+     * @param int|null $parentId the id of the new parent or null if the album should not be a subalbum
      *
      * @return bool indicating if the move was successful
      *
      * @throws Exception
      */
-    public function moveAlbum(int $albumId, int $parentId): bool
+    public function moveAlbum(int $albumId, ?int $parentId): bool
     {
         if (!$this->aclService->isAllowed('move', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to move albums'));
         }
 
         $album = $this->getAlbum($albumId);
-        $parent = $this->getAlbum($parentId);
 
         if (
             null === $album
@@ -376,6 +375,12 @@ class Album
             return false;
         }
 
+        $parent = (null === $parentId) ? null : $this->getAlbum($parentId);
+
+        // If the current album is already a subalbum, remove it from it's parent's children.
+        $album->getParent()?->removeAlbum($album);
+
+        // Set the new parent.
         $album->setParent($parent);
         $this->albumMapper->flush();
 
