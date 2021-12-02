@@ -78,21 +78,6 @@ return [
     ],
 
     /*
-     * Dreamspark configuration.
-     */
-    'dreamspark' => [
-        'url' => 'https://e5.onthehub.com/WebStore/Security/AuthenticateUser.aspx?account=%ACCOUNT%&username=%EMAIL%&key=%KEY%&academic_statuses=%GROUPS%',
-        // configured locally
-        'account' => '',
-        'key' => '',
-    ],
-
-    /*
-     * CA Path for SSL certificates, override this locally if necessary.
-     */
-    'sslcapath' => '/etc/ssl/certs',
-
-    /*
      * Path for JWT keypairs
      */
     'jwt_key_path' => 'data/keys/jwt-key',

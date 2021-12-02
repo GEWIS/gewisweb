@@ -168,16 +168,6 @@ class MemberController extends AbstractActionController
     }
 
     /**
-     * Action to go to dreamspark.
-     */
-    public function dreamsparkAction()
-    {
-        $url = $this->memberService->getDreamsparkUrl();
-
-        return $this->redirect()->toUrl($url);
-    }
-
-    /**
      * Action to download regulations.
      */
     public function downloadRegulationAction()

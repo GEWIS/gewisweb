@@ -72,54 +72,6 @@ class Member
     }
 
     /**
-     * Get the dreamspark URL for the current user.
-     */
-    public function getDreamsparkUrl()
-    {
-        if (!$this->aclService->isAllowed('login', 'dreamspark')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed login into Microsoft Imagine.')
-            );
-        }
-
-        $user = $this->aclService->getIdentityOrThrowException();
-
-        $sslcapath = $this->config['sslcapath'];
-        $dreamsparkConfig = $this->config['dreamspark'];
-
-        // determine groups for dreamspark
-        $groups = [];
-        if ($this->aclService->isAllowed('students', 'dreamspark')) {
-            $groups[] = 'students';
-        }
-        if ($this->aclService->isAllowed('faculty', 'dreamspark')) {
-            $groups[] = 'faculty';
-        }
-        if ($this->aclService->isAllowed('staff', 'dreamspark')) {
-            $groups[] = 'staff';
-        }
-
-        $url = $dreamsparkConfig['url'];
-        $url = str_replace('%ACCOUNT%', $dreamsparkConfig['account'], $url);
-        $url = str_replace('%KEY%', $dreamsparkConfig['key'], $url);
-        $url = str_replace('%EMAIL%', $user->getEmail(), $url);
-        $url = str_replace('%GROUPS%', implode(',', $groups), $url);
-
-        $client = new HttpClient($url, [
-            'sslcapath' => $sslcapath,
-        ]);
-        $response = $client->send();
-
-        if (200 != $response->getStatusCode()) {
-            throw new NotAllowedException(
-                $this->translator->translate('Login to Microsoft Imagine failed. If this persists, contact the WebCommittee.')
-            );
-        }
-
-        return $response->getBody();
-    }
-
-    /**
      * Get the members of which their birthday falls in the next $days days.
      *
      * When $days equals 0 or isn't given, it will give all birthdays of today.
