@@ -158,6 +158,20 @@ class Album implements ResourceInterface
     }
 
     /**
+     * Remove a subalbum.
+     *
+     * @param Album|null $album
+     */
+    public function removeAlbum(?Album $album): void
+    {
+        if (!$this->children->contains($album)) {
+            return;
+        }
+
+        $this->children->removeElement($album);
+    }
+
+    /**
      * Returns an associative array representation of this object
      * including all child objects.
      *
