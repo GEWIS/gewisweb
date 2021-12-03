@@ -11,7 +11,6 @@ class AclService extends \User\Service\AclService
         // add resources for this module
         $this->acl->addResource('organ');
         $this->acl->addResource('member');
-        $this->acl->addResource('dreamspark');
         $this->acl->addResource('decision');
         $this->acl->addResource('meeting');
         $this->acl->addResource('authorization');
@@ -35,8 +34,6 @@ class AclService extends \User\Service\AclService
         $this->acl->allow('user', 'decision', ['search', 'view_meeting', 'list_meetings']);
 
         $this->acl->allow('user', 'meeting', ['view', 'view_notes', 'view_documents']);
-
-        $this->acl->allow('user', 'dreamspark', ['login', 'students']);
 
         $this->acl->allow('user', 'authorization', ['create', 'view_own']);
 

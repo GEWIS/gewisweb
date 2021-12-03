@@ -254,15 +254,6 @@ return [
                             ],
                         ],
                     ],
-                    'dreamspark' => [
-                        'type' => Literal::class,
-                        'options' => [
-                            'route' => '/dreamspark',
-                            'defaults' => [
-                                'action' => 'dreamspark',
-                            ],
-                        ],
-                    ],
                     'view' => [
                         'type' => Segment::class,
                         'options' => [
