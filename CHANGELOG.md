@@ -1,3 +1,11 @@
+## [v2.4.12](https://github.com/GEWIS/gewisweb/tree/v2.4.12) (2021-12-03)
+
+- Added the ability to change sub-albums to normal albums.
+- Added button to Supremum website in Members section.
+- Remove defunct Microsoft Dreamspark/Imagine integration.
+
+---
+
 ## [v2.4.11](https://github.com/GEWIS/gewisweb/tree/v2.4.11) (2021-11-29)
 
 - Added security policy and [security.txt](https://gewis.nl/.well-known/security.txt).
