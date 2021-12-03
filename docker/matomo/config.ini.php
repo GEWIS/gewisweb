@@ -92,6 +92,7 @@ Plugins[] = CustomDimensions
 
 Plugins[] = "LogViewer"
 Plugins[] = "SecurityInfo"
+Plugins[] = "TrackingOptOut"
 
 [PluginsInstalled]
 PluginsInstalled[] = Diagnostics
@@ -105,3 +106,4 @@ PluginsInstalled[] = Intl
 
 PluginsInstalled[] = "LogViewer"
 PluginsInstalled[] = "SecurityInfo"
+PluginsInstalled[] = "TrackingOptOut"

@@ -48,14 +48,16 @@ if (strstr($viewModel->getTemplate(), 'admin')): ?>
     <div class="content-container">
         <?= $this->content ?>
     </div>
-
     <?= $this->partial('partial/footer.phtml') ?>
+    <?= $this->partial('partial/privacy-widget.phtml') ?>
 <?php endif; ?>
 
 <!-- Scripts -->
 <?= $this->inlineScript()
     ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+    ->prependFile($this->basePath() . '/js/privacy-widget.js')
     ->prependFile($this->basePath() . '/js/navbar-submenu.js'); ?>
+
 <script>
     <?php foreach($this->scriptUrl()->getUrls() as $name => $url): ?>
     URLHelper.addUrl('<?= $name ?>', '<?= urldecode($url) ?>');
