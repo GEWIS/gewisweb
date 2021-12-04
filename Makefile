@@ -49,6 +49,12 @@ test:
 
 runtest: rundev test
 
+coverage:
+		@docker-compose exec web ./vendor/phpunit/phpunit/phpunit --bootstrap ./bootstrap.php --configuration ./phpunit.xml --coverage-html ./coverage
+		@docker cp gewisweb_web_1:/code/coverage ./coverage
+
+runcoverage: rundev coverage
+
 getvendordir:
 		@rm -Rf ./vendor
 		@docker cp gewisweb_web_1:/code/vendor ./vendor
