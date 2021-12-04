@@ -11,4 +11,16 @@ class ControllerTestTest extends BaseControllerTest
         $this->dispatch('/activity');
         $this->assertResponseStatusCode(200);
     }
+
+    public function testActivityArchiveActionCanBeAccessed()
+    {
+        $this->dispatch('/activity/archive');
+        $this->assertResponseStatusCode(200);
+    }
+
+    public function testActivityCareerActionCanBeAccessed()
+    {
+        $this->dispatch('/activity/career');
+        $this->assertResponseStatusCode(200);
+    }
 }

@@ -6,7 +6,7 @@ use ApplicationTest\BaseControllerTest;
 
 class ControllerTest extends BaseControllerTest
 {
-    public function testIndexActionCanNotBeAccessed()
+    public function testIndexActionIsForbidden()
     {
         $this->dispatch('/photo');
         $this->assertResponseStatusCode(403);
