@@ -284,7 +284,7 @@ class ActivityQuery
         $oldest = $this->activityMapper->getOldestActivity();
 
         if (null === $oldest) {
-            return [null];
+            return [];
         }
 
         $startYear = AssociationYear::fromDate($oldest->getBeginTime())->getYear();
@@ -295,13 +295,13 @@ class ActivityQuery
     }
 
     /**
-     * Get all the activities that have finished in a year (and thus are archived.
+     * Get all the activities that have finished in a year (and thus are archived)
      *
      * @param int $year First part of study year
      *
      * @return array
      */
-    public function getFinishedActivitiesByYear($year)
+    public function getFinishedActivitiesByYear(int $year)
     {
         if (!$this->aclService->isAllowed('view', 'activity')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view the activities'));

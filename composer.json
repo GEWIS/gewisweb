@@ -11,6 +11,10 @@
         {
             "type": "git",
             "url": "https://github.com/jszanto/gewisweb-test-data"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/laminas/laminas-test"
         }
     ],
     "require": {
@@ -86,6 +90,7 @@
         "laminas/laminas-component-installer": "^2.5.0",
         "laminas/laminas-developer-tools": "^2.1.0",
         "laminas/laminas-loader": "^2.7.0",
+        "laminas/laminas-test": "@dev",
         "san/san-session-toolbar": "^4.0.0",
         "jszanto/gewisweb-test-data": "@dev",
         "squizlabs/php_codesniffer": "^3.6.0",
@@ -145,6 +150,17 @@
             "Frontpage\\": "module/Frontpage/src",
             "Photo\\": "module/Photo/src",
             "User\\": "module/User/src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ActivityTest\\": "module/Activity/test",
+            "ApplicationTest\\": "module/Application/test",
+            "CompanyTest\\": "module/Company/test",
+            "EducationTest\\": "module/Education/test",
+            "FrontpageTest\\": "module/Frontpage/test",
+            "PhotoTest\\": "module/Photo/test",
+            "UserTest\\": "module/User/test"
         }
     }
 }
