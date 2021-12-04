@@ -12,16 +12,16 @@ class ControllerTest extends BaseControllerTest
         $this->assertResponseStatusCode(200);
     }
 
-    public function testLangEnCanBeAccessed()
+    public function testLangEnDoesRedirect()
     {
-        $this->dispatch('/lang/en');
-        $this->assertResponseStatusCode(200);
+        $this->dispatch('/lang/en/');
+        $this->assertResponseStatusCode(302);
     }
 
-    public function testLangNlCanBeAccessed()
+    public function testLangNlDoesRedirect()
     {
-        $this->dispatch('/lang/nl');
-        $this->assertResponseStatusCode(200);
+        $this->dispatch('/lang/nl/');
+        $this->assertResponseStatusCode(302);
     }
 
     public function testPollHistoryActionCanBeAccessed()
