@@ -1,0 +1,14 @@
+name: PHPCS
+on: [push]
+jobs:
+    PHPCS:
+        runs-on: ubuntu-latest
+        env:
+            DOCKER_BUILDKIT: '1'
+        steps:
+            - name: Check out repository code
+              uses: actions/checkout@v2
+            - run: cd ${{ github.workspace }}
+            - run: php composer.phar install
+            - name: Running PHPCS
+              run: make phpcs

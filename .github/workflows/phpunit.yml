@@ -1,0 +1,15 @@
+name: PHPUnit
+on: [push]
+jobs:
+    PHPUnit:
+        runs-on: ubuntu-latest
+        env:
+            DOCKER_BUILDKIT: '1'
+        steps:
+            - name: Check out repository code
+              uses: actions/checkout@v2
+            - run: cd ${{ github.workspace }}
+            - run: cp .env.dist .env
+            - run: make updatedb
+            - name: Running tests
+              run: make runtest

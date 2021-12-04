@@ -41,6 +41,9 @@ runprodtest: buildprod
 rundev: builddev
 		@docker-compose up -d --force-recreate --remove-orphans
 
+updatedb: rundev
+		@docker-compose exec -T web ./orm orm:schema-tool:update --force --no-interaction
+
 stop:
 		@docker-compose down
 
@@ -71,18 +74,20 @@ phpstan:
 		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G
 
 phpstanpr:
-		@git checkout --detach master
+		@git fetch --all
+		@git update-ref refs/heads/temp-phpstanpr refs/remotes/origin/master
+		@git checkout --detach temp-phpstanpr
 		@cp phpstan/phpstan-baseline.neon phpstan/phpstan-baseline-temp.neon
 		@echo "" > phpstan/phpstan-baseline.neon
 		@echo "" > phpstan/phpstan-baseline-pr.neon
 		@make rundev
-		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon --generate-baseline phpstan/phpstan-baseline-pr.neon --memory-limit 1G
+		@docker-compose exec -T web vendor/bin/phpstan analyse -c phpstan.neon --generate-baseline phpstan/phpstan-baseline-pr.neon --memory-limit 1G --no-progress
 		@git checkout -
 		@cp phpstan/phpstan-baseline-temp.neon phpstan/phpstan-baseline.neon
 		@rm phpstan/phpstan-baseline-temp.neon
 		@docker cp gewisweb_web_1:/code/phpstan/phpstan-baseline-pr.neon ./phpstan/phpstan-baseline-pr.neon
 		@make rundev
-		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G
+		@docker-compose exec -T web vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G --no-progress
 
 phpcs:
 		@vendor/bin/phpcs -p --standard=PSR1,PSR12 --extensions=php,dist module config
