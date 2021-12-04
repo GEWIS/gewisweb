@@ -78,6 +78,7 @@ phpstanpr:
 		@echo "" > phpstan/phpstan-baseline.neon
 		@echo "" > phpstan/phpstan-baseline-pr.neon
 		@make rundev
+		@docker-compose exec -T web vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G --no-progress
 		@docker-compose exec -T web vendor/bin/phpstan analyse -c phpstan.neon --generate-baseline phpstan/phpstan-baseline-pr.neon --memory-limit 1G --no-progress
 		@git checkout -
 		@cp phpstan/phpstan-baseline-temp.neon phpstan/phpstan-baseline.neon
