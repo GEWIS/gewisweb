@@ -90,10 +90,10 @@
         "jszanto/gewisweb-test-data": "@dev",
         "squizlabs/php_codesniffer": "^3.6.0",
         "friendsofphp/php-cs-fixer": "^3.0.0",
-        "phpstan/phpstan": "^0.12.92",
+        "phpstan/phpstan": "^1.0.0",
         "phpstan/extension-installer": "^1.1",
-        "slam/phpstan-laminas-framework": "^0.12.6",
-        "phpstan/phpstan-doctrine": "^0.12.42"
+        "slam/phpstan-laminas-framework": "^1.0.0",
+        "phpstan/phpstan-doctrine": "^1.0.0"
     },
     "replace": {
         "laminas/laminas-cache-storage-adapter-apc": "*",
