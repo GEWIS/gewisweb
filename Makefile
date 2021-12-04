@@ -42,6 +42,7 @@ rundev: builddev
 		@docker-compose up -d --force-recreate --remove-orphans
 
 updatedb: rundev
+		@sleep 5
 		@docker-compose exec -T web ./orm orm:schema-tool:update --force --no-interaction
 
 stop:
@@ -81,12 +82,14 @@ phpstanpr:
 		@echo "" > phpstan/phpstan-baseline.neon
 		@echo "" > phpstan/phpstan-baseline-pr.neon
 		@make rundev
+		@sleep 1
 		@docker-compose exec -T web vendor/bin/phpstan analyse -c phpstan.neon --generate-baseline phpstan/phpstan-baseline-pr.neon --memory-limit 1G --no-progress
 		@git checkout -
 		@cp phpstan/phpstan-baseline-temp.neon phpstan/phpstan-baseline.neon
 		@rm phpstan/phpstan-baseline-temp.neon
 		@docker cp gewisweb_web_1:/code/phpstan/phpstan-baseline-pr.neon ./phpstan/phpstan-baseline-pr.neon
 		@make rundev
+		@sleep 1
 		@docker-compose exec -T web vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G --no-progress
 
 phpcs:
