@@ -25,6 +25,7 @@
             <directory>./module/Education/test/</directory>
             <directory>./module/Frontpage/test/</directory>
             <directory>./module/Photo/test/</directory>
+            <directory>./module/User/test/</directory>
         </testsuite>
     </testsuites>
 </phpunit>

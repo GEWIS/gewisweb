@@ -1,4 +1,4 @@
-.PHONY: help runprod rundev update updatecomposer updatepackage updateglide getvendordir phpstan phpcs phpcbf phpcsfix phpcsfixtypes build buildprod builddev login push pushprod pushdev update all prod dev
+.PHONY: help runprod rundev runtest runcoverage update updatecomposer updatepackage updateglide getvendordir phpstan phpcs phpcbf phpcsfix phpcsfixtypes build buildprod builddev login push pushprod pushdev update all prod dev
 
 help:
 		@echo "Makefile commands:"
@@ -44,16 +44,13 @@ rundev: builddev
 stop:
 		@docker-compose down
 
-test:
+runtest: rundev
 		@docker-compose exec web ./vendor/phpunit/phpunit/phpunit --bootstrap ./bootstrap.php --configuration ./phpunit.xml
 
-runtest: rundev test
-
-coverage:
+runcoverage: rundev
 		@docker-compose exec web ./vendor/phpunit/phpunit/phpunit --bootstrap ./bootstrap.php --configuration ./phpunit.xml --coverage-html ./coverage
+		@rm -r ./coverage
 		@docker cp gewisweb_web_1:/code/coverage ./coverage
-
-runcoverage: rundev coverage
 
 getvendordir:
 		@rm -Rf ./vendor
