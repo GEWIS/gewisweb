@@ -499,7 +499,13 @@ class ActivityController extends AbstractActionController
 
         // If no year is supplied, use the latest year.
         if (null === $year) {
-            $year = max($years);
+            if (empty($years)) {
+                $year = (int) date('Y');
+            } else {
+                $year = max($years);
+            }
+        } else {
+            $year = (int) $year;
         }
 
         return new ViewModel(
