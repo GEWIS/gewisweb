@@ -44,6 +44,11 @@ rundev: builddev
 stop:
 		@docker-compose down
 
+test:
+		@docker-compose exec web ./vendor/phpunit/phpunit/phpunit --bootstrap ./bootstrap.php --configuration ./phpunit.xml
+
+runtest: rundev test
+
 getvendordir:
 		@rm -Rf ./vendor
 		@docker cp gewisweb_web_1:/code/vendor ./vendor

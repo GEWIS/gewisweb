@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "46050adebc24eddb0de31d23512b95c6",
+    "content-hash": "08b3df71a93a2848629c6a45533fd964",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -10775,8 +10775,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "jszanto/gewisweb-test-data": 20,
-        "laminas/laminas-test": 20
+        "laminas/laminas-test": 20,
+        "jszanto/gewisweb-test-data": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

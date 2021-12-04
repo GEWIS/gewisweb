@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+    bootstrap="./bootstrap.php"
+    colors="true">
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./module/Activity/src</directory>
+            <directory suffix=".php">./module/Application/src</directory>
+            <directory suffix=".php">./module/Company/src</directory>
+            <directory suffix=".php">./module/Decision/src</directory>
+            <directory suffix=".php">./module/Education/src</directory>
+            <directory suffix=".php">./module/Frontpage/src</directory>
+            <directory suffix=".php">./module/Photo/src</directory>
+            <directory suffix=".php">./module/User/src</directory>
+        </include>
+    </coverage>
+
+    <testsuites>
+        <testsuite name="gewisweb">
+            <directory>./module/Activity/test/</directory>
+            <directory>./module/Application/test/</directory>
+            <directory>./module/Company/test/</directory>
+            <directory>./module/Education/test/</directory>
+            <directory>./module/Frontpage/test/</directory>
+            <directory>./module/Photo/test/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

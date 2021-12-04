@@ -151,5 +151,15 @@
             "Photo\\": "module/Photo/src",
             "User\\": "module/User/src"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ActivityTest\\": "module/Activity/test",
+            "ApplicationTest\\": "module/Application/test",
+            "CompanyTest\\": "module/Company/test",
+            "EducationTest\\": "module/Education/test",
+            "FrontpageTest\\": "module/Frontpage/test",
+            "PhotoTest\\": "module/Photo/test"
+        }
     }
 }
