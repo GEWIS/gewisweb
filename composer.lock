@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "179220b7760d24980040b15500b17ec3",
+    "content-hash": "8be3385f2df7678d70d380e8e4d6a3cd",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -7860,16 +7860,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.99",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "b4d40f1d759942f523be267a1bab6884f46ca3f7"
+                "reference": "cbe085f9fdead5b6d62e4c022ca52dc9427a10ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b4d40f1d759942f523be267a1bab6884f46ca3f7",
-                "reference": "b4d40f1d759942f523be267a1bab6884f46ca3f7",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/cbe085f9fdead5b6d62e4c022ca52dc9427a10ee",
+                "reference": "cbe085f9fdead5b6d62e4c022ca52dc9427a10ee",
                 "shasum": ""
             },
             "require": {
@@ -7885,7 +7885,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.12-dev"
+                    "dev-master": "1.2-dev"
                 }
             },
             "autoload": {
@@ -7900,7 +7900,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.99"
+                "source": "https://github.com/phpstan/phpstan/tree/1.2.0"
             },
             "funding": [
                 {
@@ -7920,25 +7920,25 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-12T20:09:55+00:00"
+            "time": "2021-11-18T14:09:01+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
-            "version": "0.12.44",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-doctrine.git",
-                "reference": "5fe9a9b15707d9bc5178fa7cf0899e904d112ccd"
+                "reference": "8805ca71119c736606be39ad6284a0cfddb89127"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/5fe9a9b15707d9bc5178fa7cf0899e904d112ccd",
-                "reference": "5fe9a9b15707d9bc5178fa7cf0899e904d112ccd",
+                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/8805ca71119c736606be39ad6284a0cfddb89127",
+                "reference": "8805ca71119c736606be39ad6284a0cfddb89127",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0",
-                "phpstan/phpstan": "^0.12.85"
+                "phpstan/phpstan": "^1.0"
             },
             "conflict": {
                 "doctrine/collections": "<1.0",
@@ -7956,16 +7956,17 @@
                 "doctrine/orm": "^2.9.1",
                 "doctrine/persistence": "^1.1 || ^2.0",
                 "nesbot/carbon": "^2.49",
+                "nikic/php-parser": "^4.13.0",
                 "php-parallel-lint/php-parallel-lint": "^1.2",
-                "phpstan/phpstan-phpunit": "^0.12.16",
-                "phpstan/phpstan-strict-rules": "^0.12.5",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpstan/phpstan-strict-rules": "^1.0",
                 "phpunit/phpunit": "^9.5",
                 "ramsey/uuid-doctrine": "^1.5.0"
             },
             "type": "phpstan-extension",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.12-dev"
+                    "dev-master": "1.0-dev"
                 },
                 "phpstan": {
                     "includes": [
@@ -7986,9 +7987,9 @@
             "description": "Doctrine extensions for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-doctrine/issues",
-                "source": "https://github.com/phpstan/phpstan-doctrine/tree/0.12.44"
+                "source": "https://github.com/phpstan/phpstan-doctrine/tree/1.0.2"
             },
-            "time": "2021-09-01T06:46:16+00:00"
+            "time": "2021-11-24T08:26:25+00:00"
         },
         {
             "name": "san/san-session-toolbar",
@@ -8066,26 +8067,26 @@
         },
         {
             "name": "slam/phpstan-laminas-framework",
-            "version": "v0.12.7",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Slamdunk/phpstan-laminas-framework.git",
-                "reference": "d9243d9b3e824d5a62d7b0c642ab24bd6e96d56f"
+                "reference": "c82c8d22aa5b724a5a2c375ff918ed89981ccd40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Slamdunk/phpstan-laminas-framework/zipball/d9243d9b3e824d5a62d7b0c642ab24bd6e96d56f",
-                "reference": "d9243d9b3e824d5a62d7b0c642ab24bd6e96d56f",
+                "url": "https://api.github.com/repos/Slamdunk/phpstan-laminas-framework/zipball/c82c8d22aa5b724a5a2c375ff918ed89981ccd40",
+                "reference": "c82c8d22aa5b724a5a2c375ff918ed89981ccd40",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.4 || ^8.0",
-                "phpstan/phpstan": "^0.12.99"
+                "php": ">=8.0",
+                "phpstan/phpstan": "^1.1.2"
             },
             "conflict": {
                 "laminas/laminas-cache": "<2.13",
                 "laminas/laminas-filter": "<2.11",
-                "laminas/laminas-form": "<2.17",
+                "laminas/laminas-form": "<3.0",
                 "laminas/laminas-hydrator": "<4.3",
                 "laminas/laminas-i18n": "<2.11",
                 "laminas/laminas-inputfilter": "<2.12",
@@ -8096,20 +8097,21 @@
                 "laminas/laminas-validator": "<2.15"
             },
             "require-dev": {
-                "laminas/laminas-cache": "^2.13.0",
-                "laminas/laminas-filter": "^2.11.1",
-                "laminas/laminas-form": "^2.17.0",
+                "laminas/laminas-cache": "^2.13.2",
+                "laminas/laminas-filter": "^2.12.0",
+                "laminas/laminas-form": "^3.0.1",
                 "laminas/laminas-hydrator": "^4.3.1",
-                "laminas/laminas-i18n": "^2.11.2",
+                "laminas/laminas-i18n": "^2.11.3",
                 "laminas/laminas-inputfilter": "^2.12.0",
                 "laminas/laminas-log": "^2.13.1",
-                "laminas/laminas-mail": "^2.15.0",
-                "laminas/laminas-mvc": "^3.2.0",
-                "laminas/laminas-paginator": "^2.10.0",
+                "laminas/laminas-mail": "^2.15.1",
+                "laminas/laminas-mvc": "^3.3.0",
+                "laminas/laminas-paginator": "^2.11.0",
                 "laminas/laminas-validator": "^2.15.0",
                 "malukenho/mcbumpface": "^1.1.5",
-                "phpstan/phpstan-phpunit": "^0.12.22",
-                "phpunit/phpunit": "^9.5.9",
+                "phpstan/phpstan-deprecation-rules": "^1.0.0",
+                "phpstan/phpstan-phpunit": "^1.0.0",
+                "phpunit/phpunit": "^9.5.10",
                 "slam/php-cs-fixer-extensions": "^v3.1.0",
                 "slam/php-debug-r": "^v1.7.0"
             },
@@ -8147,7 +8149,7 @@
             "description": "Laminas Framework 3 MVC controller plugin extension for PHPStan.",
             "support": {
                 "issues": "https://github.com/Slamdunk/phpstan-laminas-framework/issues",
-                "source": "https://github.com/Slamdunk/phpstan-laminas-framework/tree/v0.12.7"
+                "source": "https://github.com/Slamdunk/phpstan-laminas-framework/tree/v1.0.0"
             },
             "funding": [
                 {
@@ -8159,7 +8161,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-09-22T07:23:53+00:00"
+            "time": "2021-11-09T13:29:51+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
