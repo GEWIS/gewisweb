@@ -94,20 +94,22 @@ phpcbfall:
 		@vendor/bin/phpcbf -p --standard=PSR1,PSR12 --extensions=php,dist module config
 
 phpcsfix:
-		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --rules=@PSR1,@PSR12,@DoctrineAnnotation,@PHP80Migration module
-		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --rules=@PSR1,@PSR12,@DoctrineAnnotation,@PHP80Migration config
+		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --rules=@PSR1,@PSR12,@DoctrineAnnotation,@PHP81Migration module
+		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --rules=@PSR1,@PSR12,@DoctrineAnnotation,@PHP81Migration config
 
 phpcsfixtypes:
-		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --allow-risky=yes --rules=@PSR1,@PSR12,@DoctrineAnnotation,@PHP80Migration:risky module
-		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --allow-risky=yes --rules=@PSR1,@PSR12,@DoctrineAnnotation,@PHP80Migration:risky config
+		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --allow-risky=yes --rules=@PHP80Migration:risky module
+		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --allow-risky=yes --rules=@PHP80Migration:risky config
 
 updatecomposer:
+		@docker cp ./composer.json gewisweb_web_1:/code/composer.json
 		@docker-compose exec web php composer.phar selfupdate
 		@docker cp gewisweb_web_1:/code/composer.phar ./composer.phar
 		@docker-compose exec web php composer.phar update -W
 		@docker cp gewisweb_web_1:/code/composer.lock ./composer.lock
 
 updatepackage:
+		@docker cp ./package.json gewisweb_web_1:/code/package.json
 		@docker-compose exec web npm update
 		@docker-compose exec web npm audit fix
 		@docker cp gewisweb_web_1:/code/package-lock.json ./package-lock.json
@@ -120,6 +122,7 @@ updateglide:
 		@docker-compose exec glide php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 		@docker-compose exec glide php composer-setup.php
 		@docker-compose exec glide php -r "unlink('composer-setup.php');"
+		@docker cp ./docker/glide/composer.json gewisweb_glide_1:/glide/composer.json
 		@docker-compose exec glide php composer.phar selfupdate
 		@docker cp gewisweb_glide_1:/glide/composer.phar ./docker/glide/composer.phar
 		@docker-compose exec glide php composer.phar update -W

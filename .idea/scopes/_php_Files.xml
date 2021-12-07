@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name=".php Files" pattern="file:module/*.php" />
+</component>

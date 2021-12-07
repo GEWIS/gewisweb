@@ -1,4 +1,4 @@
-FROM php:8.0-fpm as gewisweb_web_development
+FROM php:8.1-fpm as gewisweb_web_development
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
