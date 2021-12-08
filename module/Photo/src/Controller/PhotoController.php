@@ -44,7 +44,11 @@ class PhotoController extends AbstractActionController
         $year = $this->params()->fromRoute('year');
         // If no year is supplied, use the latest year.
         if (is_null($year)) {
-            $year = max($years);
+            if (empty($years)) {
+                $year = (int) date('Y');
+            } else {
+                $year = max($years);
+            }
         } else {
             $year = (int)$year;
         }

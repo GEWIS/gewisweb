@@ -10,6 +10,7 @@ nbproject
 .idea/sonarlint/
 .project
 .settings
+coverage/
 vendor/
 gewisweb-vagrant/
 node_modules/

@@ -85,6 +85,7 @@
         "laminas/laminas-component-installer": "^2.6.0",
         "laminas/laminas-developer-tools": "^2.3.0",
         "laminas/laminas-loader": "^2.8.0",
+        "laminas/laminas-test": "^4.0.0",
         "san/san-session-toolbar": "^4.0.0",
         "jszanto/gewisweb-test-data": "@dev",
         "squizlabs/php_codesniffer": "^3.6.0",
@@ -146,6 +147,17 @@
             "Frontpage\\": "module/Frontpage/src",
             "Photo\\": "module/Photo/src",
             "User\\": "module/User/src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ActivityTest\\": "module/Activity/test",
+            "ApplicationTest\\": "module/Application/test",
+            "CompanyTest\\": "module/Company/test",
+            "EducationTest\\": "module/Education/test",
+            "FrontpageTest\\": "module/Frontpage/test",
+            "PhotoTest\\": "module/Photo/test",
+            "UserTest\\": "module/User/test"
         }
     }
 }
