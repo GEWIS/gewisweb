@@ -3,8 +3,6 @@ on: [push]
 jobs:
     PHPCS:
         runs-on: ubuntu-latest
-        env:
-            DOCKER_BUILDKIT: '1'
         steps:
             - name: Check out repository code
               uses: actions/checkout@v2
