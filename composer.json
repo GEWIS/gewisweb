@@ -84,7 +84,7 @@
         "ext-simplexml": "*",
         "ext-xdebug": "^3.0.0",
         "laminas/laminas-component-installer": "^2.6.0",
-        "laminas/laminas-developer-tools": "^2.2.0",
+        "laminas/laminas-developer-tools": "^2.3.0",
         "laminas/laminas-loader": "^2.8.0",
         "san/san-session-toolbar": "^4.0.0",
         "jszanto/gewisweb-test-data": "@dev",
