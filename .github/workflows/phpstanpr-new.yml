@@ -1,0 +1,35 @@
+name: PHPStan PR
+on: [push]
+jobs:
+    PHPStan-PR:
+        runs-on: ubuntu-latest
+        env:
+            DOCKER_BUILDKIT: '1'
+        services:
+            postgres:
+                image: mariadb
+        steps:
+            -   name: Setup PHP with extensions
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.1'
+                    extensions: imagick, memcached, xdebug
+            - name: Check out repository code
+              uses: actions/checkout@v2
+            - run: cd ${{ github.workspace }}
+            - run: cp .env.dist .env
+            - run: make updatedb
+            - run: git fetch --all
+            - run: git update-ref refs/heads/temp-phpstanpr refs/remotes/origin/master
+            - run: git checkout --detach temp-phpstanpr
+            - run: php composer.phar install
+            - run: cp phpstan/phpstan-baseline.neon phpstan/phpstan-baseline-temp.neon
+            - run: echo "" > phpstan/phpstan-baseline.neon
+            - run: echo "" > phpstan/phpstan-baseline-pr.neon
+            - run: vendor/bin/phpstan analyse -c phpstan.neon --generate-baseline phpstan/phpstan-baseline-pr.neon --memory-limit 1G --no-progress
+            - run: git checkout -
+            - run: php composer.phar install
+            - run: cp phpstan/phpstan-baseline-temp.neon phpstan/phpstan-baseline.neon
+            - run: rm phpstan/phpstan-baseline-temp.neon
+            - name: Running PHPStan
+              run: vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G --no-progress
