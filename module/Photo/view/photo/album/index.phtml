@@ -190,8 +190,29 @@ $this->scriptUrl()->requireUrl('member/search')
     lightbox.on('uiRegister', () => {
         // Register custom buttons.
         lightbox.pswp.ui.registerElement({
-            name: 'download-button',
+            name: 'share-button',
             order: 9,
+            isButton: true,
+            title: '<?= $this->translate('Share') ?>',
+            html: {
+                isCustomSVG: true,
+                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#share"></use>',
+            },
+            onClick: (event, el, pswp) => {
+                let id = pswp.currSlide.data.element.dataset.id;
+                let currentURL = window.location.href;
+                let photoURL = currentURL + '#&pid=' + id;
+
+                navigator.clipboard.writeText(photoURL).then(() => {
+                    // TODO: Update tooltip
+                }).catch(() => {
+                    // TODO: Update tooltip
+                });
+            },
+        });
+        lightbox.pswp.ui.registerElement({
+            name: 'download-button',
+            order: 8,
             isButton: true,
             title: '<?= $this->translate('Download') ?>',
             html: {
@@ -213,7 +234,7 @@ $this->scriptUrl()->requireUrl('member/search')
         });
         lightbox.pswp.ui.registerElement({
             name: 'metadata-button',
-            order: 8,
+            order: 7,
             isButton: true,
             title: '<?= $this->translate('Information') ?>',
             html: {
@@ -233,7 +254,7 @@ $this->scriptUrl()->requireUrl('member/search')
         });
         lightbox.pswp.ui.registerElement({
             name: 'like-button',
-            order: 7,
+            order: 6,
             isButton: true,
             title: '<?= $this->translate('Vote for photo of the week') ?>',
             html: {
