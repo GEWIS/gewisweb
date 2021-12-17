@@ -106,7 +106,7 @@ $this->scriptUrl()->requireUrl('member/search')
                 <?php endforeach ?>
             </div>
         <?php endif; ?>
-        <div class="pswp-gallery">
+        <div class="pswp-gallery" data-recent-vote="<?= $hasRecentVote ? 'true' : 'false' ?>">
             <div class="grid-sizer"></div>
             <div class="gutter-sizer"></div>
             <?php foreach ($album->getPhotos() as $item): ?>
@@ -264,8 +264,14 @@ $this->scriptUrl()->requireUrl('member/search')
             position: 'bar',
             onInit: (el, pswp) => {
                 lightbox.pswp.on('change', () => {
-                    let currentSlide = pswp.currSlide.data.element;
-                    let hasVoted = currentSlide.dataset.voted;
+                    let hasRecentVote = document.querySelector('.pswp-gallery').dataset.recentVote;
+                    let hasVoted = pswp.currSlide.data.element.dataset.voted;
+
+                    if ('false' === hasRecentVote) {
+                        const pulsingDot = document.createElement('span');
+                        pulsingDot.classList.add('pulsing-dot');
+                        el.appendChild(pulsingDot);
+                    }
 
                     if ('true' === hasVoted) {
                         el.firstChild.classList.add('pswp__icn-red');
@@ -287,6 +293,15 @@ $this->scriptUrl()->requireUrl('member/search')
                             currentSlide.dataset.voted = 'true';
                             el.firstChild.classList.add('pswp__icn-red');
                             el.dataset.originalTitle = '<?= $this->translate('Voted!') ?>';
+
+                            // Remove the pulsing dot if it is present.
+                            const pulsingdot = document.querySelector('.pulsing-dot');
+                            if (null !== pulsingdot) {
+                                el.removeChild(pulsingdot);
+                            }
+
+                            // Also update the recent vote status.
+                            document.querySelector('.pswp-gallery').dataset.recentVote = 'true';
                         }).catch(error => {
                             // An error occurred somewhere along the way, perhaps we should notify the user.
                             el.dataset.originalTitle = '<?= $this->translate('Could not vote, try again') ?>';

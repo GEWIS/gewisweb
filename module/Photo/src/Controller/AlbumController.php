@@ -4,7 +4,10 @@ namespace Photo\Controller;
 
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
-use Photo\Service\Album as AlbumService;
+use Photo\Service\{
+    Album as AlbumService,
+    Photo as PhotoService,
+};
 
 class AlbumController extends AbstractActionController
 {
@@ -12,6 +15,11 @@ class AlbumController extends AbstractActionController
      * @var AlbumService
      */
     private AlbumService $albumService;
+
+    /**
+     * @var PhotoService
+     */
+    private PhotoService $photoService;
 
     /**
      * @var array
@@ -26,9 +34,11 @@ class AlbumController extends AbstractActionController
      */
     public function __construct(
         AlbumService $albumService,
+        PhotoService $photoService,
         array $photoConfig,
     ) {
         $this->albumService = $albumService;
+        $this->photoService = $photoService;
         $this->photoConfig = $photoConfig;
     }
 
@@ -48,11 +58,14 @@ class AlbumController extends AbstractActionController
             return $this->notFoundAction();
         }
 
+        $hasRecentVote = $this->photoService->hasRecentVote();
+
         return new ViewModel(
             [
                 'album' => $album,
                 'basedir' => '/',
                 'config' => $this->photoConfig,
+                'hasRecentVote' => $hasRecentVote,
             ]
         );
     }

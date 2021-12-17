@@ -3,6 +3,7 @@
 namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
+use DateInterval;
 use DateTime;
 use Photo\Model\Vote as VoteModel;
 
@@ -49,6 +50,27 @@ class Vote extends BaseMapper
                 'voter' => $lidnr,
             ]
         );
+    }
+
+    /**
+     * Checks if a member has recently voted.
+     *
+     * @param int $lidnr
+     * @return bool
+     */
+    public function hasRecentVote(int $lidnr): bool
+    {
+        $nowMinusMonth = (new DateTime('now'))->sub(new DateInterval('P1M'));
+
+        $qb = $this->getRepository()->createQueryBuilder('v');
+        $qb->select('v.id')
+            ->where('v.voter = :lidnr')
+            ->andWhere('v.dateTime > :after')
+            ->setParameter('lidnr', $lidnr)
+            ->setParameter('after', $nowMinusMonth)
+            ->setMaxResults(1);
+
+        return !empty($qb->getQuery()->getResult());
     }
 
     protected function getRepositoryName(): string

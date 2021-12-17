@@ -22,6 +22,7 @@ class AlbumControllerFactory implements FactoryInterface
     ): AlbumController {
         return new AlbumController(
             $container->get('photo_service_album'),
+            $container->get('photo_service_photo'),
             $container->get('config')['photo'],
         );
     }

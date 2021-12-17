@@ -790,4 +790,14 @@ class Photo
     {
         return str_replace('public', '', $this->photoConfig['upload_dir']);
     }
+
+    /**
+     * Checks if the currently logged-in user has recently voted for a photo.
+     */
+    public function hasRecentVote(): bool
+    {
+        $lidnr = $this->aclService->getIdentityOrThrowException()->getLidnr();
+
+        return $this->voteMapper->hasRecentVote($lidnr);
+    }
 }
