@@ -13,7 +13,7 @@ use Laminas\Http\Response\Stream;
 use Laminas\I18n\Filter\Alnum;
 use Laminas\Mvc\I18n\Translator;
 use Photo\Mapper\{
-    PHoto as PhotoMapper,
+    Photo as PhotoMapper,
     ProfilePhoto as ProfilePhotoMapper,
     Tag as TagMapper,
     Vote as VoteMapper,
