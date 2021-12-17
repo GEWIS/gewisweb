@@ -34,16 +34,23 @@ class MemberInfo
      */
     private AclService $aclService;
 
+    /**
+     * @var array
+     */
+    private array $photoConfig;
+
     public function __construct(
         Translator $translator,
         PhotoService $photoService,
         MemberMapper $memberMapper,
-        AclService $aclService
+        AclService $aclService,
+        array $photoConfig,
     ) {
         $this->translator = $translator;
         $this->photoService = $photoService;
         $this->memberMapper = $memberMapper;
         $this->aclService = $aclService;
+        $this->photoConfig = $photoConfig;
     }
 
     /**
@@ -81,6 +88,7 @@ class MemberInfo
 
         $profilePhoto = $this->photoService->getProfilePhoto($lidnr);
         $isExplicitProfilePhoto = $this->photoService->hasExplicitProfilePhoto($lidnr);
+        $photoConfig = $this->photoConfig;
 
         return [
             'member' => $member,
@@ -89,6 +97,7 @@ class MemberInfo
             'profilePhoto' => $profilePhoto,
             'isExplicitProfilePhoto' => $isExplicitProfilePhoto,
             'basedir' => $basedir,
+            'photoConfig' => $photoConfig,
         ];
     }
 

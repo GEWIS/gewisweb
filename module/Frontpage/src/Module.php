@@ -46,6 +46,7 @@ class Module
                     $tagMapper = $container->get('photo_mapper_tag');
                     $activityMapper = $container->get('activity_mapper_activity');
                     $frontpageConfig = $container->get('config')['frontpage'];
+                    $photoConfig = $container->get('config')['photo'];
 
                     return new Frontpage(
                         $translator,
@@ -56,7 +57,8 @@ class Module
                         $photoService,
                         $tagMapper,
                         $activityMapper,
-                        $frontpageConfig
+                        $frontpageConfig,
+                        $photoConfig,
                     );
                 },
                 'frontpage_service_page' => function (ContainerInterface $container) {

@@ -66,23 +66,51 @@ use Activity\Model\Activity;
                 <?php if (!empty($birthdays) && $this->acl('decision_service_acl')->isAllowed('member', 'birthdays')): ?>
                     <section class="content-section">
                         <div class="panel panel-default" style="overflow:hidden;">
-                            <?php if (!is_null($birthdayTag)): ?>
+                            <?php if (!is_null($birthdayPhoto)): ?>
                                 <div class="col-md-6 no-pad">
                                     <a href="<?= $this->url(
                                         'photo/album',
                                         [
-                                            'album_id' => $birthdayTag->getPhoto()->getAlbum()->getId(),
+                                            'album_id' => $birthdayPhoto->getAlbum()->getId(),
                                             'album_type' => 'album',
-                                            'photo_id' => $birthdayTag->getPhoto()->getId(),
+                                            'photo_id' => $birthdayPhoto->getId(),
                                         ],
                                     ) ?>">
+                                        <?php
+                                        $bAspectRatio = $birthdayPhoto->getAspectRatio();
+
+                                        $bThumbnailWidth = $photoConfig['small_thumb_size']['width'];
+                                        $bThumbnailSize = [
+                                            'w' => $bThumbnailWidth,
+                                            'h' => round($bThumbnailWidth * $bAspectRatio)
+                                        ];
+
+                                        $bLargeWidth = $photoConfig['large_thumb_size']['width'];
+                                        $bLargeSize = [
+                                            'w' => $bLargeWidth,
+                                            'h' => round($bLargeWidth * $bAspectRatio)
+                                        ];
+                                        ?>
                                         <img class="img-responsive"
-                                             src="<?= $this->fileUrl($birthdayTag->getPhoto()->getLargeThumbPath()) ?>"
+                                             src="<?= $this->glideUrl()->getUrl($birthdayPhoto->getPath(), $bThumbnailSize) ?>"
+                                             srcset="<?= sprintf(
+                                                 "%s %sw, %s %sw",
+                                                 $this->glideUrl()->getUrl(
+                                                     $birthdayPhoto->getPath(),
+                                                     $bThumbnailSize,
+                                                 ),
+                                                 $bThumbnailSize['w'],
+                                                 $this->glideUrl()->getUrl(
+                                                     $birthdayPhoto->getPath(),
+                                                     $bLargeSize,
+                                                 ),
+                                                 $bLargeSize['w'],
+                                             ) ?>"
                                              alt="">
                                     </a>
                                 </div>
                             <?php endif; ?>
-                            <div class="col-md-<?= is_null($birthdayTag) ? '12' : '6' ?> no-pad">
+                            <div class="col-md-<?= is_null($birthdayPhoto) ? '12' : '6' ?> no-pad">
                                 <div class="panel-heading">
                                     <h3><?= $this->translate('Verjaardagen') ?></h3>
                                 </div>
@@ -149,9 +177,9 @@ use Activity\Model\Activity;
                                 <a href="<?= $this->url(
                                     'photo/album',
                                     [
-                                        'album_id' => $weeklyPhoto->getPhoto()->getAlbum()->getId(),
+                                        'album_id' => $weeklyPhoto->getAlbum()->getId(),
                                         'album_type' => 'album',
-                                        'photo_id' => $weeklyPhoto->getPhoto()->getId(),
+                                        'photo_id' => $weeklyPhoto->getId(),
                                     ],
                                 ) ?>">
                                     <?= $this->translate('Photo of the week') ?>
@@ -164,14 +192,42 @@ use Activity\Model\Activity;
                                 href="<?= $this->url(
                                     'photo/album',
                                     [
-                                        'album_id' => $weeklyPhoto->getPhoto()->getAlbum()->getId(),
+                                        'album_id' => $weeklyPhoto->getAlbum()->getId(),
                                         'album_type' => 'album',
-                                        'photo_id' => $weeklyPhoto->getPhoto()->getId(),
+                                        'photo_id' => $weeklyPhoto->getId(),
                                     ],
                                 ) ?>">
+                                <?php
+                                $wAspectRatio = $weeklyPhoto->getAspectRatio();
+
+                                $wThumbnailWidth = $photoConfig['small_thumb_size']['width'];
+                                $wThumbnailSize = [
+                                    'w' => $wThumbnailWidth,
+                                    'h' => round($wThumbnailWidth * $wAspectRatio)
+                                ];
+
+                                $wLargeWidth = $photoConfig['large_thumb_size']['width'];
+                                $wLargeSize = [
+                                    'w' => $wLargeWidth,
+                                    'h' => round($wLargeWidth * $wAspectRatio)
+                                ];
+                                ?>
                                 <img
                                     class="img-responsive"
-                                    src="<?= $this->fileUrl($weeklyPhoto->getPhoto()->getLargeThumbPath()) ?>"
+                                    src="<?= $this->glideUrl()->getUrl($weeklyPhoto->getPath(), $wThumbnailSize) ?>"
+                                    srcset="<?= sprintf(
+                                        "%s %sw, %s %sw",
+                                        $this->glideUrl()->getUrl(
+                                            $weeklyPhoto->getPath(),
+                                            $wThumbnailSize,
+                                        ),
+                                        $wThumbnailSize['w'],
+                                        $this->glideUrl()->getUrl(
+                                            $weeklyPhoto->getPath(),
+                                            $wLargeSize,
+                                        ),
+                                        $wLargeSize['w'],
+                                    ) ?>"
                                     alt=""
                                 >
                             </a>
