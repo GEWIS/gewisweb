@@ -5,7 +5,6 @@ namespace Photo;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Doctrine\ORM\Events;
 use Exception;
-use Laminas\Cache\StorageFactory;
 use Laminas\Mvc\MvcEvent;
 use Interop\Container\ContainerInterface;
 use League\Glide\Urls\UrlBuilderFactory;
@@ -202,23 +201,6 @@ class Module
                     );
                 },
                 'photo_service_acl' => AclServiceFactory::class,
-                'album_page_cache' => function () {
-                    return StorageFactory::factory(
-                        [
-                            'adapter' => [
-                                'name' => 'filesystem',
-                                'options' => [
-                                    'dirLevel' => 2,
-                                    'cacheDir' => 'data/cache',
-                                    'dirPermission' => 0755,
-                                    'filePermission' => 0666,
-                                    'namespaceSeparator' => '-db-',
-                                ],
-                            ],
-                            'plugins' => ['serializer'],
-                        ]
-                    );
-                },
                 'activity_service_acl' => AclServiceFactory::class,
                 WeeklyPhoto::class => function (ContainerInterface $container) {
                     $weeklyPhoto = new WeeklyPhoto();
