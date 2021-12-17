@@ -23,7 +23,6 @@ class PhotoAdminControllerFactory implements FactoryInterface
         return new PhotoAdminController(
             $container->get('photo_service_album'),
             $container->get('photo_service_photo'),
-            $container->get('doctrine.entitymanager.orm_default'),
         );
     }
 }
