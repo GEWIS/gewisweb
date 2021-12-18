@@ -10,14 +10,13 @@ use Laminas\Form\Element\{
     Submit,
     Textarea,
 };
-use Laminas\Validator\StringLength;
+use Laminas\Validator\{Date as DateValidator, StringLength};
 use Laminas\Filter\{
     StringTrim,
     StripTags,
 };
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\Date as DateValidator;
 
 class Package extends LocalisableForm implements InputFilterProviderInterface
 {

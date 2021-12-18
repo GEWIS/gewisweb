@@ -3,8 +3,7 @@
 namespace Photo\Controller\Plugin;
 
 use Laminas\Paginator\Adapter\AdapterInterface;
-use Photo\Service\Album;
-use Photo\Service\Photo;
+use Photo\Service\{Album, Photo};
 
 /**
  * Paginator for album pages.

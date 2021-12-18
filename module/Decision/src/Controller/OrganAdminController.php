@@ -59,10 +59,12 @@ class OrganAdminController extends AbstractActionController
             $form->setData($post);
 
             if ($form->isValid()) {
-                if ($this->organService->updateOrganInformation(
-                    $organInformation,
-                    $form->getData(FormInterface::VALUES_AS_ARRAY),
-                )) {
+                if (
+                    $this->organService->updateOrganInformation(
+                        $organInformation,
+                        $form->getData(FormInterface::VALUES_AS_ARRAY),
+                    )
+                ) {
                     return $this->redirect()->toUrl($this->url()->fromRoute('admin_organ'));
                 }
             }

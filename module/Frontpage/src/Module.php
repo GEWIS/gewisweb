@@ -3,14 +3,8 @@
 namespace Frontpage;
 
 use Doctrine\Laminas\Hydrator\DoctrineObject;
-use Frontpage\Form\NewsItem;
-use Frontpage\Form\Page;
-use Frontpage\Form\Poll;
-use Frontpage\Form\PollApproval;
-use Frontpage\Form\PollComment;
-use Frontpage\Service\AclService;
-use Frontpage\Service\Frontpage;
-use Frontpage\Service\News;
+use Frontpage\Form\{NewsItem, Page, Poll, PollApproval, PollComment};
+use Frontpage\Service\{AclService, Frontpage, News};
 use Interop\Container\ContainerInterface;
 use RuntimeException;
 use User\Authorization\AclServiceFactory;

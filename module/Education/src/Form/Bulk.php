@@ -6,8 +6,7 @@ use Laminas\Form\Element\{
     Collection,
     Submit,
 };
-use Laminas\Form\Fieldset;
-use Laminas\Form\Form;
+use Laminas\Form\{Fieldset, Form};
 use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
 

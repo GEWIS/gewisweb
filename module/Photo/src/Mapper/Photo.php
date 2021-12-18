@@ -3,8 +3,7 @@
 namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Photo\Model\MemberAlbum;
-use Photo\Model\Photo as PhotoModel;
+use Photo\Model\{MemberAlbum, Photo as PhotoModel};
 
 /**
  * Mappers for Photo.

@@ -48,12 +48,12 @@ class Member extends BaseMapper
             ->addScalarResult('generation', 'generation', 'integer');
 
         $sql = <<<QUERY
-        SELECT `lidnr`, CONCAT_WS(' ', `firstName`, IF(LENGTH(`middleName`), `middleName`, NULL), `lastName`) as `fullName`, `generation`
-        FROM `Member`
-        WHERE CONCAT(LOWER(`firstName`), ' ', LOWER(`lastName`)) LIKE :name
-        OR CONCAT(LOWER(`firstName`), ' ', LOWER(`middleName`), ' ', LOWER(`lastName`)) LIKE :name
-        ORDER BY $orderColumn $orderDirection LIMIT :limit
-        QUERY;
+            SELECT `lidnr`, CONCAT_WS(' ', `firstName`, IF(LENGTH(`middleName`), `middleName`, NULL), `lastName`) as `fullName`, `generation`
+            FROM `Member`
+            WHERE CONCAT(LOWER(`firstName`), ' ', LOWER(`lastName`)) LIKE :name
+            OR CONCAT(LOWER(`firstName`), ' ', LOWER(`middleName`), ' ', LOWER(`lastName`)) LIKE :name
+            ORDER BY $orderColumn $orderDirection LIMIT :limit
+            QUERY;
 
         $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
         $query->setParameter(':name', '%' . strtolower($name) . '%')

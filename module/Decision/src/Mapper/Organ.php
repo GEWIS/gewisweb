@@ -4,8 +4,7 @@ namespace Decision\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Decision\Model\Organ as OrganModel;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\{NoResultException, NonUniqueResultException};
 
 /**
  * Mappers for organs.

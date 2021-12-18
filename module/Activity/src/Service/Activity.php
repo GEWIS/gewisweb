@@ -572,16 +572,16 @@ class Activity
         // the activity data, we actually have to check both ways. After
         // this unset all `id`s after getting the diff to reduce the number
         // of calls.
-        $diff1 = $this->array_diff_assoc_recursive($current, $proposal);
-        $diff2 = $this->array_diff_assoc_recursive($proposal, $current);
+        $diff1 = $this->arrayDiffAssocRecursive($current, $proposal);
+        $diff2 = $this->arrayDiffAssocRecursive($proposal, $current);
         $this->recursiveUnsetKey($diff1, 'id');
         $this->recursiveUnsetKey($diff2, 'id');
 
         // Filter out all empty parts of the differences, if both are empty
         // nothing has changed on form submission.
         if (
-            empty($this->array_filter_recursive($diff1))
-            && empty($this->array_filter_recursive($diff2))
+            empty($this->arrayFilterRecursive($diff1))
+            && empty($this->arrayFilterRecursive($diff2))
         ) {
             return false;
         }
@@ -597,7 +597,7 @@ class Activity
      *
      * @return array
      */
-    protected function array_diff_assoc_recursive(array $array1, array $array2)
+    protected function arrayDiffAssocRecursive(array $array1, array $array2): array
     {
         $difference = [];
 
@@ -606,7 +606,7 @@ class Activity
                 if (!array_key_exists($key, $array2) || !is_array($array2[$key])) {
                     $difference[$key] = $value;
                 } else {
-                    $newDifference = $this->array_diff_assoc_recursive($value, $array2[$key]);
+                    $newDifference = $this->arrayDiffAssocRecursive($value, $array2[$key]);
 
                     if (!empty($newDifference)) {
                         $difference[$key] = $newDifference;
@@ -643,11 +643,11 @@ class Activity
      *
      * @return array
      */
-    protected function array_filter_recursive(array $array)
+    protected function arrayFilterRecursive(array $array): array
     {
         foreach ($array as $key => $value) {
             if (is_array($value)) {
-                $array[$key] = $this->array_filter_recursive($value);
+                $array[$key] = $this->arrayFilterRecursive($value);
             }
 
             if (in_array($array[$key], ['', null, []], true)) {

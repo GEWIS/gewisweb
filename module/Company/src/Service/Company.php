@@ -563,7 +563,8 @@ class Company
      * @return bool
      * @throws Exception
      */
-    public function createPackage(CompanyModel $company, array $data, string $type = 'job'): bool {
+    public function createPackage(CompanyModel $company, array $data, string $type = 'job'): bool
+    {
         $package = $this->packageMapper->createPackage($type);
         $package->setCompany($company);
 
@@ -690,7 +691,9 @@ class Company
 
         if (isset($data['labels'])) {
             $newLabels = $data['labels'];
-            $currentLabels = $job->getLabels()->map(function ($label) { return $label->getId(); })->toArray();
+            $currentLabels = $job->getLabels()->map(function ($label) {
+                return $label->getId();
+            })->toArray();
 
             $intersection = array_intersect($newLabels, $currentLabels);
             $toRemove = array_diff($currentLabels, $newLabels);

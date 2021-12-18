@@ -2,9 +2,6 @@
 
 namespace Decision\Service;
 
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
-use Doctrine\ORM\ORMException;
 use Application\Service\{
     Email as EmailService,
     FileStorage as FileStorageService,
@@ -28,7 +25,7 @@ use Decision\Model\{
     MeetingDocument as MeetingDocumentModel,
     MeetingNotes as MeetingNotesModel,
 };
-use Doctrine\ORM\PersistentCollection;
+use Doctrine\ORM\{NoResultException, NonUniqueResultException, ORMException, PersistentCollection};
 use Exception;
 use InvalidArgumentException;
 use Laminas\Http\Response\Stream;

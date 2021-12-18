@@ -3,12 +3,10 @@
 namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Photo\Model\Photo as PhotoModel;
-use Photo\Model\Tag as TagModel;
-
-/**
+use Photo\Model\{Photo as PhotoModel, Tag as /**
  * Mappers for Tags.
- */
+ */TagModel};
+
 class Tag extends BaseMapper
 {
     public function findTag($photoId, $lidnr)

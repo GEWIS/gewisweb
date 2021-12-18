@@ -3,8 +3,7 @@
 namespace User\Permissions\Assertion;
 
 use DateTime;
-use Decision\Model\Organ;
-use Decision\Model\OrganMember;
+use Decision\Model\{Organ, OrganMember};
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;

@@ -3,8 +3,7 @@
 namespace User\Authentication;
 
 use Laminas\Authentication\Adapter\AdapterInterface;
-use Laminas\Authentication\AuthenticationServiceInterface;
-use Laminas\Authentication\Result;
+use Laminas\Authentication\{AuthenticationServiceInterface, Result};
 use RuntimeException;
 use User\Authentication\Adapter\ApiMapper;
 use User\Model\ApiUser;

@@ -68,7 +68,8 @@ abstract class Signup
     )]
     protected Collection $fieldValues;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->fieldValues = new ArrayCollection();
     }
 

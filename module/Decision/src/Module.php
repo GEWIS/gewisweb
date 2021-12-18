@@ -3,16 +3,8 @@
 namespace Decision;
 
 use Decision\Controller\FileBrowser\LocalFileReader;
-use Decision\Form\Authorization;
-use Decision\Form\Document;
-use Decision\Form\Notes;
-use Decision\Form\OrganInformation;
-use Decision\Form\ReorderDocument;
-use Decision\Form\SearchDecision;
-use Decision\Mapper\Decision;
-use Decision\Mapper\Meeting;
-use Decision\Mapper\Member;
-use Decision\Mapper\Organ;
+use Decision\Form\{Authorization, Document, Notes, OrganInformation, ReorderDocument, SearchDecision};
+use Decision\Mapper\{Decision, Meeting, Member, Organ};
 use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Interop\Container\ContainerInterface;
 use User\Authorization\AclServiceFactory;

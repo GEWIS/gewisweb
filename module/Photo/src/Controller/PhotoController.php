@@ -1,6 +1,7 @@
 <?php
 
 namespace Photo\Controller;
+
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\{
     JsonModel,

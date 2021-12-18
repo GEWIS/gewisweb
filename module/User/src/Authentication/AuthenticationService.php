@@ -3,12 +3,10 @@
 namespace User\Authentication;
 
 use Laminas\Authentication\Adapter\AdapterInterface;
-use Laminas\Authentication\AuthenticationServiceInterface;
-use Laminas\Authentication\Result;
 use Laminas\Authentication\Storage\StorageInterface;
 use RuntimeException;
-use User\Authentication\Adapter\Mapper;
-use User\Authentication\Adapter\PinMapper;
+use Laminas\Authentication\{AuthenticationServiceInterface, Result};
+use User\Authentication\Adapter\{Mapper, PinMapper};
 use User\Authentication\Storage\Session;
 use User\Model\User;
 
