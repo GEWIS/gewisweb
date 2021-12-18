@@ -1,7 +1,6 @@
 <?php
 // set title
 use Decision\Model\AssociationYear;
-use Photo\Model\Album;
 use Photo\Model\MemberAlbum;
 
 $this->headTitle($album->getName());
@@ -13,9 +12,15 @@ while (!is_null($currentAlbum->getParent())) {
 $this->headTitle($this->translate('Photos'));
 ?>
 <?php $this->headScript()
-    ->appendFile($this->basePath() . '/js/imagesloaded.pkgd.min.js')
+    ->appendFile($this->basePath() . '/js/autocomplete.min.js')
+    ->appendFile($this->basePath() . '/js/photo.js')
     ->appendFile($this->basePath() . '/js/masonry.pkgd.min.js')
-    ->appendFile($this->basePath() . '/js/photo.js');
+    ->appendFile($this->basePath() . '/js/lazyload.min.js')
+    ->appendFile($this->basePath() . '/js/bootstrap/tooltip.js');
+$this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css');
+
+$this->scriptUrl()->requireUrl('member/search')
+    ->requireUrl('photo/photo/vote', ['photo_id']);
 ?>
 <section class="section section-breadcrumb">
     <div class="container">
@@ -70,19 +75,9 @@ $this->headTitle($this->translate('Photos'));
 </section>
 
 <section class="section">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <div class="alert alert-danger" role="alert">
-                    <?= $this->translate('Do you want to help test new features of the website?') ?>
-                    <?php
-                    if ($album instanceof MemberAlbum) {
-                        echo sprintf($this->translate('Then try the new photo viewer %sHERE%s!'), '<a href="' . $this->url('photo/album_beta', ['album_id' => $currentAlbum->getId(), 'album_type' => 'member']) . '">', '</a>');
-                    } else {
-                        echo sprintf($this->translate('Then try the new photo viewer %sHERE%s!'), '<a href="' . $this->url('photo/album_beta', ['album_id' => $currentAlbum->getId(), 'album_type' => 'album']) . '">', '</a>');
-                    }
-                    ?>
-                </div>
                 <h1 class="page-header">
                     <?= $this->escapeHtml($album->getName()); ?>
                     <small>
@@ -93,32 +88,14 @@ $this->headTitle($this->translate('Photos'));
                         <?php else: ?>
                             <?= $album->getStartDateTime()->format('d-m-Y') ?>
                         <?php endif; ?>
-                    </small></h1>
+                    </small>
+                </h1>
             </div>
         </div>
-        <?php
-        $path = '';
-        if ($album instanceof MemberAlbum) {
-            $path = $this->url('photo/member', ['lidnr' => $album->getMember()->getLidnr()]);
-        } else {
-            $path = $this->url('photo/album', ['album_id' => $album->getId()]);
-        }
-        $this->paginationControl(
-            $this->paginator,
-            // the scrolling style
-            'elastic',
-            'paginator/default',
-            [
-                'path' => $path
-            ]
-        )
-        ?>
-        <div class="photo-grid">
-            <div class="grid-sizer"></div>
-            <div class="gutter-sizer"></div>
-            <?php foreach ($paginator as $item): ?>
-                <?php if ($item instanceof Album): ?>
-                    <div class="photo-grid-item photo-grid-item-album">
+        <?php if ($album->getAlbumCount() > 0): ?>
+            <div class="row">
+                <?php foreach ($album->getChildren() as $item): ?>
+                    <div class="col-lg-2 col-md-3 col-xs-6 thumb">
                         <a class="thumbnail" href="<?= $this->url('photo/album', ['album_id' => $item->getId()]); ?>">
                             <img src="<?= $this->fileUrl($item->getCoverPath()); ?>">
                             <div class="caption">
@@ -126,49 +103,355 @@ $this->headTitle($this->translate('Photos'));
                             </div>
                         </a>
                     </div>
-                <?php else: ?>
-                    <div
-                        class="photo-grid-item photo-grid-item-photo<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>">
-                        <a href="<?php
-                        if ($album instanceof MemberAlbum) {
-                            echo $this->url('photo/member/photo', [
-                                'lidnr' => $album->getMember()->getLidnr(),
-                                'page' => isset($paginator->current) ? $paginator->current : 0,
-                                'photo_id' => $item->getId()]);
-                        } else {
-                            echo $this->url('photo/photo', ['photo_id' => $item->getId()]);
-                        }
-                        ?>">
-                            <?php
-                            $image = is_null($item->getWeeklyPhoto()) ?
-                                $item->getSmallThumbPath()
-                                : $item->getLargeThumbPath();
-                            $size = getimagesize('public/data/' . $image);
-                            ?>
-                            <img data-width="<?= $size[0] ?>" data-height="<?= $size[1] ?>"
-                                 src="<?= $this->fileUrl($image); ?>">
-                        </a>
-                    </div>
-                <?php endif; ?>
+                <?php endforeach ?>
+            </div>
+        <?php endif; ?>
+        <div class="pswp-gallery" data-recent-vote="<?= $hasRecentVote ? 'true' : 'false' ?>">
+            <div class="grid-sizer"></div>
+            <div class="gutter-sizer"></div>
+            <?php foreach ($album->getPhotos() as $item): ?>
+                <?php
+                $ar = $item->getAspectRatio();
+                $width = $config['small_thumb_size']['width'];
+                $thumbnailSize = [
+                    'w' => $width,
+                    'h' => round($width * $ar)
+                ];
+
+                $width = $config['large_thumb_size']['width'];
+                $largeSize = [
+                    'w' => $width,
+                    'h' => round($width * $ar)
+                ];
+                ?>
+                <figure
+                    class="pswp-gallery__item<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>"
+                    data-id="<?= $item->getId() ?>"
+                    data-author="GEWIS"
+                    data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]); ?>"
+                    data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]); ?>"
+                    data-voted="<?= $this->hasVoted($item->getId(), $this->identity()->getLidnr()) ? 'true' : 'false' ?>"
+                >
+                    <a href="<?= $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
+                       target="_blank"
+                       data-pswp-height="<?= $largeSize['h'] ?>"
+                       data-pswp-width="<?= $largeSize['w'] ?>"
+                    >
+                        <img
+                            class="lazy-load"
+                            data-height="<?= $thumbnailSize['h'] ?>"
+                            data-width="<?= $thumbnailSize['w'] ?>"
+                            data-src="<?= $this->glideUrl()->getUrl($item->getPath(), $thumbnailSize) ?>"
+                            alt=""
+                        >
+                    </a>
+                    <figcaption style="display:none">
+                        <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
+                    </figcaption>
+                    <figtags style="display:none">
+                        <?= $this->partial('partial/tags.phtml', ['photo' => $item]) ?>
+                    </figtags>
+                </figure>
             <?php endforeach; ?>
-        </div>
-        <div class="pull-right">
-            <?= $this->paginationControl(
-                $this->paginator,
-                // the scrolling style
-                'elastic',
-                'paginator/default',
-                [
-                    'path' => $path
-                ]
-            )
-            ?>
         </div>
     </div>
 </section>
-
 <script>
     $(document).ready(function () {
         Photo.initGrid();
     });
+</script>
+<script type="module">
+    import PhotoSwipeLightbox from '<?= $this->basePath() ?>/js/photoswipe-lightbox.esm.min.js';
+
+    const leftArrowSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 50 30" width="50" height="30"><use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#chevron-left"></use></svg>';
+    const closeSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#times"></use></svg>';
+    const zoomSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use class="pswp__icn-zoom-plus" href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#search-plus"></use><use class="pswp__icn-zoom-minus" href="<? $this->basePath() ?>/sprites/fontawesome/solid.svg#search-minus"></use></svg>';
+
+    const lightbox = new PhotoSwipeLightbox({
+        gallery: '.pswp-gallery',
+        children: '.pswp-gallery__item',
+        bgOpacity: 0.9,
+
+        // Use FontAwesome for all icons.
+        arrowPrevSVG: leftArrowSVGString,
+        arrowNextSVG: leftArrowSVGString,
+        closeSVG: closeSVGString,
+        zoomSVG: zoomSVGString,
+
+        // Update translations.
+        closeTitle: '<?= $this->translate('Close') ?>',
+        zoomTitle: '<?= $this->translate('Zoom (z)') ?>',
+        arrowPrevTitle: '<?=  $this->translate('Previous') ?>',
+        arrowNextTitle: '<?=  $this->translate('Next') ?>',
+        errorMsg: '<div class="pswp__error-msg"><a href="" target="_blank"><?= $this->translate('The image') ?></a> <?= $this->translate('could not be loaded.') ?></div>',
+
+        pswpModule: '<?= $this->basePath() ?>/js/photoswipe.esm.min.js',
+    });
+
+    lightbox.on('uiRegister', () => {
+        // Register custom buttons.
+        lightbox.pswp.ui.registerElement({
+            name: 'share-button',
+            order: 9,
+            isButton: true,
+            title: '<?= $this->translate('Share') ?>',
+            html: {
+                isCustomSVG: true,
+                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#share"></use>',
+            },
+            onClick: (event, el, pswp) => {
+                let id = pswp.currSlide.data.element.dataset.id;
+                let currentURL = window.location.href;
+                let photoURL = currentURL + '#&pid=' + id;
+
+                navigator.clipboard.writeText(photoURL).then(() => {
+                    el.dataset.originalTitle = '<?= $this->translate('Copied URL!') ?>';
+                });
+            },
+        });
+        lightbox.pswp.ui.registerElement({
+            name: 'download-button',
+            order: 8,
+            isButton: true,
+            title: '<?= $this->translate('Download') ?>',
+            html: {
+                isCustomSVG: true,
+                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#file-download"></use>',
+            },
+            position: 'bar',
+            onClick: (event, el, pswp) => {
+                let downloadUrl = pswp.currSlide.data.element.dataset.rawUrl;
+                let link = document.createElement('a');
+
+                link.href = downloadUrl;
+                link.download = '';
+                document.body.appendChild(link);
+
+                link.click();
+                link.remove();
+            },
+        });
+        lightbox.pswp.ui.registerElement({
+            name: 'metadata-button',
+            order: 7,
+            isButton: true,
+            title: '<?= $this->translate('Information') ?>',
+            html: {
+                isCustomSVG: true,
+                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#info-circle"></use>',
+            },
+            position: 'bar',
+            onClick: (event, el, pswp) => {
+                let metadata = document.querySelector('.pswp__metadata-ui');
+
+                if (metadata.classList.contains('pswp__metadata-ui-open')) {
+                    metadata.classList.remove('pswp__metadata-ui-open');
+                } else {
+                    metadata.classList.add('pswp__metadata-ui-open');
+                }
+            },
+        });
+        lightbox.pswp.ui.registerElement({
+            name: 'like-button',
+            order: 6,
+            isButton: true,
+            title: '<?= $this->translate('Vote for photo of the week') ?>',
+            html: {
+                isCustomSVG: true,
+                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#thumbs-up"></use>',
+            },
+            position: 'bar',
+            onInit: (el, pswp) => {
+                lightbox.pswp.on('change', () => {
+                    let hasRecentVote = document.querySelector('.pswp-gallery').dataset.recentVote;
+                    let hasVoted = pswp.currSlide.data.element.dataset.voted;
+
+                    if ('false' === hasRecentVote) {
+                        const pulsingDot = document.createElement('span');
+                        pulsingDot.classList.add('pulsing-dot');
+                        el.appendChild(pulsingDot);
+                    }
+
+                    if ('true' === hasVoted) {
+                        el.firstChild.classList.add('pswp__icn-red');
+                        el.dataset.originalTitle = '<?= $this->translate('Already voted!') ?>';
+                    } else {
+                        el.firstChild.classList.remove('pswp__icn-red');
+                        el.dataset.originalTitle = '<?= $this->translate('Vote for photo of the week') ?>';
+                    }
+                });
+            },
+            onClick: (event, el, pswp) => {
+                let currentSlide = pswp.currSlide.data.element;
+                let hasVoted = currentSlide.dataset.voted;
+
+                if ('false' === hasVoted) {
+                    fetch(currentSlide.dataset.voteUrl, { method: 'POST' })
+                        .then(response => response.json())
+                        .then(result => {
+                            currentSlide.dataset.voted = 'true';
+                            el.firstChild.classList.add('pswp__icn-red');
+                            el.dataset.originalTitle = '<?= $this->translate('Voted!') ?>';
+
+                            // Remove the pulsing dot if it is present.
+                            const pulsingdot = document.querySelector('.pulsing-dot');
+                            if (null !== pulsingdot) {
+                                el.removeChild(pulsingdot);
+                            }
+
+                            // Also update the recent vote status.
+                            document.querySelector('.pswp-gallery').dataset.recentVote = 'true';
+                        }).catch(error => {
+                            // An error occurred somewhere along the way, perhaps we should notify the user.
+                            el.dataset.originalTitle = '<?= $this->translate('Could not vote, try again') ?>';
+                        });
+                }
+            },
+        });
+
+        // Register the metadata UI.
+        lightbox.pswp.ui.registerElement({
+            name: 'metadata-ui',
+            order: 4,
+            isButton: false,
+            html: '<?= $this->translate('Cannot load metadata') ?>',
+            appendTo: 'root',
+            onInit: (el, pswp) => {
+                lightbox.pswp.on('change', () => {
+                    let currentSlide = pswp.currSlide.data.element;
+
+                    // Copy all HTML.
+                    el.innerHTML = currentSlide.querySelector('figcaption').innerHTML;
+                });
+            },
+        });
+
+        // Register the tagging system.
+        lightbox.pswp.ui.registerElement({
+            name: 'tags-ui',
+            order: 3,
+            isButton: false,
+            html: '<?= $this->translate('Cannot load tags') ?>',
+            appendTo: 'root',
+            onInit: (el, pswp) => {
+                lightbox.pswp.on('change', () => {
+                    let currentSlide = pswp.currSlide.data.element;
+
+                    // Copy all HTML.
+                    el.innerHTML = currentSlide.querySelector('figtags').innerHTML;
+
+                    // Remove any old autocomplete suggestion boxes.
+                    document.querySelectorAll('.autocomplete-suggestions').forEach(element => {
+                        element.remove();
+                    });
+
+                    // Make it possible to add new tags.
+                    let tagSearch = el.querySelector('.tagSearch');
+                    new VanillaAutocomplete(tagSearch, {
+                        minChars: 2,
+                        lookup: function (query, done) {
+                            $.getJSON(URLHelper.url('member/search') + '?q=' + query, function (data) {
+                                var result = {suggestions: []};
+
+                                $.each(data.members, function (i, member) {
+                                    result.suggestions.push({
+                                        'value': member.fullName, 'data': member.lidnr
+                                    })
+                                });
+
+                                done(result);
+                            });
+                        },
+                        orientation: 'top',
+                        onSelect: function (suggestion) {
+                            $.post($(this).data('url').replace('lidnr', suggestion.data),
+                                { lidnr: suggestion.data }
+                                , function (data) {
+                                    if (data.success) {
+                                        let removeURL = URLHelper.url('photo/photo/tag/remove', {
+                                            'photo_id': data.tag.photo_id,
+                                            'lidnr': data.tag.member_id
+                                        });
+
+                                        let memberURL = URLHelper.url('member/view', {
+                                            'lidnr': data.tag.member_id
+                                        });
+
+                                        let id = 'removeTag' + data.tag.id;
+
+                                        el.querySelector('.tagList-' + data.tag.photo_id).insertAdjacentHTML(
+                                            'afterbegin',
+                                            '<a href="' + memberURL + '">' + suggestion.value + '</a>' +
+                                                '<a href="' + removeURL + '" id="' + id + '">' +
+                                                '<span class="fas fa-times" aria-hidden="true">' +
+                                                '</span></a>, '
+                                        );
+                                        Photo.initRemoveTag(el.querySelector('#' + id));
+                                        tagSearch.focus();
+                                    }
+                                    tagSearch.value = '';
+                                });
+                        },
+                        zIndex: 100000,
+                    });
+
+                    // Make tags removable.
+                    el.querySelectorAll('.remove-tag').forEach(element => {
+                        Photo.initRemoveTag(element);
+                    });
+                });
+            },
+        });
+    });
+
+    // To properly show the tooltips (not the native titles) we need to inject the event handlers, but only after the UI
+    // has been created (which is guaranteed to be before `afterInit`).
+    lightbox.on('afterInit', () => {
+        $('.pswp__top-bar').tooltip({
+            placement: 'bottom',
+            selector: '[title]',
+        });
+    });
+
+    lightbox.on('close', () => {
+        // Remove all remaining autocomplete suggestion elements.
+        document.querySelectorAll('.autocomplete-suggestions').forEach(element => {
+            element.remove();
+        });
+    });
+
+    lightbox.init();
+
+    // Check if the hash is present in the URL, if so, parse and try to open the lightbox for the provided image.
+    if (typeof window.location.hash !== "undefined") {
+        let hash = window.location.hash.substring(1), params = {};
+
+        if (hash.length > 5) {
+            let vars = hash.split('&');
+
+            for (let i = 0; i < vars.length; i++) {
+                if (!vars[i]) {
+                    continue;
+                }
+
+                let pair = vars[i].split('=');
+                if (pair.length < 2) {
+                    continue;
+                }
+
+                params[pair[0]] = pair[1];
+            }
+
+            if (params.pid) {
+                let expectedImage = parseInt(params.pid, 10);
+
+                document.querySelectorAll('.pswp-gallery__item').forEach(element => {
+                    if (parseInt(element.dataset.id, 10) === expectedImage) {
+                        element.click(); // lightbox.loadAndOpen does not work, so simulate clicking the image.
+                    }
+                });
+            }
+        }
+    }
 </script>

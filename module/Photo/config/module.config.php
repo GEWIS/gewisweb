@@ -41,43 +41,14 @@ return [
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
-                    'member' => [
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '/member/:lidnr[/:page]',
-                            'constraints' => [
-                                'lidnr' => '[0-9]+',
-                                'page' => '[0-9]+',
-                            ],
-                            'defaults' => [
-                                'controller' => AlbumController::class,
-                                'action' => 'member',
-                            ],
-                        ],
-                        'may_terminate' => true,
-                        'child_routes' => [
-                            'photo' => [
-                                'type' => Segment::class,
-                                'options' => [
-                                    'route' => '/photo/:photo_id',
-                                    'constraints' => [
-                                        'photo_id' => '[0-9]+',
-                                    ],
-                                    'defaults' => [
-                                        'controller' => PhotoController::class,
-                                        'action' => 'member',
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
                     'album' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/album[/:album_id][/:page]',
+                            'route' => '/:album_type/:album_id[#&pid=:photo_id]',
                             'constraints' => [
                                 'album_id' => '[0-9]+',
-                                'page' => '[0-9]+',
+                                'album_type' => '(album|member)',
+                                'photo_id' => '[0-9]+',
                             ],
                             'defaults' => [
                                 'controller' => AlbumController::class,
@@ -85,32 +56,15 @@ return [
                             ],
                         ],
                     ],
-                    'album_beta' => [
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '/beta/:album_type/:album_id',
-                            'constraints' => [
-                                'album_id' => '[0-9]+',
-                                'album_type' => '(album|member)',
-                            ],
-                            'defaults' => [
-                                'controller' => AlbumController::class,
-                                'action' => 'indexNew',
-                            ],
-                        ],
-                    ],
                     'photo' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/view/:photo_id',
+                            'route' => '/photo/:photo_id',
                             'constraints' => [
                                 'photo_id' => '[0-9]+',
                             ],
-                            'defaults' => [
-                                'action' => 'view',
-                            ],
                         ],
-                        'may_terminate' => true,
+                        'may_terminate' => false,
                         'child_routes' => [
                             'tag' => [
                                 'type' => Segment::class,
@@ -159,7 +113,7 @@ return [
                     'photo_download' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/download[/:photo_id]',
+                            'route' => '/download/:photo_id',
                             'constraints' => [
                                 'photo_id' => '[0-9]+',
                             ],

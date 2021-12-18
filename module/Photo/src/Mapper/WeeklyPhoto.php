@@ -22,7 +22,10 @@ class WeeklyPhoto extends BaseMapper
         return !is_null($this->getRepository()->findOneBy(['photo' => $photo]));
     }
 
-    public function getCurrentPhotoOfTheWeek()
+    /**
+     * @return WeeklyPhotoModel|null
+     */
+    public function getCurrentPhotoOfTheWeek(): ?WeeklyPhotoModel
     {
         $qb = $this->em->createQueryBuilder();
 

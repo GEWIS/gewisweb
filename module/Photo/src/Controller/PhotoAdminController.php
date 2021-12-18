@@ -26,37 +26,33 @@ class PhotoAdminController extends AbstractActionController
     private PhotoService $photoService;
 
     /**
-     * @var EntityManager
-     */
-    private EntityManager $entityManager;
-
-    /**
      * PhotoAdminController constructor.
      *
      * @param AlbumService $albumService
      * @param PhotoService $photoService
-     * @param EntityManager $entityManager
      */
     public function __construct(
         AlbumService $albumService,
         PhotoService $photoService,
-        EntityManager $entityManager
     ) {
-        $this->photoService = $photoService;
         $this->albumService = $albumService;
-        $this->entityManager = $entityManager;
+        $this->photoService = $photoService;
     }
 
     /**
      * Shows an admin page for the specified photo.
+     *
+     * TODO: Potentially remove, as the admin interface can already move/delete images from the global view.
      */
     public function indexAction()
     {
         $photoId = $this->params()->fromRoute('photo_id');
         $data = $this->photoService->getPhotoData($photoId);
+
         if (is_null($data)) {
             return $this->notFoundAction();
         }
+
         $path = []; //The path to use in the breadcrumb navigation bar
         $parent = $data['photo']->getAlbum();
         while (!is_null($parent)) {

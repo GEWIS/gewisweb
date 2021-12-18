@@ -35,7 +35,6 @@
         "ext-zip": "^1.12.0",
         "laminas/laminas-authentication": "^2.9.0",
         "laminas/laminas-cache": "^3.1.2",
-        "laminas/laminas-cache-storage-adapter-filesystem": "^2.0.0",
         "laminas/laminas-cache-storage-adapter-memcached": "^2.0.0",
         "laminas/laminas-captcha": "^2.11.0",
         "laminas/laminas-cli": "^1.2.0",
@@ -101,6 +100,7 @@
         "laminas/laminas-cache-storage-adapter-blackhole": "*",
         "laminas/laminas-cache-storage-adapter-dba": "*",
         "laminas/laminas-cache-storage-adapter-ext-mongodb": "*",
+        "laminas/laminas-cache-storage-adapter-filesystem": "*",
         "laminas/laminas-cache-storage-adapter-memcache": "*",
         "laminas/laminas-cache-adapter-storage-memory": "*",
         "laminas/laminas-cache-storage-adapter-mongodb": "*",
@@ -127,7 +127,8 @@
     "extra": {
         "copy-file": {
             "vendor/fortawesome/font-awesome/scss/": "public/scss/fontawesome/",
-            "vendor/fortawesome/font-awesome/webfonts/": "public/fonts/fontawesome/"
+            "vendor/fortawesome/font-awesome/webfonts/": "public/fonts/fontawesome/",
+            "vendor/fortawesome/font-awesome/sprites/": "public/sprites/fontawesome/"
         },
         "patches": {
             "doctrine/orm": {

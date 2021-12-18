@@ -3,7 +3,6 @@
 namespace Activity\Mapper;
 
 use Activity\Model\ActivityCalendarOption as ActivityCalendarOptionModel;
-use Activity\Model\ActivityOptionOption;
 use Activity\Model\ActivityOptionProposal as ActivityOptionProposalModel;
 use Application\Mapper\BaseMapper;
 use DateTime;

@@ -6,7 +6,6 @@ use Decision\Mapper\Authorization;
 use Decision\Model\Meeting;
 use Decision\Model\Member as MemberModel;
 use Laminas\Code\Exception\InvalidArgumentException;
-use Laminas\Http\Client as HttpClient;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
 

@@ -5,7 +5,6 @@ namespace Photo;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Doctrine\ORM\Events;
 use Exception;
-use Laminas\Cache\StorageFactory;
 use Laminas\Mvc\MvcEvent;
 use Interop\Container\ContainerInterface;
 use League\Glide\Urls\UrlBuilderFactory;
@@ -25,7 +24,10 @@ use Photo\Service\{
     Metadata as MetadataService,
     Photo as PhotoService,
 };
-use Photo\View\Helper\GlideUrl;
+use Photo\View\Helper\{
+    GlideUrl,
+    HasVoted,
+};
 use User\Authorization\AclServiceFactory;
 
 class Module
@@ -92,7 +94,6 @@ class Module
                     $storageService = $container->get('application_service_storage');
                     $photoMapper = $container->get('photo_mapper_photo');
                     $tagMapper = $container->get('photo_mapper_tag');
-                    $hitMapper = $container->get('photo_mapper_hit');
                     $voteMapper = $container->get('photo_mapper_vote');
                     $weeklyPhotoMapper = $container->get('photo_mapper_weekly_photo');
                     $profilePhotoMapper = $container->get('photo_mapper_profile_photo');
@@ -105,7 +106,6 @@ class Module
                         $storageService,
                         $photoMapper,
                         $tagMapper,
-                        $hitMapper,
                         $voteMapper,
                         $weeklyPhotoMapper,
                         $profilePhotoMapper,
@@ -190,11 +190,6 @@ class Module
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'photo_mapper_hit' => function (ContainerInterface $container) {
-                    return new Mapper\Hit(
-                        $container->get('doctrine.entitymanager.orm_default')
-                    );
-                },
                 'photo_mapper_weekly_photo' => function (ContainerInterface $container) {
                     return new Mapper\WeeklyPhoto(
                         $container->get('doctrine.entitymanager.orm_default')
@@ -206,23 +201,6 @@ class Module
                     );
                 },
                 'photo_service_acl' => AclServiceFactory::class,
-                'album_page_cache' => function () {
-                    return StorageFactory::factory(
-                        [
-                            'adapter' => [
-                                'name' => 'filesystem',
-                                'options' => [
-                                    'dirLevel' => 2,
-                                    'cacheDir' => 'data/cache',
-                                    'dirPermission' => 0755,
-                                    'filePermission' => 0666,
-                                    'namespaceSeparator' => '-db-',
-                                ],
-                            ],
-                            'plugins' => ['serializer'],
-                        ]
-                    );
-                },
                 'activity_service_acl' => AclServiceFactory::class,
                 WeeklyPhoto::class => function (ContainerInterface $container) {
                     $weeklyPhoto = new WeeklyPhoto();
@@ -258,6 +236,9 @@ class Module
                     $helper->setUrlBuilder($urlBuilder);
 
                     return $helper;
+                },
+                'hasVoted' => function (ContainerInterface $container) {
+                    return new HasVoted($container->get('photo_mapper_vote'));
                 },
             ],
         ];

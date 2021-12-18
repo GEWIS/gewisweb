@@ -2,10 +2,12 @@
 
 namespace Photo\Controller;
 
-use Laminas\Cache\Storage\StorageInterface;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
-use Photo\Service\Album as AlbumService;
+use Photo\Service\{
+    Album as AlbumService,
+    Photo as PhotoService,
+};
 
 class AlbumController extends AbstractActionController
 {
@@ -15,9 +17,9 @@ class AlbumController extends AbstractActionController
     private AlbumService $albumService;
 
     /**
-     * @var StorageInterface
+     * @var PhotoService
      */
-    private StorageInterface $pageCache;
+    private PhotoService $photoService;
 
     /**
      * @var array
@@ -28,38 +30,16 @@ class AlbumController extends AbstractActionController
      * AlbumController constructor.
      *
      * @param AlbumService $albumService
-     * @param StorageInterface $pageCache
      * @param array $photoConfig
      */
     public function __construct(
         AlbumService $albumService,
-        StorageInterface $pageCache,
-        array $photoConfig
+        PhotoService $photoService,
+        array $photoConfig,
     ) {
         $this->albumService = $albumService;
-        $this->pageCache = $pageCache;
+        $this->photoService = $photoService;
         $this->photoConfig = $photoConfig;
-    }
-
-    /**
-     * Shows a page from the album, or a 404 if this page does not exist.
-     *
-     * @return ViewModel
-     */
-    public function indexAction()
-    {
-        $albumId = $this->params()->fromRoute('album_id');
-        $activePage = (int)$this->params()->fromRoute('page');
-        $albumPage = $this->plugin('AlbumPlugin')->getAlbumPage(
-            $albumId,
-            $activePage,
-            'album'
-        );
-        if (is_null($albumPage)) {
-            return $this->notFoundAction();
-        }
-
-        return new ViewModel($albumPage);
     }
 
     /**
@@ -68,7 +48,7 @@ class AlbumController extends AbstractActionController
      *
      * @return ViewModel
      */
-    public function indexNewAction()
+    public function indexAction()
     {
         $albumId = $this->params()->fromRoute('album_id');
         $albumType = $this->params()->fromRoute('album_type');
@@ -78,39 +58,15 @@ class AlbumController extends AbstractActionController
             return $this->notFoundAction();
         }
 
+        $hasRecentVote = $this->photoService->hasRecentVote();
+
         return new ViewModel(
             [
-                'cache' => $this->pageCache,
                 'album' => $album,
                 'basedir' => '/',
                 'config' => $this->photoConfig,
+                'hasRecentVote' => $hasRecentVote,
             ]
         );
-    }
-
-    /**
-     * Shows a page with photo's of a member, or a 404 if this page does not
-     * exist.
-     *
-     * @return ViewModel
-     */
-    public function memberAction()
-    {
-        $lidnr = (int)$this->params()->fromRoute('lidnr');
-        $activePage = (int)$this->params()->fromRoute('page');
-        $albumPage = $this->plugin('AlbumPlugin')->getAlbumPage(
-            $lidnr,
-            $activePage,
-            'member'
-        );
-
-        if (is_null($albumPage)) {
-            return $this->notFoundAction();
-        }
-
-        $vm = new ViewModel($albumPage);
-        $vm->setTemplate('photo/album/index');
-
-        return $vm;
     }
 }

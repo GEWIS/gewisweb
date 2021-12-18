@@ -112,12 +112,14 @@ class Module
                     $photoService = $container->get('photo_service_photo');
                     $memberMapper = $container->get('decision_mapper_member');
                     $aclService = $container->get('decision_service_acl');
+                    $photoConfig = $container->get('config')['photo'];
 
                     return new Service\MemberInfo(
                         $translator,
                         $photoService,
                         $memberMapper,
-                        $aclService
+                        $aclService,
+                        $photoConfig,
                     );
                 },
                 'decision_mapper_member' => function (ContainerInterface $container) {

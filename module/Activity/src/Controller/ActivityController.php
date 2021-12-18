@@ -2,8 +2,6 @@
 
 namespace Activity\Controller;
 
-use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
-use Laminas\Session\AbstractContainer;
 use Activity\Form\{
     ModifyRequest as RequestForm,
     Signup as SignupForm,
@@ -462,7 +460,9 @@ class ActivityController extends AbstractActionController
                 !$this->signupService->isInSubscriptionWindow($signupList->getOpenDate(), $signupList->getCloseDate())
                 || ActivityModel::STATUS_APPROVED !== $signupList->getActivity()->getStatus()
             ) {
-                $error = $this->translator->translate('You cannot unsubscribe from this activity at this moment in time');
+                $error = $this->translator->translate(
+                    'You cannot unsubscribe from this activity at this moment in time'
+                );
 
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
             }

@@ -1,17 +1,11 @@
 <?php
-// set title
-$this->headTitle($member->getFullName());
-$this->headTitle($this->translate('Members')); ?>
-<?php $this->headScript()
-    ->appendFile($this->basePath() . '/js/imagesloaded.pkgd.min.js')
-    ->appendFile($this->basePath() . '/js/masonry.pkgd.min.js')
-    ->appendFile($this->basePath() . '/js/photo.js');
-?>
-<?php
 
 use Decision\Model\Member;
 use Decision\Model\Address;
 
+// set title
+$this->headTitle($member->getFullName());
+$this->headTitle($this->translate('Members'));
 ?>
 <section class="section">
     <div class="container">
@@ -103,20 +97,47 @@ use Decision\Model\Address;
                     <div class="row">
                         <div class="col-sm-12 col-xs-12">
                             <a class="thumbnail"
-                               href="<?= $this->url('photo/photo', ['photo_id' => $profilePhoto->getId()]); ?>">
+                               href="<?= $this->url(
+                                   'photo/album',
+                                   [
+                                       'album_id' => $member->getLidnr(),
+                                       'album_type' => 'member',
+                                       'photo_id' => $profilePhoto->getId(),
+                                   ],
+                               ) ?>">
+                                <?php
+                                $pAspectRatio = $profilePhoto->getAspectRatio();
+
+                                $pLargeWidth = $photoConfig['large_thumb_size']['width'];
+                                $pLargeSize = [
+                                    'w' => $pLargeWidth,
+                                    'h' => round($pLargeWidth * $pAspectRatio)
+                                ];
+                                ?>
                                 <img class="img-responsive"
-                                     src="<?= $this->fileUrl($profilePhoto->getLargeThumbPath()) ?>" alt="">
+                                     src="<?= $this->glideUrl()->getUrl($profilePhoto->getPath(), $pLargeSize) ?>"
+                                     alt="">
                             </a>
                         </div>
                     </div>
                 <?php endif; ?>
                 <div class="row">
                     <div class="col-sm-6 col-xs-6">
-                        <a href="<?= $this->url('photo/member', ['lidnr' => $member->getLidnr(), 'page' => null]) ?>"
-                           class="panel panel-image">
+                        <a class="panel panel-image"
+                           href="<?= $this->url('photo/album',
+                            [
+                                'album_id' => $member->getLidnr(),
+                                'album_type' => 'member',
+                            ],
+                        ) ?>">
                             <div class="panel-body">
                                 <div class="far fa-image big-icon"></div>
-                                <h4><?= sprintf($this->translate("Photo's of %s"), $member->getFirstName()); ?></h4>
+                                <h4>
+                                    <?= sprintf(
+                                        $this->translate("Photo's of %s"),
+                                        $this->escapeHtml($member->getFirstName()),
+                                    ) ?>
+                                </h4>
                             </div>
                         </a>
                     </div>
@@ -125,9 +146,3 @@ use Decision\Model\Address;
         </div>
     </div>
 </section>
-
-<script>
-    $(document).ready(function () {
-        Photo.initGrid();
-    });
-</script>

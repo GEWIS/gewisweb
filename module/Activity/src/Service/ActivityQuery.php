@@ -225,7 +225,9 @@ class ActivityQuery
         if ('my' === $category) {
             if (!$this->aclService->isAllowed('view', 'myActivities')) {
                 throw new NotAllowedException(
-                    $this->translator->translate('You are not allowed to view upcoming activities coupled to a member account')
+                    $this->translator->translate(
+                        'You are not allowed to view upcoming activities coupled to a member account'
+                    )
                 );
             }
             $user = $this->aclService->getIdentityOrThrowException();

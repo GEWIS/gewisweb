@@ -1,6 +1,6 @@
 <?php
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/jquery.autocomplete.js')
+    ->appendFile($this->basePath() . '/js/autocomplete.min.js')
     ->appendFile($this->basePath() . '/js/photo.js')
     ->appendFile($this->basePath() . '/js/photo-admin.js');
 
@@ -133,6 +133,6 @@ $this->scriptUrl()->requireUrls(
 <script>
     $(document).ready(function () {
         Photo.Admin.initPhoto();
-        Photo.initTagging();
+        Photo.initTagging(); // TODO: Allow tagging in admin interface.
     });
 </script>

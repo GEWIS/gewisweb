@@ -26,7 +26,6 @@ return [
     'Laminas\Mvc\Plugin\FlashMessenger',
     'DoctrineModule',
     'DoctrineORMModule',
-    'Laminas\Cache\Storage\Adapter\Filesystem',
     'User',
     'Application',
     'Company',

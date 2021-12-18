@@ -4,85 +4,14 @@
  * Depends: jquery
  */
 
-var LEFT_ARROW = 37;
-var RIGHT_ARROW = 39;
-
-Photo = {
-    previousPage: function () {
-        if ($('#previous').length > 0) {
-            $('#previous')[0].click();
-        }
-    },
-    nextPage: function () {
-        if ($('#next').length > 0) {
-            $('#next')[0].click();
-        }
-    },
-    initTagging: function () {
-        $('#tagList').find(".remove-tag").each(function () {
-            $(this).on('click', Photo.removeTag);
-        });
-        Photo.initTagSearch();
-    },
-    initTagSearch: function () {
-        let request = null;
-        $('#tagSearch').autocomplete({
-            minChars: 2,
-            lookup: function (query, done) {
-                if (request) request.abort();
-                request = $.getJSON(URLHelper.url('member/search') + '?q=' + query, function (data) {
-                    request = null;
-                    var result = { suggestions: [] };
-
-                    $.each(data.members, function (i, member) {
-                        result.suggestions.push({
-                            'value': member.fullName, 'data': member.lidnr
-                        })
-                    });
-
-                    done(result);
-                });
-            },
-            onSelect: function (suggestion) {
-                if (request) request.abort();
-                request = $.post($('#tagForm').attr('action').replace('lidnr', suggestion.data),
-                    { lidnr: suggestion.data }
-                    , function (data) {
-                        request = null;
-                        if (data.success) {
-                            var removeURL = URLHelper.url('photo/photo/tag/remove', {
-                                'photo_id': data.tag.photo_id,
-                                'lidnr': data.tag.member_id
-                            });
-
-                            var memberURL = URLHelper.url('member/view', {
-                                'lidnr': data.tag.member_id
-                            });
-
-                            var id = 'removeTag' + data.tag.id;
-                            $('#tagList').append('<li><a href="' + memberURL + '">' + suggestion.value + '</a>' +
-                                '<a href="' + removeURL + '" id="' + id + '">' +
-                                '<span class="fas fa-times" aria-hidden="true">' +
-                                '</span></a></li>'
-                            );
-                            $('#' + id).on('click', Photo.removeTag);
-                            $('#tagSearch').focus();
-                        }
-                        $('#tagSearch').val('');
-                    });
-            }
-        });
-
-    },
-
+let Photo = {
     initGrid: function () {
-
         /*
          * Pre size items such that we can do the layouting while the images are loading
          */
         var sizer = $('.grid-sizer').width();
         var gutter = $('.gutter-sizer').width();
-        $('.photo-grid-item > a > img').each(function (index) {
+        $('figure.pswp-gallery__item > a > img').each(function (index) {
             var item = $(this);
             var ratio = sizer / item.data('width');
             var height = Math.round(ratio * item.data('height'));
@@ -95,31 +24,30 @@ Photo = {
             }
         });
 
-        $('.photo-grid').masonry({
-            itemSelector: '.photo-grid-item',
+        let lazyLoadInstance = new LazyLoad({
+            elements_selector: '.lazy-load',
+        });
+
+        $('.pswp-gallery').masonry({
+            itemSelector: '.pswp-gallery__item',
             columnWidth: '.grid-sizer',
             percentPosition: true,
             gutter: '.gutter-sizer',
-            transitionDuration: 0
+            transitionDuration: 0,
+            resize: true,
         });
     },
-    removeTag: function (e) {
-        e.preventDefault()
-        parent = $(this).parent();
-        $.post($(this).attr('href'), function (data) {
-            if (data.success) {
-                parent.remove();
-            }
+    initRemoveTag: element => {
+        element.addEventListener('click', event => {
+            event.preventDefault();
+
+            fetch(element.href, { method: 'POST' })
+                .then(response => response.json())
+                .then(result => {
+                    element.parentElement.remove();
+                }).catch(error => {
+                // An error occurred somewhere along the way, perhaps we should notify the user.
+            });
         });
     }
-}
-
-$(function () {
-    $('html').keydown(function (e) {
-        if (e.which === LEFT_ARROW) {
-            Photo.previousPage();
-        } else if (e.which === RIGHT_ARROW) {
-            Photo.nextPage()
-        }
-    });
-});
+};

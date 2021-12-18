@@ -62,6 +62,11 @@ class Frontpage
      */
     private $frontpageConfig;
 
+    /**
+     * @var array
+     */
+    private array $photoConfig;
+
     public function __construct(
         Translator $translator,
         Poll $pollService,
@@ -71,7 +76,8 @@ class Frontpage
         Photo $photoService,
         Tag $tagMapper,
         \Activity\Mapper\Activity $activityMapper,
-        array $frontpageConfig
+        array $frontpageConfig,
+        array $photoConfig,
     ) {
         $this->translator = $translator;
         $this->pollService = $pollService;
@@ -82,6 +88,7 @@ class Frontpage
         $this->tagMapper = $tagMapper;
         $this->activityMapper = $activityMapper;
         $this->frontpageConfig = $frontpageConfig;
+        $this->photoConfig = $photoConfig;
     }
 
     /**
@@ -107,15 +114,17 @@ class Frontpage
         $pollDetails['poll'] = $poll;
         $news = $this->getNewsItems();
         $companyBanner = $this->companyService->getCurrentBanner();
+        $photoConfig = $this->photoConfig;
 
         return [
             'birthdays' => $birthdayInfo['birthdays'],
-            'birthdayTag' => $birthdayInfo['tag'],
+            'birthdayPhoto' => $birthdayInfo['tag']?->getPhoto(),
             'activities' => $activities,
-            'weeklyPhoto' => $weeklyPhoto,
+            'weeklyPhoto' => $weeklyPhoto?->getPhoto(),
             'poll' => $pollDetails,
             'news' => $news,
             'companyBanner' => $companyBanner,
+            'photoConfig' => $photoConfig,
         ];
     }
 

@@ -34,28 +34,28 @@ $this->headTitle($this->translate('Photos')); ?>
             </ul>
         </div>
     </section>
-    <section class="section">
-        <div class="container">
-            <div class="row">
-                <?php if (!empty($albums)): ?>
-                    <?php for ($i = 0; $i < count($albums); $i++): ?>
-                        <?php if ($albums[$i]->getPhotoCount() > 0): ?>
+    <?php if (!empty($albums)): ?>
+        <section class="section">
+            <div class="container">
+                <div class="row">
+                    <?php foreach ($albums as $album): ?>
+                        <?php if ($album->getPhotoCount() > 0): ?>
                             <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                                 <a class="thumbnail"
-                                   href="<?= $this->url('photo/album', ["album_id" => $albums[$i]->getId()]); ?>">
+                                   href="<?= $this->url('photo/album', ['album_id' => $album->getId(), 'album_type' => 'album']) ?>">
                                     <img class="img-responsive"
-                                         src="<?= $this->fileUrl($albums[$i]->getCoverPath()) ?>"
+                                         src="<?= $this->fileUrl($album->getCoverPath()) ?>"
                                          alt="">
                                     <div class="caption">
-                                        <?= $albums[$i]->getName(); ?>
+                                        <?= $this->escapeHtml($album->getName()) ?>
                                     </div>
                                 </a>
                             </div>
                         <?php endif; ?>
-                    <?php endfor; ?>
-                <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    <?php endif; ?>
 </div>
 
