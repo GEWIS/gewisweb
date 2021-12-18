@@ -1188,7 +1188,7 @@ if(!String.prototype.formatNum) {
         }
         var self = this;
         var activecell = 0;
-        var downbox = $(document.createElement('div')).attr('id', 'cal-day-tick').html('<i class="fas fa-chevron-down"></i>');
+        var downbox = $(document.createElement('div')).attr('id', 'cal-day-tick').html('<span class="fas fa-chevron-down"></span>');
 
         self.context.find('.cal-month-day, .cal-year-box .span3')
             .on('mouseenter', function() {
