@@ -5,8 +5,6 @@ namespace Activity\Controller;
 use Activity\Service\ActivityCategory as ActivityCategoryService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
-use Laminas\Session\Container as SessionContainer;
 use Laminas\View\Model\ViewModel;
 
 class AdminCategoryController extends AbstractActionController

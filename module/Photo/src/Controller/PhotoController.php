@@ -1,8 +1,6 @@
 <?php
 
 namespace Photo\Controller;
-
-use Exception;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\{
     JsonModel,
@@ -104,7 +102,7 @@ class PhotoController extends AbstractActionController
      */
     public function removeProfilePhotoAction()
     {
-        $photoId = $this->params()->fromRoute('photo_id', null);
+        $photoId = $this->params()->fromRoute('photo_id');
         $this->photoService->removeProfilePhoto();
 
         if (null != $photoId) {

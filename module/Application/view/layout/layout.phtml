@@ -42,7 +42,7 @@
 <?php
 $viewModel = current($this->viewModel()->getCurrent()->getChildren());
 
-if (strstr($viewModel->getTemplate(), 'admin')): ?>
+if (str_contains($viewModel->getTemplate(), 'admin')): ?>
     <?= $this->partial('partial/admin.phtml', ['content' => $this->content]) ?>
 <?php else: ?>
     <div class="content-container">
