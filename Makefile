@@ -95,6 +95,9 @@ phpstanpr:
 phpcs:
 		@vendor/bin/phpcs -p --standard=PSR1,PSR12 --extensions=php,dist module config
 
+phpcsnowarnings:
+		@vendor/bin/phpcs -p --standard=PSR1,PSR12 --extensions=php,dist --severity=error module config
+
 phpcbf:
 		@vendor/bin/phpcbf -p --standard=PSR1,PSR12 --extensions=php,dist --filter=GitModified module config
 

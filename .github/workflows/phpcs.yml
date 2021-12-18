@@ -9,4 +9,4 @@ jobs:
             - run: cd ${{ github.workspace }}
             - run: php composer.phar install
             - name: Running PHPCS
-              run: make phpcs
+              run: make phpcsnowarnings
