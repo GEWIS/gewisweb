@@ -299,7 +299,6 @@ div.pswp__img--placeholder,
 */
 .pswp__button--arrow {
     position: absolute;
-    top: 0;
     width: 75px;
     height: 100px;
     top: 50%;
@@ -347,11 +346,11 @@ div.pswp__img--placeholder,
 
 .pswp__button--arrow--prev {
     right: auto;
-    left: 0px;
+    left: 0;
 }
 
 .pswp__button--arrow--next {
-    right: 0px;
+    right: 0;
 }
 .pswp__button--arrow--next .pswp__icn {
     left: auto;
@@ -438,12 +437,11 @@ div.pswp__img--placeholder,
 */
 .pswp__counter {
     height: 24px;
-    margin: 12px 0 0 20px;
+    margin: 12px auto 0 20px;
     font-size: 14px;
     line-height: 24px;
     color: var(--pswp-icon-color);
     opacity: 0.85;
-    margin-right: auto; /* align left */
 }
 
 .pswp--one-slide .pswp__counter {
