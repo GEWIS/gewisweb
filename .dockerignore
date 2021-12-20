@@ -32,6 +32,7 @@ config/autoload/doctrine.external.php
 config/autoload/gewisdb.local.php
 config/autoload/local.php
 config/autoload/zdt.local.php
+coverage/
 data/cache/*
 data/DoctrineORMModule/
 data/keys/jwt-key

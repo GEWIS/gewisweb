@@ -194,7 +194,7 @@ class Album
             || is_null($oldest->getStartDateTime())
             || is_null($newest->getEndDateTime())
         ) {
-            return [null];
+            return [];
         }
 
         $startYear = $this->getAssociationYear($oldest->getStartDateTime());
