@@ -49,8 +49,9 @@ if (str_contains($viewModel->getTemplate(), 'admin')): ?>
         <?= $this->content ?>
     </div>
     <?= $this->partial('partial/footer.phtml') ?>
-    <?= $this->partial('partial/privacy-widget.phtml') ?>
 <?php endif; ?>
+
+<?= $this->partial('partial/privacy-widget.phtml') ?>
 
 <!-- Scripts -->
 <?= $this->inlineScript()
