@@ -1,0 +1,26 @@
+name: PHP Coding Standards
+
+# Only run this action when pushing to master or on pull requests (creation, synchronisation, and reopening).
+on:
+    push:
+        branches:
+            - master
+    pull_request:
+
+jobs:
+    php-codesniffer:
+        name: PHP_CodeSniffer
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+
+            -   name: Install PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.1'
+                    tools: cs2pr, phpcs
+
+            -   name: Run PHPCS
+                run: phpcs --standard=PSR1,PSR12 --extensions=php,dist --report=checkstyle -q module config | cs2pr --graceful-warnings

@@ -76,21 +76,6 @@ copyconf:
 		cp config/autoload/laminas-developer-tools.local.php.dist config/autoload/laminas-developer-tools.local.php
 
 phpstan:
-		@docker-compose exec web echo "" > phpstan/phpstan-baseline-pr.neon
-		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G
-
-phpstanpr:
-		@git checkout --detach master
-		@cp phpstan/phpstan-baseline.neon phpstan/phpstan-baseline-temp.neon
-		@echo "" > phpstan/phpstan-baseline.neon
-		@echo "" > phpstan/phpstan-baseline-pr.neon
-		@make rundev
-		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon --generate-baseline phpstan/phpstan-baseline-pr.neon --memory-limit 1G
-		@git checkout -
-		@cp phpstan/phpstan-baseline-temp.neon phpstan/phpstan-baseline.neon
-		@rm phpstan/phpstan-baseline-temp.neon
-		@docker cp gewisweb_web_1:/code/phpstan/phpstan-baseline-pr.neon ./phpstan/phpstan-baseline-pr.neon
-		@make rundev
 		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G
 
 phpcs:
