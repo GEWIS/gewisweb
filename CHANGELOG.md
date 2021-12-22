@@ -1,3 +1,12 @@
+## [v2.5](https://github.com/GEWIS/gewisweb/tree/v2.5) (2021-12-22)
+
+- Added a privacy widget where users can set their tracking preferences.
+- Improved the new photo viewer.
+- Upgraded to PHP 8.1
+- Removed the old photo viewer.
+
+---
+
 ## [v2.4.12](https://github.com/GEWIS/gewisweb/tree/v2.4.12) (2021-12-03)
 
 - Added the ability to change sub-albums to normal albums.
