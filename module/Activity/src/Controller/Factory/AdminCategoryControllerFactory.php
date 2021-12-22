@@ -18,11 +18,12 @@ class AdminCategoryControllerFactory implements FactoryInterface
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        array $options = null,
     ): AdminCategoryController {
         return new AdminCategoryController(
-            $container->get('activity_service_category'),
+            $container->get('activity_service_acl'),
             $container->get('translator'),
+            $container->get('activity_service_category'),
         );
     }
 }

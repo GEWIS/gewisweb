@@ -105,7 +105,7 @@ class Decision
      *
      * @param Meeting $meeting
      */
-    public function setMeeting(Meeting $meeting)
+    public function setMeeting(Meeting $meeting): void
     {
         $meeting->addDecision($this);
         $this->meeting_type = $meeting->getType();

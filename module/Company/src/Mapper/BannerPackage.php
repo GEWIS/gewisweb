@@ -14,8 +14,10 @@ class BannerPackage extends Package
 {
     /**
      * Returns a random banner from the active banners.
+     *
+     * @return CompanyBannerPackageModel|null
      */
-    public function getBannerPackage()
+    public function getBannerPackage(): ?CompanyBannerPackageModel
     {
         $banners = $this->findVisiblePackages();
 

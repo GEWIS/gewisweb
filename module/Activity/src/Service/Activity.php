@@ -3,66 +3,93 @@
 namespace Activity\Service;
 
 use Activity\Form\Activity as ActivityForm;
-use Activity\Model\Activity as ActivityModel;
-use Activity\Model\ActivityLocalisedText;
-use Activity\Model\ActivityUpdateProposal as ActivityProposalModel;
-use Activity\Model\SignupField as SignupFieldModel;
-use Activity\Model\SignupList as SignupListModel;
-use Activity\Model\SignupOption as SignupOptionModel;
-use Application\Service\Email;
-use Company\Service\Company;
+use Activity\Model\{
+    Activity as ActivityModel,
+    ActivityLocalisedText,
+    ActivityUpdateProposal as ActivityProposalModel,
+    SignupField as SignupFieldModel,
+    SignupList as SignupListModel,
+    SignupOption as SignupOptionModel,
+};
+use Activity\Service\ActivityCategory as ActivityCategoryService;
+use Application\Service\Email as EmailService;
+use Company\Model\Company as CompanyModel;
+use Company\Service\Company as CompanyService;
 use DateTime;
-use Decision\Model\Organ;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
+use Decision\Model\Organ as OrganModel;
+use Decision\Service\Organ as OrganService;
+use Doctrine\ORM\{
+    EntityManager,
+    OptimisticLockException,
+    ORMException,
+};
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Stdlib\Parameters;
-use User\Model\User;
+use User\Model\User as UserModel;
 use User\Permissions\NotAllowedException;
 
 class Activity
 {
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
      * @var Translator
      */
-    private $translator;
+    private Translator $translator;
+
     /**
      * @var EntityManager
      */
-    private $entityManager;
+    private EntityManager $entityManager;
+
     /**
-     * @var ActivityCategory
+     * @var ActivityCategoryService
      */
-    private $categoryService;
+    private ActivityCategoryService $categoryService;
+
     /**
-     * @var \Decision\Service\Organ
+     * @var OrganService
      */
-    private $organService;
+    private OrganService $organService;
+
     /**
-     * @var Company
+     * @var CompanyService
      */
-    private $companyService;
+    private CompanyService $companyService;
+
     /**
-     * @var Email
+     * @var EmailService
      */
-    private $emailService;
+    private EmailService $emailService;
+
     /**
      * @var ActivityForm
      */
-    private $activityForm;
-    private AclService $aclService;
+    private ActivityForm $activityForm;
 
+    /**
+     * @param AclService $aclService
+     * @param Translator $translator
+     * @param EntityManager $entityManager
+     * @param ActivityCategory $categoryService
+     * @param OrganService $organService
+     * @param CompanyService $companyService
+     * @param EmailService $emailService
+     * @param ActivityForm $activityForm
+     */
     public function __construct(
+        AclService $aclService,
         Translator $translator,
         EntityManager $entityManager,
         ActivityCategory $categoryService,
-        \Decision\Service\Organ $organService,
-        Company $companyService,
-        Email $emailService,
+        OrganService $organService,
+        CompanyService $companyService,
+        EmailService $emailService,
         ActivityForm $activityForm,
-        AclService $aclService
     ) {
+        $this->aclService = $aclService;
         $this->translator = $translator;
         $this->entityManager = $entityManager;
         $this->categoryService = $categoryService;
@@ -70,7 +97,6 @@ class Activity
         $this->companyService = $companyService;
         $this->emailService = $emailService;
         $this->activityForm = $activityForm;
-        $this->aclService = $aclService;
     }
 
     /**
@@ -82,18 +108,10 @@ class Activity
      *
      * @return bool activity that was created
      */
-    public function createActivity($data)
+    public function createActivity(array $data): bool
     {
         if (!$this->aclService->isAllowed('create', 'activity')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create an activity'));
-        }
-
-        // TODO: Move the form check to the controller.
-        $form = $this->getActivityForm();
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return false;
         }
 
         // Find the creator
@@ -139,19 +157,19 @@ class Activity
 
         try {
             $organs = $this->organService->getEditableOrgans();
-        } catch (NotAllowedException $e) {
+        } catch (NotAllowedException) {
             $organs = [];
         }
 
         try {
             $companies = $this->companyService->getHiddenCompanyList();
-        } catch (NotAllowedException $e) {
+        } catch (NotAllowedException) {
             $companies = [];
         }
 
         try {
             $categories = $this->categoryService->findAll();
-        } catch (NotAllowedException $e) {
+        } catch (NotAllowedException) {
             $categories = [];
         }
 
@@ -164,11 +182,11 @@ class Activity
      *
      * @param int $organId The id of the organ associated with the activity
      *
-     * @return Organ The organ associated with the activity, if the user is a member of that organ
+     * @return OrganModel The organ associated with the activity, if the user is a member of that organ
      *
      * @throws NotAllowedException if the user is not a member of the organ specified
      */
-    protected function findOrgan($organId)
+    protected function findOrgan(int $organId): OrganModel
     {
         $organ = $this->organService->getOrgan($organId);
 
@@ -187,15 +205,20 @@ class Activity
      * @pre $data is valid data of Activity\Form\Activity
      *
      * @param array $data Parameters describing activity
-     * @param User $user The user that creates this activity
-     * @param Organ $organ The organ this activity is associated with
-     * @param \Company\Model\Company|null $company The company this activity is associated with
+     * @param UserModel $user The user that creates this activity
+     * @param OrganModel|null $organ The organ this activity is associated with
+     * @param CompanyModel|null $company The company this activity is associated with
      * @param int $status
      *
      * @return ActivityModel activity that was created
      */
-    protected function saveActivityData($data, $user, $organ, $company, $status)
-    {
+    protected function saveActivityData(
+        array $data,
+        UserModel $user,
+        ?OrganModel $organ,
+        ?CompanyModel $company,
+        int $status,
+    ): ActivityModel {
         $activity = new ActivityModel();
         $activity->setBeginTime(new DateTime($data['beginTime']));
         $activity->setEndTime(new DateTime($data['endTime']));
@@ -228,8 +251,7 @@ class Activity
 
         if (isset($data['signupLists'])) {
             foreach ($data['signupLists'] as $signupList) {
-                // Laminas\Stdlib\Parameters is required to prevent undefined indices.
-                $signupList = $this->createSignupList(new Parameters($signupList), $activity);
+                $signupList = $this->createSignupList($signupList, $activity);
                 $em->persist($signupList);
             }
             $em->flush();
@@ -256,13 +278,15 @@ class Activity
     /**
      * Creates a SignupList for the specified Activity.
      *
-     * @param array|Parameters $data
+     * @param array $data
      * @param ActivityModel $activity
      *
      * @return SignupListModel
      */
-    public function createSignupList($data, $activity)
-    {
+    public function createSignupList(
+        array $data,
+        ActivityModel $activity,
+    ): SignupListModel {
         $signupList = new SignupListModel();
 
         $signupList->setActivity($activity);
@@ -277,8 +301,7 @@ class Activity
             $em = $this->entityManager;
 
             foreach ($data['fields'] as $field) {
-                // Laminas\Stdlib\Parameters is required to prevent undefined indices.
-                $field = $this->createSignupField(new Parameters($field), $signupList);
+                $field = $this->createSignupField($field, $signupList);
                 $em->persist($field);
             }
             $em->flush();
@@ -292,13 +315,15 @@ class Activity
      *
      * @pre $data is valid data of Activity\Form\SignupListFields
      *
-     * @param array|Parameters $data parameters for the new field
+     * @param array $data parameters for the new field
      * @param SignupListModel $signupList the SignupList the field belongs to
      *
      * @return SignupFieldModel the new field
      */
-    public function createSignupField($data, $signupList)
-    {
+    public function createSignupField(
+        array $data,
+        SignupListModel $signupList,
+    ): SignupFieldModel {
         $field = new SignupFieldModel();
 
         $field->setSignupList($signupList);
@@ -327,8 +352,10 @@ class Activity
      * @param array $data the array containing the options strings
      * @param SignupFieldModel $field the field to add the options to
      */
-    protected function createSignupOption($data, $field)
-    {
+    protected function createSignupOption(
+        array $data,
+        SignupFieldModel $field,
+    ): void {
         $numOptions = 0;
         $em = $this->entityManager;
 
@@ -359,11 +386,14 @@ class Activity
 
     /**
      * @param ActivityModel $activity
-     * @param User $user
-     * @param Organ $organ
+     * @param UserModel $user
+     * @param OrganModel|null $organ
      */
-    private function requestGEFLITST($activity, $user, $organ)
-    {
+    private function requestGEFLITST(
+        ActivityModel $activity,
+        UserModel $user,
+        ?OrganModel $organ,
+    ): void {
         // Default to an English title, otherwise use the Dutch title
         $activityTitle = $activity->getName()->getText('en');
         $activityTime = $activity->getBeginTime()->format('d-m-Y H:i');
@@ -371,17 +401,17 @@ class Activity
         $type = 'activity_creation_require_GEFLITST';
         $view = 'email/activity_created_require_GEFLITST';
 
-        if (null != $organ) {
+        if (null !== $organ) {
             $subject = sprintf('%s: %s on %s', $organ->getAbbr(), $activityTitle, $activityTime);
 
             $organInfo = $organ->getApprovedOrganInformation();
-            if (null != $organInfo && null != $organInfo->getEmail()) {
+            if (null !== $organInfo && null !== $organInfo->getEmail()) {
                 $this->emailService->sendEmailAsOrgan(
                     $type,
                     $view,
                     $subject,
                     ['activity' => $activity, 'requester' => $organ->getName()],
-                    $organInfo
+                    $organInfo,
                 );
             } else {
                 // The organ did not fill in it's email address, so send the email as the requested user.
@@ -390,7 +420,7 @@ class Activity
                     $view,
                     $subject,
                     ['activity' => $activity, 'requester' => $organ->getName()],
-                    $user
+                    $user,
                 );
             }
         } else {
@@ -401,7 +431,7 @@ class Activity
                 $view,
                 $subject,
                 ['activity' => $activity, 'requester' => $user->getMember()->getFullName()],
-                $user
+                $user,
             );
         }
     }
@@ -416,8 +446,10 @@ class Activity
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function createUpdateProposal(ActivityModel $currentActivity, array $data)
-    {
+    public function createUpdateProposal(
+        ActivityModel $currentActivity,
+        array $data,
+    ): bool {
         // Find the creator
         $user = $this->aclService->getIdentityOrThrowException();
 
@@ -505,8 +537,10 @@ class Activity
      *
      * @return bool
      */
-    protected function isUpdateProposalNew(array $current, array $proposal): bool
-    {
+    protected function isUpdateProposalNew(
+        array $current,
+        array $proposal,
+    ): bool {
         unset($current['id']);
 
         // Convert all DateTimes in the original Activity to strings.
@@ -595,10 +629,15 @@ class Activity
      *
      * Adapted from https://www.php.net/manual/en/function.array-diff-assoc.php#usernotes.
      *
+     * @param array $array1
+     * @param array $array2
+     *
      * @return array
      */
-    protected function arrayDiffAssocRecursive(array $array1, array $array2): array
-    {
+    protected function arrayDiffAssocRecursive(
+        array $array1,
+        array $array2,
+    ): array {
         $difference = [];
 
         foreach ($array1 as $key => $value) {
@@ -626,8 +665,10 @@ class Activity
      * @param array $array
      * @param string $key
      */
-    protected function recursiveUnsetKey(&$array, $key)
-    {
+    protected function recursiveUnsetKey(
+        array &$array,
+        string $key,
+    ): void {
         unset($array[$key]);
 
         foreach ($array as &$value) {
@@ -640,6 +681,8 @@ class Activity
     /**
      * `array_filter` but recursively. Used to compare an update proposal of an activity
      * to the original activity.
+     *
+     * @param array $array
      *
      * @return array
      */
@@ -663,7 +706,7 @@ class Activity
      *
      * @return bool indicating whether the update may be applied
      */
-    protected function canApplyUpdateProposal(ActivityModel $activity)
+    protected function canApplyUpdateProposal(ActivityModel $activity): bool
     {
         if ($this->aclService->isAllowed('update', 'activity')) {
             return true;
@@ -680,7 +723,7 @@ class Activity
     /**
      * Apply a proposed activity update.
      */
-    public function updateActivity(ActivityProposalModel $proposal)
+    public function updateActivity(ActivityProposalModel $proposal): void
     {
         $old = $proposal->getOld();
         $new = $proposal->getNew();
@@ -710,7 +753,7 @@ class Activity
      * NB: This action permanently removes the proposal, so this cannot be undone.
      * (The potentially updated activity remains untouched).
      */
-    public function revokeUpdateProposal(ActivityProposalModel $proposal)
+    public function revokeUpdateProposal(ActivityProposalModel $proposal): void
     {
         $em = $this->entityManager;
         $new = $proposal->getNew();
@@ -722,7 +765,7 @@ class Activity
     /**
      * Approve of an activity.
      */
-    public function approve(ActivityModel $activity)
+    public function approve(ActivityModel $activity): void
     {
         if (!$this->aclService->isAllowed('approve', 'activity')) {
             throw new NotAllowedException(
@@ -740,7 +783,7 @@ class Activity
     /**
      * Reset the approval status of an activity.
      */
-    public function reset(ActivityModel $activity)
+    public function reset(ActivityModel $activity): void
     {
         if (!$this->aclService->isAllowed('reset', 'activity')) {
             throw new NotAllowedException(
@@ -758,7 +801,7 @@ class Activity
     /**
      * Disapprove of an activity.
      */
-    public function disapprove(ActivityModel $activity)
+    public function disapprove(ActivityModel $activity): void
     {
         if (!$this->aclService->isAllowed('disapprove', 'activity')) {
             throw new NotAllowedException(

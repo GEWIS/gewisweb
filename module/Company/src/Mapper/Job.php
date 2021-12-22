@@ -23,8 +23,11 @@ class Job extends BaseMapper
      *
      * @return bool
      */
-    public function isSlugNameUnique(string $companySlugName, string $jobSlugName, int $jobCategoryId): bool
-    {
+    public function isSlugNameUnique(
+        string $companySlugName,
+        string $jobSlugName,
+        int $jobCategoryId,
+    ): bool {
         // A slug in unique if there is no other slug of the same category and same company.
         $jobs = $this->findJob(
             jobCategoryId: $jobCategoryId,
@@ -55,8 +58,7 @@ class Job extends BaseMapper
         string $companySlugName = null,
     ): array {
         $qb = $this->getRepository()->createQueryBuilder('j');
-        $qb->select('j')
-            ->join('j.package', 'p')
+        $qb->join('j.package', 'p')
             ->addSelect('p')
             ->join('p.company', 'c')
             ->addSelect('c');

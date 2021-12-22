@@ -18,13 +18,13 @@ class AdminApprovalControllerFactory implements FactoryInterface
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        array $options = null,
     ): AdminApprovalController {
         return new AdminApprovalController(
-            $container->get('activity_service_activity'),
-            $container->get('activity_service_activityQuery'),
             $container->get('activity_service_acl'),
             $container->get('translator'),
+            $container->get('activity_service_activity'),
+            $container->get('activity_service_activityQuery'),
         );
     }
 }

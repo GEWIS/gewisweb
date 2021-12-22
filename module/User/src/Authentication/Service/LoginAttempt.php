@@ -5,41 +5,52 @@ namespace User\Authentication\Service;
 use DateInterval;
 use DateTime;
 use Doctrine\ORM\EntityManager;
-use User\Mapper\User;
+use User\Mapper\{
+    LoginAttempt as LoginAttemptMapper,
+    User as UserMapper,
+};
+use User\Model\User as UserModel;
 
 class LoginAttempt
 {
     /**
      * @var string
      */
-    private $remoteAddress;
+    private string $remoteAddress;
 
     /**
      * @var array
      */
-    private $rateLimitConfig;
+    private array $rateLimitConfig;
 
     /**
-     * @var \User\Mapper\LoginAttempt
+     * @var LoginAttemptMapper
      */
-    private $loginAttemptMapper;
+    private LoginAttemptMapper $loginAttemptMapper;
 
     /**
      * @var EntityManager
      */
-    private $entityManager;
+    private EntityManager $entityManager;
 
     /**
-     * @var User
+     * @var UserMapper
      */
-    private $userMapper;
+    private UserMapper $userMapper;
 
+    /**
+     * @param string $remoteAddress
+     * @param EntityManager $entityManager
+     * @param LoginAttemptMapper $loginAttemptMapper
+     * @param UserMapper $userMapper
+     * @param array $rateLimitConfig
+     */
     public function __construct(
         string $remoteAddress,
         EntityManager $entityManager,
-        \User\Mapper\LoginAttempt $loginAttemptMapper,
-        User $userMapper,
-        array $rateLimitConfig
+        LoginAttemptMapper $loginAttemptMapper,
+        UserMapper $userMapper,
+        array $rateLimitConfig,
     ) {
         $this->remoteAddress = $remoteAddress;
         $this->loginAttemptMapper = $loginAttemptMapper;
@@ -48,8 +59,14 @@ class LoginAttempt
         $this->userMapper = $userMapper;
     }
 
-    public function logFailedLogin($user, $type)
-    {
+    /**
+     * @param UserModel $user
+     * @param string $type
+     */
+    public function logFailedLogin(
+        UserModel $user,
+        string $type,
+    ): void {
         $attempt = new \User\Model\LoginAttempt();
         $attempt->setIp($this->remoteAddress);
         $attempt->setTime(new DateTime());
@@ -59,7 +76,12 @@ class LoginAttempt
         $this->loginAttemptMapper->persist($attempt);
     }
 
-    public function detachUser($user)
+    /**
+     * @param UserModel $user
+     *
+     * @return UserModel|null
+     */
+    public function detachUser(UserModel $user): ?UserModel
     {
         /*
          * TODO: This probably shouldn't be neccessary
@@ -72,13 +94,23 @@ class LoginAttempt
         return $this->userMapper->findByLidnr($user->getLidnr());
     }
 
-    public function loginAttemptsExceeded($type, $user): bool
-    {
+    /**
+     * @param UserModel $user
+     * @param string $type
+     *
+     * @return bool
+     */
+    public function loginAttemptsExceeded(
+        UserModel $user,
+        string $type,
+    ): bool {
         $ip = $this->remoteAddress;
         $since = (new DateTime())->sub(new DateInterval('PT' . $this->rateLimitConfig[$type]['lockout_time'] . 'M'));
+
         if ($this->loginAttemptMapper->getFailedAttemptCount($since, $type, $ip) > $this->rateLimitConfig[$type]['ip']) {
             return true;
         }
+
         if ($this->loginAttemptMapper->getFailedAttemptCount($since, $type, $ip, $user) > $this->rateLimitConfig[$type]['user']) {
             return true;
         }

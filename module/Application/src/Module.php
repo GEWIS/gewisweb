@@ -46,7 +46,12 @@ use User\Permissions\NotAllowedException;
 
 class Module
 {
-    public function onBootstrap(MvcEvent $e)
+    /**
+     * @param MvcEvent $e
+     *
+     * @return void
+     */
+    public function onBootstrap(MvcEvent $e): void
     {
         $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
@@ -70,7 +75,12 @@ class Module
         AbstractValidator::setDefaultTranslator($mvcTranslator, 'validate');
     }
 
-    public function logError(MvCEvent $e)
+    /**
+     * @param MvcEvent $e
+     *
+     * @return void
+     */
+    public function logError(MvCEvent $e): void
     {
         $container = $e->getApplication()->getServiceManager();
         $logger = $container->get('logger');
@@ -94,7 +104,12 @@ class Module
         $logger->error($e->getError());
     }
 
-    protected function determineLocale(MvcEvent $e)
+    /**
+     * @param MvcEvent $e
+     *
+     * @return string
+     */
+    protected function determineLocale(MvcEvent $e): string
     {
         $session = new SessionContainer('lang');
         if (!isset($session->lang)) {
@@ -115,7 +130,10 @@ class Module
         return include __DIR__ . '/../config/module.config.php';
     }
 
-    public function getServiceConfig()
+    /**
+     * @return array
+     */
+    public function getServiceConfig(): array
     {
         return [
             'factories' => [
@@ -188,7 +206,7 @@ class Module
      *
      * @return array
      */
-    public function getViewHelperConfig()
+    public function getViewHelperConfig(): array
     {
         return [
             'factories' => [

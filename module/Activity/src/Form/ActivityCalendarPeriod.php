@@ -24,6 +24,9 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
      */
     private Translator $translator;
 
+    /**
+     * @param Translator $translator
+     */
     public function __construct(Translator $translator)
     {
         parent::__construct();
@@ -190,8 +193,11 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
      *
      * @return bool
      */
-    public function afterOtherTime(string $value, array $context, string $option): bool
-    {
+    public function afterOtherTime(
+        string $value,
+        array $context,
+        string $option,
+    ): bool {
         try {
             $value = new DateTime($value);
             $time = isset($context[$option]) ? new DateTime($context[$option]) : new DateTime('now');

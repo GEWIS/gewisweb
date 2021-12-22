@@ -12,7 +12,7 @@ class FileUrl extends AbstractHelper
      *
      * @var ContainerInterface
      */
-    protected $locator;
+    protected ContainerInterface $locator;
 
     /**
      * Get the file URL.
@@ -21,7 +21,7 @@ class FileUrl extends AbstractHelper
      *
      * @return string
      */
-    public function __invoke($path)
+    public function __invoke(string $path): string
     {
         $config = $this->getServiceLocator()->get('config');
         $basedir = $config['storage']['public_dir'];
@@ -34,7 +34,7 @@ class FileUrl extends AbstractHelper
      *
      * @return ContainerInterface
      */
-    protected function getServiceLocator()
+    protected function getServiceLocator(): ContainerInterface
     {
         return $this->locator;
     }
@@ -43,8 +43,10 @@ class FileUrl extends AbstractHelper
      * Set the service locator.
      *
      * @param ContainerInterface $locator
+     *
+     * @return void
      */
-    public function setServiceLocator($locator)
+    public function setServiceLocator(ContainerInterface $locator): void
     {
         $this->locator = $locator;
     }

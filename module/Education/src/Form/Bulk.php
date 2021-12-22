@@ -15,8 +15,14 @@ use Laminas\InputFilter\InputFilterProviderInterface;
 
 class Bulk extends Form implements InputFilterProviderInterface
 {
-    public function __construct(Translator $translator, Fieldset $exam)
-    {
+    /**
+     * @param Translator $translator
+     * @param Fieldset $exam
+     */
+    public function __construct(
+        Translator $translator,
+        Fieldset $exam,
+    ) {
         parent::__construct();
 
         $this->add(

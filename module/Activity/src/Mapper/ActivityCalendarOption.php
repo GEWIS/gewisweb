@@ -2,8 +2,10 @@
 
 namespace Activity\Mapper;
 
-use Activity\Model\ActivityCalendarOption as ActivityCalendarOptionModel;
-use Activity\Model\ActivityOptionProposal as ActivityOptionProposalModel;
+use Activity\Model\{
+    ActivityCalendarOption as ActivityCalendarOptionModel,
+    ActivityOptionProposal as ActivityOptionProposalModel,
+};
 use Application\Mapper\BaseMapper;
 use DateTime;
 use Exception;
@@ -11,33 +13,19 @@ use Exception;
 class ActivityCalendarOption extends BaseMapper
 {
     /**
-     * Find an option by its id.
-     *
-     * @param int $optionId Option id
-     *
-     * @return ActivityCalendarOptionModel
-     */
-    public function findOption($optionId)
-    {
-        return $this->getRepository()->findOneBy(['id' => $optionId]);
-    }
-
-    /**
      * Gets all options created by the given organs.
      *
      * @param array $organs
      * @return array
      */
-    public function getUpcomingOptionsByOrgans($organs)
+    public function getUpcomingOptionsByOrgans(array $organs): array
     {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
-            ->from(ActivityOptionProposalModel::class, 'b')
-            ->where('a.proposal = b.id')
-            ->andWhere('a.endTime > :now')
+        $qb = $this->getRepository()->createQueryBuilder('o');
+        $qb->from(ActivityOptionProposalModel::class, 'b')
+            ->where('o.proposal = b.id')
+            ->andWhere('o.endTime > :now')
             ->andWhere('b.organ IN (:organs)')
-            ->orderBy('a.beginTime', 'ASC');
+            ->orderBy('o.beginTime', 'ASC');
 
         $qb->setParameter('now', new DateTime())
             ->setParameter('organs', $organs);
@@ -54,17 +42,15 @@ class ActivityCalendarOption extends BaseMapper
      *
      * @throws Exception
      */
-    public function getUpcomingOptions($withDeleted = false)
+    public function getUpcomingOptions(bool $withDeleted = false): array
     {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
-            ->where('a.endTime > :now')
-            ->orderBy('a.beginTime', 'ASC');
+        $qb = $this->getRepository()->createQueryBuilder('o');
+        $qb->where('o.endTime > :now')
+            ->orderBy('o.beginTime', 'ASC');
 
         if (!$withDeleted) {
-            $qb->andWhere('a.modifiedBy IS NULL')
-                ->orWhere("a.status = 'approved'");
+            $qb->andWhere('o.modifiedBy IS NULL')
+                ->orWhere("o.status = 'approved'");
         }
         $qb->setParameter('now', new DateTime());
 
@@ -96,36 +82,14 @@ class ActivityCalendarOption extends BaseMapper
     /**
      * Retrieves options associated with a proposal.
      *
-     * @param int $proposalId
+     * @param ActivityOptionProposalModel $proposal
      * @return array
      */
-    public function findOptionsByProposal($proposalId)
+    public function findOptionsByProposal(ActivityOptionProposalModel $proposal): array
     {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
-            ->andWhere('a.proposal = :proposal')
-            ->setParameter('proposal', $proposalId);
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Retrieves options associated with a proposal and associated with given organ.
-     *
-     * @param int $proposalId
-     * @param int $organId the organ proposals have to be associated with
-     *
-     * @return array
-     */
-    public function findOptionsByProposalAndOrgan($proposalId, $organId)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
-            ->andWhere('a.proposal = :proposal')
-            ->setParameter('proposal', $proposalId)
-            ->setParameter('organ', $organId);
+        $qb = $this->getRepository()->createQueryBuilder('o');
+        $qb->where('o.proposal = :proposal')
+            ->setParameter('proposal', $proposal);
 
         return $qb->getQuery()->getResult();
     }

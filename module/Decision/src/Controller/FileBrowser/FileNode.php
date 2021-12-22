@@ -75,8 +75,16 @@ class FileNode
         'fa-folder' => ['folder'],
     ];
 
-    public function __construct($kind, $fullPath, $name)
-    {
+    /**
+     * @param string $kind
+     * @param string $fullPath
+     * @param string $name
+     */
+    public function __construct(
+        string $kind,
+        string $fullPath,
+        string $name,
+    ) {
         if ('dir' !== $kind && 'file' !== $kind) {
             throw new RuntimeException('Kind is not supported.');
         }

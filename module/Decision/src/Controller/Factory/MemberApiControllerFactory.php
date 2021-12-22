@@ -18,7 +18,7 @@ class MemberApiControllerFactory implements FactoryInterface
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        array $options = null,
     ): MemberApiController {
         return new MemberApiController(
             $container->get('decision_service_member'),

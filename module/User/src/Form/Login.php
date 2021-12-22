@@ -12,20 +12,23 @@ use Laminas\Form\Element\{
     Text,
 };
 use Laminas\Form\Form;
+use Laminas\InputFilter\InputProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\InputFilter\InputFilter;
 use Laminas\Validator\{
     NotEmpty,
     StringLength,
 };
 
-class Login extends Form
+class Login extends Form implements InputProviderInterface
 {
     /**
      * @var Translator
      */
     protected Translator $translate;
 
+    /**
+     * @param Translator $translate
+     */
     public function __construct(Translator $translate)
     {
         parent::__construct();
@@ -87,14 +90,14 @@ class Login extends Form
                 'type' => Csrf::class,
             ]
         );
-
-        $this->initFilters();
     }
 
     /**
      * Set authentication result.
+     *
+     * @param Result $result
      */
-    public function setResult(Result $result)
+    public function setResult(Result $result): void
     {
         if (!$result->isValid()) {
             switch ($result->getCode()) {
@@ -129,25 +132,21 @@ class Login extends Form
         }
     }
 
-    protected function initFilters()
+    /**
+     * @return array
+     */
+    public function getInputSpecification(): array
     {
-        $filter = new InputFilter();
-
-        $filter->add(
-            [
-                'name' => 'login',
+        return [
+            'login' => [
                 'required' => true,
                 'validators' => [
                     [
                         'name' => NotEmpty::class,
                     ],
                 ],
-            ]
-        );
-
-        $filter->add(
-            [
-                'name' => 'password',
+            ],
+            'password' => [
                 'required' => true,
                 'validators' => [
                     [
@@ -160,9 +159,7 @@ class Login extends Form
                         ],
                     ],
                 ],
-            ]
-        );
-
-        $this->setInputFilter($filter);
+            ],
+        ];
     }
 }

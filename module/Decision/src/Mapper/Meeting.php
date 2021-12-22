@@ -10,8 +10,6 @@ use Decision\Model\{
     MeetingDocument as MeetingDocumentModel,
 };
 use Doctrine\ORM\{
-    EntityManager,
-    EntityRepository,
     NonUniqueResultException,
     NoResultException,
     ORMException,
@@ -27,10 +25,9 @@ class Meeting extends BaseMapper
      *
      * @return array Of all meetings
      */
-    public function findAllMeetings($limit = null)
+    public function findAllMeetings(?int $limit = null): array
     {
         $qb = $this->em->createQueryBuilder();
-
         $qb->select('m, COUNT(d)')
             ->from($this->getRepositoryName(), 'm')
             ->leftJoin('m.decisions', 'd')
@@ -53,11 +50,8 @@ class Meeting extends BaseMapper
      */
     public function findByType(string $type): array
     {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('m')
-            ->from($this->getRepositoryName(), 'm')
-            ->where('m.type = :type')
+        $qb = $this->getRepository()->createQueryBuilder('m');
+        $qb->where('m.type = :type')
             ->orderBy('m.date', 'DESC')
             ->setParameter(':type', $type);
 
@@ -72,8 +66,10 @@ class Meeting extends BaseMapper
      *
      * @return array Meetings that have taken place
      */
-    public function findPast(int $limit = null, string $type = null): array
-    {
+    public function findPast(
+        ?int $limit = null,
+        ?string $type = null,
+    ): array {
         $qb = $this->em->createQueryBuilder();
 
         // Use yesterday because a meeting might still take place later on the day
@@ -133,10 +129,11 @@ class Meeting extends BaseMapper
      * @return MeetingModel|null
      * @throws NonUniqueResultException
      */
-    public function findMeeting(?string $type, ?int $number): ?MeetingModel
-    {
+    public function findMeeting(
+        ?string $type,
+        ?int $number,
+    ): ?MeetingModel {
         $qb = $this->em->createQueryBuilder();
-
         $qb->select('m, d, db')
             ->from($this->getRepositoryName(), 'm')
             ->where('m.type = :type')
@@ -173,7 +170,7 @@ class Meeting extends BaseMapper
      * @throws InvalidArgumentException If the document does not exist
      * @throws ORMException
      */
-    public function findDocumentOrFail($id): MeetingDocumentModel
+    public function findDocumentOrFail(int $id): MeetingDocumentModel
     {
         $document = $this->findDocument($id);
 
@@ -196,7 +193,6 @@ class Meeting extends BaseMapper
     public function findMaxDocumentPosition(MeetingModel $meeting): ?int
     {
         $qb = $this->em->createQueryBuilder();
-
         $qb->select('MAX(d.displayPosition)')
             ->from($this->getRepositoryName(), 'm')
             ->join('m.documents', 'd')
@@ -218,16 +214,16 @@ class Meeting extends BaseMapper
      * @return MeetingModel|null
      * @throws NonUniqueResultException
      */
-    private function findFutureMeeting($order, $vvs = false)
-    {
-        $qb = $this->em->createQueryBuilder();
+    private function findFutureMeeting(
+        string $order,
+        bool $vvs = false,
+    ): ?MeetingModel {
+        $qb = $this->getRepository()->createQueryBuilder('m');
 
         $today = new DateTime();
         $maxDate = $today->sub(new DateInterval('P1D'));
 
-        $qb->select('m')
-            ->from($this->getRepositoryName(), 'm')
-            ->where('m.type = :type')
+        $qb->where('m.type = :type')
             ->where('m.date >= :date')
             ->orderBy('m.date', $order)
             ->setParameter('date', $maxDate)

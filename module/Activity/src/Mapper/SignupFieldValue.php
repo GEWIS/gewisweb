@@ -2,7 +2,10 @@
 
 namespace Activity\Mapper;
 
-use Activity\Model\SignupFieldValue as SignupFieldValueModel;
+use Activity\Model\{
+    Signup as SignupModel,
+    SignupFieldValue as SignupFieldValueModel,
+};
 use Application\Mapper\BaseMapper;
 
 class SignupFieldValue extends BaseMapper
@@ -12,7 +15,7 @@ class SignupFieldValue extends BaseMapper
      *
      * @return array of \Activity\Model\ActivityFieldValue
      */
-    public function getFieldValuesBySignup(\Activity\Model\Signup $signup)
+    public function getFieldValuesBySignup(SignupModel $signup): array
     {
         return $this->getRepository()->findBy(['signup' => $signup->getId()]);
     }

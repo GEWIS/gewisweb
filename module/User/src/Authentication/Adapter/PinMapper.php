@@ -45,8 +45,10 @@ class PinMapper implements AdapterInterface
      * @param LoginAttemptService $loginAttemptService
      * @param UserMapper $mapper
      */
-    public function __construct(loginAttemptService $loginAttemptService, UserMapper $mapper)
-    {
+    public function __construct(
+        LoginAttemptService $loginAttemptService,
+        UserMapper $mapper,
+    ) {
         $this->loginAttemptService = $loginAttemptService;
         $this->mapper = $mapper;
     }
@@ -66,11 +68,11 @@ class PinMapper implements AdapterInterface
      *
      * @param string $lidnr
      * @param string $pincode
-     *
-     * @return void
      */
-    public function setCredentials($lidnr, $pincode)
-    {
+    public function setCredentials(
+        string $lidnr,
+        string $pincode,
+    ): void {
         $this->lidnr = $lidnr;
         $this->pincode = $pincode;
     }

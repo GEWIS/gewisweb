@@ -29,13 +29,20 @@ class IsOrganMember implements AssertionInterface
      * @param Acl $acl
      * @param RoleInterface|null $role
      * @param ResourceInterface|null $resource
-     * @param string $privilege
+     * @param string|null $privilege
      *
      * @return bool
      */
-    public function assert(Acl $acl, RoleInterface $role = null, ResourceInterface $resource = null, $privilege = null): bool
-    {
-        if (!$role instanceof User || !$resource instanceof OrganResourceInterface) {
+    public function assert(
+        Acl $acl,
+        ?RoleInterface $role = null,
+        ?ResourceInterface $resource = null,
+        $privilege = null,
+    ): bool {
+        if (
+            !$role instanceof User
+            || !$resource instanceof OrganResourceInterface
+        ) {
             return false;
         }
 
@@ -61,9 +68,11 @@ class IsOrganMember implements AssertionInterface
     /**
      * Check if this is a current organ member.
      *
+     * @param OrganMember $organMember
+     *
      * @return bool
      */
-    protected function isCurrentMember(OrganMember $organMember)
+    protected function isCurrentMember(OrganMember $organMember): bool
     {
         $now = new DateTime();
 

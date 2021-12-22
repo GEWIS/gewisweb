@@ -34,7 +34,6 @@ use Exception;
 use InvalidArgumentException;
 use Laminas\Http\Response\Stream;
 use Laminas\Mvc\I18n\Translator;
-use Traversable;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -42,6 +41,16 @@ use User\Permissions\NotAllowedException;
  */
 class Decision
 {
+    /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
     /**
      * @var FileStorageService
      */
@@ -98,16 +107,23 @@ class Decision
     private AuthorizationForm $authorizationForm;
 
     /**
-     * @var AclService
+     * @param AclService $aclService
+     * @param Translator $translator
+     * @param FileStorageService $storageService
+     * @param EmailService $emailService
+     * @param MemberMapper $memberMapper
+     * @param MeetingMapper $meetingMapper
+     * @param DecisionMapper $decisionMapper
+     * @param AuthorizationMapper $authorizationMapper
+     * @param NotesForm $notesForm
+     * @param DocumentForm $documentForm
+     * @param ReorderDocumentForm $reorderDocumentForm
+     * @param SearchDecisionForm $searchDecisionForm
+     * @param AuthorizationForm $authorizationForm
      */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
     public function __construct(
+        AclService $aclService,
+        Translator $translator,
         FileStorageService $storageService,
         EmailService $emailService,
         MemberMapper $memberMapper,
@@ -119,9 +135,9 @@ class Decision
         ReorderDocumentForm $reorderDocumentForm,
         SearchDecisionForm $searchDecisionForm,
         AuthorizationForm $authorizationForm,
-        AclService $aclService,
-        Translator $translator,
     ) {
+        $this->aclService = $aclService;
+        $this->translator = $translator;
         $this->storageService = $storageService;
         $this->emailService = $emailService;
         $this->memberMapper = $memberMapper;
@@ -133,8 +149,6 @@ class Decision
         $this->reorderDocumentForm = $reorderDocumentForm;
         $this->searchDecisionForm = $searchDecisionForm;
         $this->authorizationForm = $authorizationForm;
-        $this->aclService = $aclService;
-        $this->translator = $translator;
     }
 
     /**
@@ -154,7 +168,7 @@ class Decision
      *
      * @return array Of all meetings
      */
-    public function getMeetings(int $limit = null): array
+    public function getMeetings(?int $limit = null): array
     {
         if (!$this->aclService->isAllowed('list_meetings', 'decision')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings.'));
@@ -171,8 +185,10 @@ class Decision
      *
      * @return array Of all meetings
      */
-    public function getPastMeetings(int $limit = null, string $type = null): array
-    {
+    public function getPastMeetings(
+        ?int $limit = null,
+        ?string $type = null,
+    ): array {
         if (!$this->aclService->isAllowed('list_meetings', 'decision')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings.'));
         }
@@ -203,8 +219,10 @@ class Decision
      * @return MeetingModel|null
      * @throws NonUniqueResultException
      */
-    public function getMeeting(?string $type, ?int $number): ?MeetingModel
-    {
+    public function getMeeting(
+        ?string $type,
+        ?int $number,
+    ): ?MeetingModel {
         if (!$this->aclService->isAllowed('view', 'meeting')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view meetings.'));
         }
@@ -250,20 +268,16 @@ class Decision
     /**
      * Returns a download for a meeting document.
      *
-     * @param MeetingDocumentModel|null $meetingDocument
+     * @param MeetingDocumentModel $meetingDocument
      *
      * @return Stream|null
      */
-    public function getMeetingDocumentDownload(?MeetingDocumentModel $meetingDocument): ?Stream
+    public function getMeetingDocumentDownload(MeetingDocumentModel $meetingDocument): ?Stream
     {
         if (!$this->aclService->isAllowed('view_documents', 'meeting')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view meeting documents.')
             );
-        }
-
-        if (is_null($meetingDocument)) {
-            return null;
         }
 
         $path = $meetingDocument->getPath();
@@ -392,8 +406,10 @@ class Decision
      * @throws NotAllowedException
      * @throws InvalidArgumentException If the document doesn't exist
      */
-    public function changePositionDocument($id, $moveDown = true)
-    {
+    public function changePositionDocument(
+        int $id,
+        bool $moveDown = true,
+    ): void {
         $errorMessage = 'You are not allowed to modify meeting documents.';
 
         $this->isAllowedOrFail('upload_document', 'meeting', $errorMessage);
@@ -436,26 +452,12 @@ class Decision
     /**
      * Search for decisions.
      *
-     * @param array|Traversable $data Search data
+     * @param array $data Search data
      *
      * @return array|null Search results
      */
-    public function search($data)
+    public function search(array $data): ?array
     {
-        if (!$this->aclService->isAllowed('search', 'decision')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to search decisions.'));
-        }
-
-        $form = $this->getSearchDecisionForm();
-
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return null;
-        }
-
-        $data = $form->getData();
-
         return $this->decisionMapper->search($data['query']);
     }
 
@@ -480,19 +482,19 @@ class Decision
     /**
      * Gets the authorization of the current user for the given meeting.
      *
-     * @param int $meetingNumber
+     * @param MeetingModel $meeting
      *
      * @return AuthorizationModel|null
      */
-    public function getUserAuthorization(int $meetingNumber): ?AuthorizationModel
+    public function getUserAuthorization(MeetingModel $meeting): ?AuthorizationModel
     {
         if (!$this->aclService->isAllowed('view_own', 'authorization')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view authorizations.'));
         }
 
-        $lidnr = $this->aclService->getIdentityOrThrowException()->getLidnr();
+        $member = $this->aclService->getIdentityOrThrowException()->getMember();
 
-        return $this->authorizationMapper->findUserAuthorization($meetingNumber, $lidnr);
+        return $this->authorizationMapper->findUserAuthorization($meeting->getNumber(), $member);
     }
 
     /**
@@ -531,7 +533,7 @@ class Decision
             'email/authorization_received',
             'Machtiging ontvangen | Authorization received',
             ['authorization' => $authorization],
-            $authorizer
+            $authorizer,
         );
 
         // Send a confirmation email to the authorizing member
@@ -540,7 +542,7 @@ class Decision
             'email/authorization_sent',
             'Machtiging verstuurd | Authorization sent',
             ['authorization' => $authorization],
-            $recipient
+            $recipient,
         );
 
         return $authorization;
@@ -631,8 +633,11 @@ class Decision
      *
      * @throws NotAllowedException If the user doesn't have permission
      */
-    private function isAllowedOrFail(string $operation, string $resource, string $errorMessage): void
-    {
+    private function isAllowedOrFail(
+        string $operation,
+        string $resource,
+        string $errorMessage,
+    ): void {
         if (!$this->aclService->isAllowed($operation, $resource)) {
             throw new NotAllowedException($this->translator->translate($errorMessage));
         }

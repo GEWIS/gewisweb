@@ -15,10 +15,8 @@ class Label extends BaseMapper
      */
     public function findVisibleLabels(): array
     {
-        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('c')
-            ->select('c')
-            ->where('c.hidden = :hidden')
+        $qb = $this->getRepository()->createQueryBuilder('l');
+        $qb->where('l.hidden = :hidden')
             ->setParameter('hidden', false);
 
         return $qb->getQuery()->getResult();

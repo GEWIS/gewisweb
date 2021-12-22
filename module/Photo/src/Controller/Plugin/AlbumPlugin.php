@@ -40,7 +40,7 @@ class AlbumPlugin extends AbstractPlugin
     public function __construct(
         AlbumService $albumService,
         PhotoService $photoService,
-        array $photoConfig
+        array $photoConfig,
     ) {
         $this->photoService = $photoService;
         $this->albumService = $albumService;
@@ -90,8 +90,10 @@ class AlbumPlugin extends AbstractPlugin
      *
      * @throws Exception
      */
-    public function getAlbumPageAsArray(int $albumId, int $activePage): ?array
-    {
+    public function getAlbumPageAsArray(
+        int $albumId,
+        int $activePage,
+    ): ?array {
         $page = $this->getAlbumPage($albumId, $activePage);
 
         if (null === $page) {
@@ -130,8 +132,11 @@ class AlbumPlugin extends AbstractPlugin
      *
      * @throws Exception
      */
-    public function getAlbumPage(int $albumId, int $activePage, string $type = 'album'): ?array
-    {
+    public function getAlbumPage(
+        int $albumId,
+        int $activePage,
+        string $type = 'album',
+    ): ?array {
         $album = $this->albumService->getAlbum($albumId, $type);
 
         if (null === $album) {

@@ -14,7 +14,10 @@ use Exception;
  */
 class VirtualAlbum extends Album
 {
-    public function __construct($id)
+    /**
+     * @param int $id
+     */
+    public function __construct(int $id)
     {
         parent::__construct();
         $this->id = $id;

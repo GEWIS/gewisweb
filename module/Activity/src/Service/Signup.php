@@ -2,9 +2,11 @@
 
 namespace Activity\Service;
 
+use Activity\Form\Signup as SignupForm;
 use Activity\Mapper\{
-    SignupFieldValue,
-    SignupOption,
+    Signup as SignupMapper,
+    SignupFieldValue as SignupFieldValueMapper,
+    SignupOption as SignupOptionMapper,
 };
 use Activity\Model\{
     ExternalSignup as ExternalSignupModel,
@@ -26,45 +28,57 @@ use User\Permissions\NotAllowedException;
 class Signup
 {
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
      * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
      * @var EntityManager
      */
-    private $entityManager;
+    private EntityManager $entityManager;
 
     /**
-     * @var \Activity\Mapper\Signup
+     * @var SignupMapper
      */
-    private $signupMapper;
+    private SignupMapper $signupMapper;
 
     /**
-     * @var SignupOption
+     * @var SignupFieldValueMapper
      */
-    private $signupOptionMapper;
+    private SignupFieldValueMapper $signupFieldValueMapper;
 
     /**
-     * @var SignupFieldValue
+     * @var SignupOptionMapper
      */
-    private $signupFieldValueMapper;
-    private AclService $aclService;
+    private SignupOptionMapper $signupOptionMapper;
 
+    /**
+     * @param AclService $aclService
+     * @param Translator $translator
+     * @param EntityManager $entityManager
+     * @param SignupMapper $signupMapper
+     * @param SignupFieldValueMapper $signupFieldValueMapper
+     * @param SignupOptionMapper $signupOptionMapper
+     */
     public function __construct(
+        AclService $aclService,
         Translator $translator,
         EntityManager $entityManager,
-        \Activity\Mapper\Signup $signupMapper,
-        SignupOption $signupOptionMapper,
-        SignupFieldValue $signupFieldValueMapper,
-        AclService $aclService
+        SignupMapper $signupMapper,
+        SignupFieldValueMapper $signupFieldValueMapper,
+        SignupOptionMapper $signupOptionMapper,
     ) {
+        $this->aclService = $aclService;
         $this->translator = $translator;
         $this->entityManager = $entityManager;
         $this->signupMapper = $signupMapper;
-        $this->signupOptionMapper = $signupOptionMapper;
         $this->signupFieldValueMapper = $signupFieldValueMapper;
-        $this->aclService = $aclService;
+        $this->signupOptionMapper = $signupOptionMapper;
     }
 
     /**
@@ -73,11 +87,11 @@ class Signup
      *
      * @param SignupListModel $signupList
      *
-     * @return \Activity\Form\Signup
+     * @return SignupForm
      *
      * @throws NotAllowedException
      */
-    public function getForm($signupList)
+    public function getForm(SignupListModel $signupList): SignupForm
     {
         if (!$this->aclService->isAllowed('signup', $signupList)) {
             throw new NotAllowedException(
@@ -85,13 +99,18 @@ class Signup
             );
         }
 
-        $form = new \Activity\Form\Signup();
+        $form = new SignupForm();
         $form->initialiseForm($signupList);
 
         return $form;
     }
 
-    public function getExternalAdminForm($signupList)
+    /**
+     * @param SignupListModel $signupList
+     *
+     * @return SignupForm
+     */
+    public function getExternalAdminForm(SignupListModel $signupList): SignupForm
     {
         if (!$this->aclService->isAllowed('adminSignup', $signupList)) {
             throw new NotAllowedException(
@@ -99,13 +118,18 @@ class Signup
             );
         }
 
-        $form = new \Activity\Form\Signup();
+        $form = new SignupForm();
         $form->initialiseExternalAdminForm($signupList);
 
         return $form;
     }
 
-    public function getExternalForm($signupList)
+    /**
+     * @param SignupListModel $signupList
+     *
+     * @return SignupForm
+     */
+    public function getExternalForm(SignupListModel $signupList): SignupForm
     {
         if (!$this->aclService->isAllowed('externalSignup', $signupList)) {
             throw new NotAllowedException(
@@ -113,7 +137,7 @@ class Signup
             );
         }
 
-        $form = new \Activity\Form\Signup();
+        $form = new SignupForm();
         $form->initialiseExternalForm($signupList);
 
         return $form;
@@ -122,9 +146,11 @@ class Signup
     /**
      * Gets an array of the signed up users and the associated data.
      *
+     * @param SignupListModel $signupList
+     *
      * @return array
      */
-    public function getSignedUpData(SignupListModel $signupList)
+    public function getSignedUpData(SignupListModel $signupList): array
     {
         if (!$this->aclService->isAllowed('view', $signupList)) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view the sign up data'));
@@ -152,36 +178,6 @@ class Signup
     }
 
     /**
-     * Gets an array of the signed up users, but without the associated data.
-     *
-     * @return array
-     */
-    public function getSignedUpDataWithoutFields(SignupListModel $signupList)
-    {
-        if (!$this->aclService->isAllowed('view', $signupList)) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view the sign up data'));
-        }
-
-        $result = [];
-
-        foreach ($signupList->getSignUps() as $signup) {
-            $entry = [];
-            $entry['fullName'] = $signup->getFullName();
-            $entry['email'] = $signup->getEmail();
-
-            $entry['type'] = $this->translator->translate('External');
-
-            if ($signup instanceof UserSignupModel) {
-                $entry['type'] = $this->translator->translate('User');
-            }
-
-            $result[] = $entry;
-        }
-
-        return $result;
-    }
-
-    /**
      * Check if a member is signed up for an activity.
      *
      * @param SignupListModel $signupList
@@ -189,44 +185,28 @@ class Signup
      *
      * @return bool
      */
-    public function isSignedUp(SignupListModel $signupList, UserModel $user): bool
-    {
+    public function isSignedUp(
+        SignupListModel $signupList,
+        UserModel $user,
+    ): bool {
         if (!$this->aclService->isAllowed('checkUserSignedUp', 'signupList')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view the activities'));
         }
 
-        return $this->signupMapper->isSignedUp($signupList->getId(), $user->getLidnr());
-    }
-
-    /**
-     * Get the ids of all activities which the current user is signed up for.
-     *
-     * @return array
-     */
-    public function getSignedUpActivityIds()
-    {
-        if (!$this->aclService->isAllowed('checkUserSignedUp', 'signupList')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view activities which you signed up for')
-            );
-        }
-
-        $user = $this->aclService->getIdentityOrThrowException();
-        $activitySignups = $this->signupMapper->getSignedUpActivities($user->getLidnr());
-        $activities = [];
-
-        foreach ($activitySignups as $activitySignup) {
-            $activities[] = $activitySignup->getActivity()->getId();
-        }
-
-        return $activities;
+        return $this->signupMapper->isSignedUp($signupList, $user);
     }
 
     /**
      * Sign a User up for an activity with the specified field values.
+     * @param SignupListModel $signupList
+     * @param array $fieldResults
+     *
+     * @return UserSignupModel
      */
-    public function signUp(SignupListModel $signupList, array $fieldResults)
-    {
+    public function signUp(
+        SignupListModel $signupList,
+        array $fieldResults,
+    ): UserSignupModel {
         if (!$this->aclService->isAllowed('signup', 'signupList')) {
             throw new NotAllowedException(
                 $this->translator->translate('You need to be logged in to sign up for this activity')
@@ -236,24 +216,31 @@ class Signup
         $user = $this->aclService->getIdentityOrThrowException();
         $signup = new UserSignupModel();
         $signup->setUser($user);
-        $this->createSignup($signup, $signupList, $fieldResults);
+
+        return $this->createSignup($signup, $signupList, $fieldResults);
     }
 
     /**
      * Creates the generic parts of a signup.
      *
-     * @param SignupModel $signup
+     * @param ExternalSignupModel|UserSignupModel $signup
      * @param SignupListModel $signupList
      * @param array $fieldResults
-     * @return SignupModel
+     *
+     * @return ExternalSignupModel|UserSignupModel
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    protected function createSignup(SignupModel $signup, SignupListModel $signupList, array $fieldResults)
-    {
+    protected function createSignup(
+        ExternalSignupModel|UserSignupModel $signup,
+        SignupListModel $signupList,
+        array $fieldResults,
+    ): ExternalSignupModel|UserSignupModel {
         $signup->setSignupList($signupList);
         $optionMapper = $this->signupOptionMapper;
         $em = $this->entityManager;
+
         foreach ($signupList->getFields() as $field) {
             $fieldValue = new SignupFieldValueModel();
             $fieldValue->setField($field);
@@ -284,62 +271,96 @@ class Signup
     /**
      * Sign an external user up for an activity, which the current user may admin.
      *
+     * @param SignupListModel $signupList
      * @param string $fullName
      * @param string $email
+     * @param array $fieldResults
+     *
+     * @return ExternalSignupModel
      *
      * @throws NotAllowedException
+     * @throws ORMException
      */
-    public function adminSignUp(SignupListModel $signupList, $fullName, $email, array $fieldResults)
-    {
+    public function adminSignUp(
+        SignupListModel $signupList,
+        string $fullName,
+        string $email,
+        array $fieldResults,
+    ): ExternalSignupModel {
         if (!($this->aclService->isAllowed('adminSignup', $signupList))) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to subscribe an external user to this sign-up list')
             );
         }
 
-        $this->manualSignUp($signupList, $fullName, $email, $fieldResults);
+        return $this->manualSignUp($signupList, $fullName, $email, $fieldResults);
     }
 
     /**
      * Sign an external user up for an activity.
      *
+     * @param SignupListModel $signupList
      * @param string $fullName
      * @param string $email
+     * @param array $fieldResults
      *
-     * @throws NotAllowedException
+     * @return ExternalSignupModel
+     *
+     * @throws ORMException
      */
-    protected function manualSignUp(SignupListModel $signupList, $fullName, $email, array $fieldResults)
-    {
+    protected function manualSignUp(
+        SignupListModel $signupList,
+        string $fullName,
+        string $email,
+        array $fieldResults,
+    ): ExternalSignupModel {
         $signup = new ExternalSignupModel();
         $signup->setEmail($email);
         $signup->setFullName($fullName);
-        $this->createSignup($signup, $signupList, $fieldResults);
+
+        return $this->createSignup($signup, $signupList, $fieldResults);
     }
 
     /**
      * Sign an external user up for an activity, allowed by a guest.
      *
+     * @param SignupListModel $signupList
      * @param string $fullName
      * @param string $email
+     * @param array $fieldResults
+     *
+     * @return SignupModel
      *
      * @throws NotAllowedException
+     * @throws ORMException
      */
-    public function externalSignUp(SignupListModel $signupList, $fullName, $email, array $fieldResults)
-    {
+    public function externalSignUp(
+        SignupListModel $signupList,
+        string $fullName,
+        string $email,
+        array $fieldResults,
+    ): SignupModel {
         if (!($this->aclService->isAllowed('externalSignup', $signupList))) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to subscribe to this sign-up list')
             );
         }
 
-        $this->manualSignUp($signupList, $fullName, $email, $fieldResults);
+        return $this->manualSignUp($signupList, $fullName, $email, $fieldResults);
     }
 
     /**
      * Undo an activity sign up.
+     *
+     * @param SignupListModel $signupList
+     * @param UserModel $user
+     *
+     * @return void
      */
-    public function signOff(SignupListModel $signupList, UserModel $user)
-    {
+    public function signOff(
+        SignupListModel $signupList,
+        UserModel $user,
+    ): void {
         if (!$this->aclService->isAllowed('signoff', 'signupList')) {
             throw new NotAllowedException(
                 $this->translator->translate('You need to be logged in to sign off for this activity')
@@ -347,7 +368,7 @@ class Signup
         }
 
         $signUpMapper = $this->signupMapper;
-        $signUp = $signUpMapper->getSignUp($signupList->getId(), $user->getLidnr());
+        $signUp = $signUpMapper->getSignUp($signupList, $user);
 
         // If the user was not signed up, no need to signoff anyway
         if (is_null($signUp)) {
@@ -357,20 +378,38 @@ class Signup
         $this->removeSignUp($signUp);
     }
 
-    protected function removeSignUp(SignupModel $signup)
+    /**
+     * @param SignupModel $signup
+     *
+     * @return void
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    protected function removeSignUp(SignupModel $signup): void
     {
-        $em = $this->entityManager;
-        $em->remove($signup);
-        $em->flush();
+        $this->signupMapper->remove($signup);
     }
 
-    public function getNumberOfSubscribedMembers(SignupListModel $signupList)
+    /**
+     * @param SignupListModel $signupList
+     *
+     * @return int
+     */
+    public function getNumberOfSubscribedMembers(SignupListModel $signupList): int
     {
-        return $this->signupMapper
-            ->getNumberOfSignedUpMembers($signupList->getId())[1];
+        return $this->signupMapper->getNumberOfSignedUpMembers($signupList)[1];
     }
 
-    public function externalSignOff(ExternalSignupModel $signup)
+    /**
+     * @param ExternalSignupModel $signup
+     *
+     * @return void
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function externalSignOff(ExternalSignupModel $signup): void
     {
         if (
             !($this->aclService->isAllowed('adminSignup', 'activity') ||
@@ -380,11 +419,20 @@ class Signup
                 $this->translator->translate('You are not allowed to remove external signups for this activity')
             );
         }
+
         $this->removeSignUp($signup);
     }
 
-    public static function isInSubscriptionWindow($openDate, $closeDate)
-    {
+    /**
+     * @param DateTime $openDate
+     * @param DateTime $closeDate
+     *
+     * @return bool
+     */
+    public static function isInSubscriptionWindow(
+        DateTime $openDate,
+        DateTime $closeDate,
+    ): bool {
         $currentTime = new DateTime();
 
         return $openDate < $currentTime && $currentTime < $closeDate;
@@ -395,7 +443,7 @@ class Signup
      *
      * @return bool
      */
-    public function isAllowedToSubscribe()
+    public function isAllowedToSubscribe(): bool
     {
         return $this->aclService->isAllowed('signup', 'signupList');
     }
@@ -405,17 +453,23 @@ class Signup
      *
      * @return bool
      */
-    public function isAllowedToExternalSubscribe()
+    public function isAllowedToExternalSubscribe(): bool
     {
         return $this->aclService->isAllowed('externalSignup', 'signupList');
     }
 
-    public function isAllowedToViewSubscriptions()
+    /**
+     * @return bool
+     */
+    public function isAllowedToViewSubscriptions(): bool
     {
         return $this->aclService->isAllowed('view', 'signupList');
     }
 
-    public function isAllowedToInternalSubscribe()
+    /**
+     * @return bool
+     */
+    public function isAllowedToInternalSubscribe(): bool
     {
         return $this->aclService->isAllowed('signup', 'signupList');
     }

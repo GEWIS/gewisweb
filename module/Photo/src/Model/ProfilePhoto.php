@@ -109,7 +109,7 @@ class ProfilePhoto implements ResourceInterface
     /**
      * @param int $id
      */
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -117,7 +117,7 @@ class ProfilePhoto implements ResourceInterface
     /**
      * @param Photo $photo
      */
-    public function setPhoto(Photo $photo)
+    public function setPhoto(Photo $photo): void
     {
         $this->photo = $photo;
     }
@@ -125,7 +125,7 @@ class ProfilePhoto implements ResourceInterface
     /**
      * @param MemberModel $member
      */
-    public function setMember(MemberModel $member)
+    public function setMember(MemberModel $member): void
     {
         $this->member = $member;
     }
@@ -133,7 +133,7 @@ class ProfilePhoto implements ResourceInterface
     /**
      * @param DateTime $dateTime
      */
-    public function setDateTime(DateTime $dateTime)
+    public function setDateTime(DateTime $dateTime): void
     {
         $this->dateTime = $dateTime;
     }
@@ -141,7 +141,7 @@ class ProfilePhoto implements ResourceInterface
     /**
      * @param bool $explicit
      */
-    public function setExplicit(bool $explicit)
+    public function setExplicit(bool $explicit): void
     {
         $this->explicit = $explicit;
     }

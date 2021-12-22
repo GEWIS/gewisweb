@@ -18,12 +18,12 @@ class NewsAdminControllerFactory implements FactoryInterface
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        array $options = null,
     ): NewsAdminController {
         return new NewsAdminController(
-            $container->get('frontpage_service_news'),
             $container->get('frontpage_service_acl'),
             $container->get('translator'),
+            $container->get('frontpage_service_news'),
         );
     }
 }

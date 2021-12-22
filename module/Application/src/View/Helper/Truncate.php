@@ -15,11 +15,16 @@ class Truncate extends AbstractHelper
      *
      * @src http://www.codestance.com/tutorials-archive/zend-framework-truncate-view-helper-246
      */
-    public function __invoke($text, $length = 100, $options = [])
-    {
+    public function __invoke(
+        string $text,
+        int $length = 100,
+        array $options = [],
+    ): string {
         $default = [
-            'ending' => '...', 'exact' => false,
+            'ending' => '...',
+            'exact' => false,
         ];
+
         $options = array_merge($default, $options);
         $ending = $options['ending'];
         $exact = $options['exact'];

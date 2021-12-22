@@ -4,7 +4,12 @@ namespace Frontpage\Service;
 
 class AclService extends \User\Service\AclService
 {
-    public function setPages(array $pages)
+    /**
+     * @param array $pages
+     *
+     * @return void
+     */
+    public function setPages(array $pages): void
     {
         foreach ($pages as $page) {
             $requiredRole = $page->getRequiredRole();
@@ -13,7 +18,10 @@ class AclService extends \User\Service\AclService
         }
     }
 
-    protected function createAcl()
+    /**
+     * @return void
+     */
+    protected function createAcl(): void
     {
         parent::createAcl();
 

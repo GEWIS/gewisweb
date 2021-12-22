@@ -41,8 +41,14 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
      */
     private ?string $currentSlug = null;
 
-    public function __construct(CompanyMapper $mapper, Translator $translator)
-    {
+    /**
+     * @param CompanyMapper $mapper
+     * @param Translator $translator
+     */
+    public function __construct(
+        CompanyMapper $mapper,
+        Translator $translator,
+    ) {
         // we want to ignore the name passed
         parent::__construct($translator);
         $this->mapper = $mapper;

@@ -18,9 +18,11 @@ class DecisionControllerFactory implements FactoryInterface
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        array $options = null,
     ): DecisionController {
         return new DecisionController(
+            $container->get('decision_service_acl'),
+            $container->get('translator'),
             $container->get('decision_service_decision'),
             $container->get('decision_fileReader'),
         );

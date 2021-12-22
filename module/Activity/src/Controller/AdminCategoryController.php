@@ -2,17 +2,22 @@
 
 namespace Activity\Controller;
 
-use Activity\Service\ActivityCategory as ActivityCategoryService;
+use Activity\Service\{
+    AclService,
+    ActivityCategory as ActivityCategoryService,
+};
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
+use User\Permissions\NotAllowedException;
 
 class AdminCategoryController extends AbstractActionController
 {
     /**
-     * @var ActivityCategoryService
+     * @var AclService
      */
-    private ActivityCategoryService $categoryService;
+    private AclService $aclService;
 
     /**
      * @var Translator
@@ -20,17 +25,25 @@ class AdminCategoryController extends AbstractActionController
     private Translator $translator;
 
     /**
+     * @var ActivityCategoryService
+     */
+    private ActivityCategoryService $categoryService;
+
+    /**
      * AdminCategoryController constructor.
      *
-     * @param ActivityCategoryService $categoryService
+     * @param AclService $aclService
      * @param Translator $translator
+     * @param ActivityCategoryService $categoryService
      */
     public function __construct(
+        AclService $aclService,
+        Translator $translator,
         ActivityCategoryService $categoryService,
-        Translator $translator
     ) {
-        $this->categoryService = $categoryService;
+        $this->aclService = $aclService;
         $this->translator = $translator;
+        $this->categoryService = $categoryService;
     }
 
     /**
@@ -52,26 +65,45 @@ class AdminCategoryController extends AbstractActionController
      */
     public function addAction()
     {
+        if (!$this->aclService->isAllowed('addCategory', 'activity')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to create an activity category')
+            );
+        }
+
         $request = $this->getRequest();
+        $form = $this->categoryService->getCategoryForm();
 
         if ($request->isPost()) {
-            if ($this->categoryService->createCategory($request->getPost())) {
-                $message = $this->translator->translate('The activity category was created successfully!');
+            $form->setData($request->getPost()->toArray());
 
-                return $this->redirectWithNotice(true, $message);
+            if ($form->isValid()) {
+                if ($this->categoryService->createCategory($form->getData())) {
+                    $message = $this->translator->translate('The activity category was created successfully!');
+
+                    return $this->redirectWithNotice(true, $message);
+                }
             }
         }
 
         return new ViewModel(
             [
-                'form' => $this->categoryService->getCategoryForm(),
+                'form' => $form,
                 'action' => $this->translator->translate('Create Activity Category'),
             ]
         );
     }
 
-    protected function redirectWithNotice($success, $message)
-    {
+    /**
+     * @param bool $success
+     * @param string $message
+     *
+     * @return Response
+     */
+    protected function redirectWithNotice(
+        bool $success,
+        string $message,
+    ): Response {
         if ($success) {
             $this->plugin('FlashMessenger')->addSuccessMessage($message);
         } else {
@@ -109,6 +141,12 @@ class AdminCategoryController extends AbstractActionController
      */
     public function editAction()
     {
+        if (!$this->aclService->isAllowed('editCategory', 'activity')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to edit an activity category')
+            );
+        }
+
         $categoryId = (int) $this->params('id');
         $category = $this->categoryService->getCategoryById($categoryId);
 
@@ -120,10 +158,14 @@ class AdminCategoryController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            if ($this->categoryService->updateCategory($category, $request->getPost())) {
-                $message = $this->translator->translate('The activity category was successfully updated!');
+            $form->setData($request->getPost()->toArray());
 
-                return $this->redirectWithNotice(true, $message);
+            if ($form->isValid()) {
+                if ($this->categoryService->updateCategory($category, $form->getData())) {
+                    $message = $this->translator->translate('The activity category was successfully updated!');
+
+                    return $this->redirectWithNotice(true, $message);
+                }
             }
         }
 

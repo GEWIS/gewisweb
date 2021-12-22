@@ -17,14 +17,15 @@ class ActivityOptionProposal extends BaseMapper
      *
      * @return array
      */
-    public function getNonClosedProposalsWithinPeriodAndOrgan($begin, $end, $organId)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('b')
-            ->from('Activity\Model\ActivityCalendarOption', 'a')
-            ->andWhere('a.modifiedBy IS NULL')
+    public function getNonClosedProposalsWithinPeriodAndOrgan(
+        DateTime $begin,
+        DateTime $end,
+        int $organId,
+    ): array {
+        $qb = $this->getRepository()->createQueryBuilder('b');
+        $qb->from('Activity\Model\ActivityCalendarOption', 'a')
+            ->where('a.modifiedBy IS NULL')
             ->orWhere("a.status = 'approved'")
-            ->from('Activity\Model\ActivityOptionProposal', 'b')
             ->andWhere('a.proposal = b.id')
             ->andWhere('a.beginTime > :begin')
             ->setParameter('begin', $begin)

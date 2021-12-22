@@ -2,15 +2,17 @@
 
 namespace Application\Service;
 
-use Decision\Model\Member;
-use Decision\Model\OrganInformation;
+use Decision\Model\{
+    Member as MemberModel,
+    OrganInformation as OrganInformationModel,
+};
 use Laminas\Mail\Message;
 use Laminas\Mail\Transport\TransportInterface;
 use Laminas\Mime\Message as MimeMessage;
 use Laminas\Mime\Part as MimePart;
 use Laminas\View\Model\ViewModel;
 use Laminas\View\Renderer\PhpRenderer;
-use User\Model\User;
+use User\Model\User as UserModel;
 
 /**
  * This service is used for sending emails.
@@ -20,20 +22,28 @@ class Email
     /**
      * @var PhpRenderer
      */
-    private $renderer;
+    private PhpRenderer $renderer;
 
     /**
      * @var TransportInterface
      */
-    private $transport;
+    private TransportInterface $transport;
 
     /**
      * @var array
      */
-    private $emailConfig;
+    private array $emailConfig;
 
-    public function __construct(PhpRenderer $renderer, TransportInterface $transport, array $emailConfig)
-    {
+    /**
+     * @param PhpRenderer $renderer
+     * @param TransportInterface $transport
+     * @param array $emailConfig
+     */
+    public function __construct(
+        PhpRenderer $renderer,
+        TransportInterface $transport,
+        array $emailConfig,
+    ) {
         $this->renderer = $renderer;
         $this->transport = $transport;
         $this->emailConfig = $emailConfig;
@@ -46,9 +56,15 @@ class Email
      * @param String $view Template of the email
      * @param String $subject Subject of the email
      * @param array $data Variables that you want to have available in the template
+     *
+     * @return void
      */
-    public function sendEmail($type, $view, $subject, $data)
-    {
+    public function sendEmail(
+        string $type,
+        string $view,
+        string $subject,
+        array $data,
+    ): void {
         $message = $this->createMessageFromView($view, $data);
 
         $message->addFrom($this->emailConfig['from']);
@@ -65,10 +81,17 @@ class Email
      * @param String $view Template of the email
      * @param String $subject Subject of the email
      * @param array $data Variables that you want to have available in the template
-     * @param user $user The user as which the email should be sent
+     * @param UserModel $user The user as which the email should be sent
+     *
+     * @return void
      */
-    public function sendEmailAsUser($type, $view, $subject, $data, $user)
-    {
+    public function sendEmailAsUser(
+        string $type,
+        string $view,
+        string $subject,
+        array $data,
+        UserModel $user,
+    ): void {
         $message = $this->createMessageFromView($view, $data);
 
         $message->addFrom($this->emailConfig['from']);
@@ -82,14 +105,21 @@ class Email
     /**
      * Send an email as a given user. The user will be added as reply-to header to the email.
      *
-     * @param member $recipient The receiver of this email
+     * @param MemberModel $recipient The receiver of this email
      * @param String $view Template of the email
      * @param String $subject Subject of the email
      * @param array $data Variables that you want to have available in the template
-     * @param member $user The user as which the email should be sent
+     * @param MemberModel $user The user as which the email should be sent
+     *
+     * @return void
      */
-    public function sendEmailAsUserToUser($recipient, $view, $subject, $data, $user)
-    {
+    public function sendEmailAsUserToUser(
+        MemberModel $recipient,
+        string $view,
+        string $subject,
+        array $data,
+        MemberModel $user,
+    ): void {
         $message = $this->createMessageFromView($view, $data);
 
         $message->addFrom($this->emailConfig['from']);
@@ -103,14 +133,21 @@ class Email
     /**
      * Send an email as a given user. The user will be added as reply-to header to the email.
      *
-     * @param String $type Type that this email belongs to. A key in the config file for email.
-     * @param String $view Template of the email
-     * @param String $subject Subject of the email
+     * @param string $type Type that this email belongs to. A key in the config file for email.
+     * @param string $view Template of the email
+     * @param string $subject Subject of the email
      * @param array $data Variables that you want to have available in the template
-     * @param organInformation $organ The organ as which the email should be sent
+     * @param OrganInformationModel $organ The organ as which the email should be sent
+     *
+     * @return void
      */
-    public function sendEmailAsOrgan($type, $view, $subject, $data, $organ)
-    {
+    public function sendEmailAsOrgan(
+        string $type,
+        string $view,
+        string $subject,
+        array $data,
+        OrganInformationModel $organ,
+    ): void {
         $message = $this->createMessageFromView($view, $data);
 
         $message->addFrom($this->emailConfig['from']);
@@ -124,13 +161,15 @@ class Email
     /**
      * Constructs the Message instance for a given view with given variables.
      *
-     * @param String $view Template of the email
+     * @param string $view Template of the email
      * @param array $data Variables that you want to have available in the template
      *
      * @return Message the constructed instance containing the given view as HTML body
      */
-    private function createMessageFromView($view, $data)
-    {
+    private function createMessageFromView(
+        string $view,
+        array $data,
+    ): Message {
         $body = $this->render($view, $data);
 
         $html = new MimePart($body);
@@ -151,10 +190,12 @@ class Email
      * @param string $template
      * @param array $vars
      *
-     * @return string/
+     * @return string
      */
-    public function render($template, $vars)
-    {
+    public function render(
+        string $template,
+        array $vars,
+    ): string {
         $model = new ViewModel($vars);
         $model->setTemplate($template);
 

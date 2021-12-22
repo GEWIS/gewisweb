@@ -2,7 +2,7 @@
 
 namespace Activity\Mapper;
 
-use Activity\Model\ActivityUpdateProposal;
+use Activity\Model\ActivityUpdateProposal as ActivityUpdateProposalModel;
 use Application\Mapper\BaseMapper;
 
 class Proposal extends BaseMapper
@@ -12,6 +12,6 @@ class Proposal extends BaseMapper
      */
     protected function getRepositoryName(): string
     {
-        return ActivityUpdateProposal::class;
+        return ActivityUpdateProposalModel::class;
     }
 }

@@ -21,8 +21,8 @@ class ApiControllerFactory implements FactoryInterface
         array $options = null,
     ): ApiController {
         return new ApiController(
-            $container->get('activity_service_activityQuery'),
             $container->get('activity_service_acl'),
+            $container->get('activity_service_activityQuery'),
         );
     }
 }

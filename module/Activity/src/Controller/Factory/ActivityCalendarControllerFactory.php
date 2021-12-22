@@ -18,15 +18,15 @@ class ActivityCalendarControllerFactory implements FactoryInterface
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        array $options = null,
     ): ActivityCalendarController {
         return new ActivityCalendarController(
+            $container->get('activity_service_acl'),
+            $container->get('translator'),
             $container->get('activity_service_calendar'),
             $container->get('activity_service_calendar_form'),
-            $container->get('activity_service_acl'),
             $container->get('activity_form_calendar_proposal'),
             $container->get('config')['calendar'],
-            $container->get('translator'),
         );
     }
 }

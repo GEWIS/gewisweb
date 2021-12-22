@@ -10,6 +10,7 @@ use Company\Model\{
     CompanyPackage as CompanyPackageModel,
 };
 use DateTime;
+use Doctrine\ORM\QueryBuilder;
 use Exception;
 
 /**
@@ -21,26 +22,16 @@ use Exception;
 class Package extends BaseMapper
 {
     /**
-     * Finds the package with the given id.
-     *
-     * @param int $packageId
-     */
-    public function findPackage($packageId)
-    {
-        return $this->getRepository()->findOneBy(['id' => $packageId]);
-    }
-
-    /**
      * Will return a list of published packages that will expire between now and $date.
      *
      * @param DateTime $date The date until where to search
+     *
+     * @return array
      */
-    public function findFuturePackageExpirationsBeforeDate($date)
+    public function findFuturePackageExpirationsBeforeDate(DateTime $date): array
     {
-        $objectRepository = $this->getRepository();
-        $qb = $objectRepository->createQueryBuilder('p');
-        $qb->select('p')
-            ->where('p.published=1')
+        $qb = $this->getRepository()->createQueryBuilder('p');
+        $qb->where('p.published=1')
             // All packages that will expire between today and then, ordered smallest first
             ->andWhere('p.expires>CURRENT_DATE()')
             ->andWhere('p.expires<=:date')
@@ -54,13 +45,13 @@ class Package extends BaseMapper
      * Will return a list of published packages that will expire between now and $date.
      *
      * @param DateTime $date The date until where to search
+     *
+     * @return array
      */
-    public function findFuturePackageStartsBeforeDate($date)
+    public function findFuturePackageStartsBeforeDate(DateTime $date): array
     {
-        $objectRepository = $this->getRepository();
-        $qb = $objectRepository->createQueryBuilder('p');
-        $qb->select('p')
-            ->where('p.published=1')
+        $qb = $this->getRepository()->createQueryBuilder('p');
+        $qb->where('p.published=1')
             // All packages that will start between today and then, ordered smallest first
             ->andWhere('p.starts>CURRENT_DATE()')
             ->andWhere('p.starts<=:date')
@@ -70,12 +61,13 @@ class Package extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
-    protected function getVisiblePackagesQueryBuilder()
+    /**
+     * @return QueryBuilder
+     */
+    protected function getVisiblePackagesQueryBuilder(): QueryBuilder
     {
-        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('p');
-        $qb->select('p')
-            ->where('p.published=1')
+        $qb = $this->getRepository()->createQueryBuilder('p');
+        $qb->where('p.published=1')
             ->andWhere('p.starts<=CURRENT_DATE()')
             ->andWhere('p.expires>=CURRENT_DATE()');
 
@@ -87,7 +79,7 @@ class Package extends BaseMapper
      *
      * @return array
      */
-    public function findVisiblePackages()
+    public function findVisiblePackages(): array
     {
         $qb = $this->getVisiblePackagesQueryBuilder();
 
@@ -97,13 +89,14 @@ class Package extends BaseMapper
     /**
      * Find all packages, and returns an editable version of them.
      *
+     * @param int $packageId
+     *
      * @return CompanyPackageModel|null
      */
-    public function findEditablePackage($packageId)
+    public function findEditablePackage(int $packageId): ?CompanyPackageModel
     {
-        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('p');
-        $qb->select('p')->where('p.id=:packageId')
+        $qb = $this->getRepository()->createQueryBuilder('p');
+        $qb->where('p.id=:packageId')
             ->setParameter('packageId', $packageId)
             ->setMaxResults(1);
 

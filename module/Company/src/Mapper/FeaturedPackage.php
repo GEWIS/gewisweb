@@ -15,8 +15,10 @@ class FeaturedPackage extends Package
     /**
      * Returns a random featured package from the active featured packages,
      * and null when there is no featured package.
+     *
+     * @return CompanyFeaturedPackageModel|null
      */
-    public function getFeaturedPackage()
+    public function getFeaturedPackage(): ?CompanyFeaturedPackageModel
     {
         $featuredPackages = $this->findVisiblePackages();
 

@@ -35,6 +35,11 @@ use User\Permissions\NotAllowedException;
 class Photo
 {
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
      * @var Translator
      */
     private Translator $translator;
@@ -80,11 +85,19 @@ class Photo
     private array $photoConfig;
 
     /**
-     * @var AclService
+     * @param AclService $aclService
+     * @param Translator $translator
+     * @param MemberService $memberService
+     * @param FileStorageService $storageService
+     * @param PhotoMapper $photoMapper
+     * @param TagMapper $tagMapper
+     * @param VoteMapper $voteMapper
+     * @param WeeklyPhotoMapper $weeklyPhotoMapper
+     * @param ProfilePhotoMapper $profilePhotoMapper
+     * @param array $photoConfig
      */
-    private AclService $aclService;
-
     public function __construct(
+        AclService $aclService,
         Translator $translator,
         MemberService $memberService,
         FileStorageService $storageService,
@@ -94,8 +107,8 @@ class Photo
         WeeklyPhotoMapper $weeklyPhotoMapper,
         ProfilePhotoMapper $profilePhotoMapper,
         array $photoConfig,
-        AclService $aclService
     ) {
+        $this->aclService = $aclService;
         $this->translator = $translator;
         $this->memberService = $memberService;
         $this->storageService = $storageService;
@@ -105,7 +118,6 @@ class Photo
         $this->weeklyPhotoMapper = $weeklyPhotoMapper;
         $this->profilePhotoMapper = $profilePhotoMapper;
         $this->photoConfig = $photoConfig;
-        $this->aclService = $aclService;
     }
 
     /**
@@ -117,8 +129,11 @@ class Photo
      *
      * @return array of AlbumModel
      */
-    public function getPhotos(AlbumModel $album, int $start = 0, ?int $maxResults = null): array
-    {
+    public function getPhotos(
+        AlbumModel $album,
+        int $start = 0,
+        ?int $maxResults = null,
+    ): array {
         if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
         }
@@ -197,8 +212,10 @@ class Photo
      *
      * @throws Exception
      */
-    public function getPhotoData(int $photoId, ?AlbumModel $album = null): ?array
-    {
+    public function getPhotoData(
+        int $photoId,
+        ?AlbumModel $album = null,
+    ): ?array {
         if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
         }
@@ -248,7 +265,7 @@ class Photo
      */
     public function getNextPhoto(
         PhotoModel $photo,
-        AlbumModel $album
+        AlbumModel $album,
     ): ?PhotoModel {
         if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
@@ -264,7 +281,7 @@ class Photo
      */
     public function getPreviousPhoto(
         PhotoModel $photo,
-        AlbumModel $album
+        AlbumModel $album,
     ): ?PhotoModel {
         if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
@@ -328,28 +345,30 @@ class Photo
      * if at least one photo has been viewed in the specified time.
      * The parameters determine the week to check the photos of.
      *
-     * @param DateTime|null $begindate
-     * @param DateTime|null $enddate
+     * @param DateTime|null $beginDate
+     * @param DateTime|null $endDate
      *
      * @return WeeklyPhotoModel|null
      * @throws ORMException
      * @throws Exception
      */
-    public function generatePhotoOfTheWeek(?DateTime $begindate = null, ?DateTime $enddate = null): ?WeeklyPhotoModel
-    {
-        if (is_null($begindate) || is_null($enddate)) {
-            $begindate = (new DateTime())->sub(new DateInterval('P1W'));
-            $enddate = new DateTime();
+    public function generatePhotoOfTheWeek(
+        ?DateTime $beginDate = null,
+        ?DateTime $endDate = null,
+    ): ?WeeklyPhotoModel {
+        if (is_null($beginDate) || is_null($endDate)) {
+            $beginDate = (new DateTime())->sub(new DateInterval('P1W'));
+            $endDate = new DateTime();
         }
 
-        $bestPhoto = $this->determinePhotoOfTheWeek($begindate, $enddate);
+        $bestPhoto = $this->determinePhotoOfTheWeek($beginDate, $endDate);
         if (is_null($bestPhoto)) {
             return null;
         }
 
         $weeklyPhoto = new WeeklyPhotoModel();
         $weeklyPhoto->setPhoto($bestPhoto);
-        $weeklyPhoto->setWeek($begindate);
+        $weeklyPhoto->setWeek($beginDate);
         $mapper = $this->weeklyPhotoMapper;
         $mapper->persist($weeklyPhoto);
         $mapper->flush();
@@ -360,15 +379,17 @@ class Photo
     /**
      * Determine which photo is the photo of the week.
      *
-     * @param DateTime $begindate
-     * @param DateTime $enddate
+     * @param DateTime $beginDate
+     * @param DateTime $endDate
      *
      * @return PhotoModel|null
      * @throws Exception
      */
-    public function determinePhotoOfTheWeek(DateTime $begindate, DateTime $enddate): ?PhotoModel
-    {
-        $results = $this->voteMapper->getVotesInRange($begindate, $enddate);
+    public function determinePhotoOfTheWeek(
+        DateTime $beginDate,
+        DateTime $endDate,
+    ): ?PhotoModel {
+        $results = $this->voteMapper->getVotesInRange($beginDate, $endDate);
 
         if (empty($results)) {
             return null;
@@ -450,7 +471,7 @@ class Photo
      *
      * @throws Exception
      */
-    public function removeProfilePhoto(ProfilePhotoModel $profilePhoto = null): void
+    public function removeProfilePhoto(?ProfilePhotoModel $profilePhoto = null): void
     {
         if (null === $profilePhoto) {
             $member = $this->aclService->getIdentity()->getMember();
@@ -503,8 +524,10 @@ class Photo
      *
      * @throws ORMException
      */
-    private function cacheProfilePhoto(int $lidnr, PhotoModel $photo): void
-    {
+    private function cacheProfilePhoto(
+        int $lidnr,
+        PhotoModel $photo,
+    ): void {
         $member = $this->memberService->findMemberByLidnr($lidnr);
 
         $now = new DateTime();
@@ -589,8 +612,10 @@ class Photo
      *
      * @return float|int
      */
-    public function ratePhoto(PhotoModel $photo, int $occurences): float|int
-    {
+    public function ratePhoto(
+        PhotoModel $photo,
+        int $occurences,
+    ): float|int {
         $tagged = count($photo->getTags()) > 0;
         $now = new DateTime();
         $age = $now->diff($photo->getDateTime(), true)->days;
@@ -679,8 +704,10 @@ class Photo
      * @return TagModel|null
      * @throws ORMException
      */
-    public function addTag(int $photoId, int $lidnr): ?TagModel
-    {
+    public function addTag(
+        int $photoId,
+        int $lidnr,
+    ): ?TagModel {
         if (!$this->aclService->isAllowed('add', 'tag')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to add tags.'));
         }
@@ -708,8 +735,10 @@ class Photo
      *
      * @return TagModel|null
      */
-    public function findTag(int $photoId, int $lidnr): ?TagModel
-    {
+    public function findTag(
+        int $photoId,
+        int $lidnr,
+    ): ?TagModel {
         if (!$this->aclService->isAllowed('view', 'tag')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view tags.'));
         }
@@ -725,10 +754,13 @@ class Photo
      *
      * @return bool
      */
-    public function isTaggedIn(int $photoId, int $lidnr): bool
-    {
+    public function isTaggedIn(
+        int $photoId,
+        int $lidnr,
+    ): bool {
         $tag = $this->findTag($photoId, $lidnr);
-        if (null != $tag) {
+
+        if (null !== $tag) {
             return true;
         }
 
@@ -744,8 +776,10 @@ class Photo
      * @return bool indicating whether removing the tag succeeded
      * @throws ORMException
      */
-    public function removeTag(int $photoId, int $lidnr): bool
-    {
+    public function removeTag(
+        int $photoId,
+        int $lidnr,
+    ): bool {
         if (!$this->aclService->isAllowed('remove', 'tag')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to remove tags.'));
         }

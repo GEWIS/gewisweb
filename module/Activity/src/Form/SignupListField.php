@@ -2,7 +2,7 @@
 
 namespace Activity\Form;
 
-use Activity\Model\SignupField;
+use Activity\Model\SignupField as SignupFieldModel;
 use Laminas\Form\Element\{
     Number,
     Select,
@@ -24,12 +24,15 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
      */
     protected Translator $translator;
 
+    /**
+     * @param Translator $translator
+     */
     public function __construct(Translator $translator)
     {
         parent::__construct('signupfield');
         $this->translator = $translator;
         $this->setHydrator(new ClassMethodsHydrator(false))
-            ->setObject(new SignupField());
+            ->setObject(new SignupFieldModel());
 
         $this->add(
             [
@@ -215,8 +218,12 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
      *
      * @return bool
      */
-    protected function fieldDependantRequired($value, $context, $child, $testvalue): bool
-    {
+    protected function fieldDependantRequired(
+        string $value,
+        array $context,
+        string $child,
+        string $testvalue,
+    ): bool {
         if ($value === $testvalue) {
             return (new NotEmpty())->isValid($context[$child]);
         }

@@ -3,13 +3,27 @@
 namespace Decision\Controller;
 
 use Decision\Controller\FileBrowser\FileReader;
-use Decision\Service\Decision as DecisionService;
+use Decision\Service\{
+    AclService,
+    Decision as DecisionService,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
 class DecisionController extends AbstractActionController
 {
+    /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
     /**
      * @var DecisionService
      */
@@ -23,13 +37,19 @@ class DecisionController extends AbstractActionController
     /**
      * DecisionController constructor.
      *
+     * @param AclService $aclService
+     * @param Translator $translator
      * @param DecisionService $decisionService
      * @param FileReader $fileReader
      */
     public function __construct(
+        AclService $aclService,
+        Translator $translator,
         DecisionService $decisionService,
-        FileReader $fileReader
+        FileReader $fileReader,
     ) {
+        $this->aclService = $aclService;
+        $this->translator = $translator;
         $this->decisionService = $decisionService;
         $this->fileReader = $fileReader;
     }
@@ -107,24 +127,33 @@ class DecisionController extends AbstractActionController
      */
     public function searchAction()
     {
+        if (!$this->aclService->isAllowed('search', 'decision')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to search decisions.'));
+        }
+
         $request = $this->getRequest();
+        $form = $this->decisionService->getSearchDecisionForm();
 
         if ($request->isPost()) {
-            $result = $this->decisionService->search($request->getPost());
+            $form->setData($request->getPost()->toArray());
 
-            if (null !== $result) {
-                return new ViewModel(
-                    [
-                        'result' => $result,
-                        'form' => $this->decisionService->getSearchDecisionForm(),
-                    ]
-                );
+            if ($form->isValid()) {
+                $result = $this->decisionService->search($form->getData());
+
+                if (null !== $result) {
+                    return new ViewModel(
+                        [
+                            'result' => $result,
+                            'form' => $form,
+                        ]
+                    );
+                }
             }
         }
 
         return new ViewModel(
             [
-                'form' => $this->decisionService->getSearchDecisionForm(),
+                'form' => $form,
             ]
         );
     }
@@ -135,7 +164,7 @@ class DecisionController extends AbstractActionController
         $authorization = null;
 
         if (null !== $meeting) {
-            $authorization = $this->decisionService->getUserAuthorization($meeting->getNumber());
+            $authorization = $this->decisionService->getUserAuthorization($meeting);
         }
 
         $form = $this->decisionService->getAuthorizationForm();

@@ -2,17 +2,20 @@
 
 namespace Photo\Form;
 
+use Laminas\InputFilter\InputProviderInterface;
 use Laminas\Form\Element\{
     Submit,
     Text,
 };
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilter;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\StringLength;
 
-class CreateAlbum extends Form
+class CreateAlbum extends Form implements InputProviderInterface
 {
+    /**
+     * @param Translator $translate
+     */
     public function __construct(Translator $translate)
     {
         parent::__construct();
@@ -36,17 +39,15 @@ class CreateAlbum extends Form
                 ],
             ]
         );
-
-        $this->initFilters();
     }
 
-    protected function initFilters()
+    /**
+     * @return array
+     */
+    public function getInputSpecification(): array
     {
-        $filter = new InputFilter();
-
-        $filter->add(
-            [
-                'name' => 'name',
+        return [
+            'name' => [
                 'required' => true,
                 'validators' => [
                     [
@@ -58,9 +59,7 @@ class CreateAlbum extends Form
                         ],
                     ],
                 ],
-            ]
-        );
-
-        $this->setInputFilter($filter);
+            ],
+        ];
     }
 }

@@ -2,42 +2,93 @@
 
 namespace User\Authorization;
 
+use Activity\Service\AclService as ActivityAclService;
+use Company\Service\AclService as CompanyAclService;
+use Decision\Service\AclService as DecisionAclService;
+use Education\Service\AclService as EducationAclService;
+use Frontpage\Service\AclService as FrontpageAclService;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\ServiceManager\Exception\InvalidArgumentException;
-use User\Service\AclService;
+use Photo\Service\AclService as PhotoAclService;
+use User\Service\AclService as UserAclService;
 
 class AclServiceFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): GenericAclService
-    {
+    /**
+     * @param ContainerInterface $container
+     * @param string $requestedName
+     * @param array|null $options
+     *
+     * @return GenericAclService
+     */
+    public function __invoke(
+        ContainerInterface $container,
+        $requestedName,
+        ?array $options = null,
+    ): GenericAclService {
         $translator = $container->get('translator');
         $authService = $container->get('user_auth_service');
         $apiAuthService = $container->get('user_apiauth_service');
         $remoteAddress = $container->get('user_remoteaddress');
         $tueRange = $container->get('config')['tue_range'];
-        switch ($requestedName) {
-            case 'user_service_acl':
-                return new AclService($translator, $authService, $apiAuthService, $remoteAddress, $tueRange);
-            case 'activity_service_acl':
-                return new \Activity\Service\AclService($translator, $authService, $apiAuthService, $remoteAddress, $tueRange);
-            case 'company_service_acl':
-                return new \Company\Service\AclService($translator, $authService, $apiAuthService, $remoteAddress, $tueRange);
-            case 'decision_service_acl':
-                return new \Decision\Service\AclService($translator, $authService, $apiAuthService, $remoteAddress, $tueRange);
-            case 'education_service_acl':
-                return new \Education\Service\AclService($translator, $authService, $apiAuthService, $remoteAddress, $tueRange);
-            case 'frontpage_service_acl':
-                return new \Frontpage\Service\AclService($translator, $authService, $apiAuthService, $remoteAddress, $tueRange);
-            case 'photo_service_acl':
-                return new \Photo\Service\AclService($translator, $authService, $apiAuthService, $remoteAddress, $tueRange);
-            default:
-                throw new InvalidArgumentException(
-                    sprintf(
-                        "The service with name %s could not be found and was therefore not created.",
-                        $requestedName
-                    )
-                );
-        }
+
+        return match ($requestedName) {
+            'activity_service_acl' => new ActivityAclService(
+                $translator,
+                $authService,
+                $apiAuthService,
+                $remoteAddress,
+                $tueRange,
+            ),
+            'company_service_acl' => new CompanyAclService(
+                $translator,
+                $authService,
+                $apiAuthService,
+                $remoteAddress,
+                $tueRange,
+            ),
+            'decision_service_acl' => new DecisionAclService(
+                $translator,
+                $authService,
+                $apiAuthService,
+                $remoteAddress,
+                $tueRange,
+            ),
+            'education_service_acl' => new EducationAclService(
+                $translator,
+                $authService,
+                $apiAuthService,
+                $remoteAddress,
+                $tueRange,
+            ),
+            'frontpage_service_acl' => new FrontpageAclService(
+                $translator,
+                $authService,
+                $apiAuthService,
+                $remoteAddress,
+                $tueRange,
+            ),
+            'photo_service_acl' => new PhotoAclService(
+                $translator,
+                $authService,
+                $apiAuthService,
+                $remoteAddress,
+                $tueRange,
+            ),
+            'user_service_acl' => new UserAclService(
+                $translator,
+                $authService,
+                $apiAuthService,
+                $remoteAddress,
+                $tueRange,
+            ),
+            default => throw new InvalidArgumentException(
+                sprintf(
+                    "The service with name %s could not be found and was therefore not created.",
+                    $requestedName,
+                )
+            ),
+        };
     }
 }

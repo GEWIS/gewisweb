@@ -35,6 +35,11 @@ class Session extends SessionStorage
      */
     private array $config;
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param array $config
+     */
     public function __construct(
         Request $request,
         Response $response,
@@ -121,8 +126,6 @@ class Session extends SessionStorage
      * Defined by Laminas\Authentication\Storage\StorageInterface.
      *
      * @param int $contents
-     *
-     * @return void
      */
     public function write($contents): void
     {
@@ -137,8 +140,6 @@ class Session extends SessionStorage
      * Store the current session.
      *
      * @param int $lidnr the lidnr of the logged in user
-     *
-     * @return void
      */
     protected function saveSession(int $lidnr): void
     {

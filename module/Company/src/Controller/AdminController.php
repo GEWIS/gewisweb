@@ -18,16 +18,6 @@ use User\Permissions\NotAllowedException;
 class AdminController extends AbstractActionController
 {
     /**
-     * @var CompanyService
-     */
-    private CompanyService $companyService;
-
-    /**
-     * @var CompanyQueryService
-     */
-    private CompanyQueryService $companyQueryService;
-
-    /**
      * @var AclService
      */
     private AclService $aclService;
@@ -38,23 +28,33 @@ class AdminController extends AbstractActionController
     private Translator $translator;
 
     /**
+     * @var CompanyService
+     */
+    private CompanyService $companyService;
+
+    /**
+     * @var CompanyQueryService
+     */
+    private CompanyQueryService $companyQueryService;
+
+    /**
      * AdminController constructor.
      *
-     * @param CompanyService $companyService
-     * @param CompanyQueryService $companyQueryService
      * @param AclService $aclService
      * @param Translator $translator
+     * @param CompanyService $companyService
+     * @param CompanyQueryService $companyQueryService
      */
     public function __construct(
-        CompanyService $companyService,
-        CompanyQueryService $companyQueryService,
         AclService $aclService,
         Translator $translator,
+        CompanyService $companyService,
+        CompanyQueryService $companyQueryService,
     ) {
-        $this->companyService = $companyService;
-        $this->companyQueryService = $companyQueryService;
         $this->aclService = $aclService;
         $this->translator = $translator;
+        $this->companyService = $companyService;
+        $this->companyQueryService = $companyQueryService;
     }
 
     /**

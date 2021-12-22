@@ -2,9 +2,13 @@
 
 namespace Photo\Service;
 
-use Application\Service\FileStorage;
-use Doctrine\Common\Collections\Collection;
+use Application\Service\FileStorage as FileStorageService;
 use Imagick;
+use Photo\Mapper\{
+    Album as AlbumMapper,
+    Photo as PhotoMapper,
+};
+use Photo\Model\Album as AlbumModel;
 
 /**
  * Album cover services. Used for (re)generating album covers.
@@ -12,36 +16,43 @@ use Imagick;
 class AlbumCover
 {
     /**
-     * @var \Photo\Mapper\Photo
+     * @var PhotoMapper
      */
-    private $photoMapper;
+    private PhotoMapper $photoMapper;
 
     /**
-     * @var \Photo\Mapper\Album
+     * @var AlbumMapper
      */
-    private $albumMapper;
+    private AlbumMapper $albumMapper;
 
     /**
-     * @var FileStorage
+     * @var FileStorageService
      */
-    private $storage;
-
-    /**
-     * @var array
-     */
-    private $photoConfig;
+    private FileStorageService $storage;
 
     /**
      * @var array
      */
-    private $storageConfig;
+    private array $photoConfig;
 
+    /**
+     * @var array
+     */
+    private array $storageConfig;
+
+    /**
+     * @param PhotoMapper $photoMapper
+     * @param AlbumMapper $albumMapper
+     * @param FileStorageService $storage
+     * @param array $photoConfig
+     * @param array $storageConfig
+     */
     public function __construct(
-        \Photo\Mapper\Photo $photoMapper,
-        \Photo\Mapper\Album $albumMapper,
-        FileStorage $storage,
+        PhotoMapper $photoMapper,
+        AlbumMapper $albumMapper,
+        FileStorageService $storage,
         array $photoConfig,
-        array $storageConfig
+        array $storageConfig,
     ) {
         $this->photoMapper = $photoMapper;
         $this->albumMapper = $albumMapper;
@@ -54,11 +65,11 @@ class AlbumCover
      * Creates, stores and returns the path to a cover image, a mozaic generated from
      * a random selection of photos in the album or sub-albums.
      *
-     * @param \Photo\Model\Album $album the album to create the cover for
+     * @param AlbumModel $album the album to create the cover for
      *
      * @return string the path to the cover image
      */
-    public function createCover($album)
+    public function createCover(AlbumModel $album): string
     {
         $cover = $this->generateCover($album);
         $tempFileName = sys_get_temp_dir() . '/CoverImage' . rand() . '.png';
@@ -70,11 +81,11 @@ class AlbumCover
     /**
      * Creates a cover image for the given album.
      *
-     * @param \Photo\Model\Album $album the album to create a cover image for
+     * @param AlbumModel $album the album to create a cover image for
      *
      * @return Imagick the cover image
      */
-    protected function generateCover($album)
+    protected function generateCover(AlbumModel $album): Imagick
     {
         $columns = $this->photoConfig['album_cover']['cols'];
         $rows = $this->photoConfig['album_cover']['rows'];
@@ -111,13 +122,15 @@ class AlbumCover
     /**
      * Returns the images needed to fill the album cover.
      *
-     * @param \Photo\Model\Album $album
+     * @param AlbumModel $album
      * @param int $count the amount of images needed
      *
      * @return array of Imagick - a list of the images
      */
-    protected function getImages($album, $count)
-    {
+    protected function getImages(
+        AlbumModel $album,
+        int $count,
+    ): array {
         $photos = $this->photoMapper->getRandomAlbumPhotos($album, $count);
         //retrieve more photo's from subalbums
         foreach ($this->albumMapper->getSubAlbums($album) as $subAlbum) {
@@ -142,8 +155,12 @@ class AlbumCover
      * @param int $rows The amount of rows to fill
      * @param array $images of Imagick the list of images to fill the mosaic with
      */
-    protected function drawComposition($target, $columns, $rows, $images)
-    {
+    protected function drawComposition(
+        Imagick $target,
+        int $columns,
+        int $rows,
+        array $images,
+    ): void {
         $innerBorder = $this->photoConfig['album_cover']['inner_border'];
         $outerBorder = $this->photoConfig['album_cover']['inner_border'];
 
@@ -191,8 +208,11 @@ class AlbumCover
      *
      * @return Imagick $image
      */
-    protected function resizeCropImage($image, $width, $height)
-    {
+    protected function resizeCropImage(
+        Imagick $image,
+        int $width,
+        int $height,
+    ): Imagick {
         $imageHeight = $image->getImageGeometry()['height'];
         $imageWidth = $image->getImageGeometry()['width'];
         $resizeWidth = max($width, floor($imageWidth * $height / $imageHeight));

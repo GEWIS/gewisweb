@@ -16,6 +16,11 @@ use User\Permissions\NotAllowedException;
 class CompanyQuery
 {
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
      * @var Translator
      */
     private Translator $translator;
@@ -36,22 +41,24 @@ class CompanyQuery
     private LabelMapper $labelMapper;
 
     /**
-     * @var AclService
+     * @param AclService $aclService
+     * @param Translator $translator
+     * @param JobMapper $jobMapper
+     * @param CategoryMapper $categoryMapper
+     * @param LabelMapper $labelMapper
      */
-    private AclService $aclService;
-
     public function __construct(
+        AclService $aclService,
         Translator $translator,
         JobMapper $jobMapper,
         CategoryMapper $categoryMapper,
         LabelMapper $labelMapper,
-        AclService $aclService
     ) {
+        $this->aclService = $aclService;
         $this->translator = $translator;
         $this->jobMapper = $jobMapper;
         $this->categoryMapper = $categoryMapper;
         $this->labelMapper = $labelMapper;
-        $this->aclService = $aclService;
     }
 
     /**
@@ -130,7 +137,7 @@ class CompanyQuery
      *
      * @return array
      */
-    public function getCategoryList($visible)
+    public function getCategoryList(bool $visible): array
     {
         if (!$visible) {
             if (!$this->aclService->isAllowed('listAllCategories', 'company')) {

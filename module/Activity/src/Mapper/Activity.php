@@ -5,45 +5,31 @@ namespace Activity\Mapper;
 use Activity\Model\Activity as ActivityModel;
 use Application\Mapper\BaseMapper;
 use DateTime;
-use Decision\Model\Organ;
+use Decision\Model\Organ as OrganModel;
+use Doctrine\ORM\Query\Expr\Comparison;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use User\Model\User;
+use User\Model\User as UserModel;
 
 class Activity extends BaseMapper
 {
     /**
-     * @param int $id
-     *
-     * @return ActivityModel
-     */
-    public function getActivityById($id)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
-            ->where('a.id = :id')
-            ->setParameter('id', $id);
-        $result = $qb->getQuery()->getResult();
-
-        return !empty($result) ? $result[0] : null;
-    }
-
-    /**
      * Get upcoming activities sorted by date.
      *
-     * @param int $count optional number of activities to retrieve
-     * @param Organ $organ option organ by whom the activities are organized
+     * @param int|null $count optional number of activities to retrieve
+     * @param OrganModel|null $organ option organ by whom the activities are organized
+     * @param string|null $category
      *
      * @return array
      */
-    public function getUpcomingActivities($count = null, $organ = null, $category = null)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
-            ->where('a.endTime > :now')
+    public function getUpcomingActivities(
+        int $count = null,
+        OrganModel $organ = null,
+        string $category = null,
+    ): array {
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->where('a.endTime > :now')
             ->andWhere('a.status = :status')
             ->orderBy('a.beginTime', 'ASC');
 
@@ -69,11 +55,11 @@ class Activity extends BaseMapper
     /**
      * Get upcoming activities sorted by date for member.
      *
-     * @param User $user Option user that should relate to activity
+     * @param UserModel $user Option user that should relate to activity
      *
      * @return array
      */
-    public function getUpcomingActivitiesForMember($user)
+    public function getUpcomingActivitiesForMember(UserModel $user): array
     {
         // Get subscriptions (not including non-approved)
         $result = $this->getUpcomingActivitiesSubscribedBy($user);
@@ -117,16 +103,14 @@ class Activity extends BaseMapper
     /**
      * Get upcoming activities sorted by date that a user is subscribed to.
      *
-     * @param User $user Option user that should relate to activity
+     * @param UserModel $user Option user that should relate to activity
      *
      * @return array
      */
-    public function getUpcomingActivitiesSubscribedBy($user)
+    public function getUpcomingActivitiesSubscribedBy(UserModel $user): array
     {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
-            ->from('Activity\Model\SignupList', 'b')
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->from('Activity\Model\SignupList', 'b')
             ->from('Activity\Model\UserSignup', 'c')
             ->where('a.endTime > :now')
             ->setParameter('now', new DateTime())
@@ -143,16 +127,14 @@ class Activity extends BaseMapper
     /**
      * Get upcoming activities sorted by date that a user created.
      *
-     * @param User $user Option user that should relate to activity
+     * @param UserModel $user Option user that should relate to activity
      *
      * @return array
      */
-    public function getUpcomingActivitiesCreatedBy($user)
+    public function getUpcomingActivitiesCreatedBy(UserModel $user): array
     {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
-            ->where('a.endTime > :now')
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->where('a.endTime > :now')
             ->setParameter('now', new DateTime())
             ->andWhere('a.creator = :user')
             ->setParameter('user', $user);
@@ -163,19 +145,18 @@ class Activity extends BaseMapper
     /**
      * Get upcoming activities sorted by date that a organ created.
      *
-     * @param Organ $organ Option organ that should relate to activity
+     * @param OrganModel $organ Option organ that should relate to activity
      *
      * @return array
      */
-    public function getUpcomingActivitiesByOrgan($organ)
+    public function getUpcomingActivitiesByOrgan(OrganModel $organ): array
     {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->from($this->getRepositoryName(), 'a')
             ->where('a.endTime > :now')
             ->setParameter('now', new DateTime())
             ->andWhere('a.organ = :organ')
-            ->setParameter('organ', $organ->getId());
+            ->setParameter('organ', $organ);
 
         return $qb->getQuery()->getResult();
     }
@@ -184,28 +165,42 @@ class Activity extends BaseMapper
      * Gets upcoming activities of the given organs or user, sorted by date.
      *
      * @param array|null $organs
-     * @param int|null $userid
+     * @param UserModel|null $user
      * @param int|null $status An optional filter for activity status
      *
      * @return array
      */
-    public function getAllUpcomingActivities($organs = null, $userid = null, $status = null)
-    {
+    public function getAllUpcomingActivities(
+        ?array $organs = null,
+        ?UserModel $user = null,
+        ?int $status = null,
+    ): array {
         $qb = $this->activityByOrganizerQuery(
             $this->em->createQueryBuilder()->expr()->gt('a.endTime', ':now'),
             $organs,
-            $userid,
+            $user,
             $status
         );
 
         return $qb->getQuery()->getResult();
     }
 
-    protected function activityByOrganizerQuery($filter, $organs, $userid, $status)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a');
+    /**
+     * @param Comparison|null $filter
+     * @param array|null $organs
+     * @param UserModel|null $user
+     * @param int|null $status
+     *
+     * @return QueryBuilder
+     */
+    protected function activityByOrganizerQuery(
+        ?Comparison $filter = null,
+        ?array $organs = null,
+        ?UserModel $user = null,
+        ?int $status = null,
+    ): QueryBuilder {
+        $qb = $this->getRepository()->createQueryBuilder('a');
+
         if (!is_null($status)) {
             $qb->where('a.status = :status')
                 ->setParameter('status', $status);
@@ -221,15 +216,15 @@ class Activity extends BaseMapper
 
         $qb->join('a.creator', 'u');
 
-        if (!is_null($organs) && !is_null($userid)) {
+        if (!is_null($organs) && !is_null($user)) {
             $qb->andWhere(
                 $qb->expr()->orX(
                     $qb->expr()->in('a.organ', ':organs'),
-                    'u.lidnr = :userid'
+                    'u.lidnr = :user'
                 )
             )
                 ->setParameter('organs', $organs)
-                ->setParameter('userid', $userid);
+                ->setParameter('user', $user);
         }
 
         $qb->orderBy('a.beginTime', 'DESC');
@@ -242,60 +237,24 @@ class Activity extends BaseMapper
      * Supplying 'null' to all arguments gets all activities.
      *
      * @param array|null $organs
-     * @param int|null $userid
+     * @param UserModel|null $user
      * @param int|null $status An optional filter for activity status
      *
      * @return DoctrineAdapter
      */
-    public function getOldActivityPaginatorAdapterByOrganizer($organs = null, $userid = null, $status = null)
-    {
+    public function getOldActivityPaginatorAdapterByOrganizer(
+        ?array $organs = null,
+        ?UserModel $user = null,
+        ?int $status = null,
+    ): DoctrineAdapter {
         $qb = $this->activityByOrganizerQuery(
             $this->em->createQueryBuilder()->expr()->lt('a.endTime', ':now'),
             $organs,
-            $userid,
+            $user,
             $status
         );
 
         return new DoctrineAdapter(new ORMPaginator($qb));
-    }
-
-    /**
-     * Returns the newest activity that has taken place.
-     *
-     * @return ActivityModel
-     */
-    public function getNewestActivity()
-    {
-        $qb = $this->getArchivedActivityQueryBuilder()
-            ->setMaxResults(1)
-            ->where('a.status = :status')
-            ->setParameter('status', ActivityModel::STATUS_APPROVED)
-            ->orderBy('a.beginTime', 'DESC');
-
-        $res = $qb->getQuery()->getResult();
-
-        return empty($res) ? null : $res[0];
-    }
-
-    /**
-     * Create a query that is restricted to finished activities which are displayed in the activity.
-     *
-     * Finished activities do have the following constaints (1) The begin time is less than the current time and
-     * (2) it must have been approved before
-     *
-     * @return QueryBuilder
-     */
-    protected function getArchivedActivityQueryBuilder()
-    {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
-            ->andWhere('a.status = :status')
-            ->andWhere('a.beginTime IS NOT NULL');
-        $qb->setParameter('status', ActivityModel::STATUS_APPROVED);
-
-        return $qb;
     }
 
     /**
@@ -305,21 +264,29 @@ class Activity extends BaseMapper
      */
     public function getOldestActivity(): ?ActivityModel
     {
-        $qb = $this->getArchivedActivityQueryBuilder()
-            ->where('a.status = :status')
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->where('a.status = :status')
             ->setParameter('status', ActivityModel::STATUS_APPROVED)
-            ->setMaxResults(1)
-            ->orderBy('a.beginTime', 'ASC');
+            ->orderBy('a.beginTime', 'ASC')
+            ->setMaxResults(1);
 
         $res = $qb->getQuery()->getResult();
 
         return empty($res) ? null : $res[0];
     }
 
-    public function getArchivedActivitiesInRange($start, $end)
-    {
-        $qb = $this->getArchivedActivityQueryBuilder()
-            ->andWhere('a.beginTime >= :start')
+    /**
+     * @param DateTime $start
+     * @param DateTime $end
+     *
+     * @return array
+     */
+    public function getArchivedActivitiesInRange(
+        DateTime $start,
+        DateTime $end,
+    ): array {
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->where('a.beginTime >= :start')
             ->setParameter('start', $start)
             ->andWhere('a.endTime <= :end')
             ->setParameter('end', $end)

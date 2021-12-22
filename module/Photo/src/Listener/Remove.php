@@ -2,9 +2,14 @@
 
 namespace Photo\Listener;
 
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Photo\Model\{
-    Album,
-    Photo,
+    Album as AlbumModel,
+    Photo as PhotoModel,
+};
+use Photo\Service\{
+    Album as AlbumService,
+    Photo as PhotoService,
 };
 
 /**
@@ -14,37 +19,53 @@ use Photo\Model\{
 class Remove
 {
     /**
-     * @var \Photo\Service\Photo
+     * @var PhotoService
      */
-    private $photoService;
+    private PhotoService $photoService;
 
     /**
-     * @var \Photo\Service\Album
+     * @var AlbumService
      */
-    private $albumService;
+    private AlbumService $albumService;
 
-    public function __construct(\Photo\Service\Photo $photoService, \Photo\Service\Album $albumService)
-    {
+    /**
+     * @param PhotoService $photoService
+     * @param AlbumService $albumService
+     */
+    public function __construct(
+        PhotoService $photoService,
+        AlbumService $albumService,
+    ) {
         $this->photoService = $photoService;
         $this->albumService = $albumService;
     }
 
-    public function preRemove($eventArgs)
+    /**
+     * @param LifecycleEventArgs $eventArgs
+     */
+    public function preRemove(LifecycleEventArgs $eventArgs): void
     {
         $entity = $eventArgs->getEntity();
-        if ($entity instanceof Album) {
+
+        if ($entity instanceof AlbumModel) {
             $this->albumRemoved($entity);
-        } elseif ($entity instanceof Photo) {
+        } elseif ($entity instanceof PhotoModel) {
             $this->photoRemoved($entity);
         }
     }
 
-    protected function photoRemoved($photo)
+    /**
+     * @param PhotoModel $photo
+     */
+    protected function photoRemoved(PhotoModel $photo): void
     {
         $this->photoService->deletePhotoFiles($photo);
     }
 
-    protected function albumRemoved($album)
+    /**
+     * @param AlbumModel $album
+     */
+    protected function albumRemoved(AlbumModel $album): void
     {
         $this->albumService->deleteAlbumCover($album);
     }

@@ -33,6 +33,16 @@ use User\Permissions\NotAllowedException;
 class AdminController extends AbstractActionController
 {
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
+    /**
      * @var ActivityService
      */
     private ActivityService $activityService;
@@ -58,42 +68,32 @@ class AdminController extends AbstractActionController
     private SignupMapper $signupMapper;
 
     /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
      * AdminController constructor.
      *
+     * @param AclService $aclService
+     * @param Translator $translator
      * @param ActivityService $activityService
      * @param ActivityQueryService $activityQueryService
      * @param SignupService $signupService
      * @param SignupListQueryService $signupListQueryService
      * @param SignupMapper $signupMapper
-     * @param AclService $aclService
-     * @param Translator $translator
      */
     public function __construct(
+        AclService $aclService,
+        Translator $translator,
         ActivityService $activityService,
         ActivityQueryService $activityQueryService,
         SignupService $signupService,
         SignupListQueryService $signupListQueryService,
         SignupMapper $signupMapper,
-        AclService $aclService,
-        Translator $translator
     ) {
+        $this->aclService = $aclService;
+        $this->translator = $translator;
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;
         $this->signupService = $signupService;
         $this->signupListQueryService = $signupListQueryService;
         $this->signupMapper = $signupMapper;
-        $this->aclService = $aclService;
-        $this->translator = $translator;
     }
 
     public function updateAction()
@@ -194,8 +194,16 @@ class AdminController extends AbstractActionController
         return $viewModel;
     }
 
-    protected function redirectActivityAdmin($success, $message)
-    {
+    /**
+     * @param bool $success
+     * @param string $message
+     *
+     * @return Response
+     */
+    protected function redirectActivityAdmin(
+        bool $success,
+        string $message,
+    ): Response {
         if ($success) {
             $this->plugin('FlashMessenger')->addSuccessMessage($message);
         } else {

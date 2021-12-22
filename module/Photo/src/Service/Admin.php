@@ -2,7 +2,7 @@
 
 namespace Photo\Service;
 
-use Application\Service\FileStorage;
+use Application\Service\FileStorage as FileStorageService;
 use Exception;
 use Imagick;
 use InvalidArgumentException;
@@ -11,7 +11,15 @@ use Laminas\Validator\File\{
     Extension,
     IsImage,
 };
-use Photo\Model\Photo as PhotoModel;
+use Photo\Mapper\Photo as PhotoMapper;
+use Photo\Model\{
+    Album as AlbumModel,
+    Photo as PhotoModel,
+};
+use Photo\Service\{
+    Photo as PhotoService,
+    Metadata as MetadataService,
+};
 use User\Permissions\NotAllowedException;
 
 /**
@@ -20,52 +28,56 @@ use User\Permissions\NotAllowedException;
 class Admin
 {
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
      * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
      * @var Photo
      */
-    private $photoService;
+    private Photo $photoService;
 
     /**
-     * @var Metadata
+     * @var MetadataService
      */
-    private $metadataService;
+    private MetadataService $metadataService;
 
     /**
-     * @var FileStorage
+     * @var FileStorageService
      */
-    private $storageService;
+    private FileStorageService $storageService;
 
     /**
-     * @var \Photo\Mapper\Photo
+     * @var PhotoMapper
      */
-    private $photoMapper;
+    private PhotoMapper $photoMapper;
 
     /**
      * @var array
      */
-    private $photoConfig;
-    private AclService $aclService;
+    private array $photoConfig;
 
     public function __construct(
-        Translator $translator,
-        Photo $photoService,
-        Metadata $metadataService,
-        FileStorage $storageService,
-        \Photo\Mapper\Photo $photoMapper,
-        array $photoConfig,
         AclService $aclService,
+        Translator $translator,
+        PhotoService $photoService,
+        MetadataService $metadataService,
+        FileStorageService $storageService,
+        PhotoMapper $photoMapper,
+        array $photoConfig,
     ) {
+        $this->aclService = $aclService;
         $this->translator = $translator;
         $this->photoService = $photoService;
         $this->metadataService = $metadataService;
         $this->storageService = $storageService;
         $this->photoMapper = $photoMapper;
         $this->photoConfig = $photoConfig;
-        $this->aclService = $aclService;
     }
 
     /**
@@ -74,13 +86,16 @@ class Admin
      * or database entries.
      *
      * @param string $path the temporary path of the uploaded photo
-     * @param \Photo\Model\Album $targetAlbum the album to save the photo in
+     * @param AlbumModel $targetAlbum the album to save the photo in
      * @param bool $move whether to move the photo instead of copying it
      *
      * @return PhotoModel|bool
      */
-    public function storeUploadedPhoto($path, $targetAlbum, $move = false)
-    {
+    public function storeUploadedPhoto(
+        string $path,
+        AlbumModel $targetAlbum,
+        bool $move = false,
+    ): bool|PhotoModel {
         if (!$this->aclService->isAllowed('add', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to add photos.'));
         }
@@ -142,8 +157,11 @@ class Admin
      *
      * @return string the path of the created thumbnail
      */
-    protected function createThumbnail($path, $width, $height)
-    {
+    protected function createThumbnail(
+        string $path,
+        int $width,
+        int $height,
+    ): string {
         $image = new Imagick($path);
         $image->thumbnailImage($width, $height, true);
         $image->setimageformat('png');
@@ -154,8 +172,14 @@ class Admin
         return $this->storageService->storeFile($tempFileName);
     }
 
-    public function upload($files, $album)
-    {
+    /**
+     * @param array $files
+     * @param AlbumModel $album
+     */
+    public function upload(
+        array $files,
+        AlbumModel $album,
+    ): void {
         $this->checkUploadAllowed();
 
         $imageValidator = new IsImage(
@@ -202,7 +226,7 @@ class Admin
     /**
      * Checks if the current user is allowed to upload photos.
      */
-    public function checkUploadAllowed()
+    public function checkUploadAllowed(): void
     {
         if (!$this->aclService->isAllowed('upload', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to upload photos.'));

@@ -17,8 +17,14 @@ abstract class Localisable extends Form implements InputFilterProviderInterface
      */
     private Translator $translator;
 
-    public function __construct(Translator $translator, bool $addElements = true)
-    {
+    /**
+     * @param Translator $translator
+     * @param bool $addElements
+     */
+    public function __construct(
+        Translator $translator,
+        bool $addElements = true,
+    ) {
         parent::__construct();
         $this->translator = $translator;
 

@@ -48,8 +48,18 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
      */
     private ?string $currentSlug = null;
 
-    public function __construct(JobMapper $mapper, Translator $translator, array $categories, array $labels)
-    {
+    /**
+     * @param JobMapper $mapper
+     * @param Translator $translator
+     * @param array $categories
+     * @param array $labels
+     */
+    public function __construct(
+        JobMapper $mapper,
+        Translator $translator,
+        array $categories,
+        array $labels,
+    ) {
         parent::__construct($translator);
         $this->mapper = $mapper;
 
@@ -490,8 +500,10 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
      *
      * @return bool
      */
-    public function isSlugUnique(string $value, array $context): bool
-    {
+    public function isSlugUnique(
+        string $value,
+        array $context,
+    ): bool {
         $category = $context['category'];
 
         // Don't validate if the job category is empty. Note that this is an empty string, null only exists after

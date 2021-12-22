@@ -17,6 +17,11 @@ use Laminas\View\Model\{
 class MemberController extends AbstractActionController
 {
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
      * @var MemberService
      */
     private MemberService $memberService;
@@ -37,31 +42,26 @@ class MemberController extends AbstractActionController
     private array $regulationsConfig;
 
     /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
      * MemberController constructor.
      *
+     * @param AclService $aclService
      * @param MemberService $memberService
      * @param MemberInfoService $memberInfoService
      * @param DecisionService $decisionService
      * @param array $regulationsConfig
-     * @param AclService $aclService
      */
     public function __construct(
+        AclService $aclService,
         MemberService $memberService,
         MemberInfoService $memberInfoService,
         DecisionService $decisionService,
         array $regulationsConfig,
-        AclService $aclService
     ) {
+        $this->aclService = $aclService;
         $this->memberService = $memberService;
         $this->memberInfoService = $memberInfoService;
         $this->decisionService = $decisionService;
         $this->regulationsConfig = $regulationsConfig;
-        $this->aclService = $aclService;
     }
 
     public function indexAction()

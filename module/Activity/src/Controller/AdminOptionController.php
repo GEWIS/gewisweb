@@ -18,6 +18,16 @@ use User\Permissions\NotAllowedException;
 class AdminOptionController extends AbstractActionController
 {
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
+    /**
      * @var ActivityCalendarService
      */
     private ActivityCalendarService $activityCalendarService;
@@ -33,36 +43,26 @@ class AdminOptionController extends AbstractActionController
     private ActivityOptionCreationPeriodMapper $activityOptionCreationPeriodMapper;
 
     /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
      * AdminOptionController constructor.
      *
+     * @param AclService $aclService
+     * @param Translator $translator
      * @param ActivityCalendarService $activityCalendarService
      * @param OrganService $organService
      * @param ActivityOptionCreationPeriodMapper $activityOptionCreationPeriodMapper
-     * @param AclService $aclService
-     * @param Translator $translator
      */
     public function __construct(
+        AclService $aclService,
+        Translator $translator,
         ActivityCalendarService $activityCalendarService,
         OrganService $organService,
         ActivityOptionCreationPeriodMapper $activityOptionCreationPeriodMapper,
-        AclService $aclService,
-        Translator $translator,
     ) {
+        $this->aclService = $aclService;
+        $this->translator = $translator;
         $this->activityCalendarService = $activityCalendarService;
         $this->organService = $organService;
         $this->activityOptionCreationPeriodMapper = $activityOptionCreationPeriodMapper;
-        $this->aclService = $aclService;
-        $this->translator = $translator;
     }
 
     public function indexAction()
@@ -200,8 +200,10 @@ class AdminOptionController extends AbstractActionController
      *
      * @return Response
      */
-    private function redirectWithMessage(bool $success, string $message): Response
-    {
+    private function redirectWithMessage(
+        bool $success,
+        string $message,
+    ): Response {
         if ($success) {
             $this->plugin('FlashMessenger')->addSuccessMessage($message);
         } else {

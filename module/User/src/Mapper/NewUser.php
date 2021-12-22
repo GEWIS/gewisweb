@@ -3,7 +3,7 @@
 namespace User\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Decision\Model\Member;
+use Decision\Model\Member as MemberModel;
 use User\Model\NewUser as NewUserModel;
 
 class NewUser extends BaseMapper
@@ -15,7 +15,7 @@ class NewUser extends BaseMapper
      *
      * @return NewUserModel|null
      */
-    public function getByLidnr($lidnr): ?NewUserModel
+    public function getByLidnr(int $lidnr): ?NewUserModel
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('u, m')
@@ -37,7 +37,7 @@ class NewUser extends BaseMapper
      *
      * @return NewUserModel|null
      */
-    public function getByCode($code): ?NewUserModel
+    public function getByCode(string $code): ?NewUserModel
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('u, m')
@@ -55,9 +55,11 @@ class NewUser extends BaseMapper
     /**
      * Delete the existing activation code for a member.
      *
-     * @return array
+     * @param MemberModel $member
+     *
+     * @return int
      */
-    public function deleteByMember(Member $member)
+    public function deleteByMember(MemberModel $member): int
     {
         $qb = $this->em->createQueryBuilder();
         $qb->delete($this->getRepositoryName(), 'u');

@@ -19,11 +19,11 @@ class ApiAuthenticationControllerFactory implements FactoryInterface
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        array $options = null,
     ): ApiAuthenticationController {
         return new ApiAuthenticationController(
+            $container->get('user_service_acl'),
             $container->get(ApiAppService::class),
-            $container->get('user_service_acl')
         );
     }
 }

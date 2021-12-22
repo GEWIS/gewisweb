@@ -2,45 +2,49 @@
 
 namespace Activity\Mapper;
 
-use Activity\Model\Signup as SignupModel;
+use Activity\Model\{
+    SignupList as SignupListModel,
+    UserSignup as UserSignupModel,
+};
 use Application\Mapper\BaseMapper;
+use User\Model\User as UserModel;
 
 class Signup extends BaseMapper
 {
     /**
      * Check if a user is signed up for an activity.
      *
-     * @param int $signupListId
-     * @param int $userId
+     * @param SignupListModel $signupList
+     * @param UserModel $user
      *
      * @return bool
      */
-    public function isSignedUp(int $signupListId, int $userId): bool
-    {
-        return null !== $this->getSignUp($signupListId, $userId);
+    public function isSignedUp(
+        SignupListModel $signupList,
+        UserModel $user,
+    ): bool {
+        return null !== $this->getSignUp($signupList, $user);
     }
 
     /**
-     * Get the signup object for an usedid/activityid if it exists.
+     * Get the signup object if it exists.
      *
-     * @param int $signupListId
-     * @param int $userId
+     * @param SignupListModel $signupList
+     * @param UserModel $user
      *
-     * @return SignupModel|null
+     * @return UserSignupModel|null
      */
-    public function getSignUp(int $signupListId, int $userId): ?SignupModel
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\UserSignup', 'a')
-            ->join('a.user', 'u')
-            ->where('u.lidnr = ?1')
-            ->join('a.signupList', 'ac')
-            ->andWhere('ac.id = ?2')
+    public function getSignUp(
+        SignupListModel $signupList,
+        UserModel $user,
+    ): ?UserSignupModel {
+        $qb = $this->getRepository()->createQueryBuilder('s');
+        $qb->where('s.signupList = :signupList')
+            ->andWhere('s.user = :user')
             ->setParameters(
                 [
-                    1 => $userId,
-                    2 => $signupListId,
+                    'signupList' => $signupList,
+                    'user' => $user,
                 ]
             );
         $result = $qb->getQuery()->getResult();
@@ -49,32 +53,17 @@ class Signup extends BaseMapper
     }
 
     /**
-     * Get all activities which a user is signed up for.
-     *
-     * @param int $userId
+     * @param SignupListModel $signupList
      *
      * @return array
      */
-    public function getSignedUpActivities(int $userId): array
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\UserSignup', 'a')
-            ->join('a.user', 'u')
-            ->where('u.lidnr = ?1')
-            ->setParameter(1, $userId);
-
-        return $qb->getQuery()->getResult();
-    }
-
-    public function getNumberOfSignedUpMembers($signupListId)
+    public function getNumberOfSignedUpMembers(SignupListModel $signupList): array
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('COUNT(s)')
-            ->from('Activity\Model\UserSignup', 's')
-            ->join('s.signupList', 'a')
-            ->where('a.id = ?1')
-            ->setParameter(1, $signupListId);
+            ->from($this->getRepositoryName(), 's')
+            ->where('s.signupList = :signupList')
+            ->setParameter('signupList', $signupList);
         $result = $qb->getQuery()->getResult();
 
         return $result[0];
@@ -85,6 +74,6 @@ class Signup extends BaseMapper
      */
     protected function getRepositoryName(): string
     {
-        return SignupModel::class;
+        return UserSignupModel::class;
     }
 }

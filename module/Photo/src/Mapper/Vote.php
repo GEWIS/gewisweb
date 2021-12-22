@@ -18,10 +18,13 @@ class Vote extends BaseMapper
      *
      * @param DateTime $startDate
      * @param DateTime $endDate
+     *
      * @return array of array of string
      */
-    public function getVotesInRange($startDate, $endDate)
-    {
+    public function getVotesInRange(
+        DateTime $startDate,
+        DateTime $endDate,
+    ): array {
         $qb = $this->em->createQueryBuilder();
 
         $qb->select('IDENTITY(vote.photo)', 'Count(vote.photo)')
@@ -42,8 +45,10 @@ class Vote extends BaseMapper
      *
      * @return VoteModel|null
      */
-    public function findVote(int $photoId, int $lidnr): ?VoteModel
-    {
+    public function findVote(
+        int $photoId,
+        int $lidnr,
+    ): ?VoteModel {
         return $this->getRepository()->findOneBy(
             [
                 'photo' => $photoId,
@@ -56,6 +61,7 @@ class Vote extends BaseMapper
      * Checks if a member has recently voted.
      *
      * @param int $lidnr
+     *
      * @return bool
      */
     public function hasRecentVote(int $lidnr): bool

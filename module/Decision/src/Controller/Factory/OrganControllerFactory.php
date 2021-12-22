@@ -18,7 +18,7 @@ class OrganControllerFactory implements FactoryInterface
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        array $options = null,
     ): OrganController {
         return new OrganController(
             $container->get('decision_service_organ'),

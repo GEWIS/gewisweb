@@ -13,6 +13,9 @@ use Laminas\Validator\Date as DateValidator;
 
 class PollApproval extends Form implements InputFilterProviderInterface
 {
+    /**
+     * @param Translator $translator
+     */
     public function __construct(Translator $translator)
     {
         parent::__construct();

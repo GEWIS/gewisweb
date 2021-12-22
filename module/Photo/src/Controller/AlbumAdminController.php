@@ -33,7 +33,7 @@ class AlbumAdminController extends AbstractActionController
      */
     public function __construct(
         AdminService $adminService,
-        AlbumService $albumService
+        AlbumService $albumService,
     ) {
         $this->adminService = $adminService;
         $this->albumService = $albumService;
@@ -158,7 +158,7 @@ class AlbumAdminController extends AbstractActionController
             $album = $this->albumService->getAlbum($albumId);
 
             try {
-                $this->adminService->upload($request->getFiles(), $album);
+                $this->adminService->upload($request->getFiles()->toArray(), $album);
                 $result['success'] = true;
             } catch (Exception $e) {
                 $this->getResponse()->setStatusCode(500);

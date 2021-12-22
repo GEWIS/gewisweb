@@ -18,7 +18,7 @@ class TagControllerFactory implements FactoryInterface
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        array $options = null,
     ): TagController {
         return new TagController(
             $container->get('photo_service_photo'),

@@ -18,14 +18,14 @@ class MemberControllerFactory implements FactoryInterface
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        array $options = null,
     ): MemberController {
         return new MemberController(
+            $container->get('decision_service_acl'),
             $container->get('decision_service_member'),
             $container->get('decision_service_memberinfo'),
             $container->get('decision_service_decision'),
             $container->get('config')['regulations'],
-            $container->get('decision_service_acl'),
         );
     }
 }

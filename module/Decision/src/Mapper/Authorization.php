@@ -3,7 +3,11 @@
 namespace Decision\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Decision\Model\Authorization as AuthorizationModel;
+use Decision\Model\{
+    Authorization as AuthorizationModel,
+    Meeting as MeetingModel,
+    Member as MemberModel,
+};
 
 /**
  * Mappers for authorizations.
@@ -17,26 +21,30 @@ class Authorization extends BaseMapper
      *
      * @return array
      */
-    public function findNotRevoked($meetingNumber)
+    public function findNotRevoked(int $meetingNumber): array
     {
-        return $this->getRepository()->findBy(['meetingNumber' => $meetingNumber, 'revoked' => false]);
+        return $this->getRepository()->findBy(
+            [
+                'meetingNumber' => $meetingNumber,
+                'revoked' => false,
+            ]
+        );
     }
 
     /**
      * Find non-revoked authorizations for a meeting for a user.
      *
      * @param int $meetingNumber
-     * @param int $authorizer
+     * @param MemberModel $authorizer
      *
      * @return AuthorizationModel|null
      */
-    public function findUserAuthorization($meetingNumber, $authorizer)
-    {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
-            ->where('a.meetingNumber = :meetingNumber')
+    public function findUserAuthorization(
+        int $meetingNumber,
+        MemberModel $authorizer,
+    ): ?AuthorizationModel {
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->where('a.meetingNumber = :meetingNumber')
             ->andWhere('a.authorizer = :authorizer')
             ->andWhere('a.revoked = 0')
             ->setParameter('meetingNumber', $meetingNumber)
@@ -49,17 +57,16 @@ class Authorization extends BaseMapper
      * Find non-revoked authorizations for a meeting for a recipient.
      *
      * @param int $meetingNumber
-     * @param int $recipient
+     * @param MemberModel $recipient
      *
      * @return array
      */
-    public function findRecipientAuthorization($meetingNumber, $recipient)
-    {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
-            ->where('a.meetingNumber = :meetingNumber')
+    public function findRecipientAuthorization(
+        int $meetingNumber,
+        MemberModel $recipient,
+    ): array {
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->where('a.meetingNumber = :meetingNumber')
             ->andWhere('a.recipient = :recipient')
             ->andWhere('a.revoked = 0')
             ->setParameter('meetingNumber', $meetingNumber)

@@ -20,7 +20,7 @@ abstract class AbstractAclService
      *
      * @return RoleInterface|string
      */
-    abstract protected function getRole();
+    abstract protected function getRole(): string|RoleInterface;
 
     /**
      * Check if a operation is allowed for the current role.
@@ -30,8 +30,10 @@ abstract class AbstractAclService
      *
      * @return bool
      */
-    public function isAllowed(string $operation, $resource): bool
-    {
+    public function isAllowed(
+        string $operation,
+        ResourceInterface|string $resource,
+    ): bool {
         return $this->getAcl()->isAllowed(
             $this->getRole(),
             $resource,

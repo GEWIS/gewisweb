@@ -17,6 +17,14 @@ use Photo\Listener\{
     AlbumDate as AlbumDateListener,
     Remove as RemoveListener,
 };
+use Photo\Mapper\{
+    Album as AlbumMapper,
+    Photo as PhotoMapper,
+    ProfilePhoto as ProfilePhotoMapper,
+    Tag as TagMapper,
+    Vote as VoteMapper,
+    WeeklyPhoto as WeeklyPhotoMapper,
+};
 use Photo\Service\{
     Admin as AdminService,
     Album as AlbumService,
@@ -32,7 +40,10 @@ use User\Authorization\AclServiceFactory;
 
 class Module
 {
-    public function onBootstrap(MvcEvent $e)
+    /**
+     * @param MvcEvent $e
+     */
+    public function onBootstrap(MvcEvent $e): void
     {
         $container = $e->getApplication()->getServiceManager();
         $em = $container->get('doctrine.entitymanager.orm_default');
@@ -63,6 +74,8 @@ class Module
         return [
             'factories' => [
                 'photo_service_album' => function (ContainerInterface $container) {
+                    $aclService = $container->get('photo_service_acl');
+                    $translator = $container->get('translator');
                     $photoService = $container->get('photo_service_photo');
                     $albumCoverService = $container->get('photo_service_album_cover');
                     $memberService = $container->get('decision_service_member');
@@ -70,10 +83,10 @@ class Module
                     $albumMapper = $container->get('photo_mapper_album');
                     $createAlbumForm = $container->get('photo_form_album_create');
                     $editAlbumForm = $container->get('photo_form_album_edit');
-                    $aclService = $container->get('photo_service_acl');
-                    $translator = $container->get('translator');
 
                     return new AlbumService(
+                        $aclService,
+                        $translator,
                         $photoService,
                         $albumCoverService,
                         $memberService,
@@ -81,14 +94,13 @@ class Module
                         $albumMapper,
                         $createAlbumForm,
                         $editAlbumForm,
-                        $aclService,
-                        $translator,
                     );
                 },
                 'photo_service_metadata' => function () {
                     return new MetadataService();
                 },
                 'photo_service_photo' => function (ContainerInterface $container) {
+                    $aclService = $container->get('photo_service_acl');
                     $translator = $container->get('translator');
                     $memberService = $container->get('decision_service_member');
                     $storageService = $container->get('application_service_storage');
@@ -98,9 +110,9 @@ class Module
                     $weeklyPhotoMapper = $container->get('photo_mapper_weekly_photo');
                     $profilePhotoMapper = $container->get('photo_mapper_profile_photo');
                     $photoConfig = $container->get('config')['photo'];
-                    $aclService = $container->get('photo_service_acl');
 
                     return new PhotoService(
+                        $aclService,
                         $translator,
                         $memberService,
                         $storageService,
@@ -110,7 +122,6 @@ class Module
                         $weeklyPhotoMapper,
                         $profilePhotoMapper,
                         $photoConfig,
-                        $aclService
                     );
                 },
                 'photo_service_album_cover' => function (ContainerInterface $container) {
@@ -129,22 +140,22 @@ class Module
                     );
                 },
                 'photo_service_admin' => function (ContainerInterface $container) {
+                    $aclService = $container->get('photo_service_acl');
                     $translator = $container->get('translator');
                     $photoService = $container->get('photo_service_photo');
                     $metadataService = $container->get('photo_service_metadata');
                     $storageService = $container->get('application_service_storage');
                     $photoMapper = $container->get('photo_mapper_photo');
                     $photoConfig = $container->get('config')['photo'];
-                    $aclService = $container->get('photo_service_acl');
 
                     return new AdminService(
+                        $aclService,
                         $translator,
                         $photoService,
                         $metadataService,
                         $storageService,
                         $photoMapper,
                         $photoConfig,
-                        $aclService,
                     );
                 },
                 'photo_form_album_edit' => function (ContainerInterface $container) {
@@ -169,37 +180,36 @@ class Module
                     );
                 },
                 'photo_mapper_album' => function (ContainerInterface $container) {
-                    return new Mapper\Album(
+                    return new AlbumMapper(
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
                 'photo_mapper_photo' => function (ContainerInterface $container) {
-                    return new Mapper\Photo(
+                    return new PhotoMapper(
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
                 'photo_mapper_profile_photo' => function (ContainerInterface $container) {
-                    return new Mapper\ProfilePhoto(
+                    return new ProfilePhotoMapper(
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
                 'photo_mapper_tag' => function (ContainerInterface $container) {
-                    return new Mapper\Tag(
+                    return new TagMapper(
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
                 'photo_mapper_weekly_photo' => function (ContainerInterface $container) {
-                    return new Mapper\WeeklyPhoto(
+                    return new WeeklyPhotoMapper(
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
                 'photo_mapper_vote' => function (ContainerInterface $container) {
-                    return new Mapper\Vote(
+                    return new VoteMapper(
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
                 'photo_service_acl' => AclServiceFactory::class,
-                'activity_service_acl' => AclServiceFactory::class,
                 WeeklyPhoto::class => function (ContainerInterface $container) {
                     $weeklyPhoto = new WeeklyPhoto();
                     $photoService = $container->get('photo_service_photo');

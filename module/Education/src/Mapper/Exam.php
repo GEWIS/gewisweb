@@ -16,8 +16,12 @@ class Exam extends BaseMapper
      *
      * Instead of the EntityManager, this inserts this Mapper into the
      * function.
+     *
+     * @param Closure $func
+     *
+     * @return mixed
      */
-    public function transactional(Closure $func)
+    public function transactional(Closure $func): mixed
     {
         return $this->em->transactional(
             function ($em) use ($func) {

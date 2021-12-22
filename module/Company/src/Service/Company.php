@@ -25,14 +25,14 @@ use Company\Mapper\{
 };
 use Company\Model\{
     Company as CompanyModel,
+    CompanyFeaturedPackage as CompanyFeaturedPackageModel,
     CompanyLocalisedText,
     CompanyBannerPackage as CompanyBannerPackageModel,
     CompanyJobPackage as CompanyJobPackageModel,
     CompanyPackage as CompanyPackageModel,
     Job as JobModel,
     JobCategory as JobCategoryModel,
-    JobLabel as JobLabelModel,
-};
+    JobLabel as JobLabelModel};
 use DateTime;
 use Exception;
 use Laminas\Mvc\I18n\Translator;
@@ -43,6 +43,11 @@ use User\Permissions\NotAllowedException;
  */
 class Company
 {
+    /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
     /**
      * @var Translator
      */
@@ -124,11 +129,26 @@ class Company
     private EditLabelForm $editLabelForm;
 
     /**
-     * @var AclService
+     * @param AclService $aclService
+     * @param Translator $translator
+     * @param FileStorage $storageService
+     * @param CompanyMapper $companyMapper
+     * @param PackageMapper $packageMapper
+     * @param BannerPackageMapper $bannerPackageMapper
+     * @param FeaturedPackageMapper $featuredPackageMapper
+     * @param JobMapper $jobMapper
+     * @param CategoryMapper $categoryMapper
+     * @param LabelMapper $labelMapper
+     * @param CompanyForm $companyForm
+     * @param EditPackageForm $editPackageForm
+     * @param EditPackageForm $editBannerPackageForm
+     * @param EditPackageForm $editFeaturedPackageForm
+     * @param EditJobForm $editJobForm
+     * @param EditCategoryForm $editCategoryForm
+     * @param EditLabelForm $editLabelForm
      */
-    private AclService $aclService;
-
     public function __construct(
+        AclService $aclService,
         Translator $translator,
         FileStorage $storageService,
         CompanyMapper $companyMapper,
@@ -145,8 +165,8 @@ class Company
         EditJobForm $editJobForm,
         EditCategoryForm $editCategoryForm,
         EditLabelForm $editLabelForm,
-        AclService $aclService,
     ) {
+        $this->aclService = $aclService;
         $this->translator = $translator;
         $this->storageService = $storageService;
         $this->companyMapper = $companyMapper;
@@ -163,13 +183,14 @@ class Company
         $this->editJobForm = $editJobForm;
         $this->editCategoryForm = $editCategoryForm;
         $this->editLabelForm = $editLabelForm;
-        $this->aclService = $aclService;
     }
 
     /**
      * Returns a random banner for display on the frontpage.
+     *
+     * @return CompanyBannerPackageModel|null
      */
-    public function getCurrentBanner()
+    public function getCurrentBanner(): ?CompanyBannerPackageModel
     {
         if (!$this->aclService->isAllowed('showBanner', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view the banner'));
@@ -178,7 +199,10 @@ class Company
         return $this->bannerPackageMapper->getBannerPackage();
     }
 
-    public function getFeaturedPackage()
+    /**
+     * @return CompanyFeaturedPackageModel|null
+     */
+    public function getFeaturedPackage(): ?CompanyFeaturedPackageModel
     {
         if (!$this->aclService->isAllowed('viewFeaturedCompany', 'company')) {
             throw new NotAllowedException(
@@ -189,7 +213,12 @@ class Company
         return $this->featuredPackageMapper->getFeaturedPackage();
     }
 
-    private function getFuturePackageStartsBeforeDate($date)
+    /**
+     * @param DateTime $date
+     *
+     * @return array
+     */
+    private function getFuturePackageStartsBeforeDate(DateTime $date): array
     {
         $startPackages = array_merge(
             $this->packageMapper->findFuturePackageStartsBeforeDate($date),
@@ -210,7 +239,12 @@ class Company
         return $startPackages;
     }
 
-    private function getFuturePackageExpiresBeforeDate($date)
+    /**
+     * @param DateTime $date
+     *
+     * @return array
+     */
+    private function getFuturePackageExpiresBeforeDate(DateTime $date): array
     {
         $expirePackages = array_merge(
             $this->packageMapper->findFuturePackageExpirationsBeforeDate($date),
@@ -238,7 +272,7 @@ class Company
      *
      * @return array Two sorted arrays, containing the packages that respectively start and expire between now and $date,
      */
-    public function getPackageChangeEvents($date)
+    public function getPackageChangeEvents(DateTime $date): array
     {
         if (!$this->aclService->isAllowed('listall', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list the companies'));
@@ -247,7 +281,10 @@ class Company
         $startPackages = $this->getFuturePackageStartsBeforeDate($date);
         $expirePackages = $this->getFuturePackageExpiresBeforeDate($date);
 
-        return [$startPackages, $expirePackages];
+        return [
+            $startPackages,
+            $expirePackages,
+        ];
     }
 
     /**
@@ -331,9 +368,13 @@ class Company
     /**
      * @param JobCategoryModel $jobCategory The JobCategoryModel to update
      * @param array $data The (new) data to save
+     *
+     * @return void
      */
-    public function updateJobCategory(JobCategoryModel $jobCategory, array $data): void
-    {
+    public function updateJobCategory(
+        JobCategoryModel $jobCategory,
+        array $data,
+    ): void {
         $jobCategory->getName()->updateValues($data['nameEn'], $data['name']);
         $jobCategory->getPluralName()->updateValues($data['pluralNameEn'], $data['pluralName']);
         $jobCategory->getSlug()->updateValues($data['slugEn'], $data['slug']);
@@ -366,9 +407,13 @@ class Company
      *
      * @param JobLabelModel $jobLabel
      * @param array $data The data to validate, and apply to the label
+     *
+     * @return void
      */
-    public function updateJobLabel(JobLabelModel $jobLabel, array $data): void
-    {
+    public function updateJobLabel(
+        JobLabelModel $jobLabel,
+        array $data,
+    ): void {
         $jobLabel->getName()->updateValues($data['nameEn'], $data['name']);
         $jobLabel->getAbbreviation()->updateValues($data['abbreviationEn'], $data['abbreviation']);
 
@@ -422,8 +467,10 @@ class Company
      *
      * @throws Exception
      */
-    public function updateCompany(CompanyModel $company, array $data): bool
-    {
+    public function updateCompany(
+        CompanyModel $company,
+        array $data,
+    ): bool {
         $company->exchangeArray($data);
 
         // Upload the logo of the company.
@@ -446,12 +493,13 @@ class Company
      * @param string $languageSuffix
      *
      * @return bool
+     *
      * @throws Exception
      */
     private function uploadFile(
         CompanyModel|CompanyPackageModel|JobModel $entity,
         ?array $file,
-        string $languageSuffix = ''
+        string $languageSuffix = '',
     ): bool {
         if (null === $file) {
             return true;
@@ -497,6 +545,10 @@ class Company
 
     /**
      * Saves the modified JobCategoryModel.
+     *
+     * @param JobCategoryModel $jobCategory
+     *
+     * @return void
      */
     public function persistJobCategory(JobCategoryModel $jobCategory): void
     {
@@ -505,6 +557,10 @@ class Company
 
     /**
      * Saves the modified JobLabelModel.
+     *
+     * @param JobLabelModel $jobLabel
+     *
+     * @return void
      */
     public function persistJobLabel(JobLabelModel $jobLabel): void
     {
@@ -516,16 +572,19 @@ class Company
      *
      * @param JobModel $job
      *
+     * @return void
+     *
      * @throws ORMException
      */
-
-    public function persistJob(JobModel $job)
+    public function persistJob(JobModel $job): void
     {
         $this->jobMapper->persist($job);
     }
 
     /**
      * @param CompanyModel $company
+     *
+     * @return void
      *
      * @throws ORMException
      */
@@ -539,9 +598,11 @@ class Company
      *
      * @param CompanyPackageModel $package
      *
+     * @return void
+     *
      * @throws ORMException
      */
-    public function persistPackage(CompanyPackageModel $package)
+    public function persistPackage(CompanyPackageModel $package): void
     {
         $this->packageMapper->persist($package);
     }
@@ -554,10 +615,14 @@ class Company
      * @param string $type
      *
      * @return bool
+     *
      * @throws Exception
      */
-    public function createPackage(CompanyModel $company, array $data, string $type = 'job'): bool
-    {
+    public function createPackage(
+        CompanyModel $company,
+        array $data,
+        string $type = 'job',
+    ): bool {
         $package = $this->packageMapper->createPackage($type);
         $package->setCompany($company);
 
@@ -580,10 +645,13 @@ class Company
      * @param array $data
      *
      * @return bool
+     *
      * @throws Exception
      */
-    public function updatePackage(CompanyPackageModel $package, array $data): bool
-    {
+    public function updatePackage(
+        CompanyPackageModel $package,
+        array $data,
+    ): bool {
         if (CompanyBannerPackageModel::class === get_class($package)) {
             if (!$this->uploadFile($package, $data['banner'])) {
                 return false;
@@ -603,10 +671,13 @@ class Company
      * @param array $data
      *
      * @return bool
+     *
      * @throws ORMException
      */
-    public function createJob(CompanyJobPackageModel $package, array $data): bool
-    {
+    public function createJob(
+        CompanyJobPackageModel $package,
+        array $data,
+    ): bool {
         $job = new JobModel();
 
         $category = $this->categoryMapper->find($data['category']);
@@ -661,10 +732,13 @@ class Company
      * @param array $data
      *
      * @return bool
+     *
      * @throws ORMException
      */
-    public function updateJob(JobModel $job, array $data): bool
-    {
+    public function updateJob(
+        JobModel $job,
+        array $data,
+    ): bool {
         $category = $this->categoryMapper->find($data['category']);
         if (null === $category) {
             return false;
@@ -727,6 +801,8 @@ class Company
      *
      * @param CompanyPackageModel $package
      *
+     * @return void
+     *
      * @throws ORMException
      */
     public function deletePackage(CompanyPackageModel $package): void
@@ -743,6 +819,8 @@ class Company
      *
      * @param JobModel $job
      *
+     * @return void
+     *
      * @throws ORMException
      */
     public function deleteJob($job): void
@@ -758,6 +836,8 @@ class Company
      * Deletes the company identified with $slug.
      *
      * @param string $slug
+     *
+     * @return void
      *
      * @throws ORMException
      */
@@ -889,9 +969,11 @@ class Company
     /**
      * Returns a the form for entering packages.
      *
+     * @param string $type
+     *
      * @return EditPackageForm Form
      */
-    public function getPackageForm($type = 'job'): EditPackageForm
+    public function getPackageForm(string $type = 'job'): EditPackageForm
     {
         if ('banner' === $type) {
             return $this->editBannerPackageForm;

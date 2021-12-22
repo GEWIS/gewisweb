@@ -13,27 +13,27 @@ use User\Service\{
 class ApiAuthenticationController extends AbstractActionController
 {
     /**
-     * @var ApiAppService
-     */
-    protected ApiAppService $apiAppService;
-
-    /**
      * @var AclService
      */
     private AclService $aclService;
 
     /**
+     * @var ApiAppService
+     */
+    protected ApiAppService $apiAppService;
+
+    /**
      * ApiAuthenticationController constructor.
      *
-     * @param ApiAppService $apiAppService
      * @param AclService $aclService
+     * @param ApiAppService $apiAppService
      */
     public function __construct(
+        AclService $aclService,
         ApiAppService $apiAppService,
-        AclService $aclService
     ) {
-        $this->apiAppService = $apiAppService;
         $this->aclService = $aclService;
+        $this->apiAppService = $apiAppService;
     }
 
     public function tokenAction()

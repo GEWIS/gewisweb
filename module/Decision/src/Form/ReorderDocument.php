@@ -25,8 +25,14 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
      */
     protected Translator $translator;
 
-    public function __construct($name = null, $options = [])
-    {
+    /**
+     * @param string|null $name
+     * @param array $options
+     */
+    public function __construct(
+        ?string $name = null,
+        array $options = [],
+    ) {
         parent::__construct($name, $options);
 
         $this->setAttribute('method', 'post');
@@ -124,8 +130,10 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
      *
      * @return string
      */
-    private static function generateIcon($className, $title): string
-    {
+    private static function generateIcon(
+        string $className,
+        string $title,
+    ): string {
         return "<span class=\"fa {$className}\" title=\"{$title}\"></span>";
     }
 }

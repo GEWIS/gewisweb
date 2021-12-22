@@ -32,6 +32,16 @@ use User\Permissions\NotAllowedException;
 class Organ
 {
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
+    /**
      * @var EntityManager
      */
     private EntityManager $entityManager;
@@ -67,16 +77,19 @@ class Organ
     private array $organInformationConfig;
 
     /**
-     * @var AclService
+     * @param AclService $aclService
+     * @param Translator $translator
+     * @param EntityManager $entityManager
+     * @param FileStorageService $storageService
+     * @param EmailService $emailService
+     * @param MemberMapper $memberMapper
+     * @param OrganMapper $organMapper
+     * @param OrganInformationForm $organInformationForm
+     * @param array $organInformationConfig
      */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
     public function __construct(
+        AclService $aclService,
+        Translator $translator,
         EntityManager $entityManager,
         FileStorageService $storageService,
         EmailService $emailService,
@@ -84,9 +97,8 @@ class Organ
         OrganMapper $organMapper,
         OrganInformationForm $organInformationForm,
         array $organInformationConfig,
-        AclService $aclService,
-        Translator $translator,
     ) {
+        $this->aclService = $aclService;
         $this->translator = $translator;
         $this->entityManager = $entityManager;
         $this->storageService = $storageService;
@@ -95,7 +107,6 @@ class Organ
         $this->organMapper = $organMapper;
         $this->organInformationForm = $organInformationForm;
         $this->organInformationConfig = $organInformationConfig;
-        $this->aclService = $aclService;
     }
 
     /**
@@ -222,14 +233,17 @@ class Organ
      * @param string|null $type
      * @param bool $latest  Whether to retrieve the latest occurrence of an organ or not
      *
-     * @return OrganModel
+     * @return OrganModel|null
      *
      * @throws NoResultException
      * @throws NonUniqueResultException
      * @see Decision/Mapper/Organ::findByAbbr()
      */
-    public function findOrganByAbbr(string $abbr, string $type = null, bool $latest = false): OrganModel
-    {
+    public function findOrganByAbbr(
+        string $abbr,
+        ?string $type = null,
+        bool $latest = false,
+    ): ?OrganModel {
         return $this->organMapper->findByAbbr(
             $abbr,
             $latest,
@@ -245,8 +259,10 @@ class Organ
      * @throws ORMException
      * @throws ImagickException
      */
-    public function updateOrganInformation(OrganInformationModel $organInformation, array $data): bool
-    {
+    public function updateOrganInformation(
+        OrganInformationModel $organInformation,
+        array $data,
+    ): bool {
         $config = $this->organInformationConfig;
 
         if ($data['cover']['size'] > 0) {
@@ -348,7 +364,7 @@ class Organ
             $em->remove($oldInformation);
         }
 
-        $user = $em->merge($this->aclService->getIdentityOrThrowException());
+        $user = $this->aclService->getIdentityOrThrowException();
         $organInformation->setApprover($user);
         $em->flush();
     }
@@ -379,6 +395,7 @@ class Organ
      * @param int $organId
      *
      * @return OrganInformationModel|bool
+     *
      * @throws ORMException
      */
     public function getEditableOrganInformation(int $organId): OrganInformationModel|bool

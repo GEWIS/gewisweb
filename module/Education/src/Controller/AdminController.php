@@ -148,12 +148,10 @@ class AdminController extends AbstractActionController
             );
         }
 
-        $config = $this->educationTempConfig;
-
         return new ViewModel(
             [
                 'form' => $this->examService->getBulkExamForm(),
-                'config' => $config,
+                'config' => $this->educationTempConfig,
             ]
         );
     }

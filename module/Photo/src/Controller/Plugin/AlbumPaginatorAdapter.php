@@ -3,9 +3,10 @@
 namespace Photo\Controller\Plugin;
 
 use Laminas\Paginator\Adapter\AdapterInterface;
+use Photo\Model\Album as AlbumModel;
 use Photo\Service\{
-    Album,
-    Photo,
+    Album as AlbumService,
+    Photo as PhotoService,
 };
 
 /**
@@ -16,34 +17,39 @@ class AlbumPaginatorAdapter implements AdapterInterface
     /**
      * Album.
      *
-     * @var \Photo\Model\Album
+     * @var AlbumModel|null
      */
-    protected $album = null;
+    protected ?AlbumModel $album = null;
 
     /**
      * Item count.
      *
-     * @var int
+     * @var int|null
      */
-    protected $count = null;
+    protected ?int $count = null;
 
     /**
-     * @var Photo
+     * @var PhotoService
      */
-    private $photoService;
+    private PhotoService $photoService;
 
     /**
-     * @var Album
+     * @var AlbumService
      */
-    private $albumService;
+    private AlbumService $albumService;
 
     /**
      * Constructor.
      *
-     * @param \Photo\Model\Album $album Album to paginate
+     * @param AlbumModel $album Album to paginate
+     * @param PhotoService $photoService
+     * @param AlbumService $albumService
      */
-    public function __construct(\Photo\Model\Album $album, Photo $photoService, Album $albumService)
-    {
+    public function __construct(
+        AlbumModel $album,
+        PhotoService $photoService,
+        AlbumService $albumService,
+    ) {
         $this->album = $album;
         $this->photoService = $photoService;
         $this->albumService = $albumService;
@@ -59,8 +65,10 @@ class AlbumPaginatorAdapter implements AdapterInterface
      *
      * @return array
      */
-    public function getItems($offset, $itemCountPerPage)
-    {
+    public function getItems(
+        $offset,
+        $itemCountPerPage,
+    ): array {
         $albums = $this->albumService->getAlbums(
             $this->album,
             $offset,

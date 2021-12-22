@@ -18,7 +18,7 @@ class AlbumControllerFactory implements FactoryInterface
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        array $options = null,
     ): AlbumController {
         return new AlbumController(
             $container->get('photo_service_album'),

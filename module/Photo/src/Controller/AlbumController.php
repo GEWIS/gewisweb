@@ -30,6 +30,7 @@ class AlbumController extends AbstractActionController
      * AlbumController constructor.
      *
      * @param AlbumService $albumService
+     * @param PhotoService $photoService
      * @param array $photoConfig
      */
     public function __construct(

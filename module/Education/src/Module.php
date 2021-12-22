@@ -6,6 +6,8 @@ use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Education\Form\{
     AddCourse as AddCourseForm,
     Bulk as BulkForm,
+    Fieldset\Exam as ExamFieldset,
+    Fieldset\Summary as SummaryFieldset,
     SearchCourse as SearchCourseForm,
     SummaryUpload as SummaryUploadForm,
     TempUpload as TempUploadForm,
@@ -46,30 +48,28 @@ class Module
         return [
             'factories' => [
                 'education_service_exam' => function (ContainerInterface $container) {
+                    $aclService = $container->get('education_service_acl');
                     $translator = $container->get('translator');
                     $storageService = $container->get('application_service_storage');
                     $courseMapper = $container->get('education_mapper_course');
                     $examMapper = $container->get('education_mapper_exam');
                     $addCourseForm = $container->get('education_form_add_course');
-                    $searchCourseForm = $container->get('education_form_searchcourse');
                     $tempUploadForm = $container->get('education_form_tempupload');
                     $bulkSummaryForm = $container->get('education_form_bulk_summary');
                     $bulkExamForm = $container->get('education_form_bulk_exam');
                     $config = $container->get('config');
-                    $aclService = $container->get('education_service_acl');
 
                     return new ExamService(
+                        $aclService,
                         $translator,
                         $storageService,
                         $courseMapper,
                         $examMapper,
                         $addCourseForm,
-                        $searchCourseForm,
                         $tempUploadForm,
                         $bulkSummaryForm,
                         $bulkExamForm,
                         $config,
-                        $aclService
                     );
                 },
                 'education_form_tempupload' => function (ContainerInterface $container) {
@@ -108,7 +108,7 @@ class Module
                     );
                 },
                 'education_form_fieldset_exam' => function (ContainerInterface $container) {
-                    $fieldset = new Form\Fieldset\Exam(
+                    $fieldset = new ExamFieldset(
                         $container->get('translator')
                     );
                     $fieldset->setConfig($container->get('config'));
@@ -118,7 +118,7 @@ class Module
                     return $fieldset;
                 },
                 'education_form_fieldset_summary' => function (ContainerInterface $container) {
-                    $fieldset = new Form\Fieldset\Summary(
+                    $fieldset = new SummaryFieldset(
                         $container->get('translator')
                     );
                     $fieldset->setConfig($container->get('config'));

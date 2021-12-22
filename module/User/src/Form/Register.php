@@ -8,15 +8,15 @@ use Laminas\Form\Element\{
     Submit,
 };
 use Laminas\Form\Form;
+use Laminas\InputFilter\InputProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\InputFilter\InputFilter;
 use Laminas\Validator\{
     Digits,
     EmailAddress,
     NotEmpty,
 };
 
-class Register extends Form
+class Register extends Form implements InputProviderInterface
 {
     public const ERROR_WRONG_EMAIL = 'wrong_email';
     public const ERROR_MEMBER_NOT_EXISTS = 'member_not_exists';
@@ -28,6 +28,9 @@ class Register extends Form
      */
     protected Translator $translate;
 
+    /**
+     * @param Translator $translate
+     */
     public function __construct(Translator $translate)
     {
         parent::__construct();
@@ -62,8 +65,6 @@ class Register extends Form
                 ],
             ]
         );
-
-        $this->initFilters();
     }
 
     /**
@@ -71,7 +72,7 @@ class Register extends Form
      *
      * @param string $error
      */
-    public function setError($error)
+    public function setError(string $error): void
     {
         switch ($error) {
             case self::ERROR_WRONG_EMAIL:
@@ -113,13 +114,13 @@ class Register extends Form
         }
     }
 
-    protected function initFilters()
+    /**
+     * @return array
+     */
+    public function getInputSpecification(): array
     {
-        $filter = new InputFilter();
-
-        $filter->add(
-            [
-                'name' => 'lidnr',
+        return [
+            'lidnr' => [
                 'required' => true,
                 'validators' => [
                     [
@@ -129,12 +130,8 @@ class Register extends Form
                         'name' => Digits::class,
                     ],
                 ],
-            ]
-        );
-
-        $filter->add(
-            [
-                'name' => 'email',
+            ],
+            'email' => [
                 'required' => true,
                 'validators' => [
                     [
@@ -144,9 +141,7 @@ class Register extends Form
                         'name' => EmailAddress::class,
                     ],
                 ],
-            ]
-        );
-
-        $this->setInputFilter($filter);
+            ],
+        ];
     }
 }

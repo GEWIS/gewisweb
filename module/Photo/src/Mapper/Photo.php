@@ -4,7 +4,8 @@ namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Photo\Model\{
-    MemberAlbum,
+    Album as AlbumModel,
+    MemberAlbum as MemberAlbumModel,
     Photo as PhotoModel,
 };
 
@@ -16,24 +17,20 @@ class Photo extends BaseMapper
     /**
      * Returns all the photos in an album.
      *
-     * @param \Photo\Model\Album $album The album to retrieve the photos
-     *                                       from
+     * @param AlbumModel $album The album to retrieve the photos from
      * @param int $start the result to start at
-     * @param int $maxResults max amount of results to return,
-     *                                       null for infinite
+     * @param int|null $maxResults max amount of results to return, null for infinite
      *
      * @return array of photo's
      */
     public function getAlbumPhotos(
-        \Photo\Model\Album $album,
-        $start = 0,
-        $maxResults = null
-    ) {
-        $qb = $this->em->createQueryBuilder();
+        AlbumModel $album,
+        int $start = 0,
+        ?int $maxResults = null,
+    ): array {
+        $qb = $this->getRepository()->createQueryBuilder('a');
 
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a');
-        if ($album instanceof MemberAlbum) {
+        if ($album instanceof MemberAlbumModel) {
             $qb->innerJoin('a.tags', 't')
                 ->where('t.member = ?1')
                 ->setParameter(1, $album->getMember());
@@ -59,18 +56,17 @@ class Photo extends BaseMapper
      * available photos is smaller than the requested count, less photos
      * will be returned.
      *
-     * @param \Photo\Model\Album|int $album
+     * @param AlbumModel $album
      * @param int $maxResults
      *
      * @return array of Photo\Model\Photo
      */
-    public function getRandomAlbumPhotos($album, $maxResults)
-    {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
-            ->where('a.album = ?1')
+    public function getRandomAlbumPhotos(
+        AlbumModel $album,
+        int $maxResults,
+    ): array {
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->where('a.album = ?1')
             ->setParameter(1, $album)
             ->addSelect('RAND() as HIDDEN rand')
             ->orderBy('rand');
@@ -82,18 +78,15 @@ class Photo extends BaseMapper
     /**
      * Returns the next photo in the album to display.
      *
-     * @return PhotoModel|null Photo if there is a next
-     *                         photo, null otherwise
+     * @return PhotoModel|null Photo if there is a next photo, null otherwise
      */
     public function getNextPhoto(
         PhotoModel $photo,
-        \Photo\Model\Album $album
-    ) {
-        $qb = $this->em->createQueryBuilder();
+        AlbumModel $album,
+    ): ?PhotoModel {
+        $qb = $this->getRepository()->createQueryBuilder('a');
 
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a');
-        if ($album instanceof MemberAlbum) {
+        if ($album instanceof MemberAlbumModel) {
             $qb->innerJoin('a.tags', 't')
                 ->where('t.member = ?1 AND a.dateTime > ?2')
                 ->setParameter(1, $album->getMember())
@@ -114,18 +107,15 @@ class Photo extends BaseMapper
     /**
      * Returns the previous photo in the album to display.
      *
-     * @return PhotoModel|null Photo if there is a previous
-     *                         photo, null otherwise
+     * @return PhotoModel|null Photo if there is a previous photo, null otherwise
      */
     public function getPreviousPhoto(
         PhotoModel $photo,
-        \Photo\Model\Album $album
-    ) {
-        $qb = $this->em->createQueryBuilder();
+        AlbumModel $album,
+    ): ?PhotoModel {
+        $qb = $this->getRepository()->createQueryBuilder('a');
 
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a');
-        if ($album instanceof MemberAlbum) {
+        if ($album instanceof MemberAlbumModel) {
             $qb->innerJoin('a.tags', 't')
                 ->where('t.member = ?1 AND a.dateTime < ?2')
                 ->setParameter(1, $album->getMember())
@@ -144,20 +134,21 @@ class Photo extends BaseMapper
     }
 
     /**
-     * Checks if the specified photo exists in the database already and returns
-     * it if it does.
+     * Checks if the specified photo exists in the database already and returns it if it does.
      *
      * @param string $path The storage path of the photo
-     * @param \Photo\Model\Album $album the album the photo is in
+     * @param AlbumModel $album the album the photo is in
      *
      * @return PhotoModel|null
      */
-    public function getPhotoByData($path, $album)
-    {
+    public function getPhotoByData(
+        string $path,
+        AlbumModel $album,
+    ): ?PhotoModel {
         return $this->getRepository()->findOneBy(
             [
                 'path' => $path,
-                'album' => $album->getId(),
+                'album' => $album,
             ]
         );
     }

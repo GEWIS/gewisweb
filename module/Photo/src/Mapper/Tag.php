@@ -13,8 +13,16 @@ use Photo\Model\{
  */
 class Tag extends BaseMapper
 {
-    public function findTag($photoId, $lidnr)
-    {
+    /**
+     * @param int $photoId
+     * @param int $lidnr
+     *
+     * @return TagModel|null
+     */
+    public function findTag(
+        int $photoId,
+        int $lidnr,
+    ): ?TagModel {
         return $this->getRepository()->findOneBy(
             [
                 'photo' => $photoId,
@@ -23,7 +31,11 @@ class Tag extends BaseMapper
         );
     }
 
-    public function getTagsByLidnr($lidnr)
+    /**
+     * @param int $lidnr
+     * @return array
+     */
+    public function getTagsByLidnr(int $lidnr): array
     {
         return $this->getRepository()->findBy(
             [
@@ -39,7 +51,7 @@ class Tag extends BaseMapper
      *
      * @return TagModel|null
      */
-    public function getMostActiveMemberTag($members)
+    public function getMostActiveMemberTag(array $members): ?TagModel
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -61,10 +73,8 @@ class Tag extends BaseMapper
         $lidnr = $res[0][1];
 
         // Retrieve the most recent tag of a member
-        $qb2 = $this->em->createQueryBuilder();
-        $qb2->select('t')
-            ->from($this->getRepositoryName(), 't')
-            ->join(PhotoModel::class, 'p', 'WITH', 'p.id = t.photo')
+        $qb2 = $this->getRepository()->createQueryBuilder('t');
+        $qb2->join(PhotoModel::class, 'p', 'WITH', 'p.id = t.photo')
             ->where('t.member = ?1')
             ->setParameter(1, $lidnr)
             ->setMaxResults(1)

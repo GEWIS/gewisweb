@@ -28,7 +28,7 @@ class OrganController extends AbstractActionController
      */
     public function __construct(
         ActivityQueryService $activityQueryService,
-        OrganService $organService
+        OrganService $organService,
     ) {
         $this->activityQueryService = $activityQueryService;
         $this->organService = $organService;
@@ -63,8 +63,12 @@ class OrganController extends AbstractActionController
         $type = $this->params()->fromRoute('type');
         $abbr = $this->params()->fromRoute('abbr');
         $organ = $this->organService->findOrganByAbbr($abbr, $type, true);
-        $organMemberInformation = $this->organService->getOrganMemberInformation($organ);
 
+        if (null === $organ) {
+            return $this->notFoundAction();
+        }
+
+        $organMemberInformation = $this->organService->getOrganMemberInformation($organ);
         $activities = $this->activityQueryService->getOrganActivities($organ, 3);
 
         return new ViewModel(

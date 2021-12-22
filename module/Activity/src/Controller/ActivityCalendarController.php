@@ -16,6 +16,16 @@ use Laminas\Mvc\I18n\Translator;
 class ActivityCalendarController extends AbstractActionController
 {
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
+    /**
      * @var ActivityCalendarService
      */
     private ActivityCalendarService $calendarService;
@@ -24,8 +34,6 @@ class ActivityCalendarController extends AbstractActionController
      * @var ActivityCalendarFormService
      */
     private ActivityCalendarFormService $calendarFormService;
-
-    private AclService $aclService;
 
     /**
      * @var ActivityCalendarProposalForm
@@ -37,32 +45,30 @@ class ActivityCalendarController extends AbstractActionController
      */
     private array $calendarConfig;
 
-    private Translator $translator;
-
     /**
      * ActivityCalendarController constructor.
      *
+     * @param AclService $aclService
+     * @param Translator $translator
      * @param ActivityCalendarService $calendarService
      * @param ActivityCalendarFormService $calendarFormService
-     * @param AclService $aclService
      * @param ActivityCalendarProposalForm $calendarProposalForm
      * @param array $calendarConfig
-     * @param Translator $translator
      */
     public function __construct(
+        AclService $aclService,
+        Translator $translator,
         ActivityCalendarService $calendarService,
         ActivityCalendarFormService $calendarFormService,
-        AclService $aclService,
         ActivityCalendarProposalForm $calendarProposalForm,
         array $calendarConfig,
-        Translator $translator
     ) {
+        $this->aclService = $aclService;
+        $this->translator = $translator;
         $this->calendarService = $calendarService;
         $this->calendarFormService = $calendarFormService;
-        $this->aclService = $aclService;
         $this->calendarProposalForm = $calendarProposalForm;
         $this->calendarConfig = $calendarConfig;
-        $this->translator = $translator;
     }
 
     public function indexAction()

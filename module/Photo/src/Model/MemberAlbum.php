@@ -24,8 +24,10 @@ class MemberAlbum extends VirtualAlbum
      * @param int $id it is best to use the member lidnr here
      * @param MemberModel $member
      */
-    public function __construct(int $id, MemberModel $member)
-    {
+    public function __construct(
+        int $id,
+        MemberModel $member,
+    ) {
         parent::__construct($id);
         $this->member = $member;
     }

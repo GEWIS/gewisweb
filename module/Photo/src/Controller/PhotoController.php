@@ -32,7 +32,7 @@ class PhotoController extends AbstractActionController
      */
     public function __construct(
         AlbumService $albumService,
-        PhotoService $photoService
+        PhotoService $photoService,
     ) {
         $this->photoService = $photoService;
         $this->albumService = $albumService;

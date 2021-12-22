@@ -30,6 +30,16 @@ use User\Permissions\NotAllowedException;
 class Album
 {
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
+    /**
      * @var PhotoService
      */
     private PhotoService $photoService;
@@ -64,17 +74,9 @@ class Album
      */
     private EditAlbumForm $editAlbumForm;
 
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
     public function __construct(
+        AclService $aclService,
+        Translator $translator,
         PhotoService $photoService,
         AlbumCoverService $albumCoverService,
         MemberService $memberService,
@@ -82,9 +84,9 @@ class Album
         AlbumMapper $albumMapper,
         CreateAlbumForm $createAlbumForm,
         EditAlbumForm $editAlbumForm,
-        AclService $aclService,
-        Translator $translator,
     ) {
+        $this->aclService = $aclService;
+        $this->translator = $translator;
         $this->photoService = $photoService;
         $this->albumCoverService = $albumCoverService;
         $this->memberService = $memberService;
@@ -92,8 +94,6 @@ class Album
         $this->albumMapper = $albumMapper;
         $this->createAlbumForm = $createAlbumForm;
         $this->editAlbumForm = $editAlbumForm;
-        $this->aclService = $aclService;
-        $this->translator = $translator;
     }
 
     /**
@@ -106,14 +106,17 @@ class Album
      * Retrieves all the albums in the root directory or in the specified
      * album.
      *
+     * @param AlbumModel|null $album The album to retrieve sub-albums of
      * @param int $start the result to start at
      * @param int|null $maxResults max amount of results to return, null for infinite
-     * @param AlbumModel|null $album The album to retrieve sub-albums of
      *
      * @return array
      */
-    public function getAlbums(AlbumModel $album = null, int $start = 0, int $maxResults = null): array
-    {
+    public function getAlbums(
+        ?AlbumModel $album = null,
+        int $start = 0,
+        ?int $maxResults = null,
+    ): array {
         if (!$this->aclService->isAllowed('view', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view albums'));
         }
@@ -234,8 +237,10 @@ class Album
      *
      * @throws Exception
      */
-    public function createAlbum(?int $parentId, array $data): AlbumModel
-    {
+    public function createAlbum(
+        ?int $parentId,
+        array $data,
+    ): AlbumModel {
         if (!$this->aclService->isAllowed('create', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to create albums'));
         }
@@ -277,8 +282,10 @@ class Album
      *
      * @throws Exception If there are not sufficient permissions
      */
-    public function getAlbum(int $albumId, string $type = 'album'): MemberAlbumModel|AlbumModel|null
-    {
+    public function getAlbum(
+        int $albumId,
+        string $type = 'album',
+    ): MemberAlbumModel|AlbumModel|null {
         if (!$this->aclService->isAllowed('view', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view albums'));
         }
@@ -360,8 +367,10 @@ class Album
      *
      * @throws Exception
      */
-    public function moveAlbum(int $albumId, ?int $parentId): bool
-    {
+    public function moveAlbum(
+        int $albumId,
+        ?int $parentId,
+    ): bool {
         if (!$this->aclService->isAllowed('move', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to move albums'));
         }
@@ -438,7 +447,7 @@ class Album
      *
      * @param AlbumModel $album
      */
-    public function deleteAlbumCover(AlbumModel $album)
+    public function deleteAlbumCover(AlbumModel $album): void
     {
         $this->photoService->deletePhotoFile($album->getCoverPath());
     }
@@ -453,8 +462,10 @@ class Album
      *
      * @throws Exception
      */
-    public function movePhoto(int $photoId, int $albumId): bool
-    {
+    public function movePhoto(
+        int $photoId,
+        int $albumId,
+    ): bool {
         if (!$this->aclService->isAllowed('move', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to move photos'));
         }

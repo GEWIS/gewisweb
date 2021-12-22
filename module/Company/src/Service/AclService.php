@@ -4,7 +4,10 @@ namespace Company\Service;
 
 class AclService extends \User\Service\AclService
 {
-    protected function createAcl()
+    /**
+     * @return void
+     */
+    protected function createAcl(): void
     {
         parent::createAcl();
 

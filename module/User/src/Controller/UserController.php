@@ -7,7 +7,7 @@ use Laminas\View\Model\{
     JsonModel,
     ViewModel,
 };
-use Laminas\View\View;
+use User\Form\Login as LoginForm;
 use User\Service\User as UserService;
 
 class UserController extends AbstractActionController
@@ -56,21 +56,29 @@ class UserController extends AbstractActionController
         );
     }
 
-    private function handleRedirect($referer)
+    /**
+     * @param string|null $referer
+     *
+     * @return LoginForm
+     */
+    private function handleRedirect(?string $referer)
     {
         $form = $this->userService->getLoginForm();
         if (is_null($form->get('redirect')->getValue())) {
             $redirect = $this->getRequest()->getQuery('redirect');
+
             if (isset($redirect)) {
                 $form->get('redirect')->setValue($redirect);
 
                 return $form;
             }
-            if (isset($referer)) {
+
+            if (null !== $referer) {
                 $form->get('redirect')->setValue($referer);
 
                 return $form;
             }
+
             $form->get('redirect')->setValue($this->url()->fromRoute('home'));
         }
 

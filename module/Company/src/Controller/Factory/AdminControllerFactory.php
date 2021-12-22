@@ -21,10 +21,10 @@ class AdminControllerFactory implements FactoryInterface
         array $options = null,
     ): AdminController {
         return new AdminController(
-            $container->get('company_service_company'),
-            $container->get('company_service_companyquery'),
             $container->get('company_service_acl'),
             $container->get('translator'),
+            $container->get('company_service_company'),
+            $container->get('company_service_companyquery'),
         );
     }
 }

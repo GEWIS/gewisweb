@@ -3,12 +3,15 @@
 namespace Education\Form;
 
 use Laminas\Form\Form;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\InputFilter\InputFilter;
 use Laminas\Validator\NotEmpty;
 
-class SearchCourse extends Form
+class SearchCourse extends Form implements InputFilterProviderInterface
 {
+    /**
+     * @param Translator $translate
+     */
     public function __construct(Translator $translate)
     {
         parent::__construct();
@@ -22,26 +25,22 @@ class SearchCourse extends Form
                 ],
             ]
         );
-
-        $this->initFilters();
     }
 
-    protected function initFilters()
+    /**
+     * @return array
+     */
+    public function getInputFilterSpecification(): array
     {
-        $filter = new InputFilter();
-
-        $filter->add(
-            [
-                'name' => 'query',
+        return [
+            'query' => [
                 'required' => true,
                 'validators' => [
                     [
                         'name' => NotEmpty::class,
                     ],
                 ],
-            ]
-        );
-
-        $this->setInputFilter($filter);
+            ],
+        ];
     }
 }

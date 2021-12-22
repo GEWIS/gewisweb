@@ -15,28 +15,34 @@ class Email
     /**
      * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
      * @var PhpRenderer
      */
-    private $renderer;
+    private PhpRenderer $renderer;
 
     /**
      * @var TransportInterface
      */
-    private $transport;
+    private TransportInterface $transport;
 
     /**
      * @var array
      */
-    private $emailConfig;
+    private array $emailConfig;
 
+    /**
+     * @param Translator $translator
+     * @param PhpRenderer $renderer
+     * @param TransportInterface $transport
+     * @param array $emailConfig
+     */
     public function __construct(
         Translator $translator,
         PhpRenderer $renderer,
         TransportInterface $transport,
-        array $emailConfig
+        array $emailConfig,
     ) {
         $this->translator = $translator;
         $this->renderer = $renderer;
@@ -46,9 +52,14 @@ class Email
 
     /**
      * Send registration email.
+     *
+     * @param NewUserModel $newUser
+     * @param MemberModel $member
      */
-    public function sendRegisterEmail(NewUserModel $newUser, MemberModel $member)
-    {
+    public function sendRegisterEmail(
+        NewUserModel $newUser,
+        MemberModel $member,
+    ): void {
         $body = $this->render(
             'user/email/register',
             [
@@ -73,8 +84,10 @@ class Email
      * @param NewUserModel $newUser
      * @param MemberModel $member
      */
-    public function sendPasswordLostMail(NewUserModel $newUser, MemberModel $member)
-    {
+    public function sendPasswordLostMail(
+        NewUserModel $newUser,
+        MemberModel $member,
+    ): void {
         $body = $this->render(
             'user/email/reset',
             [
@@ -99,10 +112,12 @@ class Email
      * @param string $template
      * @param array $vars
      *
-     * @return string/
+     * @return string
      */
-    public function render($template, $vars)
-    {
+    public function render(
+        string $template,
+        array $vars,
+    ): string {
         $model = new ViewModel($vars);
         $model->setTemplate($template);
 

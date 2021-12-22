@@ -4,18 +4,25 @@ namespace Decision;
 
 use Decision\Controller\FileBrowser\LocalFileReader;
 use Decision\Form\{
-    Authorization,
-    Document,
-    Notes,
-    OrganInformation,
-    ReorderDocument,
-    SearchDecision,
+    Authorization as AuthorizationForm,
+    Document as DocumentForm,
+    Notes as NotesForm,
+    OrganInformation as OrganInformationForm,
+    ReorderDocument as ReorderDocumentForm,
+    SearchDecision as SearchDecisionForm,
 };
 use Decision\Mapper\{
-    Decision,
-    Meeting,
-    Member,
-    Organ,
+    Authorization as AuthorizationMapper,
+    Decision as DecisionMapper,
+    Meeting as MeetingMapper,
+    Member as MemberMapper,
+    Organ as OrganMapper,
+};
+use Decision\Service\{
+    Decision as DecisionService,
+    Member as MemberService,
+    MemberInfo as MemberInfoService,
+    Organ as OrganService,
 };
 use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Interop\Container\ContainerInterface;
@@ -38,11 +45,12 @@ class Module
      *
      * @return array Service configuration
      */
-    public function getServiceConfig()
+    public function getServiceConfig(): array
     {
         return [
             'factories' => [
                 'decision_service_organ' => function (ContainerInterface $container) {
+                    $aclService = $container->get('decision_service_acl');
                     $translator = $container->get('translator');
                     $entityManager = $container->get('doctrine.entitymanager.orm_default');
                     $storageService = $container->get('application_service_storage');
@@ -51,9 +59,10 @@ class Module
                     $organMapper = $container->get('decision_mapper_organ');
                     $organInformationForm = $container->get('decision_form_organ_information');
                     $organInformationConfig = $container->get('config')['organ_information'];
-                    $aclService = $container->get('decision_service_acl');
 
-                    return new Service\Organ(
+                    return new OrganService(
+                        $aclService,
+                        $translator,
                         $entityManager,
                         $storageService,
                         $emailService,
@@ -61,11 +70,10 @@ class Module
                         $organMapper,
                         $organInformationForm,
                         $organInformationConfig,
-                        $aclService,
-                        $translator,
                     );
                 },
                 'decision_service_decision' => function (ContainerInterface $container) {
+                    $aclService = $container->get('decision_service_acl');
                     $translator = $container->get('translator');
                     $storageService = $container->get('application_service_storage');
                     $emailService = $container->get('application_service_email');
@@ -78,9 +86,10 @@ class Module
                     $reorderDocumentForm = $container->get('decision_form_reorder_document');
                     $searchDecisionForm = $container->get('decision_form_searchdecision');
                     $authorizationForm = $container->get('decision_form_authorization');
-                    $aclService = $container->get('decision_service_acl');
 
-                    return new Service\Decision(
+                    return new DecisionService(
+                        $aclService,
+                        $translator,
                         $storageService,
                         $emailService,
                         $memberMapper,
@@ -92,85 +101,83 @@ class Module
                         $reorderDocumentForm,
                         $searchDecisionForm,
                         $authorizationForm,
-                        $aclService,
-                        $translator,
                     );
                 },
                 'decision_service_member' => function (ContainerInterface $container) {
+                    $aclService = $container->get('decision_service_acl');
                     $translator = $container->get('translator');
                     $memberMapper = $container->get('decision_mapper_member');
                     $authorizationMapper = $container->get('decision_mapper_authorization');
-                    $aclService = $container->get('decision_service_acl');
 
-                    return new Service\Member(
+                    return new MemberService(
+                        $aclService,
                         $translator,
                         $memberMapper,
                         $authorizationMapper,
-                        $aclService,
                     );
                 },
                 'decision_service_memberinfo' => function (ContainerInterface $container) {
+                    $aclService = $container->get('decision_service_acl');
                     $translator = $container->get('translator');
                     $photoService = $container->get('photo_service_photo');
                     $memberMapper = $container->get('decision_mapper_member');
-                    $aclService = $container->get('decision_service_acl');
                     $photoConfig = $container->get('config')['photo'];
 
-                    return new Service\MemberInfo(
+                    return new MemberInfoService(
+                        $aclService,
                         $translator,
                         $photoService,
                         $memberMapper,
-                        $aclService,
                         $photoConfig,
                     );
                 },
                 'decision_mapper_member' => function (ContainerInterface $container) {
-                    return new Member(
+                    return new MemberMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
                 'decision_mapper_organ' => function (ContainerInterface $container) {
-                    return new Organ(
+                    return new OrganMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
                 'decision_mapper_meeting' => function (ContainerInterface $container) {
-                    return new Meeting(
+                    return new MeetingMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
                 'decision_mapper_decision' => function (ContainerInterface $container) {
-                    return new Decision(
+                    return new DecisionMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
                 'decision_mapper_authorization' => function (ContainerInterface $container) {
-                    return new Mapper\Authorization(
+                    return new AuthorizationMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
                 'decision_form_searchdecision' => function (ContainerInterface $container) {
-                    return new SearchDecision(
+                    return new SearchDecisionForm(
                         $container->get('translator'),
                     );
                 },
                 'decision_form_document' => function (ContainerInterface $container) {
-                    return new Document(
+                    return new DocumentForm(
                         $container->get('translator'),
                     );
                 },
                 'decision_form_notes' => function (ContainerInterface $container) {
-                    return new Notes(
+                    return new NotesForm(
                         $container->get('translator'),
                     );
                 },
                 'decision_form_authorization' => function (ContainerInterface $container) {
-                    return new Authorization(
+                    return new AuthorizationForm(
                         $container->get('translator'),
                     );
                 },
                 'decision_form_organ_information' => function (ContainerInterface $container) {
-                    $form = new OrganInformation(
+                    $form = new OrganInformationForm(
                         $container->get('translator'),
                     );
                     $form->setHydrator($container->get('decision_hydrator'));
@@ -180,7 +187,7 @@ class Module
                 'decision_form_reorder_document' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
 
-                    return (new ReorderDocument())
+                    return (new ReorderDocumentForm())
                         ->setTranslator($translator)
                         ->setupElements();
                 },

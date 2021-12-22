@@ -2,18 +2,21 @@
 
 namespace Application\View\Helper;
 
-use Company\Model\CompanyFeaturedPackage;
-use Company\Service\Company;
+use Company\Model\CompanyFeaturedPackage as CompanyFeaturedPackageModel;
+use Company\Service\Company as CompanyService;
 use Laminas\View\Helper\AbstractHelper;
 
 class FeaturedCompanyPackage extends AbstractHelper
 {
     /**
-     * @var Company
+     * @var CompanyService
      */
-    private $companyService;
+    private CompanyService $companyService;
 
-    public function __construct(Company $companyService)
+    /**
+     * @param CompanyService $companyService
+     */
+    public function __construct(CompanyService $companyService)
     {
         $this->companyService = $companyService;
     }
@@ -21,9 +24,9 @@ class FeaturedCompanyPackage extends AbstractHelper
     /**
      * Returns currently active featurePackage.
      *
-     * @return CompanyFeaturedPackage
+     * @return CompanyFeaturedPackageModel|null
      */
-    public function __invoke()
+    public function __invoke(): ?CompanyFeaturedPackageModel
     {
         return $this->companyService->getFeaturedPackage();
     }

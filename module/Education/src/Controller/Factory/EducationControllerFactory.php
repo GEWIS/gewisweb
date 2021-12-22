@@ -18,7 +18,7 @@ class EducationControllerFactory implements FactoryInterface
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        array $options = null,
     ): EducationController {
         return new EducationController(
             $container->get('education_service_exam'),

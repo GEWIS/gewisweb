@@ -33,20 +33,20 @@ class Meeting
      */
     #[Id]
     #[Column(type: "string")]
-    protected $type;
+    protected string $type;
 
     /**
      * Meeting number.
      */
     #[Id]
     #[Column(type: "integer")]
-    protected $number;
+    protected int $number;
 
     /**
      * Meeting date.
      */
     #[Column(type: "date")]
-    protected $date;
+    protected DateTime $date;
 
     /**
      * Decisions.

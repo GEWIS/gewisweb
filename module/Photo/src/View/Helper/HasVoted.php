@@ -15,6 +15,9 @@ class HasVoted extends AbstractHelper
      */
     private VoteMapper $voteMapper;
 
+    /**
+     * @param VoteMapper $voteMapper
+     */
     public function __construct(VoteMapper $voteMapper)
     {
         $this->voteMapper = $voteMapper;
@@ -26,8 +29,10 @@ class HasVoted extends AbstractHelper
      *
      * @return bool
      */
-    public function __invoke(int $photoId, int $lidnr): bool
-    {
+    public function __invoke(
+        int $photoId,
+        int $lidnr,
+    ): bool {
         return null !== $this->voteMapper->findVote($photoId, $lidnr);
     }
 }

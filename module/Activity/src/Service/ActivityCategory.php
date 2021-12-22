@@ -2,32 +2,17 @@
 
 namespace Activity\Service;
 
-use Activity\Form\ActivityCategory as CategoryForm;
+use Activity\Form\ActivityCategory as ActivityCategoryForm;
+use Activity\Mapper\ActivityCategory as ActivityCategoryMapper;
 use Activity\Model\{
-    ActivityCategory as CategoryModel,
+    ActivityCategory as ActivityCategoryModel,
     ActivityLocalisedText,
 };
-use Doctrine\ORM\EntityManager;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
 
 class ActivityCategory
 {
-    /**
-     * @var EntityManager
-     */
-    private $entityManager;
-
-    /**
-     * @var \Activity\Mapper\ActivityCategory
-     */
-    private $categoryMapper;
-
-    /**
-     * @var CategoryForm
-     */
-    private $categoryForm;
-
     /**
      * @var AclService
      */
@@ -38,18 +23,32 @@ class ActivityCategory
      */
     private Translator $translator;
 
+    /**
+     * @var ActivityCategoryMapper
+     */
+    private ActivityCategoryMapper $categoryMapper;
+
+    /**
+     * @var ActivityCategoryForm
+     */
+    private ActivityCategoryForm $categoryForm;
+
+    /**
+     * @param AclService $aclService
+     * @param Translator $translator
+     * @param ActivityCategoryMapper $categoryMapper
+     * @param ActivityCategoryForm $categoryForm
+     */
     public function __construct(
-        EntityManager $entityManager,
-        \Activity\Mapper\ActivityCategory $categoryMapper,
-        CategoryForm $categoryForm,
         AclService $aclService,
         Translator $translator,
+        ActivityCategoryMapper $categoryMapper,
+        ActivityCategoryForm $categoryForm,
     ) {
-        $this->entityManager = $entityManager;
-        $this->categoryMapper = $categoryMapper;
-        $this->categoryForm = $categoryForm;
         $this->aclService = $aclService;
         $this->translator = $translator;
+        $this->categoryMapper = $categoryMapper;
+        $this->categoryForm = $categoryForm;
     }
 
     /**
@@ -57,9 +56,9 @@ class ActivityCategory
      *
      * @param int $id
      *
-     * @return CategoryModel|null
+     * @return ActivityCategoryModel|null
      */
-    public function getCategoryById(int $id): ?CategoryModel
+    public function getCategoryById(int $id): ?ActivityCategoryModel
     {
         if (!$this->aclService->isAllowed('listCategories', 'activity')) {
             throw new NotAllowedException(
@@ -86,27 +85,17 @@ class ActivityCategory
         return $this->categoryMapper->findAll();
     }
 
-    public function createCategory($data)
+    /**
+     * @param array $data
+     *
+     * @return bool
+     */
+    public function createCategory(array $data): bool
     {
-        if (!$this->aclService->isAllowed('addCategory', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create an activity category')
-            );
-        }
-
-        $form = $this->getCategoryForm();
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return false;
-        }
-
-        $category = new CategoryModel();
+        $category = new ActivityCategoryModel();
         $category->setName(new ActivityLocalisedText($data['nameEn'], $data['name']));
 
-        $em = $this->entityManager;
-        $em->persist($category);
-        $em->flush();
+        $this->categoryMapper->persist($category);
 
         return true;
     }
@@ -114,9 +103,9 @@ class ActivityCategory
     /**
      * Return Category creation form.
      *
-     * @return CategoryForm
+     * @return ActivityCategoryForm
      */
-    public function getCategoryForm()
+    public function getCategoryForm(): ActivityCategoryForm
     {
         if (!$this->aclService->isAllowed('addCategory', 'activity')) {
             throw new NotAllowedException(
@@ -127,33 +116,31 @@ class ActivityCategory
         return $this->categoryForm;
     }
 
-    public function updateCategory($category, $data)
-    {
-        if (!$this->aclService->isAllowed('editCategory', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to edit an activity category')
-            );
-        }
-
-        $form = $this->getCategoryForm();
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return false;
-        }
-
+    /**
+     * @param ActivityCategoryModel $category
+     * @param array $data
+     *
+     * @return bool
+     */
+    public function updateCategory(
+        ActivityCategoryModel $category,
+        array $data,
+    ): bool {
         $name = $category->getName();
         $name->updatevalues($data['nameEn'], $data['name']);
 
-        $em = $this->entityManager;
-        $em->persist($name);
-        $em->persist($category);
-        $em->flush();
+        $this->categoryMapper->persist($name);
+        $this->categoryMapper->persist($category);
 
         return true;
     }
 
-    public function deleteCategory($category)
+    /**
+     * @param ActivityCategoryModel $category
+     *
+     * @return void
+     */
+    public function deleteCategory(ActivityCategoryModel $category)
     {
         if (!$this->aclService->isAllowed('deleteCategory', 'activity')) {
             throw new NotAllowedException(
@@ -161,8 +148,6 @@ class ActivityCategory
             );
         }
 
-        $em = $this->entityManager;
-        $em->remove($category);
-        $em->flush();
+        $this->categoryMapper->remove($category);
     }
 }

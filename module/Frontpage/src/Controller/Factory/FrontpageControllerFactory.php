@@ -18,7 +18,7 @@ class FrontpageControllerFactory implements FactoryInterface
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        array $options = null,
     ): FrontpageController {
         return new FrontpageController(
             $container->get('frontpage_service_frontpage'),

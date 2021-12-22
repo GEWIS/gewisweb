@@ -21,16 +21,6 @@ use User\Permissions\NotAllowedException;
 class AdminApprovalController extends AbstractActionController
 {
     /**
-     * @var ActivityService
-     */
-    private ActivityService $activityService;
-
-    /**
-     * @var ActivityQueryService
-     */
-    private ActivityQueryService $activityQueryService;
-
-    /**
      * @var AclService
      */
     private AclService $aclService;
@@ -41,23 +31,33 @@ class AdminApprovalController extends AbstractActionController
     private Translator $translator;
 
     /**
+     * @var ActivityService
+     */
+    private ActivityService $activityService;
+
+    /**
+     * @var ActivityQueryService
+     */
+    private ActivityQueryService $activityQueryService;
+
+    /**
      * AdminApprovalController constructor.
      *
-     * @param ActivityService $activityService
-     * @param ActivityQueryService $activityQueryService
      * @param AclService $aclService
      * @param Translator $translator
+     * @param ActivityService $activityService
+     * @param ActivityQueryService $activityQueryService
      */
     public function __construct(
+        AclService $aclService,
+        Translator $translator,
         ActivityService $activityService,
         ActivityQueryService $activityQueryService,
-        AclService $aclService,
-        Translator $translator
     ) {
-        $this->activityService = $activityService;
-        $this->activityQueryService = $activityQueryService;
         $this->aclService = $aclService;
         $this->translator = $translator;
+        $this->activityService = $activityService;
+        $this->activityQueryService = $activityQueryService;
     }
 
     /**

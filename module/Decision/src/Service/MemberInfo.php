@@ -15,6 +15,11 @@ use User\Permissions\NotAllowedException;
 class MemberInfo
 {
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
      * @var Translator
      */
     private Translator $translator;
@@ -30,26 +35,28 @@ class MemberInfo
     private MemberMapper $memberMapper;
 
     /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
      * @var array
      */
     private array $photoConfig;
 
+    /**
+     * @param AclService $aclService
+     * @param Translator $translator
+     * @param PhotoService $photoService
+     * @param MemberMapper $memberMapper
+     * @param array $photoConfig
+     */
     public function __construct(
+        AclService $aclService,
         Translator $translator,
         PhotoService $photoService,
         MemberMapper $memberMapper,
-        AclService $aclService,
         array $photoConfig,
     ) {
+        $this->aclService = $aclService;
         $this->translator = $translator;
         $this->photoService = $photoService;
         $this->memberMapper = $memberMapper;
-        $this->aclService = $aclService;
         $this->photoConfig = $photoConfig;
     }
 
@@ -59,6 +66,7 @@ class MemberInfo
      * @param int|null $lidnr
      *
      * @return array|null
+     *
      * @throws Exception
      */
     public function getMembershipInfo(?int $lidnr = null): ?array

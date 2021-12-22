@@ -30,6 +30,11 @@ use User\Permissions\NotAllowedException;
 class Poll
 {
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
      * @var Translator
      */
     private Translator $translator;
@@ -54,25 +59,20 @@ class Poll
      */
     private PollApprovalForm $pollApprovalForm;
 
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
     public function __construct(
+        AclService $aclService,
         Translator $translator,
         EmailService $emailService,
         PollMapper $pollMapper,
         PollForm $pollForm,
         PollApprovalForm $pollApprovalForm,
-        AclService $aclService,
     ) {
+        $this->aclService = $aclService;
         $this->translator = $translator;
         $this->emailService = $emailService;
         $this->pollMapper = $pollMapper;
         $this->pollForm = $pollForm;
         $this->pollApprovalForm = $pollApprovalForm;
-        $this->aclService = $aclService;
     }
 
     /**
@@ -248,8 +248,10 @@ class Poll
      *
      * @throws ORMException
      */
-    public function createComment(PollModel $poll, array $data): bool
-    {
+    public function createComment(
+        PollModel $poll,
+        array $data,
+    ): bool {
         $user = $this->aclService->getIdentity();
         $comment = $this->saveCommentData($data, $poll, $user);
 
@@ -272,8 +274,11 @@ class Poll
      *
      * @throws ORMException
      */
-    public function saveCommentData(array $data, PollModel $poll, UserModel $user): PollCommentModel
-    {
+    public function saveCommentData(
+        array $data,
+        PollModel $poll,
+        UserModel $user,
+    ): PollCommentModel {
         $comment = new PollCommentModel();
 
         $comment->setPoll($poll);
@@ -330,8 +335,10 @@ class Poll
      *
      * @throws ORMException
      */
-    public function savePollData(array $data, UserModel $user): PollModel
-    {
+    public function savePollData(
+        array $data,
+        UserModel $user,
+    ): PollModel {
         $poll = new PollModel();
         $poll->setDutchQuestion($data['dutchQuestion']);
         $poll->setEnglishQuestion($data['englishQuestion']);
@@ -353,8 +360,10 @@ class Poll
      *
      * @return PollOptionModel
      */
-    public function createPollOption(array $data, PollModel $poll): PollOption
-    {
+    public function createPollOption(
+        array $data,
+        PollModel $poll,
+    ): PollOption {
         $pollOption = new PollOptionModel();
         $pollOption->setDutchText($data['dutchText']);
         $pollOption->setEnglishText($data['englishText']);
@@ -412,8 +421,10 @@ class Poll
      *
      * @throws ORMException
      */
-    public function approvePoll(PollModel $poll, Parameters $data): bool
-    {
+    public function approvePoll(
+        PollModel $poll,
+        Parameters $data,
+    ): bool {
         $approvalForm = $this->getPollApprovalForm();
         $approvalForm->bind($poll);
         $approvalForm->setData($data);
