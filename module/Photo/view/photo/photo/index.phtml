@@ -47,7 +47,7 @@ $this->headTitle($this->translate('Photos')); ?>
                                          src="<?= $this->fileUrl($album->getCoverPath()) ?>"
                                          alt="">
                                     <div class="caption">
-                                        <?= $this->escapeHtml($album->getName()) ?>
+                                        <p><?= $this->escapeHtml($album->getName()) ?></p>
                                     </div>
                                 </a>
                             </div>

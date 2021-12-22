@@ -101,3 +101,11 @@ Photo
         box-shadow: 0 0 0 0 rgba($brand-primary, 0);
     }
 }
+
+.thumbnail .caption p {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 0;
+}
