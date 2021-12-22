@@ -100,15 +100,13 @@ class Module
                     $translator = $container->get('translator');
                     $memberMapper = $container->get('decision_mapper_member');
                     $authorizationMapper = $container->get('decision_mapper_authorization');
-                    $config = $container->get('config');
                     $aclService = $container->get('decision_service_acl');
 
                     return new Service\Member(
                         $translator,
                         $memberMapper,
                         $authorizationMapper,
-                        $config,
-                        $aclService
+                        $aclService,
                     );
                 },
                 'decision_service_memberinfo' => function (ContainerInterface $container) {

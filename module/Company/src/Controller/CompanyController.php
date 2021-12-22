@@ -23,25 +23,17 @@ class CompanyController extends AbstractActionController
     private CompanyQueryService $companyQueryService;
 
     /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
      * CompanyController constructor.
      *
      * @param CompanyService $companyService
      * @param CompanyQueryService $companyQueryService
-     * @param Translator $translator
      */
     public function __construct(
         CompanyService $companyService,
         CompanyQueryService $companyQueryService,
-        Translator $translator
     ) {
         $this->companyService = $companyService;
         $this->companyQueryService = $companyQueryService;
-        $this->translator = $translator;
     }
 
     /**

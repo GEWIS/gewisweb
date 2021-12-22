@@ -34,7 +34,7 @@ class Module
     /**
      * Bootstrap.
      *
-     * @var MvcEvent
+     * @param MvcEvent $e
      */
     public function onBootstrap(MvcEvent $e)
     {

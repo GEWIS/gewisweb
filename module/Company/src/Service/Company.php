@@ -124,11 +124,6 @@ class Company
     private EditLabelForm $editLabelForm;
 
     /**
-     * @var array
-     */
-    private array $languages;
-
-    /**
      * @var AclService
      */
     private AclService $aclService;
@@ -150,8 +145,7 @@ class Company
         EditJobForm $editJobForm,
         EditCategoryForm $editCategoryForm,
         EditLabelForm $editLabelForm,
-        array $languages,
-        AclService $aclService
+        AclService $aclService,
     ) {
         $this->translator = $translator;
         $this->storageService = $storageService;
@@ -169,7 +163,6 @@ class Company
         $this->editJobForm = $editJobForm;
         $this->editCategoryForm = $editCategoryForm;
         $this->editLabelForm = $editLabelForm;
-        $this->languages = $languages;
         $this->aclService = $aclService;
     }
 

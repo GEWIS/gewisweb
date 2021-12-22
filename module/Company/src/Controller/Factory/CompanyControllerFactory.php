@@ -18,12 +18,11 @@ class CompanyControllerFactory implements FactoryInterface
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        array $options = null,
     ): CompanyController {
         return new CompanyController(
             $container->get('company_service_company'),
             $container->get('company_service_companyquery'),
-            $container->get('translator'),
         );
     }
 }

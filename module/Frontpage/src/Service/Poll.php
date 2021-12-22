@@ -10,7 +10,6 @@ use Laminas\Stdlib\Parameters;
 use Frontpage\Form\{
     Poll as PollForm,
     PollApproval as PollApprovalForm,
-    PollComment as PollCommentForm,
 };
 use Frontpage\Mapper\{
     Poll as PollMapper,
@@ -22,7 +21,6 @@ use Frontpage\Model\{
     PollOption,
     PollVote as PollVoteModel};
 use Laminas\Mvc\I18n\Translator;
-use RuntimeException;
 use User\Model\User as UserModel;
 use User\Permissions\NotAllowedException;
 
@@ -52,11 +50,6 @@ class Poll
     private PollForm $pollForm;
 
     /**
-     * @var PollCommentForm
-     */
-    private PollCommentForm $pollCommentForm;
-
-    /**
      * @var PollApprovalForm
      */
     private PollApprovalForm $pollApprovalForm;
@@ -71,15 +64,13 @@ class Poll
         EmailService $emailService,
         PollMapper $pollMapper,
         PollForm $pollForm,
-        PollCommentForm $pollCommentForm,
         PollApprovalForm $pollApprovalForm,
-        AclService $aclService
+        AclService $aclService,
     ) {
         $this->translator = $translator;
         $this->emailService = $emailService;
         $this->pollMapper = $pollMapper;
         $this->pollForm = $pollForm;
-        $this->pollCommentForm = $pollCommentForm;
         $this->pollApprovalForm = $pollApprovalForm;
         $this->aclService = $aclService;
     }

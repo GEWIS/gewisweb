@@ -172,7 +172,6 @@ class Module
                 $jobForm = $container->get('company_admin_job_form');
                 $jobCategoryForm = $container->get('company_admin_jobcategory_form');
                 $jobLabelForm = $container->get('company_admin_joblabel_form');
-                $languages = $container->get('application_get_languages');
                 $aclService = $container->get('company_service_acl');
 
                 return new CompanySerivce(
@@ -192,7 +191,6 @@ class Module
                     $jobForm,
                     $jobCategoryForm,
                     $jobLabelForm,
-                    $languages,
                     $aclService,
                 );
             },

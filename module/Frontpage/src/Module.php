@@ -87,7 +87,6 @@ class Module
                     $emailService = $container->get('application_service_email');
                     $pollMapper = $container->get('frontpage_mapper_poll');
                     $pollForm = $container->get('frontpage_form_poll');
-                    $pollCommentForm = $container->get('frontpage_form_poll_comment');
                     $pollApprovalForm = $container->get('frontpage_form_poll_approval');
                     $aclService = $container->get('frontpage_service_acl');
 
@@ -96,9 +95,8 @@ class Module
                         $emailService,
                         $pollMapper,
                         $pollForm,
-                        $pollCommentForm,
                         $pollApprovalForm,
-                        $aclService
+                        $aclService,
                     );
                 },
                 'frontpage_service_news' => function (ContainerInterface $container) {
