@@ -131,7 +131,6 @@ class Module
                 'photo_service_admin' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
                     $photoService = $container->get('photo_service_photo');
-                    $albumService = $container->get('photo_service_album');
                     $metadataService = $container->get('photo_service_metadata');
                     $storageService = $container->get('application_service_storage');
                     $photoMapper = $container->get('photo_mapper_photo');
@@ -141,12 +140,11 @@ class Module
                     return new AdminService(
                         $translator,
                         $photoService,
-                        $albumService,
                         $metadataService,
                         $storageService,
                         $photoMapper,
                         $photoConfig,
-                        $aclService
+                        $aclService,
                     );
                 },
                 'photo_form_album_edit' => function (ContainerInterface $container) {

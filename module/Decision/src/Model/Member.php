@@ -675,7 +675,7 @@ class Member
             }
         );
 
-        if (empty($boards)) {
+        if ($boards->isEmpty()) {
             return null;
         }
 

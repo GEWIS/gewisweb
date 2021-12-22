@@ -30,11 +30,6 @@ class Admin
     private $photoService;
 
     /**
-     * @var Album
-     */
-    private $albumService;
-
-    /**
      * @var Metadata
      */
     private $metadataService;
@@ -58,16 +53,14 @@ class Admin
     public function __construct(
         Translator $translator,
         Photo $photoService,
-        Album $albumService,
         Metadata $metadataService,
         FileStorage $storageService,
         \Photo\Mapper\Photo $photoMapper,
         array $photoConfig,
-        AclService $aclService
+        AclService $aclService,
     ) {
         $this->translator = $translator;
         $this->photoService = $photoService;
-        $this->albumService = $albumService;
         $this->metadataService = $metadataService;
         $this->storageService = $storageService;
         $this->photoMapper = $photoMapper;
