@@ -113,7 +113,7 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
                         'name' => Date::class,
                         'options' => [
                             'format' => 'Y-m-d\TH:i',
-                        ]
+                        ],
                     ],
                 ],
             ],
@@ -124,7 +124,7 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
                         'name' => Date::class,
                         'options' => [
                             'format' => 'Y-m-d\TH:i',
-                        ]
+                        ],
                     ],
                     [
                         'name' => Callback::class,
@@ -145,7 +145,7 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
                         'name' => Date::class,
                         'options' => [
                             'format' => 'Y-m-d\TH:i',
-                        ]
+                        ],
                     ],
                     [
                         'name' => Callback::class,
@@ -166,7 +166,7 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
                         'name' => Date::class,
                         'options' => [
                             'format' => 'Y-m-d\TH:i',
-                        ]
+                        ],
                     ],
                     [
                         'name' => Callback::class,

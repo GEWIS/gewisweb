@@ -249,8 +249,7 @@ class Photo
     public function getNextPhoto(
         PhotoModel $photo,
         AlbumModel $album
-    ): ?PhotoModel
-    {
+    ): ?PhotoModel {
         if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
         }
@@ -266,8 +265,7 @@ class Photo
     public function getPreviousPhoto(
         PhotoModel $photo,
         AlbumModel $album
-    ): ?PhotoModel
-    {
+    ): ?PhotoModel {
         if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
         }
@@ -532,8 +530,7 @@ class Photo
         MemberModel $member,
         DateTime $dateTime,
         bool $explicit = false,
-    ): void
-    {
+    ): void {
         if (!$this->isTaggedIn($photo->getId(), $member->getLidnr())) {
             return;
         }

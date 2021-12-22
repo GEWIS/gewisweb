@@ -2,8 +2,10 @@
 
 namespace Photo\Listener;
 
-use Photo\Model\Album;
-use Photo\Model\Photo;
+use Photo\Model\{
+    Album,
+    Photo,
+};
 
 /**
  * Doctrine event listener class for Album and Photo entities.

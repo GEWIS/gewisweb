@@ -2,7 +2,6 @@
 
 namespace Activity\Service;
 
-use Activity\Mapper\ActivityOptionCreationPeriod;
 use Activity\Form\{
     ActivityCalendarOption,
     ActivityCalendarPeriod as ActivityCalendarPeriodForm,
@@ -370,7 +369,9 @@ class ActivityCalendar
         // Update maxActivities, if the form has been altered (by hand) those changes will not be persisted. We get an
         // array indexed by the organ ids, last value is used if organ is present more than once (i.e. someone tampered
         // with the form).
-        $ids = array_flip(array_map(function ($val) { return $val['id']; }, $data['maxActivities']));
+        $ids = array_flip(array_map(function ($val) {
+            return $val['id'];
+        }, $data['maxActivities']));
         foreach ($activityOptionCreationPeriod->getMaxActivities() as $maxActivity) {
             $organId = $maxActivity->getOrgan()->getId();
 

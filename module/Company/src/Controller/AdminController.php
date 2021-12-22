@@ -169,10 +169,12 @@ class AdminController extends AbstractActionController
             $companyForm->setCurrentSlug($companySlugName);
 
             if ($companyForm->isValid()) {
-                if ($this->companyService->updateCompany(
-                    $company,
-                    $companyForm->getData(),
-                )) {
+                if (
+                    $this->companyService->updateCompany(
+                        $company,
+                        $companyForm->getData(),
+                    )
+                ) {
                     $slugName = $post['slugName'];
 
                     return $this->redirect()->toRoute(

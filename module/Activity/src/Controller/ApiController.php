@@ -22,7 +22,7 @@ class ApiController extends AbstractActionController
     /**
      * @var SignupService
      */
-    private SignupService$signupService;
+    private SignupService $signupService;
 
     /**
      * @var AclService

@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping\{
     JoinColumn,
     ManyToOne,
 };
+
 /**
  * Max Activities model.
  * Contains the max amount of activities an organ may create options for

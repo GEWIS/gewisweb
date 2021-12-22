@@ -9,8 +9,10 @@ use Doctrine\ORM\Mapping\{
     GeneratedValue,
     Id,
     OneToMany};
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 
 /**
  * Activity Options Creation Period

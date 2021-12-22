@@ -11,7 +11,7 @@ class ApiAdminController extends AbstractActionController
     /**
      * @var ApiUserService
      */
-    private ApiUserService$apiUserService;
+    private ApiUserService $apiUserService;
 
     /**
      * ApiAdminController constructor.

@@ -4,8 +4,10 @@ namespace Frontpage\Controller;
 
 use Frontpage\Form\PollComment as PollCommentForm;
 use Frontpage\Model\Poll as PollModel;
-use Frontpage\Service\AclService;
-use Frontpage\Service\Poll as PollService;
+use Frontpage\Service\{
+    AclService,
+    Poll as PollService,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Paginator\Paginator;

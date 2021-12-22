@@ -7,8 +7,10 @@ use Exception;
 use Imagick;
 use InvalidArgumentException;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\File\Extension;
-use Laminas\Validator\File\IsImage;
+use Laminas\Validator\File\{
+    Extension,
+    IsImage,
+};
 use Photo\Model\Photo as PhotoModel;
 use User\Permissions\NotAllowedException;
 

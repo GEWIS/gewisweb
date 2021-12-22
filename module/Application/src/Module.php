@@ -25,14 +25,16 @@ use Application\View\Helper\{
     ModuleIsActive,
     ScriptUrl,
 };
-use Laminas\Cache\Storage\Adapter\Memcached;
 use Laminas\Mvc\{
     I18n\Translator as MvcTranslator,
     ModuleRouteListener,
     MvcEvent
 };
 use Interop\Container\ContainerInterface;
-use Laminas\Cache\Storage\Adapter\MemcachedOptions;
+use Laminas\Cache\Storage\Adapter\{
+    Memcached,
+    MemcachedOptions,
+};
 use Laminas\I18n\Translator\Translator as I18nTranslator;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\Validator\AbstractValidator;

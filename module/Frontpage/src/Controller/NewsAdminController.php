@@ -2,8 +2,10 @@
 
 namespace Frontpage\Controller;
 
-use Frontpage\Service\AclService;
-use Frontpage\Service\News as NewsService;
+use Frontpage\Service\{
+    AclService,
+    News as NewsService,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Paginator\Paginator;

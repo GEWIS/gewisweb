@@ -2,7 +2,6 @@
 
 namespace User\Model;
 
-
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
