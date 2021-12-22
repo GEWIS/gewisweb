@@ -6,7 +6,10 @@ use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
 use Laminas\Permissions\Acl\Role\GenericRole as Role;
-use User\Authentication\{ApiAuthenticationService, AuthenticationService};
+use User\Authentication\{
+    ApiAuthenticationService,
+    AuthenticationService,
+};
 use User\Authorization\GenericAclService;
 
 class AclService extends GenericAclService

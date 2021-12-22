@@ -6,7 +6,7 @@ use Activity\Form\{
     ActivityCalendarOption,
     ActivityCalendarPeriod as ActivityCalendarPeriodForm,
 };
-use Activity\Mapper\{ActivityOptionCreationPeriod, ActivityOptionCreationPeriod as ActivityOptionCreationPeriodMapper};
+use Activity\Mapper\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodMapper;
 use Activity\Model\{
     ActivityCalendarOption as OptionModel,
     ActivityOptionCreationPeriod as ActivityOptionCreationPeriodModel,

@@ -2,7 +2,10 @@
 
 namespace Activity\Service;
 
-use Activity\Mapper\{ActivityOptionProposal, MaxActivities};
+use Activity\Mapper\{
+    ActivityOptionProposal,
+    MaxActivities,
+};
 use Activity\Model\ActivityOptionCreationPeriod;
 use DateTime;
 use Decision\Service\Organ;

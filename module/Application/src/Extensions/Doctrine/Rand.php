@@ -3,7 +3,11 @@
 namespace Application\Extensions\Doctrine;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
-use Doctrine\ORM\Query\{Lexer, Parser, SqlWalker};
+use Doctrine\ORM\Query\{
+    Lexer,
+    Parser,
+    SqlWalker,
+};
 
 /**
  * This extension adds SQL RAND() functionality to DQL for returning random

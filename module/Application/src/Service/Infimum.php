@@ -5,7 +5,10 @@ namespace Application\Service;
 use Laminas\Cache\Exception\ExceptionInterface;
 use Laminas\Cache\Storage\Adapter\AbstractAdapter;
 use Laminas\Http\Client\Adapter\Curl;
-use Laminas\Http\{Client, Request};
+use Laminas\Http\{
+    Client,
+    Request,
+};
 use Laminas\Json\Json;
 use Laminas\Mvc\I18n\Translator;
 

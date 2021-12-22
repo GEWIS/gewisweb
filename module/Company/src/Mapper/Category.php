@@ -4,9 +4,7 @@ namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Company\Model\JobCategory as JobCategoryModel;
-use Doctrine\ORM\{
-    NonUniqueResultException
-};
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\Expr\Join;
 
 /**

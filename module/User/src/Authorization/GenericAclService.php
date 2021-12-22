@@ -4,7 +4,10 @@ namespace User\Authorization;
 
 use Application\Service\AbstractAclService;
 use Laminas\I18n\Translator\TranslatorInterface;
-use User\Authentication\{ApiAuthenticationService, AuthenticationService};
+use User\Authentication\{
+    ApiAuthenticationService,
+    AuthenticationService,
+};
 use User\Model\User;
 use User\Permissions\NotAllowedException;
 

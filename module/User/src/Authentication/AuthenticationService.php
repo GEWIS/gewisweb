@@ -5,8 +5,14 @@ namespace User\Authentication;
 use Laminas\Authentication\Adapter\AdapterInterface;
 use Laminas\Authentication\Storage\StorageInterface;
 use RuntimeException;
-use Laminas\Authentication\{AuthenticationServiceInterface, Result};
-use User\Authentication\Adapter\{Mapper, PinMapper};
+use Laminas\Authentication\{
+    AuthenticationServiceInterface,
+    Result,
+};
+use User\Authentication\Adapter\{
+    Mapper,
+    PinMapper,
+};
 use User\Authentication\Storage\Session;
 use User\Model\User;
 

@@ -10,7 +10,10 @@ use Laminas\Form\Element\{
     Submit,
     Textarea,
 };
-use Laminas\Validator\{Date as DateValidator, StringLength};
+use Laminas\Validator\{
+    Date as DateValidator,
+    StringLength,
+};
 use Laminas\Filter\{
     StringTrim,
     StripTags,

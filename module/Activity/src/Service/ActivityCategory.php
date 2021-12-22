@@ -3,7 +3,10 @@
 namespace Activity\Service;
 
 use Activity\Form\ActivityCategory as CategoryForm;
-use Activity\Model\{ActivityCategory as CategoryModel, ActivityLocalisedText};
+use Activity\Model\{
+    ActivityCategory as CategoryModel,
+    ActivityLocalisedText,
+};
 use Doctrine\ORM\EntityManager;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;

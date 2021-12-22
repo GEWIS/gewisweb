@@ -31,7 +31,10 @@ use Laminas\Mvc\{
     MvcEvent
 };
 use Interop\Container\ContainerInterface;
-use Laminas\Cache\Storage\Adapter\{Memcached, MemcachedOptions};
+use Laminas\Cache\Storage\Adapter\{
+    Memcached,
+    MemcachedOptions,
+};
 use Laminas\I18n\Translator\Translator as I18nTranslator;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\Validator\AbstractValidator;
