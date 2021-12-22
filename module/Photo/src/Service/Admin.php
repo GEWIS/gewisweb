@@ -161,42 +161,6 @@ class Admin
         return $this->storageService->storeFile($tempFileName);
     }
 
-    /**
-     * Stores an directory in $target_album.
-     * If any subdirectory is present, it will be stored in a new album,
-     * with the (temporary) name of the directory.
-     * (i.e. the function is applied recursively).
-     *
-     * @param string $path the path of the directory
-     * @param \Photo\Model\Album $targetAlbum album The album to store the photos
-     *
-     * @throws Exception on invalid path
-     */
-    public function storeUploadedDirectory($path, $targetAlbum)
-    {
-        if (!$this->aclService->isAllowed('import', 'photo')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to import photos.'));
-        }
-        $image = new IsImage(['magicFile' => false]);
-        if ($handle = opendir($path)) {
-            while (false !== ($entry = readdir($handle))) {
-                if ('.' != $entry && '..' != $entry) {
-                    $subPath = $path . '/' . $entry;
-                    if (is_dir($subPath)) {
-                        //TODO: this no longer works (probably because of the type of $targetAlbum)
-                        $subAlbum = $this->albumService->createAlbum($entry, $targetAlbum);
-                        $this->storeUploadedDirectory($subPath, $subAlbum);
-                    } elseif ($image->isValid($subPath)) {
-                        $this->storeUploadedPhoto($subPath, $targetAlbum);
-                    }
-                }
-            }
-            closedir($handle);
-        } else {
-            throw new Exception($this->translator->translate('The specified path is not valid'));
-        }
-    }
-
     public function upload($files, $album)
     {
         $this->checkUploadAllowed();

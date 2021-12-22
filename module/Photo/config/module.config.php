@@ -258,18 +258,6 @@ return [
                             ],
                         ],
                     ],
-                    'album_import' => [
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '/album[/:album_id]/import',
-                            'defaults' => [
-                                'action' => 'import',
-                            ],
-                            'constraints' => [
-                                'album_id' => '[0-9]+',
-                            ],
-                        ],
-                    ],
                     'album_upload' => [
                         'type' => Segment::class,
                         'options' => [

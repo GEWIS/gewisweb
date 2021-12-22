@@ -477,39 +477,6 @@ return [
                             ],
                         ],
                     ],
-                    'signup' => [
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '/signup/[:id]',
-                            'constraints' => [
-                                'id' => '[0-9]*',
-                            ],
-                            'defaults' => [
-                                'action' => 'signup',
-                            ],
-                        ],
-                    ],
-                    'signoff' => [
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '/signoff/[:id]',
-                            'constraints' => [
-                                'id' => '[0-9]*',
-                            ],
-                            'defaults' => [
-                                'action' => 'signoff',
-                            ],
-                        ],
-                    ],
-                    'signedup' => [
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '/signedup',
-                            'defaults' => [
-                                'action' => 'signedup',
-                            ],
-                        ],
-                    ],
                 ],
                 'priority' => 100,
             ],

@@ -5,9 +5,7 @@ namespace Activity\Controller;
 use Activity\Service\{
     AclService,
     ActivityQuery as ActivityQueryService,
-    Signup as SignupService,
 };
-use Laminas\Form\FormInterface;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\JsonModel;
 use User\Permissions\NotAllowedException;
@@ -20,11 +18,6 @@ class ApiController extends AbstractActionController
     private ActivityQueryService $activityQueryService;
 
     /**
-     * @var SignupService
-     */
-    private SignupService $signupService;
-
-    /**
      * @var AclService
      */
     private AclService $aclService;
@@ -33,16 +26,13 @@ class ApiController extends AbstractActionController
      * ApiController constructor.
      *
      * @param ActivityQueryService $activityQueryService
-     * @param SignupService $signupService
      * @param AclService $aclService
      */
     public function __construct(
         ActivityQueryService $activityQueryService,
-        SignupService $signupService,
-        AclService $aclService
+        AclService $aclService,
     ) {
         $this->activityQueryService = $activityQueryService;
-        $this->signupService = $signupService;
         $this->aclService = $aclService;
     }
 
@@ -66,69 +56,5 @@ class ApiController extends AbstractActionController
         }
 
         return new JsonModel($activitiesArray);
-    }
-
-    /**
-     * Signup for a activity.
-     */
-    public function signupAction()
-    {
-        $id = (int)$this->params('id');
-
-        $params = [];
-        $params['success'] = false;
-        //Assure the form is used
-        if ($this->getRequest()->isPost() && $this->signupService->isAllowedToSubscribe()) {
-            $activity = $this->activityQueryService->getActivity($id);
-            // TODO: ->getFields is undefined
-            $form = $this->signupService->getForm($activity->getFields());
-            $form->setData($this->getRequest()->getPost());
-            // TODO: ->getCanSignup() is undefined
-            if ($activity->getCanSignup() && $form->isValid()) {
-                // TODO: -> signOff expects a signupList instead of an activity
-                $this->signupService->signUp($activity, $form->getData(FormInterface::VALUES_AS_ARRAY));
-                $params['success'] = true;
-            }
-        }
-
-        return new JsonModel($params);
-    }
-
-    /**
-     * Signup for a activity.
-     */
-    public function signoffAction()
-    {
-        $id = (int)$this->params('id');
-
-        $params = [];
-        $params['success'] = false;
-
-        $identity = $this->aclService->getIdentityOrThrowException();
-        $user = $identity->getMember();
-        if ($this->getRequest()->isPost() && $this->signupService->isAllowedToSubscribe()) {
-            $activity = $this->activityQueryService->getActivity($id);
-            if ($this->signupService->isSignedUp($activity, $user)) {
-                // TODO: -> signOff expects a signupList instead of an activity
-                $this->signupService->signOff($activity, $user);
-                $params['success'] = true;
-            }
-        }
-
-        return new JsonModel($params);
-    }
-
-    /**
-     * Get all activities which the current user has subscribed to.
-     */
-    public function signedupAction()
-    {
-        $activities = $this->signupService->getSignedUpActivityIds();
-
-        return new JsonModel(
-            [
-                'activities' => $activities,
-            ]
-        );
     }
 }

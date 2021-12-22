@@ -18,11 +18,10 @@ class ApiControllerFactory implements FactoryInterface
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        array $options = null,
     ): ApiController {
         return new ApiController(
             $container->get('activity_service_activityQuery'),
-            $container->get('activity_service_signup'),
             $container->get('activity_service_acl'),
         );
     }

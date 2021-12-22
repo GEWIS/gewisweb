@@ -196,7 +196,7 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
      *
      * @return Activity
      */
-    public function setAllOptions(array $organs, array $companies, array $categories): static
+    public function setAllOptions(array $organs, array $companies, array $categories): self
     {
         $organOptions = $this->get('organ')->getValueOptions();
         foreach ($organs as $organ) {

@@ -163,17 +163,14 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
     /**
      * Check if the amount of options is acceptable.
      *
-     * @param int $value
+     * @param array $value
      * @param array $context
      *
      * @return bool
      */
     public function isGoodOptionCount($value, $context = []): bool
     {
-        if (count($value) < 1) {
-            return false;
-        }
-        if (count($value) > $this->maxOptions) {
+        if (count($value) < 1 || count($value) > $this->maxOptions) {
             return false;
         }
 
