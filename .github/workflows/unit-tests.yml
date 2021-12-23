@@ -1,0 +1,76 @@
+name: PHP Unit Tests
+
+# Only run this action when pushing to master or on pull requests (creation, synchronisation, and reopening).
+on:
+    push:
+        branches:
+            - master
+    pull_request:
+
+jobs:
+    phpunit:
+        name: PHPUnit
+        runs-on: ubuntu-latest
+
+        # Create a MySQL service.
+        services:
+            mysql:
+                image: mariadb
+                env:
+                    MYSQL_ROOT_PASSWORD: gewis
+                    MYSQL_DATABASE: gewis
+                    MYSQL_USER: gewis
+                    MYSQL_PASSWORD: gewis
+                ports:
+                    - 3306:3306
+                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+
+            -   name: Install PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.1'
+                    extensions: calendar, curl, exif, gd, intl, opcache, pgsql, pdo_mysql, pdo_pgsql, soap, zip, imagick, memcached, xdebug
+
+            -   name: Setup problem matchers for PHPUnit
+                run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+            -   name: Get Composer cache directory
+                id: composer-cache
+                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+            -   name: Cache dependencies
+                uses: actions/cache@v2
+                with:
+                    path: ${{ steps.composer-cache.outputs.dir }}
+                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                    restore-keys: ${{ runner.os }}-composer-
+
+            -   name: Install dependencies
+                run: composer install --no-interaction
+
+            -   name: Extract configuration files
+                run: |
+                    cp config/autoload/doctrine.local.development.php.dist config/autoload/doctrine.local.php
+                    cp config/autoload/laminas-developer-tools.local.php.dist config/autoload/laminas-developer-tools.local.php
+                    cp config/autoload/local.development.php.dist config/autoload/local.php
+
+            -   name: Load environment variables
+                uses: c-py/action-dotenv-to-setenv@v3
+                with:
+                    env-file: .env.dist
+
+            -   name: Create database
+                # GitHub Actions do not support custom hostnames like in Docker, hence we need to overwrite this value.
+                # Furthermore, we cannot declare it above, as it will be overwritten by the previous step.
+                env:
+                    DOCKER_DB_HOST: 127.0.0.1
+                run: ./orm orm:schema-tool:update --force
+
+            -   name: Run PHPUnit
+                env:
+                    DOCKER_DB_HOST: 127.0.0.1
+                run: vendor/phpunit/phpunit/phpunit --bootstrap bootstrap.php --configuration phpunit.xml
