@@ -34,7 +34,7 @@ class OrganController extends AbstractActionController
         $this->organService = $organService;
     }
 
-    public function committeeListAction()
+    public function committeeListAction(): ViewModel
     {
         $committees = $this->organService->findActiveOrgansByType(Organ::ORGAN_TYPE_COMMITTEE);
 
@@ -45,7 +45,7 @@ class OrganController extends AbstractActionController
         );
     }
 
-    public function fraternityListAction()
+    public function fraternityListAction(): ViewModel
     {
         $activeFraternities = $this->organService->findActiveOrgansByType(Organ::ORGAN_TYPE_FRATERNITY);
         $abrogatedFraternities = $this->organService->findAbrogatedOrgansByType(Organ::ORGAN_TYPE_FRATERNITY);
@@ -58,7 +58,7 @@ class OrganController extends AbstractActionController
         );
     }
 
-    public function organAction()
+    public function organAction(): ViewModel
     {
         $type = $this->params()->fromRoute('type');
         $abbr = $this->params()->fromRoute('abbr');

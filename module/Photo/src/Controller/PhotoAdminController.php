@@ -2,7 +2,6 @@
 
 namespace Photo\Controller;
 
-use Doctrine\ORM\EntityManager;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\{
     JsonModel,
@@ -44,7 +43,7 @@ class PhotoAdminController extends AbstractActionController
      *
      * TODO: Potentially remove, as the admin interface can already move/delete images from the global view.
      */
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         $photoId = $this->params()->fromRoute('photo_id');
         $data = $this->photoService->getPhotoData($photoId);
@@ -66,7 +65,7 @@ class PhotoAdminController extends AbstractActionController
     /**
      * Places a photo in another album.
      */
-    public function moveAction()
+    public function moveAction(): JsonModel
     {
         $request = $this->getRequest();
         $result = [];
@@ -82,7 +81,7 @@ class PhotoAdminController extends AbstractActionController
     /**
      * Removes a photo from an album and deletes it.
      */
-    public function deleteAction()
+    public function deleteAction(): JsonModel
     {
         $request = $this->getRequest();
         $result = [];

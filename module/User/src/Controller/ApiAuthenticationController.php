@@ -2,6 +2,7 @@
 
 namespace User\Controller;
 
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use User\Model\User;
 use User\Permissions\NotAllowedException;
@@ -36,7 +37,7 @@ class ApiAuthenticationController extends AbstractActionController
         $this->apiAppService = $apiAppService;
     }
 
-    public function tokenAction()
+    public function tokenAction(): Response
     {
         $appId = $this->params()->fromRoute('appId');
         $identity = $this->aclService->getIdentity();

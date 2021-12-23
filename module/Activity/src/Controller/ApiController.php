@@ -39,7 +39,7 @@ class ApiController extends AbstractActionController
     /**
      * List all activities.
      */
-    public function listAction()
+    public function listAction(): JsonModel
     {
         if (!$this->aclService->isAllowed('list', 'activityApi')) {
             $translator = $this->activityQueryService->getTranslator();

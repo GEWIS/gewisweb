@@ -49,7 +49,7 @@ class AlbumController extends AbstractActionController
      *
      * @return ViewModel
      */
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         $albumId = $this->params()->fromRoute('album_id');
         $albumType = $this->params()->fromRoute('album_type');

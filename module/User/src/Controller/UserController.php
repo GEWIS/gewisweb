@@ -2,6 +2,7 @@
 
 namespace User\Controller;
 
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\{
     JsonModel,
@@ -30,7 +31,7 @@ class UserController extends AbstractActionController
     /**
      * User login action.
      */
-    public function indexAction()
+    public function indexAction(): Response|ViewModel
     {
         $referer = $this->getRequest()->getServer('HTTP_REFERER');
 
@@ -61,7 +62,7 @@ class UserController extends AbstractActionController
      *
      * @return LoginForm
      */
-    private function handleRedirect(?string $referer)
+    private function handleRedirect(?string $referer): LoginForm
     {
         $form = $this->userService->getLoginForm();
         if (is_null($form->get('redirect')->getValue())) {
@@ -85,7 +86,7 @@ class UserController extends AbstractActionController
         return $form;
     }
 
-    public function pinLoginAction()
+    public function pinLoginAction(): JsonModel
     {
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
@@ -112,7 +113,7 @@ class UserController extends AbstractActionController
     /**
      * User logout action.
      */
-    public function logoutAction()
+    public function logoutAction(): Response
     {
         $this->userService->logout();
 
@@ -126,7 +127,7 @@ class UserController extends AbstractActionController
     /**
      * User register action.
      */
-    public function registerAction()
+    public function registerAction(): ViewModel
     {
         if ($this->getRequest()->isPost()) {
             $newUser = $this->userService->register($this->getRequest()->getPost());
@@ -151,7 +152,7 @@ class UserController extends AbstractActionController
     /**
      * Action to change password.
      */
-    public function passwordAction()
+    public function passwordAction(): ViewModel
     {
         $request = $this->getRequest();
 
@@ -173,7 +174,7 @@ class UserController extends AbstractActionController
     /**
      * Action to reset password.
      */
-    public function resetAction()
+    public function resetAction(): ViewModel
     {
         $request = $this->getRequest();
 
@@ -199,7 +200,7 @@ class UserController extends AbstractActionController
     /**
      * User activation action.
      */
-    public function activateAction()
+    public function activateAction(): Response|ViewModel
     {
         $code = $this->params()->fromRoute('code');
 

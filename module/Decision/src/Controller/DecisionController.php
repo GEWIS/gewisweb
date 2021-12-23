@@ -7,6 +7,7 @@ use Decision\Service\{
     AclService,
     Decision as DecisionService,
 };
+use Laminas\Http\Response\Stream;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
@@ -57,7 +58,7 @@ class DecisionController extends AbstractActionController
     /**
      * Index action, shows meetings.
      */
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         return new ViewModel(
             [
@@ -69,7 +70,7 @@ class DecisionController extends AbstractActionController
     /**
      * Download meeting notes.
      */
-    public function notesAction()
+    public function notesAction(): ViewModel|Stream
     {
         $type = $this->params()->fromRoute('type');
         $number = $this->params()->fromRoute('number');
@@ -86,7 +87,7 @@ class DecisionController extends AbstractActionController
         return $this->notFoundAction();
     }
 
-    public function documentAction()
+    public function documentAction(): ViewModel|Stream
     {
         $id = $this->params()->fromRoute('id');
 
@@ -105,7 +106,7 @@ class DecisionController extends AbstractActionController
     /**
      * View a meeting.
      */
-    public function viewAction()
+    public function viewAction(): ViewModel
     {
         $type = $this->params()->fromRoute('type');
         $number = $this->params()->fromRoute('number');
@@ -125,7 +126,7 @@ class DecisionController extends AbstractActionController
     /**
      * Search decisions.
      */
-    public function searchAction()
+    public function searchAction(): ViewModel
     {
         if (!$this->aclService->isAllowed('search', 'decision')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to search decisions.'));
@@ -158,7 +159,7 @@ class DecisionController extends AbstractActionController
         );
     }
 
-    public function authorizationsAction()
+    public function authorizationsAction(): ViewModel
     {
         $meeting = $this->decisionService->getLatestAV();
         $authorization = null;
@@ -197,7 +198,7 @@ class DecisionController extends AbstractActionController
     /**
      * Browse/download files from the set FileReader.
      */
-    public function filesAction()
+    public function filesAction(): bool|ViewModel|Stream
     {
         if (!$this->decisionService->isAllowedToBrowseFiles()) {
             $translator = $this->decisionService->getTranslator();

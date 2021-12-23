@@ -6,7 +6,7 @@ use ImagickException;
 use Doctrine\ORM\{
     NonUniqueResultException,
     NoResultException,
-    ORMException,
+    Exception\ORMException,
     EntityManager,
 };
 use Application\Service\{

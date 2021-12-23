@@ -7,7 +7,7 @@ use DateInterval;
 use DateTime;
 use Decision\Model\Member as MemberModel;
 use Decision\Service\Member as MemberService;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Exception;
 use Laminas\Http\Response\Stream;
 use Laminas\I18n\Filter\Alnum;

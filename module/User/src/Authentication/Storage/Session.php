@@ -11,7 +11,6 @@ use Laminas\Http\{
     Response,
 };
 use UnexpectedValueException;
-use User\Model\User as UserModel;
 
 class Session extends SessionStorage
 {

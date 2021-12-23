@@ -8,10 +8,9 @@ use DirectoryIterator;
 use Education\Form\{
     AddCourse as AddCourseForm,
     Bulk as BulkForm,
-    SearchCourse as SearchCourseForm,
     TempUpload as TempUploadForm,
 };
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Education\Mapper\{
     Exam as ExamMapper,
     Course as CourseMapper,
@@ -498,7 +497,7 @@ class Exam
         $filename = str_replace($month, '', $filename);
         $day = preg_match_all('/[0123]\d/', $filename, $matches) ? $matches[0][0] : $today->format('d');
 
-        $language = strstr($filename, 'nl') ? 'nl' : 'en';
+        $language = str_contains($filename, 'nl') ? 'nl' : 'en';
 
         return [
             'course' => $course,

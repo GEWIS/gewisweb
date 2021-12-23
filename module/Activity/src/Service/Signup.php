@@ -19,7 +19,7 @@ use DateTime;
 use Doctrine\ORM\{
     EntityManager,
     OptimisticLockException,
-    ORMException,
+    Exception\ORMException,
 };
 use Laminas\Mvc\I18n\Translator;
 use User\Model\User as UserModel;

@@ -2,6 +2,8 @@
 
 namespace Photo\Controller;
 
+use Laminas\Http\Response;
+use Laminas\Http\Response\Stream;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\{
     JsonModel,
@@ -38,7 +40,7 @@ class PhotoController extends AbstractActionController
         $this->albumService = $albumService;
     }
 
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         //add any other special behavior which is required for the main photo page here later
         $years = $this->albumService->getAlbumYears();
@@ -65,7 +67,7 @@ class PhotoController extends AbstractActionController
         );
     }
 
-    public function downloadAction()
+    public function downloadAction(): ?Stream
     {
         $photoId = $this->params()->fromRoute('photo_id');
 
@@ -75,7 +77,7 @@ class PhotoController extends AbstractActionController
     /**
      * Display the page containing previous pictures of the week.
      */
-    public function weeklyAction()
+    public function weeklyAction(): ViewModel
     {
         $weeklyPhotos = $this->photoService->getPhotosOfTheWeek();
 
@@ -89,7 +91,7 @@ class PhotoController extends AbstractActionController
     /**
      * For setting a profile picture.
      */
-    public function setProfilePhotoAction()
+    public function setProfilePhotoAction(): Response
     {
         $photoId = $this->params()->fromRoute('photo_id');
         $this->photoService->setProfilePhoto($photoId);
@@ -105,7 +107,7 @@ class PhotoController extends AbstractActionController
     /**
      * For removing a profile picture.
      */
-    public function removeProfilePhotoAction()
+    public function removeProfilePhotoAction(): Response
     {
         $photoId = $this->params()->fromRoute('photo_id');
         $this->photoService->removeProfilePhoto();
@@ -125,7 +127,7 @@ class PhotoController extends AbstractActionController
     /**
      * Store a vote for a photo.
      */
-    public function voteAction()
+    public function voteAction(): JsonModel|ViewModel
     {
         $request = $this->getRequest();
 

@@ -80,10 +80,9 @@ abstract class GenericAclService extends AbstractAclService
     /**
      * Gets the user identity, or gives a 403 if the user is not logged in
      *
-     * @return User the current logged in user
-     * @throws NotAllowedException if no user is logged in
+     * @return User|null the current logged in user
      */
-    public function getIdentityOrThrowException()
+    public function getIdentityOrThrowException(): ?User
     {
         if (!$this->hasIdentity()) {
             throw new NotAllowedException(

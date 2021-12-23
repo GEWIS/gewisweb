@@ -5,7 +5,6 @@ namespace Decision\Mapper;
 use Application\Mapper\BaseMapper;
 use Decision\Model\{
     Authorization as AuthorizationModel,
-    Meeting as MeetingModel,
     Member as MemberModel,
 };
 

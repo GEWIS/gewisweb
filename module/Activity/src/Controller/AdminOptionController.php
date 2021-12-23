@@ -65,7 +65,7 @@ class AdminOptionController extends AbstractActionController
         $this->activityOptionCreationPeriodMapper = $activityOptionCreationPeriodMapper;
     }
 
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         if (!$this->aclService->isAllowed('view', 'activity_calendar_period')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to administer option calendar periods'));
@@ -77,7 +77,7 @@ class AdminOptionController extends AbstractActionController
         ]);
     }
 
-    public function addAction()
+    public function addAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('create', 'activity_calendar_period')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create option calendar periods'));
@@ -120,7 +120,7 @@ class AdminOptionController extends AbstractActionController
         ]);
     }
 
-    public function deleteAction()
+    public function deleteAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('delete', 'activity_calendar_period')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete option calendar periods'));
@@ -140,7 +140,7 @@ class AdminOptionController extends AbstractActionController
         return $this->notFoundAction();
     }
 
-    public function editAction()
+    public function editAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('edit', 'activity_calendar_period')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit option calendar periods'));

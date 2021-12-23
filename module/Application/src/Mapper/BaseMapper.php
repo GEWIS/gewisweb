@@ -7,7 +7,7 @@ use Doctrine\ORM\{
     EntityManager,
     EntityRepository,
     OptimisticLockException,
-    ORMException,
+    Exception\ORMException,
 };
 
 abstract class BaseMapper

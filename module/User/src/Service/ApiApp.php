@@ -28,7 +28,7 @@ class ApiApp
      * Get a callback from an appId and a user identity.
      *
      * @param string $appId
-     *
+     * @param UserModel $user
      * @return string
      */
     public function callbackWithToken(

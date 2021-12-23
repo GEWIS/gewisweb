@@ -24,7 +24,6 @@ use Company\Service\{
 };
 use Interop\Container\ContainerInterface;
 use User\Authorization\AclServiceFactory;
-use User\Permissions\NotAllowedException;
 
 class Module
 {

@@ -27,7 +27,7 @@ class PageAdminController extends AbstractActionController
         $this->pageService = $pageService;
     }
 
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         $pages = $this->pageService->getPages();
 
@@ -38,7 +38,7 @@ class PageAdminController extends AbstractActionController
         );
     }
 
-    public function createAction()
+    public function createAction(): ViewModel
     {
         $request = $this->getRequest();
 
@@ -63,7 +63,7 @@ class PageAdminController extends AbstractActionController
         return $view;
     }
 
-    public function editAction()
+    public function editAction(): ViewModel
     {
         $pageId = $this->params()->fromRoute('page_id');
         $request = $this->getRequest();
@@ -92,7 +92,7 @@ class PageAdminController extends AbstractActionController
         $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));
     }
 
-    public function uploadAction()
+    public function uploadAction(): JsonModel
     {
         $request = $this->getRequest();
         $result = [];

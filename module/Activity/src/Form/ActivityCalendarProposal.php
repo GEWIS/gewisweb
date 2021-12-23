@@ -192,7 +192,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
      */
     public function areGoodOptionDates(
         array $value,
-        $context = [],
+        array $context = [],
     ): bool {
         $final = true;
         foreach ($value as $option) {

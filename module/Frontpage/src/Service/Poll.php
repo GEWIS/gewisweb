@@ -4,7 +4,7 @@ namespace Frontpage\Service;
 
 use Application\Service\Email as EmailService;
 use DateTime;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
 use Laminas\Stdlib\Parameters;
 use Frontpage\Form\{

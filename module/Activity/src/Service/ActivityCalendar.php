@@ -3,7 +3,6 @@
 namespace Activity\Service;
 
 use Activity\Form\{
-    ActivityCalendarOption as ActivityCalendarOptionForm,
     ActivityCalendarPeriod as ActivityCalendarPeriodForm,
 };
 use Activity\Mapper\{

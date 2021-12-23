@@ -27,7 +27,7 @@ use Decision\Model\{
 };
 use Doctrine\ORM\{
     NonUniqueResultException,
-    ORMException,
+    Exception\ORMException,
     PersistentCollection,
 };
 use Exception;

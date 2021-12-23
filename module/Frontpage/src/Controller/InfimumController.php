@@ -43,7 +43,7 @@ class InfimumController extends AbstractActionController
         $this->infimumService = $infimumService;
     }
 
-    public function showAction()
+    public function showAction(): JsonModel
     {
         if (!$this->aclService->isAllowed('view', 'infimum')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view infima'));

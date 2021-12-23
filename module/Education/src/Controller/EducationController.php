@@ -4,6 +4,8 @@ namespace Education\Controller;
 
 use Education\Form\SearchCourse as SearchCourseForm;
 use Education\Service\Exam as ExamService;
+use Laminas\Http\Response;
+use Laminas\Http\Response\Stream;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
@@ -33,7 +35,7 @@ class EducationController extends AbstractActionController
         $this->searchCourseForm = $searchCourseForm;
     }
 
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         $query = $this->getRequest()->getQuery();
         $form = $this->searchCourseForm;
@@ -62,7 +64,7 @@ class EducationController extends AbstractActionController
         );
     }
 
-    public function courseAction()
+    public function courseAction(): Response|ViewModel
     {
         $code = $this->params()->fromRoute('code');
         $course = $this->examService->getCourse($code);
@@ -92,7 +94,7 @@ class EducationController extends AbstractActionController
     /**
      * Download an exam.
      */
-    public function downloadAction()
+    public function downloadAction(): ?Stream
     {
         $id = $this->params()->fromRoute('id');
 

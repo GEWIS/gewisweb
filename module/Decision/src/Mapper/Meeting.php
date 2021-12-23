@@ -12,7 +12,7 @@ use Decision\Model\{
 use Doctrine\ORM\{
     NonUniqueResultException,
     NoResultException,
-    ORMException,
+    Exception\ORMException,
 };
 use InvalidArgumentException;
 

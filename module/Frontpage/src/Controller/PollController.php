@@ -8,9 +8,11 @@ use Frontpage\Service\{
     AclService,
     Poll as PollService,
 };
+use Laminas\Http\PhpEnvironment\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Paginator\Paginator;
+use Laminas\Stdlib\ResponseInterface;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
@@ -59,7 +61,7 @@ class PollController extends AbstractActionController
     /**
      * Displays the currently active poll.
      */
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         $poll = $this->obtainPoll();
 
@@ -85,7 +87,7 @@ class PollController extends AbstractActionController
      *
      * @return PollModel|null
      */
-    public function obtainPoll()
+    public function obtainPoll(): ?PollModel
     {
         $pollId = $this->params()->fromRoute('poll_id');
 
@@ -99,7 +101,7 @@ class PollController extends AbstractActionController
     /**
      * Submits a poll vote.
      */
-    public function voteAction()
+    public function voteAction(): Response|ResponseInterface
     {
         $pollId = (int)$this->params('poll_id');
         $request = $this->getRequest();
@@ -119,7 +121,7 @@ class PollController extends AbstractActionController
     /**
      * Submits a comment.
      */
-    public function commentAction()
+    public function commentAction(): ViewModel
     {
         if (!$this->aclService->isAllowed('create', 'poll_comment')) {
             throw new NotAllowedException(
@@ -155,7 +157,7 @@ class PollController extends AbstractActionController
     /**
      * View all previous polls.
      */
-    public function historyAction()
+    public function historyAction(): ViewModel
     {
         $adapter = $this->pollService->getPaginatorAdapter();
         $paginator = new Paginator($adapter);
@@ -176,7 +178,7 @@ class PollController extends AbstractActionController
     /**
      * Request a poll.
      */
-    public function requestAction()
+    public function requestAction(): ViewModel
     {
         $form = $this->pollService->getPollForm();
 

@@ -3,7 +3,7 @@
 namespace Frontpage\Service;
 
 use Application\Service\FileStorage;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Exception;
 use Frontpage\Form\Page as PageForm;
 use Frontpage\Mapper\Page as PageMapper;

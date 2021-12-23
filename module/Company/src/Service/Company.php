@@ -5,7 +5,7 @@ namespace Company\Service;
 use Application\Service\FileStorage;
 use Doctrine\ORM\{
     NonUniqueResultException,
-    ORMException,
+    Exception\ORMException,
 };
 use Company\Form\{
     JobCategory as EditCategoryForm,
@@ -805,7 +805,7 @@ class Company
      *
      * @throws ORMException
      */
-    public function deleteJob($job): void
+    public function deleteJob(JobModel $job): void
     {
         if (!$this->aclService->isAllowed('delete', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete jobs'));

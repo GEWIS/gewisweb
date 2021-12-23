@@ -2,7 +2,7 @@
 
 namespace User\Service;
 
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Laminas\Mvc\I18n\Translator;
 use User\Form\ApiToken as ApiTokenForm;
 use User\Mapper\ApiUser as ApiUserMapper;

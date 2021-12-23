@@ -10,6 +10,7 @@ use Company\Service\{
 use Company\Model\CompanyJobPackage;
 use DateInterval;
 use DateTime;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
@@ -60,7 +61,7 @@ class AdminController extends AbstractActionController
     /**
      * Action that displays the main page.
      */
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         if (!$this->aclService->isAllowed('listAllLabels', 'company')) {
             throw new NotAllowedException(
@@ -86,7 +87,7 @@ class AdminController extends AbstractActionController
     /**
      * Action that allows adding a company.
      */
-    public function addCompanyAction()
+    public function addCompanyAction(): Response|array
     {
         if (!$this->aclService->isAllowed('create', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create companies'));
@@ -127,7 +128,7 @@ class AdminController extends AbstractActionController
     /**
      * Action that displays a form for editing a company.
      */
-    public function editCompanyAction()
+    public function editCompanyAction(): Response|array|ViewModel
     {
         if (!$this->aclService->isAllowed('edit', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit companies'));
@@ -191,7 +192,7 @@ class AdminController extends AbstractActionController
     /**
      * Action that first asks for confirmation, and when given, deletes the company.
      */
-    public function deleteCompanyAction()
+    public function deleteCompanyAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('delete', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete companies'));
@@ -214,7 +215,7 @@ class AdminController extends AbstractActionController
     /**
      * Action that allows adding a package.
      */
-    public function addPackageAction()
+    public function addPackageAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('create', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create packages'));
@@ -281,7 +282,7 @@ class AdminController extends AbstractActionController
     /**
      * Action that displays a form for editing a package.
      */
-    public function editPackageAction()
+    public function editPackageAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('edit', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit packages'));
@@ -364,7 +365,7 @@ class AdminController extends AbstractActionController
     /**
      * Action that first asks for confirmation, and when given, deletes the Package.
      */
-    public function deletePackageAction()
+    public function deletePackageAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('delete', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete packages'));
@@ -404,7 +405,7 @@ class AdminController extends AbstractActionController
     /**
      * Action that allows adding a job.
      */
-    public function addJobAction()
+    public function addJobAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('create', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create jobs'));
@@ -477,7 +478,7 @@ class AdminController extends AbstractActionController
     /**
      * Action that displays a form for editing a job.
      */
-    public function editJobAction()
+    public function editJobAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('edit', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit jobs'));
@@ -546,7 +547,7 @@ class AdminController extends AbstractActionController
     /**
      * Action to delete a job.
      */
-    public function deleteJobAction()
+    public function deleteJobAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('delete', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete jobs'));
@@ -586,7 +587,7 @@ class AdminController extends AbstractActionController
         );
     }
 
-    public function addCategoryAction()
+    public function addCategoryAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('create', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create job categories'));
@@ -634,7 +635,7 @@ class AdminController extends AbstractActionController
     /**
      * Action that displays a form for editing a category.
      */
-    public function editCategoryAction()
+    public function editCategoryAction(): ViewModel
     {
         if (!$this->aclService->isAllowed('edit', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit job categories'));
@@ -672,7 +673,7 @@ class AdminController extends AbstractActionController
         return new ViewModel(['form' => $categoryForm]);
     }
 
-    public function addLabelAction()
+    public function addLabelAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('create', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create job labels'));
@@ -719,7 +720,7 @@ class AdminController extends AbstractActionController
     /**
      * Action that displays a form for editing a label.
      */
-    public function editLabelAction()
+    public function editLabelAction(): ViewModel
     {
         if (!$this->aclService->isAllowed('edit', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit job labels'));

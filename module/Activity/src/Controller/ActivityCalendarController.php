@@ -8,6 +8,7 @@ use Activity\Service\{
     ActivityCalendar as ActivityCalendarService,
     ActivityCalendarForm as ActivityCalendarFormService,
 };
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
@@ -71,7 +72,7 @@ class ActivityCalendarController extends AbstractActionController
         $this->calendarConfig = $calendarConfig;
     }
 
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         $config = $this->calendarConfig;
 
@@ -88,7 +89,7 @@ class ActivityCalendarController extends AbstractActionController
         );
     }
 
-    public function deleteAction()
+    public function deleteAction(): Response|ViewModel
     {
         $request = $this->getRequest();
 
@@ -100,7 +101,7 @@ class ActivityCalendarController extends AbstractActionController
         return $this->notFoundAction();
     }
 
-    public function approveAction()
+    public function approveAction(): Response|ViewModel
     {
         $request = $this->getRequest();
 
@@ -112,7 +113,7 @@ class ActivityCalendarController extends AbstractActionController
         return $this->notFoundAction();
     }
 
-    public function createAction()
+    public function createAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('create', 'activity_calendar_proposal')) {
             throw new NotAllowedException(

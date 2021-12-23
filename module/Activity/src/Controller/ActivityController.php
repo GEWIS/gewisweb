@@ -87,7 +87,7 @@ class ActivityController extends AbstractActionController
     /**
      * View all activities.
      */
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         $activities = $this->activityQueryService->getUpcomingActivities($this->params('category'));
 
@@ -101,8 +101,9 @@ class ActivityController extends AbstractActionController
 
     /**
      * View one activity.
+     * @return mixed
      */
-    public function viewAction()
+    public function viewAction(): mixed
     {
         $activityId = (int)$this->params('id');
         $activity = $this->activityQueryService->getActivity($activityId);
@@ -130,7 +131,7 @@ class ActivityController extends AbstractActionController
         );
     }
 
-    public function viewSignupListAction()
+    public function viewSignupListAction(): ViewModel
     {
         $activityId = (int)$this->params('id');
         $signupListId = (int)$this->params('signupList');
@@ -245,7 +246,7 @@ class ActivityController extends AbstractActionController
     /**
      * Create an activity.
      */
-    public function createAction()
+    public function createAction(): array|ViewModel
     {
         $form = $this->activityService->getActivityForm();
         $request = $this->getRequest();
@@ -273,7 +274,7 @@ class ActivityController extends AbstractActionController
     /**
      * Signup for a activity.
      */
-    public function signupAction()
+    public function signupAction(): Response|ViewModel
     {
         $activityId = (int)$this->params('id');
         $signupListId = (int)$this->params('signupList');
@@ -368,7 +369,7 @@ class ActivityController extends AbstractActionController
         );
     }
 
-    public function externalSignupAction()
+    public function externalSignupAction(): Response|ViewModel
     {
         $activityId = (int)$this->params('id');
         $signupListId = (int)$this->params('signupList');
@@ -430,7 +431,7 @@ class ActivityController extends AbstractActionController
     /**
      * Signup for a activity.
      */
-    public function signoffAction()
+    public function signoffAction(): Response|ViewModel
     {
         $activityId = (int)$this->params('id');
         $signupListId = (int)$this->params('signupList');
@@ -497,7 +498,7 @@ class ActivityController extends AbstractActionController
      *
      * @return ViewModel
      */
-    public function archiveAction()
+    public function archiveAction(): ViewModel
     {
         $years = $this->activityQueryService->getActivityArchiveYears();
         $year = $this->params()->fromRoute('year');

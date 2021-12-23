@@ -3,7 +3,9 @@
 namespace User\Controller;
 
 use Decision\Service\MemberInfo as MemberInfoService;
+use Laminas\Http\PhpEnvironment\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Stdlib\ResponseInterface;
 use User\Service\AclService;
 
 class ApiController extends AbstractActionController
@@ -32,7 +34,7 @@ class ApiController extends AbstractActionController
         $this->memberInfoService = $memberInfoService;
     }
 
-    public function validateAction()
+    public function validateAction(): Response|ResponseInterface
     {
         if ($this->aclService->hasIdentity()) {
             $identity = $this->aclService->getIdentity();

@@ -49,7 +49,7 @@ class AdminCategoryController extends AbstractActionController
     /**
      * View all Categories.
      */
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         $categories = $this->categoryService->findAll();
 
@@ -63,7 +63,7 @@ class AdminCategoryController extends AbstractActionController
     /**
      * Add Category.
      */
-    public function addAction()
+    public function addAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('addCategory', 'activity')) {
             throw new NotAllowedException(
@@ -116,7 +116,7 @@ class AdminCategoryController extends AbstractActionController
     /**
      * Delete Category.
      */
-    public function deleteAction()
+    public function deleteAction(): Response|ViewModel
     {
         $request = $this->getRequest();
 
@@ -139,7 +139,7 @@ class AdminCategoryController extends AbstractActionController
     /**
      * Edit Category.
      */
-    public function editAction()
+    public function editAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('editCategory', 'activity')) {
             throw new NotAllowedException(

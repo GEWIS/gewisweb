@@ -23,6 +23,7 @@ use Laminas\Session\{
     Container as SessionContainer,
 };
 use Laminas\Stdlib\Parameters;
+use Laminas\Stdlib\ResponseInterface;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
@@ -96,7 +97,7 @@ class AdminController extends AbstractActionController
         $this->signupMapper = $signupMapper;
     }
 
-    public function updateAction()
+    public function updateAction(): Response|ViewModel
     {
         $activityId = (int) $this->params('id');
         $activity = $this->activityQueryService->getActivityWithDetails($activityId);
@@ -218,7 +219,7 @@ class AdminController extends AbstractActionController
      *
      * @return ViewModel|array
      */
-    public function participantsAction()
+    public function participantsAction(): array|ViewModel
     {
         $activityId = (int) $this->params('id');
         $signupListId = (int) $this->params('signupList');
@@ -301,7 +302,7 @@ class AdminController extends AbstractActionController
         return $result;
     }
 
-    public function externalSignupAction()
+    public function externalSignupAction(): \Laminas\Http\PhpEnvironment\Response|ResponseInterface|ViewModel
     {
         $activityId = (int) $this->params('id');
         $signupListId = (int) $this->params('signupList');
@@ -386,7 +387,7 @@ class AdminController extends AbstractActionController
         );
     }
 
-    public function externalSignoffAction()
+    public function externalSignoffAction(): \Laminas\Http\PhpEnvironment\Response|ResponseInterface|ViewModel
     {
         $signupId = (int) $this->params('id');
         $signup = $this->signupMapper->find($signupId);
@@ -447,7 +448,7 @@ class AdminController extends AbstractActionController
     /**
      * Show a list of all activities this user can manage.
      */
-    public function viewAction()
+    public function viewAction(): array
     {
         if (!$this->aclService->isAllowed('viewAdmin', 'activity')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to administer activities'));

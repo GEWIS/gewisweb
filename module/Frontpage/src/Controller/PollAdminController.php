@@ -3,9 +3,11 @@
 namespace Frontpage\Controller;
 
 use Frontpage\Service\Poll as PollService;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Paginator\Paginator;
 use Laminas\View\Model\ViewModel;
+use User\Permissions\NotAllowedException;
 
 class PollAdminController extends AbstractActionController
 {
@@ -27,7 +29,7 @@ class PollAdminController extends AbstractActionController
     /**
      * List all approved and unapproved polls.
      */
-    public function listAction()
+    public function listAction(): ViewModel
     {
         $adapter = $this->pollService->getPaginatorAdapter();
         $paginator = new Paginator($adapter);
@@ -55,7 +57,7 @@ class PollAdminController extends AbstractActionController
     /**
      * Approve a poll.
      */
-    public function approveAction()
+    public function approveAction(): Response
     {
         if ($this->getRequest()->isPost()) {
             $pollId = $this->params()->fromRoute('poll_id');
@@ -64,12 +66,13 @@ class PollAdminController extends AbstractActionController
 
             return $this->redirect()->toRoute('admin_poll');
         }
+        throw new NotAllowedException();
     }
 
     /**
      * Delete a poll.
      */
-    public function deleteAction()
+    public function deleteAction(): Response
     {
         if ($this->getRequest()->isPost()) {
             $pollId = $this->params()->fromRoute('poll_id');
@@ -78,5 +81,6 @@ class PollAdminController extends AbstractActionController
 
             return $this->redirect()->toRoute('admin_poll');
         }
+        throw new NotAllowedException();
     }
 }

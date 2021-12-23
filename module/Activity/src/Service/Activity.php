@@ -21,7 +21,7 @@ use Decision\Service\Organ as OrganService;
 use Doctrine\ORM\{
     EntityManager,
     OptimisticLockException,
-    ORMException,
+    Exception\ORMException,
 };
 use Laminas\Mvc\I18n\Translator;
 use User\Model\User as UserModel;
