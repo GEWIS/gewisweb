@@ -78,8 +78,8 @@ jobs:
 
             -   name: Check out new branch
                 run: |
-                    git checkout -
                     git checkout -- phpstan/phpstan-baseline.neon
+                    git checkout -
 
             -   name: Install dependencies
                 run: composer install --no-interaction
