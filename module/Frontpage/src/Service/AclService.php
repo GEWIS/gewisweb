@@ -6,8 +6,6 @@ class AclService extends \User\Service\AclService
 {
     /**
      * @param array $pages
-     *
-     * @return void
      */
     public function setPages(array $pages): void
     {
@@ -18,9 +16,6 @@ class AclService extends \User\Service\AclService
         }
     }
 
-    /**
-     * @return void
-     */
     protected function createAcl(): void
     {
         parent::createAcl();

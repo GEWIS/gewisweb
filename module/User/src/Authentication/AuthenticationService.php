@@ -178,8 +178,6 @@ class AuthenticationService implements AuthenticationServiceInterface
 
     /**
      * Clears the identity from persistent storage
-     *
-     * @return void
      */
     public function clearIdentity(): void
     {
@@ -190,8 +188,6 @@ class AuthenticationService implements AuthenticationServiceInterface
      * Set whether we should remember this session or not.
      *
      * @param bool $rememberMe
-     *
-     * @return void
      */
     public function setRememberMe(bool $rememberMe): void
     {

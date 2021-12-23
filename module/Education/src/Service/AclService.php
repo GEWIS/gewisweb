@@ -4,9 +4,6 @@ namespace Education\Service;
 
 class AclService extends \User\Service\AclService
 {
-    /**
-     * @return void
-     */
     protected function createAcl(): void
     {
         parent::createAcl();

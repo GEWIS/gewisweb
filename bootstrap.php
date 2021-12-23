@@ -22,6 +22,9 @@ if (!class_exists(Application::class)) {
 
 class ConsoleRunner
 {
+    /**
+     * @return array
+     */
     public static function getConfig(): array
     {
         // Retrieve configuration
@@ -32,6 +35,10 @@ class ConsoleRunner
 
         return $appConfig;
     }
+
+    /**
+     * @return Application
+     */
     public static function getApplication(): Application
     {
         // Retrieve configuration
@@ -41,6 +48,9 @@ class ConsoleRunner
         return Application::init($appConfig);
     }
 
+    /**
+     * @return ServiceManager
+     */
     public static function getServiceManager(): ServiceManager
     {
         $appConfig = self::getConfig();

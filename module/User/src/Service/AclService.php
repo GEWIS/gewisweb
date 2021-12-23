@@ -38,9 +38,6 @@ class AclService extends GenericAclService
         return $this->acl;
     }
 
-    /**
-     * @return void
-     */
     protected function createAcl(): void
     {
         // initialize the ACL

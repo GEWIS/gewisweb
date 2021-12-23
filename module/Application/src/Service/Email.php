@@ -56,8 +56,6 @@ class Email
      * @param String $view Template of the email
      * @param String $subject Subject of the email
      * @param array $data Variables that you want to have available in the template
-     *
-     * @return void
      */
     public function sendEmail(
         string $type,
@@ -82,8 +80,6 @@ class Email
      * @param String $subject Subject of the email
      * @param array $data Variables that you want to have available in the template
      * @param UserModel $user The user as which the email should be sent
-     *
-     * @return void
      */
     public function sendEmailAsUser(
         string $type,
@@ -110,8 +106,6 @@ class Email
      * @param String $subject Subject of the email
      * @param array $data Variables that you want to have available in the template
      * @param MemberModel $user The user as which the email should be sent
-     *
-     * @return void
      */
     public function sendEmailAsUserToUser(
         MemberModel $recipient,
@@ -138,8 +132,6 @@ class Email
      * @param string $subject Subject of the email
      * @param array $data Variables that you want to have available in the template
      * @param OrganInformationModel $organ The organ as which the email should be sent
-     *
-     * @return void
      */
     public function sendEmailAsOrgan(
         string $type,

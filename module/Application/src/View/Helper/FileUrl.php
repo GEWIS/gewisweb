@@ -43,8 +43,6 @@ class FileUrl extends AbstractHelper
      * Set the service locator.
      *
      * @param ContainerInterface $locator
-     *
-     * @return void
      */
     public function setServiceLocator(ContainerInterface $locator): void
     {

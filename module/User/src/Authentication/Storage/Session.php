@@ -165,8 +165,6 @@ class Session extends SessionStorage
 
     /**
      * Defined by Laminas\Authentication\Storage\StorageInterface.
-     *
-     * @return void
      */
     public function clear(): void
     {
@@ -181,8 +179,6 @@ class Session extends SessionStorage
      * Store the session token as a cookie.
      *
      * @param string $jwt The session token to store
-     *
-     * @return void
      */
     protected function saveCookie(string $jwt): void
     {
@@ -194,8 +190,6 @@ class Session extends SessionStorage
 
     /**
      * Destroy the cookie holding the stored session.
-     *
-     * @return void
      */
     protected function clearCookie(): void
     {

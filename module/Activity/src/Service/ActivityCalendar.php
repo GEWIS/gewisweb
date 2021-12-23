@@ -147,9 +147,6 @@ class ActivityCalendar
         );
     }
 
-    /**
-     * @return void
-     */
     public function sendOverdueNotifications(): void
     {
         $date = new DateTime();
@@ -237,8 +234,6 @@ class ActivityCalendar
 
     /**
      * @param int $id
-     *
-     * @return void
      */
     public function approveOption(int $id): void
     {
@@ -281,10 +276,8 @@ class ActivityCalendar
 
     /**
      * @param int $id
-     *
-     * @return void
      */
-    public function deleteOption(int $id)
+    public function deleteOption(int $id): void
     {
         $option = $this->calendarOptionMapper->find($id);
 

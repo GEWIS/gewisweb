@@ -48,8 +48,6 @@ class Module
 {
     /**
      * @param MvcEvent $e
-     *
-     * @return void
      */
     public function onBootstrap(MvcEvent $e): void
     {
@@ -77,8 +75,6 @@ class Module
 
     /**
      * @param MvcEvent $e
-     *
-     * @return void
      */
     public function logError(MvCEvent $e): void
     {

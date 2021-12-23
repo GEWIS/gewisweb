@@ -368,8 +368,6 @@ class Company
     /**
      * @param JobCategoryModel $jobCategory The JobCategoryModel to update
      * @param array $data The (new) data to save
-     *
-     * @return void
      */
     public function updateJobCategory(
         JobCategoryModel $jobCategory,
@@ -407,8 +405,6 @@ class Company
      *
      * @param JobLabelModel $jobLabel
      * @param array $data The data to validate, and apply to the label
-     *
-     * @return void
      */
     public function updateJobLabel(
         JobLabelModel $jobLabel,
@@ -547,8 +543,6 @@ class Company
      * Saves the modified JobCategoryModel.
      *
      * @param JobCategoryModel $jobCategory
-     *
-     * @return void
      */
     public function persistJobCategory(JobCategoryModel $jobCategory): void
     {
@@ -559,8 +553,6 @@ class Company
      * Saves the modified JobLabelModel.
      *
      * @param JobLabelModel $jobLabel
-     *
-     * @return void
      */
     public function persistJobLabel(JobLabelModel $jobLabel): void
     {
@@ -572,8 +564,6 @@ class Company
      *
      * @param JobModel $job
      *
-     * @return void
-     *
      * @throws ORMException
      */
     public function persistJob(JobModel $job): void
@@ -583,8 +573,6 @@ class Company
 
     /**
      * @param CompanyModel $company
-     *
-     * @return void
      *
      * @throws ORMException
      */
@@ -597,8 +585,6 @@ class Company
      * Saves all modified packages.
      *
      * @param CompanyPackageModel $package
-     *
-     * @return void
      *
      * @throws ORMException
      */
@@ -801,8 +787,6 @@ class Company
      *
      * @param CompanyPackageModel $package
      *
-     * @return void
-     *
      * @throws ORMException
      */
     public function deletePackage(CompanyPackageModel $package): void
@@ -819,8 +803,6 @@ class Company
      *
      * @param JobModel $job
      *
-     * @return void
-     *
      * @throws ORMException
      */
     public function deleteJob($job): void
@@ -836,8 +818,6 @@ class Company
      * Deletes the company identified with $slug.
      *
      * @param string $slug
-     *
-     * @return void
      *
      * @throws ORMException
      */

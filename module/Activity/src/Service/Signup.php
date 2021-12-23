@@ -354,8 +354,6 @@ class Signup
      *
      * @param SignupListModel $signupList
      * @param UserModel $user
-     *
-     * @return void
      */
     public function signOff(
         SignupListModel $signupList,
@@ -381,8 +379,6 @@ class Signup
     /**
      * @param SignupModel $signup
      *
-     * @return void
-     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -403,8 +399,6 @@ class Signup
 
     /**
      * @param ExternalSignupModel $signup
-     *
-     * @return void
      *
      * @throws ORMException
      * @throws OptimisticLockException

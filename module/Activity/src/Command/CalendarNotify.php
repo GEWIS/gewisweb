@@ -30,8 +30,6 @@ class CalendarNotify extends Command
 
     /**
      * @param ActivityCalendar $calendarService
-     *
-     * @return void
      */
     public function setCalendarService(ActivityCalendar $calendarService): void
     {

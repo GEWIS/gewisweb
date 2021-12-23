@@ -127,8 +127,6 @@ class Mapper implements AdapterInterface
      *
      * @param string $login
      * @param string $password
-     *
-     * @return void
      */
     public function setCredentials(
         string $login,

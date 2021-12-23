@@ -37,14 +37,14 @@ class Category extends BaseMapper
     {
         $qb = $this->getRepository()->createQueryBuilder('c');
         $qb->innerJoin(
-                'c.slug',
-                'loc',
-                Join::WITH,
-                $qb->expr()->orX(
-                    'LOWER(loc.valueEN) = :value',
-                    'LOWER(loc.valueNL) = :value',
-                )
+            'c.slug',
+            'loc',
+            Join::WITH,
+            $qb->expr()->orX(
+                'LOWER(loc.valueEN) = :value',
+                'LOWER(loc.valueNL) = :value',
             )
+        )
             ->setParameter(':value', strtolower($value));
 
         return $qb->getQuery()->getOneOrNullResult();

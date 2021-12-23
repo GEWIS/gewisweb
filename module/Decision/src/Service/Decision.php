@@ -401,8 +401,6 @@ class Decision
      * @param int $id Document ID
      * @param bool $moveDown If the document should be moved down in the ordering, defaults to TRUE
      *
-     * @return void
-     *
      * @throws NotAllowedException
      * @throws InvalidArgumentException If the document doesn't exist
      */

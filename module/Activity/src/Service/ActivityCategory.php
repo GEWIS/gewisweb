@@ -137,10 +137,8 @@ class ActivityCategory
 
     /**
      * @param ActivityCategoryModel $category
-     *
-     * @return void
      */
-    public function deleteCategory(ActivityCategoryModel $category)
+    public function deleteCategory(ActivityCategoryModel $category): void
     {
         if (!$this->aclService->isAllowed('deleteCategory', 'activity')) {
             throw new NotAllowedException(

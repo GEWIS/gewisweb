@@ -20,8 +20,6 @@ class Rand extends FunctionNode
 {
     /**
      * @param Parser $parser
-     *
-     * @return void
      */
     public function parse(Parser $parser): void
     {
