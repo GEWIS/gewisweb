@@ -11,14 +11,14 @@ class PollAdminControllerFactory implements FactoryInterface
     /**
      * @param ContainerInterface $container
      * @param string $requestedName
-     * @param null|array $options
+     * @param array|null $options
      *
      * @return PollAdminController
      */
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null,
+        ?array $options = null,
     ): PollAdminController {
         return new PollAdminController(
             $container->get('frontpage_service_poll'),

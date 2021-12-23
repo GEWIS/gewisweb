@@ -11,14 +11,14 @@ class AdminCategoryControllerFactory implements FactoryInterface
     /**
      * @param ContainerInterface $container
      * @param string $requestedName
-     * @param null|array $options
+     * @param array|null $options
      *
      * @return AdminCategoryController
      */
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null,
+        ?array $options = null,
     ): AdminCategoryController {
         return new AdminCategoryController(
             $container->get('activity_service_acl'),

@@ -11,14 +11,14 @@ class ActivityCalendarControllerFactory implements FactoryInterface
     /**
      * @param ContainerInterface $container
      * @param string $requestedName
-     * @param null|array $options
+     * @param array|null $options
      *
      * @return ActivityCalendarController
      */
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null,
+        ?array $options = null,
     ): ActivityCalendarController {
         return new ActivityCalendarController(
             $container->get('activity_service_acl'),
