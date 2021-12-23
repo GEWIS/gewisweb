@@ -89,8 +89,8 @@ phpstanpr:
 		@echo "" > phpstan/phpstan-baseline-pr.neon
 		@make rundev
 		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon --generate-baseline phpstan/phpstan-baseline-pr.neon --memory-limit 1G --no-progress
-		@git checkout -
 		@git checkout -- phpstan/phpstan-baseline.neon
+		@git checkout -
 		@docker cp gewisweb_web_1:/code/phpstan/phpstan-baseline-pr.neon ./phpstan/phpstan-baseline-pr.neon
 		@make rundev
 		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G --no-progress
