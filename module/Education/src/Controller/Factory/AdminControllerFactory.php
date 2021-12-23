@@ -18,11 +18,10 @@ class AdminControllerFactory implements FactoryInterface
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        array $options = null,
     ): AdminController {
         return new AdminController(
             $container->get('education_service_exam'),
-            $container->get('education_form_summaryupload'),
             $container->get('config')['education_temp'],
         );
     }

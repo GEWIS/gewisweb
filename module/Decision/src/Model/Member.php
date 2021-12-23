@@ -643,9 +643,7 @@ class Member
      */
     public function isActive(): bool
     {
-        $currentInstallations = $this->getCurrentOrganInstallations();
-
-        return !empty($currentInstallations);
+        return !$this->getCurrentOrganInstallations()->isEmpty();
     }
 
     /**
@@ -677,7 +675,7 @@ class Member
             }
         );
 
-        if (empty($boards)) {
+        if ($boards->isEmpty()) {
             return null;
         }
 

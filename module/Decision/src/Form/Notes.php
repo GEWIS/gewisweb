@@ -67,7 +67,7 @@ class Notes extends Form implements InputFilterProviderInterface
      *
      * @return Notes
      */
-    public function setMeetings(array $meetings): static
+    public function setMeetings(array $meetings): self
     {
         $options = [];
         foreach ($meetings as $meeting) {

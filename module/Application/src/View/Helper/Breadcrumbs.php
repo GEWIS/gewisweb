@@ -15,8 +15,6 @@ class Breadcrumbs extends AbstractStandalone
     public function __construct()
     {
         parent::__construct();
-
-        return $this;
     }
 
     /**
@@ -57,6 +55,39 @@ class Breadcrumbs extends AbstractStandalone
         }
 
         return $this;
+    }
+
+    /**
+     * Append
+     *
+     * @param array $value
+     * @return AbstractContainer
+     */
+    public function append(array $value): AbstractContainer
+    {
+        return $this->getContainer()->append($value);
+    }
+
+    /**
+     * Prepend
+     *
+     * @param array $value
+     * @return AbstractContainer
+     */
+    public function prepend(array $value): AbstractContainer
+    {
+        return $this->getContainer()->prepend($value);
+    }
+
+    /**
+     * Set
+     *
+     * @param array $value
+     * @return AbstractContainer
+     */
+    public function set(array $value): AbstractContainer
+    {
+        return $this->append($value);
     }
 
     /**

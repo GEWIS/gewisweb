@@ -10,3 +10,4 @@ parameters:
         - '#Call to an undefined method Laminas\\I18n\\Translator\\TranslatorInterface\:\:getLocale\(\)\.$#'
         - '#Property [a-zA-Z0-9\\_]+\:\:\$[a-zA-Z0-9_]+ type mapping mismatch\: property can contain Doctrine\\Common\\Collections\\Collection but database expects Doctrine\\Common\\Collections\\Collection\&iterable\<[a-zA-Z0-9\\_]+\>\.$#'
         - '#Property [a-zA-Z0-9\\_]+\:\:\$[a-zA-Z0-9_]+ type mapping mismatch\: database can contain [a-zA-Z0-9\\_]+\|null but property expects [a-zA-Z0-9\\_]+\.$#'
+        - '#Call to an undefined method Laminas\\Form\\ElementInterface\:\:(count|getFieldSets|getValueOptions|populateValues|setCount|setValueOptions)\(\).$#'

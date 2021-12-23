@@ -2,7 +2,6 @@
 
 namespace Company\Controller;
 
-use Company\Mapper\Label as LabelMapper;
 use Company\Service\{
     AclService,
     Company as CompanyService,
@@ -14,7 +13,6 @@ use DateTime;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
-use RuntimeException;
 use User\Permissions\NotAllowedException;
 
 class AdminController extends AbstractActionController
@@ -28,11 +26,6 @@ class AdminController extends AbstractActionController
      * @var CompanyQueryService
      */
     private CompanyQueryService $companyQueryService;
-
-    /**
-     * @var LabelMapper
-     */
-    private LabelMapper $labelMapper;
 
     /**
      * @var AclService
@@ -49,20 +42,17 @@ class AdminController extends AbstractActionController
      *
      * @param CompanyService $companyService
      * @param CompanyQueryService $companyQueryService
-     * @param LabelMapper $labelMapper
      * @param AclService $aclService
      * @param Translator $translator
      */
     public function __construct(
         CompanyService $companyService,
         CompanyQueryService $companyQueryService,
-        LabelMapper $labelMapper,
         AclService $aclService,
-        Translator $translator
+        Translator $translator,
     ) {
         $this->companyService = $companyService;
         $this->companyQueryService = $companyQueryService;
-        $this->labelMapper = $labelMapper;
         $this->aclService = $aclService;
         $this->translator = $translator;
     }

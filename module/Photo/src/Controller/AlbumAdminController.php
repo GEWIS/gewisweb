@@ -170,29 +170,6 @@ class AlbumAdminController extends AbstractActionController
     }
 
     /**
-     * Imports photos from a given path in to an album.
-     */
-    public function importAction()
-    {
-        $request = $this->getRequest();
-        $result = [];
-        $result['success'] = false;
-        if ($request->isPost()) {
-            $albumId = $this->params()->fromRoute('album_id');
-            $album = $this->albumService->getAlbum($albumId);
-            try {
-                $this->adminService->storeUploadedDirectory($request->getPost()['folder_path'], $album);
-                $result['success'] = true;
-            } catch (Exception $e) {
-                $this->getResponse()->setStatusCode(500);
-                $result['error'] = $e->getMessage();
-            }
-        }
-
-        return new JsonModel($result);
-    }
-
-    /**
      * Moves the album by setting the parent album to another album.
      */
     public function moveAction()

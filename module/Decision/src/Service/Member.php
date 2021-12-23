@@ -32,22 +32,19 @@ class Member
     private $authorizationMapper;
 
     /**
-     * @var array
+     * @var AclService
      */
-    private $config;
     private AclService $aclService;
 
     public function __construct(
         Translator $translator,
         \Decision\Mapper\Member $memberMapper,
         Authorization $authorizationMapper,
-        array $config,
-        AclService $aclService
+        AclService $aclService,
     ) {
         $this->translator = $translator;
         $this->memberMapper = $memberMapper;
         $this->authorizationMapper = $authorizationMapper;
-        $this->config = $config;
         $this->aclService = $aclService;
     }
 

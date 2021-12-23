@@ -100,9 +100,9 @@ class Album extends BaseMapper
     /**
      * Returns the root album containing the most recent photos.
      *
-     * @return AlbumModel
+     * @return AlbumModel|null
      */
-    public function getNewestAlbum()
+    public function getNewestAlbum(): ?AlbumModel
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -121,9 +121,9 @@ class Album extends BaseMapper
     /**
      * Returns the root album containing the oldest photos.
      *
-     * @return AlbumModel
+     * @return AlbumModel|null
      */
-    public function getOldestAlbum()
+    public function getOldestAlbum(): ?AlbumModel
     {
         $qb = $this->em->createQueryBuilder();
 
