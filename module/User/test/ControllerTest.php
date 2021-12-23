@@ -1,6 +1,6 @@
 <?php
 
-namespace UserTest\Authentication;
+namespace UserTest;
 
 use ApplicationTest\BaseControllerTest;
 
