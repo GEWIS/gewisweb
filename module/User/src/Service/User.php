@@ -440,7 +440,7 @@ class User
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
         for ($i = 0; $i < $length; ++$i) {
-            $ret .= $alphabet[rand(0, strlen($alphabet) - 1)];
+            $ret .= $alphabet[random_int(0, strlen($alphabet) - 1)];
         }
 
         return $ret;
