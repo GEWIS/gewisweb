@@ -458,7 +458,7 @@ class Activity
         $em = $this->entityManager;
 
         if (0 !== $currentActivity->getUpdateProposal()->count()) {
-            $proposal = $currentActivity->getUpdateProposal()->unwrap()->first();
+            $proposal = $currentActivity->getUpdateProposal()->first();
             //Remove old update proposal
             $oldUpdate = $proposal->getNew();
             $proposal->setNew($newActivity);
