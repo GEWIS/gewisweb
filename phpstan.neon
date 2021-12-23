@@ -3,8 +3,11 @@ includes:
     - phpstan/phpstan-baseline-pr.neon
 
 parameters:
-    level: 5
-    treatPhpDocTypesAsCertain: false
+    level: 6
+    treatPhpDocTypesAsCertain: true
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    reportUnmatchedIgnoredErrors: false
     bootstrapFiles:
         - bootstrap.php
     laminasframework:
@@ -23,5 +26,4 @@ parameters:
         - module/Photo/src
         - module/User/src
         - public/index.php
-    reportUnmatchedIgnoredErrors: false
     tmpDir: data/cache/phpstan
