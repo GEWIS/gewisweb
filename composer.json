@@ -68,7 +68,7 @@
         "laminas/laminas-view": "^2.14.0",
         "doctrine/orm": "^2.10.3",
         "doctrine/doctrine-module": "^4.3.0",
-        "doctrine/doctrine-orm-module": "^4.0.0",
+        "doctrine/doctrine-orm-module": "^4.2.0",
         "doctrine/doctrine-laminas-hydrator": "^2.2.0",
         "maglnet/magl-markdown": "^1.9.0",
         "twbs/bootstrap-sass": "^3.3.0",
@@ -115,8 +115,17 @@
         "preferred-install": {
             "doctrine/orm": "source",
             "*": "dist"
+        },
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "laminas/laminas-dependency-plugin": true,
+            "cweagans/composer-patches": true,
+            "laminas/laminas-component-installer": true,
+            "phpstan/extension-installer": true
         }
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "scripts": {
         "post-install-cmd": [
             "SlowProg\\CopyFile\\ScriptHandler::copy"
