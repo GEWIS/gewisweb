@@ -85,7 +85,7 @@ class PageAdminController extends AbstractActionController
         );
     }
 
-    public function deleteAction()
+    public function deleteAction(): void
     {
         $pageId = $this->params()->fromRoute('page_id');
         $this->pageService->deletePage($pageId);

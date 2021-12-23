@@ -438,7 +438,7 @@ class Decision
         $ordering->set($newPosition, $id);
 
         // Persist new positions
-        $documents->map(function (MeetingDocumentModel $document) use ($ordering) {
+        $documents->map(function (MeetingDocumentModel $document) use ($ordering): void {
             $position = $ordering->indexOf($document->getId());
 
             $document->setDisplayPosition($position);

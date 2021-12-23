@@ -639,7 +639,7 @@ class Photo
         $votes = $photo->getVoteCount();
         $tags = $photo->getTagCount();
 
-        $baseRating = $votes / pow($tags, 1.25);
+        $baseRating = $votes / $tags ** 1.25;
         // Prevent division by zero.
         if ($age < 14) {
             return $baseRating * (14 - $age);

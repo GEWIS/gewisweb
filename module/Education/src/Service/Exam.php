@@ -210,7 +210,7 @@ class Exam
          * exam, which we need in the upload process.
          */
         $storage = $this->storageService;
-        $this->examMapper->transactional(function ($mapper) use ($data, $type, $temporaryEducationConfig, $storage) {
+        $this->examMapper->transactional(function ($mapper) use ($data, $type, $temporaryEducationConfig, $storage): void {
             foreach ($data['exams'] as $examData) {
                 // finalize exam upload
                 $exam = new ExamModel();

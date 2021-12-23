@@ -344,7 +344,7 @@ class Organ
         $image->setimageformat('jpg');
 
         //Tempfile is used such that the file storage service can generate a filename
-        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() . '.jpg';
+        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . random_int(0, getrandmax()) . '.jpg';
         $image->writeImage($tempFileName);
 
         return $this->storageService->storeFile($tempFileName);

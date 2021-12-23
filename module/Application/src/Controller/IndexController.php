@@ -29,14 +29,14 @@ class IndexController extends AbstractActionController
     /**
      * Action called when loading pages from external templates.
      */
-    public function externalAction()
+    public function externalAction(): void
     {
     }
 
     /**
      * Throws a teapot error.
      */
-    public function teapotAction()
+    public function teapotAction(): void
     {
         $this->getResponse()->setStatusCode(418);
     }

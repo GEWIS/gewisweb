@@ -544,7 +544,7 @@ class Activity
         unset($current['id']);
 
         // Convert all DateTimes in the original Activity to strings.
-        array_walk_recursive($current, function (&$v, $k) {
+        array_walk_recursive($current, function (&$v, $k): void {
             if ($v instanceof DateTime) {
                 $v = $v->format('Y/m/d H:i');
             }
@@ -562,13 +562,13 @@ class Activity
 
         // We do not need the ActivityCategory models, hence we replace it with the ids of each one. However, it is no
         // longer a model and requires array access to get the id.
-        array_walk($current['categories'], function (&$v, $k) {
+        array_walk($current['categories'], function (&$v, $k): void {
             $v = strval($v['id']);
         });
 
         // HTML forms do not know anything about booleans, hence we need to
         // convert the strings to something we can use.
-        array_walk_recursive($proposal, function (&$v, $k) {
+        array_walk_recursive($proposal, function (&$v, $k): void {
             if (in_array($k, ['isMyFuture', 'requireGEFLITST', 'onlyGEWIS', 'displaySubscribedNumber'], true)) {
                 $v = boolval($v);
             }

@@ -166,7 +166,7 @@ class Admin
         $image->thumbnailImage($width, $height, true);
         $image->setimageformat('png');
         //Tempfile is used to generate sha1, not sure this is the best method
-        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . rand() . '.png';
+        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . random_int(0, getrandmax()) . '.png';
         $image->writeImage($tempFileName);
 
         return $this->storageService->storeFile($tempFileName);

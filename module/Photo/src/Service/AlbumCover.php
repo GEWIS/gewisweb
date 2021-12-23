@@ -72,7 +72,7 @@ class AlbumCover
     public function createCover(AlbumModel $album): string
     {
         $cover = $this->generateCover($album);
-        $tempFileName = sys_get_temp_dir() . '/CoverImage' . rand() . '.png';
+        $tempFileName = sys_get_temp_dir() . '/CoverImage' . random_int(0, getrandmax()) . '.png';
         $cover->writeImage($tempFileName);
 
         return $this->storage->storeFile($tempFileName, false);

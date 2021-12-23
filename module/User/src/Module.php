@@ -71,7 +71,7 @@ class Module
         // there is a NotAllowedException
         $em->attach(
             MvcEvent::EVENT_DISPATCH_ERROR,
-            function ($e) {
+            function ($e): void {
                 if (
                     'error-exception' == $e->getError()
                     && null != $e->getParam('exception', null)
