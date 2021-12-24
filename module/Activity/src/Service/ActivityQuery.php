@@ -78,12 +78,6 @@ class ActivityQuery
     }
 
     /**
-     * A GEWIS association year starts 01-07.
-     */
-    public const ASSOCIATION_YEAR_START_MONTH = 7;
-    public const ASSOCIATION_YEAR_START_DAY = 1;
-
-    /**
      * Get the information of one proposal from the database.
      *
      * @param int $id The proposal id to be searched for
@@ -151,21 +145,6 @@ class ActivityQuery
         }
 
         return $this->activityMapper->find($id);
-    }
-
-    /**
-     * Returns an array of all activities.
-     * NB: This method is currently unused. Should it be removed?
-     *
-     * @return array Array of activities
-     */
-    public function findAll(): array
-    {
-        if (!$this->aclService->isAllowed('view', 'activity')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view the activities'));
-        }
-
-        return $this->activityMapper->findAll();
     }
 
     /**

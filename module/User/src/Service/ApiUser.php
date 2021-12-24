@@ -35,13 +35,6 @@ class ApiUser
     private ApiTokenForm $apiTokenForm;
 
     /**
-     * Identity storage.
-     *
-     * @var ApiUserModel
-     */
-    protected ApiUserModel $identity;
-
-    /**
      * @param AclService $aclService
      * @param Translator $translator
      * @param ApiUserMapper $apiUserMapper
