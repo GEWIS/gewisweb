@@ -3,4 +3,38 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
   </component>
+  <component name="PhpEntryPointsManager">
+    <entry_point>
+      <entry_point TYPE="phpNamespace" FQNAME="\Activity\Command" />
+      <entry_point TYPE="phpNamespace" FQNAME="\Activity\Controller" />
+      <entry_point TYPE="phpNamespace" FQNAME="\ActivityTest" />
+      <entry_point TYPE="phpNamespace" FQNAME="\Application\Controller" />
+      <entry_point TYPE="phpNamespace" FQNAME="\ApplicationTest" />
+      <entry_point TYPE="phpNamespace" FQNAME="\Company\Controller" />
+      <entry_point TYPE="phpNamespace" FQNAME="\CompanyTest" />
+      <entry_point TYPE="phpNamespace" FQNAME="\Decision\Controller" />
+      <entry_point TYPE="phpNamespace" FQNAME="\Education\Controller" />
+      <entry_point TYPE="phpNamespace" FQNAME="\EducationTest" />
+      <entry_point TYPE="phpNamespace" FQNAME="\Frontpage\Controller" />
+      <entry_point TYPE="phpNamespace" FQNAME="\FrontpageTest" />
+      <entry_point TYPE="phpNamespace" FQNAME="\Photo\Command" />
+      <entry_point TYPE="phpNamespace" FQNAME="\Photo\Controller" />
+      <entry_point TYPE="phpNamespace" FQNAME="\PhotoTest" />
+      <entry_point TYPE="phpNamespace" FQNAME="\User\Controller" />
+      <entry_point TYPE="phpNamespace" FQNAME="\UserTest" />
+    </entry_point>
+    <pattern value="\*\Controller\*" member="*" />
+    <pattern value="\*\Module" member="*" />
+    <pattern value="\*\Command\*" member="*" />
+    <pattern value="\*\*\*Factory" member="*" />
+    <pattern value="\*\*\Factory\*Factory" member="*" />
+    <pattern value="\Application\Mapper\BaseMapper" member="*" />
+    <pattern value="\*Test\*Test" member="*" />
+    <pattern value="\*\Form\*" member="*" />
+    <pattern value="\*\Extensions\*\*" member="*" />
+    <pattern value="\*\View\Helper\*" member="*" />
+    <pattern value="\*\Listener\*" member="*" />
+    <pattern value="\User\Permissions\Assertion\*" member="*" />
+    <pattern value="\*\Service\*" />
+  </component>
 </project>
