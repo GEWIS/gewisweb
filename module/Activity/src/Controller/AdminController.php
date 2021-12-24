@@ -217,9 +217,9 @@ class AdminController extends AbstractActionController
     /**
      * Return the data of the activity participants.
      *
-     * @return ViewModel|array
+     * @return ViewModel
      */
-    public function participantsAction(): array|ViewModel
+    public function participantsAction(): ViewModel
     {
         $activityId = (int) $this->params('id');
         $signupListId = (int) $this->params('signupList');
@@ -299,7 +299,7 @@ class AdminController extends AbstractActionController
             unset($activityAdminSession->message);
         }
 
-        return $result;
+        return new ViewModel($result);
     }
 
     public function externalSignupAction(): \Laminas\Http\PhpEnvironment\Response|ResponseInterface|ViewModel

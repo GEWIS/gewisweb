@@ -246,7 +246,7 @@ class ActivityController extends AbstractActionController
     /**
      * Create an activity.
      */
-    public function createAction(): array|ViewModel
+    public function createAction(): ViewModel
     {
         $form = $this->activityService->getActivityForm();
         $request = $this->getRequest();
@@ -264,11 +264,13 @@ class ActivityController extends AbstractActionController
             }
         }
 
-        return [
-            'form' => $form,
-            'action' => $this->translator->translate('Create Activity'),
-            'allowSignupList' => true,
-        ];
+        return new ViewModel(
+            [
+                'form' => $form,
+                'action' => $this->translator->translate('Create Activity'),
+                'allowSignupList' => true,
+            ]
+        );
     }
 
     /**

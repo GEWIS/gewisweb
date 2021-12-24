@@ -162,7 +162,7 @@ class AdminApprovalController extends AbstractActionController
     /**
      * Display the proposed update.
      */
-    public function viewProposalAction(): array|ViewModel
+    public function viewProposalAction(): ViewModel
     {
         $id = (int)$this->params('id');
 
@@ -172,11 +172,13 @@ class AdminApprovalController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        return [
-            'proposal' => $proposal,
-            'proposalApplyForm' => new RequestForm('proposalApply', 'Apply update'),
-            'proposalRevokeForm' => new RequestForm('proposalRevoke', 'Revoke update'),
-        ];
+        return new ViewModel(
+            [
+                'proposal' => $proposal,
+                'proposalApplyForm' => new RequestForm('proposalApply', 'Apply update'),
+                'proposalRevokeForm' => new RequestForm('proposalRevoke', 'Revoke update'),
+            ]
+        );
     }
 
     /**
