@@ -280,9 +280,11 @@ $this->scriptUrl()->requireUrl('member/search')
                     let hasVoted = pswp.currSlide.data.element.dataset.voted;
 
                     if ('false' === hasRecentVote) {
-                        const pulsingDot = document.createElement('span');
-                        pulsingDot.classList.add('pulsing-dot');
-                        el.appendChild(pulsingDot);
+                        if (el.childElementCount == 1) {
+                            const pulsingDot = document.createElement('span');
+                            pulsingDot.classList.add('pulsing-dot');
+                            el.appendChild(pulsingDot);
+                        }
                     }
 
                     if ('true' === hasVoted) {
