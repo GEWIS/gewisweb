@@ -22,7 +22,7 @@ class AutomaticControllerTest extends BaseControllerTest
         $this->parsePriorityList($routes);
     }
 
-    protected function parsePriorityList(PriorityList $list)
+    protected function parsePriorityList(PriorityList $list): void
     {
         foreach ($list as $element) {
             if ($element instanceof Part) {
@@ -35,14 +35,14 @@ class AutomaticControllerTest extends BaseControllerTest
                 throw new RuntimeException(
                     sprintf(
                         'Unexpected type in parsePriorityList: %s',
-                        get_class($element)
+                        get_class($element),
                     )
                 );
             }
         }
     }
 
-    protected function parsePart(Part $part)
+    protected function parsePart(Part $part): void
     {
         $routes = $part->getRoutes();
         if ($routes instanceof PriorityList) {
@@ -51,13 +51,13 @@ class AutomaticControllerTest extends BaseControllerTest
             throw new RuntimeException(
                 sprintf(
                     'Unexpected type in parsePart: %s',
-                    get_class($routes)
+                    get_class($routes),
                 )
             );
         }
     }
 
-    protected function parseSegment(Segment $segment)
+    protected function parseSegment(Segment $segment): void
     {
         $params = $this->getParams();
         try {
@@ -68,7 +68,7 @@ class AutomaticControllerTest extends BaseControllerTest
                 throw new RuntimeException(
                     sprintf(
                         'Unexpected type in parseSegment: %s',
-                        get_class($url)
+                        get_class($url),
                     )
                 );
             }
@@ -81,7 +81,7 @@ class AutomaticControllerTest extends BaseControllerTest
         }
     }
 
-    protected function parseLiteral(Literal $literal)
+    protected function parseLiteral(Literal $literal): void
     {
         $url = $literal->assemble();
         if (is_string($url)) {
@@ -90,7 +90,7 @@ class AutomaticControllerTest extends BaseControllerTest
             throw new RuntimeException(
                 sprintf(
                     'Unexpected type in parseLiteral: %s',
-                    get_class($url)
+                    get_class($url),
                 )
             );
         }
