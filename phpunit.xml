@@ -4,7 +4,7 @@
     xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
     bootstrap="./bootstrap.php"
     colors="true">
-    <coverage processUncoveredFiles="true">
+    <coverage processUncoveredFiles="true" pathCoverage="true">
         <include>
             <directory suffix=".php">./module/Activity/src</directory>
             <directory suffix=".php">./module/Application/src</directory>
