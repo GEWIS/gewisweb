@@ -12,7 +12,7 @@ class BootstrapElementError extends AbstractHelper
      *
      * @return string A Bootstrap class
      */
-    public function __invoke(ElementInterface $element)
+    public function __invoke(ElementInterface $element): string
     {
         return count($element->getMessages()) > 0 ? 'has-error' : '';
     }

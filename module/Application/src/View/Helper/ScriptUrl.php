@@ -15,12 +15,12 @@ class ScriptUrl extends AbstractHelper
      *
      * @var array
      */
-    protected $urls = [];
+    protected array $urls = [];
 
     /**
      * @return ScriptUrl
      */
-    public function __invoke()
+    public function __invoke(): self
     {
         return $this;
     }
@@ -33,8 +33,10 @@ class ScriptUrl extends AbstractHelper
      *
      * @return ScriptUrl
      */
-    public function requireUrl($name, $params = [])
-    {
+    public function requireUrl(
+        string $name,
+        array $params = [],
+    ): self {
         $scriptParams = [];
 
         foreach ($params as $param) {
@@ -56,8 +58,10 @@ class ScriptUrl extends AbstractHelper
      *
      * @return ScriptUrl
      */
-    public function requireUrls($names, $params)
-    {
+    public function requireUrls(
+        array $names,
+        array $params,
+    ): self {
         foreach ($names as $name) {
             $this->requireUrl($name, $params);
         }
@@ -70,7 +74,7 @@ class ScriptUrl extends AbstractHelper
      *
      * @return array
      */
-    public function getUrls()
+    public function getUrls(): array
     {
         return $this->urls;
     }

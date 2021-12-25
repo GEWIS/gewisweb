@@ -3,6 +3,7 @@
 namespace Photo\Controller;
 
 use Exception;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\{
     JsonModel,
@@ -33,7 +34,7 @@ class AlbumAdminController extends AbstractActionController
      */
     public function __construct(
         AdminService $adminService,
-        AlbumService $albumService
+        AlbumService $albumService,
     ) {
         $this->adminService = $adminService;
         $this->albumService = $albumService;
@@ -42,7 +43,7 @@ class AlbumAdminController extends AbstractActionController
     /**
      * Retrieves the main photo admin index page.
      */
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         $years = $this->albumService->getAlbumYears();
         $albumsByYear = [];
@@ -63,7 +64,7 @@ class AlbumAdminController extends AbstractActionController
     /**
      * Retrieves the album creation form and saves data if needed.
      */
-    public function createAction()
+    public function createAction(): Response|ViewModel
     {
         $form = $this->albumService->getCreateAlbumForm();
 
@@ -89,7 +90,7 @@ class AlbumAdminController extends AbstractActionController
     /**
      * Retrieves photos on a certain page.
      */
-    public function pageAction()
+    public function pageAction(): JsonModel|ViewModel
     {
         $albumId = $this->params()->fromRoute('album_id');
         $activePage = (int) $this->params()->fromRoute('page');
@@ -108,7 +109,7 @@ class AlbumAdminController extends AbstractActionController
     /**
      * Retrieves the album editing form and saves changes.
      */
-    public function editAction()
+    public function editAction(): Response|ViewModel
     {
         $albumId = $this->params()->fromRoute('album_id');
         $form = $this->albumService->getEditAlbumForm($albumId);
@@ -131,7 +132,7 @@ class AlbumAdminController extends AbstractActionController
         );
     }
 
-    public function addAction()
+    public function addAction(): ViewModel
     {
         $this->adminService->checkUploadAllowed();
 
@@ -148,7 +149,7 @@ class AlbumAdminController extends AbstractActionController
     /**
      * Uploads an image file and adds it to an album.
      */
-    public function uploadAction()
+    public function uploadAction(): JsonModel
     {
         $request = $this->getRequest();
         $result = [];
@@ -158,7 +159,7 @@ class AlbumAdminController extends AbstractActionController
             $album = $this->albumService->getAlbum($albumId);
 
             try {
-                $this->adminService->upload($request->getFiles(), $album);
+                $this->adminService->upload($request->getFiles()->toArray(), $album);
                 $result['success'] = true;
             } catch (Exception $e) {
                 $this->getResponse()->setStatusCode(500);
@@ -172,7 +173,7 @@ class AlbumAdminController extends AbstractActionController
     /**
      * Moves the album by setting the parent album to another album.
      */
-    public function moveAction()
+    public function moveAction(): JsonModel
     {
         $request = $this->getRequest();
         $result = [];
@@ -193,7 +194,7 @@ class AlbumAdminController extends AbstractActionController
     /**
      * Deletes the album.
      */
-    public function deleteAction()
+    public function deleteAction(): JsonModel
     {
         $request = $this->getRequest();
         $albumId = $this->params()->fromRoute('album_id');
@@ -207,7 +208,7 @@ class AlbumAdminController extends AbstractActionController
     /**
      * Regenerates the cover photo for the album.
      */
-    public function coverAction()
+    public function coverAction(): JsonModel
     {
         if ($this->getRequest()->isPost()) {
             $albumId = $this->params()->fromRoute('album_id');

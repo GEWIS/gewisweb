@@ -3,7 +3,7 @@
 namespace Frontpage\Service;
 
 use Application\Service\FileStorage;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Exception;
 use Frontpage\Form\Page as PageForm;
 use Frontpage\Mapper\Page as PageMapper;
@@ -22,6 +22,11 @@ use User\Permissions\NotAllowedException;
  */
 class Page
 {
+    /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
     /**
      * @var Translator
      */
@@ -48,24 +53,27 @@ class Page
     private array $storageConfig;
 
     /**
-     * @var AclService
+     * @param AclService $aclService
+     * @param Translator $translator
+     * @param FileStorage $storageService
+     * @param PageMapper $pageMapper
+     * @param PageForm $pageForm
+     * @param array $storageConfig
      */
-    private AclService $aclService;
-
     public function __construct(
+        AclService $aclService,
         Translator $translator,
         FileStorage $storageService,
         PageMapper $pageMapper,
         PageForm $pageForm,
         array $storageConfig,
-        AclService $aclService
     ) {
+        $this->aclService = $aclService;
         $this->translator = $translator;
         $this->storageService = $storageService;
         $this->pageMapper = $pageMapper;
         $this->pageForm = $pageForm;
         $this->storageConfig = $storageConfig;
-        $this->aclService = $aclService;
     }
 
     /**
@@ -87,8 +95,11 @@ class Page
      *
      * @return PageModel|null
      */
-    public function getPage(string $category, ?string $subCategory = null, ?string $name = null): ?PageModel
-    {
+    public function getPage(
+        string $category,
+        ?string $subCategory = null,
+        ?string $name = null,
+    ): ?PageModel {
         $page = $this->pageMapper->findPage($category, $subCategory, $name);
 
         if (null !== $page && !$this->aclService->isAllowed('view', $page)) {
@@ -181,6 +192,7 @@ class Page
      */
     public function createPage(Parameters $data): bool
     {
+        // TODO: Move form checks to the controller.
         $form = $this->getPageForm();
         $form->setData($data);
 
@@ -226,8 +238,10 @@ class Page
      *
      * @throws ORMException
      */
-    public function updatePage(int $pageId, Parameters $data): bool
-    {
+    public function updatePage(
+        int $pageId,
+        Parameters $data,
+    ): bool {
         if (!$this->aclService->isAllowed('edit', 'page')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit pages.'));
         }
@@ -253,10 +267,7 @@ class Page
      */
     public function deletePage(int $pageId): void
     {
-        $page = $this->getPageById($pageId);
-
-        $this->pageMapper->remove($page);
-        $this->pageMapper->flush();
+        $this->pageMapper->remove($this->getPageById($pageId));
     }
 
     /**
@@ -301,7 +312,7 @@ class Page
      *
      * @return PageForm
      */
-    public function getPageForm(int $pageId = null): PageForm
+    public function getPageForm(?int $pageId = null): PageForm
     {
         if (!$this->aclService->isAllowed('create', 'page')) {
             throw new NotAllowedException(

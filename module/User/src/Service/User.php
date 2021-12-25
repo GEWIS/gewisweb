@@ -33,6 +33,11 @@ use User\Permissions\NotAllowedException;
 class User
 {
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
      * @var Translator
      */
     private Translator $translator;
@@ -95,11 +100,22 @@ class User
     private PasswordForm $passwordForm;
 
     /**
-     * @var AclService
+     * @param AclService $aclService
+     * @param Translator $translator
+     * @param Bcrypt $bcrypt
+     * @param AuthenticationService $authService
+     * @param AuthenticationService $pinAuthService
+     * @param Email $emailService
+     * @param UserMapper $userMapper
+     * @param NewUserMapper $newUserMapper
+     * @param MemberMapper $memberMapper
+     * @param RegisterForm $registerForm
+     * @param ActivateForm $activateForm
+     * @param LoginForm $loginForm
+     * @param PasswordForm $passwordForm
      */
-    private AclService $aclService;
-
     public function __construct(
+        AclService $aclService,
         Translator $translator,
         Bcrypt $bcrypt,
         AuthenticationService $authService,
@@ -112,8 +128,8 @@ class User
         ActivateForm $activateForm,
         LoginForm $loginForm,
         PasswordForm $passwordForm,
-        AclService $aclService,
     ) {
+        $this->aclService = $aclService;
         $this->translator = $translator;
         $this->bcrypt = $bcrypt;
         $this->authService = $authService;
@@ -126,7 +142,6 @@ class User
         $this->activateForm = $activateForm;
         $this->loginForm = $loginForm;
         $this->passwordForm = $passwordForm;
-        $this->aclService = $aclService;
     }
 
     /**
@@ -137,12 +152,14 @@ class User
      *
      * @return bool
      */
-    public function activate(Parameters $data, NewUserModel $newUser): bool
-    {
+    public function activate(
+        Parameters $data,
+        NewUserModel $newUser,
+    ): bool {
         $form = $this->activateForm;
 
         $form->setData($data);
-
+        // TODO: Move form validation to controller.
         if (!$form->isValid()) {
             return false;
         }
@@ -177,7 +194,7 @@ class User
     {
         $form = $this->registerForm;
         $form->setData($data);
-
+        // TODO: Move form validation to controller.
         if (!$form->isValid()) {
             return null;
         }
@@ -244,7 +261,7 @@ class User
     {
         $form = $this->registerForm;
         $form->setData($data);
-
+        // TODO: Move form validation to controller.
         if (!$form->isValid()) {
             return null;
         }
@@ -295,7 +312,7 @@ class User
         $form = $this->getPasswordForm();
 
         $form->setData($data);
-
+        // TODO: Move form validation to controller.
         if (!$form->isValid()) {
             return false;
         }
@@ -344,7 +361,7 @@ class User
     {
         $form = $this->getLoginForm();
         $form->setData($data);
-
+        // TODO: Move form validation to controller.
         if (!$form->isValid()) {
             return null;
         }
@@ -423,7 +440,7 @@ class User
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
         for ($i = 0; $i < $length; ++$i) {
-            $ret .= $alphabet[rand(0, strlen($alphabet) - 1)];
+            $ret .= $alphabet[random_int(0, strlen($alphabet) - 1)];
         }
 
         return $ret;

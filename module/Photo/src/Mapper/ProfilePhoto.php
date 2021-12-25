@@ -21,7 +21,7 @@ class ProfilePhoto extends BaseMapper
      *
      * @throws Exception
      */
-    public function getProfilePhotoByLidnr($lidnr)
+    public function getProfilePhotoByLidnr(int $lidnr): ?ProfilePhotoModel
     {
         return $this->getRepository()->findOneBy(
             [

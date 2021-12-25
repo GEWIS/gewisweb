@@ -24,7 +24,6 @@ use Company\Service\{
 };
 use Interop\Container\ContainerInterface;
 use User\Authorization\AclServiceFactory;
-use User\Permissions\NotAllowedException;
 
 class Module
 {
@@ -152,10 +151,11 @@ class Module
      *
      * @return array Service configuration
      */
-    public function getServiceConfig()
+    public function getServiceConfig(): array
     {
         $serviceFactories = [
             'company_service_company' => function (ContainerInterface $container) {
+                $aclService = $container->get('company_service_acl');
                 $translator = $container->get('translator');
                 $storageService = $container->get('application_service_storage');
                 $companyMapper = $container->get('company_mapper_company');
@@ -172,9 +172,9 @@ class Module
                 $jobForm = $container->get('company_admin_job_form');
                 $jobCategoryForm = $container->get('company_admin_jobcategory_form');
                 $jobLabelForm = $container->get('company_admin_joblabel_form');
-                $aclService = $container->get('company_service_acl');
 
                 return new CompanySerivce(
+                    $aclService,
                     $translator,
                     $storageService,
                     $companyMapper,
@@ -191,22 +191,21 @@ class Module
                     $jobForm,
                     $jobCategoryForm,
                     $jobLabelForm,
-                    $aclService,
                 );
             },
             'company_service_companyquery' => function (ContainerInterface $container) {
+                $aclService = $container->get('company_service_acl');
                 $translator = $container->get('translator');
                 $jobMapper = $container->get('company_mapper_job');
                 $categoryMapper = $container->get('company_mapper_jobcategory');
                 $labelMapper = $container->get('company_mapper_joblabel');
-                $aclService = $container->get('company_service_acl');
 
                 return new CompanyQueryService(
+                    $aclService,
                     $translator,
                     $jobMapper,
                     $categoryMapper,
                     $labelMapper,
-                    $aclService,
                 );
             },
         ];

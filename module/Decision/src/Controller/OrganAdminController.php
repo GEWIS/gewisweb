@@ -4,6 +4,7 @@ namespace Decision\Controller;
 
 use Decision\Service\Organ as OrganService;
 use Laminas\Form\FormInterface;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
@@ -27,7 +28,7 @@ class OrganAdminController extends AbstractActionController
     /**
      * Index action, shows all active organs.
      */
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         return new ViewModel(
             [
@@ -39,7 +40,7 @@ class OrganAdminController extends AbstractActionController
     /**
      * Show an organ.
      */
-    public function editAction()
+    public function editAction(): Response|ViewModel
     {
         $organId = $this->params()->fromRoute('organ_id');
         $organInformation = $this->organService->getEditableOrganInformation($organId);

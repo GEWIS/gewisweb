@@ -12,14 +12,16 @@ class ModuleIsActive extends AbstractHelper
      *
      * @var ContainerInterface
      */
-    protected $locator;
+    protected ContainerInterface $locator;
 
     /**
      * Get the active module.
      *
+     * @param array $condition
+     *
      * @return bool $condition
      */
-    public function __invoke($condition)
+    public function __invoke(array $condition): bool
     {
         $info = $this->getRouteInfo();
         foreach ($condition as $key => $cond) {
@@ -33,8 +35,10 @@ class ModuleIsActive extends AbstractHelper
 
     /**
      * Get the module.
+     *
+     * @return array
      */
-    public function getRouteInfo()
+    public function getRouteInfo(): array
     {
         $match = $this->getServiceLocator()->get('application')
             ->getMvcEvent()->getRouteMatch();
@@ -52,7 +56,7 @@ class ModuleIsActive extends AbstractHelper
      *
      * @return ContainerInterface
      */
-    protected function getServiceLocator()
+    protected function getServiceLocator(): ContainerInterface
     {
         return $this->locator;
     }
@@ -62,7 +66,7 @@ class ModuleIsActive extends AbstractHelper
      *
      * @param ContainerInterface $locator
      */
-    public function setServiceLocator($locator)
+    public function setServiceLocator(ContainerInterface $locator): void
     {
         $this->locator = $locator;
     }

@@ -2,6 +2,7 @@
 
 namespace Activity\Form;
 
+use Activity\Model\SignupList as SignupListModel;
 use DateTime;
 use Exception;
 use Laminas\Form\Element\{
@@ -18,13 +19,19 @@ use Laminas\Validator\Callback;
 
 class SignupList extends Fieldset implements InputFilterProviderInterface
 {
+    /**
+     * @var Translator
+     */
     private Translator $translator;
 
+    /**
+     * @param Translator $translator
+     */
     public function __construct(Translator $translator)
     {
         parent::__construct('signuplist');
         $this->setHydrator(new ClassMethodsHydrator(false))
-            ->setObject(new \Activity\Model\SignupList());
+            ->setObject(new SignupListModel());
 
         $this->add(
             [
@@ -115,8 +122,10 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
      *
      * @return bool
      */
-    public static function beforeCloseDate($value, $context = []): bool
-    {
+    public static function beforeCloseDate(
+        string $value,
+        array $context = [],
+    ): bool {
         try {
             $thisTime = new DateTime($value);
             $closeTime = isset($context['closeDate']) ? new DateTime($context['closeDate']) : new DateTime('now');

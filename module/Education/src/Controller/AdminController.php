@@ -35,12 +35,12 @@ class AdminController extends AbstractActionController
         $this->educationTempConfig = $educationTempConfig;
     }
 
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         return new ViewModel();
     }
 
-    public function addCourseAction()
+    public function addCourseAction(): ViewModel
     {
         $request = $this->getRequest();
 
@@ -73,7 +73,7 @@ class AdminController extends AbstractActionController
         );
     }
 
-    public function bulkExamAction()
+    public function bulkExamAction(): ViewModel
     {
         $request = $this->getRequest();
 
@@ -103,7 +103,7 @@ class AdminController extends AbstractActionController
         );
     }
 
-    public function bulkSummaryAction()
+    public function bulkSummaryAction(): ViewModel
     {
         $request = $this->getRequest();
 
@@ -136,7 +136,7 @@ class AdminController extends AbstractActionController
     /**
      * Edit several exams in bulk.
      */
-    public function editExamAction()
+    public function editExamAction(): ViewModel
     {
         $request = $this->getRequest();
 
@@ -148,12 +148,10 @@ class AdminController extends AbstractActionController
             );
         }
 
-        $config = $this->educationTempConfig;
-
         return new ViewModel(
             [
                 'form' => $this->examService->getBulkExamForm(),
-                'config' => $config,
+                'config' => $this->educationTempConfig,
             ]
         );
     }
@@ -161,7 +159,7 @@ class AdminController extends AbstractActionController
     /**
      * Edit summaries in bulk.
      */
-    public function editSummaryAction()
+    public function editSummaryAction(): ViewModel
     {
         $request = $this->getRequest();
 
@@ -183,7 +181,7 @@ class AdminController extends AbstractActionController
         );
     }
 
-    public function deleteTempAction()
+    public function deleteTempAction(): JsonModel|ViewModel
     {
         $request = $this->getRequest();
         if ($request->isPost()) {

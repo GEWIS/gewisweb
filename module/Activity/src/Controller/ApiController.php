@@ -13,33 +13,33 @@ use User\Permissions\NotAllowedException;
 class ApiController extends AbstractActionController
 {
     /**
-     * @var ActivityQueryService
-     */
-    private ActivityQueryService $activityQueryService;
-
-    /**
      * @var AclService
      */
     private AclService $aclService;
 
     /**
+     * @var ActivityQueryService
+     */
+    private ActivityQueryService $activityQueryService;
+
+    /**
      * ApiController constructor.
      *
-     * @param ActivityQueryService $activityQueryService
      * @param AclService $aclService
+     * @param ActivityQueryService $activityQueryService
      */
     public function __construct(
-        ActivityQueryService $activityQueryService,
         AclService $aclService,
+        ActivityQueryService $activityQueryService,
     ) {
-        $this->activityQueryService = $activityQueryService;
         $this->aclService = $aclService;
+        $this->activityQueryService = $activityQueryService;
     }
 
     /**
      * List all activities.
      */
-    public function listAction()
+    public function listAction(): JsonModel
     {
         if (!$this->aclService->isAllowed('list', 'activityApi')) {
             $translator = $this->activityQueryService->getTranslator();

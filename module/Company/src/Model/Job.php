@@ -306,7 +306,7 @@ class Job
      *
      * @param CompanyLocalisedText $website
      */
-    public function setWebsite(CompanyLocalisedText $website)
+    public function setWebsite(CompanyLocalisedText $website): void
     {
         $this->website = $website;
     }

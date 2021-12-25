@@ -15,6 +15,9 @@ class ApiMapper implements AdapterInterface
      */
     protected ApiUserMapper $mapper;
 
+    /**
+     * @var string
+     */
     private string $token;
 
     /**
@@ -49,9 +52,8 @@ class ApiMapper implements AdapterInterface
      * Sets the credentials used to authenticate.
      *
      * @param string $token
-     * @return void
      */
-    public function setCredentials(string $token)
+    public function setCredentials(string $token): void
     {
         $this->token = $token;
     }

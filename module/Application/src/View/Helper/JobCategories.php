@@ -2,17 +2,20 @@
 
 namespace Application\View\Helper;
 
-use Company\Service\CompanyQuery;
+use Company\Service\CompanyQuery as CompanyQueryService;
 use Laminas\View\Helper\AbstractHelper;
 
 class JobCategories extends AbstractHelper
 {
     /**
-     * @var CompanyQuery
+     * @var CompanyQueryService
      */
-    private $companyQueryService;
+    private CompanyQueryService $companyQueryService;
 
-    public function __construct(CompanyQuery $companyQueryService)
+    /**
+     * @param CompanyQueryService $companyQueryService
+     */
+    public function __construct(CompanyQueryService $companyQueryService)
     {
         $this->companyQueryService = $companyQueryService;
     }
@@ -22,7 +25,7 @@ class JobCategories extends AbstractHelper
      *
      * @return array
      */
-    public function __invoke()
+    public function __invoke(): array
     {
         return $this->companyQueryService->getCategoryList(true);
     }

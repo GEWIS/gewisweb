@@ -23,7 +23,7 @@ class PageController extends AbstractActionController
         $this->pageService = $pageService;
     }
 
-    public function pageAction()
+    public function pageAction(): ViewModel
     {
         $category = $this->params()->fromRoute('category');
         $subCategory = $this->params()->fromRoute('sub_category');

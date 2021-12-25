@@ -9,25 +9,27 @@ use Laminas\View\Helper\AbstractHelper;
 class ExamUrl extends AbstractHelper
 {
     /**
-     * Exam service..
+     * Exam service.
      *
      * @var ExamService
      */
-    protected $examService;
+    protected ExamService $examService;
 
     /**
      * Education data dir.
      *
      * @var string
      */
-    protected $dir;
+    protected string $dir;
 
     /**
      * Get the exam URL.
      *
+     * @param Exam $exam
+     *
      * @return string
      */
-    public function __invoke(Exam $exam)
+    public function __invoke(Exam $exam): string
     {
         return $this->getView()->basePath() . '/' . $this->getDir() . '/' . $this->examService->examToFilename($exam);
     }
@@ -37,7 +39,7 @@ class ExamUrl extends AbstractHelper
      *
      * @return string
      */
-    public function getDir()
+    public function getDir(): string
     {
         return $this->dir;
     }
@@ -47,7 +49,7 @@ class ExamUrl extends AbstractHelper
      *
      * @param string $dir
      */
-    public function setDir($dir)
+    public function setDir(string $dir): void
     {
         $this->dir = $dir;
     }
@@ -57,15 +59,17 @@ class ExamUrl extends AbstractHelper
      *
      * @return ExamService
      */
-    public function getExamService()
+    public function getExamService(): ExamService
     {
         return $this->examService;
     }
 
     /**
      * Set the authentication service.
+     *
+     * @param ExamService $examService
      */
-    public function setExamService(ExamService $examService)
+    public function setExamService(ExamService $examService): void
     {
         $this->examService = $examService;
     }

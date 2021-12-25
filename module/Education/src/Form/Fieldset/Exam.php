@@ -24,8 +24,14 @@ use Laminas\Validator\{
 
 class Exam extends Fieldset implements InputFilterProviderInterface
 {
-    protected $config;
+    /**
+     * @var array
+     */
+    protected array $config;
 
+    /**
+     * @param Translator $translator
+     */
     public function __construct(Translator $translator)
     {
         parent::__construct('exam');
@@ -94,7 +100,7 @@ class Exam extends Fieldset implements InputFilterProviderInterface
      *
      * @param array $config
      */
-    public function setConfig($config): void
+    public function setConfig(array $config): void
     {
         $this->config = $config['education_temp'];
     }

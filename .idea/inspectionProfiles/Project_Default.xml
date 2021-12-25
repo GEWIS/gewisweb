@@ -8,10 +8,16 @@
       <option name="SHOW_SNIFF_NAMES" value="true" />
       <option name="EXTENSIONS" value="php" />
     </inspection_tool>
-    <inspection_tool class="PhpStanGlobal" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+    <inspection_tool class="PhpMissingFieldTypeInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PhpMissingParamTypeInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PhpMissingReturnTypeInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PhpStanGlobal" enabled="false" level="WEAK WARNING" enabled_by_default="false">
       <option name="FULL_PROJECT" value="true" />
       <option name="level" value="5" />
       <option name="config" value="$PROJECT_DIR$/phpstan.neon" />
+    </inspection_tool>
+    <inspection_tool class="PhpUnused" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="SUPPRESS_GETTERS_AND_SETTERS" value="true" />
     </inspection_tool>
   </profile>
 </component>

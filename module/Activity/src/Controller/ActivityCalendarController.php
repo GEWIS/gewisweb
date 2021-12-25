@@ -8,6 +8,7 @@ use Activity\Service\{
     ActivityCalendar as ActivityCalendarService,
     ActivityCalendarForm as ActivityCalendarFormService,
 };
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
@@ -15,6 +16,16 @@ use Laminas\Mvc\I18n\Translator;
 
 class ActivityCalendarController extends AbstractActionController
 {
+    /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
     /**
      * @var ActivityCalendarService
      */
@@ -24,8 +35,6 @@ class ActivityCalendarController extends AbstractActionController
      * @var ActivityCalendarFormService
      */
     private ActivityCalendarFormService $calendarFormService;
-
-    private AclService $aclService;
 
     /**
      * @var ActivityCalendarProposalForm
@@ -37,35 +46,33 @@ class ActivityCalendarController extends AbstractActionController
      */
     private array $calendarConfig;
 
-    private Translator $translator;
-
     /**
      * ActivityCalendarController constructor.
      *
+     * @param AclService $aclService
+     * @param Translator $translator
      * @param ActivityCalendarService $calendarService
      * @param ActivityCalendarFormService $calendarFormService
-     * @param AclService $aclService
      * @param ActivityCalendarProposalForm $calendarProposalForm
      * @param array $calendarConfig
-     * @param Translator $translator
      */
     public function __construct(
+        AclService $aclService,
+        Translator $translator,
         ActivityCalendarService $calendarService,
         ActivityCalendarFormService $calendarFormService,
-        AclService $aclService,
         ActivityCalendarProposalForm $calendarProposalForm,
         array $calendarConfig,
-        Translator $translator
     ) {
+        $this->aclService = $aclService;
+        $this->translator = $translator;
         $this->calendarService = $calendarService;
         $this->calendarFormService = $calendarFormService;
-        $this->aclService = $aclService;
         $this->calendarProposalForm = $calendarProposalForm;
         $this->calendarConfig = $calendarConfig;
-        $this->translator = $translator;
     }
 
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         $config = $this->calendarConfig;
 
@@ -82,7 +89,7 @@ class ActivityCalendarController extends AbstractActionController
         );
     }
 
-    public function deleteAction()
+    public function deleteAction(): Response|ViewModel
     {
         $request = $this->getRequest();
 
@@ -94,7 +101,7 @@ class ActivityCalendarController extends AbstractActionController
         return $this->notFoundAction();
     }
 
-    public function approveAction()
+    public function approveAction(): Response|ViewModel
     {
         $request = $this->getRequest();
 
@@ -106,7 +113,7 @@ class ActivityCalendarController extends AbstractActionController
         return $this->notFoundAction();
     }
 
-    public function createAction()
+    public function createAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('create', 'activity_calendar_proposal')) {
             throw new NotAllowedException(

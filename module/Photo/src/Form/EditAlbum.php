@@ -8,12 +8,16 @@ use Laminas\Form\Element\{
     Text,
 };
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputFilter;
+use Laminas\I18n\Validator\Alnum;
+use Laminas\InputFilter\InputProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\NotEmpty;
 
-class EditAlbum extends Form
+class EditAlbum extends Form implements InputProviderInterface
 {
+    /**
+     * @param Translator $translate
+     */
     public function __construct(Translator $translate)
     {
         parent::__construct();
@@ -59,30 +63,28 @@ class EditAlbum extends Form
                 ],
             ]
         );
-
-        $this->initFilters();
     }
 
-    protected function initFilters()
+    /**
+     * @return array
+     */
+    public function getInputSpecification(): array
     {
-        $filter = new InputFilter();
-
-        $filter->add(
-            [
-                'name' => 'name',
+        return [
+            'name' => [
                 'required' => true,
                 'validators' => [
-                    ['name' => NotEmpty::class],
                     [
-                        'name' => 'alnum',
+                        'name' => NotEmpty::class,
+                    ],
+                    [
+                        'name' => Alnum::class,
                         'options' => [
                             'allowWhiteSpace' => true,
                         ],
                     ],
                 ],
-            ]
-        );
-
-        $this->setInputFilter($filter);
+            ],
+        ];
     }
 }

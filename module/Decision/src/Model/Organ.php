@@ -66,8 +66,8 @@ class Organ
      * Reference to foundation of organ.
      */
     #[OneToOne(
-        targetEntity: Foundation::class,
         inversedBy: "organ",
+        targetEntity: Foundation::class,
     )]
     #[JoinColumn(
         name: "r_meeting_type",
@@ -110,8 +110,8 @@ class Organ
      * Reference to members.
      */
     #[OneToMany(
-        targetEntity: OrganMember::class,
         mappedBy: "organ",
+        targetEntity: OrganMember::class,
     )]
     protected Collection $members;
 
@@ -156,8 +156,8 @@ class Organ
      * All organInformation for this organ.
      */
     #[OneToMany(
-        targetEntity: OrganInformation::class,
         mappedBy: "organ",
+        targetEntity: OrganInformation::class,
         cascade: ["persist", "remove"],
     )]
     protected Collection $organInformation;
@@ -361,7 +361,7 @@ class Organ
      *
      * @return array subdecisions[0]->getDate < subdecision[1]->getDate
      */
-    public function getOrderedSubdecisions()
+    public function getOrderedSubdecisions(): array
     {
         $array = $this->subdecisions->toArray();
         usort($array, function ($dA, $dB) {

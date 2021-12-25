@@ -4,6 +4,8 @@ namespace Education\Controller;
 
 use Education\Form\SearchCourse as SearchCourseForm;
 use Education\Service\Exam as ExamService;
+use Laminas\Http\Response;
+use Laminas\Http\Response\Stream;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
@@ -33,33 +35,36 @@ class EducationController extends AbstractActionController
         $this->searchCourseForm = $searchCourseForm;
     }
 
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
-        $request = $this->getRequest();
-
-        $query = $request->getQuery();
+        $query = $this->getRequest()->getQuery();
+        $form = $this->searchCourseForm;
 
         if (isset($query['query'])) {
-            $courses = $this->examService->searchCourse($query->toArray());
+            $form->setData($query->toArray());
 
-            if (null !== $courses) {
-                return new ViewModel(
-                    [
-                        'form' => $this->searchCourseForm,
-                        'courses' => $courses,
-                    ]
-                );
+            if ($form->isValid()) {
+                $courses = $this->examService->searchCourse($form->getData());
+
+                if (null !== $courses) {
+                    return new ViewModel(
+                        [
+                            'form' => $form,
+                            'courses' => $courses,
+                        ]
+                    );
+                }
             }
         }
 
         return new ViewModel(
             [
-                'form' => $this->searchCourseForm,
+                'form' => $form,
             ]
         );
     }
 
-    public function courseAction()
+    public function courseAction(): Response|ViewModel
     {
         $code = $this->params()->fromRoute('code');
         $course = $this->examService->getCourse($code);
@@ -89,7 +94,7 @@ class EducationController extends AbstractActionController
     /**
      * Download an exam.
      */
-    public function downloadAction()
+    public function downloadAction(): ?Stream
     {
         $id = $this->params()->fromRoute('id');
 

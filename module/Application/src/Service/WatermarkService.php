@@ -20,12 +20,31 @@ class WatermarkService
     // The quality of the produced PDFs
     private const DPI = 150;
 
+    /**
+     * @var array
+     */
     private array $storageConfig;
+
+    /**
+     * @var AuthenticationService
+     */
     private AuthenticationService $authService;
+
+    /**
+     * @var string
+     */
     private string $remoteAddress;
 
-    public function __construct(array $storageConfig, AuthenticationService $authService, string $remoteAddress)
-    {
+    /**
+     * @param array $storageConfig
+     * @param AuthenticationService $authService
+     * @param string $remoteAddress
+     */
+    public function __construct(
+        array $storageConfig,
+        AuthenticationService $authService,
+        string $remoteAddress,
+    ) {
         $this->storageConfig = $storageConfig;
         $this->authService = $authService;
         $this->remoteAddress = $remoteAddress;
@@ -33,7 +52,9 @@ class WatermarkService
 
     /**
      * @param string $path The CFS path of the file to watermark
+     *
      * @return string The CFS path of the watermarked file
+     *
      * @throws ImagickException
      * @throws ImagickDrawException
      */

@@ -14,10 +14,9 @@ class Decision extends BaseMapper
      *
      * @return array
      */
-    public function search($query)
+    public function search(string $query): array
     {
         $qb = $this->getRepository()->createQueryBuilder('d');
-
         $qb->select('d, m')
             ->where('d.content LIKE :query')
             ->join('d.meeting', 'm')

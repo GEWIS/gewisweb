@@ -11,7 +11,6 @@ use Laminas\Http\{
     Response,
 };
 use UnexpectedValueException;
-use User\Model\User as UserModel;
 
 class Session extends SessionStorage
 {
@@ -35,6 +34,11 @@ class Session extends SessionStorage
      */
     private array $config;
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param array $config
+     */
     public function __construct(
         Request $request,
         Response $response,
@@ -121,8 +125,6 @@ class Session extends SessionStorage
      * Defined by Laminas\Authentication\Storage\StorageInterface.
      *
      * @param int $contents
-     *
-     * @return void
      */
     public function write($contents): void
     {
@@ -137,8 +139,6 @@ class Session extends SessionStorage
      * Store the current session.
      *
      * @param int $lidnr the lidnr of the logged in user
-     *
-     * @return void
      */
     protected function saveSession(int $lidnr): void
     {
@@ -164,8 +164,6 @@ class Session extends SessionStorage
 
     /**
      * Defined by Laminas\Authentication\Storage\StorageInterface.
-     *
-     * @return void
      */
     public function clear(): void
     {
@@ -180,8 +178,6 @@ class Session extends SessionStorage
      * Store the session token as a cookie.
      *
      * @param string $jwt The session token to store
-     *
-     * @return void
      */
     protected function saveCookie(string $jwt): void
     {
@@ -193,8 +189,6 @@ class Session extends SessionStorage
 
     /**
      * Destroy the cookie holding the stored session.
-     *
-     * @return void
      */
     protected function clearCookie(): void
     {

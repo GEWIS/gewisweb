@@ -47,8 +47,10 @@ abstract class LocalisedText
      * @param string|null $valueEN
      * @param string|null $valueNL
      */
-    public function __construct(?string $valueEN, ?string $valueNL)
-    {
+    public function __construct(
+        ?string $valueEN,
+        ?string $valueNL,
+    ) {
         $this->valueEN = $valueEN;
         $this->valueNL = $valueNL;
     }
@@ -81,8 +83,10 @@ abstract class LocalisedText
      * @param string|null $valueEN
      * @param string|null $valueNL
      */
-    public function updateValues(?string $valueEN, ?string $valueNL): void
-    {
+    public function updateValues(
+        ?string $valueEN,
+        ?string $valueNL,
+    ): void {
         $this->updateValueEN($valueEN);
         $this->updateValueNL($valueNL);
     }

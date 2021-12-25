@@ -13,16 +13,16 @@ class MaxActivities extends BaseMapper
      * @param int $organId
      * @param int $periodId
      *
-     * @return MaxActivitiesModel
+     * @return MaxActivitiesModel|null
      */
-    public function getMaxActivityOptionsByOrganPeriod($organId, $periodId)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('x')
-            ->from('Activity\Model\MaxActivities', 'x')
-            ->andWhere('x.organ = :organ')
+    public function getMaxActivityOptionsByOrganPeriod(
+        int $organId,
+        int $periodId,
+    ): ?MaxActivitiesModel {
+        $qb = $this->getRepository()->createQueryBuilder('m');
+        $qb->where('m.organ = :organ')
             ->setParameter('organ', $organId)
-            ->andWhere('x.period = :period')
+            ->andWhere('m.period = :period')
             ->setParameter('period', $periodId)
             ->setMaxResults(1);
 

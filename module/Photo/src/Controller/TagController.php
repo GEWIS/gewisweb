@@ -23,7 +23,7 @@ class TagController extends AbstractActionController
         $this->photoService = $photoService;
     }
 
-    public function addAction()
+    public function addAction(): JsonModel
     {
         $request = $this->getRequest();
         $result = [];
@@ -42,7 +42,7 @@ class TagController extends AbstractActionController
         return new JsonModel($result);
     }
 
-    public function removeAction()
+    public function removeAction(): JsonModel
     {
         $request = $this->getRequest();
         $result = [];

@@ -23,6 +23,7 @@ use Laminas\Session\{
     Container as SessionContainer,
 };
 use Laminas\Stdlib\Parameters;
+use Laminas\Stdlib\ResponseInterface;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
@@ -32,6 +33,16 @@ use User\Permissions\NotAllowedException;
  */
 class AdminController extends AbstractActionController
 {
+    /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
     /**
      * @var ActivityService
      */
@@ -58,45 +69,35 @@ class AdminController extends AbstractActionController
     private SignupMapper $signupMapper;
 
     /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
      * AdminController constructor.
      *
+     * @param AclService $aclService
+     * @param Translator $translator
      * @param ActivityService $activityService
      * @param ActivityQueryService $activityQueryService
      * @param SignupService $signupService
      * @param SignupListQueryService $signupListQueryService
      * @param SignupMapper $signupMapper
-     * @param AclService $aclService
-     * @param Translator $translator
      */
     public function __construct(
+        AclService $aclService,
+        Translator $translator,
         ActivityService $activityService,
         ActivityQueryService $activityQueryService,
         SignupService $signupService,
         SignupListQueryService $signupListQueryService,
         SignupMapper $signupMapper,
-        AclService $aclService,
-        Translator $translator
     ) {
+        $this->aclService = $aclService;
+        $this->translator = $translator;
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;
         $this->signupService = $signupService;
         $this->signupListQueryService = $signupListQueryService;
         $this->signupMapper = $signupMapper;
-        $this->aclService = $aclService;
-        $this->translator = $translator;
     }
 
-    public function updateAction()
+    public function updateAction(): Response|ViewModel
     {
         $activityId = (int) $this->params('id');
         $activity = $this->activityQueryService->getActivityWithDetails($activityId);
@@ -194,8 +195,16 @@ class AdminController extends AbstractActionController
         return $viewModel;
     }
 
-    protected function redirectActivityAdmin($success, $message)
-    {
+    /**
+     * @param bool $success
+     * @param string $message
+     *
+     * @return Response
+     */
+    protected function redirectActivityAdmin(
+        bool $success,
+        string $message,
+    ): Response {
         if ($success) {
             $this->plugin('FlashMessenger')->addSuccessMessage($message);
         } else {
@@ -208,9 +217,9 @@ class AdminController extends AbstractActionController
     /**
      * Return the data of the activity participants.
      *
-     * @return ViewModel|array
+     * @return ViewModel
      */
-    public function participantsAction()
+    public function participantsAction(): ViewModel
     {
         $activityId = (int) $this->params('id');
         $signupListId = (int) $this->params('signupList');
@@ -290,10 +299,10 @@ class AdminController extends AbstractActionController
             unset($activityAdminSession->message);
         }
 
-        return $result;
+        return new ViewModel($result);
     }
 
-    public function externalSignupAction()
+    public function externalSignupAction(): \Laminas\Http\PhpEnvironment\Response|ResponseInterface|ViewModel
     {
         $activityId = (int) $this->params('id');
         $signupListId = (int) $this->params('signupList');
@@ -378,7 +387,7 @@ class AdminController extends AbstractActionController
         );
     }
 
-    public function externalSignoffAction()
+    public function externalSignoffAction(): \Laminas\Http\PhpEnvironment\Response|ResponseInterface|ViewModel
     {
         $signupId = (int) $this->params('id');
         $signup = $this->signupMapper->find($signupId);
@@ -439,7 +448,7 @@ class AdminController extends AbstractActionController
     /**
      * Show a list of all activities this user can manage.
      */
-    public function viewAction()
+    public function viewAction(): array
     {
         if (!$this->aclService->isAllowed('viewAdmin', 'activity')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to administer activities'));

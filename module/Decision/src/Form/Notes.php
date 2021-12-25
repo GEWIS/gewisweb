@@ -24,6 +24,9 @@ class Notes extends Form implements InputFilterProviderInterface
      */
     protected Translator $translator;
 
+    /**
+     * @param Translator $translator
+     */
     public function __construct(Translator $translator)
     {
         parent::__construct();

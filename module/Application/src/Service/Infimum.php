@@ -29,6 +29,11 @@ class Infimum
      */
     private array $infimumConfig;
 
+    /**
+     * @param AbstractAdapter $infimumCache
+     * @param Translator $translator
+     * @param array $infimumConfig
+     */
     public function __construct(
         AbstractAdapter $infimumCache,
         Translator $translator,

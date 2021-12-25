@@ -13,29 +13,14 @@ class SignupList extends BaseMapper
      *
      * @return SignupListModel|null
      */
-    public function getSignupListByIdAndActivity($signupListId, $activityId)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\SignupList', 'a')
-            ->where('a.id = :signupList')
-            ->andWhere('a.activity = :activity')
-            ->setParameter('signupList', $signupListId)
-            ->setParameter('activity', $activityId);
-        $result = $qb->getQuery()->getResult();
-
-        return !empty($result) ? $result[0] : null;
-    }
-
-    public function getSignupListsOfActivity($activityId)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('a')
-            ->from('Activity\Model\SignupList', 'a')
-            ->where('a.activity = :activity')
-            ->setParameter('activity', $activityId);
-
-        return $qb->getQuery()->getResult();
+    public function getSignupListByIdAndActivity(
+        int $signupListId,
+        int $activityId,
+    ): ?SignupListModel {
+        return $this->findOneBy([
+            'id' => $signupListId,
+            'activity' => $activityId,
+        ]);
     }
 
     /**

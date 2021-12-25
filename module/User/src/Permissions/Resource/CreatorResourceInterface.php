@@ -12,5 +12,5 @@ interface CreatorResourceInterface extends ResourceInterface
      *
      * @return User
      */
-    public function getResourceCreator();
+    public function getResourceCreator(): User;
 }

@@ -40,7 +40,7 @@ class Member extends BaseMapper
         string $name,
         int $maxResults = 32,
         string $orderColumn = 'generation',
-        string $orderDirection = 'DESC'
+        string $orderDirection = 'DESC',
     ): array {
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('lidnr', 'lidnr', 'integer')
@@ -100,7 +100,6 @@ class Member extends BaseMapper
     public function findOrgans(MemberModel $member): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-
         $qb->select('DISTINCT o')
             ->from(OrganModel::class, 'o')
             ->join('o.members', 'om')

@@ -2,15 +2,19 @@
 
 namespace Frontpage\Service;
 
-use Activity\Model\Activity;
-use Company\Service\Company;
+use Activity\Mapper\Activity as ActivityMapper;
+use Activity\Model\Activity as ActivityModel;
+use Company\Service\Company as CompanyService;
 use DateTime;
-use Decision\Service\Member;
-use Doctrine\Common\Proxy\Exception\InvalidArgumentException;
-use Frontpage\Model\NewsItem;
+use Decision\Service\Member as MemberService;
+use Frontpage\Model\NewsItem as NewsItemModel;
+use Frontpage\Service\{
+    News as NewsService,
+    Poll as PollService,
+};
 use Laminas\Mvc\I18n\Translator;
-use Photo\Mapper\Tag;
-use Photo\Service\Photo;
+use Photo\Mapper\Tag as TagMapper;
+use Photo\Service\Photo as PhotoService;
 
 /**
  * Frontpage service.
@@ -20,62 +24,74 @@ class Frontpage
     /**
      * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
-     * @var Poll
+     * @var PollService
      */
-    private $pollService;
+    private Poll $pollService;
 
     /**
-     * @var News
+     * @var NewsService
      */
-    private $newsService;
+    private News $newsService;
 
     /**
-     * @var Member
+     * @var MemberService
      */
-    private $memberService;
+    private MemberService $memberService;
 
     /**
-     * @var Company
+     * @var CompanyService
      */
-    private $companyService;
+    private CompanyService $companyService;
 
     /**
-     * @var Photo
+     * @var PhotoService
      */
-    private $photoService;
+    private PhotoService $photoService;
 
     /**
-     * @var Tag
+     * @var TagMapper
      */
-    private $tagMapper;
+    private TagMapper $tagMapper;
 
     /**
-     * @var \Activity\Mapper\Activity
+     * @var ActivityMapper
      */
-    private $activityMapper;
+    private ActivityMapper $activityMapper;
 
     /**
      * @var array
      */
-    private $frontpageConfig;
+    private array $frontpageConfig;
 
     /**
      * @var array
      */
     private array $photoConfig;
 
+    /**
+     * @param Translator $translator
+     * @param Poll $pollService
+     * @param News $newsService
+     * @param MemberService $memberService
+     * @param CompanyService $companyService
+     * @param PhotoService $photoService
+     * @param TagMapper $tagMapper
+     * @param ActivityMapper $activityMapper
+     * @param array $frontpageConfig
+     * @param array $photoConfig
+     */
     public function __construct(
         Translator $translator,
         Poll $pollService,
         News $newsService,
-        Member $memberService,
-        Company $companyService,
-        Photo $photoService,
-        Tag $tagMapper,
-        \Activity\Mapper\Activity $activityMapper,
+        MemberService $memberService,
+        CompanyService $companyService,
+        PhotoService $photoService,
+        TagMapper $tagMapper,
+        ActivityMapper $activityMapper,
         array $frontpageConfig,
         array $photoConfig,
     ) {
@@ -96,15 +112,17 @@ class Frontpage
      *
      * @return Translator
      */
-    public function getTranslator()
+    public function getTranslator(): Translator
     {
         return $this->translator;
     }
 
     /**
      * Retrieves all data which is needed on the home page.
+     *
+     * @return array
      */
-    public function getHomePageData()
+    public function getHomePageData(): array
     {
         $birthdayInfo = $this->getBirthdayInfo();
         $activities = $this->getUpcomingActivities();
@@ -134,7 +152,7 @@ class Frontpage
      *
      * @return array
      */
-    public function getBirthdayInfo()
+    public function getBirthdayInfo(): array
     {
         $birthdayMembers = $this->memberService->getBirthdayMembers();
         $today = new DateTime();
@@ -161,14 +179,14 @@ class Frontpage
      *
      * @return array
      */
-    public function getNewsItems()
+    public function getNewsItems(): array
     {
         $count = $this->frontpageConfig['news_count'];
         $activities = $this->getUpcomingActivities();
         $newsItems = $this->newsService->getLatestNewsItems($count);
         $news = array_merge($activities, $newsItems);
         usort($news, function ($a, $b) {
-            if (($a instanceof NewsItem) && ($b instanceof NewsItem)) {
+            if (($a instanceof NewsItemModel) && ($b instanceof NewsItemModel)) {
                 if ($a->getPinned() === $b->getPinned()) {
                     return $this->getItemTimestamp($a) - $this->getItemTimestamp($b);
                 }
@@ -176,11 +194,11 @@ class Frontpage
                 return $a->getPinned() ? -1 : 1;
             }
 
-            if (($a instanceof Activity) && ($b instanceof Activity)) {
+            if (($a instanceof ActivityModel) && ($b instanceof ActivityModel)) {
                 return $this->getItemTimestamp($a) - $this->getItemTimestamp($b);
             }
 
-            return $a instanceof Activity ? 1 : -1;
+            return $a instanceof ActivityModel ? 1 : -1;
         });
 
         return array_slice($news, 0, $count);
@@ -189,28 +207,26 @@ class Frontpage
     /**
      * Get a time stamp of a news item or activity for sorting.
      *
-     * @param Activity|NewsItem $item
+     * @param ActivityModel|NewsItemModel $item
      *
      * @return int
      */
-    public function getItemTimestamp($item)
+    public function getItemTimestamp(ActivityModel|NewsItemModel $item): int
     {
         $now = (new DateTime())->getTimestamp();
-        if ($item instanceof Activity) {
+
+        if ($item instanceof ActivityModel) {
             return abs($item->getBeginTime()->getTimestamp() - $now);
         }
 
-        if ($item instanceof NewsItem) {
-            return abs($item->getDate()->getTimeStamp() - $now);
-        }
-
-        throw new InvalidArgumentException('The given item is neither an Activity or a NewsItem');
+        return abs($item->getDate()->getTimeStamp() - $now);
     }
 
-    public function getUpcomingActivities()
+    /**
+     * @return array
+     */
+    public function getUpcomingActivities(): array
     {
-        $count = $this->frontpageConfig['activity_count'];
-
-        return $this->activityMapper->getUpcomingActivities($count);
+        return $this->activityMapper->getUpcomingActivities($this->frontpageConfig['activity_count']);
     }
 }

@@ -11,20 +11,20 @@ class PollControllerFactory implements FactoryInterface
     /**
      * @param ContainerInterface $container
      * @param string $requestedName
-     * @param null|array $options
+     * @param array|null $options
      *
      * @return PollController
      */
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        ?array $options = null,
     ): PollController {
         return new PollController(
-            $container->get('frontpage_form_poll_comment'),
-            $container->get('frontpage_service_poll'),
             $container->get('frontpage_service_acl'),
             $container->get('translator'),
+            $container->get('frontpage_form_poll_comment'),
+            $container->get('frontpage_service_poll'),
         );
     }
 }

@@ -7,7 +7,6 @@ use Company\Service\{
     CompanyQuery as CompanyQueryService,
 };
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
 
 class CompanyController extends AbstractActionController
@@ -39,7 +38,7 @@ class CompanyController extends AbstractActionController
     /**
      * Action to display a list of all non-hidden companies.
      */
-    public function listAction()
+    public function listAction(): ViewModel
     {
         $featuredPackage = $this->companyService->getFeaturedPackage();
 
@@ -60,7 +59,7 @@ class CompanyController extends AbstractActionController
         );
     }
 
-    public function showAction()
+    public function showAction(): ViewModel
     {
         $companyName = $this->params('companySlugName');
         $company = $this->companyService->getCompanyBySlugName($companyName);
@@ -81,7 +80,7 @@ class CompanyController extends AbstractActionController
     /**
      * Action that shows the 'company in the spotlight' and the article written by the company in the current language.
      */
-    public function spotlightAction()
+    public function spotlightAction(): ViewModel
     {
         $featuredPackage = $this->companyService->getFeaturedPackage();
 
@@ -104,7 +103,7 @@ class CompanyController extends AbstractActionController
      *
      * TODO: If the slug in the current locale is different from the slug parameter, redirect.
      */
-    public function jobListAction()
+    public function jobListAction(): ViewModel
     {
         $jobCategorySlug = $this->params('category');
         $jobCategory = $this->companyService->getJobCategoryBySlug($jobCategorySlug);
@@ -152,7 +151,7 @@ class CompanyController extends AbstractActionController
     /**
      * Action to list a single job of a certain company.
      */
-    public function jobsAction()
+    public function jobsAction(): ViewModel
     {
         $jobSlugName = $this->params('jobSlugName');
         $companySlugName = $this->params('companySlugName');

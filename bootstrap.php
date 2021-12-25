@@ -5,7 +5,6 @@ define('APP_ENV', getenv('APP_ENV') ?: 'production');
 // make sure we are in the correct directory
 chdir(__DIR__);
 
-use Laminas\ModuleManager\ModuleManagerInterface;
 use Laminas\Mvc\Application;
 use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
@@ -22,6 +21,9 @@ if (!class_exists(Application::class)) {
 
 class ConsoleRunner
 {
+    /**
+     * @return array
+     */
     public static function getConfig(): array
     {
         // Retrieve configuration
@@ -32,6 +34,10 @@ class ConsoleRunner
 
         return $appConfig;
     }
+
+    /**
+     * @return Application
+     */
     public static function getApplication(): Application
     {
         // Retrieve configuration
@@ -41,6 +47,9 @@ class ConsoleRunner
         return Application::init($appConfig);
     }
 
+    /**
+     * @return ServiceManager
+     */
     public static function getServiceManager(): ServiceManager
     {
         $appConfig = self::getConfig();

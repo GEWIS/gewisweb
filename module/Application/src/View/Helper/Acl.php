@@ -28,10 +28,13 @@ class Acl extends AbstractHelper
      *
      * @param ResourceInterface|string $resource
      * @param string $operation
+     *
      * @return bool
      */
-    public function isAllowed($resource, string $operation)
-    {
+    public function isAllowed(
+        ResourceInterface|string $resource,
+        string $operation,
+    ): bool {
         return $this->acl->isAllowed($operation, $resource);
     }
 
@@ -42,9 +45,10 @@ class Acl extends AbstractHelper
      *
      * @return Acl
      */
-    public function __invoke(string $factory)
+    public function __invoke(string $factory): self
     {
         $this->acl = $this->getServiceLocator()->get($factory);
+
         if ($this->acl instanceof AbstractAclService) {
             return $this;
         } else {
@@ -57,7 +61,7 @@ class Acl extends AbstractHelper
      *
      * @return ContainerInterface
      */
-    protected function getServiceLocator()
+    protected function getServiceLocator(): ContainerInterface
     {
         return $this->locator;
     }
@@ -67,7 +71,7 @@ class Acl extends AbstractHelper
      *
      * @param ContainerInterface $locator
      */
-    public function setServiceLocator(ContainerInterface $locator)
+    public function setServiceLocator(ContainerInterface $locator): void
     {
         $this->locator = $locator;
     }

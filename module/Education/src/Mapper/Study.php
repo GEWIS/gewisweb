@@ -8,7 +8,7 @@ use Education\Model\Study as StudyModel;
 /**
  * Mappers for Study.
  *
- * NOTE: Organs will be modified externally by a script. Modifycations will be
+ * NOTE: Organs will be modified externally by a script. Modifications will be
  * overwritten.
  */
 class Study extends BaseMapper

@@ -17,6 +17,16 @@ use User\Service\AclService;
 class News
 {
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
+    /**
      * @var NewsItemMapper
      */
     private NewsItemMapper $newsItemMapper;
@@ -27,25 +37,21 @@ class News
     private NewsItemForm $newsItemForm;
 
     /**
-     * @var AclService
+     * @param AclService $aclService
+     * @param Translator $translator
+     * @param NewsItemMapper $newsItemMapper
+     * @param NewsItemForm $newsItemForm
      */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
     public function __construct(
-        NewsItemMapper $newsItemMapper,
-        NewsItemForm $newsItemForm,
         AclService $aclService,
         Translator $translator,
+        NewsItemMapper $newsItemMapper,
+        NewsItemForm $newsItemForm,
     ) {
+        $this->aclService = $aclService;
         $this->translator = $translator;
         $this->newsItemMapper = $newsItemMapper;
         $this->newsItemForm = $newsItemForm;
-        $this->aclService = $aclService;
     }
 
     /**
@@ -109,8 +115,10 @@ class News
      *
      * @return bool
      */
-    public function updateNewsItem(NewsItemModel $newsItem, array $data): bool
-    {
+    public function updateNewsItem(
+        NewsItemModel $newsItem,
+        array $data,
+    ): bool {
         $newsItem->setEnglishContent($data['englishContent']);
         $newsItem->setEnglishTitle($data['englishTitle']);
         $newsItem->setDutchContent($data['dutchContent']);
@@ -118,7 +126,6 @@ class News
         $newsItem->setPinned($data['pinned']);
 
         $this->newsItemMapper->persist($newsItem);
-        $this->newsItemMapper->flush();
 
         return true;
     }
@@ -131,7 +138,6 @@ class News
     public function deleteNewsItem(NewsItemModel $newsItem): void
     {
         $this->newsItemMapper->remove($newsItem);
-        $this->newsItemMapper->flush();
     }
 
     /**

@@ -40,8 +40,11 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
      * @param ActivityCalendarForm $calendarFormService
      * @param bool $createAlways
      */
-    public function __construct(Translator $translator, ActivityCalendarForm $calendarFormService, bool $createAlways)
-    {
+    public function __construct(
+        Translator $translator,
+        ActivityCalendarForm $calendarFormService,
+        bool $createAlways,
+    ) {
         parent::__construct();
         $this->translator = $translator;
         $this->calendarFormService = $calendarFormService;
@@ -168,8 +171,10 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
      *
      * @return bool
      */
-    public function isGoodOptionCount($value, $context = []): bool
-    {
+    public function isGoodOptionCount(
+        array $value,
+        array $context = [],
+    ): bool {
         if (count($value) < 1 || count($value) > $this->maxOptions) {
             return false;
         }
@@ -185,8 +190,10 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
      *
      * @return bool
      */
-    public function areGoodOptionDates($value, $context = []): bool
-    {
+    public function areGoodOptionDates(
+        array $value,
+        array $context = [],
+    ): bool {
         $final = true;
         foreach ($value as $option) {
             try {

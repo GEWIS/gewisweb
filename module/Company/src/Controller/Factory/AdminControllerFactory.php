@@ -11,20 +11,20 @@ class AdminControllerFactory implements FactoryInterface
     /**
      * @param ContainerInterface $container
      * @param string $requestedName
-     * @param null|array $options
+     * @param array|null $options
      *
      * @return AdminController
      */
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null,
+        ?array $options = null,
     ): AdminController {
         return new AdminController(
-            $container->get('company_service_company'),
-            $container->get('company_service_companyquery'),
             $container->get('company_service_acl'),
             $container->get('translator'),
+            $container->get('company_service_company'),
+            $container->get('company_service_companyquery'),
         );
     }
 }

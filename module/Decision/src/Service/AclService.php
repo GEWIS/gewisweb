@@ -4,7 +4,7 @@ namespace Decision\Service;
 
 class AclService extends \User\Service\AclService
 {
-    protected function createAcl()
+    protected function createAcl(): void
     {
         parent::createAcl();
 

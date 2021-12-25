@@ -21,16 +21,6 @@ use User\Permissions\NotAllowedException;
 class AdminApprovalController extends AbstractActionController
 {
     /**
-     * @var ActivityService
-     */
-    private ActivityService $activityService;
-
-    /**
-     * @var ActivityQueryService
-     */
-    private ActivityQueryService $activityQueryService;
-
-    /**
      * @var AclService
      */
     private AclService $aclService;
@@ -41,29 +31,39 @@ class AdminApprovalController extends AbstractActionController
     private Translator $translator;
 
     /**
+     * @var ActivityService
+     */
+    private ActivityService $activityService;
+
+    /**
+     * @var ActivityQueryService
+     */
+    private ActivityQueryService $activityQueryService;
+
+    /**
      * AdminApprovalController constructor.
      *
-     * @param ActivityService $activityService
-     * @param ActivityQueryService $activityQueryService
      * @param AclService $aclService
      * @param Translator $translator
+     * @param ActivityService $activityService
+     * @param ActivityQueryService $activityQueryService
      */
     public function __construct(
+        AclService $aclService,
+        Translator $translator,
         ActivityService $activityService,
         ActivityQueryService $activityQueryService,
-        AclService $aclService,
-        Translator $translator
     ) {
-        $this->activityService = $activityService;
-        $this->activityQueryService = $activityQueryService;
         $this->aclService = $aclService;
         $this->translator = $translator;
+        $this->activityService = $activityService;
+        $this->activityQueryService = $activityQueryService;
     }
 
     /**
      * View one activity.
      */
-    public function viewAction()
+    public function viewAction(): ViewModel
     {
         $id = (int)$this->params('id');
 
@@ -92,7 +92,7 @@ class AdminApprovalController extends AbstractActionController
     /**
      * Approve of an activity.
      */
-    public function approveAction()
+    public function approveAction(): Response|ViewModel
     {
         return $this->setApprovalStatus('approve');
     }
@@ -104,7 +104,7 @@ class AdminApprovalController extends AbstractActionController
      *
      * @return ViewModel|Response
      */
-    protected function setApprovalStatus(string $status)
+    protected function setApprovalStatus(string $status): Response|ViewModel
     {
         //Assure the form is used
         if (!$this->getRequest()->isPost()) {
@@ -146,7 +146,7 @@ class AdminApprovalController extends AbstractActionController
     /**
      * Disapprove an activity.
      */
-    public function disapproveAction()
+    public function disapproveAction(): Response|ViewModel
     {
         return $this->setApprovalStatus('disapprove');
     }
@@ -154,7 +154,7 @@ class AdminApprovalController extends AbstractActionController
     /**
      * Reset the approval status of an activity.
      */
-    public function resetAction()
+    public function resetAction(): Response|ViewModel
     {
         return $this->setApprovalStatus('reset');
     }
@@ -162,7 +162,7 @@ class AdminApprovalController extends AbstractActionController
     /**
      * Display the proposed update.
      */
-    public function viewProposalAction()
+    public function viewProposalAction(): ViewModel
     {
         $id = (int)$this->params('id');
 
@@ -172,17 +172,19 @@ class AdminApprovalController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        return [
-            'proposal' => $proposal,
-            'proposalApplyForm' => new RequestForm('proposalApply', 'Apply update'),
-            'proposalRevokeForm' => new RequestForm('proposalRevoke', 'Revoke update'),
-        ];
+        return new ViewModel(
+            [
+                'proposal' => $proposal,
+                'proposalApplyForm' => new RequestForm('proposalApply', 'Apply update'),
+                'proposalRevokeForm' => new RequestForm('proposalRevoke', 'Revoke update'),
+            ]
+        );
     }
 
     /**
      * Apply the proposed update.
      */
-    public function applyProposalAction()
+    public function applyProposalAction(): Response|ViewModel
     {
         $id = (int)$this->params('id');
 
@@ -206,7 +208,7 @@ class AdminApprovalController extends AbstractActionController
         $newId = $proposal->getNew()->getId();
         $this->activityService->updateActivity($proposal);
 
-        $this->redirect()->toRoute(
+        return $this->redirect()->toRoute(
             'activity_admin_approval/view',
             [
                 'id' => $newId,
@@ -217,7 +219,7 @@ class AdminApprovalController extends AbstractActionController
     /**
      * Revoke the proposed update.
      */
-    public function revokeProposalAction()
+    public function revokeProposalAction(): Response|ViewModel
     {
         $id = (int)$this->params('id');
         //Assure the form is used
@@ -241,7 +243,7 @@ class AdminApprovalController extends AbstractActionController
         $oldId = $proposal->getOld()->getId();
         $this->activityService->revokeUpdateProposal($proposal);
 
-        $this->redirect()->toRoute(
+        return $this->redirect()->toRoute(
             'activity_admin_approval/view',
             [
                 'id' => $oldId,

@@ -3,12 +3,28 @@
 namespace User\Mapper;
 
 use Application\Mapper\BaseMapper;
-use User\Model\LoginAttempt as LoginAttemptModel;
+use DateTime;
+use User\Model\{
+    LoginAttempt as LoginAttemptModel,
+    User as UserModel,
+};
 
 class LoginAttempt extends BaseMapper
 {
-    public function getFailedAttemptCount($since, $type, $ip, $user = null)
-    {
+    /**
+     * @param DateTime $since
+     * @param string $type
+     * @param string $ip
+     * @param UserModel|null $user
+     *
+     * @return int|string
+     */
+    public function getFailedAttemptCount(
+        DateTime $since,
+        string $type,
+        string $ip,
+        ?UserModel $user = null,
+    ): int|string {
         $qb = $this->em->createQueryBuilder();
         $qb->select('count(a)')
             ->from($this->getRepositoryName(), 'a')

@@ -11,14 +11,14 @@ class PageAdminControllerFactory implements FactoryInterface
     /**
      * @param ContainerInterface $container
      * @param string $requestedName
-     * @param null|array $options
+     * @param array|null $options
      *
      * @return PageAdminController
      */
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        ?array $options = null,
     ): PageAdminController {
         return new PageAdminController(
             $container->get('frontpage_service_page'),

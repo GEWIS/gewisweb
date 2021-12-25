@@ -39,8 +39,10 @@ class AuthenticationService implements AuthenticationServiceInterface
      * @param AdapterInterface $adapter
      *
      */
-    public function __construct(StorageInterface $storage, AdapterInterface $adapter)
-    {
+    public function __construct(
+        StorageInterface $storage,
+        AdapterInterface $adapter,
+    ) {
         $this->setStorage($storage);
         $this->setAdapter($adapter);
     }
@@ -112,15 +114,17 @@ class AuthenticationService implements AuthenticationServiceInterface
      * Authenticates against the authentication adapter. The default values must be `null` to be compatible with the
      * `AuthenticationServiceInterface`. We can safely assume they are provided, but if not throw a `RuntimeException`.
      *
-     * @param mixed|null $login
+     * @param string|null $login
      * @param string|null $securityCode
      *
      * @return Result
      *
      * @throws RuntimeException
      */
-    public function authenticate(mixed $login = null, string $securityCode = null): Result
-    {
+    public function authenticate(
+        ?string $login = null,
+        ?string $securityCode = null,
+    ): Result {
         if (
             is_null($login)
             || is_null($securityCode)
@@ -174,8 +178,6 @@ class AuthenticationService implements AuthenticationServiceInterface
 
     /**
      * Clears the identity from persistent storage
-     *
-     * @return void
      */
     public function clearIdentity(): void
     {
@@ -186,8 +188,6 @@ class AuthenticationService implements AuthenticationServiceInterface
      * Set whether we should remember this session or not.
      *
      * @param bool $rememberMe
-     *
-     * @return void
      */
     public function setRememberMe(bool $rememberMe): void
     {

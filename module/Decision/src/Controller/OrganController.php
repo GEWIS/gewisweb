@@ -26,7 +26,7 @@ class OrganController extends AbstractActionController
     /**
      * Index action, shows all active organs.
      */
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         return new ViewModel(
             [
@@ -38,7 +38,7 @@ class OrganController extends AbstractActionController
     /**
      * Show an organ.
      */
-    public function showAction()
+    public function showAction(): ViewModel
     {
         $organId = $this->params()->fromRoute('organ');
         $organ = $this->organService->getOrgan($organId);

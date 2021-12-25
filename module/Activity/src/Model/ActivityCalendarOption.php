@@ -178,9 +178,9 @@ class ActivityCalendarOption
      * 2. The alternative for an organ, other organising parties
      * 3. The full name of the member who created the proposal.
      *
-     * @return mixed
+     * @return string
      */
-    public function getCreatorAlt()
+    public function getCreatorAlt(): string
     {
         return $this->getProposal()->getCreatorAlt();
     }

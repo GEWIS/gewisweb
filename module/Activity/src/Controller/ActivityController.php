@@ -29,6 +29,16 @@ use Laminas\View\Model\ViewModel;
 class ActivityController extends AbstractActionController
 {
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
+    /**
      * @var ActivityService
      */
     private ActivityService $activityService;
@@ -49,45 +59,35 @@ class ActivityController extends AbstractActionController
     private SignupListQueryService $signupListQueryService;
 
     /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
      * ActivityController constructor.
      *
+     * @param AclService $aclService
+     * @param Translator $translator
      * @param ActivityService $activityService
      * @param ActivityQueryService $activityQueryService
      * @param SignupService $signupService
      * @param SignupListQueryService $signupListQueryService
-     * @param AclService $aclService
-     * @param Translator $translator
      */
     public function __construct(
+        AclService $aclService,
+        Translator $translator,
         ActivityService $activityService,
         ActivityQueryService $activityQueryService,
         SignupService $signupService,
         SignupListQueryService $signupListQueryService,
-        AclService $aclService,
-        Translator $translator
     ) {
+        $this->aclService = $aclService;
+        $this->translator = $translator;
         $this->activityService = $activityService;
         $this->activityQueryService = $activityQueryService;
         $this->signupService = $signupService;
         $this->signupListQueryService = $signupListQueryService;
-        $this->aclService = $aclService;
-        $this->translator = $translator;
     }
 
     /**
      * View all activities.
      */
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         $activities = $this->activityQueryService->getUpcomingActivities($this->params('category'));
 
@@ -101,8 +101,9 @@ class ActivityController extends AbstractActionController
 
     /**
      * View one activity.
+     * @return mixed
      */
-    public function viewAction()
+    public function viewAction(): mixed
     {
         $activityId = (int)$this->params('id');
         $activity = $this->activityQueryService->getActivity($activityId);
@@ -130,7 +131,7 @@ class ActivityController extends AbstractActionController
         );
     }
 
-    public function viewSignupListAction()
+    public function viewSignupListAction(): ViewModel
     {
         $activityId = (int)$this->params('id');
         $signupListId = (int)$this->params('signupList');
@@ -158,7 +159,6 @@ class ActivityController extends AbstractActionController
         $form = $this->prepareSignupForm($signupList, $activitySession);
 
         $isSignedUp = false;
-        // TODO: you are passing a signup list while an activity is expected (repeated multiple times)
         if ($this->signupService->isAllowedToInternalSubscribe()) {
             $identity = $this->aclService->getIdentityOrThrowException();
             $isSignedUp = $isAllowedToSubscribe
@@ -212,8 +212,10 @@ class ActivityController extends AbstractActionController
      *
      * @return SignupForm|null $form
      */
-    protected function prepareSignupForm(SignupListModel $signupList, SessionContainer $activitySession)
-    {
+    protected function prepareSignupForm(
+        SignupListModel $signupList,
+        SessionContainer $activitySession,
+    ): ?SignupForm {
         if ($this->signupService->isAllowedToSubscribe()) {
             $form = $this->signupService->getForm($signupList);
 
@@ -244,31 +246,37 @@ class ActivityController extends AbstractActionController
     /**
      * Create an activity.
      */
-    public function createAction()
+    public function createAction(): ViewModel
     {
         $form = $this->activityService->getActivityForm();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            if ($this->activityService->createActivity($request->getPost())) {
-                $view = new ViewModel();
-                $view->setTemplate('activity/activity/createSuccess.phtml');
+            $form->setData($request->getPost()->toArray());
 
-                return $view;
+            if ($form->isValid()) {
+                if ($this->activityService->createActivity($form->getData())) {
+                    $view = new ViewModel();
+                    $view->setTemplate('activity/activity/createSuccess.phtml');
+
+                    return $view;
+                }
             }
         }
 
-        return [
-            'form' => $form,
-            'action' => $this->translator->translate('Create Activity'),
-            'allowSignupList' => true,
-        ];
+        return new ViewModel(
+            [
+                'form' => $form,
+                'action' => $this->translator->translate('Create Activity'),
+                'allowSignupList' => true,
+            ]
+        );
     }
 
     /**
      * Signup for a activity.
      */
-    public function signupAction()
+    public function signupAction(): Response|ViewModel
     {
         $activityId = (int)$this->params('id');
         $signupListId = (int)$this->params('signupList');
@@ -363,7 +371,7 @@ class ActivityController extends AbstractActionController
         );
     }
 
-    public function externalSignupAction()
+    public function externalSignupAction(): Response|ViewModel
     {
         $activityId = (int)$this->params('id');
         $signupListId = (int)$this->params('signupList');
@@ -425,7 +433,7 @@ class ActivityController extends AbstractActionController
     /**
      * Signup for a activity.
      */
-    public function signoffAction()
+    public function signoffAction(): Response|ViewModel
     {
         $activityId = (int)$this->params('id');
         $signupListId = (int)$this->params('signupList');
@@ -492,7 +500,7 @@ class ActivityController extends AbstractActionController
      *
      * @return ViewModel
      */
-    public function archiveAction()
+    public function archiveAction(): ViewModel
     {
         $years = $this->activityQueryService->getActivityArchiveYears();
         $year = $this->params()->fromRoute('year');

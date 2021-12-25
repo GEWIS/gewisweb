@@ -26,8 +26,14 @@ class LocalFileReader implements FileReader
      */
     private string $validFilepath;
 
-    public function __construct($root, $validFilepath)
-    {
+    /**
+     * @param string $root
+     * @param string $validFilepath
+     */
+    public function __construct(
+        string $root,
+        string $validFilepath,
+    ) {
         $this->root = $root;
         $this->validFilepath = $validFilepath;
     }
@@ -94,7 +100,7 @@ class LocalFileReader implements FileReader
             $files[] = new FileNode(
                 $kind,
                 $path . $delimiter . $dirContent,
-                $dirContent
+                $dirContent,
             );
         }
 
@@ -107,8 +113,10 @@ class LocalFileReader implements FileReader
      *
      * @return false|string
      */
-    protected function interpretDirContent(string $dirContent, string $fullPath): bool|string
-    {
+    protected function interpretDirContent(
+        string $dirContent,
+        string $fullPath,
+    ): bool|string {
         if ('.' === $dirContent[0] || !$this->isValidPathName($fullPath)) {
             return false;
         }

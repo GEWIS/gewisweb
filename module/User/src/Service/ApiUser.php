@@ -2,7 +2,7 @@
 
 namespace User\Service;
 
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Laminas\Mvc\I18n\Translator;
 use User\Form\ApiToken as ApiTokenForm;
 use User\Mapper\ApiUser as ApiUserMapper;
@@ -15,16 +15,6 @@ use User\Permissions\NotAllowedException;
 class ApiUser
 {
     /**
-     * @var ApiUserMapper
-     */
-    private ApiUserMapper $apiUserMapper;
-
-    /**
-     * @var ApiTokenForm
-     */
-    private ApiTokenForm $apiTokenForm;
-
-    /**
      * @var AclService
      */
     private AclService $aclService;
@@ -35,23 +25,31 @@ class ApiUser
     private Translator $translator;
 
     /**
-     * Identity storage.
-     *
-     * @var ApiUserModel
+     * @var ApiUserMapper
      */
-    protected ApiUserModel $identity;
+    private ApiUserMapper $apiUserMapper;
 
+    /**
+     * @var ApiTokenForm
+     */
+    private ApiTokenForm $apiTokenForm;
 
+    /**
+     * @param AclService $aclService
+     * @param Translator $translator
+     * @param ApiUserMapper $apiUserMapper
+     * @param ApiTokenForm $apiTokenForm
+     */
     public function __construct(
-        ApiUserMapper $apiUserMapper,
-        ApiTokenForm $apiTokenForm,
         AclService $aclService,
         Translator $translator,
+        ApiUserMapper $apiUserMapper,
+        ApiTokenForm $apiTokenForm,
     ) {
-        $this->apiUserMapper = $apiUserMapper;
-        $this->apiTokenForm = $apiTokenForm;
         $this->aclService = $aclService;
         $this->translator = $translator;
+        $this->apiUserMapper = $apiUserMapper;
+        $this->apiTokenForm = $apiTokenForm;
     }
 
     /**

@@ -7,7 +7,7 @@ use Laminas\Authentication\Result;
 use Laminas\Crypt\Password\Bcrypt;
 use RuntimeException;
 use User\Mapper\User as UserMapper;
-use User\Model\LoginAttempt;
+use User\Model\LoginAttempt as LoginAttemptModel;
 use User\Authentication\Service\LoginAttempt as LoginAttemptService;
 
 class Mapper implements AdapterInterface
@@ -18,6 +18,11 @@ class Mapper implements AdapterInterface
      * @var UserMapper
      */
     protected UserMapper $mapper;
+
+    /**
+     * @var string
+     */
+    private string $login;
 
     /**
      * Password.
@@ -42,18 +47,16 @@ class Mapper implements AdapterInterface
     protected LoginAttemptService $loginAttemptService;
 
     /**
-     * @var mixed
-     */
-    private $login;
-
-    /**
      * Constructor.
      * @param Bcrypt $bcrypt
      * @param LoginAttemptService $loginAttemptService
      * @param UserMapper $mapper
      */
-    public function __construct(Bcrypt $bcrypt, loginAttemptService $loginAttemptService, UserMapper $mapper)
-    {
+    public function __construct(
+        Bcrypt $bcrypt,
+        LoginAttemptService $loginAttemptService,
+        UserMapper $mapper,
+    ) {
         $this->bcrypt = $bcrypt;
         $this->loginAttemptService = $loginAttemptService;
         $this->mapper = $mapper;
@@ -77,7 +80,7 @@ class Mapper implements AdapterInterface
 
         $this->mapper->detach($user);
 
-        if ($this->loginAttemptService->loginAttemptsExceeded(LoginAttempt::TYPE_NORMAL, $user)) {
+        if ($this->loginAttemptService->loginAttemptsExceeded($user, LoginAttemptModel::TYPE_NORMAL)) {
             return new Result(
                 Result::FAILURE,
                 null,
@@ -85,7 +88,7 @@ class Mapper implements AdapterInterface
         }
 
         if (!$this->verifyPassword($this->password, $user->getPassword())) {
-            $this->loginAttemptService->logFailedLogin($user, LoginAttempt::TYPE_NORMAL);
+            $this->loginAttemptService->logFailedLogin($user, LoginAttemptModel::TYPE_NORMAL);
 
             return new Result(
                 Result::FAILURE_CREDENTIAL_INVALID,
@@ -104,8 +107,10 @@ class Mapper implements AdapterInterface
      *
      * @return bool
      */
-    public function verifyPassword($password, $hash)
-    {
+    public function verifyPassword(
+        string $password,
+        string $hash,
+    ): bool {
         if (0 === strlen($hash)) {
             throw new RuntimeException("Legacy service is not available for Mapper Auth.");
         }
@@ -120,13 +125,13 @@ class Mapper implements AdapterInterface
     /**
      * Sets the credentials used to authenticate.
      *
-     * @param mixed $login
+     * @param string $login
      * @param string $password
-     *
-     * @return void
      */
-    public function setCredentials($login, $password)
-    {
+    public function setCredentials(
+        string $login,
+        string $password,
+    ): void {
         $this->login = $login;
         $this->password = $password;
     }

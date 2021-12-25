@@ -2,6 +2,7 @@
 
 namespace User\Controller;
 
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use User\Service\ApiUser as ApiUserService;
@@ -28,7 +29,7 @@ class ApiAdminController extends AbstractActionController
      *
      * Show all API tokens
      */
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         return new ViewModel(
             [
@@ -40,7 +41,7 @@ class ApiAdminController extends AbstractActionController
     /**
      * Add an API token.
      */
-    public function addAction()
+    public function addAction(): ViewModel
     {
         $form = $this->apiUserService->getApiTokenForm();
 
@@ -71,7 +72,7 @@ class ApiAdminController extends AbstractActionController
     /**
      * Remove an API token.
      */
-    public function removeAction()
+    public function removeAction(): Response|ViewModel
     {
         $id = $this->params()->fromRoute('id');
         $service = $this->apiUserService;

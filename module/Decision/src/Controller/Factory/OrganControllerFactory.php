@@ -11,14 +11,14 @@ class OrganControllerFactory implements FactoryInterface
     /**
      * @param ContainerInterface $container
      * @param string $requestedName
-     * @param null|array $options
+     * @param array|null $options
      *
      * @return OrganController
      */
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        ?array $options = null,
     ): OrganController {
         return new OrganController(
             $container->get('decision_service_organ'),

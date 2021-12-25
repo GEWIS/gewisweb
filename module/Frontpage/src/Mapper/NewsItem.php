@@ -19,7 +19,7 @@ class NewsItem extends BaseMapper
      *
      * @return array
      */
-    public function getLatestNewsItems($count)
+    public function getLatestNewsItems(int $count): array
     {
         $qb = $this->getRepository()->createQueryBuilder('newsItem');
         $qb->addOrderBy('newsItem.pinned', 'DESC')
@@ -34,7 +34,7 @@ class NewsItem extends BaseMapper
      *
      * @return DoctrineAdapter
      */
-    public function getPaginatorAdapter()
+    public function getPaginatorAdapter(): DoctrineAdapter
     {
         $qb = $this->getRepository()->createQueryBuilder('newsItem');
         $qb->orderBy('newsItem.date', 'DESC');

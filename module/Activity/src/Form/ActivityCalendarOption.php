@@ -32,8 +32,10 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
      * @param Translator $translator
      * @param ActivityCalendarForm $calendarFormService
      */
-    public function __construct(Translator $translator, ActivityCalendarForm $calendarFormService)
-    {
+    public function __construct(
+        Translator $translator,
+        ActivityCalendarForm $calendarFormService,
+    ) {
         parent::__construct();
         $this->translator = $translator;
         $this->calendarFormService = $calendarFormService;
@@ -145,8 +147,10 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
      *
      * @return bool
      */
-    public function beforeEndTime($value, $context = []): bool
-    {
+    public function beforeEndTime(
+        string $value,
+        array $context = [],
+    ): bool {
         try {
             $endTime = isset($context['endTime']) ? $this->calendarFormService->toDateTime($context['endTime']) : new DateTime('now');
 
@@ -164,13 +168,15 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
      *
      * @return bool
      */
-    public function isFutureTime($value, $context = []): bool
-    {
+    public function isFutureTime(
+        string $value,
+        array $context = [],
+    ): bool {
         try {
             $today = new DateTime();
 
             return $this->calendarFormService->toDateTime($value) > $today;
-        } catch (Exception $e) {
+        } catch (Exception) {
             return false;
         }
     }
@@ -183,8 +189,10 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
      *
      * @return bool
      */
-    public function cannotPlanInPeriod($value, $context = []): bool
-    {
+    public function cannotPlanInPeriod(
+        string $value,
+        array $context = [],
+    ): bool {
         try {
             $beginTime = $this->calendarFormService->toDateTime($value);
             $result = $this->calendarFormService->canCreateOption($beginTime);

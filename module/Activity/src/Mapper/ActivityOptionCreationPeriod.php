@@ -18,14 +18,11 @@ class ActivityOptionCreationPeriod extends BaseMapper
      */
     public function getCurrentActivityOptionCreationPeriod(): ?ActivityOptionCreationPeriodModel
     {
-        $qb = $this->em->createQueryBuilder();
-        $today = new DateTime();
-        $qb->select('x')
-            ->from($this->getRepositoryName(), 'x')
-            ->andWhere('x.beginPlanningTime < :today')
-            ->andWhere('x.endPlanningTime > :today')
-            ->orderBy('x.beginPlanningTime', 'ASC')
-            ->setParameter('today', $today)
+        $qb = $this->getRepository()->createQueryBuilder('o');
+        $qb->where('o.beginPlanningTime < :today')
+            ->andWhere('o.endPlanningTime > :today')
+            ->orderBy('o.beginPlanningTime', 'ASC')
+            ->setParameter('today', new DateTime())
             ->setMaxResults(1);
 
         $res = $qb->getQuery()->getResult();
@@ -42,13 +39,10 @@ class ActivityOptionCreationPeriod extends BaseMapper
      */
     public function getUpcomingActivityOptionCreationPeriod(): ?ActivityOptionCreationPeriodModel
     {
-        $qb = $this->em->createQueryBuilder();
-        $today = new DateTime();
-        $qb->select('x')
-            ->from($this->getRepositoryName(), 'x')
-            ->where('x.beginPlanningTime > :today')
-            ->orderBy('x.beginPlanningTime', 'ASC')
-            ->setParameter('today', $today)
+        $qb = $this->getRepository()->createQueryBuilder('o');
+        $qb->where('o.beginPlanningTime > :today')
+            ->orderBy('o.beginPlanningTime', 'ASC')
+            ->setParameter('today', new DateTime())
             ->setMaxResults(1);
 
         return $qb->getQuery()->getOneOrNullResult();

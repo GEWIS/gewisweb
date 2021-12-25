@@ -44,7 +44,7 @@ class ApiAuthenticationService implements AuthenticationServiceInterface
      *
      * @return ApiMapper
      */
-    public function getAdapter()
+    public function getAdapter(): ApiMapper
     {
         return $this->adapter;
     }
@@ -56,10 +56,11 @@ class ApiAuthenticationService implements AuthenticationServiceInterface
      *
      * @return self Provides a fluent interface
      */
-    public function setAdapter(AdapterInterface $adapter)
+    public function setAdapter(AdapterInterface $adapter): self
     {
         if ($adapter instanceof ApiMapper) {
             $this->adapter = $adapter;
+
             return $this;
         }
 
@@ -70,22 +71,25 @@ class ApiAuthenticationService implements AuthenticationServiceInterface
 
     /**
      * @param string|null $token
+     *
      * @return Result
      */
-    public function authenticate(string $token = null)
+    public function authenticate(?string $token = null): Result
     {
         $this->getAdapter()->setCredentials($token);
         $result = $this->getAdapter()->authenticate();
+
         if ($result->isValid()) {
             $this->identity = $result->getIdentity();
         }
+
         return $result;
     }
 
     /**
      * @return bool
      */
-    public function hasIdentity()
+    public function hasIdentity(): bool
     {
         return !is_null($this->identity);
     }
@@ -93,12 +97,12 @@ class ApiAuthenticationService implements AuthenticationServiceInterface
     /**
      * @return ApiUser|null
      */
-    public function getIdentity()
+    public function getIdentity(): ?ApiUser
     {
         return $this->identity;
     }
 
-    public function clearIdentity()
+    public function clearIdentity(): void
     {
         $this->identity = null;
     }

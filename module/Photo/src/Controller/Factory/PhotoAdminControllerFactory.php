@@ -11,14 +11,14 @@ class PhotoAdminControllerFactory implements FactoryInterface
     /**
      * @param ContainerInterface $container
      * @param string $requestedName
-     * @param null|array $options
+     * @param array|null $options
      *
      * @return PhotoAdminController
      */
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
-        array $options = null
+        ?array $options = null,
     ): PhotoAdminController {
         return new PhotoAdminController(
             $container->get('photo_service_album'),

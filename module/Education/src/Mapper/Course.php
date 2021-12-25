@@ -48,11 +48,9 @@ class Course extends BaseMapper
     public function search(string $query): array
     {
         $query = '%' . $query . '%';
-        $qb = $this->em->createQueryBuilder();
+        $qb = $this->getRepository()->createQueryBuilder('c');
 
-        $qb->select('c')
-            ->from($this->getRepositoryName(), 'c')
-            ->where('c.code LIKE ?1')
+        $qb->where('c.code LIKE ?1')
             ->orWhere('c.name LIKE ?1');
         $qb->setParameter(1, $query);
 

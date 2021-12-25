@@ -28,7 +28,7 @@ class AdminController extends AbstractActionController
     /**
      * Notes upload action.
      */
-    public function notesAction()
+    public function notesAction(): ViewModel
     {
         $form = $this->decisionService->getNotesForm();
 
@@ -61,7 +61,7 @@ class AdminController extends AbstractActionController
     /**
      * Document upload action.
      */
-    public function documentAction()
+    public function documentAction(): ViewModel
     {
         $type = $this->params()->fromRoute('type');
         $number = $this->params()->fromRoute('number');
@@ -108,14 +108,14 @@ class AdminController extends AbstractActionController
     /**
      * TODO: Non-idempotent requests should be POST, not GET.
      */
-    public function deleteDocumentAction()
+    public function deleteDocumentAction(): Response
     {
         $this->decisionService->deleteDocument($this->getRequest()->getPost()->toArray());
 
         return $this->redirect()->toRoute('admin_decision/document');
     }
 
-    public function changePositionDocumentAction()
+    public function changePositionDocumentAction(): mixed
     {
         if (!$this->getRequest()->isPost()) {
             return $this->getResponse()->setStatusCode(Response::STATUS_CODE_405); // Method Not Allowed
@@ -140,7 +140,7 @@ class AdminController extends AbstractActionController
         return $this->getResponse()->setStatusCode(Response::STATUS_CODE_204); // No Content (OK)
     }
 
-    public function authorizationsAction()
+    public function authorizationsAction(): ViewModel
     {
         $meetings = $this->decisionService->getMeetingsByType('AV');
         $number = $this->params()->fromRoute('number');

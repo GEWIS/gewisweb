@@ -2,6 +2,7 @@
 
 namespace Application\Controller;
 
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Session\Container as SessionContainer;
 
@@ -10,7 +11,7 @@ class IndexController extends AbstractActionController
     /**
      * Action to switch language.
      */
-    public function langAction()
+    public function langAction(): Response
     {
         $session = new SessionContainer('lang');
         $session->lang = $this->params()->fromRoute('lang');
@@ -29,14 +30,14 @@ class IndexController extends AbstractActionController
     /**
      * Action called when loading pages from external templates.
      */
-    public function externalAction()
+    public function externalAction(): void
     {
     }
 
     /**
      * Throws a teapot error.
      */
-    public function teapotAction()
+    public function teapotAction(): void
     {
         $this->getResponse()->setStatusCode(418);
     }

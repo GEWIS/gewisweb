@@ -27,7 +27,7 @@ class User extends BaseMapper
      *
      * @return UserModel|null
      */
-    public function findByLogin($login): ?UserModel
+    public function findByLogin(string $login): ?UserModel
     {
         // create query for user
         $qb = $this->em->createQueryBuilder();
@@ -60,8 +60,10 @@ class User extends BaseMapper
      * @param UserModel $user User to create
      * @param NewUserModel $newUser NewUser to destroy
      */
-    public function createUser(UserModel $user, NewUserModel $newUser)
-    {
+    public function createUser(
+        UserModel $user,
+        NewUserModel $newUser,
+    ): void {
         $this->em->persist($user);
         $this->em->remove($newUser);
         $this->em->flush();

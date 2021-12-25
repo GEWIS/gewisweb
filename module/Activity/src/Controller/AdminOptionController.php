@@ -18,6 +18,16 @@ use User\Permissions\NotAllowedException;
 class AdminOptionController extends AbstractActionController
 {
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
+    /**
      * @var ActivityCalendarService
      */
     private ActivityCalendarService $activityCalendarService;
@@ -33,39 +43,29 @@ class AdminOptionController extends AbstractActionController
     private ActivityOptionCreationPeriodMapper $activityOptionCreationPeriodMapper;
 
     /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
      * AdminOptionController constructor.
      *
+     * @param AclService $aclService
+     * @param Translator $translator
      * @param ActivityCalendarService $activityCalendarService
      * @param OrganService $organService
      * @param ActivityOptionCreationPeriodMapper $activityOptionCreationPeriodMapper
-     * @param AclService $aclService
-     * @param Translator $translator
      */
     public function __construct(
+        AclService $aclService,
+        Translator $translator,
         ActivityCalendarService $activityCalendarService,
         OrganService $organService,
         ActivityOptionCreationPeriodMapper $activityOptionCreationPeriodMapper,
-        AclService $aclService,
-        Translator $translator,
     ) {
+        $this->aclService = $aclService;
+        $this->translator = $translator;
         $this->activityCalendarService = $activityCalendarService;
         $this->organService = $organService;
         $this->activityOptionCreationPeriodMapper = $activityOptionCreationPeriodMapper;
-        $this->aclService = $aclService;
-        $this->translator = $translator;
     }
 
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         if (!$this->aclService->isAllowed('view', 'activity_calendar_period')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to administer option calendar periods'));
@@ -77,7 +77,7 @@ class AdminOptionController extends AbstractActionController
         ]);
     }
 
-    public function addAction()
+    public function addAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('create', 'activity_calendar_period')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create option calendar periods'));
@@ -120,7 +120,7 @@ class AdminOptionController extends AbstractActionController
         ]);
     }
 
-    public function deleteAction()
+    public function deleteAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('delete', 'activity_calendar_period')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete option calendar periods'));
@@ -140,7 +140,7 @@ class AdminOptionController extends AbstractActionController
         return $this->notFoundAction();
     }
 
-    public function editAction()
+    public function editAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('edit', 'activity_calendar_period')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit option calendar periods'));
@@ -200,8 +200,10 @@ class AdminOptionController extends AbstractActionController
      *
      * @return Response
      */
-    private function redirectWithMessage(bool $success, string $message): Response
-    {
+    private function redirectWithMessage(
+        bool $success,
+        string $message,
+    ): Response {
         if ($success) {
             $this->plugin('FlashMessenger')->addSuccessMessage($message);
         } else {

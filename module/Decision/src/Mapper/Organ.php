@@ -20,15 +20,16 @@ class Organ extends BaseMapper
     /**
      * Find all active organs.
      *
-     * @param string $type
+     * @param string|null $type
      *
      * @return array
      */
-    public function findActive($type = null)
+    public function findActive(?string $type = null): array
     {
         $criteria = [
             'abrogationDate' => null,
         ];
+
         if (!is_null($type)) {
             $criteria['type'] = $type;
         }
@@ -45,27 +46,26 @@ class Organ extends BaseMapper
      */
     public function findActiveById(int $id): ?OrganModel
     {
-        $criteria = [
-            'id' => $id,
-            'abrogationDate' => null,
-        ];
-
-        return $this->getRepository()->findOneBy($criteria);
+        return $this->getRepository()->findOneBy(
+            [
+                'id' => $id,
+                'abrogationDate' => null,
+            ]
+        );
     }
 
     /**
      * Find all abrogated organs.
      *
-     * @param string $type
+     * @param string|null $type
      *
      * @return array
      */
-    public function findAbrogated($type = null)
+    public function findAbrogated(?string $type = null): array
     {
         $qb = $this->getRepository()->createQueryBuilder('o');
+        $qb->where('o.abrogationDate IS NOT NULL');
 
-        $qb->select('o')
-            ->where('o.abrogationDate IS NOT NULL');
         if (!is_null($type)) {
             $qb->andWhere('o.type = :type')
                 ->setParameter('type', $type);
@@ -80,13 +80,13 @@ class Organ extends BaseMapper
      * @param int $id
      *
      * @return OrganModel
+     *
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function findOrgan($id)
+    public function findOrgan(int $id): OrganModel
     {
         $qb = $this->getRepository()->createQueryBuilder('o');
-
         $qb->select('o, om, m')
             ->leftJoin('o.members', 'om')
             ->leftJoin('om.member', 'm')
@@ -108,14 +108,16 @@ class Organ extends BaseMapper
      * @param bool $latest Whether to retrieve the latest occurrence of an organ or not
      * @param string|null $type
      *
-     * @return OrganModel
+     * @return OrganModel|null
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function findByAbbr(string $abbr, bool $latest, ?string $type = null): OrganModel
-    {
+    public function findByAbbr(
+        string $abbr,
+        bool $latest,
+        ?string $type = null,
+    ): ?OrganModel {
         $qb = $this->getRepository()->createQueryBuilder('o');
-
         $qb->select('o, om, m')
             ->leftJoin('o.members', 'om')
             ->leftJoin('om.member', 'm')
@@ -133,7 +135,7 @@ class Organ extends BaseMapper
 
             if (empty($queryResult)) {
                 // the query did not return any records
-                throw new NoResultException();
+                return null;
             }
 
             // the query returned at least 1 record, use first (= latest) record

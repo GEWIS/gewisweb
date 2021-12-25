@@ -17,19 +17,27 @@ class FileStorage
     /**
      * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
      * @var array
      */
-    private $storageConfig;
+    private array $storageConfig;
 
+    /**
+     * @var WatermarkService
+     */
     private WatermarkService $watermarkService;
 
+    /**
+     * @param Translator $translator
+     * @param array $storageConfig
+     * @param WatermarkService $watermarkService
+     */
     public function __construct(
         Translator $translator,
         array $storageConfig,
-        WatermarkService $watermarkService
+        WatermarkService $watermarkService,
     ) {
         $this->translator = $translator;
         $this->storageConfig = $storageConfig;
@@ -43,7 +51,7 @@ class FileStorage
      *
      * @return string the path at which the photo should be saved
      */
-    public function generateStoragePath($path)
+    public function generateStoragePath(string $path): string
     {
         $config = $this->storageConfig;
         $hash = sha1_file($path);
@@ -68,7 +76,7 @@ class FileStorage
      *
      * @throws Exception
      */
-    public function storeUploadedFile($file)
+    public function storeUploadedFile(array $file): string
     {
         $config = $this->storageConfig;
         if (0 !== $file['error']) {
@@ -100,8 +108,10 @@ class FileStorage
      *
      * @return string the path at which the file was stored
      */
-    public function storeFile($source, $move = true)
-    {
+    public function storeFile(
+        string $source,
+        bool $move = true,
+    ): string {
         $config = $this->storageConfig;
         $extension = pathinfo($source, PATHINFO_EXTENSION);
         $storagePath = $this->generateStoragePath($source) . '.' . $extension;
@@ -126,7 +136,7 @@ class FileStorage
      *
      * @return bool indicating if removing the file was successful
      */
-    public function removeFile($path)
+    public function removeFile(string $path): bool
     {
         $config = $this->storageConfig;
         $fullPath = $config['storage_dir'] . '/' . $path;
@@ -146,10 +156,14 @@ class FileStorage
      * @param string $path The CFS path of the file to download
      * @param string $fileName The file name to give the downloaded file
      * @param bool $watermarkPdf Parameter to require addition of a watermark to the pdf before download. False by default
+     *
      * @return Stream|null If the given file is not found, null is returned
      */
-    public function downloadFile($path, $fileName, $watermarkPdf = false)
-    {
+    public function downloadFile(
+        string $path,
+        string $fileName,
+        bool $watermarkPdf = false,
+    ): ?Stream {
         $config = $this->storageConfig;
 
         $file = $config['storage_dir'] . '/' . $path;

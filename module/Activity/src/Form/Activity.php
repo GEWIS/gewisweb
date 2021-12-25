@@ -196,8 +196,11 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
      *
      * @return Activity
      */
-    public function setAllOptions(array $organs, array $companies, array $categories): self
-    {
+    public function setAllOptions(
+        array $organs,
+        array $companies,
+        array $categories,
+    ): self {
         $organOptions = $this->get('organ')->getValueOptions();
         foreach ($organs as $organ) {
             $organOptions[$organ->getId()] = $organ->getAbbr();
@@ -225,19 +228,21 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
     /**
      * Check if a certain date is before the end date of the activity.
      *
-     * @param DateTime $value
+     * @param string $value
      * @param array $context
      *
      * @return bool
      */
-    public static function beforeEndTime($value, $context = []): bool
-    {
+    public static function beforeEndTime(
+        string $value,
+        array $context = [],
+    ): bool {
         try {
             $endTime = $context['endTime'];
             $endTime = isset($endTime) ? new DateTime($endTime) : new DateTime('now');
 
             return $value <= $endTime;
-        } catch (Exception $e) {
+        } catch (Exception) {
             // An exception is an indication that one of the times was not valid
             return false;
         }
@@ -246,18 +251,20 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
     /**
      * Checks if a certain date is before the begin date of the activity.
      *
-     * @param DateTime $value
+     * @param string $value
      * @param array $context
      *
      * @return bool
      */
-    public static function beforeBeginTime($value, $context = []): bool
-    {
+    public static function beforeBeginTime(
+        string $value,
+        array $context = [],
+    ): bool {
         try {
             $beginTime = isset($context['beginTime']) ? new DateTime($context['beginTime']) : new DateTime('now');
 
             return $value <= $beginTime;
-        } catch (Exception $e) {
+        } catch (Exception) {
             // An exception is an indication that one of the DateTimes was not valid
             return false;
         }

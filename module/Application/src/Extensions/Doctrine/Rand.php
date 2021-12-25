@@ -18,14 +18,22 @@ use Doctrine\ORM\Query\{
  */
 class Rand extends FunctionNode
 {
-    public function parse(Parser $parser)
+    /**
+     * @param Parser $parser
+     */
+    public function parse(Parser $parser): void
     {
         $parser->match(Lexer::T_IDENTIFIER);
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 
-    public function getSql(SqlWalker $sqlWalker)
+    /**
+     * @param SqlWalker $sqlWalker
+     *
+     * @return string
+     */
+    public function getSql(SqlWalker $sqlWalker): string
     {
         return 'RAND()';
     }

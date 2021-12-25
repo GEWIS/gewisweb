@@ -2,9 +2,10 @@
 
 namespace Photo\Listener;
 
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Photo\Model\{
-    Album,
-    Photo,
+    Album as AlbumModel,
+    Photo as PhotoModel,
 };
 
 /**
@@ -13,12 +14,16 @@ use Photo\Model\{
  */
 class AlbumDate
 {
-    public function prePersist($eventArgs)
+    /**
+     * @param LifecycleEventArgs $eventArgs
+     */
+    public function prePersist(LifecycleEventArgs $eventArgs): void
     {
         $entity = $eventArgs->getEntity();
-        if ($entity instanceof Album) {
+
+        if ($entity instanceof AlbumModel) {
             $this->albumPersisted($entity);
-        } elseif ($entity instanceof Photo) {
+        } elseif ($entity instanceof PhotoModel) {
             $this->photoPersisted($entity);
         }
     }
@@ -26,24 +31,25 @@ class AlbumDate
     /**
      * Updates the dates on the parent album if it exists.
      *
-     * @param Album $album
+     * @param AlbumModel $album
      */
-    protected function albumPersisted($album)
+    protected function albumPersisted(AlbumModel $album): void
     {
         $parent = $album->getParent();
         if (!is_null($parent)) {
             if (!is_null($album->getStartDateTime())) {
                 if (
-                    is_null($parent->getStartDateTime()) || $parent->getStartDateTime()->getTimestamp() >
-                    $album->getStartDateTime()->getTimeStamp()
+                    is_null($parent->getStartDateTime())
+                    || $parent->getStartDateTime()->getTimestamp() > $album->getStartDateTime()->getTimeStamp()
                 ) {
                     $parent->setStartDateTime($album->getStartDateTime());
                 }
             }
+
             if (!is_null($album->getEndDateTime())) {
                 if (
-                    is_null($parent->getEndDateTime()) || $parent->getEndDateTime()->getTimestamp() <
-                    $album->getEndDateTime()->getTimeStamp()
+                    is_null($parent->getEndDateTime())
+                    || $parent->getEndDateTime()->getTimestamp() < $album->getEndDateTime()->getTimeStamp()
                 ) {
                     $parent->setEndDateTime($album->getEndDateTime());
                 }
@@ -54,19 +60,25 @@ class AlbumDate
     /**
      * Updates the dates on the parent album.
      *
-     * @param Photo $photo
+     * @param PhotoModel $photo
      */
-    protected function photoPersisted($photo)
+    protected function photoPersisted(PhotoModel $photo): void
     {
         $album = $photo->getAlbum();
         // Update start and end date if the added photo is newer or older
         $albumStartDateTime = $album->getStartDateTime();
-        if (is_null($albumStartDateTime) || $albumStartDateTime->getTimestamp() > $photo->getDateTime()->getTimeStamp()) {
+        if (
+            is_null($albumStartDateTime)
+            || $albumStartDateTime->getTimestamp() > $photo->getDateTime()->getTimeStamp()
+        ) {
             $album->setStartDateTime($photo->getDateTime());
         }
 
         $albumEndDateTime = $album->getEndDateTime();
-        if (is_null($albumEndDateTime) || $albumEndDateTime->getTimestamp() < $photo->getDateTime()->getTimeStamp()) {
+        if (
+            is_null($albumEndDateTime)
+            || $albumEndDateTime->getTimestamp() < $photo->getDateTime()->getTimeStamp()
+        ) {
             $photo->getAlbum()->setEndDateTime($photo->getDateTime());
         }
 

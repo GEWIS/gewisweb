@@ -67,8 +67,10 @@ class Vote implements ResourceInterface
      * @param Photo $photo
      * @param UserModel $voter The member who voted
      */
-    public function __construct(Photo $photo, UserModel $voter)
-    {
+    public function __construct(
+        Photo $photo,
+        UserModel $voter,
+    ) {
         $this->dateTime = new DateTime();
         $this->voter = $voter;
         $this->photo = $photo;

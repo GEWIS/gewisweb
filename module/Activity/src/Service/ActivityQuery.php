@@ -2,49 +2,69 @@
 
 namespace Activity\Service;
 
-use Activity\Mapper\Proposal;
-use Activity\Model\Activity as ActivityModel;
-use Activity\Model\ActivityUpdateProposal;
+use Activity\Mapper\{
+    Activity as ActivityMapper,
+    Proposal as ProposalMapper,
+};
+use Activity\Model\{
+    Activity as ActivityModel,
+    ActivityUpdateProposal as ActivityUpdateProposalModel,
+};
 use DateTime;
 use Decision\Model\AssociationYear as AssociationYear;
-use Decision\Model\Organ;
+use Decision\Model\Organ as OrganModel;
+use Decision\Service\Organ as OrganService;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
 use Laminas\Mvc\I18n\Translator;
-use User\Model\User;
+use User\Model\User as UserModel;
 use User\Permissions\NotAllowedException;
 
 class ActivityQuery
 {
     /**
-     * @var Translator
+     * @var AclService
      */
-    private $translator;
-    /**
-     * @var \Decision\Service\Organ
-     */
-    private $organService;
-    /**
-     * @var \Activity\Mapper\Activity
-     */
-    private $activityMapper;
-    /**
-     * @var Proposal
-     */
-    private $proposalMapper;
     private AclService $aclService;
 
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
+    /**
+     * @var OrganService
+     */
+    private OrganService $organService;
+
+    /**
+     * @var ActivityMapper
+     */
+    private ActivityMapper $activityMapper;
+
+    /**
+     * @var ProposalMapper
+     */
+    private ProposalMapper $proposalMapper;
+
+    /**
+     * @param AclService $aclService
+     * @param Translator $translator
+     * @param OrganService $organService
+     * @param ActivityMapper $activityMapper
+     * @param ProposalMapper $proposalMapper
+     */
     public function __construct(
+        AclService $aclService,
         Translator $translator,
-        \Decision\Service\Organ $organService,
-        \Activity\Mapper\Activity $activityMapper,
-        Proposal $proposalMapper,
-        AclService $aclService
+        OrganService $organService,
+        ActivityMapper $activityMapper,
+        ProposalMapper $proposalMapper,
     ) {
+        $this->aclService = $aclService;
         $this->translator = $translator;
         $this->organService = $organService;
         $this->activityMapper = $activityMapper;
         $this->proposalMapper = $proposalMapper;
-        $this->aclService = $aclService;
     }
 
     /**
@@ -52,25 +72,19 @@ class ActivityQuery
      *
      * @return Translator
      */
-    public function getTranslator()
+    public function getTranslator(): Translator
     {
         return $this->translator;
     }
-
-    /**
-     * A GEWIS association year starts 01-07.
-     */
-    public const ASSOCIATION_YEAR_START_MONTH = 7;
-    public const ASSOCIATION_YEAR_START_DAY = 1;
 
     /**
      * Get the information of one proposal from the database.
      *
      * @param int $id The proposal id to be searched for
      *
-     * @return ActivityUpdateProposal|null or null if the proposal does not exist
+     * @return ActivityUpdateProposalModel|null or null if the proposal does not exist
      */
-    public function getProposal(int $id): ?ActivityUpdateProposal
+    public function getProposal(int $id): ?ActivityUpdateProposalModel
     {
         return $this->proposalMapper->find($id);
     }
@@ -78,7 +92,7 @@ class ActivityQuery
     /**
      * Retrieve all update proposals from the database.
      *
-     * @return array a Collection of \Activity\Model\ActivityUpdateProposal
+     * @return array a Collection of ActivityUpdateProposalModel
      */
     public function getAllProposals(): array
     {
@@ -93,7 +107,7 @@ class ActivityQuery
      *
      * @return array
      */
-    public function getAvailableLanguages($activity)
+    public function getAvailableLanguages(ActivityModel $activity): array
     {
         return [
             'nl' => !is_null($activity->getName()->getValueNL()),
@@ -130,22 +144,7 @@ class ActivityQuery
             throw new NotAllowedException($this->translator->translate('You are not allowed to view the activities'));
         }
 
-        return $this->activityMapper->getActivityById($id);
-    }
-
-    /**
-     * Returns an array of all activities.
-     * NB: This method is currently unused. Should it be removed?
-     *
-     * @return array Array of activities
-     */
-    public function findAll()
-    {
-        if (!$this->aclService->isAllowed('view', 'activity')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view the activities'));
-        }
-
-        return $this->activityMapper->findAll();
+        return $this->activityMapper->find($id);
     }
 
     /**
@@ -153,7 +152,7 @@ class ActivityQuery
      *
      * @return array Array of activities
      */
-    public function getUnapprovedActivities()
+    public function getUnapprovedActivities(): array
     {
         if (!$this->aclService->isAllowed('viewUnapproved', 'activity')) {
             throw new NotAllowedException(
@@ -169,7 +168,7 @@ class ActivityQuery
      *
      * @return array Array of activities
      */
-    public function getApprovedActivities()
+    public function getApprovedActivities(): array
     {
         if (!$this->aclService->isAllowed('view', 'activity')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view activities'));
@@ -181,13 +180,15 @@ class ActivityQuery
     /**
      * Get upcoming activities organized by the given organ.
      *
-     * @param Organ $organ
-     * @param int $count
+     * @param OrganModel $organ
+     * @param int|null $count
      *
      * @return array
      */
-    public function getOrganActivities($organ, $count = null)
-    {
+    public function getOrganActivities(
+        OrganModel $organ,
+        ?int $count = null,
+    ): array {
         return $this->activityMapper->getUpcomingActivities($count, $organ);
     }
 
@@ -196,7 +197,7 @@ class ActivityQuery
      *
      * @return array Array of activities
      */
-    public function getDisapprovedActivities()
+    public function getDisapprovedActivities(): array
     {
         if (!$this->aclService->isAllowed('viewDisapproved', 'activity')) {
             throw new NotAllowedException(
@@ -210,11 +211,11 @@ class ActivityQuery
     /**
      * Get all activities that are approved by the board and which occur in the future.
      *
-     * @param string $category Type of activities requested
+     * @param string|null $category Type of activities requested
      *
      * @return array Array of activities
      */
-    public function getUpcomingActivities($category = null)
+    public function getUpcomingActivities(string $category = null): array
     {
         if (!$this->aclService->isAllowed('view', 'activity')) {
             throw new NotAllowedException(
@@ -235,18 +236,18 @@ class ActivityQuery
             return $this->activityMapper->getUpcomingActivitiesForMember($user);
         }
 
-        return $this->activityMapper->getUpcomingActivities(null, null, $category);
+        return $this->activityMapper->getUpcomingActivities(category: $category);
     }
 
     /**
      * Gets the upcoming activities created by this user or its organs.
      * Or, when the user is an admin, retrieve all upcoming activities.
      *
-     * @param User $user
+     * @param UserModel $user
      *
      * @return array
      */
-    public function getUpcomingCreatedActivities($user)
+    public function getUpcomingCreatedActivities(UserModel $user): array
     {
         if ($this->aclService->isAllowed('viewDetails', 'activity')) {
             //Only admins are allowed to unconditionally view activity details
@@ -254,18 +255,18 @@ class ActivityQuery
         }
         $organs = $this->organService->getEditableOrgans();
 
-        return $this->activityMapper->getAllUpcomingActivities($organs, $user->getLidnr());
+        return $this->activityMapper->getAllUpcomingActivities($organs, $user);
     }
 
     /**
      * Gets a paginator for the old activities created by this user or its organs.
      * Or, when the user is an admin, retrieve all old activities.
      *
-     * @param User $user
+     * @param UserModel $user
      *
      * @return DoctrinePaginator
      */
-    public function getOldCreatedActivitiesPaginator($user)
+    public function getOldCreatedActivitiesPaginator(UserModel $user): DoctrinePaginator
     {
         if ($this->aclService->isAllowed('viewDetails', 'activity')) {
             //Only admins are allowed to unconditionally view activity details
@@ -273,7 +274,7 @@ class ActivityQuery
         }
         $organs = $this->organService->getEditableOrgans();
 
-        return $this->activityMapper->getOldActivityPaginatorAdapterByOrganizer($organs, $user->getLidnr());
+        return $this->activityMapper->getOldActivityPaginatorAdapterByOrganizer($organs, $user);
     }
 
     /**
@@ -281,7 +282,7 @@ class ActivityQuery
      *
      * @return array
      */
-    public function getActivityArchiveYears()
+    public function getActivityArchiveYears(): array
     {
         $oldest = $this->activityMapper->getOldestActivity();
 
@@ -303,7 +304,7 @@ class ActivityQuery
      *
      * @return array
      */
-    public function getFinishedActivitiesByYear(int $year)
+    public function getFinishedActivitiesByYear(int $year): array
     {
         if (!$this->aclService->isAllowed('view', 'activity')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view the activities'));

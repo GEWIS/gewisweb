@@ -3,21 +3,23 @@
 namespace Activity\Service;
 
 use Activity\Form\{
-    ActivityCalendarOption,
     ActivityCalendarPeriod as ActivityCalendarPeriodForm,
 };
-use Activity\Mapper\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodMapper;
+use Activity\Mapper\{
+    ActivityCalendarOption as ActivityCalendarOptionMapper,
+    ActivityOptionCreationPeriod as ActivityOptionCreationPeriodMapper,
+};
 use Activity\Model\{
     ActivityCalendarOption as OptionModel,
+    ActivityCalendarOption as ActivityCalendarOptionModel,
     ActivityOptionCreationPeriod as ActivityOptionCreationPeriodModel,
     ActivityOptionProposal as ProposalModel,
-    MaxActivities as MaxActivitiesModel,
-};
-use Application\Service\Email;
+    MaxActivities as MaxActivitiesModel};
+use Application\Service\Email as EmailService;
 use DateInterval;
 use DateTime;
-use Decision\Mapper\Member;
-use Decision\Service\Organ;
+use Decision\Mapper\Member as MemberMapper;
+use Decision\Service\Organ as OrganService;
 use Doctrine\ORM\EntityManager;
 use Exception;
 use Laminas\Mvc\I18n\Translator;
@@ -26,33 +28,39 @@ use User\Permissions\NotAllowedException;
 class ActivityCalendar
 {
     /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
      * @var Translator
      */
-    private $translator;
+    private Translator $translator;
+
     /**
      * @var EntityManager
      */
-    private $entityManager;
+    private EntityManager $entityManager;
+
     /**
-     * @var Organ
+     * @var OrganService
      */
-    private $organService;
+    private OrganService $organService;
+
     /**
-     * @var Email
+     * @var EmailService
      */
-    private $emailService;
+    private EmailService $emailService;
+
     /**
-     * @var \Activity\Mapper\ActivityCalendarOption
+     * @var ActivityCalendarOptionMapper
      */
-    private $calendarOptionMapper;
+    private ActivityCalendarOptionMapper $calendarOptionMapper;
+
     /**
-     * @var Member
+     * @var MemberMapper
      */
-    private $memberMapper;
-    /**
-     * @var ActivityCalendarOption
-     */
-    private $calendarOptionForm;
+    private MemberMapper $memberMapper;
 
     /**
      * @var ActivityCalendarPeriodForm
@@ -64,55 +72,73 @@ class ActivityCalendar
      */
     private ActivityOptionCreationPeriodMapper $calendarCreationPeriodMapper;
 
-    private AclService $aclService;
+    /**
+     * @var ActivityCalendarForm
+     */
     private ActivityCalendarForm $calendarFormService;
 
+    /**
+     * @param AclService $aclService
+     * @param Translator $translator
+     * @param EntityManager $entityManager
+     * @param OrganService $organService
+     * @param EmailService $emailService
+     * @param ActivityCalendarOptionMapper $calendarOptionMapper
+     * @param MemberMapper $memberMapper
+     * @param ActivityCalendarPeriodForm $calendarPeriodForm
+     * @param ActivityOptionCreationPeriodMapper $calendarCreationPeriodMapper
+     * @param ActivityCalendarForm $calendarFormService
+     */
     public function __construct(
+        AclService $aclService,
         Translator $translator,
         EntityManager $entityManager,
-        Organ $organService,
-        Email $emailService,
-        \Activity\Mapper\ActivityCalendarOption $calendarOptionMapper,
-        Member $memberMapper,
-        ActivityCalendarOption $calendarOptionForm,
+        OrganService $organService,
+        EmailService $emailService,
+        ActivityCalendarOptionMapper $calendarOptionMapper,
+        MemberMapper $memberMapper,
         ActivityCalendarPeriodForm $calendarPeriodForm,
         ActivityOptionCreationPeriodMapper $calendarCreationPeriodMapper,
-        AclService $aclService,
-        ActivityCalendarForm $calendarFormService
+        ActivityCalendarForm $calendarFormService,
     ) {
+        $this->aclService = $aclService;
         $this->translator = $translator;
         $this->entityManager = $entityManager;
         $this->organService = $organService;
         $this->emailService = $emailService;
         $this->calendarOptionMapper = $calendarOptionMapper;
         $this->memberMapper = $memberMapper;
-        $this->calendarOptionForm = $calendarOptionForm;
         $this->calendarPeriodForm = $calendarPeriodForm;
         $this->calendarCreationPeriodMapper = $calendarCreationPeriodMapper;
-        $this->aclService = $aclService;
         $this->calendarFormService = $calendarFormService;
     }
 
     /**
      * Gets all future options.
+     *
+     * @return array
      */
-    public function getUpcomingOptions()
+    public function getUpcomingOptions(): array
     {
         return $this->calendarOptionMapper->getUpcomingOptions(false);
     }
 
     /**
      * Gets all future options which the current user is allowed to edit/delete.
+     *
+     * @return array
      */
-    public function getEditableUpcomingOptions()
+    public function getEditableUpcomingOptions(): array
     {
         if (!$this->aclService->isAllowed('delete_own', 'activity_calendar_proposal')) {
             return [];
         }
+
         if ($this->aclService->isAllowed('delete_all', 'activity_calendar_proposal')) {
             // Return all
             return $this->calendarOptionMapper->getUpcomingOptions(true);
         }
+
         $user = $this->aclService->getIdentityOrThrowException();
 
         return $this->calendarOptionMapper->getUpcomingOptionsByOrgans(
@@ -120,7 +146,7 @@ class ActivityCalendar
         );
     }
 
-    public function sendOverdueNotifications()
+    public function sendOverdueNotifications(): void
     {
         $date = new DateTime();
         $date->sub(new DateInterval('P3W'));
@@ -133,20 +159,6 @@ class ActivityCalendar
                 ['options' => $oldOptions]
             );
         }
-    }
-
-    /**
-     * Retrieves the form for creating a new calendar activity option proposal.
-     *
-     * @return ActivityCalendarOption
-     */
-    public function getCreateOptionForm()
-    {
-        if (!$this->aclService->isAllowed('create', 'activity_calendar_proposal')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to create activity options.'));
-        }
-
-        return $this->calendarOptionForm;
     }
 
     /**
@@ -185,7 +197,7 @@ class ActivityCalendar
 
         $options = $data['options'];
         foreach ($options as $option) {
-            $this->createOption($option, $proposal);
+            $this->createOption($proposal, $option);
         }
 
         return $proposal;
@@ -199,8 +211,10 @@ class ActivityCalendar
      *
      * @throws Exception
      */
-    public function createOption($data, $proposal)
-    {
+    public function createOption(
+        ProposalModel $proposal,
+        array $data,
+    ): OptionModel {
         $option = new OptionModel();
 
         $em = $this->entityManager;
@@ -217,22 +231,27 @@ class ActivityCalendar
         return $option;
     }
 
-    public function approveOption($id)
+    /**
+     * @param int $id
+     */
+    public function approveOption(int $id): void
     {
         if (!$this->canApproveOption()) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to approve this option'));
         }
 
-        $mapper = $this->calendarOptionMapper;
-        $option = $mapper->findOption($id);
+        $option = $this->calendarOptionMapper->find($id);
 
-        $em = $this->entityManager;
+        if (null === $option) {
+            return;
+        }
+
         $option->setModifiedBy($this->aclService->getIdentityOrThrowException());
         $option->setStatus('approved');
-        $em->flush();
+        $this->calendarOptionMapper->flush();
 
         $proposal = $option->getProposal();
-        $options = $mapper->findOptionsByProposal($proposal->getId());
+        $options = $this->calendarOptionMapper->findOptionsByProposal($proposal);
 
         foreach ($options as $option) {
             // Can't add two options at the same time
@@ -242,7 +261,10 @@ class ActivityCalendar
         }
     }
 
-    public function canApproveOption()
+    /**
+     * @return bool
+     */
+    public function canApproveOption(): bool
     {
         if ($this->aclService->isAllowed('approve_all', 'activity_calendar_proposal')) {
             return true;
@@ -251,21 +273,32 @@ class ActivityCalendar
         return false;
     }
 
-    public function deleteOption($id)
+    /**
+     * @param int $id
+     */
+    public function deleteOption(int $id): void
     {
-        $mapper = $this->calendarOptionMapper;
-        $option = $mapper->findOption($id);
+        $option = $this->calendarOptionMapper->find($id);
+
+        if (null === $option) {
+            return;
+        }
+
         if (!$this->canDeleteOption($option)) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete this option'));
         }
 
-        $em = $this->entityManager;
         $option->setModifiedBy($this->aclService->getIdentityOrThrowException());
         $option->setStatus('deleted');
-        $em->flush();
+        $this->calendarOptionMapper->flush();
     }
 
-    protected function canDeleteOption($option)
+    /**
+     * @param ActivityCalendarOptionModel $option
+     *
+     * @return bool
+     */
+    protected function canDeleteOption(ActivityCalendarOptionModel $option): bool
     {
         if ($this->aclService->isAllowed('delete_all', 'activity_calendar_proposal')) {
             return true;
@@ -297,7 +330,7 @@ class ActivityCalendar
      *
      * @throws Exception
      */
-    public function canCreateProposal()
+    public function canCreateProposal(): bool
     {
         $organs = $this->calendarFormService->getEditableOrgans();
 
@@ -305,23 +338,9 @@ class ActivityCalendar
     }
 
     /**
-     * Get the current ActivityOptionCreationPeriod.
-     *
-     * @param int $proposalId
-     * @param int $organId
-     *
-     * @return int
-     */
-    protected function getCurrentProposalOptionCount($proposalId, $organId)
-    {
-        $mapper = $this->calendarOptionMapper;
-        $options = $mapper->findOptionsByProposalAndOrgan($proposalId, $organId);
-
-        return count($options);
-    }
-
-    /**
      * @param array $data
+     *
+     * @return bool
      */
     public function createOptionPlanningPeriod(array $data): bool
     {
@@ -357,6 +376,12 @@ class ActivityCalendar
         return true;
     }
 
+    /**
+     * @param ActivityOptionCreationPeriodModel $activityOptionCreationPeriod
+     * @param array $data
+     *
+     * @return bool
+     */
     public function updateOptionPlanningPeriod(
         ActivityOptionCreationPeriodModel $activityOptionCreationPeriod,
         array $data,

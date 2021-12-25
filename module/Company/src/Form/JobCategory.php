@@ -47,8 +47,14 @@ class JobCategory extends Form implements InputFilterProviderInterface
      */
     private ?string $currentSlugEn = null;
 
-    public function __construct(CategoryMapper $mapper, Translator $translator)
-    {
+    /**
+     * @param CategoryMapper $mapper
+     * @param Translator $translator
+     */
+    public function __construct(
+        CategoryMapper $mapper,
+        Translator $translator,
+    ) {
         // we want to ignore the name passed
         parent::__construct();
         $this->mapper = $mapper;
@@ -256,8 +262,11 @@ class JobCategory extends Form implements InputFilterProviderInterface
      * @return bool
      * @throws NonUniqueResultException
      */
-    public function isSlugUnique(string $value, array $context, string $languageSuffix): bool
-    {
+    public function isSlugUnique(
+        string $value,
+        array $context,
+        string $languageSuffix,
+    ): bool {
         if ($this->{'currentSlug' . $languageSuffix} === $value) {
             return true;
         }

@@ -6,6 +6,7 @@ use Frontpage\Service\{
     AclService,
     News as NewsService,
 };
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Paginator\Paginator;
@@ -14,11 +15,6 @@ use User\Permissions\NotAllowedException;
 
 class NewsAdminController extends AbstractActionController
 {
-    /**
-     * @var NewsService
-     */
-    private NewsService $newsService;
-
     /**
      * @var AclService
      */
@@ -30,21 +26,28 @@ class NewsAdminController extends AbstractActionController
     private Translator $translator;
 
     /**
+     * @var NewsService
+     */
+    private NewsService $newsService;
+
+    /**
      * NewsAdminController constructor.
      *
+     * @param AclService $aclService
+     * @param Translator $translator
      * @param NewsService $newsService
      */
     public function __construct(
-        NewsService $newsService,
         AclService $aclService,
         Translator $translator,
+        NewsService $newsService,
     ) {
-        $this->newsService = $newsService;
         $this->aclService = $aclService;
         $this->translator = $translator;
+        $this->newsService = $newsService;
     }
 
-    public function listAction()
+    public function listAction(): ViewModel
     {
         $adapter = $this->newsService->getPaginatorAdapter();
         $paginator = new Paginator($adapter);
@@ -66,7 +69,7 @@ class NewsAdminController extends AbstractActionController
     /**
      * Create a news item.
      */
-    public function createAction()
+    public function createAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('create', 'news_item')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create news items'));
@@ -101,7 +104,7 @@ class NewsAdminController extends AbstractActionController
     /**
      * Edit a news item.
      */
-    public function editAction()
+    public function editAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('edit', 'news_item')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit news items'));
@@ -144,7 +147,7 @@ class NewsAdminController extends AbstractActionController
      *
      * TODO: Non-idempotent requests should be done via POST, not GET.
      */
-    public function deleteAction()
+    public function deleteAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('delete', 'news_item')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete news items'));
@@ -158,6 +161,6 @@ class NewsAdminController extends AbstractActionController
         }
 
         $this->newsService->deleteNewsItem($newsItem);
-        $this->redirect()->toUrl($this->url()->fromRoute('admin_news'));
+        return $this->redirect()->toUrl($this->url()->fromRoute('admin_news'));
     }
 }

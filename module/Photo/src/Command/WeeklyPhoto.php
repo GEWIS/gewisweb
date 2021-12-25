@@ -9,10 +9,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class WeeklyPhoto extends Command
 {
+    /**
+     * @var Photo
+     */
     private Photo $photoService;
 
-    public function execute(InputInterface $input, OutputInterface $output)
-    {
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @return int
+     */
+    public function execute(
+        InputInterface $input,
+        OutputInterface $output,
+    ): int {
         $weeklyPhoto = $this->photoService->generatePhotoOfTheWeek();
 
         if (is_null($weeklyPhoto)) {

@@ -12,10 +12,12 @@ class ApiApp
     /**
      * @var ApiAppMapper
      */
-    protected $mapper;
+    protected ApiAppMapper $mapper;
 
     /**
      * Constructor.
+     *
+     * @param ApiAppMapper $mapper
      */
     public function __construct(ApiAppMapper $mapper)
     {
@@ -26,11 +28,13 @@ class ApiApp
      * Get a callback from an appId and a user identity.
      *
      * @param string $appId
-     *
+     * @param UserModel $user
      * @return string
      */
-    public function callbackWithToken($appId, UserModel $user)
-    {
+    public function callbackWithToken(
+        string $appId,
+        UserModel $user,
+    ): string {
         $app = $this->getMapper()->findByAppId($appId);
 
         $token = [
@@ -47,7 +51,7 @@ class ApiApp
     /**
      * @return ApiAppMapper
      */
-    public function getMapper()
+    public function getMapper(): ApiAppMapper
     {
         return $this->mapper;
     }

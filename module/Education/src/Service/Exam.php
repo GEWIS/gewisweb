@@ -8,10 +8,9 @@ use DirectoryIterator;
 use Education\Form\{
     AddCourse as AddCourseForm,
     Bulk as BulkForm,
-    SearchCourse as SearchCourseForm,
     TempUpload as TempUploadForm,
 };
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Education\Mapper\{
     Exam as ExamMapper,
     Course as CourseMapper,
@@ -34,6 +33,11 @@ use User\Permissions\NotAllowedException;
  */
 class Exam
 {
+    /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
     /**
      * @var Translator
      */
@@ -60,11 +64,6 @@ class Exam
     private AddCourseForm $addCourseForm;
 
     /**
-     * @var SearchCourseForm
-     */
-    private SearchCourseForm $searchCourseForm;
-
-    /**
      * @var TempUploadForm
      */
     private TempUploadForm $tempUploadForm;
@@ -85,11 +84,6 @@ class Exam
     private array $config;
 
     /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
      * Bulk form.
      *
      * @var BulkForm|null
@@ -97,29 +91,27 @@ class Exam
     protected ?BulkForm $bulkForm = null;
 
     public function __construct(
+        AclService $aclService,
         Translator $translator,
         FileStorageService $storageService,
         CourseMapper $courseMapper,
         ExamMapper $examMapper,
         AddCourseForm $addCourseForm,
-        SearchCourseForm $searchCourseForm,
         TempUploadForm $tempUploadForm,
         BulkForm $bulkSummaryForm,
         BulkForm $bulkExamForm,
         array $config,
-        AclService $aclService
     ) {
+        $this->aclService = $aclService;
         $this->translator = $translator;
         $this->storageService = $storageService;
         $this->courseMapper = $courseMapper;
         $this->examMapper = $examMapper;
         $this->addCourseForm = $addCourseForm;
-        $this->searchCourseForm = $searchCourseForm;
         $this->tempUploadForm = $tempUploadForm;
         $this->bulkSummaryForm = $bulkSummaryForm;
         $this->bulkExamForm = $bulkExamForm;
         $this->config = $config;
-        $this->aclService = $aclService;
     }
 
     /**
@@ -131,18 +123,7 @@ class Exam
      */
     public function searchCourse(array $data): ?array
     {
-        // TODO: Move the form check to the controller.
-        $form = $this->searchCourseForm;
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return null;
-        }
-
-        $data = $form->getData();
-        $query = $data['query'];
-
-        return $this->courseMapper->search($query);
+        return $this->courseMapper->search($data['query']);
     }
 
     /**
@@ -184,8 +165,10 @@ class Exam
      * @return bool
      * @throws Exception
      */
-    protected function bulkEdit(array $data, string $type): bool
-    {
+    protected function bulkEdit(
+        array $data,
+        string $type,
+    ): bool {
         $form = $this->getBulkForm($type);
 
         $form->setData($data);
@@ -226,7 +209,7 @@ class Exam
          * exam, which we need in the upload process.
          */
         $storage = $this->storageService;
-        $this->examMapper->transactional(function ($mapper) use ($data, $type, $temporaryEducationConfig, $storage) {
+        $this->examMapper->transactional(function ($mapper) use ($data, $type, $temporaryEducationConfig, $storage): void {
             foreach ($data['exams'] as $examData) {
                 // finalize exam upload
                 $exam = new ExamModel();
@@ -290,8 +273,11 @@ class Exam
      *
      * @return bool
      */
-    protected function tempUpload(array $post, array $files, string $uploadDirectory): bool
-    {
+    protected function tempUpload(
+        array $post,
+        array $files,
+        string $uploadDirectory,
+    ): bool {
         $form = $this->getTempUploadForm();
 
         $data = array_merge_recursive($post, $files);
@@ -323,8 +309,10 @@ class Exam
      *
      * @return bool
      */
-    public function tempExamUpload(Parameters $post, Parameters $files): bool
-    {
+    public function tempExamUpload(
+        Parameters $post,
+        Parameters $files,
+    ): bool {
         $temporaryEducationConfig = $this->getConfig('education_temp');
 
         return $this->tempUpload($post->toArray(), $files->toArray(), $temporaryEducationConfig['upload_exam_dir']);
@@ -336,8 +324,10 @@ class Exam
      *
      * @return bool
      */
-    public function tempSummaryUpload(Parameters $post, Parameters $files): bool
-    {
+    public function tempSummaryUpload(
+        Parameters $post,
+        Parameters $files,
+    ): bool {
         $temporaryEducationConfig = $this->getConfig('education_temp');
 
         return $this->tempUpload($post->toArray(), $files->toArray(), $temporaryEducationConfig['upload_summary_dir']);
@@ -353,6 +343,8 @@ class Exam
      * Summaries have the following format:
      *
      * <code>-<author>-summary-<year>-<month>-<day>.pdf
+     *
+     * @param ExamModel $exam
      *
      * @return string Filename
      */
@@ -394,8 +386,10 @@ class Exam
      * @param string $filename The file to delete
      * @param string $type The type to delete (exam/summary)
      */
-    public function deleteTempExam(string $filename, string $type = 'exam'): void
-    {
+    public function deleteTempExam(
+        string $filename,
+        string $type = 'exam',
+    ): void {
         if (!$this->aclService->isAllowed('delete', 'exam')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete exams'));
         }
@@ -503,7 +497,7 @@ class Exam
         $filename = str_replace($month, '', $filename);
         $day = preg_match_all('/[0123]\d/', $filename, $matches) ? $matches[0][0] : $today->format('d');
 
-        $language = strstr($filename, 'nl') ? 'nl' : 'en';
+        $language = str_contains($filename, 'nl') ? 'nl' : 'en';
 
         return [
             'course' => $course,
@@ -517,9 +511,9 @@ class Exam
      *
      * @param string $filename
      *
-     * @return array|string
+     * @return string
      */
-    public static function guessSummaryAuthor(string $filename): array|string
+    public static function guessSummaryAuthor(string $filename): string
     {
         $parts = explode('.', $filename);
         foreach ($parts as $part) {

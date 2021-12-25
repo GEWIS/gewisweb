@@ -7,7 +7,7 @@ use Doctrine\ORM\{
     EntityManager,
     EntityRepository,
     OptimisticLockException,
-    ORMException,
+    Exception\ORMException,
 };
 
 abstract class BaseMapper
@@ -43,11 +43,12 @@ abstract class BaseMapper
      * @param array $entities
      * @throws ORMException
      */
-    public function persistMultiple(array $entities)
+    public function persistMultiple(array $entities): void
     {
         foreach ($entities as $entity) {
             $this->em->persist($entity);
         }
+
         $this->em->flush();
     }
 
@@ -67,11 +68,12 @@ abstract class BaseMapper
      * @param array $entities
      * @throws ORMException
      */
-    public function removeMultiple(array $entities)
+    public function removeMultiple(array $entities): void
     {
         foreach ($entities as $entity) {
             $this->em->remove($entity);
         }
+
         $this->em->flush();
     }
 

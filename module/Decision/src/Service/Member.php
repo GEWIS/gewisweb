@@ -2,9 +2,12 @@
 
 namespace Decision\Service;
 
-use Decision\Mapper\Authorization;
+use Decision\Mapper\{
+    Authorization as AuthorizationMapper,
+    Member as MemberMapper,
+};
 use Decision\Model\{
-    Meeting,
+    Meeting as MeetingModel,
     Member as MemberModel,
 };
 use Laminas\Code\Exception\InvalidArgumentException;
@@ -17,35 +20,41 @@ use User\Permissions\NotAllowedException;
 class Member
 {
     /**
-     * @var Translator
-     */
-    private $translator;
-
-    /**
-     * @var \Decision\Mapper\Member
-     */
-    private $memberMapper;
-
-    /**
-     * @var Authorization
-     */
-    private $authorizationMapper;
-
-    /**
      * @var AclService
      */
     private AclService $aclService;
 
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
+    /**
+     * @var MemberMapper
+     */
+    private MemberMapper $memberMapper;
+
+    /**
+     * @var AuthorizationMapper
+     */
+    private AuthorizationMapper $authorizationMapper;
+
+    /**
+     * @param AclService $aclService
+     * @param Translator $translator
+     * @param MemberMapper $memberMapper
+     * @param AuthorizationMapper $authorizationMapper
+     */
     public function __construct(
-        Translator $translator,
-        \Decision\Mapper\Member $memberMapper,
-        Authorization $authorizationMapper,
         AclService $aclService,
+        Translator $translator,
+        MemberMapper $memberMapper,
+        AuthorizationMapper $authorizationMapper,
     ) {
+        $this->aclService = $aclService;
         $this->translator = $translator;
         $this->memberMapper = $memberMapper;
         $this->authorizationMapper = $authorizationMapper;
-        $this->aclService = $aclService;
     }
 
     public const MIN_SEARCH_QUERY_LENGTH = 2;
@@ -55,12 +64,17 @@ class Member
      *
      * @return bool
      */
-    public function isActiveMember()
+    public function isActiveMember(): bool
     {
         return $this->aclService->isAllowed('edit', 'organ');
     }
 
-    public function findMemberByLidNr($lidnr)
+    /**
+     * @param int $lidnr
+     *
+     * @return MemberModel|null
+     */
+    public function findMemberByLidNr(int $lidnr): ?MemberModel
     {
         if (!$this->aclService->isAllowed('view', 'member')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view members.'));
@@ -78,7 +92,7 @@ class Member
      *
      * @return array Of members sorted by birthday
      */
-    public function getBirthdayMembers($days = 0)
+    public function getBirthdayMembers(int $days = 0): array
     {
         if (0 == $days && !$this->aclService->isAllowed('birthdays_today', 'member')) {
             throw new NotAllowedException(
@@ -98,9 +112,11 @@ class Member
     /**
      * Get the organs a member is part of.
      *
+     * @param MemberModel $member
+     *
      * @return array
      */
-    public function getOrgans(MemberModel $member)
+    public function getOrgans(MemberModel $member): array
     {
         return $this->memberMapper->findOrgans($member);
     }
@@ -113,7 +129,7 @@ class Member
      *
      * @return array
      */
-    public function searchMembersByName($query)
+    public function searchMembersByName(string $query): array
     {
         if (strlen($query) < self::MIN_SEARCH_QUERY_LENGTH) {
             throw new InvalidArgumentException(
@@ -129,21 +145,19 @@ class Member
     }
 
     /**
-     * Find a member by (part of) its name.
+     * Determine if a member can be authorized for a meeting.
      *
      * @param MemberModel $member
-     * @param Meeting $meeting
-     * @return bool
-     * @pre $name must be at least MIN_SEARCH_QUERY_LENGTH
+     * @param MeetingModel $meeting
      *
+     * @return bool
      */
-    public function canAuthorize($member, $meeting)
-    {
+    public function canAuthorize(
+        MemberModel $member,
+        MeetingModel $meeting,
+    ): bool {
         $maxAuthorizations = 2;
-
-        $meetingNumber = $meeting->getNumber();
-        $lidnr = $member->getLidnr();
-        $authorizations = $this->authorizationMapper->findRecipientAuthorization($meetingNumber, $lidnr);
+        $authorizations = $this->authorizationMapper->findRecipientAuthorization($meeting->getNumber(), $member);
 
         if (count($authorizations) < $maxAuthorizations) {
             return true;

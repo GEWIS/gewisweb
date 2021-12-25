@@ -7,16 +7,19 @@ use League\Glide\Urls\UrlBuilder;
 
 /**
  * Url view helper for generating (signed) glide url's
- * Usage: $this->scriptUrl()->requireUrl('/url/route');.
+ * Usage: $this->glideUrl()->getUrl('path to image', ['parameters']);.
  */
 class GlideUrl extends AbstractHelper
 {
-    protected $urlBuilder;
+    /**
+     * @var UrlBuilder
+     */
+    protected UrlBuilder $urlBuilder;
 
     /**
      * @return GlideUrl
      */
-    public function __invoke()
+    public function __invoke(): self
     {
         return $this;
     }
@@ -29,8 +32,10 @@ class GlideUrl extends AbstractHelper
      *
      * @return string
      */
-    public function getUrl($imagePath, $params)
-    {
+    public function getUrl(
+        string $imagePath,
+        array $params,
+    ): string {
         return $this->urlBuilder->getUrl($imagePath, $params);
     }
 
@@ -39,7 +44,7 @@ class GlideUrl extends AbstractHelper
      *
      * @param UrlBuilder $urlBuilder
      */
-    public function setUrlBuilder($urlBuilder)
+    public function setUrlBuilder(UrlBuilder $urlBuilder): void
     {
         $this->urlBuilder = $urlBuilder;
     }

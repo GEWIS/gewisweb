@@ -13,7 +13,6 @@ use Application\View\Helper\{
 };
 use Doctrine\Common\Cache\MemcachedCache;
 use Interop\Container\ContainerInterface;
-use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\Router\Http\{
     Literal,
     Segment,

@@ -4,16 +4,23 @@ namespace Frontpage;
 
 use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Frontpage\Form\{
-    NewsItem,
-    Page,
-    Poll,
-    PollApproval,
-    PollComment,
+    NewsItem as NewsItemForm,
+    Page as PageForm,
+    Poll as PollForm,
+    PollApproval as PollApprovalForm,
+    PollComment as PollCommentForm,
+};
+use Frontpage\Mapper\{
+    NewsItem as NewsItemMapper,
+    Page as PageMapper,
+    Poll as PollMapper,
 };
 use Frontpage\Service\{
     AclService,
-    Frontpage,
-    News,
+    Frontpage as FrontpageService,
+    News as NewsService,
+    Page as PageService,
+    Poll as PollService,
 };
 use Interop\Container\ContainerInterface;
 use RuntimeException;
@@ -36,7 +43,7 @@ class Module
      *
      * @return array Service configuration
      */
-    public function getServiceConfig()
+    public function getServiceConfig(): array
     {
         return [
             'factories' => [
@@ -52,7 +59,7 @@ class Module
                     $frontpageConfig = $container->get('config')['frontpage'];
                     $photoConfig = $container->get('config')['photo'];
 
-                    return new Frontpage(
+                    return new FrontpageService(
                         $translator,
                         $pollService,
                         $newsService,
@@ -66,49 +73,54 @@ class Module
                     );
                 },
                 'frontpage_service_page' => function (ContainerInterface $container) {
+                    $aclService = $container->get('frontpage_service_acl');
                     $translator = $container->get('translator');
                     $storageService = $container->get('application_service_storage');
                     $pageMapper = $container->get('frontpage_mapper_page');
                     $pageForm = $container->get('frontpage_form_page');
                     $storageConfig = $container->get('config')['storage'];
-                    $aclService = $container->get('frontpage_service_acl');
 
-                    return new Service\Page(
+                    return new PageService(
+                        $aclService,
                         $translator,
                         $storageService,
                         $pageMapper,
                         $pageForm,
                         $storageConfig,
-                        $aclService
                     );
                 },
                 'frontpage_service_poll' => function (ContainerInterface $container) {
+                    $aclService = $container->get('frontpage_service_acl');
                     $translator = $container->get('translator');
                     $emailService = $container->get('application_service_email');
                     $pollMapper = $container->get('frontpage_mapper_poll');
                     $pollForm = $container->get('frontpage_form_poll');
                     $pollApprovalForm = $container->get('frontpage_form_poll_approval');
-                    $aclService = $container->get('frontpage_service_acl');
 
-                    return new Service\Poll(
+                    return new PollService(
+                        $aclService,
                         $translator,
                         $emailService,
                         $pollMapper,
                         $pollForm,
                         $pollApprovalForm,
-                        $aclService,
                     );
                 },
                 'frontpage_service_news' => function (ContainerInterface $container) {
+                    $aclService = $container->get('frontpage_service_acl');
                     $translator = $container->get('translator');
                     $newsItemMapper = $container->get('frontpage_mapper_news_item');
                     $newsItemForm = $container->get('frontpage_form_news_item');
-                    $aclService = $container->get('frontpage_service_acl');
 
-                    return new News($newsItemMapper, $newsItemForm, $aclService, $translator);
+                    return new NewsService(
+                        $aclService,
+                        $translator,
+                        $newsItemMapper,
+                        $newsItemForm,
+                    );
                 },
                 'frontpage_form_page' => function (ContainerInterface $container) {
-                    $form = new Page(
+                    $form = new PageForm(
                         $container->get('translator')
                     );
                     $form->setHydrator($container->get('frontpage_hydrator'));
@@ -116,7 +128,7 @@ class Module
                     return $form;
                 },
                 'frontpage_form_poll' => function (ContainerInterface $container) {
-                    $form = new Poll(
+                    $form = new PollForm(
                         $container->get('translator')
                     );
                     $form->setHydrator($container->get('frontpage_hydrator'));
@@ -124,7 +136,7 @@ class Module
                     return $form;
                 },
                 'frontpage_form_poll_comment' => function (ContainerInterface $container) {
-                    $form = new PollComment(
+                    $form = new PollCommentForm(
                         $container->get('translator')
                     );
                     $form->setHydrator($container->get('frontpage_hydrator'));
@@ -132,7 +144,7 @@ class Module
                     return $form;
                 },
                 'frontpage_form_poll_approval' => function (ContainerInterface $container) {
-                    $form = new PollApproval(
+                    $form = new PollApprovalForm(
                         $container->get('translator')
                     );
                     $form->setHydrator($container->get('frontpage_hydrator'));
@@ -140,7 +152,7 @@ class Module
                     return $form;
                 },
                 'frontpage_form_news_item' => function (ContainerInterface $container) {
-                    $form = new NewsItem(
+                    $form = new NewsItemForm(
                         $container->get('translator')
                     );
                     $form->setHydrator($container->get('frontpage_hydrator'));
@@ -153,17 +165,17 @@ class Module
                     );
                 },
                 'frontpage_mapper_page' => function (ContainerInterface $container) {
-                    return new Mapper\Page(
+                    return new PageMapper(
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
                 'frontpage_mapper_poll' => function (ContainerInterface $container) {
-                    return new Mapper\Poll(
+                    return new PollMapper(
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
                 'frontpage_mapper_news_item' => function (ContainerInterface $container) {
-                    return new Mapper\NewsItem(
+                    return new NewsItemMapper(
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },

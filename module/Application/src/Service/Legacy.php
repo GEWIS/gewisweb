@@ -25,7 +25,7 @@ class Legacy
      *
      * @throws Exception
      */
-    public function checkPincode($user, $pincode)
+    public function checkPincode($user, $pincode): bool
     {
         throw new Exception('This operation is not supported.');
     }
@@ -41,7 +41,7 @@ class Legacy
      *
      * @throws Exception
      */
-    public function checkPassword($user, $password, $bcrypt)
+    public function checkPassword($user, $password, $bcrypt): bool
     {
         throw new Exception('This operation is not supported.');
     }

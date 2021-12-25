@@ -12,11 +12,6 @@ use User\Permissions\NotAllowedException;
 class InfimumController extends AbstractActionController
 {
     /**
-     * @var InfimumService
-     */
-    private InfimumService $infimumService;
-
-    /**
      * @var AclService
      */
     private AclService $aclService;
@@ -27,23 +22,28 @@ class InfimumController extends AbstractActionController
     private Translator $translator;
 
     /**
+     * @var InfimumService
+     */
+    private InfimumService $infimumService;
+
+    /**
      * FrontpageController constructor.
      *
-     * @param InfimumService $infimumService
      * @param AclService $aclService
      * @param Translator $translator
+     * @param InfimumService $infimumService
      */
     public function __construct(
-        InfimumService $infimumService,
         AclService $aclService,
         Translator $translator,
+        InfimumService $infimumService,
     ) {
-        $this->infimumService = $infimumService;
         $this->aclService = $aclService;
         $this->translator = $translator;
+        $this->infimumService = $infimumService;
     }
 
-    public function showAction()
+    public function showAction(): JsonModel
     {
         if (!$this->aclService->isAllowed('view', 'infimum')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view infima'));

@@ -20,10 +20,8 @@ class Company extends BaseMapper
      */
     public function findAllPublic(): array
     {
-        $objectRepository = $this->getRepository(); // From clause is integrated in this statement
-        $qb = $objectRepository->createQueryBuilder('c');
-        $qb->select('c')
-            ->where('c.published = 1')
+        $qb = $this->getRepository()->createQueryBuilder('c');
+        $qb->where('c.published = 1')
             ->orderBy('c.name', 'ASC');
 
         return array_filter(
@@ -32,28 +30,6 @@ class Company extends BaseMapper
                 return $company->getNumberOfPackages() > $company->getNumberOfExpiredPackages();
             }
         );
-    }
-
-    /**
-     * Find a specific company by its id.
-     *
-     * @param int $id The id of the company
-     *
-     * @return CompanyModel|null
-     */
-    public function findById(int $id): ?CompanyModel
-    {
-        return $this->getRepository()->find($id);
-    }
-
-    /**
-     * Find all companies.
-     *
-     * @return array
-     */
-    public function findAll(): array
-    {
-        return $this->getRepository()->findAll();
     }
 
     /**

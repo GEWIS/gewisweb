@@ -8,6 +8,7 @@ use Decision\Service\{
     Member as MemberService,
     MemberInfo as MemberInfoService,
 };
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\{
     JsonModel,
@@ -16,6 +17,11 @@ use Laminas\View\Model\{
 
 class MemberController extends AbstractActionController
 {
+    /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
     /**
      * @var MemberService
      */
@@ -37,34 +43,29 @@ class MemberController extends AbstractActionController
     private array $regulationsConfig;
 
     /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
      * MemberController constructor.
      *
+     * @param AclService $aclService
      * @param MemberService $memberService
      * @param MemberInfoService $memberInfoService
      * @param DecisionService $decisionService
      * @param array $regulationsConfig
-     * @param AclService $aclService
      */
     public function __construct(
+        AclService $aclService,
         MemberService $memberService,
         MemberInfoService $memberInfoService,
         DecisionService $decisionService,
         array $regulationsConfig,
-        AclService $aclService
     ) {
+        $this->aclService = $aclService;
         $this->memberService = $memberService;
         $this->memberInfoService = $memberInfoService;
         $this->decisionService = $decisionService;
         $this->regulationsConfig = $regulationsConfig;
-        $this->aclService = $aclService;
     }
 
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         // Get the latest 3 meetings of each type and flatten result
         $meetingsCollection = [
@@ -88,7 +89,7 @@ class MemberController extends AbstractActionController
     /**
      * Shown own information.
      */
-    public function selfAction()
+    public function selfAction(): ViewModel
     {
         return new ViewModel($this->memberInfoService->getMembershipInfo());
     }
@@ -96,7 +97,7 @@ class MemberController extends AbstractActionController
     /**
      * View information about a member.
      */
-    public function viewAction()
+    public function viewAction(): ViewModel
     {
         $info = $this->memberInfoService->getMembershipInfo($this->params()->fromRoute('lidnr'));
 
@@ -110,7 +111,7 @@ class MemberController extends AbstractActionController
     /**
      * Search action, allows searching for members.
      */
-    public function searchAction()
+    public function searchAction(): JsonModel|ViewModel
     {
         $name = $this->params()->fromQuery('q');
 
@@ -128,7 +129,7 @@ class MemberController extends AbstractActionController
     /**
      * Determinues whether a member can be authorized without additional confirmation.
      */
-    public function canAuthorizeAction()
+    public function canAuthorizeAction(): JsonModel|ViewModel
     {
         $lidnr = $this->params()->fromQuery('q');
         $meeting = $this->decisionService->getLatestAV();
@@ -158,7 +159,7 @@ class MemberController extends AbstractActionController
     /**
      * Show birthdays of members.
      */
-    public function birthdaysAction()
+    public function birthdaysAction(): ViewModel
     {
         return new ViewModel(
             [
@@ -170,7 +171,7 @@ class MemberController extends AbstractActionController
     /**
      * Action to download regulations.
      */
-    public function downloadRegulationAction()
+    public function downloadRegulationAction(): Response
     {
         $regulation = $this->params('regulation');
         if (isset($this->regulationsConfig['regulation'])) {

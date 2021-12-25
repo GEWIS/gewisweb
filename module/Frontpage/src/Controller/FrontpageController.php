@@ -23,7 +23,7 @@ class FrontpageController extends AbstractActionController
         $this->frontpageService = $frontpageService;
     }
 
-    public function homeAction()
+    public function homeAction(): ViewModel
     {
         $homePageData = $this->frontpageService->getHomepageData();
 

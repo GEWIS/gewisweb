@@ -16,8 +16,14 @@ use Laminas\InputFilter\InputFilterProviderInterface;
  */
 class ModifyRequest extends Form implements InputFilterProviderInterface
 {
-    public function __construct($name = null, $buttonvalue = 'submit')
-    {
+    /**
+     * @param string|null $name
+     * @param string $buttonvalue
+     */
+    public function __construct(
+        ?string $name = null,
+        string $buttonvalue = 'submit',
+    ) {
         parent::__construct($name);
         $this->setAttribute('method', 'post');
 

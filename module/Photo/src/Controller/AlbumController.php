@@ -30,6 +30,7 @@ class AlbumController extends AbstractActionController
      * AlbumController constructor.
      *
      * @param AlbumService $albumService
+     * @param PhotoService $photoService
      * @param array $photoConfig
      */
     public function __construct(
@@ -48,7 +49,7 @@ class AlbumController extends AbstractActionController
      *
      * @return ViewModel
      */
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         $albumId = $this->params()->fromRoute('album_id');
         $albumType = $this->params()->fromRoute('album_type');

@@ -23,7 +23,7 @@ class MemberApiController extends AbstractActionController
         $this->memberService = $memberService;
     }
 
-    public function lidnrAction()
+    public function lidnrAction(): JsonModel
     {
         $lidnr = $this->params()->fromRoute('lidnr');
 

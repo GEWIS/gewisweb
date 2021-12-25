@@ -3,31 +3,44 @@
 namespace User;
 
 use Doctrine\Laminas\Hydrator\DoctrineObject;
+use Laminas\Authentication\AuthenticationService as LaminasAuthenticationService;
 use Laminas\Crypt\Password\Bcrypt;
 use Laminas\Http\PhpEnvironment\RemoteAddress;
 use Laminas\Http\Request as HttpRequest;
 use Laminas\Mvc\MvcEvent;
 use Interop\Container\ContainerInterface;
-use User\Authentication\Adapter\ApiMapper;
-use User\Authentication\Adapter\Mapper;
-use User\Authentication\Adapter\PinMapper;
-use User\Authentication\ApiAuthenticationService;
+use User\Authentication\{
+    Adapter\ApiMapper,
+    Adapter\Mapper,
+    Adapter\PinMapper,
+    ApiAuthenticationService,
+    AuthenticationService,
+    Service\LoginAttempt as LoginAttemptService,
+};
 use User\Authorization\AclServiceFactory;
-use User\Mapper\User;
-use User\Mapper\Factory\ApiAppFactory as ApiAppMapperFactory;
-use User\Service\Factory\ApiAppFactory as ApiAppServiceFactory;
-use User\Form\Activate;
-use User\Form\ApiToken;
-use User\Form\Login;
-use User\Form\Password;
-use User\Form\Register;
-use User\Mapper\ApiUser;
-use User\Mapper\LoginAttempt;
-use User\Mapper\NewUser;
+use User\Mapper\{
+    User as UserMapper,
+    Factory\ApiAppFactory as ApiAppMapperFactory,
+    ApiUser as ApiUserMapper,
+    LoginAttempt as LoginAttemptMapper,
+    NewUser as NewUserMapper,
+    ApiApp as ApiAppMapper,
+};
+use User\Form\{
+    Activate as ActivateForm,
+    ApiToken as ApiTokenForm,
+    Login as LoginForm,
+    Password as PasswordForm,
+    Register as RegisterForm,
+};
 use User\Permissions\NotAllowedException;
-use User\Mapper\ApiApp as ApiAppMapper;
-use User\Service\ApiApp as ApiAppService;
-use User\Service\Email;
+use User\Service\{
+    ApiApp as ApiAppService,
+    ApiUser as ApiUserService,
+    Factory\ApiAppFactory as ApiAppServiceFactory,
+    Email as EmailService,
+    User as UserService,
+};
 
 class Module
 {
@@ -36,7 +49,7 @@ class Module
      *
      * @param MvcEvent $e
      */
-    public function onBootstrap(MvcEvent $e)
+    public function onBootstrap(MvcEvent $e): void
     {
         $em = $e->getApplication()->getEventManager();
 
@@ -58,7 +71,7 @@ class Module
         // there is a NotAllowedException
         $em->attach(
             MvcEvent::EVENT_DISPATCH_ERROR,
-            function ($e) {
+            function ($e): void {
                 if (
                     'error-exception' == $e->getError()
                     && null != $e->getParam('exception', null)
@@ -87,14 +100,15 @@ class Module
      *
      * @return array Service configuration
      */
-    public function getServiceConfig()
+    public function getServiceConfig(): array
     {
         return [
             'aliases' => [
-                'Laminas\Authentication\AuthenticationService' => 'user_auth_service',
+                LaminasAuthenticationService::class => 'user_auth_service',
             ],
             'factories' => [
                 'user_service_user' => function (ContainerInterface $container) {
+                    $aclService = $container->get('user_service_acl');
                     $translator = $container->get('translator');
                     $bcrypt = $container->get('user_bcrypt');
                     $authService = $container->get('user_auth_service');
@@ -107,9 +121,9 @@ class Module
                     $activateForm = $container->get('user_form_activate');
                     $loginForm = $container->get('user_form_login');
                     $passwordForm = $container->get('user_form_password');
-                    $aclService = $container->get('user_service_acl');
 
-                    return new Service\User(
+                    return new UserService(
+                        $aclService,
                         $translator,
                         $bcrypt,
                         $authService,
@@ -122,7 +136,6 @@ class Module
                         $activateForm,
                         $loginForm,
                         $passwordForm,
-                        $aclService
                     );
                 },
                 'user_service_loginattempt' => function (ContainerInterface $container) {
@@ -132,21 +145,26 @@ class Module
                     $userMapper = $container->get('user_mapper_user');
                     $rateLimitConfig = $container->get('config')['login_rate_limits'];
 
-                    return new Authentication\Service\LoginAttempt(
+                    return new LoginAttemptService(
                         $remoteAddress,
                         $entityManager,
                         $loginAttemptMapper,
                         $userMapper,
-                        $rateLimitConfig
+                        $rateLimitConfig,
                     );
                 },
                 'user_service_apiuser' => function (ContainerInterface $container) {
-                    $apiUserMapper = $container->get('user_mapper_apiuser');
-                    $apiTokenForm = $container->get('user_form_apitoken');
                     $aclService = $container->get('user_service_acl');
                     $translator = $container->get('translator');
+                    $apiUserMapper = $container->get('user_mapper_apiuser');
+                    $apiTokenForm = $container->get('user_form_apitoken');
 
-                    return new Service\ApiUser($apiUserMapper, $apiTokenForm, $aclService, $translator);
+                    return new ApiUserService(
+                        $aclService,
+                        $translator,
+                        $apiUserMapper,
+                        $apiTokenForm,
+                    );
                 },
                 'user_service_email' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
@@ -154,7 +172,12 @@ class Module
                     $transport = $container->get('user_mail_transport');
                     $emailConfig = $container->get('config')['email'];
 
-                    return new Email($translator, $renderer, $transport, $emailConfig);
+                    return new EmailService(
+                        $translator,
+                        $renderer,
+                        $transport,
+                        $emailConfig,
+                    );
                 },
                 ApiAppMapper::class => ApiAppMapperFactory::class,
                 ApiAppService::class => ApiAppServiceFactory::class,
@@ -166,7 +189,7 @@ class Module
                     return new Authentication\Storage\Session(
                         $request,
                         $response,
-                        $config
+                        $config,
                     );
                 },
                 'user_bcrypt' => function (ContainerInterface $container) {
@@ -179,36 +202,36 @@ class Module
 
                 'user_hydrator' => function (ContainerInterface $container) {
                     return new DoctrineObject(
-                        $container->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
                 'user_form_activate' => function (ContainerInterface $container) {
-                    return new Activate(
-                        $container->get('translator')
+                    return new ActivateForm(
+                        $container->get('translator'),
                     );
                 },
                 'user_form_register' => function (ContainerInterface $container) {
-                    return new Register(
-                        $container->get('translator')
+                    return new RegisterForm(
+                        $container->get('translator'),
                     );
                 },
                 'user_form_login' => function (ContainerInterface $container) {
-                    return new Login(
-                        $container->get('translator')
+                    return new LoginForm(
+                        $container->get('translator'),
                     );
                 },
                 'user_form_password' => function (ContainerInterface $container) {
-                    return new Password(
-                        $container->get('translator')
+                    return new PasswordForm(
+                        $container->get('translator'),
                     );
                 },
                 'user_form_passwordactivate' => function (ContainerInterface $container) {
-                    return new Activate(
-                        $container->get('translator')
+                    return new ActivateForm(
+                        $container->get('translator'),
                     );
                 },
                 'user_form_apitoken' => function (ContainerInterface $container) {
-                    $form = new ApiToken(
+                    $form = new ApiTokenForm(
                         $container->get('translator')
                     );
                     $form->setHydrator($container->get('user_hydrator'));
@@ -217,23 +240,23 @@ class Module
                 },
 
                 'user_mapper_user' => function (ContainerInterface $container) {
-                    return new User(
-                        $container->get('doctrine.entitymanager.orm_default')
+                    return new UserMapper(
+                        $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
                 'user_mapper_newuser' => function (ContainerInterface $container) {
-                    return new NewUser(
-                        $container->get('doctrine.entitymanager.orm_default')
+                    return new NewUserMapper(
+                        $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
                 'user_mapper_apiuser' => function (ContainerInterface $container) {
-                    return new ApiUser(
-                        $container->get('doctrine.entitymanager.orm_default')
+                    return new ApiUserMapper(
+                        $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
                 'user_mapper_loginattempt' => function (ContainerInterface $container) {
-                    return new LoginAttempt(
-                        $container->get('doctrine.entitymanager.orm_default')
+                    return new LoginAttemptMapper(
+                        $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
 
@@ -251,35 +274,35 @@ class Module
                     return new Mapper(
                         $container->get('user_bcrypt'),
                         $container->get('user_service_loginattempt'),
-                        $container->get('user_mapper_user')
+                        $container->get('user_mapper_user'),
                     );
                 },
                 'user_apiauth_adapter' => function (ContainerInterface $container) {
                     return new ApiMapper(
-                        $container->get('user_mapper_apiuser')
+                        $container->get('user_mapper_apiuser'),
                     );
                 },
                 'user_pin_auth_adapter' => function (ContainerInterface $container) {
                     return new PinMapper(
                         $container->get('user_service_loginattempt'),
-                        $container->get('user_mapper_user')
+                        $container->get('user_mapper_user'),
                     );
                 },
                 'user_auth_service' => function (ContainerInterface $container) {
-                    return new Authentication\AuthenticationService(
+                    return new AuthenticationService(
                         $container->get('user_auth_storage'),
-                        $container->get('user_auth_adapter')
+                        $container->get('user_auth_adapter'),
                     );
                 },
                 'user_apiauth_service' => function (ContainerInterface $container) {
-                    return new Authentication\ApiAuthenticationService(
-                        $container->get('user_apiauth_adapter')
+                    return new ApiAuthenticationService(
+                        $container->get('user_apiauth_adapter'),
                     );
                 },
                 'user_pin_auth_service' => function (ContainerInterface $container) {
-                    return new Authentication\AuthenticationService(
+                    return new AuthenticationService(
                         $container->get('user_auth_storage'),
-                        $container->get('user_pin_auth_adapter')
+                        $container->get('user_pin_auth_adapter'),
                     );
                 },
                 'user_remoteaddress' => function (ContainerInterface $container) {

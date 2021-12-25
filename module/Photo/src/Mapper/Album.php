@@ -14,24 +14,23 @@ class Album extends BaseMapper
     /**
      * Returns all the subalbums of a given album.
      *
-     * @param AlbumModel $parent the parent album to retrieve the
-     *                               subalbum from
+     * @param AlbumModel $parent the parent album to retrieve the subalbum from
      * @param int $start the result to start at
-     * @param int $maxResults max amount of results to return,
-     *                               null for infinite
+     * @param int|null $maxResults max amount of results to return, null for infinite
      *
      * @return array of subalbums or null if there are none
      */
-    public function getSubAlbums($parent, $start = 0, $maxResults = null)
-    {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
-            ->where('a.parent = ?1')
+    public function getSubAlbums(
+        AlbumModel $parent,
+        int $start = 0,
+        ?int $maxResults = null,
+    ): array {
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->where('a.parent = ?1')
             ->setParameter(1, $parent)
             ->setFirstResult($start)
             ->orderBy('a.startDateTime', 'ASC');
+
         if (!is_null($maxResults)) {
             $qb->setMaxResults($maxResults);
         }
@@ -42,15 +41,12 @@ class Album extends BaseMapper
     /**
      * return all the sub-albums without a parent.
      *
-     * @return array of \Photo\Model\Album
+     * @return array
      */
-    public function getRootAlbums()
+    public function getRootAlbums(): array
     {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
-            ->where('a.parent IS NULL')
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->where('a.parent IS NULL')
             ->orderBy('a.startDateTime', 'DESC');
 
         return $qb->getQuery()->getResult();
@@ -62,15 +58,14 @@ class Album extends BaseMapper
      * @param DateTime $start start date and time
      * @param DateTime $end   end date and time
      *
-     * @return array of \Photo\Model\Album
+     * @return array
      */
-    public function getAlbumsInDateRange($start, $end)
-    {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
-            ->where('a.parent IS NULL')
+    public function getAlbumsInDateRange(
+        DateTime $start,
+        DateTime $end,
+    ): array {
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->where('a.parent IS NULL')
             ->andWhere('a.startDateTime BETWEEN ?1 AND ?2')
             ->setParameter(1, $start)
             ->setParameter(2, $end)
@@ -85,13 +80,10 @@ class Album extends BaseMapper
      *
      * @return array
      */
-    public function getAlbumsWithoutDate()
+    public function getAlbumsWithoutDate(): array
     {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
-            ->where('a.parent IS NULL')
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->where('a.parent IS NULL')
             ->andWhere('a.startDateTime IS NULL');
 
         return $qb->getQuery()->getResult();
@@ -104,11 +96,8 @@ class Album extends BaseMapper
      */
     public function getNewestAlbum(): ?AlbumModel
     {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
-            ->where('a.parent IS NULL')
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->where('a.parent IS NULL')
             ->andWhere('a.startDateTime IS NOT NULL')
             ->setMaxResults(1)
             ->orderBy('a.startDateTime', 'DESC');
@@ -125,11 +114,8 @@ class Album extends BaseMapper
      */
     public function getOldestAlbum(): ?AlbumModel
     {
-        $qb = $this->em->createQueryBuilder();
-
-        $qb->select('a')
-            ->from($this->getRepositoryName(), 'a')
-            ->where('a.parent IS NULL')
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->where('a.parent IS NULL')
             ->andWhere('a.startDateTime IS NOT NULL')
             ->setMaxResults(1)
             ->orderBy('a.startDateTime', 'ASC');

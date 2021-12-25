@@ -19,8 +19,11 @@ class Page extends BaseMapper
      *
      * @return PageModel|null
      */
-    public function findPage(string $category, ?string $subCategory = null, ?string $name = null): ?PageModel
-    {
+    public function findPage(
+        string $category,
+        ?string $subCategory = null,
+        ?string $name = null,
+    ): ?PageModel {
         return $this->getRepository()->findOneBy(
             [
                 'category' => $category,
