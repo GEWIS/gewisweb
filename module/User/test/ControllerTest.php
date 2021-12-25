@@ -29,4 +29,11 @@ class ControllerTest extends BaseControllerTest
         $this->dispatch('/user/logout');
         $this->assertResponseStatusCode(302);
     }
+
+    public function testAdminUserApiActionCanBeAccessedAsAdmin(): void
+    {
+        $this->setUpWithRole('admin');
+        $this->dispatch('/admin/user/api');
+        $this->assertResponseStatusCode(200);
+    }
 }

@@ -20,7 +20,7 @@ $this->breadcrumbs()
             <div class="panel-body">
                 <ul class="tree">
                     <?php
-                    function showTree($pages, $context)
+                    function showPageTree($pages, $context)
                     {
                         foreach ($pages as $category => $data): ?>
                             <li>
@@ -36,7 +36,7 @@ $this->breadcrumbs()
 
                                 <?php if (!empty($data['children'])): ?>
                                     <ul>
-                                        <?php showTree($data['children'], $context); ?>
+                                        <?php showPageTree($data['children'], $context); ?>
                                     </ul>
                                 <?php endif; ?>
                             </li>
@@ -44,7 +44,7 @@ $this->breadcrumbs()
                         endforeach;
                     }
 
-                    showTree($pages, $this);
+                    showPageTree($pages, $this);
                     ?>
                 </ul>
             </div>

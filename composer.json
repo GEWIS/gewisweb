@@ -163,6 +163,7 @@
             "ActivityTest\\": "module/Activity/test",
             "ApplicationTest\\": "module/Application/test",
             "CompanyTest\\": "module/Company/test",
+            "DecisionTest\\": "module/Decision/test",
             "EducationTest\\": "module/Education/test",
             "FrontpageTest\\": "module/Frontpage/test",
             "PhotoTest\\": "module/Photo/test",

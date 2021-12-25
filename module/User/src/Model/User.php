@@ -201,6 +201,30 @@ class User implements RoleInterface, ResourceInterface
     }
 
     /**
+     * @param int $lidnr
+     */
+    public function setLidnr(int $lidnr): void
+    {
+        $this->lidnr = $lidnr;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @param MemberModel $member
+     */
+    public function setMember(MemberModel $member): void
+    {
+        $this->member = $member;
+    }
+
+    /**
      * @return array
      */
     public function toArray(): array
