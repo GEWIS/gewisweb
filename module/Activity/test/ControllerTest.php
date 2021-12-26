@@ -12,6 +12,19 @@ class ControllerTest extends BaseControllerTest
         $this->assertResponseStatusCode(200);
     }
 
+    public function testActivityActionCanBeAccessedView(): void
+    {
+        $this->dispatch('/activity/view/1');
+        $this->assertNotResponseStatusCode(500);
+    }
+
+    public function testActivityActionCanBeAccessedViewAsUser(): void
+    {
+        $this->setUpWithRole();
+        $this->dispatch('/activity/view/1');
+        $this->assertNotResponseStatusCode(500);
+    }
+
     public function testActivityArchiveActionCanBeAccessed(): void
     {
         $this->dispatch('/activity/archive');

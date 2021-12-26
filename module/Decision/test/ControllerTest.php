@@ -13,6 +13,31 @@ class ControllerTest extends BaseControllerTest
         $this->assertResponseStatusCode(200);
     }
 
+    public function testMemberSearchActionCanBeAccessedAsUser(): void
+    {
+        $this->setUpWithRole();
+        $this->dispatch('/member/search');
+        $this->assertResponseStatusCode(200);
+    }
+
+    public function testMemberSearchQueryActionCanBeAccessedAsUser(): void
+    {
+        $this->setUpWithRole();
+        $this->dispatch('/member/search?q=web');
+        $this->assertResponseStatusCode(200);
+    }
+
+    public function testDecisionSearchActionCanBeAccessedAsUser(): void
+    {
+        $this->setUpWithRole();
+        $this->dispatch(
+            '/decision/search',
+            'POST',
+            ['query' => 'web']
+        );
+        $this->assertResponseStatusCode(200);
+    }
+
     public function testAuthorizationsActionCanBeAccessedAsUser(): void
     {
         $this->setUpWithRole();

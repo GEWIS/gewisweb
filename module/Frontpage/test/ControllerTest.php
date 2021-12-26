@@ -82,4 +82,25 @@ class ControllerTest extends BaseControllerTest
         $this->dispatch('/admin/poll');
         $this->assertResponseStatusCode(200);
     }
+
+    public function testPageActionCanBeAccessedAsAdmin(): void
+    {
+        $this->setUpWithRole('admin');
+        $this->dispatch('/somenonexistentpage');
+        $this->assertNotResponseStatusCode(500);
+    }
+
+    public function testPageAction2CanBeAccessedAsAdmin(): void
+    {
+        $this->setUpWithRole('admin');
+        $this->dispatch('/some/nonexistentpage');
+        $this->assertNotResponseStatusCode(500);
+    }
+
+    public function testPageAction3CanBeAccessedAsAdmin(): void
+    {
+        $this->setUpWithRole('admin');
+        $this->dispatch('/some/nonexistent/page');
+        $this->assertNotResponseStatusCode(500);
+    }
 }

@@ -12,6 +12,38 @@ class ControllerTest extends BaseControllerTest
         $this->assertResponseStatusCode(200);
     }
 
+    public function testEducationQueryActionCanBeAccessed(): void
+    {
+        $this->dispatch('/education?query=web');
+        $this->assertResponseStatusCode(200);
+    }
+
+    public function testEducationCourseActionCanBeAccessed(): void
+    {
+        $this->dispatch('/education/course/2IPE0');
+        $this->assertNotResponseStatusCode(500);
+    }
+
+    public function testEducationCourseActionCanBeAccessedAsUser(): void
+    {
+        $this->setUpWithRole();
+        $this->dispatch('/education/course/2IPE0');
+        $this->assertNotResponseStatusCode(500);
+    }
+
+    public function testEducationCourseDownloadActionCanBeAccessed(): void
+    {
+        $this->dispatch('/education/course/2IPE0/download/1');
+        $this->assertNotResponseStatusCode(500);
+    }
+
+    public function testEducationCourseDownloadActionCanBeAccessedAsUser(): void
+    {
+        $this->setUpWithRole();
+        $this->dispatch('/education/course/2IPE0/download/1');
+        $this->assertNotResponseStatusCode(500);
+    }
+
     public function testAdminEducationExamActionCanBeAccessedAsAdmin(): void
     {
         $this->setUpWithRole('admin');

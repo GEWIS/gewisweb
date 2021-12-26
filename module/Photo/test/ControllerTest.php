@@ -19,6 +19,20 @@ class ControllerTest extends BaseControllerTest
         $this->assertResponseStatusCode(200);
     }
 
+    public function testPhotoYearActionCanBeAccessedAsUser(): void
+    {
+        $this->setUpWithRole();
+        $this->dispatch('/photo/2020');
+        $this->assertNotResponseStatusCode(500);
+    }
+
+    public function testPhotoAlbumActionCanBeAccessedAsUser(): void
+    {
+        $this->setUpWithRole();
+        $this->dispatch('/photo/album/1');
+        $this->assertNotResponseStatusCode(500);
+    }
+
     public function testPhotoWeeklyActionCanBeAccessedAsUser(): void
     {
         $this->setUpWithRole();
