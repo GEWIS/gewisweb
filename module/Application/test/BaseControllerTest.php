@@ -11,8 +11,7 @@ use Laminas\ServiceManager\ServiceManager;
 use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use User\Authentication\AuthenticationService;
-use User\Model\User;
-use User\Model\UserRole;
+use User\Model\{User, UserRole};
 
 abstract class BaseControllerTest extends AbstractHttpControllerTestCase
 {
@@ -37,7 +36,7 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
         $this->getApplication();
     }
 
-    protected function setUpMockedServices()
+    protected function setUpMockedServices(): void
     {
         $this->setUpMockAuthService();
         $this->setUpMockUserMapper();
@@ -69,7 +68,7 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
     /**
      * Variation of {@link Application::init} but without initial bootstrapping.
      */
-    private static function initServiceManager($configuration = []): ServiceManager
+    private static function initServiceManager(array $configuration = []): ServiceManager
     {
         // Prepare the service manager
         $smConfig = $configuration['service_manager'] ?? [];
@@ -85,8 +84,10 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
         return $serviceManager;
     }
 
-    private function bootstrapApplication($serviceManager, $configuration = []): Application
-    {
+    private function bootstrapApplication(
+        ServiceManager $serviceManager,
+        array $configuration = []
+    ): Application {
         // Prepare list of listeners to bootstrap
         $listenersFromAppConfig = $configuration['listeners'] ?? [];
         $config = $serviceManager->get('config');

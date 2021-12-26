@@ -3,8 +3,7 @@
 namespace Photo\Controller;
 
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\JsonModel;
-use Laminas\View\Model\ViewModel;
+use Laminas\View\Model\{JsonModel, ViewModel};
 
 class ApiController extends AbstractActionController
 {

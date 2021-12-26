@@ -103,7 +103,7 @@ class Metadata
     private function exifGetShutter(string $shutterSpeed): ?string
     {
         $apex = $this->frac2dec($shutterSpeed);
-        $shutter = 2 ** ( -$apex);
+        $shutter = 2 ** (-$apex);
         if (0 == $shutter) {
             return null;
         }
@@ -124,7 +124,7 @@ class Metadata
     private function exifGetFstop(string $apertureValue): ?string
     {
         $apex = $this->frac2dec($apertureValue);
-        $fstop = 2 ** ( $apex / 2);
+        $fstop = 2 ** ($apex / 2);
         if (0 == $fstop) {
             return null;
         }
