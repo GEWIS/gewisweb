@@ -33,6 +33,20 @@ class ControllerTest extends BaseControllerTest
         $this->assertNotResponseStatusCode(500);
     }
 
+    public function testPhotoMember1ActionCanBeAccessedAsUser(): void
+    {
+        $this->setUpWithRole();
+        $this->dispatch('/photo/member/1');
+        $this->assertNotResponseStatusCode(500);
+    }
+
+    public function testPhotoMember8000ActionCanBeAccessedAsUser(): void
+    {
+        $this->setUpWithRole();
+        $this->dispatch('/photo/member/8000');
+        $this->assertNotResponseStatusCode(500);
+    }
+
     public function testPhotoWeeklyActionCanBeAccessedAsUser(): void
     {
         $this->setUpWithRole();

@@ -13,7 +13,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 use User\Authentication\AuthenticationService;
 use User\Model\User;
 use User\Model\UserRole;
-use User\Service\AclService;
 
 abstract class BaseControllerTest extends AbstractHttpControllerTestCase
 {
@@ -21,6 +20,12 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
 
     protected MockObject $authService;
     protected MockObject $aclService;
+    protected MockObject $userMapper;
+    protected MockObject $memberMapper;
+
+    protected const LIDNR = 8000;
+    protected User $user;
+    protected Member $member;
 
     public function setUp(): void
     {
@@ -35,6 +40,8 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
     protected function setUpMockedServices()
     {
         $this->setUpMockAuthService();
+        $this->setUpMockUserMapper();
+        $this->setUpMockMemberMapper();
     }
 
     public function getApplication(): Application
@@ -101,9 +108,33 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
         $this->serviceManager->setService('user_auth_service', $this->authService);
     }
 
+    private function setUpMockUserMapper(): void
+    {
+        $entityManager = $this->serviceManager->get('doctrine.entitymanager.orm_default');
+
+        $this->userMapper = $this->getMockBuilder(\User\Mapper\User::class)
+            ->setConstructorArgs([$entityManager])
+            ->enableProxyingToOriginalMethods()
+            ->getMock();
+
+        $this->serviceManager->setService('user_mapper_user', $this->userMapper);
+    }
+
+    private function setUpMockMemberMapper(): void
+    {
+        $entityManager = $this->serviceManager->get('doctrine.entitymanager.orm_default');
+
+        $this->memberMapper = $this->getMockBuilder(\Decision\Mapper\Member::class)
+            ->setConstructorArgs([$entityManager])
+            ->enableProxyingToOriginalMethods()
+            ->getMock();
+
+        $this->serviceManager->setService('decision_mapper_member', $this->memberMapper);
+    }
+
     protected function setUpWithRole(string $role = 'user'): void
     {
-        $this->authService->method('getIdentity')->willReturn($this->getMockIdentity($role));
+        $this->authService->method('getIdentity')->willReturn($this->setUpMockIdentity($role));
 
         if ($role != 'guest') {
             $this->authService->method('hasIdentity')->willReturn(true);
@@ -112,7 +143,7 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
         }
     }
 
-    private function getMockIdentity(string $role): ?User
+    private function setUpMockIdentity(string $role): ?User
     {
         if ($role === 'guest') {
             return null;
@@ -124,45 +155,46 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
 
             $roles = new ArrayCollection([$roleModel]);
         } else {
-            $roles = new ArrayCollection([]);
+            $roles = new ArrayCollection();
         }
-        $user = $this->getMockUser($roles);
+
+        $this->setUpMockMember();
+        $this->setUpMockUser($roles);
 
         if (isset($roleModel)) {
-            $roleModel->setLidnr($user);
+            $roleModel->setLidnr($this->user);
         }
 
-        return $user;
+        $this->userMapper->method('findByLidnr')->willReturnMap([[$this::LIDNR], $this->user]);
+        $this->memberMapper->method('findByLidnr')->willReturnMap([[$this::LIDNR], $this->member]);
+
+        return $this->user;
     }
 
-    private function getMockUser(ArrayCollection $roles): User
+    protected function setUpMockUser(ArrayCollection $roles = new ArrayCollection()): void
     {
-        $user = new User();
-        $user->setLidnr(8000);
-        $user->setEmail('web@gewis.nl');
-        $user->setPassword('I dont care');
-        $user->setRoles($roles);
-        $user->setMember($this->getMockMember());
-
-        return $user;
+        $this->user = new User();
+        $this->user->setLidnr($this::LIDNR);
+        $this->user->setEmail('web@gewis.nl');
+        $this->user->setPassword('I dont care');
+        $this->user->setRoles($roles);
+        $this->user->setMember($this->member);
     }
 
-    private function getMockMember(): Member
+    protected function setUpMockMember(): void
     {
-        $member = new Member();
-        $member->setLidnr(8000);
-        $member->setEmail('web@gewis.nl');
-        $member->setBirth(DateTime::createFromFormat('Y/m/d', '2000/01/01'));
-        $member->setGender(Member::GENDER_MALE);
-        $member->setInitials('W.C.');
-        $member->setFirstName('Web');
-        $member->setMiddleName('');
-        $member->setLastName('Committee');
-        $member->setGeneration(2020);
-        $member->setType(Member::TYPE_ORDINARY);
-        $member->setExpiration(DateTime::createFromFormat('Y/m/d', '2030/01/01'));
-        $member->setChangedOn(DateTime::createFromFormat('Y/m/d', '2020/01/01'));
-
-        return $member;
+        $this->member = new Member();
+        $this->member->setLidnr($this::LIDNR);
+        $this->member->setEmail('web@gewis.nl');
+        $this->member->setBirth(DateTime::createFromFormat('Y/m/d', '2000/01/01'));
+        $this->member->setGender(Member::GENDER_MALE);
+        $this->member->setInitials('W.C.');
+        $this->member->setFirstName('Web');
+        $this->member->setMiddleName('');
+        $this->member->setLastName('Committee');
+        $this->member->setGeneration(2020);
+        $this->member->setType(Member::TYPE_ORDINARY);
+        $this->member->setExpiration(DateTime::createFromFormat('Y/m/d', '2030/01/01'));
+        $this->member->setChangedOn(DateTime::createFromFormat('Y/m/d', '2020/01/01'));
     }
 }
