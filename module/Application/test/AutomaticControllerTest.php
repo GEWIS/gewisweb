@@ -2,9 +2,11 @@
 
 namespace ApplicationTest;
 
+use Exception;
 use Laminas\Router\Exception\InvalidArgumentException;
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Part;
+use Laminas\Router\Http\Regex;
 use Laminas\Router\Http\Segment;
 use Laminas\Router\Http\TreeRouteStack;
 use Laminas\Router\PriorityList;
@@ -31,6 +33,8 @@ class AutomaticControllerTest extends BaseControllerTest
                 $this->parseLiteral($element);
             } elseif ($element instanceof Segment) {
                 $this->parseSegment($element);
+            } elseif ($element instanceof Regex) {
+                $this->parseRegex($element);
             } else {
                 throw new RuntimeException(
                     sprintf(
@@ -44,6 +48,12 @@ class AutomaticControllerTest extends BaseControllerTest
 
     protected function parsePart(Part $part): void
     {
+        try {
+            $this->parseSegment($part);
+        } catch (RuntimeException) {
+            # An exception is thrown if the route may not terminate.
+        }
+
         $routes = $part->getRoutes();
         if ($routes instanceof PriorityList) {
             $this->parsePriorityList($routes);
@@ -57,33 +67,40 @@ class AutomaticControllerTest extends BaseControllerTest
         }
     }
 
-    protected function parseSegment(Segment $segment): void
+    protected function parseSegment(Segment|Part $element): void
     {
         $params = $this->getParams();
         try {
-            $url = $segment->assemble($params);
-            if (is_string($url)) {
-                $this->testRoute($url);
-            } else {
-                throw new RuntimeException(
-                    sprintf(
-                        'Unexpected type in parseSegment: %s',
-                        get_class($url),
-                    )
-                );
-            }
+            $url = $element->assemble($params);
+            $this->parseUrl($url);
         } catch (InvalidArgumentException $exception) {
             $this->addWarning(
-                "Skipping one or multiple route segments because required parameters could not be generated automatically."
+                "Skipping one or multiple route segments/parts because required parameters could not be generated automatically."
             );
             $this->addWarning($exception->getMessage());
-            $this->addWarning(var_export($segment, true));
+            try {
+                $this->addWarning(serialize($element));
+            } catch (Exception) {
+                $this->addWarning('More details could not be provided through serialization.');
+                # A part is not always serializable.
+            }
         }
     }
 
     protected function parseLiteral(Literal $literal): void
     {
         $url = $literal->assemble();
+        $this->parseUrl($url);
+    }
+
+    protected function parseRegex(Regex $regex)
+    {
+        $url = $regex->assemble();
+        $this->parseUrl($url);
+    }
+
+    protected function parseUrl(mixed $url): void
+    {
         if (is_string($url)) {
             $this->testRoute($url);
         } else {
@@ -117,10 +134,34 @@ class AutomaticControllerTest extends BaseControllerTest
     protected function getParams(): array
     {
         $params = array();
-        $params['appId'] = 0;
+
+        $params['id'] = 1;
+        $params['appId'] = 1;
+        $params['number'] = 1;
+        $params['action'] = '';
+
+        $params['lidnr'] = 8000;
+
+        $params['organ'] = 1;
         $params['type'] = 'committee';
-        $params['abbr'] = 'wc';
+        $params['abbr'] = 'WC';
+
         $params['category'] = 'vacancies';
+        $params['companySlugName'] = 'asml';
+        $params['packageId'] = 1;
+        $params['jobId'] = 1;
+        $params['jobLabelId'] = 1;
+        $params['jobCategoryId'] = 1;
+        $params['jobSlugName'] = 'gen_CS_offers';
+
+        $params['album_type'] = 'album';
+        $params['album_id'] = 1;
+        $params['photo_id'] = 1;
+        $params['signupList'] = 1;
+
+        $params['regulation'] = 'sleutel-beleid';
+        $params['filename'] = 'file.pdf';
+
         return $params;
     }
 }
