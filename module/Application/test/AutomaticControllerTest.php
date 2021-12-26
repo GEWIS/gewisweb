@@ -24,6 +24,26 @@ class AutomaticControllerTest extends BaseControllerTest
         $this->parsePriorityList($routes);
     }
 
+    public function testAllRoutesAsUser(): void
+    {
+        $this->setUpWithRole();
+        /** @var TreeRouteStack $router */
+        $router = $this->getApplication()->getServiceManager()->get('router');
+        /** @var PriorityList|Traversable $routes */
+        $routes = $router->getRoutes();
+        $this->parsePriorityList($routes);
+    }
+
+    public function testAllRoutesAsAdmin(): void
+    {
+        $this->setUpWithRole('admin');
+        /** @var TreeRouteStack $router */
+        $router = $this->getApplication()->getServiceManager()->get('router');
+        /** @var PriorityList|Traversable $routes */
+        $routes = $router->getRoutes();
+        $this->parsePriorityList($routes);
+    }
+
     protected function parsePriorityList(PriorityList $list): void
     {
         foreach ($list as $element) {
