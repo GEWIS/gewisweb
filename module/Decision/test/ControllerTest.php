@@ -12,6 +12,12 @@ class ControllerTest extends BaseControllerTest
         $this->dispatch('/member');
         $this->assertResponseStatusCode(200);
     }
+    public function testDecisionFilesActionCanBeAccessedAsUser(): void
+    {
+        $this->setUpWithRole();
+        $this->dispatch('/decision/files');
+        $this->assertResponseStatusCode(200);
+    }
 
     public function testMemberSearchActionCanBeAccessedAsUser(): void
     {
