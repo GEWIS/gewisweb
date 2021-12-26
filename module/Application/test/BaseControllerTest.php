@@ -19,9 +19,6 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
 {
     protected ServiceManager $serviceManager;
 
-    protected string $authServiceClassName = AclService::class;
-    protected string $authServiceName = 'user_service_acl';
-
     protected MockObject $authService;
     protected MockObject $aclService;
 
@@ -38,7 +35,6 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
     protected function setUpMockedServices()
     {
         $this->setUpMockAuthService();
-        $this->setUpMockAclService($this->authServiceClassName, $this->authServiceName);
     }
 
     public function getApplication(): Application
@@ -103,21 +99,6 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
             ->getMock();
 
         $this->serviceManager->setService('user_auth_service', $this->authService);
-    }
-
-    private function setUpMockAclService(string $serviceClassName, string $serviceName): void
-    {
-        $translator = $this->serviceManager->get('translator');
-        $apiAuthService = $this->serviceManager->get('user_apiauth_service');
-        $remoteAddress = $this->serviceManager->get('user_remoteaddress');
-        $tueRange = $this->serviceManager->get('config')['tue_range'];
-
-        $this->aclService = $this->getMockBuilder($serviceClassName)
-            ->setConstructorArgs([$translator, $this->authService, $apiAuthService, $remoteAddress, $tueRange])
-            ->enableProxyingToOriginalMethods()
-            ->getMock();
-
-        $this->serviceManager->setService($serviceName, $this->aclService);
     }
 
     protected function setUpWithRole(string $role = 'user'): void

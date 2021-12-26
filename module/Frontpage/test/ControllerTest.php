@@ -3,13 +3,9 @@
 namespace FrontpageTest;
 
 use ApplicationTest\BaseControllerTest;
-use Frontpage\Service\AclService;
 
 class ControllerTest extends BaseControllerTest
 {
-    protected string $authServiceClassName = AclService::class;
-    protected string $authServiceName = 'frontpage_service_acl';
-
     public function testIndexActionCanBeAccessed(): void
     {
         $this->dispatch('/');

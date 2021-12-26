@@ -3,13 +3,9 @@
 namespace PhotoTest;
 
 use ApplicationTest\BaseControllerTest;
-use Photo\Service\AclService;
 
 class ControllerTest extends BaseControllerTest
 {
-    protected string $authServiceClassName = AclService::class;
-    protected string $authServiceName = 'photo_service_acl';
-
     public function testPhotoActionIsForbidden(): void
     {
         $this->dispatch('/photo');

@@ -2,14 +2,10 @@
 
 namespace ActivityTest;
 
-use Activity\Service\AclService;
 use ApplicationTest\BaseControllerTest;
 
 class ControllerTest extends BaseControllerTest
 {
-    protected string $authServiceClassName = AclService::class;
-    protected string $authServiceName = 'activity_service_acl';
-
     public function testActivityActionCanBeAccessed(): void
     {
         $this->dispatch('/activity');

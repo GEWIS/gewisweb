@@ -3,13 +3,9 @@
 namespace DecisionTest;
 
 use ApplicationTest\BaseControllerTest;
-use Decision\Service\AclService;
 
 class ControllerTest extends BaseControllerTest
 {
-    protected string $authServiceClassName = AclService::class;
-    protected string $authServiceName = 'decision_service_acl';
-
     public function testMemberActionCanBeAccessedAsUser(): void
     {
         $this->setUpWithRole();

@@ -3,13 +3,9 @@
 namespace EducationTest;
 
 use ApplicationTest\BaseControllerTest;
-use Education\Service\AclService;
 
 class ControllerTest extends BaseControllerTest
 {
-    protected string $authServiceClassName = AclService::class;
-    protected string $authServiceName = 'education_service_acl';
-
     public function testEducationActionCanBeAccessed(): void
     {
         $this->dispatch('/education');
