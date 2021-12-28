@@ -1,3 +1,16 @@
+## [v2.5.1](https://github.com/GEWIS/gewisweb/tree/v2.5.1) (2021-12-28)
+
+- Added GitHub Actions for automated analysis and feedback of proposed changes.
+- Added initial framework for (automated) unit testing.
+- Updated the Public Archive to use the new file server.
+- Switched to stricter type checking to set a baseline for code style and improved error checking.
+- Fixed issue where pulsing attention dot would not get removed while navigating between photos.
+- Fixed issue where albums with long names would create unnatural layouts.
+- Fixed issue where albums with children would not be accessible.
+- Fixed several other bugs while adding strict type checks.
+
+---
+
 ## [v2.5](https://github.com/GEWIS/gewisweb/tree/v2.5) (2021-12-22)
 
 - Added a privacy widget where users can set their tracking preferences.
