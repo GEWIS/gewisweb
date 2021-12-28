@@ -153,6 +153,10 @@ class Exam
 
         $exam = $this->examMapper->find($id);
 
+        if (is_null($exam)) {
+            return null;
+        }
+
         return $this->storageService->downloadFile($exam->getFilename(), $this->examToFilename($exam), true);
     }
 

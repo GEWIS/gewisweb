@@ -36,7 +36,7 @@ $this->scriptUrl()->requireUrl('admin_photo/album_page', ['album_id', 'page'])
             <div class="panel-body">
                 <ul class="tree">
                     <?php
-                    function showTree($albums, $context)
+                    function showAlbumTree($albums, $context)
                     {
                         foreach ($albums as $album): ?>
                             <li><a
@@ -49,7 +49,7 @@ $this->scriptUrl()->requireUrl('admin_photo/album_page', ['album_id', 'page'])
                                 <?php $children = $album->getChildren() ?>
                                 <?php if (!empty($children)): ?>
                                     <ul>
-                                        <?php showTree($children, $context); ?>
+                                        <?php showAlbumTree($children, $context); ?>
                                     </ul>
                                 <?php endif; ?>
                             </li>
@@ -64,7 +64,7 @@ $this->scriptUrl()->requireUrl('admin_photo/album_page', ['album_id', 'page'])
                             <li>
                                 <?= "$year/$nextYear" ?>
                                 <ul>
-                                    <?php showTree($albums, $this); ?>
+                                    <?php showAlbumTree($albums, $this); ?>
                                 </ul>
                             </li>
                         <?php endif;
@@ -74,7 +74,7 @@ $this->scriptUrl()->requireUrl('admin_photo/album_page', ['album_id', 'page'])
                         <li>
                             <?= $this->translate('Other albums'); ?>
                             <ul>
-                                <?php showTree($albumsWithoutDate, $this); ?>
+                                <?php showAlbumTree($albumsWithoutDate, $this); ?>
                             </ul>
                         </li>
                     <?php endif; ?>

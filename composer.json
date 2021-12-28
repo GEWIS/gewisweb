@@ -66,6 +66,7 @@
         "laminas/laminas-stdlib": "^3.6.1",
         "laminas/laminas-validator": "^2.15.0",
         "laminas/laminas-view": "^2.14.0",
+        "doctrine/dbal": "^3.0.0",
         "doctrine/orm": "^2.10.3",
         "doctrine/doctrine-module": "^4.3.0",
         "doctrine/doctrine-orm-module": "^4.2.0",
@@ -80,6 +81,7 @@
         "cweagans/composer-patches": "^1.7.1"
     },
     "require-dev": {
+        "ext-pdo_sqlite": "*",
         "ext-simplexml": "*",
         "ext-xdebug": "^3.0.0",
         "laminas/laminas-component-installer": "^2.6.0",
@@ -163,6 +165,7 @@
             "ActivityTest\\": "module/Activity/test",
             "ApplicationTest\\": "module/Application/test",
             "CompanyTest\\": "module/Company/test",
+            "DecisionTest\\": "module/Decision/test",
             "EducationTest\\": "module/Education/test",
             "FrontpageTest\\": "module/Frontpage/test",
             "PhotoTest\\": "module/Photo/test",

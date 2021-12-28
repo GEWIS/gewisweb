@@ -94,10 +94,16 @@ class EducationController extends AbstractActionController
     /**
      * Download an exam.
      */
-    public function downloadAction(): ?Stream
+    public function downloadAction(): Stream|ViewModel
     {
         $id = $this->params()->fromRoute('id');
 
-        return $this->examService->getExamDownload($id);
+        $download = $this->examService->getExamDownload($id);
+
+        if (is_null($download)) {
+            return $this->notFoundAction();
+        }
+
+        return $download;
     }
 }

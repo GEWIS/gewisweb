@@ -12,19 +12,6 @@ jobs:
         name: PHPUnit
         runs-on: ubuntu-latest
 
-        # Create a MySQL service.
-        services:
-            mysql:
-                image: mariadb
-                env:
-                    MYSQL_ROOT_PASSWORD: gewis
-                    MYSQL_DATABASE: gewis
-                    MYSQL_USER: gewis
-                    MYSQL_PASSWORD: gewis
-                ports:
-                    - 3306:3306
-                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
         steps:
             -   name: Checkout
                 uses: actions/checkout@v2
@@ -63,14 +50,5 @@ jobs:
                 with:
                     env-file: .env.dist
 
-            -   name: Create database
-                # GitHub Actions do not support custom hostnames like in Docker, hence we need to overwrite this value.
-                # Furthermore, we cannot declare it above, as it will be overwritten by the previous step.
-                env:
-                    DOCKER_DB_HOST: 127.0.0.1
-                run: ./orm orm:schema-tool:update --force
-
             -   name: Run PHPUnit
-                env:
-                    DOCKER_DB_HOST: 127.0.0.1
                 run: vendor/phpunit/phpunit/phpunit --bootstrap bootstrap.php --configuration phpunit.xml

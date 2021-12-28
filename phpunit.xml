@@ -22,6 +22,7 @@
             <directory>./module/Activity/test/</directory>
             <directory>./module/Application/test/</directory>
             <directory>./module/Company/test/</directory>
+            <directory>./module/Decision/test/</directory>
             <directory>./module/Education/test/</directory>
             <directory>./module/Frontpage/test/</directory>
             <directory>./module/Photo/test/</directory>
