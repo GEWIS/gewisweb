@@ -8,7 +8,6 @@ class ControllerTest extends BaseControllerTest
 {
     public function testIndexActionCanBeAccessed(): void
     {
-//        $this->markTestSkipped('Decision/Mapper/Member::findBirthdayMembers is not supported by SQLite');
         $this->dispatch('/');
         $this->assertResponseStatusCode(200);
     }

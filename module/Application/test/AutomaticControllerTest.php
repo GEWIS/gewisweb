@@ -4,11 +4,13 @@ namespace ApplicationTest;
 
 use Exception;
 use Laminas\Router\Exception\InvalidArgumentException;
-use Laminas\Router\Http\Literal;
-use Laminas\Router\Http\Part;
-use Laminas\Router\Http\Regex;
-use Laminas\Router\Http\Segment;
-use Laminas\Router\Http\TreeRouteStack;
+use Laminas\Router\Http\{
+    Literal,
+    Part,
+    Regex,
+    Segment,
+    TreeRouteStack,
+};
 use Laminas\Router\PriorityList;
 use RuntimeException;
 use Traversable;
@@ -113,7 +115,7 @@ class AutomaticControllerTest extends BaseControllerTest
         $this->parseUrl($url);
     }
 
-    protected function parseRegex(Regex $regex)
+    protected function parseRegex(Regex $regex): void
     {
         $url = $regex->assemble();
         $this->parseUrl($url);
@@ -153,7 +155,7 @@ class AutomaticControllerTest extends BaseControllerTest
 
     protected function getParams(): array
     {
-        $params = array();
+        $params = [];
 
         $params['id'] = 1;
         $params['appId'] = 1;

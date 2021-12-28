@@ -8,7 +8,8 @@ use Doctrine\ORM\{
     EntityNotFoundException,
     EntityRepository,
     OptimisticLockException,
-    Exception\ORMException};
+    Exception\ORMException,
+};
 
 abstract class BaseMapper
 {

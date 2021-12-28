@@ -19,7 +19,7 @@ class TestConfigProvider
     /**
      * @throws SchemaException
      */
-    public static function overrideConfig(ServiceManager $serviceManager)
+    public static function overrideConfig(ServiceManager $serviceManager): void
     {
         $testConfig = [
             'doctrine' => [

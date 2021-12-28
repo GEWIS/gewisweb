@@ -4,8 +4,10 @@ namespace ApplicationTest\Mapper;
 
 use Application\Mapper\BaseMapper;
 use ApplicationTest\TestConfigProvider;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\{
+    EntityManager,
+    EntityNotFoundException,
+};
 use Laminas\Mvc\Application;
 use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
@@ -59,7 +61,7 @@ abstract class BaseMapperTest extends TestCase
     /**
      * Variation of {@link Application::init} but without initial bootstrapping.
      */
-    private static function initServiceManager($configuration = []): ServiceManager
+    private static function initServiceManager(array $configuration = []): ServiceManager
     {
         // Prepare the service manager
         $smConfig = $configuration['service_manager'] ?? [];
@@ -75,12 +77,14 @@ abstract class BaseMapperTest extends TestCase
         return $serviceManager;
     }
 
-    protected function setUpMockedServices()
+    protected function setUpMockedServices(): void
     {
     }
 
-    private function bootstrapApplication($serviceManager, $configuration = []): Application
-    {
+    private function bootstrapApplication(
+        ServiceManager $serviceManager,
+        array $configuration = [],
+    ): Application {
         // Prepare list of listeners to bootstrap
         $listenersFromAppConfig = $configuration['listeners'] ?? [];
         $config = $serviceManager->get('config');

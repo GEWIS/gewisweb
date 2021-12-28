@@ -11,7 +11,10 @@ use Laminas\ServiceManager\ServiceManager;
 use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use User\Authentication\AuthenticationService;
-use User\Model\{User, UserRole};
+use User\Model\{
+    User,
+    UserRole,
+};
 
 abstract class BaseControllerTest extends AbstractHttpControllerTestCase
 {
@@ -84,7 +87,7 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
 
     private function bootstrapApplication(
         ServiceManager $serviceManager,
-        array $configuration = []
+        array $configuration = [],
     ): Application {
         // Prepare list of listeners to bootstrap
         $listenersFromAppConfig = $configuration['listeners'] ?? [];

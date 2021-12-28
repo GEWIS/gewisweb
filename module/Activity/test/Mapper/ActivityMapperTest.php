@@ -3,8 +3,10 @@
 namespace ActivityTest\Mapper;
 
 use Activity\Mapper\Activity as ActivityMapper;
-use Activity\Model\Activity;
-use Activity\Model\ActivityLocalisedText;
+use Activity\Model\{
+    Activity,
+    ActivityLocalisedText,
+};
 use Application\Mapper\BaseMapper;
 use ApplicationTest\Mapper\BaseMapperTest;
 use DateTime;

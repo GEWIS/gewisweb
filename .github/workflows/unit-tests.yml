@@ -51,6 +51,4 @@ jobs:
                     env-file: .env.dist
 
             -   name: Run PHPUnit
-                env:
-                    DOCKER_DB_HOST: 127.0.0.1
                 run: vendor/phpunit/phpunit/phpunit --bootstrap bootstrap.php --configuration phpunit.xml

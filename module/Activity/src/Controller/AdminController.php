@@ -22,7 +22,10 @@ use Laminas\Session\{
     AbstractContainer,
     Container as SessionContainer,
 };
-use Laminas\Stdlib\{Parameters, ResponseInterface};
+use Laminas\Stdlib\{
+    Parameters,
+    ResponseInterface,
+};
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
