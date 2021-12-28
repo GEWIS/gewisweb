@@ -3,25 +3,34 @@
 namespace ApplicationTest\Mapper;
 
 use Application\Mapper\BaseMapper;
+use ApplicationTest\TestConfigProvider;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityNotFoundException;
 use Laminas\Mvc\Application;
 use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 abstract class BaseMapperTest extends TestCase
 {
     protected array $applicationConfig;
     protected ?Application $application = null;
     protected ServiceManager $serviceManager;
+    protected EntityManager $entityManager;
     protected BaseMapper $mapper;
     protected object $object;
-    protected EntityManager $entityManager;
 
     public function setUp(): void
     {
-        $this->applicationConfig = include './config/application.config.php';
+        $this->applicationConfig = TestConfigProvider::getConfig();
         $this->getApplication();
+        $this->entityManager = $this->serviceManager->get('doctrine.entitymanager.orm_default');
+    }
+
+    protected function getId(object $object): mixed
+    {
+        throw new RuntimeException('Not implemented');
     }
 
     public function getApplication(): Application
@@ -35,6 +44,7 @@ abstract class BaseMapperTest extends TestCase
         $this->serviceManager = $this->initServiceManager($appConfig);
 
         $this->serviceManager->setAllowOverride(true);
+        TestConfigProvider::overrideConfig($this->serviceManager);
         $this->setUpMockedServices();
         $this->serviceManager->setAllowOverride(false);
 
@@ -122,39 +132,57 @@ abstract class BaseMapperTest extends TestCase
         $this->expectNotToPerformAssertions();
     }
 
-//    public function testPersist(): void
-//    {
-//        $this->mapper->persist($this->object);
-//        $this->expectNotToPerformAssertions();
-//    }
-//
-//    public function testPersistMultiple(): void
-//    {
-//        $this->mapper->persistMultiple([$this->object]);
-//        $this->expectNotToPerformAssertions();
-//    }
-//
-//    public function testRemove(): void
-//    {
-//        $this->mapper->remove($this->object);
-//        $this->expectNotToPerformAssertions();
-//    }
-//
-//    public function testRemoveMultiple(): void
-//    {
-//        $this->mapper->removeMultiple([$this->object]);
-//        $this->expectNotToPerformAssertions();
-//    }
-//
-//    public function testRemoveById(): void
-//    {
-//        $this->mapper->removeById(0);
-//        $this->expectNotToPerformAssertions();
-//    }
-//
-//    public function testDetach(): void
-//    {
-//        $this->mapper->detach($this->object);
-//        $this->expectNotToPerformAssertions();
-//    }
+    public function testPersist(): void
+    {
+        $this->mapper->persist($this->object);
+        $this->expectNotToPerformAssertions();
+    }
+
+    public function testPersistMultiple(): void
+    {
+        $this->mapper->persistMultiple([$this->object]);
+        $this->expectNotToPerformAssertions();
+    }
+
+    public function testRemove(): void
+    {
+        $this->mapper->remove($this->object);
+        $this->expectNotToPerformAssertions();
+    }
+
+    public function testRemoveMultiple(): void
+    {
+        $this->mapper->removeMultiple([$this->object]);
+        $this->expectNotToPerformAssertions();
+    }
+
+    public function testRemoveById(): void
+    {
+        try {
+            $id = $this->getId($this->object);
+            $this->entityManager->persist($this->object);
+            $this->mapper->removeById($id);
+            $this->expectNotToPerformAssertions();
+        } catch (RuntimeException $e) {
+            if ($e->getMessage() !== 'Not implemented') {
+                $this->addWarning($e->getMessage());
+                $this->addWarning($e->getTraceAsString());
+                $this->fail('testRemoveById threw an unexpected exception.');
+            } else {
+                $this->expectNotToPerformAssertions();
+            }
+        }
+    }
+
+    public function testRemoveByIdNotFound(): void
+    {
+        $this->expectException(EntityNotFoundException::class);
+        $this->mapper->removeById(0);
+    }
+
+    public function testDetach(): void
+    {
+        $this->mapper->detach($this->object);
+        $this->expectNotToPerformAssertions();
+    }
 }

@@ -47,13 +47,11 @@ updatedb: rundev
 stop:
 		@docker-compose down
 
-runtest: rundev
-		@docker-compose exec -T web ./vendor/phpunit/phpunit/phpunit --bootstrap ./bootstrap.php --configuration ./phpunit.xml
+runtest:
+		./vendor/phpunit/phpunit/phpunit --bootstrap ./bootstrap.php --configuration ./phpunit.xml --stop-on-error --stop-on-failure
 
-runcoverage: rundev
-		@docker-compose exec web ./vendor/phpunit/phpunit/phpunit --bootstrap ./bootstrap.php --configuration ./phpunit.xml --coverage-html ./coverage
-		@rm -r ./coverage
-		@docker cp gewisweb_web_1:/code/coverage ./coverage
+runcoverage:
+		./vendor/phpunit/phpunit/phpunit --bootstrap ./bootstrap.php --configuration ./phpunit.xml --coverage-html ./coverage
 
 getvendordir:
 		@rm -Rf ./vendor

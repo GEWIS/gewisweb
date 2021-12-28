@@ -3,6 +3,8 @@
 namespace Decision\Mapper;
 
 use Application\Mapper\BaseMapper;
+use DateInterval;
+use DateTime;
 use Decision\Model\{
     Member as MemberModel,
     Organ as OrganModel,
@@ -73,21 +75,18 @@ class Member extends BaseMapper
      */
     public function findBirthdayMembers(int $days): array
     {
-        // unfortunately, there is no support for functions like DAY() and MONTH()
-        // in doctrine2, thus we have to use the NativeSQL here
-        $builder = new ResultSetMappingBuilder($this->getEntityManager());
-        $builder->addRootEntityFromClassMetadata($this->getRepositoryName(), 'm');
+        $now = new DateTime();
+        $now->setTime(0, 0, 0, 0);
+        $interval = new DateInterval('P' . $days . 'D');
 
-        $select = $builder->generateSelectClause(['m' => 't1']);
-
-        $sql = "SELECT $select FROM Member AS t1"
-            . ' WHERE DATEDIFF(DATE_SUB(t1.birth, INTERVAL YEAR(t1.birth) YEAR),'
-            . ' DATE_SUB(CURDATE(), INTERVAL YEAR(CURDATE()) YEAR)) BETWEEN 0 AND :days'
-            . ' AND t1.expiration >= CURDATE()'
-            . 'ORDER BY DATE_SUB(t1.birth, INTERVAL YEAR(t1.birth) YEAR) ASC';
-
-        $query = $this->getEntityManager()->createNativeQuery($sql, $builder);
-        $query->setParameter('days', $days);
+        $query = $this->getEntityManager()->createQueryBuilder()
+            ->select('m')
+            ->from(MemberModel::class, 'm')
+            ->where('m.birth >= :d1')
+            ->andWhere('m.birth <= :d2')
+            ->setParameter('d1', $now)
+            ->setParameter('d2', $now->add($interval))
+            ->getQuery();
 
         return $query->getResult();
     }

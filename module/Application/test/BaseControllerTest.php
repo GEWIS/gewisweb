@@ -28,10 +28,7 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
 
     public function setUp(): void
     {
-        $this->setApplicationConfig(
-            include './config/application.config.php'
-        );
-
+        $this->setApplicationConfig(TestConfigProvider::getConfig());
         parent::setUp();
         $this->getApplication();
     }
@@ -54,6 +51,7 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
         $this->serviceManager = $this->initServiceManager($appConfig);
 
         $this->serviceManager->setAllowOverride(true);
+        TestConfigProvider::overrideConfig($this->serviceManager);
         $this->setUpMockedServices();
         $this->serviceManager->setAllowOverride(false);
 

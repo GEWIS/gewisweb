@@ -5,10 +5,10 @@ namespace Application\Mapper;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\{
     EntityManager,
+    EntityNotFoundException,
     EntityRepository,
     OptimisticLockException,
-    Exception\ORMException,
-};
+    Exception\ORMException};
 
 abstract class BaseMapper
 {
@@ -81,13 +81,19 @@ abstract class BaseMapper
      * Remove an entity by its ID using find
      *
      * @param mixed $id
+     * @throws EntityNotFoundException
+     * @throws OptimisticLockException
      * @throws ORMException
      */
     public function removeById(mixed $id): void
     {
         $entity = $this->find($id);
-        $this->em->remove($entity);
-        $this->em->flush();
+        if (!is_null($entity)) {
+            $this->em->remove($entity);
+            $this->em->flush();
+        } else {
+            throw new EntityNotFoundException('No entity with the given ID could be found.');
+        }
     }
 
     /**

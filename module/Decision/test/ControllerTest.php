@@ -29,6 +29,7 @@ class ControllerTest extends BaseControllerTest
 
     public function testMemberSearchQueryActionCanBeAccessedAsUser(): void
     {
+        $this->markTestSkipped('CONCAT_WS is not supported by the SQLite driver');
         $this->setUpWithRole();
         $this->dispatch('/member/search?q=web');
         $this->assertResponseStatusCode(200);

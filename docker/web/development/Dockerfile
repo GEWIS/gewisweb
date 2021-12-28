@@ -13,6 +13,7 @@ RUN apt-get update \
         libmemcached-dev \
         libpng-dev \
         libpq-dev \
+        libsqlite3-dev \
         libxml2-dev \
         libzip-dev \
         nano \
@@ -35,8 +36,10 @@ RUN docker-php-ext-configure \
         intl \
         opcache \
         pgsql \
+        pdo \
         pdo_mysql \
         pdo_pgsql \
+        pdo_sqlite \
         soap \
         zip
 
