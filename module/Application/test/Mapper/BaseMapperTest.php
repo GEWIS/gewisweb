@@ -11,6 +11,8 @@ use Doctrine\ORM\{
 use Laminas\Mvc\Application;
 use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
+use Laminas\Stdlib\Exception\LogicException;
+use Laminas\Test\PHPUnit\Controller\AbstractControllerTestCase;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
@@ -25,7 +27,7 @@ abstract class BaseMapperTest extends TestCase
 
     public function setUp(): void
     {
-        $this->applicationConfig = TestConfigProvider::getConfig();
+        $this->setApplicationConfig(TestConfigProvider::getConfig());
         $this->getApplication();
         $this->entityManager = $this->serviceManager->get('doctrine.entitymanager.orm_default');
     }
@@ -56,6 +58,26 @@ abstract class BaseMapperTest extends TestCase
         $this->application->getServiceManager()->get('SendResponseListener')->detach($events);
 
         return $this->application;
+    }
+
+    /**
+     * Mocks the behaviour of {@link AbstractControllerTestCase}, is required to allow ORM/DBAL to correctly obtain all
+     * metadata from the entity/model classes.
+     */
+    private function setApplicationConfig(array $applicationConfig): void
+    {
+        if (null !== $this->application) {
+            throw new LogicException(
+                'Application config can not be set, the application is already built'
+            );
+        }
+
+        // Do not cache the module config in the testing environment
+        if (isset($applicationConfig['module_listener_options']['config_cache_enabled'])) {
+            $applicationConfig['module_listener_options']['config_cache_enabled'] = false;
+        }
+
+        $this->applicationConfig = $applicationConfig;
     }
 
     /**
