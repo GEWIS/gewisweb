@@ -12,7 +12,7 @@ cp -R -u gewisweb-${BRANCH}/data/* /code/data/
 chown -R  www-data:www-data /code/data
 rm -R /tmp/gewisweb-${BRANCH}
 cd /code
-if [ ${APP_ENV} == 'production' ]
+if [ "${APP_ENV}" == 'production' ]
 then
     php composer.phar dump-autoload -o --no-dev
 else
