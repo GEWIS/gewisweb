@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="phpunit test" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+    <CommandLine>
+      <PhpTestInterpreterSettings>
+        <option name="interpreterName" value="PHP 8.1" />
+      </PhpTestInterpreterSettings>
+    </CommandLine>
+    <TestRunner bootstrap_file="$PROJECT_DIR$/bootstrap.php" configuration_file="$PROJECT_DIR$/phpunit.xml" directory="$PROJECT_DIR$" scope="XML" use_alternative_bootstrap_file="true" use_alternative_configuration_file="true" />
+    <method v="2">
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="loadenv" run_configuration_type="ShConfigurationType" />
+    </method>
+  </configuration>
+</component>
