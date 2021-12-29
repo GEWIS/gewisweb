@@ -47,11 +47,11 @@ updatedb: rundev
 stop:
 		@docker-compose down
 
-runtest:
-		./vendor/phpunit/phpunit/phpunit --bootstrap ./bootstrap.php --configuration ./phpunit.xml --stop-on-error --stop-on-failure
+runtest: loadenv
+		@vendor/phpunit/phpunit/phpunit --bootstrap ./bootstrap.php --configuration ./phpunit.xml --stop-on-error --stop-on-failure
 
-runcoverage:
-		./vendor/phpunit/phpunit/phpunit --bootstrap ./bootstrap.php --configuration ./phpunit.xml --coverage-html ./coverage
+runcoverage: loadenv
+		@vendor/phpunit/phpunit/phpunit --bootstrap ./bootstrap.php --configuration ./phpunit.xml --coverage-html ./coverage
 
 getvendordir:
 		@rm -Rf ./vendor
@@ -93,20 +93,20 @@ phpstanpr:
 		@make rundev
 		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G --no-progress
 
-phpcs:
+phpcs: loadenv
 		@vendor/bin/phpcs -p --standard=PSR1,PSR12 --extensions=php,dist module config
 
-phpcbf:
+phpcbf: loadenv
 		@vendor/bin/phpcbf -p --standard=PSR1,PSR12 --extensions=php,dist --filter=GitModified module config
 
-phpcbfall:
+phpcbfall: loadenv
 		@vendor/bin/phpcbf -p --standard=PSR1,PSR12 --extensions=php,dist module config
 
-phpcsfix:
+phpcsfix: loadenv
 		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --rules=@PSR1,@PSR12,@DoctrineAnnotation,@PHP81Migration,group_import,-single_import_per_statement module
 		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --rules=@PSR1,@PSR12,@DoctrineAnnotation,@PHP81Migration,group_import,-single_import_per_statement config
 
-phpcsfixrisky:
+phpcsfixrisky: loadenv
 		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --allow-risky=yes --rules=@PHP80Migration:risky,-declare_strict_types,-use_arrow_functions  module
 		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --allow-risky=yes --rules=@PHP80Migration:risky,-declare_strict_types,-use_arrow_functions  config
 
