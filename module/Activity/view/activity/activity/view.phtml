@@ -122,15 +122,29 @@ $flash = $this->plugin('FlashMessenger');
         <div class="row">
             <div class="col-md-12">
                 <?php
-                $organString = "the organizing party";
+                // TODO: add translation to 'de organiserende partij'
+                $organString = $this->translate("the organizing party");
+                $boardString = "<a href='mailto:cib@gewis.nl'>cib@gewis.nl</a>";
                 $organ = $activity->getOrgan();
 
                 if (!is_null($organ)) {
                     $organString = "<a href='" . $this->url('home/organ', ['abbr' => $organ->getAbbr(), 'type' => $organ->getType()]) . "''>" . $this->escapeHtml($organ->getName()) . "</a>";
                 }
+
+                if ($activity->getIsMyFuture()) {
+                    $boardString = "<a href='mailto:ceb@gewis.nl'>ceb@gewis.nl</a>";
+                }
+
+                $finalText = sprintf($this->translate("Please contact %s or the board (%s) with any questions, concerns or if you are unable to attend after the deadline for unsubscribing has passed. Have fun!"), $organString, $boardString);
+
+                if (!isset($signupList)) {
+                    // TODO: add translation for the string below
+                    $finalText = sprintf($this->translate("Please contact %s or the board (%s) with any questions or concerns. Have fun!"), $organString, $boardString);
+                }
+
                 ?>
                 <p>
-                    <?= sprintf($this->translate("Please contact %s or the board (%s) with any questions, concerns or if you are unable to attend after the deadline for unsubscribing has passed. Have fun!"), $organString, "<a href='mailto:cib@gewis.nl'>cib@gewis.nl</a>") ?>
+                    <?= $finalText ?>
                 </p>
             </div>
         </div>
