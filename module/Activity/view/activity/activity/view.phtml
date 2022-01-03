@@ -122,7 +122,6 @@ $flash = $this->plugin('FlashMessenger');
         <div class="row">
             <div class="col-md-12">
                 <?php
-                // TODO: add translation to 'de organiserende partij'
                 $organString = $this->translate("the organizing party");
                 $boardString = "<a href='mailto:cib@gewis.nl'>cib@gewis.nl</a>";
                 $organ = $activity->getOrgan();
@@ -138,7 +137,6 @@ $flash = $this->plugin('FlashMessenger');
                 $finalText = sprintf($this->translate("Please contact %s or the board (%s) with any questions, concerns or if you are unable to attend after the deadline for unsubscribing has passed. Have fun!"), $organString, $boardString);
 
                 if (!isset($signupList)) {
-                    // TODO: add translation for the string below
                     $finalText = sprintf($this->translate("Please contact %s or the board (%s) with any questions or concerns. Have fun!"), $organString, $boardString);
                 }
 

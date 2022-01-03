@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-18 16:46+0100\n"
+"POT-Creation-Date: 2022-01-03 21:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr ""
 #: module/Activity/view/partial/create.phtml:3
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:41
 #: module/Activity/view/activity/admin-approval/view.phtml:20
-#: module/Photo/view/photo/album/index.phtml:239
+#: module/Photo/view/photo/album/index.phtml:251
 msgid "Information"
 msgstr ""
 
@@ -41,9 +41,9 @@ msgstr ""
 #: module/Activity/view/activity/admin-approval/view.phtml:169
 #: module/Activity/view/activity/admin-category/add.phtml:33
 #: module/Activity/view/activity/activity/create.phtml:160
-#: module/Education/src/Form/Fieldset/Exam.php:85
-#: module/Education/src/Form/Fieldset/Summary.php:79
-#: module/Education/src/Form/SummaryUpload.php:73
+#: module/Education/src/Form/Fieldset/Exam.php:91
+#: module/Education/src/Form/Fieldset/Summary.php:85
+#: module/Education/src/Form/SummaryUpload.php:76
 msgid "Dutch"
 msgstr ""
 
@@ -59,17 +59,17 @@ msgstr ""
 #: module/Activity/view/activity/admin-approval/view.phtml:174
 #: module/Activity/view/activity/admin-category/add.phtml:71
 #: module/Activity/view/activity/activity/create.phtml:165
-#: module/Education/src/Form/Fieldset/Exam.php:84
-#: module/Education/src/Form/Fieldset/Summary.php:78
-#: module/Education/src/Form/SummaryUpload.php:72
+#: module/Education/src/Form/Fieldset/Exam.php:90
+#: module/Education/src/Form/Fieldset/Summary.php:84
+#: module/Education/src/Form/SummaryUpload.php:75
 msgid "English"
 msgstr ""
 
 #: module/Company/view/partial/company/admin/editors/job.phtml:5
 #: module/Company/view/partial/company/admin/editors/company.phtml:5
-#: module/Company/src/Form/Job.php:73 module/Company/src/Form/Company.php:67
-#: module/Company/src/Form/JobCategory.php:103
-#: module/Company/src/Form/JobCategory.php:113
+#: module/Company/src/Form/Job.php:83 module/Company/src/Form/Company.php:73
+#: module/Company/src/Form/JobCategory.php:109
+#: module/Company/src/Form/JobCategory.php:119
 msgid "Slug"
 msgstr ""
 
@@ -160,9 +160,9 @@ msgstr ""
 #: module/Activity/view/activity/admin-approval/view.phtml:126
 #: module/Activity/view/activity/admin-approval/view.phtml:133
 #: module/Activity/view/activity/activity-calendar/create.phtml:116
-#: module/Company/src/Form/Job.php:202 module/Company/src/Form/Job.php:212
-#: module/Company/src/Form/Company.php:184
-#: module/Company/src/Form/Company.php:194
+#: module/Company/src/Form/Job.php:212 module/Company/src/Form/Job.php:222
+#: module/Company/src/Form/Company.php:190
+#: module/Company/src/Form/Company.php:200
 msgid "Description"
 msgstr ""
 
@@ -212,7 +212,7 @@ msgstr ""
 
 #: module/Company/view/company/admin/index.phtml:74
 #: module/Company/view/company/admin/index.phtml:93
-#: module/Company/src/Form/Job.php:242
+#: module/Company/src/Form/Job.php:252
 msgid "Labels"
 msgstr ""
 
@@ -240,7 +240,7 @@ msgstr ""
 #: module/Activity/view/activity/admin-category/add.phtml:87
 #: module/Activity/view/activity/activity-calendar/index.phtml:73
 #: module/Activity/view/activity/activity-calendar/create.phtml:99
-#: module/Activity/view/activity/activity/view.phtml:230
+#: module/Activity/view/activity/activity/view.phtml:244
 #: module/Decision/view/decision/member/birthdays.phtml:12
 #: module/Decision/view/decision/admin/document.phtml:40
 #: module/Decision/view/decision/organ/index.phtml:14
@@ -248,21 +248,21 @@ msgstr ""
 #: module/Photo/view/photo/album-admin/edit.phtml:23
 #: module/User/view/user/api-admin/index.phtml:10
 #: module/User/view/user/api-admin/add.phtml:45
-#: module/Company/src/Form/Job.php:107 module/Company/src/Form/Job.php:138
-#: module/Company/src/Form/Job.php:148 module/Company/src/Form/Company.php:57
-#: module/Company/src/Form/Company.php:99
-#: module/Company/src/Form/JobCategory.php:63
-#: module/Company/src/Form/JobCategory.php:73
-#: module/Company/src/Form/JobLabel.php:32
-#: module/Company/src/Form/JobLabel.php:42
-#: module/Activity/src/Form/ActivityCategory.php:24
-#: module/Activity/src/Form/ActivityCategory.php:34
-#: module/Activity/src/Form/SignupListField.php:39
-#: module/Activity/src/Form/SignupListField.php:49
-#: module/Activity/src/Form/SignupList.php:34
-#: module/Activity/src/Form/SignupList.php:44
-#: module/Education/src/Form/AddCourse.php:55
-#: module/User/src/Form/ApiToken.php:25
+#: module/Company/src/Form/Job.php:117 module/Company/src/Form/Job.php:148
+#: module/Company/src/Form/Job.php:158 module/Company/src/Form/Company.php:63
+#: module/Company/src/Form/Company.php:105
+#: module/Company/src/Form/JobCategory.php:69
+#: module/Company/src/Form/JobCategory.php:79
+#: module/Company/src/Form/JobLabel.php:35
+#: module/Company/src/Form/JobLabel.php:45
+#: module/Activity/src/Form/ActivityCategory.php:27
+#: module/Activity/src/Form/ActivityCategory.php:37
+#: module/Activity/src/Form/SignupListField.php:42
+#: module/Activity/src/Form/SignupListField.php:52
+#: module/Activity/src/Form/SignupList.php:41
+#: module/Activity/src/Form/SignupList.php:51
+#: module/Education/src/Form/AddCourse.php:58
+#: module/User/src/Form/ApiToken.php:28
 msgid "Name"
 msgstr ""
 
@@ -427,7 +427,7 @@ msgid "Update Package"
 msgstr ""
 
 #: module/Company/view/company/admin/edit-package.phtml:50
-#: module/Company/src/Form/Package.php:104
+#: module/Company/src/Form/Package.php:112
 msgid "Banner"
 msgstr ""
 
@@ -479,7 +479,7 @@ msgstr ""
 #: module/Company/view/company/admin/edit-company.phtml:83
 #: module/Activity/view/activity/admin/list.phtml:15
 #: module/Activity/view/activity/admin/view.phtml:55
-#: module/Photo/src/Form/EditAlbum.php:36
+#: module/Photo/src/Form/EditAlbum.php:40
 msgid "Start date"
 msgstr ""
 
@@ -674,46 +674,46 @@ msgstr ""
 #: module/Activity/view/activity/activity-calendar/index.phtml:74
 #: module/Decision/view/decision/organ/index.phtml:15
 #: module/Decision/view/decision/decision/index.phtml:9
-#: module/Activity/src/Form/SignupListField.php:65
-#: module/Education/src/Form/Fieldset/Exam.php:66
+#: module/Activity/src/Form/SignupListField.php:68
+#: module/Education/src/Form/Fieldset/Exam.php:72
 msgid "Type"
 msgstr ""
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:104
-#: module/Activity/src/Form/SignupListField.php:60
+#: module/Activity/src/Form/SignupListField.php:63
 msgid "Text"
 msgstr ""
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:107
-#: module/Activity/src/Form/SignupListField.php:61
+#: module/Activity/src/Form/SignupListField.php:64
 msgid "Yes/No"
 msgstr ""
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:110
-#: module/Activity/src/Form/SignupListField.php:62
+#: module/Activity/src/Form/SignupListField.php:65
 msgid "Number"
 msgstr ""
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:113
-#: module/Activity/src/Form/SignupListField.php:63
+#: module/Activity/src/Form/SignupListField.php:66
 msgid "Choice"
 msgstr ""
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:123
-#: module/Activity/src/Form/SignupListField.php:75
+#: module/Activity/src/Form/SignupListField.php:78
 msgid "Min. value"
 msgstr ""
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:133
-#: module/Activity/src/Form/SignupListField.php:85
+#: module/Activity/src/Form/SignupListField.php:88
 msgid "Max. value"
 msgstr ""
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:145
 #: module/Activity/view/partial/create.phtml:159
 #: module/Activity/view/activity/activity-calendar/create.phtml:125
-#: module/Activity/src/Form/SignupListField.php:98
-#: module/Activity/src/Form/SignupListField.php:111
+#: module/Activity/src/Form/SignupListField.php:101
+#: module/Activity/src/Form/SignupListField.php:114
 msgid "Options"
 msgstr ""
 
@@ -769,7 +769,7 @@ msgstr ""
 
 #: module/Activity/view/partial/create.phtml:15
 #: module/Activity/view/activity/admin-category/add.phtml:30
-#: module/Application/src/Form/Localisable.php:31
+#: module/Application/src/Form/Localisable.php:37
 msgid "Enable Dutch Translations"
 msgstr ""
 
@@ -784,7 +784,7 @@ msgstr ""
 #: module/Activity/view/activity/activity/list.phtml:41
 #: module/Activity/view/activity/activity/view.phtml:72
 #: module/Photo/view/partial/metadata.phtml:70
-#: module/Company/src/Form/Job.php:182 module/Company/src/Form/Job.php:192
+#: module/Company/src/Form/Job.php:192 module/Company/src/Form/Job.php:202
 msgid "Location"
 msgstr ""
 
@@ -803,7 +803,7 @@ msgstr ""
 
 #: module/Activity/view/partial/create.phtml:90
 #: module/Activity/view/activity/admin-category/add.phtml:68
-#: module/Application/src/Form/Localisable.php:43
+#: module/Application/src/Form/Localisable.php:49
 msgid "Enable English Translations"
 msgstr ""
 
@@ -986,7 +986,7 @@ msgid "There is currently no option creation period planned."
 msgstr ""
 
 #: module/Activity/view/activity/admin-option/index.phtml:33
-#: module/Activity/src/Controller/AdminOptionController.php:120
+#: module/Activity/src/Controller/AdminOptionController.php:119
 msgid "Add Option Period"
 msgstr ""
 
@@ -1084,7 +1084,7 @@ msgstr ""
 #: module/Decision/view/decision/member/self.phtml:51
 #: module/Decision/view/decision/member/view.phtml:34
 #: module/Frontpage/view/frontpage/organ/organ.phtml:72
-#: module/Decision/src/Form/OrganInformation.php:34
+#: module/Decision/src/Form/OrganInformation.php:37
 msgid "Email"
 msgstr ""
 
@@ -1093,13 +1093,11 @@ msgid "Sign-up List"
 msgstr ""
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:43
-#: module/Activity/src/Service/Signup.php:175
 msgid "User"
 msgstr ""
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:46
 #: module/Decision/view/decision/member/self.phtml:73
-#: module/Activity/src/Service/Signup.php:172
 msgid "External"
 msgstr ""
 
@@ -1222,7 +1220,7 @@ msgid "Today"
 msgstr ""
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:44
-#: module/Education/src/Form/AddCourse.php:73
+#: module/Education/src/Form/AddCourse.php:76
 msgid "Year"
 msgstr ""
 
@@ -1301,8 +1299,8 @@ msgid "Remove the last option"
 msgstr ""
 
 #: module/Activity/view/activity/activity-calendar/create.phtml:162
-#: module/Education/src/Form/SummaryUpload.php:94
-#: module/Decision/src/Form/Notes.php:59 module/Frontpage/src/Form/Poll.php:62
+#: module/Education/src/Form/SummaryUpload.php:97
+#: module/Decision/src/Form/Notes.php:62 module/Frontpage/src/Form/Poll.php:65
 msgid "Submit"
 msgstr ""
 
@@ -1319,7 +1317,7 @@ msgid "My Activities"
 msgstr ""
 
 #: module/Activity/view/activity/activity/index.phtml:32
-#: module/Activity/src/Controller/ActivityController.php:263
+#: module/Activity/src/Controller/ActivityController.php:270
 msgid "Create Activity"
 msgstr ""
 
@@ -1345,7 +1343,11 @@ msgstr ""
 msgid "It will become visible after it has been approved by the board."
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:133
+#: module/Activity/view/activity/activity/view.phtml:126
+msgid "the organizing party"
+msgstr ""
+
+#: module/Activity/view/activity/activity/view.phtml:138
 #, php-format
 msgid ""
 "Please contact %s or the board (%s) with any questions, concerns or if you "
@@ -1353,55 +1355,61 @@ msgid ""
 "fun!"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:143
+#: module/Activity/view/activity/activity/view.phtml:142
+#, php-format
+msgid ""
+"Please contact %s or the board (%s) with any questions or concerns. Have fun!"
+msgstr ""
+
+#: module/Activity/view/activity/activity/view.phtml:157
 #, php-format
 msgid ""
 "This sign-up list is open from <strong>%s</strong> till <strong>%s</strong>."
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:155
+#: module/Activity/view/activity/activity/view.phtml:169
 msgid "Already subscribed"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:162
+#: module/Activity/view/activity/activity/view.phtml:176
 msgid "Subscription closed"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:168
+#: module/Activity/view/activity/activity/view.phtml:182
 msgid "Subscribe now"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:175
+#: module/Activity/view/activity/activity/view.phtml:189
 msgid "Unsubscribe yourself"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:178
+#: module/Activity/view/activity/activity/view.phtml:192
 msgid "You are not allowed to unsubscribe after the deadline!"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:197
-#: module/Activity/view/activity/activity/view.phtml:214
+#: module/Activity/view/activity/activity/view.phtml:211
+#: module/Activity/view/activity/activity/view.phtml:228
 msgid "Subscribe yourself"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:200
+#: module/Activity/view/activity/activity/view.phtml:214
 msgid "Login to subscribe"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:204
+#: module/Activity/view/activity/activity/view.phtml:218
 msgid "Or subscribe without a GEWIS membership: "
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:225
+#: module/Activity/view/activity/activity/view.phtml:239
 msgid "Current subscriptions"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:243
+#: module/Activity/view/activity/activity/view.phtml:257
 #, php-format
 msgid "The number of subscribed members is currently %d."
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:247
+#: module/Activity/view/activity/activity/view.phtml:261
 msgid "Login to view the subscribed members."
 msgstr ""
 
@@ -1478,8 +1486,8 @@ msgstr ""
 #: module/Education/view/education/education/index.phtml:46
 #: module/Decision/view/decision/member/index.phtml:122
 #: module/Decision/view/decision/decision/search.phtml:30
-#: module/Decision/src/Form/SearchDecision.php:35
-#: module/Decision/src/Form/SearchDecision.php:36
+#: module/Decision/src/Form/SearchDecision.php:38
+#: module/Decision/src/Form/SearchDecision.php:39
 msgid "Search"
 msgstr ""
 
@@ -1489,10 +1497,10 @@ msgid "Found %d course(s) matching your description"
 msgstr ""
 
 #: module/Education/view/education/education/index.phtml:65
-#: module/Education/src/Form/Fieldset/Exam.php:45
-#: module/Education/src/Form/Fieldset/Summary.php:45
-#: module/Education/src/Form/AddCourse.php:37
-#: module/Education/src/Form/SummaryUpload.php:39
+#: module/Education/src/Form/Fieldset/Exam.php:51
+#: module/Education/src/Form/Fieldset/Summary.php:51
+#: module/Education/src/Form/AddCourse.php:40
+#: module/Education/src/Form/SummaryUpload.php:42
 msgid "Course code"
 msgstr ""
 
@@ -1745,7 +1753,7 @@ msgstr ""
 #: module/Application/view/partial/main-nav.phtml:97
 #: module/User/view/user/user/password.phtml:2
 #: module/User/view/user/user/password.phtml:23
-#: module/User/src/Form/Password.php:59
+#: module/User/src/Form/Password.php:62
 msgid "Change password"
 msgstr ""
 
@@ -1891,7 +1899,7 @@ msgid "Sleutelbeleid"
 msgstr ""
 
 #: module/Decision/view/decision/member/self.phtml:15
-#: module/User/src/Form/Register.php:41
+#: module/User/src/Form/Register.php:44
 msgid "Membership number"
 msgstr ""
 
@@ -1928,7 +1936,7 @@ msgstr ""
 
 #: module/Decision/view/decision/member/self.phtml:45
 #: module/Decision/view/decision/member/view.phtml:27
-#: module/Education/src/Form/Fieldset/Exam.php:71
+#: module/Education/src/Form/Fieldset/Exam.php:77
 msgid "Other"
 msgstr ""
 
@@ -2136,8 +2144,8 @@ msgid "Meeting notes uploaded"
 msgstr ""
 
 #: module/Decision/view/decision/admin/notes.phtml:24
-#: module/Decision/src/Form/Notes.php:37
-#: module/Decision/src/Form/Document.php:31
+#: module/Decision/src/Form/Notes.php:40
+#: module/Decision/src/Form/Document.php:34
 msgid "Meeting"
 msgstr ""
 
@@ -2147,8 +2155,8 @@ msgstr ""
 
 #: module/Decision/view/decision/organ/index.phtml:13
 #: module/Decision/view/decision/organ-admin/index.phtml:11
-#: module/Company/src/Form/JobLabel.php:52
-#: module/Company/src/Form/JobLabel.php:62
+#: module/Company/src/Form/JobLabel.php:55
+#: module/Company/src/Form/JobLabel.php:65
 msgid "Abbreviation"
 msgstr ""
 
@@ -2215,10 +2223,10 @@ msgstr ""
 #: module/Decision/view/decision/organ-admin/edit.phtml:144
 #: module/Frontpage/view/frontpage/news-admin/edit.phtml:79
 #: module/Frontpage/view/frontpage/page-admin/edit.phtml:113
-#: module/Decision/src/Form/OrganInformation.php:125
-#: module/Frontpage/src/Form/Page.php:102
-#: module/Frontpage/src/Form/NewsItem.php:78
-#: module/Photo/src/Form/EditAlbum.php:58
+#: module/Decision/src/Form/OrganInformation.php:128
+#: module/Frontpage/src/Form/Page.php:105
+#: module/Frontpage/src/Form/NewsItem.php:81
+#: module/Photo/src/Form/EditAlbum.php:62
 msgid "Save"
 msgstr ""
 
@@ -2297,7 +2305,7 @@ msgstr ""
 
 #: module/Decision/view/decision/decision/authorizations.phtml:68
 #: module/Decision/view/decision/decision/authorizations.phtml:73
-#: module/Decision/src/Form/Authorization.php:42
+#: module/Decision/src/Form/Authorization.php:45
 msgid "Authorize"
 msgstr ""
 
@@ -2342,8 +2350,8 @@ msgid "Search for decision"
 msgstr ""
 
 #: module/Decision/view/decision/decision/search.phtml:21
-#: module/Education/src/Form/SearchCourse.php:21
-#: module/Decision/src/Form/SearchDecision.php:25
+#: module/Education/src/Form/SearchCourse.php:24
+#: module/Decision/src/Form/SearchDecision.php:28
 msgid "Search query"
 msgstr ""
 
@@ -2355,7 +2363,7 @@ msgstr ""
 #: module/Application/view/partial/main-nav.phtml:66
 #: module/Application/view/error/403.phtml:12
 #: module/User/view/partial/login.phtml:13
-#: module/User/view/user/user/index.phtml:2 module/User/src/Form/Login.php:59
+#: module/User/view/user/user/index.phtml:2 module/User/src/Form/Login.php:62
 msgid "Login"
 msgstr ""
 
@@ -2448,12 +2456,12 @@ msgid "Continue"
 msgstr ""
 
 #: module/Application/view/partial/paginator.phtml:8
-#: module/Photo/view/photo/album/index.phtml:185
+#: module/Photo/view/photo/album/index.phtml:197
 msgid "Previous"
 msgstr ""
 
 #: module/Application/view/partial/paginator.phtml:22
-#: module/Photo/view/photo/album/index.phtml:186
+#: module/Photo/view/photo/album/index.phtml:198
 msgid "Next"
 msgstr ""
 
@@ -2736,15 +2744,15 @@ msgstr ""
 
 #: module/Frontpage/view/frontpage/news-admin/edit.phtml:18
 #: module/Frontpage/view/frontpage/page-admin/edit.phtml:50
-#: module/Frontpage/src/Form/Page.php:81
-#: module/Frontpage/src/Form/NewsItem.php:57
+#: module/Frontpage/src/Form/Page.php:84
+#: module/Frontpage/src/Form/NewsItem.php:60
 msgid "English content"
 msgstr ""
 
 #: module/Frontpage/view/frontpage/news-admin/edit.phtml:42
 #: module/Frontpage/view/frontpage/page-admin/edit.phtml:74
-#: module/Frontpage/src/Form/Page.php:71
-#: module/Frontpage/src/Form/NewsItem.php:47
+#: module/Frontpage/src/Form/Page.php:74
+#: module/Frontpage/src/Form/NewsItem.php:50
 msgid "Dutch content"
 msgstr ""
 
@@ -2780,10 +2788,10 @@ msgid "The following fraternities have retired:"
 msgstr ""
 
 #: module/Frontpage/view/frontpage/organ/organ.phtml:83
-#: module/Company/src/Form/Job.php:162 module/Company/src/Form/Job.php:172
-#: module/Company/src/Form/Company.php:164
-#: module/Company/src/Form/Company.php:174
-#: module/Decision/src/Form/OrganInformation.php:44
+#: module/Company/src/Form/Job.php:172 module/Company/src/Form/Job.php:182
+#: module/Company/src/Form/Company.php:170
+#: module/Company/src/Form/Company.php:180
+#: module/Decision/src/Form/OrganInformation.php:47
 msgid "Website"
 msgstr ""
 
@@ -2812,7 +2820,7 @@ msgstr ""
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:32
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:95
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:107
-#: module/Frontpage/src/Form/Poll.php:27
+#: module/Frontpage/src/Form/Poll.php:30
 msgid "Dutch question"
 msgstr ""
 
@@ -2820,7 +2828,7 @@ msgstr ""
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:35
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:96
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:110
-#: module/Frontpage/src/Form/Poll.php:37
+#: module/Frontpage/src/Form/Poll.php:40
 msgid "English question"
 msgstr ""
 
@@ -2853,7 +2861,7 @@ msgstr ""
 
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:185
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:212
-#: module/Frontpage/src/Form/PollApproval.php:36
+#: module/Frontpage/src/Form/PollApproval.php:39
 msgid "Approve poll"
 msgstr ""
 
@@ -3055,7 +3063,7 @@ msgid "Regenerate"
 msgstr ""
 
 #: module/Photo/view/photo/album-admin/index.phtml:141
-#: module/Photo/view/photo/album/index.phtml:183
+#: module/Photo/view/photo/album/index.phtml:195
 msgid "Close"
 msgstr ""
 
@@ -3136,8 +3144,8 @@ msgid "Create Album"
 msgstr ""
 
 #: module/Photo/view/photo/album-admin/create.phtml:16
-#: module/Photo/src/Form/EditAlbum.php:26
-#: module/Photo/src/Form/CreateAlbum.php:25
+#: module/Photo/src/Form/EditAlbum.php:30
+#: module/Photo/src/Form/CreateAlbum.php:28
 msgid "Album title"
 msgstr ""
 
@@ -3153,56 +3161,56 @@ msgstr ""
 msgid "Update Album"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:86
+#: module/Photo/view/photo/album/index.phtml:92
 msgid "View user profile"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:184
+#: module/Photo/view/photo/album/index.phtml:196
 msgid "Zoom (z)"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:187
+#: module/Photo/view/photo/album/index.phtml:199
 msgid "The image"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:187
+#: module/Photo/view/photo/album/index.phtml:199
 msgid "could not be loaded."
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:198
+#: module/Photo/view/photo/album/index.phtml:210
 msgid "Share"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:209
+#: module/Photo/view/photo/album/index.phtml:221
 msgid "Copied URL!"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:217
+#: module/Photo/view/photo/album/index.phtml:229
 msgid "Download"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:259
-#: module/Photo/view/photo/album/index.phtml:281
+#: module/Photo/view/photo/album/index.phtml:271
+#: module/Photo/view/photo/album/index.phtml:295
 msgid "Vote for photo of the week"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:278
+#: module/Photo/view/photo/album/index.phtml:292
 msgid "Already voted!"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:295
+#: module/Photo/view/photo/album/index.phtml:309
 msgid "Voted!"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:307
+#: module/Photo/view/photo/album/index.phtml:321
 msgid "Could not vote, try again"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:318
+#: module/Photo/view/photo/album/index.phtml:332
 msgid "Cannot load metadata"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:335
+#: module/Photo/view/photo/album/index.phtml:349
 msgid "Cannot load tags"
 msgstr ""
 
@@ -3286,8 +3294,8 @@ msgid "Token"
 msgstr ""
 
 #: module/User/view/user/api-admin/index.phtml:23
-#: module/Activity/src/Controller/AdminController.php:269
-#: module/Activity/src/Controller/AdminController.php:399
+#: module/Activity/src/Controller/AdminController.php:281
+#: module/Activity/src/Controller/AdminController.php:411
 msgid "Remove"
 msgstr ""
 
@@ -3304,7 +3312,7 @@ msgid "Add a token"
 msgstr ""
 
 #: module/User/view/user/api-admin/add.phtml:33
-#: module/User/src/Form/ApiToken.php:35
+#: module/User/src/Form/ApiToken.php:38
 msgid "Create API token"
 msgstr ""
 
@@ -3322,7 +3330,7 @@ msgstr ""
 
 #: module/User/view/user/user/register.phtml:2
 #: module/User/view/user/user/register.phtml:23
-#: module/User/src/Form/Register.php:61
+#: module/User/src/Form/Register.php:64
 msgid "Register"
 msgstr ""
 
@@ -3340,7 +3348,7 @@ msgstr ""
 
 #: module/User/view/user/user/activate.phtml:2
 #: module/User/view/user/user/activate.phtml:23
-#: module/User/src/Form/Activate.php:49
+#: module/User/src/Form/Activate.php:52
 msgid "Activate"
 msgstr ""
 
@@ -3382,191 +3390,191 @@ msgstr ""
 msgid "Password changed successfully"
 msgstr ""
 
-#: module/Company/src/Controller/AdminController.php:77
+#: module/Company/src/Controller/AdminController.php:68
 msgid "You are not allowed to administer career settings"
 msgstr ""
 
-#: module/Company/src/Controller/AdminController.php:102
+#: module/Company/src/Controller/AdminController.php:93
 msgid "You are not allowed to create companies"
 msgstr ""
 
-#: module/Company/src/Controller/AdminController.php:143
+#: module/Company/src/Controller/AdminController.php:134
 msgid "You are not allowed to edit companies"
 msgstr ""
 
-#: module/Company/src/Controller/AdminController.php:205
-#: module/Company/src/Service/Company.php:771
+#: module/Company/src/Controller/AdminController.php:198
+#: module/Company/src/Service/Company.php:827
 msgid "You are not allowed to delete companies"
 msgstr ""
 
-#: module/Company/src/Controller/AdminController.php:228
+#: module/Company/src/Controller/AdminController.php:221
 msgid "You are not allowed to create packages"
 msgstr ""
 
-#: module/Company/src/Controller/AdminController.php:295
-#: module/Company/src/Service/Company.php:832
+#: module/Company/src/Controller/AdminController.php:288
+#: module/Company/src/Service/Company.php:888
 msgid "You are not allowed to edit packages"
 msgstr ""
 
-#: module/Company/src/Controller/AdminController.php:378
-#: module/Company/src/Service/Company.php:739
+#: module/Company/src/Controller/AdminController.php:371
+#: module/Company/src/Service/Company.php:795
 msgid "You are not allowed to delete packages"
 msgstr ""
 
-#: module/Company/src/Controller/AdminController.php:418
+#: module/Company/src/Controller/AdminController.php:411
 msgid "You are not allowed to create jobs"
 msgstr ""
 
-#: module/Company/src/Controller/AdminController.php:491
-#: module/Company/src/Service/Company.php:859
-#: module/Company/src/Service/Company.php:919
+#: module/Company/src/Controller/AdminController.php:484
+#: module/Company/src/Service/Company.php:915
+#: module/Company/src/Service/Company.php:977
 msgid "You are not allowed to edit jobs"
 msgstr ""
 
-#: module/Company/src/Controller/AdminController.php:560
-#: module/Company/src/Service/Company.php:755
+#: module/Company/src/Controller/AdminController.php:553
+#: module/Company/src/Service/Company.php:811
 msgid "You are not allowed to delete jobs"
 msgstr ""
 
-#: module/Company/src/Controller/AdminController.php:600
+#: module/Company/src/Controller/AdminController.php:593
 msgid "You are not allowed to create job categories"
 msgstr ""
 
-#: module/Company/src/Controller/AdminController.php:648
-#: module/Company/src/Service/Company.php:800
+#: module/Company/src/Controller/AdminController.php:641
+#: module/Company/src/Service/Company.php:856
 msgid "You are not allowed to edit job categories"
 msgstr ""
 
-#: module/Company/src/Controller/AdminController.php:686
+#: module/Company/src/Controller/AdminController.php:679
 msgid "You are not allowed to create job labels"
 msgstr ""
 
-#: module/Company/src/Controller/AdminController.php:733
-#: module/Company/src/Service/Company.php:816
+#: module/Company/src/Controller/AdminController.php:726
+#: module/Company/src/Service/Company.php:872
 msgid "You are not allowed to edit job labels"
 msgstr ""
 
-#: module/Company/src/Form/Job.php:83
+#: module/Company/src/Form/Job.php:93
 msgid "Category"
 msgstr ""
 
-#: module/Company/src/Form/Job.php:84
+#: module/Company/src/Form/Job.php:94
 msgid "Select a job category"
 msgstr ""
 
-#: module/Company/src/Form/Job.php:95 module/Company/src/Form/Company.php:87
-#: module/Company/src/Form/Package.php:68
+#: module/Company/src/Form/Job.php:105 module/Company/src/Form/Company.php:93
+#: module/Company/src/Form/Package.php:76
 msgid "Published"
 msgstr ""
 
-#: module/Company/src/Form/Job.php:117 module/Company/src/Form/Company.php:119
+#: module/Company/src/Form/Job.php:127 module/Company/src/Form/Company.php:125
 msgid "E-mail Address"
 msgstr ""
 
-#: module/Company/src/Form/Job.php:127 module/Company/src/Form/Company.php:129
+#: module/Company/src/Form/Job.php:137 module/Company/src/Form/Company.php:135
 msgid "Phone Number"
 msgstr ""
 
-#: module/Company/src/Form/Job.php:222 module/Company/src/Form/Job.php:232
+#: module/Company/src/Form/Job.php:232 module/Company/src/Form/Job.php:242
 msgid "Attachment"
 msgstr ""
 
-#: module/Company/src/Form/Job.php:288 module/Company/src/Form/Company.php:246
-#: module/Company/src/Form/JobCategory.php:212
+#: module/Company/src/Form/Job.php:298 module/Company/src/Form/Company.php:252
+#: module/Company/src/Form/JobCategory.php:218
 msgid "This slug is already taken"
 msgstr ""
 
-#: module/Company/src/Form/Job.php:297 module/Company/src/Form/Company.php:255
-#: module/Company/src/Form/JobCategory.php:221
+#: module/Company/src/Form/Job.php:307 module/Company/src/Form/Company.php:261
+#: module/Company/src/Form/JobCategory.php:227
 msgid "This slug contains invalid characters"
 msgstr ""
 
-#: module/Company/src/Form/Job.php:344 module/Company/src/Form/Company.php:323
+#: module/Company/src/Form/Job.php:354 module/Company/src/Form/Company.php:329
 msgid "E-mail address format is not valid"
 msgstr ""
 
-#: module/Company/src/Form/Company.php:77
+#: module/Company/src/Form/Company.php:83
 msgid "Logo"
 msgstr ""
 
-#: module/Company/src/Form/Company.php:109
+#: module/Company/src/Form/Company.php:115
 msgid "Address"
 msgstr ""
 
-#: module/Company/src/Form/Company.php:140
-#: module/Company/src/Form/Company.php:150
+#: module/Company/src/Form/Company.php:146
+#: module/Company/src/Form/Company.php:156
 msgid "Slogan"
 msgstr ""
 
-#: module/Company/src/Form/JobCategory.php:83
-#: module/Company/src/Form/JobCategory.php:93
+#: module/Company/src/Form/JobCategory.php:89
+#: module/Company/src/Form/JobCategory.php:99
 msgid "Name (Plural)"
 msgstr ""
 
-#: module/Company/src/Form/JobCategory.php:123
+#: module/Company/src/Form/JobCategory.php:129
 msgid "Hidden"
 msgstr ""
 
-#: module/Company/src/Form/Package.php:40
+#: module/Company/src/Form/Package.php:48
 msgid "Start Date"
 msgstr ""
 
-#: module/Company/src/Form/Package.php:54
+#: module/Company/src/Form/Package.php:62
 msgid "Expiration Date"
 msgstr ""
 
-#: module/Company/src/Form/Package.php:82
-#: module/Company/src/Form/Package.php:92
+#: module/Company/src/Form/Package.php:90
+#: module/Company/src/Form/Package.php:100
 msgid "Article"
 msgstr ""
 
-#: module/Company/src/Service/Company.php:182
+#: module/Company/src/Service/Company.php:196
 msgid "You are not allowed to view the banner"
 msgstr ""
 
-#: module/Company/src/Service/Company.php:192
+#: module/Company/src/Service/Company.php:209
 msgid "You are not allowed to view the featured company"
 msgstr ""
 
-#: module/Company/src/Service/Company.php:251
-#: module/Company/src/Service/Company.php:268
-#: module/Company/src/Service/Company.php:300
+#: module/Company/src/Service/Company.php:278
+#: module/Company/src/Service/Company.php:298
+#: module/Company/src/Service/Company.php:330
 msgid "You are not allowed to list the companies"
 msgstr ""
 
-#: module/Company/src/Service/Company.php:283
+#: module/Company/src/Service/Company.php:313
 msgid "You are not allowed to access the admin interface"
 msgstr ""
 
-#: module/Company/src/Service/Company.php:873
+#: module/Company/src/Service/Company.php:929
 msgid "You are not allowed to edit categories"
 msgstr ""
 
-#: module/Company/src/Service/Company.php:887
+#: module/Company/src/Service/Company.php:943
 msgid "You are not allowed to edit labels"
 msgstr ""
 
-#: module/Company/src/Service/Company.php:931
+#: module/Company/src/Service/Company.php:989
 msgid "You are not allowed to create a company"
 msgstr ""
 
-#: module/Company/src/Service/CompanyQuery.php:138
+#: module/Company/src/Service/CompanyQuery.php:145
 msgid "You are not allowed to list all job categories"
 msgstr ""
 
-#: module/Company/src/Service/CompanyQuery.php:146
+#: module/Company/src/Service/CompanyQuery.php:153
 msgid "You are not allowed to list job categories"
 msgstr ""
 
-#: module/Company/src/Service/CompanyQuery.php:186
+#: module/Company/src/Service/CompanyQuery.php:193
 msgid "You are not allowed to list all job labels"
 msgstr ""
 
-#: module/Company/src/Service/CompanyQuery.php:194
+#: module/Company/src/Service/CompanyQuery.php:201
 msgid "You are not allowed to list job labels"
 msgstr ""
 
-#: module/Activity/src/Controller/ActivityCalendarController.php:113
+#: module/Activity/src/Controller/ActivityCalendarController.php:120
 msgid "You are not allowed to create activity proposals"
 msgstr ""
 
@@ -3574,21 +3582,21 @@ msgstr ""
 msgid "You are not allowed to view the approval of this activity"
 msgstr ""
 
-#: module/Activity/src/Controller/AdminController.php:108
+#: module/Activity/src/Controller/AdminController.php:112
 msgid "You are not allowed to update this activity"
 msgstr ""
 
-#: module/Activity/src/Controller/AdminController.php:122
+#: module/Activity/src/Controller/AdminController.php:126
 msgid ""
 "Activities that have sign-up lists which are open or approved cannot be "
 "updated."
 msgstr ""
 
-#: module/Activity/src/Controller/AdminController.php:133
+#: module/Activity/src/Controller/AdminController.php:137
 msgid "This activity has already started/ended and can no longer be updated."
 msgstr ""
 
-#: module/Activity/src/Controller/AdminController.php:148
+#: module/Activity/src/Controller/AdminController.php:152
 msgid ""
 "You have successfully created an update proposal for the activity! If the "
 "activity was already approved, the proposal will be applied after it has "
@@ -3596,242 +3604,251 @@ msgid ""
 "to the activity."
 msgstr ""
 
-#: module/Activity/src/Controller/AdminController.php:187
+#: module/Activity/src/Controller/AdminController.php:191
 msgid "Update Activity"
 msgstr ""
 
-#: module/Activity/src/Controller/AdminController.php:232
 #: module/Activity/src/Controller/AdminController.php:244
+#: module/Activity/src/Controller/AdminController.php:256
 msgid "You are not allowed to view the participants of this activity"
-msgstr ""
-
-#: module/Activity/src/Controller/AdminController.php:306
-#: module/Activity/src/Controller/AdminController.php:392
-msgid "You are not allowed to use this form"
 msgstr ""
 
 #: module/Activity/src/Controller/AdminController.php:318
 #: module/Activity/src/Controller/AdminController.php:404
-#: module/Activity/src/Controller/ActivityController.php:290
-#: module/Activity/src/Controller/ActivityController.php:385
+msgid "You are not allowed to use this form"
+msgstr ""
+
+#: module/Activity/src/Controller/AdminController.php:330
+#: module/Activity/src/Controller/AdminController.php:416
+#: module/Activity/src/Controller/ActivityController.php:298
+#: module/Activity/src/Controller/ActivityController.php:393
 msgid "Invalid form"
 msgstr ""
 
-#: module/Activity/src/Controller/AdminController.php:332
+#: module/Activity/src/Controller/AdminController.php:344
 msgid "Successfully subscribed external participant"
 msgstr ""
 
-#: module/Activity/src/Controller/AdminController.php:338
-#: module/Activity/src/Controller/ActivityController.php:329
-#: module/Activity/src/Controller/ActivityController.php:420
+#: module/Activity/src/Controller/AdminController.php:350
+#: module/Activity/src/Controller/ActivityController.php:337
+#: module/Activity/src/Controller/ActivityController.php:428
 msgid "Use the form to subscribe"
 msgstr ""
 
-#: module/Activity/src/Controller/AdminController.php:416
+#: module/Activity/src/Controller/AdminController.php:428
 msgid "Successfully removed external participant"
 msgstr ""
 
-#: module/Activity/src/Controller/AdminController.php:427
+#: module/Activity/src/Controller/AdminController.php:439
 msgid "Use the form to unsubscribe an external participant"
 msgstr ""
 
-#: module/Activity/src/Controller/AdminController.php:444
+#: module/Activity/src/Controller/AdminController.php:456
 msgid "You are not allowed to administer activities"
 msgstr ""
 
-#: module/Activity/src/Controller/ApiController.php:57
+#: module/Activity/src/Controller/ApiController.php:47
 msgid "You are not allowed to access the activities through the API"
 msgstr ""
 
-#: module/Activity/src/Controller/ActivityController.php:299
-#: module/Activity/src/Controller/ActivityController.php:394
+#: module/Activity/src/Controller/ActivityController.php:307
+#: module/Activity/src/Controller/ActivityController.php:402
 msgid "You need to log in to subscribe"
 msgstr ""
 
-#: module/Activity/src/Controller/ActivityController.php:309
-#: module/Activity/src/Controller/ActivityController.php:404
+#: module/Activity/src/Controller/ActivityController.php:317
+#: module/Activity/src/Controller/ActivityController.php:412
 msgid "You cannot subscribe to this activity at this moment in time"
 msgstr ""
 
-#: module/Activity/src/Controller/ActivityController.php:318
+#: module/Activity/src/Controller/ActivityController.php:326
 msgid "You have already been subscribed for this activity"
 msgstr ""
 
-#: module/Activity/src/Controller/ActivityController.php:324
+#: module/Activity/src/Controller/ActivityController.php:332
 msgid "Successfully subscribed"
 msgstr ""
 
-#: module/Activity/src/Controller/ActivityController.php:415
+#: module/Activity/src/Controller/ActivityController.php:423
 msgid "Successfully subscribed as external participant"
 msgstr ""
 
-#: module/Activity/src/Controller/ActivityController.php:446
+#: module/Activity/src/Controller/ActivityController.php:454
 msgid "Wrong form"
 msgstr ""
 
-#: module/Activity/src/Controller/ActivityController.php:453
+#: module/Activity/src/Controller/ActivityController.php:461
 msgid "You have to be logged in to subscribe for this activity"
 msgstr ""
 
-#: module/Activity/src/Controller/ActivityController.php:464
+#: module/Activity/src/Controller/ActivityController.php:472
 msgid "You cannot unsubscribe from this activity at this moment in time"
 msgstr ""
 
-#: module/Activity/src/Controller/ActivityController.php:474
+#: module/Activity/src/Controller/ActivityController.php:482
 msgid "You are not subscribed to this activity!"
 msgstr ""
 
-#: module/Activity/src/Controller/ActivityController.php:480
+#: module/Activity/src/Controller/ActivityController.php:488
 msgid "Successfully unsubscribed"
 msgstr ""
 
-#: module/Activity/src/Controller/ActivityController.php:485
+#: module/Activity/src/Controller/ActivityController.php:493
 msgid "Use the form to unsubscribe"
 msgstr ""
 
-#: module/Activity/src/Controller/AdminCategoryController.php:59
+#: module/Activity/src/Controller/AdminCategoryController.php:70
+#: module/Activity/src/Service/ActivityCategory.php:112
+msgid "You are not allowed to create an activity category"
+msgstr ""
+
+#: module/Activity/src/Controller/AdminCategoryController.php:82
 msgid "The activity category was created successfully!"
 msgstr ""
 
-#: module/Activity/src/Controller/AdminCategoryController.php:68
-#: module/Activity/src/Form/ActivityCategory.php:44
+#: module/Activity/src/Controller/AdminCategoryController.php:92
+#: module/Activity/src/Form/ActivityCategory.php:47
 msgid "Create Activity Category"
 msgstr ""
 
-#: module/Activity/src/Controller/AdminCategoryController.php:124
+#: module/Activity/src/Controller/AdminCategoryController.php:146
+msgid "You are not allowed to edit an activity category"
+msgstr ""
+
+#: module/Activity/src/Controller/AdminCategoryController.php:165
 msgid "The activity category was successfully updated!"
 msgstr ""
 
-#: module/Activity/src/Controller/AdminCategoryController.php:140
+#: module/Activity/src/Controller/AdminCategoryController.php:182
 msgid "Update Activity Category"
 msgstr ""
 
-#: module/Activity/src/Controller/AdminOptionController.php:72
+#: module/Activity/src/Controller/AdminOptionController.php:71
 msgid "You are not allowed to administer option calendar periods"
 msgstr ""
 
-#: module/Activity/src/Controller/AdminOptionController.php:84
+#: module/Activity/src/Controller/AdminOptionController.php:83
 msgid "You are not allowed to create option calendar periods"
 msgstr ""
 
-#: module/Activity/src/Controller/AdminOptionController.php:98
+#: module/Activity/src/Controller/AdminOptionController.php:97
 msgid "Option planning period created successfully."
 msgstr ""
 
-#: module/Activity/src/Controller/AdminOptionController.php:127
+#: module/Activity/src/Controller/AdminOptionController.php:126
 msgid "You are not allowed to delete option calendar periods"
 msgstr ""
 
-#: module/Activity/src/Controller/AdminOptionController.php:137
+#: module/Activity/src/Controller/AdminOptionController.php:136
 msgid "Option planning period removed."
 msgstr ""
 
-#: module/Activity/src/Controller/AdminOptionController.php:147
+#: module/Activity/src/Controller/AdminOptionController.php:146
 msgid "You are not allowed to edit option calendar periods"
 msgstr ""
 
-#: module/Activity/src/Controller/AdminOptionController.php:158
+#: module/Activity/src/Controller/AdminOptionController.php:157
 msgid "This option planning period cannot be edited."
 msgstr ""
 
-#: module/Activity/src/Controller/AdminOptionController.php:171
+#: module/Activity/src/Controller/AdminOptionController.php:170
 msgid "Option planning period has been updated."
 msgstr ""
 
-#: module/Activity/src/Controller/AdminOptionController.php:191
+#: module/Activity/src/Controller/AdminOptionController.php:190
 msgid "Edit Option Period"
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarProposal.php:72
+#: module/Activity/src/Form/ActivityCalendarProposal.php:75
 msgid "Select an option"
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarProposal.php:140
+#: module/Activity/src/Form/ActivityCalendarProposal.php:143
 msgid "The activity does now have an acceptable amount of options"
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarProposal.php:151
+#: module/Activity/src/Form/ActivityCalendarProposal.php:154
 msgid "The options for this proposal do not fit in the valid range."
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarPeriod.php:38
+#: module/Activity/src/Form/ActivityCalendarPeriod.php:41
 msgid "Start date and time of planning period"
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarPeriod.php:49
+#: module/Activity/src/Form/ActivityCalendarPeriod.php:52
 msgid "End date and time of planning period"
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarPeriod.php:60
+#: module/Activity/src/Form/ActivityCalendarPeriod.php:63
 msgid "Start date and time of option period"
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarPeriod.php:71
+#: module/Activity/src/Form/ActivityCalendarPeriod.php:74
 msgid "End date and time of option period"
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarPeriod.php:97
+#: module/Activity/src/Form/ActivityCalendarPeriod.php:100
 msgid "Create Option Period"
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarPeriod.php:133
+#: module/Activity/src/Form/ActivityCalendarPeriod.php:136
 msgid "The planning period must end after it starts."
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarPeriod.php:154
+#: module/Activity/src/Form/ActivityCalendarPeriod.php:157
 msgid "The option period must start after the planning period ends."
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarPeriod.php:175
+#: module/Activity/src/Form/ActivityCalendarPeriod.php:178
 msgid "The option period must end after it starts."
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:42
+#: module/Activity/src/Form/ActivityCalendarOption.php:44
 msgid "Morning"
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:43
+#: module/Activity/src/Form/ActivityCalendarOption.php:45
 msgid "Lunch break"
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:44
+#: module/Activity/src/Form/ActivityCalendarOption.php:46
 msgid "Afternoon"
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:45
+#: module/Activity/src/Form/ActivityCalendarOption.php:47
 msgid "Evening"
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:46
+#: module/Activity/src/Form/ActivityCalendarOption.php:48
 msgid "Day"
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:47
+#: module/Activity/src/Form/ActivityCalendarOption.php:49
 msgid "Multiple days"
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:76
+#: module/Activity/src/Form/ActivityCalendarOption.php:78
 msgid "Select a type"
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:99
+#: module/Activity/src/Form/ActivityCalendarOption.php:101
 msgid "The activity must start before it ends"
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:110
+#: module/Activity/src/Form/ActivityCalendarOption.php:112
 msgid "The activity must start after today"
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:121
+#: module/Activity/src/Form/ActivityCalendarOption.php:123
 msgid "The activity must be within the given period"
 msgstr ""
 
-#: module/Activity/src/Form/SignupListField.php:95
-#: module/Activity/src/Form/SignupListField.php:108
+#: module/Activity/src/Form/SignupListField.php:98
+#: module/Activity/src/Form/SignupListField.php:111
 msgid "Option 1, Option 2, ..."
 msgstr ""
 
-#: module/Activity/src/Form/SignupList.php:193
+#: module/Activity/src/Form/SignupList.php:202
 msgid ""
 "The sign-up list opening date and time must be before the sign-up list "
 "closes."
@@ -3845,393 +3862,373 @@ msgstr ""
 msgid "No Company"
 msgstr ""
 
-#: module/Activity/src/Form/Activity.php:288
-#: module/Activity/src/Form/Activity.php:300
-#: module/Activity/src/Form/Activity.php:314
-#: module/Activity/src/Form/Activity.php:326
-#: module/Activity/src/Form/Activity.php:338
-#: module/Activity/src/Form/Activity.php:350
+#: module/Activity/src/Form/Activity.php:295
+#: module/Activity/src/Form/Activity.php:307
+#: module/Activity/src/Form/Activity.php:321
+#: module/Activity/src/Form/Activity.php:333
+#: module/Activity/src/Form/Activity.php:345
+#: module/Activity/src/Form/Activity.php:357
 msgid "Value is required and can't be empty"
 msgstr ""
 
-#: module/Activity/src/Form/Activity.php:388
+#: module/Activity/src/Form/Activity.php:395
 msgid "The activity must start before it ends."
 msgstr ""
 
-#: module/Activity/src/Service/Signup.php:84
-#: module/Activity/src/Service/Signup.php:232
+#: module/Activity/src/Service/Signup.php:98
+#: module/Activity/src/Service/Signup.php:212
 msgid "You need to be logged in to sign up for this activity"
 msgstr ""
 
-#: module/Activity/src/Service/Signup.php:98
+#: module/Activity/src/Service/Signup.php:117
 msgid "You are not allowed to use the external admin signup"
 msgstr ""
 
-#: module/Activity/src/Service/Signup.php:112
+#: module/Activity/src/Service/Signup.php:136
 msgid "You are not allowed to use the external signup"
 msgstr ""
 
-#: module/Activity/src/Service/Signup.php:130
-#: module/Activity/src/Service/Signup.php:162
+#: module/Activity/src/Service/Signup.php:156
 msgid "You are not allowed to view the sign up data"
 msgstr ""
 
-#: module/Activity/src/Service/Signup.php:195
-#: module/Activity/src/Service/ActivityQuery.php:130
-#: module/Activity/src/Service/ActivityQuery.php:145
-#: module/Activity/src/Service/ActivityQuery.php:309
+#: module/Activity/src/Service/Signup.php:193
+#: module/Activity/src/Service/ActivityQuery.php:144
+#: module/Activity/src/Service/ActivityQuery.php:310
 msgid "You are not allowed to view the activities"
 msgstr ""
 
-#: module/Activity/src/Service/Signup.php:210
-msgid "You are not allowed to view activities which you signed up for"
-msgstr ""
-
-#: module/Activity/src/Service/Signup.php:296
+#: module/Activity/src/Service/Signup.php:292
 msgid "You are not allowed to subscribe an external user to this sign-up list"
 msgstr ""
 
-#: module/Activity/src/Service/Signup.php:331
+#: module/Activity/src/Service/Signup.php:345
 msgid "You are not allowed to subscribe to this sign-up list"
 msgstr ""
 
-#: module/Activity/src/Service/Signup.php:345
+#: module/Activity/src/Service/Signup.php:364
 msgid "You need to be logged in to sign off for this activity"
 msgstr ""
 
-#: module/Activity/src/Service/Signup.php:380
+#: module/Activity/src/Service/Signup.php:413
 msgid "You are not allowed to remove external signups for this activity"
 msgstr ""
 
-#: module/Activity/src/Service/ActivityQuery.php:114
+#: module/Activity/src/Service/ActivityQuery.php:128
 msgid "You are not allowed to view this activity"
 msgstr ""
 
-#: module/Activity/src/Service/ActivityQuery.php:160
+#: module/Activity/src/Service/ActivityQuery.php:159
 msgid "You are not allowed to view unapproved activities"
 msgstr ""
 
-#: module/Activity/src/Service/ActivityQuery.php:175
+#: module/Activity/src/Service/ActivityQuery.php:174
 msgid "You are not allowed to view activities"
 msgstr ""
 
-#: module/Activity/src/Service/ActivityQuery.php:203
+#: module/Activity/src/Service/ActivityQuery.php:204
 msgid "You are not allowed to view the disapproved activities"
 msgstr ""
 
-#: module/Activity/src/Service/ActivityQuery.php:221
+#: module/Activity/src/Service/ActivityQuery.php:222
 msgid "You are not allowed to view upcoming the activities"
 msgstr ""
 
-#: module/Activity/src/Service/ActivityQuery.php:229
+#: module/Activity/src/Service/ActivityQuery.php:230
 msgid ""
 "You are not allowed to view upcoming activities coupled to a member account"
 msgstr ""
 
-#: module/Activity/src/Service/ActivityCategory.php:64
-#: module/Activity/src/Service/ActivityCategory.php:80
+#: module/Activity/src/Service/ActivityCategory.php:65
+#: module/Activity/src/Service/ActivityCategory.php:81
 msgid "You are not allowed to view activity categories"
 msgstr ""
 
-#: module/Activity/src/Service/ActivityCategory.php:91
-#: module/Activity/src/Service/ActivityCategory.php:121
-msgid "You are not allowed to create an activity category"
-msgstr ""
-
-#: module/Activity/src/Service/ActivityCategory.php:132
-msgid "You are not allowed to edit an activity category"
-msgstr ""
-
-#: module/Activity/src/Service/ActivityCategory.php:158
+#: module/Activity/src/Service/ActivityCategory.php:145
 msgid "You are not allowed to delete an activity category"
 msgstr ""
 
-#: module/Activity/src/Service/ActivityCalendar.php:147
-msgid "Not allowed to create activity options."
-msgstr ""
-
-#: module/Activity/src/Service/ActivityCalendar.php:224
+#: module/Activity/src/Service/ActivityCalendar.php:240
 msgid "You are not allowed to approve this option"
 msgstr ""
 
-#: module/Activity/src/Service/ActivityCalendar.php:260
+#: module/Activity/src/Service/ActivityCalendar.php:288
 msgid "You are not allowed to delete this option"
 msgstr ""
 
-#: module/Activity/src/Service/SignupListQuery.php:41
-#: module/Activity/src/Service/SignupListQuery.php:50
+#: module/Activity/src/Service/SignupListQuery.php:53
 msgid "You are not allowed to view sign-up lists"
 msgstr ""
 
-#: module/Activity/src/Service/Activity.php:88
-#: module/Activity/src/Service/Activity.php:137
+#: module/Activity/src/Service/Activity.php:114
+#: module/Activity/src/Service/Activity.php:155
 msgid "You are not allowed to create an activity"
 msgstr ""
 
-#: module/Activity/src/Service/Activity.php:177
+#: module/Activity/src/Service/Activity.php:195
 msgid "You are not allowed to create an activity for this organ"
 msgstr ""
 
-#: module/Activity/src/Service/Activity.php:729
-#: module/Activity/src/Service/Activity.php:747
-#: module/Activity/src/Service/Activity.php:765
+#: module/Activity/src/Service/Activity.php:772
+#: module/Activity/src/Service/Activity.php:790
+#: module/Activity/src/Service/Activity.php:808
 msgid "You are not allowed to change the status of the activity"
 msgstr ""
 
-#: module/Education/src/Form/TempUpload.php:25
+#: module/Education/src/Form/TempUpload.php:28
 msgid "Exam to upload"
 msgstr ""
 
-#: module/Education/src/Form/Fieldset/Exam.php:55
+#: module/Education/src/Form/Fieldset/Exam.php:61
 msgid "Exam date"
 msgstr ""
 
-#: module/Education/src/Form/Fieldset/Exam.php:68
+#: module/Education/src/Form/Fieldset/Exam.php:74
 msgid "Final examination"
 msgstr ""
 
-#: module/Education/src/Form/Fieldset/Exam.php:69
+#: module/Education/src/Form/Fieldset/Exam.php:75
 msgid "Intermediate test"
 msgstr ""
 
-#: module/Education/src/Form/Fieldset/Exam.php:70
+#: module/Education/src/Form/Fieldset/Exam.php:76
 msgid "Exam answers"
 msgstr ""
 
-#: module/Education/src/Form/Fieldset/Exam.php:82
-#: module/Education/src/Form/Fieldset/Summary.php:76
-#: module/Education/src/Form/SummaryUpload.php:70
+#: module/Education/src/Form/Fieldset/Exam.php:88
+#: module/Education/src/Form/Fieldset/Summary.php:82
+#: module/Education/src/Form/SummaryUpload.php:73
 msgid "Language"
 msgstr ""
 
-#: module/Education/src/Form/Fieldset/Summary.php:55
-#: module/Education/src/Form/SummaryUpload.php:49
+#: module/Education/src/Form/Fieldset/Summary.php:61
+#: module/Education/src/Form/SummaryUpload.php:52
 msgid "Summary date"
 msgstr ""
 
-#: module/Education/src/Form/Fieldset/Summary.php:66
-#: module/Education/src/Form/SummaryUpload.php:60
-#: module/Frontpage/src/Form/PollComment.php:26
+#: module/Education/src/Form/Fieldset/Summary.php:72
+#: module/Education/src/Form/SummaryUpload.php:63
+#: module/Frontpage/src/Form/PollComment.php:29
 msgid "Author"
 msgstr ""
 
-#: module/Education/src/Form/AddCourse.php:23
+#: module/Education/src/Form/AddCourse.php:26
 msgid "Quartile 1"
 msgstr ""
 
-#: module/Education/src/Form/AddCourse.php:24
+#: module/Education/src/Form/AddCourse.php:27
 msgid "Quartile 2"
 msgstr ""
 
-#: module/Education/src/Form/AddCourse.php:25
+#: module/Education/src/Form/AddCourse.php:28
 msgid "Quartile 3"
 msgstr ""
 
-#: module/Education/src/Form/AddCourse.php:26
+#: module/Education/src/Form/AddCourse.php:29
 msgid "Quartile 4"
 msgstr ""
 
-#: module/Education/src/Form/AddCourse.php:27
+#: module/Education/src/Form/AddCourse.php:30
 msgid "Interim"
 msgstr ""
 
-#: module/Education/src/Form/AddCourse.php:46
+#: module/Education/src/Form/AddCourse.php:49
 msgid "Parent course code"
 msgstr ""
 
-#: module/Education/src/Form/AddCourse.php:64
+#: module/Education/src/Form/AddCourse.php:67
 msgid "URL"
 msgstr ""
 
-#: module/Education/src/Form/AddCourse.php:83
+#: module/Education/src/Form/AddCourse.php:86
 msgid "Quartile"
 msgstr ""
 
-#: module/Education/src/Form/AddCourse.php:94
+#: module/Education/src/Form/AddCourse.php:97
 msgid "Add course"
 msgstr ""
 
-#: module/Education/src/Form/SummaryUpload.php:84
+#: module/Education/src/Form/SummaryUpload.php:87
 msgid "Summary to upload"
 msgstr ""
 
-#: module/Education/src/Form/Bulk.php:38
+#: module/Education/src/Form/Bulk.php:46
 msgid "Finalize uploads"
 msgstr ""
 
-#: module/Education/src/Service/Exam.php:170
+#: module/Education/src/Service/Exam.php:151
 msgid "You are not allowed to download exams"
 msgstr ""
 
-#: module/Education/src/Service/Exam.php:208
+#: module/Education/src/Service/Exam.php:195
 msgid "Course doesn't exist"
 msgstr ""
 
-#: module/Education/src/Service/Exam.php:400
+#: module/Education/src/Service/Exam.php:398
 msgid "You are not allowed to delete exams"
 msgstr ""
 
-#: module/Education/src/Service/Exam.php:419
-#: module/Education/src/Service/Exam.php:544
+#: module/Education/src/Service/Exam.php:417
+#: module/Education/src/Service/Exam.php:542
 msgid "You are not allowed to upload exams"
 msgstr ""
 
-#: module/Education/src/Service/Exam.php:559
+#: module/Education/src/Service/Exam.php:557
 msgid "You are not allowed to add courses"
 msgstr ""
 
-#: module/Decision/src/Controller/DecisionController.php:175
-msgid "You are not allowed to browse files."
-msgstr ""
-
-#: module/Decision/src/Form/OrganInformation.php:54
-msgid "Short dutch description"
-msgstr ""
-
-#: module/Decision/src/Form/OrganInformation.php:64
-msgid "Short english description"
-msgstr ""
-
-#: module/Decision/src/Form/OrganInformation.php:74
-msgid "Long dutch description"
-msgstr ""
-
-#: module/Decision/src/Form/OrganInformation.php:84
-msgid "Long english description"
-msgstr ""
-
-#: module/Decision/src/Form/OrganInformation.php:94
-msgid "Thumbnail photo to upload"
-msgstr ""
-
-#: module/Decision/src/Form/OrganInformation.php:104
-msgid "Cover photo to upload"
-msgstr ""
-
-#: module/Decision/src/Form/Notes.php:38
-msgid "Choose a meeting"
-msgstr ""
-
-#: module/Decision/src/Form/Notes.php:49
-msgid "Notes to upload"
-msgstr ""
-
-#: module/Decision/src/Form/Notes.php:96
-msgid "There already are notes for this meeting"
-msgstr ""
-
-#: module/Decision/src/Form/ReorderDocument.php:49
-msgid "Move up"
-msgstr ""
-
-#: module/Decision/src/Form/ReorderDocument.php:53
-msgid "Move down"
-msgstr ""
-
-#: module/Decision/src/Form/Document.php:41
-msgid "Document name"
-msgstr ""
-
-#: module/Decision/src/Form/Document.php:51
-msgid "Document to upload"
-msgstr ""
-
-#: module/Decision/src/Form/Document.php:61
-msgid "Upload document"
-msgstr ""
-
-#: module/Decision/src/Service/Organ.php:109
-msgid "Not allowed to view the list of organs"
-msgstr ""
-
-#: module/Decision/src/Service/Organ.php:125
-msgid "Not allowed to view organ information"
-msgstr ""
-
-#: module/Decision/src/Service/Organ.php:140
-msgid "You are not allowed to edit organ information"
-msgstr ""
-
-#: module/Decision/src/Service/Organ.php:368
-msgid "You are not allowed to edit this organ's information"
-msgstr ""
-
-#: module/Decision/src/Service/Member.php:67
-#: module/Decision/src/Service/MemberInfo.php:69
-msgid "You are not allowed to view members."
-msgstr ""
-
-#: module/Decision/src/Service/Member.php:86
-msgid "You are not allowed to view the list of today's birthdays."
-msgstr ""
-
-#: module/Decision/src/Service/Member.php:92
-msgid "You are not allowed to view the list of birthdays."
-msgstr ""
-
-#: module/Decision/src/Service/Member.php:121
-msgid "Name must be at least "
-msgstr ""
-
-#: module/Decision/src/Service/Member.php:126
-msgid "Not allowed to search for members."
-msgstr ""
-
-#: module/Decision/src/Service/MemberInfo.php:67
-msgid "You are not allowed to view membership info."
-msgstr ""
-
-#: module/Decision/src/Service/Decision.php:159
-#: module/Decision/src/Service/Decision.php:176
-#: module/Decision/src/Service/Decision.php:190
-msgid "You are not allowed to list meetings."
-msgstr ""
-
-#: module/Decision/src/Service/Decision.php:208
-msgid "You are not allowed to view meetings."
-msgstr ""
-
-#: module/Decision/src/Service/Decision.php:260
-msgid "You are not allowed to view meeting documents."
-msgstr ""
-
-#: module/Decision/src/Service/Decision.php:285
-msgid "You are not allowed to view meeting notes."
-msgstr ""
-
-#: module/Decision/src/Service/Decision.php:366
-msgid "You are not allowed to delete meeting documents."
-msgstr ""
-
-#: module/Decision/src/Service/Decision.php:445
+#: module/Decision/src/Controller/DecisionController.php:132
 msgid "You are not allowed to search decisions."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:472
+#: module/Decision/src/Controller/DecisionController.php:205
+msgid "You are not allowed to browse files."
+msgstr ""
+
+#: module/Decision/src/Form/OrganInformation.php:57
+msgid "Short dutch description"
+msgstr ""
+
+#: module/Decision/src/Form/OrganInformation.php:67
+msgid "Short english description"
+msgstr ""
+
+#: module/Decision/src/Form/OrganInformation.php:77
+msgid "Long dutch description"
+msgstr ""
+
+#: module/Decision/src/Form/OrganInformation.php:87
+msgid "Long english description"
+msgstr ""
+
+#: module/Decision/src/Form/OrganInformation.php:97
+msgid "Thumbnail photo to upload"
+msgstr ""
+
+#: module/Decision/src/Form/OrganInformation.php:107
+msgid "Cover photo to upload"
+msgstr ""
+
+#: module/Decision/src/Form/Notes.php:41
+msgid "Choose a meeting"
+msgstr ""
+
+#: module/Decision/src/Form/Notes.php:52
+msgid "Notes to upload"
+msgstr ""
+
+#: module/Decision/src/Form/Notes.php:99
+msgid "There already are notes for this meeting"
+msgstr ""
+
+#: module/Decision/src/Form/ReorderDocument.php:55
+msgid "Move up"
+msgstr ""
+
+#: module/Decision/src/Form/ReorderDocument.php:59
+msgid "Move down"
+msgstr ""
+
+#: module/Decision/src/Form/Document.php:44
+msgid "Document name"
+msgstr ""
+
+#: module/Decision/src/Form/Document.php:54
+msgid "Document to upload"
+msgstr ""
+
+#: module/Decision/src/Form/Document.php:64
+msgid "Upload document"
+msgstr ""
+
+#: module/Decision/src/Service/Organ.php:120
+msgid "Not allowed to view the list of organs"
+msgstr ""
+
+#: module/Decision/src/Service/Organ.php:136
+msgid "Not allowed to view organ information"
+msgstr ""
+
+#: module/Decision/src/Service/Organ.php:151
+msgid "You are not allowed to edit organ information"
+msgstr ""
+
+#: module/Decision/src/Service/Organ.php:384
+msgid "You are not allowed to edit this organ's information"
+msgstr ""
+
+#: module/Decision/src/Service/Member.php:80
+#: module/Decision/src/Service/MemberInfo.php:77
+msgid "You are not allowed to view members."
+msgstr ""
+
+#: module/Decision/src/Service/Member.php:99
+msgid "You are not allowed to view the list of today's birthdays."
+msgstr ""
+
+#: module/Decision/src/Service/Member.php:105
+msgid "You are not allowed to view the list of birthdays."
+msgstr ""
+
+#: module/Decision/src/Service/Member.php:136
+msgid "Name must be at least "
+msgstr ""
+
+#: module/Decision/src/Service/Member.php:141
+msgid "Not allowed to search for members."
+msgstr ""
+
+#: module/Decision/src/Service/MemberInfo.php:75
+msgid "You are not allowed to view membership info."
+msgstr ""
+
+#: module/Decision/src/Service/Decision.php:174
+#: module/Decision/src/Service/Decision.php:193
+#: module/Decision/src/Service/Decision.php:207
+msgid "You are not allowed to list meetings."
+msgstr ""
+
+#: module/Decision/src/Service/Decision.php:227
+msgid "You are not allowed to view meetings."
+msgstr ""
+
+#: module/Decision/src/Service/Decision.php:279
+msgid "You are not allowed to view meeting documents."
+msgstr ""
+
+#: module/Decision/src/Service/Decision.php:300
+msgid "You are not allowed to view meeting notes."
+msgstr ""
+
+#: module/Decision/src/Service/Decision.php:381
+msgid "You are not allowed to delete meeting documents."
+msgstr ""
+
+#: module/Decision/src/Service/Decision.php:473
 msgid "You are not allowed to view all authorizations."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:489
+#: module/Decision/src/Service/Decision.php:490
 msgid "You are not allowed to view authorizations."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:556
+#: module/Decision/src/Service/Decision.php:557
 msgid "You are not allowed to upload notes."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:571
+#: module/Decision/src/Service/Decision.php:572
 msgid "You are not allowed to upload meeting documents."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:608
+#: module/Decision/src/Service/Decision.php:609
 msgid "You are not authorize people."
 msgstr ""
 
-#: module/Application/src/Service/FileStorage.php:77
+#: module/Application/src/Service/FileStorage.php:85
 msgid "An unknown error occurred during uploading (%i)"
 msgstr ""
 
-#: module/Application/src/Service/Infimum.php:78
+#: module/Application/src/Service/Infimum.php:85
 msgid "Unable to retrieve infimum."
 msgstr ""
 
@@ -4239,82 +4236,82 @@ msgstr ""
 msgid "You are not allowed to view infima"
 msgstr ""
 
-#: module/Frontpage/src/Controller/PollController.php:124
+#: module/Frontpage/src/Controller/PollController.php:128
 msgid "You are not allowed to create comments on this poll"
 msgstr ""
 
-#: module/Frontpage/src/Controller/NewsAdminController.php:70
+#: module/Frontpage/src/Controller/NewsAdminController.php:75
 msgid "You are not allowed to create news items"
 msgstr ""
 
-#: module/Frontpage/src/Controller/NewsAdminController.php:105
+#: module/Frontpage/src/Controller/NewsAdminController.php:110
 msgid "You are not allowed to edit news items"
 msgstr ""
 
-#: module/Frontpage/src/Controller/NewsAdminController.php:148
+#: module/Frontpage/src/Controller/NewsAdminController.php:153
 msgid "You are not allowed to delete news items"
 msgstr ""
 
-#: module/Frontpage/src/Form/Page.php:51
-#: module/Frontpage/src/Form/NewsItem.php:27
+#: module/Frontpage/src/Form/Page.php:54
+#: module/Frontpage/src/Form/NewsItem.php:30
 msgid "Dutch title"
 msgstr ""
 
-#: module/Frontpage/src/Form/Page.php:61
-#: module/Frontpage/src/Form/NewsItem.php:37
+#: module/Frontpage/src/Form/Page.php:64
+#: module/Frontpage/src/Form/NewsItem.php:40
 msgid "English title"
 msgstr ""
 
-#: module/Frontpage/src/Form/Page.php:91
+#: module/Frontpage/src/Form/Page.php:94
 msgid "Required role"
 msgstr ""
 
-#: module/Frontpage/src/Form/PollComment.php:36
+#: module/Frontpage/src/Form/PollComment.php:39
 msgid "Content"
 msgstr ""
 
-#: module/Frontpage/src/Form/PollComment.php:46
+#: module/Frontpage/src/Form/PollComment.php:49
 msgid "Comment"
 msgstr ""
 
-#: module/Frontpage/src/Form/PollApproval.php:25
+#: module/Frontpage/src/Form/PollApproval.php:28
 msgid "Expiration date for the poll (YYYY-MM-DD)"
 msgstr ""
 
-#: module/Frontpage/src/Service/News.php:71
+#: module/Frontpage/src/Service/News.php:77
 msgid "You are not allowed to list all news items."
 msgstr ""
 
-#: module/Frontpage/src/Service/Page.php:95
+#: module/Frontpage/src/Service/Page.php:106
 msgid "You are not allowed to view this page."
 msgstr ""
 
-#: module/Frontpage/src/Service/Page.php:144
+#: module/Frontpage/src/Service/Page.php:155
 msgid "You are not allowed to view the list of pages."
 msgstr ""
 
-#: module/Frontpage/src/Service/Page.php:232
+#: module/Frontpage/src/Service/Page.php:246
 msgid "You are not allowed to edit pages."
 msgstr ""
 
-#: module/Frontpage/src/Service/Page.php:289
-#: module/Photo/src/Service/Admin.php:227
+#: module/Frontpage/src/Service/Page.php:300
+#: module/Photo/src/Service/Admin.php:210
 msgid "The uploaded file does not have a valid extension"
 msgstr ""
 
-#: module/Frontpage/src/Service/Page.php:293
+#: module/Frontpage/src/Service/Page.php:304
 msgid "The uploaded file is not a valid image"
 msgstr ""
 
-#: module/Frontpage/src/Service/Page.php:308
+#: module/Frontpage/src/Service/Page.php:319
 msgid "You are not allowed to create new pages."
 msgstr ""
 
-#: module/Frontpage/src/Service/Poll.php:112
+#: module/Frontpage/src/Service/Poll.php:103
 msgid "You are not allowed to view unapproved polls"
 msgstr ""
 
-#: module/Frontpage/src/Service/Poll.php:237
+#: module/Frontpage/src/Service/Poll.php:228
 msgid "You are not allowed to vote on this poll."
 msgstr ""
 
@@ -4326,216 +4323,208 @@ msgstr ""
 msgid "You are not allowed to delete polls"
 msgstr ""
 
-#: module/Frontpage/src/Service/Poll.php:447
+#: module/Frontpage/src/Service/Poll.php:449
 msgid "You are not allowed to approve polls"
 msgstr ""
 
-#: module/Photo/src/Form/EditAlbum.php:47
+#: module/Photo/src/Form/EditAlbum.php:51
 msgid "End date"
 msgstr ""
 
-#: module/Photo/src/Form/CreateAlbum.php:35
+#: module/Photo/src/Form/CreateAlbum.php:38
 msgid "Create"
 msgstr ""
 
-#: module/Photo/src/Service/Photo.php:123
-#: module/Photo/src/Service/Photo.php:163
-#: module/Photo/src/Service/Photo.php:203
-#: module/Photo/src/Service/Photo.php:255
-#: module/Photo/src/Service/Photo.php:272
+#: module/Photo/src/Service/Photo.php:138
+#: module/Photo/src/Service/Photo.php:178
+#: module/Photo/src/Service/Photo.php:220
+#: module/Photo/src/Service/Photo.php:271
+#: module/Photo/src/Service/Photo.php:287
 msgid "Not allowed to view photos"
 msgstr ""
 
-#: module/Photo/src/Service/Photo.php:143
+#: module/Photo/src/Service/Photo.php:158
 msgid "Not allowed to download photos"
 msgstr ""
 
-#: module/Photo/src/Service/Photo.php:290
+#: module/Photo/src/Service/Photo.php:305
 msgid "Not allowed to delete photos."
 msgstr ""
 
-#: module/Photo/src/Service/Photo.php:638
+#: module/Photo/src/Service/Photo.php:660
 msgid "Not allowed to view previous photos of the week"
 msgstr ""
 
-#: module/Photo/src/Service/Photo.php:688
+#: module/Photo/src/Service/Photo.php:712
 msgid "Not allowed to add tags."
 msgstr ""
 
-#: module/Photo/src/Service/Photo.php:717
-#: module/Photo/src/Service/Photo.php:778
+#: module/Photo/src/Service/Photo.php:743
+#: module/Photo/src/Service/Photo.php:809
 msgid "Not allowed to view tags."
 msgstr ""
 
-#: module/Photo/src/Service/Photo.php:753
+#: module/Photo/src/Service/Photo.php:784
 msgid "Not allowed to remove tags."
 msgstr ""
 
-#: module/Photo/src/Service/Admin.php:90
+#: module/Photo/src/Service/Admin.php:100
 msgid "Not allowed to add photos."
 msgstr ""
 
-#: module/Photo/src/Service/Admin.php:176
-msgid "Not allowed to import photos."
-msgstr ""
-
 #: module/Photo/src/Service/Admin.php:194
-msgid "The specified path is not valid"
-msgstr ""
-
-#: module/Photo/src/Service/Admin.php:211
 msgid "An unknown error occurred during uploading ("
 msgstr ""
 
-#: module/Photo/src/Service/Admin.php:233
+#: module/Photo/src/Service/Admin.php:216
 #, php-format
 msgid ""
 "The uploaded file is not a valid image \n"
 "Error: %s"
 msgstr ""
 
-#: module/Photo/src/Service/Admin.php:249
+#: module/Photo/src/Service/Admin.php:232
 msgid "Not allowed to upload photos."
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:118
-#: module/Photo/src/Service/Album.php:148
-#: module/Photo/src/Service/Album.php:283
+#: module/Photo/src/Service/Album.php:121
+#: module/Photo/src/Service/Album.php:151
+#: module/Photo/src/Service/Album.php:290
 msgid "Not allowed to view albums"
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:171
+#: module/Photo/src/Service/Album.php:174
 msgid "Not allowed to view albums without dates"
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:240
+#: module/Photo/src/Service/Album.php:245
 msgid "Not allowed to create albums"
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:264
+#: module/Photo/src/Service/Album.php:269
 msgid "Not allowed to create albums."
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:324
+#: module/Photo/src/Service/Album.php:331
 msgid "Not allowed to edit albums"
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:343
+#: module/Photo/src/Service/Album.php:350
 msgid "Not allowed to edit albums."
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:366
+#: module/Photo/src/Service/Album.php:375
 msgid "Not allowed to move albums"
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:400
+#: module/Photo/src/Service/Album.php:409
 msgid "Not allowed to delete albums."
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:421
+#: module/Photo/src/Service/Album.php:430
 msgid "Not allowed to generate album covers."
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:459
+#: module/Photo/src/Service/Album.php:470
 msgid "Not allowed to move photos"
 msgstr ""
 
-#: module/User/src/Form/Password.php:29
+#: module/User/src/Form/Password.php:32
 msgid "Old password"
 msgstr ""
 
-#: module/User/src/Form/Password.php:39
+#: module/User/src/Form/Password.php:42
 msgid "New password"
 msgstr ""
 
-#: module/User/src/Form/Password.php:49
+#: module/User/src/Form/Password.php:52
 msgid "Verify new password"
 msgstr ""
 
-#: module/User/src/Form/Activate.php:29 module/User/src/Form/Login.php:49
+#: module/User/src/Form/Activate.php:32 module/User/src/Form/Login.php:52
 msgid "Your password"
 msgstr ""
 
-#: module/User/src/Form/Activate.php:39
+#: module/User/src/Form/Activate.php:42
 msgid "Verify your password"
 msgstr ""
 
-#: module/User/src/Form/Register.php:51
+#: module/User/src/Form/Register.php:54
 msgid "E-mail address"
 msgstr ""
 
-#: module/User/src/Form/Register.php:81
+#: module/User/src/Form/Register.php:82
 msgid "This email address does not be long to the given member."
 msgstr ""
 
-#: module/User/src/Form/Register.php:90
+#: module/User/src/Form/Register.php:91
 msgid "There is no member with this membership number."
 msgstr ""
 
-#: module/User/src/Form/Register.php:99
+#: module/User/src/Form/Register.php:100
 msgid ""
 "You already attempted to register, please check your email or try again "
 "after 15 minutes."
 msgstr ""
 
-#: module/User/src/Form/Register.php:108
+#: module/User/src/Form/Register.php:109
 msgid "This member already has an account."
 msgstr ""
 
-#: module/User/src/Form/Login.php:39
+#: module/User/src/Form/Login.php:42
 msgid "Membership number or email address"
 msgstr ""
 
-#: module/User/src/Form/Login.php:69
+#: module/User/src/Form/Login.php:72
 msgid "Remember me"
 msgstr ""
 
-#: module/User/src/Form/Login.php:105
+#: module/User/src/Form/Login.php:108
 msgid "This user could not be found."
 msgstr ""
 
-#: module/User/src/Form/Login.php:114
+#: module/User/src/Form/Login.php:117
 msgid "Wrong password provided."
 msgstr ""
 
-#: module/User/src/Form/Login.php:123
+#: module/User/src/Form/Login.php:126
 msgid "Too many login attempts, try again later."
 msgstr ""
 
-#: module/User/src/Service/ApiUser.php:75
-#: module/User/src/Service/ApiUser.php:107
+#: module/User/src/Service/ApiUser.php:73
+#: module/User/src/Service/ApiUser.php:105
 msgid "You are not allowed to view API tokens"
 msgstr ""
 
-#: module/User/src/Service/ApiUser.php:91
+#: module/User/src/Service/ApiUser.php:89
 msgid "You are not allowed to remove API tokens"
 msgstr ""
 
-#: module/User/src/Service/ApiUser.php:151
+#: module/User/src/Service/ApiUser.php:149
 msgid "You are not allowed to add API tokens"
 msgstr ""
 
-#: module/User/src/Service/User.php:317
+#: module/User/src/Service/User.php:334
 msgid "Password incorrect"
 msgstr ""
 
-#: module/User/src/Service/User.php:377
+#: module/User/src/Service/User.php:394
 msgid "You are not allowed to login using pin codes"
 msgstr ""
 
-#: module/User/src/Service/User.php:461
+#: module/User/src/Service/User.php:478
 msgid "You are not allowed to change your password"
 msgstr ""
 
-#: module/User/src/Service/Email.php:64
+#: module/User/src/Service/Email.php:75
 msgid "Account activation code for the GEWIS Website"
 msgstr ""
 
-#: module/User/src/Service/Email.php:90
+#: module/User/src/Service/Email.php:103
 msgid "Password reset code for the GEWIS Website"
 msgstr ""
 
-#: module/User/src/Authorization/GenericAclService.php:68
+#: module/User/src/Authorization/GenericAclService.php:89
 msgid "You need to log in to perform this action"
 msgstr ""
 

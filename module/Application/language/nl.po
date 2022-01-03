@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-18 16:46+0100\n"
-"PO-Revision-Date: 2021-12-18 17:09+0100\n"
+"POT-Creation-Date: 2022-01-03 21:10+0100\n"
+"PO-Revision-Date: 2022-01-03 21:11+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -27,7 +27,7 @@ msgstr ""
 #: module/Activity/view/partial/create.phtml:3
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:41
 #: module/Activity/view/activity/admin-approval/view.phtml:20
-#: module/Photo/view/photo/album/index.phtml:239
+#: module/Photo/view/photo/album/index.phtml:251
 msgid "Information"
 msgstr "Informatie"
 
@@ -43,9 +43,9 @@ msgstr "Informatie"
 #: module/Activity/view/activity/admin-approval/view.phtml:169
 #: module/Activity/view/activity/admin-category/add.phtml:33
 #: module/Activity/view/activity/activity/create.phtml:160
-#: module/Education/src/Form/Fieldset/Exam.php:85
-#: module/Education/src/Form/Fieldset/Summary.php:79
-#: module/Education/src/Form/SummaryUpload.php:73
+#: module/Education/src/Form/Fieldset/Exam.php:91
+#: module/Education/src/Form/Fieldset/Summary.php:85
+#: module/Education/src/Form/SummaryUpload.php:76
 msgid "Dutch"
 msgstr "Nederlands"
 
@@ -61,17 +61,17 @@ msgstr "Nederlands"
 #: module/Activity/view/activity/admin-approval/view.phtml:174
 #: module/Activity/view/activity/admin-category/add.phtml:71
 #: module/Activity/view/activity/activity/create.phtml:165
-#: module/Education/src/Form/Fieldset/Exam.php:84
-#: module/Education/src/Form/Fieldset/Summary.php:78
-#: module/Education/src/Form/SummaryUpload.php:72
+#: module/Education/src/Form/Fieldset/Exam.php:90
+#: module/Education/src/Form/Fieldset/Summary.php:84
+#: module/Education/src/Form/SummaryUpload.php:75
 msgid "English"
 msgstr "Engels"
 
 #: module/Company/view/partial/company/admin/editors/job.phtml:5
 #: module/Company/view/partial/company/admin/editors/company.phtml:5
-#: module/Company/src/Form/Job.php:73 module/Company/src/Form/Company.php:67
-#: module/Company/src/Form/JobCategory.php:103
-#: module/Company/src/Form/JobCategory.php:113
+#: module/Company/src/Form/Job.php:83 module/Company/src/Form/Company.php:73
+#: module/Company/src/Form/JobCategory.php:109
+#: module/Company/src/Form/JobCategory.php:119
 msgid "Slug"
 msgstr "Permalink"
 
@@ -172,9 +172,9 @@ msgstr "Website bezoeken"
 #: module/Activity/view/activity/admin-approval/view.phtml:126
 #: module/Activity/view/activity/admin-approval/view.phtml:133
 #: module/Activity/view/activity/activity-calendar/create.phtml:116
-#: module/Company/src/Form/Job.php:202 module/Company/src/Form/Job.php:212
-#: module/Company/src/Form/Company.php:184
-#: module/Company/src/Form/Company.php:194
+#: module/Company/src/Form/Job.php:212 module/Company/src/Form/Job.php:222
+#: module/Company/src/Form/Company.php:190
+#: module/Company/src/Form/Company.php:200
 msgid "Description"
 msgstr "Beschrijving"
 
@@ -224,7 +224,7 @@ msgstr "Voeg een label toe"
 
 #: module/Company/view/company/admin/index.phtml:74
 #: module/Company/view/company/admin/index.phtml:93
-#: module/Company/src/Form/Job.php:242
+#: module/Company/src/Form/Job.php:252
 msgid "Labels"
 msgstr "Labels"
 
@@ -252,7 +252,7 @@ msgstr "Labels"
 #: module/Activity/view/activity/admin-category/add.phtml:87
 #: module/Activity/view/activity/activity-calendar/index.phtml:73
 #: module/Activity/view/activity/activity-calendar/create.phtml:99
-#: module/Activity/view/activity/activity/view.phtml:230
+#: module/Activity/view/activity/activity/view.phtml:244
 #: module/Decision/view/decision/member/birthdays.phtml:12
 #: module/Decision/view/decision/admin/document.phtml:40
 #: module/Decision/view/decision/organ/index.phtml:14
@@ -260,21 +260,21 @@ msgstr "Labels"
 #: module/Photo/view/photo/album-admin/edit.phtml:23
 #: module/User/view/user/api-admin/index.phtml:10
 #: module/User/view/user/api-admin/add.phtml:45
-#: module/Company/src/Form/Job.php:107 module/Company/src/Form/Job.php:138
-#: module/Company/src/Form/Job.php:148 module/Company/src/Form/Company.php:57
-#: module/Company/src/Form/Company.php:99
-#: module/Company/src/Form/JobCategory.php:63
-#: module/Company/src/Form/JobCategory.php:73
-#: module/Company/src/Form/JobLabel.php:32
-#: module/Company/src/Form/JobLabel.php:42
-#: module/Activity/src/Form/ActivityCategory.php:24
-#: module/Activity/src/Form/ActivityCategory.php:34
-#: module/Activity/src/Form/SignupListField.php:39
-#: module/Activity/src/Form/SignupListField.php:49
-#: module/Activity/src/Form/SignupList.php:34
-#: module/Activity/src/Form/SignupList.php:44
-#: module/Education/src/Form/AddCourse.php:55
-#: module/User/src/Form/ApiToken.php:25
+#: module/Company/src/Form/Job.php:117 module/Company/src/Form/Job.php:148
+#: module/Company/src/Form/Job.php:158 module/Company/src/Form/Company.php:63
+#: module/Company/src/Form/Company.php:105
+#: module/Company/src/Form/JobCategory.php:69
+#: module/Company/src/Form/JobCategory.php:79
+#: module/Company/src/Form/JobLabel.php:35
+#: module/Company/src/Form/JobLabel.php:45
+#: module/Activity/src/Form/ActivityCategory.php:27
+#: module/Activity/src/Form/ActivityCategory.php:37
+#: module/Activity/src/Form/SignupListField.php:42
+#: module/Activity/src/Form/SignupListField.php:52
+#: module/Activity/src/Form/SignupList.php:41
+#: module/Activity/src/Form/SignupList.php:51
+#: module/Education/src/Form/AddCourse.php:58
+#: module/User/src/Form/ApiToken.php:28
 msgid "Name"
 msgstr "Naam"
 
@@ -439,7 +439,7 @@ msgid "Update Package"
 msgstr "Pakket bijwerken"
 
 #: module/Company/view/company/admin/edit-package.phtml:50
-#: module/Company/src/Form/Package.php:104
+#: module/Company/src/Form/Package.php:112
 msgid "Banner"
 msgstr "Banner"
 
@@ -491,7 +491,7 @@ msgstr "Voeg bannerpakket toe"
 #: module/Company/view/company/admin/edit-company.phtml:83
 #: module/Activity/view/activity/admin/list.phtml:15
 #: module/Activity/view/activity/admin/view.phtml:55
-#: module/Photo/src/Form/EditAlbum.php:36
+#: module/Photo/src/Form/EditAlbum.php:40
 msgid "Start date"
 msgstr "Startdatum"
 
@@ -692,46 +692,46 @@ msgstr ""
 #: module/Activity/view/activity/activity-calendar/index.phtml:74
 #: module/Decision/view/decision/organ/index.phtml:15
 #: module/Decision/view/decision/decision/index.phtml:9
-#: module/Activity/src/Form/SignupListField.php:65
-#: module/Education/src/Form/Fieldset/Exam.php:66
+#: module/Activity/src/Form/SignupListField.php:68
+#: module/Education/src/Form/Fieldset/Exam.php:72
 msgid "Type"
 msgstr "Type"
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:104
-#: module/Activity/src/Form/SignupListField.php:60
+#: module/Activity/src/Form/SignupListField.php:63
 msgid "Text"
 msgstr "Tekst"
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:107
-#: module/Activity/src/Form/SignupListField.php:61
+#: module/Activity/src/Form/SignupListField.php:64
 msgid "Yes/No"
 msgstr "Ja/Nee"
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:110
-#: module/Activity/src/Form/SignupListField.php:62
+#: module/Activity/src/Form/SignupListField.php:65
 msgid "Number"
 msgstr "Getal"
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:113
-#: module/Activity/src/Form/SignupListField.php:63
+#: module/Activity/src/Form/SignupListField.php:66
 msgid "Choice"
 msgstr "Keuze"
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:123
-#: module/Activity/src/Form/SignupListField.php:75
+#: module/Activity/src/Form/SignupListField.php:78
 msgid "Min. value"
 msgstr "Min. waarde"
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:133
-#: module/Activity/src/Form/SignupListField.php:85
+#: module/Activity/src/Form/SignupListField.php:88
 msgid "Max. value"
 msgstr "Max. waarde"
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:145
 #: module/Activity/view/partial/create.phtml:159
 #: module/Activity/view/activity/activity-calendar/create.phtml:125
-#: module/Activity/src/Form/SignupListField.php:98
-#: module/Activity/src/Form/SignupListField.php:111
+#: module/Activity/src/Form/SignupListField.php:101
+#: module/Activity/src/Form/SignupListField.php:114
 msgid "Options"
 msgstr "Opties"
 
@@ -793,7 +793,7 @@ msgstr ""
 
 #: module/Activity/view/partial/create.phtml:15
 #: module/Activity/view/activity/admin-category/add.phtml:30
-#: module/Application/src/Form/Localisable.php:31
+#: module/Application/src/Form/Localisable.php:37
 msgid "Enable Dutch Translations"
 msgstr "Nederlandse vertalingen inschakelen"
 
@@ -808,7 +808,7 @@ msgstr "Nederlandse vertalingen inschakelen"
 #: module/Activity/view/activity/activity/list.phtml:41
 #: module/Activity/view/activity/activity/view.phtml:72
 #: module/Photo/view/partial/metadata.phtml:70
-#: module/Company/src/Form/Job.php:182 module/Company/src/Form/Job.php:192
+#: module/Company/src/Form/Job.php:192 module/Company/src/Form/Job.php:202
 msgid "Location"
 msgstr "Locatie"
 
@@ -827,7 +827,7 @@ msgstr "Kosten"
 
 #: module/Activity/view/partial/create.phtml:90
 #: module/Activity/view/activity/admin-category/add.phtml:68
-#: module/Application/src/Form/Localisable.php:43
+#: module/Application/src/Form/Localisable.php:49
 msgid "Enable English Translations"
 msgstr "Engelse vertalingen inschakelen"
 
@@ -1028,7 +1028,7 @@ msgid "There is currently no option creation period planned."
 msgstr "Er is momenteel geen optieperiode gepland."
 
 #: module/Activity/view/activity/admin-option/index.phtml:33
-#: module/Activity/src/Controller/AdminOptionController.php:120
+#: module/Activity/src/Controller/AdminOptionController.php:119
 msgid "Add Option Period"
 msgstr "Voeg optieperiode toe"
 
@@ -1128,7 +1128,7 @@ msgstr "Deelnemers"
 #: module/Decision/view/decision/member/self.phtml:51
 #: module/Decision/view/decision/member/view.phtml:34
 #: module/Frontpage/view/frontpage/organ/organ.phtml:72
-#: module/Decision/src/Form/OrganInformation.php:34
+#: module/Decision/src/Form/OrganInformation.php:37
 msgid "Email"
 msgstr "Email"
 
@@ -1137,13 +1137,11 @@ msgid "Sign-up List"
 msgstr "Inschrijflijst"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:43
-#: module/Activity/src/Service/Signup.php:175
 msgid "User"
 msgstr "Gebruiker"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:46
 #: module/Decision/view/decision/member/self.phtml:73
-#: module/Activity/src/Service/Signup.php:172
 msgid "External"
 msgstr "Extern"
 
@@ -1296,7 +1294,7 @@ msgid "Today"
 msgstr "Vandaag"
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:44
-#: module/Education/src/Form/AddCourse.php:73
+#: module/Education/src/Form/AddCourse.php:76
 msgid "Year"
 msgstr "Jaar"
 
@@ -1375,8 +1373,8 @@ msgid "Remove the last option"
 msgstr "Verwijder de laatste optie"
 
 #: module/Activity/view/activity/activity-calendar/create.phtml:162
-#: module/Education/src/Form/SummaryUpload.php:94
-#: module/Decision/src/Form/Notes.php:59 module/Frontpage/src/Form/Poll.php:62
+#: module/Education/src/Form/SummaryUpload.php:97
+#: module/Decision/src/Form/Notes.php:62 module/Frontpage/src/Form/Poll.php:65
 msgid "Submit"
 msgstr "Verzend"
 
@@ -1393,7 +1391,7 @@ msgid "My Activities"
 msgstr "Mijn Activiteiten"
 
 #: module/Activity/view/activity/activity/index.phtml:32
-#: module/Activity/src/Controller/ActivityController.php:263
+#: module/Activity/src/Controller/ActivityController.php:270
 msgid "Create Activity"
 msgstr "Maak nieuwe activiteit"
 
@@ -1420,7 +1418,11 @@ msgid "It will become visible after it has been approved by the board."
 msgstr ""
 "Het zal zichtbaar worden als de activiteit goedgekeurd is door het bestuur."
 
-#: module/Activity/view/activity/activity/view.phtml:133
+#: module/Activity/view/activity/activity/view.phtml:126
+msgid "the organizing party"
+msgstr "de organiserende partij"
+
+#: module/Activity/view/activity/activity/view.phtml:138
 #, php-format
 msgid ""
 "Please contact %s or the board (%s) with any questions, concerns or if you "
@@ -1431,56 +1433,64 @@ msgstr ""
 "of als je na het verstrijken van de afmeldtermijn niet aanwezig kunt zijn. "
 "Veel plezier!"
 
-#: module/Activity/view/activity/activity/view.phtml:143
+#: module/Activity/view/activity/activity/view.phtml:142
+#, php-format
+msgid ""
+"Please contact %s or the board (%s) with any questions or concerns. Have fun!"
+msgstr ""
+"Neem contact op met %s of het bestuur (%s) als je vragen of opmerkingen "
+"hebt. Veel plezier!"
+
+#: module/Activity/view/activity/activity/view.phtml:157
 #, php-format
 msgid ""
 "This sign-up list is open from <strong>%s</strong> till <strong>%s</strong>."
 msgstr ""
 "Deze inschrijflijst is open van <strong>%s</strong> tot <strong>%s</strong>."
 
-#: module/Activity/view/activity/activity/view.phtml:155
+#: module/Activity/view/activity/activity/view.phtml:169
 msgid "Already subscribed"
 msgstr "Je bent al ingeschreven"
 
-#: module/Activity/view/activity/activity/view.phtml:162
+#: module/Activity/view/activity/activity/view.phtml:176
 msgid "Subscription closed"
 msgstr "Inschrijving gesloten"
 
-#: module/Activity/view/activity/activity/view.phtml:168
+#: module/Activity/view/activity/activity/view.phtml:182
 msgid "Subscribe now"
 msgstr "Schrijf je in"
 
-#: module/Activity/view/activity/activity/view.phtml:175
+#: module/Activity/view/activity/activity/view.phtml:189
 msgid "Unsubscribe yourself"
 msgstr "Uitschrijven"
 
-#: module/Activity/view/activity/activity/view.phtml:178
+#: module/Activity/view/activity/activity/view.phtml:192
 msgid "You are not allowed to unsubscribe after the deadline!"
 msgstr "Uitschrijven na de uitschrijfdeadline is niet toegestaan!"
 
-#: module/Activity/view/activity/activity/view.phtml:197
-#: module/Activity/view/activity/activity/view.phtml:214
+#: module/Activity/view/activity/activity/view.phtml:211
+#: module/Activity/view/activity/activity/view.phtml:228
 msgid "Subscribe yourself"
 msgstr "Inschrijven"
 
-#: module/Activity/view/activity/activity/view.phtml:200
+#: module/Activity/view/activity/activity/view.phtml:214
 msgid "Login to subscribe"
 msgstr "Login om in te schrijven"
 
-#: module/Activity/view/activity/activity/view.phtml:204
+#: module/Activity/view/activity/activity/view.phtml:218
 msgid "Or subscribe without a GEWIS membership: "
 msgstr "Of schrijf je in zonder een GEWIS lidmaatschap: "
 
-#: module/Activity/view/activity/activity/view.phtml:225
+#: module/Activity/view/activity/activity/view.phtml:239
 msgid "Current subscriptions"
 msgstr "Huidige inschrijvingen"
 
-#: module/Activity/view/activity/activity/view.phtml:243
+#: module/Activity/view/activity/activity/view.phtml:257
 #, php-format
 msgid "The number of subscribed members is currently %d."
 msgstr "Het aantal ingeschreven leden is momenteel %d."
 
-#: module/Activity/view/activity/activity/view.phtml:247
+#: module/Activity/view/activity/activity/view.phtml:261
 msgid "Login to view the subscribed members."
 msgstr "Login om de lijst met deelnemers te bekijken."
 
@@ -1564,8 +1574,8 @@ msgstr "Vak code of omschrijving"
 #: module/Education/view/education/education/index.phtml:46
 #: module/Decision/view/decision/member/index.phtml:122
 #: module/Decision/view/decision/decision/search.phtml:30
-#: module/Decision/src/Form/SearchDecision.php:35
-#: module/Decision/src/Form/SearchDecision.php:36
+#: module/Decision/src/Form/SearchDecision.php:38
+#: module/Decision/src/Form/SearchDecision.php:39
 msgid "Search"
 msgstr "Zoek"
 
@@ -1575,10 +1585,10 @@ msgid "Found %d course(s) matching your description"
 msgstr "%d vak(ken) gevonden welke aan je zoektermen voldoen"
 
 #: module/Education/view/education/education/index.phtml:65
-#: module/Education/src/Form/Fieldset/Exam.php:45
-#: module/Education/src/Form/Fieldset/Summary.php:45
-#: module/Education/src/Form/AddCourse.php:37
-#: module/Education/src/Form/SummaryUpload.php:39
+#: module/Education/src/Form/Fieldset/Exam.php:51
+#: module/Education/src/Form/Fieldset/Summary.php:51
+#: module/Education/src/Form/AddCourse.php:40
+#: module/Education/src/Form/SummaryUpload.php:42
 msgid "Course code"
 msgstr "Vakcode"
 
@@ -1850,7 +1860,7 @@ msgstr "Persoonlijk"
 #: module/Application/view/partial/main-nav.phtml:97
 #: module/User/view/user/user/password.phtml:2
 #: module/User/view/user/user/password.phtml:23
-#: module/User/src/Form/Password.php:59
+#: module/User/src/Form/Password.php:62
 msgid "Change password"
 msgstr "Wijzig wachtwoord"
 
@@ -1998,7 +2008,7 @@ msgid "Sleutelbeleid"
 msgstr "Sleutelbeleid"
 
 #: module/Decision/view/decision/member/self.phtml:15
-#: module/User/src/Form/Register.php:41
+#: module/User/src/Form/Register.php:44
 msgid "Membership number"
 msgstr "Lidmaatschapsnummer"
 
@@ -2035,7 +2045,7 @@ msgstr "Vrouw"
 
 #: module/Decision/view/decision/member/self.phtml:45
 #: module/Decision/view/decision/member/view.phtml:27
-#: module/Education/src/Form/Fieldset/Exam.php:71
+#: module/Education/src/Form/Fieldset/Exam.php:77
 msgid "Other"
 msgstr "Anders"
 
@@ -2247,8 +2257,8 @@ msgid "Meeting notes uploaded"
 msgstr "Notulen geupload"
 
 #: module/Decision/view/decision/admin/notes.phtml:24
-#: module/Decision/src/Form/Notes.php:37
-#: module/Decision/src/Form/Document.php:31
+#: module/Decision/src/Form/Notes.php:40
+#: module/Decision/src/Form/Document.php:34
 msgid "Meeting"
 msgstr "Vergadering"
 
@@ -2258,8 +2268,8 @@ msgstr "Organen"
 
 #: module/Decision/view/decision/organ/index.phtml:13
 #: module/Decision/view/decision/organ-admin/index.phtml:11
-#: module/Company/src/Form/JobLabel.php:52
-#: module/Company/src/Form/JobLabel.php:62
+#: module/Company/src/Form/JobLabel.php:55
+#: module/Company/src/Form/JobLabel.php:65
 msgid "Abbreviation"
 msgstr "Afkorting"
 
@@ -2332,10 +2342,10 @@ msgstr ""
 #: module/Decision/view/decision/organ-admin/edit.phtml:144
 #: module/Frontpage/view/frontpage/news-admin/edit.phtml:79
 #: module/Frontpage/view/frontpage/page-admin/edit.phtml:113
-#: module/Decision/src/Form/OrganInformation.php:125
-#: module/Frontpage/src/Form/Page.php:102
-#: module/Frontpage/src/Form/NewsItem.php:78
-#: module/Photo/src/Form/EditAlbum.php:58
+#: module/Decision/src/Form/OrganInformation.php:128
+#: module/Frontpage/src/Form/Page.php:105
+#: module/Frontpage/src/Form/NewsItem.php:81
+#: module/Photo/src/Form/EditAlbum.php:62
 msgid "Save"
 msgstr "Opslaan"
 
@@ -2423,7 +2433,7 @@ msgstr ""
 
 #: module/Decision/view/decision/decision/authorizations.phtml:68
 #: module/Decision/view/decision/decision/authorizations.phtml:73
-#: module/Decision/src/Form/Authorization.php:42
+#: module/Decision/src/Form/Authorization.php:45
 msgid "Authorize"
 msgstr "Machtig"
 
@@ -2470,8 +2480,8 @@ msgid "Search for decision"
 msgstr "Zoek besluit"
 
 #: module/Decision/view/decision/decision/search.phtml:21
-#: module/Education/src/Form/SearchCourse.php:21
-#: module/Decision/src/Form/SearchDecision.php:25
+#: module/Education/src/Form/SearchCourse.php:24
+#: module/Decision/src/Form/SearchDecision.php:28
 msgid "Search query"
 msgstr "Zoek query"
 
@@ -2483,7 +2493,7 @@ msgstr "GEWIS Website"
 #: module/Application/view/partial/main-nav.phtml:66
 #: module/Application/view/error/403.phtml:12
 #: module/User/view/partial/login.phtml:13
-#: module/User/view/user/user/index.phtml:2 module/User/src/Form/Login.php:59
+#: module/User/view/user/user/index.phtml:2 module/User/src/Form/Login.php:62
 msgid "Login"
 msgstr "Login"
 
@@ -2580,12 +2590,12 @@ msgid "Continue"
 msgstr "Doorgaan"
 
 #: module/Application/view/partial/paginator.phtml:8
-#: module/Photo/view/photo/album/index.phtml:185
+#: module/Photo/view/photo/album/index.phtml:197
 msgid "Previous"
 msgstr "Vorige"
 
 #: module/Application/view/partial/paginator.phtml:22
-#: module/Photo/view/photo/album/index.phtml:186
+#: module/Photo/view/photo/album/index.phtml:198
 msgid "Next"
 msgstr "Volgende"
 
@@ -2876,15 +2886,15 @@ msgstr "Maak een nieuw nieuwsitem"
 
 #: module/Frontpage/view/frontpage/news-admin/edit.phtml:18
 #: module/Frontpage/view/frontpage/page-admin/edit.phtml:50
-#: module/Frontpage/src/Form/Page.php:81
-#: module/Frontpage/src/Form/NewsItem.php:57
+#: module/Frontpage/src/Form/Page.php:84
+#: module/Frontpage/src/Form/NewsItem.php:60
 msgid "English content"
 msgstr "Engelse inhoud"
 
 #: module/Frontpage/view/frontpage/news-admin/edit.phtml:42
 #: module/Frontpage/view/frontpage/page-admin/edit.phtml:74
-#: module/Frontpage/src/Form/Page.php:71
-#: module/Frontpage/src/Form/NewsItem.php:47
+#: module/Frontpage/src/Form/Page.php:74
+#: module/Frontpage/src/Form/NewsItem.php:50
 msgid "Dutch content"
 msgstr "Nederlandse inhoud"
 
@@ -2923,10 +2933,10 @@ msgid "The following fraternities have retired:"
 msgstr "De volgende disputen zijn in ruste:"
 
 #: module/Frontpage/view/frontpage/organ/organ.phtml:83
-#: module/Company/src/Form/Job.php:162 module/Company/src/Form/Job.php:172
-#: module/Company/src/Form/Company.php:164
-#: module/Company/src/Form/Company.php:174
-#: module/Decision/src/Form/OrganInformation.php:44
+#: module/Company/src/Form/Job.php:172 module/Company/src/Form/Job.php:182
+#: module/Company/src/Form/Company.php:170
+#: module/Company/src/Form/Company.php:180
+#: module/Decision/src/Form/OrganInformation.php:47
 msgid "Website"
 msgstr "Website"
 
@@ -2957,7 +2967,7 @@ msgstr "Niet goedgekeurde polls"
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:32
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:95
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:107
-#: module/Frontpage/src/Form/Poll.php:27
+#: module/Frontpage/src/Form/Poll.php:30
 msgid "Dutch question"
 msgstr "Nederlandse vraag"
 
@@ -2965,7 +2975,7 @@ msgstr "Nederlandse vraag"
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:35
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:96
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:110
-#: module/Frontpage/src/Form/Poll.php:37
+#: module/Frontpage/src/Form/Poll.php:40
 msgid "English question"
 msgstr "Engelse vraag"
 
@@ -2998,7 +3008,7 @@ msgstr "Verwijder poll"
 
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:185
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:212
-#: module/Frontpage/src/Form/PollApproval.php:36
+#: module/Frontpage/src/Form/PollApproval.php:39
 msgid "Approve poll"
 msgstr "Keur poll goed"
 
@@ -3202,7 +3212,7 @@ msgid "Regenerate"
 msgstr "Genereer opnieuw"
 
 #: module/Photo/view/photo/album-admin/index.phtml:141
-#: module/Photo/view/photo/album/index.phtml:183
+#: module/Photo/view/photo/album/index.phtml:195
 msgid "Close"
 msgstr "Sluiten"
 
@@ -3287,8 +3297,8 @@ msgid "Create Album"
 msgstr "Album maken"
 
 #: module/Photo/view/photo/album-admin/create.phtml:16
-#: module/Photo/src/Form/EditAlbum.php:26
-#: module/Photo/src/Form/CreateAlbum.php:25
+#: module/Photo/src/Form/EditAlbum.php:30
+#: module/Photo/src/Form/CreateAlbum.php:28
 msgid "Album title"
 msgstr "Album titel"
 
@@ -3304,56 +3314,56 @@ msgstr "Wijzig album"
 msgid "Update Album"
 msgstr "Album Bijwerken"
 
-#: module/Photo/view/photo/album/index.phtml:86
+#: module/Photo/view/photo/album/index.phtml:92
 msgid "View user profile"
 msgstr "Bekijk profiel"
 
-#: module/Photo/view/photo/album/index.phtml:184
+#: module/Photo/view/photo/album/index.phtml:196
 msgid "Zoom (z)"
 msgstr "Zoom (z)"
 
-#: module/Photo/view/photo/album/index.phtml:187
+#: module/Photo/view/photo/album/index.phtml:199
 msgid "The image"
 msgstr "De afbeelding"
 
-#: module/Photo/view/photo/album/index.phtml:187
+#: module/Photo/view/photo/album/index.phtml:199
 msgid "could not be loaded."
 msgstr "kan niet worden geladen."
 
-#: module/Photo/view/photo/album/index.phtml:198
+#: module/Photo/view/photo/album/index.phtml:210
 msgid "Share"
 msgstr "Delen"
 
-#: module/Photo/view/photo/album/index.phtml:209
+#: module/Photo/view/photo/album/index.phtml:221
 msgid "Copied URL!"
 msgstr "URL gekopieerd!"
 
-#: module/Photo/view/photo/album/index.phtml:217
+#: module/Photo/view/photo/album/index.phtml:229
 msgid "Download"
 msgstr "Downloaden"
 
-#: module/Photo/view/photo/album/index.phtml:259
-#: module/Photo/view/photo/album/index.phtml:281
+#: module/Photo/view/photo/album/index.phtml:271
+#: module/Photo/view/photo/album/index.phtml:295
 msgid "Vote for photo of the week"
 msgstr "Stem voor de foto van de week"
 
-#: module/Photo/view/photo/album/index.phtml:278
+#: module/Photo/view/photo/album/index.phtml:292
 msgid "Already voted!"
 msgstr "Je hebt al gestemd!"
 
-#: module/Photo/view/photo/album/index.phtml:295
+#: module/Photo/view/photo/album/index.phtml:309
 msgid "Voted!"
 msgstr "Gestemd!"
 
-#: module/Photo/view/photo/album/index.phtml:307
+#: module/Photo/view/photo/album/index.phtml:321
 msgid "Could not vote, try again"
 msgstr "Stemmen mislukt, probeer het nog een keer"
 
-#: module/Photo/view/photo/album/index.phtml:318
+#: module/Photo/view/photo/album/index.phtml:332
 msgid "Cannot load metadata"
 msgstr "Kan metadata niet laden"
 
-#: module/Photo/view/photo/album/index.phtml:335
+#: module/Photo/view/photo/album/index.phtml:349
 msgid "Cannot load tags"
 msgstr "Kan tags niet laden"
 
@@ -3440,8 +3450,8 @@ msgid "Token"
 msgstr "Token"
 
 #: module/User/view/user/api-admin/index.phtml:23
-#: module/Activity/src/Controller/AdminController.php:269
-#: module/Activity/src/Controller/AdminController.php:399
+#: module/Activity/src/Controller/AdminController.php:281
+#: module/Activity/src/Controller/AdminController.php:411
 msgid "Remove"
 msgstr "Verwijder"
 
@@ -3458,7 +3468,7 @@ msgid "Add a token"
 msgstr "Voeg een token toe"
 
 #: module/User/view/user/api-admin/add.phtml:33
-#: module/User/src/Form/ApiToken.php:35
+#: module/User/src/Form/ApiToken.php:38
 msgid "Create API token"
 msgstr "Maak een API token"
 
@@ -3476,7 +3486,7 @@ msgstr "Je bent ingelogd."
 
 #: module/User/view/user/user/register.phtml:2
 #: module/User/view/user/user/register.phtml:23
-#: module/User/src/Form/Register.php:61
+#: module/User/src/Form/Register.php:64
 msgid "Register"
 msgstr "Registreer"
 
@@ -3498,7 +3508,7 @@ msgstr ""
 
 #: module/User/view/user/user/activate.phtml:2
 #: module/User/view/user/user/activate.phtml:23
-#: module/User/src/Form/Activate.php:49
+#: module/User/src/Form/Activate.php:52
 msgid "Activate"
 msgstr "Activeer"
 
@@ -3543,191 +3553,191 @@ msgstr "Je bent uitgelogd."
 msgid "Password changed successfully"
 msgstr "Wachtwoord succesvol gewijzigd"
 
-#: module/Company/src/Controller/AdminController.php:77
+#: module/Company/src/Controller/AdminController.php:68
 msgid "You are not allowed to administer career settings"
 msgstr "Je hebt niet de rechten om carri&egrave;re-instellingen te beheren"
 
-#: module/Company/src/Controller/AdminController.php:102
+#: module/Company/src/Controller/AdminController.php:93
 msgid "You are not allowed to create companies"
 msgstr "Je hebt niet de rechten om bedrijven toe te voegen"
 
-#: module/Company/src/Controller/AdminController.php:143
+#: module/Company/src/Controller/AdminController.php:134
 msgid "You are not allowed to edit companies"
 msgstr "Je hebt niet de rechten om bedrijven te wijzigen"
 
-#: module/Company/src/Controller/AdminController.php:205
-#: module/Company/src/Service/Company.php:771
+#: module/Company/src/Controller/AdminController.php:198
+#: module/Company/src/Service/Company.php:827
 msgid "You are not allowed to delete companies"
 msgstr "Je hebt niet de rechten om bedrijven te verwijderen"
 
-#: module/Company/src/Controller/AdminController.php:228
+#: module/Company/src/Controller/AdminController.php:221
 msgid "You are not allowed to create packages"
 msgstr "Je hebt niet de rechten om pakketten toe te voegen"
 
-#: module/Company/src/Controller/AdminController.php:295
-#: module/Company/src/Service/Company.php:832
+#: module/Company/src/Controller/AdminController.php:288
+#: module/Company/src/Service/Company.php:888
 msgid "You are not allowed to edit packages"
 msgstr "Je hebt niet de rechten om pakketten te wijzigen"
 
-#: module/Company/src/Controller/AdminController.php:378
-#: module/Company/src/Service/Company.php:739
+#: module/Company/src/Controller/AdminController.php:371
+#: module/Company/src/Service/Company.php:795
 msgid "You are not allowed to delete packages"
 msgstr "Je hebt niet de rechten om pakketten te verwijderen"
 
-#: module/Company/src/Controller/AdminController.php:418
+#: module/Company/src/Controller/AdminController.php:411
 msgid "You are not allowed to create jobs"
 msgstr "Je hebt niet de rechten om vacatures toe te voegen"
 
-#: module/Company/src/Controller/AdminController.php:491
-#: module/Company/src/Service/Company.php:859
-#: module/Company/src/Service/Company.php:919
+#: module/Company/src/Controller/AdminController.php:484
+#: module/Company/src/Service/Company.php:915
+#: module/Company/src/Service/Company.php:977
 msgid "You are not allowed to edit jobs"
 msgstr "Je hebt niet de rechten om vacatures te wijzigen"
 
-#: module/Company/src/Controller/AdminController.php:560
-#: module/Company/src/Service/Company.php:755
+#: module/Company/src/Controller/AdminController.php:553
+#: module/Company/src/Service/Company.php:811
 msgid "You are not allowed to delete jobs"
 msgstr "Je hebt niet de rechten om vacatures te verwijderen"
 
-#: module/Company/src/Controller/AdminController.php:600
+#: module/Company/src/Controller/AdminController.php:593
 msgid "You are not allowed to create job categories"
 msgstr "Je hebt niet de rechten om vacaturecategorieën te wijzigen"
 
-#: module/Company/src/Controller/AdminController.php:648
-#: module/Company/src/Service/Company.php:800
+#: module/Company/src/Controller/AdminController.php:641
+#: module/Company/src/Service/Company.php:856
 msgid "You are not allowed to edit job categories"
 msgstr "Je hebt niet de rechten om vacature categorieën te wijzigen"
 
-#: module/Company/src/Controller/AdminController.php:686
+#: module/Company/src/Controller/AdminController.php:679
 msgid "You are not allowed to create job labels"
 msgstr "Je hebt niet de rechten om vacature-labels te wijzigen"
 
-#: module/Company/src/Controller/AdminController.php:733
-#: module/Company/src/Service/Company.php:816
+#: module/Company/src/Controller/AdminController.php:726
+#: module/Company/src/Service/Company.php:872
 msgid "You are not allowed to edit job labels"
 msgstr "Je hebt niet de rechten om vacature labels te wijzigen"
 
-#: module/Company/src/Form/Job.php:83
+#: module/Company/src/Form/Job.php:93
 msgid "Category"
 msgstr "Categorie"
 
-#: module/Company/src/Form/Job.php:84
+#: module/Company/src/Form/Job.php:94
 msgid "Select a job category"
 msgstr "Selecteer een vacaturecategorie"
 
-#: module/Company/src/Form/Job.php:95 module/Company/src/Form/Company.php:87
-#: module/Company/src/Form/Package.php:68
+#: module/Company/src/Form/Job.php:105 module/Company/src/Form/Company.php:93
+#: module/Company/src/Form/Package.php:76
 msgid "Published"
 msgstr "Gepubliceerd"
 
-#: module/Company/src/Form/Job.php:117 module/Company/src/Form/Company.php:119
+#: module/Company/src/Form/Job.php:127 module/Company/src/Form/Company.php:125
 msgid "E-mail Address"
 msgstr "E-mailadres"
 
-#: module/Company/src/Form/Job.php:127 module/Company/src/Form/Company.php:129
+#: module/Company/src/Form/Job.php:137 module/Company/src/Form/Company.php:135
 msgid "Phone Number"
 msgstr "Telefoonnummer"
 
-#: module/Company/src/Form/Job.php:222 module/Company/src/Form/Job.php:232
+#: module/Company/src/Form/Job.php:232 module/Company/src/Form/Job.php:242
 msgid "Attachment"
 msgstr "Bijlage"
 
-#: module/Company/src/Form/Job.php:288 module/Company/src/Form/Company.php:246
-#: module/Company/src/Form/JobCategory.php:212
+#: module/Company/src/Form/Job.php:298 module/Company/src/Form/Company.php:252
+#: module/Company/src/Form/JobCategory.php:218
 msgid "This slug is already taken"
 msgstr "Deze permalink is al in gebruik"
 
-#: module/Company/src/Form/Job.php:297 module/Company/src/Form/Company.php:255
-#: module/Company/src/Form/JobCategory.php:221
+#: module/Company/src/Form/Job.php:307 module/Company/src/Form/Company.php:261
+#: module/Company/src/Form/JobCategory.php:227
 msgid "This slug contains invalid characters"
 msgstr "Deze permalink bevat ongeldige tekens"
 
-#: module/Company/src/Form/Job.php:344 module/Company/src/Form/Company.php:323
+#: module/Company/src/Form/Job.php:354 module/Company/src/Form/Company.php:329
 msgid "E-mail address format is not valid"
 msgstr "E-mailadres formaat is niet geldig"
 
-#: module/Company/src/Form/Company.php:77
+#: module/Company/src/Form/Company.php:83
 msgid "Logo"
 msgstr "Logo"
 
-#: module/Company/src/Form/Company.php:109
+#: module/Company/src/Form/Company.php:115
 msgid "Address"
 msgstr "Adres"
 
-#: module/Company/src/Form/Company.php:140
-#: module/Company/src/Form/Company.php:150
+#: module/Company/src/Form/Company.php:146
+#: module/Company/src/Form/Company.php:156
 msgid "Slogan"
 msgstr "Slogan"
 
-#: module/Company/src/Form/JobCategory.php:83
-#: module/Company/src/Form/JobCategory.php:93
+#: module/Company/src/Form/JobCategory.php:89
+#: module/Company/src/Form/JobCategory.php:99
 msgid "Name (Plural)"
 msgstr "Naam (meervoud)"
 
-#: module/Company/src/Form/JobCategory.php:123
+#: module/Company/src/Form/JobCategory.php:129
 msgid "Hidden"
 msgstr "Verborgen"
 
-#: module/Company/src/Form/Package.php:40
+#: module/Company/src/Form/Package.php:48
 msgid "Start Date"
 msgstr "Startdatum"
 
-#: module/Company/src/Form/Package.php:54
+#: module/Company/src/Form/Package.php:62
 msgid "Expiration Date"
 msgstr "Afloopdatum"
 
-#: module/Company/src/Form/Package.php:82
-#: module/Company/src/Form/Package.php:92
+#: module/Company/src/Form/Package.php:90
+#: module/Company/src/Form/Package.php:100
 msgid "Article"
 msgstr "Artikel"
 
-#: module/Company/src/Service/Company.php:182
+#: module/Company/src/Service/Company.php:196
 msgid "You are not allowed to view the banner"
 msgstr "Je hebt niet de rechten om de banner te zien"
 
-#: module/Company/src/Service/Company.php:192
+#: module/Company/src/Service/Company.php:209
 msgid "You are not allowed to view the featured company"
 msgstr "Je hebt niet de rechten om het uitgelichte bedrijf te zien"
 
-#: module/Company/src/Service/Company.php:251
-#: module/Company/src/Service/Company.php:268
-#: module/Company/src/Service/Company.php:300
+#: module/Company/src/Service/Company.php:278
+#: module/Company/src/Service/Company.php:298
+#: module/Company/src/Service/Company.php:330
 msgid "You are not allowed to list the companies"
 msgstr "Je hebt niet de rechten om de lijst met bedrijven te zien"
 
-#: module/Company/src/Service/Company.php:283
+#: module/Company/src/Service/Company.php:313
 msgid "You are not allowed to access the admin interface"
 msgstr "Je hebt niet de rechten om de admin interface te zien"
 
-#: module/Company/src/Service/Company.php:873
+#: module/Company/src/Service/Company.php:929
 msgid "You are not allowed to edit categories"
 msgstr "Je hebt niet de rechten om alle categorieën te wijzigen"
 
-#: module/Company/src/Service/Company.php:887
+#: module/Company/src/Service/Company.php:943
 msgid "You are not allowed to edit labels"
 msgstr "Je hebt niet de rechten om labels te wijzigen"
 
-#: module/Company/src/Service/Company.php:931
+#: module/Company/src/Service/Company.php:989
 msgid "You are not allowed to create a company"
 msgstr "Je hebt niet de rechten om een bedrijf toe te voegen"
 
-#: module/Company/src/Service/CompanyQuery.php:138
+#: module/Company/src/Service/CompanyQuery.php:145
 msgid "You are not allowed to list all job categories"
 msgstr "Je hebt niet de rechten om alle vacaturecategorieën te bekijken"
 
-#: module/Company/src/Service/CompanyQuery.php:146
+#: module/Company/src/Service/CompanyQuery.php:153
 msgid "You are not allowed to list job categories"
 msgstr "Je hebt niet de rechten om vacaturecategorieën te bekijken"
 
-#: module/Company/src/Service/CompanyQuery.php:186
+#: module/Company/src/Service/CompanyQuery.php:193
 msgid "You are not allowed to list all job labels"
 msgstr "Je hebt niet de rechten om alle vacature-labels te bekijken"
 
-#: module/Company/src/Service/CompanyQuery.php:194
+#: module/Company/src/Service/CompanyQuery.php:201
 msgid "You are not allowed to list job labels"
 msgstr "Je hebt niet de rechten om vacature-labels te bekijken"
 
-#: module/Activity/src/Controller/ActivityCalendarController.php:113
+#: module/Activity/src/Controller/ActivityCalendarController.php:120
 msgid "You are not allowed to create activity proposals"
 msgstr "Je hebt niet de rechten om opties voor activiteiten te maken"
 
@@ -3736,11 +3746,11 @@ msgid "You are not allowed to view the approval of this activity"
 msgstr ""
 "Je hebt niet de rechten om de goedkeuring van deze activiteit te bekijken"
 
-#: module/Activity/src/Controller/AdminController.php:108
+#: module/Activity/src/Controller/AdminController.php:112
 msgid "You are not allowed to update this activity"
 msgstr "Je hebt niet de rechten om deze activiteit te wijzigen"
 
-#: module/Activity/src/Controller/AdminController.php:122
+#: module/Activity/src/Controller/AdminController.php:126
 msgid ""
 "Activities that have sign-up lists which are open or approved cannot be "
 "updated."
@@ -3748,12 +3758,12 @@ msgstr ""
 "Activiteiten met inschrijflijsten die open of goedgekeurd zijn, kunnen niet "
 "worden bijgewerkt."
 
-#: module/Activity/src/Controller/AdminController.php:133
+#: module/Activity/src/Controller/AdminController.php:137
 msgid "This activity has already started/ended and can no longer be updated."
 msgstr ""
 "Deze activiteit is al gestart/geëindigd en kan niet meer worden bijgewerkt."
 
-#: module/Activity/src/Controller/AdminController.php:148
+#: module/Activity/src/Controller/AdminController.php:152
 msgid ""
 "You have successfully created an update proposal for the activity! If the "
 "activity was already approved, the proposal will be applied after it has "
@@ -3765,243 +3775,252 @@ msgstr ""
 "is goedgekeurd door het bestuur. Anders is de update al toegepast op de "
 "activiteit."
 
-#: module/Activity/src/Controller/AdminController.php:187
+#: module/Activity/src/Controller/AdminController.php:191
 msgid "Update Activity"
 msgstr "Activiteit bijwerken"
 
-#: module/Activity/src/Controller/AdminController.php:232
 #: module/Activity/src/Controller/AdminController.php:244
+#: module/Activity/src/Controller/AdminController.php:256
 msgid "You are not allowed to view the participants of this activity"
 msgstr ""
 "Je hebt niet de rechten om de deelnemers van deze activiteit te bekijken"
 
-#: module/Activity/src/Controller/AdminController.php:306
-#: module/Activity/src/Controller/AdminController.php:392
+#: module/Activity/src/Controller/AdminController.php:318
+#: module/Activity/src/Controller/AdminController.php:404
 msgid "You are not allowed to use this form"
 msgstr "Je hebt niet de rechten om dit formulier te gebruiken"
 
-#: module/Activity/src/Controller/AdminController.php:318
-#: module/Activity/src/Controller/AdminController.php:404
-#: module/Activity/src/Controller/ActivityController.php:290
-#: module/Activity/src/Controller/ActivityController.php:385
+#: module/Activity/src/Controller/AdminController.php:330
+#: module/Activity/src/Controller/AdminController.php:416
+#: module/Activity/src/Controller/ActivityController.php:298
+#: module/Activity/src/Controller/ActivityController.php:393
 msgid "Invalid form"
 msgstr "De ingevulde gegevens zijn niet geldig"
 
-#: module/Activity/src/Controller/AdminController.php:332
+#: module/Activity/src/Controller/AdminController.php:344
 msgid "Successfully subscribed external participant"
 msgstr "Succesvol geregistreerd"
 
-#: module/Activity/src/Controller/AdminController.php:338
-#: module/Activity/src/Controller/ActivityController.php:329
-#: module/Activity/src/Controller/ActivityController.php:420
+#: module/Activity/src/Controller/AdminController.php:350
+#: module/Activity/src/Controller/ActivityController.php:337
+#: module/Activity/src/Controller/ActivityController.php:428
 msgid "Use the form to subscribe"
 msgstr "Gebruik het formulier om in te schrijven"
 
-#: module/Activity/src/Controller/AdminController.php:416
+#: module/Activity/src/Controller/AdminController.php:428
 msgid "Successfully removed external participant"
 msgstr "Deelnemer succesvol verwijderd"
 
-#: module/Activity/src/Controller/AdminController.php:427
+#: module/Activity/src/Controller/AdminController.php:439
 msgid "Use the form to unsubscribe an external participant"
 msgstr "Gebruik het formulier om iemand uit te schrijven"
 
-#: module/Activity/src/Controller/AdminController.php:444
+#: module/Activity/src/Controller/AdminController.php:456
 msgid "You are not allowed to administer activities"
 msgstr "Je hebt niet de rechten om activiteiten te beheren"
 
-#: module/Activity/src/Controller/ApiController.php:57
+#: module/Activity/src/Controller/ApiController.php:47
 msgid "You are not allowed to access the activities through the API"
 msgstr "Je hebt niet de rechten om de activiteiten in te zien via de API"
 
-#: module/Activity/src/Controller/ActivityController.php:299
-#: module/Activity/src/Controller/ActivityController.php:394
+#: module/Activity/src/Controller/ActivityController.php:307
+#: module/Activity/src/Controller/ActivityController.php:402
 msgid "You need to log in to subscribe"
 msgstr "Je moet inloggen om in te schrijven"
 
-#: module/Activity/src/Controller/ActivityController.php:309
-#: module/Activity/src/Controller/ActivityController.php:404
+#: module/Activity/src/Controller/ActivityController.php:317
+#: module/Activity/src/Controller/ActivityController.php:412
 msgid "You cannot subscribe to this activity at this moment in time"
 msgstr "Je kunt je op dit moment niet inschrijven voor deze activiteit"
 
-#: module/Activity/src/Controller/ActivityController.php:318
+#: module/Activity/src/Controller/ActivityController.php:326
 msgid "You have already been subscribed for this activity"
 msgstr "Je bent al ingeschreven voor deze activiteit"
 
-#: module/Activity/src/Controller/ActivityController.php:324
+#: module/Activity/src/Controller/ActivityController.php:332
 msgid "Successfully subscribed"
 msgstr "Succesvol geregistreerd"
 
-#: module/Activity/src/Controller/ActivityController.php:415
+#: module/Activity/src/Controller/ActivityController.php:423
 msgid "Successfully subscribed as external participant"
 msgstr "Succesvol geregistreerd"
 
-#: module/Activity/src/Controller/ActivityController.php:446
+#: module/Activity/src/Controller/ActivityController.php:454
 msgid "Wrong form"
 msgstr "Verkeerd formulier"
 
-#: module/Activity/src/Controller/ActivityController.php:453
+#: module/Activity/src/Controller/ActivityController.php:461
 msgid "You have to be logged in to subscribe for this activity"
 msgstr "Je moet ingelogd zijn om je voor deze activiteit in te schrijven"
 
-#: module/Activity/src/Controller/ActivityController.php:464
+#: module/Activity/src/Controller/ActivityController.php:472
 msgid "You cannot unsubscribe from this activity at this moment in time"
 msgstr "Je kunt je op dit moment niet afmelden voor deze activiteit"
 
-#: module/Activity/src/Controller/ActivityController.php:474
+#: module/Activity/src/Controller/ActivityController.php:482
 msgid "You are not subscribed to this activity!"
 msgstr "Je bent niet ingeschreven voor deze activiteit!"
 
-#: module/Activity/src/Controller/ActivityController.php:480
+#: module/Activity/src/Controller/ActivityController.php:488
 msgid "Successfully unsubscribed"
 msgstr "Succesvol uitgeschreven"
 
-#: module/Activity/src/Controller/ActivityController.php:485
+#: module/Activity/src/Controller/ActivityController.php:493
 msgid "Use the form to unsubscribe"
 msgstr "Gebruik het formulier om in te schrijven"
 
-#: module/Activity/src/Controller/AdminCategoryController.php:59
+#: module/Activity/src/Controller/AdminCategoryController.php:70
+#: module/Activity/src/Service/ActivityCategory.php:112
+msgid "You are not allowed to create an activity category"
+msgstr "Je hebt niet de rechten om een activiteitencategorie te maken"
+
+#: module/Activity/src/Controller/AdminCategoryController.php:82
 msgid "The activity category was created successfully!"
 msgstr "De activiteitencategorie is succesvol aangemaakt!"
 
-#: module/Activity/src/Controller/AdminCategoryController.php:68
-#: module/Activity/src/Form/ActivityCategory.php:44
+#: module/Activity/src/Controller/AdminCategoryController.php:92
+#: module/Activity/src/Form/ActivityCategory.php:47
 msgid "Create Activity Category"
 msgstr "Activiteitencategorie aanmaken"
 
-#: module/Activity/src/Controller/AdminCategoryController.php:124
+#: module/Activity/src/Controller/AdminCategoryController.php:146
+msgid "You are not allowed to edit an activity category"
+msgstr "Je hebt niet de rechten om een activiteitencategorie bij te werken"
+
+#: module/Activity/src/Controller/AdminCategoryController.php:165
 msgid "The activity category was successfully updated!"
 msgstr "De activiteitencategorie is succesvol bijgewerkt!"
 
-#: module/Activity/src/Controller/AdminCategoryController.php:140
+#: module/Activity/src/Controller/AdminCategoryController.php:182
 msgid "Update Activity Category"
 msgstr "Activiteitencategorie bijwerken"
 
-#: module/Activity/src/Controller/AdminOptionController.php:72
+#: module/Activity/src/Controller/AdminOptionController.php:71
 msgid "You are not allowed to administer option calendar periods"
 msgstr "Je hebt niet de rechten om optieperiodes te beheren"
 
-#: module/Activity/src/Controller/AdminOptionController.php:84
+#: module/Activity/src/Controller/AdminOptionController.php:83
 msgid "You are not allowed to create option calendar periods"
 msgstr "Je hebt niet de rechten om optieperiodes toe te voegen"
 
-#: module/Activity/src/Controller/AdminOptionController.php:98
+#: module/Activity/src/Controller/AdminOptionController.php:97
 msgid "Option planning period created successfully."
 msgstr "Optie planningsperiode succesvol aangemaakt."
 
-#: module/Activity/src/Controller/AdminOptionController.php:127
+#: module/Activity/src/Controller/AdminOptionController.php:126
 msgid "You are not allowed to delete option calendar periods"
 msgstr "Je hebt niet de rechten om optieperiodes te verwijderen"
 
-#: module/Activity/src/Controller/AdminOptionController.php:137
+#: module/Activity/src/Controller/AdminOptionController.php:136
 msgid "Option planning period removed."
 msgstr "Optie planningsperiode verwijderd."
 
-#: module/Activity/src/Controller/AdminOptionController.php:147
+#: module/Activity/src/Controller/AdminOptionController.php:146
 msgid "You are not allowed to edit option calendar periods"
 msgstr "Je hebt niet de rechten om optieperiodes te wijzigen"
 
-#: module/Activity/src/Controller/AdminOptionController.php:158
+#: module/Activity/src/Controller/AdminOptionController.php:157
 msgid "This option planning period cannot be edited."
 msgstr "Deze optie planningsperiode kan niet worden gewijzigd."
 
-#: module/Activity/src/Controller/AdminOptionController.php:171
+#: module/Activity/src/Controller/AdminOptionController.php:170
 msgid "Option planning period has been updated."
 msgstr "De optie planningsperiode is bijgewerkt."
 
-#: module/Activity/src/Controller/AdminOptionController.php:191
+#: module/Activity/src/Controller/AdminOptionController.php:190
 msgid "Edit Option Period"
 msgstr "Bewerk optieperiode"
 
-#: module/Activity/src/Form/ActivityCalendarProposal.php:72
+#: module/Activity/src/Form/ActivityCalendarProposal.php:75
 msgid "Select an option"
 msgstr "Selecteer een optie"
 
-#: module/Activity/src/Form/ActivityCalendarProposal.php:140
+#: module/Activity/src/Form/ActivityCalendarProposal.php:143
 msgid "The activity does now have an acceptable amount of options"
 msgstr "De activiteit heeft geen acceptabel aantal opties"
 
-#: module/Activity/src/Form/ActivityCalendarProposal.php:151
+#: module/Activity/src/Form/ActivityCalendarProposal.php:154
 msgid "The options for this proposal do not fit in the valid range."
 msgstr "De opties voor dit voorstel passen niet binnen het geldige bereik."
 
-#: module/Activity/src/Form/ActivityCalendarPeriod.php:38
+#: module/Activity/src/Form/ActivityCalendarPeriod.php:41
 msgid "Start date and time of planning period"
 msgstr "Begindatum en -tijd van de planningsperiode"
 
-#: module/Activity/src/Form/ActivityCalendarPeriod.php:49
+#: module/Activity/src/Form/ActivityCalendarPeriod.php:52
 msgid "End date and time of planning period"
 msgstr "Einddatum en -tijd van de planningsperiode"
 
-#: module/Activity/src/Form/ActivityCalendarPeriod.php:60
+#: module/Activity/src/Form/ActivityCalendarPeriod.php:63
 msgid "Start date and time of option period"
 msgstr "Begindatum en -tijd van de optieperiode"
 
-#: module/Activity/src/Form/ActivityCalendarPeriod.php:71
+#: module/Activity/src/Form/ActivityCalendarPeriod.php:74
 msgid "End date and time of option period"
 msgstr "Einddatum en -tijd van de optieperiode"
 
-#: module/Activity/src/Form/ActivityCalendarPeriod.php:97
+#: module/Activity/src/Form/ActivityCalendarPeriod.php:100
 msgid "Create Option Period"
 msgstr "Optieperiode maken"
 
-#: module/Activity/src/Form/ActivityCalendarPeriod.php:133
+#: module/Activity/src/Form/ActivityCalendarPeriod.php:136
 msgid "The planning period must end after it starts."
 msgstr "De planningsperiode moet eindigen nadat deze begonnen is."
 
-#: module/Activity/src/Form/ActivityCalendarPeriod.php:154
+#: module/Activity/src/Form/ActivityCalendarPeriod.php:157
 msgid "The option period must start after the planning period ends."
 msgstr "De optieperiode moet ingaan na afloop van de planningsperiode."
 
-#: module/Activity/src/Form/ActivityCalendarPeriod.php:175
+#: module/Activity/src/Form/ActivityCalendarPeriod.php:178
 msgid "The option period must end after it starts."
 msgstr "De optieperiode moet eindigen nadat deze begonnen is."
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:42
+#: module/Activity/src/Form/ActivityCalendarOption.php:44
 msgid "Morning"
 msgstr "Ochtend"
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:43
+#: module/Activity/src/Form/ActivityCalendarOption.php:45
 msgid "Lunch break"
 msgstr "Lunchpauze"
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:44
+#: module/Activity/src/Form/ActivityCalendarOption.php:46
 msgid "Afternoon"
 msgstr "Namiddag"
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:45
+#: module/Activity/src/Form/ActivityCalendarOption.php:47
 msgid "Evening"
 msgstr "Avond"
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:46
+#: module/Activity/src/Form/ActivityCalendarOption.php:48
 msgid "Day"
 msgstr "Dag"
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:47
+#: module/Activity/src/Form/ActivityCalendarOption.php:49
 msgid "Multiple days"
 msgstr "Meerdere dagen"
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:76
+#: module/Activity/src/Form/ActivityCalendarOption.php:78
 msgid "Select a type"
 msgstr "Selecteer een type"
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:99
+#: module/Activity/src/Form/ActivityCalendarOption.php:101
 msgid "The activity must start before it ends"
 msgstr "De starttijd van de activiteit moet voor de eindtijd zijn"
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:110
+#: module/Activity/src/Form/ActivityCalendarOption.php:112
 msgid "The activity must start after today"
 msgstr "De starttijd van de activiteit moet in de toekomst zijn"
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:121
+#: module/Activity/src/Form/ActivityCalendarOption.php:123
 msgid "The activity must be within the given period"
 msgstr "De starttijd van de activiteit moet voor de eindtijd zijn"
 
-#: module/Activity/src/Form/SignupListField.php:95
-#: module/Activity/src/Form/SignupListField.php:108
+#: module/Activity/src/Form/SignupListField.php:98
+#: module/Activity/src/Form/SignupListField.php:111
 msgid "Option 1, Option 2, ..."
 msgstr "Optie 1, Optie 2, ..."
 
-#: module/Activity/src/Form/SignupList.php:193
+#: module/Activity/src/Form/SignupList.php:202
 msgid ""
 "The sign-up list opening date and time must be before the sign-up list "
 "closes."
@@ -4017,404 +4036,381 @@ msgstr "Geen orgaan"
 msgid "No Company"
 msgstr "Geen bedrijf"
 
-#: module/Activity/src/Form/Activity.php:288
-#: module/Activity/src/Form/Activity.php:300
-#: module/Activity/src/Form/Activity.php:314
-#: module/Activity/src/Form/Activity.php:326
-#: module/Activity/src/Form/Activity.php:338
-#: module/Activity/src/Form/Activity.php:350
+#: module/Activity/src/Form/Activity.php:295
+#: module/Activity/src/Form/Activity.php:307
+#: module/Activity/src/Form/Activity.php:321
+#: module/Activity/src/Form/Activity.php:333
+#: module/Activity/src/Form/Activity.php:345
+#: module/Activity/src/Form/Activity.php:357
 msgid "Value is required and can't be empty"
 msgstr "Waarde is vereist en kan niet leeg zijn"
 
-#: module/Activity/src/Form/Activity.php:388
+#: module/Activity/src/Form/Activity.php:395
 msgid "The activity must start before it ends."
 msgstr "De activiteit moet beginnen voordat deze eindigt."
 
-#: module/Activity/src/Service/Signup.php:84
-#: module/Activity/src/Service/Signup.php:232
+#: module/Activity/src/Service/Signup.php:98
+#: module/Activity/src/Service/Signup.php:212
 msgid "You need to be logged in to sign up for this activity"
 msgstr "Je moet ingelogd zijn om je voor deze activiteit in te schrijven"
 
-#: module/Activity/src/Service/Signup.php:98
+#: module/Activity/src/Service/Signup.php:117
 msgid "You are not allowed to use the external admin signup"
 msgstr "Je hebt niet de rechten om een externe admin inschrijving te maken"
 
-#: module/Activity/src/Service/Signup.php:112
+#: module/Activity/src/Service/Signup.php:136
 msgid "You are not allowed to use the external signup"
 msgstr "Je hebt niet de rechten om een externe inschrijving te maken"
 
-#: module/Activity/src/Service/Signup.php:130
-#: module/Activity/src/Service/Signup.php:162
+#: module/Activity/src/Service/Signup.php:156
 msgid "You are not allowed to view the sign up data"
 msgstr "Je hebt niet de rechten om ingeschreven leden te zien"
 
-#: module/Activity/src/Service/Signup.php:195
-#: module/Activity/src/Service/ActivityQuery.php:130
-#: module/Activity/src/Service/ActivityQuery.php:145
-#: module/Activity/src/Service/ActivityQuery.php:309
+#: module/Activity/src/Service/Signup.php:193
+#: module/Activity/src/Service/ActivityQuery.php:144
+#: module/Activity/src/Service/ActivityQuery.php:310
 msgid "You are not allowed to view the activities"
 msgstr "Je hebt niet de rechten om de activiteiten in te zien"
 
-#: module/Activity/src/Service/Signup.php:210
-msgid "You are not allowed to view activities which you signed up for"
-msgstr ""
-"Je hebt niet de rechten om te zien voor welke activiteiten je ingeschreven "
-"bent"
-
-#: module/Activity/src/Service/Signup.php:296
+#: module/Activity/src/Service/Signup.php:292
 msgid "You are not allowed to subscribe an external user to this sign-up list"
 msgstr ""
 "Je hebt niet de rechten om een externe gebruiker op deze inschrijflijst in "
 "te schrijven"
 
-#: module/Activity/src/Service/Signup.php:331
+#: module/Activity/src/Service/Signup.php:345
 msgid "You are not allowed to subscribe to this sign-up list"
 msgstr ""
 "Je hebt niet de rechten om jezelf op deze inschrijflijst in te schrijven"
 
-#: module/Activity/src/Service/Signup.php:345
+#: module/Activity/src/Service/Signup.php:364
 msgid "You need to be logged in to sign off for this activity"
 msgstr "Je moet ingelogd zijn om je uit te schrijven voor deze activiteit"
 
-#: module/Activity/src/Service/Signup.php:380
+#: module/Activity/src/Service/Signup.php:413
 msgid "You are not allowed to remove external signups for this activity"
 msgstr ""
 "Je hebt niet de rechten om externe inschrijvingen te verwijderen voor deze "
 "activiteit"
 
-#: module/Activity/src/Service/ActivityQuery.php:114
+#: module/Activity/src/Service/ActivityQuery.php:128
 msgid "You are not allowed to view this activity"
 msgstr "Je hebt niet de rechten om deze activiteit te bekijken"
 
-#: module/Activity/src/Service/ActivityQuery.php:160
+#: module/Activity/src/Service/ActivityQuery.php:159
 msgid "You are not allowed to view unapproved activities"
 msgstr "Je hebt niet de rechten om niet goedgekeurde activiteiten in te zien"
 
-#: module/Activity/src/Service/ActivityQuery.php:175
+#: module/Activity/src/Service/ActivityQuery.php:174
 msgid "You are not allowed to view activities"
 msgstr "Je hebt niet de rechten om de activiteiten in te zien"
 
-#: module/Activity/src/Service/ActivityQuery.php:203
+#: module/Activity/src/Service/ActivityQuery.php:204
 msgid "You are not allowed to view the disapproved activities"
 msgstr "Je hebt niet de rechten om afgekeurde activiteiten in te zien"
 
-#: module/Activity/src/Service/ActivityQuery.php:221
+#: module/Activity/src/Service/ActivityQuery.php:222
 msgid "You are not allowed to view upcoming the activities"
 msgstr "Je hebt niet de rechten om aankomende activiteiten te zien"
 
-#: module/Activity/src/Service/ActivityQuery.php:229
+#: module/Activity/src/Service/ActivityQuery.php:230
 msgid ""
 "You are not allowed to view upcoming activities coupled to a member account"
 msgstr ""
 "Je hebt niet de rechten om aankomende activiteiten te zien die gekoppeld "
 "zijn een het account van een lid"
 
-#: module/Activity/src/Service/ActivityCategory.php:64
-#: module/Activity/src/Service/ActivityCategory.php:80
+#: module/Activity/src/Service/ActivityCategory.php:65
+#: module/Activity/src/Service/ActivityCategory.php:81
 msgid "You are not allowed to view activity categories"
 msgstr "Je hebt niet de rechten om activiteitencategorieën te bekijken"
 
-#: module/Activity/src/Service/ActivityCategory.php:91
-#: module/Activity/src/Service/ActivityCategory.php:121
-msgid "You are not allowed to create an activity category"
-msgstr "Je hebt niet de rechten om een activiteitencategorie te maken"
-
-#: module/Activity/src/Service/ActivityCategory.php:132
-msgid "You are not allowed to edit an activity category"
-msgstr "Je hebt niet de rechten om een activiteitencategorie bij te werken"
-
-#: module/Activity/src/Service/ActivityCategory.php:158
+#: module/Activity/src/Service/ActivityCategory.php:145
 msgid "You are not allowed to delete an activity category"
 msgstr "Je hebt niet de rechten om een activiteitencategorie te verwijderen"
 
-#: module/Activity/src/Service/ActivityCalendar.php:147
-msgid "Not allowed to create activity options."
-msgstr ""
-"Je hebt niet de juiste rechten om een optie aan te maken voor dit orgaan."
-
-#: module/Activity/src/Service/ActivityCalendar.php:224
+#: module/Activity/src/Service/ActivityCalendar.php:240
 msgid "You are not allowed to approve this option"
 msgstr "Je hebt niet de rechten om deze optie goed te keuren"
 
-#: module/Activity/src/Service/ActivityCalendar.php:260
+#: module/Activity/src/Service/ActivityCalendar.php:288
 msgid "You are not allowed to delete this option"
 msgstr "Je hebt niet de rechten om deze optie te verwijderen"
 
-#: module/Activity/src/Service/SignupListQuery.php:41
-#: module/Activity/src/Service/SignupListQuery.php:50
+#: module/Activity/src/Service/SignupListQuery.php:53
 msgid "You are not allowed to view sign-up lists"
 msgstr "Je hebt niet de rechten om inschrijflijsten te bekijken"
 
-#: module/Activity/src/Service/Activity.php:88
-#: module/Activity/src/Service/Activity.php:137
+#: module/Activity/src/Service/Activity.php:114
+#: module/Activity/src/Service/Activity.php:155
 msgid "You are not allowed to create an activity"
 msgstr "Je hebt niet de rechten om een activiteit te maken"
 
-#: module/Activity/src/Service/Activity.php:177
+#: module/Activity/src/Service/Activity.php:195
 msgid "You are not allowed to create an activity for this organ"
 msgstr "Je hebt niet de rechten om een activiteit aan te maken voor dit orgaan"
 
-#: module/Activity/src/Service/Activity.php:729
-#: module/Activity/src/Service/Activity.php:747
-#: module/Activity/src/Service/Activity.php:765
+#: module/Activity/src/Service/Activity.php:772
+#: module/Activity/src/Service/Activity.php:790
+#: module/Activity/src/Service/Activity.php:808
 msgid "You are not allowed to change the status of the activity"
 msgstr "Je hebt niet de rechten om de status van deze activiteit te wijzigen"
 
-#: module/Education/src/Form/TempUpload.php:25
+#: module/Education/src/Form/TempUpload.php:28
 msgid "Exam to upload"
 msgstr "Tentamen"
 
-#: module/Education/src/Form/Fieldset/Exam.php:55
+#: module/Education/src/Form/Fieldset/Exam.php:61
 msgid "Exam date"
 msgstr "Datum tentamen"
 
-#: module/Education/src/Form/Fieldset/Exam.php:68
+#: module/Education/src/Form/Fieldset/Exam.php:74
 msgid "Final examination"
 msgstr "Laatste tentamen"
 
-#: module/Education/src/Form/Fieldset/Exam.php:69
+#: module/Education/src/Form/Fieldset/Exam.php:75
 msgid "Intermediate test"
 msgstr "Tussentoets"
 
-#: module/Education/src/Form/Fieldset/Exam.php:70
+#: module/Education/src/Form/Fieldset/Exam.php:76
 msgid "Exam answers"
 msgstr "Tentamen antwoorden"
 
-#: module/Education/src/Form/Fieldset/Exam.php:82
-#: module/Education/src/Form/Fieldset/Summary.php:76
-#: module/Education/src/Form/SummaryUpload.php:70
+#: module/Education/src/Form/Fieldset/Exam.php:88
+#: module/Education/src/Form/Fieldset/Summary.php:82
+#: module/Education/src/Form/SummaryUpload.php:73
 msgid "Language"
 msgstr "Taal"
 
-#: module/Education/src/Form/Fieldset/Summary.php:55
-#: module/Education/src/Form/SummaryUpload.php:49
+#: module/Education/src/Form/Fieldset/Summary.php:61
+#: module/Education/src/Form/SummaryUpload.php:52
 msgid "Summary date"
 msgstr "Datum van samenvatting"
 
-#: module/Education/src/Form/Fieldset/Summary.php:66
-#: module/Education/src/Form/SummaryUpload.php:60
-#: module/Frontpage/src/Form/PollComment.php:26
+#: module/Education/src/Form/Fieldset/Summary.php:72
+#: module/Education/src/Form/SummaryUpload.php:63
+#: module/Frontpage/src/Form/PollComment.php:29
 msgid "Author"
 msgstr "Auteur"
 
-#: module/Education/src/Form/AddCourse.php:23
+#: module/Education/src/Form/AddCourse.php:26
 msgid "Quartile 1"
 msgstr "Kwartiel 1"
 
-#: module/Education/src/Form/AddCourse.php:24
+#: module/Education/src/Form/AddCourse.php:27
 msgid "Quartile 2"
 msgstr "Kwartiel 2"
 
-#: module/Education/src/Form/AddCourse.php:25
+#: module/Education/src/Form/AddCourse.php:28
 msgid "Quartile 3"
 msgstr "Kwartiel 3"
 
-#: module/Education/src/Form/AddCourse.php:26
+#: module/Education/src/Form/AddCourse.php:29
 msgid "Quartile 4"
 msgstr "Kwartiel 4"
 
-#: module/Education/src/Form/AddCourse.php:27
+#: module/Education/src/Form/AddCourse.php:30
 msgid "Interim"
 msgstr "Interim"
 
-#: module/Education/src/Form/AddCourse.php:46
+#: module/Education/src/Form/AddCourse.php:49
 msgid "Parent course code"
 msgstr "Moeder vakcode"
 
-#: module/Education/src/Form/AddCourse.php:64
+#: module/Education/src/Form/AddCourse.php:67
 msgid "URL"
 msgstr "URL"
 
-#: module/Education/src/Form/AddCourse.php:83
+#: module/Education/src/Form/AddCourse.php:86
 msgid "Quartile"
 msgstr "Kwartiel"
 
-#: module/Education/src/Form/AddCourse.php:94
+#: module/Education/src/Form/AddCourse.php:97
 msgid "Add course"
 msgstr "Vak toevoegen"
 
-#: module/Education/src/Form/SummaryUpload.php:84
+#: module/Education/src/Form/SummaryUpload.php:87
 msgid "Summary to upload"
 msgstr "Samenvatting"
 
-#: module/Education/src/Form/Bulk.php:38
+#: module/Education/src/Form/Bulk.php:46
 msgid "Finalize uploads"
 msgstr "Rond uploaden af"
 
-#: module/Education/src/Service/Exam.php:170
+#: module/Education/src/Service/Exam.php:151
 msgid "You are not allowed to download exams"
 msgstr "Je hebt niet de rechten om tentamens te downloaden"
 
-#: module/Education/src/Service/Exam.php:208
+#: module/Education/src/Service/Exam.php:195
 msgid "Course doesn't exist"
 msgstr "Vak bestaat niet"
 
-#: module/Education/src/Service/Exam.php:400
+#: module/Education/src/Service/Exam.php:398
 msgid "You are not allowed to delete exams"
 msgstr "Je hebt niet de rechten om tentamens te verwijderen"
 
-#: module/Education/src/Service/Exam.php:419
-#: module/Education/src/Service/Exam.php:544
+#: module/Education/src/Service/Exam.php:417
+#: module/Education/src/Service/Exam.php:542
 msgid "You are not allowed to upload exams"
 msgstr "Het is niet toegestaan om tentamens te uploaden"
 
-#: module/Education/src/Service/Exam.php:559
+#: module/Education/src/Service/Exam.php:557
 msgid "You are not allowed to add courses"
 msgstr "Je hebt niet de rechten om vakken toe te voegen"
 
-#: module/Decision/src/Controller/DecisionController.php:175
+#: module/Decision/src/Controller/DecisionController.php:132
+msgid "You are not allowed to search decisions."
+msgstr "Het is niet toegestaan om besluiten te doorzoeken."
+
+#: module/Decision/src/Controller/DecisionController.php:205
 msgid "You are not allowed to browse files."
 msgstr "Je hebt niet de rechten om door bestanden te bladeren."
 
-#: module/Decision/src/Form/OrganInformation.php:54
+#: module/Decision/src/Form/OrganInformation.php:57
 msgid "Short dutch description"
 msgstr "Korte Nederlandse omschrijving"
 
-#: module/Decision/src/Form/OrganInformation.php:64
+#: module/Decision/src/Form/OrganInformation.php:67
 msgid "Short english description"
 msgstr "Korte Engelse omschrijving"
 
-#: module/Decision/src/Form/OrganInformation.php:74
+#: module/Decision/src/Form/OrganInformation.php:77
 msgid "Long dutch description"
 msgstr "Volledige Nederlandse omschrijving"
 
-#: module/Decision/src/Form/OrganInformation.php:84
+#: module/Decision/src/Form/OrganInformation.php:87
 msgid "Long english description"
 msgstr "Volledige Engelse omschrijving"
 
-#: module/Decision/src/Form/OrganInformation.php:94
+#: module/Decision/src/Form/OrganInformation.php:97
 msgid "Thumbnail photo to upload"
 msgstr "Profiel foto"
 
-#: module/Decision/src/Form/OrganInformation.php:104
+#: module/Decision/src/Form/OrganInformation.php:107
 msgid "Cover photo to upload"
 msgstr "Coverfoto om te uploaden"
 
-#: module/Decision/src/Form/Notes.php:38
+#: module/Decision/src/Form/Notes.php:41
 msgid "Choose a meeting"
 msgstr "Kies een vergadering"
 
-#: module/Decision/src/Form/Notes.php:49
+#: module/Decision/src/Form/Notes.php:52
 msgid "Notes to upload"
 msgstr "Te uploaden notulen"
 
-#: module/Decision/src/Form/Notes.php:96
+#: module/Decision/src/Form/Notes.php:99
 msgid "There already are notes for this meeting"
 msgstr "Er zijn al notulen voor deze vergadering"
 
-#: module/Decision/src/Form/ReorderDocument.php:49
+#: module/Decision/src/Form/ReorderDocument.php:55
 msgid "Move up"
 msgstr "Verplaats omhoog"
 
-#: module/Decision/src/Form/ReorderDocument.php:53
+#: module/Decision/src/Form/ReorderDocument.php:59
 msgid "Move down"
 msgstr "Verplaats omlaag"
 
-#: module/Decision/src/Form/Document.php:41
+#: module/Decision/src/Form/Document.php:44
 msgid "Document name"
 msgstr "Naam document"
 
-#: module/Decision/src/Form/Document.php:51
+#: module/Decision/src/Form/Document.php:54
 msgid "Document to upload"
 msgstr "Te uploaden document"
 
-#: module/Decision/src/Form/Document.php:61
+#: module/Decision/src/Form/Document.php:64
 msgid "Upload document"
 msgstr "Upload document"
 
-#: module/Decision/src/Service/Organ.php:109
+#: module/Decision/src/Service/Organ.php:120
 msgid "Not allowed to view the list of organs"
 msgstr "Niet toegestaan om de lijst van organen te bekijken"
 
-#: module/Decision/src/Service/Organ.php:125
+#: module/Decision/src/Service/Organ.php:136
 msgid "Not allowed to view organ information"
 msgstr "Het is niet toegestaan om informatie over organen in te zien"
 
-#: module/Decision/src/Service/Organ.php:140
+#: module/Decision/src/Service/Organ.php:151
 msgid "You are not allowed to edit organ information"
 msgstr "Je hebt niet de rechten om organen te wijzigen"
 
-#: module/Decision/src/Service/Organ.php:368
+#: module/Decision/src/Service/Organ.php:384
 msgid "You are not allowed to edit this organ's information"
 msgstr "Je hebt niet de rechten om de informatie van dit orgaan te wijzigen"
 
-#: module/Decision/src/Service/Member.php:67
-#: module/Decision/src/Service/MemberInfo.php:69
+#: module/Decision/src/Service/Member.php:80
+#: module/Decision/src/Service/MemberInfo.php:77
 msgid "You are not allowed to view members."
 msgstr "Het is niet toegestaan om lidinformatie in te zien."
 
-#: module/Decision/src/Service/Member.php:86
+#: module/Decision/src/Service/Member.php:99
 msgid "You are not allowed to view the list of today's birthdays."
 msgstr ""
 "Het is niet toegestaan om de lijst met verjaardagen van vandaag te zien."
 
-#: module/Decision/src/Service/Member.php:92
+#: module/Decision/src/Service/Member.php:105
 msgid "You are not allowed to view the list of birthdays."
 msgstr "Het is niet toegestaan om de lijst met verjaardagen te zien."
 
-#: module/Decision/src/Service/Member.php:121
+#: module/Decision/src/Service/Member.php:136
 msgid "Name must be at least "
 msgstr "Naam moet op zijn minst "
 
-#: module/Decision/src/Service/Member.php:126
+#: module/Decision/src/Service/Member.php:141
 msgid "Not allowed to search for members."
 msgstr "Het is niet toegestaan om te zoeken op leden."
 
-#: module/Decision/src/Service/MemberInfo.php:67
+#: module/Decision/src/Service/MemberInfo.php:75
 msgid "You are not allowed to view membership info."
 msgstr "Het is niet toegestaan om lidinformatie in te zien."
 
-#: module/Decision/src/Service/Decision.php:159
-#: module/Decision/src/Service/Decision.php:176
-#: module/Decision/src/Service/Decision.php:190
+#: module/Decision/src/Service/Decision.php:174
+#: module/Decision/src/Service/Decision.php:193
+#: module/Decision/src/Service/Decision.php:207
 msgid "You are not allowed to list meetings."
 msgstr "Het is niet toegestaan om de lijst van vergaderingen te zien."
 
-#: module/Decision/src/Service/Decision.php:208
+#: module/Decision/src/Service/Decision.php:227
 msgid "You are not allowed to view meetings."
 msgstr "Het is niet toegestaan om vergaderingen te zien."
 
-#: module/Decision/src/Service/Decision.php:260
+#: module/Decision/src/Service/Decision.php:279
 msgid "You are not allowed to view meeting documents."
 msgstr "Het is niet toegestaan om vergaderstukken te zien."
 
-#: module/Decision/src/Service/Decision.php:285
+#: module/Decision/src/Service/Decision.php:300
 msgid "You are not allowed to view meeting notes."
 msgstr "Het is niet toegestaan om notulen te zien."
 
-#: module/Decision/src/Service/Decision.php:366
+#: module/Decision/src/Service/Decision.php:381
 msgid "You are not allowed to delete meeting documents."
 msgstr "Het is niet toegestaan om vergaderstukken te verwijderen."
 
-#: module/Decision/src/Service/Decision.php:445
-msgid "You are not allowed to search decisions."
-msgstr "Het is niet toegestaan om besluiten te doorzoeken."
-
-#: module/Decision/src/Service/Decision.php:472
+#: module/Decision/src/Service/Decision.php:473
 msgid "You are not allowed to view all authorizations."
 msgstr "Je hebt niet de rechten om alle machtigingen te bekijken."
 
-#: module/Decision/src/Service/Decision.php:489
+#: module/Decision/src/Service/Decision.php:490
 msgid "You are not allowed to view authorizations."
 msgstr "Je hebt niet de rechten om all machtigingen te bekijken."
 
-#: module/Decision/src/Service/Decision.php:556
+#: module/Decision/src/Service/Decision.php:557
 msgid "You are not allowed to upload notes."
 msgstr "Het is niet toegestaan om notulen te uploaden."
 
-#: module/Decision/src/Service/Decision.php:571
+#: module/Decision/src/Service/Decision.php:572
 msgid "You are not allowed to upload meeting documents."
 msgstr "Het is niet toegestaan om vergaderstukken te uploaden."
 
-#: module/Decision/src/Service/Decision.php:608
+#: module/Decision/src/Service/Decision.php:609
 msgid "You are not authorize people."
 msgstr "Je hebt niet de rechten om iemand te machtigen."
 
-#: module/Application/src/Service/FileStorage.php:77
+#: module/Application/src/Service/FileStorage.php:85
 msgid "An unknown error occurred during uploading (%i)"
 msgstr "Een onbekende fout vond plaats tijdens het uploaden van (%i)"
 
-#: module/Application/src/Service/Infimum.php:78
+#: module/Application/src/Service/Infimum.php:85
 msgid "Unable to retrieve infimum."
 msgstr "Kan infimum niet ophalen."
 
@@ -4422,82 +4418,82 @@ msgstr "Kan infimum niet ophalen."
 msgid "You are not allowed to view infima"
 msgstr "Je hebt niet de rechten om infima te bekijken"
 
-#: module/Frontpage/src/Controller/PollController.php:124
+#: module/Frontpage/src/Controller/PollController.php:128
 msgid "You are not allowed to create comments on this poll"
 msgstr "Je hebt niet de rechten om commentaar te geven op de poll"
 
-#: module/Frontpage/src/Controller/NewsAdminController.php:70
+#: module/Frontpage/src/Controller/NewsAdminController.php:75
 msgid "You are not allowed to create news items"
 msgstr "Je hebt niet de rechten om nieuwsberichten toe te voegen"
 
-#: module/Frontpage/src/Controller/NewsAdminController.php:105
+#: module/Frontpage/src/Controller/NewsAdminController.php:110
 msgid "You are not allowed to edit news items"
 msgstr "Je hebt niet de rechten om nieuwsberichten te wijzigen"
 
-#: module/Frontpage/src/Controller/NewsAdminController.php:148
+#: module/Frontpage/src/Controller/NewsAdminController.php:153
 msgid "You are not allowed to delete news items"
 msgstr "Je hebt niet de rechten om nieuwsberichten te verwijderen"
 
-#: module/Frontpage/src/Form/Page.php:51
-#: module/Frontpage/src/Form/NewsItem.php:27
+#: module/Frontpage/src/Form/Page.php:54
+#: module/Frontpage/src/Form/NewsItem.php:30
 msgid "Dutch title"
 msgstr "Nederlandse titel"
 
-#: module/Frontpage/src/Form/Page.php:61
-#: module/Frontpage/src/Form/NewsItem.php:37
+#: module/Frontpage/src/Form/Page.php:64
+#: module/Frontpage/src/Form/NewsItem.php:40
 msgid "English title"
 msgstr "Engelse titel"
 
-#: module/Frontpage/src/Form/Page.php:91
+#: module/Frontpage/src/Form/Page.php:94
 msgid "Required role"
 msgstr "Verplichte rol"
 
-#: module/Frontpage/src/Form/PollComment.php:36
+#: module/Frontpage/src/Form/PollComment.php:39
 msgid "Content"
 msgstr "Inhoud"
 
-#: module/Frontpage/src/Form/PollComment.php:46
+#: module/Frontpage/src/Form/PollComment.php:49
 msgid "Comment"
 msgstr "Commentaar"
 
-#: module/Frontpage/src/Form/PollApproval.php:25
+#: module/Frontpage/src/Form/PollApproval.php:28
 msgid "Expiration date for the poll (YYYY-MM-DD)"
 msgstr "Verloopdatum van de poll (JJJJ-MM-DD)"
 
-#: module/Frontpage/src/Service/News.php:71
+#: module/Frontpage/src/Service/News.php:77
 msgid "You are not allowed to list all news items."
 msgstr "Je hebt niet de rechten om alle nieuws items te bekijken."
 
-#: module/Frontpage/src/Service/Page.php:95
+#: module/Frontpage/src/Service/Page.php:106
 msgid "You are not allowed to view this page."
 msgstr "Je hebt niet de rechten om deze pagina te bekijken."
 
-#: module/Frontpage/src/Service/Page.php:144
+#: module/Frontpage/src/Service/Page.php:155
 msgid "You are not allowed to view the list of pages."
 msgstr "Je hebt niet de rechten om de lijst met pagina's te bekijken."
 
-#: module/Frontpage/src/Service/Page.php:232
+#: module/Frontpage/src/Service/Page.php:246
 msgid "You are not allowed to edit pages."
 msgstr "Je hebt niet de rechten om pagina's te wijzigen."
 
-#: module/Frontpage/src/Service/Page.php:289
-#: module/Photo/src/Service/Admin.php:227
+#: module/Frontpage/src/Service/Page.php:300
+#: module/Photo/src/Service/Admin.php:210
 msgid "The uploaded file does not have a valid extension"
 msgstr "Het geuploade bestand heeft geen valide extensie"
 
-#: module/Frontpage/src/Service/Page.php:293
+#: module/Frontpage/src/Service/Page.php:304
 msgid "The uploaded file is not a valid image"
 msgstr "Het geuploade bestand is geen valide plaatje"
 
-#: module/Frontpage/src/Service/Page.php:308
+#: module/Frontpage/src/Service/Page.php:319
 msgid "You are not allowed to create new pages."
 msgstr "Je hebt niet de rechten om nieuw pagina's te maken."
 
-#: module/Frontpage/src/Service/Poll.php:112
+#: module/Frontpage/src/Service/Poll.php:103
 msgid "You are not allowed to view unapproved polls"
 msgstr "Je hebt niet de rechten om niet-goedgekeurde polls te bekijken"
 
-#: module/Frontpage/src/Service/Poll.php:237
+#: module/Frontpage/src/Service/Poll.php:228
 msgid "You are not allowed to vote on this poll."
 msgstr "Je hebt niet de rechten om op deze poll te stemmen."
 
@@ -4509,68 +4505,60 @@ msgstr "Je hebt niet de rechten om polls aan te vragen"
 msgid "You are not allowed to delete polls"
 msgstr "Je hebt niet de rechten om polls te verwijderen"
 
-#: module/Frontpage/src/Service/Poll.php:447
+#: module/Frontpage/src/Service/Poll.php:449
 msgid "You are not allowed to approve polls"
 msgstr "Je hebt niet de rechten om polls goed te keuren"
 
-#: module/Photo/src/Form/EditAlbum.php:47
+#: module/Photo/src/Form/EditAlbum.php:51
 msgid "End date"
 msgstr "Einddatum"
 
-#: module/Photo/src/Form/CreateAlbum.php:35
+#: module/Photo/src/Form/CreateAlbum.php:38
 msgid "Create"
 msgstr "Maak"
 
-#: module/Photo/src/Service/Photo.php:123
-#: module/Photo/src/Service/Photo.php:163
-#: module/Photo/src/Service/Photo.php:203
-#: module/Photo/src/Service/Photo.php:255
-#: module/Photo/src/Service/Photo.php:272
+#: module/Photo/src/Service/Photo.php:138
+#: module/Photo/src/Service/Photo.php:178
+#: module/Photo/src/Service/Photo.php:220
+#: module/Photo/src/Service/Photo.php:271
+#: module/Photo/src/Service/Photo.php:287
 msgid "Not allowed to view photos"
 msgstr "Het is niet toegestaan om foto's te zien"
 
-#: module/Photo/src/Service/Photo.php:143
+#: module/Photo/src/Service/Photo.php:158
 msgid "Not allowed to download photos"
 msgstr "Het is niet toegestaan om foto's te downloaden"
 
-#: module/Photo/src/Service/Photo.php:290
+#: module/Photo/src/Service/Photo.php:305
 msgid "Not allowed to delete photos."
 msgstr "Het is niet toegestaan om foto's te verwijderen."
 
-#: module/Photo/src/Service/Photo.php:638
+#: module/Photo/src/Service/Photo.php:660
 msgid "Not allowed to view previous photos of the week"
 msgstr "Not allowed to view previous photos of the week"
 
-#: module/Photo/src/Service/Photo.php:688
+#: module/Photo/src/Service/Photo.php:712
 msgid "Not allowed to add tags."
 msgstr "Het is niet toegestaan om tags toe te voegen."
 
-#: module/Photo/src/Service/Photo.php:717
-#: module/Photo/src/Service/Photo.php:778
+#: module/Photo/src/Service/Photo.php:743
+#: module/Photo/src/Service/Photo.php:809
 msgid "Not allowed to view tags."
 msgstr "Het is niet toegestaan om tags te zien."
 
-#: module/Photo/src/Service/Photo.php:753
+#: module/Photo/src/Service/Photo.php:784
 msgid "Not allowed to remove tags."
 msgstr "Het is niet toegestaan om tags te verwijderen."
 
-#: module/Photo/src/Service/Admin.php:90
+#: module/Photo/src/Service/Admin.php:100
 msgid "Not allowed to add photos."
 msgstr "Het is niet toegestaan om foto's toe te voegen."
 
-#: module/Photo/src/Service/Admin.php:176
-msgid "Not allowed to import photos."
-msgstr "Het is niet toegestaan om foto's te importeren."
-
 #: module/Photo/src/Service/Admin.php:194
-msgid "The specified path is not valid"
-msgstr "Het gespecificeerde pad is niet valide"
-
-#: module/Photo/src/Service/Admin.php:211
 msgid "An unknown error occurred during uploading ("
 msgstr "Een onbekende error vond plaats tijdens het uploaden van ("
 
-#: module/Photo/src/Service/Admin.php:233
+#: module/Photo/src/Service/Admin.php:216
 #, php-format
 msgid ""
 "The uploaded file is not a valid image \n"
@@ -4579,85 +4567,85 @@ msgstr ""
 "Het geuploade bestand is geen valide plaatje \n"
 "Error: %s"
 
-#: module/Photo/src/Service/Admin.php:249
+#: module/Photo/src/Service/Admin.php:232
 msgid "Not allowed to upload photos."
 msgstr "Het is niet toegestaan om foto's te uploaden."
 
-#: module/Photo/src/Service/Album.php:118
-#: module/Photo/src/Service/Album.php:148
-#: module/Photo/src/Service/Album.php:283
+#: module/Photo/src/Service/Album.php:121
+#: module/Photo/src/Service/Album.php:151
+#: module/Photo/src/Service/Album.php:290
 msgid "Not allowed to view albums"
 msgstr "Het is niet toegestaan om albums te zien"
 
-#: module/Photo/src/Service/Album.php:171
+#: module/Photo/src/Service/Album.php:174
 msgid "Not allowed to view albums without dates"
 msgstr "Het is niet toegestaan om albums te zien zonder data"
 
-#: module/Photo/src/Service/Album.php:240
+#: module/Photo/src/Service/Album.php:245
 msgid "Not allowed to create albums"
 msgstr "Het is niet toegestaan om albums te maken"
 
-#: module/Photo/src/Service/Album.php:264
+#: module/Photo/src/Service/Album.php:269
 msgid "Not allowed to create albums."
 msgstr "Het is niet toegestaan om albums te maken."
 
-#: module/Photo/src/Service/Album.php:324
+#: module/Photo/src/Service/Album.php:331
 msgid "Not allowed to edit albums"
 msgstr "Het is niet toegestaan om albums te wijzigen"
 
-#: module/Photo/src/Service/Album.php:343
+#: module/Photo/src/Service/Album.php:350
 msgid "Not allowed to edit albums."
 msgstr "Het is niet toegestaan om albums te wijzigen."
 
-#: module/Photo/src/Service/Album.php:366
+#: module/Photo/src/Service/Album.php:375
 msgid "Not allowed to move albums"
 msgstr "Het is niet toegestaan om albums te verplaatsen"
 
-#: module/Photo/src/Service/Album.php:400
+#: module/Photo/src/Service/Album.php:409
 msgid "Not allowed to delete albums."
 msgstr "Het is niet toegestaan om albums te verwijderen."
 
-#: module/Photo/src/Service/Album.php:421
+#: module/Photo/src/Service/Album.php:430
 msgid "Not allowed to generate album covers."
 msgstr "Het is niet toegestaan om albums-covers opnieuw te genereren."
 
-#: module/Photo/src/Service/Album.php:459
+#: module/Photo/src/Service/Album.php:470
 msgid "Not allowed to move photos"
 msgstr "Het is niet toegestaan om foto's te verplaatsen"
 
-#: module/User/src/Form/Password.php:29
+#: module/User/src/Form/Password.php:32
 msgid "Old password"
 msgstr "Oud wachtwoord"
 
-#: module/User/src/Form/Password.php:39
+#: module/User/src/Form/Password.php:42
 msgid "New password"
 msgstr "Nieuw wachtwoord"
 
-#: module/User/src/Form/Password.php:49
+#: module/User/src/Form/Password.php:52
 msgid "Verify new password"
 msgstr "Verifier nieuw wachtwoord"
 
-#: module/User/src/Form/Activate.php:29 module/User/src/Form/Login.php:49
+#: module/User/src/Form/Activate.php:32 module/User/src/Form/Login.php:52
 msgid "Your password"
 msgstr "Wachtwoord"
 
-#: module/User/src/Form/Activate.php:39
+#: module/User/src/Form/Activate.php:42
 msgid "Verify your password"
 msgstr "Verifieer je wachtwoord"
 
-#: module/User/src/Form/Register.php:51
+#: module/User/src/Form/Register.php:54
 msgid "E-mail address"
 msgstr "E-mail adres"
 
-#: module/User/src/Form/Register.php:81
+#: module/User/src/Form/Register.php:82
 msgid "This email address does not be long to the given member."
 msgstr "Dit email adres is niet van het lid met dit lidmaatschapsnummer."
 
-#: module/User/src/Form/Register.php:90
+#: module/User/src/Form/Register.php:91
 msgid "There is no member with this membership number."
 msgstr "Er is geen lid met dit lidmaatschapsnummer."
 
-#: module/User/src/Form/Register.php:99
+#: module/User/src/Form/Register.php:100
 msgid ""
 "You already attempted to register, please check your email or try again "
 "after 15 minutes."
@@ -4665,64 +4653,64 @@ msgstr ""
 "Je hebt al geprobeerd om te registreren; controleer je email of probeer het "
 "na een kwartier opnieuw."
 
-#: module/User/src/Form/Register.php:108
+#: module/User/src/Form/Register.php:109
 msgid "This member already has an account."
 msgstr "Dit lid heeft al een account."
 
-#: module/User/src/Form/Login.php:39
+#: module/User/src/Form/Login.php:42
 msgid "Membership number or email address"
 msgstr "Lidnummer of email adres"
 
-#: module/User/src/Form/Login.php:69
+#: module/User/src/Form/Login.php:72
 msgid "Remember me"
 msgstr "Onthoud mij"
 
-#: module/User/src/Form/Login.php:105
+#: module/User/src/Form/Login.php:108
 msgid "This user could not be found."
 msgstr "Deze gebruiker kon niet gevonden worden."
 
-#: module/User/src/Form/Login.php:114
+#: module/User/src/Form/Login.php:117
 msgid "Wrong password provided."
 msgstr "Verkeerd wachtwoord ingevoerd."
 
-#: module/User/src/Form/Login.php:123
+#: module/User/src/Form/Login.php:126
 msgid "Too many login attempts, try again later."
 msgstr "Te veel login pogingen, probeer het later nog eens."
 
-#: module/User/src/Service/ApiUser.php:75
-#: module/User/src/Service/ApiUser.php:107
+#: module/User/src/Service/ApiUser.php:73
+#: module/User/src/Service/ApiUser.php:105
 msgid "You are not allowed to view API tokens"
 msgstr "Je hebt niet de rechten om API tokens in te zien"
 
-#: module/User/src/Service/ApiUser.php:91
+#: module/User/src/Service/ApiUser.php:89
 msgid "You are not allowed to remove API tokens"
 msgstr "Je hebt niet de rechten om API tokens te verwijderen"
 
-#: module/User/src/Service/ApiUser.php:151
+#: module/User/src/Service/ApiUser.php:149
 msgid "You are not allowed to add API tokens"
 msgstr "Je hebt niet de rechten om API tokens toe te voegen"
 
-#: module/User/src/Service/User.php:317
+#: module/User/src/Service/User.php:334
 msgid "Password incorrect"
 msgstr "Wachtwoord incorrect"
 
-#: module/User/src/Service/User.php:377
+#: module/User/src/Service/User.php:394
 msgid "You are not allowed to login using pin codes"
 msgstr "Het is niet toegestaan in te loggen"
 
-#: module/User/src/Service/User.php:461
+#: module/User/src/Service/User.php:478
 msgid "You are not allowed to change your password"
 msgstr "Je hebt niet de rechten om een wachtwoord te wijzigen"
 
-#: module/User/src/Service/Email.php:64
+#: module/User/src/Service/Email.php:75
 msgid "Account activation code for the GEWIS Website"
 msgstr "Activatiecode voor je account op de GEWIS Website"
 
-#: module/User/src/Service/Email.php:90
+#: module/User/src/Service/Email.php:103
 msgid "Password reset code for the GEWIS Website"
 msgstr "Wachtwoord reset code voor de GEWIS Website"
 
-#: module/User/src/Authorization/GenericAclService.php:68
+#: module/User/src/Authorization/GenericAclService.php:89
 msgid "You need to log in to perform this action"
 msgstr "Je moet ingelogd zijn om dit te doen"
 
@@ -4769,6 +4757,21 @@ msgstr "Inkoper"
 #: module/Application/language/additional-strings:11
 msgid "Inactief Lid"
 msgstr "Inactief Lid"
+
+#~ msgid "You are not allowed to view activities which you signed up for"
+#~ msgstr ""
+#~ "Je hebt niet de rechten om te zien voor welke activiteiten je "
+#~ "ingeschreven bent"
+
+#~ msgid "Not allowed to create activity options."
+#~ msgstr ""
+#~ "Je hebt niet de juiste rechten om een optie aan te maken voor dit orgaan."
+
+#~ msgid "Not allowed to import photos."
+#~ msgstr "Het is niet toegestaan om foto's te importeren."
+
+#~ msgid "The specified path is not valid"
+#~ msgstr "Het gespecificeerde pad is niet valide"
 
 #~ msgid "Microsoft Imagine"
 #~ msgstr "Microsoft Imagine"
