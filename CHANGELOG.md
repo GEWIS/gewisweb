@@ -1,3 +1,14 @@
+## [v2.5.2](https://github.com/GEWIS/gewisweb/tree/v2.5.2) (2022-01-03)
+
+- Added `Referrer-Policy` to restrict referrer information on cross-origin requests.
+- Added `Permissions-Policy` to restrict access to web APIs which are not used by the website.
+- Fixed issue where the activity notice on career activities would link to the CIB instead of the CEB.
+- Fixed issue where the activity notice would show information about unsubscribing when no sign-up list was available.
+- Updated dependencies.
+- Updated the `$year` variable to `2022`.
+
+---
+
 ## [v2.5.1](https://github.com/GEWIS/gewisweb/tree/v2.5.1) (2021-12-28)
 
 - Added GitHub Actions for automated analysis and feedback of proposed changes.
