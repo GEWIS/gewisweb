@@ -1,0 +1,47 @@
+name: Docs
+
+# Only run this action when pushing to master.
+on:
+    push:
+        branches:
+            - master
+
+jobs:
+    phpunit:
+        name: PHPUnit
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+
+            -   name: Install PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.1'
+                    tools: phpdoc
+
+            -   name: Clone the target branch
+                run: |
+                    REMOTE_BRANCH="${REMOTE_BRANCH:-gh-pages}"
+                    REMOTE_REPO="https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
+                    echo "Publishing to ${GITHUB_REPOSITORY} on branch ${REMOTE_BRANCH}"
+                    rm -rf docs/_site/
+                    git clone --depth=1 --branch="${REMOTE_BRANCH}" --single-branch --no-checkout "${REMOTE_REPO}" docs/_site/
+
+            -   name: Build site
+                run: phpdoc
+
+            -   name: Deploy to GitHub Pages
+                run: |
+                    SOURCE_COMMIT="$(git log -1 --pretty="%an: %B" "$GITHUB_SHA")"
+                    pushd docs/_site &>/dev/null
+                    : > .nojekyll
+                    git add --all
+                    git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+                        commit --quiet \
+                        --message "Deploy docs from ${GITHUB_SHA}" \
+                        --message "$SOURCE_COMMIT" \
+                        --message "Co-authored-by: ${GITHUB_ACTOR} <${GITHUB_ACTOR}@users.noreply.github.com>"
+                    git push
+                    popd &>/dev/null

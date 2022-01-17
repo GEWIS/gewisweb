@@ -30,3 +30,4 @@ config/bash.env
 .idea/sonarlint-state.xml
 phpstan/phpstan-baseline-temp.neon
 phpstan/phpstan-baseline-pr.neon
+docs/_site/
