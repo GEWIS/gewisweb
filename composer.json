@@ -124,7 +124,8 @@
             "cweagans/composer-patches": true,
             "laminas/laminas-component-installer": true,
             "phpstan/extension-installer": true
-        }
+        },
+        "discard-changes" : true
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
