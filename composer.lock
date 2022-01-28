@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ba456788be723c8f2acb1143b49b2fa1",
+    "content-hash": "f2b347c4937f492ddabffb66569a5635",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -2933,16 +2933,16 @@
         },
         {
             "name": "laminas/laminas-form",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-form.git",
-                "reference": "beee25df568f1140d5553eabe51f97c6643f0464"
+                "reference": "43005a3ec4c2292d4f825273768d9b884acbca37"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-form/zipball/beee25df568f1140d5553eabe51f97c6643f0464",
-                "reference": "beee25df568f1140d5553eabe51f97c6643f0464",
+                "url": "https://api.github.com/repos/laminas/laminas-form/zipball/43005a3ec4c2292d4f825273768d9b884acbca37",
+                "reference": "43005a3ec4c2292d4f825273768d9b884acbca37",
                 "shasum": ""
             },
             "require": {
@@ -3027,7 +3027,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-12-03T06:38:20+00:00"
+            "time": "2022-01-28T15:58:45+00:00"
         },
         {
             "name": "laminas/laminas-http",
