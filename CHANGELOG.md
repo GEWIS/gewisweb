@@ -1,3 +1,10 @@
+## [v2.5.3](https://github.com/GEWIS/gewisweb/tree/v2.5.3) (2022-01-28)
+
+- Added automatic generation of code documentation at [gewis.github.io/gewisweb](https://gewis.github.io/gewisweb/).
+- Upgraded `laminas/laminas-form` to protect against a [potential reflected XSS vector](https://getlaminas.org/security/advisory/LP-2022-01).
+
+---
+
 ## [v2.5.2](https://github.com/GEWIS/gewisweb/tree/v2.5.2) (2022-01-03)
 
 - Added `Referrer-Policy` to restrict referrer information on cross-origin requests.
@@ -26,7 +33,7 @@
 
 - Added a privacy widget where users can set their tracking preferences.
 - Improved the new photo viewer.
-- Upgraded to PHP 8.1
+- Upgraded to PHP 8.1.
 - Removed the old photo viewer.
 
 ---
