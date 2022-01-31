@@ -152,8 +152,7 @@ class Activity extends BaseMapper
     public function getUpcomingActivitiesByOrgan(OrganModel $organ): array
     {
         $qb = $this->getRepository()->createQueryBuilder('a');
-        $qb->from($this->getRepositoryName(), 'a')
-            ->where('a.endTime > :now')
+        $qb->where('a.endTime > :now')
             ->setParameter('now', new DateTime())
             ->andWhere('a.organ = :organ')
             ->setParameter('organ', $organ);
