@@ -2,7 +2,10 @@
 
 namespace Education\Form;
 
-use Laminas\Filter\StringToUpper;
+use Laminas\Filter\{
+    StringToUpper,
+    ToNull,
+};
 use Laminas\Form\Element\{
     Select,
     Submit,
@@ -131,6 +134,11 @@ class AddCourse extends Form implements InputFilterProviderInterface
             ],
             'url' => [
                 'required' => false,
+                'filters' => [
+                    [
+                        'name' => ToNull::class,
+                    ],
+                ],
             ],
             'quartile' => [
                 'required' => true,

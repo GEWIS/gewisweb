@@ -48,8 +48,11 @@ class Course implements ResourceInterface
     /**
      * Course url.
      */
-    #[Column(type: "string")]
-    protected string $url;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $url = null;
 
     /**
      * Last year the course has been given.
@@ -155,9 +158,9 @@ class Course implements ResourceInterface
     /**
      * Get the course URL.
      *
-     * @return string
+     * @return string|null
      */
-    public function getUrl(): string
+    public function getUrl(): ?string
     {
         return $this->url;
     }
@@ -225,9 +228,9 @@ class Course implements ResourceInterface
     /**
      * Set the course URL.
      *
-     * @param string $url
+     * @param string|null $url
      */
-    public function setUrl(string $url): void
+    public function setUrl(?string $url): void
     {
         $this->url = $url;
     }
