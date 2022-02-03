@@ -21,6 +21,8 @@ class PollAdminControllerFactory implements FactoryInterface
         ?array $options = null,
     ): PollAdminController {
         return new PollAdminController(
+            $container->get('frontpage_service_acl'),
+            $container->get('translator'),
             $container->get('frontpage_service_poll'),
         );
     }

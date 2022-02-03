@@ -98,6 +98,10 @@ class Poll
     {
         $poll = $this->pollMapper->find($pollId);
 
+        if (null === $poll) {
+            return null;
+        }
+
         if (is_null($poll->getApprover()) && !$this->aclService->isAllowed('view_unapproved', 'poll')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view unapproved polls')
@@ -395,10 +399,6 @@ class Poll
      */
     public function deletePoll(PollModel $poll): void
     {
-        if (!$this->aclService->isAllowed('delete', 'poll')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to delete polls'));
-        }
-
         // Check to see if poll is approved
         if ($poll->isApproved()) {
             // Instead of removing, set expiry date to 'now' to hide poll.
@@ -415,26 +415,16 @@ class Poll
      * Approves the given poll.
      *
      * @param PollModel $poll The poll to approve
-     * @param Parameters $data The data from the poll approval form
      *
      * @return bool indicating whether the approval succeeded
      *
      * @throws ORMException
      */
-    public function approvePoll(
-        PollModel $poll,
-        Parameters $data,
-    ): bool {
-        $approvalForm = $this->getPollApprovalForm();
-        $approvalForm->bind($poll);
-        $approvalForm->setData($data);
-
-        if (!$approvalForm->isValid()) {
-            return false;
-        }
-
+    public function approvePoll(PollModel $poll): bool
+    {
         $poll->setApprover($this->aclService->getIdentity());
         $this->pollMapper->flush();
+
         return true;
     }
 
@@ -445,10 +435,6 @@ class Poll
      */
     public function getPollApprovalForm(): PollApprovalForm
     {
-        if (!$this->aclService->isAllowed('approve', 'poll')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to approve polls'));
-        }
-
         return $this->pollApprovalForm;
     }
 }
