@@ -15,7 +15,10 @@ use Laminas\Form\Fieldset;
 use Laminas\Hydrator\ClassMethodsHydrator;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\Callback;
+use Laminas\Validator\{
+    Callback,
+    StringLength,
+};
 
 class SignupList extends Fieldset implements InputFilterProviderInterface
 {
@@ -127,10 +130,9 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
         array $context = [],
     ): bool {
         try {
-            $thisTime = new DateTime($value);
             $closeTime = isset($context['closeDate']) ? new DateTime($context['closeDate']) : new DateTime('now');
 
-            return $thisTime < $closeTime;
+            return new DateTime($value) < $closeTime;
         } catch (Exception $e) {
             // An exception is an indication that one of the times was not valid
             return false;
@@ -147,7 +149,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 'required' => false,
                 'validators' => [
                     [
-                        'name' => 'StringLength',
+                        'name' => StringLength::class,
                         'options' => [
                             'encoding' => 'UTF-8',
                             'min' => 1,
@@ -160,7 +162,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 'required' => false,
                 'validators' => [
                     [
-                        'name' => 'StringLength',
+                        'name' => StringLength::class,
                         'options' => [
                             'encoding' => 'UTF-8',
                             'min' => 1,
@@ -171,29 +173,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
             ],
             'openDate' => [
                 'required' => true,
-                // TODO: Move to an actual InputFilter
-                // The validator below does not work, as the $context in
-                // Activity\Form\Activity::beforeBeginTime is the context
-                // of this FieldSet and not the parent form.
-                //
-                // This means that the `beginTime`-index does not exist and
-                // as a result any `closeDate` in the future does not validate
-                // correctly.
-                //
-                // An separate InputFilter should be made for the parent form
-                // to validate any and all child forms.
-                //
                 'validators' => [
-                    //[
-                    //    'name' => \Laminas\Validator\Callback::class,
-                    //    'options' => [
-                    //        'messages' => [
-                    //            \Laminas\Validator\Callback::INVALID_VALUE =>
-                    //                $this->translator->translate('The sign-up list opening date and time must be before the activity starts.'),
-                    //        ],
-                    //        'callback' => ['Activity\Form\Activity', 'beforeBeginTime'],
-                    //    ],
-                    //],
                     [
                         'name' => Callback::class,
                         'options' => [
@@ -209,30 +189,6 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
             ],
             'closeDate' => [
                 'required' => true,
-                // TODO: Move to an actual InputFilter
-                // The validator below does not work, as the $context in
-                // Activity\Form\Activity::beforeBeginTime is the context
-                // of this FieldSet and not the parent form.
-                //
-                // This means that the `beginTime`-index does not exist and
-                // as a result any `closeDate` in the future does not validate
-                // correctly.
-                //
-                // An separate InputFilter should be made for the parent form
-                // to validate any and all child forms.
-                //
-                //'validators' => [
-                //    [
-                //        'name' => \Laminas\Validator\Callback::class,
-                //        'options' => [
-                //            'messages' => [
-                //                \Laminas\Validator\Callback::INVALID_VALUE =>
-                //                    $this->translator->translate('The sign-up list closing date and time must be before the activity starts.'),
-                //            ],
-                //            'callback' => ['Activity\Form\Activity', 'beforeBeginTime'],
-                //        ],
-                //    ],
-                //],
             ],
         ];
     }

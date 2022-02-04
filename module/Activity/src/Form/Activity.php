@@ -238,10 +238,9 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
         array $context = [],
     ): bool {
         try {
-            $endTime = $context['endTime'];
-            $endTime = isset($endTime) ? new DateTime($endTime) : new DateTime('now');
+            $endTime = isset($context['endTime']) ? new DateTime($context['endTime']) : new DateTime('now');
 
-            return $value <= $endTime;
+            return new DateTime($value) <= $endTime;
         } catch (Exception) {
             // An exception is an indication that one of the times was not valid
             return false;
@@ -263,7 +262,7 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
         try {
             $beginTime = isset($context['beginTime']) ? new DateTime($context['beginTime']) : new DateTime('now');
 
-            return $value <= $beginTime;
+            return new DateTime($value) <= $beginTime;
         } catch (Exception) {
             // An exception is an indication that one of the DateTimes was not valid
             return false;
@@ -281,9 +280,7 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
     {
         $valid = parent::isValid();
 
-        /*
-         * This might seem like a bit of a hack, but this is probably the only way Laminas allows us to do this.
-         */
+        // This might seem like a bit of a hack, but this is probably the only way Laminas allows us to do this.
         if (isset($this->data['language_dutch']) && isset($this->data['language_english'])) {
             // Check for each SignupList whether the required fields have data.
             foreach ($this->get('signupLists')->getFieldSets() as $signupList) {
@@ -361,6 +358,24 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
                         }
                     }
                 }
+            }
+        }
+
+        // Similar to what is shown above, validation of the closing date and time of the sign-up lists cannot be done
+        // in the fieldset itself (there is no context), so do it here.
+        foreach ($this->get('signupLists')->getFieldSets() as $signupList) {
+            if (
+                !self::beforeBeginTime(
+                    $signupList->get('closeDate')->getValue(),
+                    ['beginTime' => $this->get('beginTime')->getValue()],
+                )
+            ) {
+                $signupList->get('closeDate')->setMessages(
+                    [
+                        $this->getTranslator()->translate('The sign-up list closing date and time must be before the activity starts.'),
+                    ],
+                );
+                $valid = false;
             }
         }
 
