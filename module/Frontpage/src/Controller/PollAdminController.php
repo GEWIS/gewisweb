@@ -2,15 +2,27 @@
 
 namespace Frontpage\Controller;
 
+use Frontpage\Service\AclService;
 use Frontpage\Service\Poll as PollService;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Paginator\Paginator;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
 class PollAdminController extends AbstractActionController
 {
+    /**
+     * @var AclService
+     */
+    private AclService $aclService;
+
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
+
     /**
      * @var PollService
      */
@@ -19,10 +31,17 @@ class PollAdminController extends AbstractActionController
     /**
      * PollAdminController constructor.
      *
+     * @param AclService $aclService
+     * @param Translator $translator
      * @param PollService $pollService
      */
-    public function __construct(PollService $pollService)
-    {
+    public function __construct(
+        AclService $aclService,
+        Translator $translator,
+        PollService $pollService,
+    ) {
+        $this->aclService = $aclService;
+        $this->translator = $translator;
         $this->pollService = $pollService;
     }
 
@@ -31,6 +50,10 @@ class PollAdminController extends AbstractActionController
      */
     public function listAction(): ViewModel
     {
+        if (!$this->aclService->isAllowed('approve', 'poll')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to administer polls'));
+        }
+
         $adapter = $this->pollService->getPaginatorAdapter();
         $paginator = new Paginator($adapter);
         $paginator->setDefaultItemCountPerPage(15);
@@ -57,30 +80,52 @@ class PollAdminController extends AbstractActionController
     /**
      * Approve a poll.
      */
-    public function approveAction(): Response
+    public function approveAction(): ViewModel|Response
     {
+        if (!$this->aclService->isAllowed('approve', 'poll')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to approve polls'));
+        }
+
         if ($this->getRequest()->isPost()) {
             $pollId = $this->params()->fromRoute('poll_id');
             $poll = $this->pollService->getPoll($pollId);
-            $this->pollService->approvePoll($poll, $this->getRequest()->getPost());
 
-            return $this->redirect()->toRoute('admin_poll');
+            if (null !== $poll) {
+                $approvalForm = $this->pollService->getPollApprovalForm();
+                $approvalForm->bind($poll);
+                $approvalForm->setData($this->getRequest()->getPost()->toArray());
+
+                if ($approvalForm->isValid()) {
+                    if ($this->pollService->approvePoll($poll)) {
+                        return $this->redirect()->toRoute('admin_poll');
+                    }
+                }
+            }
         }
-        throw new NotAllowedException();
+
+        return $this->notFoundAction();
     }
 
     /**
      * Delete a poll.
      */
-    public function deleteAction(): Response
+    public function deleteAction(): ViewModel|Response
     {
+        if (!$this->aclService->isAllowed('delete', 'poll')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to delete polls'));
+        }
+
         if ($this->getRequest()->isPost()) {
             $pollId = $this->params()->fromRoute('poll_id');
             $poll = $this->pollService->getPoll($pollId);
-            $this->pollService->deletePoll($poll);
 
-            return $this->redirect()->toRoute('admin_poll');
+            if (null !== $poll) {
+                $this->pollService->deletePoll($poll);
+
+                return $this->redirect()->toRoute('admin_poll');
+            }
         }
-        throw new NotAllowedException();
+
+        return $this->notFoundAction();
     }
 }
