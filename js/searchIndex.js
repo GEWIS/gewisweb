@@ -3366,6 +3366,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Mapper-BaseMapper.html#method_count"
         },                {
+            "fqsen": "\\Application\\Mapper\\BaseMapper\u003A\u003Atransactional\u0028\u0029",
+            "name": "transactional",
+            "summary": "Transactional\u0020Doctrine\u0020wrapper.",
+            "url": "classes/Application-Mapper-BaseMapper.html#method_transactional"
+        },                {
             "fqsen": "\\Application\\Mapper\\BaseMapper\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
             "summary": "",
@@ -9860,11 +9865,6 @@ Search.appendIndex(
             "name": "Exam",
             "summary": "Mapper\u0020for\u0020Exam.",
             "url": "classes/Education-Mapper-Exam.html"
-        },                {
-            "fqsen": "\\Education\\Mapper\\Exam\u003A\u003Atransactional\u0028\u0029",
-            "name": "transactional",
-            "summary": "Transactional\u0020Doctrine\u0020wrapper.",
-            "url": "classes/Education-Mapper-Exam.html#method_transactional"
         },                {
             "fqsen": "\\Education\\Mapper\\Exam\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
