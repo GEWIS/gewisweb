@@ -240,7 +240,7 @@ return [
             'activity_calendar' => [
                 'type' => Literal::class,
                 'options' => [
-                    'route' => '/activity/calendar/',
+                    'route' => '/activity/calendar',
                     'defaults' => [
                         'controller' => ActivityCalendarController::class,
                         'action' => 'index',
@@ -251,7 +251,7 @@ return [
                     'delete' => [
                         'type' => Literal::class,
                         'options' => [
-                            'route' => 'delete',
+                            'route' => '/delete',
                             'defaults' => [
                                 'action' => 'delete',
                             ],
@@ -260,7 +260,7 @@ return [
                     'approve' => [
                         'type' => Literal::class,
                         'options' => [
-                            'route' => 'approve',
+                            'route' => '/approve',
                             'defaults' => [
                                 'action' => 'approve',
                             ],
@@ -269,7 +269,7 @@ return [
                     'create' => [
                         'type' => Literal::class,
                         'options' => [
-                            'route' => 'create',
+                            'route' => '/create',
                             'defaults' => [
                                 'action' => 'create',
                             ],
