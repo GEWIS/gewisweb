@@ -15,7 +15,6 @@ use Education\Form\{
 use Education\Mapper\{
     Course as CourseMapper,
     Exam as ExamMapper,
-    Study as StudyMapper,
 };
 use Education\Model\{
     Exam as ExamModel,
@@ -134,11 +133,6 @@ class Module
                 },
                 'education_mapper_course' => function (ContainerInterface $container) {
                     return new CourseMapper(
-                        $container->get('doctrine.entitymanager.orm_default')
-                    );
-                },
-                'education_mapper_study' => function (ContainerInterface $container) {
-                    return new StudyMapper(
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },

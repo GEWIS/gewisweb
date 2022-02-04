@@ -10,10 +10,7 @@ use Doctrine\ORM\Mapping\{
     Column,
     Entity,
     Id,
-    InverseJoinColumn,
     JoinColumn,
-    JoinTable,
-    ManyToMany,
     ManyToOne,
     OneToMany,
 };
@@ -72,26 +69,6 @@ class Course implements ResourceInterface
     protected string $quartile;
 
     /**
-     * The studies that apply to the course.
-     */
-    #[ManyToMany(
-        targetEntity: Study::class,
-        inversedBy: "courses",
-    )]
-    #[JoinTable(
-        name: "CoursesStudies",
-    )]
-    #[JoinColumn(
-        name: "course_code",
-        referencedColumnName: "code",
-    )]
-    #[InverseJoinColumn(
-        name: "study_id",
-        referencedColumnName: "id",
-    )]
-    protected Collection $studies;
-
-    /**
      * Exams (and summaries) in this course.
      */
     #[OneToMany(
@@ -127,7 +104,6 @@ class Course implements ResourceInterface
      */
     public function __construct()
     {
-        $this->studies = new ArrayCollection();
         $this->exams = new ArrayCollection();
         $this->children = new ArrayCollection();
     }
@@ -160,16 +136,6 @@ class Course implements ResourceInterface
     public function getUrl(): string
     {
         return $this->url;
-    }
-
-    /**
-     * Get the studies for this course.
-     *
-     * @return Collection
-     */
-    public function getStudies(): Collection
-    {
-        return $this->studies;
     }
 
     /**
@@ -233,29 +199,6 @@ class Course implements ResourceInterface
     }
 
     /**
-     * Add a study.
-     */
-    public function addStudy(Study $study): void
-    {
-        if (!$this->studies->contains($study)) {
-            $study->addCourse($this);
-            $this->studies[] = $study;
-        }
-    }
-
-    /**
-     * Add multiple studies.
-     *
-     * @param array $studies
-     */
-    public function addStudies(array $studies): void
-    {
-        foreach ($studies as $study) {
-            $this->addStudy($study);
-        }
-    }
-
-    /**
      * Set the parent course.
      */
     public function setParent(Course $parent): void
@@ -270,27 +213,6 @@ class Course implements ResourceInterface
     public function addChild(Course $child): void
     {
         $this->children[] = $child;
-    }
-
-    /**
-     * Remove a study.
-     */
-    public function removeStudy(Study $study): void
-    {
-        $study->removeCourse($this);
-        $this->studies->removeElement($study);
-    }
-
-    /**
-     * Remove multiple studies.
-     *
-     * @param array $studies
-     */
-    public function removeStudies(array $studies): void
-    {
-        foreach ($studies as $study) {
-            $this->removeStudy($study);
-        }
     }
 
     /**
