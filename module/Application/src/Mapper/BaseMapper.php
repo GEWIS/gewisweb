@@ -2,6 +2,7 @@
 
 namespace Application\Mapper;
 
+use Closure;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\{
     EntityManager,
@@ -188,6 +189,25 @@ abstract class BaseMapper
     public function count(mixed $criteria): int
     {
         return $this->getRepository()->count($criteria);
+    }
+
+    /**
+     * Transactional Doctrine wrapper.
+     *
+     * Instead of the EntityManager, this inserts this Mapper into the
+     * function.
+     *
+     * @param Closure $func
+     *
+     * @return mixed
+     */
+    public function transactional(Closure $func): mixed
+    {
+        return $this->getEntityManager()->wrapInTransaction(
+            function ($em) use ($func) {
+                return $func($this);
+            }
+        );
     }
 
     /**
