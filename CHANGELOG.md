@@ -1,3 +1,14 @@
+## [v2.5.4](https://github.com/GEWIS/gewisweb/tree/v2.5.4) (2022-02-04)
+
+- Changed Google Fonts to be hosted locally, to prevent violating GDPR.
+- Removed final remnants from the old OASE integration.
+- Fixed issue where the option calendar would not be visible in Chromium-based browsers.
+- Fixed issue where "My Activities" was not accessible.
+- Fixed issue where "Today's Birthdays" would be empty.
+- Fixed issue where viewing a non-existent poll would fail.
+
+---
+
 ## [v2.5.3](https://github.com/GEWIS/gewisweb/tree/v2.5.3) (2022-01-28)
 
 - Added automatic generation of code documentation at [gewis.github.io/gewisweb](https://gewis.github.io/gewisweb/).
