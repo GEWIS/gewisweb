@@ -46,5 +46,6 @@ types {
     video/x-ms-wmv                        wmv;
     video/x-ms-asf                        asx asf;
     video/x-mng                           mng;
+    font/woff                             woff;
     font/woff2                            woff2;
 }
