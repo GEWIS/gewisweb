@@ -91,17 +91,16 @@ class PhotoController extends AbstractActionController
     /**
      * For setting a profile picture.
      */
-    public function setProfilePhotoAction(): Response
+    public function setProfilePhotoAction(): JsonModel|ViewModel
     {
-        $photoId = $this->params()->fromRoute('photo_id');
-        $this->photoService->setProfilePhoto($photoId);
+        if ($this->getRequest()->isPost()) {
+            $photoId = $this->params()->fromRoute('photo_id');
+            $this->photoService->setProfilePhoto($photoId);
 
-        return $this->redirect()->toRoute(
-            'photo/photo',
-            [
-                'photo_id' => $photoId,
-            ]
-        );
+            return new JsonModel(['success' => true]);
+        }
+
+        return $this->notFoundAction();
     }
 
     /**
@@ -129,9 +128,7 @@ class PhotoController extends AbstractActionController
      */
     public function voteAction(): JsonModel|ViewModel
     {
-        $request = $this->getRequest();
-
-        if ($request->isPost()) {
+        if ($this->getRequest()->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
             $this->photoService->countVote($photoId);
 

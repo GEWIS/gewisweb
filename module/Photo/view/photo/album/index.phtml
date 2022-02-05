@@ -140,8 +140,9 @@ $this->scriptUrl()->requireUrl('member/search')
                     class="pswp-gallery__item<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>"
                     data-id="<?= $item->getId() ?>"
                     data-author="GEWIS"
-                    data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]); ?>"
-                    data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]); ?>"
+                    data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]) ?>"
+                    data-profile-photo-url="<?= $this->url('photo/set_profile_photo', ['photo_id' => $item->getId()]) ?>"
+                    data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]) ?>"
                     data-voted="<?= $this->hasVoted($item->getId(), $this->identity()->getLidnr()) ? 'true' : 'false' ?>"
                 >
                     <a href="<?= $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
@@ -222,9 +223,34 @@ $this->scriptUrl()->requireUrl('member/search')
                 });
             },
         });
+
+        lightbox.pswp.ui.registerElement({
+            name: 'profile-photo-button',
+            order: 8,
+            isButton: true,
+            title: '<?= $this->translate('Set as profile picture') ?>',
+            html: {
+                isCustomSVG: true,
+                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#portrait"></use>',
+            },
+            position: 'bar',
+            onClick: (event, el, pswp) => {
+                let currentSlide = pswp.currSlide.data.element;
+
+                fetch(currentSlide.dataset.profilePhotoUrl, { method: 'POST' })
+                    .then(response => response.json())
+                    .then(result => {
+                        el.dataset.originalTitle = '<?= $this->translate('Set as profile picture!') ?>';
+                    }).catch(error => {
+                        // An error occurred somewhere along the way, perhaps we should notify the user.
+                        el.dataset.originalTitle = '<?= $this->translate('Could not set as profile photo, try again') ?>';
+                    });
+            },
+        });
+
         lightbox.pswp.ui.registerElement({
             name: 'download-button',
-            order: 8,
+            order: 7,
             isButton: true,
             title: '<?= $this->translate('Download') ?>',
             html: {
@@ -244,9 +270,10 @@ $this->scriptUrl()->requireUrl('member/search')
                 link.remove();
             },
         });
+
         lightbox.pswp.ui.registerElement({
             name: 'metadata-button',
-            order: 7,
+            order: 6,
             isButton: true,
             title: '<?= $this->translate('Information') ?>',
             html: {
@@ -264,9 +291,10 @@ $this->scriptUrl()->requireUrl('member/search')
                 }
             },
         });
+
         lightbox.pswp.ui.registerElement({
             name: 'like-button',
-            order: 6,
+            order: 5,
             isButton: true,
             title: '<?= $this->translate('Vote for photo of the week') ?>',
             html: {
