@@ -1,37 +1,40 @@
-.option-calendar {
+.activity-global {
+    background-color: darken($brand-primary, 7%) !important;
+    border-color: darken($brand-primary, 7%) !important;
+    color: #FFFFFF;
 
-    .calendarTitleHeader {
-        display: inline;
-        margin-left: 1em;
-        margin-top: .2em;
+    &:hover {
+        color: #FFFFFF;
+    }
+}
+
+.activity-option-approved {
+    background-color: #D029FF !important;
+    border-color: #D029FF !important;
+    color: #FFFFFF;
+}
+
+.activity-option-unapproved {
+    background-color: #0077EA !important;
+    border-color: #0077EA !important;
+    color: #FFFFFF;
+}
+
+.fc-daygrid-block-event .fc-event-title-container {
+    margin: 0 4px;
+}
+
+.fc-daygrid-event-dot {
+    border: none !important;
+    border-radius: 0 !important;
+}
+
+.fc {
+    tr {
+        height: 100%;
     }
 
-    .calendar-control {
-        margin-top: 20px;
-
-        .event {
-            border: 0;
-            -webkit-box-shadow: none;
-            box-shadow: none;
-
-            &.event-approved {
-                background-color: #DB5CFF;
-            }
-        }
-
-        .day-highlight.dh-event-approved,
-        .day-highlight.dh-event-approved:hover {
-            background-color: #FCF1FF;
-        }
+    .fc-daygrid-day-frame {
+        min-height: 116.867px !important;
     }
-
-    .dropdown .dropdown-menu {
-        padding: 10px;
-
-        form {
-            width: 300px;
-        }
-    }
-
-
 }

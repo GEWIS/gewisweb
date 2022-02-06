@@ -94,7 +94,7 @@ class ActivityCalendarController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $this->calendarService->deleteOption($request->getPost()['option_id']);
+            $this->calendarService->deleteOption((int) $request->getPost()['option_id']);
             return $this->redirect()->toRoute('activity_calendar');
         }
 
@@ -106,7 +106,7 @@ class ActivityCalendarController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $this->calendarService->approveOption($request->getPost()['option_id']);
+            $this->calendarService->approveOption((int) $request->getPost()['option_id']);
             return $this->redirect()->toRoute('activity_calendar');
         }
 
