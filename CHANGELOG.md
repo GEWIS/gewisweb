@@ -1,3 +1,16 @@
+## [v2.6](https://github.com/GEWIS/gewisweb/tree/v2.6) (2022-02-06)
+
+* Added a button to the photo viewer to set a photo as your profile photo.
+* Changed the activity option calendar, with improved controls for approving/deleting proposed options.
+* Improved the layout of the course overview page.
+* Preloaded required resources to improve future load time.
+* Fixed issue where an activity could start after it had ended.
+* Fixed issue where the member search page was visible to non-logged in members.
+* Fixed issue where trying to set a non-existent photo as your profile picture would cause a crash.
+* Fixes issue where loading fonts would be blocking, now swapped when ready.
+
+---
+
 ## [v2.5.4](https://github.com/GEWIS/gewisweb/tree/v2.5.4) (2022-02-04)
 
 - Changed Google Fonts to be hosted locally, to prevent violating GDPR.
