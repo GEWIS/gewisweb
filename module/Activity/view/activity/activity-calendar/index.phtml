@@ -290,7 +290,7 @@ $this->headLink()
             headerToolbar: {
                 start: 'prev,today,next',
                 center: 'title',
-                end: 'dayGridMonth,dayOptionList <?= ($canCreate) ? 'create' : '' ?>'
+                end: 'dayGridMonth,dayOptionList<?= ($canCreate) ? ' create' : '' ?>'
             },
             initialView: 'dayGridMonth',
             locale: '<?= $this->plugin('translate')->getTranslator()->getLocale() ?>',
