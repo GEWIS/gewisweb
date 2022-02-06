@@ -28,6 +28,7 @@ $this->headLink()
         <div class="row">
             <div id="calendar" class="calendar-control"></div>
         </div>
+        <hr>
         <div class="row">
             <h2><?= $this->translate('My options') ?></h2>
             <table class="table table-striped table-hover">
@@ -171,11 +172,11 @@ $this->headLink()
                                         <li>
                                             <strong>${option.def.extendedProps.organizer}</strong> ${option.def.title} (${option.def.extendedProps.type}) &nbsp;
                                             ${(!option.def.extendedProps.isApproved && option.def.extendedProps.isOwner) ? `
-                                                <a class="btn btn-xs btn-delete btn-danger" data-option-id="${option.def.id}">
+                                                <a class="btn btn-xs btn-delete btn-danger" data-option-id="${option.def.publicId}">
                                                     <span class="far fa-trash-alt"></span>
                                                 </a>
                                                 ${(option.def.extendedProps.isApprovable) ? `
-                                                    <a class="btn btn-xs btn-approve btn-success" data-option-id="${option.def.id}">
+                                                    <a class="btn btn-xs btn-approve btn-success" data-option-id="${option.def.publicId}">
                                                         <span class="far fa-check-square"></span>
                                                     </a>
                                                 ` : ''}
