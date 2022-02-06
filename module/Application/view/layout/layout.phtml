@@ -10,16 +10,51 @@
     ?>
 
     <!-- Preload fonts-->
-    <?= $this->headLink(['as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'href' => '/fonts/raleway/raleway-v22-latin-500.woff2']); ?>
-    <?= $this->headLink(['as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'href' => '/fonts/raleway/raleway-v22-latin-600.woff2']); ?>
-    <?= $this->headLink(['as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'href' => '/fonts/raleway/raleway-v22-latin-regular.woff2']); ?>
-    <?= $this->headLink(['as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'href' => '/fonts/lato/lato-v22-latin-regular.woff2']); ?>
-    <?= $this->headLink(['as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'href' => '/fonts/fontawesome/fa-solid-900.woff2']); ?>
-    <?= $this->headLink(['as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'href' => '/fonts/fontawesome/fa-brands-400.woff2']); ?>
-    <?= $this->headLink(['as' => 'font', 'rel' => 'preload', 'type' => 'font/ttf', 'href' => '/fonts/gewisicons/gewisicons.ttf']); ?>
-    <?= $this->headLink(['as' => 'image', 'rel' => 'preload', 'type' => 'image/svg+xml', 'href' => '/img/nl.svg']); ?>
-    <?= $this->headLink(['as' => 'image', 'rel' => 'preload', 'type' => 'image/svg+xml', 'href' => '/img/en.svg']); ?>
-    <?= $this->headLink(['as' => 'image', 'rel' => 'preload', 'type' => 'image/jpeg', 'href' => '/img/panorama2-compressed.jpg']); ?>
+    <?= $this->headLink([
+        'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2',
+        'href' => '/fonts/raleway/raleway-v22-latin-500.woff2'
+    ]); ?>
+    <?= $this->headLink([
+        'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2',
+        'href' => '/fonts/raleway/raleway-v22-latin-600.woff2'
+    ]); ?>
+    <?= $this->headLink([
+        'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2',
+        'href' => '/fonts/raleway/raleway-v22-latin-regular.woff2'
+    ]); ?>
+    <?= $this->headLink([
+        'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2',
+        'href' => '/fonts/lato/lato-v22-latin-700.woff2'
+    ]); ?>
+    <?= $this->headLink([
+        'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2',
+        'href' => '/fonts/lato/lato-v22-latin-regular.woff2'
+    ]); ?>
+    <?= $this->headLink([
+        'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2',
+        'href' => '/fonts/fontawesome/fa-solid-900.woff2'
+    ]); ?>
+    <?= $this->headLink([
+        'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2',
+        'href' => '/fonts/fontawesome/fa-brands-400.woff2'
+    ]); ?>
+    <?= $this->headLink([
+        'as' => 'font', 'rel' => 'preload', 'type' => 'font/ttf',
+        'href' => '/fonts/gewisicons/gewisicons.ttf?37l19n='
+    ]); ?>
+    <?= $this->headLink([
+        'as' => 'image', 'rel' => 'preload', 'type' => 'image/svg+xml',
+        'href' => '/img/nl.svg'
+    ]); ?>
+    <?= $this->headLink([
+        'as' => 'image', 'rel' => 'preload', 'type' => 'image/svg+xml',
+        'href' => '/img/en.svg'
+    ]); ?>
+    <?= $this->headLink([
+        'as' => 'image', 'rel' => 'preload', 'type' => 'image/jpeg',
+        'href' => '/img/panorama2-compressed-extra.jpg',
+        'imagesrcset' => '/img/panorama2-compressed-extra.jpg 4x, /img/panorama2-compressed.jpg 20x'
+    ]); ?>
 
     <!-- Le styles -->
     <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->basePath() . '/img/favicon.ico'])

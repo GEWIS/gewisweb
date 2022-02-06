@@ -85,7 +85,7 @@ use Activity\Model\Activity;
                                             'h' => round($bThumbnailWidth * $bAspectRatio)
                                         ];
 
-                                        $bLargeWidth = $photoConfig['large_thumb_size']['width'];
+                                        $bLargeWidth = $photoConfig['large_thumb_size']['width'] / 2;
                                         $bLargeSize = [
                                             'w' => $bLargeWidth,
                                             'h' => round($bLargeWidth * $bAspectRatio)
@@ -206,7 +206,7 @@ use Activity\Model\Activity;
                                     'h' => round($wThumbnailWidth * $wAspectRatio)
                                 ];
 
-                                $wLargeWidth = $photoConfig['large_thumb_size']['width'];
+                                $wLargeWidth = $photoConfig['large_thumb_size']['width'] / 2;
                                 $wLargeSize = [
                                     'w' => $wLargeWidth,
                                     'h' => round($wLargeWidth * $wAspectRatio)
