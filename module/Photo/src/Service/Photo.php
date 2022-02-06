@@ -8,6 +8,7 @@ use DateTime;
 use Decision\Model\Member as MemberModel;
 use Decision\Service\Member as MemberService;
 use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\NoResultException;
 use Exception;
 use Laminas\Http\Response\Stream;
 use Laminas\I18n\Filter\Alnum;
@@ -571,12 +572,22 @@ class Photo
     /**
      * @param int $photoId
      *
-     * @throws Exception
+     * @throws ORMException
      */
     public function setProfilePhoto(int $photoId): void
     {
         $photo = $this->getPhoto($photoId);
-        $member = $this->aclService->getIdentity()->getMember();
+        if (is_null($photo)) {
+            throw new NoResultException();
+        }
+
+        $member = $this->aclService->getIdentity()?->getMember();
+        if (!$member instanceof MemberModel) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to set a profile picture.')
+            );
+        }
+
         $lidnr = $member->getLidnr();
         $profilePhoto = $this->getStoredProfilePhoto($lidnr);
 
