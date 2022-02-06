@@ -137,10 +137,6 @@ class Member
             );
         }
 
-        if (!$this->aclService->isAllowed('search', 'member')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to search for members.'));
-        }
-
         return $this->memberMapper->searchByName($query);
     }
 
