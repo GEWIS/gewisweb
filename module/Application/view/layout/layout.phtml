@@ -1,6 +1,6 @@
 <?= $this->doctype(); ?>
 
-<html lang="en">
+<html lang="<?php echo $this->plugin('translate')->getTranslator()->getLocale(); ?>">
 <head>
     <meta charset="utf-8">
     <?= $this->headTitle($this->translate('GEWIS Website'))->setSeparator(' - ')->setAutoEscape(false) ?>
