@@ -6431,6 +6431,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Controller-MemberController.html#property_aclService"
         },                {
+            "fqsen": "\\Decision\\Controller\\MemberController\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Decision-Controller-MemberController.html#property_translator"
+        },                {
             "fqsen": "\\Decision\\Controller\\MemberController\u003A\u003A\u0024memberService",
             "name": "memberService",
             "summary": "",
