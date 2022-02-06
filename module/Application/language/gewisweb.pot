@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-03 21:10+0100\n"
+"POT-Creation-Date: 2022-02-06 12:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr ""
 #: module/Activity/view/partial/create.phtml:3
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:41
 #: module/Activity/view/activity/admin-approval/view.phtml:20
-#: module/Photo/view/photo/album/index.phtml:251
+#: module/Photo/view/photo/album/index.phtml:278
 msgid "Information"
 msgstr ""
 
@@ -238,9 +238,9 @@ msgstr ""
 #: module/Activity/view/activity/admin/participantsTable.phtml:5
 #: module/Activity/view/activity/admin-category/add.phtml:49
 #: module/Activity/view/activity/admin-category/add.phtml:87
-#: module/Activity/view/activity/activity-calendar/index.phtml:73
+#: module/Activity/view/activity/activity-calendar/index.phtml:38
 #: module/Activity/view/activity/activity-calendar/create.phtml:99
-#: module/Activity/view/activity/activity/view.phtml:244
+#: module/Activity/view/activity/activity/view.phtml:242
 #: module/Decision/view/decision/member/birthdays.phtml:12
 #: module/Decision/view/decision/admin/document.phtml:40
 #: module/Decision/view/decision/organ/index.phtml:14
@@ -259,9 +259,9 @@ msgstr ""
 #: module/Activity/src/Form/ActivityCategory.php:37
 #: module/Activity/src/Form/SignupListField.php:42
 #: module/Activity/src/Form/SignupListField.php:52
-#: module/Activity/src/Form/SignupList.php:41
-#: module/Activity/src/Form/SignupList.php:51
-#: module/Education/src/Form/AddCourse.php:58
+#: module/Activity/src/Form/SignupList.php:44
+#: module/Activity/src/Form/SignupList.php:54
+#: module/Education/src/Form/AddCourse.php:61
 #: module/User/src/Form/ApiToken.php:28
 msgid "Name"
 msgstr ""
@@ -330,8 +330,8 @@ msgstr ""
 #: module/Company/view/company/admin/index.phtml:184
 #: module/Company/view/company/admin/edit-package.phtml:86
 #: module/Company/view/company/admin/edit-company.phtml:131
-#: module/Activity/view/activity/activity-calendar/index.phtml:98
-#: module/Activity/view/activity/activity-calendar/index.phtml:132
+#: module/Activity/view/activity/activity-calendar/index.phtml:62
+#: module/Activity/view/activity/activity-calendar/index.phtml:95
 #: module/Education/view/education/admin/edit-exam.phtml:39
 #: module/Education/view/education/admin/edit-summary.phtml:39
 #: module/Decision/view/decision/admin/document.phtml:108
@@ -368,8 +368,8 @@ msgstr ""
 #: module/Company/view/company/admin/edit-package.phtml:120
 #: module/Company/view/company/admin/edit-company.phtml:184
 #: module/Activity/view/activity/admin-category/index.phtml:56
-#: module/Activity/view/activity/activity-calendar/index.phtml:130
-#: module/Activity/view/activity/activity-calendar/index.phtml:154
+#: module/Activity/view/activity/activity-calendar/index.phtml:93
+#: module/Activity/view/activity/activity-calendar/index.phtml:117
 #: module/Decision/view/decision/decision/authorizations.phtml:119
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:170
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:216
@@ -671,7 +671,7 @@ msgstr ""
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:97
 #: module/Activity/view/partial/option.phtml:10
 #: module/Activity/view/activity/admin/participantsTable.phtml:7
-#: module/Activity/view/activity/activity-calendar/index.phtml:74
+#: module/Activity/view/activity/activity-calendar/index.phtml:39
 #: module/Decision/view/decision/organ/index.phtml:15
 #: module/Decision/view/decision/decision/index.phtml:9
 #: module/Activity/src/Form/SignupListField.php:68
@@ -711,6 +711,7 @@ msgstr ""
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:145
 #: module/Activity/view/partial/create.phtml:159
+#: module/Activity/view/activity/activity-calendar/index.phtml:167
 #: module/Activity/view/activity/activity-calendar/create.phtml:125
 #: module/Activity/src/Form/SignupListField.php:101
 #: module/Activity/src/Form/SignupListField.php:114
@@ -934,8 +935,8 @@ msgid "View details / subscriptions"
 msgstr ""
 
 #: module/Activity/view/activity/admin-approval/view.phtml:192
-#: module/Activity/view/activity/activity-calendar/index.phtml:103
-#: module/Activity/view/activity/activity-calendar/index.phtml:156
+#: module/Activity/view/activity/activity-calendar/index.phtml:66
+#: module/Activity/view/activity/activity-calendar/index.phtml:119
 #: module/Decision/view/decision/organ-admin/edit.phtml:143
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:66
 msgid "Approve"
@@ -1167,13 +1168,13 @@ msgstr ""
 msgid "Delete Activity Category"
 msgstr ""
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:13
+#: module/Activity/view/activity/activity-calendar/index.phtml:12
 #: module/Activity/view/activity/activity-calendar/create.phtml:50
 #: module/Decision/view/decision/member/index.phtml:164
 msgid "Option calendar"
 msgstr ""
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:14
+#: module/Activity/view/activity/activity-calendar/index.phtml:13
 msgid ""
 "Welcome on the page of the digital Option Calendar. In the calendar below "
 "you can place options for GEWIS activities, just like you were used to do in "
@@ -1183,17 +1184,17 @@ msgid ""
 "name, so it is clear what the option is for."
 msgstr ""
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:16
+#: module/Activity/view/activity/activity-calendar/index.phtml:15
 msgid "There are a few rules:"
 msgstr ""
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:18
+#: module/Activity/view/activity/activity-calendar/index.phtml:17
 msgid ""
 "It is not allowed to put more than 3 options for the same activity in the "
 "calendar."
 msgstr ""
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:19
+#: module/Activity/view/activity/activity-calendar/index.phtml:18
 msgid ""
 "The first to put an option for an activity on a particular date, has the "
 "first dibs to let the activity take place on this date. Five weeks before "
@@ -1204,72 +1205,76 @@ msgid ""
 "line gets the chance to use this date for an activity."
 msgstr ""
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:20
+#: module/Activity/view/activity/activity-calendar/index.phtml:19
 msgid ""
 "The board can always decide to make an exception to the rules written above, "
 "for example in case of dependence on a third party, or when it concerns very "
 "big activities or weekends."
 msgstr ""
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:26
+#: module/Activity/view/activity/activity-calendar/index.phtml:25
 msgid "Your option has been added successfully"
 msgstr ""
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:36
-msgid "Today"
-msgstr ""
-
-#: module/Activity/view/activity/activity-calendar/index.phtml:44
-#: module/Education/src/Form/AddCourse.php:76
-msgid "Year"
-msgstr ""
-
-#: module/Activity/view/activity/activity-calendar/index.phtml:47
-msgid "Month"
-msgstr ""
-
-#: module/Activity/view/activity/activity-calendar/index.phtml:58
-msgid "Plan activity"
-msgstr ""
-
-#: module/Activity/view/activity/activity-calendar/index.phtml:68
+#: module/Activity/view/activity/activity-calendar/index.phtml:33
 msgid "My options"
 msgstr ""
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:72
+#: module/Activity/view/activity/activity-calendar/index.phtml:37
 msgid "Creator"
 msgstr ""
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:75
+#: module/Activity/view/activity/activity-calendar/index.phtml:40
 #: module/Activity/view/activity/activity/list.phtml:36
 #: module/Activity/view/activity/activity/view.phtml:66
 msgid "Start"
 msgstr ""
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:76
+#: module/Activity/view/activity/activity-calendar/index.phtml:41
 #: module/Activity/view/activity/activity/list.phtml:38
 #: module/Activity/view/activity/activity/view.phtml:69
 msgid "End"
 msgstr ""
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:107
+#: module/Activity/view/activity/activity-calendar/index.phtml:70
 msgid "Modified by"
 msgstr ""
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:121
+#: module/Activity/view/activity/activity-calendar/index.phtml:84
 msgid "Delete option"
 msgstr ""
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:124
+#: module/Activity/view/activity/activity-calendar/index.phtml:87
 msgid "Are you sure you want to delete this option?"
 msgstr ""
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:145
+#: module/Activity/view/activity/activity-calendar/index.phtml:108
 msgid "Approve option"
 msgstr ""
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:148
+#: module/Activity/view/activity/activity-calendar/index.phtml:111
 msgid "Are you sure you want to approve this option?"
+msgstr ""
+
+#: module/Activity/view/activity/activity-calendar/index.phtml:134
+#: module/Activity/src/Form/ActivityCalendarOption.php:48
+msgid "Day"
+msgstr ""
+
+#: module/Activity/view/activity/activity-calendar/index.phtml:154
+msgid "Planned Activities"
+msgstr ""
+
+#: module/Activity/view/activity/activity-calendar/index.phtml:155
+msgid "There are no activities."
+msgstr ""
+
+#: module/Activity/view/activity/activity-calendar/index.phtml:168
+msgid "There are no options."
+msgstr ""
+
+#: module/Activity/view/activity/activity-calendar/index.phtml:208
+msgid "Plan activity"
 msgstr ""
 
 #: module/Activity/view/activity/activity-calendar/create.phtml:2
@@ -1343,11 +1348,11 @@ msgstr ""
 msgid "It will become visible after it has been approved by the board."
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:126
+#: module/Activity/view/activity/activity/view.phtml:125
 msgid "the organizing party"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:138
+#: module/Activity/view/activity/activity/view.phtml:137
 #, php-format
 msgid ""
 "Please contact %s or the board (%s) with any questions, concerns or if you "
@@ -1355,61 +1360,61 @@ msgid ""
 "fun!"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:142
+#: module/Activity/view/activity/activity/view.phtml:140
 #, php-format
 msgid ""
 "Please contact %s or the board (%s) with any questions or concerns. Have fun!"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:157
+#: module/Activity/view/activity/activity/view.phtml:155
 #, php-format
 msgid ""
 "This sign-up list is open from <strong>%s</strong> till <strong>%s</strong>."
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:169
+#: module/Activity/view/activity/activity/view.phtml:167
 msgid "Already subscribed"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:176
+#: module/Activity/view/activity/activity/view.phtml:174
 msgid "Subscription closed"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:182
+#: module/Activity/view/activity/activity/view.phtml:180
 msgid "Subscribe now"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:189
+#: module/Activity/view/activity/activity/view.phtml:187
 msgid "Unsubscribe yourself"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:192
+#: module/Activity/view/activity/activity/view.phtml:190
 msgid "You are not allowed to unsubscribe after the deadline!"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:211
-#: module/Activity/view/activity/activity/view.phtml:228
+#: module/Activity/view/activity/activity/view.phtml:209
+#: module/Activity/view/activity/activity/view.phtml:226
 msgid "Subscribe yourself"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:214
+#: module/Activity/view/activity/activity/view.phtml:212
 msgid "Login to subscribe"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:218
+#: module/Activity/view/activity/activity/view.phtml:216
 msgid "Or subscribe without a GEWIS membership: "
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:239
+#: module/Activity/view/activity/activity/view.phtml:237
 msgid "Current subscriptions"
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:257
+#: module/Activity/view/activity/activity/view.phtml:255
 #, php-format
 msgid "The number of subscribed members is currently %d."
 msgstr ""
 
-#: module/Activity/view/activity/activity/view.phtml:261
+#: module/Activity/view/activity/activity/view.phtml:259
 msgid "Login to view the subscribed members."
 msgstr ""
 
@@ -1499,7 +1504,7 @@ msgstr ""
 #: module/Education/view/education/education/index.phtml:65
 #: module/Education/src/Form/Fieldset/Exam.php:51
 #: module/Education/src/Form/Fieldset/Summary.php:51
-#: module/Education/src/Form/AddCourse.php:40
+#: module/Education/src/Form/AddCourse.php:43
 #: module/Education/src/Form/SummaryUpload.php:42
 msgid "Course code"
 msgstr ""
@@ -1616,40 +1621,39 @@ msgid ""
 "author is illegal."
 msgstr ""
 
-#: module/Education/view/education/education/course.phtml:19
-msgid "Course parts"
+#: module/Education/view/education/education/course.phtml:18
+msgid "Course URL"
 msgstr ""
 
-#: module/Education/view/education/education/course.phtml:27
+#: module/Education/view/education/education/course.phtml:31
+msgid "Subcourses"
+msgstr ""
+
+#: module/Education/view/education/education/course.phtml:44
 msgid "Exams and summaries"
 msgstr ""
 
-#: module/Education/view/education/education/course.phtml:38
-#: module/Education/view/education/education/course.phtml:67
+#: module/Education/view/education/education/course.phtml:65
 #, php-format
 msgid "Summary by %s on %s (%s)"
 msgstr ""
 
-#: module/Education/view/education/education/course.phtml:43
-#: module/Education/view/education/education/course.phtml:72
+#: module/Education/view/education/education/course.phtml:75
 #, php-format
 msgid "Examination from %s (%s)"
 msgstr ""
 
-#: module/Education/view/education/education/course.phtml:46
-#: module/Education/view/education/education/course.phtml:75
+#: module/Education/view/education/education/course.phtml:78
 #, php-format
 msgid "Intermediate test from %s (%s)"
 msgstr ""
 
-#: module/Education/view/education/education/course.phtml:49
-#: module/Education/view/education/education/course.phtml:78
+#: module/Education/view/education/education/course.phtml:81
 #, php-format
 msgid "Answers from %s (%s)"
 msgstr ""
 
-#: module/Education/view/education/education/course.phtml:52
-#: module/Education/view/education/education/course.phtml:81
+#: module/Education/view/education/education/course.phtml:84
 #, php-format
 msgid "Other exam material from %s (%s)"
 msgstr ""
@@ -2456,12 +2460,12 @@ msgid "Continue"
 msgstr ""
 
 #: module/Application/view/partial/paginator.phtml:8
-#: module/Photo/view/photo/album/index.phtml:197
+#: module/Photo/view/photo/album/index.phtml:198
 msgid "Previous"
 msgstr ""
 
 #: module/Application/view/partial/paginator.phtml:22
-#: module/Photo/view/photo/album/index.phtml:198
+#: module/Photo/view/photo/album/index.phtml:199
 msgid "Next"
 msgstr ""
 
@@ -3063,7 +3067,7 @@ msgid "Regenerate"
 msgstr ""
 
 #: module/Photo/view/photo/album-admin/index.phtml:141
-#: module/Photo/view/photo/album/index.phtml:195
+#: module/Photo/view/photo/album/index.phtml:196
 msgid "Close"
 msgstr ""
 
@@ -3165,52 +3169,64 @@ msgstr ""
 msgid "View user profile"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:196
+#: module/Photo/view/photo/album/index.phtml:197
 msgid "Zoom (z)"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:199
+#: module/Photo/view/photo/album/index.phtml:200
 msgid "The image"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:199
+#: module/Photo/view/photo/album/index.phtml:200
 msgid "could not be loaded."
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:210
+#: module/Photo/view/photo/album/index.phtml:211
 msgid "Share"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:221
+#: module/Photo/view/photo/album/index.phtml:222
 msgid "Copied URL!"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:229
+#: module/Photo/view/photo/album/index.phtml:231
+msgid "Set as profile picture"
+msgstr ""
+
+#: module/Photo/view/photo/album/index.phtml:243
+msgid "Set as profile picture!"
+msgstr ""
+
+#: module/Photo/view/photo/album/index.phtml:246
+msgid "Could not set as profile photo, try again"
+msgstr ""
+
+#: module/Photo/view/photo/album/index.phtml:255
 msgid "Download"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:271
-#: module/Photo/view/photo/album/index.phtml:295
+#: module/Photo/view/photo/album/index.phtml:299
+#: module/Photo/view/photo/album/index.phtml:323
 msgid "Vote for photo of the week"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:292
+#: module/Photo/view/photo/album/index.phtml:320
 msgid "Already voted!"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:309
+#: module/Photo/view/photo/album/index.phtml:337
 msgid "Voted!"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:321
+#: module/Photo/view/photo/album/index.phtml:349
 msgid "Could not vote, try again"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:332
+#: module/Photo/view/photo/album/index.phtml:360
 msgid "Cannot load metadata"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:349
+#: module/Photo/view/photo/album/index.phtml:377
 msgid "Cannot load tags"
 msgstr ""
 
@@ -3819,10 +3835,6 @@ msgstr ""
 msgid "Evening"
 msgstr ""
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:48
-msgid "Day"
-msgstr ""
-
 #: module/Activity/src/Form/ActivityCalendarOption.php:49
 msgid "Multiple days"
 msgstr ""
@@ -3848,7 +3860,7 @@ msgstr ""
 msgid "Option 1, Option 2, ..."
 msgstr ""
 
-#: module/Activity/src/Form/SignupList.php:202
+#: module/Activity/src/Form/SignupList.php:182
 msgid ""
 "The sign-up list opening date and time must be before the sign-up list "
 "closes."
@@ -3862,16 +3874,21 @@ msgstr ""
 msgid "No Company"
 msgstr ""
 
-#: module/Activity/src/Form/Activity.php:295
-#: module/Activity/src/Form/Activity.php:307
-#: module/Activity/src/Form/Activity.php:321
-#: module/Activity/src/Form/Activity.php:333
-#: module/Activity/src/Form/Activity.php:345
-#: module/Activity/src/Form/Activity.php:357
+#: module/Activity/src/Form/Activity.php:292
+#: module/Activity/src/Form/Activity.php:304
+#: module/Activity/src/Form/Activity.php:318
+#: module/Activity/src/Form/Activity.php:330
+#: module/Activity/src/Form/Activity.php:342
+#: module/Activity/src/Form/Activity.php:354
 msgid "Value is required and can't be empty"
 msgstr ""
 
-#: module/Activity/src/Form/Activity.php:395
+#: module/Activity/src/Form/Activity.php:375
+msgid ""
+"The sign-up list closing date and time must be before the activity starts."
+msgstr ""
+
+#: module/Activity/src/Form/Activity.php:410
 msgid "The activity must start before it ends."
 msgstr ""
 
@@ -4012,39 +4029,43 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: module/Education/src/Form/AddCourse.php:26
+#: module/Education/src/Form/AddCourse.php:29
 msgid "Quartile 1"
 msgstr ""
 
-#: module/Education/src/Form/AddCourse.php:27
+#: module/Education/src/Form/AddCourse.php:30
 msgid "Quartile 2"
 msgstr ""
 
-#: module/Education/src/Form/AddCourse.php:28
+#: module/Education/src/Form/AddCourse.php:31
 msgid "Quartile 3"
 msgstr ""
 
-#: module/Education/src/Form/AddCourse.php:29
+#: module/Education/src/Form/AddCourse.php:32
 msgid "Quartile 4"
 msgstr ""
 
-#: module/Education/src/Form/AddCourse.php:30
+#: module/Education/src/Form/AddCourse.php:33
 msgid "Interim"
 msgstr ""
 
-#: module/Education/src/Form/AddCourse.php:49
+#: module/Education/src/Form/AddCourse.php:52
 msgid "Parent course code"
 msgstr ""
 
-#: module/Education/src/Form/AddCourse.php:67
+#: module/Education/src/Form/AddCourse.php:70
 msgid "URL"
 msgstr ""
 
-#: module/Education/src/Form/AddCourse.php:86
+#: module/Education/src/Form/AddCourse.php:79
+msgid "Year"
+msgstr ""
+
+#: module/Education/src/Form/AddCourse.php:89
 msgid "Quartile"
 msgstr ""
 
-#: module/Education/src/Form/AddCourse.php:97
+#: module/Education/src/Form/AddCourse.php:100
 msgid "Add course"
 msgstr ""
 
@@ -4075,6 +4096,10 @@ msgstr ""
 
 #: module/Education/src/Service/Exam.php:557
 msgid "You are not allowed to add courses"
+msgstr ""
+
+#: module/Decision/src/Controller/MemberController.php:126
+msgid "Not allowed to search for members."
 msgstr ""
 
 #: module/Decision/src/Controller/DecisionController.php:132
@@ -4174,10 +4199,6 @@ msgstr ""
 msgid "Name must be at least "
 msgstr ""
 
-#: module/Decision/src/Service/Member.php:141
-msgid "Not allowed to search for members."
-msgstr ""
-
 #: module/Decision/src/Service/MemberInfo.php:75
 msgid "You are not allowed to view membership info."
 msgstr ""
@@ -4238,6 +4259,18 @@ msgstr ""
 
 #: module/Frontpage/src/Controller/PollController.php:128
 msgid "You are not allowed to create comments on this poll"
+msgstr ""
+
+#: module/Frontpage/src/Controller/PollAdminController.php:54
+msgid "You are not allowed to administer polls"
+msgstr ""
+
+#: module/Frontpage/src/Controller/PollAdminController.php:86
+msgid "You are not allowed to approve polls"
+msgstr ""
+
+#: module/Frontpage/src/Controller/PollAdminController.php:115
+msgid "You are not allowed to delete polls"
 msgstr ""
 
 #: module/Frontpage/src/Controller/NewsAdminController.php:75
@@ -4307,24 +4340,16 @@ msgstr ""
 msgid "You are not allowed to create new pages."
 msgstr ""
 
-#: module/Frontpage/src/Service/Poll.php:103
+#: module/Frontpage/src/Service/Poll.php:107
 msgid "You are not allowed to view unapproved polls"
 msgstr ""
 
-#: module/Frontpage/src/Service/Poll.php:228
+#: module/Frontpage/src/Service/Poll.php:232
 msgid "You are not allowed to vote on this poll."
 msgstr ""
 
-#: module/Frontpage/src/Service/Poll.php:383
+#: module/Frontpage/src/Service/Poll.php:387
 msgid "You are not allowed to request polls"
-msgstr ""
-
-#: module/Frontpage/src/Service/Poll.php:399
-msgid "You are not allowed to delete polls"
-msgstr ""
-
-#: module/Frontpage/src/Service/Poll.php:449
-msgid "You are not allowed to approve polls"
 msgstr ""
 
 #: module/Photo/src/Form/EditAlbum.php:51
@@ -4335,36 +4360,40 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
-#: module/Photo/src/Service/Photo.php:138
-#: module/Photo/src/Service/Photo.php:178
-#: module/Photo/src/Service/Photo.php:220
-#: module/Photo/src/Service/Photo.php:271
-#: module/Photo/src/Service/Photo.php:287
+#: module/Photo/src/Service/Photo.php:139
+#: module/Photo/src/Service/Photo.php:179
+#: module/Photo/src/Service/Photo.php:221
+#: module/Photo/src/Service/Photo.php:272
+#: module/Photo/src/Service/Photo.php:288
 msgid "Not allowed to view photos"
 msgstr ""
 
-#: module/Photo/src/Service/Photo.php:158
+#: module/Photo/src/Service/Photo.php:159
 msgid "Not allowed to download photos"
 msgstr ""
 
-#: module/Photo/src/Service/Photo.php:305
+#: module/Photo/src/Service/Photo.php:306
 msgid "Not allowed to delete photos."
 msgstr ""
 
-#: module/Photo/src/Service/Photo.php:660
+#: module/Photo/src/Service/Photo.php:587
+msgid "You are not allowed to set a profile picture."
+msgstr ""
+
+#: module/Photo/src/Service/Photo.php:671
 msgid "Not allowed to view previous photos of the week"
 msgstr ""
 
-#: module/Photo/src/Service/Photo.php:712
+#: module/Photo/src/Service/Photo.php:723
 msgid "Not allowed to add tags."
 msgstr ""
 
-#: module/Photo/src/Service/Photo.php:743
-#: module/Photo/src/Service/Photo.php:809
+#: module/Photo/src/Service/Photo.php:754
+#: module/Photo/src/Service/Photo.php:820
 msgid "Not allowed to view tags."
 msgstr ""
 
-#: module/Photo/src/Service/Photo.php:784
+#: module/Photo/src/Service/Photo.php:795
 msgid "Not allowed to remove tags."
 msgstr ""
 
