@@ -13,6 +13,7 @@ types {
     image/x-jng                           jng;
     image/svg+xml                         svg;
     image/vnd.wap.wbmp                    wbmp;
+    image/webp                            webp;
     application/java-archive              jar war ear;
     application/mac-binhex40              hqx;
     application/pdf                       pdf;

@@ -7,14 +7,24 @@
 .jumbotron--panorama {
     height: 340px;
 
-    background-image: url(/img/panorama2-compressed-extra.jpg);
+    background-image: url(/img/panorama2-1024.jpg);
     background-image: -webkit-image-set(
-            url(/img/panorama2-compressed-extra.jpg) 4x,
-            url(/img/panorama2-compressed.jpg) 20x
+            url(/img/panorama2-480.webp) type("image/webp") 30dpi,
+            url(/img/panorama2-640.webp) type("image/webp") 60dpi,
+            url(/img/panorama2-1024.jpg) type("image/jpeg") 120dpi,
+            url(/img/panorama2-1024.webp) type("image/webp") 120dpi,
+            url(/img/panorama2-1280.webp) type("image/webp") 240dpi,
+            url(/img/panorama2-1600.webp) type("image/webp") 480dpi,
+            url(/img/panorama2-1920.webp) type("image/webp") 960dpi
     );
     background-image: image-set(
-            url(/img/panorama2-compressed-extra.jpg) 4x,
-            url(/img/panorama2-compressed.jpg) 20x
+            url(/img/panorama2-480.webp) type("image/webp") 30dpi,
+            url(/img/panorama2-640.webp) type("image/webp") 60dpi,
+            url(/img/panorama2-1024.jpg) type("image/jpeg") 120dpi,
+            url(/img/panorama2-1024.webp) type("image/webp") 120dpi,
+            url(/img/panorama2-1280.webp) type("image/webp") 240dpi,
+            url(/img/panorama2-1600.webp) type("image/webp") 480dpi,
+            url(/img/panorama2-1920.webp) type("image/webp") 960dpi
     );
     background-position: center;
     background-size: cover;
