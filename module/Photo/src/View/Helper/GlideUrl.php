@@ -36,6 +36,11 @@ class GlideUrl extends AbstractHelper
         string $imagePath,
         array $params,
     ): string {
+        // If the encoding format is not specifically defined, default to webp.
+        if (!isset($params['fm'])) {
+            $params['fm'] = 'webp';
+        }
+
         return $this->urlBuilder->getUrl($imagePath, $params);
     }
 
