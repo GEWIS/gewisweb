@@ -40,6 +40,8 @@ runprodtest: buildprod
 
 rundev: builddev
 		@docker-compose up -d --force-recreate --remove-orphans
+		@make replenish
+		@docker-compose exec web rm -rf data/cache/module-config-cache.application.config.cache.php
 
 updatedb: rundev
 		@docker-compose exec -T web ./orm orm:schema-tool:update --force --no-interaction
@@ -62,6 +64,7 @@ replenish:
 		@docker-compose exec web chown -R www-data:www-data /code/public
 		@docker cp ./data gewisweb_web_1:/code
 		@docker-compose exec web chown -R www-data:www-data /code/data
+		@docker-compose exec web rm -rf data/cache/module-config-cache.application.config.cache.php
 		@docker-compose exec web php composer.phar dump-autoload --dev
 		@docker-compose exec web ./orm orm:generate-proxies
 
@@ -124,6 +127,8 @@ updatepackage:
 		@docker cp gewisweb_web_1:/code/package-lock.json ./package-lock.json
 
 updatecss:
+		@docker cp ./public gewisweb_web_1:/code
+		@docker-compose exec web chown -R www-data:www-data /code/public
 		@docker-compose exec web npm run scss
 		@docker cp gewisweb_web_1:/code/public/css/gewis-theme.css ./public/css/gewis-theme.css
 
