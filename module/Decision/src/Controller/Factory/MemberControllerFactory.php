@@ -22,6 +22,7 @@ class MemberControllerFactory implements FactoryInterface
     ): MemberController {
         return new MemberController(
             $container->get('decision_service_acl'),
+            $container->get('translator'),
             $container->get('decision_service_member'),
             $container->get('decision_service_memberinfo'),
             $container->get('decision_service_decision'),

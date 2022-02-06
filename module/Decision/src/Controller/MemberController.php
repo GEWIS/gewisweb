@@ -14,6 +14,8 @@ use Laminas\View\Model\{
     JsonModel,
     ViewModel,
 };
+use Laminas\Mvc\I18n\Translator;
+use User\Permissions\NotAllowedException;
 
 class MemberController extends AbstractActionController
 {
@@ -21,6 +23,11 @@ class MemberController extends AbstractActionController
      * @var AclService
      */
     private AclService $aclService;
+
+    /**
+     * @var Translator
+     */
+    private Translator $translator;
 
     /**
      * @var MemberService
@@ -53,12 +60,14 @@ class MemberController extends AbstractActionController
      */
     public function __construct(
         AclService $aclService,
+        Translator $translator,
         MemberService $memberService,
         MemberInfoService $memberInfoService,
         DecisionService $decisionService,
         array $regulationsConfig,
     ) {
         $this->aclService = $aclService;
+        $this->translator = $translator;
         $this->memberService = $memberService;
         $this->memberInfoService = $memberInfoService;
         $this->decisionService = $decisionService;
@@ -113,6 +122,10 @@ class MemberController extends AbstractActionController
      */
     public function searchAction(): JsonModel|ViewModel
     {
+        if (!$this->aclService->isAllowed('search', 'member')) {
+            throw new NotAllowedException($this->translator->translate('Not allowed to search for members.'));
+        }
+
         $name = $this->params()->fromQuery('q');
 
         if (!empty($name)) {
