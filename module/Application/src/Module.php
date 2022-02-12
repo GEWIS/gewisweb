@@ -31,6 +31,7 @@ use Laminas\Mvc\{
     MvcEvent,
 };
 use Interop\Container\ContainerInterface;
+use Laminas\Http\Header\Accept\FieldValuePart\LanguageFieldValuePart;
 use Laminas\Http\Header\AcceptLanguage;
 use Laminas\Http\Header\HeaderInterface;
 use Laminas\Http\Request;
@@ -133,33 +134,20 @@ class Module
 
     protected function getPreferedLanguageFromRequest(Request $request): ?string
     {
-        $lang = null;
         $header = $request->getHeader('Accept-Language');
         if ($header instanceof AcceptLanguage) {
-            $entries = explode(',', $header->getFieldValue());
-            $preference = 0.;
-            foreach ($entries as $entry) {
-                $parameters = explode(';', trim($entry));
-                $new_preference = 0.1;
-                $new_lang = null;
-                foreach ($parameters as $parameter) {
-                    if (str_starts_with($parameter, 'q=')) {
-                        $new_preference = trim($parameter, 'q=');
-                    } else {
-                        if (str_starts_with($parameter, 'nl')) {
-                            $new_lang = 'nl';
-                        } else {
-                            $new_lang = 'en';
-                        }
-                    }
-                }
-                if ($new_preference > $preference) {
-                    $preference = $new_preference;
-                    $lang = $new_lang;
+            $languages = $header->getPrioritized();
+            /** @var LanguageFieldValuePart $lang */
+            foreach ($languages as $lang) {
+                $langString = $lang->getLanguage();
+                if (str_starts_with($langString, 'nl')) {
+                    return 'nl';
+                } elseif (str_starts_with($langString, 'en')) {
+                    return 'en';
                 }
             }
         }
-        return $lang;
+        return null;
     }
 
     /**
