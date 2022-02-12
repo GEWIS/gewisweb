@@ -25,11 +25,14 @@ return [
             'lang' => [
                 'type' => Segment::class,
                 'options' => [
-                    'route' => '/lang/:lang/',
+                    'route' => '/lang/:lang',
                     'defaults' => [
                         'controller' => IndexController::class,
                         'action' => 'lang',
                         'lang' => 'nl',
+                    ],
+                    'constraints' => [
+                        'lang' => 'nl|en',
                     ],
                 ],
                 'priority' => 100,

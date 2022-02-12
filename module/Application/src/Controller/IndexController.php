@@ -20,6 +20,11 @@ class IndexController extends AbstractActionController
             $session->lang = 'nl';
         }
 
+        $url = $this->getRequest()->getQuery()['href'];
+        if (isset($url)) {
+            return $this->redirect()->toUrl($url);
+        }
+
         if (isset($_SERVER['HTTP_REFERER'])) {
             return $this->redirect()->toUrl($_SERVER['HTTP_REFERER']);
         }
