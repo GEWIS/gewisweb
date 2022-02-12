@@ -28,9 +28,12 @@ use Application\View\Helper\{
 use Laminas\Mvc\{
     I18n\Translator as MvcTranslator,
     ModuleRouteListener,
-    MvcEvent
+    MvcEvent,
 };
 use Interop\Container\ContainerInterface;
+use Laminas\Http\Header\AcceptLanguage;
+use Laminas\Http\Header\HeaderInterface;
+use Laminas\Http\Request;
 use Laminas\Cache\Storage\Adapter\{
     Memcached,
     MemcachedOptions,
@@ -108,12 +111,55 @@ class Module
     protected function determineLocale(MvcEvent $e): string
     {
         $session = new SessionContainer('lang');
+
         if (!isset($session->lang)) {
-            // default: nl locale
-            $session->lang = 'nl';
+            // Check the preferred language in the Accept-Language request header if present
+            $request = $e->getRequest();
+            if ($request instanceof Request) {
+                $lang = $this->getPreferedLanguageFromRequest($request);
+                if (null !== $lang) {
+                    $session->lang = $lang;
+                }
+            }
+        }
+
+        if (!isset($session->lang)) {
+            // default: en locale
+            $session->lang = 'en';
         }
 
         return $session->lang;
+    }
+
+    protected function getPreferedLanguageFromRequest(Request $request): ?string
+    {
+        $lang = null;
+        $header = $request->getHeader('Accept-Language');
+        if ($header instanceof AcceptLanguage) {
+            $entries = explode(',', $header->getFieldValue());
+            $preference = 0.;
+            foreach ($entries as $entry) {
+                $parameters = explode(';', trim($entry));
+                $new_preference = 0.1;
+                $new_lang = null;
+                foreach ($parameters as $parameter) {
+                    if (str_starts_with($parameter, 'q=')) {
+                        $new_preference = trim($parameter, 'q=');
+                    } else {
+                        if (str_starts_with($parameter, 'nl')) {
+                            $new_lang = 'nl';
+                        } else {
+                            $new_lang = 'en';
+                        }
+                    }
+                }
+                if ($new_preference > $preference) {
+                    $preference = $new_preference;
+                    $lang = $new_lang;
+                }
+            }
+        }
+        return $lang;
     }
 
     /**
