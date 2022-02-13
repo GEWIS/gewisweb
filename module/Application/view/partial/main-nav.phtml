@@ -39,14 +39,16 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     <ul class="dropdown-menu language <?= ($lang == 'en') ? 'reverse' : '' ?> ">
                         <li>
                             <a class="<?= ($lang == 'en') ? 'disabled' : '' ?>"
-                               href="<?= $this->url('lang', ['lang' => 'en']) ?>">
+                               href="<?= $this->url('lang', ['lang' => 'en']) ?>"
+                            >
                                 <span class="flag-icon flag-icon-en"
                                       style="background-image: url('<?= $this->basePath() ?>/img/en.svg');"></span>English
                             </a>
                         </li>
                         <li>
                             <a class="<?= ($lang == 'nl') ? 'disabled' : '' ?>"
-                               href="<?= $this->url('lang', ['lang' => 'nl']) ?>">
+                               href="<?= $this->url('lang', ['lang' => 'nl']) ?>"
+                            >
                                 <span class="flag-icon flag-icon-nl"
                                       style="background-image: url('<?= $this->basePath() ?>/img/nl.svg');"></span>Nederlands
                             </a>

@@ -28,9 +28,13 @@ use Application\View\Helper\{
 use Laminas\Mvc\{
     I18n\Translator as MvcTranslator,
     ModuleRouteListener,
-    MvcEvent
+    MvcEvent,
 };
 use Interop\Container\ContainerInterface;
+use Laminas\Http\Header\Accept\FieldValuePart\LanguageFieldValuePart;
+use Laminas\Http\Header\AcceptLanguage;
+use Laminas\Http\Header\HeaderInterface;
+use Laminas\Http\Request;
 use Laminas\Cache\Storage\Adapter\{
     Memcached,
     MemcachedOptions,
@@ -108,12 +112,42 @@ class Module
     protected function determineLocale(MvcEvent $e): string
     {
         $session = new SessionContainer('lang');
+
         if (!isset($session->lang)) {
-            // default: nl locale
-            $session->lang = 'nl';
+            // Check the preferred language in the Accept-Language request header if present
+            $request = $e->getRequest();
+            if ($request instanceof Request) {
+                $lang = $this->getPreferedLanguageFromRequest($request);
+                if (null !== $lang) {
+                    $session->lang = $lang;
+                }
+            }
+        }
+
+        if (!isset($session->lang)) {
+            // default: en locale
+            $session->lang = 'en';
         }
 
         return $session->lang;
+    }
+
+    protected function getPreferedLanguageFromRequest(Request $request): ?string
+    {
+        $header = $request->getHeader('Accept-Language');
+        if ($header instanceof AcceptLanguage) {
+            $languages = $header->getPrioritized();
+            /** @var LanguageFieldValuePart $lang */
+            foreach ($languages as $lang) {
+                $langString = $lang->getLanguage();
+                if (str_starts_with($langString, 'nl')) {
+                    return 'nl';
+                } elseif (str_starts_with($langString, 'en')) {
+                    return 'en';
+                }
+            }
+        }
+        return null;
     }
 
     /**
