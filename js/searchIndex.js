@@ -3471,6 +3471,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Module.html#method_determineLocale"
         },                {
+            "fqsen": "\\Application\\Module\u003A\u003AgetPreferedLanguageFromRequest\u0028\u0029",
+            "name": "getPreferedLanguageFromRequest",
+            "summary": "",
+            "url": "classes/Application-Module.html#method_getPreferedLanguageFromRequest"
+        },                {
             "fqsen": "\\Application\\Module\u003A\u003AgetConfig\u0028\u0029",
             "name": "getConfig",
             "summary": "Get\u0020the\u0020configuration\u0020for\u0020this\u0020module.",
@@ -12075,6 +12080,16 @@ Search.appendIndex(
             "name": "testLangNlDoesRedirect",
             "summary": "",
             "url": "classes/FrontpageTest-ControllerTest.html#method_testLangNlDoesRedirect"
+        },                {
+            "fqsen": "\\FrontpageTest\\ControllerTest\u003A\u003AtestLangEnDoesRedirectToUri\u0028\u0029",
+            "name": "testLangEnDoesRedirectToUri",
+            "summary": "",
+            "url": "classes/FrontpageTest-ControllerTest.html#method_testLangEnDoesRedirectToUri"
+        },                {
+            "fqsen": "\\FrontpageTest\\ControllerTest\u003A\u003AtestLangNlDoesRedirectToUri\u0028\u0029",
+            "name": "testLangNlDoesRedirectToUri",
+            "summary": "",
+            "url": "classes/FrontpageTest-ControllerTest.html#method_testLangNlDoesRedirectToUri"
         },                {
             "fqsen": "\\FrontpageTest\\ControllerTest\u003A\u003AtestPollHistoryActionCanBeAccessed\u0028\u0029",
             "name": "testPollHistoryActionCanBeAccessed",
