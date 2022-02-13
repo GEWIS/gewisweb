@@ -518,9 +518,10 @@ class Decision
             return false;
         }
 
-        // You cannot authorize more than one person.
-        if (null !== $this->getUserAuthorization($meeting)) {
-            return false;
+        // You cannot authorize more than one person, actually return the existing authorization model to ensure the
+        // form is not shown again on a refresh.
+        if (null !== ($previousAuthorization = $this->getUserAuthorization($meeting))) {
+            return $previousAuthorization;
         }
 
         $authorization = new AuthorizationModel();
