@@ -6,29 +6,27 @@
 
 .jumbotron--panorama {
     height: 340px;
+    position: relative;
+    width: 100%;
+    padding: 0 !important;
 
-    background-image: url(/img/panorama2-1024.jpg);
-    background-image: -webkit-image-set(
-            url(/img/panorama2-480.webp) type("image/webp") 30dpi,
-            url(/img/panorama2-640.webp) type("image/webp") 60dpi,
-            url(/img/panorama2-1024.jpg) type("image/jpeg") 120dpi,
-            url(/img/panorama2-1024.webp) type("image/webp") 120dpi,
-            url(/img/panorama2-1280.webp) type("image/webp") 240dpi,
-            url(/img/panorama2-1600.webp) type("image/webp") 480dpi,
-            url(/img/panorama2-1920.webp) type("image/webp") 960dpi
-    );
-    background-image: image-set(
-            url(/img/panorama2-480.webp) type("image/webp") 30dpi,
-            url(/img/panorama2-640.webp) type("image/webp") 60dpi,
-            url(/img/panorama2-1024.jpg) type("image/jpeg") 120dpi,
-            url(/img/panorama2-1024.webp) type("image/webp") 120dpi,
-            url(/img/panorama2-1280.webp) type("image/webp") 240dpi,
-            url(/img/panorama2-1600.webp) type("image/webp") 480dpi,
-            url(/img/panorama2-1920.webp) type("image/webp") 960dpi
-    );
-    background-position: center;
-    background-size: cover;
-    box-shadow: inset 0 1px 5px rgba(0,0,0,0.3);
+    &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    > img {
+        float: left;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 40%;
+    }
 
     @media screen and (max-width: $screen-xs-max) {
         max-height: 30vh;
