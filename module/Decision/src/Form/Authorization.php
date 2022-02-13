@@ -4,6 +4,7 @@ namespace Decision\Form;
 
 use Laminas\Form\Element\{
     Checkbox,
+    Csrf,
     Hidden,
     Submit,
 };
@@ -34,6 +35,13 @@ class Authorization extends Form implements InputFilterProviderInterface
                 'options' => [
                     'use_hidden_element' => false,
                 ],
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'csrf_token',
+                'type' => Csrf::class,
             ]
         );
 

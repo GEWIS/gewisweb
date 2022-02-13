@@ -67,6 +67,7 @@ You may still be able to authorize someone or revoke an authorization by contact
             $submit = $form->get('submit');
             $submit->setLabel($this->translate('Authorize'));
             $submit->setAttribute('class', 'btn btn-primary pull-right');
+            echo $this->formHidden($form->get('csrf_token'));
             ?>
             <div class='form-group'>
                 <button type='button' class='btn btn-primary pull-right' id='initialSubmit'>

@@ -175,7 +175,7 @@ class DecisionController extends AbstractActionController
             $form->setData($request->getPost()->toArray());
 
             if ($form->isValid()) {
-                if ($this->decisionService->createAuthorization($form->getData())) {
+                if (false !== ($authorization = $this->decisionService->createAuthorization($form->getData()))) {
                     return new ViewModel(
                         [
                             'meeting' => $meeting,

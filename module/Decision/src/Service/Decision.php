@@ -503,11 +503,9 @@ class Decision
      */
     public function createAuthorization(array $data): AuthorizationModel|bool
     {
-        $authorization = new AuthorizationModel();
-        $user = $this->aclService->getIdentityOrThrowException();
-        $authorizer = $user->getMember();
-
+        $authorizer = $this->aclService->getIdentityOrThrowException()->getMember();
         $recipient = $this->memberMapper->findByLidnr($data['recipient']);
+
         if (
             null === $recipient
             || $recipient->getLidnr() === $authorizer->getLidnr()
@@ -519,6 +517,14 @@ class Decision
         if (null === $meeting) {
             return false;
         }
+
+        // You cannot authorize more than one person, actually return the existing authorization model to ensure the
+        // form is not shown again on a refresh.
+        if (null !== ($previousAuthorization = $this->getUserAuthorization($meeting))) {
+            return $previousAuthorization;
+        }
+
+        $authorization = new AuthorizationModel();
 
         $authorization->setAuthorizer($authorizer);
         $authorization->setRecipient($recipient);
