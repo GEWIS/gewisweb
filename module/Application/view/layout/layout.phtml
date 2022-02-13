@@ -24,48 +24,49 @@
     ?>
 
     <!-- Preload fonts-->
-    <?= $this->headLink([
+    <?php $this->headLink([
         'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'crossorigin' => 'anonymous',
         'href' => '/fonts/raleway/raleway-v22-latin-500.woff2'
     ]); ?>
-    <?= $this->headLink([
+    <?php $this->headLink([
         'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'crossorigin' => 'anonymous',
         'href' => '/fonts/raleway/raleway-v22-latin-600.woff2'
     ]); ?>
-    <?= $this->headLink([
+    <?php $this->headLink([
         'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'crossorigin' => 'anonymous',
         'href' => '/fonts/raleway/raleway-v22-latin-regular.woff2'
     ]); ?>
-    <?= $this->headLink([
+    <?php $this->headLink([
         'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'crossorigin' => 'anonymous',
         'href' => '/fonts/lato/lato-v22-latin-700.woff2'
     ]); ?>
-    <?= $this->headLink([
+    <?php $this->headLink([
         'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'crossorigin' => 'anonymous',
         'href' => '/fonts/lato/lato-v22-latin-regular.woff2'
     ]); ?>
-    <?= $this->headLink([
+    <?php $this->headLink([
         'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'crossorigin' => 'anonymous',
         'href' => '/fonts/fontawesome/fa-solid-900.woff2'
     ]); ?>
-    <?= $this->headLink([
+    <?php $this->headLink([
         'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'crossorigin' => 'anonymous',
         'href' => '/fonts/fontawesome/fa-brands-400.woff2'
     ]); ?>
-    <?= $this->headLink([
+    <?php $this->headLink([
         'as' => 'font', 'rel' => 'preload', 'type' => 'font/ttf', 'crossorigin' => 'anonymous',
         'href' => '/fonts/gewisicons/gewisicons.ttf?37l19n='
     ]); ?>
-    <?= $this->headLink([
+    <?php $this->headLink([
         'as' => 'image', 'rel' => 'preload', 'type' => 'image/svg+xml', 'crossorigin' => 'anonymous',
         'href' => '/img/nl.svg'
     ]); ?>
-    <?= $this->headLink([
+    <?php $this->headLink([
         'as' => 'image', 'rel' => 'preload', 'type' => 'image/svg+xml', 'crossorigin' => 'anonymous',
         'href' => '/img/en.svg'
     ]); ?>
 
     <!-- Le styles -->
+    <!-- All headLinks are outputted here once. -->
     <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->basePath() . '/img/favicon.ico'])
         ->prependStylesheet($this->basePath() . '/css/gewis-theme.css'); ?>
 
