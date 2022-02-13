@@ -40,7 +40,6 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <li>
                             <a class="<?= ($lang == 'en') ? 'disabled' : '' ?>"
                                href="<?= $this->url('lang', ['lang' => 'en']) ?>"
-                               hreflang='en'
                             >
                                 <span class="flag-icon flag-icon-en"
                                       style="background-image: url('<?= $this->basePath() ?>/img/en.svg');"></span>English
@@ -49,7 +48,6 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <li>
                             <a class="<?= ($lang == 'nl') ? 'disabled' : '' ?>"
                                href="<?= $this->url('lang', ['lang' => 'nl']) ?>"
-                               hreflang='nl'
                             >
                                 <span class="flag-icon flag-icon-nl"
                                       style="background-image: url('<?= $this->basePath() ?>/img/nl.svg');"></span>Nederlands

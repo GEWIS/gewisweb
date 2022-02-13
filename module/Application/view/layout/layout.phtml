@@ -14,11 +14,11 @@
     if (isset($_SERVER['REQUEST_URI'])) {
         $this->headLink([
             'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'en',
-            'href' => '/lang/en/' . ltrim($_SERVER['REQUEST_URI'], '/')
+            'href' => 'https://gewis.nl/lang/en/' . ltrim($_SERVER['REQUEST_URI'], '/')
         ]);
         $this->headLink([
             'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'nl',
-            'href' => '/lang/nl/' . ltrim($_SERVER['REQUEST_URI'], '/')
+            'href' => 'https://gewis.nl/lang/nl/' . ltrim($_SERVER['REQUEST_URI'], '/')
         ]);
     }
     ?>
