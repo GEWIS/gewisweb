@@ -9,6 +9,16 @@
         ->appendName('viewport', 'width=device-width, initial-scale=1.0')
     ?>
 
+    <!-- Display alternate language links-->
+    <?= $this->headLink([
+        'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'en',
+        'href' => '/lang/en?href=' . $_SERVER['REQUEST_URI']
+    ]); ?>
+    <?= $this->headLink([
+        'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'nl',
+        'href' => '/lang/nl?href=' . $_SERVER['REQUEST_URI']
+    ]); ?>
+
     <!-- Preload fonts-->
     <?= $this->headLink([
         'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'crossorigin' => 'anonymous',
@@ -50,11 +60,6 @@
         'as' => 'image', 'rel' => 'preload', 'type' => 'image/svg+xml', 'crossorigin' => 'anonymous',
         'href' => '/img/en.svg'
     ]); ?>
-<!--    --><?//= $this->headLink([
-//        'as' => 'image', 'rel' => 'preload', 'type' => 'image/jpeg', 'crossorigin' => 'anonymous',
-//        'href' => '/img/panorama2-1024.jpg',
-//        'imagesrcset' => '/img/panorama2-480.webp 30dpi, /img/panorama2-640.webp 60dpi, /img/panorama2-1024.webp 120dpi, /img/panorama2-1280.webp 240dpi, /img/panorama2-1600.webp 480dpi, /img/panorama2-1920 960dpi'
-//    ]); ?>
 
     <!-- Le styles -->
     <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->basePath() . '/img/favicon.ico'])
