@@ -30,7 +30,6 @@ return [
                         'controller' => IndexController::class,
                         'action' => 'lang',
                         'lang' => 'en',
-                        'href' => '/',
                     ],
                     'constraints' => [
                         'lang' => 'nl|en',
