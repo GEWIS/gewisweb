@@ -25,11 +25,12 @@ return [
             'lang' => [
                 'type' => Segment::class,
                 'options' => [
-                    'route' => '/lang/:lang',
+                    'route' => '/lang/:lang[/:href]',
                     'defaults' => [
                         'controller' => IndexController::class,
                         'action' => 'lang',
                         'lang' => 'en',
+                        'href' => '/',
                     ],
                     'constraints' => [
                         'lang' => 'nl|en',

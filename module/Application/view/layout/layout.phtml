@@ -12,11 +12,11 @@
     <!-- Display alternate language links-->
     <?= $this->headLink([
         'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'en',
-        'href' => '/lang/en?href=' . $_SERVER['REQUEST_URI']
+        'href' => '/lang/en/' . ltrim($_SERVER['REQUEST_URI'], '/')
     ]); ?>
     <?= $this->headLink([
         'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'nl',
-        'href' => '/lang/nl?href=' . $_SERVER['REQUEST_URI']
+        'href' => '/lang/nl/' . ltrim($_SERVER['REQUEST_URI'], '/')
     ]); ?>
 
     <!-- Preload fonts-->
