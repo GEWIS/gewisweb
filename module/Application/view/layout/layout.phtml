@@ -10,14 +10,18 @@
     ?>
 
     <!-- Display alternate language links-->
-    <?= $this->headLink([
-        'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'en',
-        'href' => '/lang/en/' . ltrim($_SERVER['REQUEST_URI'], '/')
-    ]); ?>
-    <?= $this->headLink([
-        'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'nl',
-        'href' => '/lang/nl/' . ltrim($_SERVER['REQUEST_URI'], '/')
-    ]); ?>
+    <?php
+    if (isset($_SERVER['REQUEST_URI'])) {
+        $this->headLink([
+            'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'en',
+            'href' => '/lang/en/' . ltrim($_SERVER['REQUEST_URI'], '/')
+        ]);
+        $this->headLink([
+            'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'nl',
+            'href' => '/lang/nl/' . ltrim($_SERVER['REQUEST_URI'], '/')
+        ]);
+    }
+    ?>
 
     <!-- Preload fonts-->
     <?= $this->headLink([
