@@ -1,3 +1,16 @@
+## [v2.6.1](https://github.com/GEWIS/gewisweb/tree/v2.6.1) (2022-02-13)
+
+* Changed default site language to English.
+* Added functionality to automatically infer the user's language preference.
+* Added alternate URLs for pages.
+* Changed default encoding of images from `jpg/png` to `webp`.
+* Improved caching of resources (images, fonts, etc.).
+* Fixed issue where an error was displayed even though an authorization was successful.
+* Fixed issue where it was possible to authorize multiple people.
+* Fixed issue where the frontpage panorama would not be the correct resolution.
+
+---
+
 ## [v2.6](https://github.com/GEWIS/gewisweb/tree/v2.6) (2022-02-06)
 
 * Added a button to the photo viewer to set a photo as your profile photo.
@@ -7,7 +20,7 @@
 * Fixed issue where an activity could start after it had ended.
 * Fixed issue where the member search page was visible to non-logged in members.
 * Fixed issue where trying to set a non-existent photo as your profile picture would cause a crash.
-* Fixes issue where loading fonts would be blocking, now swapped when ready.
+* Fixed issue where loading fonts would be blocking, now swapped when ready.
 
 ---
 
