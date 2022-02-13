@@ -29,7 +29,7 @@ return [
                     'defaults' => [
                         'controller' => IndexController::class,
                         'action' => 'lang',
-                        'lang' => 'nl',
+                        'lang' => 'en',
                     ],
                     'constraints' => [
                         'lang' => 'nl|en',

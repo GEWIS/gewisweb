@@ -20,8 +20,8 @@ class IndexController extends AbstractActionController
             $session->lang = 'nl';
         }
 
-        $url = $this->getRequest()->getQuery()['href'];
-        if (isset($url)) {
+        $url = $this->getRequest()->getQuery('href');
+        if (null !== $url) {
             return $this->redirect()->toUrl($url);
         }
 
