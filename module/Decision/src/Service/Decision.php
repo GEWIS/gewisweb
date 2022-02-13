@@ -503,11 +503,9 @@ class Decision
      */
     public function createAuthorization(array $data): AuthorizationModel|bool
     {
-        $authorization = new AuthorizationModel();
-        $user = $this->aclService->getIdentityOrThrowException();
-        $authorizer = $user->getMember();
-
+        $authorizer = $this->aclService->getIdentityOrThrowException()->getMember();
         $recipient = $this->memberMapper->findByLidnr($data['recipient']);
+
         if (
             null === $recipient
             || $recipient->getLidnr() === $authorizer->getLidnr()
@@ -519,6 +517,13 @@ class Decision
         if (null === $meeting) {
             return false;
         }
+
+        // You cannot authorize more than one person.
+        if (null !== $this->getUserAuthorization($meeting)) {
+            return false;
+        }
+
+        $authorization = new AuthorizationModel();
 
         $authorization->setAuthorizer($authorizer);
         $authorization->setRecipient($recipient);
