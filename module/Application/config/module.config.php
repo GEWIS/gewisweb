@@ -25,7 +25,7 @@ return [
             'lang' => [
                 'type' => Segment::class,
                 'options' => [
-                    'route' => '/lang/:lang[/:href]',
+                    'route' => '/lang/:lang[/[:href]]',
                     'defaults' => [
                         'controller' => IndexController::class,
                         'action' => 'lang',
