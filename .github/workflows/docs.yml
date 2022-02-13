@@ -8,7 +8,7 @@ on:
 
 jobs:
     phpunit:
-        name: PHPUnit
+        name: phpDoc
         runs-on: ubuntu-latest
 
         steps:
