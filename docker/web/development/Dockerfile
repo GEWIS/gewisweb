@@ -14,7 +14,6 @@ RUN apt-get update \
         libpng-dev \
         libpq-dev \
         libsqlite3-dev \
-        libxml2-dev \
         libzip-dev \
         nano \
         poppler-utils \
@@ -40,7 +39,6 @@ RUN docker-php-ext-configure \
         pdo_mysql \
         pdo_pgsql \
         pdo_sqlite \
-        soap \
         zip
 
 RUN pecl install imagick \

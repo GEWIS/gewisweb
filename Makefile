@@ -113,6 +113,10 @@ phpcsfixrisky: loadenv
 		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --allow-risky=yes --rules=@PHP80Migration:risky,-declare_strict_types,-use_arrow_functions  module
 		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --allow-risky=yes --rules=@PHP80Migration:risky,-declare_strict_types,-use_arrow_functions  config
 
+checkcomposer: loadenv
+		@XDEBUG_MODE=off vendor/bin/composer-require-checker check composer.json
+		@vendor/bin/composer-unused
+
 updatecomposer:
 		@docker cp ./composer.json gewisweb_web_1:/code/composer.json
 		@docker-compose exec web php composer.phar selfupdate

@@ -24,7 +24,6 @@ RUN apt-get update \
         libmemcached-dev \
         libpng-dev \
         libpq-dev \
-        libxml2-dev \
         libzip-dev \
         poppler-utils \
         rsync \
@@ -46,7 +45,6 @@ RUN docker-php-ext-configure \
         pgsql \
         pdo_mysql \
         pdo_pgsql \
-        soap \
         zip
 
 RUN pecl install -o imagick \

@@ -33,12 +33,10 @@
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-view" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-escaper" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-config" />
-      <path value="$PROJECT_DIR$/vendor/laminas/laminas-server" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-i18n" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-mail" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-mime" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-serializer" />
-      <path value="$PROJECT_DIR$/vendor/laminas/laminas-soap" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-paginator" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-crypt" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-hydrator" />
@@ -86,7 +84,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/console" />
       <path value="$PROJECT_DIR$/vendor/jszanto/gewisweb-test-data" />
-      <path value="$PROJECT_DIR$/vendor/laminas/laminas-zendframework-bridge" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-dependency-plugin" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-cache-storage-adapter-zend-server" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-cache-storage-adapter-xcache" />
