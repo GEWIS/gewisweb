@@ -8,7 +8,7 @@ $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
     $i = 1;
     ?>
     <?= (0 !== $tagCount) ? $this->translate('In this photo:') : '' ?>
-    <div class="tagList tagList-<?= $this->photo->getId() ?>">
+    <div class="tagList" data-tag-list="<?= $this->photo->getId() ?>">
         <?php foreach ($this->photo->getTags() as $tag): ?>
             <span>
                 <a href="<?= $this->url(

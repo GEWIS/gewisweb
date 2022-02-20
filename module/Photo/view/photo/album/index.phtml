@@ -423,7 +423,7 @@ $this->scriptUrl()->requireUrl('member/search')
                                         let id = 'removeTag' + data.tag.id;
 
                                         // Write the tag into the current slide and the original `figtags`.
-                                        document.querySelectorAll('.tagList-' + data.tag.photo_id).forEach(tagList => {
+                                        document.querySelectorAll('div[data-tag-list=' + data.tag.photo_id + ']').forEach(tagList => {
                                             let spacer = (0 !== tagList.childElementCount) ?
                                                 ((1 === tagList.childElementCount) ?
                                                     ' <?= $this->translate('and') ?> '

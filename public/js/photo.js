@@ -44,6 +44,8 @@ let Photo = {
             fetch(element.href, { method: 'POST' })
                 .then(response => response.json())
                 .then(result => {
+                    document.querySelector('div[data-tag-list=' + element.parentElement.parentElement.dataset.tagList + ']')
+                        .querySelector('#' + element.id).remove();
                     element.parentElement.remove();
                 }).catch(error => {
                 // An error occurred somewhere along the way, perhaps we should notify the user.
