@@ -422,13 +422,26 @@ $this->scriptUrl()->requireUrl('member/search')
 
                                         let id = 'removeTag' + data.tag.id;
 
-                                        el.querySelector('.tagList-' + data.tag.photo_id).insertAdjacentHTML(
-                                            'afterbegin',
-                                            '<a href="' + memberURL + '">' + suggestion.value + '</a>' +
-                                                '<a href="' + removeURL + '" id="' + id + '">' +
-                                                '<span class="fas fa-times" aria-hidden="true">' +
-                                                '</span></a>, '
-                                        );
+                                        // Write the tag into the current slide and the original `figtags`.
+                                        document.querySelectorAll('.tagList-' + data.tag.photo_id).forEach(tagList => {
+                                            let spacer = (0 !== tagList.childElementCount) ?
+                                                ((1 === tagList.childElementCount) ?
+                                                    ' <?= $this->translate('and') ?> '
+                                                    : ',&nbsp')
+                                                : '';
+
+                                            tagList.insertAdjacentHTML(
+                                                'afterbegin',
+                                                `
+                                                <span>
+                                                    <a href="${memberURL}">${suggestion.value}</a>
+                                                    <a href="${removeURL}" id="${id}">
+                                                        <span class="fas fa-times" aria-hidden="true"></span>
+                                                    </a>${spacer}
+                                                </span>
+                                                `
+                                            );
+                                        });
                                         Photo.initRemoveTag(el.querySelector('#' + id));
                                         tagSearch.focus();
                                     }

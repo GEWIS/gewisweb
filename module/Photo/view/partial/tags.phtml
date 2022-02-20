@@ -35,7 +35,7 @@ $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
                 if ($i < $tagCount)
                     echo ',&nbsp';
                 if ($i == $tagCount)
-                    echo 'and';
+                    echo $this->translate('and');
                 ?>
             </span>
         <?php endforeach; ?>
