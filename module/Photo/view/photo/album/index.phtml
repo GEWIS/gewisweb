@@ -423,26 +423,33 @@ $this->scriptUrl()->requireUrl('member/search')
                                         let id = 'removeTag' + data.tag.id;
 
                                         // Write the tag into the current slide and the original `figtags`.
-                                        document.querySelectorAll('div[data-tag-list=' + data.tag.photo_id + ']').forEach(tagList => {
+                                        document.querySelectorAll('div[data-tag-list="' + data.tag.photo_id + '"]').forEach(tagList => {
                                             let spacer = (0 !== tagList.childElementCount) ?
                                                 ((1 === tagList.childElementCount) ?
                                                     ' <?= $this->translate('and') ?> '
                                                     : ',&nbsp')
                                                 : '';
 
+                                            if (0 === tagList.childElementCount) {
+                                                tagList.insertAdjacentHTML(
+                                                    'beforebegin',
+                                                    '<span class="tag-title"><?= $this->translate('In this photo:') ?></span>'
+                                                );
+                                            }
+
                                             tagList.insertAdjacentHTML(
                                                 'afterbegin',
                                                 `
                                                 <span>
                                                     <a href="${memberURL}">${suggestion.value}</a>
-                                                    <a href="${removeURL}" id="${id}">
+                                                    <a href="${removeURL}" class="remove-tag" data-tag-id="${id}">
                                                         <span class="fas fa-times" aria-hidden="true"></span>
                                                     </a>${spacer}
                                                 </span>
                                                 `
                                             );
                                         });
-                                        Photo.initRemoveTag(el.querySelector('#' + id));
+                                        Photo.initRemoveTag(el.querySelector('a[data-tag-id="' + id + '"]'));
                                         tagSearch.focus();
                                     }
                                     tagSearch.value = '';

@@ -44,12 +44,17 @@ let Photo = {
             fetch(element.href, { method: 'POST' })
                 .then(response => response.json())
                 .then(result => {
-                    document.querySelector('div[data-tag-list=' + element.parentElement.parentElement.dataset.tagList + ']')
-                        .querySelector('#' + element.id).remove();
-                    element.parentElement.remove();
+                    document.querySelectorAll('a[data-tag-id="' + element.dataset.tagId + '"').forEach(tag => {
+                        // Also remove the "In this photo:" text.
+                        if (1 === tag.parentElement.parentElement.childElementCount) {
+                            tag.parentElement.parentElement.parentElement.querySelector('.tag-title').remove();
+                        }
+
+                        tag.parentElement.remove();
+                    })
                 }).catch(error => {
-                // An error occurred somewhere along the way, perhaps we should notify the user.
-            });
+                    // An error occurred somewhere along the way, perhaps we should notify the user.
+                });
         });
     }
 };
