@@ -467,6 +467,16 @@ $this->scriptUrl()->requireUrl('member/search')
         });
     });
 
+    // If the tag search is being used, do not allow zooming using the `z` key.
+    lightbox.on('keydown', (e)  => {
+        if (
+            90 === e.originalEvent.keyCode
+            && document.activeElement === document.querySelector('.pswp__tags-ui .tagSearch')
+        ) {
+            e.preventDefault();
+        }
+    });
+
     // To properly show the tooltips (not the native titles) we need to inject the event handlers, but only after the UI
     // has been created (which is guaranteed to be before `afterInit`).
     lightbox.on('afterInit', () => {
