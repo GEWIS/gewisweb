@@ -7,10 +7,10 @@ $this->headTitle($this->translate('Update Proposal'));
 
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Activities'), true, $this->url('activity_admin'))
-    ->addBreadcrumb($this->localiseText($activity->getName()), true, $this->url(
+    ->addBreadcrumb($this->localiseText($old->getName()), true, $this->url(
         'activity_admin_approval/view',
         [
-            'id' => $activity->getId()
+            'id' => $old->getId()
         ],
     ))
     ->addBreadcrumb($this->translate('Update Proposal'));
