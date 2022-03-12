@@ -15,3 +15,11 @@ parameters:
             message: "#^Unable to resolve the template type T in call to method Doctrine\\\\ORM\\\\EntityManager\\:\\:getRepository\\(\\)$#"
             count: 1
             path: ../module/Application/src/Mapper/BaseMapper.php
+        -
+            message: "#^Comparison operation \"\\<\" between '1'\\|'10'\\|'11'\\|'12'\\|'13'\\|'14'\\|'15'\\|'16'\\|'17'\\|'18'\\|'19'\\|'2'\\|'20'\\|'21'\\|'22'\\|'23'\\|'24'\\|'25'\\|'26'\\|'27'\\|'28'\\|'29'\\|'3'\\|'30'\\|'31'\\|'4'\\|'5'\\|'6'\\|'7'\\|'8'\\|'9' and 1 is always false\\.$#"
+            count: 1
+            path: ../module/Decision/src/Model/AssociationYear.php
+        -
+            message: "#^Result of && is always false\\.$#"
+            count: 1
+            path: ../module/Decision/src/Model/AssociationYear.php

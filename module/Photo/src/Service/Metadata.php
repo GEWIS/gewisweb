@@ -90,7 +90,7 @@ class Metadata
 
         [$n, $d] = explode('/', $str);
 
-        return $n / $d; //I assume stuff like '234/0' is not supported by EXIF.
+        return (int) $n / (int) $d; //I assume stuff like '234/0' is not supported by EXIF.
     }
 
     /**
