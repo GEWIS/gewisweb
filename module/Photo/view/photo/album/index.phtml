@@ -199,7 +199,7 @@ $this->scriptUrl()->requireUrl('member/search')
         arrowNextTitle: '<?=  $this->translate('Next') ?>',
         errorMsg: '<div class="pswp__error-msg"><a href="" target="_blank"><?= $this->translate('The image') ?></a> <?= $this->translate('could not be loaded.') ?></div>',
 
-        pswpModule: '<?= $this->basePath() ?>/js/photoswipe.esm.min.js',
+        pswpModule: () => import('<?= $this->basePath() ?>/js/photoswipe.esm.min.js'),
     });
 
     lightbox.on('uiRegister', () => {
