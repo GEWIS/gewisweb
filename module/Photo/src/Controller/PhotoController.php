@@ -42,27 +42,24 @@ class PhotoController extends AbstractActionController
 
     public function indexAction(): ViewModel
     {
-        //add any other special behavior which is required for the main photo page here later
         $years = $this->albumService->getAlbumYears();
         $year = $this->params()->fromRoute('year');
+
         // If no year is supplied, use the latest year.
-        if (is_null($year)) {
-            if (empty($years)) {
+        if (null === $year) {
+            if (0 === count($years)) {
                 $year = (int) date('Y');
             } else {
                 $year = max($years);
             }
         } else {
-            $year = (int)$year;
+            $year = (int) $year;
         }
-
-        $albums = $this->albumService->getAlbumsByYear($year);
 
         return new ViewModel(
             [
-                'activeYear' => $year,
                 'years' => $years,
-                'albums' => $albums,
+                'albums' => $this->albumService->getAlbumsByYear($year),
             ]
         );
     }

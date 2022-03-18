@@ -291,7 +291,7 @@ class Activity extends BaseMapper
             ->setParameter('end', $end)
             ->andWhere('a.status = :status')
             ->setParameter('status', ActivityModel::STATUS_APPROVED)
-            ->orderBy('a.beginTime', 'ASC');
+            ->orderBy('a.beginTime', 'DESC');
 
         return $qb->getQuery()->getResult();
     }
