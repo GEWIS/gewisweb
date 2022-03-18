@@ -467,9 +467,13 @@ $this->scriptUrl()->requireUrl('member/search')
 
     // If the tag search is being used, do not allow zooming using the `z` key.
     lightbox.on('keydown', (e)  => {
+        let pressedKey = e.originalEvent.keyCode;
+        let tagSearch = document.querySelector('.pswp__tags-ui .tagSearch');
+
         if (
-            90 === e.originalEvent.keyCode
-            && document.activeElement === document.querySelector('.pswp__tags-ui .tagSearch')
+            (90 === pressedKey || 37 === pressedKey || 39 === pressedKey)
+            && document.activeElement === tagSearch
+            && "" !== tagSearch.value
         ) {
             e.preventDefault();
         }
