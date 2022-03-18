@@ -38,7 +38,7 @@ return [
                         'options' => [
                             'route' => '/:category',
                             'constraints' => [
-                                'category' => '[a-zA-Z0-9_\-\.]*',
+                                'category' => '[a-zA-Z0-9_\-\.]+',
                             ],
                             'defaults' => [
                                 'action' => 'jobList',
