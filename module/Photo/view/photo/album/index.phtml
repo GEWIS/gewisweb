@@ -181,6 +181,8 @@ $this->scriptUrl()->requireUrl('member/search')
     const closeSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#times"></use></svg>';
     const zoomSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use class="pswp__icn-zoom-plus" href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#search-plus"></use><use class="pswp__icn-zoom-minus" href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#search-minus"></use></svg>';
 
+    let lastActiveElement = null;
+
     const lightbox = new PhotoSwipeLightbox({
         gallery: '.pswp-gallery',
         children: '.pswp-gallery__item',
@@ -487,11 +489,30 @@ $this->scriptUrl()->requireUrl('member/search')
         });
     });
 
+    // Update the last active element when a slide is activated.
+    lightbox.on('slideActivate', ({slide}) => {
+        lastActiveElement = slide.data.element;
+    });
+
     lightbox.on('close', () => {
         // Remove all remaining autocomplete suggestion elements.
         document.querySelectorAll('.autocomplete-suggestions').forEach(element => {
             element.remove();
         });
+
+        let elBoundingBox = lastActiveElement.getBoundingClientRect();
+
+        // If the last active element is slightly outside the viewport, scroll it into view (preferably centered).
+        if (
+            elBoundingBox.top < 0
+            || elBoundingBox.left < 0
+            || elBoundingBox.bottom > (window.innerHeight || document.documentElement.clientHeight)
+            || elBoundingBox.right > (window.innerWidth || document.documentElement.clientWidth)
+        ) {
+            lastActiveElement.scrollIntoView({block: 'center'});
+        }
+
+        lastActiveElement = null;
     });
 
     lightbox.init();
