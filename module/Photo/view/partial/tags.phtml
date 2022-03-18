@@ -7,9 +7,8 @@ $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
     $tagCount = $this->photo->getTags()->count();
     $i = 1;
     ?>
-    <?php if (0 !== $tagCount): ?>
-        <span class="tag-title"><?= $this->translate('In this photo:') ?></span>
-    <?php endif; ?>
+    <span class="tag-title <?= (0 === $tagCount) ? 'hidden' : '' ?>"><?= $this->translate('In this photo:') ?></span>
+    <span class="no-tag-title <?= (0 !== $tagCount) ? 'hidden' : '' ?>"><?= $this->translate('No one has been tagged in this photo yet. Tag someone you recognise now!')?></span>
     <div class="tagList" data-tag-list="<?= $this->photo->getId() ?>">
         <?php foreach ($this->photo->getTags() as $tag): ?>
             <span>

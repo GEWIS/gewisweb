@@ -47,7 +47,8 @@ let Photo = {
                     document.querySelectorAll('a[data-tag-id="' + element.dataset.tagId + '"').forEach(tag => {
                         // Also remove the "In this photo:" text.
                         if (1 === tag.parentElement.parentElement.childElementCount) {
-                            tag.parentElement.parentElement.parentElement.querySelector('.tag-title').remove();
+                            tag.parentElement.parentElement.parentElement.querySelector('.tag-title').classList.add('hidden');
+                            tag.parentElement.parentElement.parentElement.querySelector('.no-tag-title').classList.remove('hidden');
                         }
 
                         tag.parentElement.remove();

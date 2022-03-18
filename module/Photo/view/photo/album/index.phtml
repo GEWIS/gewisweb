@@ -158,10 +158,10 @@ $this->scriptUrl()->requireUrl('member/search')
                             alt=""
                         >
                     </a>
-                    <figcaption style="display:none">
+                    <figcaption class="hidden">
                         <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
                     </figcaption>
-                    <figtags style="display:none">
+                    <figtags class="hidden">
                         <?= $this->partial('partial/tags.phtml', ['photo' => $item]) ?>
                     </figtags>
                 </figure>
@@ -431,10 +431,8 @@ $this->scriptUrl()->requireUrl('member/search')
                                                 : '';
 
                                             if (0 === tagList.childElementCount) {
-                                                tagList.insertAdjacentHTML(
-                                                    'beforebegin',
-                                                    '<span class="tag-title"><?= $this->translate('In this photo:') ?></span>'
-                                                );
+                                                tagList.parentElement.querySelector('.no-tag-title').classList.add('hidden');
+                                                tagList.parentElement.querySelector('.tag-title').classList.remove('hidden');
                                             }
 
                                             tagList.insertAdjacentHTML(
