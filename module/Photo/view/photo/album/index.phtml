@@ -141,6 +141,7 @@ $this->scriptUrl()->requireUrl('member/search')
                     data-id="<?= $item->getId() ?>"
                     data-author="GEWIS"
                     data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]) ?>"
+                    data-original-album="<?= $this->url('photo/album', ['album_id' => $item->getAlbum()->getId(), 'album_type' => 'album']) ?>"
                     data-profile-photo-url="<?= $this->url('photo/set_profile_photo', ['photo_id' => $item->getId()]) ?>"
                     data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]) ?>"
                     data-voted="<?= $this->hasVoted($item->getId(), $this->identity()->getLidnr()) ? 'true' : 'false' ?>"
@@ -208,7 +209,8 @@ $this->scriptUrl()->requireUrl('member/search')
         // Register custom buttons.
         lightbox.pswp.ui.registerElement({
             name: 'share-button',
-            order: 9,
+            appendTo: 'bar',
+            order: 12,
             isButton: true,
             title: '<?= $this->translate('Share') ?>',
             html: {
@@ -226,9 +228,31 @@ $this->scriptUrl()->requireUrl('member/search')
             },
         });
 
+        <?php if ($album instanceof MemberAlbum): ?>
+            lightbox.pswp.ui.registerElement({
+                name: 'original-album-button',
+                appendTo: 'bar',
+                order: 11,
+                isButton: true,
+                title: '<?= $this->translate('Go to album') ?>',
+                html: {
+                    isCustomSVG: true,
+                    inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#images"></use>',
+                },
+                onClick: (event, el, pswp) => {
+                    let id = pswp.currSlide.data.element.dataset.id;
+                    let originalAlbum = pswp.currSlide.data.element.dataset.originalAlbum;
+                    let photoURL = originalAlbum + '#&pid=' + id;
+
+                    window.open(photoURL, '_blank').focus();
+                },
+            });
+        <?php endif; ?>
+
         lightbox.pswp.ui.registerElement({
             name: 'profile-photo-button',
-            order: 8,
+            appendTo: 'bar',
+            order: 9,
             isButton: true,
             title: '<?= $this->translate('Set as profile picture') ?>',
             html: {
@@ -252,7 +276,8 @@ $this->scriptUrl()->requireUrl('member/search')
 
         lightbox.pswp.ui.registerElement({
             name: 'download-button',
-            order: 7,
+            appendTo: 'bar',
+            order: 8,
             isButton: true,
             title: '<?= $this->translate('Download') ?>',
             html: {
@@ -275,7 +300,8 @@ $this->scriptUrl()->requireUrl('member/search')
 
         lightbox.pswp.ui.registerElement({
             name: 'metadata-button',
-            order: 6,
+            appendTo: 'bar',
+            order: 7,
             isButton: true,
             title: '<?= $this->translate('Information') ?>',
             html: {
@@ -296,7 +322,8 @@ $this->scriptUrl()->requireUrl('member/search')
 
         lightbox.pswp.ui.registerElement({
             name: 'like-button',
-            order: 5,
+            appendTo: 'bar',
+            order: 6,
             isButton: true,
             title: '<?= $this->translate('Vote for photo of the week') ?>',
             html: {
@@ -310,7 +337,7 @@ $this->scriptUrl()->requireUrl('member/search')
                     let hasVoted = pswp.currSlide.data.element.dataset.voted;
 
                     if ('false' === hasRecentVote) {
-                        if (el.childElementCount == 1) {
+                        if (1 === el.childElementCount) {
                             const pulsingDot = document.createElement('span');
                             pulsingDot.classList.add('pulsing-dot');
                             el.appendChild(pulsingDot);
@@ -357,10 +384,10 @@ $this->scriptUrl()->requireUrl('member/search')
         // Register the metadata UI.
         lightbox.pswp.ui.registerElement({
             name: 'metadata-ui',
-            order: 4,
+            appendTo: 'root',
+            order: 2,
             isButton: false,
             html: '<?= $this->translate('Cannot load metadata') ?>',
-            appendTo: 'root',
             onInit: (el, pswp) => {
                 lightbox.pswp.on('change', () => {
                     let currentSlide = pswp.currSlide.data.element;
@@ -374,10 +401,10 @@ $this->scriptUrl()->requireUrl('member/search')
         // Register the tagging system.
         lightbox.pswp.ui.registerElement({
             name: 'tags-ui',
-            order: 3,
+            appendTo: 'root',
+            order: 1,
             isButton: false,
             html: '<?= $this->translate('Cannot load tags') ?>',
-            appendTo: 'root',
             onInit: (el, pswp) => {
                 lightbox.pswp.on('change', () => {
                     let currentSlide = pswp.currSlide.data.element;
