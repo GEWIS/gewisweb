@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping\{
     Column,
     Entity,
     GeneratedValue,
-    HasLifecycleCallbacks,
     Id,
     JoinColumn,
     ManyToOne,
@@ -19,7 +18,6 @@ use User\Model\User as UserModel;
  * Vote, represents a vote for a photo of the week.
  */
 #[Entity]
-#[HasLifecycleCallbacks]
 class Vote implements ResourceInterface
 {
     /**
