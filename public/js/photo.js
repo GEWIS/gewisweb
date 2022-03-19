@@ -45,13 +45,26 @@ let Photo = {
                 .then(response => response.json())
                 .then(result => {
                     document.querySelectorAll('a[data-tag-id="' + element.dataset.tagId + '"').forEach(tag => {
-                        // Also remove the "In this photo:" text.
-                        if (1 === tag.parentElement.parentElement.childElementCount) {
-                            tag.parentElement.parentElement.parentElement.querySelector('.tag-title').classList.add('hidden');
-                            tag.parentElement.parentElement.parentElement.querySelector('.no-tag-title').classList.remove('hidden');
+                        let realTag = tag.parentElement;
+
+                        // Fix the text for the tags ("In this photo:" or "Tag someone now!").
+                        if (1 === realTag.parentElement.childElementCount) {
+                            realTag.parentElement.parentElement.querySelector('.tag-title').classList.add('hidden');
+                            realTag.parentElement.parentElement.querySelector('.no-tag-title').classList.remove('hidden');
+                        } else {
+                            // There are 1 or more elements left, check if the tag was the last element and if so, fix
+                            // the spacer(s).
+                            if (null === realTag.nextElementSibling) {
+                                realTag.previousElementSibling.querySelector('.tag-spacer').remove();
+
+                                if (2 < realTag.parentElement.childElementCount) {
+                                    // TODO: Cannot be translated.
+                                    realTag.previousElementSibling.previousElementSibling.querySelector('.tag-spacer').textContent = 'and';
+                                }
+                            }
                         }
 
-                        tag.parentElement.remove();
+                        realTag.remove();
                     })
                 }).catch(error => {
                     // An error occurred somewhere along the way, perhaps we should notify the user.

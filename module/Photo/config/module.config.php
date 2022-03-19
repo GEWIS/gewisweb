@@ -371,6 +371,19 @@ return [
                             ],
                         ],
                     ],
+                    'tags' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/:photo_id/tags',
+                            'defaults' => [
+                                'controller' => TagController::class,
+                                'action' => 'list',
+                            ],
+                            'constraints' => [
+                                'photo_id' => '[0-9]+',
+                            ],
+                        ],
+                    ],
                 ],
                 'priority' => 100,
             ],

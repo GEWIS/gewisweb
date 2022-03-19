@@ -20,7 +20,9 @@ $this->headTitle($this->translate('Photos'));
 $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css');
 
 $this->scriptUrl()->requireUrl('member/search')
-    ->requireUrl('photo/photo/vote', ['photo_id']);
+    ->requireUrl('member/view', ['lidnr'])
+    ->requireUrl('photo/photo/tag/add', ['photo_id', 'lidnr'])
+    ->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr']);
 ?>
 <section class="section section-breadcrumb">
     <div class="container">
@@ -144,6 +146,7 @@ $this->scriptUrl()->requireUrl('member/search')
                     data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]) ?>"
                     data-original-album="<?= $this->url('photo/album', ['album_id' => $item->getAlbum()->getId(), 'album_type' => 'album']) ?>"
                     data-profile-photo-url="<?= $this->url('photo/set_profile_photo', ['photo_id' => $item->getId()]) ?>"
+                    data-tags-url="<?= $this->url('api_photo/tags', ['photo_id' => $item->getId()]) ?>"
                     data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]) ?>"
                     data-voted="<?= $this->hasVoted($item->getId(), $lidnr) ? 'true' : 'false' ?>"
                 >
@@ -163,9 +166,7 @@ $this->scriptUrl()->requireUrl('member/search')
                     <figcaption class="hidden">
                         <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
                     </figcaption>
-                    <figtags class="hidden">
-                        <?= $this->partial('partial/tags.phtml', ['photo' => $item]) ?>
-                    </figtags>
+                    <figtags class="hidden"></figtags>
                 </figure>
             <?php endforeach; ?>
         </div>
@@ -399,100 +400,172 @@ $this->scriptUrl()->requireUrl('member/search')
             },
         });
 
-        // Register the tagging system.
-        lightbox.pswp.ui.registerElement({
-            name: 'tags-ui',
-            appendTo: 'root',
-            order: 1,
-            isButton: false,
-            html: '<?= $this->translate('Cannot load tags') ?>',
-            onInit: (el, pswp) => {
-                lightbox.pswp.on('change', () => {
-                    let currentSlide = pswp.currSlide.data.element;
+        <?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'view')): ?>
+            // Register the tagging system (but only if the user is allowed to see tags).
+            lightbox.pswp.ui.registerElement({
+                name: 'tags-ui',
+                appendTo: 'root',
+                order: 1,
+                isButton: false,
+                html: '<?= $this->translate('Loading tags...') ?>',
+                onInit: (el, pswp) => {
+                    lightbox.pswp.on('change', async () => {
+                        let currentSlide = pswp.currSlide.data.element;
+                        let maybePromisetags = pswp.currSlide.data.tags;
 
-                    // Copy all HTML.
-                    el.innerHTML = currentSlide.querySelector('figtags').innerHTML;
-
-                    // Remove any old autocomplete suggestion boxes.
-                    document.querySelectorAll('.autocomplete-suggestions').forEach(element => {
-                        element.remove();
-                    });
-
-                    // Make it possible to add new tags.
-                    let tagSearch = el.querySelector('.tagSearch');
-                    new VanillaAutocomplete(tagSearch, {
-                        minChars: 2,
-                        lookup: function (query, done) {
-                            $.getJSON(URLHelper.url('member/search') + '?q=' + query, function (data) {
-                                var result = {suggestions: []};
-
-                                $.each(data.members, function (i, member) {
-                                    result.suggestions.push({
-                                        'value': member.fullName, 'data': member.lidnr
-                                    })
-                                });
-
-                                done(result);
+                        // Check if we are dealing with a promise, if so, resolve it.
+                        // TODO: Maybe we should already resolve this in `on('gettingData')` and directly load from
+                        // TODO: `figtags`. However, we cannot easily update the text if for whatever reason we fail
+                        // TODO: to load the tags.
+                        if (
+                            maybePromisetags
+                            && "function" === typeof maybePromisetags.then
+                        ) {
+                            await pswp.currSlide.data.tags.then((data) => {
+                                pswp.currSlide.data.tags = data;
+                            }).catch(() => {
+                                pswp.currSlide.data.tags = false;
+                                el.innerText = '<?= $this->translate('Cannot load tags') ?>';
                             });
-                        },
-                        orientation: 'top',
-                        onSelect: function (suggestion) {
-                            $.post($(this).data('url').replace('lidnr', suggestion.data),
-                                { lidnr: suggestion.data }
-                                , function (data) {
-                                    if (data.success) {
-                                        let removeURL = URLHelper.url('photo/photo/tag/remove', {
-                                            'photo_id': data.tag.photo_id,
-                                            'lidnr': data.tag.member_id
+                        }
+
+                        // Now retrieve the actual value that is not the promise from fetch.
+                        let data = pswp.currSlide.data.tags;
+
+                        if (Array.isArray(data)) {
+                            let id = pswp.currSlide.data.element.dataset.id;
+                            let tagCount = data.length;
+                            let i = 1;
+
+                            el.innerHTML = `
+                                <span class="tag-title ${(0 === tagCount) ? 'hidden' : ''}"><?= $this->translate('In this photo:') ?></span>
+                                <span class="no-tag-title ${(0 !== tagCount) ? 'hidden' : ''}"><?= $this->translate('No one has been tagged in this photo yet. Tag someone you recognise now!')?></span>
+                                <div class="tagList">
+                                    ${data.map((member) => {
+                                        let viewMemberUrl = URLHelper.url('member/view', {lidnr: member.lidnr});
+                                        let removeUrl = URLHelper.url('photo/photo/tag/remove', {photo_id: id, lidnr: member.lidnr});
+                                        let spacer = (i++ && i < tagCount) ? ',&nbsp' : ((i === tagCount) ? '<?= $this->translate('and') ?>' : '');
+
+                                        return `
+                                            <span>
+                                                <a href="${viewMemberUrl}">${member.fullName}</a>&nbsp;
+                                                <a class="remove-tag" href="${removeUrl}" data-tag-id="removeTag${member.id}">
+                                                    <span class="fas fa-times" aria-hidden="true"></span>
+                                                </a>
+                                                <span class="tag-spacer">${spacer}</span>
+                                            </span>`;
+                                    }).join('')}
+                                </div>
+                                <?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'add')): ?>
+                                    <div class="form-group">
+                                        <label for="tagSearch"><span class="fas fa-plus"></span> <?= $this->translate('Tag someone') ?>:</label>
+                                        <input type="text"
+                                            data-url="${URLHelper.url('photo/photo/tag/add', {photo_id: id, lidnr: 'lidnr'})}"
+                                            id="tagSearch" class="tagSearch" name="tagSearch">
+                                    </div>
+                                <?php endif; ?>
+                            `;
+
+                            pswp.currSlide.data.tags = true;
+                        }
+
+                        if (false !== pswp.currSlide.data.tags) {
+                            let figTags = currentSlide.querySelector('figtags');
+
+                            // If figtags is empty, we just loaded the data, and we do not have to load anything.
+                            // Otherwise, the data already existed, so load it back.
+                            if (figTags.hasChildNodes()) {
+                                el.innerHTML = figTags.innerHTML;
+                            } else {
+                                figTags.innerHTML = el.innerHTML;
+                            }
+
+                            // Remove any old autocomplete suggestion boxes.
+                            document.querySelectorAll('.autocomplete-suggestions').forEach(element => {
+                                element.remove();
+                            });
+
+                            // Make it possible to add new tags.
+                            let tagSearch = el.querySelector('.tagSearch');
+                            new VanillaAutocomplete(tagSearch, {
+                                minChars: 2,
+                                lookup: function (query, done) {
+                                    $.getJSON(URLHelper.url('member/search') + '?q=' + query, function (data) {
+                                        var result = {suggestions: []};
+
+                                        $.each(data.members, function (i, member) {
+                                            result.suggestions.push({
+                                                'value': member.fullName, 'data': member.lidnr
+                                            })
                                         });
 
-                                        let memberURL = URLHelper.url('member/view', {
-                                            'lidnr': data.tag.member_id
-                                        });
+                                        done(result);
+                                    });
+                                },
+                                orientation: 'top',
+                                onSelect: function (suggestion) {
+                                    $.post(tagSearch.dataset.url.replace('lidnr', suggestion.data),
+                                        { lidnr: suggestion.data }
+                                        , function (data) {
+                                            if (data.success) {
+                                                let removeURL = URLHelper.url('photo/photo/tag/remove', {
+                                                    'photo_id': data.tag.photo_id,
+                                                    'lidnr': data.tag.member_id
+                                                });
 
-                                        let id = 'removeTag' + data.tag.id;
+                                                let memberURL = URLHelper.url('member/view', {
+                                                    'lidnr': data.tag.member_id
+                                                });
 
-                                        // Write the tag into the current slide and the original `figtags`.
-                                        document.querySelectorAll('div[data-tag-list="' + data.tag.photo_id + '"]').forEach(tagList => {
-                                            let spacer = (0 !== tagList.childElementCount) ?
-                                                ((1 === tagList.childElementCount) ?
-                                                    ' <?= $this->translate('and') ?> '
-                                                    : ',&nbsp')
-                                                : '';
+                                                // Write the tag into the current slide.
+                                                let tagList = el.querySelector('.tagList');
+                                                let spacer = (0 !== tagList.childElementCount) ?
+                                                    ((1 === tagList.childElementCount) ?
+                                                        ' <?= $this->translate('and') ?> '
+                                                        : ',&nbsp')
+                                                    : '';
 
-                                            if (0 === tagList.childElementCount) {
-                                                tagList.parentElement.querySelector('.no-tag-title').classList.add('hidden');
-                                                tagList.parentElement.querySelector('.tag-title').classList.remove('hidden');
+                                                if (0 === tagList.childElementCount) {
+                                                    el.querySelector('.no-tag-title').classList.add('hidden');
+                                                    el.querySelector('.tag-title').classList.remove('hidden');
+                                                }
+
+                                                tagList.insertAdjacentHTML(
+                                                    'afterbegin',
+                                                    `
+                                                    <span>
+                                                        <a href="${memberURL}">${suggestion.value}</a>
+                                                        <a href="${removeURL}" class="remove-tag" data-tag-id="removeTag${data.tag.id}">
+                                                            <span class="fas fa-times" aria-hidden="true"></span>
+                                                        </a>
+                                                        <span class="tag-spacer">${spacer}</span>
+                                                    </span>
+                                                    `
+                                                );
+
+                                                // We have to keep track of our changes, to put everything in figtags.
+                                                // TODO: Check if there is more efficient way to do this.
+                                                figTags.innerHTML = el.innerHTML;
+
+                                                Photo.initRemoveTag(el.querySelector('a[data-tag-id="' + id + '"]'));
                                             }
 
-                                            tagList.insertAdjacentHTML(
-                                                'afterbegin',
-                                                `
-                                                <span>
-                                                    <a href="${memberURL}">${suggestion.value}</a>
-                                                    <a href="${removeURL}" class="remove-tag" data-tag-id="${id}">
-                                                        <span class="fas fa-times" aria-hidden="true"></span>
-                                                    </a>${spacer}
-                                                </span>
-                                                `
-                                            );
+                                            tagSearch.value = '';
+                                            tagSearch.focus();
                                         });
-                                        Photo.initRemoveTag(el.querySelector('a[data-tag-id="' + id + '"]'));
-                                        tagSearch.focus();
-                                    }
-                                    tagSearch.value = '';
-                                });
-                        },
-                        zIndex: 100000,
-                    });
+                                },
+                                zIndex: 100000,
+                            });
 
-                    // Make tags removable.
-                    el.querySelectorAll('.remove-tag').forEach(element => {
-                        Photo.initRemoveTag(element);
+                            // Make tags removable.
+                            el.querySelectorAll('.remove-tag').forEach(element => {
+                                Photo.initRemoveTag(element);
+                            });
+                        }
                     });
-                });
-            },
-        });
+                },
+            });
+        <?php endif; ?>
     });
 
     // If the tag search is being used, do not allow zooming using the `z` key.
@@ -520,9 +593,23 @@ $this->scriptUrl()->requireUrl('member/search')
         });
     });
 
-    // Update the last active element when a slide is activated.
-    lightbox.on('slideActivate', ({slide}) => {
-        lastActiveElement = slide.data.element;
+    // Fetch tags from the API.
+    lightbox.on('gettingData', (event) => {
+        // When opening the photo viewer, there is initially no slide.
+        if ('slide' in event) {
+            // If tags are not yet present, or are present but failed, try to load them (again).
+            if (!event.slide.data.element.querySelector('figtags').hasChildNodes()) {
+                event.slide.data = {
+                    ...event.slide.data,
+                    tags: fetch(event.slide.data.element.dataset.tagsUrl).then(response => response.json()),
+                };
+            }
+        }
+    });
+
+    // Update the last active element when a new slide is shown.
+    lightbox.on('change', () => {
+        lastActiveElement = lightbox.pswp.currSlide.data.element;
     });
 
     lightbox.on('close', () => {

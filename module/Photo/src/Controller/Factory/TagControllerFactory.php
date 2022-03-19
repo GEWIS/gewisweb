@@ -21,6 +21,9 @@ class TagControllerFactory implements FactoryInterface
         ?array $options = null,
     ): TagController {
         return new TagController(
+            $container->get('photo_service_acl'),
+            $container->get('translator'),
+            $container->get('photo_mapper_tag'),
             $container->get('photo_service_photo'),
         );
     }
