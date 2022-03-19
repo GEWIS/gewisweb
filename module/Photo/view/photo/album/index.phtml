@@ -121,6 +121,7 @@ $this->scriptUrl()->requireUrl('member/search')
         <div class="pswp-gallery" data-recent-vote="<?= $hasRecentVote ? 'true' : 'false' ?>">
             <div class="grid-sizer"></div>
             <div class="gutter-sizer"></div>
+            <?php $lidnr = $this->identity()->getLidnr(); ?>
             <?php foreach ($album->getPhotos() as $item): ?>
                 <?php
                 $ar = $item->getAspectRatio();
@@ -144,7 +145,7 @@ $this->scriptUrl()->requireUrl('member/search')
                     data-original-album="<?= $this->url('photo/album', ['album_id' => $item->getAlbum()->getId(), 'album_type' => 'album']) ?>"
                     data-profile-photo-url="<?= $this->url('photo/set_profile_photo', ['photo_id' => $item->getId()]) ?>"
                     data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]) ?>"
-                    data-voted="<?= $this->hasVoted($item->getId(), $this->identity()->getLidnr()) ? 'true' : 'false' ?>"
+                    data-voted="<?= $this->hasVoted($item->getId(), $lidnr) ? 'true' : 'false' ?>"
                 >
                     <a href="<?= $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
                        target="_blank"
