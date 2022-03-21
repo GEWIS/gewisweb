@@ -411,15 +411,16 @@ $this->scriptUrl()->requireUrl('member/search')
                 onInit: (el, pswp) => {
                     lightbox.pswp.on('change', async () => {
                         let currentSlide = pswp.currSlide.data.element;
-                        let maybePromisetags = pswp.currSlide.data.tags;
+                        let promisedTags = pswp.currSlide.data.tags;
+
+                        // Make sure that the tags say they are loading, otherwise it can occur that old data is still
+                        // shown after switching to a new slide.
+                        el.innerText = '<?= $this->translate('Loading tags...') ?>';
 
                         // Check if we are dealing with a promise, if so, resolve it.
-                        // TODO: Maybe we should already resolve this in `on('gettingData')` and directly load from
-                        // TODO: `figtags`. However, we cannot easily update the text if for whatever reason we fail
-                        // TODO: to load the tags.
                         if (
-                            maybePromisetags
-                            && "function" === typeof maybePromisetags.then
+                            promisedTags
+                            && "function" === typeof promisedTags.then
                         ) {
                             await pswp.currSlide.data.tags.then((data) => {
                                 pswp.currSlide.data.tags = data;
@@ -429,9 +430,11 @@ $this->scriptUrl()->requireUrl('member/search')
                             });
                         }
 
-                        // Now retrieve the actual value that is not the promise from fetch.
+                        // We now either have the actual tags or a boolean in the tags data element.
                         let data = pswp.currSlide.data.tags;
 
+                        // If we have the actual tags, we update the tags UI element of the PhotoSwipe UI to be our
+                        // tags interface.
                         if (Array.isArray(data)) {
                             let id = pswp.currSlide.data.element.dataset.id;
                             let tagCount = data.length;
@@ -466,14 +469,21 @@ $this->scriptUrl()->requireUrl('member/search')
                                 <?php endif; ?>
                             `;
 
+                            // Now that we have replicated the tags into actual elements, we can change the tags to
+                            // true to show that we can continue processing (i.e. adding the auto complete).
                             pswp.currSlide.data.tags = true;
                         }
 
+                        // At this point, we are guaranteed that the tags data element is a boolean. If it is false, we
+                        // were unable to retrieve the tags, hence we do not need to load the auto complete
+                        // functionality. If it is true (because we just loaded the tags) do in fact enable the auto
+                        // complete functionality.
                         if (false !== pswp.currSlide.data.tags) {
                             let figTags = currentSlide.querySelector('figtags');
 
-                            // If figtags is empty, we just loaded the data, and we do not have to load anything.
-                            // Otherwise, the data already existed, so load it back.
+                            // If figtags is empty, we just loaded the data (or we recently deleted all existing tags),
+                            // and we replicate the data from the PhotoSwipe UI to the actual DOM element. Otherwise,
+                            // the data already existed, so we load it back.
                             if (figTags.hasChildNodes()) {
                                 el.innerHTML = figTags.innerHTML;
                             } else {
@@ -517,7 +527,7 @@ $this->scriptUrl()->requireUrl('member/search')
                                                     'lidnr': data.tag.member_id
                                                 });
 
-                                                // Write the tag into the current slide.
+                                                // Start writing the tag into the current slide.
                                                 let tagList = el.querySelector('.tagList');
                                                 let spacer = (0 !== tagList.childElementCount) ?
                                                     ((1 === tagList.childElementCount) ?
@@ -525,17 +535,23 @@ $this->scriptUrl()->requireUrl('member/search')
                                                         : ',&nbsp')
                                                     : '';
 
+                                                // Check if there were previously no tags to ensure we show the correct
+                                                // text to the user.
                                                 if (0 === tagList.childElementCount) {
                                                     el.querySelector('.no-tag-title').classList.add('hidden');
                                                     el.querySelector('.tag-title').classList.remove('hidden');
                                                 }
 
+                                                // Insert the new tag directly at the beginning of the tag list, this
+                                                // prevents us from having to deal with the complicated logic of having
+                                                // to deal with the commas and 'and' between the tags.
                                                 tagList.insertAdjacentHTML(
                                                     'afterbegin',
                                                     `
                                                     <span>
                                                         <a href="${memberURL}">${suggestion.value}</a>
-                                                        <a href="${removeURL}" class="remove-tag" data-tag-id="removeTag${data.tag.id}">
+                                                        <a href="${removeURL}" class="remove-tag"
+                                                            data-tag-id="removeTag${data.tag.id}">
                                                             <span class="fas fa-times" aria-hidden="true"></span>
                                                         </a>
                                                         <span class="tag-spacer">${spacer}</span>
@@ -543,8 +559,9 @@ $this->scriptUrl()->requireUrl('member/search')
                                                     `
                                                 );
 
-                                                // We have to keep track of our changes, to put everything in figtags.
-                                                // TODO: Check if there is more efficient way to do this.
+                                                // Because we want to "cache" the current slide's tags for future usage
+                                                // and prevent having to make too many requests, we have to write the
+                                                // current "state" of the tags back into the actual DOM element.
                                                 figTags.innerHTML = el.innerHTML;
 
                                                 Photo.initRemoveTag(el.querySelector('a[data-tag-id="' + id + '"]'));
@@ -568,7 +585,7 @@ $this->scriptUrl()->requireUrl('member/search')
         <?php endif; ?>
     });
 
-    // If the tag search is being used, do not allow zooming using the `z` key.
+    // If the tag search is being used, do not allow zooming using the `z` or arrow keys.
     lightbox.on('keydown', (e)  => {
         let pressedKey = e.originalEvent.keyCode;
         let tagSearch = document.querySelector('.pswp__tags-ui .tagSearch');
@@ -597,7 +614,8 @@ $this->scriptUrl()->requireUrl('member/search')
     lightbox.on('gettingData', (event) => {
         // When opening the photo viewer, there is initially no slide.
         if ('slide' in event) {
-            // If tags are not yet present, or are present but failed, try to load them (again).
+            // Unfortunately, the tags data element is lost after the slide is unloaded, hence we need to check if we
+            // managed to get data into the actual DOM to determine if we need to fetch the tags again.
             if (!event.slide.data.element.querySelector('figtags').hasChildNodes()) {
                 event.slide.data = {
                     ...event.slide.data,

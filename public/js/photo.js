@@ -47,13 +47,14 @@ let Photo = {
                     document.querySelectorAll('a[data-tag-id="' + element.dataset.tagId + '"').forEach(tag => {
                         let realTag = tag.parentElement;
 
-                        // Fix the text for the tags ("In this photo:" or "Tag someone now!").
+                        // Check if we are removing the last tag from the current slide. If so, make sure we change the
+                        // text shown to the user ("In this photo:" or "Tag someone now!").
                         if (1 === realTag.parentElement.childElementCount) {
                             realTag.parentElement.parentElement.querySelector('.tag-title').classList.add('hidden');
                             realTag.parentElement.parentElement.querySelector('.no-tag-title').classList.remove('hidden');
                         } else {
-                            // There are 1 or more elements left, check if the tag was the last element and if so, fix
-                            // the spacer(s).
+                            // If there are 1 or more elements left, check if the tag was the last element and if so,
+                            // fix the spacer(s).
                             if (null === realTag.nextElementSibling) {
                                 realTag.previousElementSibling.querySelector('.tag-spacer').remove();
 
