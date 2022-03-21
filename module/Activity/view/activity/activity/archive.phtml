@@ -37,7 +37,7 @@
         <?php if (0 !== count($activities)): ?>
             <?= $this->partial('activity/activity/list.phtml', ['activities' => $activities]) ?>
         <?php else: ?>
-            <p><?= $this->translate('There are no activities the archive.') ?></p>
+            <p><?= $this->translate('There are no activities in the archive.') ?></p>
         <?php endif; ?>
     </div>
 </div>
