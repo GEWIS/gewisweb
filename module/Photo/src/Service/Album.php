@@ -449,7 +449,9 @@ class Album
      */
     public function deleteAlbumCover(AlbumModel $album): void
     {
-        $this->photoService->deletePhotoFile($album->getCoverPath());
+        if (null !== ($albumCover = $album->getCoverPath())) {
+            $this->photoService->deletePhotoFile($albumCover);
+        }
     }
 
     /**
