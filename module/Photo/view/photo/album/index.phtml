@@ -473,7 +473,6 @@ $this->scriptUrl()->requireUrl('member/search')
         if (
             (90 === pressedKey || 37 === pressedKey || 39 === pressedKey)
             && document.activeElement === tagSearch
-            && "" !== tagSearch.value
         ) {
             e.preventDefault();
         }
