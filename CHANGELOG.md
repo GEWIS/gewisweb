@@ -1,3 +1,24 @@
+## [v2.7](https://github.com/GEWIS/gewisweb/tree/v2.7) (2022-03-27)
+
+* Added a button to go from a photo in a member album to the actual album.
+* Added automatic scrolling to the last viewed photo when you close the photo viewer.
+* Added global error page to improve UX when an unrecoverable failure has occurred.
+* Improved the ordering of the activity archive.
+* Fixed issue where an error occurred while trying to view companies and jobs without a slug.
+* Fixed issue where the album overview would not be accessible if an album did not have a cover photo.
+* Fixed issue where an album could not be deleted if it did not have a cover photo.
+* Fixed issue where it was impossible to type the letter `z` in the tag field.
+* Fixed issue where using the arrow keys while tagging would inadvertently switch to the previous/next photo.
+* Fixed issue where tag suggestions would not automatically have the first option selected.
+* Fixed issue where a fully matching tag suggestion would not be automatically tagged.
+* Fixed issue where tags would not be persisted in the DOM between PhotoSwipe sessions.
+* Fixed issue where the user's identity was loaded for each photo in an album resulting in performance issues.
+* Fixed issue where certain fonts and images were not cacheable.
+* Fixed issue where Matomo was not accessible.
+* Updated dependencies.
+
+---
+
 ## [v2.6.1](https://github.com/GEWIS/gewisweb/tree/v2.6.1) (2022-02-13)
 
 * Changed default site language to English.
