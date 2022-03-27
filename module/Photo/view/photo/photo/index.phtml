@@ -12,32 +12,35 @@ $this->headTitle($this->translate('Photos')); ?>
                         </a>
                     </li>
                 <?php endfor; ?>
-                <li role="presentation" class="dropdown">
-                    <a class="dropdown-toggle"
-                       data-toggle="dropdown"
-                       href="#"
-                       role="button"
-                       aria-haspopup="true"
-                       aria-expanded="false">
-                        <?= $this->translate('Older') ?> <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <?php for ($i = max(0, count($years) - 6); $i > 0; $i--): ?>
-                            <li>
-                                <a href="<?= $this->url('photo/year', ['year' => $years[$i]]); ?>">
-                                    <?= $years[$i] ?>-<?= $years[$i] + 1 ?>
-                                </a>
-                            </li>
-                        <?php endfor ?>
-                    </ul>
-                </li>
+                <?php if (7 <= count($years)): ?>
+                    <li role="presentation" class="dropdown">
+                        <a class="dropdown-toggle"
+                           data-toggle="dropdown"
+                           href="#"
+                           role="button"
+                           aria-haspopup="true"
+                           aria-expanded="false">
+                            <?= $this->translate('Older') ?> <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <?php var_dump($years) ?>
+                            <?php for ($i = max(0, count($years) - 6); $i > 0; $i--): ?>
+                                <li>
+                                    <a href="<?= $this->url('photo/year', ['year' => $years[$i]]); ?>">
+                                        <?= $years[$i] ?>-<?= $years[$i] + 1 ?>
+                                    </a>
+                                </li>
+                            <?php endfor ?>
+                        </ul>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
     </section>
-    <?php if (!empty($albums)): ?>
-        <section class="section">
-            <div class="container">
-                <div class="row">
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <?php if (0 !== count($albums)): ?>
                     <?php foreach ($albums as $album): ?>
                         <?php if ($album->getPhotoCount() > 0): ?>
                             <div class="col-lg-3 col-md-4 col-xs-6 thumb">
@@ -53,9 +56,11 @@ $this->headTitle($this->translate('Photos')); ?>
                             </div>
                         <?php endif; ?>
                     <?php endforeach; ?>
-                </div>
+                <?php else: ?>
+                    <p><?= $this->translate('There are no photos in this year.') ?></p>
+                <?php endif; ?>
             </div>
-        </section>
-    <?php endif; ?>
+        </div>
+    </section>
 </div>
 

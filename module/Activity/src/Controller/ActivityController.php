@@ -507,7 +507,7 @@ class ActivityController extends AbstractActionController
 
         // If no year is supplied, use the latest year.
         if (null === $year) {
-            if (empty($years)) {
+            if (0 === count($years)) {
                 $year = (int) date('Y');
             } else {
                 $year = max($years);
@@ -518,7 +518,6 @@ class ActivityController extends AbstractActionController
 
         return new ViewModel(
             [
-                'activeYear' => $year,
                 'years' => $years,
                 'activities' => $this->activityQueryService->getFinishedActivitiesByYear($year),
             ]
