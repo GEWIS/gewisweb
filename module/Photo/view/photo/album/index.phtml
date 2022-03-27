@@ -158,10 +158,10 @@ $this->scriptUrl()->requireUrl('member/search')
                             alt=""
                         >
                     </a>
-                    <figcaption style="display:none">
+                    <figcaption class="hidden">
                         <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
                     </figcaption>
-                    <figtags style="display:none">
+                    <figtags class="hidden">
                         <?= $this->partial('partial/tags.phtml', ['photo' => $item]) ?>
                     </figtags>
                 </figure>
@@ -422,14 +422,32 @@ $this->scriptUrl()->requireUrl('member/search')
 
                                         let id = 'removeTag' + data.tag.id;
 
-                                        el.querySelector('.tagList-' + data.tag.photo_id).insertAdjacentHTML(
-                                            'afterbegin',
-                                            '<a href="' + memberURL + '">' + suggestion.value + '</a>' +
-                                                '<a href="' + removeURL + '" id="' + id + '">' +
-                                                '<span class="fas fa-times" aria-hidden="true">' +
-                                                '</span></a>, '
-                                        );
-                                        Photo.initRemoveTag(el.querySelector('#' + id));
+                                        // Write the tag into the current slide and the original `figtags`.
+                                        document.querySelectorAll('div[data-tag-list="' + data.tag.photo_id + '"]').forEach(tagList => {
+                                            let spacer = (0 !== tagList.childElementCount) ?
+                                                ((1 === tagList.childElementCount) ?
+                                                    ' <?= $this->translate('and') ?> '
+                                                    : ',&nbsp')
+                                                : '';
+
+                                            if (0 === tagList.childElementCount) {
+                                                tagList.parentElement.querySelector('.no-tag-title').classList.add('hidden');
+                                                tagList.parentElement.querySelector('.tag-title').classList.remove('hidden');
+                                            }
+
+                                            tagList.insertAdjacentHTML(
+                                                'afterbegin',
+                                                `
+                                                <span>
+                                                    <a href="${memberURL}">${suggestion.value}</a>
+                                                    <a href="${removeURL}" class="remove-tag" data-tag-id="${id}">
+                                                        <span class="fas fa-times" aria-hidden="true"></span>
+                                                    </a>${spacer}
+                                                </span>
+                                                `
+                                            );
+                                        });
+                                        Photo.initRemoveTag(el.querySelector('a[data-tag-id="' + id + '"]'));
                                         tagSearch.focus();
                                     }
                                     tagSearch.value = '';
@@ -445,6 +463,19 @@ $this->scriptUrl()->requireUrl('member/search')
                 });
             },
         });
+    });
+
+    // If the tag search is being used, do not allow zooming using the `z` key.
+    lightbox.on('keydown', (e)  => {
+        let pressedKey = e.originalEvent.keyCode;
+        let tagSearch = document.querySelector('.pswp__tags-ui .tagSearch');
+
+        if (
+            (90 === pressedKey || 37 === pressedKey || 39 === pressedKey)
+            && document.activeElement === tagSearch
+        ) {
+            e.preventDefault();
+        }
     });
 
     // To properly show the tooltips (not the native titles) we need to inject the event handlers, but only after the UI
