@@ -76,7 +76,7 @@ class Vote extends BaseMapper
             ->setParameter('after', $nowMinusMonth)
             ->setMaxResults(1);
 
-        return !empty($qb->getQuery()->getResult());
+        return 0 !== count($qb->getQuery()->getResult());
     }
 
     protected function getRepositoryName(): string
