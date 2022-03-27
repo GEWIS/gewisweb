@@ -16,6 +16,19 @@ if (php_sapi_name() === 'cli-server') {
 
 require 'bootstrap.php';
 
-$application = ConsoleRunner::getApplication();
-$application->run();
+// Certain errors and exceptions cannot be caught by the Laminas exception handler (such as PDOExceptions), as a result
+// a blank page is shown.
+try {
+    $application = ConsoleRunner::getApplication();
+    $application->run();
+} catch (Throwable $e) {
+    // Only show the global exception page if we are not in development mode.
+    if ('development' !== APP_ENV) {
+        // Make sure that we actually log the problem.
+        error_log('Fatal ' . $e);
 
+        // Output the exception page (and force status code to 500, otherwise it will be 200).
+        header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error');
+        readfile('/code/public/errors/exception.html');
+    }
+}
