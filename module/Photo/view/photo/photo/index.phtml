@@ -23,7 +23,6 @@ $this->headTitle($this->translate('Photos')); ?>
                             <?= $this->translate('Older') ?> <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <?php var_dump($years) ?>
                             <?php for ($i = max(0, count($years) - 6); $i > 0; $i--): ?>
                                 <li>
                                     <a href="<?= $this->url('photo/year', ['year' => $years[$i]]); ?>">
