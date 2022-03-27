@@ -1,6 +1,6 @@
 <?= $this->doctype(); ?>
 
-<html lang="<?php echo $this->plugin('translate')->getTranslator()->getLocale(); ?>">
+<html lang="<?= $this->plugin('translate')->getTranslator()->getLocale() ?>">
 <head>
     <meta charset="utf-8">
     <?= $this->headTitle($this->translate('GEWIS Website'))->setSeparator(' - ')->setAutoEscape(false) ?>
@@ -11,16 +11,17 @@
 
     <!-- Display alternate language links-->
     <?php
-    if (isset($_SERVER['REQUEST_URI'])) {
-        $this->headLink([
-            'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'en',
-            'href' => $this->serverUrl('/lang/en' . $_SERVER['REQUEST_URI']),
-        ]);
-        $this->headLink([
-            'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'nl',
-            'href' => $this->serverUrl('/lang/en' . $_SERVER['REQUEST_URI']),
-        ]);
-    }
+    // Disabled because of buggy implementation.
+    // if (isset($_SERVER['REQUEST_URI'])) {
+    //     $this->headLink([
+    //         'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'en',
+    //         'href' => $this->serverUrl('/lang/en' . $_SERVER['REQUEST_URI']),
+    //     ]);
+    //     $this->headLink([
+    //         'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'nl',
+    //         'href' => $this->serverUrl('/lang/nl' . $_SERVER['REQUEST_URI']),
+    //     ]);
+    // }
     ?>
 
     <!-- Preload fonts-->
