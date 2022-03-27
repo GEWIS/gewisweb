@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-06 12:32+0100\n"
-"PO-Revision-Date: 2022-02-06 12:41+0100\n"
+"POT-Creation-Date: 2022-03-27 14:25+0200\n"
+"PO-Revision-Date: 2022-03-27 14:27+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -27,7 +27,7 @@ msgstr ""
 #: module/Activity/view/partial/create.phtml:3
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:41
 #: module/Activity/view/activity/admin-approval/view.phtml:20
-#: module/Photo/view/photo/album/index.phtml:278
+#: module/Photo/view/photo/album/index.phtml:307
 msgid "Information"
 msgstr "Informatie"
 
@@ -152,7 +152,7 @@ msgstr "Logo van"
 #: module/Company/view/company/company/jobs.phtml:89
 #: module/Company/view/company/company/companyStory.phtml:21
 #: module/Application/view/partial/footer.phtml:24
-#: module/Application/view/partial/main-nav.phtml:179
+#: module/Application/view/partial/main-nav.phtml:181
 msgid "Contact"
 msgstr "Contact"
 
@@ -181,9 +181,9 @@ msgstr "Beschrijving"
 #: module/Company/view/company/admin/index.phtml:3
 #: module/Company/view/company/admin/edit-company.phtml:4
 #: module/Application/view/partial/admin.phtml:51
-#: module/Application/view/partial/main-nav.phtml:186
-#: module/Application/view/partial/main-nav.phtml:190
-#: module/Application/view/partial/main-nav.phtml:195
+#: module/Application/view/partial/main-nav.phtml:188
+#: module/Application/view/partial/main-nav.phtml:192
+#: module/Application/view/partial/main-nav.phtml:197
 msgid "Career"
 msgstr "Carrière"
 
@@ -295,7 +295,7 @@ msgid "Banner active"
 msgstr "Banner actief"
 
 #: module/Company/view/company/admin/index.phtml:140
-#: module/Application/view/partial/main-nav.phtml:202
+#: module/Application/view/partial/main-nav.phtml:204
 msgid "Featured"
 msgstr "Uitgelicht"
 
@@ -382,7 +382,7 @@ msgstr "Verwijder bedrijf"
 #: module/Activity/view/activity/admin-category/index.phtml:56
 #: module/Activity/view/activity/activity-calendar/index.phtml:93
 #: module/Activity/view/activity/activity-calendar/index.phtml:117
-#: module/Decision/view/decision/decision/authorizations.phtml:119
+#: module/Decision/view/decision/decision/authorizations.phtml:120
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:170
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:216
 #: module/Photo/view/photo/album-admin/index.phtml:200
@@ -806,7 +806,7 @@ msgstr "Nederlandse vertalingen inschakelen"
 #: module/Activity/view/activity/admin-approval/view.phtml:83
 #: module/Activity/view/activity/admin-approval/view.phtml:88
 #: module/Activity/view/activity/admin-approval/view.phtml:95
-#: module/Activity/view/activity/activity/list.phtml:41
+#: module/Activity/view/activity/activity/list.phtml:42
 #: module/Activity/view/activity/activity/view.phtml:72
 #: module/Photo/view/partial/metadata.phtml:70
 #: module/Company/src/Form/Job.php:192 module/Company/src/Form/Job.php:202
@@ -821,7 +821,7 @@ msgstr "Locatie"
 #: module/Activity/view/activity/admin-approval/view.phtml:102
 #: module/Activity/view/activity/admin-approval/view.phtml:107
 #: module/Activity/view/activity/admin-approval/view.phtml:114
-#: module/Activity/view/activity/activity/list.phtml:44
+#: module/Activity/view/activity/activity/list.phtml:45
 #: module/Activity/view/activity/activity/view.phtml:75
 msgid "Costs"
 msgstr "Kosten"
@@ -884,9 +884,9 @@ msgstr "Update voorstel"
 #: module/Activity/view/activity/activity/view.phtml:14
 #: module/Decision/view/decision/member/index.phtml:160
 #: module/Application/view/partial/admin.phtml:29
-#: module/Application/view/partial/main-nav.phtml:229
-#: module/Application/view/partial/main-nav.phtml:233
-#: module/Application/view/partial/main-nav.phtml:238
+#: module/Application/view/partial/main-nav.phtml:231
+#: module/Application/view/partial/main-nav.phtml:235
+#: module/Application/view/partial/main-nav.phtml:240
 msgid "Activities"
 msgstr "Activiteiten"
 
@@ -917,6 +917,8 @@ msgstr "nieuw"
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:55
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:68
 #: module/Activity/view/activity/admin-approval/view.phtml:26
+#: module/Photo/view/partial/tags.phtml:40
+#: module/Photo/view/photo/album/index.phtml:459
 msgid "and"
 msgstr "en"
 
@@ -1299,13 +1301,13 @@ msgid "Creator"
 msgstr "Aangemaakt door"
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:40
-#: module/Activity/view/activity/activity/list.phtml:36
+#: module/Activity/view/activity/activity/list.phtml:37
 #: module/Activity/view/activity/activity/view.phtml:66
 msgid "Start"
 msgstr "Start"
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:41
-#: module/Activity/view/activity/activity/list.phtml:38
+#: module/Activity/view/activity/activity/list.phtml:39
 #: module/Activity/view/activity/activity/view.phtml:69
 msgid "End"
 msgstr "Einde"
@@ -1340,6 +1342,7 @@ msgid "Planned Activities"
 msgstr "Geplande activiteiten"
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:155
+#: module/Activity/view/activity/activity/list.phtml:55
 msgid "There are no activities."
 msgstr "Er zijn geen activiteiten."
 
@@ -1400,19 +1403,23 @@ msgstr "Mijn Activiteiten"
 msgid "Create Activity"
 msgstr "Maak nieuwe activiteit"
 
-#: module/Activity/view/activity/activity/list.phtml:8
+#: module/Activity/view/activity/activity/list.phtml:9
 msgid "MMM d"
 msgstr "MMM d"
 
-#: module/Activity/view/activity/activity/list.phtml:32
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:46
+#: module/Activity/view/activity/activity/list.phtml:33
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:61
 msgid "Continue reading"
 msgstr "Lees meer"
 
-#: module/Activity/view/activity/activity/archive.phtml:8
-#: module/Photo/view/photo/photo/index.phtml:22
+#: module/Activity/view/activity/activity/archive.phtml:20
+#: module/Photo/view/photo/photo/index.phtml:23
 msgid "Older"
 msgstr "Ouder"
+
+#: module/Activity/view/activity/activity/archive.phtml:40
+msgid "There are no activities in the archive."
+msgstr "Er zijn geen activiteiten in het archief."
 
 #: module/Activity/view/activity/activity/createSuccess.phtml:6
 msgid "The activity has been successfully created."
@@ -1564,7 +1571,7 @@ msgstr "Voeg een inschrijflijst toe"
 #: module/Education/view/education/admin/bulk-exam.phtml:7
 #: module/Education/view/education/admin/add-course.phtml:8
 #: module/Application/view/partial/admin.phtml:59
-#: module/Application/view/partial/main-nav.phtml:223
+#: module/Application/view/partial/main-nav.phtml:225
 msgid "Education"
 msgstr "Onderwijs"
 
@@ -1849,8 +1856,8 @@ msgstr "Het vak is niet toegevoegd, controleer de opgegeven informatie."
 #: module/Decision/view/decision/member/birthdays.phtml:4
 #: module/Decision/view/decision/member/view.phtml:8
 #: module/Decision/view/decision/member/search.phtml:4
-#: module/Application/view/partial/main-nav.phtml:60
-#: module/Application/view/partial/main-nav.phtml:308
+#: module/Application/view/partial/main-nav.phtml:62
+#: module/Application/view/partial/main-nav.phtml:310
 msgid "Members"
 msgstr "Leden"
 
@@ -1861,7 +1868,7 @@ msgstr "Persoonlijk"
 
 #: module/Decision/view/decision/member/index.phtml:9
 #: module/Decision/view/decision/member/index.phtml:33
-#: module/Application/view/partial/main-nav.phtml:97
+#: module/Application/view/partial/main-nav.phtml:99
 #: module/User/view/user/user/password.phtml:2
 #: module/User/view/user/user/password.phtml:23
 #: module/User/src/Form/Password.php:62
@@ -1873,12 +1880,12 @@ msgid "Profile"
 msgstr "Profiel"
 
 #: module/Decision/view/decision/member/index.phtml:43
-#: module/Application/view/partial/main-nav.phtml:297
+#: module/Application/view/partial/main-nav.phtml:299
 msgid "My photo's"
 msgstr "Mijn foto’s"
 
 #: module/Decision/view/decision/member/index.phtml:47
-#: module/Application/view/partial/main-nav.phtml:94
+#: module/Application/view/partial/main-nav.phtml:96
 msgid "SuSOS"
 msgstr "SuSOS"
 
@@ -1891,9 +1898,9 @@ msgid "Authorizations"
 msgstr "Machtigingen"
 
 #: module/Decision/view/decision/member/index.phtml:58
-#: module/Application/view/partial/main-nav.phtml:123
-#: module/Application/view/partial/main-nav.phtml:128
-#: module/Application/view/partial/main-nav.phtml:133
+#: module/Application/view/partial/main-nav.phtml:125
+#: module/Application/view/partial/main-nav.phtml:130
+#: module/Application/view/partial/main-nav.phtml:135
 msgid "Association"
 msgstr "Vereniging"
 
@@ -1913,7 +1920,7 @@ msgid "Find a member"
 msgstr "Vind een lid"
 
 #: module/Decision/view/decision/member/index.phtml:80
-#: module/Application/view/partial/main-nav.phtml:168
+#: module/Application/view/partial/main-nav.phtml:170
 msgid "Links"
 msgstr "Links"
 
@@ -1991,7 +1998,7 @@ msgid "Administrator"
 msgstr "Administrator"
 
 #: module/Decision/view/decision/member/index.phtml:183
-#: module/Application/view/partial/main-nav.phtml:152
+#: module/Application/view/partial/main-nav.phtml:154
 msgid "Regulations"
 msgstr "Reguleringen"
 
@@ -2436,16 +2443,16 @@ msgstr ""
 "v. GEWIS"
 
 #: module/Decision/view/decision/decision/authorizations.phtml:68
-#: module/Decision/view/decision/decision/authorizations.phtml:73
-#: module/Decision/src/Form/Authorization.php:45
+#: module/Decision/view/decision/decision/authorizations.phtml:74
+#: module/Decision/src/Form/Authorization.php:53
 msgid "Authorize"
 msgstr "Machtig"
 
-#: module/Decision/view/decision/decision/authorizations.phtml:109
+#: module/Decision/view/decision/decision/authorizations.phtml:110
 msgid "Are you sure you would like to authorize"
 msgstr "Weet je zeker dat je wilt machtigen"
 
-#: module/Decision/view/decision/decision/authorizations.phtml:115
+#: module/Decision/view/decision/decision/authorizations.phtml:116
 msgid ""
 " This person already has 2 or more authorizations. Are you sure you would "
 "like to proceed?"
@@ -2453,11 +2460,11 @@ msgstr ""
 " Deze persoon heeft al 2 of meer machtigingen. Weet je zeker dat je door wil "
 "gaan?"
 
-#: module/Decision/view/decision/decision/authorizations.phtml:121
+#: module/Decision/view/decision/decision/authorizations.phtml:122
 msgid "Confirm authorization"
 msgstr "Bevestig machtiging"
 
-#: module/Decision/view/decision/decision/authorizations.phtml:145
+#: module/Decision/view/decision/decision/authorizations.phtml:146
 #, php-format
 msgid "Are you sure you would like to authorize %s"
 msgstr "Weet je zeker dat je %s wilt machtigen"
@@ -2494,7 +2501,7 @@ msgid "GEWIS Website"
 msgstr "GEWIS Website"
 
 #: module/Application/view/partial/admin.phtml:21
-#: module/Application/view/partial/main-nav.phtml:66
+#: module/Application/view/partial/main-nav.phtml:68
 #: module/Application/view/error/403.phtml:12
 #: module/User/view/partial/login.phtml:13
 #: module/User/view/user/user/index.phtml:2 module/User/src/Form/Login.php:62
@@ -2506,7 +2513,7 @@ msgid "Add courses"
 msgstr "Vakken toevoegen"
 
 #: module/Application/view/partial/admin.phtml:108
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:21
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:36
 #: module/Frontpage/view/frontpage/news-admin/list.phtml:3
 #: module/Frontpage/view/frontpage/news-admin/edit.phtml:7
 msgid "News"
@@ -2520,10 +2527,10 @@ msgid "Pages"
 msgstr "Pagina's"
 
 #: module/Application/view/partial/admin.phtml:118
-#: module/Application/view/partial/main-nav.phtml:273
-#: module/Application/view/partial/main-nav.phtml:277
-#: module/Application/view/partial/main-nav.phtml:281
-#: module/Application/view/partial/main-nav.phtml:288
+#: module/Application/view/partial/main-nav.phtml:275
+#: module/Application/view/partial/main-nav.phtml:279
+#: module/Application/view/partial/main-nav.phtml:283
+#: module/Application/view/partial/main-nav.phtml:290
 #: module/Photo/view/photo/album-admin/index.phtml:9
 #: module/Photo/view/photo/album-admin/add.phtml:9
 #: module/Photo/view/photo/album-admin/create.phtml:3
@@ -2549,7 +2556,7 @@ msgid "API Users"
 msgstr "API gebruikers"
 
 #: module/Application/view/partial/admin.phtml:153
-#: module/Application/view/partial/main-nav.phtml:100
+#: module/Application/view/partial/main-nav.phtml:102
 msgid "Admin"
 msgstr "Admin"
 
@@ -2594,17 +2601,17 @@ msgid "Continue"
 msgstr "Doorgaan"
 
 #: module/Application/view/partial/paginator.phtml:8
-#: module/Photo/view/photo/album/index.phtml:198
+#: module/Photo/view/photo/album/index.phtml:202
 msgid "Previous"
 msgstr "Vorige"
 
 #: module/Application/view/partial/paginator.phtml:22
-#: module/Photo/view/photo/album/index.phtml:199
+#: module/Photo/view/photo/album/index.phtml:203
 msgid "Next"
 msgstr "Volgende"
 
 #: module/Application/view/partial/footer.phtml:11
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:240
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:255
 msgid "Infimum"
 msgstr "Infimum"
 
@@ -2620,78 +2627,78 @@ msgstr "Alle rechten voorbehouden."
 msgid "Language settings"
 msgstr "Taalinstellingen"
 
-#: module/Application/view/partial/main-nav.phtml:77
+#: module/Application/view/partial/main-nav.phtml:79
 msgid "Subscribe"
 msgstr "Inschrijven"
 
-#: module/Application/view/partial/main-nav.phtml:91
+#: module/Application/view/partial/main-nav.phtml:93
 msgid "My information"
 msgstr "Mijn informatie"
 
-#: module/Application/view/partial/main-nav.phtml:104
+#: module/Application/view/partial/main-nav.phtml:106
 msgid "Logout"
 msgstr "Uitloggen"
 
-#: module/Application/view/partial/main-nav.phtml:110
+#: module/Application/view/partial/main-nav.phtml:112
 msgid "Toggle navigation"
 msgstr "Klap navigatie in/uit"
 
-#: module/Application/view/partial/main-nav.phtml:137
+#: module/Application/view/partial/main-nav.phtml:139
 msgid "Board 2015/2016"
 msgstr "Bestuur"
 
-#: module/Application/view/partial/main-nav.phtml:140
+#: module/Application/view/partial/main-nav.phtml:142
 #: module/Frontpage/view/frontpage/organ/organ.phtml:45
 #: module/Frontpage/view/frontpage/organ/committee-list.phtml:3
 #: module/Frontpage/view/frontpage/organ/committee-list.phtml:9
 msgid "Committees"
 msgstr "Commissies"
 
-#: module/Application/view/partial/main-nav.phtml:143
+#: module/Application/view/partial/main-nav.phtml:145
 #: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:3
 #: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:7
 #: module/Frontpage/view/frontpage/organ/organ.phtml:41
 msgid "Fraternities"
 msgstr "Disputen"
 
-#: module/Application/view/partial/main-nav.phtml:146
+#: module/Application/view/partial/main-nav.phtml:148
 msgid "Exceptional Members"
 msgstr "Uitzonderlijke leden"
 
-#: module/Application/view/partial/main-nav.phtml:149
+#: module/Application/view/partial/main-nav.phtml:151
 msgid "GEWIS song"
 msgstr "GEWIS-lied"
 
-#: module/Application/view/partial/main-nav.phtml:158
-#: module/Application/view/partial/main-nav.phtml:163
+#: module/Application/view/partial/main-nav.phtml:160
+#: module/Application/view/partial/main-nav.phtml:165
 msgid "Useful Information"
 msgstr "Praktische informatie"
 
-#: module/Application/view/partial/main-nav.phtml:171
+#: module/Application/view/partial/main-nav.phtml:173
 msgid "Well-being"
 msgstr "Welzijn"
 
-#: module/Application/view/partial/main-nav.phtml:174
+#: module/Application/view/partial/main-nav.phtml:176
 msgid "FAQ"
 msgstr "FAQ"
 
-#: module/Application/view/partial/main-nav.phtml:242
+#: module/Application/view/partial/main-nav.phtml:244
 msgid "My activities"
 msgstr "Mijn activiteiten"
 
-#: module/Application/view/partial/main-nav.phtml:247
+#: module/Application/view/partial/main-nav.phtml:249
 msgid "Activity Archive"
 msgstr "Archief"
 
-#: module/Application/view/partial/main-nav.phtml:252
+#: module/Application/view/partial/main-nav.phtml:254
 msgid "Create an activity"
 msgstr "Maak een activiteit"
 
-#: module/Application/view/partial/main-nav.phtml:257
+#: module/Application/view/partial/main-nav.phtml:259
 msgid "Activity Information COVID-19"
 msgstr "Activiteitsinformatie COVID-19"
 
-#: module/Application/view/partial/main-nav.phtml:261
+#: module/Application/view/partial/main-nav.phtml:263
 msgid ""
 "Option\n"
 "                            calendar"
@@ -2699,12 +2706,12 @@ msgstr ""
 "Optie\n"
 "Kalender"
 
-#: module/Application/view/partial/main-nav.phtml:265
+#: module/Application/view/partial/main-nav.phtml:267
 msgid "Career related"
 msgstr "Carrière gerelateerd"
 
-#: module/Application/view/partial/main-nav.phtml:292
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:185
+#: module/Application/view/partial/main-nav.phtml:294
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:200
 msgid "Photo of the week"
 msgstr "Foto van de week"
 
@@ -2806,11 +2813,11 @@ msgstr "Mogelijk kun je deze pagina wel bekijken door in te loggen"
 msgid "Home"
 msgstr "Home"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:14
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:29
 msgid "Studievereniging GEWIS"
 msgstr "Studievereniging GEWIS"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:16
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:31
 msgid ""
 "Welcome to the website of Study association GEWIS, the study association of "
 "the department of Mathematics & Computer Science of the Eindhoven University "
@@ -2819,51 +2826,51 @@ msgstr ""
 "Welkom op de website van Studievereniging GEWIS. De studievereniging van de "
 "faculteit Wiskunde & Informatica aan de Technische Universiteit Eindhoven."
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:115
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:130
 msgid "Verjaardagen"
 msgstr "Verjaardagen"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:120
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:135
 #, php-format
 msgid "%s wil be %s years old today!"
 msgstr "%s wordt vandaag %s jaar oud!"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:135
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:150
 msgid "Agenda"
 msgstr "Agenda"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:152
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:167
 #, php-format
 msgid "Donderdags is er %sborrel%s van 16.30 tot 19.00 uur."
 msgstr "Donderdags is er %sborrel%s van 16.30 tot 19.00 uur."
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:161
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:176
 #: module/Frontpage/view/frontpage/organ/organ.phtml:109
 msgid "Complete agenda"
 msgstr "Volledige agenda"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:165
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:180
 msgid "Google Calendar"
 msgstr "Google Calendar"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:254
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:269
 msgid "Poll"
 msgstr "Poll"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:267
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:282
 msgid "View the results"
 msgstr "Laat de resultaten zien"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:272
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:287
 msgid "There currently is no poll."
 msgstr "Er is op het moment geen poll."
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:276
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:291
 #: module/Frontpage/view/frontpage/poll/request.phtml:165
 msgid "Request poll"
 msgstr "Vraag poll aan"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:279
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:294
 #: module/Frontpage/view/frontpage/poll/index.phtml:10
 msgid "Old polls"
 msgstr "Oude polls"
@@ -3110,7 +3117,12 @@ msgstr "%d stemmen"
 msgid "In this photo:"
 msgstr "In deze foto:"
 
-#: module/Photo/view/partial/tags.phtml:47
+#: module/Photo/view/partial/tags.phtml:11
+msgid ""
+"No one has been tagged in this photo yet. Tag someone you recognise now!"
+msgstr "Er is nog niemand getagd in deze foto. Tag nu iemand die je herkent!"
+
+#: module/Photo/view/partial/tags.phtml:49
 msgid "Tag someone"
 msgstr "Tag iemand"
 
@@ -3216,7 +3228,7 @@ msgid "Regenerate"
 msgstr "Genereer opnieuw"
 
 #: module/Photo/view/photo/album-admin/index.phtml:141
-#: module/Photo/view/photo/album/index.phtml:196
+#: module/Photo/view/photo/album/index.phtml:200
 msgid "Close"
 msgstr "Sluiten"
 
@@ -3322,64 +3334,68 @@ msgstr "Album Bijwerken"
 msgid "View user profile"
 msgstr "Bekijk profiel"
 
-#: module/Photo/view/photo/album/index.phtml:197
+#: module/Photo/view/photo/album/index.phtml:201
 msgid "Zoom (z)"
 msgstr "Zoom (z)"
 
-#: module/Photo/view/photo/album/index.phtml:200
+#: module/Photo/view/photo/album/index.phtml:204
 msgid "The image"
 msgstr "De afbeelding"
 
-#: module/Photo/view/photo/album/index.phtml:200
+#: module/Photo/view/photo/album/index.phtml:204
 msgid "could not be loaded."
 msgstr "kan niet worden geladen."
 
-#: module/Photo/view/photo/album/index.phtml:211
+#: module/Photo/view/photo/album/index.phtml:216
 msgid "Share"
 msgstr "Delen"
 
-#: module/Photo/view/photo/album/index.phtml:222
+#: module/Photo/view/photo/album/index.phtml:227
 msgid "Copied URL!"
 msgstr "URL gekopieerd!"
 
-#: module/Photo/view/photo/album/index.phtml:231
+#: module/Photo/view/photo/album/index.phtml:238
+msgid "Go to album"
+msgstr "Ga naar album"
+
+#: module/Photo/view/photo/album/index.phtml:258
 msgid "Set as profile picture"
 msgstr "Kies deze foto als jouw profielfoto"
 
-#: module/Photo/view/photo/album/index.phtml:243
+#: module/Photo/view/photo/album/index.phtml:270
 msgid "Set as profile picture!"
 msgstr "Gekozen als profielfoto!"
 
-#: module/Photo/view/photo/album/index.phtml:246
+#: module/Photo/view/photo/album/index.phtml:273
 msgid "Could not set as profile photo, try again"
 msgstr "Profielfoto instellen mislukt, probeer het nog een keer"
 
-#: module/Photo/view/photo/album/index.phtml:255
+#: module/Photo/view/photo/album/index.phtml:283
 msgid "Download"
 msgstr "Downloaden"
 
-#: module/Photo/view/photo/album/index.phtml:299
-#: module/Photo/view/photo/album/index.phtml:323
+#: module/Photo/view/photo/album/index.phtml:329
+#: module/Photo/view/photo/album/index.phtml:353
 msgid "Vote for photo of the week"
 msgstr "Stem voor de foto van de week"
 
-#: module/Photo/view/photo/album/index.phtml:320
+#: module/Photo/view/photo/album/index.phtml:350
 msgid "Already voted!"
 msgstr "Je hebt al gestemd!"
 
-#: module/Photo/view/photo/album/index.phtml:337
+#: module/Photo/view/photo/album/index.phtml:367
 msgid "Voted!"
 msgstr "Gestemd!"
 
-#: module/Photo/view/photo/album/index.phtml:349
+#: module/Photo/view/photo/album/index.phtml:379
 msgid "Could not vote, try again"
 msgstr "Stemmen mislukt, probeer het nog een keer"
 
-#: module/Photo/view/photo/album/index.phtml:360
+#: module/Photo/view/photo/album/index.phtml:391
 msgid "Cannot load metadata"
 msgstr "Kan metadata niet laden"
 
-#: module/Photo/view/photo/album/index.phtml:377
+#: module/Photo/view/photo/album/index.phtml:408
 msgid "Cannot load tags"
 msgstr "Kan tags niet laden"
 
@@ -3420,6 +3436,10 @@ msgstr "Wacht terwijl de foto verwijderd wordt."
 #: module/Photo/view/photo/photo-admin/index.phtml:122
 msgid "The photo has been deleted"
 msgstr "De foto is verwijderd"
+
+#: module/Photo/view/photo/photo/index.phtml:60
+msgid "There are no photos in this year."
+msgstr "Er zijn geen foto's in dit jaar."
 
 #: module/Photo/view/photo/photo/weekly.phtml:2
 #: module/Photo/view/photo/photo/weekly.phtml:8
@@ -4417,15 +4437,15 @@ msgstr "Je hebt niet de rechten om alle machtigingen te bekijken."
 msgid "You are not allowed to view authorizations."
 msgstr "Je hebt niet de rechten om all machtigingen te bekijken."
 
-#: module/Decision/src/Service/Decision.php:557
+#: module/Decision/src/Service/Decision.php:563
 msgid "You are not allowed to upload notes."
 msgstr "Het is niet toegestaan om notulen te uploaden."
 
-#: module/Decision/src/Service/Decision.php:572
+#: module/Decision/src/Service/Decision.php:578
 msgid "You are not allowed to upload meeting documents."
 msgstr "Het is niet toegestaan om vergaderstukken te uploaden."
 
-#: module/Decision/src/Service/Decision.php:609
+#: module/Decision/src/Service/Decision.php:615
 msgid "You are not authorize people."
 msgstr "Je hebt niet de rechten om iemand te machtigen."
 
@@ -4640,7 +4660,7 @@ msgstr "Het is niet toegestaan om albums te verwijderen."
 msgid "Not allowed to generate album covers."
 msgstr "Het is niet toegestaan om albums-covers opnieuw te genereren."
 
-#: module/Photo/src/Service/Album.php:470
+#: module/Photo/src/Service/Album.php:472
 msgid "Not allowed to move photos"
 msgstr "Het is niet toegestaan om foto's te verplaatsen"
 
