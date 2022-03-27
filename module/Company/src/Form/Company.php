@@ -256,7 +256,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                     [
                         'name' => Regex::class,
                         'options' => [
-                            'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
+                            'pattern' => '/^[0-9a-zA-Z_\-\.]+$/',
                             'messages' => [
                                 Regex::ERROROUS => $this->getTranslator()->translate('This slug contains invalid characters'),
                             ],

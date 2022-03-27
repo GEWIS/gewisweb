@@ -38,7 +38,7 @@ return [
                         'options' => [
                             'route' => '/:category',
                             'constraints' => [
-                                'category' => '[a-zA-Z0-9_\-\.]*',
+                                'category' => '[a-zA-Z0-9_\-\.]+',
                             ],
                             'defaults' => [
                                 'action' => 'jobList',
@@ -80,11 +80,9 @@ return [
                             // company/apple/jobs should be list of jobs of apple
                             // company/apple/jobs/ceo should be the page of ceo job
                             // company should give frontpage of company part
-                            // company/list should give a list of companies
-                            // company/index should give the frontpage
                             'route' => '/company/:companySlugName',
                             'constraints' => [
-                                'companySlugName' => '[a-zA-Z0-9_\-\.]*',
+                                'companySlugName' => '[a-zA-Z0-9_\-\.]+',
                             ],
                         ],
                         'may_terminate' => true,
