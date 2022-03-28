@@ -501,8 +501,11 @@ $this->scriptUrl()->requireUrl('member/search')
         let tagSearch = document.querySelector('.pswp__tags-ui .tagSearch');
 
         if (
-            (90 === pressedKey || 37 === pressedKey || 39 === pressedKey)
-            && document.activeElement === tagSearch
+            document.activeElement === tagSearch
+            && (
+                90 === pressedKey
+                || ("" !== tagSearch.value && (37 === pressedKey || 39 === pressedKey))
+            )
         ) {
             e.preventDefault();
         }
