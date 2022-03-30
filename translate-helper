@@ -3,7 +3,7 @@ dir="$PWD"
 cd `dirname $0`
 
 # parse php files
-find ./module -iname "*.phtml" | xargs xgettext \
+find ./module -iname "*.phtml" -print0 | sort -z | xargs -r0 xgettext \
     --language=PHP \
     --keyword=translate \
     --output=./module/Application/language/gewisweb.pot \
@@ -12,7 +12,7 @@ find ./module -iname "*.phtml" | xargs xgettext \
     --package-version=0.1.0-dev \
     --copyright-holder=GEWIS \
 
-find ./module -iname "*.php" | xargs xgettext \
+find ./module -iname "*.php" -print0 | sort -z | xargs -r0 xgettext \
     --language=PHP \
     --keyword=translate \
     --output=./module/Application/language/gewisweb.pot \
@@ -35,7 +35,7 @@ xgettext module/Application/language/additional-strings \
 cd ./module/Application/language/
 
 # merge translation files
-msgmerge -U nl.po gewisweb.pot
-msgmerge -U en.po gewisweb.pot
+msgmerge --sort-by-file -U nl.po gewisweb.pot
+msgmerge --sort-by-file -U en.po gewisweb.pot
 
 cd $dir
