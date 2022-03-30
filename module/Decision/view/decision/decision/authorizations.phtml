@@ -12,7 +12,7 @@ $this->headTitle($this->translate('Authorizations')); ?>
 You may still be able to authorize someone or revoke an authorization by contacting the board.') ?>
         <?php elseif (null !== $authorization): ?>
             <?= sprintf(
-                $this->translate('You have authorized %s for AV %s (%s)'),
+                $this->translate('You have authorized %s for GMM %s (%s)'),
                 '<strong>' . $authorization->getRecipient()->getFullName() . '</strong>',
                 $meeting->getNumber(),
                 $meeting->getDate()->format('Y-m-d')
@@ -22,7 +22,7 @@ You may still be able to authorize someone or revoke an authorization by contact
         <?php else: ?>
             <h3>
                 <?= sprintf(
-                    $this->translate('Authorize someone for GM %s (%s)'),
+                    $this->translate('Authorize someone for GMM %s (%s)'),
                     $meeting->getNumber(),
                     $meeting->getDate()->format('Y-m-d')
                 ) ?>
@@ -56,7 +56,7 @@ You may still be able to authorize someone or revoke an authorization by contact
                 <div class='col-sm-10'>
                     <?= $this->formCheckbox($element) ?>
                     <?= sprintf(
-                        $this->translate('I, %s am fully aware that by filling in this form I authorize the person in this form to represent me at General Meeting %s of s.v. GEWIS'),
+                        $this->translate('I, %s am fully aware that by filling in this form I authorize the person in this form to represent me at the General Members\' Meeting %s of s.v. GEWIS'),
                         $this->identity()->getMember()->getFullName(),
                         $meeting->getNumber()
                     ) ?>
@@ -113,7 +113,7 @@ You may still be able to authorize someone or revoke an authorization by contact
                 </button>
             </div>
             <div class='modal-body'>
-                <p><?= $this->translate('This member already has 2 or more authorizations. Therefore, this member has to choose which 2 authorizations they use, which may <strong>not</strong> include yours. If you want to authorize someone else instead, click on "cancel". If you want to continue with the authorization click on "confirm authorization".') ?></p>
+                <p><?= $this->translate('This member has already received 2 or more authorizations through the website. Since you can only use two authorizations at the same time, this member may have to choose which 2 authorizations they use. This may <strong>not</strong> include yours. If you want to authorize someone else instead, click on "cancel". If you want to continue with the authorization click on "confirm authorization".') ?></p>
             </div>
             <div class='modal-footer'>
                 <button type='button' class='btn btn-secondary'
