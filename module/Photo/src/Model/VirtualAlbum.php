@@ -40,7 +40,7 @@ class VirtualAlbum extends Album
      *
      * @throws Exception
      */
-    public function setParent(Album $parent): void
+    public function setParent(?Album $parent): void
     {
         throw new Exception('Method is not implemented');
     }
