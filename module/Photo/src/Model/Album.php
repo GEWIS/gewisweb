@@ -297,7 +297,7 @@ class Album implements ResourceInterface
      *
      * @param Album $parent
      */
-    public function setParent(Album $parent): void
+    public function setParent(?Album $parent): void
     {
         $this->parent = $parent;
     }
