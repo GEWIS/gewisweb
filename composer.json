@@ -95,7 +95,7 @@
         "slam/phpstan-laminas-framework": "^1.0.0",
         "phpstan/phpstan-doctrine": "^1.0.0",
         "maglnet/composer-require-checker": "^4.0.0",
-        "icanhazstring/composer-unused": "^0.7.12"
+        "icanhazstring/composer-unused": "^0.8.2"
     },
     "replace": {
         "laminas/laminas-cache-storage-adapter-apc": "*",
