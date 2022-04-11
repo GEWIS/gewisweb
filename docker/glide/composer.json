@@ -15,6 +15,6 @@
         "ext-imagick": ">=3.1",
         "ext-fileinfo": "*",
         "ext-zip": ">=1.12.5",
-        "league/glide": "^1.5"
+        "league/glide": "^2.0.0"
     }
 }
