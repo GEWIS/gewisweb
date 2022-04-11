@@ -75,7 +75,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/string" />
       <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php73" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme" />
@@ -101,7 +100,6 @@
       <path value="$PROJECT_DIR$/vendor/erusev/parsedown-extra" />
       <path value="$PROJECT_DIR$/vendor/erusev/parsedown" />
       <path value="$PROJECT_DIR$/vendor/composer" />
-      <path value="$PROJECT_DIR$/vendor/container-interop/container-interop" />
       <path value="$PROJECT_DIR$/vendor/fortawesome/font-awesome" />
       <path value="$PROJECT_DIR$/vendor/webimpress/safe-writer" />
       <path value="$PROJECT_DIR$/vendor/firebase/php-jwt" />
@@ -189,14 +187,18 @@
       <path value="$PROJECT_DIR$/vendor/nette/schema" />
       <path value="$PROJECT_DIR$/vendor/dflydev/dot-access-data" />
       <path value="$PROJECT_DIR$/vendor/maglnet/composer-require-checker" />
-      <path value="$PROJECT_DIR$/vendor/webmozart/path-util" />
       <path value="$PROJECT_DIR$/vendor/webmozart/glob" />
-      <path value="$PROJECT_DIR$/vendor/seld/jsonlint" />
       <path value="$PROJECT_DIR$/vendor/icanhazstring/composer-unused" />
-      <path value="$PROJECT_DIR$/vendor/seld/phar-utils" />
-      <path value="$PROJECT_DIR$/vendor/react/promise" />
-      <path value="$PROJECT_DIR$/vendor/justinrainbow/json-schema" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/vendor/true/punycode" />
+      <path value="$PROJECT_DIR$/vendor/laminas/laminas-text" />
+      <path value="$PROJECT_DIR$/vendor/laminas/laminas-recaptcha" />
+      <path value="$PROJECT_DIR$/vendor/ondram/ci-detector" />
+      <path value="$PROJECT_DIR$/vendor/symfony/dependency-injection" />
+      <path value="$PROJECT_DIR$/vendor/symfony/serializer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/config" />
+      <path value="$PROJECT_DIR$/vendor/composer-unused/contracts" />
+      <path value="$PROJECT_DIR$/vendor/composer-unused/symbol-parser" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
