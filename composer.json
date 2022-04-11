@@ -71,7 +71,7 @@
         "doctrine/doctrine-laminas-hydrator": "^2.2.0",
         "maglnet/magl-markdown": "^1.9.0",
         "twbs/bootstrap-sass": "^3.3.0",
-        "firebase/php-jwt": "^5.4.0",
+        "firebase/php-jwt": "^6.0.0",
         "monolog/monolog": "^2.3.0",
         "league/glide": "^2.0.0",
         "fortawesome/font-awesome": "^5.15.3",
