@@ -139,11 +139,11 @@ return [
     ],
 
     'regulations' => [
-        'activity-policy' => 'Beleid%20&%20Reglementen/Activiteitenbeleid',
-        'borrel-reglement' => 'Beleid%20&%20Reglementen/Borrelreglement',
-        'computer-reglement' => 'Beleid%20&%20Reglementen/Computerreglement',
-        'sleutel-beleid' => 'Beleid%20&%20Reglementen/Sleutelbeleid',
-        'poster-reglement' => 'Beleid%20&%20Reglementen/Posterbeleid',
+        'activity-policy' => 'Policies%20&%20Regulations/Activity%20Policy',
+        'borrel-policy' => 'Policies%20&%20Regulations/Borrel%20Policy',
+        'ict-policy' => 'Policies%20&%20Regulations/ICT%20Policy',
+        'key-policy' => 'Policies%20&%20Regulations/Key%20Policy',
+        'poster-policy' => 'Policies%20&%20Regulations/Poster%20Policy',
     ],
 
     /*

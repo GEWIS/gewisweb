@@ -181,7 +181,7 @@ class AutomaticControllerTest extends BaseControllerTest
         $params['photo_id'] = 1;
         $params['signupList'] = 1;
 
-        $params['regulation'] = 'sleutel-beleid';
+        $params['regulation'] = 'key-policy';
         $params['filename'] = 'file.pdf';
 
         return $params;
