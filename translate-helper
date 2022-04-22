@@ -38,4 +38,8 @@ cd ./module/Application/language/
 msgmerge --sort-by-file -U nl.po gewisweb.pot
 msgmerge --sort-by-file -U en.po gewisweb.pot
 
+# remove obsolete translations
+msgattrib --no-obsolete -o en.po en.po
+msgattrib --no-obsolete -o nl.po nl.po
+
 cd $dir
