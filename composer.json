@@ -66,15 +66,15 @@
         "laminas/laminas-view": "^2.14.0",
         "doctrine/dbal": "^3.0.0",
         "doctrine/orm": "^2.10.3",
-        "doctrine/doctrine-module": "^4.3.0",
-        "doctrine/doctrine-orm-module": "^4.2.0",
-        "doctrine/doctrine-laminas-hydrator": "^2.2.0",
+        "doctrine/doctrine-module": "^5.0.0",
+        "doctrine/doctrine-orm-module": "^5.0.0",
+        "doctrine/doctrine-laminas-hydrator": "^3.0.0",
         "maglnet/magl-markdown": "^1.9.0",
         "twbs/bootstrap-sass": "^3.3.0",
-        "firebase/php-jwt": "^5.4.0",
+        "firebase/php-jwt": "^6.0.0",
         "monolog/monolog": "^2.3.0",
         "league/glide": "^2.0.0",
-        "fortawesome/font-awesome": "^5.15.3",
+        "fortawesome/font-awesome": "^6.0.0",
         "slowprog/composer-copy-file": "^0.3.0",
         "cweagans/composer-patches": "^1.7.1"
     },
@@ -95,7 +95,7 @@
         "slam/phpstan-laminas-framework": "^1.0.0",
         "phpstan/phpstan-doctrine": "^1.0.0",
         "maglnet/composer-require-checker": "^4.0.0",
-        "icanhazstring/composer-unused": "^0.7.12"
+        "icanhazstring/composer-unused": "^0.8.2"
     },
     "replace": {
         "laminas/laminas-cache-storage-adapter-apc": "*",

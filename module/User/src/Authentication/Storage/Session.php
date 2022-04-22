@@ -3,7 +3,10 @@
 namespace User\Authentication\Storage;
 
 use DateTime;
-use Firebase\JWT\JWT;
+use Firebase\JWT\{
+    JWT,
+    Key,
+};
 use Laminas\Authentication\Storage\Session as SessionStorage;
 use Laminas\Http\{
     Header\SetCookie,
@@ -104,7 +107,7 @@ class Session extends SessionStorage
         }
 
         try {
-            $session = JWT::decode($cookies->GEWISSESSTOKEN, $key, ['RS256']);
+            $session = JWT::decode($cookies->GEWISSESSTOKEN, new Key($key, 'RS256'));
         } catch (UnexpectedValueException $e) {
             return false;
         }
