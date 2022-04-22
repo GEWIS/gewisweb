@@ -36,10 +36,15 @@ class ApiApp
         UserModel $user,
     ): string {
         $app = $this->getMapper()->findByAppId($appId);
+        $member = $user->getMember();
 
         $token = [
             'iss' => 'https://gewis.nl/',
-            'lidnr' => $user->getLidnr(),
+            'lidnr' => $member->getLidnr(),
+            'given_name' => $member->getFirstName(),
+            'family_name' => $member->getLastName(),
+            'email' => $member->getEmail(),
+            'membership_type' => $member->getType(),
             'exp' => (new DateTime('+5 min'))->getTimestamp(),
             'iat' => (new DateTime())->getTimestamp(),
             'nonce' => bin2hex(openssl_random_pseudo_bytes(16)),
