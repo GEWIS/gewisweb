@@ -181,8 +181,8 @@ $this->scriptUrl()->requireUrl('member/search')
     import PhotoSwipeLightbox from '<?= $this->basePath() ?>/js/photoswipe-lightbox.esm.min.js';
 
     const leftArrowSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 50 30" width="50" height="30"><use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#chevron-left"></use></svg>';
-    const closeSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#times"></use></svg>';
-    const zoomSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use class="pswp__icn-zoom-plus" href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#search-plus"></use><use class="pswp__icn-zoom-minus" href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#search-minus"></use></svg>';
+    const closeSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#xmark"></use></svg>';
+    const zoomSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use class="pswp__icn-zoom-plus" href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#magnifying-glass-plus"></use><use class="pswp__icn-zoom-minus" href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#magnifying-glass-minus"></use></svg>';
 
     let lastActiveElement = null;
 
@@ -259,7 +259,7 @@ $this->scriptUrl()->requireUrl('member/search')
             title: '<?= $this->translate('Set as profile picture') ?>',
             html: {
                 isCustomSVG: true,
-                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#portrait"></use>',
+                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#image-portrait"></use>',
             },
             position: 'bar',
             onClick: (event, el, pswp) => {
@@ -284,7 +284,7 @@ $this->scriptUrl()->requireUrl('member/search')
             title: '<?= $this->translate('Download') ?>',
             html: {
                 isCustomSVG: true,
-                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#file-download"></use>',
+                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#download"></use>',
             },
             position: 'bar',
             onClick: (event, el, pswp) => {
@@ -308,7 +308,7 @@ $this->scriptUrl()->requireUrl('member/search')
             title: '<?= $this->translate('Information') ?>',
             html: {
                 isCustomSVG: true,
-                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#info-circle"></use>',
+                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#circle-info"></use>',
             },
             position: 'bar',
             onClick: (event, el, pswp) => {

@@ -3,7 +3,6 @@
 .pswp {
     --pswp-bg: #000;
     --pswp-placeholder-bg: #222;
-    --pswp-error-text-color: #f7f7f7;
 
     --pswp-root-z-index: 100000;
 
@@ -17,6 +16,8 @@
     --pswp-icon-color-secondary: #4f4f4f;
     --pswp-icon-stroke-color: #4f4f4f;
     --pswp-icon-stroke-width: 2px;
+
+    --pswp-error-text-color: var(--pswp-icon-color);
 }
 
 
@@ -74,6 +75,7 @@
 .pswp__bg,
 .pswp__container,
 .pswp__item,
+.pswp__content,
 .pswp__img,
 .pswp__zoom-wrap {
     position: absolute;
@@ -142,6 +144,14 @@
     display: none !important;
 }
 
+/* Allow to click through pswp__content element, but not its children */
+.pswp__content {
+    pointer-events: none;
+}
+
+.pswp__content > * {
+    pointer-events: auto;
+}
 
 /*
 
@@ -153,22 +163,15 @@
 	Error message appears when image is not loaded
 	(JS option errorMsg controls markup)
 */
+.pswp__error-msg-container {
+    display: grid;
+}
+
 .pswp__error-msg {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    padding: 0 10px;
-    margin-top: -0.5em;
+    margin: auto;
     font-size: 1em;
     line-height: 1;
     color: var(--pswp-error-text-color);
-    text-align: center;
-}
-
-.pswp__error-msg a {
-    color: var(--pswp-error-text-color);
-    text-decoration: underline;
 }
 
 /*
@@ -388,45 +391,27 @@ div.pswp__img--placeholder,
 
 */
 .pswp__preloader {
-    position: absolute;
-    display: none;
-    width: 24px;
-    height: 24px;
-    pointer-events: none;
-    border: 3px solid var(--pswp-preloader-color);
-    border-left-color: var(--pswp-preloader-color-secondary);
-    border-radius: 50%;
-
-
-
-
-    /* left:50% / top:50% styles are defined via JS,
-      as size of PhotoSwipe viewport might change visually
-      (because of UI elements like sidebar),
-      use !important if you want to override them */
+    position: relative;
+    overflow: hidden;
+    width: 50px;
+    height: 60px;
+    margin-right: auto;
 }
-
-.pswp__preloader--active {
-    display: block;
-    animation: pswp-fadein 333ms linear, pswp-clockwise 600ms linear infinite;
-}
-
-.pswp__preloader--hiding {
+.pswp__preloader .pswp__icn {
+    opacity: 0;
+    transition: opacity 0.2s linear;
     animation: pswp-clockwise 600ms linear infinite;
-
-    /* use of !important to override hide-on-close styles */
-    opacity: 0 !important;
 }
-
-
+.pswp__preloader--active .pswp__icn {
+    opacity: 0.85;
+}
 @keyframes pswp-clockwise {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes pswp-fadein {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 
