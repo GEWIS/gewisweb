@@ -65,6 +65,10 @@ let Photo = {
                             }
                         }
 
+                        if (realTag.dataset.member === document.querySelector('.pswp-gallery').dataset.lidnr) {
+                            document.querySelector('.pswp__button--profile-photo-button').classList.add('pswp__button--hidden');
+                        }
+
                         realTag.remove();
                     })
                 }).catch(error => {

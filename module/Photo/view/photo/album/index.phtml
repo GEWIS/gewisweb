@@ -120,55 +120,61 @@ $this->scriptUrl()->requireUrl('member/search')
                 <?php endforeach ?>
             </div>
         <?php endif; ?>
-        <div class="pswp-gallery" data-recent-vote="<?= $hasRecentVote ? 'true' : 'false' ?>">
+        <div class="pswp-gallery"
+             data-recent-vote="<?= $hasRecentVote ? 'true' : 'false' ?>"
+             data-lidnr="<?= $this->identity()->getLidnr() ?>"
+        >
             <div class="grid-sizer"></div>
             <div class="gutter-sizer"></div>
             <?php $lidnr = $this->identity()->getLidnr(); ?>
             <?php foreach ($album->getPhotos() as $item): ?>
-                <?php
-                $ar = $item->getAspectRatio();
-                $width = $config['small_thumb_size']['width'];
-                $thumbnailSize = [
-                    'w' => $width,
-                    'h' => round($width * $ar)
-                ];
+            <?php
+            $ar = $item->getAspectRatio();
+            $width = $config['small_thumb_size']['width'];
+            $thumbnailSize = [
+                'w' => $width,
+                'h' => round($width * $ar)
+            ];
 
-                $width = $config['large_thumb_size']['width'];
-                $largeSize = [
-                    'w' => $width,
-                    'h' => round($width * $ar)
-                ];
-                ?>
-                <figure
-                    class="pswp-gallery__item<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>"
-                    data-id="<?= $item->getId() ?>"
-                    data-author="GEWIS"
-                    data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]) ?>"
-                    <?php if ($album instanceof MemberAlbum): ?>
-                        data-original-album="<?= $this->url('photo/album', ['album_id' => $item->getAlbum()->getId(), 'album_type' => 'album']) ?>"
-                    <?php endif; ?>
-                    data-profile-photo-url="<?= $this->url('photo/set_profile_photo', ['photo_id' => $item->getId()]) ?>"
-                    data-details-url="<?= $this->url('api_photo/details', ['photo_id' => $item->getId()]) ?>"
-                    data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]) ?>"
+            $width = $config['large_thumb_size']['width'];
+            $largeSize = [
+                'w' => $width,
+                'h' => round($width * $ar)
+            ];
+            ?>
+            <figure
+                class="pswp-gallery__item<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>"
+                data-id="<?= $item->getId() ?>"
+                data-author="GEWIS"
+                data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]) ?>"
+                <?php if ($album instanceof MemberAlbum): ?>
+                data-original-album="<?= $this->url(
+                    'photo/album',
+                    ['album_id' => $item->getAlbum()->getId(), 'album_type' => 'album']
+                ) ?>"
+                <?php endif; ?>
+                data-profile-photo-url="<?= $this->url('photo/set_profile_photo', ['photo_id' => $item->getId()]) ?>"
+                data-details-url="<?= $this->url('api_photo/details', ['photo_id' => $item->getId()]) ?>"
+                data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]) ?>"
+            >
+                <a href="<?= $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
+                   target="_blank"
+                   data-pswp-height="<?= $largeSize['h'] ?>"
+                   data-pswp-width="<?= $largeSize['w'] ?>"
                 >
-                    <a href="<?= $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
-                       target="_blank"
-                       data-pswp-height="<?= $largeSize['h'] ?>"
-                       data-pswp-width="<?= $largeSize['w'] ?>"
+                    <img
+                        class="lazy-load"
+                        data-height="<?= $thumbnailSize['h'] ?>"
+                        data-width="<?= $thumbnailSize['w'] ?>"
+                        data-src="<?= $this->glideUrl()->getUrl($item->getPath(), $thumbnailSize) ?>"
+                        alt=""
                     >
-                        <img
-                            class="lazy-load"
-                            data-height="<?= $thumbnailSize['h'] ?>"
-                            data-width="<?= $thumbnailSize['w'] ?>"
-                            data-src="<?= $this->glideUrl()->getUrl($item->getPath(), $thumbnailSize) ?>"
-                            alt=""
-                        >
-                    </a>
-                    <figcaption class="hidden">
-                        <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
-                    </figcaption>
-                    <figtags class="hidden"></figtags>
-                </figure>
+                </a>
+                <figcaption class="hidden">
+                    <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
+                </figcaption>
+                <figtags class="hidden"></figtags>
+            </figure>
             <?php endforeach; ?>
         </div>
     </div>
@@ -178,7 +184,7 @@ $this->scriptUrl()->requireUrl('member/search')
         Photo.initGrid();
     });
 
-    const addTagSearch = (el) => {
+    const addTagSearch = (el, figTags) => {
         // Remove any old autocomplete suggestion boxes.
         document.querySelectorAll('.autocomplete-suggestions').forEach(element => {
             element.remove();
@@ -237,7 +243,7 @@ $this->scriptUrl()->requireUrl('member/search')
                             tagList.insertAdjacentHTML(
                                 'afterbegin',
                                 `
-                                    <span>
+                                    <span data-member="${data.tag.member_id}">
                                         <a href="${memberURL}">${suggestion.value}</a>
                                         <a href="${removeURL}" class="remove-tag"
                                             data-tag-id="removeTag${data.tag.id}">
@@ -252,6 +258,10 @@ $this->scriptUrl()->requireUrl('member/search')
                             // and prevent having to make too many requests, we have to write the
                             // current "state" of the tags back into the actual DOM element.
                             figTags.innerHTML = el.innerHTML;
+
+                            if (data.tag.member_id === parseInt(document.querySelector('.pswp-gallery').dataset.lidnr)) {
+                                document.querySelector('.pswp__button--profile-photo-button').classList.remove('pswp__button--hidden');
+                            }
 
                             Photo.initRemoveTag(el.querySelector('a[data-tag-id="removeTag' + data.tag.id + '"]'));
                         }
@@ -411,6 +421,12 @@ $this->scriptUrl()->requireUrl('member/search')
                 isCustomSVG: true,
                 inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#image-portrait"></use>',
             },
+            onInit: (el, pswp) => {
+                // Hide button by default, it should only be shown through tags.
+                pswp.on('change', () => {
+                    el.classList.add('pswp__button--hidden');
+                });
+            },
             onClick: (event, el, pswp) => {
                 let currentSlide = pswp.currSlide.data.element;
 
@@ -439,7 +455,7 @@ $this->scriptUrl()->requireUrl('member/search')
                 onInit: (el, pswp) => {
                     pswp.on('change', () => {
                         // Add a pulsing dot if the user has not recently voted for a photo.
-                        if ('false' === document.querySelector('.pswp-gallery').dataset.recentVote) {
+                        if ('false' === pswp.options.dataSource.gallery.dataset.recentVote) {
                             if (1 === el.childElementCount) {
                                 const pulsingDot = document.createElement('span');
                                 pulsingDot.classList.add('pulsing-dot');
@@ -481,7 +497,7 @@ $this->scriptUrl()->requireUrl('member/search')
                                 }
 
                                 // Also update the recent vote status.
-                                document.querySelector('.pswp-gallery').dataset.recentVote = 'true';
+                                pswp.options.dataSource.gallery.dataset.recentVote = 'true';
                             }).catch(error => {
                                 // An error occurred somewhere along the way, perhaps we should notify the user.
                                 el.dataset.originalTitle = '<?= $this->translate('Could not vote, try again') ?>';
@@ -491,31 +507,12 @@ $this->scriptUrl()->requireUrl('member/search')
             });
         <?php endif; ?>
 
-        <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'view_metadata')): ?>
-            // Register the metadata UI.
-            lightbox.pswp.ui.registerElement({
-                name: 'metadata-ui',
-                appendTo: 'root',
-                order: 2,
-                isButton: false,
-                html: '<?= $this->translate('Cannot load metadata') ?>',
-                onInit: (el, pswp) => {
-                    pswp.on('change', () => {
-                        let currentSlide = pswp.currSlide.data.element;
-
-                        // Copy all HTML.
-                        el.innerHTML = currentSlide.querySelector('figcaption').innerHTML;
-                    });
-                },
-            });
-        <?php endif; ?>
-
         <?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'view')): ?>
             // Register the tagging system (but only if the user is allowed to see tags).
             lightbox.pswp.ui.registerElement({
                 name: 'tags-ui',
                 appendTo: 'root',
-                order: 1,
+                order: 42,
                 isButton: false,
                 html: '<?= $this->translate('Loading tags...') ?>',
                 onInit: (el, pswp) => {
@@ -524,7 +521,12 @@ $this->scriptUrl()->requireUrl('member/search')
 
                         if (figTags.hasChildNodes()) {
                             el.innerHTML = figTags.innerHTML;
-                            addTagSearch(el);
+
+                            if (null !== el.querySelector(`.tagList span[data-member="${pswp.options.dataSource.gallery.dataset.lidnr}"]`)) {
+                                document.querySelector('.pswp__button--profile-photo-button').classList.remove('pswp__button--hidden');
+                            }
+
+                            addTagSearch(el, figTags);
                         }
                     });
 
@@ -536,6 +538,7 @@ $this->scriptUrl()->requireUrl('member/search')
                             return;
                         }
 
+                        let lidnr = parseInt(pswp.options.dataSource.gallery.dataset.lidnr);
                         let figTags = pswp.currSlide.data.element.querySelector('figtags');
                         let id = pswp.currSlide.data.element.dataset.id;
                         let tagCount = tags.length;
@@ -546,12 +549,19 @@ $this->scriptUrl()->requireUrl('member/search')
                             <span class="no-tag-title ${(0 !== tagCount) ? 'hidden' : ''}"><?= $this->translate('No one has been tagged in this photo yet. Tag someone you recognise now!')?></span>
                             <div class="tagList">
                                 ${tags.map((member) => {
+                                    // Since we are already looping through all tags here, we can directly check if one
+                                    // of the tags belongs to the current member. If so, show the "set as profile pic"
+                                    // button.
+                                    if (member.lidnr === lidnr) {
+                                        document.querySelector('.pswp__button--profile-photo-button').classList.remove('pswp__button--hidden');
+                                    }
+
                                     let viewMemberUrl = URLHelper.url('member/view', {lidnr: member.lidnr});
                                     let removeUrl = URLHelper.url('photo/photo/tag/remove', {photo_id: id, lidnr: member.lidnr});
                                     let spacer = (i++ && i < tagCount) ? ',&nbsp' : ((i === tagCount) ? '<?= $this->translate('and') ?>' : '');
 
                                     return `
-                                        <span>
+                                        <span data-member="${member.lidnr}">
                                             <a href="${viewMemberUrl}">${member.fullName}</a>&nbsp;
                                             <a class="remove-tag" href="${removeUrl}" data-tag-id="removeTag${member.id}">
                                                 <span class="fas fa-times" aria-hidden="true"></span>
@@ -572,7 +582,7 @@ $this->scriptUrl()->requireUrl('member/search')
 
                         // Replicate the tags UI to the actual figure DOM.
                         figTags.innerHTML = el.innerHTML;
-                        addTagSearch(el);
+                        addTagSearch(el, figTags);
                     });
 
                     pswp.on('zoomPanUpdate', () => {
@@ -604,6 +614,25 @@ $this->scriptUrl()->requireUrl('member/search')
                     });
                 },
             });
+        <?php endif; ?>
+
+        <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'view_metadata')): ?>
+        // Register the metadata UI.
+        lightbox.pswp.ui.registerElement({
+            name: 'metadata-ui',
+            appendTo: 'root',
+            order: 43,
+            isButton: false,
+            html: '<?= $this->translate('Cannot load metadata') ?>',
+            onInit: (el, pswp) => {
+                pswp.on('change', () => {
+                    let currentSlide = pswp.currSlide.data.element;
+
+                    // Copy all HTML.
+                    el.innerHTML = currentSlide.querySelector('figcaption').innerHTML;
+                });
+            },
+        });
         <?php endif; ?>
     });
 
