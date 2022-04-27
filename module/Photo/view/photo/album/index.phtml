@@ -582,7 +582,7 @@ $this->scriptUrl()->requireUrl('member/search')
                                                 // current "state" of the tags back into the actual DOM element.
                                                 figTags.innerHTML = el.innerHTML;
 
-                                                Photo.initRemoveTag(el.querySelector('a[data-tag-id="' + id + '"]'));
+                                                Photo.initRemoveTag(el.querySelector('a[data-tag-id="removeTag' + data.tag.id + '"]'));
                                             }
 
                                             tagSearch.value = '';
