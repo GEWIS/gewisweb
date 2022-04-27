@@ -148,7 +148,7 @@ $this->scriptUrl()->requireUrl('member/search')
                     data-profile-photo-url="<?= $this->url('photo/set_profile_photo', ['photo_id' => $item->getId()]) ?>"
                     data-tags-url="<?= $this->url('api_photo/tags', ['photo_id' => $item->getId()]) ?>"
                     data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]) ?>"
-                    data-voted="<?= $this->hasVoted($item->getId(), $lidnr) ? 'true' : 'false' ?>"
+                    data-voted-url="<?= $this->url('api_photo/voted', ['photo_id' => $item->getId()]) ?>"
                 >
                     <a href="<?= $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
                        target="_blank"
@@ -334,8 +334,24 @@ $this->scriptUrl()->requireUrl('member/search')
             },
             position: 'bar',
             onInit: (el, pswp) => {
-                lightbox.pswp.on('change', () => {
+                lightbox.pswp.on('change', async () => {
                     let hasRecentVote = document.querySelector('.pswp-gallery').dataset.recentVote;
+                    let promisedVote = pswp.currSlide.data.voted;
+
+                    // Check if we are dealing with a promise, if so, resolve it.
+                    if (
+                        promisedVote
+                        && "function" === typeof promisedVote.then
+                    ) {
+                        await pswp.currSlide.data.voted.then((data) => {
+                            pswp.currSlide.data.voted = data.voted;
+                            pswp.currSlide.data.element.dataset.voted = data.voted;
+                        }).catch(() => {
+                            pswp.currSlide.data.voted = false;
+                            el.dataset.originalTitle = '<?= $this->translate('Cannot load vote') ?>';
+                        });
+                    }
+
                     let hasVoted = pswp.currSlide.data.element.dataset.voted;
 
                     if ('false' === hasRecentVote) {
@@ -357,13 +373,13 @@ $this->scriptUrl()->requireUrl('member/search')
             },
             onClick: (event, el, pswp) => {
                 let currentSlide = pswp.currSlide.data.element;
-                let hasVoted = currentSlide.dataset.voted;
+                let hasVoted = pswp.currSlide.data.element.dataset.voted;
 
                 if ('false' === hasVoted) {
                     fetch(currentSlide.dataset.voteUrl, { method: 'POST' })
                         .then(response => response.json())
                         .then(result => {
-                            currentSlide.dataset.voted = 'true';
+                            pswp.currSlide.data.voted = true;
                             el.firstChild.classList.add('pswp__icn-red');
                             el.dataset.originalTitle = '<?= $this->translate('Voted!') ?>';
 
@@ -615,11 +631,13 @@ $this->scriptUrl()->requireUrl('member/search')
         // When opening the photo viewer, there is initially no slide.
         if ('slide' in event) {
             // Unfortunately, the tags data element is lost after the slide is unloaded, hence we need to check if we
-            // managed to get data into the actual DOM to determine if we need to fetch the tags again.
+            // managed to get data into the actual DOM to determine if we need to fetch the tags again. We also
+            // assume that the same applies to votes.
             if (!event.slide.data.element.querySelector('figtags').hasChildNodes()) {
                 event.slide.data = {
                     ...event.slide.data,
                     tags: fetch(event.slide.data.element.dataset.tagsUrl).then(response => response.json()),
+                    voted: fetch(event.slide.data.element.dataset.votedUrl).then(response => response.json()),
                 };
             }
         }

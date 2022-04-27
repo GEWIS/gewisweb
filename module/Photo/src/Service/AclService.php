@@ -12,6 +12,7 @@ class AclService extends \User\Service\AclService
         $this->acl->addResource('photo');
         $this->acl->addResource('album');
         $this->acl->addResource('tag');
+        $this->acl->addResource('vote');
 
         // Only users and 'the screen' are allowed to view photos and albums
         $this->acl->allow('user', 'photo', 'view');
@@ -22,6 +23,9 @@ class AclService extends \User\Service\AclService
 
         // Users are allowed to view, remove and add tags
         $this->acl->allow('user', 'tag', ['view', 'add', 'remove']);
+
+        // Users are allowed to view and add votes
+        $this->acl->allow('user', 'tag', ['view', 'add']);
 
         // Users are allowed to download photos
         $this->acl->allow('user', 'photo', ['download', 'view_metadata']);

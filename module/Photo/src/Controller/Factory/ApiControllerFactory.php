@@ -20,6 +20,11 @@ class ApiControllerFactory implements FactoryInterface
         $requestedName,
         ?array $options = null,
     ): ApiController {
-        return new ApiController();
+        return new ApiController(
+            $container->get('photo_service_acl'),
+            $container->get('translator'),
+            $container->get('photo_mapper_tag'),
+            $container->get('photo_mapper_vote'),
+        );
     }
 }

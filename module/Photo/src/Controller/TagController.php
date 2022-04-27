@@ -5,7 +5,6 @@ namespace Photo\Controller;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\JsonModel;
-use Photo\Mapper\Tag as TagMapper;
 use Photo\Service\{
     AclService,
     Photo as PhotoService,
@@ -17,8 +16,6 @@ class TagController extends AbstractActionController
     private AclService $aclService;
 
     private Translator $translator;
-
-    private TagMapper $tagMapper;
 
     /**
      * @var PhotoService
@@ -33,12 +30,10 @@ class TagController extends AbstractActionController
     public function __construct(
         AclService $aclService,
         Translator $translator,
-        TagMapper $tagMapper,
         PhotoService $photoService,
     ) {
         $this->aclService = $aclService;
         $this->translator = $translator;
-        $this->tagMapper = $tagMapper;
         $this->photoService = $photoService;
     }
 
@@ -80,14 +75,5 @@ class TagController extends AbstractActionController
         }
 
         return new JsonModel($result);
-    }
-
-    public function listAction(): JsonModel
-    {
-        if (!$this->aclService->isAllowed('view', 'tag')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view tags.'));
-        }
-
-        return new JsonModel($this->tagMapper->getTagsByPhoto($this->params()->fromRoute('photo_id')));
     }
 }

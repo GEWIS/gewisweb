@@ -376,8 +376,19 @@ return [
                         'options' => [
                             'route' => '/:photo_id/tags',
                             'defaults' => [
-                                'controller' => TagController::class,
-                                'action' => 'list',
+                                'action' => 'listTags',
+                            ],
+                            'constraints' => [
+                                'photo_id' => '[0-9]+',
+                            ],
+                        ],
+                    ],
+                    'voted' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/:photo_id/voted',
+                            'defaults' => [
+                                'action' => 'hasVoted',
                             ],
                             'constraints' => [
                                 'photo_id' => '[0-9]+',
