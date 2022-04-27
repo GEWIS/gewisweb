@@ -212,6 +212,30 @@ $this->scriptUrl()->requireUrl('member/search')
     lightbox.on('uiRegister', () => {
         // Register custom buttons.
         lightbox.pswp.ui.registerElement({
+            name: 'download-button',
+            appendTo: 'bar',
+            order: 13,
+            isButton: true,
+            title: '<?= $this->translate('Download') ?>',
+            html: {
+                isCustomSVG: true,
+                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#download"></use>',
+            },
+            position: 'bar',
+            onClick: (event, el, pswp) => {
+                let downloadUrl = pswp.currSlide.data.element.dataset.rawUrl;
+                let link = document.createElement('a');
+
+                link.href = downloadUrl;
+                link.download = '';
+                document.body.appendChild(link);
+
+                link.click();
+                link.remove();
+            },
+        });
+
+        lightbox.pswp.ui.registerElement({
             name: 'share-button',
             appendTo: 'bar',
             order: 12,
@@ -254,9 +278,31 @@ $this->scriptUrl()->requireUrl('member/search')
         <?php endif; ?>
 
         lightbox.pswp.ui.registerElement({
-            name: 'profile-photo-button',
+            name: 'metadata-button',
             appendTo: 'bar',
             order: 9,
+            isButton: true,
+            title: '<?= $this->translate('Information') ?>',
+            html: {
+                isCustomSVG: true,
+                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#circle-info"></use>',
+            },
+            position: 'bar',
+            onClick: (event, el, pswp) => {
+                let metadata = document.querySelector('.pswp__metadata-ui');
+
+                if (metadata.classList.contains('pswp__metadata-ui-open')) {
+                    metadata.classList.remove('pswp__metadata-ui-open');
+                } else {
+                    metadata.classList.add('pswp__metadata-ui-open');
+                }
+            },
+        });
+
+        lightbox.pswp.ui.registerElement({
+            name: 'profile-photo-button',
+            appendTo: 'bar',
+            order: 8,
             isButton: true,
             title: '<?= $this->translate('Set as profile picture') ?>',
             html: {
@@ -279,55 +325,9 @@ $this->scriptUrl()->requireUrl('member/search')
         });
 
         lightbox.pswp.ui.registerElement({
-            name: 'download-button',
-            appendTo: 'bar',
-            order: 8,
-            isButton: true,
-            title: '<?= $this->translate('Download') ?>',
-            html: {
-                isCustomSVG: true,
-                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#download"></use>',
-            },
-            position: 'bar',
-            onClick: (event, el, pswp) => {
-                let downloadUrl = pswp.currSlide.data.element.dataset.rawUrl;
-                let link = document.createElement('a');
-
-                link.href = downloadUrl;
-                link.download = '';
-                document.body.appendChild(link);
-
-                link.click();
-                link.remove();
-            },
-        });
-
-        lightbox.pswp.ui.registerElement({
-            name: 'metadata-button',
-            appendTo: 'bar',
-            order: 7,
-            isButton: true,
-            title: '<?= $this->translate('Information') ?>',
-            html: {
-                isCustomSVG: true,
-                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#circle-info"></use>',
-            },
-            position: 'bar',
-            onClick: (event, el, pswp) => {
-                let metadata = document.querySelector('.pswp__metadata-ui');
-
-                if (metadata.classList.contains('pswp__metadata-ui-open')) {
-                    metadata.classList.remove('pswp__metadata-ui-open');
-                } else {
-                    metadata.classList.add('pswp__metadata-ui-open');
-                }
-            },
-        });
-
-        lightbox.pswp.ui.registerElement({
             name: 'like-button',
             appendTo: 'bar',
-            order: 6,
+            order: 7,
             isButton: true,
             title: '<?= $this->translate('Vote for photo of the week') ?>',
             html: {
