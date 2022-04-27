@@ -144,7 +144,9 @@ $this->scriptUrl()->requireUrl('member/search')
                     data-id="<?= $item->getId() ?>"
                     data-author="GEWIS"
                     data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]) ?>"
-                    data-original-album="<?= $this->url('photo/album', ['album_id' => $item->getAlbum()->getId(), 'album_type' => 'album']) ?>"
+                    <?php if ($album instanceof MemberAlbum): ?>
+                        data-original-album="<?= $this->url('photo/album', ['album_id' => $item->getAlbum()->getId(), 'album_type' => 'album']) ?>"
+                    <?php endif; ?>
                     data-profile-photo-url="<?= $this->url('photo/set_profile_photo', ['photo_id' => $item->getId()]) ?>"
                     data-tags-url="<?= $this->url('api_photo/tags', ['photo_id' => $item->getId()]) ?>"
                     data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]) ?>"
