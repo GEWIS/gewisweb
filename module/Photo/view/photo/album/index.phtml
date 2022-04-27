@@ -204,7 +204,7 @@ $this->scriptUrl()->requireUrl('member/search')
         zoomTitle: '<?= $this->translate('Zoom (z)') ?>',
         arrowPrevTitle: '<?=  $this->translate('Previous') ?>',
         arrowNextTitle: '<?=  $this->translate('Next') ?>',
-        errorMsg: '<div class="pswp__error-msg"><a href="" target="_blank"><?= $this->translate('The image') ?></a> <?= $this->translate('could not be loaded.') ?></div>',
+        errorMsg: '<?= $this->translate('The image could not be loaded.') ?>',
 
         pswpModule: () => import('<?= $this->basePath() ?>/js/photoswipe.esm.min.js'),
     });
