@@ -470,4 +470,9 @@ div.pswp__img--placeholder,
     bottom: 16px;
     transform: translateX(-50%);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    transition: opacity 100ms linear !important;
+}
+
+.pswp__tags-ui--hidden {
+    opacity: 0 !important;
 }

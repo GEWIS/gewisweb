@@ -336,7 +336,7 @@ $this->scriptUrl()->requireUrl('member/search')
             },
             position: 'bar',
             onInit: (el, pswp) => {
-                lightbox.pswp.on('change', async () => {
+                pswp.on('change', async () => {
                     let hasRecentVote = document.querySelector('.pswp-gallery').dataset.recentVote;
                     let promisedVote = pswp.currSlide.data.voted;
 
@@ -409,7 +409,7 @@ $this->scriptUrl()->requireUrl('member/search')
             isButton: false,
             html: '<?= $this->translate('Cannot load metadata') ?>',
             onInit: (el, pswp) => {
-                lightbox.pswp.on('change', () => {
+                pswp.on('change', () => {
                     let currentSlide = pswp.currSlide.data.element;
 
                     // Copy all HTML.
@@ -427,7 +427,7 @@ $this->scriptUrl()->requireUrl('member/search')
                 isButton: false,
                 html: '<?= $this->translate('Loading tags...') ?>',
                 onInit: (el, pswp) => {
-                    lightbox.pswp.on('change', async () => {
+                    pswp.on('change', async () => {
                         let currentSlide = pswp.currSlide.data.element;
                         let promisedTags = pswp.currSlide.data.tags;
 
@@ -596,6 +596,34 @@ $this->scriptUrl()->requireUrl('member/search')
                             el.querySelectorAll('.remove-tag').forEach(element => {
                                 Photo.initRemoveTag(element);
                             });
+                        }
+                    });
+
+                    pswp.on('zoomPanUpdate', () => {
+                        let tagsUIHideTimeout;
+
+                        if (pswp.currSlide.currZoomLevel > pswp.currSlide.zoomLevels.initial) {
+                            el.classList.add('pswp__tags-ui--hidden');
+
+                            if (tagsUIHideTimeout) {
+                                clearTimeout(tagsUIHideTimeout);
+                            }
+
+                            tagsUIHideTimeout = setTimeout(() => {
+                                el.hidden = true
+                                tagsUIHideTimeout = null;
+                            }, 300);
+                        } else {
+                            el.hidden = false;
+
+                            if (tagsUIHideTimeout) {
+                                clearTimeout(tagsUIHideTimeout);
+                            }
+
+                            tagsUIHideTimeout = setTimeout(() => {
+                                el.classList.remove('pswp__tags-ui--hidden');
+                                tagsUIHideTimeout = null;
+                            }, 50);
                         }
                     });
                 },
