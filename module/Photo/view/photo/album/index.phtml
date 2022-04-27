@@ -223,8 +223,8 @@ $this->scriptUrl()->requireUrl('member/search')
             },
             onClick: (event, el, pswp) => {
                 let id = pswp.currSlide.data.element.dataset.id;
-                let currentURL = window.location.href;
-                let photoURL = currentURL + '#&pid=' + id;
+                let currentURL = window.location.origin + window.location.pathname;
+                let photoURL = currentURL + '#pid=' + id;
 
                 navigator.clipboard.writeText(photoURL).then(() => {
                     el.dataset.originalTitle = '<?= $this->translate('Copied URL!') ?>';
@@ -674,34 +674,10 @@ $this->scriptUrl()->requireUrl('member/search')
     lightbox.init();
 
     // Check if the hash is present in the URL, if so, parse and try to open the lightbox for the provided image.
-    if (typeof window.location.hash !== "undefined") {
-        let hash = window.location.hash.substring(1), params = {};
+    const idMatcher = /^pid=(\d+)$/i;
+    const pid = window.location.hash.substring(1).match(idMatcher);
 
-        if (hash.length > 5) {
-            let vars = hash.split('&');
-
-            for (let i = 0; i < vars.length; i++) {
-                if (!vars[i]) {
-                    continue;
-                }
-
-                let pair = vars[i].split('=');
-                if (pair.length < 2) {
-                    continue;
-                }
-
-                params[pair[0]] = pair[1];
-            }
-
-            if (params.pid) {
-                let expectedImage = parseInt(params.pid, 10);
-
-                document.querySelectorAll('.pswp-gallery__item').forEach(element => {
-                    if (parseInt(element.dataset.id, 10) === expectedImage) {
-                        element.click(); // lightbox.loadAndOpen does not work, so simulate clicking the image.
-                    }
-                });
-            }
-        }
+    if (null !== pid) {
+        document.querySelector(`.pswp-gallery__item[data-id="${parseInt(pid[1], 10)}"]`)?.click();
     }
 </script>
