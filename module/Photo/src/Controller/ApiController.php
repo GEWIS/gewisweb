@@ -51,26 +51,20 @@ class ApiController extends AbstractActionController
         return new JsonModel($album);
     }
 
-    public function listTagsAction(): JsonModel|ViewModel
+    public function detailsAction(): JsonModel
     {
-        if (!$this->aclService->isAllowed('view', 'tag')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view tags'));
+        if (
+            !$this->aclService->isAllowed('view', 'tag')
+            && !$this->aclService->isAllowed('vote', 'photo')
+        ) {
+            throw new NotAllowedException($this->translator->translate('Not allowed to view photo details'));
         }
 
-        return new JsonModel($this->tagMapper->getTagsByPhoto($this->params()->fromRoute('photo_id')));
-    }
-
-    public function hasVotedAction(): JsonModel|ViewModel
-    {
-        if (!$this->aclService->isAllowed('view', 'vote')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view votes'));
-        }
+        $photoId = $this->params()->fromRoute('photo_id');
 
         return new JsonModel([
-            'voted' => null !== $this->voteMapper->findVote(
-                $this->params()->fromRoute('photo_id'),
-                $this->aclService->getIdentity()->getLidnr(),
-            ),
+            'tags' => $this->tagMapper->getTagsByPhoto($photoId),
+            'voted' => null !== $this->voteMapper->findVote($photoId, $this->aclService->getIdentity()->getLidnr()),
         ]);
     }
 }

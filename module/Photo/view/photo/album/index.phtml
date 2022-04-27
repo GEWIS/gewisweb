@@ -148,9 +148,8 @@ $this->scriptUrl()->requireUrl('member/search')
                         data-original-album="<?= $this->url('photo/album', ['album_id' => $item->getAlbum()->getId(), 'album_type' => 'album']) ?>"
                     <?php endif; ?>
                     data-profile-photo-url="<?= $this->url('photo/set_profile_photo', ['photo_id' => $item->getId()]) ?>"
-                    data-tags-url="<?= $this->url('api_photo/tags', ['photo_id' => $item->getId()]) ?>"
+                    data-details-url="<?= $this->url('api_photo/details', ['photo_id' => $item->getId()]) ?>"
                     data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]) ?>"
-                    data-voted-url="<?= $this->url('api_photo/voted', ['photo_id' => $item->getId()]) ?>"
                 >
                     <a href="<?= $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
                        target="_blank"
@@ -178,6 +177,107 @@ $this->scriptUrl()->requireUrl('member/search')
     $(document).ready(function () {
         Photo.initGrid();
     });
+
+    const addTagSearch = (el) => {
+        // Remove any old autocomplete suggestion boxes.
+        document.querySelectorAll('.autocomplete-suggestions').forEach(element => {
+            element.remove();
+        });
+
+        // Make it possible to add new tags.
+        let tagSearch = el.querySelector('.tagSearch');
+        new VanillaAutocomplete(tagSearch, {
+            minChars: 2,
+            lookup: function (query, done) {
+                $.getJSON(URLHelper.url('member/search') + '?q=' + query, function (data) {
+                    let result = {suggestions: []};
+
+                    $.each(data.members, function (i, member) {
+                        result.suggestions.push({
+                            'value': member.fullName, 'data': member.lidnr
+                        })
+                    });
+
+                    done(result);
+                });
+            },
+            orientation: 'top',
+            onSelect: function (suggestion) {
+                $.post(tagSearch.dataset.url.replace('lidnr', suggestion.data),
+                    { lidnr: suggestion.data }
+                    , function (data) {
+                        if (data.success) {
+                            let removeURL = URLHelper.url('photo/photo/tag/remove', {
+                                'photo_id': data.tag.photo_id,
+                                'lidnr': data.tag.member_id
+                            });
+
+                            let memberURL = URLHelper.url('member/view', {
+                                'lidnr': data.tag.member_id
+                            });
+
+                            // Start writing the tag into the current slide.
+                            let tagList = el.querySelector('.tagList');
+                            let spacer = (0 !== tagList.childElementCount) ?
+                                ((1 === tagList.childElementCount) ?
+                                    ' <?= $this->translate('and') ?> '
+                                    : ',&nbsp')
+                                : '';
+
+                            // Check if there were previously no tags to ensure we show the correct
+                            // text to the user.
+                            if (0 === tagList.childElementCount) {
+                                el.querySelector('.no-tag-title').classList.add('hidden');
+                                el.querySelector('.tag-title').classList.remove('hidden');
+                            }
+
+                            // Insert the new tag directly at the beginning of the tag list, this
+                            // prevents us from having to deal with the complicated logic of having
+                            // to deal with the commas and 'and' between the tags.
+                            tagList.insertAdjacentHTML(
+                                'afterbegin',
+                                `
+                                    <span>
+                                        <a href="${memberURL}">${suggestion.value}</a>
+                                        <a href="${removeURL}" class="remove-tag"
+                                            data-tag-id="removeTag${data.tag.id}">
+                                            <span class="fas fa-times" aria-hidden="true"></span>
+                                        </a>
+                                        <span class="tag-spacer">${spacer}</span>
+                                    </span>
+                                `
+                            );
+
+                            // Because we want to "cache" the current slide's tags for future usage
+                            // and prevent having to make too many requests, we have to write the
+                            // current "state" of the tags back into the actual DOM element.
+                            figTags.innerHTML = el.innerHTML;
+
+                            Photo.initRemoveTag(el.querySelector('a[data-tag-id="removeTag' + data.tag.id + '"]'));
+                        }
+
+                        tagSearch.value = '';
+                        tagSearch.focus();
+                    });
+            },
+            zIndex: 100000,
+        });
+
+        // Make tags removable.
+        el.querySelectorAll('.remove-tag').forEach(element => {
+            Photo.initRemoveTag(element);
+        });
+    };
+
+    const updateVotedState = (el, voted) => {
+        if ('true' === voted) {
+            el.firstChild.classList.add('pswp__icn-red');
+            el.dataset.originalTitle = '<?= $this->translate('Already voted!') ?>';
+        } else {
+            el.firstChild.classList.remove('pswp__icn-red');
+            el.dataset.originalTitle = '<?= $this->translate('Vote for photo of the week') ?>';
+        }
+    };
 </script>
 <script type="module">
     import PhotoSwipeLightbox from '<?= $this->basePath() ?>/js/photoswipe-lightbox.esm.min.js';
@@ -211,29 +311,30 @@ $this->scriptUrl()->requireUrl('member/search')
 
     lightbox.on('uiRegister', () => {
         // Register custom buttons.
-        lightbox.pswp.ui.registerElement({
-            name: 'download-button',
-            appendTo: 'bar',
-            order: 13,
-            isButton: true,
-            title: '<?= $this->translate('Download') ?>',
-            html: {
-                isCustomSVG: true,
-                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#download"></use>',
-            },
-            position: 'bar',
-            onClick: (event, el, pswp) => {
-                let downloadUrl = pswp.currSlide.data.element.dataset.rawUrl;
-                let link = document.createElement('a');
+        <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'download')): ?>
+            lightbox.pswp.ui.registerElement({
+                name: 'download-button',
+                appendTo: 'bar',
+                order: 13,
+                isButton: true,
+                title: '<?= $this->translate('Download') ?>',
+                html: {
+                    isCustomSVG: true,
+                    inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#download"></use>',
+                },
+                onClick: (event, el, pswp) => {
+                    let downloadUrl = pswp.currSlide.data.element.dataset.rawUrl;
+                    let link = document.createElement('a');
 
-                link.href = downloadUrl;
-                link.download = '';
-                document.body.appendChild(link);
+                    link.href = downloadUrl;
+                    link.download = '';
+                    document.body.appendChild(link);
 
-                link.click();
-                link.remove();
-            },
-        });
+                    link.click();
+                    link.remove();
+                },
+            });
+        <?php endif; ?>
 
         lightbox.pswp.ui.registerElement({
             name: 'share-button',
@@ -277,27 +378,28 @@ $this->scriptUrl()->requireUrl('member/search')
             });
         <?php endif; ?>
 
-        lightbox.pswp.ui.registerElement({
-            name: 'metadata-button',
-            appendTo: 'bar',
-            order: 9,
-            isButton: true,
-            title: '<?= $this->translate('Information') ?>',
-            html: {
-                isCustomSVG: true,
-                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#circle-info"></use>',
-            },
-            position: 'bar',
-            onClick: (event, el, pswp) => {
-                let metadata = document.querySelector('.pswp__metadata-ui');
+        <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'view_metadata')): ?>
+            lightbox.pswp.ui.registerElement({
+                name: 'metadata-button',
+                appendTo: 'bar',
+                order: 9,
+                isButton: true,
+                title: '<?= $this->translate('Information') ?>',
+                html: {
+                    isCustomSVG: true,
+                    inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#circle-info"></use>',
+                },
+                onClick: () => {
+                    let metadata = document.querySelector('.pswp__metadata-ui');
 
-                if (metadata.classList.contains('pswp__metadata-ui-open')) {
-                    metadata.classList.remove('pswp__metadata-ui-open');
-                } else {
-                    metadata.classList.add('pswp__metadata-ui-open');
-                }
-            },
-        });
+                    if (metadata.classList.contains('pswp__metadata-ui-open')) {
+                        metadata.classList.remove('pswp__metadata-ui-open');
+                    } else {
+                        metadata.classList.add('pswp__metadata-ui-open');
+                    }
+                },
+            });
+        <?php endif; ?>
 
         lightbox.pswp.ui.registerElement({
             name: 'profile-photo-button',
@@ -309,7 +411,6 @@ $this->scriptUrl()->requireUrl('member/search')
                 isCustomSVG: true,
                 inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#image-portrait"></use>',
             },
-            position: 'bar',
             onClick: (event, el, pswp) => {
                 let currentSlide = pswp.currSlide.data.element;
 
@@ -324,99 +425,90 @@ $this->scriptUrl()->requireUrl('member/search')
             },
         });
 
-        lightbox.pswp.ui.registerElement({
-            name: 'like-button',
-            appendTo: 'bar',
-            order: 7,
-            isButton: true,
-            title: '<?= $this->translate('Vote for photo of the week') ?>',
-            html: {
-                isCustomSVG: true,
-                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#thumbs-up"></use>',
-            },
-            position: 'bar',
-            onInit: (el, pswp) => {
-                pswp.on('change', async () => {
-                    let hasRecentVote = document.querySelector('.pswp-gallery').dataset.recentVote;
-                    let promisedVote = pswp.currSlide.data.voted;
+        <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'vote')): ?>
+            lightbox.pswp.ui.registerElement({
+                name: 'like-button',
+                appendTo: 'bar',
+                order: 7,
+                isButton: true,
+                title: '<?= $this->translate('Vote for photo of the week') ?>',
+                html: {
+                    isCustomSVG: true,
+                    inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#thumbs-up"></use>',
+                },
+                onInit: (el, pswp) => {
+                    pswp.on('change', () => {
+                        // Add a pulsing dot if the user has not recently voted for a photo.
+                        if ('false' === document.querySelector('.pswp-gallery').dataset.recentVote) {
+                            if (1 === el.childElementCount) {
+                                const pulsingDot = document.createElement('span');
+                                pulsingDot.classList.add('pulsing-dot');
+                                el.appendChild(pulsingDot);
+                            }
+                        }
 
-                    // Check if we are dealing with a promise, if so, resolve it.
-                    if (
-                        promisedVote
-                        && "function" === typeof promisedVote.then
-                    ) {
-                        await pswp.currSlide.data.voted.then((data) => {
-                            pswp.currSlide.data.voted = data.voted;
-                            pswp.currSlide.data.element.dataset.voted = data.voted;
-                        }).catch(() => {
-                            pswp.currSlide.data.voted = false;
+                        updateVotedState(el, pswp.currSlide.data.element.dataset.voted);
+                    });
+
+                    pswp.on('votedLoaded', ({voted}) => {
+                        // Check that we were able to load the voted status.
+                        if (null === voted) {
                             el.dataset.originalTitle = '<?= $this->translate('Cannot load vote') ?>';
-                        });
-                    }
 
+                            return;
+                        }
+
+                        pswp.currSlide.data.element.dataset.voted = voted;
+                        updateVotedState(el, pswp.currSlide.data.element.dataset.voted);
+                    });
+                },
+                onClick: (event, el, pswp) => {
+                    let currentSlide = pswp.currSlide.data.element;
                     let hasVoted = pswp.currSlide.data.element.dataset.voted;
 
-                    if ('false' === hasRecentVote) {
-                        if (1 === el.childElementCount) {
-                            const pulsingDot = document.createElement('span');
-                            pulsingDot.classList.add('pulsing-dot');
-                            el.appendChild(pulsingDot);
-                        }
+                    if ('false' === hasVoted) {
+                        fetch(currentSlide.dataset.voteUrl, { method: 'POST' })
+                            .then(response => response.json())
+                            .then(result => {
+                                pswp.currSlide.data.voted = true;
+                                el.firstChild.classList.add('pswp__icn-red');
+                                el.dataset.originalTitle = '<?= $this->translate('Voted!') ?>';
+
+                                // Remove the pulsing dot if it is present.
+                                const pulsingdot = document.querySelector('.pulsing-dot');
+                                if (null !== pulsingdot) {
+                                    el.removeChild(pulsingdot);
+                                }
+
+                                // Also update the recent vote status.
+                                document.querySelector('.pswp-gallery').dataset.recentVote = 'true';
+                            }).catch(error => {
+                                // An error occurred somewhere along the way, perhaps we should notify the user.
+                                el.dataset.originalTitle = '<?= $this->translate('Could not vote, try again') ?>';
+                            });
                     }
+                },
+            });
+        <?php endif; ?>
 
-                    if ('true' === hasVoted) {
-                        el.firstChild.classList.add('pswp__icn-red');
-                        el.dataset.originalTitle = '<?= $this->translate('Already voted!') ?>';
-                    } else {
-                        el.firstChild.classList.remove('pswp__icn-red');
-                        el.dataset.originalTitle = '<?= $this->translate('Vote for photo of the week') ?>';
-                    }
-                });
-            },
-            onClick: (event, el, pswp) => {
-                let currentSlide = pswp.currSlide.data.element;
-                let hasVoted = pswp.currSlide.data.element.dataset.voted;
+        <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'view_metadata')): ?>
+            // Register the metadata UI.
+            lightbox.pswp.ui.registerElement({
+                name: 'metadata-ui',
+                appendTo: 'root',
+                order: 2,
+                isButton: false,
+                html: '<?= $this->translate('Cannot load metadata') ?>',
+                onInit: (el, pswp) => {
+                    pswp.on('change', () => {
+                        let currentSlide = pswp.currSlide.data.element;
 
-                if ('false' === hasVoted) {
-                    fetch(currentSlide.dataset.voteUrl, { method: 'POST' })
-                        .then(response => response.json())
-                        .then(result => {
-                            pswp.currSlide.data.voted = true;
-                            el.firstChild.classList.add('pswp__icn-red');
-                            el.dataset.originalTitle = '<?= $this->translate('Voted!') ?>';
-
-                            // Remove the pulsing dot if it is present.
-                            const pulsingdot = document.querySelector('.pulsing-dot');
-                            if (null !== pulsingdot) {
-                                el.removeChild(pulsingdot);
-                            }
-
-                            // Also update the recent vote status.
-                            document.querySelector('.pswp-gallery').dataset.recentVote = 'true';
-                        }).catch(error => {
-                            // An error occurred somewhere along the way, perhaps we should notify the user.
-                            el.dataset.originalTitle = '<?= $this->translate('Could not vote, try again') ?>';
-                        });
-                }
-            },
-        });
-
-        // Register the metadata UI.
-        lightbox.pswp.ui.registerElement({
-            name: 'metadata-ui',
-            appendTo: 'root',
-            order: 2,
-            isButton: false,
-            html: '<?= $this->translate('Cannot load metadata') ?>',
-            onInit: (el, pswp) => {
-                pswp.on('change', () => {
-                    let currentSlide = pswp.currSlide.data.element;
-
-                    // Copy all HTML.
-                    el.innerHTML = currentSlide.querySelector('figcaption').innerHTML;
-                });
-            },
-        });
+                        // Copy all HTML.
+                        el.innerHTML = currentSlide.querySelector('figcaption').innerHTML;
+                    });
+                },
+            });
+        <?php endif; ?>
 
         <?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'view')): ?>
             // Register the tagging system (but only if the user is allowed to see tags).
@@ -427,56 +519,47 @@ $this->scriptUrl()->requireUrl('member/search')
                 isButton: false,
                 html: '<?= $this->translate('Loading tags...') ?>',
                 onInit: (el, pswp) => {
-                    pswp.on('change', async () => {
-                        let currentSlide = pswp.currSlide.data.element;
-                        let promisedTags = pswp.currSlide.data.tags;
+                    pswp.on('change', () => {
+                        let figTags = pswp.currSlide.data.element.querySelector('figtags');
 
-                        // Make sure that the tags say they are loading, otherwise it can occur that old data is still
-                        // shown after switching to a new slide.
-                        el.innerText = '<?= $this->translate('Loading tags...') ?>';
+                        if (figTags.hasChildNodes()) {
+                            el.innerHTML = figTags.innerHTML;
+                            addTagSearch(el);
+                        }
+                    });
 
-                        // Check if we are dealing with a promise, if so, resolve it.
-                        if (
-                            promisedTags
-                            && "function" === typeof promisedTags.then
-                        ) {
-                            await pswp.currSlide.data.tags.then((data) => {
-                                pswp.currSlide.data.tags = data;
-                            }).catch(() => {
-                                pswp.currSlide.data.tags = false;
-                                el.innerText = '<?= $this->translate('Cannot load tags') ?>';
-                            });
+                    pswp.on('tagsLoaded', ({tags}) => {
+                        // Check that we were able to load the tags.
+                        if (null === tags) {
+                            el.innerText = '<?= $this->translate('Cannot load tags') ?>';
+
+                            return;
                         }
 
-                        // We now either have the actual tags or a boolean in the tags data element.
-                        let data = pswp.currSlide.data.tags;
+                        let figTags = pswp.currSlide.data.element.querySelector('figtags');
+                        let id = pswp.currSlide.data.element.dataset.id;
+                        let tagCount = tags.length;
+                        let i = 1;
 
-                        // If we have the actual tags, we update the tags UI element of the PhotoSwipe UI to be our
-                        // tags interface.
-                        if (Array.isArray(data)) {
-                            let id = pswp.currSlide.data.element.dataset.id;
-                            let tagCount = data.length;
-                            let i = 1;
+                        el.innerHTML = `
+                            <span class="tag-title ${(0 === tagCount) ? 'hidden' : ''}"><?= $this->translate('In this photo:') ?></span>
+                            <span class="no-tag-title ${(0 !== tagCount) ? 'hidden' : ''}"><?= $this->translate('No one has been tagged in this photo yet. Tag someone you recognise now!')?></span>
+                            <div class="tagList">
+                                ${tags.map((member) => {
+                                    let viewMemberUrl = URLHelper.url('member/view', {lidnr: member.lidnr});
+                                    let removeUrl = URLHelper.url('photo/photo/tag/remove', {photo_id: id, lidnr: member.lidnr});
+                                    let spacer = (i++ && i < tagCount) ? ',&nbsp' : ((i === tagCount) ? '<?= $this->translate('and') ?>' : '');
 
-                            el.innerHTML = `
-                                <span class="tag-title ${(0 === tagCount) ? 'hidden' : ''}"><?= $this->translate('In this photo:') ?></span>
-                                <span class="no-tag-title ${(0 !== tagCount) ? 'hidden' : ''}"><?= $this->translate('No one has been tagged in this photo yet. Tag someone you recognise now!')?></span>
-                                <div class="tagList">
-                                    ${data.map((member) => {
-                                        let viewMemberUrl = URLHelper.url('member/view', {lidnr: member.lidnr});
-                                        let removeUrl = URLHelper.url('photo/photo/tag/remove', {photo_id: id, lidnr: member.lidnr});
-                                        let spacer = (i++ && i < tagCount) ? ',&nbsp' : ((i === tagCount) ? '<?= $this->translate('and') ?>' : '');
-
-                                        return `
-                                            <span>
-                                                <a href="${viewMemberUrl}">${member.fullName}</a>&nbsp;
-                                                <a class="remove-tag" href="${removeUrl}" data-tag-id="removeTag${member.id}">
-                                                    <span class="fas fa-times" aria-hidden="true"></span>
-                                                </a>
-                                                <span class="tag-spacer">${spacer}</span>
-                                            </span>`;
-                                    }).join('')}
-                                </div>
+                                    return `
+                                        <span>
+                                            <a href="${viewMemberUrl}">${member.fullName}</a>&nbsp;
+                                            <a class="remove-tag" href="${removeUrl}" data-tag-id="removeTag${member.id}">
+                                                <span class="fas fa-times" aria-hidden="true"></span>
+                                            </a>
+                                            <span class="tag-spacer">${spacer}</span>
+                                        </span>`;
+                                }).join('')}
+                            </div>
                                 <?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'add')): ?>
                                     <div class="form-group">
                                         <label for="tagSearch"><span class="fas fa-plus"></span> <?= $this->translate('Tag someone') ?>:</label>
@@ -485,118 +568,11 @@ $this->scriptUrl()->requireUrl('member/search')
                                             id="tagSearch" class="tagSearch" name="tagSearch">
                                     </div>
                                 <?php endif; ?>
-                            `;
+                        `;
 
-                            // Now that we have replicated the tags into actual elements, we can change the tags to
-                            // true to show that we can continue processing (i.e. adding the auto complete).
-                            pswp.currSlide.data.tags = true;
-                        }
-
-                        // At this point, we are guaranteed that the tags data element is a boolean. If it is false, we
-                        // were unable to retrieve the tags, hence we do not need to load the auto complete
-                        // functionality. If it is true (because we just loaded the tags) do in fact enable the auto
-                        // complete functionality.
-                        if (false !== pswp.currSlide.data.tags) {
-                            let figTags = currentSlide.querySelector('figtags');
-
-                            // If figtags is empty, we just loaded the data (or we recently deleted all existing tags),
-                            // and we replicate the data from the PhotoSwipe UI to the actual DOM element. Otherwise,
-                            // the data already existed, so we load it back.
-                            if (figTags.hasChildNodes()) {
-                                el.innerHTML = figTags.innerHTML;
-                            } else {
-                                figTags.innerHTML = el.innerHTML;
-                            }
-
-                            // Remove any old autocomplete suggestion boxes.
-                            document.querySelectorAll('.autocomplete-suggestions').forEach(element => {
-                                element.remove();
-                            });
-
-                            // Make it possible to add new tags.
-                            let tagSearch = el.querySelector('.tagSearch');
-                            new VanillaAutocomplete(tagSearch, {
-                                minChars: 2,
-                                lookup: function (query, done) {
-                                    $.getJSON(URLHelper.url('member/search') + '?q=' + query, function (data) {
-                                        var result = {suggestions: []};
-
-                                        $.each(data.members, function (i, member) {
-                                            result.suggestions.push({
-                                                'value': member.fullName, 'data': member.lidnr
-                                            })
-                                        });
-
-                                        done(result);
-                                    });
-                                },
-                                orientation: 'top',
-                                onSelect: function (suggestion) {
-                                    $.post(tagSearch.dataset.url.replace('lidnr', suggestion.data),
-                                        { lidnr: suggestion.data }
-                                        , function (data) {
-                                            if (data.success) {
-                                                let removeURL = URLHelper.url('photo/photo/tag/remove', {
-                                                    'photo_id': data.tag.photo_id,
-                                                    'lidnr': data.tag.member_id
-                                                });
-
-                                                let memberURL = URLHelper.url('member/view', {
-                                                    'lidnr': data.tag.member_id
-                                                });
-
-                                                // Start writing the tag into the current slide.
-                                                let tagList = el.querySelector('.tagList');
-                                                let spacer = (0 !== tagList.childElementCount) ?
-                                                    ((1 === tagList.childElementCount) ?
-                                                        ' <?= $this->translate('and') ?> '
-                                                        : ',&nbsp')
-                                                    : '';
-
-                                                // Check if there were previously no tags to ensure we show the correct
-                                                // text to the user.
-                                                if (0 === tagList.childElementCount) {
-                                                    el.querySelector('.no-tag-title').classList.add('hidden');
-                                                    el.querySelector('.tag-title').classList.remove('hidden');
-                                                }
-
-                                                // Insert the new tag directly at the beginning of the tag list, this
-                                                // prevents us from having to deal with the complicated logic of having
-                                                // to deal with the commas and 'and' between the tags.
-                                                tagList.insertAdjacentHTML(
-                                                    'afterbegin',
-                                                    `
-                                                    <span>
-                                                        <a href="${memberURL}">${suggestion.value}</a>
-                                                        <a href="${removeURL}" class="remove-tag"
-                                                            data-tag-id="removeTag${data.tag.id}">
-                                                            <span class="fas fa-times" aria-hidden="true"></span>
-                                                        </a>
-                                                        <span class="tag-spacer">${spacer}</span>
-                                                    </span>
-                                                    `
-                                                );
-
-                                                // Because we want to "cache" the current slide's tags for future usage
-                                                // and prevent having to make too many requests, we have to write the
-                                                // current "state" of the tags back into the actual DOM element.
-                                                figTags.innerHTML = el.innerHTML;
-
-                                                Photo.initRemoveTag(el.querySelector('a[data-tag-id="removeTag' + data.tag.id + '"]'));
-                                            }
-
-                                            tagSearch.value = '';
-                                            tagSearch.focus();
-                                        });
-                                },
-                                zIndex: 100000,
-                            });
-
-                            // Make tags removable.
-                            el.querySelectorAll('.remove-tag').forEach(element => {
-                                Photo.initRemoveTag(element);
-                            });
-                        }
+                        // Replicate the tags UI to the actual figure DOM.
+                        figTags.innerHTML = el.innerHTML;
+                        addTagSearch(el);
                     });
 
                     pswp.on('zoomPanUpdate', () => {
@@ -654,28 +630,46 @@ $this->scriptUrl()->requireUrl('member/search')
             placement: 'bottom',
             selector: '[title]',
         });
+
+        document.querySelectorAll('.pswp__top-bar [title]').forEach(element => {
+            element.dataset.originalTitle = element.title;
+            element.title = "";
+        });
     });
 
-    // Fetch tags from the API.
-    lightbox.on('gettingData', (event) => {
-        // When opening the photo viewer, there is initially no slide.
-        if ('slide' in event) {
-            // Unfortunately, the tags data element is lost after the slide is unloaded, hence we need to check if we
-            // managed to get data into the actual DOM to determine if we need to fetch the tags again. We also
-            // assume that the same applies to votes.
-            if (!event.slide.data.element.querySelector('figtags').hasChildNodes()) {
-                event.slide.data = {
-                    ...event.slide.data,
-                    tags: fetch(event.slide.data.element.dataset.tagsUrl).then(response => response.json()),
-                    voted: fetch(event.slide.data.element.dataset.votedUrl).then(response => response.json()),
-                };
+    <?php if (
+        $this->acl('photo_service_acl')->isAllowed('tag', 'view')
+        && $this->acl('photo_service_acl')->isAllowed('photo', 'vote')
+    ): ?>
+        // Fetch the tags and voted status.
+        lightbox.on('gettingData', ({slide}) => {
+            // When opening the photo viewer, there is initially no slide.
+            if (undefined !== slide) {
+                // Unfortunately, slide are unloaded at some point, so we cannot permanently store the obtained data,
+                // hence our only hope is that we managed to get data into the actual DOM to be able to determine if we
+                // need to fetch the tags/voted status again.
+                if (!slide.data.element.querySelector('figtags').hasChildNodes()) {
+                    slide.data = {
+                        ...slide.data,
+                        details: fetch(slide.data.element.dataset.detailsUrl),
+                    };
+                }
             }
-        }
-    });
+        });
+    <?php endif; ?>
 
     // Update the last active element when a new slide is shown.
     lightbox.on('change', () => {
         lastActiveElement = lightbox.pswp.currSlide.data.element;
+
+        lightbox.pswp.currSlide.data.details?.then(response => response.json())
+            .then((data) => {
+                lightbox.pswp.dispatch('tagsLoaded', {tags: data.tags});
+                lightbox.pswp.dispatch('votedLoaded', {voted: data.voted});
+            }).catch(() => {
+                lightbox.pswp.dispatch('tagsLoaded', {tags: null});
+                lightbox.pswp.dispatch('votedLoaded', {voted: null});
+            });
     });
 
     lightbox.on('close', () => {

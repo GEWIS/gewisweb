@@ -371,24 +371,12 @@ return [
                             ],
                         ],
                     ],
-                    'tags' => [
+                    'details' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/:photo_id/tags',
+                            'route' => '/:photo_id/details',
                             'defaults' => [
-                                'action' => 'listTags',
-                            ],
-                            'constraints' => [
-                                'photo_id' => '[0-9]+',
-                            ],
-                        ],
-                    ],
-                    'voted' => [
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '/:photo_id/voted',
-                            'defaults' => [
-                                'action' => 'hasVoted',
+                                'action' => 'details',
                             ],
                             'constraints' => [
                                 'photo_id' => '[0-9]+',
