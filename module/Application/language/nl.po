@@ -617,7 +617,7 @@ msgid "Remove the last option"
 msgstr "Verwijder de laatste optie"
 
 #: module/Activity/view/activity/activity-calendar/create.phtml:162
-#: module/Decision/src/Form/Notes.php:62
+#: module/Decision/src/Form/Minutes.php:62
 #: module/Education/src/Form/SummaryUpload.php:97
 #: module/Frontpage/src/Form/Poll.php:65
 msgid "Submit"
@@ -1793,15 +1793,16 @@ msgstr "Vakken toevoegen"
 #: module/Application/view/partial/admin.phtml:84
 #: module/Decision/view/decision/admin/authorizations.phtml:3
 #: module/Decision/view/decision/admin/document.phtml:4
-#: module/Decision/view/decision/admin/notes.phtml:3
+#: module/Decision/view/decision/admin/minutes.phtml:3
 #: module/Decision/view/decision/decision/index.phtml:3
 #: module/Decision/view/decision/member/index.phtml:87
 msgid "Meetings"
 msgstr "Vergaderingen"
 
 #: module/Application/view/partial/admin.phtml:88
-#: module/Decision/view/decision/admin/notes.phtml:4
-msgid "Notes"
+#: module/Decision/view/decision/admin/minutes.phtml:4
+#: module/Decision/view/decision/decision/view.phtml:34
+msgid "Minutes"
 msgstr "Notulen"
 
 #: module/Application/view/partial/admin.phtml:91
@@ -2661,6 +2662,10 @@ msgstr ""
 msgid "There are currently no job labels..."
 msgstr "Er zijn momenteel geen vacature-labels..."
 
+#: module/Decision/src/Controller/AdminController.php:52
+msgid "Meeting minutes uploaded"
+msgstr "Notulen geupload"
+
 #: module/Decision/src/Controller/DecisionController.php:132
 msgid "You are not allowed to search decisions."
 msgstr "Het is niet toegestaan om besluiten te doorzoeken."
@@ -2680,8 +2685,8 @@ msgid "Authorize"
 msgstr "Machtig"
 
 #: module/Decision/src/Form/Document.php:34
-#: module/Decision/src/Form/Notes.php:40
-#: module/Decision/view/decision/admin/notes.phtml:24
+#: module/Decision/src/Form/Minutes.php:40
+#: module/Decision/view/decision/admin/minutes.phtml:20
 msgid "Meeting"
 msgstr "Vergadering"
 
@@ -2697,16 +2702,16 @@ msgstr "Te uploaden document"
 msgid "Upload document"
 msgstr "Upload document"
 
-#: module/Decision/src/Form/Notes.php:41
+#: module/Decision/src/Form/Minutes.php:41
 msgid "Choose a meeting"
 msgstr "Kies een vergadering"
 
-#: module/Decision/src/Form/Notes.php:52
-msgid "Notes to upload"
+#: module/Decision/src/Form/Minutes.php:52
+msgid "Minutes to upload"
 msgstr "Te uploaden notulen"
 
-#: module/Decision/src/Form/Notes.php:99
-msgid "There already are notes for this meeting"
+#: module/Decision/src/Form/Minutes.php:99
+msgid "There already are minutes for this meeting"
 msgstr "Er zijn al notulen voor deze vergadering"
 
 #: module/Decision/src/Form/OrganInformation.php:57
@@ -2780,7 +2785,7 @@ msgid "You are not allowed to view meeting documents."
 msgstr "Het is niet toegestaan om vergaderstukken te zien."
 
 #: module/Decision/src/Service/Decision.php:300
-msgid "You are not allowed to view meeting notes."
+msgid "You are not allowed to view meeting minutes."
 msgstr "Het is niet toegestaan om notulen te zien."
 
 #: module/Decision/src/Service/Decision.php:381
@@ -2796,7 +2801,7 @@ msgid "You are not allowed to view authorizations."
 msgstr "Je hebt niet de rechten om all machtigingen te bekijken."
 
 #: module/Decision/src/Service/Decision.php:563
-msgid "You are not allowed to upload notes."
+msgid "You are not allowed to upload meeting minutes."
 msgstr "Het is niet toegestaan om notulen te uploaden."
 
 #: module/Decision/src/Service/Decision.php:578
@@ -2874,11 +2879,7 @@ msgstr "Documenten voor deze vergadering"
 msgid "This meeting does not have any associated documents."
 msgstr "Voor deze vergadering zijn geen documenten beschikbaar."
 
-#: module/Decision/view/decision/admin/notes.phtml:7
-msgid "Meeting notes uploaded"
-msgstr "Notulen geupload"
-
-#: module/Decision/view/decision/admin/notes.phtml:48
+#: module/Decision/view/decision/admin/minutes.phtml:44
 #: module/Education/view/education/admin/summary.phtml:86
 msgid "Upload"
 msgstr "Upload"
@@ -3008,10 +3009,6 @@ msgstr "Zoek besluit"
 #: module/Decision/view/decision/decision/view.phtml:28
 msgid "No documents have been added."
 msgstr "Er zijn geen documenten toegevoegd."
-
-#: module/Decision/view/decision/decision/view.phtml:34
-msgid "Minutes"
-msgstr "Notulen"
 
 #: module/Decision/view/decision/decision/view.phtml:43
 #, php-format

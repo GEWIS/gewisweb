@@ -15,7 +15,7 @@ use Laminas\Validator\File\{
     MimeType,
 };
 
-class Notes extends Form implements InputFilterProviderInterface
+class Minutes extends Form implements InputFilterProviderInterface
 {
     public const ERROR_FILE_EXISTS = 'file_exists';
 
@@ -49,7 +49,7 @@ class Notes extends Form implements InputFilterProviderInterface
                 'name' => 'upload',
                 'type' => File::class,
                 'option' => [
-                    'label' => $translator->translate('Notes to upload'),
+                    'label' => $translator->translate('Minutes to upload'),
                 ],
             ]
         );
@@ -68,7 +68,7 @@ class Notes extends Form implements InputFilterProviderInterface
     /**
      * @param array $meetings
      *
-     * @return Notes
+     * @return Minutes
      */
     public function setMeetings(array $meetings): self
     {
@@ -96,7 +96,7 @@ class Notes extends Form implements InputFilterProviderInterface
             $this->setMessages(
                 [
                     'meeting' => [
-                        $this->translator->translate('There already are notes for this meeting'),
+                        $this->translator->translate('There already are minutes for this meeting'),
                     ],
                 ]
             );

@@ -68,16 +68,16 @@ class DecisionController extends AbstractActionController
     }
 
     /**
-     * Download meeting notes.
+     * Download meeting minutes.
      */
-    public function notesAction(): ViewModel|Stream
+    public function minutesAction(): ViewModel|Stream
     {
         $type = $this->params()->fromRoute('type');
         $number = $this->params()->fromRoute('number');
 
         $meeting = $this->decisionService->getMeeting($type, $number);
         if (null !== $meeting) {
-            $response = $this->decisionService->getMeetingNotesDownload($meeting);
+            $response = $this->decisionService->getMeetingMinutesDownload($meeting);
 
             if (null !== $response) {
                 return $response;

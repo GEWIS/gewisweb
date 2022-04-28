@@ -68,13 +68,13 @@ class Meeting
     protected Collection $documents;
 
     /**
-     * The notes for this meeting.
+     * The minutes for this meeting.
      */
     #[OneToOne(
-        targetEntity: MeetingNotes::class,
+        targetEntity: MeetingMinutes::class,
         mappedBy: "meeting",
     )]
-    protected ?MeetingNotes $meetingNotes = null;
+    protected ?MeetingMinutes $meetingMinutes = null;
 
     /**
      * Get all allowed meeting types.
@@ -121,11 +121,11 @@ class Meeting
     }
 
     /**
-     * @return MeetingNotes|null
+     * @return MeetingMinutes|null
      */
-    public function getNotes(): ?MeetingNotes
+    public function getMinutes(): ?MeetingMinutes
     {
-        return $this->meetingNotes;
+        return $this->meetingMinutes;
     }
 
     /**

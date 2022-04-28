@@ -53,10 +53,10 @@ class ControllerTest extends BaseControllerTest
         $this->assertResponseStatusCode(200);
     }
 
-    public function testAdminDecisionNotesActionCanBeAccessedAsAdmin(): void
+    public function testAdminDecisionMinutesActionCanBeAccessedAsAdmin(): void
     {
         $this->setUpWithRole('admin');
-        $this->dispatch('/admin/decision/notes');
+        $this->dispatch('/admin/decision/minutes');
         $this->assertResponseStatusCode(200);
     }
 
