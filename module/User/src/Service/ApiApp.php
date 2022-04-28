@@ -4,60 +4,42 @@ namespace User\Service;
 
 use DateTime;
 use Firebase\JWT\JWT;
-use User\Mapper\ApiApp as ApiAppMapper;
-use User\Model\User as UserModel;
+use Decision\Model\Member as MemberModel;
+use User\Model\ApiApp as ApiAppModel;
 
 class ApiApp
 {
     /**
-     * @var ApiAppMapper
-     */
-    protected ApiAppMapper $mapper;
-
-    /**
-     * Constructor.
-     *
-     * @param ApiAppMapper $mapper
-     */
-    public function __construct(ApiAppMapper $mapper)
-    {
-        $this->mapper = $mapper;
-    }
-
-    /**
      * Get a callback from an appId and a user identity.
      *
-     * @param string $appId
-     * @param UserModel $user
+     * @param ApiAppModel $app
+     * @param MemberModel $member
+     *
      * @return string
      */
     public function callbackWithToken(
-        string $appId,
-        UserModel $user,
+        ApiAppModel $app,
+        MemberModel $member,
     ): string {
-        $app = $this->getMapper()->findByAppId($appId);
-        $member = $user->getMember();
 
         $token = [
             'iss' => 'https://gewis.nl/',
-            'lidnr' => $member->getLidnr(),
-            'given_name' => $member->getFirstName(),
-            'family_name' => $member->getLastName(),
-            'email' => $member->getEmail(),
-            'membership_type' => $member->getType(),
             'exp' => (new DateTime('+5 min'))->getTimestamp(),
             'iat' => (new DateTime())->getTimestamp(),
             'nonce' => bin2hex(openssl_random_pseudo_bytes(16)),
         ];
 
-        return $app->getCallback() . '?token=' . JWT::encode($token, $app->getSecret(), 'HS256');
-    }
+        $claimsToAdd = $app->getClaims();
 
-    /**
-     * @return ApiAppMapper
-     */
-    public function getMapper(): ApiAppMapper
-    {
-        return $this->mapper;
+        // Always provide the lidnr (even if no claims have been declared).
+        if (empty($claimsToAdd)) {
+            $token['lidnr'] = $member->getLidnr();
+        } else {
+            foreach ($app->getClaims() as $claim) {
+                $token[$claim->value] = $claim->getValue($member);
+            }
+        }
+
+        return $app->getCallback() . '?token=' . JWT::encode($token, $app->getSecret(), 'HS256');
     }
 }

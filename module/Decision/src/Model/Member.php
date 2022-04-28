@@ -858,4 +858,9 @@ class Member
 
         return false;
     }
+
+    public function is18Plus(): bool
+    {
+        return (18 <= (new DateTime('now'))->diff($this->getBirth())->y);
+    }
 }

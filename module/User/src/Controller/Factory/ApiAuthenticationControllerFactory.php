@@ -5,6 +5,7 @@ namespace User\Controller\Factory;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use User\Controller\ApiAuthenticationController;
+use User\Mapper\ApiApp as ApiAppMapper;
 use User\Service\ApiApp as ApiAppService;
 
 class ApiAuthenticationControllerFactory implements FactoryInterface
@@ -24,6 +25,7 @@ class ApiAuthenticationControllerFactory implements FactoryInterface
         return new ApiAuthenticationController(
             $container->get('user_service_acl'),
             $container->get(ApiAppService::class),
+            $container->get(ApiAppMapper::class),
         );
     }
 }

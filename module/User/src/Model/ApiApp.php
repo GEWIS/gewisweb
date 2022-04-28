@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping\{
     GeneratedValue,
     Id,
 };
+use User\Model\Enums\JWTClaims;
 
 /**
  * ApiApp model.
@@ -40,6 +41,20 @@ class ApiApp
      */
     #[Column(type: "string")]
     protected string $callback;
+
+    /**
+     * The claims that will be present in the JWT. If `null` only the lidnr will be passed along.
+     *
+     * @var JWTClaims[]|null $claims
+     */
+    #[Column(
+        type: "simple_array",
+        nullable: true,
+        insertable: false,
+        updatable: false,
+        enumType: JWTClaims::class,
+    )]
+    protected array $claims;
 
     /**
      * @return int|null
@@ -87,5 +102,10 @@ class ApiApp
     public function getCallback(): string
     {
         return $this->callback;
+    }
+
+    public function getClaims(): ?array
+    {
+        return $this->claims;
     }
 }
