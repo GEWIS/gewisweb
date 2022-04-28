@@ -143,6 +143,22 @@ $this->headTitle($member->getFullName());
                         </tr>
                     </table>
                 <?php endforeach ?>
+
+                <h3><?= $this->translate('External applications') ?></h3>
+                <table class="table table-bordered">
+                    <tr>
+                        <th><?= $this->translate('App') ?></th>
+                        <th><?= $this->translate('First authentication') ?></th>
+                        <th><?= $this->translate('Last authentication') ?></th>
+                    </tr>
+                    <?php foreach ($apps as $app): ?>
+                        <tr>
+                            <td><?= $this->escapeHtml($app['appId']) ?></td>
+                            <td><?= $this->dateFormat(new DateTime($app['firstAuthentication']), IntlDateFormatter::FULL, IntlDateFormatter::SHORT) ?></td>
+                            <td><?= $this->dateFormat(new DateTime($app['lastAuthentication']), IntlDateFormatter::FULL, IntlDateFormatter::SHORT) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
             </div>
             <div class="col-md-6">
                 <?php if ($profilePhoto != null): ?>

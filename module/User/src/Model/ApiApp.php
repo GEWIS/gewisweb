@@ -43,6 +43,12 @@ class ApiApp
     protected string $callback;
 
     /**
+     * URL for the application when the user does not authorise access.
+     */
+    #[Column(type: "string")]
+    protected string $url;
+
+    /**
      * The claims that will be present in the JWT. If `null` only the lidnr will be passed along.
      *
      * @var JWTClaims[]|null $claims
@@ -102,6 +108,11 @@ class ApiApp
     public function getCallback(): string
     {
         return $this->callback;
+    }
+
+    public function getUrl(): string
+    {
+        return $this->url;
     }
 
     public function getClaims(): ?array

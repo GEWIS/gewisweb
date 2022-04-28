@@ -20,6 +20,8 @@ class ApiAppFactory implements FactoryInterface
         $requestedName,
         ?array $options = null,
     ): ApiApp {
-        return new ApiApp();
+        return new ApiApp(
+            $container->get('user_mapper_apiappauthentication'),
+        );
     }
 }

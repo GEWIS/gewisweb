@@ -25,6 +25,7 @@ class ApiAuthenticationControllerFactory implements FactoryInterface
         return new ApiAuthenticationController(
             $container->get('user_service_acl'),
             $container->get(ApiAppService::class),
+            $container->get('user_mapper_apiappauthentication'),
             $container->get(ApiAppMapper::class),
         );
     }
