@@ -3,6 +3,7 @@
 namespace Activity\Mapper;
 
 use Activity\Model\{
+    ExternalSignup as ExternalSignupModel,
     SignupList as SignupListModel,
     UserSignup as UserSignupModel,
 };
@@ -50,6 +51,11 @@ class Signup extends BaseMapper
         $result = $qb->getQuery()->getResult();
 
         return $result[0] ?? null;
+    }
+
+    public function getExternalSignUp(int $signupId): ?ExternalSignupModel
+    {
+        return $this->getEntityManager()->getRepository(ExternalSignupModel::class)->find($signupId);
     }
 
     /**

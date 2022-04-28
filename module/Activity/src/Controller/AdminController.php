@@ -389,10 +389,10 @@ class AdminController extends AbstractActionController
         );
     }
 
-    public function externalSignoffAction(): \Laminas\Http\PhpEnvironment\Response|ResponseInterface|ViewModel
+    public function externalSignoffAction(): Response|ViewModel
     {
         $signupId = (int) $this->params('id');
-        $signup = $this->signupMapper->find($signupId);
+        $signup = $this->signupMapper->getExternalSignUp($signupId);
 
         if (null === $signup) {
             return $this->notFoundAction();
