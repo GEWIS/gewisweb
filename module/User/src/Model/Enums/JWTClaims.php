@@ -35,7 +35,7 @@ enum JWTClaims: string
             self::Email => $translator->translate('E-mail address'),
             self::FamilyName => $translator->translate('Family name'),
             self::GivenName => $translator->translate('Given name'),
-            self::Is18Plus => $translator->translate('18+'),
+            self::Is18Plus => $translator->translate('Is 18+?'),
             self::Lidnr => $translator->translate('Member number'),
             self::MembershipType => $translator->translate('Membership type'),
         };
