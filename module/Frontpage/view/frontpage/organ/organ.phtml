@@ -122,7 +122,7 @@ function getOrganDescription($organInformation, $lang)
                                 <a href="<?= $this->url('member/view', ['lidnr' => $membership['member']->getLidnr()]) ?>">
                                     <?= $membership['member']->getFullName() ?>
                                     <?php if (!empty($membership['functions'])): ?>
-                                        (<?= implode(', ', $membership['functions']) ?>)
+                                        (<?= implode(', ', array_map(fn(string $value): string => $this->translate($value), $membership['functions'])) ?>)
                                     <?php endif ?>
                                 </a>
                             </li>

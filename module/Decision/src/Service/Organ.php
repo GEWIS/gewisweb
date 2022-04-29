@@ -460,8 +460,7 @@ class Organ
                 }
 
                 if ('Lid' != $install->getFunction()) {
-                    $function = $this->translator->translate($install->getFunction());
-                    $currentMembers[$install->getMember()->getLidnr()]['functions'][] = $function;
+                    $currentMembers[$install->getMember()->getLidnr()]['functions'][] = $install->getFunction();
                 }
             } else {
                 // old member
