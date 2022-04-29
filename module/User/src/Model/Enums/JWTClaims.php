@@ -19,7 +19,7 @@ enum JWTClaims: string
 
     public function getValue(MemberModel $member): bool|int|string
     {
-        return match($this) {
+        return match ($this) {
             self::Email => $member->getEmail(),
             self::FamilyName => $member->getLastName(),
             self::GivenName => $member->getFirstName(),
@@ -31,7 +31,7 @@ enum JWTClaims: string
 
     public function getName(Translator $translator): string
     {
-        return match($this) {
+        return match ($this) {
             self::Email => $translator->translate('E-mail address'),
             self::FamilyName => $translator->translate('Family name'),
             self::GivenName => $translator->translate('Given name'),

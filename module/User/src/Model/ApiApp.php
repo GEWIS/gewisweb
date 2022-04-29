@@ -50,8 +50,6 @@ class ApiApp
 
     /**
      * The claims that will be present in the JWT. If `null` only the lidnr will be passed along.
-     *
-     * @var JWTClaims[]|null $claims
      */
     #[Column(
         type: "simple_array",
