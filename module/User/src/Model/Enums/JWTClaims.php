@@ -16,6 +16,7 @@ enum JWTClaims: string
     case Is18Plus = 'is_18_plus';
     case Lidnr = 'lidnr';
     case MembershipType = 'membership_type';
+    case MiddleName = 'middle_name';
 
     public function getValue(MemberModel $member): bool|int|string
     {
@@ -26,6 +27,7 @@ enum JWTClaims: string
             self::Is18Plus => $member->is18Plus(),
             self::Lidnr => $member->getLidnr(),
             self::MembershipType => $member->getType(),
+            self::MiddleName => $member->getMiddleName(),
         };
     }
 
@@ -38,6 +40,7 @@ enum JWTClaims: string
             self::Is18Plus => $translator->translate('Is 18+?'),
             self::Lidnr => $translator->translate('Member number'),
             self::MembershipType => $translator->translate('Membership type'),
+            self::MiddleName => $translator->translate('Middle name'),
         };
     }
 }
