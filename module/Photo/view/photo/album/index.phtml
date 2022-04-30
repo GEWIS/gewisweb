@@ -695,9 +695,11 @@ $this->scriptUrl()->requireUrl('member/search')
             .then((data) => {
                 lightbox.pswp.dispatch('tagsLoaded', {tags: data.tags});
                 lightbox.pswp.dispatch('votedLoaded', {voted: data.voted});
+                lightbox.pswp.currSlide.data.details = null;
             }).catch(() => {
                 lightbox.pswp.dispatch('tagsLoaded', {tags: null});
                 lightbox.pswp.dispatch('votedLoaded', {voted: null});
+                lightbox.pswp.currSlide.data.details = null;
             });
     });
 
