@@ -42,6 +42,11 @@ class OrganController extends AbstractActionController
     {
         $organId = $this->params()->fromRoute('organ');
         $organ = $this->organService->getOrgan($organId);
+
+        if (null === $organ) {
+            return $this->notFoundAction();
+        }
+
         $organMemberInformation = $this->organService->getOrganMemberInformation($organ);
 
         return new ViewModel(
