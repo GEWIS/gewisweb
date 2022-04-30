@@ -55,7 +55,7 @@ class ApiApp
         // Log the authentication.
         $this->logAuthentication($app, $user);
 
-        return $app->getCallback() . '?token=' . JWT::encode($token, $app->getSecret(), 'HS256');
+        return $app->getCallback() . '?token=' . JWT::encode($token, $app->getSecret(), 'HS512');
     }
 
     protected function logAuthentication(
