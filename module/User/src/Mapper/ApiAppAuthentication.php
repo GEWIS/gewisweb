@@ -15,13 +15,13 @@ class ApiAppAuthentication extends BaseMapper
     public function getFirstAndLastAuthenticationPerApiApp(MemberModel $member): array
     {
         $qb = $this->getRepository()->createQueryBuilder('a');
-        $qb->select(['app.appId', 'MIN(a.time) AS firstAuthentication', 'MAX(a.time) AS lastAuthentication'])
+        $qb->select(['app', 'MIN(a.time) AS firstAuthentication', 'MAX(a.time) AS lastAuthentication'])
             ->leftJoin(ApiAppModel::class, 'app', 'WITH', 'a.apiApp = app.id')
             ->where('a.user = :user_id')
             ->groupBy('app.appId')
             ->setParameter('user_id', $member->getLidnr());
 
-        return $qb->getQuery()->getArrayResult();
+        return $qb->getQuery()->getResult();
     }
 
     public function getLastAuthentication(

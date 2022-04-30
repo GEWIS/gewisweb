@@ -153,7 +153,11 @@ $this->headTitle($member->getFullName());
                     </tr>
                     <?php foreach ($apps as $app): ?>
                         <tr>
-                            <td><?= $this->escapeHtml($app['appId']) ?></td>
+                            <td>
+                                <a href="<?= $app[0]->getUrl() ?>" target="_blank">
+                                    <?= $this->escapeHtml($app[0]->getAppId()) ?>
+                                </a>
+                            </td>
                             <td><?= $this->dateFormat(new DateTime($app['firstAuthentication']), IntlDateFormatter::FULL, IntlDateFormatter::SHORT) ?></td>
                             <td><?= $this->dateFormat(new DateTime($app['lastAuthentication']), IntlDateFormatter::FULL, IntlDateFormatter::SHORT) ?></td>
                         </tr>
