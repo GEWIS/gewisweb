@@ -5,6 +5,7 @@ namespace Photo\Service;
 use Application\Service\FileStorage as FileStorageService;
 use DateInterval;
 use DateTime;
+use Decision\Model\AssociationYear;
 use Decision\Service\Member as MemberService;
 use Exception;
 use Laminas\Mvc\I18n\Translator;
@@ -12,11 +13,16 @@ use Photo\Form\{
     CreateAlbum as CreateAlbumForm,
     EditAlbum as EditAlbumForm,
 };
-use Photo\Mapper\Album as AlbumMapper;
+use Photo\Mapper\{
+    Album as AlbumMapper,
+    WeeklyPhoto as WeeklyPhotoMapper,
+};
 use Photo\Model\{
     Album as AlbumModel,
     MemberAlbum as MemberAlbumModel,
     VirtualAlbum as VirtualAlbumModel,
+    WeeklyAlbum as WeeklyAlbumModel,
+    WeeklyPhoto,
 };
 use Photo\Service\{
     AlbumCover as AlbumCoverService,
@@ -64,6 +70,8 @@ class Album
      */
     private AlbumMapper $albumMapper;
 
+    private WeeklyPhotoMapper $weeklyPhotoMapper;
+
     /**
      * @var CreateAlbumForm
      */
@@ -82,6 +90,7 @@ class Album
         MemberService $memberService,
         FileStorageService $storageService,
         AlbumMapper $albumMapper,
+        WeeklyPhotoMapper $weeklyPhotoMapper,
         CreateAlbumForm $createAlbumForm,
         EditAlbumForm $editAlbumForm,
     ) {
@@ -92,15 +101,10 @@ class Album
         $this->memberService = $memberService;
         $this->storageService = $storageService;
         $this->albumMapper = $albumMapper;
+        $this->weeklyPhotoMapper = $weeklyPhotoMapper;
         $this->createAlbumForm = $createAlbumForm;
         $this->editAlbumForm = $editAlbumForm;
     }
-
-    /**
-     * A GEWIS association year starts 01-07.
-     */
-    public const ASSOCIATION_YEAR_START_MONTH = 7;
-    public const ASSOCIATION_YEAR_START_DAY = 1;
 
     /**
      * Retrieves all the albums in the root directory or in the specified
@@ -153,8 +157,8 @@ class Album
 
         $start = DateTime::createFromFormat(
             'Y-m-d H:i:s',
-            $year . '-' . self::ASSOCIATION_YEAR_START_MONTH . '-'
-            . self::ASSOCIATION_YEAR_START_DAY . ' 0:00:00'
+            $year . '-' . AssociationYear::ASSOCIATION_YEAR_START_MONTH . '-'
+            . AssociationYear::ASSOCIATION_YEAR_START_DAY . ' 0:00:00'
         );
         $end = clone $start;
         $end->add(new DateInterval('P1Y'));
@@ -220,7 +224,7 @@ class Album
      */
     public function getAssociationYear(DateTime $date): int
     {
-        if ($date->format('n') < self::ASSOCIATION_YEAR_START_MONTH) {
+        if ($date->format('n') < AssociationYear::ASSOCIATION_YEAR_START_MONTH) {
             return (int) $date->format('Y') - 1;
         } else {
             return (int) $date->format('Y');
@@ -278,14 +282,14 @@ class Album
      * @param int $albumId the id of the album
      * @param string $type "album"|"member"|"year"
      *
-     * @return MemberAlbumModel|AlbumModel|null album matching the given id
+     * @return MemberAlbumModel|AlbumModel|WeeklyAlbumModel|null album matching the given id
      *
      * @throws Exception If there are not sufficient permissions
      */
     public function getAlbum(
         int $albumId,
         string $type = 'album',
-    ): MemberAlbumModel|AlbumModel|null {
+    ): MemberAlbumModel|AlbumModel|WeeklyAlbumModel|null {
         if (!$this->aclService->isAllowed('view', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view albums'));
         }
@@ -293,6 +297,7 @@ class Album
         return match ($type) {
             'album' => $this->albumMapper->find($albumId),
             'member' => $this->getMemberAlbum($albumId),
+            'weekly' => $this->getWeeklyAlbum($albumId),
             default => throw new Exception('Album type not allowed'),
         };
     }
@@ -302,7 +307,7 @@ class Album
      *
      * @return MemberAlbumModel|null
      */
-    public function getMemberAlbum(int $lidNr): ?MemberAlbumModel
+    private function getMemberAlbum(int $lidNr): ?MemberAlbumModel
     {
         $member = $this->memberService->findMemberByLidnr($lidNr);
 
@@ -317,6 +322,76 @@ class Album
         $album->addPhotos($this->photoService->getPhotos($album));
 
         return $album;
+    }
+
+    /**
+     * Retrieves all WeeklyPhotos.
+     *
+     * @return array
+     */
+    public function getLastPhotosOfTheWeekPerYear(): array
+    {
+        $oldest = $this->weeklyPhotoMapper->getOldestPhotoOfTheWeek();
+        $newest = $this->weeklyPhotoMapper->getNewestPhotoOfTheWeek();
+
+        if (
+            null === $oldest
+            || null === $newest
+        ) {
+            return [];
+        }
+
+        $startYear = $this->getAssociationYear($oldest->getWeek());
+        $endYear = $this->getAssociationYear($newest->getWeek());
+        $years = range($startYear, $endYear);
+
+        $photos = [];
+        foreach ($years as $year) {
+            if (null !== ($photo = $this->weeklyPhotoMapper->getPhotosOfTheWeekInYear($year, true))) {
+                $photos[$year] = $photo;
+            }
+        }
+
+        return $photos;
+    }
+
+    private function getWeeklyAlbum(int $year): ?WeeklyAlbumModel
+    {
+        $photos = $this->weeklyPhotoMapper->getPhotosOfTheWeekInYear($year);
+
+        if (empty($photos)) {
+            return null;
+        }
+
+        $dates = [];
+        $actualPhotos = [];
+
+        /** @var WeeklyPhoto $photo */
+        foreach ($photos as $photo) {
+            $actualPhotos[] = $photo->getPhoto();
+            $dates[] = $photo->getWeek();
+        }
+
+        $weeklyAlbum = new WeeklyAlbumModel($year, $dates);
+        $weeklyAlbum->setName(sprintf(
+            $this->translator->translate('Photos of the Week in %d/%d'),
+            $year,
+            $year + 1,
+        ));
+
+        $startDate = DateTime::createFromFormat(
+            'Y-m-d H:i:s',
+            $year . '-' . AssociationYear::ASSOCIATION_YEAR_START_MONTH . '-'
+            . AssociationYear::ASSOCIATION_YEAR_START_DAY . ' 00:00:00'
+        );
+        $endDate = clone $startDate;
+        $endDate->add(new DateInterval('P1Y'));
+
+        $weeklyAlbum->setStartDateTime($startDate);
+        $weeklyAlbum->setEndDateTime($endDate);
+        $weeklyAlbum->addPhotos($actualPhotos);
+
+        return $weeklyAlbum;
     }
 
     /**

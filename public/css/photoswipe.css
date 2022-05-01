@@ -480,3 +480,32 @@ div.pswp__img--placeholder,
 .pswp__button--hidden {
     display: none;
 }
+
+/*
+
+  Photo of the Week UI
+
+ */
+.pswp__photo-of-the-week-ui {
+    font-size: 16px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+    width: 175px;
+    padding: 10px;
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    transition: opacity 100ms linear !important;
+}
+
+@media only screen and (max-width: 915px) {
+    .pswp__photo-of-the-week-ui {
+        display: none;
+    }
+}
+
+.pswp__photo-of-the-week-ui--hidden {
+    opacity: 0 !important;
+}

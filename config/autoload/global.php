@@ -12,6 +12,10 @@
  * file.
  */
 
+use Application\Extensions\Doctrine\{
+    Rand,
+    Year,
+};
 use Laminas\Session\Storage\SessionArrayStorage;
 use Laminas\Session\Validator\HttpUserAgent;
 
@@ -153,7 +157,8 @@ return [
         'configuration' => [
             'orm_default' => [
                 'numeric_functions' => [
-                    'RAND' => 'Application\Extensions\Doctrine\Rand',
+                    'RAND' => Rand::class,
+                    'YEAR' => Year::class,
                 ],
             ],
         ],
