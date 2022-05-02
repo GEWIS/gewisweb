@@ -45,7 +45,7 @@
             <?php endif; ?>
             <?php if (!$admin): ?>
                 <td>
-                    <?php $icons = ['fa-question-circle', 'fa-check-circle', 'fa-times-circle'] ?>
+                    <?php $icons = ['fa-circle-question', 'fa-circle-check', 'fa-circle-x'] ?>
                     <span class="fas <?= $icons[$activity->getStatus() - 1] ?>"></span>&nbsp;
                 </td>
             <?php endif ?>
