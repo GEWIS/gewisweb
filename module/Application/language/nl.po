@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-23 12:47+0200\n"
+"POT-Creation-Date: 2022-05-23 16:49+0200\n"
 "PO-Revision-Date: 2022-05-23 12:49+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -359,7 +359,7 @@ msgstr "De opties voor dit voorstel passen niet binnen het geldige bereik."
 #: module/Activity/view/activity/admin-approval/view.phtml:76
 #: module/Activity/view/activity/admin-category/add.phtml:49
 #: module/Activity/view/activity/admin-category/add.phtml:87
-#: module/Activity/view/activity/admin/participantsTable.phtml:5
+#: module/Activity/view/activity/admin/participantsTable.phtml:11
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:5
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:10
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:17
@@ -422,7 +422,7 @@ msgstr "Keuze"
 
 #: module/Activity/src/Form/SignupListField.php:68
 #: module/Activity/view/activity/activity-calendar/index.phtml:39
-#: module/Activity/view/activity/admin/participantsTable.phtml:7
+#: module/Activity/view/activity/admin/participantsTable.phtml:13
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:97
 #: module/Activity/view/partial/option.phtml:10
 #: module/Decision/view/decision/decision/index.phtml:9
@@ -1362,7 +1362,7 @@ msgstr ""
 "Hier kan je externe deelnemers toevoegen of verwijderen en gedetailleerde "
 "informatie bekijken over de inschrijving van alle deelnemers."
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:6
+#: module/Activity/view/activity/admin/participantsTable.phtml:12
 #: module/Decision/src/Form/OrganInformation.php:37
 #: module/Decision/view/decision/member/self.phtml:51
 #: module/Decision/view/decision/member/view.phtml:34
@@ -1370,20 +1370,42 @@ msgstr ""
 msgid "Email"
 msgstr "Email"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:9
+#: module/Activity/view/activity/admin/participantsTable.phtml:15
 msgid "Sign-up List"
 msgstr "Inschrijflijst"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:43
-msgid "User"
-msgstr "Gebruiker"
+#: module/Activity/view/activity/admin/participantsTable.phtml:54
+#: module/Decision/view/decision/member/self.phtml:67
+msgid "Ordinary"
+msgstr "Gewoon"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:46
+#: module/Activity/view/activity/admin/participantsTable.phtml:57
+#: module/Decision/view/decision/member/self.phtml:70
+msgid "Prolonged"
+msgstr "Geprolongeerd"
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:60
+#: module/Activity/view/activity/admin/participantsTable.phtml:75
 #: module/Decision/view/decision/member/self.phtml:73
 msgid "External"
 msgstr "Extern"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:75
+#: module/Activity/view/activity/admin/participantsTable.phtml:63
+#: module/Decision/view/decision/member/self.phtml:76
+msgid "Extraordinary"
+msgstr "Buitengewoon"
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:66
+#: module/Decision/view/decision/member/self.phtml:79
+msgid "Honorary"
+msgstr "Erelidmaatschap"
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:70
+#, php-format
+msgid "User (%s)"
+msgstr "Gebruiker (%s)"
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:104
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -1397,7 +1419,7 @@ msgstr "Extern"
 msgid "Yes"
 msgstr "Ja"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:77
+#: module/Activity/view/activity/admin/participantsTable.phtml:106
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -1411,11 +1433,11 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nee"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:100
+#: module/Activity/view/activity/admin/participantsTable.phtml:129
 msgid "Additional actions"
 msgstr "Aanvullende acties"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:104
+#: module/Activity/view/activity/admin/participantsTable.phtml:133
 msgid "Mail everybody"
 msgstr "E-mail iedereen"
 
@@ -3211,22 +3233,6 @@ msgstr "Generatie"
 msgid "Membership type"
 msgstr "Type lidmaatschap"
 
-#: module/Decision/view/decision/member/self.phtml:67
-msgid "Ordinary"
-msgstr "Gewoon"
-
-#: module/Decision/view/decision/member/self.phtml:70
-msgid "Prolonged"
-msgstr "Geprolongeerd"
-
-#: module/Decision/view/decision/member/self.phtml:76
-msgid "Extraordinary"
-msgstr "Buitengewoon"
-
-#: module/Decision/view/decision/member/self.phtml:79
-msgid "Honorary"
-msgstr "Erelidmaatschap"
-
 #: module/Decision/view/decision/member/self.phtml:85
 msgid "Last membership change"
 msgstr "Laatste wijziging lidmaatschap"
@@ -3872,7 +3878,7 @@ msgid "You are not allowed to edit pages."
 msgstr "Je hebt niet de rechten om pagina's te wijzigen."
 
 #: module/Frontpage/src/Service/Page.php:300
-#: module/Photo/src/Service/Admin.php:210
+#: module/Photo/src/Service/Admin.php:229
 msgid "The uploaded file does not have a valid extension"
 msgstr "Het geuploade bestand heeft geen valide extensie"
 
@@ -4174,11 +4180,11 @@ msgstr "Einddatum"
 msgid "Not allowed to add photos."
 msgstr "Het is niet toegestaan om foto's toe te voegen."
 
-#: module/Photo/src/Service/Admin.php:194
+#: module/Photo/src/Service/Admin.php:213
 msgid "An unknown error occurred during uploading ("
 msgstr "Een onbekende error vond plaats tijdens het uploaden van ("
 
-#: module/Photo/src/Service/Admin.php:216
+#: module/Photo/src/Service/Admin.php:235
 #, php-format
 msgid ""
 "The uploaded file is not a valid image \n"
@@ -4187,7 +4193,7 @@ msgstr ""
 "Het geuploade bestand is geen valide plaatje \n"
 "Error: %s"
 
-#: module/Photo/src/Service/Admin.php:232
+#: module/Photo/src/Service/Admin.php:251
 msgid "Not allowed to upload photos."
 msgstr "Het is niet toegestaan om foto's te uploaden."
 

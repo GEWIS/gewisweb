@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-23 12:47+0200\n"
+"POT-Creation-Date: 2022-05-23 16:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,7 +57,7 @@ msgstr ""
 #: module/Activity/view/activity/admin-approval/view.phtml:76
 #: module/Activity/view/activity/admin-category/add.phtml:49
 #: module/Activity/view/activity/admin-category/add.phtml:87
-#: module/Activity/view/activity/admin/participantsTable.phtml:5
+#: module/Activity/view/activity/admin/participantsTable.phtml:11
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:5
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:10
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:17
@@ -188,7 +188,7 @@ msgid "Creator"
 msgstr ""
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:39
-#: module/Activity/view/activity/admin/participantsTable.phtml:7
+#: module/Activity/view/activity/admin/participantsTable.phtml:13
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:97
 #: module/Activity/view/partial/option.phtml:10
 #: module/Decision/view/decision/decision/index.phtml:9
@@ -843,7 +843,7 @@ msgid ""
 "the signup of all participants."
 msgstr ""
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:6
+#: module/Activity/view/activity/admin/participantsTable.phtml:12
 #: module/Decision/view/decision/member/self.phtml:51
 #: module/Decision/view/decision/member/view.phtml:34
 #: module/Frontpage/view/frontpage/organ/organ.phtml:72
@@ -851,20 +851,42 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:9
+#: module/Activity/view/activity/admin/participantsTable.phtml:15
 msgid "Sign-up List"
 msgstr ""
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:43
-msgid "User"
+#: module/Activity/view/activity/admin/participantsTable.phtml:54
+#: module/Decision/view/decision/member/self.phtml:67
+msgid "Ordinary"
 msgstr ""
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:46
+#: module/Activity/view/activity/admin/participantsTable.phtml:57
+#: module/Decision/view/decision/member/self.phtml:70
+msgid "Prolonged"
+msgstr ""
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:60
+#: module/Activity/view/activity/admin/participantsTable.phtml:75
 #: module/Decision/view/decision/member/self.phtml:73
 msgid "External"
 msgstr ""
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:75
+#: module/Activity/view/activity/admin/participantsTable.phtml:63
+#: module/Decision/view/decision/member/self.phtml:76
+msgid "Extraordinary"
+msgstr ""
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:66
+#: module/Decision/view/decision/member/self.phtml:79
+msgid "Honorary"
+msgstr ""
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:70
+#, php-format
+msgid "User (%s)"
+msgstr ""
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:104
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -878,7 +900,7 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:77
+#: module/Activity/view/activity/admin/participantsTable.phtml:106
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -892,11 +914,11 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:100
+#: module/Activity/view/activity/admin/participantsTable.phtml:129
 msgid "Additional actions"
 msgstr ""
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:104
+#: module/Activity/view/activity/admin/participantsTable.phtml:133
 msgid "Mail everybody"
 msgstr ""
 
@@ -2253,22 +2275,6 @@ msgstr ""
 #: module/Decision/view/decision/member/self.phtml:63
 #: module/User/src/Model/Enums/JWTClaims.php:43
 msgid "Membership type"
-msgstr ""
-
-#: module/Decision/view/decision/member/self.phtml:67
-msgid "Ordinary"
-msgstr ""
-
-#: module/Decision/view/decision/member/self.phtml:70
-msgid "Prolonged"
-msgstr ""
-
-#: module/Decision/view/decision/member/self.phtml:76
-msgid "Extraordinary"
-msgstr ""
-
-#: module/Decision/view/decision/member/self.phtml:79
-msgid "Honorary"
 msgstr ""
 
 #: module/Decision/view/decision/member/self.phtml:85
@@ -4390,7 +4396,7 @@ msgid "You are not allowed to edit pages."
 msgstr ""
 
 #: module/Frontpage/src/Service/Page.php:300
-#: module/Photo/src/Service/Admin.php:210
+#: module/Photo/src/Service/Admin.php:229
 msgid "The uploaded file does not have a valid extension"
 msgstr ""
 
@@ -4426,18 +4432,18 @@ msgstr ""
 msgid "Not allowed to add photos."
 msgstr ""
 
-#: module/Photo/src/Service/Admin.php:194
+#: module/Photo/src/Service/Admin.php:213
 msgid "An unknown error occurred during uploading ("
 msgstr ""
 
-#: module/Photo/src/Service/Admin.php:216
+#: module/Photo/src/Service/Admin.php:235
 #, php-format
 msgid ""
 "The uploaded file is not a valid image \n"
 "Error: %s"
 msgstr ""
 
-#: module/Photo/src/Service/Admin.php:232
+#: module/Photo/src/Service/Admin.php:251
 msgid "Not allowed to upload photos."
 msgstr ""
 
