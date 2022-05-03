@@ -1006,6 +1006,11 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020signup\u0020object\u0020if\u0020it\u0020exists.",
             "url": "classes/Activity-Mapper-Signup.html#method_getSignUp"
         },                {
+            "fqsen": "\\Activity\\Mapper\\Signup\u003A\u003AgetExternalSignUp\u0028\u0029",
+            "name": "getExternalSignUp",
+            "summary": "",
+            "url": "classes/Activity-Mapper-Signup.html#method_getExternalSignUp"
+        },                {
             "fqsen": "\\Activity\\Mapper\\Signup\u003A\u003AgetNumberOfSignedUpMembers\u0028\u0029",
             "name": "getNumberOfSignedUpMembers",
             "summary": "",
