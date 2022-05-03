@@ -45,6 +45,32 @@ $this->headTitle($this->translate('Members'));
                         <th><?= $this->translate('Generation') ?></th>
                         <td><?= $member->getGeneration() ?></td>
                     </tr>
+                    <?php if ($this->acl('decision_service_acl')->isAllowed('member', 'view_full')): ?>
+                        <tr>
+                            <th><?= $this->translate('Membership type') ?></th>
+                            <td>
+                                <?php
+                                switch ($member->getType()) {
+                                    case Member::TYPE_ORDINARY:
+                                        echo $this->translate('Ordinary');
+                                        break;
+                                    case Member::TYPE_PROLONGED:
+                                        echo $this->translate('Prolonged');
+                                        break;
+                                    case Member::TYPE_EXTERNAL:
+                                        echo $this->translate('External');
+                                        break;
+                                    case Member::TYPE_EXTRAORDINARY:
+                                        echo $this->translate('Extraordinary');
+                                        break;
+                                    case Member::TYPE_HONORARY:
+                                        echo $this->translate('Honorary');
+                                        break;
+                                }
+                                ?>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
                 </table>
                 <h3><?= $this->translate('Membership of committees and fraternities') ?></h3>
                 <ul>
