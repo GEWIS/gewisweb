@@ -79,12 +79,11 @@ class Organ extends BaseMapper
      *
      * @param int $id
      *
-     * @return OrganModel
+     * @return OrganModel|null
      *
-     * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function findOrgan(int $id): OrganModel
+    public function findOrgan(int $id): ?OrganModel
     {
         $qb = $this->getRepository()->createQueryBuilder('o');
         $qb->select('o, om, m')
@@ -94,7 +93,7 @@ class Organ extends BaseMapper
 
         $qb->setParameter('id', $id);
 
-        return $qb->getQuery()->getSingleResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
