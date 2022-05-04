@@ -82,6 +82,7 @@ services:
         networks:
             - gewisweb_network
         restart: unless-stopped
+        stop_grace_period: 60s
     memcached:
         image: memcached
         entrypoint: ['memcached', '-m 256']
