@@ -14,7 +14,7 @@ $this->headTitle($organ->getName()); ?>
                                 <?= $membership['member']->getFullName() ?>
                             </a>
                             <?php if (!empty($membership['functions'])): ?>
-                                (<?= implode(', ', $membership['functions']) ?>)
+                                (<?= implode(', ', array_map(fn(string $value): string => $this->translate($value), $membership['functions'])) ?>)
                             <?php endif ?></li>
                     <?php endforeach ?>
                 </ul>
