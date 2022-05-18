@@ -11581,6 +11581,16 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020number\u0020of\u0020votes\u0020for\u0020this\u0020poll\u0020option.",
             "url": "classes/Frontpage-Model-PollOption.html#method_getVotesCount"
         },                {
+            "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003AgetAnonymousVotes\u0028\u0029",
+            "name": "getAnonymousVotes",
+            "summary": "",
+            "url": "classes/Frontpage-Model-PollOption.html#method_getAnonymousVotes"
+        },                {
+            "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003AsetAnonymousVotes\u0028\u0029",
+            "name": "setAnonymousVotes",
+            "summary": "",
+            "url": "classes/Frontpage-Model-PollOption.html#method_setAnonymousVotes"
+        },                {
             "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003AgetResourceId\u0028\u0029",
             "name": "getResourceId",
             "summary": "Get\u0020the\u0020resource\u0020ID.",
@@ -11610,6 +11620,11 @@ Search.appendIndex(
             "name": "votes",
             "summary": "Votes\u0020for\u0020this\u0020option.",
             "url": "classes/Frontpage-Model-PollOption.html#property_votes"
+        },                {
+            "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003A\u0024anonymousVotes",
+            "name": "anonymousVotes",
+            "summary": "",
+            "url": "classes/Frontpage-Model-PollOption.html#property_anonymousVotes"
         },                {
             "fqsen": "\\Frontpage\\Model\\PollVote",
             "name": "PollVote",
