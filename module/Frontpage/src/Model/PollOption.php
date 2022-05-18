@@ -66,6 +66,12 @@ class PollOption implements ResourceInterface
     )]
     protected Collection $votes;
 
+    #[Column(
+        type: "integer",
+        options: ["default" => 0],
+    )]
+    protected int $anonymousVotes = 0;
+
     /**
      * @return int|null
      */
@@ -140,7 +146,17 @@ class PollOption implements ResourceInterface
      */
     public function getVotesCount(): int
     {
-        return $this->votes->count();
+        return $this->votes->count() + $this->getAnonymousVotes();
+    }
+
+    public function getAnonymousVotes(): int
+    {
+        return $this->anonymousVotes;
+    }
+
+    public function setAnonymousVotes(int $anonymousVotes): void
+    {
+        $this->anonymousVotes = $anonymousVotes;
     }
 
     /**
