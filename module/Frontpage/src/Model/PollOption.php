@@ -68,9 +68,9 @@ class PollOption implements ResourceInterface
 
     #[Column(
         type: "integer",
-        nullable: true,
+        options: ["default" => 0],
     )]
-    protected ?int $anonymousVotes = null;
+    protected int $anonymousVotes = 0;
 
     /**
      * @return int|null
@@ -146,21 +146,15 @@ class PollOption implements ResourceInterface
      */
     public function getVotesCount(): int
     {
-        $votes = $this->votes->count();
-
-        if (null !== ($anonymousVotes = $this->getAnonymousVotes())) {
-            $votes += $anonymousVotes;
-        }
-
-        return $votes;
+        return $this->votes->count() + $this->getAnonymousVotes();
     }
 
-    public function getAnonymousVotes(): ?int
+    public function getAnonymousVotes(): int
     {
         return $this->anonymousVotes;
     }
 
-    public function setAnonymousVotes(?int $anonymousVotes): void
+    public function setAnonymousVotes(int $anonymousVotes): void
     {
         $this->anonymousVotes = $anonymousVotes;
     }
