@@ -37,4 +37,9 @@
     <pattern value="\User\Permissions\Assertion\*" member="*" />
     <pattern value="\*\Service\*" />
   </component>
+  <component name="SwUserDefinedSpecifications">
+    <option name="specTypeByUrl">
+      <map />
+    </option>
+  </component>
 </project>
