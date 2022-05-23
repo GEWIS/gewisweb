@@ -7921,6 +7921,11 @@ Search.appendIndex(
             "summary": "Check\u0020if\u0020this\u0020is\u0020a\u0020current\u0020board\u0020member.",
             "url": "classes/Decision-Model-Member.html#method_isCurrentBoard"
         },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003Ais18Plus\u0028\u0029",
+            "name": "is18Plus",
+            "summary": "",
+            "url": "classes/Decision-Model-Member.html#method_is18Plus"
+        },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003AGENDER_MALE",
             "name": "GENDER_MALE",
             "summary": "",
@@ -9435,6 +9440,11 @@ Search.appendIndex(
             "name": "memberMapper",
             "summary": "",
             "url": "classes/Decision-Service-MemberInfo.html#property_memberMapper"
+        },                {
+            "fqsen": "\\Decision\\Service\\MemberInfo\u003A\u003A\u0024apiAppAuthenticationMapper",
+            "name": "apiAppAuthenticationMapper",
+            "summary": "",
+            "url": "classes/Decision-Service-MemberInfo.html#property_apiAppAuthenticationMapper"
         },                {
             "fqsen": "\\Decision\\Service\\MemberInfo\u003A\u003A\u0024photoConfig",
             "name": "photoConfig",
@@ -14751,6 +14761,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Controller-ApiAuthenticationController.html#property_apiAppService"
         },                {
+            "fqsen": "\\User\\Controller\\ApiAuthenticationController\u003A\u003A\u0024apiAppAuthenticationMapper",
+            "name": "apiAppAuthenticationMapper",
+            "summary": "",
+            "url": "classes/User-Controller-ApiAuthenticationController.html#property_apiAppAuthenticationMapper"
+        },                {
+            "fqsen": "\\User\\Controller\\ApiAuthenticationController\u003A\u003A\u0024apiAppMapper",
+            "name": "apiAppMapper",
+            "summary": "",
+            "url": "classes/User-Controller-ApiAuthenticationController.html#property_apiAppMapper"
+        },                {
             "fqsen": "\\User\\Controller\\ApiController",
             "name": "ApiController",
             "summary": "",
@@ -15001,6 +15021,26 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Mapper-ApiApp.html#method_getRepositoryName"
         },                {
+            "fqsen": "\\User\\Mapper\\ApiAppAuthentication",
+            "name": "ApiAppAuthentication",
+            "summary": "",
+            "url": "classes/User-Mapper-ApiAppAuthentication.html"
+        },                {
+            "fqsen": "\\User\\Mapper\\ApiAppAuthentication\u003A\u003AgetFirstAndLastAuthenticationPerApiApp\u0028\u0029",
+            "name": "getFirstAndLastAuthenticationPerApiApp",
+            "summary": "",
+            "url": "classes/User-Mapper-ApiAppAuthentication.html#method_getFirstAndLastAuthenticationPerApiApp"
+        },                {
+            "fqsen": "\\User\\Mapper\\ApiAppAuthentication\u003A\u003AgetLastAuthentication\u0028\u0029",
+            "name": "getLastAuthentication",
+            "summary": "",
+            "url": "classes/User-Mapper-ApiAppAuthentication.html#method_getLastAuthentication"
+        },                {
+            "fqsen": "\\User\\Mapper\\ApiAppAuthentication\u003A\u003AgetRepositoryName\u0028\u0029",
+            "name": "getRepositoryName",
+            "summary": "",
+            "url": "classes/User-Mapper-ApiAppAuthentication.html#method_getRepositoryName"
+        },                {
             "fqsen": "\\User\\Mapper\\ApiUser",
             "name": "ApiUser",
             "summary": "",
@@ -15126,6 +15166,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Model-ApiApp.html#method_getCallback"
         },                {
+            "fqsen": "\\User\\Model\\ApiApp\u003A\u003AgetUrl\u0028\u0029",
+            "name": "getUrl",
+            "summary": "",
+            "url": "classes/User-Model-ApiApp.html#method_getUrl"
+        },                {
+            "fqsen": "\\User\\Model\\ApiApp\u003A\u003AgetClaims\u0028\u0029",
+            "name": "getClaims",
+            "summary": "",
+            "url": "classes/User-Model-ApiApp.html#method_getClaims"
+        },                {
             "fqsen": "\\User\\Model\\ApiApp\u003A\u003A\u0024id",
             "name": "id",
             "summary": "Id.",
@@ -15145,6 +15195,81 @@ Search.appendIndex(
             "name": "callback",
             "summary": "Callback\u0020URL.",
             "url": "classes/User-Model-ApiApp.html#property_callback"
+        },                {
+            "fqsen": "\\User\\Model\\ApiApp\u003A\u003A\u0024url",
+            "name": "url",
+            "summary": "URL\u0020for\u0020the\u0020application\u0020when\u0020the\u0020user\u0020does\u0020not\u0020authorise\u0020access.",
+            "url": "classes/User-Model-ApiApp.html#property_url"
+        },                {
+            "fqsen": "\\User\\Model\\ApiApp\u003A\u003A\u0024claims",
+            "name": "claims",
+            "summary": "The\u0020claims\u0020that\u0020will\u0020be\u0020present\u0020in\u0020the\u0020JWT.\u0020If\u0020\u0060null\u0060\u0020only\u0020the\u0020lidnr\u0020will\u0020be\u0020passed\u0020along.",
+            "url": "classes/User-Model-ApiApp.html#property_claims"
+        },                {
+            "fqsen": "\\User\\Model\\ApiAppAuthentication",
+            "name": "ApiAppAuthentication",
+            "summary": "Log\u0020when\u0020a\u0020member\u0020has\u0020authenticated\u0020for\u0020an\u0020external\u0020app.",
+            "url": "classes/User-Model-ApiAppAuthentication.html"
+        },                {
+            "fqsen": "\\User\\Model\\ApiAppAuthentication\u003A\u003AgetId\u0028\u0029",
+            "name": "getId",
+            "summary": "",
+            "url": "classes/User-Model-ApiAppAuthentication.html#method_getId"
+        },                {
+            "fqsen": "\\User\\Model\\ApiAppAuthentication\u003A\u003AsetId\u0028\u0029",
+            "name": "setId",
+            "summary": "",
+            "url": "classes/User-Model-ApiAppAuthentication.html#method_setId"
+        },                {
+            "fqsen": "\\User\\Model\\ApiAppAuthentication\u003A\u003AgetUser\u0028\u0029",
+            "name": "getUser",
+            "summary": "",
+            "url": "classes/User-Model-ApiAppAuthentication.html#method_getUser"
+        },                {
+            "fqsen": "\\User\\Model\\ApiAppAuthentication\u003A\u003AsetUser\u0028\u0029",
+            "name": "setUser",
+            "summary": "",
+            "url": "classes/User-Model-ApiAppAuthentication.html#method_setUser"
+        },                {
+            "fqsen": "\\User\\Model\\ApiAppAuthentication\u003A\u003AgetApiApp\u0028\u0029",
+            "name": "getApiApp",
+            "summary": "",
+            "url": "classes/User-Model-ApiAppAuthentication.html#method_getApiApp"
+        },                {
+            "fqsen": "\\User\\Model\\ApiAppAuthentication\u003A\u003AsetApiApp\u0028\u0029",
+            "name": "setApiApp",
+            "summary": "",
+            "url": "classes/User-Model-ApiAppAuthentication.html#method_setApiApp"
+        },                {
+            "fqsen": "\\User\\Model\\ApiAppAuthentication\u003A\u003AgetTime\u0028\u0029",
+            "name": "getTime",
+            "summary": "",
+            "url": "classes/User-Model-ApiAppAuthentication.html#method_getTime"
+        },                {
+            "fqsen": "\\User\\Model\\ApiAppAuthentication\u003A\u003AsetTime\u0028\u0029",
+            "name": "setTime",
+            "summary": "",
+            "url": "classes/User-Model-ApiAppAuthentication.html#method_setTime"
+        },                {
+            "fqsen": "\\User\\Model\\ApiAppAuthentication\u003A\u003A\u0024id",
+            "name": "id",
+            "summary": "Id.",
+            "url": "classes/User-Model-ApiAppAuthentication.html#property_id"
+        },                {
+            "fqsen": "\\User\\Model\\ApiAppAuthentication\u003A\u003A\u0024user",
+            "name": "user",
+            "summary": "The\u0020user\u0020who\u0020was\u0020authenticated.",
+            "url": "classes/User-Model-ApiAppAuthentication.html#property_user"
+        },                {
+            "fqsen": "\\User\\Model\\ApiAppAuthentication\u003A\u003A\u0024apiApp",
+            "name": "apiApp",
+            "summary": "The\u0020application\u0020that\u0020got\u0020the\u0020authentication.",
+            "url": "classes/User-Model-ApiAppAuthentication.html#property_apiApp"
+        },                {
+            "fqsen": "\\User\\Model\\ApiAppAuthentication\u003A\u003A\u0024time",
+            "name": "time",
+            "summary": "Time\u0020of\u0020authentication.",
+            "url": "classes/User-Model-ApiAppAuthentication.html#property_time"
         },                {
             "fqsen": "\\User\\Model\\ApiUser",
             "name": "ApiUser",
@@ -15200,6 +15325,56 @@ Search.appendIndex(
             "name": "token",
             "summary": "Authentication\u0020token.",
             "url": "classes/User-Model-ApiUser.html#property_token"
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\JWTClaims",
+            "name": "JWTClaims",
+            "summary": "Enum\u0020for\u0020keeping\u0020track\u0020of\u0020the\u0020claims\u0020that\u0020can\u0020be\u0020present\u0020in\u0020the\u0020JWT\u0020for\u0020ApiApps.",
+            "url": "classes/User-Model-Enums-JWTClaims.html"
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\JWTClaims\u003A\u003AgetValue\u0028\u0029",
+            "name": "getValue",
+            "summary": "",
+            "url": "classes/User-Model-Enums-JWTClaims.html#method_getValue"
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\JWTClaims\u003A\u003AgetName\u0028\u0029",
+            "name": "getName",
+            "summary": "",
+            "url": "classes/User-Model-Enums-JWTClaims.html#method_getName"
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\JWTClaims\u003A\u003AEmail",
+            "name": "Email",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\JWTClaims\u003A\u003AFamilyName",
+            "name": "FamilyName",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\JWTClaims\u003A\u003AGivenName",
+            "name": "GivenName",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\JWTClaims\u003A\u003AIs18Plus",
+            "name": "Is18Plus",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\JWTClaims\u003A\u003ALidnr",
+            "name": "Lidnr",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\JWTClaims\u003A\u003AMembershipType",
+            "name": "MembershipType",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\JWTClaims\u003A\u003AMiddleName",
+            "name": "MiddleName",
+            "summary": "",
+            "url": ""
         },                {
             "fqsen": "\\User\\Model\\LoginAttempt",
             "name": "LoginAttempt",
@@ -15628,7 +15803,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\User\\Service\\ApiApp\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "Constructor.",
+            "summary": "",
             "url": "classes/User-Service-ApiApp.html#method___construct"
         },                {
             "fqsen": "\\User\\Service\\ApiApp\u003A\u003AcallbackWithToken\u0028\u0029",
@@ -15636,15 +15811,15 @@ Search.appendIndex(
             "summary": "Get\u0020a\u0020callback\u0020from\u0020an\u0020appId\u0020and\u0020a\u0020user\u0020identity.",
             "url": "classes/User-Service-ApiApp.html#method_callbackWithToken"
         },                {
-            "fqsen": "\\User\\Service\\ApiApp\u003A\u003AgetMapper\u0028\u0029",
-            "name": "getMapper",
+            "fqsen": "\\User\\Service\\ApiApp\u003A\u003AlogAuthentication\u0028\u0029",
+            "name": "logAuthentication",
             "summary": "",
-            "url": "classes/User-Service-ApiApp.html#method_getMapper"
+            "url": "classes/User-Service-ApiApp.html#method_logAuthentication"
         },                {
-            "fqsen": "\\User\\Service\\ApiApp\u003A\u003A\u0024mapper",
-            "name": "mapper",
+            "fqsen": "\\User\\Service\\ApiApp\u003A\u003A\u0024apiAppAuthenticationMapper",
+            "name": "apiAppAuthenticationMapper",
             "summary": "",
-            "url": "classes/User-Service-ApiApp.html#property_mapper"
+            "url": "classes/User-Service-ApiApp.html#property_apiAppAuthenticationMapper"
         },                {
             "fqsen": "\\User\\Service\\ApiUser",
             "name": "ApiUser",
@@ -16375,6 +16550,11 @@ Search.appendIndex(
             "name": "Model",
             "summary": "",
             "url": "namespaces/user-model.html"
+        },                {
+            "fqsen": "\\User\\Model\\Enums",
+            "name": "Enums",
+            "summary": "",
+            "url": "namespaces/user-model-enums.html"
         },                {
             "fqsen": "\\User\\Permissions\\Assertion",
             "name": "Assertion",

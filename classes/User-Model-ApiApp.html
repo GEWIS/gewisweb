@@ -393,7 +393,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/ApiApp.php"><a href="files/module-user-src-model-apiapp.html"><abbr title="module/User/src/Model/ApiApp.php">ApiApp.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">15</span>
+    <span class="phpdocumentor-element-found-in__line">16</span>
 
     </aside>
 
@@ -428,6 +428,13 @@
 <dd>Callback URL.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/User-Model-ApiApp.html#property_claims">$claims</a>
+    <span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+</dt>
+<dd>The claims that will be present in the JWT. If `null` only the lidnr will be passed along.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/User-Model-ApiApp.html#property_id">$id</a>
     <span>
                         &nbsp;: int|null            </span>
@@ -440,6 +447,13 @@
                         &nbsp;: string            </span>
 </dt>
 <dd>Application secret.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/User-Model-ApiApp.html#property_url">$url</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+<dd>URL for the application when the user does not authorise access.</dd>
 
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/User-Model-ApiApp.html#method_getAppId">getAppId()</a>
@@ -456,6 +470,13 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/User-Model-ApiApp.html#method_getClaims">getClaims()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;|null    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/User-Model-ApiApp.html#method_getId">getId()</a>
     <span>
                                 &nbsp;: int|null    </span>
@@ -464,6 +485,13 @@
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/User-Model-ApiApp.html#method_getSecret">getSecret()</a>
+    <span>
+                                &nbsp;: string    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/User-Model-ApiApp.html#method_getUrl">getUrl()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
@@ -511,7 +539,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/ApiApp.php"><a href="files/module-user-src-model-apiapp.html"><abbr title="module/User/src/Model/ApiApp.php">ApiApp.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
@@ -545,7 +573,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/ApiApp.php"><a href="files/module-user-src-model-apiapp.html"><abbr title="module/User/src/Model/ApiApp.php">ApiApp.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -570,6 +598,40 @@
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_claims">
+        $claims
+        <a href="classes/User-Model-ApiApp.html#property_claims" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/ApiApp.php"><a href="files/module-user-src-model-apiapp.html"><abbr title="module/User/src/Model/ApiApp.php">ApiApp.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">54</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The claims that will be present in the JWT. If `null` only the lidnr will be passed along.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$claims</span>
+    </code>
+
+    
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_id">
         $id
         <a href="classes/User-Model-ApiApp.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
@@ -579,7 +641,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/ApiApp.php"><a href="files/module-user-src-model-apiapp.html"><abbr title="module/User/src/Model/ApiApp.php">ApiApp.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">21</span>
+    <span class="phpdocumentor-element-found-in__line">22</span>
 
     </aside>
 
@@ -613,7 +675,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/ApiApp.php"><a href="files/module-user-src-model-apiapp.html"><abbr title="module/User/src/Model/ApiApp.php">ApiApp.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
     </aside>
 
@@ -623,6 +685,40 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$secret</span>
+    </code>
+
+    
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_url">
+        $url
+        <a href="classes/User-Model-ApiApp.html#property_url" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/ApiApp.php"><a href="files/module-user-src-model-apiapp.html"><abbr title="module/User/src/Model/ApiApp.php">ApiApp.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">48</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">URL for the application when the user does not authorise access.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$url</span>
     </code>
 
     
@@ -651,7 +747,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/ApiApp.php"><a href="files/module-user-src-model-apiapp.html"><abbr title="module/User/src/Model/ApiApp.php">ApiApp.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">74</span>
 
     </aside>
 
@@ -683,7 +779,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/ApiApp.php"><a href="files/module-user-src-model-apiapp.html"><abbr title="module/User/src/Model/ApiApp.php">ApiApp.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">87</span>
+    <span class="phpdocumentor-element-found-in__line">106</span>
 
     </aside>
 
@@ -708,6 +804,39 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getClaims">
+        getClaims()
+        <a href="classes/User-Model-ApiApp.html#method_getClaims" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/ApiApp.php"><a href="files/module-user-src-model-apiapp.html"><abbr title="module/User/src/Model/ApiApp.php">ApiApp.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">116</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getClaims</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|null</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|null</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getId">
         getId()
         <a href="classes/User-Model-ApiApp.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
@@ -715,7 +844,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/ApiApp.php"><a href="files/module-user-src-model-apiapp.html"><abbr title="module/User/src/Model/ApiApp.php">ApiApp.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
     </aside>
 
@@ -747,7 +876,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/ApiApp.php"><a href="files/module-user-src-model-apiapp.html"><abbr title="module/User/src/Model/ApiApp.php">ApiApp.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">90</span>
 
     </aside>
 
@@ -772,6 +901,39 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getUrl">
+        getUrl()
+        <a href="classes/User-Model-ApiApp.html#method_getUrl" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/ApiApp.php"><a href="files/module-user-src-model-apiapp.html"><abbr title="module/User/src/Model/ApiApp.php">ApiApp.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">111</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getUrl</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">string</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setAppId">
         setAppId()
         <a href="classes/User-Model-ApiApp.html#method_setAppId" class="headerlink"><i class="fas fa-link"></i></a>
@@ -779,7 +941,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/ApiApp.php"><a href="files/module-user-src-model-apiapp.html"><abbr title="module/User/src/Model/ApiApp.php">ApiApp.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">82</span>
 
     </aside>
 
@@ -821,7 +983,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/ApiApp.php"><a href="files/module-user-src-model-apiapp.html"><abbr title="module/User/src/Model/ApiApp.php">ApiApp.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">79</span>
+    <span class="phpdocumentor-element-found-in__line">98</span>
 
     </aside>
 

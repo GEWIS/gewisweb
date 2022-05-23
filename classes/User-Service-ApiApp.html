@@ -393,7 +393,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Service/ApiApp.php"><a href="files/module-user-src-service-apiapp.html"><abbr title="module/User/src/Service/ApiApp.php">ApiApp.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">10</span>
+    <span class="phpdocumentor-element-found-in__line">14</span>
 
     </aside>
 
@@ -413,10 +413,10 @@
 </h3>
 
 <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/User-Service-ApiApp.html#property_mapper">$mapper</a>
+                    <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/User-Service-ApiApp.html#property_apiAppAuthenticationMapper">$apiAppAuthenticationMapper</a>
     <span>
-                        &nbsp;: <a href="classes/User-Mapper-ApiApp.html"><abbr title="\User\Mapper\ApiApp">ApiApp</abbr></a>            </span>
+                        &nbsp;: <a href="classes/User-Mapper-ApiAppAuthentication.html"><abbr title="\User\Mapper\ApiAppAuthentication">ApiAppAuthentication</abbr></a>            </span>
 </dt>
 <dd></dd>
 
@@ -425,7 +425,7 @@
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd>Constructor.</dd>
+<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/User-Service-ApiApp.html#method_callbackWithToken">callbackWithToken()</a>
@@ -434,10 +434,10 @@
 </dt>
 <dd>Get a callback from an appId and a user identity.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/User-Service-ApiApp.html#method_getMapper">getMapper()</a>
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a href="classes/User-Service-ApiApp.html#method_logAuthentication">logAuthentication()</a>
     <span>
-                                &nbsp;: <a href="classes/User-Mapper-ApiApp.html"><abbr title="\User\Mapper\ApiApp">ApiApp</abbr></a>    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd></dd>
 
@@ -457,31 +457,33 @@
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_mapper">
-        $mapper
-        <a href="classes/User-Service-ApiApp.html#property_mapper" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_apiAppAuthenticationMapper">
+        $apiAppAuthenticationMapper
+        <a href="classes/User-Service-ApiApp.html#property_apiAppAuthenticationMapper" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Service/ApiApp.php"><a href="files/module-user-src-service-apiapp.html"><abbr title="module/User/src/Service/ApiApp.php">ApiApp.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">15</span>
+    <span class="phpdocumentor-element-found-in__line">16</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/User-Mapper-ApiApp.html"><abbr title="\User\Mapper\ApiApp">ApiApp</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$mapper</span>
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/User-Mapper-ApiAppAuthentication.html"><abbr title="\User\Mapper\ApiAppAuthentication">ApiAppAuthentication</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$apiAppAuthenticationMapper</span>
     </code>
 
-    
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -505,25 +507,26 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Service/ApiApp.php"><a href="files/module-user-src-service-apiapp.html"><abbr title="module/User/src/Service/ApiApp.php">ApiApp.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">22</span>
+    <span class="phpdocumentor-element-found-in__line">18</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Constructor.</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Mapper-ApiApp.html"><abbr title="\User\Mapper\ApiApp">ApiApp</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mapper</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Mapper-ApiAppAuthentication.html"><abbr title="\User\Mapper\ApiAppAuthentication">ApiAppAuthentication</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$apiAppAuthenticationMapper</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-    
+        <section class="phpdocumentor-description"></section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$mapper</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Mapper-ApiApp.html"><abbr title="\User\Mapper\ApiApp">ApiApp</abbr></a></span>
+                <span class="phpdocumentor-signature__argument__name">$apiAppAuthenticationMapper</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Mapper-ApiAppAuthentication.html"><abbr title="\User\Mapper\ApiAppAuthentication">ApiAppAuthentication</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -548,7 +551,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Service/ApiApp.php"><a href="files/module-user-src-service-apiapp.html"><abbr title="module/User/src/Service/ApiApp.php">ApiApp.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">31</span>
 
     </aside>
 
@@ -556,14 +559,14 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">callbackWithToken</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$appId</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">callbackWithToken</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-ApiApp.html"><abbr title="\User\Model\ApiApp">ApiApp</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$app</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$appId</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-signature__argument__name">$app</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-ApiApp.html"><abbr title="\User\Model\ApiApp">ApiApp</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -588,31 +591,51 @@
                     <article
         class="phpdocumentor-element
             -method
-            -public
+            -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getMapper">
-        getMapper()
-        <a href="classes/User-Service-ApiApp.html#method_getMapper" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_logAuthentication">
+        logAuthentication()
+        <a href="classes/User-Service-ApiApp.html#method_logAuthentication" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Service/ApiApp.php"><a href="files/module-user-src-service-apiapp.html"><abbr title="module/User/src/Service/ApiApp.php">ApiApp.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getMapper</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Mapper-ApiApp.html"><abbr title="\User\Mapper\ApiApp">ApiApp</abbr></a></span></code>
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">logAuthentication</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-ApiApp.html"><abbr title="\User\Model\ApiApp">ApiApp</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$app</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-    
-    
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$app</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-ApiApp.html"><abbr title="\User\Model\ApiApp">ApiApp</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$user</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Mapper-ApiApp.html"><abbr title="\User\Mapper\ApiApp">ApiApp</abbr></a></span>
+    <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
         
     
