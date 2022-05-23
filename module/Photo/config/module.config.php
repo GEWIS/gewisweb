@@ -44,7 +44,7 @@ return [
                     'album' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/:album_type/:album_id[#&pid=:photo_id]',
+                            'route' => '/:album_type/:album_id[#pid=:photo_id]',
                             'constraints' => [
                                 'album_id' => '[0-9]+',
                                 'album_type' => '(album|member)',
@@ -368,6 +368,18 @@ return [
                             ],
                             'constraints' => [
                                 'album_id' => '[0-9]+',
+                            ],
+                        ],
+                    ],
+                    'details' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/:photo_id/details',
+                            'defaults' => [
+                                'action' => 'details',
+                            ],
+                            'constraints' => [
+                                'photo_id' => '[0-9]+',
                             ],
                         ],
                     ],

@@ -11,14 +11,13 @@ use Doctrine\ORM\Mapping\{
     JoinColumn,
     ManyToOne,
 };
-use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use User\Model\User as UserModel;
 
 /**
  * Vote, represents a vote for a photo of the week.
  */
 #[Entity]
-class Vote implements ResourceInterface
+class Vote
 {
     /**
      * Vote ID.
@@ -96,15 +95,5 @@ class Vote implements ResourceInterface
     public function getPhoto(): Photo
     {
         return $this->photo;
-    }
-
-    /**
-     * Get the resource ID.
-     *
-     * @return string
-     */
-    public function getResourceId(): string
-    {
-        return 'vote';
     }
 }

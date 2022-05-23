@@ -20,7 +20,9 @@ $this->headTitle($this->translate('Photos'));
 $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css');
 
 $this->scriptUrl()->requireUrl('member/search')
-    ->requireUrl('photo/photo/vote', ['photo_id']);
+    ->requireUrl('member/view', ['lidnr'])
+    ->requireUrl('photo/photo/tag/add', ['photo_id', 'lidnr'])
+    ->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr']);
 ?>
 <section class="section section-breadcrumb">
     <div class="container">
@@ -120,55 +122,61 @@ $this->scriptUrl()->requireUrl('member/search')
                 <?php endforeach ?>
             </div>
         <?php endif; ?>
-        <div class="pswp-gallery" data-recent-vote="<?= $hasRecentVote ? 'true' : 'false' ?>">
+        <div class="pswp-gallery"
+             data-recent-vote="<?= $hasRecentVote ? 'true' : 'false' ?>"
+             data-lidnr="<?= $this->identity()->getLidnr() ?>"
+        >
             <div class="grid-sizer"></div>
             <div class="gutter-sizer"></div>
             <?php $lidnr = $this->identity()->getLidnr(); ?>
             <?php foreach ($album->getPhotos() as $item): ?>
-                <?php
-                $ar = $item->getAspectRatio();
-                $width = $config['small_thumb_size']['width'];
-                $thumbnailSize = [
-                    'w' => $width,
-                    'h' => round($width * $ar)
-                ];
+            <?php
+            $ar = $item->getAspectRatio();
+            $width = $config['small_thumb_size']['width'];
+            $thumbnailSize = [
+                'w' => $width,
+                'h' => round($width * $ar)
+            ];
 
-                $width = $config['large_thumb_size']['width'];
-                $largeSize = [
-                    'w' => $width,
-                    'h' => round($width * $ar)
-                ];
-                ?>
-                <figure
-                    class="pswp-gallery__item<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>"
-                    data-id="<?= $item->getId() ?>"
-                    data-author="GEWIS"
-                    data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]) ?>"
-                    data-original-album="<?= $this->url('photo/album', ['album_id' => $item->getAlbum()->getId(), 'album_type' => 'album']) ?>"
-                    data-profile-photo-url="<?= $this->url('photo/set_profile_photo', ['photo_id' => $item->getId()]) ?>"
-                    data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]) ?>"
-                    data-voted="<?= $this->hasVoted($item->getId(), $lidnr) ? 'true' : 'false' ?>"
+            $width = $config['large_thumb_size']['width'];
+            $largeSize = [
+                'w' => $width,
+                'h' => round($width * $ar)
+            ];
+            ?>
+            <figure
+                class="pswp-gallery__item<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>"
+                data-id="<?= $item->getId() ?>"
+                data-author="GEWIS"
+                data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]) ?>"
+                <?php if ($album instanceof MemberAlbum): ?>
+                data-original-album="<?= $this->url(
+                    'photo/album',
+                    ['album_id' => $item->getAlbum()->getId(), 'album_type' => 'album']
+                ) ?>"
+                <?php endif; ?>
+                data-profile-photo-url="<?= $this->url('photo/set_profile_photo', ['photo_id' => $item->getId()]) ?>"
+                data-details-url="<?= $this->url('api_photo/details', ['photo_id' => $item->getId()]) ?>"
+                data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]) ?>"
+            >
+                <a href="<?= $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
+                   target="_blank"
+                   data-pswp-height="<?= $largeSize['h'] ?>"
+                   data-pswp-width="<?= $largeSize['w'] ?>"
                 >
-                    <a href="<?= $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
-                       target="_blank"
-                       data-pswp-height="<?= $largeSize['h'] ?>"
-                       data-pswp-width="<?= $largeSize['w'] ?>"
+                    <img
+                        class="lazy-load"
+                        data-height="<?= $thumbnailSize['h'] ?>"
+                        data-width="<?= $thumbnailSize['w'] ?>"
+                        data-src="<?= $this->glideUrl()->getUrl($item->getPath(), $thumbnailSize) ?>"
+                        alt=""
                     >
-                        <img
-                            class="lazy-load"
-                            data-height="<?= $thumbnailSize['h'] ?>"
-                            data-width="<?= $thumbnailSize['w'] ?>"
-                            data-src="<?= $this->glideUrl()->getUrl($item->getPath(), $thumbnailSize) ?>"
-                            alt=""
-                        >
-                    </a>
-                    <figcaption class="hidden">
-                        <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
-                    </figcaption>
-                    <figtags class="hidden">
-                        <?= $this->partial('partial/tags.phtml', ['photo' => $item]) ?>
-                    </figtags>
-                </figure>
+                </a>
+                <figcaption class="hidden">
+                    <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
+                </figcaption>
+                <figtags class="hidden"></figtags>
+            </figure>
             <?php endforeach; ?>
         </div>
     </div>
@@ -177,13 +185,118 @@ $this->scriptUrl()->requireUrl('member/search')
     $(document).ready(function () {
         Photo.initGrid();
     });
+
+    const addTagSearch = (el, figTags) => {
+        // Remove any old autocomplete suggestion boxes.
+        document.querySelectorAll('.autocomplete-suggestions').forEach(element => {
+            element.remove();
+        });
+
+        // Make it possible to add new tags.
+        let tagSearch = el.querySelector('.tagSearch');
+        new VanillaAutocomplete(tagSearch, {
+            minChars: 2,
+            lookup: function (query, done) {
+                $.getJSON(URLHelper.url('member/search') + '?q=' + query, function (data) {
+                    let result = {suggestions: []};
+
+                    $.each(data.members, function (i, member) {
+                        result.suggestions.push({
+                            'value': member.fullName, 'data': member.lidnr
+                        })
+                    });
+
+                    done(result);
+                });
+            },
+            orientation: 'top',
+            onSelect: function (suggestion) {
+                $.post(tagSearch.dataset.url.replace('lidnr', suggestion.data),
+                    { lidnr: suggestion.data }
+                    , function (data) {
+                        if (data.success) {
+                            let removeURL = URLHelper.url('photo/photo/tag/remove', {
+                                'photo_id': data.tag.photo_id,
+                                'lidnr': data.tag.member_id
+                            });
+
+                            let memberURL = URLHelper.url('member/view', {
+                                'lidnr': data.tag.member_id
+                            });
+
+                            // Start writing the tag into the current slide.
+                            let tagList = el.querySelector('.tagList');
+                            let spacer = (0 !== tagList.childElementCount) ?
+                                ((1 === tagList.childElementCount) ?
+                                    ' <?= $this->translate('and') ?> '
+                                    : ',&nbsp')
+                                : '';
+
+                            // Check if there were previously no tags to ensure we show the correct
+                            // text to the user.
+                            if (0 === tagList.childElementCount) {
+                                el.querySelector('.no-tag-title').classList.add('hidden');
+                                el.querySelector('.tag-title').classList.remove('hidden');
+                            }
+
+                            // Insert the new tag directly at the beginning of the tag list, this
+                            // prevents us from having to deal with the complicated logic of having
+                            // to deal with the commas and 'and' between the tags.
+                            tagList.insertAdjacentHTML(
+                                'afterbegin',
+                                `
+                                    <span data-member="${data.tag.member_id}">
+                                        <a href="${memberURL}">${suggestion.value}</a>
+                                        <a href="${removeURL}" class="remove-tag"
+                                            data-tag-id="removeTag${data.tag.id}">
+                                            <span class="fas fa-times" aria-hidden="true"></span>
+                                        </a>
+                                        <span class="tag-spacer">${spacer}</span>
+                                    </span>
+                                `
+                            );
+
+                            // Because we want to "cache" the current slide's tags for future usage
+                            // and prevent having to make too many requests, we have to write the
+                            // current "state" of the tags back into the actual DOM element.
+                            figTags.innerHTML = el.innerHTML;
+
+                            if (data.tag.member_id === parseInt(document.querySelector('.pswp-gallery').dataset.lidnr)) {
+                                document.querySelector('.pswp__button--profile-photo-button').classList.remove('pswp__button--hidden');
+                            }
+
+                            Photo.initRemoveTag(el.querySelector('a[data-tag-id="removeTag' + data.tag.id + '"]'));
+                        }
+
+                        tagSearch.value = '';
+                        tagSearch.focus();
+                    });
+            },
+            zIndex: 100000,
+        });
+
+        // Make tags removable.
+        el.querySelectorAll('.remove-tag').forEach(element => {
+            Photo.initRemoveTag(element);
+        });
+    };
+
+    const updateVotedState = (el, voted) => {
+        if ('true' === voted) {
+            el.firstChild.classList.add('pswp__icn-red');
+            el.dataset.originalTitle = '<?= $this->translate('Already voted!') ?>';
+        } else {
+            el.firstChild.classList.remove('pswp__icn-red');
+            el.dataset.originalTitle = '<?= $this->translate('Vote for photo of the week') ?>';
+        }
+    };
 </script>
 <script type="module">
     import PhotoSwipeLightbox from '<?= $this->basePath() ?>/js/photoswipe-lightbox.esm.min.js';
 
     const leftArrowSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 50 30" width="50" height="30"><use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#chevron-left"></use></svg>';
-    const closeSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#times"></use></svg>';
-    const zoomSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use class="pswp__icn-zoom-plus" href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#search-plus"></use><use class="pswp__icn-zoom-minus" href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#search-minus"></use></svg>';
+    const closeSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#xmark"></use></svg>';
+    const zoomSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use class="pswp__icn-zoom-plus" href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#magnifying-glass-plus"></use><use class="pswp__icn-zoom-minus" href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#magnifying-glass-minus"></use></svg>';
 
     let lastActiveElement = null;
 
@@ -203,13 +316,38 @@ $this->scriptUrl()->requireUrl('member/search')
         zoomTitle: '<?= $this->translate('Zoom (z)') ?>',
         arrowPrevTitle: '<?=  $this->translate('Previous') ?>',
         arrowNextTitle: '<?=  $this->translate('Next') ?>',
-        errorMsg: '<div class="pswp__error-msg"><a href="" target="_blank"><?= $this->translate('The image') ?></a> <?= $this->translate('could not be loaded.') ?></div>',
+        errorMsg: '<?= $this->translate('The image could not be loaded.') ?>',
 
         pswpModule: () => import('<?= $this->basePath() ?>/js/photoswipe.esm.min.js'),
     });
 
     lightbox.on('uiRegister', () => {
         // Register custom buttons.
+        <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'download')): ?>
+            lightbox.pswp.ui.registerElement({
+                name: 'download-button',
+                appendTo: 'bar',
+                order: 13,
+                isButton: true,
+                title: '<?= $this->translate('Download') ?>',
+                html: {
+                    isCustomSVG: true,
+                    inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#download"></use>',
+                },
+                onClick: (event, el, pswp) => {
+                    let downloadUrl = pswp.currSlide.data.element.dataset.rawUrl;
+                    let link = document.createElement('a');
+
+                    link.href = downloadUrl;
+                    link.download = '';
+                    document.body.appendChild(link);
+
+                    link.click();
+                    link.remove();
+                },
+            });
+        <?php endif; ?>
+
         lightbox.pswp.ui.registerElement({
             name: 'share-button',
             appendTo: 'bar',
@@ -222,8 +360,8 @@ $this->scriptUrl()->requireUrl('member/search')
             },
             onClick: (event, el, pswp) => {
                 let id = pswp.currSlide.data.element.dataset.id;
-                let currentURL = window.location.href;
-                let photoURL = currentURL + '#&pid=' + id;
+                let currentURL = window.location.origin + window.location.pathname;
+                let photoURL = currentURL + '#pid=' + id;
 
                 navigator.clipboard.writeText(photoURL).then(() => {
                     el.dataset.originalTitle = '<?= $this->translate('Copied URL!') ?>';
@@ -252,17 +390,45 @@ $this->scriptUrl()->requireUrl('member/search')
             });
         <?php endif; ?>
 
+        <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'view_metadata')): ?>
+            lightbox.pswp.ui.registerElement({
+                name: 'metadata-button',
+                appendTo: 'bar',
+                order: 9,
+                isButton: true,
+                title: '<?= $this->translate('Information') ?>',
+                html: {
+                    isCustomSVG: true,
+                    inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#circle-info"></use>',
+                },
+                onClick: () => {
+                    let metadata = document.querySelector('.pswp__metadata-ui');
+
+                    if (metadata.classList.contains('pswp__metadata-ui-open')) {
+                        metadata.classList.remove('pswp__metadata-ui-open');
+                    } else {
+                        metadata.classList.add('pswp__metadata-ui-open');
+                    }
+                },
+            });
+        <?php endif; ?>
+
         lightbox.pswp.ui.registerElement({
             name: 'profile-photo-button',
             appendTo: 'bar',
-            order: 9,
+            order: 8,
             isButton: true,
             title: '<?= $this->translate('Set as profile picture') ?>',
             html: {
                 isCustomSVG: true,
-                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#portrait"></use>',
+                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#image-portrait"></use>',
             },
-            position: 'bar',
+            onInit: (el, pswp) => {
+                // Hide button by default, it should only be shown through tags.
+                pswp.on('change', () => {
+                    el.classList.add('pswp__button--hidden');
+                });
+            },
             onClick: (event, el, pswp) => {
                 let currentSlide = pswp.currSlide.data.element;
 
@@ -277,122 +443,191 @@ $this->scriptUrl()->requireUrl('member/search')
             },
         });
 
-        lightbox.pswp.ui.registerElement({
-            name: 'download-button',
-            appendTo: 'bar',
-            order: 8,
-            isButton: true,
-            title: '<?= $this->translate('Download') ?>',
-            html: {
-                isCustomSVG: true,
-                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#file-download"></use>',
-            },
-            position: 'bar',
-            onClick: (event, el, pswp) => {
-                let downloadUrl = pswp.currSlide.data.element.dataset.rawUrl;
-                let link = document.createElement('a');
+        <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'vote')): ?>
+            lightbox.pswp.ui.registerElement({
+                name: 'like-button',
+                appendTo: 'bar',
+                order: 7,
+                isButton: true,
+                title: '<?= $this->translate('Vote for photo of the week') ?>',
+                html: {
+                    isCustomSVG: true,
+                    inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#thumbs-up"></use>',
+                },
+                onInit: (el, pswp) => {
+                    pswp.on('change', () => {
+                        // Add a pulsing dot if the user has not recently voted for a photo.
+                        if ('false' === pswp.options.dataSource.gallery.dataset.recentVote) {
+                            if (1 === el.childElementCount) {
+                                const pulsingDot = document.createElement('span');
+                                pulsingDot.classList.add('pulsing-dot');
+                                el.appendChild(pulsingDot);
+                            }
+                        }
 
-                link.href = downloadUrl;
-                link.download = '';
-                document.body.appendChild(link);
+                        updateVotedState(el, pswp.currSlide.data.element.dataset.voted);
+                    });
 
-                link.click();
-                link.remove();
-            },
-        });
+                    pswp.on('votedLoaded', ({voted}) => {
+                        // Check that we were able to load the voted status.
+                        if (null === voted) {
+                            el.dataset.originalTitle = '<?= $this->translate('Cannot load vote') ?>';
 
-        lightbox.pswp.ui.registerElement({
-            name: 'metadata-button',
-            appendTo: 'bar',
-            order: 7,
-            isButton: true,
-            title: '<?= $this->translate('Information') ?>',
-            html: {
-                isCustomSVG: true,
-                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#info-circle"></use>',
-            },
-            position: 'bar',
-            onClick: (event, el, pswp) => {
-                let metadata = document.querySelector('.pswp__metadata-ui');
+                            return;
+                        }
 
-                if (metadata.classList.contains('pswp__metadata-ui-open')) {
-                    metadata.classList.remove('pswp__metadata-ui-open');
-                } else {
-                    metadata.classList.add('pswp__metadata-ui-open');
-                }
-            },
-        });
-
-        lightbox.pswp.ui.registerElement({
-            name: 'like-button',
-            appendTo: 'bar',
-            order: 6,
-            isButton: true,
-            title: '<?= $this->translate('Vote for photo of the week') ?>',
-            html: {
-                isCustomSVG: true,
-                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#thumbs-up"></use>',
-            },
-            position: 'bar',
-            onInit: (el, pswp) => {
-                lightbox.pswp.on('change', () => {
-                    let hasRecentVote = document.querySelector('.pswp-gallery').dataset.recentVote;
+                        pswp.currSlide.data.element.dataset.voted = voted;
+                        updateVotedState(el, pswp.currSlide.data.element.dataset.voted);
+                    });
+                },
+                onClick: (event, el, pswp) => {
+                    let currentSlide = pswp.currSlide.data.element;
                     let hasVoted = pswp.currSlide.data.element.dataset.voted;
 
-                    if ('false' === hasRecentVote) {
-                        if (1 === el.childElementCount) {
-                            const pulsingDot = document.createElement('span');
-                            pulsingDot.classList.add('pulsing-dot');
-                            el.appendChild(pulsingDot);
-                        }
+                    if ('false' === hasVoted) {
+                        fetch(currentSlide.dataset.voteUrl, { method: 'POST' })
+                            .then(response => response.json())
+                            .then(result => {
+                                pswp.currSlide.data.voted = true;
+                                el.firstChild.classList.add('pswp__icn-red');
+                                el.dataset.originalTitle = '<?= $this->translate('Voted!') ?>';
+
+                                // Remove the pulsing dot if it is present.
+                                const pulsingdot = document.querySelector('.pulsing-dot');
+                                if (null !== pulsingdot) {
+                                    el.removeChild(pulsingdot);
+                                }
+
+                                // Also update the recent vote status.
+                                pswp.options.dataSource.gallery.dataset.recentVote = 'true';
+                            }).catch(error => {
+                                // An error occurred somewhere along the way, perhaps we should notify the user.
+                                el.dataset.originalTitle = '<?= $this->translate('Could not vote, try again') ?>';
+                            });
                     }
+                },
+            });
+        <?php endif; ?>
 
-                    if ('true' === hasVoted) {
-                        el.firstChild.classList.add('pswp__icn-red');
-                        el.dataset.originalTitle = '<?= $this->translate('Already voted!') ?>';
-                    } else {
-                        el.firstChild.classList.remove('pswp__icn-red');
-                        el.dataset.originalTitle = '<?= $this->translate('Vote for photo of the week') ?>';
-                    }
-                });
-            },
-            onClick: (event, el, pswp) => {
-                let currentSlide = pswp.currSlide.data.element;
-                let hasVoted = currentSlide.dataset.voted;
+        <?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'view')): ?>
+            // Register the tagging system (but only if the user is allowed to see tags).
+            lightbox.pswp.ui.registerElement({
+                name: 'tags-ui',
+                appendTo: 'root',
+                order: 42,
+                isButton: false,
+                html: '<?= $this->translate('Loading tags...') ?>',
+                onInit: (el, pswp) => {
+                    pswp.on('change', () => {
+                        let figTags = pswp.currSlide.data.element.querySelector('figtags');
 
-                if ('false' === hasVoted) {
-                    fetch(currentSlide.dataset.voteUrl, { method: 'POST' })
-                        .then(response => response.json())
-                        .then(result => {
-                            currentSlide.dataset.voted = 'true';
-                            el.firstChild.classList.add('pswp__icn-red');
-                            el.dataset.originalTitle = '<?= $this->translate('Voted!') ?>';
+                        if (figTags.hasChildNodes()) {
+                            el.innerHTML = figTags.innerHTML;
 
-                            // Remove the pulsing dot if it is present.
-                            const pulsingdot = document.querySelector('.pulsing-dot');
-                            if (null !== pulsingdot) {
-                                el.removeChild(pulsingdot);
+                            if (null !== el.querySelector(`.tagList span[data-member="${pswp.options.dataSource.gallery.dataset.lidnr}"]`)) {
+                                document.querySelector('.pswp__button--profile-photo-button').classList.remove('pswp__button--hidden');
                             }
 
-                            // Also update the recent vote status.
-                            document.querySelector('.pswp-gallery').dataset.recentVote = 'true';
-                        }).catch(error => {
-                            // An error occurred somewhere along the way, perhaps we should notify the user.
-                            el.dataset.originalTitle = '<?= $this->translate('Could not vote, try again') ?>';
-                        });
-                }
-            },
-        });
+                            addTagSearch(el, figTags);
+                        }
+                    });
 
+                    pswp.on('tagsLoaded', ({tags}) => {
+                        // Check that we were able to load the tags.
+                        if (null === tags) {
+                            el.innerText = '<?= $this->translate('Cannot load tags') ?>';
+
+                            return;
+                        }
+
+                        let lidnr = parseInt(pswp.options.dataSource.gallery.dataset.lidnr);
+                        let figTags = pswp.currSlide.data.element.querySelector('figtags');
+                        let id = pswp.currSlide.data.element.dataset.id;
+                        let tagCount = tags.length;
+                        let i = 1;
+
+                        el.innerHTML = `
+                            <span class="tag-title ${(0 === tagCount) ? 'hidden' : ''}"><?= $this->translate('In this photo:') ?></span>
+                            <span class="no-tag-title ${(0 !== tagCount) ? 'hidden' : ''}"><?= $this->translate('No one has been tagged in this photo yet. Tag someone you recognise now!')?></span>
+                            <div class="tagList">
+                                ${tags.map((member) => {
+                                    // Since we are already looping through all tags here, we can directly check if one
+                                    // of the tags belongs to the current member. If so, show the "set as profile pic"
+                                    // button.
+                                    if (member.lidnr === lidnr) {
+                                        document.querySelector('.pswp__button--profile-photo-button').classList.remove('pswp__button--hidden');
+                                    }
+
+                                    let viewMemberUrl = URLHelper.url('member/view', {lidnr: member.lidnr});
+                                    let removeUrl = URLHelper.url('photo/photo/tag/remove', {photo_id: id, lidnr: member.lidnr});
+                                    let spacer = (i++ && i < tagCount) ? ',&nbsp' : ((i === tagCount) ? '<?= $this->translate('and') ?>' : '');
+
+                                    return `
+                                        <span data-member="${member.lidnr}">
+                                            <a href="${viewMemberUrl}">${member.fullName}</a>&nbsp;
+                                            <a class="remove-tag" href="${removeUrl}" data-tag-id="removeTag${member.id}">
+                                                <span class="fas fa-times" aria-hidden="true"></span>
+                                            </a>
+                                            <span class="tag-spacer">${spacer}</span>
+                                        </span>`;
+                                }).join('')}
+                            </div>
+                                <?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'add')): ?>
+                                    <div class="form-group">
+                                        <label for="tagSearch"><span class="fas fa-plus"></span> <?= $this->translate('Tag someone') ?>:</label>
+                                        <input type="text"
+                                            data-url="${URLHelper.url('photo/photo/tag/add', {photo_id: id, lidnr: 'lidnr'})}"
+                                            id="tagSearch" class="tagSearch" name="tagSearch">
+                                    </div>
+                                <?php endif; ?>
+                        `;
+
+                        // Replicate the tags UI to the actual figure DOM.
+                        figTags.innerHTML = el.innerHTML;
+                        addTagSearch(el, figTags);
+                    });
+
+                    pswp.on('zoomPanUpdate', () => {
+                        let tagsUIHideTimeout;
+
+                        if (pswp.currSlide.currZoomLevel > pswp.currSlide.zoomLevels.initial) {
+                            el.classList.add('pswp__tags-ui--hidden');
+
+                            if (tagsUIHideTimeout) {
+                                clearTimeout(tagsUIHideTimeout);
+                            }
+
+                            tagsUIHideTimeout = setTimeout(() => {
+                                el.hidden = true
+                                tagsUIHideTimeout = null;
+                            }, 300);
+                        } else {
+                            el.hidden = false;
+
+                            if (tagsUIHideTimeout) {
+                                clearTimeout(tagsUIHideTimeout);
+                            }
+
+                            tagsUIHideTimeout = setTimeout(() => {
+                                el.classList.remove('pswp__tags-ui--hidden');
+                                tagsUIHideTimeout = null;
+                            }, 50);
+                        }
+                    });
+                },
+            });
+        <?php endif; ?>
+
+        <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'view_metadata')): ?>
         // Register the metadata UI.
         lightbox.pswp.ui.registerElement({
             name: 'metadata-ui',
             appendTo: 'root',
-            order: 2,
+            order: 43,
             isButton: false,
             html: '<?= $this->translate('Cannot load metadata') ?>',
             onInit: (el, pswp) => {
-                lightbox.pswp.on('change', () => {
+                pswp.on('change', () => {
                     let currentSlide = pswp.currSlide.data.element;
 
                     // Copy all HTML.
@@ -400,104 +635,10 @@ $this->scriptUrl()->requireUrl('member/search')
                 });
             },
         });
-
-        // Register the tagging system.
-        lightbox.pswp.ui.registerElement({
-            name: 'tags-ui',
-            appendTo: 'root',
-            order: 1,
-            isButton: false,
-            html: '<?= $this->translate('Cannot load tags') ?>',
-            onInit: (el, pswp) => {
-                lightbox.pswp.on('change', () => {
-                    let currentSlide = pswp.currSlide.data.element;
-
-                    // Copy all HTML.
-                    el.innerHTML = currentSlide.querySelector('figtags').innerHTML;
-
-                    // Remove any old autocomplete suggestion boxes.
-                    document.querySelectorAll('.autocomplete-suggestions').forEach(element => {
-                        element.remove();
-                    });
-
-                    // Make it possible to add new tags.
-                    let tagSearch = el.querySelector('.tagSearch');
-                    new VanillaAutocomplete(tagSearch, {
-                        minChars: 2,
-                        lookup: function (query, done) {
-                            $.getJSON(URLHelper.url('member/search') + '?q=' + query, function (data) {
-                                var result = {suggestions: []};
-
-                                $.each(data.members, function (i, member) {
-                                    result.suggestions.push({
-                                        'value': member.fullName, 'data': member.lidnr
-                                    })
-                                });
-
-                                done(result);
-                            });
-                        },
-                        orientation: 'top',
-                        onSelect: function (suggestion) {
-                            $.post($(this).data('url').replace('lidnr', suggestion.data),
-                                { lidnr: suggestion.data }
-                                , function (data) {
-                                    if (data.success) {
-                                        let removeURL = URLHelper.url('photo/photo/tag/remove', {
-                                            'photo_id': data.tag.photo_id,
-                                            'lidnr': data.tag.member_id
-                                        });
-
-                                        let memberURL = URLHelper.url('member/view', {
-                                            'lidnr': data.tag.member_id
-                                        });
-
-                                        let id = 'removeTag' + data.tag.id;
-
-                                        // Write the tag into the current slide and the original `figtags`.
-                                        document.querySelectorAll('div[data-tag-list="' + data.tag.photo_id + '"]').forEach(tagList => {
-                                            let spacer = (0 !== tagList.childElementCount) ?
-                                                ((1 === tagList.childElementCount) ?
-                                                    ' <?= $this->translate('and') ?> '
-                                                    : ',&nbsp')
-                                                : '';
-
-                                            if (0 === tagList.childElementCount) {
-                                                tagList.parentElement.querySelector('.no-tag-title').classList.add('hidden');
-                                                tagList.parentElement.querySelector('.tag-title').classList.remove('hidden');
-                                            }
-
-                                            tagList.insertAdjacentHTML(
-                                                'afterbegin',
-                                                `
-                                                <span>
-                                                    <a href="${memberURL}">${suggestion.value}</a>
-                                                    <a href="${removeURL}" class="remove-tag" data-tag-id="${id}">
-                                                        <span class="fas fa-times" aria-hidden="true"></span>
-                                                    </a>${spacer}
-                                                </span>
-                                                `
-                                            );
-                                        });
-                                        Photo.initRemoveTag(el.querySelector('a[data-tag-id="' + id + '"]'));
-                                        tagSearch.focus();
-                                    }
-                                    tagSearch.value = '';
-                                });
-                        },
-                        zIndex: 100000,
-                    });
-
-                    // Make tags removable.
-                    el.querySelectorAll('.remove-tag').forEach(element => {
-                        Photo.initRemoveTag(element);
-                    });
-                });
-            },
-        });
+        <?php endif; ?>
     });
 
-    // If the tag search is being used, do not allow zooming using the `z` key.
+    // If the tag search is being used, do not allow zooming using the `z` or arrow keys.
     lightbox.on('keydown', (e)  => {
         let pressedKey = e.originalEvent.keyCode;
         let tagSearch = document.querySelector('.pswp__tags-ui .tagSearch');
@@ -520,11 +661,48 @@ $this->scriptUrl()->requireUrl('member/search')
             placement: 'bottom',
             selector: '[title]',
         });
+
+        document.querySelectorAll('.pswp__top-bar [title]').forEach(element => {
+            element.dataset.originalTitle = element.title;
+            element.title = "";
+        });
     });
 
-    // Update the last active element when a slide is activated.
-    lightbox.on('slideActivate', ({slide}) => {
-        lastActiveElement = slide.data.element;
+    <?php if (
+        $this->acl('photo_service_acl')->isAllowed('tag', 'view')
+        && $this->acl('photo_service_acl')->isAllowed('photo', 'vote')
+    ): ?>
+        // Fetch the tags and voted status.
+        lightbox.on('gettingData', ({slide}) => {
+            // When opening the photo viewer, there is initially no slide.
+            if (undefined !== slide) {
+                // Unfortunately, slide are unloaded at some point, so we cannot permanently store the obtained data,
+                // hence our only hope is that we managed to get data into the actual DOM to be able to determine if we
+                // need to fetch the tags/voted status again.
+                if (!slide.data.element.querySelector('figtags').hasChildNodes()) {
+                    slide.data = {
+                        ...slide.data,
+                        details: fetch(slide.data.element.dataset.detailsUrl),
+                    };
+                }
+            }
+        });
+    <?php endif; ?>
+
+    // Update the last active element when a new slide is shown.
+    lightbox.on('change', () => {
+        lastActiveElement = lightbox.pswp.currSlide.data.element;
+
+        lightbox.pswp.currSlide.data.details?.then(response => response.json())
+            .then((data) => {
+                lightbox.pswp.dispatch('tagsLoaded', {tags: data.tags});
+                lightbox.pswp.dispatch('votedLoaded', {voted: data.voted});
+                lightbox.pswp.currSlide.data.details = null;
+            }).catch(() => {
+                lightbox.pswp.dispatch('tagsLoaded', {tags: null});
+                lightbox.pswp.dispatch('votedLoaded', {voted: null});
+                lightbox.pswp.currSlide.data.details = null;
+            });
     });
 
     lightbox.on('close', () => {
@@ -551,34 +729,10 @@ $this->scriptUrl()->requireUrl('member/search')
     lightbox.init();
 
     // Check if the hash is present in the URL, if so, parse and try to open the lightbox for the provided image.
-    if (typeof window.location.hash !== "undefined") {
-        let hash = window.location.hash.substring(1), params = {};
+    const idMatcher = /^pid=(\d+)$/i;
+    const pid = window.location.hash.substring(1).match(idMatcher);
 
-        if (hash.length > 5) {
-            let vars = hash.split('&');
-
-            for (let i = 0; i < vars.length; i++) {
-                if (!vars[i]) {
-                    continue;
-                }
-
-                let pair = vars[i].split('=');
-                if (pair.length < 2) {
-                    continue;
-                }
-
-                params[pair[0]] = pair[1];
-            }
-
-            if (params.pid) {
-                let expectedImage = parseInt(params.pid, 10);
-
-                document.querySelectorAll('.pswp-gallery__item').forEach(element => {
-                    if (parseInt(element.dataset.id, 10) === expectedImage) {
-                        element.click(); // lightbox.loadAndOpen does not work, so simulate clicking the image.
-                    }
-                });
-            }
-        }
+    if (null !== pid) {
+        document.querySelector(`.pswp-gallery__item[data-id="${parseInt(pid[1], 10)}"]`)?.click();
     }
 </script>

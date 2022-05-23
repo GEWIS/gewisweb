@@ -5,6 +5,7 @@ namespace Photo\Model;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\{
+    ClassMetadataInfo,
     Column,
     Entity,
     GeneratedValue,
@@ -179,7 +180,6 @@ class Photo implements ResourceInterface
         targetEntity: Tag::class,
         mappedBy: "photo",
         cascade: ["persist", "remove"],
-        fetch: "EAGER",
     )]
     protected Collection $tags;
 

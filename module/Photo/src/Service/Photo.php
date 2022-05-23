@@ -719,10 +719,6 @@ class Photo
         int $photoId,
         int $lidnr,
     ): ?TagModel {
-        if (!$this->aclService->isAllowed('add', 'tag')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to add tags.'));
-        }
-
         if (null === $this->findTag($photoId, $lidnr)) {
             $photo = $this->getPhoto($photoId);
             $member = $this->memberService->findMemberByLidnr($lidnr);
@@ -791,10 +787,6 @@ class Photo
         int $photoId,
         int $lidnr,
     ): bool {
-        if (!$this->aclService->isAllowed('remove', 'tag')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to remove tags.'));
-        }
-
         $tag = $this->findTag($photoId, $lidnr);
 
         if (null !== $tag) {

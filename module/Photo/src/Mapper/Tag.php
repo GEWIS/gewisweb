@@ -3,6 +3,7 @@
 namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Photo\Model\{
     Photo as PhotoModel,
     Tag as TagModel,
@@ -42,6 +43,32 @@ class Tag extends BaseMapper
                 'member' => $lidnr,
             ]
         );
+    }
+
+    /**
+     * Get all the tags for a photo, but limited to lidnr and full name.
+     *
+     * @param int $photoId
+     * @return array
+     */
+    public function getTagsByPhoto(int $photoId): array
+    {
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('id', 'id', 'integer')
+            ->addScalarResult('lidnr', 'lidnr', 'integer')
+            ->addScalarResult('fullName', 'fullName');
+
+        $sql = <<<QUERY
+            SELECT `t`.`id`, `m`.`lidnr`, CONCAT_WS(' ', `m`.`firstName`, IF(LENGTH(`m`.`middleName`), `m`.`middleName`, NULL), `m`.`lastName`) as `fullName`
+            FROM `Member` `m`
+            LEFT JOIN `Tag` `t` ON `m`.`lidnr` = `t`.`member_id`
+            WHERE `t`.`photo_id` = :photo_id
+            QUERY;
+
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+        $query->setParameter(':photo_id', $photoId);
+
+        return $query->getArrayResult();
     }
 
     /**

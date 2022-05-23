@@ -245,9 +245,6 @@ class Module
 
                     return $helper;
                 },
-                'hasVoted' => function (ContainerInterface $container) {
-                    return new HasVoted($container->get('photo_mapper_vote'));
-                },
             ],
         ];
     }

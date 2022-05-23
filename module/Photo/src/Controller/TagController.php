@@ -3,11 +3,20 @@
 namespace Photo\Controller;
 
 use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\JsonModel;
-use Photo\Service\Photo as PhotoService;
+use Photo\Service\{
+    AclService,
+    Photo as PhotoService,
+};
+use User\Permissions\NotAllowedException;
 
 class TagController extends AbstractActionController
 {
+    private AclService $aclService;
+
+    private Translator $translator;
+
     /**
      * @var PhotoService
      */
@@ -18,13 +27,22 @@ class TagController extends AbstractActionController
      *
      * @param PhotoService $photoService
      */
-    public function __construct(PhotoService $photoService)
-    {
+    public function __construct(
+        AclService $aclService,
+        Translator $translator,
+        PhotoService $photoService,
+    ) {
+        $this->aclService = $aclService;
+        $this->translator = $translator;
         $this->photoService = $photoService;
     }
 
     public function addAction(): JsonModel
     {
+        if (!$this->aclService->isAllowed('add', 'tag')) {
+            throw new NotAllowedException($this->translator->translate('Not allowed to add tags.'));
+        }
+
         $request = $this->getRequest();
         $result = [];
         if ($request->isPost()) {
@@ -44,6 +62,10 @@ class TagController extends AbstractActionController
 
     public function removeAction(): JsonModel
     {
+        if (!$this->aclService->isAllowed('remove', 'tag')) {
+            throw new NotAllowedException($this->translator->translate('Not allowed to remove tags.'));
+        }
+
         $request = $this->getRequest();
         $result = [];
         if ($request->isPost()) {
