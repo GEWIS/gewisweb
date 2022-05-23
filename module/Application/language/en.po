@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-23 12:47+0200\n"
+"POT-Creation-Date: 2022-05-23 16:49+0200\n"
 "PO-Revision-Date: 2022-05-23 12:48+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -355,7 +355,7 @@ msgstr "The options for this proposal do not fit in the valid range."
 #: module/Activity/view/activity/admin-approval/view.phtml:76
 #: module/Activity/view/activity/admin-category/add.phtml:49
 #: module/Activity/view/activity/admin-category/add.phtml:87
-#: module/Activity/view/activity/admin/participantsTable.phtml:5
+#: module/Activity/view/activity/admin/participantsTable.phtml:11
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:5
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:10
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:17
@@ -418,7 +418,7 @@ msgstr "Choice"
 
 #: module/Activity/src/Form/SignupListField.php:68
 #: module/Activity/view/activity/activity-calendar/index.phtml:39
-#: module/Activity/view/activity/admin/participantsTable.phtml:7
+#: module/Activity/view/activity/admin/participantsTable.phtml:13
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:97
 #: module/Activity/view/partial/option.phtml:10
 #: module/Decision/view/decision/decision/index.phtml:9
@@ -1345,7 +1345,7 @@ msgstr ""
 "add or remove external participants and view detailed information regarding "
 "the signup of all participants."
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:6
+#: module/Activity/view/activity/admin/participantsTable.phtml:12
 #: module/Decision/src/Form/OrganInformation.php:37
 #: module/Decision/view/decision/member/self.phtml:51
 #: module/Decision/view/decision/member/view.phtml:34
@@ -1353,20 +1353,42 @@ msgstr ""
 msgid "Email"
 msgstr "Email"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:9
+#: module/Activity/view/activity/admin/participantsTable.phtml:15
 msgid "Sign-up List"
 msgstr "Sign-up List"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:43
-msgid "User"
-msgstr "User"
+#: module/Activity/view/activity/admin/participantsTable.phtml:54
+#: module/Decision/view/decision/member/self.phtml:67
+msgid "Ordinary"
+msgstr "Ordinary"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:46
+#: module/Activity/view/activity/admin/participantsTable.phtml:57
+#: module/Decision/view/decision/member/self.phtml:70
+msgid "Prolonged"
+msgstr "Prolonged"
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:60
+#: module/Activity/view/activity/admin/participantsTable.phtml:75
 #: module/Decision/view/decision/member/self.phtml:73
 msgid "External"
 msgstr "External"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:75
+#: module/Activity/view/activity/admin/participantsTable.phtml:63
+#: module/Decision/view/decision/member/self.phtml:76
+msgid "Extraordinary"
+msgstr "Extraordinary"
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:66
+#: module/Decision/view/decision/member/self.phtml:79
+msgid "Honorary"
+msgstr "Honorary"
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:70
+#, php-format
+msgid "User (%s)"
+msgstr "User (%s)"
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:104
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -1380,7 +1402,7 @@ msgstr "External"
 msgid "Yes"
 msgstr "Yes"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:77
+#: module/Activity/view/activity/admin/participantsTable.phtml:106
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -1394,11 +1416,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:100
+#: module/Activity/view/activity/admin/participantsTable.phtml:129
 msgid "Additional actions"
 msgstr "Additional actions"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:104
+#: module/Activity/view/activity/admin/participantsTable.phtml:133
 msgid "Mail everybody"
 msgstr "Mail everybody"
 
@@ -3186,22 +3208,6 @@ msgstr "Generation"
 msgid "Membership type"
 msgstr "Membership type"
 
-#: module/Decision/view/decision/member/self.phtml:67
-msgid "Ordinary"
-msgstr "Ordinary"
-
-#: module/Decision/view/decision/member/self.phtml:70
-msgid "Prolonged"
-msgstr "Prolonged"
-
-#: module/Decision/view/decision/member/self.phtml:76
-msgid "Extraordinary"
-msgstr "Extraordinary"
-
-#: module/Decision/view/decision/member/self.phtml:79
-msgid "Honorary"
-msgstr "Honorary"
-
 #: module/Decision/view/decision/member/self.phtml:85
 msgid "Last membership change"
 msgstr "Last membership change"
@@ -3838,7 +3844,7 @@ msgid "You are not allowed to edit pages."
 msgstr "You are not allowed to edit pages."
 
 #: module/Frontpage/src/Service/Page.php:300
-#: module/Photo/src/Service/Admin.php:210
+#: module/Photo/src/Service/Admin.php:229
 msgid "The uploaded file does not have a valid extension"
 msgstr "The uploaded file does not have a valid extension"
 
@@ -4139,11 +4145,11 @@ msgstr "End date"
 msgid "Not allowed to add photos."
 msgstr "Not allowed to add photos."
 
-#: module/Photo/src/Service/Admin.php:194
+#: module/Photo/src/Service/Admin.php:213
 msgid "An unknown error occurred during uploading ("
 msgstr "An unknown error occurred during uploading ("
 
-#: module/Photo/src/Service/Admin.php:216
+#: module/Photo/src/Service/Admin.php:235
 #, php-format
 msgid ""
 "The uploaded file is not a valid image \n"
@@ -4152,7 +4158,7 @@ msgstr ""
 "The uploaded file is not a valid image \n"
 "Error: %s"
 
-#: module/Photo/src/Service/Admin.php:232
+#: module/Photo/src/Service/Admin.php:251
 msgid "Not allowed to upload photos."
 msgstr "Not allowed to upload photos."
 
