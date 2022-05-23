@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-23 16:49+0200\n"
-"PO-Revision-Date: 2022-05-23 12:48+0200\n"
+"POT-Creation-Date: 2022-05-23 21:46+0200\n"
+"PO-Revision-Date: 2022-05-23 21:48+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -1056,7 +1056,7 @@ msgstr "Update Proposal"
 #: module/Company/view/partial/company/admin/editors/job.phtml:119
 #: module/Company/view/partial/company/admin/editors/label.phtml:3
 #: module/Company/view/partial/company/admin/editors/package.phtml:3
-#: module/Photo/view/photo/album/index.phtml:309
+#: module/Photo/view/photo/album/index.phtml:399
 msgid "Information"
 msgstr "Information"
 
@@ -1087,7 +1087,8 @@ msgstr "old"
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:68
 #: module/Activity/view/activity/admin-approval/view.phtml:26
 #: module/Photo/view/partial/tags.phtml:40
-#: module/Photo/view/photo/album/index.phtml:461
+#: module/Photo/view/photo/album/index.phtml:231
+#: module/Photo/view/photo/album/index.phtml:563
 msgid "and"
 msgstr "and"
 
@@ -1359,27 +1360,32 @@ msgstr "Sign-up List"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:54
 #: module/Decision/view/decision/member/self.phtml:67
+#: module/Decision/view/decision/member/view.phtml:55
 msgid "Ordinary"
 msgstr "Ordinary"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:57
 #: module/Decision/view/decision/member/self.phtml:70
+#: module/Decision/view/decision/member/view.phtml:58
 msgid "Prolonged"
 msgstr "Prolonged"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:60
 #: module/Activity/view/activity/admin/participantsTable.phtml:75
 #: module/Decision/view/decision/member/self.phtml:73
+#: module/Decision/view/decision/member/view.phtml:61
 msgid "External"
 msgstr "External"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:63
 #: module/Decision/view/decision/member/self.phtml:76
+#: module/Decision/view/decision/member/view.phtml:64
 msgid "Extraordinary"
 msgstr "Extraordinary"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:66
 #: module/Decision/view/decision/member/self.phtml:79
+#: module/Decision/view/decision/member/view.phtml:67
 msgid "Honorary"
 msgstr "Honorary"
 
@@ -1851,7 +1857,7 @@ msgstr "Pages"
 #: module/Photo/view/photo/album-admin/edit.phtml:3
 #: module/Photo/view/photo/album-admin/index.phtml:9
 #: module/Photo/view/photo/album/index.phtml:12
-#: module/Photo/view/photo/album/index.phtml:30
+#: module/Photo/view/photo/album/index.phtml:32
 #: module/Photo/view/photo/photo-admin/index.phtml:8
 #: module/Photo/view/photo/photo/index.phtml:3
 msgid "Photos"
@@ -2040,12 +2046,12 @@ msgid "My photo's"
 msgstr "My photos"
 
 #: module/Application/view/partial/paginator.phtml:8
-#: module/Photo/view/photo/album/index.phtml:204
+#: module/Photo/view/photo/album/index.phtml:317
 msgid "Previous"
 msgstr "Previous"
 
 #: module/Application/view/partial/paginator.phtml:22
-#: module/Photo/view/photo/album/index.phtml:205
+#: module/Photo/view/photo/album/index.phtml:318
 msgid "Next"
 msgstr "Next"
 
@@ -3204,6 +3210,7 @@ msgid "Generation"
 msgstr "Generation"
 
 #: module/Decision/view/decision/member/self.phtml:63
+#: module/Decision/view/decision/member/view.phtml:50
 #: module/User/src/Model/Enums/JWTClaims.php:43
 msgid "Membership type"
 msgstr "Membership type"
@@ -3237,42 +3244,42 @@ msgid "the secretary of GEWIS"
 msgstr "the secretary of GEWIS"
 
 #: module/Decision/view/decision/member/self.phtml:102
-#: module/Decision/view/decision/member/view.phtml:49
+#: module/Decision/view/decision/member/view.phtml:75
 msgid "Membership of committees and fraternities"
 msgstr "Membership of committees and fraternities"
 
 #: module/Decision/view/decision/member/self.phtml:112
-#: module/Decision/view/decision/member/view.phtml:63
+#: module/Decision/view/decision/member/view.phtml:89
 msgid "Adresses"
 msgstr "Adresses"
 
 #: module/Decision/view/decision/member/self.phtml:117
-#: module/Decision/view/decision/member/view.phtml:68
+#: module/Decision/view/decision/member/view.phtml:94
 msgid "Home address (parents)"
 msgstr "Home address (parents)"
 
 #: module/Decision/view/decision/member/self.phtml:120
-#: module/Decision/view/decision/member/view.phtml:71
+#: module/Decision/view/decision/member/view.phtml:97
 msgid "Student address"
 msgstr "Student address"
 
 #: module/Decision/view/decision/member/self.phtml:123
-#: module/Decision/view/decision/member/view.phtml:74
+#: module/Decision/view/decision/member/view.phtml:100
 msgid "Mail address"
 msgstr "Mail address"
 
 #: module/Decision/view/decision/member/self.phtml:129
-#: module/Decision/view/decision/member/view.phtml:80
+#: module/Decision/view/decision/member/view.phtml:106
 msgid "Country"
 msgstr "Country"
 
 #: module/Decision/view/decision/member/self.phtml:133
-#: module/Decision/view/decision/member/view.phtml:84
+#: module/Decision/view/decision/member/view.phtml:110
 msgid "Street and number"
 msgstr "Street and number"
 
 #: module/Decision/view/decision/member/self.phtml:137
-#: module/Decision/view/decision/member/view.phtml:88
+#: module/Decision/view/decision/member/view.phtml:114
 msgid "City and postal code"
 msgstr "City and postal code"
 
@@ -3308,7 +3315,7 @@ msgstr "Your profile picture will be chosen automatically instead."
 msgid "More of my photo's"
 msgstr "More of my photo's"
 
-#: module/Decision/view/decision/member/view.phtml:137
+#: module/Decision/view/decision/member/view.phtml:163
 #, php-format
 msgid "Photo's of %s"
 msgstr "Photo's of %s"
@@ -4127,6 +4134,18 @@ msgstr "%d votes"
 msgid "1 vote"
 msgstr "1 vote"
 
+#: module/Photo/src/Controller/ApiController.php:60
+msgid "Not allowed to view photo details"
+msgstr "Not allowed to view photo details"
+
+#: module/Photo/src/Controller/TagController.php:43
+msgid "Not allowed to add tags."
+msgstr "Not allowed to add tags."
+
+#: module/Photo/src/Controller/TagController.php:66
+msgid "Not allowed to remove tags."
+msgstr "Not allowed to remove tags."
+
 #: module/Photo/src/Form/CreateAlbum.php:28
 #: module/Photo/src/Form/EditAlbum.php:30
 #: module/Photo/view/photo/album-admin/create.phtml:16
@@ -4228,18 +4247,10 @@ msgstr "You are not allowed to set a profile picture."
 msgid "Not allowed to view previous photos of the week"
 msgstr "Not allowed to view previous photos of the week"
 
-#: module/Photo/src/Service/Photo.php:723
-msgid "Not allowed to add tags."
-msgstr "Not allowed to add tags."
-
-#: module/Photo/src/Service/Photo.php:754
-#: module/Photo/src/Service/Photo.php:820
+#: module/Photo/src/Service/Photo.php:750
+#: module/Photo/src/Service/Photo.php:812
 msgid "Not allowed to view tags."
 msgstr "Not allowed to view tags."
-
-#: module/Photo/src/Service/Photo.php:795
-msgid "Not allowed to remove tags."
-msgstr "Not allowed to remove tags."
 
 #: module/Photo/view/partial/metadata.phtml:7
 msgid "Artist"
@@ -4293,16 +4304,19 @@ msgid "View on map"
 msgstr "View on map"
 
 #: module/Photo/view/partial/tags.phtml:10
+#: module/Photo/view/photo/album/index.phtml:550
 msgid "In this photo:"
 msgstr "In this photo:"
 
 #: module/Photo/view/partial/tags.phtml:11
+#: module/Photo/view/photo/album/index.phtml:551
 msgid ""
 "No one has been tagged in this photo yet. Tag someone you recognise now!"
 msgstr ""
 "No one has been tagged in this photo yet. Tag someone you recognise now!"
 
 #: module/Photo/view/partial/tags.phtml:49
+#: module/Photo/view/photo/album/index.phtml:577
 msgid "Tag someone"
 msgstr "Tag someone"
 
@@ -4382,7 +4396,7 @@ msgid "Regenerate"
 msgstr "Regenerate"
 
 #: module/Photo/view/photo/album-admin/index.phtml:141
-#: module/Photo/view/photo/album/index.phtml:202
+#: module/Photo/view/photo/album/index.phtml:315
 msgid "Close"
 msgstr "Close"
 
@@ -4453,74 +4467,78 @@ msgstr "Select a new parent album"
 msgid "The photos have been moved"
 msgstr "The photos have been moved"
 
-#: module/Photo/view/photo/album/index.phtml:92
+#: module/Photo/view/photo/album/index.phtml:94
 msgid "View user profile"
 msgstr "View user profile"
 
-#: module/Photo/view/photo/album/index.phtml:203
-msgid "Zoom (z)"
-msgstr "Zoom (z)"
-
-#: module/Photo/view/photo/album/index.phtml:206
-msgid "The image"
-msgstr "The image"
-
-#: module/Photo/view/photo/album/index.phtml:206
-msgid "could not be loaded."
-msgstr "could not be loaded."
-
-#: module/Photo/view/photo/album/index.phtml:218
-msgid "Share"
-msgstr "Share"
-
-#: module/Photo/view/photo/album/index.phtml:229
-msgid "Copied URL!"
-msgstr "Copied URL!"
-
-#: module/Photo/view/photo/album/index.phtml:240
-msgid "Go to album"
-msgstr "Go to album"
-
-#: module/Photo/view/photo/album/index.phtml:260
-msgid "Set as profile picture"
-msgstr "Set as profile picture"
-
-#: module/Photo/view/photo/album/index.phtml:272
-msgid "Set as profile picture!"
-msgstr "Set as profile picture!"
-
-#: module/Photo/view/photo/album/index.phtml:275
-msgid "Could not set as profile photo, try again"
-msgstr "Could not set as profile photo, try again"
-
-#: module/Photo/view/photo/album/index.phtml:285
-msgid "Download"
-msgstr "Download"
-
-#: module/Photo/view/photo/album/index.phtml:331
-#: module/Photo/view/photo/album/index.phtml:355
-msgid "Vote for photo of the week"
-msgstr "Vote for photo of the week"
-
-#: module/Photo/view/photo/album/index.phtml:352
+#: module/Photo/view/photo/album/index.phtml:287
 msgid "Already voted!"
 msgstr "Already voted!"
 
-#: module/Photo/view/photo/album/index.phtml:369
+#: module/Photo/view/photo/album/index.phtml:290
+#: module/Photo/view/photo/album/index.phtml:452
+msgid "Vote for photo of the week"
+msgstr "Vote for photo of the week"
+
+#: module/Photo/view/photo/album/index.phtml:316
+msgid "Zoom (z)"
+msgstr "Zoom (z)"
+
+#: module/Photo/view/photo/album/index.phtml:319
+msgid "The image could not be loaded."
+msgstr "The image could not be loaded."
+
+#: module/Photo/view/photo/album/index.phtml:332
+msgid "Download"
+msgstr "Download"
+
+#: module/Photo/view/photo/album/index.phtml:356
+msgid "Share"
+msgstr "Share"
+
+#: module/Photo/view/photo/album/index.phtml:367
+msgid "Copied URL!"
+msgstr "Copied URL!"
+
+#: module/Photo/view/photo/album/index.phtml:378
+msgid "Go to album"
+msgstr "Go to album"
+
+#: module/Photo/view/photo/album/index.phtml:421
+msgid "Set as profile picture"
+msgstr "Set as profile picture"
+
+#: module/Photo/view/photo/album/index.phtml:438
+msgid "Set as profile picture!"
+msgstr "Set as profile picture!"
+
+#: module/Photo/view/photo/album/index.phtml:441
+msgid "Could not set as profile photo, try again"
+msgstr "Could not set as profile photo, try again"
+
+#: module/Photo/view/photo/album/index.phtml:474
+msgid "Cannot load vote"
+msgstr "Cannot load vote"
+
+#: module/Photo/view/photo/album/index.phtml:493
 msgid "Voted!"
 msgstr "Voted!"
 
-#: module/Photo/view/photo/album/index.phtml:381
+#: module/Photo/view/photo/album/index.phtml:505
 msgid "Could not vote, try again"
 msgstr "Could not vote, try again"
 
-#: module/Photo/view/photo/album/index.phtml:393
-msgid "Cannot load metadata"
-msgstr "Cannot load metadata"
+#: module/Photo/view/photo/album/index.phtml:519
+msgid "Loading tags..."
+msgstr "Loading tags..."
 
-#: module/Photo/view/photo/album/index.phtml:410
+#: module/Photo/view/photo/album/index.phtml:538
 msgid "Cannot load tags"
 msgstr "Cannot load tags"
+
+#: module/Photo/view/photo/album/index.phtml:628
+msgid "Cannot load metadata"
+msgstr "Cannot load metadata"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:21
 #, php-format

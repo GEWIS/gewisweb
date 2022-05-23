@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-23 16:49+0200\n"
-"PO-Revision-Date: 2022-05-23 12:49+0200\n"
+"POT-Creation-Date: 2022-05-23 21:46+0200\n"
+"PO-Revision-Date: 2022-05-23 21:47+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -1069,7 +1069,7 @@ msgstr "Update voorstel"
 #: module/Company/view/partial/company/admin/editors/job.phtml:119
 #: module/Company/view/partial/company/admin/editors/label.phtml:3
 #: module/Company/view/partial/company/admin/editors/package.phtml:3
-#: module/Photo/view/photo/album/index.phtml:309
+#: module/Photo/view/photo/album/index.phtml:399
 msgid "Information"
 msgstr "Informatie"
 
@@ -1101,7 +1101,8 @@ msgstr "oud"
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:68
 #: module/Activity/view/activity/admin-approval/view.phtml:26
 #: module/Photo/view/partial/tags.phtml:40
-#: module/Photo/view/photo/album/index.phtml:461
+#: module/Photo/view/photo/album/index.phtml:231
+#: module/Photo/view/photo/album/index.phtml:563
 msgid "and"
 msgstr "en"
 
@@ -1376,27 +1377,32 @@ msgstr "Inschrijflijst"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:54
 #: module/Decision/view/decision/member/self.phtml:67
+#: module/Decision/view/decision/member/view.phtml:55
 msgid "Ordinary"
 msgstr "Gewoon"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:57
 #: module/Decision/view/decision/member/self.phtml:70
+#: module/Decision/view/decision/member/view.phtml:58
 msgid "Prolonged"
 msgstr "Geprolongeerd"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:60
 #: module/Activity/view/activity/admin/participantsTable.phtml:75
 #: module/Decision/view/decision/member/self.phtml:73
+#: module/Decision/view/decision/member/view.phtml:61
 msgid "External"
 msgstr "Extern"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:63
 #: module/Decision/view/decision/member/self.phtml:76
+#: module/Decision/view/decision/member/view.phtml:64
 msgid "Extraordinary"
 msgstr "Buitengewoon"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:66
 #: module/Decision/view/decision/member/self.phtml:79
+#: module/Decision/view/decision/member/view.phtml:67
 msgid "Honorary"
 msgstr "Erelidmaatschap"
 
@@ -1872,7 +1878,7 @@ msgstr "Pagina's"
 #: module/Photo/view/photo/album-admin/edit.phtml:3
 #: module/Photo/view/photo/album-admin/index.phtml:9
 #: module/Photo/view/photo/album/index.phtml:12
-#: module/Photo/view/photo/album/index.phtml:30
+#: module/Photo/view/photo/album/index.phtml:32
 #: module/Photo/view/photo/photo-admin/index.phtml:8
 #: module/Photo/view/photo/photo/index.phtml:3
 msgid "Photos"
@@ -2061,12 +2067,12 @@ msgid "My photo's"
 msgstr "Mijn foto’s"
 
 #: module/Application/view/partial/paginator.phtml:8
-#: module/Photo/view/photo/album/index.phtml:204
+#: module/Photo/view/photo/album/index.phtml:317
 msgid "Previous"
 msgstr "Vorige"
 
 #: module/Application/view/partial/paginator.phtml:22
-#: module/Photo/view/photo/album/index.phtml:205
+#: module/Photo/view/photo/album/index.phtml:318
 msgid "Next"
 msgstr "Volgende"
 
@@ -3229,6 +3235,7 @@ msgid "Generation"
 msgstr "Generatie"
 
 #: module/Decision/view/decision/member/self.phtml:63
+#: module/Decision/view/decision/member/view.phtml:50
 #: module/User/src/Model/Enums/JWTClaims.php:43
 msgid "Membership type"
 msgstr "Type lidmaatschap"
@@ -3262,42 +3269,42 @@ msgid "the secretary of GEWIS"
 msgstr "de secretaris van GEWIS"
 
 #: module/Decision/view/decision/member/self.phtml:102
-#: module/Decision/view/decision/member/view.phtml:49
+#: module/Decision/view/decision/member/view.phtml:75
 msgid "Membership of committees and fraternities"
 msgstr "Lidmaatschap van commissies en disputen"
 
 #: module/Decision/view/decision/member/self.phtml:112
-#: module/Decision/view/decision/member/view.phtml:63
+#: module/Decision/view/decision/member/view.phtml:89
 msgid "Adresses"
 msgstr "Adressen"
 
 #: module/Decision/view/decision/member/self.phtml:117
-#: module/Decision/view/decision/member/view.phtml:68
+#: module/Decision/view/decision/member/view.phtml:94
 msgid "Home address (parents)"
 msgstr "Thuisadres (ouders)"
 
 #: module/Decision/view/decision/member/self.phtml:120
-#: module/Decision/view/decision/member/view.phtml:71
+#: module/Decision/view/decision/member/view.phtml:97
 msgid "Student address"
 msgstr "Studentadres"
 
 #: module/Decision/view/decision/member/self.phtml:123
-#: module/Decision/view/decision/member/view.phtml:74
+#: module/Decision/view/decision/member/view.phtml:100
 msgid "Mail address"
 msgstr "Post adres"
 
 #: module/Decision/view/decision/member/self.phtml:129
-#: module/Decision/view/decision/member/view.phtml:80
+#: module/Decision/view/decision/member/view.phtml:106
 msgid "Country"
 msgstr "Land"
 
 #: module/Decision/view/decision/member/self.phtml:133
-#: module/Decision/view/decision/member/view.phtml:84
+#: module/Decision/view/decision/member/view.phtml:110
 msgid "Street and number"
 msgstr "Straat en huisnummer"
 
 #: module/Decision/view/decision/member/self.phtml:137
-#: module/Decision/view/decision/member/view.phtml:88
+#: module/Decision/view/decision/member/view.phtml:114
 msgid "City and postal code"
 msgstr "Woonplaats en postcode"
 
@@ -3333,7 +3340,7 @@ msgstr "Jouw profiel foto wordt in plaats hiervan automatisch gekozen."
 msgid "More of my photo's"
 msgstr "Meer van mijn foto’s"
 
-#: module/Decision/view/decision/member/view.phtml:137
+#: module/Decision/view/decision/member/view.phtml:163
 #, php-format
 msgid "Photo's of %s"
 msgstr "Foto's van %s"
@@ -4162,6 +4169,18 @@ msgstr "%d stemmen"
 msgid "1 vote"
 msgstr "1 stem"
 
+#: module/Photo/src/Controller/ApiController.php:60
+msgid "Not allowed to view photo details"
+msgstr "Het is niet toegestaan om details van foto's te zien"
+
+#: module/Photo/src/Controller/TagController.php:43
+msgid "Not allowed to add tags."
+msgstr "Het is niet toegestaan om tags toe te voegen."
+
+#: module/Photo/src/Controller/TagController.php:66
+msgid "Not allowed to remove tags."
+msgstr "Het is niet toegestaan om tags te verwijderen."
+
 #: module/Photo/src/Form/CreateAlbum.php:28
 #: module/Photo/src/Form/EditAlbum.php:30
 #: module/Photo/view/photo/album-admin/create.phtml:16
@@ -4263,18 +4282,10 @@ msgstr "Je hebt niet de rechten om een profielfoto in te stellen."
 msgid "Not allowed to view previous photos of the week"
 msgstr "Not allowed to view previous photos of the week"
 
-#: module/Photo/src/Service/Photo.php:723
-msgid "Not allowed to add tags."
-msgstr "Het is niet toegestaan om tags toe te voegen."
-
-#: module/Photo/src/Service/Photo.php:754
-#: module/Photo/src/Service/Photo.php:820
+#: module/Photo/src/Service/Photo.php:750
+#: module/Photo/src/Service/Photo.php:812
 msgid "Not allowed to view tags."
 msgstr "Het is niet toegestaan om tags te zien."
-
-#: module/Photo/src/Service/Photo.php:795
-msgid "Not allowed to remove tags."
-msgstr "Het is niet toegestaan om tags te verwijderen."
 
 #: module/Photo/view/partial/metadata.phtml:7
 msgid "Artist"
@@ -4328,15 +4339,18 @@ msgid "View on map"
 msgstr "Toon op kaart"
 
 #: module/Photo/view/partial/tags.phtml:10
+#: module/Photo/view/photo/album/index.phtml:550
 msgid "In this photo:"
 msgstr "In deze foto:"
 
 #: module/Photo/view/partial/tags.phtml:11
+#: module/Photo/view/photo/album/index.phtml:551
 msgid ""
 "No one has been tagged in this photo yet. Tag someone you recognise now!"
 msgstr "Er is nog niemand getagd in deze foto. Tag nu iemand die je herkent!"
 
 #: module/Photo/view/partial/tags.phtml:49
+#: module/Photo/view/photo/album/index.phtml:577
 msgid "Tag someone"
 msgstr "Tag iemand"
 
@@ -4416,7 +4430,7 @@ msgid "Regenerate"
 msgstr "Genereer opnieuw"
 
 #: module/Photo/view/photo/album-admin/index.phtml:141
-#: module/Photo/view/photo/album/index.phtml:202
+#: module/Photo/view/photo/album/index.phtml:315
 msgid "Close"
 msgstr "Sluiten"
 
@@ -4487,74 +4501,78 @@ msgstr "Selecteer een nieuwe bovenliggende album"
 msgid "The photos have been moved"
 msgstr "De foto's zijn verplaatst"
 
-#: module/Photo/view/photo/album/index.phtml:92
+#: module/Photo/view/photo/album/index.phtml:94
 msgid "View user profile"
 msgstr "Bekijk profiel"
 
-#: module/Photo/view/photo/album/index.phtml:203
-msgid "Zoom (z)"
-msgstr "Zoom (z)"
-
-#: module/Photo/view/photo/album/index.phtml:206
-msgid "The image"
-msgstr "De afbeelding"
-
-#: module/Photo/view/photo/album/index.phtml:206
-msgid "could not be loaded."
-msgstr "kan niet worden geladen."
-
-#: module/Photo/view/photo/album/index.phtml:218
-msgid "Share"
-msgstr "Delen"
-
-#: module/Photo/view/photo/album/index.phtml:229
-msgid "Copied URL!"
-msgstr "URL gekopieerd!"
-
-#: module/Photo/view/photo/album/index.phtml:240
-msgid "Go to album"
-msgstr "Ga naar album"
-
-#: module/Photo/view/photo/album/index.phtml:260
-msgid "Set as profile picture"
-msgstr "Kies deze foto als jouw profielfoto"
-
-#: module/Photo/view/photo/album/index.phtml:272
-msgid "Set as profile picture!"
-msgstr "Gekozen als profielfoto!"
-
-#: module/Photo/view/photo/album/index.phtml:275
-msgid "Could not set as profile photo, try again"
-msgstr "Profielfoto instellen mislukt, probeer het nog een keer"
-
-#: module/Photo/view/photo/album/index.phtml:285
-msgid "Download"
-msgstr "Downloaden"
-
-#: module/Photo/view/photo/album/index.phtml:331
-#: module/Photo/view/photo/album/index.phtml:355
-msgid "Vote for photo of the week"
-msgstr "Stem voor de foto van de week"
-
-#: module/Photo/view/photo/album/index.phtml:352
+#: module/Photo/view/photo/album/index.phtml:287
 msgid "Already voted!"
 msgstr "Je hebt al gestemd!"
 
-#: module/Photo/view/photo/album/index.phtml:369
+#: module/Photo/view/photo/album/index.phtml:290
+#: module/Photo/view/photo/album/index.phtml:452
+msgid "Vote for photo of the week"
+msgstr "Stem voor de foto van de week"
+
+#: module/Photo/view/photo/album/index.phtml:316
+msgid "Zoom (z)"
+msgstr "Zoom (z)"
+
+#: module/Photo/view/photo/album/index.phtml:319
+msgid "The image could not be loaded."
+msgstr "De foto kan niet worden geladen."
+
+#: module/Photo/view/photo/album/index.phtml:332
+msgid "Download"
+msgstr "Downloaden"
+
+#: module/Photo/view/photo/album/index.phtml:356
+msgid "Share"
+msgstr "Delen"
+
+#: module/Photo/view/photo/album/index.phtml:367
+msgid "Copied URL!"
+msgstr "URL gekopieerd!"
+
+#: module/Photo/view/photo/album/index.phtml:378
+msgid "Go to album"
+msgstr "Ga naar album"
+
+#: module/Photo/view/photo/album/index.phtml:421
+msgid "Set as profile picture"
+msgstr "Kies deze foto als jouw profielfoto"
+
+#: module/Photo/view/photo/album/index.phtml:438
+msgid "Set as profile picture!"
+msgstr "Gekozen als profielfoto!"
+
+#: module/Photo/view/photo/album/index.phtml:441
+msgid "Could not set as profile photo, try again"
+msgstr "Profielfoto instellen mislukt, probeer het nog een keer"
+
+#: module/Photo/view/photo/album/index.phtml:474
+msgid "Cannot load vote"
+msgstr "Kan stem niet laden"
+
+#: module/Photo/view/photo/album/index.phtml:493
 msgid "Voted!"
 msgstr "Gestemd!"
 
-#: module/Photo/view/photo/album/index.phtml:381
+#: module/Photo/view/photo/album/index.phtml:505
 msgid "Could not vote, try again"
 msgstr "Stemmen mislukt, probeer het nog een keer"
 
-#: module/Photo/view/photo/album/index.phtml:393
-msgid "Cannot load metadata"
-msgstr "Kan metadata niet laden"
+#: module/Photo/view/photo/album/index.phtml:519
+msgid "Loading tags..."
+msgstr "Tags aan het laden..."
 
-#: module/Photo/view/photo/album/index.phtml:410
+#: module/Photo/view/photo/album/index.phtml:538
 msgid "Cannot load tags"
 msgstr "Kan tags niet laden"
+
+#: module/Photo/view/photo/album/index.phtml:628
+msgid "Cannot load metadata"
+msgstr "Kan metadata niet laden"
 
 #: module/Photo/view/photo/photo-admin/index.phtml:21
 #, php-format
