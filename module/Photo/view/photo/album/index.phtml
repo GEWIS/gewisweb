@@ -383,7 +383,7 @@ $this->scriptUrl()->requireUrl('member/search')
                 onClick: (event, el, pswp) => {
                     let id = pswp.currSlide.data.element.dataset.id;
                     let originalAlbum = pswp.currSlide.data.element.dataset.originalAlbum;
-                    let photoURL = originalAlbum + '#&pid=' + id;
+                    let photoURL = originalAlbum + '#pid=' + id;
 
                     window.open(photoURL, '_blank').focus();
                 },
