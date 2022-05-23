@@ -12306,10 +12306,40 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Controller-ApiController.html"
         },                {
+            "fqsen": "\\Photo\\Controller\\ApiController\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Photo-Controller-ApiController.html#method___construct"
+        },                {
             "fqsen": "\\Photo\\Controller\\ApiController\u003A\u003AlistAction\u0028\u0029",
             "name": "listAction",
             "summary": "Retrieve\u0020a\u0020list\u0020of\u0020all\u0020photo\u0027s\u0020in\u0020an\u0020album.",
             "url": "classes/Photo-Controller-ApiController.html#method_listAction"
+        },                {
+            "fqsen": "\\Photo\\Controller\\ApiController\u003A\u003AdetailsAction\u0028\u0029",
+            "name": "detailsAction",
+            "summary": "",
+            "url": "classes/Photo-Controller-ApiController.html#method_detailsAction"
+        },                {
+            "fqsen": "\\Photo\\Controller\\ApiController\u003A\u003A\u0024aclService",
+            "name": "aclService",
+            "summary": "",
+            "url": "classes/Photo-Controller-ApiController.html#property_aclService"
+        },                {
+            "fqsen": "\\Photo\\Controller\\ApiController\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Photo-Controller-ApiController.html#property_translator"
+        },                {
+            "fqsen": "\\Photo\\Controller\\ApiController\u003A\u003A\u0024tagMapper",
+            "name": "tagMapper",
+            "summary": "",
+            "url": "classes/Photo-Controller-ApiController.html#property_tagMapper"
+        },                {
+            "fqsen": "\\Photo\\Controller\\ApiController\u003A\u003A\u0024voteMapper",
+            "name": "voteMapper",
+            "summary": "",
+            "url": "classes/Photo-Controller-ApiController.html#property_voteMapper"
         },                {
             "fqsen": "\\Photo\\Controller\\Factory\\AlbumAdminControllerFactory",
             "name": "AlbumAdminControllerFactory",
@@ -12561,6 +12591,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Controller-TagController.html#method_removeAction"
         },                {
+            "fqsen": "\\Photo\\Controller\\TagController\u003A\u003A\u0024aclService",
+            "name": "aclService",
+            "summary": "",
+            "url": "classes/Photo-Controller-TagController.html#property_aclService"
+        },                {
+            "fqsen": "\\Photo\\Controller\\TagController\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Photo-Controller-TagController.html#property_translator"
+        },                {
             "fqsen": "\\Photo\\Controller\\TagController\u003A\u003A\u0024photoService",
             "name": "photoService",
             "summary": "",
@@ -12755,6 +12795,11 @@ Search.appendIndex(
             "name": "getTagsByLidnr",
             "summary": "",
             "url": "classes/Photo-Mapper-Tag.html#method_getTagsByLidnr"
+        },                {
+            "fqsen": "\\Photo\\Mapper\\Tag\u003A\u003AgetTagsByPhoto\u0028\u0029",
+            "name": "getTagsByPhoto",
+            "summary": "Get\u0020all\u0020the\u0020tags\u0020for\u0020a\u0020photo,\u0020but\u0020limited\u0020to\u0020lidnr\u0020and\u0020full\u0020name.",
+            "url": "classes/Photo-Mapper-Tag.html#method_getTagsByPhoto"
         },                {
             "fqsen": "\\Photo\\Mapper\\Tag\u003A\u003AgetMostActiveMemberTag\u0028\u0029",
             "name": "getMostActiveMemberTag",
@@ -13536,11 +13581,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Model-Vote.html#method_getPhoto"
         },                {
-            "fqsen": "\\Photo\\Model\\Vote\u003A\u003AgetResourceId\u0028\u0029",
-            "name": "getResourceId",
-            "summary": "Get\u0020the\u0020resource\u0020ID.",
-            "url": "classes/Photo-Model-Vote.html#method_getResourceId"
-        },                {
             "fqsen": "\\Photo\\Model\\Vote\u003A\u003A\u0024id",
             "name": "id",
             "summary": "Vote\u0020ID.",
@@ -14195,26 +14235,6 @@ Search.appendIndex(
             "name": "urlBuilder",
             "summary": "",
             "url": "classes/Photo-View-Helper-GlideUrl.html#property_urlBuilder"
-        },                {
-            "fqsen": "\\Photo\\View\\Helper\\HasVoted",
-            "name": "HasVoted",
-            "summary": "View\u0020helper\u0020to\u0020aid\u0020with\u0020determining\u0020whether\u0020a\u0020certain\u0020user\u0020has\u0020voted\u0020for\u0020a\u0020certain\u0020photo\u0020or\u0020not.",
-            "url": "classes/Photo-View-Helper-HasVoted.html"
-        },                {
-            "fqsen": "\\Photo\\View\\Helper\\HasVoted\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/Photo-View-Helper-HasVoted.html#method___construct"
-        },                {
-            "fqsen": "\\Photo\\View\\Helper\\HasVoted\u003A\u003A__invoke\u0028\u0029",
-            "name": "__invoke",
-            "summary": "",
-            "url": "classes/Photo-View-Helper-HasVoted.html#method___invoke"
-        },                {
-            "fqsen": "\\Photo\\View\\Helper\\HasVoted\u003A\u003A\u0024voteMapper",
-            "name": "voteMapper",
-            "summary": "",
-            "url": "classes/Photo-View-Helper-HasVoted.html#property_voteMapper"
         },                {
             "fqsen": "\\PhotoTest\\ControllerTest",
             "name": "ControllerTest",
