@@ -6,10 +6,13 @@ use Decision\Service\Decision as DecisionService;
 use Laminas\Http\Response;
 use Laminas\Json\Json;
 use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
 
 class AdminController extends AbstractActionController
 {
+    private Translator $translator;
+
     /**
      * @var DecisionService
      */
@@ -18,19 +21,23 @@ class AdminController extends AbstractActionController
     /**
      * AdminController constructor.
      *
+     * @param Translator $translator
      * @param DecisionService $decisionService
      */
-    public function __construct(DecisionService $decisionService)
-    {
+    public function __construct(
+        Translator $translator,
+        DecisionService $decisionService,
+    ) {
+        $this->translator = $translator;
         $this->decisionService = $decisionService;
     }
 
     /**
-     * Notes upload action.
+     * Minutes upload action.
      */
-    public function notesAction(): ViewModel
+    public function minutesAction(): ViewModel|Response
     {
-        $form = $this->decisionService->getNotesForm();
+        $form = $this->decisionService->getMinutesForm();
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -41,12 +48,10 @@ class AdminController extends AbstractActionController
             $form->setData($post);
 
             if ($form->isValid()) {
-                if ($this->decisionService->uploadNotes($form->getData())) {
-                    return new ViewModel(
-                        [
-                            'success' => true,
-                        ]
-                    );
+                if ($this->decisionService->uploadMinutes($form->getData())) {
+                    $this->plugin('FlashMessenger')->addSuccessMessage($this->translator->translate('Meeting minutes uploaded'));
+
+                    return $this->redirect()->toRoute('admin_decision/minutes');
                 }
             }
         }

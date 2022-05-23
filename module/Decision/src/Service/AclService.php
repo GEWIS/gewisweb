@@ -33,7 +33,7 @@ class AclService extends \User\Service\AclService
 
         $this->acl->allow('user', 'decision', ['search', 'view_meeting', 'list_meetings']);
 
-        $this->acl->allow('user', 'meeting', ['view', 'view_notes', 'view_documents']);
+        $this->acl->allow('user', 'meeting', ['view', 'view_minutes', 'view_documents']);
 
         $this->acl->allow('user', 'authorization', ['create', 'view_own']);
 

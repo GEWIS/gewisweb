@@ -6,7 +6,7 @@ use Decision\Controller\FileBrowser\LocalFileReader;
 use Decision\Form\{
     Authorization as AuthorizationForm,
     Document as DocumentForm,
-    Notes as NotesForm,
+    Minutes as MinutesForm,
     OrganInformation as OrganInformationForm,
     ReorderDocument as ReorderDocumentForm,
     SearchDecision as SearchDecisionForm,
@@ -81,7 +81,7 @@ class Module
                     $meetingMapper = $container->get('decision_mapper_meeting');
                     $decisionMapper = $container->get('decision_mapper_decision');
                     $authorizationMapper = $container->get('decision_mapper_authorization');
-                    $notesForm = $container->get('decision_form_notes');
+                    $minutesForm = $container->get('decision_form_minutes');
                     $documentForm = $container->get('decision_form_document');
                     $reorderDocumentForm = $container->get('decision_form_reorder_document');
                     $searchDecisionForm = $container->get('decision_form_searchdecision');
@@ -96,7 +96,7 @@ class Module
                         $meetingMapper,
                         $decisionMapper,
                         $authorizationMapper,
-                        $notesForm,
+                        $minutesForm,
                         $documentForm,
                         $reorderDocumentForm,
                         $searchDecisionForm,
@@ -168,8 +168,8 @@ class Module
                         $container->get('translator'),
                     );
                 },
-                'decision_form_notes' => function (ContainerInterface $container) {
-                    return new NotesForm(
+                'decision_form_minutes' => function (ContainerInterface $container) {
+                    return new MinutesForm(
                         $container->get('translator'),
                     );
                 },

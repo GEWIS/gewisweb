@@ -70,12 +70,12 @@ return [
                         ],
                         'may_terminate' => true,
                         'child_routes' => [
-                            'notes' => [
+                            'minutes' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/notes',
+                                    'route' => '/minutes',
                                     'defaults' => [
-                                        'action' => 'notes',
+                                        'action' => 'minutes',
                                     ],
                                 ],
                             ],
@@ -135,12 +135,12 @@ return [
                             ],
                         ],
                     ],
-                    'notes' => [
+                    'minutes' => [
                         'type' => Literal::class,
                         'options' => [
-                            'route' => '/notes',
+                            'route' => '/minutes',
                             'defaults' => [
-                                'action' => 'notes',
+                                'action' => 'minutes',
                             ],
                         ],
                     ],

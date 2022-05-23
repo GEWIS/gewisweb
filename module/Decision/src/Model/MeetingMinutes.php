@@ -12,10 +12,10 @@ use Doctrine\ORM\Mapping\{
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
- * Meeting notes.
+ * Meeting minutes.
  */
 #[Entity]
-class MeetingNotes implements ResourceInterface
+class MeetingMinutes implements ResourceInterface
 {
     /**
      * Meeting type.
@@ -32,11 +32,11 @@ class MeetingNotes implements ResourceInterface
     protected int $number;
 
     /**
-     * The corresponding meeting for these notes.
+     * The corresponding meeting for these minutes.
      */
     #[OneToOne(
         targetEntity: Meeting::class,
-        inversedBy: "meetingNotes",
+        inversedBy: "meetingMinutes",
     )]
     #[JoinColumn(
         name: "type",
@@ -89,6 +89,6 @@ class MeetingNotes implements ResourceInterface
      */
     public function getResourceId(): string
     {
-        return 'meeting_notes';
+        return 'meeting_minutes';
     }
 }

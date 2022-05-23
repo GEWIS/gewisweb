@@ -9,7 +9,7 @@ use Application\Service\{
 use Decision\Form\{
     Authorization as AuthorizationForm,
     Document as DocumentForm,
-    Notes as NotesForm,
+    Minutes as MinutesForm,
     ReorderDocument as ReorderDocumentForm,
     SearchDecision as SearchDecisionForm,
 };
@@ -23,7 +23,7 @@ use Decision\Model\{
     Authorization as AuthorizationModel,
     Meeting as MeetingModel,
     MeetingDocument as MeetingDocumentModel,
-    MeetingNotes as MeetingNotesModel,
+    MeetingMinutes as MeetingMinutesModel,
 };
 use Doctrine\ORM\{
     NonUniqueResultException,
@@ -82,9 +82,9 @@ class Decision
     private AuthorizationMapper $authorizationMapper;
 
     /**
-     * @var NotesForm
+     * @var MinutesForm
      */
-    private NotesForm $notesForm;
+    private MinutesForm $minutesForm;
 
     /**
      * @var DocumentForm
@@ -115,7 +115,7 @@ class Decision
      * @param MeetingMapper $meetingMapper
      * @param DecisionMapper $decisionMapper
      * @param AuthorizationMapper $authorizationMapper
-     * @param NotesForm $notesForm
+     * @param MinutesForm $minutesForm
      * @param DocumentForm $documentForm
      * @param ReorderDocumentForm $reorderDocumentForm
      * @param SearchDecisionForm $searchDecisionForm
@@ -130,7 +130,7 @@ class Decision
         MeetingMapper $meetingMapper,
         DecisionMapper $decisionMapper,
         AuthorizationMapper $authorizationMapper,
-        NotesForm $notesForm,
+        MinutesForm $minutesForm,
         DocumentForm $documentForm,
         ReorderDocumentForm $reorderDocumentForm,
         SearchDecisionForm $searchDecisionForm,
@@ -144,7 +144,7 @@ class Decision
         $this->meetingMapper = $meetingMapper;
         $this->decisionMapper = $decisionMapper;
         $this->authorizationMapper = $authorizationMapper;
-        $this->notesForm = $notesForm;
+        $this->minutesForm = $minutesForm;
         $this->documentForm = $documentForm;
         $this->reorderDocumentForm = $reorderDocumentForm;
         $this->searchDecisionForm = $searchDecisionForm;
@@ -288,52 +288,52 @@ class Decision
     }
 
     /**
-     * Returns a download for meeting notes.
+     * Returns a download for meeting minutes.
      *
      * @param MeetingModel $meeting
      *
      * @return Stream|null
      */
-    public function getMeetingNotesDownload(MeetingModel $meeting): ?Stream
+    public function getMeetingMinutesDownload(MeetingModel $meeting): ?Stream
     {
-        if (!$this->aclService->isAllowed('view_notes', 'meeting')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view meeting notes.'));
+        if (!$this->aclService->isAllowed('view_minutes', 'meeting')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view meeting minutes.'));
         }
 
-        if (is_null($meeting->getNotes())) {
+        if (is_null($meeting->getMinutes())) {
             return null;
         }
 
-        $path = $meeting->getNotes()->getPath();
+        $path = $meeting->getMinutes()->getPath();
         $fileName = $meeting->getType() . '-' . $meeting->getNumber() . '.pdf';
 
         return $this->storageService->downloadFile($path, $fileName);
     }
 
     /**
-     * Upload meeting notes.
+     * Upload meeting minutes.
      *
      * @param array $data
      *
      * @return bool If uploading was a success
      * @throws Exception
      */
-    public function uploadNotes(array $data): bool
+    public function uploadMinutes(array $data): bool
     {
         $parts = explode('/', $data['meeting']);
         $meeting = $this->getMeeting($parts[0], intval($parts[1]));
         $path = $this->storageService->storeUploadedFile($data['upload']);
 
-        $meetingNotes = $meeting->getNotes();
-        if (is_null($meetingNotes)) {
-            $meetingNotes = new MeetingNotesModel();
-            $meetingNotes->setMeeting($meeting);
+        $meetingMinutes = $meeting->getMinutes();
+        if (is_null($meetingMinutes)) {
+            $meetingMinutes = new MeetingMinutesModel();
+            $meetingMinutes->setMeeting($meeting);
         }
 
-        $meetingNotes->setPath($path);
+        $meetingMinutes->setPath($path);
 
         $mapper = $this->decisionMapper;
-        $mapper->persist($meetingNotes);
+        $mapper->persist($meetingMinutes);
 
         return true;
     }
@@ -553,17 +553,17 @@ class Decision
     }
 
     /**
-     * Get the Notes form.
+     * Get the meeting minutes form.
      *
-     * @return NotesForm
+     * @return MinutesForm
      */
-    public function getNotesForm(): NotesForm
+    public function getMinutesForm(): MinutesForm
     {
-        if (!$this->aclService->isAllowed('upload_notes', 'meeting')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to upload notes.'));
+        if (!$this->aclService->isAllowed('upload_minutes', 'meeting')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to upload meeting minutes.'));
         }
 
-        return $this->notesForm->setMeetings($this->meetingMapper->findAllMeetings());
+        return $this->minutesForm->setMeetings($this->meetingMapper->findAllMeetings());
     }
 
     /**

@@ -21,6 +21,7 @@ class AdminControllerFactory implements FactoryInterface
         ?array $options = null,
     ): AdminController {
         return new AdminController(
+            $container->get('translator'),
             $container->get('decision_service_decision'),
         );
     }
