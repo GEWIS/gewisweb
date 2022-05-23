@@ -122,61 +122,67 @@ $this->scriptUrl()->requireUrl('member/search')
                 <?php endforeach ?>
             </div>
         <?php endif; ?>
+        <?php
+        $lidnr = $this->identity()->getLidnr();
+        // Check permissions once, to prevent repeatedly retrieving the logged in `Member`.
+        $canViewMetadata = $this->acl('photo_service_acl')->isAllowed('photo', 'view_metadata');
+        ?>
         <div class="pswp-gallery"
              data-recent-vote="<?= $hasRecentVote ? 'true' : 'false' ?>"
-             data-lidnr="<?= $this->identity()->getLidnr() ?>"
+             data-lidnr="<?= $lidnr ?>"
         >
             <div class="grid-sizer"></div>
             <div class="gutter-sizer"></div>
-            <?php $lidnr = $this->identity()->getLidnr(); ?>
             <?php foreach ($album->getPhotos() as $item): ?>
-            <?php
-            $ar = $item->getAspectRatio();
-            $width = $config['small_thumb_size']['width'];
-            $thumbnailSize = [
-                'w' => $width,
-                'h' => round($width * $ar)
-            ];
+                <?php
+                $ar = $item->getAspectRatio();
+                $width = $config['small_thumb_size']['width'];
+                $thumbnailSize = [
+                    'w' => $width,
+                    'h' => round($width * $ar)
+                ];
 
-            $width = $config['large_thumb_size']['width'];
-            $largeSize = [
-                'w' => $width,
-                'h' => round($width * $ar)
-            ];
-            ?>
-            <figure
-                class="pswp-gallery__item<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>"
-                data-id="<?= $item->getId() ?>"
-                data-author="GEWIS"
-                data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]) ?>"
-                <?php if ($album instanceof MemberAlbum): ?>
-                data-original-album="<?= $this->url(
-                    'photo/album',
-                    ['album_id' => $item->getAlbum()->getId(), 'album_type' => 'album']
-                ) ?>"
-                <?php endif; ?>
-                data-profile-photo-url="<?= $this->url('photo/set_profile_photo', ['photo_id' => $item->getId()]) ?>"
-                data-details-url="<?= $this->url('api_photo/details', ['photo_id' => $item->getId()]) ?>"
-                data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]) ?>"
-            >
-                <a href="<?= $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
-                   target="_blank"
-                   data-pswp-height="<?= $largeSize['h'] ?>"
-                   data-pswp-width="<?= $largeSize['w'] ?>"
+                $width = $config['large_thumb_size']['width'];
+                $largeSize = [
+                    'w' => $width,
+                    'h' => round($width * $ar)
+                ];
+                ?>
+                <figure
+                    class="pswp-gallery__item<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>"
+                    data-id="<?= $item->getId() ?>"
+                    data-author="GEWIS"
+                    data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]) ?>"
+                    <?php if ($album instanceof MemberAlbum): ?>
+                        data-original-album="<?= $this->url(
+                            'photo/album',
+                            ['album_id' => $item->getAlbum()->getId(), 'album_type' => 'album']
+                        ) ?>"
+                    <?php endif; ?>
+                    data-profile-photo-url="<?= $this->url('photo/set_profile_photo', ['photo_id' => $item->getId()]) ?>"
+                    data-details-url="<?= $this->url('api_photo/details', ['photo_id' => $item->getId()]) ?>"
+                    data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]) ?>"
                 >
-                    <img
-                        class="lazy-load"
-                        data-height="<?= $thumbnailSize['h'] ?>"
-                        data-width="<?= $thumbnailSize['w'] ?>"
-                        data-src="<?= $this->glideUrl()->getUrl($item->getPath(), $thumbnailSize) ?>"
-                        alt=""
+                    <a href="<?= $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
+                       target="_blank"
+                       data-pswp-height="<?= $largeSize['h'] ?>"
+                       data-pswp-width="<?= $largeSize['w'] ?>"
                     >
-                </a>
-                <figcaption class="hidden">
-                    <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
-                </figcaption>
-                <figtags class="hidden"></figtags>
-            </figure>
+                        <img
+                            class="lazy-load"
+                            data-height="<?= $thumbnailSize['h'] ?>"
+                            data-width="<?= $thumbnailSize['w'] ?>"
+                            data-src="<?= $this->glideUrl()->getUrl($item->getPath(), $thumbnailSize) ?>"
+                            alt=""
+                        >
+                    </a>
+                    <figcaption class="hidden">
+                        <?php if ($canViewMetadata): ?>
+                            <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
+                        <?php endif; ?>
+                    </figcaption>
+                    <figtags class="hidden"></figtags>
+                </figure>
             <?php endforeach; ?>
         </div>
     </div>
