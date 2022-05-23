@@ -20,6 +20,11 @@ Styleguide: list-group
         &:hover {
             background: rgba(black, 0.05);
         }
+
+        .list-group-item-heading {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 
     & + .panel-footer {
