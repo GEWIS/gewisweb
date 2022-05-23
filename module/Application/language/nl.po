@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-22 16:20+0200\n"
-"PO-Revision-Date: 2022-04-22 16:25+0200\n"
+"POT-Creation-Date: 2022-05-23 12:47+0200\n"
+"PO-Revision-Date: 2022-05-23 12:49+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -749,6 +749,7 @@ msgstr "Weet je zeker dat je deze optie wil verwijderen?"
 #: module/Photo/view/photo/album-admin/index.phtml:200
 #: module/Photo/view/photo/album-admin/index.phtml:232
 #: module/Photo/view/photo/photo-admin/index.phtml:128
+#: module/User/view/user/api-authentication/token.phtml:32
 msgid "Cancel"
 msgstr "Annuleer"
 
@@ -1068,7 +1069,7 @@ msgstr "Update voorstel"
 #: module/Company/view/partial/company/admin/editors/job.phtml:119
 #: module/Company/view/partial/company/admin/editors/label.phtml:3
 #: module/Company/view/partial/company/admin/editors/package.phtml:3
-#: module/Photo/view/photo/album/index.phtml:307
+#: module/Photo/view/photo/album/index.phtml:309
 msgid "Information"
 msgstr "Informatie"
 
@@ -1100,7 +1101,7 @@ msgstr "oud"
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:68
 #: module/Activity/view/activity/admin-approval/view.phtml:26
 #: module/Photo/view/partial/tags.phtml:40
-#: module/Photo/view/photo/album/index.phtml:459
+#: module/Photo/view/photo/album/index.phtml:461
 msgid "and"
 msgstr "en"
 
@@ -2037,12 +2038,12 @@ msgid "My photo's"
 msgstr "Mijn foto’s"
 
 #: module/Application/view/partial/paginator.phtml:8
-#: module/Photo/view/photo/album/index.phtml:202
+#: module/Photo/view/photo/album/index.phtml:204
 msgid "Previous"
 msgstr "Vorige"
 
 #: module/Application/view/partial/paginator.phtml:22
-#: module/Photo/view/photo/album/index.phtml:203
+#: module/Photo/view/photo/album/index.phtml:205
 msgid "Next"
 msgstr "Volgende"
 
@@ -2083,6 +2084,7 @@ msgid "Privacy Policy"
 msgstr "Privacybeleid"
 
 #: module/Application/view/partial/privacy-widget.phtml:18
+#: module/User/view/user/api-authentication/token.phtml:35
 msgid "Continue"
 msgstr "Doorgaan"
 
@@ -2806,7 +2808,7 @@ msgid "You are not authorize people."
 msgstr "Je hebt niet de rechten om iemand te machtigen."
 
 #: module/Decision/src/Service/Member.php:80
-#: module/Decision/src/Service/MemberInfo.php:77
+#: module/Decision/src/Service/MemberInfo.php:83
 msgid "You are not allowed to view members."
 msgstr "Het is niet toegestaan om lidinformatie in te zien."
 
@@ -2823,7 +2825,7 @@ msgstr "Het is niet toegestaan om de lijst met verjaardagen te zien."
 msgid "Name must be at least "
 msgstr "Naam moet op zijn minst "
 
-#: module/Decision/src/Service/MemberInfo.php:75
+#: module/Decision/src/Service/MemberInfo.php:81
 msgid "You are not allowed to view membership info."
 msgstr "Het is niet toegestaan om lidinformatie in te zien."
 
@@ -3168,6 +3170,7 @@ msgid "First name"
 msgstr "Voornaam"
 
 #: module/Decision/view/decision/member/self.phtml:27
+#: module/User/src/Model/Enums/JWTClaims.php:44
 msgid "Middle name"
 msgstr "Tussenvoegsels"
 
@@ -3207,6 +3210,7 @@ msgid "Generation"
 msgstr "Generatie"
 
 #: module/Decision/view/decision/member/self.phtml:63
+#: module/User/src/Model/Enums/JWTClaims.php:43
 msgid "Membership type"
 msgstr "Type lidmaatschap"
 
@@ -3298,15 +3302,31 @@ msgstr "Woonplaats en postcode"
 msgid "Phone number"
 msgstr "Telefoonnummer"
 
-#: module/Decision/view/decision/member/self.phtml:177
+#: module/Decision/view/decision/member/self.phtml:147
+msgid "External applications"
+msgstr "Externe applicaties"
+
+#: module/Decision/view/decision/member/self.phtml:150
+msgid "App"
+msgstr "App"
+
+#: module/Decision/view/decision/member/self.phtml:151
+msgid "First authentication"
+msgstr "Eerste authenticatie"
+
+#: module/Decision/view/decision/member/self.phtml:152
+msgid "Last authentication"
+msgstr "Laatste authenticatie"
+
+#: module/Decision/view/decision/member/self.phtml:197
 msgid "Remove this picture as your profile picture"
 msgstr "Verwijder deze foto als profielfoto"
 
-#: module/Decision/view/decision/member/self.phtml:179
+#: module/Decision/view/decision/member/self.phtml:199
 msgid "Your profile picture will be chosen automatically instead."
 msgstr "Jouw profiel foto wordt in plaats hiervan automatisch gekozen."
 
-#: module/Decision/view/decision/member/self.phtml:194
+#: module/Decision/view/decision/member/self.phtml:214
 msgid "More of my photo's"
 msgstr "Meer van mijn foto’s"
 
@@ -4393,7 +4413,7 @@ msgid "Regenerate"
 msgstr "Genereer opnieuw"
 
 #: module/Photo/view/photo/album-admin/index.phtml:141
-#: module/Photo/view/photo/album/index.phtml:200
+#: module/Photo/view/photo/album/index.phtml:202
 msgid "Close"
 msgstr "Sluiten"
 
@@ -4468,68 +4488,68 @@ msgstr "De foto's zijn verplaatst"
 msgid "View user profile"
 msgstr "Bekijk profiel"
 
-#: module/Photo/view/photo/album/index.phtml:201
+#: module/Photo/view/photo/album/index.phtml:203
 msgid "Zoom (z)"
 msgstr "Zoom (z)"
 
-#: module/Photo/view/photo/album/index.phtml:204
+#: module/Photo/view/photo/album/index.phtml:206
 msgid "The image"
 msgstr "De afbeelding"
 
-#: module/Photo/view/photo/album/index.phtml:204
+#: module/Photo/view/photo/album/index.phtml:206
 msgid "could not be loaded."
 msgstr "kan niet worden geladen."
 
-#: module/Photo/view/photo/album/index.phtml:216
+#: module/Photo/view/photo/album/index.phtml:218
 msgid "Share"
 msgstr "Delen"
 
-#: module/Photo/view/photo/album/index.phtml:227
+#: module/Photo/view/photo/album/index.phtml:229
 msgid "Copied URL!"
 msgstr "URL gekopieerd!"
 
-#: module/Photo/view/photo/album/index.phtml:238
+#: module/Photo/view/photo/album/index.phtml:240
 msgid "Go to album"
 msgstr "Ga naar album"
 
-#: module/Photo/view/photo/album/index.phtml:258
+#: module/Photo/view/photo/album/index.phtml:260
 msgid "Set as profile picture"
 msgstr "Kies deze foto als jouw profielfoto"
 
-#: module/Photo/view/photo/album/index.phtml:270
+#: module/Photo/view/photo/album/index.phtml:272
 msgid "Set as profile picture!"
 msgstr "Gekozen als profielfoto!"
 
-#: module/Photo/view/photo/album/index.phtml:273
+#: module/Photo/view/photo/album/index.phtml:275
 msgid "Could not set as profile photo, try again"
 msgstr "Profielfoto instellen mislukt, probeer het nog een keer"
 
-#: module/Photo/view/photo/album/index.phtml:283
+#: module/Photo/view/photo/album/index.phtml:285
 msgid "Download"
 msgstr "Downloaden"
 
-#: module/Photo/view/photo/album/index.phtml:329
-#: module/Photo/view/photo/album/index.phtml:353
+#: module/Photo/view/photo/album/index.phtml:331
+#: module/Photo/view/photo/album/index.phtml:355
 msgid "Vote for photo of the week"
 msgstr "Stem voor de foto van de week"
 
-#: module/Photo/view/photo/album/index.phtml:350
+#: module/Photo/view/photo/album/index.phtml:352
 msgid "Already voted!"
 msgstr "Je hebt al gestemd!"
 
-#: module/Photo/view/photo/album/index.phtml:367
+#: module/Photo/view/photo/album/index.phtml:369
 msgid "Voted!"
 msgstr "Gestemd!"
 
-#: module/Photo/view/photo/album/index.phtml:379
+#: module/Photo/view/photo/album/index.phtml:381
 msgid "Could not vote, try again"
 msgstr "Stemmen mislukt, probeer het nog een keer"
 
-#: module/Photo/view/photo/album/index.phtml:391
+#: module/Photo/view/photo/album/index.phtml:393
 msgid "Cannot load metadata"
 msgstr "Kan metadata niet laden"
 
-#: module/Photo/view/photo/album/index.phtml:408
+#: module/Photo/view/photo/album/index.phtml:410
 msgid "Cannot load tags"
 msgstr "Kan tags niet laden"
 
@@ -4652,6 +4672,7 @@ msgid "Verify new password"
 msgstr "Verifier nieuw wachtwoord"
 
 #: module/User/src/Form/Register.php:54
+#: module/User/src/Model/Enums/JWTClaims.php:38
 msgid "E-mail address"
 msgstr "E-mail adres"
 
@@ -4680,6 +4701,22 @@ msgstr ""
 #: module/User/src/Form/Register.php:109
 msgid "This member already has an account."
 msgstr "Dit lid heeft al een account."
+
+#: module/User/src/Model/Enums/JWTClaims.php:39
+msgid "Family name"
+msgstr "Achternaam"
+
+#: module/User/src/Model/Enums/JWTClaims.php:40
+msgid "Given name"
+msgstr "Voornaam"
+
+#: module/User/src/Model/Enums/JWTClaims.php:41
+msgid "Is 18+?"
+msgstr "Is 18+?"
+
+#: module/User/src/Model/Enums/JWTClaims.php:42
+msgid "Member number"
+msgstr "Lidmaatschapsnummer"
 
 #: module/User/src/Service/ApiUser.php:73
 #: module/User/src/Service/ApiUser.php:105
@@ -4756,6 +4793,28 @@ msgstr "Voeg een nieuw Token toe"
 #: module/User/view/user/api-admin/remove.phtml:4
 msgid "Remove Token"
 msgstr "Verwijder token"
+
+#: module/User/view/user/api-authentication/token.phtml:9
+#, php-format
+msgid "Authorize %s to use your account?"
+msgstr "Geef je %s toestemming om je account te gebruiken?"
+
+#: module/User/view/user/api-authentication/token.phtml:18
+#, php-format
+msgid ""
+"It has been more than 90 days since you last used <strong>%s</strong>. As a "
+"reminder, the application has access to:"
+msgstr ""
+"Het is meer dan 90 dagen geleden dat je <strong>%s</strong> voor het laatst "
+"heeft gebruikt. Ter herinnering, de applicatie heeft toegang tot:"
+
+#: module/User/view/user/api-authentication/token.phtml:23
+msgid "The application will get the following information:"
+msgstr "De applicatie zal de volgende informatie krijgen:"
+
+#: module/User/view/user/api-authentication/token.phtml:33
+msgid "Confirm"
+msgstr "Bevestig"
 
 #: module/User/view/user/user/activate.phtml:7
 msgid "Your account has been activated. You are now able to login."

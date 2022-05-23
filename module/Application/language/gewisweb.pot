@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-30 08:28+0200\n"
+"POT-Creation-Date: 2022-05-23 12:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -571,7 +571,7 @@ msgstr ""
 #: module/Company/view/partial/company/admin/editors/job.phtml:119
 #: module/Company/view/partial/company/admin/editors/label.phtml:3
 #: module/Company/view/partial/company/admin/editors/package.phtml:3
-#: module/Photo/view/photo/album/index.phtml:307
+#: module/Photo/view/photo/album/index.phtml:309
 msgid "Information"
 msgstr ""
 
@@ -597,7 +597,7 @@ msgstr ""
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:68
 #: module/Activity/view/activity/admin-approval/view.phtml:26
 #: module/Photo/view/partial/tags.phtml:40
-#: module/Photo/view/photo/album/index.phtml:459
+#: module/Photo/view/photo/album/index.phtml:461
 msgid "and"
 msgstr ""
 
@@ -1476,12 +1476,12 @@ msgid "My photo's"
 msgstr ""
 
 #: module/Application/view/partial/paginator.phtml:8
-#: module/Photo/view/photo/album/index.phtml:202
+#: module/Photo/view/photo/album/index.phtml:204
 msgid "Previous"
 msgstr ""
 
 #: module/Application/view/partial/paginator.phtml:22
-#: module/Photo/view/photo/album/index.phtml:203
+#: module/Photo/view/photo/album/index.phtml:205
 msgid "Next"
 msgstr ""
 
@@ -2218,7 +2218,7 @@ msgid "First name"
 msgstr ""
 
 #: module/Decision/view/decision/member/self.phtml:27
-#: module/User/src/Model/Enums/JWTClaims.php:43
+#: module/User/src/Model/Enums/JWTClaims.php:44
 msgid "Middle name"
 msgstr ""
 
@@ -2258,7 +2258,7 @@ msgid "Generation"
 msgstr ""
 
 #: module/Decision/view/decision/member/self.phtml:63
-#: module/User/src/Model/Enums/JWTClaims.php:42
+#: module/User/src/Model/Enums/JWTClaims.php:43
 msgid "Membership type"
 msgstr ""
 
@@ -3135,7 +3135,7 @@ msgid "Regenerate"
 msgstr ""
 
 #: module/Photo/view/photo/album-admin/index.phtml:141
-#: module/Photo/view/photo/album/index.phtml:200
+#: module/Photo/view/photo/album/index.phtml:202
 msgid "Close"
 msgstr ""
 
@@ -3206,68 +3206,68 @@ msgstr ""
 msgid "View user profile"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:201
+#: module/Photo/view/photo/album/index.phtml:203
 msgid "Zoom (z)"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:204
+#: module/Photo/view/photo/album/index.phtml:206
 msgid "The image"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:204
+#: module/Photo/view/photo/album/index.phtml:206
 msgid "could not be loaded."
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:216
+#: module/Photo/view/photo/album/index.phtml:218
 msgid "Share"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:227
+#: module/Photo/view/photo/album/index.phtml:229
 msgid "Copied URL!"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:238
+#: module/Photo/view/photo/album/index.phtml:240
 msgid "Go to album"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:258
+#: module/Photo/view/photo/album/index.phtml:260
 msgid "Set as profile picture"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:270
+#: module/Photo/view/photo/album/index.phtml:272
 msgid "Set as profile picture!"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:273
+#: module/Photo/view/photo/album/index.phtml:275
 msgid "Could not set as profile photo, try again"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:283
+#: module/Photo/view/photo/album/index.phtml:285
 msgid "Download"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:329
-#: module/Photo/view/photo/album/index.phtml:353
+#: module/Photo/view/photo/album/index.phtml:331
+#: module/Photo/view/photo/album/index.phtml:355
 msgid "Vote for photo of the week"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:350
+#: module/Photo/view/photo/album/index.phtml:352
 msgid "Already voted!"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:367
+#: module/Photo/view/photo/album/index.phtml:369
 msgid "Voted!"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:379
+#: module/Photo/view/photo/album/index.phtml:381
 msgid "Could not vote, try again"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:391
+#: module/Photo/view/photo/album/index.phtml:393
 msgid "Cannot load metadata"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:408
+#: module/Photo/view/photo/album/index.phtml:410
 msgid "Cannot load tags"
 msgstr ""
 
@@ -4568,7 +4568,7 @@ msgid "Verify new password"
 msgstr ""
 
 #: module/User/src/Form/Register.php:54
-#: module/User/src/Model/Enums/JWTClaims.php:37
+#: module/User/src/Model/Enums/JWTClaims.php:38
 msgid "E-mail address"
 msgstr ""
 
@@ -4590,19 +4590,19 @@ msgstr ""
 msgid "This member already has an account."
 msgstr ""
 
-#: module/User/src/Model/Enums/JWTClaims.php:38
+#: module/User/src/Model/Enums/JWTClaims.php:39
 msgid "Family name"
 msgstr ""
 
-#: module/User/src/Model/Enums/JWTClaims.php:39
+#: module/User/src/Model/Enums/JWTClaims.php:40
 msgid "Given name"
 msgstr ""
 
-#: module/User/src/Model/Enums/JWTClaims.php:40
+#: module/User/src/Model/Enums/JWTClaims.php:41
 msgid "Is 18+?"
 msgstr ""
 
-#: module/User/src/Model/Enums/JWTClaims.php:41
+#: module/User/src/Model/Enums/JWTClaims.php:42
 msgid "Member number"
 msgstr ""
 
