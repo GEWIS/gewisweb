@@ -396,7 +396,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/AdminController.php"><a href="files/module-decision-src-controller-admincontroller.html"><abbr title="module/Decision/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">11</span>
+    <span class="phpdocumentor-element-found-in__line">12</span>
 
     </aside>
 
@@ -420,6 +420,13 @@
     <a href="classes/Decision-Controller-AdminController.html#property_decisionService">$decisionService</a>
     <span>
                         &nbsp;: <a href="classes/Decision-Service-Decision.html"><abbr title="\Decision\Service\Decision">Decision</abbr></a>            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/Decision-Controller-AdminController.html#property_translator">$translator</a>
+    <span>
+                        &nbsp;: <abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>            </span>
 </dt>
 <dd></dd>
 
@@ -459,11 +466,11 @@
 <dd>Document upload action.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Controller-AdminController.html#method_notesAction">notesAction()</a>
+    <a href="classes/Decision-Controller-AdminController.html#method_minutesAction">minutesAction()</a>
     <span>
-                                &nbsp;: <abbr title="\Laminas\View\Model\ViewModel">ViewModel</abbr>    </span>
+                                &nbsp;: <abbr title="\Laminas\View\Model\ViewModel">ViewModel</abbr>|<abbr title="\Laminas\Http\Response">Response</abbr>    </span>
 </dt>
-<dd>Notes upload action.</dd>
+<dd>Minutes upload action.</dd>
 
         </dl>
 
@@ -493,7 +500,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/AdminController.php"><a href="files/module-decision-src-controller-admincontroller.html"><abbr title="module/Decision/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">16</span>
+    <span class="phpdocumentor-element-found-in__line">19</span>
 
     </aside>
 
@@ -506,6 +513,40 @@
 
     
     
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_translator">
+        $translator
+        <a href="classes/Decision-Controller-AdminController.html#property_translator" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/AdminController.php"><a href="files/module-decision-src-controller-admincontroller.html"><abbr title="module/Decision/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">14</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr></span>
+    <span class="phpdocumentor-signature__name">$translator</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -529,7 +570,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/AdminController.php"><a href="files/module-decision-src-controller-admincontroller.html"><abbr title="module/Decision/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">23</span>
+    <span class="phpdocumentor-element-found-in__line">27</span>
 
     </aside>
 
@@ -537,11 +578,18 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Service-Decision.html"><abbr title="\Decision\Service\Decision">Decision</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$decisionService</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Service-Decision.html"><abbr title="\Decision\Service\Decision">Decision</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$decisionService</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$translator</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$decisionService</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Service-Decision.html"><abbr title="\Decision\Service\Decision">Decision</abbr></a></span>
@@ -572,7 +620,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/AdminController.php"><a href="files/module-decision-src-controller-admincontroller.html"><abbr title="module/Decision/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">143</span>
+    <span class="phpdocumentor-element-found-in__line">148</span>
 
     </aside>
 
@@ -605,7 +653,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/AdminController.php"><a href="files/module-decision-src-controller-admincontroller.html"><abbr title="module/Decision/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">118</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
@@ -638,7 +686,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/AdminController.php"><a href="files/module-decision-src-controller-admincontroller.html"><abbr title="module/Decision/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">111</span>
+    <span class="phpdocumentor-element-found-in__line">116</span>
 
     </aside>
 
@@ -671,7 +719,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/AdminController.php"><a href="files/module-decision-src-controller-admincontroller.html"><abbr title="module/Decision/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">64</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
     </aside>
 
@@ -697,29 +745,29 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_notesAction">
-        notesAction()
-        <a href="classes/Decision-Controller-AdminController.html#method_notesAction" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_minutesAction">
+        minutesAction()
+        <a href="classes/Decision-Controller-AdminController.html#method_minutesAction" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/AdminController.php"><a href="files/module-decision-src-controller-admincontroller.html"><abbr title="module/Decision/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Notes upload action.</p>
+        <p class="phpdocumentor-summary">Minutes upload action.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">notesAction</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\View\Model\ViewModel">ViewModel</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">minutesAction</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\View\Model\ViewModel">ViewModel</abbr>|<abbr title="\Laminas\Http\Response">Response</abbr></span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\View\Model\ViewModel">ViewModel</abbr></span>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\View\Model\ViewModel">ViewModel</abbr>|<abbr title="\Laminas\Http\Response">Response</abbr></span>
             &mdash;
         
     

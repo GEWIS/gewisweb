@@ -470,9 +470,9 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/Decision-Service-Decision.html#property_notesForm">$notesForm</a>
+    <a href="classes/Decision-Service-Decision.html#property_minutesForm">$minutesForm</a>
     <span>
-                        &nbsp;: <a href="classes/Decision-Form-Notes.html"><abbr title="\Decision\Form\Notes">Notes</abbr></a>            </span>
+                        &nbsp;: <a href="classes/Decision-Form-Minutes.html"><abbr title="\Decision\Form\Minutes">Minutes</abbr></a>            </span>
 </dt>
 <dd></dd>
 
@@ -582,11 +582,11 @@
 <dd>Returns a download for a meeting document.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Service-Decision.html#method_getMeetingNotesDownload">getMeetingNotesDownload()</a>
+    <a href="classes/Decision-Service-Decision.html#method_getMeetingMinutesDownload">getMeetingMinutesDownload()</a>
     <span>
                                 &nbsp;: <abbr title="\Laminas\Http\Response\Stream">Stream</abbr>|null    </span>
 </dt>
-<dd>Returns a download for meeting notes.</dd>
+<dd>Returns a download for meeting minutes.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Service-Decision.html#method_getMeetings">getMeetings()</a>
@@ -603,11 +603,11 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Service-Decision.html#method_getNotesForm">getNotesForm()</a>
+    <a href="classes/Decision-Service-Decision.html#method_getMinutesForm">getMinutesForm()</a>
     <span>
-                                &nbsp;: <a href="classes/Decision-Form-Notes.html"><abbr title="\Decision\Form\Notes">Notes</abbr></a>    </span>
+                                &nbsp;: <a href="classes/Decision-Form-Minutes.html"><abbr title="\Decision\Form\Minutes">Minutes</abbr></a>    </span>
 </dt>
-<dd>Get the Notes form.</dd>
+<dd>Get the meeting minutes form.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Service-Decision.html#method_getPastMeetings">getPastMeetings()</a>
@@ -673,11 +673,11 @@
 <dd>Upload a meeting document.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Service-Decision.html#method_uploadNotes">uploadNotes()</a>
+    <a href="classes/Decision-Service-Decision.html#method_uploadMinutes">uploadMinutes()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
-<dd>Upload meeting notes.</dd>
+<dd>Upload meeting minutes.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/Decision-Service-Decision.html#method_isAllowedOrFail">isAllowedOrFail()</a>
@@ -961,9 +961,9 @@
             -private
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_notesForm">
-        $notesForm
-        <a href="classes/Decision-Service-Decision.html#property_notesForm" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_minutesForm">
+        $minutesForm
+        <a href="classes/Decision-Service-Decision.html#property_minutesForm" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -977,8 +977,8 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Form-Notes.html"><abbr title="\Decision\Form\Notes">Notes</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$notesForm</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Form-Minutes.html"><abbr title="\Decision\Form\Minutes">Minutes</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$minutesForm</span>
     </code>
 
     
@@ -1141,7 +1141,7 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Service-AclService.html"><abbr title="\Decision\Service\AclService">AclService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$aclService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Service-FileStorage.html"><abbr title="\Application\Service\FileStorage">FileStorage</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$storageService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Service-Email.html"><abbr title="\Application\Service\Email">Email</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$emailService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Member.html"><abbr title="\Decision\Mapper\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$memberMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Meeting.html"><abbr title="\Decision\Mapper\Meeting">Meeting</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$meetingMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Decision.html"><abbr title="\Decision\Mapper\Decision">Decision</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$decisionMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Authorization.html"><abbr title="\Decision\Mapper\Authorization">Authorization</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$authorizationMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-Notes.html"><abbr title="\Decision\Form\Notes">Notes</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$notesForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-Document.html"><abbr title="\Decision\Form\Document">Document</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$documentForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-ReorderDocument.html"><abbr title="\Decision\Form\ReorderDocument">ReorderDocument</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reorderDocumentForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-SearchDecision.html"><abbr title="\Decision\Form\SearchDecision">SearchDecision</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$searchDecisionForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-Authorization.html"><abbr title="\Decision\Form\Authorization">Authorization</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$authorizationForm</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Service-AclService.html"><abbr title="\Decision\Service\AclService">AclService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$aclService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Service-FileStorage.html"><abbr title="\Application\Service\FileStorage">FileStorage</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$storageService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Service-Email.html"><abbr title="\Application\Service\Email">Email</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$emailService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Member.html"><abbr title="\Decision\Mapper\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$memberMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Meeting.html"><abbr title="\Decision\Mapper\Meeting">Meeting</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$meetingMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Decision.html"><abbr title="\Decision\Mapper\Decision">Decision</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$decisionMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Authorization.html"><abbr title="\Decision\Mapper\Authorization">Authorization</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$authorizationMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-Minutes.html"><abbr title="\Decision\Form\Minutes">Minutes</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$minutesForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-Document.html"><abbr title="\Decision\Form\Document">Document</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$documentForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-ReorderDocument.html"><abbr title="\Decision\Form\ReorderDocument">ReorderDocument</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reorderDocumentForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-SearchDecision.html"><abbr title="\Decision\Form\SearchDecision">SearchDecision</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$searchDecisionForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-Authorization.html"><abbr title="\Decision\Form\Authorization">Authorization</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$authorizationForm</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1203,8 +1203,8 @@
                 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$notesForm</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-Notes.html"><abbr title="\Decision\Form\Notes">Notes</abbr></a></span>
+                <span class="phpdocumentor-signature__argument__name">$minutesForm</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-Minutes.html"><abbr title="\Decision\Form\Minutes">Minutes</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -1770,9 +1770,9 @@ mutating two rows.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getMeetingNotesDownload">
-        getMeetingNotesDownload()
-        <a href="classes/Decision-Service-Decision.html#method_getMeetingNotesDownload" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getMeetingMinutesDownload">
+        getMeetingMinutesDownload()
+        <a href="classes/Decision-Service-Decision.html#method_getMeetingMinutesDownload" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
@@ -1781,11 +1781,11 @@ mutating two rows.</p>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Returns a download for meeting notes.</p>
+        <p class="phpdocumentor-summary">Returns a download for meeting minutes.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getMeetingNotesDownload</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$meeting</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Http\Response\Stream">Stream</abbr>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getMeetingMinutesDownload</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$meeting</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Http\Response\Stream">Stream</abbr>|null</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1902,9 +1902,9 @@ mutating two rows.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getNotesForm">
-        getNotesForm()
-        <a href="classes/Decision-Service-Decision.html#method_getNotesForm" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getMinutesForm">
+        getMinutesForm()
+        <a href="classes/Decision-Service-Decision.html#method_getMinutesForm" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
@@ -1913,18 +1913,18 @@ mutating two rows.</p>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get the Notes form.</p>
+        <p class="phpdocumentor-summary">Get the meeting minutes form.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getNotesForm</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Form-Notes.html"><abbr title="\Decision\Form\Notes">Notes</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">getMinutesForm</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Form-Minutes.html"><abbr title="\Decision\Form\Minutes">Minutes</abbr></a></span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Form-Notes.html"><abbr title="\Decision\Form\Notes">Notes</abbr></a></span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Form-Minutes.html"><abbr title="\Decision\Form\Minutes">Minutes</abbr></a></span>
             &mdash;
         
     
@@ -2318,9 +2318,9 @@ mutating two rows.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_uploadNotes">
-        uploadNotes()
-        <a href="classes/Decision-Service-Decision.html#method_uploadNotes" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_uploadMinutes">
+        uploadMinutes()
+        <a href="classes/Decision-Service-Decision.html#method_uploadMinutes" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
@@ -2329,11 +2329,11 @@ mutating two rows.</p>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Upload meeting notes.</p>
+        <p class="phpdocumentor-summary">Upload meeting minutes.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">uploadNotes</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">uploadMinutes</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>

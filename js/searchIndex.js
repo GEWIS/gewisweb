@@ -6081,10 +6081,10 @@ Search.appendIndex(
             "summary": "AdminController\u0020constructor.",
             "url": "classes/Decision-Controller-AdminController.html#method___construct"
         },                {
-            "fqsen": "\\Decision\\Controller\\AdminController\u003A\u003AnotesAction\u0028\u0029",
-            "name": "notesAction",
-            "summary": "Notes\u0020upload\u0020action.",
-            "url": "classes/Decision-Controller-AdminController.html#method_notesAction"
+            "fqsen": "\\Decision\\Controller\\AdminController\u003A\u003AminutesAction\u0028\u0029",
+            "name": "minutesAction",
+            "summary": "Minutes\u0020upload\u0020action.",
+            "url": "classes/Decision-Controller-AdminController.html#method_minutesAction"
         },                {
             "fqsen": "\\Decision\\Controller\\AdminController\u003A\u003AdocumentAction\u0028\u0029",
             "name": "documentAction",
@@ -6106,6 +6106,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Controller-AdminController.html#method_authorizationsAction"
         },                {
+            "fqsen": "\\Decision\\Controller\\AdminController\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Decision-Controller-AdminController.html#property_translator"
+        },                {
             "fqsen": "\\Decision\\Controller\\AdminController\u003A\u003A\u0024decisionService",
             "name": "decisionService",
             "summary": "",
@@ -6126,10 +6131,10 @@ Search.appendIndex(
             "summary": "Index\u0020action,\u0020shows\u0020meetings.",
             "url": "classes/Decision-Controller-DecisionController.html#method_indexAction"
         },                {
-            "fqsen": "\\Decision\\Controller\\DecisionController\u003A\u003AnotesAction\u0028\u0029",
-            "name": "notesAction",
-            "summary": "Download\u0020meeting\u0020notes.",
-            "url": "classes/Decision-Controller-DecisionController.html#method_notesAction"
+            "fqsen": "\\Decision\\Controller\\DecisionController\u003A\u003AminutesAction\u0028\u0029",
+            "name": "minutesAction",
+            "summary": "Download\u0020meeting\u0020minutes.",
+            "url": "classes/Decision-Controller-DecisionController.html#method_minutesAction"
         },                {
             "fqsen": "\\Decision\\Controller\\DecisionController\u003A\u003AdocumentAction\u0028\u0029",
             "name": "documentAction",
@@ -6546,40 +6551,40 @@ Search.appendIndex(
             "summary": "Input\u0020filter\u0020specification.",
             "url": "classes/Decision-Form-Document.html#method_getInputFilterSpecification"
         },                {
-            "fqsen": "\\Decision\\Form\\Notes",
-            "name": "Notes",
+            "fqsen": "\\Decision\\Form\\Minutes",
+            "name": "Minutes",
             "summary": "",
-            "url": "classes/Decision-Form-Notes.html"
+            "url": "classes/Decision-Form-Minutes.html"
         },                {
-            "fqsen": "\\Decision\\Form\\Notes\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\Decision\\Form\\Minutes\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "",
-            "url": "classes/Decision-Form-Notes.html#method___construct"
+            "url": "classes/Decision-Form-Minutes.html#method___construct"
         },                {
-            "fqsen": "\\Decision\\Form\\Notes\u003A\u003AsetMeetings\u0028\u0029",
+            "fqsen": "\\Decision\\Form\\Minutes\u003A\u003AsetMeetings\u0028\u0029",
             "name": "setMeetings",
             "summary": "",
-            "url": "classes/Decision-Form-Notes.html#method_setMeetings"
+            "url": "classes/Decision-Form-Minutes.html#method_setMeetings"
         },                {
-            "fqsen": "\\Decision\\Form\\Notes\u003A\u003AsetError\u0028\u0029",
+            "fqsen": "\\Decision\\Form\\Minutes\u003A\u003AsetError\u0028\u0029",
             "name": "setError",
             "summary": "Set\u0020an\u0020error.",
-            "url": "classes/Decision-Form-Notes.html#method_setError"
+            "url": "classes/Decision-Form-Minutes.html#method_setError"
         },                {
-            "fqsen": "\\Decision\\Form\\Notes\u003A\u003AgetInputFilterSpecification\u0028\u0029",
+            "fqsen": "\\Decision\\Form\\Minutes\u003A\u003AgetInputFilterSpecification\u0028\u0029",
             "name": "getInputFilterSpecification",
             "summary": "Input\u0020filter\u0020specification.",
-            "url": "classes/Decision-Form-Notes.html#method_getInputFilterSpecification"
+            "url": "classes/Decision-Form-Minutes.html#method_getInputFilterSpecification"
         },                {
-            "fqsen": "\\Decision\\Form\\Notes\u003A\u003AERROR_FILE_EXISTS",
+            "fqsen": "\\Decision\\Form\\Minutes\u003A\u003AERROR_FILE_EXISTS",
             "name": "ERROR_FILE_EXISTS",
             "summary": "",
-            "url": "classes/Decision-Form-Notes.html#constant_ERROR_FILE_EXISTS"
+            "url": "classes/Decision-Form-Minutes.html#constant_ERROR_FILE_EXISTS"
         },                {
-            "fqsen": "\\Decision\\Form\\Notes\u003A\u003A\u0024translator",
+            "fqsen": "\\Decision\\Form\\Minutes\u003A\u003A\u0024translator",
             "name": "translator",
             "summary": "",
-            "url": "classes/Decision-Form-Notes.html#property_translator"
+            "url": "classes/Decision-Form-Minutes.html#property_translator"
         },                {
             "fqsen": "\\Decision\\Form\\OrganInformation",
             "name": "OrganInformation",
@@ -7431,10 +7436,10 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020meeting\u0020number.",
             "url": "classes/Decision-Model-Meeting.html#method_getNumber"
         },                {
-            "fqsen": "\\Decision\\Model\\Meeting\u003A\u003AgetNotes\u0028\u0029",
-            "name": "getNotes",
+            "fqsen": "\\Decision\\Model\\Meeting\u003A\u003AgetMinutes\u0028\u0029",
+            "name": "getMinutes",
             "summary": "",
-            "url": "classes/Decision-Model-Meeting.html#method_getNotes"
+            "url": "classes/Decision-Model-Meeting.html#method_getMinutes"
         },                {
             "fqsen": "\\Decision\\Model\\Meeting\u003A\u003AsetType\u0028\u0029",
             "name": "setType",
@@ -7531,10 +7536,10 @@ Search.appendIndex(
             "summary": "Documents.",
             "url": "classes/Decision-Model-Meeting.html#property_documents"
         },                {
-            "fqsen": "\\Decision\\Model\\Meeting\u003A\u003A\u0024meetingNotes",
-            "name": "meetingNotes",
-            "summary": "The\u0020notes\u0020for\u0020this\u0020meeting.",
-            "url": "classes/Decision-Model-Meeting.html#property_meetingNotes"
+            "fqsen": "\\Decision\\Model\\Meeting\u003A\u003A\u0024meetingMinutes",
+            "name": "meetingMinutes",
+            "summary": "The\u0020minutes\u0020for\u0020this\u0020meeting.",
+            "url": "classes/Decision-Model-Meeting.html#property_meetingMinutes"
         },                {
             "fqsen": "\\Decision\\Model\\MeetingDocument",
             "name": "MeetingDocument",
@@ -7611,50 +7616,50 @@ Search.appendIndex(
             "summary": "Determines\u0020the\u0020order\u0020in\u0020which\u0020to\u0020display\u0020the\u0020document.",
             "url": "classes/Decision-Model-MeetingDocument.html#property_displayPosition"
         },                {
-            "fqsen": "\\Decision\\Model\\MeetingNotes",
-            "name": "MeetingNotes",
-            "summary": "Meeting\u0020notes.",
-            "url": "classes/Decision-Model-MeetingNotes.html"
+            "fqsen": "\\Decision\\Model\\MeetingMinutes",
+            "name": "MeetingMinutes",
+            "summary": "Meeting\u0020minutes.",
+            "url": "classes/Decision-Model-MeetingMinutes.html"
         },                {
-            "fqsen": "\\Decision\\Model\\MeetingNotes\u003A\u003AgetPath\u0028\u0029",
+            "fqsen": "\\Decision\\Model\\MeetingMinutes\u003A\u003AgetPath\u0028\u0029",
             "name": "getPath",
             "summary": "",
-            "url": "classes/Decision-Model-MeetingNotes.html#method_getPath"
+            "url": "classes/Decision-Model-MeetingMinutes.html#method_getPath"
         },                {
-            "fqsen": "\\Decision\\Model\\MeetingNotes\u003A\u003AsetMeeting\u0028\u0029",
+            "fqsen": "\\Decision\\Model\\MeetingMinutes\u003A\u003AsetMeeting\u0028\u0029",
             "name": "setMeeting",
             "summary": "",
-            "url": "classes/Decision-Model-MeetingNotes.html#method_setMeeting"
+            "url": "classes/Decision-Model-MeetingMinutes.html#method_setMeeting"
         },                {
-            "fqsen": "\\Decision\\Model\\MeetingNotes\u003A\u003AsetPath\u0028\u0029",
+            "fqsen": "\\Decision\\Model\\MeetingMinutes\u003A\u003AsetPath\u0028\u0029",
             "name": "setPath",
             "summary": "",
-            "url": "classes/Decision-Model-MeetingNotes.html#method_setPath"
+            "url": "classes/Decision-Model-MeetingMinutes.html#method_setPath"
         },                {
-            "fqsen": "\\Decision\\Model\\MeetingNotes\u003A\u003AgetResourceId\u0028\u0029",
+            "fqsen": "\\Decision\\Model\\MeetingMinutes\u003A\u003AgetResourceId\u0028\u0029",
             "name": "getResourceId",
             "summary": "Get\u0020the\u0020resource\u0020ID.",
-            "url": "classes/Decision-Model-MeetingNotes.html#method_getResourceId"
+            "url": "classes/Decision-Model-MeetingMinutes.html#method_getResourceId"
         },                {
-            "fqsen": "\\Decision\\Model\\MeetingNotes\u003A\u003A\u0024type",
+            "fqsen": "\\Decision\\Model\\MeetingMinutes\u003A\u003A\u0024type",
             "name": "type",
             "summary": "Meeting\u0020type.",
-            "url": "classes/Decision-Model-MeetingNotes.html#property_type"
+            "url": "classes/Decision-Model-MeetingMinutes.html#property_type"
         },                {
-            "fqsen": "\\Decision\\Model\\MeetingNotes\u003A\u003A\u0024number",
+            "fqsen": "\\Decision\\Model\\MeetingMinutes\u003A\u003A\u0024number",
             "name": "number",
             "summary": "Meeting\u0020number.",
-            "url": "classes/Decision-Model-MeetingNotes.html#property_number"
+            "url": "classes/Decision-Model-MeetingMinutes.html#property_number"
         },                {
-            "fqsen": "\\Decision\\Model\\MeetingNotes\u003A\u003A\u0024meeting",
+            "fqsen": "\\Decision\\Model\\MeetingMinutes\u003A\u003A\u0024meeting",
             "name": "meeting",
-            "summary": "The\u0020corresponding\u0020meeting\u0020for\u0020these\u0020notes.",
-            "url": "classes/Decision-Model-MeetingNotes.html#property_meeting"
+            "summary": "The\u0020corresponding\u0020meeting\u0020for\u0020these\u0020minutes.",
+            "url": "classes/Decision-Model-MeetingMinutes.html#property_meeting"
         },                {
-            "fqsen": "\\Decision\\Model\\MeetingNotes\u003A\u003A\u0024path",
+            "fqsen": "\\Decision\\Model\\MeetingMinutes\u003A\u003A\u0024path",
             "name": "path",
             "summary": "The\u0020storage\u0020path.",
-            "url": "classes/Decision-Model-MeetingNotes.html#property_path"
+            "url": "classes/Decision-Model-MeetingMinutes.html#property_path"
         },                {
             "fqsen": "\\Decision\\Model\\Member",
             "name": "Member",
@@ -9191,15 +9196,15 @@ Search.appendIndex(
             "summary": "Returns\u0020a\u0020download\u0020for\u0020a\u0020meeting\u0020document.",
             "url": "classes/Decision-Service-Decision.html#method_getMeetingDocumentDownload"
         },                {
-            "fqsen": "\\Decision\\Service\\Decision\u003A\u003AgetMeetingNotesDownload\u0028\u0029",
-            "name": "getMeetingNotesDownload",
-            "summary": "Returns\u0020a\u0020download\u0020for\u0020meeting\u0020notes.",
-            "url": "classes/Decision-Service-Decision.html#method_getMeetingNotesDownload"
+            "fqsen": "\\Decision\\Service\\Decision\u003A\u003AgetMeetingMinutesDownload\u0028\u0029",
+            "name": "getMeetingMinutesDownload",
+            "summary": "Returns\u0020a\u0020download\u0020for\u0020meeting\u0020minutes.",
+            "url": "classes/Decision-Service-Decision.html#method_getMeetingMinutesDownload"
         },                {
-            "fqsen": "\\Decision\\Service\\Decision\u003A\u003AuploadNotes\u0028\u0029",
-            "name": "uploadNotes",
-            "summary": "Upload\u0020meeting\u0020notes.",
-            "url": "classes/Decision-Service-Decision.html#method_uploadNotes"
+            "fqsen": "\\Decision\\Service\\Decision\u003A\u003AuploadMinutes\u0028\u0029",
+            "name": "uploadMinutes",
+            "summary": "Upload\u0020meeting\u0020minutes.",
+            "url": "classes/Decision-Service-Decision.html#method_uploadMinutes"
         },                {
             "fqsen": "\\Decision\\Service\\Decision\u003A\u003AuploadDocument\u0028\u0029",
             "name": "uploadDocument",
@@ -9236,10 +9241,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Service-Decision.html#method_createAuthorization"
         },                {
-            "fqsen": "\\Decision\\Service\\Decision\u003A\u003AgetNotesForm\u0028\u0029",
-            "name": "getNotesForm",
-            "summary": "Get\u0020the\u0020Notes\u0020form.",
-            "url": "classes/Decision-Service-Decision.html#method_getNotesForm"
+            "fqsen": "\\Decision\\Service\\Decision\u003A\u003AgetMinutesForm\u0028\u0029",
+            "name": "getMinutesForm",
+            "summary": "Get\u0020the\u0020meeting\u0020minutes\u0020form.",
+            "url": "classes/Decision-Service-Decision.html#method_getMinutesForm"
         },                {
             "fqsen": "\\Decision\\Service\\Decision\u003A\u003AgetDocumentForm\u0028\u0029",
             "name": "getDocumentForm",
@@ -9311,10 +9316,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Service-Decision.html#property_authorizationMapper"
         },                {
-            "fqsen": "\\Decision\\Service\\Decision\u003A\u003A\u0024notesForm",
-            "name": "notesForm",
+            "fqsen": "\\Decision\\Service\\Decision\u003A\u003A\u0024minutesForm",
+            "name": "minutesForm",
             "summary": "",
-            "url": "classes/Decision-Service-Decision.html#property_notesForm"
+            "url": "classes/Decision-Service-Decision.html#property_minutesForm"
         },                {
             "fqsen": "\\Decision\\Service\\Decision\u003A\u003A\u0024documentForm",
             "name": "documentForm",
@@ -9611,10 +9616,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/DecisionTest-ControllerTest.html#method_testAuthorizationsActionCanBeAccessedAsUser"
         },                {
-            "fqsen": "\\DecisionTest\\ControllerTest\u003A\u003AtestAdminDecisionNotesActionCanBeAccessedAsAdmin\u0028\u0029",
-            "name": "testAdminDecisionNotesActionCanBeAccessedAsAdmin",
+            "fqsen": "\\DecisionTest\\ControllerTest\u003A\u003AtestAdminDecisionMinutesActionCanBeAccessedAsAdmin\u0028\u0029",
+            "name": "testAdminDecisionMinutesActionCanBeAccessedAsAdmin",
             "summary": "",
-            "url": "classes/DecisionTest-ControllerTest.html#method_testAdminDecisionNotesActionCanBeAccessedAsAdmin"
+            "url": "classes/DecisionTest-ControllerTest.html#method_testAdminDecisionMinutesActionCanBeAccessedAsAdmin"
         },                {
             "fqsen": "\\DecisionTest\\ControllerTest\u003A\u003AtestAdminDecisionDocumentActionCanBeAccessedAsAdmin\u0028\u0029",
             "name": "testAdminDecisionDocumentActionCanBeAccessedAsAdmin",
