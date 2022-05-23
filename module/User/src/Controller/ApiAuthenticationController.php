@@ -54,17 +54,17 @@ class ApiAuthenticationController extends AbstractActionController
 
     public function tokenAction(): Response|ViewModel
     {
+        $identity = $this->aclService->getIdentity();
+
+        if (!$identity instanceof User) {
+            throw new NotAllowedException('User not fully authenticated.');
+        }
+
         $appId = $this->params()->fromRoute('appId');
         $app = $this->apiAppMapper->findByAppId($appId);
 
         if (null === $app) {
             return $this->notFoundAction();
-        }
-
-        $identity = $this->aclService->getIdentity();
-
-        if (!$identity instanceof User) {
-            throw new NotAllowedException('User not fully authenticated.');
         }
 
         $request = $this->getRequest();
