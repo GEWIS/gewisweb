@@ -1,6 +1,5 @@
-<?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'view_metadata')): ?>
-    <table class="table table-condensed">
-        <tbody>
+<table class="table table-condensed">
+    <tbody>
         <tr>
             <td>
                 <span class="fas fa-user" aria-hidden="true"></span>
@@ -72,11 +71,10 @@
             <td>
                 <?= is_null($this->photo->getLongitude()) || is_null($this->photo->getLatitude()) ?
                     $this->translate("Unknown") : "<a target='_blank'
-				href='https://www.google.com/maps/?q={$this->photo->getLatitude()},{$this->photo->getLongitude()}'>"
+                href='https://www.google.com/maps/?q={$this->photo->getLatitude()},{$this->photo->getLongitude()}'>"
                     . $this->translate("View on map") . "</a>"
                 ?>
             </td>
         </tr>
-        </tbody>
-    </table>
-<?php endif; ?>
+    </tbody>
+</table>
