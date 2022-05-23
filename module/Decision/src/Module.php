@@ -121,6 +121,7 @@ class Module
                     $translator = $container->get('translator');
                     $photoService = $container->get('photo_service_photo');
                     $memberMapper = $container->get('decision_mapper_member');
+                    $apiAppAuthenticationMapper = $container->get('user_mapper_apiappauthentication');
                     $photoConfig = $container->get('config')['photo'];
 
                     return new MemberInfoService(
@@ -128,6 +129,7 @@ class Module
                         $translator,
                         $photoService,
                         $memberMapper,
+                        $apiAppAuthenticationMapper,
                         $photoConfig,
                     );
                 },

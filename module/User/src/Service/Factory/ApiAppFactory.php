@@ -4,7 +4,6 @@ namespace User\Service\Factory;
 
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
-use User\Mapper\ApiApp as ApiAppMapper;
 use User\Service\ApiApp;
 
 class ApiAppFactory implements FactoryInterface
@@ -22,7 +21,7 @@ class ApiAppFactory implements FactoryInterface
         ?array $options = null,
     ): ApiApp {
         return new ApiApp(
-            $container->get(ApiAppMapper::class),
+            $container->get('user_mapper_apiappauthentication'),
         );
     }
 }

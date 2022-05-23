@@ -7,6 +7,7 @@ use Decision\Model\Member as MemberModel;
 use Exception;
 use Laminas\Mvc\I18n\Translator;
 use Photo\Service\Photo as PhotoService;
+use User\Mapper\ApiAppAuthentication as ApiAppAuthenticationMapper;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -34,6 +35,8 @@ class MemberInfo
      */
     private MemberMapper $memberMapper;
 
+    private ApiAppAuthenticationMapper $apiAppAuthenticationMapper;
+
     /**
      * @var array
      */
@@ -44,6 +47,7 @@ class MemberInfo
      * @param Translator $translator
      * @param PhotoService $photoService
      * @param MemberMapper $memberMapper
+     * @param ApiAppAuthenticationMapper $apiAppAuthenticationMapper
      * @param array $photoConfig
      */
     public function __construct(
@@ -51,12 +55,14 @@ class MemberInfo
         Translator $translator,
         PhotoService $photoService,
         MemberMapper $memberMapper,
+        ApiAppAuthenticationMapper $apiAppAuthenticationMapper,
         array $photoConfig,
     ) {
         $this->aclService = $aclService;
         $this->translator = $translator;
         $this->photoService = $photoService;
         $this->memberMapper = $memberMapper;
+        $this->apiAppAuthenticationMapper = $apiAppAuthenticationMapper;
         $this->photoConfig = $photoConfig;
     }
 
@@ -105,6 +111,7 @@ class MemberInfo
             'isExplicitProfilePhoto' => $isExplicitProfilePhoto,
             'basedir' => $basedir,
             'photoConfig' => $this->photoConfig,
+            'apps' => $this->apiAppAuthenticationMapper->getFirstAndLastAuthenticationPerApiApp($member),
         ];
     }
 

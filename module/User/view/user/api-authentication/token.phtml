@@ -1,0 +1,43 @@
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1 col-md-7 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>
+                            <?= sprintf(
+                                $this->translate('Authorize %s to use your account?'),
+                                $this->escapeHtml($this->app),
+                            ) ?>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <?php if ($this->remind): ?>
+                            <p>
+                                <?= sprintf(
+                                    $this->translate('It has been more than 90 days since you last used <strong>%s</strong>. As a reminder, the application has access to:'),
+                                    $this->escapeHtml($this->app),
+                                ) ?>
+                            </p>
+                        <?php else: ?>
+                            <p><?= $this->translate('The application will get the following information:') ?></p>
+                        <?php endif; ?>
+                        <ul>
+                            <?php foreach ($claims as $claim): ?>
+                                <li><?= $claim->getName($this->plugin('translate')->getTranslator()) ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                        <form method="post" class="pull-right">
+                            <?php if (!$this->remind): ?>
+                                <input type="submit" name="cancel" class="btn btn-default" value="<?= $this->translate('Cancel') ?>">
+                                <input type="submit" name="confirm" class="btn btn-primary" value="<?= $this->translate('Confirm') ?>">
+                            <?php else: ?>
+                                <input type="submit" name="continue" class="btn btn-primary" value="<?= $this->translate('Continue') ?>">
+                            <?php endif; ?>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

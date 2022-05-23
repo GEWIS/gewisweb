@@ -19,6 +19,7 @@ use User\Authentication\{
 };
 use User\Authorization\AclServiceFactory;
 use User\Mapper\{
+    ApiAppAuthentication as ApiAppAuthenticationMapper,
     User as UserMapper,
     Factory\ApiAppFactory as ApiAppMapperFactory,
     ApiUser as ApiUserMapper,
@@ -259,7 +260,11 @@ class Module
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-
+                'user_mapper_apiappauthentication' => function (ContainerInterface $container) {
+                    return new ApiAppAuthenticationMapper(
+                        $container->get('doctrine.entitymanager.orm_default'),
+                    );
+                },
                 'user_mail_transport' => function (ContainerInterface $container) {
                     $config = $container->get('config');
                     $config = $config['email'];

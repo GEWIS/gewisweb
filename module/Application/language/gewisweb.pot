@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-22 16:20+0200\n"
+"POT-Creation-Date: 2022-04-30 08:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -255,6 +255,7 @@ msgstr ""
 #: module/Photo/view/photo/album-admin/index.phtml:200
 #: module/Photo/view/photo/album-admin/index.phtml:232
 #: module/Photo/view/photo/photo-admin/index.phtml:128
+#: module/User/view/user/api-authentication/token.phtml:32
 msgid "Cancel"
 msgstr ""
 
@@ -1517,6 +1518,7 @@ msgid "Privacy Policy"
 msgstr ""
 
 #: module/Application/view/partial/privacy-widget.phtml:18
+#: module/User/view/user/api-authentication/token.phtml:35
 msgid "Continue"
 msgstr ""
 
@@ -2216,6 +2218,7 @@ msgid "First name"
 msgstr ""
 
 #: module/Decision/view/decision/member/self.phtml:27
+#: module/User/src/Model/Enums/JWTClaims.php:43
 msgid "Middle name"
 msgstr ""
 
@@ -2255,6 +2258,7 @@ msgid "Generation"
 msgstr ""
 
 #: module/Decision/view/decision/member/self.phtml:63
+#: module/User/src/Model/Enums/JWTClaims.php:42
 msgid "Membership type"
 msgstr ""
 
@@ -2344,15 +2348,31 @@ msgstr ""
 msgid "Phone number"
 msgstr ""
 
-#: module/Decision/view/decision/member/self.phtml:177
+#: module/Decision/view/decision/member/self.phtml:147
+msgid "External applications"
+msgstr ""
+
+#: module/Decision/view/decision/member/self.phtml:150
+msgid "App"
+msgstr ""
+
+#: module/Decision/view/decision/member/self.phtml:151
+msgid "First authentication"
+msgstr ""
+
+#: module/Decision/view/decision/member/self.phtml:152
+msgid "Last authentication"
+msgstr ""
+
+#: module/Decision/view/decision/member/self.phtml:197
 msgid "Remove this picture as your profile picture"
 msgstr ""
 
-#: module/Decision/view/decision/member/self.phtml:179
+#: module/Decision/view/decision/member/self.phtml:199
 msgid "Your profile picture will be chosen automatically instead."
 msgstr ""
 
-#: module/Decision/view/decision/member/self.phtml:194
+#: module/Decision/view/decision/member/self.phtml:214
 msgid "More of my photo's"
 msgstr ""
 
@@ -3365,6 +3385,26 @@ msgstr ""
 msgid "Remove Token"
 msgstr ""
 
+#: module/User/view/user/api-authentication/token.phtml:9
+#, php-format
+msgid "Authorize %s to use your account?"
+msgstr ""
+
+#: module/User/view/user/api-authentication/token.phtml:18
+#, php-format
+msgid ""
+"It has been more than 90 days since you last used <strong>%s</strong>. As a "
+"reminder, the application has access to:"
+msgstr ""
+
+#: module/User/view/user/api-authentication/token.phtml:23
+msgid "The application will get the following information:"
+msgstr ""
+
+#: module/User/view/user/api-authentication/token.phtml:33
+msgid "Confirm"
+msgstr ""
+
 #: module/User/view/user/user/activate.phtml:2
 #: module/User/view/user/user/activate.phtml:23
 #: module/User/src/Form/Activate.php:52
@@ -4136,7 +4176,7 @@ msgid "You are not authorize people."
 msgstr ""
 
 #: module/Decision/src/Service/Member.php:80
-#: module/Decision/src/Service/MemberInfo.php:77
+#: module/Decision/src/Service/MemberInfo.php:83
 msgid "You are not allowed to view members."
 msgstr ""
 
@@ -4152,7 +4192,7 @@ msgstr ""
 msgid "Name must be at least "
 msgstr ""
 
-#: module/Decision/src/Service/MemberInfo.php:75
+#: module/Decision/src/Service/MemberInfo.php:81
 msgid "You are not allowed to view membership info."
 msgstr ""
 
@@ -4528,6 +4568,7 @@ msgid "Verify new password"
 msgstr ""
 
 #: module/User/src/Form/Register.php:54
+#: module/User/src/Model/Enums/JWTClaims.php:37
 msgid "E-mail address"
 msgstr ""
 
@@ -4547,6 +4588,22 @@ msgstr ""
 
 #: module/User/src/Form/Register.php:109
 msgid "This member already has an account."
+msgstr ""
+
+#: module/User/src/Model/Enums/JWTClaims.php:38
+msgid "Family name"
+msgstr ""
+
+#: module/User/src/Model/Enums/JWTClaims.php:39
+msgid "Given name"
+msgstr ""
+
+#: module/User/src/Model/Enums/JWTClaims.php:40
+msgid "Is 18+?"
+msgstr ""
+
+#: module/User/src/Model/Enums/JWTClaims.php:41
+msgid "Member number"
 msgstr ""
 
 #: module/User/src/Service/ApiUser.php:73
