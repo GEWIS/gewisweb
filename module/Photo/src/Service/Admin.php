@@ -165,6 +165,25 @@ class Admin
         $image = new Imagick($path);
         $image->thumbnailImage($width, $height, true);
         $image->setimageformat('png');
+
+        $orientation = $image->getImageOrientation();
+
+        switch ($orientation) {
+            case imagick::ORIENTATION_BOTTOMRIGHT:
+                $image->rotateimage("#000000", 180);
+                break;
+
+            case imagick::ORIENTATION_RIGHTTOP:
+                $image->rotateimage("#000000", 90);
+                break;
+
+            case imagick::ORIENTATION_LEFTBOTTOM:
+                $image->rotateimage("#000000", -90);
+                break;
+        }
+
+        $image->setImageOrientation(imagick::ORIENTATION_TOPLEFT);
+
         //Tempfile is used to generate sha1, not sure this is the best method
         $tempFileName = sys_get_temp_dir() . '/ThumbImage' . random_int(0, getrandmax()) . '.png';
         $image->writeImage($tempFileName);
