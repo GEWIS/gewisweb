@@ -3256,6 +3256,26 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Extensions-Doctrine-Rand.html#method_getSql"
         },                {
+            "fqsen": "\\Application\\Extensions\\Doctrine\\Year",
+            "name": "Year",
+            "summary": "YearFunction\u0020\u003A\u003A\u003D\u0020\u0022YEAR\u0022\u0020\u0022\u0028\u0022\u0020ArithmeticPrimary\u0020\u0022\u0029\u0022",
+            "url": "classes/Application-Extensions-Doctrine-Year.html"
+        },                {
+            "fqsen": "\\Application\\Extensions\\Doctrine\\Year\u003A\u003Aparse\u0028\u0029",
+            "name": "parse",
+            "summary": "",
+            "url": "classes/Application-Extensions-Doctrine-Year.html#method_parse"
+        },                {
+            "fqsen": "\\Application\\Extensions\\Doctrine\\Year\u003A\u003AgetSql\u0028\u0029",
+            "name": "getSql",
+            "summary": "",
+            "url": "classes/Application-Extensions-Doctrine-Year.html#method_getSql"
+        },                {
+            "fqsen": "\\Application\\Extensions\\Doctrine\\Year\u003A\u003A\u0024yearExpression",
+            "name": "yearExpression",
+            "summary": "",
+            "url": "classes/Application-Extensions-Doctrine-Year.html#property_yearExpression"
+        },                {
             "fqsen": "\\Application\\Form\\Localisable",
             "name": "Localisable",
             "summary": "A\u0020form\u0020which\u0020provides\u0020the\u0020basic\u0020structure\u0020for\u0020forms\u0020that\u0020utilise\u0020a\u0020model\u0027s\u0020\u007B\u0040link\u0020\\Application\\Model\\LocalisedText\u007D.",
@@ -12486,6 +12506,16 @@ Search.appendIndex(
             "summary": "Store\u0020a\u0020vote\u0020for\u0020a\u0020photo.",
             "url": "classes/Photo-Controller-PhotoController.html#method_voteAction"
         },                {
+            "fqsen": "\\Photo\\Controller\\PhotoController\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Photo-Controller-PhotoController.html#property_translator"
+        },                {
+            "fqsen": "\\Photo\\Controller\\PhotoController\u003A\u003A\u0024aclService",
+            "name": "aclService",
+            "summary": "",
+            "url": "classes/Photo-Controller-PhotoController.html#property_aclService"
+        },                {
             "fqsen": "\\Photo\\Controller\\PhotoController\u003A\u003A\u0024albumService",
             "name": "albumService",
             "summary": "",
@@ -12495,6 +12525,11 @@ Search.appendIndex(
             "name": "photoService",
             "summary": "",
             "url": "classes/Photo-Controller-PhotoController.html#property_photoService"
+        },                {
+            "fqsen": "\\Photo\\Controller\\PhotoController\u003A\u003A\u0024photoConfig",
+            "name": "photoConfig",
+            "summary": "",
+            "url": "classes/Photo-Controller-PhotoController.html#property_photoConfig"
         },                {
             "fqsen": "\\Photo\\Controller\\Plugin\\AlbumPaginatorAdapter",
             "name": "AlbumPaginatorAdapter",
@@ -12851,10 +12886,20 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Mapper-WeeklyPhoto.html#method_getCurrentPhotoOfTheWeek"
         },                {
-            "fqsen": "\\Photo\\Mapper\\WeeklyPhoto\u003A\u003AgetPhotosOfTheWeek\u0028\u0029",
-            "name": "getPhotosOfTheWeek",
-            "summary": "Retrieves\u0020all\u0020WeeklyPhotos.",
-            "url": "classes/Photo-Mapper-WeeklyPhoto.html#method_getPhotosOfTheWeek"
+            "fqsen": "\\Photo\\Mapper\\WeeklyPhoto\u003A\u003AgetPhotosOfTheWeekInYear\u0028\u0029",
+            "name": "getPhotosOfTheWeekInYear",
+            "summary": "",
+            "url": "classes/Photo-Mapper-WeeklyPhoto.html#method_getPhotosOfTheWeekInYear"
+        },                {
+            "fqsen": "\\Photo\\Mapper\\WeeklyPhoto\u003A\u003AgetOldestPhotoOfTheWeek\u0028\u0029",
+            "name": "getOldestPhotoOfTheWeek",
+            "summary": "",
+            "url": "classes/Photo-Mapper-WeeklyPhoto.html#method_getOldestPhotoOfTheWeek"
+        },                {
+            "fqsen": "\\Photo\\Mapper\\WeeklyPhoto\u003A\u003AgetNewestPhotoOfTheWeek\u0028\u0029",
+            "name": "getNewestPhotoOfTheWeek",
+            "summary": "",
+            "url": "classes/Photo-Mapper-WeeklyPhoto.html#method_getNewestPhotoOfTheWeek"
         },                {
             "fqsen": "\\Photo\\Mapper\\WeeklyPhoto\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
@@ -13601,6 +13646,26 @@ Search.appendIndex(
             "summary": "The\u0020member\u0020who\u0020voted.",
             "url": "classes/Photo-Model-Vote.html#property_voter"
         },                {
+            "fqsen": "\\Photo\\Model\\WeeklyAlbum",
+            "name": "WeeklyAlbum",
+            "summary": "Contains\u0020all\u0020photos\u0020of\u0020the\u0020week\u0020in\u0020a\u0020certain\u0020year.\u0020This\u0020is\u0020a\u0020VirtualAlbum,\u0020meaning\u0020that\u0020it\u0020is\u0020not\u0020persisted.",
+            "url": "classes/Photo-Model-WeeklyAlbum.html"
+        },                {
+            "fqsen": "\\Photo\\Model\\WeeklyAlbum\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "MemberAlbum\u0020constructor.",
+            "url": "classes/Photo-Model-WeeklyAlbum.html#method___construct"
+        },                {
+            "fqsen": "\\Photo\\Model\\WeeklyAlbum\u003A\u003AgetDates\u0028\u0029",
+            "name": "getDates",
+            "summary": "",
+            "url": "classes/Photo-Model-WeeklyAlbum.html#method_getDates"
+        },                {
+            "fqsen": "\\Photo\\Model\\WeeklyAlbum\u003A\u003A\u0024dates",
+            "name": "dates",
+            "summary": "The\u0020dates\u0020for\u0020each\u0020photo\u0020of\u0020the\u0020week\u0020in\u0020this\u0020year.",
+            "url": "classes/Photo-Model-WeeklyAlbum.html#property_dates"
+        },                {
             "fqsen": "\\Photo\\Model\\WeeklyPhoto",
             "name": "WeeklyPhoto",
             "summary": "Maintains\u0020a\u0020list\u0020of\u0020the\u0020\u0022Foto\u0020of\u0020the\u0020week\u0022.",
@@ -13811,6 +13876,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Service-Album.html#method_getMemberAlbum"
         },                {
+            "fqsen": "\\Photo\\Service\\Album\u003A\u003AgetLastPhotosOfTheWeekPerYear\u0028\u0029",
+            "name": "getLastPhotosOfTheWeekPerYear",
+            "summary": "Retrieves\u0020all\u0020WeeklyPhotos.",
+            "url": "classes/Photo-Service-Album.html#method_getLastPhotosOfTheWeekPerYear"
+        },                {
+            "fqsen": "\\Photo\\Service\\Album\u003A\u003AgetWeeklyAlbum\u0028\u0029",
+            "name": "getWeeklyAlbum",
+            "summary": "",
+            "url": "classes/Photo-Service-Album.html#method_getWeeklyAlbum"
+        },                {
             "fqsen": "\\Photo\\Service\\Album\u003A\u003AupdateAlbum\u0028\u0029",
             "name": "updateAlbum",
             "summary": "Updates\u0020the\u0020metadata\u0020of\u0020an\u0020album\u0020using\u0020post\u0020data.",
@@ -13846,16 +13921,6 @@ Search.appendIndex(
             "summary": "Moves\u0020a\u0020photo\u0020to\u0020a\u0020new\u0020album.",
             "url": "classes/Photo-Service-Album.html#method_movePhoto"
         },                {
-            "fqsen": "\\Photo\\Service\\Album\u003A\u003AASSOCIATION_YEAR_START_MONTH",
-            "name": "ASSOCIATION_YEAR_START_MONTH",
-            "summary": "A\u0020GEWIS\u0020association\u0020year\u0020starts\u002001\u002D07.",
-            "url": "classes/Photo-Service-Album.html#constant_ASSOCIATION_YEAR_START_MONTH"
-        },                {
-            "fqsen": "\\Photo\\Service\\Album\u003A\u003AASSOCIATION_YEAR_START_DAY",
-            "name": "ASSOCIATION_YEAR_START_DAY",
-            "summary": "",
-            "url": "classes/Photo-Service-Album.html#constant_ASSOCIATION_YEAR_START_DAY"
-        },                {
             "fqsen": "\\Photo\\Service\\Album\u003A\u003A\u0024aclService",
             "name": "aclService",
             "summary": "",
@@ -13890,6 +13955,11 @@ Search.appendIndex(
             "name": "albumMapper",
             "summary": "",
             "url": "classes/Photo-Service-Album.html#property_albumMapper"
+        },                {
+            "fqsen": "\\Photo\\Service\\Album\u003A\u003A\u0024weeklyPhotoMapper",
+            "name": "weeklyPhotoMapper",
+            "summary": "",
+            "url": "classes/Photo-Service-Album.html#property_weeklyPhotoMapper"
         },                {
             "fqsen": "\\Photo\\Service\\Album\u003A\u003A\u0024createAlbumForm",
             "name": "createAlbumForm",
@@ -14110,11 +14180,6 @@ Search.appendIndex(
             "name": "ratePhotoForMember",
             "summary": "Determine\u0020the\u0020preference\u0020rating\u0020of\u0020the\u0020photo.",
             "url": "classes/Photo-Service-Photo.html#method_ratePhotoForMember"
-        },                {
-            "fqsen": "\\Photo\\Service\\Photo\u003A\u003AgetPhotosOfTheWeek\u0028\u0029",
-            "name": "getPhotosOfTheWeek",
-            "summary": "Retrieves\u0020all\u0020WeeklyPhotos.",
-            "url": "classes/Photo-Service-Photo.html#method_getPhotosOfTheWeek"
         },                {
             "fqsen": "\\Photo\\Service\\Photo\u003A\u003AgetCurrentPhotoOfTheWeek\u0028\u0029",
             "name": "getCurrentPhotoOfTheWeek",

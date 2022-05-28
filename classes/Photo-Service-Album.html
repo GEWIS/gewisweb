@@ -393,7 +393,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">30</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
     </aside>
 
@@ -413,20 +413,6 @@
 </h3>
 
 <dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/Photo-Service-Album.html#constant_ASSOCIATION_YEAR_START_DAY">ASSOCIATION_YEAR_START_DAY</a>
-    <span>
-        &nbsp;= 1                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/Photo-Service-Album.html#constant_ASSOCIATION_YEAR_START_MONTH">ASSOCIATION_YEAR_START_MONTH</a>
-    <span>
-        &nbsp;= 7                            </span>
-</dt>
-<dd>A GEWIS association year starts 01-07.</dd>
-
                     <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/Photo-Service-Album.html#property_aclService">$aclService</a>
     <span>
@@ -490,6 +476,13 @@
 </dt>
 <dd></dd>
 
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/Photo-Service-Album.html#property_weeklyPhotoMapper">$weeklyPhotoMapper</a>
+    <span>
+                        &nbsp;: <a href="classes/Photo-Mapper-WeeklyPhoto.html"><abbr title="\Photo\Mapper\WeeklyPhoto">WeeklyPhoto</abbr></a>            </span>
+</dt>
+<dd></dd>
+
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Photo-Service-Album.html#method___construct">__construct()</a>
     <span>
@@ -528,7 +521,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Photo-Service-Album.html#method_getAlbum">getAlbum()</a>
     <span>
-                                &nbsp;: <a href="classes/Photo-Model-MemberAlbum.html"><abbr title="\Photo\Model\MemberAlbum">MemberAlbum</abbr></a>|<a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>|null    </span>
+                                &nbsp;: <a href="classes/Photo-Model-MemberAlbum.html"><abbr title="\Photo\Model\MemberAlbum">MemberAlbum</abbr></a>|<a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>|<a href="classes/Photo-Model-WeeklyAlbum.html"><abbr title="\Photo\Model\WeeklyAlbum">WeeklyAlbum</abbr></a>|null    </span>
 </dt>
 <dd>Gets an album using the album id.</dd>
 
@@ -585,11 +578,11 @@ the first day of the association year.</dd>
 <dd>Retrieves the form for editing the specified album.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Photo-Service-Album.html#method_getMemberAlbum">getMemberAlbum()</a>
+    <a href="classes/Photo-Service-Album.html#method_getLastPhotosOfTheWeekPerYear">getLastPhotosOfTheWeekPerYear()</a>
     <span>
-                                &nbsp;: <a href="classes/Photo-Model-MemberAlbum.html"><abbr title="\Photo\Model\MemberAlbum">MemberAlbum</abbr></a>|null    </span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
-<dd></dd>
+<dd>Retrieves all WeeklyPhotos.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Photo-Service-Album.html#method_moveAlbum">moveAlbum()</a>
@@ -612,75 +605,25 @@ the first day of the association year.</dd>
 </dt>
 <dd>Updates the metadata of an album using post data.</dd>
 
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a href="classes/Photo-Service-Album.html#method_getMemberAlbum">getMemberAlbum()</a>
+    <span>
+                                &nbsp;: <a href="classes/Photo-Model-MemberAlbum.html"><abbr title="\Photo\Model\MemberAlbum">MemberAlbum</abbr></a>|null    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a href="classes/Photo-Service-Album.html#method_getWeeklyAlbum">getWeeklyAlbum()</a>
+    <span>
+                                &nbsp;: <a href="classes/Photo-Model-WeeklyAlbum.html"><abbr title="\Photo\Model\WeeklyAlbum">WeeklyAlbum</abbr></a>|null    </span>
+</dt>
+<dd></dd>
+
         </dl>
 
 
 
         
-    <section class="phpdocumentor-constants">
-        <h3 class="phpdocumentor-elements__header" id="constants">
-            Constants
-            <a href="classes/Photo-Service-Album.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
-        </h3>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_ASSOCIATION_YEAR_START_DAY">
-        ASSOCIATION_YEAR_START_DAY
-        <a href="classes/Photo-Service-Album.html#constant_ASSOCIATION_YEAR_START_DAY" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">103</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">ASSOCIATION_YEAR_START_DAY</span>
-    = <span class="phpdocumentor-signature__default-value">1</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_ASSOCIATION_YEAR_START_MONTH">
-        ASSOCIATION_YEAR_START_MONTH
-        <a href="classes/Photo-Service-Album.html#constant_ASSOCIATION_YEAR_START_MONTH" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">102</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">A GEWIS association year starts 01-07.</p>
-
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">ASSOCIATION_YEAR_START_MONTH</span>
-    = <span class="phpdocumentor-signature__default-value">7</span>
-</code>
-
-
-    
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-            </section>
 
         
     <section class="phpdocumentor-properties">
@@ -704,7 +647,7 @@ the first day of the association year.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
@@ -736,7 +679,7 @@ the first day of the association year.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">56</span>
 
     </aside>
 
@@ -768,7 +711,7 @@ the first day of the association year.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">65</span>
+    <span class="phpdocumentor-element-found-in__line">71</span>
 
     </aside>
 
@@ -800,7 +743,7 @@ the first day of the association year.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">70</span>
+    <span class="phpdocumentor-element-found-in__line">78</span>
 
     </aside>
 
@@ -832,7 +775,7 @@ the first day of the association year.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
@@ -864,7 +807,7 @@ the first day of the association year.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
@@ -896,7 +839,7 @@ the first day of the association year.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
@@ -928,7 +871,7 @@ the first day of the association year.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">60</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
     </aside>
 
@@ -960,7 +903,7 @@ the first day of the association year.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
     </aside>
 
@@ -973,6 +916,40 @@ the first day of the association year.</dd>
 
     
     
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_weeklyPhotoMapper">
+        $weeklyPhotoMapper
+        <a href="classes/Photo-Service-Album.html#property_weeklyPhotoMapper" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">73</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Photo-Mapper-WeeklyPhoto.html"><abbr title="\Photo\Mapper\WeeklyPhoto">WeeklyPhoto</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$weeklyPhotoMapper</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -996,14 +973,14 @@ the first day of the association year.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
+    <span class="phpdocumentor-element-found-in__line">85</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Service-AclService.html"><abbr title="\Photo\Service\AclService">AclService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$aclService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Service-Photo.html"><abbr title="\Photo\Service\Photo">Photo</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$photoService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Service-AlbumCover.html"><abbr title="\Photo\Service\AlbumCover">AlbumCover</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$albumCoverService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Service-Member.html"><abbr title="\Decision\Service\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$memberService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Service-FileStorage.html"><abbr title="\Application\Service\FileStorage">FileStorage</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$storageService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Mapper-Album.html"><abbr title="\Photo\Mapper\Album">Album</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$albumMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Form-CreateAlbum.html"><abbr title="\Photo\Form\CreateAlbum">CreateAlbum</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$createAlbumForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Form-EditAlbum.html"><abbr title="\Photo\Form\EditAlbum">EditAlbum</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$editAlbumForm</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Service-AclService.html"><abbr title="\Photo\Service\AclService">AclService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$aclService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Service-Photo.html"><abbr title="\Photo\Service\Photo">Photo</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$photoService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Service-AlbumCover.html"><abbr title="\Photo\Service\AlbumCover">AlbumCover</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$albumCoverService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Service-Member.html"><abbr title="\Decision\Service\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$memberService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Service-FileStorage.html"><abbr title="\Application\Service\FileStorage">FileStorage</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$storageService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Mapper-Album.html"><abbr title="\Photo\Mapper\Album">Album</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$albumMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Mapper-WeeklyPhoto.html"><abbr title="\Photo\Mapper\WeeklyPhoto">WeeklyPhoto</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$weeklyPhotoMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Form-CreateAlbum.html"><abbr title="\Photo\Form\CreateAlbum">CreateAlbum</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$createAlbumForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Form-EditAlbum.html"><abbr title="\Photo\Form\EditAlbum">EditAlbum</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$editAlbumForm</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -1066,6 +1043,14 @@ the first day of the association year.</dd>
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$weeklyPhotoMapper</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Mapper-WeeklyPhoto.html"><abbr title="\Photo\Mapper\WeeklyPhoto">WeeklyPhoto</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$createAlbumForm</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Form-CreateAlbum.html"><abbr title="\Photo\Form\CreateAlbum">CreateAlbum</abbr></a></span>
                             </dt>
@@ -1104,7 +1089,7 @@ the first day of the association year.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">240</span>
+    <span class="phpdocumentor-element-found-in__line">244</span>
 
     </aside>
 
@@ -1172,7 +1157,7 @@ the first day of the association year.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">406</span>
+    <span class="phpdocumentor-element-found-in__line">481</span>
 
     </aside>
 
@@ -1231,7 +1216,7 @@ the first day of the association year.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">450</span>
+    <span class="phpdocumentor-element-found-in__line">525</span>
 
     </aside>
 
@@ -1274,7 +1259,7 @@ the first day of the association year.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">427</span>
+    <span class="phpdocumentor-element-found-in__line">502</span>
 
     </aside>
 
@@ -1331,7 +1316,7 @@ the first day of the association year.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">285</span>
+    <span class="phpdocumentor-element-found-in__line">289</span>
 
     </aside>
 
@@ -1339,7 +1324,7 @@ the first day of the association year.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getAlbum</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$albumId</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;album&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Photo-Model-MemberAlbum.html"><abbr title="\Photo\Model\MemberAlbum">MemberAlbum</abbr></a>|<a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getAlbum</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$albumId</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;album&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Photo-Model-MemberAlbum.html"><abbr title="\Photo\Model\MemberAlbum">MemberAlbum</abbr></a>|<a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>|<a href="classes/Photo-Model-WeeklyAlbum.html"><abbr title="\Photo\Model\WeeklyAlbum">WeeklyAlbum</abbr></a>|null</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1383,7 +1368,7 @@ the first day of the association year.</dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Photo-Model-MemberAlbum.html"><abbr title="\Photo\Model\MemberAlbum">MemberAlbum</abbr></a>|<a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Photo-Model-MemberAlbum.html"><abbr title="\Photo\Model\MemberAlbum">MemberAlbum</abbr></a>|<a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>|<a href="classes/Photo-Model-WeeklyAlbum.html"><abbr title="\Photo\Model\WeeklyAlbum">WeeklyAlbum</abbr></a>|null</span>
             &mdash;
             <section class="phpdocumentor-description"><p>album matching the given id</p>
 </section>
@@ -1403,7 +1388,7 @@ the first day of the association year.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">115</span>
+    <span class="phpdocumentor-element-found-in__line">119</span>
 
     </aside>
 
@@ -1467,7 +1452,7 @@ album.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">148</span>
+    <span class="phpdocumentor-element-found-in__line">152</span>
 
     </aside>
 
@@ -1516,7 +1501,7 @@ the first day of the association year.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">171</span>
+    <span class="phpdocumentor-element-found-in__line">175</span>
 
     </aside>
 
@@ -1551,7 +1536,7 @@ the first day of the association year.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">189</span>
+    <span class="phpdocumentor-element-found-in__line">193</span>
 
     </aside>
 
@@ -1590,7 +1575,7 @@ the first day of the association year.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">221</span>
+    <span class="phpdocumentor-element-found-in__line">225</span>
 
     </aside>
 
@@ -1639,7 +1624,7 @@ the first day of the association year.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">266</span>
+    <span class="phpdocumentor-element-found-in__line">270</span>
 
     </aside>
 
@@ -1672,7 +1657,7 @@ the first day of the association year.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">347</span>
+    <span class="phpdocumentor-element-found-in__line">422</span>
 
     </aside>
 
@@ -1724,38 +1709,29 @@ the first day of the association year.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getMemberAlbum">
-        getMemberAlbum()
-        <a href="classes/Photo-Service-Album.html#method_getMemberAlbum" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getLastPhotosOfTheWeekPerYear">
+        getLastPhotosOfTheWeekPerYear()
+        <a href="classes/Photo-Service-Album.html#method_getLastPhotosOfTheWeekPerYear" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">305</span>
+    <span class="phpdocumentor-element-found-in__line">332</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Retrieves all WeeklyPhotos.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getMemberAlbum</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lidNr</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Photo-Model-MemberAlbum.html"><abbr title="\Photo\Model\MemberAlbum">MemberAlbum</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getLastPhotosOfTheWeekPerYear</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
     
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$lidNr</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
+    
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Photo-Model-MemberAlbum.html"><abbr title="\Photo\Model\MemberAlbum">MemberAlbum</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
             &mdash;
         
     
@@ -1773,7 +1749,7 @@ the first day of the association year.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">370</span>
+    <span class="phpdocumentor-element-found-in__line">445</span>
 
     </aside>
 
@@ -1843,7 +1819,7 @@ the first day of the association year.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">467</span>
+    <span class="phpdocumentor-element-found-in__line">542</span>
 
     </aside>
 
@@ -1913,7 +1889,7 @@ the first day of the association year.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">328</span>
+    <span class="phpdocumentor-element-found-in__line">403</span>
 
     </aside>
 
@@ -1947,6 +1923,92 @@ the first day of the association year.</p>
             <section class="phpdocumentor-description"><p>indicating if the update was successful</p>
 </section>
 
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getMemberAlbum">
+        getMemberAlbum()
+        <a href="classes/Photo-Service-Album.html#method_getMemberAlbum" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">310</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+                    <span class="phpdocumentor-signature__name">getMemberAlbum</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lidNr</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Photo-Model-MemberAlbum.html"><abbr title="\Photo\Model\MemberAlbum">MemberAlbum</abbr></a>|null</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$lidNr</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Photo-Model-MemberAlbum.html"><abbr title="\Photo\Model\MemberAlbum">MemberAlbum</abbr></a>|null</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getWeeklyAlbum">
+        getWeeklyAlbum()
+        <a href="classes/Photo-Service-Album.html#method_getWeeklyAlbum" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Service/Album.php"><a href="files/module-photo-src-service-album.html"><abbr title="module/Photo/src/Service/Album.php">Album.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">358</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+                    <span class="phpdocumentor-signature__name">getWeeklyAlbum</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$year</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Photo-Model-WeeklyAlbum.html"><abbr title="\Photo\Model\WeeklyAlbum">WeeklyAlbum</abbr></a>|null</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$year</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Photo-Model-WeeklyAlbum.html"><abbr title="\Photo\Model\WeeklyAlbum">WeeklyAlbum</abbr></a>|null</span>
+            &mdash;
+        
     
 </article>
             </section>
