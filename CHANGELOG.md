@@ -1,3 +1,32 @@
+## [v2.8](https://github.com/GEWIS/gewisweb/tree/v2.8) (2022-05-29)
+
+* Added a pop-up in the photo viewer for Photos of the Week to shown when they were voted 'Photo of the Week'.
+* Added membership type to profile page for administrative purposes.
+* Added membership type to the activity admin sign-up list overview.
+* Added more claims to the JWT authentication for external applications to use; `email`, `family_name`, `given_name`, `is_18_plus`, `membership_typ`, and `middle_name`.
+* Added an overview of external application authentications to the user's profile.
+* Improved external authentication process by showing which claims will be available to the external application and allowing the user to deny the authorization. If the user has not used an external application for more than 90 days, they will get a reminder of what inforamtion is shared with the external application when trying to authenticate.
+* Improved the warning and confirmation process when a user tries to grant an authorisation to another user who already has received 2 or more authorizations.
+* Improved the 'Photos of the Week' page by creating virtual albums for each association year.
+* Improved performance of album pages by dynamically loading tags and voted status for each photo.
+* Improved performance of album pages by not repeatedly performing ACL checks for viewing metadata.
+* Fixed issue where the button the button to set a photo as your profile photo would always be shown, even when you were not tagged in a photo.
+* Fixed issue where anonymous votes on polls were not preserved.
+* Fixed issue where external participants of an activity could not be signed off.
+* Fixed issue where thumbnails of photos with EXIF rotation would not be correctly rotated resulting in incorrect aspect ratios.
+* Fixed issue where sharing an already shared image would incorrectly structure the URL, resulting in unexpected behaviour.
+* Fixed issue where album pages would fail to load if there existed a tag that belonged to an old member.
+* Fixed issue where organ names would be incorrectly capitalised.
+* Fixed issue where long activity names could overflow the agenda panel of the frontpage.
+* Fixed issue where viewing a non-existent organ could result in a crash.
+* Fixed issue where albums with sub-albums that did not have a cover photo could not be viewed.
+* Fixed issue where sub-albums could not be made full albums again.
+* Fixed issue where meeting minutes were called meeting "notes".
+* Fixed issue where the ordering of functions within an organ was wrong in English.
+* Updated dependencies.
+
+---
+
 ## [v2.7](https://github.com/GEWIS/gewisweb/tree/v2.7) (2022-03-27)
 
 * Added a button to go from a photo in a member album to the actual album.
