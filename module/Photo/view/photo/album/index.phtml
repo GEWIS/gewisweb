@@ -1,7 +1,11 @@
 <?php
 // set title
 use Decision\Model\AssociationYear;
-use Photo\Model\MemberAlbum;
+use Photo\Model\{
+    MemberAlbum,
+    VirtualAlbum,
+    WeeklyAlbum,
+};
 
 $this->headTitle($album->getName());
 $currentAlbum = $album;
@@ -32,7 +36,7 @@ $this->scriptUrl()->requireUrl('member/search')
                     <?= $this->translate('Photos') ?>
                 </a>
             </li>
-            <?php if (!$currentAlbum instanceof MemberAlbum): ?>
+            <?php if (!$currentAlbum instanceof VirtualAlbum): ?>
                 <li>
                     <?php
                     // determine association year
@@ -41,6 +45,10 @@ $this->scriptUrl()->requireUrl('member/search')
                     <a href="<?= $this->url('photo/year', ['year' => $associationYear->getYear()]); ?>">
                         <?= $associationYear->getYearString() ?>
                     </a>
+                </li>
+            <?php elseif ($currentAlbum instanceof WeeklyAlbum): ?>
+                <li>
+                    <a href="<?= $this->url('photo/weekly') ?>"><?= $this->translate('Photos of the Week') ?></a>
                 </li>
             <?php endif; ?>
             <?php
@@ -75,6 +83,9 @@ $this->scriptUrl()->requireUrl('member/search')
                 <?php if ($album instanceof MemberAlbum): ?>
                     <span class="fas fa-user"></span>
                     &nbsp;
+                <?php elseif ($album instanceof WeeklyAlbum): ?>
+                    <span class="fas fa-award"></span>
+                    &nbsp;
                 <?php endif; ?>
                 <?= $this->escapeHtml($album->getName()); ?>
             </li>
@@ -93,8 +104,12 @@ $this->scriptUrl()->requireUrl('member/search')
                             <a href="<?= $this->url('member/view', ['lidnr' => $album->getMember()->getLidnr()]) ?>">
                                 <?= strtolower($this->translate("View user profile")) ?>
                             </a>
-                        <?php else: ?>
-                            <?= $album->getStartDateTime()->format('d-m-Y') ?>
+                        <?php elseif (!($album instanceof WeeklyAlbum)): ?>
+                            <?= sprintf(
+                                    '%s/%s',
+                                    $album->getStartDateTime()->format('Y'),
+                                    $album->getEndDateTime()->format('Y')
+                                ) ?>
                         <?php endif; ?>
                     </small>
                 </h1>
@@ -133,7 +148,7 @@ $this->scriptUrl()->requireUrl('member/search')
         >
             <div class="grid-sizer"></div>
             <div class="gutter-sizer"></div>
-            <?php foreach ($album->getPhotos() as $item): ?>
+            <?php foreach ($album->getPhotos() as $key => $item): ?>
                 <?php
                 $ar = $item->getAspectRatio();
                 $width = $config['small_thumb_size']['width'];
@@ -147,13 +162,19 @@ $this->scriptUrl()->requireUrl('member/search')
                     'w' => $width,
                     'h' => round($width * $ar)
                 ];
+
+                // Don't retrieve photo of the week when we are viewing photos of the week.
+                $weeklyPhoto = null;
+                if (!($album instanceof WeeklyAlbum)) {
+                    $weeklyPhoto = $item->getWeeklyPhoto();
+                }
                 ?>
                 <figure
-                    class="pswp-gallery__item<?= is_null($item->getWeeklyPhoto()) ? '' : ' potw-thumb' ?>"
+                    class="pswp-gallery__item<?= (null === $weeklyPhoto) ? '' : ' potw-thumb' ?>"
                     data-id="<?= $item->getId() ?>"
                     data-author="GEWIS"
                     data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]) ?>"
-                    <?php if ($album instanceof MemberAlbum): ?>
+                    <?php if ($album instanceof VirtualAlbum): ?>
                         data-original-album="<?= $this->url(
                             'photo/album',
                             ['album_id' => $item->getAlbum()->getId(), 'album_type' => 'album']
@@ -162,6 +183,11 @@ $this->scriptUrl()->requireUrl('member/search')
                     data-profile-photo-url="<?= $this->url('photo/set_profile_photo', ['photo_id' => $item->getId()]) ?>"
                     data-details-url="<?= $this->url('api_photo/details', ['photo_id' => $item->getId()]) ?>"
                     data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]) ?>"
+                    <?php if (null !== $weeklyPhoto): ?>
+                        data-weekly-date="<?= $weeklyPhoto->getWeek()->format('c') ?>"
+                    <?php elseif ($album instanceof WeeklyAlbum): ?>
+                        data-weekly-date="<?= $album->getDates()[$key]->format('c') ?>"
+                    <?php endif; ?>
                 >
                     <a href="<?= $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
                        target="_blank"
@@ -296,6 +322,15 @@ $this->scriptUrl()->requireUrl('member/search')
             el.dataset.originalTitle = '<?= $this->translate('Vote for photo of the week') ?>';
         }
     };
+
+    Date.prototype.getWeekNumber = function() {
+        let d = new Date(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()));
+        let dayNum = d.getUTCDay() || 7;
+        d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+        let yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+
+        return Math.ceil((((d - yearStart) / 86400000) + 1) / 7)
+    };
 </script>
 <script type="module">
     import PhotoSwipeLightbox from '<?= $this->basePath() ?>/js/photoswipe-lightbox.esm.min.js';
@@ -375,7 +410,7 @@ $this->scriptUrl()->requireUrl('member/search')
             },
         });
 
-        <?php if ($album instanceof MemberAlbum): ?>
+        <?php if ($album instanceof VirtualAlbum): ?>
             lightbox.pswp.ui.registerElement({
                 name: 'original-album-button',
                 appendTo: 'bar',
@@ -625,23 +660,78 @@ $this->scriptUrl()->requireUrl('member/search')
         <?php endif; ?>
 
         <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'view_metadata')): ?>
-        // Register the metadata UI.
+            // Register the metadata UI.
+            lightbox.pswp.ui.registerElement({
+                name: 'metadata-ui',
+                appendTo: 'root',
+                order: 43,
+                isButton: false,
+                html: '<?= $this->translate('Cannot load metadata') ?>',
+                onInit: (el, pswp) => {
+                    pswp.on('change', () => {
+                        let currentSlide = pswp.currSlide.data.element;
+
+                        // Copy all HTML.
+                        el.innerHTML = currentSlide.querySelector('figcaption').innerHTML;
+                    });
+                },
+            });
+        <?php endif; ?>
+
         lightbox.pswp.ui.registerElement({
-            name: 'metadata-ui',
+            name: 'photo-of-the-week-ui',
             appendTo: 'root',
-            order: 43,
+            order: 44,
             isButton: false,
-            html: '<?= $this->translate('Cannot load metadata') ?>',
+            html: '',
             onInit: (el, pswp) => {
                 pswp.on('change', () => {
                     let currentSlide = pswp.currSlide.data.element;
+                    let weeklyDate = currentSlide.dataset.weeklyDate;
 
-                    // Copy all HTML.
-                    el.innerHTML = currentSlide.querySelector('figcaption').innerHTML;
+                    if (undefined !== weeklyDate) {
+                        let date = new Date(weeklyDate)
+                        let currentWeek = date.getWeekNumber();
+                        el.innerHTML = `<span class="fas fa-award"></span> <?= $this->translate('Photo of the Week:<br> Week') ?> ${currentWeek} <?= $this->translate('of') ?> ${date.getUTCFullYear()}`;
+                        el.hidden = false;
+                    } else {
+                        el.hidden = true;
+                        // el.classList.add('pswp__photo-of-the-week-ui--hidden');
+                    }
+                });
+
+                pswp.on('zoomPanUpdate', () => {
+                    let potwUIHideTimeout;
+
+                    // Hide the Photo of the Week message when zooming but only when it is not being displayed.
+                    if (!el.hidden || el.classList.contains('pswp__photo-of-the-week-ui--hidden')) {
+                        if (pswp.currSlide.currZoomLevel > pswp.currSlide.zoomLevels.initial) {
+                            el.classList.add('pswp__photo-of-the-week-ui--hidden');
+
+                            if (potwUIHideTimeout) {
+                                clearTimeout(potwUIHideTimeout);
+                            }
+
+                            potwUIHideTimeout = setTimeout(() => {
+                                el.hidden = true
+                                potwUIHideTimeout = null;
+                            }, 300);
+                        } else {
+                            el.hidden = false;
+
+                            if (potwUIHideTimeout) {
+                                clearTimeout(potwUIHideTimeout);
+                            }
+
+                            potwUIHideTimeout = setTimeout(() => {
+                                el.classList.remove('pswp__photo-of-the-week-ui--hidden');
+                                potwUIHideTimeout = null;
+                            }, 50);
+                        }
+                    }
                 });
             },
         });
-        <?php endif; ?>
     });
 
     // If the tag search is being used, do not allow zooming using the `z` or arrow keys.

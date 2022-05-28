@@ -1,52 +1,71 @@
 <?php
-$this->headTitle($this->translate('Picture of the week')); ?>
+$this->headTitle($this->translate('Photos of the Week')); ?>
 <section class="section">
     <div class="container">
-        <?php if (empty($weeklyPhotos)): ?>
+        <?php if (empty($photosOfTheWeek)): ?>
             <p><?= $this->translate("Currently, no pictures of the week are available.") ?></p>
         <?php else: ?>
-            <h1><?= $this->translate('Picture of the week') ?></h1>
-            <h4><?= $this->translate('Current picture of the week') ?></h4>
+            <h1><?= $this->translate('Photos of the Week') ?></h1>
+            <h4><?= $this->translate('Current photo of the week') ?></h4>
             <hr>
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
+                    <?php
+                    $mostRecentYear = max(array_keys($photosOfTheWeek));
+                    $currentPhotoOfTheWeek = $photosOfTheWeek[$mostRecentYear]->getPhoto();
+                    $ar = $currentPhotoOfTheWeek->getAspectRatio();
+                    $width = $config['large_thumb_size']['width'];
+                    $largeSize = [
+                        'w' => $width,
+                        'h' => round($width * $ar)
+                    ];
+                    ?>
                     <a href="<?= $this->url(
                         'photo/album',
                         [
-                            'album_id' => $weeklyPhotos[0]->getPhoto()->getAlbum()->getId(),
+                            'album_id' => $currentPhotoOfTheWeek->getAlbum()->getId(),
                             'album_type' => 'album',
-                            'photo_id' => $weeklyPhotos[0]->getPhoto()->getId(),
+                            'photo_id' => $currentPhotoOfTheWeek->getId(),
                         ],
                     ) ?>">
                         <img
                             class="img-responsive"
-                            src="<?= $this->fileUrl($weeklyPhotos[0]->getPhoto()->getLargeThumbPath()) ?>"
+                            src="<?= $this->glideUrl()->getUrl($currentPhotoOfTheWeek->getPath(), $largeSize) ?>"
                             alt=""
                         />
                     </a>
                 </div>
             </div>
 
-            <h4><?= $this->translate('Old pictures of the week') ?></h4>
+            <h4><?= $this->translate('Old photos of the week') ?></h4>
             <hr>
-            <div class="photo-grid">
-                <div class="grid-sizer"></div>
-                <div class="gutter-sizer"></div>
-                <?php foreach ($weeklyPhotos as $weeklyPhoto): ?>
-                    <div class="photo-grid-item">
-                        <a
-                            class="thumbnail"
-                            href="<?= $this->url(
-                                'photo/album',
-                                [
-                                    'album_id' => $weeklyPhoto->getPhoto()->getAlbum()->getId(),
-                                    'album_type' => 'album',
-                                    'photo_id' => $weeklyPhoto->getPhoto()->getId(),
-                                ],
-                            ) ?>">
-                            <img src="<?= $this->fileUrl($weeklyPhoto->getPhoto()->getSmallThumbPath()) ?>">
+            <div class="row">
+                <?php foreach ($photosOfTheWeek as $year => $photoOfTheWeek): ?>
+                    <?php
+                    $lastWeeklyPhoto = $photoOfTheWeek->getPhoto();
+                    $ar = $lastWeeklyPhoto->getAspectRatio();
+                    $width = $config['small_thumb_size']['width'];
+                    $smallSize = [
+                        'w' => $width,
+                        'h' => round($width * $ar)
+                    ];
+                    ?>
+                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                        <a class="thumbnail"
+                           href="<?= $this->url(
+                               'photo/album',
+                               [
+                                   'album_id' => $year,
+                                   'album_type' => 'weekly',
+                               ],
+                           ) ?>">
+                            <img
+                                class="img-responsive"
+                                src="<?= $this->glideUrl()->getUrl($lastWeeklyPhoto->getPath(), $smallSize) ?>"
+                                alt=""
+                            />
                             <div class="caption">
-                                <?= $this->translate('Week') ?> <?= $weeklyPhoto->getWeek()->format('W'); ?>
+                                <?= sprintf('%d/%d', $year, $year + 1) ?>
                             </div>
                         </a>
                     </div>
@@ -55,8 +74,3 @@ $this->headTitle($this->translate('Picture of the week')); ?>
         <?php endif; ?>
     </div>
 </section>
-<script>
-    $(document).ready(function () {
-        Photo.initGrid();
-    });
-</script>

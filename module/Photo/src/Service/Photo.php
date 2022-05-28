@@ -660,22 +660,6 @@ class Photo
     }
 
     /**
-     * Retrieves all WeeklyPhotos.
-     *
-     * @return array
-     */
-    public function getPhotosOfTheWeek(): array
-    {
-        if (!$this->aclService->isAllowed('view', 'photo')) {
-            throw new NotAllowedException(
-                $this->translator->translate('Not allowed to view previous photos of the week')
-            );
-        }
-
-        return $this->weeklyPhotoMapper->getPhotosOfTheWeek();
-    }
-
-    /**
      * @return WeeklyPhotoModel|null
      */
     public function getCurrentPhotoOfTheWeek(): ?WeeklyPhotoModel

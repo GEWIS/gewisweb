@@ -47,7 +47,7 @@ return [
                             'route' => '/:album_type/:album_id[#pid=:photo_id]',
                             'constraints' => [
                                 'album_id' => '[0-9]+',
-                                'album_type' => '(album|member)',
+                                'album_type' => '(album|member|weekly)',
                                 'photo_id' => '[0-9]+',
                             ],
                             'defaults' => [

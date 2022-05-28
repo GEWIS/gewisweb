@@ -10,12 +10,19 @@ use Laminas\View\Model\{
     ViewModel,
 };
 use Photo\Service\{
+    AclService,
     Album as AlbumService,
     Photo as PhotoService,
 };
+use Laminas\Mvc\I18n\Translator;
+use User\Permissions\NotAllowedException;
 
 class PhotoController extends AbstractActionController
 {
+    private Translator $translator;
+
+    private AclService $aclService;
+
     /**
      * @var AlbumService
      */
@@ -26,18 +33,29 @@ class PhotoController extends AbstractActionController
      */
     private PhotoService $photoService;
 
+    private array $photoConfig;
+
     /**
      * PhotoController constructor.
      *
+     * @param Translator $translator
+     * @param AclService $aclService
      * @param AlbumService $albumService
      * @param PhotoService $photoService
+     * @param array $photoConfig
      */
     public function __construct(
+        Translator $translator,
+        AclService $aclService,
         AlbumService $albumService,
         PhotoService $photoService,
+        array $photoConfig,
     ) {
+        $this->translator = $translator;
+        $this->aclService = $aclService;
         $this->photoService = $photoService;
         $this->albumService = $albumService;
+        $this->photoConfig = $photoConfig;
     }
 
     public function indexAction(): ViewModel
@@ -76,11 +94,16 @@ class PhotoController extends AbstractActionController
      */
     public function weeklyAction(): ViewModel
     {
-        $weeklyPhotos = $this->photoService->getPhotosOfTheWeek();
+        if (!$this->aclService->isAllowed('view', 'photo')) {
+            throw new NotAllowedException(
+                $this->translator->translate('Not allowed to view previous photos of the week')
+            );
+        }
 
         return new ViewModel(
             [
-                'weeklyPhotos' => $weeklyPhotos,
+                'config' => $this->photoConfig,
+                'photosOfTheWeek' => $this->albumService->getLastPhotosOfTheWeekPerYear(),
             ]
         );
     }

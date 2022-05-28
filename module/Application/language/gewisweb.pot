@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-23 21:46+0200\n"
+"POT-Creation-Date: 2022-05-23 22:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -571,7 +571,7 @@ msgstr ""
 #: module/Company/view/partial/company/admin/editors/job.phtml:119
 #: module/Company/view/partial/company/admin/editors/label.phtml:3
 #: module/Company/view/partial/company/admin/editors/package.phtml:3
-#: module/Photo/view/photo/album/index.phtml:399
+#: module/Photo/view/photo/album/index.phtml:430
 msgid "Information"
 msgstr ""
 
@@ -597,8 +597,8 @@ msgstr ""
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:68
 #: module/Activity/view/activity/admin-approval/view.phtml:26
 #: module/Photo/view/partial/tags.phtml:40
-#: module/Photo/view/photo/album/index.phtml:231
-#: module/Photo/view/photo/album/index.phtml:563
+#: module/Photo/view/photo/album/index.phtml:253
+#: module/Photo/view/photo/album/index.phtml:594
 msgid "and"
 msgstr ""
 
@@ -1317,8 +1317,8 @@ msgstr ""
 #: module/Photo/view/photo/album-admin/create.phtml:3
 #: module/Photo/view/photo/album-admin/edit.phtml:3
 #: module/Photo/view/photo/album-admin/index.phtml:9
-#: module/Photo/view/photo/album/index.phtml:12
-#: module/Photo/view/photo/album/index.phtml:32
+#: module/Photo/view/photo/album/index.phtml:16
+#: module/Photo/view/photo/album/index.phtml:36
 #: module/Photo/view/photo/photo-admin/index.phtml:8
 #: module/Photo/view/photo/photo/index.phtml:3
 msgid "Photos"
@@ -1505,12 +1505,12 @@ msgid "My photo's"
 msgstr ""
 
 #: module/Application/view/partial/paginator.phtml:8
-#: module/Photo/view/photo/album/index.phtml:317
+#: module/Photo/view/photo/album/index.phtml:348
 msgid "Previous"
 msgstr ""
 
 #: module/Application/view/partial/paginator.phtml:22
-#: module/Photo/view/photo/album/index.phtml:318
+#: module/Photo/view/photo/album/index.phtml:349
 msgid "Next"
 msgstr ""
 
@@ -3047,18 +3047,18 @@ msgid "View on map"
 msgstr ""
 
 #: module/Photo/view/partial/tags.phtml:10
-#: module/Photo/view/photo/album/index.phtml:550
+#: module/Photo/view/photo/album/index.phtml:581
 msgid "In this photo:"
 msgstr ""
 
 #: module/Photo/view/partial/tags.phtml:11
-#: module/Photo/view/photo/album/index.phtml:551
+#: module/Photo/view/photo/album/index.phtml:582
 msgid ""
 "No one has been tagged in this photo yet. Tag someone you recognise now!"
 msgstr ""
 
 #: module/Photo/view/partial/tags.phtml:49
-#: module/Photo/view/photo/album/index.phtml:577
+#: module/Photo/view/photo/album/index.phtml:608
 msgid "Tag someone"
 msgstr ""
 
@@ -3144,7 +3144,7 @@ msgid "Regenerate"
 msgstr ""
 
 #: module/Photo/view/photo/album-admin/index.phtml:141
-#: module/Photo/view/photo/album/index.phtml:315
+#: module/Photo/view/photo/album/index.phtml:346
 msgid "Close"
 msgstr ""
 
@@ -3211,77 +3211,91 @@ msgstr ""
 msgid "The photos have been moved"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:94
+#: module/Photo/view/photo/album/index.phtml:51
+#: module/Photo/view/photo/photo/weekly.phtml:2
+#: module/Photo/view/photo/photo/weekly.phtml:8
+msgid "Photos of the Week"
+msgstr ""
+
+#: module/Photo/view/photo/album/index.phtml:105
 msgid "View user profile"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:287
+#: module/Photo/view/photo/album/index.phtml:309
 msgid "Already voted!"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:290
-#: module/Photo/view/photo/album/index.phtml:452
+#: module/Photo/view/photo/album/index.phtml:312
+#: module/Photo/view/photo/album/index.phtml:483
 msgid "Vote for photo of the week"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:316
+#: module/Photo/view/photo/album/index.phtml:347
 msgid "Zoom (z)"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:319
+#: module/Photo/view/photo/album/index.phtml:350
 msgid "The image could not be loaded."
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:332
+#: module/Photo/view/photo/album/index.phtml:363
 msgid "Download"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:356
+#: module/Photo/view/photo/album/index.phtml:387
 msgid "Share"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:367
+#: module/Photo/view/photo/album/index.phtml:398
 msgid "Copied URL!"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:378
+#: module/Photo/view/photo/album/index.phtml:409
 msgid "Go to album"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:421
+#: module/Photo/view/photo/album/index.phtml:452
 msgid "Set as profile picture"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:438
+#: module/Photo/view/photo/album/index.phtml:469
 msgid "Set as profile picture!"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:441
+#: module/Photo/view/photo/album/index.phtml:472
 msgid "Could not set as profile photo, try again"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:474
+#: module/Photo/view/photo/album/index.phtml:505
 msgid "Cannot load vote"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:493
+#: module/Photo/view/photo/album/index.phtml:524
 msgid "Voted!"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:505
+#: module/Photo/view/photo/album/index.phtml:536
 msgid "Could not vote, try again"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:519
+#: module/Photo/view/photo/album/index.phtml:550
 msgid "Loading tags..."
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:538
+#: module/Photo/view/photo/album/index.phtml:569
 msgid "Cannot load tags"
 msgstr ""
 
-#: module/Photo/view/photo/album/index.phtml:628
+#: module/Photo/view/photo/album/index.phtml:659
 msgid "Cannot load metadata"
+msgstr ""
+
+#: module/Photo/view/photo/album/index.phtml:685
+msgid "Photo of the Week:<br> Week"
+msgstr ""
+
+#: module/Photo/view/photo/album/index.phtml:685
+msgid "of"
 msgstr ""
 
 #: module/Photo/view/photo/photo-admin/index.phtml:21
@@ -3324,25 +3338,16 @@ msgstr ""
 msgid "There are no photos in this year."
 msgstr ""
 
-#: module/Photo/view/photo/photo/weekly.phtml:2
-#: module/Photo/view/photo/photo/weekly.phtml:8
-msgid "Picture of the week"
-msgstr ""
-
 #: module/Photo/view/photo/photo/weekly.phtml:6
 msgid "Currently, no pictures of the week are available."
 msgstr ""
 
 #: module/Photo/view/photo/photo/weekly.phtml:9
-msgid "Current picture of the week"
+msgid "Current photo of the week"
 msgstr ""
 
-#: module/Photo/view/photo/photo/weekly.phtml:30
-msgid "Old pictures of the week"
-msgstr ""
-
-#: module/Photo/view/photo/photo/weekly.phtml:49
-msgid "Week"
+#: module/Photo/view/photo/photo/weekly.phtml:39
+msgid "Old photos of the week"
 msgstr ""
 
 #: module/User/view/partial/login.phtml:74
@@ -4473,45 +4478,50 @@ msgstr ""
 msgid "Not allowed to upload photos."
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:121
-#: module/Photo/src/Service/Album.php:151
-#: module/Photo/src/Service/Album.php:290
+#: module/Photo/src/Service/Album.php:129
+#: module/Photo/src/Service/Album.php:159
+#: module/Photo/src/Service/Album.php:298
 msgid "Not allowed to view albums"
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:174
+#: module/Photo/src/Service/Album.php:182
 msgid "Not allowed to view albums without dates"
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:245
+#: module/Photo/src/Service/Album.php:253
 msgid "Not allowed to create albums"
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:269
+#: module/Photo/src/Service/Album.php:277
 msgid "Not allowed to create albums."
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:331
+#: module/Photo/src/Service/Album.php:349
+#, php-format
+msgid "Photos of the Week in %d"
+msgstr ""
+
+#: module/Photo/src/Service/Album.php:366
 msgid "Not allowed to edit albums"
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:350
+#: module/Photo/src/Service/Album.php:385
 msgid "Not allowed to edit albums."
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:375
+#: module/Photo/src/Service/Album.php:410
 msgid "Not allowed to move albums"
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:409
+#: module/Photo/src/Service/Album.php:444
 msgid "Not allowed to delete albums."
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:430
+#: module/Photo/src/Service/Album.php:465
 msgid "Not allowed to generate album covers."
 msgstr ""
 
-#: module/Photo/src/Service/Album.php:472
+#: module/Photo/src/Service/Album.php:507
 msgid "Not allowed to move photos"
 msgstr ""
 

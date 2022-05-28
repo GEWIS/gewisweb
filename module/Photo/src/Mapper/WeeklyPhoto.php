@@ -3,6 +3,9 @@
 namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
+use DateInterval;
+use DateTime;
+use Decision\Model\AssociationYear;
 use Photo\Model\{
     Photo as PhotoModel,
     WeeklyPhoto as WeeklyPhotoModel,
@@ -39,17 +42,50 @@ class WeeklyPhoto extends BaseMapper
         return empty($res) ? null : $res[0];
     }
 
-    /**
-     * Retrieves all WeeklyPhotos.
-     *
-     * @return array
-     */
-    public function getPhotosOfTheWeek(): array
-    {
+    public function getPhotosOfTheWeekInYear(
+        int $year,
+        bool $onlyLast = false,
+    ): WeeklyPhotoModel|array|null {
+        $startDate = DateTime::createFromFormat(
+            'Y-m-d H:i:s',
+            $year . '-' . AssociationYear::ASSOCIATION_YEAR_START_MONTH . '-'
+            . AssociationYear::ASSOCIATION_YEAR_START_DAY . ' 00:00:00'
+        );
+        $endDate = clone $startDate;
+        $endDate->add(new DateInterval('P1Y'));
+
         $qb = $this->getRepository()->createQueryBuilder('w');
-        $qb->orderBy('w.week', 'DESC');
+        $qb->where('w.week >= :start')
+            ->andWhere('w.week < :end')
+            ->setParameter(':start', $startDate)
+            ->setParameter(':end', $endDate);
+
+        if ($onlyLast) {
+            $qb->orderBy('w.week', 'DESC')
+                ->setMaxResults(1);
+
+            return $qb->getQuery()->getOneOrNullResult();
+        }
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function getOldestPhotoOfTheWeek(): ?WeeklyPhotoModel
+    {
+        $qb = $this->getRepository()->createQueryBuilder('w');
+        $qb->orderBy('w.week', 'DESC')
+            ->setMaxResults(1);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    public function getNewestPhotoOfTheWeek(): ?WeeklyPhotoModel
+    {
+        $qb = $this->getRepository()->createQueryBuilder('w');
+        $qb->orderBy('w.week', 'ASC')
+            ->setMaxResults(1);
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     protected function getRepositoryName(): string
