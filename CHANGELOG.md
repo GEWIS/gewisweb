@@ -5,8 +5,8 @@
 * Added membership type to the activity admin sign-up list overview.
 * Added more claims to the JWT authentication for external applications to use; `email`, `family_name`, `given_name`, `is_18_plus`, `membership_typ`, and `middle_name`.
 * Added an overview of external application authentications to the user's profile.
-* Improved external authentication process by showing which claims will be available to the external application and allowing the user to deny the authorization. If the user has not used an external application for more than 90 days, they will get a reminder of what inforamtion is shared with the external application when trying to authenticate.
-* Improved the warning and confirmation process when a user tries to grant an authorisation to another user who already has received 2 or more authorizations.
+* Improved external authentication process by showing which claims will be available to the external application and allowing the user to deny the authorization. If the user has not used an external application for more than 90 days, they will get a reminder of what information is shared with the external application when trying to authenticate.
+* Improved the warning and confirmation process when a member tries to grant an authorisation to another member who already has received 2 or more authorizations.
 * Improved the 'Photos of the Week' page by creating virtual albums for each association year.
 * Improved performance of album pages by dynamically loading tags and voted status for each photo.
 * Improved performance of album pages by not repeatedly performing ACL checks for viewing metadata.
