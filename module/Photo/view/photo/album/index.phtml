@@ -104,12 +104,14 @@ $this->scriptUrl()->requireUrl('member/search')
                             <a href="<?= $this->url('member/view', ['lidnr' => $album->getMember()->getLidnr()]) ?>">
                                 <?= strtolower($this->translate("View user profile")) ?>
                             </a>
-                        <?php elseif (!($album instanceof WeeklyAlbum)): ?>
+                        <?php elseif ($album instanceof WeeklyAlbum): ?>
                             <?= sprintf(
                                     '%s/%s',
                                     $album->getStartDateTime()->format('Y'),
                                     $album->getEndDateTime()->format('Y')
                                 ) ?>
+                        <?php else: ?>
+                            <?= $album->getStartDateTime()->format('Y-m-d') ?>
                         <?php endif; ?>
                     </small>
                 </h1>
