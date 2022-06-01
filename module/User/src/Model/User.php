@@ -2,6 +2,7 @@
 
 namespace User\Model;
 
+use Decision\Model\Enums\MembershipTypes;
 use Decision\Model\Member as MemberModel;
 use Doctrine\Common\Collections\{
     ArrayCollection,
@@ -180,6 +181,10 @@ class User implements RoleInterface, ResourceInterface
         }
 
         if (empty($roleNames)) {
+            if (MembershipTypes::Graduate === $this->getMember()->getType()) {
+                return 'graduate';
+            }
+
             return 'user';
         }
 

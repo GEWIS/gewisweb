@@ -83,6 +83,7 @@ class MemberInfo
             throw new NotAllowedException($this->translator->translate('You are not allowed to view members.'));
         }
 
+
         if (null === $lidnr) {
             $lidnr = $this->aclService->getIdentityOrThrowException()->getLidnr();
         }

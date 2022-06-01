@@ -42,5 +42,9 @@ class AclService extends \User\Service\AclService
 
         // users are allowed to download the regulations
         $this->acl->allow('user', 'regulations', ['list', 'download']);
+
+        // graduates may not do a few things, so limit them.
+        $this->acl->deny('graduate', 'member', ['view', 'search', 'birthdays']);
+        $this->acl->deny('graduate', 'authorization', ['create', 'view_own']);
     }
 }
