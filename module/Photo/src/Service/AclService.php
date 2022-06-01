@@ -2,6 +2,8 @@
 
 namespace Photo\Service;
 
+use User\Permissions\Assertion\IsAfterGraduation;
+
 class AclService extends \User\Service\AclService
 {
     protected function createAcl(): void
@@ -30,6 +32,7 @@ class AclService extends \User\Service\AclService
         $this->acl->allow('photo_guest', 'photo', ['download', 'view_metadata']);
 
         // graduates may not tag people or vote for the photo of the week
+        $this->acl->deny('graduate', 'album', 'view', new IsAfterGraduation());
         $this->acl->deny('graduate', 'tag', ['add', 'remove']);
         $this->acl->deny('graduate', 'vote', 'add');
     }

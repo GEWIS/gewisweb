@@ -294,12 +294,18 @@ class Album
             throw new NotAllowedException($this->translator->translate('Not allowed to view albums'));
         }
 
-        return match ($type) {
+        $album = match ($type) {
             'album' => $this->albumMapper->find($albumId),
             'member' => $this->getMemberAlbum($albumId),
             'weekly' => $this->getWeeklyAlbum($albumId),
             default => throw new Exception('Album type not allowed'),
         };
+
+        if (!$this->aclService->isAllowed('view', $album)) {
+            throw new NotAllowedException($this->translator->translate('Not allowed to view albums'));
+        }
+
+        return $album;
     }
 
     /**

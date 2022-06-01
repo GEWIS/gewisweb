@@ -15,6 +15,7 @@ use Photo\Service\{
     Photo as PhotoService,
 };
 use Laminas\Mvc\I18n\Translator;
+use Photo\Model\Album;
 use User\Permissions\NotAllowedException;
 
 class PhotoController extends AbstractActionController
@@ -60,6 +61,10 @@ class PhotoController extends AbstractActionController
 
     public function indexAction(): ViewModel
     {
+        if (!$this->aclService->isAllowed('view', 'album')) {
+            throw new NotAllowedException($this->translator->translate('Not allowed to view albums'));
+        }
+
         $years = $this->albumService->getAlbumYears();
         $year = $this->params()->fromRoute('year');
 
@@ -74,10 +79,17 @@ class PhotoController extends AbstractActionController
             $year = (int) $year;
         }
 
+        $albums = $this->albumService->getAlbumsByYear($year);
+        if (null !== ($membershipEndsOn = $this->aclService->getIdentity()->getMember()->getMembershipEndsOn())) {
+            $albums = array_filter($albums, function (Album $v) use ($membershipEndsOn) {
+                return $membershipEndsOn > $v->getStartDateTime();
+            });
+        }
+
         return new ViewModel(
             [
                 'years' => $years,
-                'albums' => $this->albumService->getAlbumsByYear($year),
+                'albums' => $albums,
             ]
         );
     }
