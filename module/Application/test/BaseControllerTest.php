@@ -3,6 +3,7 @@
 namespace ApplicationTest;
 
 use DateTime;
+use Decision\Model\Enums\MembershipTypes;
 use Decision\Model\Member;
 use Doctrine\Common\Collections\ArrayCollection;
 use Laminas\Mvc\Application;
@@ -195,7 +196,7 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
         $this->member->setMiddleName('');
         $this->member->setLastName('Committee');
         $this->member->setGeneration(2020);
-        $this->member->setType(Member::TYPE_ORDINARY);
+        $this->member->setType(MembershipTypes::Ordinary);
         $this->member->setExpiration(DateTime::createFromFormat('Y/m/d', '2030/01/01'));
         $this->member->setChangedOn(DateTime::createFromFormat('Y/m/d', '2020/01/01'));
     }

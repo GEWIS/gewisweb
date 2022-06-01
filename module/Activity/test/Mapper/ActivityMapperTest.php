@@ -10,6 +10,7 @@ use Activity\Model\{
 use Application\Mapper\BaseMapper;
 use ApplicationTest\Mapper\BaseMapperTest;
 use DateTime;
+use Decision\Model\Enums\MembershipTypes;
 use Decision\Model\Member;
 use User\Model\User;
 
@@ -60,7 +61,7 @@ class ActivityMapperTest extends BaseMapperTest
         $this->member->setLastName('Committee');
         $this->member->setGender(Member::GENDER_OTHER);
         $this->member->setGeneration(2020);
-        $this->member->setType(Member::TYPE_ORDINARY);
+        $this->member->setType(MembershipTypes::Ordinary);
         $this->member->setChangedOn(new DateTime());
         $this->member->setBirth(new DateTime());
         $this->member->setExpiration(new DateTime());
