@@ -6,7 +6,7 @@ namespace Decision\Model\Enums;
 use Laminas\Mvc\I18n\Translator;
 
 /**
- * Enum for keeping track of the claims that can be present in the JWT for ApiApps.
+ * Enum for the different membership types as defined in the bylaws of the association.
  */
 enum MembershipTypes: string
 {

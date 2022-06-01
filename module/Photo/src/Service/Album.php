@@ -301,7 +301,10 @@ class Album
             default => throw new Exception('Album type not allowed'),
         };
 
-        if (!$this->aclService->isAllowed('view', $album)) {
+        if (
+            null !== $album
+            && !$this->aclService->isAllowed('view', $album)
+        ) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view albums'));
         }
 
