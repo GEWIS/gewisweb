@@ -486,7 +486,7 @@ $this->scriptUrl()->requireUrl('member/search')
             },
         });
 
-        <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'vote')): ?>
+        <?php if ($this->acl('photo_service_acl')->isAllowed('vote', 'view')): ?>
             lightbox.pswp.ui.registerElement({
                 name: 'like-button',
                 appendTo: 'bar',
@@ -523,32 +523,34 @@ $this->scriptUrl()->requireUrl('member/search')
                         updateVotedState(el, pswp.currSlide.data.element.dataset.voted);
                     });
                 },
-                onClick: (event, el, pswp) => {
-                    let currentSlide = pswp.currSlide.data.element;
-                    let hasVoted = pswp.currSlide.data.element.dataset.voted;
+                <?php if ($this->acl('photo_service_acl')->isAllowed('vote', 'add')): ?>
+                    onClick: (event, el, pswp) => {
+                        let currentSlide = pswp.currSlide.data.element;
+                        let hasVoted = pswp.currSlide.data.element.dataset.voted;
 
-                    if ('false' === hasVoted) {
-                        fetch(currentSlide.dataset.voteUrl, { method: 'POST' })
-                            .then(response => response.json())
-                            .then(result => {
-                                pswp.currSlide.data.voted = true;
-                                el.firstChild.classList.add('pswp__icn-red');
-                                el.dataset.originalTitle = '<?= $this->translate('Voted!') ?>';
+                        if ('false' === hasVoted) {
+                            fetch(currentSlide.dataset.voteUrl, { method: 'POST' })
+                                .then(response => response.json())
+                                .then(result => {
+                                    pswp.currSlide.data.voted = true;
+                                    el.firstChild.classList.add('pswp__icn-red');
+                                    el.dataset.originalTitle = '<?= $this->translate('Voted!') ?>';
 
-                                // Remove the pulsing dot if it is present.
-                                const pulsingdot = document.querySelector('.pulsing-dot');
-                                if (null !== pulsingdot) {
-                                    el.removeChild(pulsingdot);
-                                }
+                                    // Remove the pulsing dot if it is present.
+                                    const pulsingdot = document.querySelector('.pulsing-dot');
+                                    if (null !== pulsingdot) {
+                                        el.removeChild(pulsingdot);
+                                    }
 
-                                // Also update the recent vote status.
-                                pswp.options.dataSource.gallery.dataset.recentVote = 'true';
-                            }).catch(error => {
-                                // An error occurred somewhere along the way, perhaps we should notify the user.
-                                el.dataset.originalTitle = '<?= $this->translate('Could not vote, try again') ?>';
-                            });
-                    }
-                },
+                                    // Also update the recent vote status.
+                                    pswp.options.dataSource.gallery.dataset.recentVote = 'true';
+                                }).catch(error => {
+                                    // An error occurred somewhere along the way, perhaps we should notify the user.
+                                    el.dataset.originalTitle = '<?= $this->translate('Could not vote, try again') ?>';
+                                });
+                        }
+                    },
+                <?php endif; ?>
             });
         <?php endif; ?>
 
@@ -571,7 +573,9 @@ $this->scriptUrl()->requireUrl('member/search')
                                 document.querySelector('.pswp__button--profile-photo-button').classList.remove('pswp__button--hidden');
                             }
 
-                            addTagSearch(el, figTags);
+                            <?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'add')): ?>
+                                addTagSearch(el, figTags);
+                            <?php endif; ?>
                         }
                     });
 
@@ -608,9 +612,11 @@ $this->scriptUrl()->requireUrl('member/search')
                                     return `
                                         <span data-member="${member.lidnr}">
                                             <a href="${viewMemberUrl}">${member.fullName}</a>&nbsp;
-                                            <a class="remove-tag" href="${removeUrl}" data-tag-id="removeTag${member.id}">
-                                                <span class="fas fa-times" aria-hidden="true"></span>
-                                            </a>
+                                            <?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'remove')): ?>
+                                                <a class="remove-tag" href="${removeUrl}" data-tag-id="removeTag${member.id}">
+                                                    <span class="fas fa-times" aria-hidden="true"></span>
+                                                </a>
+                                            <?php endif; ?>
                                             <span class="tag-spacer">${spacer}</span>
                                         </span>`;
                                 }).join('')}
@@ -627,7 +633,10 @@ $this->scriptUrl()->requireUrl('member/search')
 
                         // Replicate the tags UI to the actual figure DOM.
                         figTags.innerHTML = el.innerHTML;
-                        addTagSearch(el, figTags);
+
+                        <?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'add')): ?>
+                            addTagSearch(el, figTags);
+                        <?php endif; ?>
                     });
 
                     pswp.on('zoomPanUpdate', () => {
@@ -768,7 +777,7 @@ $this->scriptUrl()->requireUrl('member/search')
 
     <?php if (
         $this->acl('photo_service_acl')->isAllowed('tag', 'view')
-        && $this->acl('photo_service_acl')->isAllowed('photo', 'vote')
+        && $this->acl('photo_service_acl')->isAllowed('vote', 'view')
     ): ?>
         // Fetch the tags and voted status.
         lightbox.on('gettingData', ({slide}) => {

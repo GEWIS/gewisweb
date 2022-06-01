@@ -148,6 +148,12 @@ class PhotoController extends AbstractActionController
      */
     public function voteAction(): JsonModel|ViewModel
     {
+        if (!$this->aclService->isAllowed('add', 'vote')) {
+            throw new NotAllowedException(
+                $this->translator->translate('Not allowed to vote for a photo of the week')
+            );
+        }
+
         if ($this->getRequest()->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
             $this->photoService->countVote($photoId);
