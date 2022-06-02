@@ -24,9 +24,6 @@ class AclService extends \User\Service\AclService
         // Organ members are allowed to edit organ information of their own organs
         $this->acl->allow('active_member', 'organ', ['edit', 'viewAdmin']);
 
-        // guests are allowed to view birthdays on the homepage
-        $this->acl->allow('guest', 'member', 'birthdays_today');
-
         // users are allowed to view and search members
         $this->acl->allow('user', 'member', ['view', 'view_self', 'search', 'birthdays']);
         $this->acl->allow('apiuser', 'member', ['view']);

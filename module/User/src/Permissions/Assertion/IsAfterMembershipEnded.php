@@ -8,13 +8,14 @@ use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\Permissions\Acl\Role\RoleInterface;
 use Photo\Model\Album;
+use Photo\Model\Photo;
 use User\Model\User;
 
 /**
  * Assertion to check if when the user is a graduate, that the album they are trying to view is before their membership
  * ended.
  */
-class IsAfterGraduation implements AssertionInterface
+class IsAfterMembershipEnded implements AssertionInterface
 {
     /**
      * Returns true if and only if the assertion conditions are met.
@@ -38,7 +39,7 @@ class IsAfterGraduation implements AssertionInterface
     ): bool {
         if (
             !$role instanceof User
-            || !$resource instanceof Album
+            || (!$resource instanceof Album && !$resource instanceof Photo)
         ) {
             return false;
         }
@@ -47,6 +48,10 @@ class IsAfterGraduation implements AssertionInterface
         // sure that we are only checking graduates.
         if (MembershipTypes::Graduate !== $role->getMember()->getType()) {
             return false;
+        }
+
+        if ($resource instanceof Photo) {
+            $resource = $resource->getAlbum();
         }
 
         return $role->getMember()->getMembershipEndsOn() < $resource->getStartDateTime();

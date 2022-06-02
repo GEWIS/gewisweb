@@ -147,7 +147,7 @@ class Photo
     }
 
     /**
-     * Returns a zend response to be used for downloading a photo.
+     * Returns a Laminas response to be used for downloading a photo.
      *
      * @param int $photoId
      *
@@ -155,11 +155,16 @@ class Photo
      */
     public function getPhotoDownload(int $photoId): ?Stream
     {
-        if (!$this->aclService->isAllowed('download', 'photo')) {
+        $photo = $this->getPhoto($photoId);
+
+        if (null === $photo) {
+            return null;
+        }
+
+        if (!$this->aclService->isAllowed('download', $photo)) {
             throw new NotAllowedException($this->translator->translate('Not allowed to download photos'));
         }
 
-        $photo = $this->getPhoto($photoId);
         $path = $photo->getPath();
         $fileName = $this->getPhotoFileName($photo);
 

@@ -96,6 +96,10 @@ class PhotoController extends AbstractActionController
 
     public function downloadAction(): ?Stream
     {
+        if (!$this->aclService->isAllowed('download', 'photo')) {
+            throw new NotAllowedException($this->translator->translate('Not allowed to download photos'));
+        }
+
         $photoId = $this->params()->fromRoute('photo_id');
 
         return $this->photoService->getPhotoDownload($photoId);

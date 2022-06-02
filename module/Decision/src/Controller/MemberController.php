@@ -174,6 +174,12 @@ class MemberController extends AbstractActionController
      */
     public function birthdaysAction(): ViewModel
     {
+        if (!$this->aclService->isAllowed('birthdays', 'member')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view the list of birthdays.')
+            );
+        }
+
         return new ViewModel(
             [
                 'members' => $this->memberService->getBirthdayMembers(7),
