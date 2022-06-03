@@ -5,7 +5,6 @@ namespace Photo\Model;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\{
-    ClassMetadataInfo,
     Column,
     Entity,
     GeneratedValue,
@@ -15,6 +14,7 @@ use Doctrine\ORM\Mapping\{
     ManyToOne,
     OneToMany,
     OneToOne,
+    PrePersist,
 };
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
@@ -400,11 +400,17 @@ class Photo implements ResourceInterface
     public function getAspectRatio(): ?float
     {
         if (null === $this->aspectRatio) {
-            [$width, $height, $type, $attr] = getimagesize('public/data/' . $this->getSmallThumbPath());
-            $this->aspectRatio = $height / $width;
+            $this->calculateAspectRatio();
         }
 
         return $this->aspectRatio;
+    }
+
+    #[PrePersist]
+    public function calculateAspectRatio(): void
+    {
+        [$width, $height, $type, $attr] = getimagesize('public/data/' . $this->getSmallThumbPath());
+        $this->aspectRatio = $height / $width;
     }
 
     /**

@@ -32,10 +32,7 @@ use Photo\Service\{
     Metadata as MetadataService,
     Photo as PhotoService,
 };
-use Photo\View\Helper\{
-    GlideUrl,
-    HasVoted,
-};
+use Photo\View\Helper\GlideUrl;
 use User\Authorization\AclServiceFactory;
 
 class Module
