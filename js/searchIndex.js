@@ -13191,6 +13191,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Model-Photo.html#method_getAspectRatio"
         },                {
+            "fqsen": "\\Photo\\Model\\Photo\u003A\u003AcalculateAspectRatio\u0028\u0029",
+            "name": "calculateAspectRatio",
+            "summary": "",
+            "url": "classes/Photo-Model-Photo.html#method_calculateAspectRatio"
+        },                {
             "fqsen": "\\Photo\\Model\\Photo\u003A\u003AsetDateTime\u0028\u0029",
             "name": "setDateTime",
             "summary": "Set\u0020the\u0020dateTime.",
