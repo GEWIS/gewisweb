@@ -92,6 +92,7 @@ $flash = $this->plugin('FlashMessenger');
                                     'text' => $this->localiseText($activity->getName()),
                                     'dates' => $begin . '/' . $end,
                                     'location' => $this->localiseText($activity->getLocation()),
+                                    'details' => $this->url('activity/view', ['id' => $activity->getId()], ['force_canonical' => true]),
                                 ]);
                                 ?>
 
