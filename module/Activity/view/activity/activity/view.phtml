@@ -92,7 +92,7 @@ $flash = $this->plugin('FlashMessenger');
                                     'text' => $this->localiseText($activity->getName()),
                                     'dates' => $begin . '/' . $end,
                                     'location' => $this->localiseText($activity->getLocation()),
-                                    'details' => 'https://gewis.nl/activity/view/' . $activity->getId(),
+                                    'details' => $this->url('activity/view', ['id' => $activity->getId()]),
                                 ]);
                                 ?>
 
