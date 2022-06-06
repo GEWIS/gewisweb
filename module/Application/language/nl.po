@@ -8,16 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-29 00:01+0200\n"
-"PO-Revision-Date: 2022-05-29 00:02+0200\n"
-"Last-Translator: Tom Udding <web@gewis.nl>\n"
+"POT-Creation-Date: 2022-06-07 00:08+0200\n"
+"PO-Revision-Date: 2022-06-07 00:10+0200\n"
+"Last-Translator: Rink Pieters <rinkp@users.noreply.github.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #: module/Activity/src/Controller/ActivityCalendarController.php:120
 msgid "You are not allowed to create activity proposals"
@@ -350,7 +350,7 @@ msgstr "De opties voor dit voorstel passen niet binnen het geldige bereik."
 #: module/Activity/src/Form/SignupListField.php:52
 #: module/Activity/view/activity/activity-calendar/create.phtml:99
 #: module/Activity/view/activity/activity-calendar/index.phtml:38
-#: module/Activity/view/activity/activity/view.phtml:242
+#: module/Activity/view/activity/activity/view.phtml:243
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:112
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:117
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:129
@@ -846,7 +846,7 @@ msgid "There are currently no activity categories..."
 msgstr "Er zijn momenteel geen activiteitencategorieën..."
 
 #: module/Activity/view/activity/activity/create.phtml:153
-#: module/Activity/view/activity/activity/view.phtml:109
+#: module/Activity/view/activity/activity/view.phtml:110
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:269
 #: module/Activity/view/activity/admin-approval/view.phtml:163
 msgid "Sign-up Lists"
@@ -980,11 +980,11 @@ msgstr "Locatie"
 msgid "Costs"
 msgstr "Kosten"
 
-#: module/Activity/view/activity/activity/view.phtml:125
+#: module/Activity/view/activity/activity/view.phtml:126
 msgid "the organizing party"
 msgstr "de organiserende partij"
 
-#: module/Activity/view/activity/activity/view.phtml:137
+#: module/Activity/view/activity/activity/view.phtml:138
 #, php-format
 msgid ""
 "Please contact %s or the board (%s) with any questions, concerns or if you "
@@ -995,7 +995,7 @@ msgstr ""
 "of als je na het verstrijken van de afmeldtermijn niet aanwezig kunt zijn. "
 "Veel plezier!"
 
-#: module/Activity/view/activity/activity/view.phtml:140
+#: module/Activity/view/activity/activity/view.phtml:141
 #, php-format
 msgid ""
 "Please contact %s or the board (%s) with any questions or concerns. Have fun!"
@@ -1003,56 +1003,56 @@ msgstr ""
 "Neem contact op met %s of het bestuur (%s) als je vragen of opmerkingen "
 "hebt. Veel plezier!"
 
-#: module/Activity/view/activity/activity/view.phtml:155
+#: module/Activity/view/activity/activity/view.phtml:156
 #, php-format
 msgid ""
 "This sign-up list is open from <strong>%s</strong> till <strong>%s</strong>."
 msgstr ""
 "Deze inschrijflijst is open van <strong>%s</strong> tot <strong>%s</strong>."
 
-#: module/Activity/view/activity/activity/view.phtml:167
+#: module/Activity/view/activity/activity/view.phtml:168
 msgid "Already subscribed"
 msgstr "Je bent al ingeschreven"
 
-#: module/Activity/view/activity/activity/view.phtml:174
+#: module/Activity/view/activity/activity/view.phtml:175
 msgid "Subscription closed"
 msgstr "Inschrijving gesloten"
 
-#: module/Activity/view/activity/activity/view.phtml:180
+#: module/Activity/view/activity/activity/view.phtml:181
 msgid "Subscribe now"
 msgstr "Schrijf je in"
 
-#: module/Activity/view/activity/activity/view.phtml:187
+#: module/Activity/view/activity/activity/view.phtml:188
 msgid "Unsubscribe yourself"
 msgstr "Uitschrijven"
 
-#: module/Activity/view/activity/activity/view.phtml:190
+#: module/Activity/view/activity/activity/view.phtml:191
 msgid "You are not allowed to unsubscribe after the deadline!"
 msgstr "Uitschrijven na de uitschrijfdeadline is niet toegestaan!"
 
-#: module/Activity/view/activity/activity/view.phtml:209
-#: module/Activity/view/activity/activity/view.phtml:226
+#: module/Activity/view/activity/activity/view.phtml:210
+#: module/Activity/view/activity/activity/view.phtml:227
 msgid "Subscribe yourself"
 msgstr "Inschrijven"
 
-#: module/Activity/view/activity/activity/view.phtml:212
+#: module/Activity/view/activity/activity/view.phtml:213
 msgid "Login to subscribe"
 msgstr "Login om in te schrijven"
 
-#: module/Activity/view/activity/activity/view.phtml:216
+#: module/Activity/view/activity/activity/view.phtml:217
 msgid "Or subscribe without a GEWIS membership: "
 msgstr "Of schrijf je in zonder een GEWIS lidmaatschap: "
 
-#: module/Activity/view/activity/activity/view.phtml:237
+#: module/Activity/view/activity/activity/view.phtml:238
 msgid "Current subscriptions"
 msgstr "Huidige inschrijvingen"
 
-#: module/Activity/view/activity/activity/view.phtml:255
+#: module/Activity/view/activity/activity/view.phtml:256
 #, php-format
 msgid "The number of subscribed members is currently %d."
 msgstr "Het aantal ingeschreven leden is momenteel %d."
 
-#: module/Activity/view/activity/activity/view.phtml:259
+#: module/Activity/view/activity/activity/view.phtml:260
 msgid "Login to view the subscribed members."
 msgstr "Login om de lijst met deelnemers te bekijken."
 
@@ -1069,7 +1069,7 @@ msgstr "Update voorstel"
 #: module/Company/view/partial/company/admin/editors/job.phtml:119
 #: module/Company/view/partial/company/admin/editors/label.phtml:3
 #: module/Company/view/partial/company/admin/editors/package.phtml:3
-#: module/Photo/view/photo/album/index.phtml:440
+#: module/Photo/view/photo/album/index.phtml:442
 msgid "Information"
 msgstr "Informatie"
 
@@ -1101,8 +1101,8 @@ msgstr "oud"
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:68
 #: module/Activity/view/activity/admin-approval/view.phtml:26
 #: module/Photo/view/partial/tags.phtml:40
-#: module/Photo/view/photo/album/index.phtml:263
-#: module/Photo/view/photo/album/index.phtml:604
+#: module/Photo/view/photo/album/index.phtml:265
+#: module/Photo/view/photo/album/index.phtml:606
 msgid "and"
 msgstr "en"
 
@@ -2067,12 +2067,12 @@ msgid "My photo's"
 msgstr "Mijn foto’s"
 
 #: module/Application/view/partial/paginator.phtml:8
-#: module/Photo/view/photo/album/index.phtml:358
+#: module/Photo/view/photo/album/index.phtml:360
 msgid "Previous"
 msgstr "Vorige"
 
 #: module/Application/view/partial/paginator.phtml:22
-#: module/Photo/view/photo/album/index.phtml:359
+#: module/Photo/view/photo/album/index.phtml:361
 msgid "Next"
 msgstr "Volgende"
 
@@ -2109,6 +2109,7 @@ msgid "unavailable"
 msgstr "niet beschikbaar"
 
 #: module/Application/view/partial/privacy-widget.phtml:17
+#: module/Decision/view/decision/member/index.phtml:227
 msgid "Privacy Policy"
 msgstr "Privacybeleid"
 
@@ -3141,20 +3142,36 @@ msgid "Administrator"
 msgstr "Administrator"
 
 #: module/Decision/view/decision/member/index.phtml:192
-msgid "Borrelreglement"
-msgstr "Borrelreglement"
+msgid "Alcohol Policy"
+msgstr "Alcoholreglement"
 
 #: module/Decision/view/decision/member/index.phtml:197
-msgid "Computerreglement"
-msgstr "Computerreglement"
+msgid "Board Policies"
+msgstr "Beleidsnota's"
 
 #: module/Decision/view/decision/member/index.phtml:202
-msgid "Posterreglement"
-msgstr "Posterreglement"
+msgid "Borrel Policy"
+msgstr "Borrelreglement"
 
 #: module/Decision/view/decision/member/index.phtml:207
-msgid "Sleutelbeleid"
-msgstr "Sleutelbeleid"
+msgid "House Rules"
+msgstr "Huisregels"
+
+#: module/Decision/view/decision/member/index.phtml:212
+msgid "ICT Policy"
+msgstr "ICT-reglement"
+
+#: module/Decision/view/decision/member/index.phtml:217
+msgid "Key Policy"
+msgstr "Sleutelreglement"
+
+#: module/Decision/view/decision/member/index.phtml:222
+msgid "Poster Policy"
+msgstr "Posterbeleid"
+
+#: module/Decision/view/decision/member/index.phtml:233
+msgid "Organ Regulations"
+msgstr "Orgaanreglementen"
 
 #: module/Decision/view/decision/member/search.phtml:3
 #: module/Decision/view/decision/member/search.phtml:9
@@ -4344,18 +4361,18 @@ msgid "View on map"
 msgstr "Toon op kaart"
 
 #: module/Photo/view/partial/tags.phtml:10
-#: module/Photo/view/photo/album/index.phtml:591
+#: module/Photo/view/photo/album/index.phtml:593
 msgid "In this photo:"
 msgstr "In deze foto:"
 
 #: module/Photo/view/partial/tags.phtml:11
-#: module/Photo/view/photo/album/index.phtml:592
+#: module/Photo/view/photo/album/index.phtml:594
 msgid ""
 "No one has been tagged in this photo yet. Tag someone you recognise now!"
 msgstr "Er is nog niemand getagd in deze foto. Tag nu iemand die je herkent!"
 
 #: module/Photo/view/partial/tags.phtml:49
-#: module/Photo/view/photo/album/index.phtml:618
+#: module/Photo/view/photo/album/index.phtml:620
 msgid "Tag someone"
 msgstr "Tag iemand"
 
@@ -4435,7 +4452,7 @@ msgid "Regenerate"
 msgstr "Genereer opnieuw"
 
 #: module/Photo/view/photo/album-admin/index.phtml:141
-#: module/Photo/view/photo/album/index.phtml:356
+#: module/Photo/view/photo/album/index.phtml:358
 msgid "Close"
 msgstr "Sluiten"
 
@@ -4516,80 +4533,80 @@ msgstr "Foto's van de week"
 msgid "View user profile"
 msgstr "Bekijk profiel"
 
-#: module/Photo/view/photo/album/index.phtml:319
+#: module/Photo/view/photo/album/index.phtml:321
 msgid "Already voted!"
 msgstr "Je hebt al gestemd!"
 
-#: module/Photo/view/photo/album/index.phtml:322
-#: module/Photo/view/photo/album/index.phtml:493
+#: module/Photo/view/photo/album/index.phtml:324
+#: module/Photo/view/photo/album/index.phtml:495
 msgid "Vote for photo of the week"
 msgstr "Stem voor de foto van de week"
 
-#: module/Photo/view/photo/album/index.phtml:357
+#: module/Photo/view/photo/album/index.phtml:359
 msgid "Zoom (z)"
 msgstr "Zoom (z)"
 
-#: module/Photo/view/photo/album/index.phtml:360
+#: module/Photo/view/photo/album/index.phtml:362
 msgid "The image could not be loaded."
 msgstr "De foto kan niet worden geladen."
 
-#: module/Photo/view/photo/album/index.phtml:373
+#: module/Photo/view/photo/album/index.phtml:375
 msgid "Download"
 msgstr "Downloaden"
 
-#: module/Photo/view/photo/album/index.phtml:397
+#: module/Photo/view/photo/album/index.phtml:399
 msgid "Share"
 msgstr "Delen"
 
-#: module/Photo/view/photo/album/index.phtml:408
+#: module/Photo/view/photo/album/index.phtml:410
 msgid "Copied URL!"
 msgstr "URL gekopieerd!"
 
-#: module/Photo/view/photo/album/index.phtml:419
+#: module/Photo/view/photo/album/index.phtml:421
 msgid "Go to album"
 msgstr "Ga naar album"
 
-#: module/Photo/view/photo/album/index.phtml:462
+#: module/Photo/view/photo/album/index.phtml:464
 msgid "Set as profile picture"
 msgstr "Kies deze foto als jouw profielfoto"
 
-#: module/Photo/view/photo/album/index.phtml:479
+#: module/Photo/view/photo/album/index.phtml:481
 msgid "Set as profile picture!"
 msgstr "Gekozen als profielfoto!"
 
-#: module/Photo/view/photo/album/index.phtml:482
+#: module/Photo/view/photo/album/index.phtml:484
 msgid "Could not set as profile photo, try again"
 msgstr "Profielfoto instellen mislukt, probeer het nog een keer"
 
-#: module/Photo/view/photo/album/index.phtml:515
+#: module/Photo/view/photo/album/index.phtml:517
 msgid "Cannot load vote"
 msgstr "Kan stem niet laden"
 
-#: module/Photo/view/photo/album/index.phtml:534
+#: module/Photo/view/photo/album/index.phtml:536
 msgid "Voted!"
 msgstr "Gestemd!"
 
-#: module/Photo/view/photo/album/index.phtml:546
+#: module/Photo/view/photo/album/index.phtml:548
 msgid "Could not vote, try again"
 msgstr "Stemmen mislukt, probeer het nog een keer"
 
-#: module/Photo/view/photo/album/index.phtml:560
+#: module/Photo/view/photo/album/index.phtml:562
 msgid "Loading tags..."
 msgstr "Tags aan het laden..."
 
-#: module/Photo/view/photo/album/index.phtml:579
+#: module/Photo/view/photo/album/index.phtml:581
 msgid "Cannot load tags"
 msgstr "Kan tags niet laden"
 
-#: module/Photo/view/photo/album/index.phtml:669
+#: module/Photo/view/photo/album/index.phtml:671
 msgid "Cannot load metadata"
 msgstr "Kan metadata niet laden"
 
-#: module/Photo/view/photo/album/index.phtml:695
+#: module/Photo/view/photo/album/index.phtml:697
 msgid "Photo of the Week:<br> Week"
 msgstr "Foto van de week<br> Week"
 
-#: module/Photo/view/photo/album/index.phtml:695
+#: module/Photo/view/photo/album/index.phtml:697
 msgid "of"
 msgstr "van"
 

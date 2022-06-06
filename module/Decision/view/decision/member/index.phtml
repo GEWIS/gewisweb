@@ -188,25 +188,52 @@ $meetings = $this->meetings;
                             </a>
                         </li>
                         <li>
+                            <a href="<?= $this->url('member/regulations', ['regulation' => 'alcohol-policy']) ?>">
+                                <?= $this->translate('Alcohol Policy') ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?= $this->url('member/regulations', ['regulation' => 'board-policies']) ?>">
+                                <?= $this->translate('Board Policies') ?>
+                            </a>
+                        </li>
+                        <li>
                             <a href="<?= $this->url('member/regulations', ['regulation' => 'borrel-policy']) ?>">
-                                <?= $this->translate('Borrelreglement') ?>
+                                <?= $this->translate('Borrel Policy') ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?= $this->url('member/regulations', ['regulation' => 'house-rules']) ?>">
+                                <?= $this->translate('House Rules') ?>
                             </a>
                         </li>
                         <li>
                             <a href="<?= $this->url('member/regulations', ['regulation' => 'ict-policy']) ?>">
-                                <?= $this->translate('Computerreglement') ?>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?= $this->url('member/regulations', ['regulation' => 'poster-policy']) ?>">
-                                <?= $this->translate('Posterreglement') ?>
+                                <?= $this->translate('ICT Policy') ?>
                             </a>
                         </li>
                         <li>
                             <a href="<?= $this->url('member/regulations', ['regulation' => 'key-policy']) ?>">
-                                <?= $this->translate('Sleutelbeleid') ?>
+                                <?= $this->translate('Key Policy') ?>
                             </a>
                         </li>
+                        <li>
+                            <a href="<?= $this->url('member/regulations', ['regulation' => 'poster-policy']) ?>">
+                                <?= $this->translate('Poster Policy') ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?= $this->url('member/regulations', ['regulation' => 'privacy-policy']) ?>">
+                                <?= $this->translate('Privacy Policy') ?>
+                            </a>
+                        </li>
+                        <?php if ($isActive): ?>
+                            <li>
+                                <a href="https://wiki.gewis.nl/link/231">
+                                    <?= $this->translate('Organ Regulations') ?>
+                                </a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             <?php endif; ?>
