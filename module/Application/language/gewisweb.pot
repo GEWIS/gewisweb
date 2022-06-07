@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-07 00:08+0200\n"
+"POT-Creation-Date: 2022-06-07 16:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -252,8 +252,8 @@ msgstr ""
 #: module/Decision/view/decision/decision/authorizations.phtml:120
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:170
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:216
-#: module/Photo/view/photo/album-admin/index.phtml:200
-#: module/Photo/view/photo/album-admin/index.phtml:232
+#: module/Photo/view/photo/album-admin/index.phtml:206
+#: module/Photo/view/photo/album-admin/index.phtml:238
 #: module/Photo/view/photo/photo-admin/index.phtml:128
 #: module/User/view/user/api-authentication/token.phtml:32
 msgid "Cancel"
@@ -427,9 +427,9 @@ msgstr ""
 #: module/Activity/view/activity/admin/participants.phtml:7
 #: module/Activity/view/activity/admin/view.phtml:3
 #: module/Application/view/partial/admin.phtml:29
-#: module/Application/view/partial/main-nav.phtml:231
-#: module/Application/view/partial/main-nav.phtml:235
-#: module/Application/view/partial/main-nav.phtml:240
+#: module/Application/view/partial/main-nav.phtml:234
+#: module/Application/view/partial/main-nav.phtml:238
+#: module/Application/view/partial/main-nav.phtml:243
 #: module/Decision/view/decision/member/index.phtml:160
 msgid "Activities"
 msgstr ""
@@ -676,8 +676,8 @@ msgstr ""
 #: module/Company/view/company/admin/edit-package.phtml:111
 #: module/Company/view/company/admin/index.phtml:211
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:159
-#: module/Photo/view/photo/album-admin/index.phtml:181
-#: module/Photo/view/photo/album-admin/index.phtml:213
+#: module/Photo/view/photo/album-admin/index.phtml:187
+#: module/Photo/view/photo/album-admin/index.phtml:219
 #: module/Photo/view/photo/photo-admin/index.phtml:109
 msgid "Delete confirmation"
 msgstr ""
@@ -1221,16 +1221,16 @@ msgid "Categories"
 msgstr ""
 
 #: module/Application/view/partial/admin.phtml:51
-#: module/Application/view/partial/main-nav.phtml:188
-#: module/Application/view/partial/main-nav.phtml:192
-#: module/Application/view/partial/main-nav.phtml:197
+#: module/Application/view/partial/main-nav.phtml:191
+#: module/Application/view/partial/main-nav.phtml:195
+#: module/Application/view/partial/main-nav.phtml:200
 #: module/Company/view/company/admin/edit-company.phtml:4
 #: module/Company/view/company/admin/index.phtml:3
 msgid "Career"
 msgstr ""
 
 #: module/Application/view/partial/admin.phtml:59
-#: module/Application/view/partial/main-nav.phtml:225
+#: module/Application/view/partial/main-nav.phtml:228
 #: module/Education/view/education/admin/add-course.phtml:8
 #: module/Education/view/education/admin/bulk-exam.phtml:7
 #: module/Education/view/education/admin/bulk-summary.phtml:8
@@ -1309,14 +1309,14 @@ msgid "Pages"
 msgstr ""
 
 #: module/Application/view/partial/admin.phtml:118
-#: module/Application/view/partial/main-nav.phtml:275
-#: module/Application/view/partial/main-nav.phtml:279
-#: module/Application/view/partial/main-nav.phtml:283
-#: module/Application/view/partial/main-nav.phtml:290
+#: module/Application/view/partial/main-nav.phtml:273
+#: module/Application/view/partial/main-nav.phtml:277
+#: module/Application/view/partial/main-nav.phtml:281
+#: module/Application/view/partial/main-nav.phtml:288
 #: module/Photo/view/photo/album-admin/add.phtml:9
 #: module/Photo/view/photo/album-admin/create.phtml:3
 #: module/Photo/view/photo/album-admin/edit.phtml:3
-#: module/Photo/view/photo/album-admin/index.phtml:9
+#: module/Photo/view/photo/album-admin/index.phtml:10
 #: module/Photo/view/photo/album/index.phtml:16
 #: module/Photo/view/photo/album/index.phtml:36
 #: module/Photo/view/photo/photo-admin/index.phtml:8
@@ -1356,7 +1356,7 @@ msgid "All rights reserved."
 msgstr ""
 
 #: module/Application/view/partial/footer.phtml:24
-#: module/Application/view/partial/main-nav.phtml:181
+#: module/Application/view/partial/main-nav.phtml:184
 #: module/Company/view/company/company/companyStory.phtml:21
 #: module/Company/view/company/company/jobs.phtml:89
 #: module/Company/view/partial/company/company/list/company.phtml:28
@@ -1368,7 +1368,7 @@ msgid "Language settings"
 msgstr ""
 
 #: module/Application/view/partial/main-nav.phtml:62
-#: module/Application/view/partial/main-nav.phtml:310
+#: module/Application/view/partial/main-nav.phtml:308
 #: module/Decision/view/decision/member/birthdays.phtml:4
 #: module/Decision/view/decision/member/index.phtml:5
 #: module/Decision/view/decision/member/index.phtml:19
@@ -1460,46 +1460,46 @@ msgid "Well-being"
 msgstr ""
 
 #: module/Application/view/partial/main-nav.phtml:176
+msgid "Confidential Contact Person (CCP)"
+msgstr ""
+
+#: module/Application/view/partial/main-nav.phtml:179
 msgid "FAQ"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:204
+#: module/Application/view/partial/main-nav.phtml:207
 #: module/Company/view/company/admin/index.phtml:140
 msgid "Featured"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:244
+#: module/Application/view/partial/main-nav.phtml:247
 msgid "My activities"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:249
+#: module/Application/view/partial/main-nav.phtml:252
 msgid "Activity Archive"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:254
+#: module/Application/view/partial/main-nav.phtml:257
 msgid "Create an activity"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:259
-msgid "Activity Information COVID-19"
-msgstr ""
-
-#: module/Application/view/partial/main-nav.phtml:263
+#: module/Application/view/partial/main-nav.phtml:261
 msgid ""
 "Option\n"
 "                            calendar"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:267
+#: module/Application/view/partial/main-nav.phtml:265
 msgid "Career related"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:294
+#: module/Application/view/partial/main-nav.phtml:292
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:200
 msgid "Photo of the week"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:299
+#: module/Application/view/partial/main-nav.phtml:297
 #: module/Decision/view/decision/member/index.phtml:43
 msgid "My photo's"
 msgstr ""
@@ -3110,121 +3110,121 @@ msgstr ""
 msgid "Update Album"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:31
+#: module/Photo/view/photo/album-admin/index.phtml:32
 #: module/Photo/view/photo/photo-admin/index.phtml:32
 msgid "Photo admin"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:75
+#: module/Photo/view/photo/album-admin/index.phtml:81
 msgid "Other albums"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:88
+#: module/Photo/view/photo/album-admin/index.phtml:94
 msgid "Create new album"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:93
+#: module/Photo/view/photo/album-admin/index.phtml:99
 msgid "Edit album"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:96
+#: module/Photo/view/photo/album-admin/index.phtml:102
 msgid "Add photos"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:98
+#: module/Photo/view/photo/album-admin/index.phtml:104
 msgid "Move album"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:101
+#: module/Photo/view/photo/album-admin/index.phtml:107
 msgid "Move %i photos"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:104
+#: module/Photo/view/photo/album-admin/index.phtml:110
 msgid "Regenerate album cover"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:108
-#: module/Photo/view/photo/album-admin/index.phtml:199
+#: module/Photo/view/photo/album-admin/index.phtml:114
+#: module/Photo/view/photo/album-admin/index.phtml:205
 msgid "Delete album"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:111
+#: module/Photo/view/photo/album-admin/index.phtml:117
 msgid "Delete %i photos"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:129
+#: module/Photo/view/photo/album-admin/index.phtml:135
 msgid "Generate a new cover photo"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:139
+#: module/Photo/view/photo/album-admin/index.phtml:145
 msgid "Regenerate"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:141
+#: module/Photo/view/photo/album-admin/index.phtml:147
 #: module/Photo/view/photo/album/index.phtml:358
 msgid "Close"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:154
+#: module/Photo/view/photo/album-admin/index.phtml:160
 msgid "Move the album"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:159
+#: module/Photo/view/photo/album-admin/index.phtml:165
 msgid "Select a new parent for the album"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:163
+#: module/Photo/view/photo/album-admin/index.phtml:169
 msgid "The album has been moved"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:168
-#: module/Photo/view/photo/album-admin/index.phtml:259
+#: module/Photo/view/photo/album-admin/index.phtml:174
+#: module/Photo/view/photo/album-admin/index.phtml:265
 #: module/Photo/view/photo/photo-admin/index.phtml:96
 msgid "Move"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:185
+#: module/Photo/view/photo/album-admin/index.phtml:191
 msgid ""
 "Are you sure you want to delete this album including all photos inside of "
 "it? <strong>This action can not be reverted.</strong>"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:188
+#: module/Photo/view/photo/album-admin/index.phtml:194
 msgid "Please wait while the album is being deleted."
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:194
+#: module/Photo/view/photo/album-admin/index.phtml:200
 msgid "The album has been deleted"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:217
+#: module/Photo/view/photo/album-admin/index.phtml:223
 msgid ""
 "Are you sure you want to delete the selected items? <strong>This action can "
 "not be reverted.</strong>"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:220
+#: module/Photo/view/photo/album-admin/index.phtml:226
 msgid "Please wait while the photos are being deleted."
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:226
+#: module/Photo/view/photo/album-admin/index.phtml:232
 msgid "The photos have been been deleted"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:231
+#: module/Photo/view/photo/album-admin/index.phtml:237
 msgid "Delete photos"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:245
+#: module/Photo/view/photo/album-admin/index.phtml:251
 msgid "Move the photos to another album"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:250
+#: module/Photo/view/photo/album-admin/index.phtml:256
 #: module/Photo/view/photo/photo-admin/index.phtml:87
 msgid "Select a new parent album"
 msgstr ""
 
-#: module/Photo/view/photo/album-admin/index.phtml:254
+#: module/Photo/view/photo/album-admin/index.phtml:260
 msgid "The photos have been moved"
 msgstr ""
 
