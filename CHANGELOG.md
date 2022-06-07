@@ -1,3 +1,16 @@
+## [v2.8.1](https://github.com/GEWIS/gewisweb/tree/v2.8.1) (2022-06-07)
+
+* Added the link to an activity in the description of the Google Calendar event creation tool.
+* Added all internal regulations to the members page.
+* Added link to the Confidential Contact Person (CCP) page in the useful information menu.
+* Improved retrieval of photo aspect ratios by calculating them on persistence instead of on-the-fly.
+* Removed COVID-19 information for activities in the activity menu.
+* Fixed issue where newly elected board members would already have `admin` privileges while their term had not started.
+* Fixed issue where the date of a normal photo album would incorrectly be shown as just a year instead of the full date.
+* Fixed issue where the tree navigation for pages and photo albums would not behave as expected.
+
+---
+
 ## [v2.8](https://github.com/GEWIS/gewisweb/tree/v2.8) (2022-05-29)
 
 * Added a pop-up in the photo viewer for Photos of the Week to shown when they were voted 'Photo of the Week'.
