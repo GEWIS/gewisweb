@@ -1,7 +1,8 @@
 <?php
 $this->headScript()
     ->appendFile($this->basePath() . '/js/photo.js')
-    ->appendFile($this->basePath() . '/js/photo-admin.js');
+    ->appendFile($this->basePath() . '/js/photo-admin.js')
+    ->appendFile($this->basePath() . '/js/tree.js');
 $this->headLink()
     ->appendStylesheet($this->basePath() . '/css/tree.css');
 
@@ -38,22 +39,27 @@ $this->scriptUrl()->requireUrl('admin_photo/album_page', ['album_id', 'page'])
                     <?php
                     function showAlbumTree($albums, $context)
                     {
-                        foreach ($albums as $album): ?>
-                            <li><a
-                                    id="<?= $album->getId() ?>"
-                                    href="<?= $context->url('admin_photo/album_index',
-                                        ['album_id' => $album->getId()]) ?>">
-                                    <?= $context->escapeHtml($album->getName()) ?>
-                                </a>
-
-                                <?php $children = $album->getChildren() ?>
-                                <?php if (!empty($children)): ?>
-                                    <ul>
-                                        <?php showAlbumTree($children, $context); ?>
-                                    </ul>
-                                <?php endif; ?>
-                            </li>
-                        <?php
+                        foreach ($albums as $album):
+                    ?>
+                        <li>
+                            <a
+                                id="<?= $album->getId() ?>"
+                                href="<?= $context->url('admin_photo/album_index',
+                                    ['album_id' => $album->getId()]) ?>">
+                                <?= $context->escapeHtml($album->getName()) ?>
+                            </a>
+                            <?php
+                            $children = $album->getChildren();
+                            if (!$children->isEmpty()):
+                            ?>
+                                <ul>
+                                    <?php showAlbumTree($children, $context); ?>
+                                </ul>
+                            <?php
+                            endif;
+                            ?>
+                        </li>
+                    <?php
                         endforeach;
                     }
 
