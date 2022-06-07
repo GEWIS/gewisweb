@@ -173,6 +173,9 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                     <a href="<?= $this->url('home/page', ['category' => 'wellbeing']) ?>"><?= $this->translate('Well-being') ?></a>
                                 </li>
                                 <li>
+                                    <a href="<?= $this->url('home/page', ['category' => 'wellbeing', 'sub_category' => 'ccp']) ?>"><?= $this->translate('Confidential Contact Person (CCP)') ?></a>
+                                </li>
+                                <li>
                                     <a href="<?= $this->url('home/page', ['category' => 'faq']) ?>"><?= $this->translate('FAQ') ?></a>
                                 </li>
                             </ul>
@@ -252,11 +255,6 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'create')): ?>
                             <li>
                                 <a href="<?= $this->url('activity/create') ?>"> <?= $this->translate('Create an activity') ?></a>
-                            </li>
-                        <?php endif; ?>
-                        <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'create')): ?>
-                            <li>
-                                <a href="<?= $this->url('home/page', ['category' => 'activity', 'sub_category' => 'corona']) ?>"><?= $this->translate('Activity Information COVID-19') ?></a>
                             </li>
                         <?php endif; ?>
                         <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'create')): ?>
