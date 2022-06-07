@@ -144,10 +144,14 @@ return [
 
     'regulations' => [
         'activity-policy' => 'Policies%20&%20Regulations/Activity%20Policy',
+        'alcohol-policy' => 'Policies%20&%20Regulations/Alcohol%20Policy',
+        'board-policies' => 'Policies%20&%20Regulations/Board%20Policies',
         'borrel-policy' => 'Policies%20&%20Regulations/Borrel%20Policy',
+        'house-rules' => 'Policies%20&%20Regulations/House%20rules',
         'ict-policy' => 'Policies%20&%20Regulations/ICT%20Policy',
         'key-policy' => 'Policies%20&%20Regulations/Key%20Policy',
         'poster-policy' => 'Policies%20&%20Regulations/Poster%20Policy',
+        'privacy-policy' => 'Policies%20&%20Regulations/Privacy%20Policy',
     ],
 
     /*
