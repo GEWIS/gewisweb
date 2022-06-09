@@ -55,7 +55,6 @@
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-mvc" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-uri" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-router" />
-      <path value="$PROJECT_DIR$/vendor/laminas/laminas-log" />
       <path value="$PROJECT_DIR$/vendor/league/mime-type-detection" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-mvc-i18n" />
       <path value="$PROJECT_DIR$/vendor/league/glide-zend" />
