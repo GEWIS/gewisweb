@@ -7321,6 +7321,36 @@ Search.appendIndex(
             "summary": "Destroyed\u0020by.",
             "url": "classes/Decision-Model-Decision.html#property_destroyedby"
         },                {
+            "fqsen": "\\Decision\\Model\\Enums\\MembershipTypes",
+            "name": "MembershipTypes",
+            "summary": "Enum\u0020for\u0020the\u0020different\u0020membership\u0020types\u0020as\u0020defined\u0020in\u0020the\u0020bylaws\u0020of\u0020the\u0020association.",
+            "url": "classes/Decision-Model-Enums-MembershipTypes.html"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\MembershipTypes\u003A\u003AgetName\u0028\u0029",
+            "name": "getName",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-MembershipTypes.html#method_getName"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\MembershipTypes\u003A\u003AOrdinary",
+            "name": "Ordinary",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\MembershipTypes\u003A\u003AExternal",
+            "name": "External",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\MembershipTypes\u003A\u003AGraduate",
+            "name": "Graduate",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\MembershipTypes\u003A\u003AHonorary",
+            "name": "Honorary",
+            "summary": "",
+            "url": ""
+        },                {
             "fqsen": "\\Decision\\Model\\MailingList",
             "name": "MailingList",
             "summary": "Mailing\u0020List\u0020model.",
@@ -7691,11 +7721,6 @@ Search.appendIndex(
             "summary": "Static\u0020method\u0020to\u0020get\u0020available\u0020genders.",
             "url": "classes/Decision-Model-Member.html#method_getGenders"
         },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetTypes\u0028\u0029",
-            "name": "getTypes",
-            "summary": "Static\u0020method\u0020to\u0020get\u0020available\u0020member\u0020types.",
-            "url": "classes/Decision-Model-Member.html#method_getTypes"
-        },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "Constructor.",
@@ -7825,6 +7850,16 @@ Search.appendIndex(
             "name": "setChangedOn",
             "summary": "Set\u0020the\u0020date\u0020of\u0020the\u0020last\u0020membership\u0020change.",
             "url": "classes/Decision-Model-Member.html#method_setChangedOn"
+        },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetMembershipEndsOn\u0028\u0029",
+            "name": "getMembershipEndsOn",
+            "summary": "Get\u0020the\u0020date\u0020on\u0020which\u0020the\u0020membership\u0020of\u0020the\u0020member\u0020will\u0020have\u0020ended\u0020\u0028i.e.,\u0020they\u0020have\u0020become\u0020\u0022graduate\u0022\u0029.",
+            "url": "classes/Decision-Model-Member.html#method_getMembershipEndsOn"
+        },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AsetMembershipEndsOn\u0028\u0029",
+            "name": "setMembershipEndsOn",
+            "summary": "Set\u0020the\u0020date\u0020on\u0020which\u0020the\u0020membership\u0020of\u0020the\u0020member\u0020will\u0020have\u0020ended\u0020\u0028i.e.,\u0020they\u0020have\u0020become\u0020\u0022graduate\u0022\u0029.",
+            "url": "classes/Decision-Model-Member.html#method_setMembershipEndsOn"
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetPaid\u0028\u0029",
             "name": "getPaid",
@@ -7966,31 +8001,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Model-Member.html#constant_GENDER_OTHER"
         },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003ATYPE_ORDINARY",
-            "name": "TYPE_ORDINARY",
-            "summary": "",
-            "url": "classes/Decision-Model-Member.html#constant_TYPE_ORDINARY"
-        },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003ATYPE_PROLONGED",
-            "name": "TYPE_PROLONGED",
-            "summary": "",
-            "url": "classes/Decision-Model-Member.html#constant_TYPE_PROLONGED"
-        },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003ATYPE_EXTERNAL",
-            "name": "TYPE_EXTERNAL",
-            "summary": "",
-            "url": "classes/Decision-Model-Member.html#constant_TYPE_EXTERNAL"
-        },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003ATYPE_EXTRAORDINARY",
-            "name": "TYPE_EXTRAORDINARY",
-            "summary": "",
-            "url": "classes/Decision-Model-Member.html#constant_TYPE_EXTRAORDINARY"
-        },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003ATYPE_HONORARY",
-            "name": "TYPE_HONORARY",
-            "summary": "",
-            "url": "classes/Decision-Model-Member.html#constant_TYPE_HONORARY"
-        },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024lidnr",
             "name": "lidnr",
             "summary": "The\u0020user.",
@@ -8041,6 +8051,11 @@ Search.appendIndex(
             "summary": "Last\u0020changed\u0020date\u0020of\u0020membership.",
             "url": "classes/Decision-Model-Member.html#property_changedOn"
         },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024membershipEndsOn",
+            "name": "membershipEndsOn",
+            "summary": "Date\u0020when\u0020the\u0020real\u0020membership\u0020\u0028\u0022ordinary\u0022\u0020or\u0020\u0022external\u0022\u0029\u0020of\u0020the\u0020member\u0020will\u0020have\u0020ended,\u0020in\u0020other\u0020words,\u0020from\u0020this\ndate\u0020onwards\u0020they\u0020are\u0020\u0022graduate\u0022.\u0020If\u0020\u0060null\u0060,\u0020the\u0020expiration\u0020is\u0020rolling\u0020and\u0020will\u0020be\u0020silently\u0020renewed\u0020if\u0020the\u0020member\nstill\u0020meets\u0020the\u0020requirements\u0020as\u0020set\u0020forth\u0020in\u0020the\u0020bylaws\u0020and\u0020internal\u0020regulations.",
+            "url": "classes/Decision-Model-Member.html#property_membershipEndsOn"
+        },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024birth",
             "name": "birth",
             "summary": "Member\u0020birth\u0020date.",
@@ -8048,7 +8063,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024expiration",
             "name": "expiration",
-            "summary": "Member\u0020expiration\u0020date.",
+            "summary": "The\u0020date\u0020on\u0020which\u0020the\u0020membership\u0020of\u0020the\u0020member\u0020is\u0020set\u0020to\u0020expire\u0020and\u0020will\u0020therefore\u0020have\u0020to\u0020be\u0020renewed,\u0020which\nhappens\u0020either\u0020automatically\u0020or\u0020has\u0020to\u0020be\u0020done\u0020manually,\u0020as\u0020set\u0020forth\u0020in\u0020the\u0020bylaws\u0020and\u0020internal\u0020regulations.",
             "url": "classes/Decision-Model-Member.html#property_expiration"
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024paid",
@@ -11781,6 +11796,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Frontpage-Service-Frontpage.html#property_translator"
         },                {
+            "fqsen": "\\Frontpage\\Service\\Frontpage\u003A\u003A\u0024aclService",
+            "name": "aclService",
+            "summary": "",
+            "url": "classes/Frontpage-Service-Frontpage.html#property_aclService"
+        },                {
             "fqsen": "\\Frontpage\\Service\\Frontpage\u003A\u003A\u0024pollService",
             "name": "pollService",
             "summary": "",
@@ -14083,7 +14103,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Photo\\Service\\Photo\u003A\u003AgetPhotoDownload\u0028\u0029",
             "name": "getPhotoDownload",
-            "summary": "Returns\u0020a\u0020zend\u0020response\u0020to\u0020be\u0020used\u0020for\u0020downloading\u0020a\u0020photo.",
+            "summary": "Returns\u0020a\u0020Laminas\u0020response\u0020to\u0020be\u0020used\u0020for\u0020downloading\u0020a\u0020photo.",
             "url": "classes/Photo-Service-Photo.html#method_getPhotoDownload"
         },                {
             "fqsen": "\\Photo\\Service\\Photo\u003A\u003AgetPhoto\u0028\u0029",
@@ -15806,6 +15826,16 @@ Search.appendIndex(
             "summary": "Get\u0020service\u0020configuration.",
             "url": "classes/User-Module.html#method_getServiceConfig"
         },                {
+            "fqsen": "\\User\\Permissions\\Assertion\\IsAfterMembershipEnded",
+            "name": "IsAfterMembershipEnded",
+            "summary": "Assertion\u0020to\u0020check\u0020if\u0020when\u0020the\u0020user\u0020is\u0020a\u0020graduate,\u0020that\u0020the\u0020album\u0020they\u0020are\u0020trying\u0020to\u0020view\u0020is\u0020before\u0020their\u0020membership\nended.",
+            "url": "classes/User-Permissions-Assertion-IsAfterMembershipEnded.html"
+        },                {
+            "fqsen": "\\User\\Permissions\\Assertion\\IsAfterMembershipEnded\u003A\u003Aassert\u0028\u0029",
+            "name": "assert",
+            "summary": "Returns\u0020true\u0020if\u0020and\u0020only\u0020if\u0020the\u0020assertion\u0020conditions\u0020are\u0020met.",
+            "url": "classes/User-Permissions-Assertion-IsAfterMembershipEnded.html#method_assert"
+        },                {
             "fqsen": "\\User\\Permissions\\Assertion\\IsCreator",
             "name": "IsCreator",
             "summary": "Assertion\u0020to\u0020check\u0020if\u0020the\u0020user\u0020has\u0020created\u0020some\u0020entity.",
@@ -16400,6 +16430,11 @@ Search.appendIndex(
             "name": "Model",
             "summary": "",
             "url": "namespaces/decision-model.html"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums",
+            "name": "Enums",
+            "summary": "",
+            "url": "namespaces/decision-model-enums.html"
         },                {
             "fqsen": "\\Decision\\Model\\SubDecision",
             "name": "SubDecision",
