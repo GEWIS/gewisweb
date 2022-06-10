@@ -49,16 +49,18 @@ class AclService extends GenericAclService
          * - guest: everyone gets at least this access level
          * - tueguest: guest from the TU/e
          * - user: GEWIS-member
+         * - active_member: a GEWIS-member who is part on an organ
+         * - graduate: an old GEWIS-member, has limited privileges
          * - apiuser: Automated tool given access by an admin
          * - admin: Defined administrators
          * - photo_guest: Special role for non-members but friends of GEWIS nonetheless
          */
-
         $this->acl->addRole(new Role('guest'));
         $this->acl->addRole(new Role('tueguest'), 'guest');
         $this->acl->addRole(new Role('user'), 'tueguest');
         $this->acl->addrole(new Role('apiuser'), 'guest');
         $this->acl->addrole(new Role('active_member'), 'user');
+        $this->acl->addRole(new Role('graduate'), 'user');
         $this->acl->addrole(new Role('company_admin'), 'active_member');
         $this->acl->addRole(new Role('admin'));
         $this->acl->addRole(new Role('photo_guest'), 'guest');

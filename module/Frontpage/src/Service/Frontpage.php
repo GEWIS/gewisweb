@@ -6,7 +6,10 @@ use Activity\Mapper\Activity as ActivityMapper;
 use Activity\Model\Activity as ActivityModel;
 use Company\Service\Company as CompanyService;
 use DateTime;
-use Decision\Service\Member as MemberService;
+use Decision\Service\{
+    AclService,
+    Member as MemberService,
+};
 use Frontpage\Model\NewsItem as NewsItemModel;
 use Frontpage\Service\{
     News as NewsService,
@@ -25,6 +28,8 @@ class Frontpage
      * @var Translator
      */
     private Translator $translator;
+
+    private AclService $aclService;
 
     /**
      * @var PollService
@@ -73,6 +78,7 @@ class Frontpage
 
     /**
      * @param Translator $translator
+     * @param AclService $aclService;
      * @param Poll $pollService
      * @param News $newsService
      * @param MemberService $memberService
@@ -85,6 +91,7 @@ class Frontpage
      */
     public function __construct(
         Translator $translator,
+        AclService $aclService,
         Poll $pollService,
         News $newsService,
         MemberService $memberService,
@@ -96,6 +103,7 @@ class Frontpage
         array $photoConfig,
     ) {
         $this->translator = $translator;
+        $this->aclService = $aclService;
         $this->pollService = $pollService;
         $this->newsService = $newsService;
         $this->memberService = $memberService;
@@ -154,6 +162,13 @@ class Frontpage
      */
     public function getBirthdayInfo(): array
     {
+        if (!$this->aclService->isAllowed('birthdays', 'member')) {
+            return [
+                'birthdays' => [],
+                'tag' => null,
+            ];
+        }
+
         $birthdayMembers = $this->memberService->getBirthdayMembers();
         $today = new DateTime();
         $birthdays = [];

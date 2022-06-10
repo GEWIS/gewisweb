@@ -46,10 +46,12 @@ $meetings = $this->meetings;
                         <div class="big-icon fas fa-beer"></div>
                         <div class="panel-heading"><?= $this->translate('SuSOS') ?></div>
                     </a>
-                    <a href="<?= $this->url('decision/authorizations') ?>" class="panel panel-image align-middle">
-                        <div class="big-icon fas fa-file-signature"></div>
-                        <div class="panel-heading"><?= $this->translate('Authorizations') ?></div>
-                    </a>
+                    <?php if ($this->acl('decision_service_acl')->isAllowed('authorization', 'create')): ?>
+                        <a href="<?= $this->url('decision/authorizations') ?>" class="panel panel-image align-middle">
+                            <div class="big-icon fas fa-file-signature"></div>
+                            <div class="panel-heading"><?= $this->translate('Authorizations') ?></div>
+                        </a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -66,10 +68,12 @@ $meetings = $this->meetings;
                         <div class="big-icon fas fa-download"></div>
                         <div class="panel-heading"><?= $this->translate('Public archive') ?></div>
                     </a>
-                    <a href="<?= $this->url('member/search') ?>" class="panel panel-image align-middle">
-                        <div class="big-icon fas fa-search"></div>
-                        <div class="panel-heading"><?= $this->translate('Find a member') ?></div>
-                    </a>
+                    <?php if ($this->acl('decision_service_acl')->isAllowed('member', 'search')): ?>
+                        <a href="<?= $this->url('member/search') ?>" class="panel panel-image align-middle">
+                            <div class="big-icon fas fa-search"></div>
+                            <div class="panel-heading"><?= $this->translate('Find a member') ?></div>
+                        </a>
+                    <?php endif; ?>
                     <a href="https://supremum.gewis.nl/" class="panel panel-image align-middle">
                         <div class="big-icon fas fa-book"></div>
                         <div class="panel-heading">Supremum</div>

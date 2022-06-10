@@ -15,6 +15,7 @@ use Photo\Service\{
     Photo as PhotoService,
 };
 use Laminas\Mvc\I18n\Translator;
+use Photo\Model\Album;
 use User\Permissions\NotAllowedException;
 
 class PhotoController extends AbstractActionController
@@ -60,6 +61,10 @@ class PhotoController extends AbstractActionController
 
     public function indexAction(): ViewModel
     {
+        if (!$this->aclService->isAllowed('view', 'album')) {
+            throw new NotAllowedException($this->translator->translate('Not allowed to view albums'));
+        }
+
         $years = $this->albumService->getAlbumYears();
         $year = $this->params()->fromRoute('year');
 
@@ -74,16 +79,27 @@ class PhotoController extends AbstractActionController
             $year = (int) $year;
         }
 
+        $albums = $this->albumService->getAlbumsByYear($year);
+        if (null !== ($membershipEndsOn = $this->aclService->getIdentity()->getMember()->getMembershipEndsOn())) {
+            $albums = array_filter($albums, function (Album $v) use ($membershipEndsOn) {
+                return $membershipEndsOn > $v->getStartDateTime();
+            });
+        }
+
         return new ViewModel(
             [
                 'years' => $years,
-                'albums' => $this->albumService->getAlbumsByYear($year),
+                'albums' => $albums,
             ]
         );
     }
 
     public function downloadAction(): ?Stream
     {
+        if (!$this->aclService->isAllowed('download', 'photo')) {
+            throw new NotAllowedException($this->translator->translate('Not allowed to download photos'));
+        }
+
         $photoId = $this->params()->fromRoute('photo_id');
 
         return $this->photoService->getPhotoDownload($photoId);
@@ -148,6 +164,12 @@ class PhotoController extends AbstractActionController
      */
     public function voteAction(): JsonModel|ViewModel
     {
+        if (!$this->aclService->isAllowed('add', 'vote')) {
+            throw new NotAllowedException(
+                $this->translator->translate('Not allowed to vote for a photo of the week')
+            );
+        }
+
         if ($this->getRequest()->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
             $this->photoService->countVote($photoId);

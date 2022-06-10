@@ -55,7 +55,7 @@ class ApiController extends AbstractActionController
     {
         if (
             !$this->aclService->isAllowed('view', 'tag')
-            && !$this->aclService->isAllowed('vote', 'photo')
+            && !$this->aclService->isAllowed('view', 'vote')
         ) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view photo details'));
         }

@@ -47,28 +47,10 @@ use Decision\Model\Member;
             </td>
             <?php if ($signup instanceof UserSignup): ?>
                 <td>
-                    <?php
-                    $membershipType = '';
-                    switch ($signup->getUser()->getMember()->getType()) {
-                        case Member::TYPE_ORDINARY:
-                            $membershipType = $this->translate('Ordinary');
-                            break;
-                        case Member::TYPE_PROLONGED:
-                            $membershipType = $this->translate('Prolonged');
-                            break;
-                        case Member::TYPE_EXTERNAL:
-                            $membershipType = $this->translate('External');
-                            break;
-                        case Member::TYPE_EXTRAORDINARY:
-                            $membershipType = $this->translate('Extraordinary');
-                            break;
-                        case Member::TYPE_HONORARY:
-                            $membershipType = $this->translate('Honorary');
-                            break;
-                    }
-
-                    echo sprintf($this->translate('User (%s)'), $membershipType);
-                    ?>
+                    <?= sprintf(
+                        $this->translate('User (%s)'),
+                        $signup->getUser()->getMember()->getType()->getName($this->plugin('translate')->getTranslator()),
+                    ); ?>
                 </td>
             <?php else: ?>
                 <td>

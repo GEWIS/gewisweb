@@ -20,6 +20,7 @@ use Doctrine\ORM\Mapping\{
     OneToMany,
     OneToOne,
 };
+use Decision\Model\Enums\MembershipTypes;
 use Decision\Model\SubDecision\Installation;
 use InvalidArgumentException;
 use User\Model\User as UserModel;
@@ -33,12 +34,6 @@ class Member
     public const GENDER_MALE = 'm';
     public const GENDER_FEMALE = 'f';
     public const GENDER_OTHER = 'o';
-
-    public const TYPE_ORDINARY = 'ordinary';
-    public const TYPE_PROLONGED = 'prolonged';
-    public const TYPE_EXTERNAL = 'external';
-    public const TYPE_EXTRAORDINARY = 'extraordinary';
-    public const TYPE_HONORARY = 'honorary';
 
     /**
      * The user.
@@ -110,19 +105,19 @@ class Member
      * This can be one of the following, as defined by the GEWIS statuten:
      *
      * - ordinary
-     * - prolonged
      * - external
-     * - extraordinary
+     * - graduate
      * - honorary
      *
-     * You can find the GEWIS Statuten here:
+     * You can find the GEWIS statuten here: https://gewis.nl/vereniging/statuten/statuten.
      *
-     * http://gewis.nl/vereniging/statuten/statuten.php
-     *
-     * Zie artikel 7 lid 1 en 2.
+     * See artikel 7.
      */
-    #[Column(type: "string")]
-    protected string $type;
+    #[Column(
+        type: "string",
+        enumType: MembershipTypes::class,
+    )]
+    protected MembershipTypes $type;
 
     /**
      * Last changed date of membership.
@@ -131,13 +126,25 @@ class Member
     protected DateTime $changedOn;
 
     /**
+     * Date when the real membership ("ordinary" or "external") of the member will have ended, in other words, from this
+     * date onwards they are "graduate". If `null`, the expiration is rolling and will be silently renewed if the member
+     * still meets the requirements as set forth in the bylaws and internal regulations.
+     */
+    #[Column(
+        type: "date",
+        nullable: true,
+    )]
+    protected ?DateTime $membershipEndsOn = null;
+
+    /**
      * Member birth date.
      */
     #[Column(type: "date")]
     protected DateTime $birth;
 
     /**
-     * Member expiration date.
+     * The date on which the membership of the member is set to expire and will therefore have to be renewed, which
+     * happens either automatically or has to be done manually, as set forth in the bylaws and internal regulations.
      */
     #[Column(type: "date")]
     protected DateTime $expiration;
@@ -232,22 +239,6 @@ class Member
             self::GENDER_MALE,
             self::GENDER_FEMALE,
             self::GENDER_OTHER,
-        ];
-    }
-
-    /**
-     * Static method to get available member types.
-     *
-     * @return array
-     */
-    protected static function getTypes(): array
-    {
-        return [
-            self::TYPE_ORDINARY,
-            self::TYPE_PROLONGED,
-            self::TYPE_EXTERNAL,
-            self::TYPE_EXTRAORDINARY,
-            self::TYPE_HONORARY,
         ];
     }
 
@@ -448,9 +439,9 @@ class Member
     /**
      * Get the member type.
      *
-     * @return string
+     * @return MembershipTypes
      */
-    public function getType(): string
+    public function getType(): MembershipTypes
     {
         return $this->type;
     }
@@ -458,22 +449,15 @@ class Member
     /**
      * Set the member type.
      *
-     * @param string $type
-     *
-     * @throws InvalidArgumentException when the type is incorrect
+     * @param MembershipTypes $type
      */
-    public function setType(string $type): void
+    public function setType(MembershipTypes $type): void
     {
-        if (!in_array($type, self::getTypes())) {
-            throw new InvalidArgumentException('Nonexisting type given.');
-        }
         $this->type = $type;
     }
 
     /**
      * Get the expiration date.
-     *
-     * The information comes from the statuten and HR.
      *
      * @return DateTime
      */
@@ -530,6 +514,26 @@ class Member
     public function setChangedOn(DateTime $changedOn): void
     {
         $this->changedOn = $changedOn;
+    }
+
+    /**
+     * Get the date on which the membership of the member will have ended (i.e., they have become "graduate").
+     *
+     * @return DateTime|null
+     */
+    public function getMembershipEndsOn(): ?DateTime
+    {
+        return $this->membershipEndsOn;
+    }
+
+    /**
+     * Set the date on which the membership of the member will have ended (i.e., they have become "graduate").
+     *
+     * @param DateTime|null $membershipEndsOn
+     */
+    public function setMembershipEndsOn(?DateTime $membershipEndsOn): void
+    {
+        $this->membershipEndsOn = $membershipEndsOn;
     }
 
     /**
@@ -699,6 +703,7 @@ class Member
             'initials' => $this->getInitials(),
             'firstName' => $this->getFirstName(),
             'generation' => $this->getGeneration(),
+            'membershipEndsOn' => $this->getMembershipEndsOn()?->format(DateTimeInterface::ISO8601) ?? null,
             'expiration' => $this->getExpiration()->format('l j F Y'),
         ];
     }
@@ -718,6 +723,7 @@ class Member
             'lastName' => $this->getLastName(),
             'birth' => $this->getBirth()->format(DateTimeInterface::ISO8601),
             'generation' => $this->getGeneration(),
+            'membershipEndsOn' => $this->getMembershipEndsOn()?->format(DateTimeInterface::ISO8601) ?? null,
             'expiration' => $this->getExpiration()->format(DateTimeInterface::ISO8601),
         ];
     }

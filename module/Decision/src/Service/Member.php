@@ -94,18 +94,6 @@ class Member
      */
     public function getBirthdayMembers(int $days = 0): array
     {
-        if (0 == $days && !$this->aclService->isAllowed('birthdays_today', 'member')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the list of today\'s birthdays.')
-            );
-        }
-
-        if ($days > 0 && !$this->aclService->isAllowed('birthdays', 'member')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the list of birthdays.')
-            );
-        }
-
         return $this->memberMapper->findBirthdayMembers($days);
     }
 

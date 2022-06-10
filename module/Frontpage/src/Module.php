@@ -49,6 +49,7 @@ class Module
             'factories' => [
                 'frontpage_service_frontpage' => function (ContainerInterface $container) {
                     $translator = $container->get('translator');
+                    $aclService = $container->get('decision_service_acl');
                     $pollService = $container->get('frontpage_service_poll');
                     $newsService = $container->get('frontpage_service_news');
                     $memberService = $container->get('decision_service_member');
@@ -61,6 +62,7 @@ class Module
 
                     return new FrontpageService(
                         $translator,
+                        $aclService,
                         $pollService,
                         $newsService,
                         $memberService,
