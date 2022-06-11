@@ -277,7 +277,7 @@ class ActivityController extends AbstractActionController
     /**
      * Signup for a activity.
      */
-    public function signupAction(): Response|ViewModel
+    public function signupAction(): array
     {
         $activityId = (int)$this->params('id');
         $signupListId = (int)$this->params('signupList');
