@@ -1,0 +1,102 @@
+name: PHP Static Analysis with PHPStan
+
+# Only run this action on pull requests (creation, synchronisation, and reopening).
+on: [pull_request]
+
+jobs:
+    phpstan:
+        name: PHPStan
+        runs-on: ubuntu-latest
+
+        # Create a MySQL service.
+        services:
+            mysql:
+                image: mariadb
+                env:
+                    MYSQL_ROOT_PASSWORD: gewis
+                    MYSQL_DATABASE: gewis
+                    MYSQL_USER: gewis
+                    MYSQL_PASSWORD: gewis
+                ports:
+                    - 3306:3306
+                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+        steps:
+            -   name: Checkout head branch
+                uses: actions/checkout@v2
+
+            -   name: Install PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.1'
+                    extensions: calendar, curl, exif, gd, intl, opcache, pgsql, pdo_mysql, pdo_pgsql, zip, imagick, memcached, xdebug
+                    tools: cs2pr
+
+            -   name: Get Composer cache directory
+                id: composer-cache-head
+                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+            -   name: Cache dependencies
+                uses: actions/cache@v2
+                with:
+                    path: ${{ steps.composer-cache-head.outputs.dir }}
+                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                    restore-keys: ${{ runner.os }}-composer-
+
+            -   name: Extract configuration files
+                run: |
+                    cp config/autoload/doctrine.local.development.php.dist config/autoload/doctrine.local.php
+                    cp config/autoload/laminas-developer-tools.local.php.dist config/autoload/laminas-developer-tools.local.php
+                    cp config/autoload/local.development.php.dist config/autoload/local.php
+
+            -   name: Check out master
+                run: |
+                    git fetch --all
+                    git update-ref refs/heads/temp-phpstanpr refs/remotes/origin/master
+                    git checkout --detach temp-phpstanpr
+
+            -   name: Install dependencies
+                run: composer install --no-interaction
+
+            -   name: Load environment variables
+                uses: c-py/action-dotenv-to-setenv@v3
+                with:
+                    env-file: .env.dist
+
+            -   name: Create database
+                env:
+                    DOCKER_DB_HOST: 127.0.0.1
+                run: ./orm orm:schema-tool:update --force
+
+            -   name: Generate PHPStan Baseline
+                env:
+                    DOCKER_DB_HOST: 127.0.0.1
+                run: |
+                    echo "" > phpstan/phpstan-baseline.neon
+                    echo "" > phpstan/phpstan-baseline-pr.neon
+                    vendor/bin/phpstan analyse -c phpstan.neon --generate-baseline phpstan/phpstan-baseline-temp.neon --memory-limit 1G --no-progress
+
+            -   name: Check out new branch
+                run: |
+                    git checkout -- phpstan/phpstan-baseline.neon
+                    git checkout -
+
+            -   name: Install dependencies
+                run: composer install --no-interaction
+
+            -   name: Load environment variables
+                uses: c-py/action-dotenv-to-setenv@v3
+                with:
+                    env-file: .env.dist
+
+            -   name: Create database
+                env:
+                    DOCKER_DB_HOST: 127.0.0.1
+                run: ./orm orm:schema-tool:update --force
+
+            -   name: Run PHPStan
+                env:
+                    DOCKER_DB_HOST: 127.0.0.1
+                run: |
+                    cp phpstan/phpstan-baseline-temp.neon phpstan/phpstan-baseline-pr.neon
+                    vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G --no-progress --error-format=checkstyle | cs2pr

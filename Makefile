@@ -96,6 +96,22 @@ phpstanpr:
 		@make rundev
 		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G --no-progress
 
+psalm: loadenv
+		@echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?><files/>" > psalm/psalm-baseline-pr.xml
+		@vendor/bin/psalm --no-cache --no-diff
+
+psalmdiff: loadenv
+		@echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?><files/>" > psalm/psalm-baseline-pr.xml
+		@vendor/bin/psalm --no-cache --show-info --diff
+
+psalmbaseline: loadenv
+		@echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?><files/>" > psalm/psalm-baseline-pr.xml
+		@vendor/bin/psalm --set-baseline=psalm/psalm-baseline.xml --no-cache --no-diff
+
+psalmfix: loadenv
+		@echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?><files/>" > psalm/psalm-baseline-pr.xml
+		@vendor/bin/psalm --alter
+
 phpcs: loadenv
 		@vendor/bin/phpcs -p --standard=PSR1,PSR12 --extensions=php,dist module config
 

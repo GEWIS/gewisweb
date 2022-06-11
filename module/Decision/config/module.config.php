@@ -105,7 +105,7 @@ return [
                     'files' => [
                         'type' => 'Regex',
                         'options' => [
-                            'regex' => '/files(?<path>' . $this->getServiceConfig()['filebrowser_valid_file'] . ')',
+                            'regex' => '/files(?<path>' . (new Module())->getServiceConfig()['filebrowser_valid_file'] . ')',
                             'defaults' => [
                                 'action' => 'files',
                             ],

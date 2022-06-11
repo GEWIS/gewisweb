@@ -24,8 +24,8 @@ use Laminas\Session\{
 };
 use Laminas\Stdlib\{
     Parameters,
-    ResponseInterface,
-};
+    ParametersInterface,
+    ResponseInterface};
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
@@ -322,6 +322,7 @@ class AdminController extends AbstractActionController
 
         if ($request->isPost()) {
             $form = $this->signupService->getExternalAdminForm($signupList);
+            /** @var ParametersInterface $postData */
             $postData = $request->getPost();
             $form->setData($postData);
 

@@ -1,11 +1,11 @@
-name: PHP Static Analysis
+name: PHP Static Analysis with Psalm
 
 # Only run this action on pull requests (creation, synchronisation, and reopening).
 on: [pull_request]
 
 jobs:
-    phpstan:
-        name: PHPStan
+    psalm:
+        name: Psalm
         runs-on: ubuntu-latest
 
         # Create a MySQL service.
@@ -52,8 +52,8 @@ jobs:
             -   name: Check out master
                 run: |
                     git fetch --all
-                    git update-ref refs/heads/temp-phpstanpr refs/remotes/origin/master
-                    git checkout --detach temp-phpstanpr
+                    git update-ref refs/heads/temp-psalmpr refs/remotes/origin/master
+                    git checkout --detach temp-psalmpr
 
             -   name: Install dependencies
                 run: composer install --no-interaction
@@ -68,17 +68,17 @@ jobs:
                     DOCKER_DB_HOST: 127.0.0.1
                 run: ./orm orm:schema-tool:update --force
 
-            -   name: Generate PHPStan Baseline
+            -   name: Generate Psalm Baseline
                 env:
                     DOCKER_DB_HOST: 127.0.0.1
                 run: |
-                    echo "" > phpstan/phpstan-baseline.neon
-                    echo "" > phpstan/phpstan-baseline-pr.neon
-                    vendor/bin/phpstan analyse -c phpstan.neon --generate-baseline phpstan/phpstan-baseline-temp.neon --memory-limit 1G --no-progress
+                    echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?><files/>" > psalm/psalm-baseline.xml
+                    echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?><files/>" > psalm/psalm-baseline-pr.xml
+                    vendor/bin/psalm --set-baseline=psalm/psalm-baseline-pr.xml --no-diff --no-progress
 
             -   name: Check out new branch
                 run: |
-                    git checkout -- phpstan/phpstan-baseline.neon
+                    git checkout -- psalm/psalm-baseline.xml
                     git checkout -
 
             -   name: Install dependencies
@@ -94,9 +94,9 @@ jobs:
                     DOCKER_DB_HOST: 127.0.0.1
                 run: ./orm orm:schema-tool:update --force
 
-            -   name: Run PHPStan
+            -   name: Run Psalm
                 env:
                     DOCKER_DB_HOST: 127.0.0.1
                 run: |
-                    cp phpstan/phpstan-baseline-temp.neon phpstan/phpstan-baseline-pr.neon
-                    vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G --no-progress --error-format=checkstyle | cs2pr
+                    cp psalm/psalm-baseline-temp.xml psalm/psalm-baseline-pr.xml
+                    vendor/bin/psalm  --no-diff --info --no-progress --output-format=checkstyle | cs2pr
