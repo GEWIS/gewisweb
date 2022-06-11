@@ -139,7 +139,6 @@
       <path value="$PROJECT_DIR$/vendor/phpstan/extension-installer" />
       <path value="$PROJECT_DIR$/vendor/slam/phpstan-laminas-framework" />
       <path value="$PROJECT_DIR$/vendor/phpstan/phpstan-doctrine" />
-      <path value="$PROJECT_DIR$/vendor/phpstan/phpstan-symfony" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php81" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-mvc-plugin-flashmessenger" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-cache-storage-deprecated-factory" />
@@ -198,7 +197,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/config" />
       <path value="$PROJECT_DIR$/vendor/composer-unused/contracts" />
       <path value="$PROJECT_DIR$/vendor/composer-unused/symbol-parser" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php73" />
       <path value="$PROJECT_DIR$/vendor/container-interop/container-interop" />
       <path value="$PROJECT_DIR$/vendor/webmozart/path-util" />
       <path value="$PROJECT_DIR$/vendor/seld/jsonlint" />
@@ -206,6 +204,20 @@
       <path value="$PROJECT_DIR$/vendor/react/promise" />
       <path value="$PROJECT_DIR$/vendor/justinrainbow/json-schema" />
       <path value="$PROJECT_DIR$/vendor/masterminds/html5" />
+      <path value="$PROJECT_DIR$/vendor/laminas/laminas-log" />
+      <path value="$PROJECT_DIR$/vendor/openlss/lib-array2xml" />
+      <path value="$PROJECT_DIR$/vendor/felixfbecker/advanced-json-rpc" />
+      <path value="$PROJECT_DIR$/vendor/felixfbecker/language-server-protocol" />
+      <path value="$PROJECT_DIR$/vendor/vimeo/psalm" />
+      <path value="$PROJECT_DIR$/vendor/dnoegel/php-xdg-base-dir" />
+      <path value="$PROJECT_DIR$/vendor/netresearch/jsonmapper" />
+      <path value="$PROJECT_DIR$/vendor/amphp/byte-stream" />
+      <path value="$PROJECT_DIR$/vendor/amphp/amp" />
+      <path value="$PROJECT_DIR$/vendor/psalm/plugin-phpunit" />
+      <path value="$PROJECT_DIR$/vendor/weirdan/doctrine-psalm-plugin" />
+      <path value="$PROJECT_DIR$/vendor/bnf/phpstan-psr-container" />
+      <path value="$PROJECT_DIR$/vendor/phpstan/phpstan-phpunit" />
+      <path value="$PROJECT_DIR$/vendor/lctrs/psalm-psr-container-plugin" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
@@ -292,5 +304,10 @@
       <phpunit_by_interpreter interpreter_id="b6502dad-7c78-4cdb-b177-76e9f54dbca6" bootstrap_file_path="/code/bootstrap.php" configuration_file_path="/code/phpunit.xml" custom_loader_path="/code/vendor/autoload.php" use_bootstrap_file="true" use_configuration_file="true" />
       <PhpUnitSettings bootstrap_file_path="$PROJECT_DIR$/phpunit.xml" configuration_file_path="$PROJECT_DIR$/phpunit.xml" custom_loader_path="$PROJECT_DIR$/vendor/autoload.php" phpunit_phar_path="" use_bootstrap_file="true" use_configuration_file="true" />
     </phpunit_settings>
+  </component>
+  <component name="Psalm">
+    <Psalm_settings>
+      <PsalmConfiguration tool_path="$PROJECT_DIR$/vendor/bin/psalm" />
+    </Psalm_settings>
   </component>
 </project>

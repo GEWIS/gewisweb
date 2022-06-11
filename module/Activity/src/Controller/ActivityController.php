@@ -2,6 +2,7 @@
 
 namespace Activity\Controller;
 
+use Laminas\Stdlib\ParametersInterface;
 use Activity\Form\{
     ModifyRequest as RequestForm,
     Signup as SignupForm,
@@ -290,6 +291,7 @@ class ActivityController extends AbstractActionController
 
         if ($request->isPost()) {
             $form = $this->signupService->getForm($signupList);
+            /** @var ParametersInterface $postData */
             $postData = $request->getPost();
             $form->setData($postData);
 
@@ -385,6 +387,7 @@ class ActivityController extends AbstractActionController
 
         if ($request->isPost()) {
             $form = $this->signupService->getExternalForm($signupList);
+            /** @var ParametersInterface $postData */
             $postData = $request->getPost();
             $form->setData($postData);
 

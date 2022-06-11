@@ -25,5 +25,13 @@ parameters:
         - module/Frontpage/src
         - module/Photo/src
         - module/User/src
+        - module/Activity/test
+        - module/Application/test
+        - module/Company/test
+        - module/Decision/test
+        - module/Education/test
+        - module/Frontpage/test
+        - module/Photo/test
+        - module/User/test
         - public/index.php
     tmpDir: data/cache/phpstan

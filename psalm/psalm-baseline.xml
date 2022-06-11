@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.23.0@f1fe6ff483bf325c803df9f510d09a03fd796f88">
+  <file src="module/Activity/src/Controller/AdminController.php">
+    <MoreSpecificReturnType occurrences="1">
+      <code>Response|ViewModel</code>
+    </MoreSpecificReturnType>
+  </file>
+  <file src="module/Activity/src/Model/ActivityCalendarOption.php">
+    <InvalidNullableReturnType occurrences="1">
+      <code>int|string</code>
+    </InvalidNullableReturnType>
+  </file>
+  <file src="module/Activity/src/Model/ActivityOptionProposal.php">
+    <InvalidNullableReturnType occurrences="3">
+      <code>OrganModel|string</code>
+      <code>int|string</code>
+      <code>string</code>
+    </InvalidNullableReturnType>
+  </file>
+  <file src="module/Activity/src/Service/Signup.php">
+    <InvalidReturnStatement occurrences="2">
+      <code>$this-&gt;createSignup($signup, $signupList, $fieldResults)</code>
+      <code>$this-&gt;createSignup($signup, $signupList, $fieldResults)</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="2">
+      <code>ExternalSignupModel</code>
+      <code>UserSignupModel</code>
+    </InvalidReturnType>
+  </file>
+  <file src="module/Application/src/Model/LocalisedText.php">
+    <InvalidNullableReturnType occurrences="1">
+      <code>string</code>
+    </InvalidNullableReturnType>
+  </file>
+  <file src="module/Application/test/BaseControllerTest.php">
+    <InvalidArgument occurrences="2">
+      <code>[[$this::LIDNR], $this-&gt;member]</code>
+      <code>[[$this::LIDNR], $this-&gt;user]</code>
+    </InvalidArgument>
+  </file>
+  <file src="module/Company/src/Model/Company.php">
+    <InvalidReturnStatement occurrences="2">
+      <code>array_sum(array_map($jobCount, $this-&gt;getPackages()-&gt;toArray()))</code>
+      <code>array_sum(array_map($jobCount, $this-&gt;getPackages()-&gt;toArray()))</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="2">
+      <code>int</code>
+      <code>int</code>
+    </InvalidReturnType>
+  </file>
+  <file src="module/Decision/src/Mapper/Meeting.php">
+    <MoreSpecificReturnType occurrences="1">
+      <code>MeetingDocumentModel|null</code>
+    </MoreSpecificReturnType>
+  </file>
+  <file src="module/Decision/src/Service/Decision.php">
+    <InvalidArgument occurrences="2"/>
+    <InvalidScalarArgument occurrences="2">
+      <code>$newPosition</code>
+      <code>$newPosition</code>
+    </InvalidScalarArgument>
+  </file>
+  <file src="module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php">
+    <InvalidNullableReturnType occurrences="1">
+      <code>int</code>
+    </InvalidNullableReturnType>
+  </file>
+  <file src="module/Photo/src/Service/AlbumCover.php">
+    <InvalidScalarArgument occurrences="3">
+      <code>$cropX</code>
+      <code>$resizeHeight</code>
+      <code>$resizeWidth</code>
+    </InvalidScalarArgument>
+  </file>
+  <file src="module/Photo/src/Service/Metadata.php">
+    <InvalidScalarArgument occurrences="1">
+      <code>$coordinate[$i]</code>
+    </InvalidScalarArgument>
+  </file>
+  <file src="module/User/src/Authentication/Storage/Session.php">
+    <InvalidScalarArgument occurrences="2">
+      <code>$key</code>
+      <code>$key</code>
+    </InvalidScalarArgument>
+  </file>
+  <file src="module/User/src/Authorization/GenericAclService.php">
+    <InvalidNullableReturnType occurrences="1">
+      <code>RoleInterface|string</code>
+    </InvalidNullableReturnType>
+  </file>
+  <file src="module/User/src/Controller/UserController.php">
+    <InvalidReturnStatement occurrences="2">
+      <code>$this-&gt;redirect()-&gt;toUrl($data['redirect'])</code>
+      <code>$this-&gt;redirect()-&gt;toUrl($referer)</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1">
+      <code>Response|ViewModel</code>
+    </InvalidReturnType>
+  </file>
+  <file src="module/User/src/Mapper/NewUser.php">
+    <InvalidReturnStatement occurrences="1">
+      <code>$qb-&gt;getQuery()-&gt;getResult()</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1">
+      <code>int</code>
+    </InvalidReturnType>
+  </file>
+  <file src="module/User/src/Model/Enums/JWTClaims.php">
+    <InvalidReturnStatement occurrences="1"/>
+    <InvalidReturnType occurrences="1">
+      <code>bool|int|string</code>
+    </InvalidReturnType>
+  </file>
+</files>

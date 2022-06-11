@@ -1,0 +1,101 @@
+name: PHP Static Analysis with Psalm
+
+# Only run this action on pull requests (creation, synchronisation, and reopening).
+on: [pull_request]
+
+jobs:
+    psalm:
+        name: Psalm
+        runs-on: ubuntu-latest
+
+        # Create a MySQL service.
+        services:
+            mysql:
+                image: mariadb
+                env:
+                    MYSQL_ROOT_PASSWORD: gewis
+                    MYSQL_DATABASE: gewis
+                    MYSQL_USER: gewis
+                    MYSQL_PASSWORD: gewis
+                ports:
+                    - 3306:3306
+                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+        steps:
+            -   name: Checkout head branch
+                uses: actions/checkout@v2
+
+            -   name: Install PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.1'
+                    extensions: calendar, curl, exif, gd, intl, opcache, pgsql, pdo_mysql, pdo_pgsql, zip, imagick, memcached, xdebug
+                    tools: cs2pr
+
+            -   name: Get Composer cache directory
+                id: composer-cache-head
+                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+            -   name: Cache dependencies
+                uses: actions/cache@v2
+                with:
+                    path: ${{ steps.composer-cache-head.outputs.dir }}
+                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                    restore-keys: ${{ runner.os }}-composer-
+
+            -   name: Extract configuration files
+                run: |
+                    cp config/autoload/doctrine.local.development.php.dist config/autoload/doctrine.local.php
+                    cp config/autoload/laminas-developer-tools.local.php.dist config/autoload/laminas-developer-tools.local.php
+                    cp config/autoload/local.development.php.dist config/autoload/local.php
+
+            -   name: Check out master
+                run: |
+                    git fetch --all
+                    git update-ref refs/heads/temp-psalmpr refs/remotes/origin/master
+                    git checkout --detach temp-psalmpr
+
+            -   name: Install dependencies
+                run: composer install --no-interaction
+
+            -   name: Load environment variables
+                uses: c-py/action-dotenv-to-setenv@v3
+                with:
+                    env-file: .env.dist
+
+            -   name: Create database
+                env:
+                    DOCKER_DB_HOST: 127.0.0.1
+                run: ./orm orm:schema-tool:update --force
+
+            -   name: Generate Psalm Baseline
+                env:
+                    DOCKER_DB_HOST: 127.0.0.1
+                run: |
+                    echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?><files/>" > psalm/psalm-baseline.xml
+                    echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?><files/>" > psalm/psalm-baseline-pr.xml
+                    vendor/bin/psalm --set-baseline=psalm/psalm-baseline-pr.xml --no-diff --no-cache --no-progress || true
+
+            -   name: Check out new branch
+                run: |
+                    git checkout -- psalm/psalm-baseline.xml
+                    git checkout -
+
+            -   name: Install dependencies
+                run: composer install --no-interaction
+
+            -   name: Load environment variables
+                uses: c-py/action-dotenv-to-setenv@v3
+                with:
+                    env-file: .env.dist
+
+            -   name: Create database
+                env:
+                    DOCKER_DB_HOST: 127.0.0.1
+                run: ./orm orm:schema-tool:update --force
+
+            -   name: Run Psalm
+                env:
+                    DOCKER_DB_HOST: 127.0.0.1
+                run: |
+                    vendor/bin/psalm  --no-diff --no-cache --show-info=true --no-progress --output-format=checkstyle | cs2pr

@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="3"
+    autoloader="bootstrap.php"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    errorBaseline="psalm/psalm-baseline.xml"
+>
+    <projectFiles>
+        <directory name="config"/>
+        <file name="bootstrap.php"/>
+        <directory name="module/Activity/src"/>
+        <directory name="module/Application/src"/>
+        <directory name="module/Company/src"/>
+        <directory name="module/Decision/src"/>
+        <directory name="module/Education/src"/>
+        <directory name="module/Frontpage/src"/>
+        <directory name="module/Photo/src"/>
+        <directory name="module/User/src"/>
+        <directory name="module/Activity/test"/>
+        <directory name="module/Application/test"/>
+        <directory name="module/Company/test"/>
+        <directory name="module/Decision/test"/>
+        <directory name="module/Education/test"/>
+        <directory name="module/Frontpage/test"/>
+        <directory name="module/Photo/test"/>
+        <directory name="module/User/test"/>
+        <file name="public/index.php"/>
+        <ignoreFiles>
+            <directory name="vendor"/>
+        </ignoreFiles>
+    </projectFiles>
+    <issueHandlers>
+<!--Please note that the most problematic supressed issues are at the bottom of the list-->
+        <RedundantCondition errorLevel="suppress" />
+        <RedundantConditionGivenDocblockType errorLevel="suppress" />
+        <LessSpecificImplementedReturnType errorLevel="suppress" />
+        <MoreSpecificImplementedParamType errorLevel="suppress" />
+        <LessSpecificReturnStatement errorLevel="suppress" />
+        <MissingClosureParamType errorLevel="suppress" />
+        <MissingClosureReturnType errorLevel="suppress" />
+        <MissingConstructor errorLevel="suppress" />
+        <PropertyNotSetInConstructor errorLevel="suppress" />
+        <NonInvariantDocblockPropertyType errorLevel="suppress" />
+        <DocblockTypeContradiction errorLevel="suppress" />
+        <DeprecatedClass errorLevel="suppress" />
+        <UndefinedThisPropertyAssignment errorLevel="suppress" />
+        <ArgumentTypeCoercion errorLevel="suppress" />
+        <MixedClone errorLevel="suppress" />
+        <InternalMethod errorLevel="suppress" />
+        <PossibleRawObjectIteration errorLevel="suppress" />
+        <PossiblyUndefinedMethod errorLevel="suppress" />
+        <PossiblyNullArrayOffset errorLevel="suppress" />
+        <PossiblyNullOperand errorLevel="suppress" />
+        <PossiblyNullReference errorLevel="suppress" />
+        <PossiblyNullArgument errorLevel="suppress" />
+        <PossiblyNullIterator errorLevel="suppress" />
+        <PossiblyFalseArgument errorLevel="suppress" />
+        <PossiblyFalseOperand errorLevel="suppress" />
+        <PossiblyInvalidPropertyAssignmentValue errorLevel="suppress" />
+        <PossiblyInvalidArgument errorLevel="suppress" />
+        <PossiblyInvalidIterator errorLevel="suppress" />
+        <PossiblyInvalidMethodCall errorLevel="suppress" />
+        <PossiblyInvalidArrayAccess errorLevel="suppress" />
+        <ImplementedReturnTypeMismatch errorLevel="info" />
+        <UndefinedInterfaceMethod errorLevel="info" />
+        <NullableReturnStatement errorLevel="info" />
+    </issueHandlers>
+    <plugins>
+        <pluginClass class="Lctrs\PsalmPsrContainerPlugin\Plugin"/>
+        <pluginClass class="Weirdan\DoctrinePsalmPlugin\Plugin"/>
+        <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
+    </plugins>
+</psalm>

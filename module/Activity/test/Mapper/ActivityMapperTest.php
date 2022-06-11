@@ -22,6 +22,7 @@ class ActivityMapperTest extends BaseMapperTest
     protected BaseMapper $mapper;
     protected User $user;
     protected Member $member;
+    private ActivityLocalisedText $localisedText;
 
     public function setUp(): void
     {

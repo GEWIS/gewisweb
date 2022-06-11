@@ -1,4 +1,4 @@
-name: PHP Static Analysis
+name: PHP Static Analysis with PHPStan
 
 # Only run this action on pull requests (creation, synchronisation, and reopening).
 on: [pull_request]

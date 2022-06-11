@@ -3,6 +3,7 @@
 namespace ApplicationTest;
 
 use Exception;
+use Iterator;
 use Laminas\Router\Exception\InvalidArgumentException;
 use Laminas\Router\Http\{
     Literal,
@@ -21,7 +22,7 @@ class AutomaticControllerTest extends BaseControllerTest
     {
         /** @var TreeRouteStack $router */
         $router = $this->getApplication()->getServiceManager()->get('router');
-        /** @var PriorityList|Traversable $routes */
+        /** @var Iterator $routes */
         $routes = $router->getRoutes();
         $this->parsePriorityList($routes);
     }
@@ -31,7 +32,7 @@ class AutomaticControllerTest extends BaseControllerTest
         $this->setUpWithRole();
         /** @var TreeRouteStack $router */
         $router = $this->getApplication()->getServiceManager()->get('router');
-        /** @var PriorityList|Traversable $routes */
+        /** @var Iterator $routes */
         $routes = $router->getRoutes();
         $this->parsePriorityList($routes);
     }
@@ -41,12 +42,12 @@ class AutomaticControllerTest extends BaseControllerTest
         $this->setUpWithRole('admin');
         /** @var TreeRouteStack $router */
         $router = $this->getApplication()->getServiceManager()->get('router');
-        /** @var PriorityList|Traversable $routes */
+        /** @var Iterator $routes */
         $routes = $router->getRoutes();
         $this->parsePriorityList($routes);
     }
 
-    protected function parsePriorityList(PriorityList $list): void
+    protected function parsePriorityList(Iterator $list): void
     {
         foreach ($list as $element) {
             if ($element instanceof Part) {
