@@ -100,8 +100,6 @@ class Album implements ResourceInterface
 
     /**
      * The cover photo to display with the album.
-     *
-     * @Column(type="string", nullable=true)
      */
     #[Column(
         type: "string",

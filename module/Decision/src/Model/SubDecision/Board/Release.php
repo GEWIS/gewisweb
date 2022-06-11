@@ -53,8 +53,6 @@ class Release extends SubDecision
 
     /**
      * Date of the discharge.
-     *
-     * @Column(type="date")
      */
     #[Column(type: "date")]
     protected DateTime $date;
