@@ -2,6 +2,7 @@
 
 namespace Decision;
 
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Decision\Controller\FileBrowser\LocalFileReader;
 use Decision\Form\{
     Authorization as AuthorizationForm,
@@ -51,7 +52,7 @@ class Module
             'factories' => [
                 'decision_service_organ' => function (ContainerInterface $container) {
                     $aclService = $container->get('decision_service_acl');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $entityManager = $container->get('doctrine.entitymanager.orm_default');
                     $storageService = $container->get('application_service_storage');
                     $emailService = $container->get('application_service_email');
@@ -74,7 +75,7 @@ class Module
                 },
                 'decision_service_decision' => function (ContainerInterface $container) {
                     $aclService = $container->get('decision_service_acl');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $storageService = $container->get('application_service_storage');
                     $emailService = $container->get('application_service_email');
                     $memberMapper = $container->get('decision_mapper_member');
@@ -105,7 +106,7 @@ class Module
                 },
                 'decision_service_member' => function (ContainerInterface $container) {
                     $aclService = $container->get('decision_service_acl');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $memberMapper = $container->get('decision_mapper_member');
                     $authorizationMapper = $container->get('decision_mapper_authorization');
 
@@ -118,7 +119,7 @@ class Module
                 },
                 'decision_service_memberinfo' => function (ContainerInterface $container) {
                     $aclService = $container->get('decision_service_acl');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $photoService = $container->get('photo_service_photo');
                     $memberMapper = $container->get('decision_mapper_member');
                     $apiAppAuthenticationMapper = $container->get('user_mapper_apiappauthentication');
@@ -160,34 +161,34 @@ class Module
                 },
                 'decision_form_searchdecision' => function (ContainerInterface $container) {
                     return new SearchDecisionForm(
-                        $container->get('translator'),
+                        $container->get(MvcTranslator::class),
                     );
                 },
                 'decision_form_document' => function (ContainerInterface $container) {
                     return new DocumentForm(
-                        $container->get('translator'),
+                        $container->get(MvcTranslator::class),
                     );
                 },
                 'decision_form_minutes' => function (ContainerInterface $container) {
                     return new MinutesForm(
-                        $container->get('translator'),
+                        $container->get(MvcTranslator::class),
                     );
                 },
                 'decision_form_authorization' => function (ContainerInterface $container) {
                     return new AuthorizationForm(
-                        $container->get('translator'),
+                        $container->get(MvcTranslator::class),
                     );
                 },
                 'decision_form_organ_information' => function (ContainerInterface $container) {
                     $form = new OrganInformationForm(
-                        $container->get('translator'),
+                        $container->get(MvcTranslator::class),
                     );
                     $form->setHydrator($container->get('decision_hydrator'));
 
                     return $form;
                 },
                 'decision_form_reorder_document' => function (ContainerInterface $container) {
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
 
                     return (new ReorderDocumentForm())
                         ->setTranslator($translator)

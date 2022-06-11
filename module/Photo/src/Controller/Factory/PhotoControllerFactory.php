@@ -3,6 +3,7 @@
 namespace Photo\Controller\Factory;
 
 use Psr\Container\ContainerInterface;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Photo\Controller\PhotoController;
 
@@ -21,7 +22,7 @@ class PhotoControllerFactory implements FactoryInterface
         ?array $options = null,
     ): PhotoController {
         return new PhotoController(
-            $container->get('translator'),
+            $container->get(MvcTranslator::class),
             $container->get('photo_service_acl'),
             $container->get('photo_service_album'),
             $container->get('photo_service_photo'),

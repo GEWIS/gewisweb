@@ -7,6 +7,7 @@ use Laminas\Authentication\AuthenticationService as LaminasAuthenticationService
 use Laminas\Crypt\Password\Bcrypt;
 use Laminas\Http\PhpEnvironment\RemoteAddress;
 use Laminas\Http\Request as HttpRequest;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\Mvc\MvcEvent;
 use Psr\Container\ContainerInterface;
 use User\Authentication\{
@@ -110,7 +111,7 @@ class Module
             'factories' => [
                 'user_service_user' => function (ContainerInterface $container) {
                     $aclService = $container->get('user_service_acl');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $bcrypt = $container->get('user_bcrypt');
                     $authService = $container->get('user_auth_service');
                     $pinMapper = $container->get('user_pin_auth_service');
@@ -156,7 +157,7 @@ class Module
                 },
                 'user_service_apiuser' => function (ContainerInterface $container) {
                     $aclService = $container->get('user_service_acl');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $apiUserMapper = $container->get('user_mapper_apiuser');
                     $apiTokenForm = $container->get('user_form_apitoken');
 
@@ -168,7 +169,7 @@ class Module
                     );
                 },
                 'user_service_email' => function (ContainerInterface $container) {
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $renderer = $container->get('ViewRenderer');
                     $transport = $container->get('user_mail_transport');
                     $emailConfig = $container->get('config')['email'];
@@ -208,32 +209,32 @@ class Module
                 },
                 'user_form_activate' => function (ContainerInterface $container) {
                     return new ActivateForm(
-                        $container->get('translator'),
+                        $container->get(MvcTranslator::class),
                     );
                 },
                 'user_form_register' => function (ContainerInterface $container) {
                     return new RegisterForm(
-                        $container->get('translator'),
+                        $container->get(MvcTranslator::class),
                     );
                 },
                 'user_form_login' => function (ContainerInterface $container) {
                     return new LoginForm(
-                        $container->get('translator'),
+                        $container->get(MvcTranslator::class),
                     );
                 },
                 'user_form_password' => function (ContainerInterface $container) {
                     return new PasswordForm(
-                        $container->get('translator'),
+                        $container->get(MvcTranslator::class),
                     );
                 },
                 'user_form_passwordactivate' => function (ContainerInterface $container) {
                     return new ActivateForm(
-                        $container->get('translator'),
+                        $container->get(MvcTranslator::class),
                     );
                 },
                 'user_form_apitoken' => function (ContainerInterface $container) {
                     $form = new ApiTokenForm(
-                        $container->get('translator')
+                        $container->get(MvcTranslator::class)
                     );
                     $form->setHydrator($container->get('user_hydrator'));
 

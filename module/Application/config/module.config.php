@@ -18,6 +18,7 @@ use Laminas\Router\Http\{
     Segment,
 };
 use Laminas\Cache\Service\StorageCacheAbstractServiceFactory;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\Session\Config\ConfigInterface;
 use Laminas\Session\Service\SessionConfigFactory;
 use Memcached;
@@ -57,9 +58,6 @@ return [
         'abstract_factories' => [
             StorageCacheAbstractServiceFactory::class,
         ],
-        'aliases' => [
-            'translator' => 'MvcTranslator',
-        ],
         'factories' => [
             ConfigInterface::class => SessionConfigFactory::class,
             'doctrine.cache.my_memcached' => function () {
@@ -72,7 +70,7 @@ return [
             },
         ],
     ],
-    'translator' => [
+    MvcTranslator::class => [
         'locale' => 'nl',
         'translation_file_patterns' => [
             [

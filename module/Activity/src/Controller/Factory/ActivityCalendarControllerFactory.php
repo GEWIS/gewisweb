@@ -4,6 +4,7 @@ namespace Activity\Controller\Factory;
 
 use Activity\Controller\ActivityCalendarController;
 use Psr\Container\ContainerInterface;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class ActivityCalendarControllerFactory implements FactoryInterface
@@ -22,7 +23,7 @@ class ActivityCalendarControllerFactory implements FactoryInterface
     ): ActivityCalendarController {
         return new ActivityCalendarController(
             $container->get('activity_service_acl'),
-            $container->get('translator'),
+            $container->get(MvcTranslator::class),
             $container->get('activity_service_calendar'),
             $container->get('activity_service_calendar_form'),
             $container->get('activity_form_calendar_proposal'),

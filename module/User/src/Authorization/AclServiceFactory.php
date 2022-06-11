@@ -8,6 +8,7 @@ use Decision\Service\AclService as DecisionAclService;
 use Education\Service\AclService as EducationAclService;
 use Frontpage\Service\AclService as FrontpageAclService;
 use Psr\Container\ContainerInterface;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\ServiceManager\Exception\InvalidArgumentException;
 use Photo\Service\AclService as PhotoAclService;
@@ -27,7 +28,7 @@ class AclServiceFactory implements FactoryInterface
         $requestedName,
         ?array $options = null,
     ): GenericAclService {
-        $translator = $container->get('translator');
+        $translator = $container->get(MvcTranslator::class);
         $authService = $container->get('user_auth_service');
         $apiAuthService = $container->get('user_apiauth_service');
         $remoteAddress = $container->get('user_remoteaddress');

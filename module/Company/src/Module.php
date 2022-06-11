@@ -2,6 +2,7 @@
 
 namespace Company;
 
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Company\Form\{
     JobCategory as JobCategoryForm,
     Company as CompanyForm,
@@ -45,43 +46,43 @@ class Module
         return [
             'company_admin_package_form' => function (ContainerInterface $container) {
                 return new PackageForm(
-                    $container->get('translator'),
+                    $container->get(MvcTranslator::class),
                     'job',
                 );
             },
             'company_admin_featuredpackage_form' => function (ContainerInterface $container) {
                 return new PackageForm(
-                    $container->get('translator'),
+                    $container->get(MvcTranslator::class),
                     'featured',
                 );
             },
             'company_admin_jobcategory_form' => function (ContainerInterface $container) {
                 return new JobCategoryForm(
                     $container->get('company_mapper_jobcategory'),
-                    $container->get('translator'),
+                    $container->get(MvcTranslator::class),
                 );
             },
             'company_admin_joblabel_form' => function (ContainerInterface $container) {
                 return new JobLabelForm(
-                    $container->get('translator'),
+                    $container->get(MvcTranslator::class),
                 );
             },
             'company_admin_bannerpackage_form' => function (ContainerInterface $container) {
                 return new PackageForm(
-                    $container->get('translator'),
+                    $container->get(MvcTranslator::class),
                     'banner',
                 );
             },
             'company_admin_company_form' => function (ContainerInterface $container) {
                 return new CompanyForm(
                     $container->get('company_mapper_company'),
-                    $container->get('translator'),
+                    $container->get(MvcTranslator::class),
                 );
             },
             'company_admin_job_form' => function (ContainerInterface $container) {
                 return new JobForm(
                     $container->get('company_mapper_job'),
-                    $container->get('translator'),
+                    $container->get(MvcTranslator::class),
                     $container->get('company_mapper_jobcategory')->findAll(),
                     $container->get('company_mapper_joblabel')->findAll(),
                 );
@@ -140,7 +141,7 @@ class Module
     {
         return [
             'company_language' => function (ContainerInterface $container) {
-                return $container->get('translator');
+                return $container->get(MvcTranslator::class);
             },
             'company_service_acl' => AclServiceFactory::class,
         ];
@@ -156,7 +157,7 @@ class Module
         $serviceFactories = [
             'company_service_company' => function (ContainerInterface $container) {
                 $aclService = $container->get('company_service_acl');
-                $translator = $container->get('translator');
+                $translator = $container->get(MvcTranslator::class);
                 $storageService = $container->get('application_service_storage');
                 $companyMapper = $container->get('company_mapper_company');
                 $packageMapper = $container->get('company_mapper_package');
@@ -195,7 +196,7 @@ class Module
             },
             'company_service_companyquery' => function (ContainerInterface $container) {
                 $aclService = $container->get('company_service_acl');
-                $translator = $container->get('translator');
+                $translator = $container->get(MvcTranslator::class);
                 $jobMapper = $container->get('company_mapper_job');
                 $categoryMapper = $container->get('company_mapper_jobcategory');
                 $labelMapper = $container->get('company_mapper_joblabel');

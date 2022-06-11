@@ -62,7 +62,7 @@ class Module
         $locale = $this->determineLocale($e);
 
         /** @var MvcTranslator $mvcTranslator */
-        $mvcTranslator = $e->getApplication()->getServiceManager()->get('translator');
+        $mvcTranslator = $e->getApplication()->getServiceManager()->get(MvcTranslator::class);
         $translator = $mvcTranslator->getTranslator();
         if ($translator instanceof I18nTranslator) {
             $translator->setlocale($locale);
@@ -179,13 +179,13 @@ class Module
                 },
                 'application_service_infimum' => function (ContainerInterface $container) {
                     $infimumCache = $container->get('application_cache_infimum');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $infimumConfig = $container->get('config')['infimum'];
 
                     return new InfimumService($infimumCache, $translator, $infimumConfig);
                 },
                 'application_service_storage' => function (ContainerInterface $container) {
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $storageConfig = $container->get('config')['storage'];
                     $watermarkService = $container->get('application_service_watermark');
 

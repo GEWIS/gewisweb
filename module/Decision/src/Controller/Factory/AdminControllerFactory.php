@@ -4,6 +4,7 @@ namespace Decision\Controller\Factory;
 
 use Decision\Controller\AdminController;
 use Psr\Container\ContainerInterface;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class AdminControllerFactory implements FactoryInterface
@@ -21,7 +22,7 @@ class AdminControllerFactory implements FactoryInterface
         ?array $options = null,
     ): AdminController {
         return new AdminController(
-            $container->get('translator'),
+            $container->get(MvcTranslator::class),
             $container->get('decision_service_decision'),
         );
     }

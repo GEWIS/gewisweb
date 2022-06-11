@@ -4,6 +4,7 @@ namespace Activity\Controller\Factory;
 
 use Activity\Controller\AdminOptionController;
 use Psr\Container\ContainerInterface;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class AdminOptionControllerFactory implements FactoryInterface
@@ -22,7 +23,7 @@ class AdminOptionControllerFactory implements FactoryInterface
     ): AdminOptionController {
         return new AdminOptionController(
             $container->get('activity_service_acl'),
-            $container->get('translator'),
+            $container->get(MvcTranslator::class),
             $container->get('activity_service_calendar'),
             $container->get('decision_service_organ'),
             $container->get('activity_mapper_period'),

@@ -4,6 +4,7 @@ namespace Activity\Controller\Factory;
 
 use Activity\Controller\ActivityController;
 use Psr\Container\ContainerInterface;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class ActivityControllerFactory implements FactoryInterface
@@ -22,7 +23,7 @@ class ActivityControllerFactory implements FactoryInterface
     ): ActivityController {
         return new ActivityController(
             $container->get('activity_service_acl'),
-            $container->get('translator'),
+            $container->get(MvcTranslator::class),
             $container->get('activity_service_activity'),
             $container->get('activity_service_activityQuery'),
             $container->get('activity_service_signup'),
