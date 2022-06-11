@@ -3,7 +3,7 @@
 namespace Activity\Controller\Factory;
 
 use Activity\Controller\ActivityController;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class ActivityControllerFactory implements FactoryInterface

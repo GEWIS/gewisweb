@@ -3,7 +3,7 @@
 namespace Decision\Controller\Factory;
 
 use Decision\Controller\MemberApiController;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class MemberApiControllerFactory implements FactoryInterface

@@ -3,7 +3,7 @@
 namespace Application\View\Helper;
 
 use Application\Service\AbstractAclService;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\ServiceManager\Exception\InvalidArgumentException;
 use Laminas\View\Helper\AbstractHelper;

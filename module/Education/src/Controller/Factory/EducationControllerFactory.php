@@ -3,7 +3,7 @@
 namespace Education\Controller\Factory;
 
 use Education\Controller\EducationController;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class EducationControllerFactory implements FactoryInterface

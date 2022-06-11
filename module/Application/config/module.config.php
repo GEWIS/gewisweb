@@ -12,7 +12,7 @@ use Application\View\Helper\{
     LocaliseText,
 };
 use Doctrine\Common\Cache\MemcachedCache;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Router\Http\{
     Literal,
     Segment,

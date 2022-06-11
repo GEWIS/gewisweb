@@ -3,7 +3,7 @@
 namespace Company\Controller\Factory;
 
 use Company\Controller\CompanyController;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class CompanyControllerFactory implements FactoryInterface

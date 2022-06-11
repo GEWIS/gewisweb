@@ -22,7 +22,7 @@ use Education\Model\{
 };
 use Education\Service\Exam as ExamService;
 use Education\View\Helper\ExamUrl;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use User\Authorization\AclServiceFactory;
 
 class Module

@@ -3,7 +3,7 @@
 namespace Frontpage\Controller\Factory;
 
 use Frontpage\Controller\PageController;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class PageControllerFactory implements FactoryInterface

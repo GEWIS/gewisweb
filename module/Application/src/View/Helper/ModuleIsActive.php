@@ -3,7 +3,7 @@
 namespace Application\View\Helper;
 
 use Laminas\View\Helper\AbstractHelper;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class ModuleIsActive extends AbstractHelper
 {

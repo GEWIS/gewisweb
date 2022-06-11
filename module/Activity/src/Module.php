@@ -36,7 +36,7 @@ use Activity\Service\{
     SignupListQuery as SignupListQueryService,
 };
 use Doctrine\Laminas\Hydrator\DoctrineObject;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use User\Authorization\AclServiceFactory;
 
 class Module

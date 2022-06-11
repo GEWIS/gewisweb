@@ -7,7 +7,7 @@ use Company\Service\AclService as CompanyAclService;
 use Decision\Service\AclService as DecisionAclService;
 use Education\Service\AclService as EducationAclService;
 use Frontpage\Service\AclService as FrontpageAclService;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\ServiceManager\Exception\InvalidArgumentException;
 use Photo\Service\AclService as PhotoAclService;
