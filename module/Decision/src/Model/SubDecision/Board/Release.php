@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping\{
     JoinColumn,
     OneToOne,
 };
+use Doctrine\ORM\Mapping as ORM;
 use IntlDateFormatter;
 
 /**
@@ -53,7 +54,7 @@ class Release extends SubDecision
     /**
      * Date of the discharge.
      *
-     * @ORM\Column(type="date")
+     * @Column(type="date")
      */
     #[Column(type: "date")]
     protected DateTime $date;
