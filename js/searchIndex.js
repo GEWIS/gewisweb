@@ -3211,6 +3211,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/ActivityTest-Mapper-ActivityMapperTest.html#property_member"
         },                {
+            "fqsen": "\\ActivityTest\\Mapper\\ActivityMapperTest\u003A\u003A\u0024localisedText",
+            "name": "localisedText",
+            "summary": "",
+            "url": "classes/ActivityTest-Mapper-ActivityMapperTest.html#property_localisedText"
+        },                {
             "fqsen": "\\Application\\Controller\\Factory\\IndexControllerFactory",
             "name": "IndexControllerFactory",
             "summary": "",
