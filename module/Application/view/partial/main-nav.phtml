@@ -90,20 +90,33 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="<?= $this->url('member/self') ?>"><?= $this->translate('My information') ?></a>
+                            <li>
+                                <a href="<?= $this->url('member/self') ?>">
+                                    <?= $this->translate('My information') ?>
+                                </a>
                             </li>
                             <li>
-                                <a href="https://gewis.nl/susos/account/websitelogin.php"><?= $this->translate('SuSOS') ?></a>
+                                <a href="https://gewis.nl/susos/account/websitelogin.php">
+                                    <?= $this->translate('SuSOS') ?>
+                                </a>
                             </li>
                             <li>
-                                <a href="<?= $this->url('user/default', ['action' => 'password']) ?>"><?= $this->translate('Change password') ?></a>
+                                <a href="<?= $this->url('user/default', ['action' => 'password']) ?>">
+                                    <?= $this->translate('Change password') ?>
+                                </a>
                             </li>
                             <?php if ($this->acl('decision_service_acl')->isAllowed('organ', 'edit')): ?>
-                                <li><a href="<?= $this->url('admin') ?>"><?= $this->translate('Admin') ?></a></li>
+                                <li>
+                                    <a href="<?= $this->url('admin') ?>">
+                                        <?= $this->translate('Admin') ?>
+                                    </a>
+                                </li>
                             <?php endif; ?>
-                            <li><a href="<?= $this->url('user/default', [
-                                    'action' => 'logout'
-                                ]) ?>"><?= $this->translate('Logout') ?></a></li>
+                            <li>
+                                <a href="<?= $this->url('user/default', ['action' => 'logout']) ?>">
+                                    <?= $this->translate('Logout') ?>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 <?php endif; ?>
@@ -136,22 +149,58 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             </a>
                         </li>
                         <li>
-                            <a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'bestuur']) ?>"><?= $this->translate('Board 2015/2016') ?></a>
+                            <a href="<?= $this->url(
+                                'home/page',
+                                [
+                                    'category' => 'vereniging',
+                                    'sub_category' => 'bestuur',
+                                ],
+                            ) ?>">
+                                <?= $this->translate('Board') ?>
+                            </a>
                         </li>
                         <li>
-                            <a href="<?= $this->url('home/committee_list') ?>"><?= $this->translate('Committees') ?></a>
+                            <a href="<?= $this->url('home/committee_list') ?>">
+                                <?= $this->translate('Committees') ?>
+                            </a>
                         </li>
                         <li>
-                            <a href="<?= $this->url('home/fraternity_list') ?>"><?= $this->translate('Fraternities') ?></a>
+                            <a href="<?= $this->url('home/fraternity_list') ?>">
+                                <?= $this->translate('Fraternities') ?>
+                            </a>
                         </li>
                         <li>
-                            <a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'exceptionalmembers'])?>"><?= $this->translate('Exceptional Members')?></a>
+                            <a href="<?= $this->url(
+                                'home/page',
+                                [
+                                    'category' => 'vereniging',
+                                    'sub_category' => 'exceptionalmembers',
+                                ],
+                            )?>">
+                                <?= $this->translate('Exceptional Members')?>
+                            </a>
                         </li>
                         <li>
-                            <a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'lied']) ?>"><?= $this->translate('GEWIS song') ?></a>
+                            <a href="<?= $this->url(
+                                'home/page',
+                                [
+                                    'category' => 'vereniging',
+                                    'sub_category' => 'lied',
+                                ],
+                            ) ?>">
+                                <?= $this->translate('GEWIS song') ?>
+                            </a>
                         </li>
                         <li>
-                            <a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'statuten']) ?>"><?= $this->translate('Regulations') ?></a>
+                            <a href="<?= $this->url(
+                                'home/page',
+                                [
+                                    'category' => 'vereniging',
+                                    'sub_category' => 'statuten',
+                                ],
+                            ) ?>">
+                                <?= $this->translate('Regulations') ?>
+                            </a>
                         </li>
                         <li class="dropdown dropdown-submenu">
                             <a href="#" role="button"
@@ -167,21 +216,43 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="<?= $this->url('home/page', ['category' => 'links']) ?>"><?= $this->translate('Links') ?></a>
+                                    <a href="<?= $this->url('home/page', ['category' => 'links']) ?>">
+                                        <?= $this->translate('Links') ?>
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="<?= $this->url('home/page', ['category' => 'wellbeing']) ?>"><?= $this->translate('Well-being') ?></a>
+                                    <a href="<?= $this->url('home/page', ['category' => 'wellbeing']) ?>">
+                                        <?= $this->translate('Well-being') ?>
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="<?= $this->url('home/page', ['category' => 'wellbeing', 'sub_category' => 'ccp']) ?>"><?= $this->translate('Confidential Contact Person (CCP)') ?></a>
+                                    <a href="<?= $this->url(
+                                        'home/page',
+                                        [
+                                            'category' => 'wellbeing',
+                                            'sub_category' => 'ccp',
+                                        ],
+                                    ) ?>">
+                                        <?= $this->translate('Confidential Contact Person (CCP)') ?>
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="<?= $this->url('home/page', ['category' => 'faq']) ?>"><?= $this->translate('FAQ') ?></a>
+                                    <a href="<?= $this->url('home/page', ['category' => 'faq']) ?>">
+                                        <?= $this->translate('FAQ') ?>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'contact']) ?>"><?= $this->translate('Contact') ?></a>
+                            <a href="<?= $this->url(
+                                'home/page',
+                                [
+                                    'category' => 'vereniging',
+                                    'sub_category' => 'contact',
+                                ],
+                            ) ?>">
+                                <?= $this->translate('Contact') ?>
+                            </a>
                         </li>
                     </ul>
                 </li>
@@ -216,8 +287,10 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                     'company/jobList',
                                     [
                                         'category' => $this->localiseText($category->getSlug()),
-                                    ]
-                                ) ?>"><?= $this->escapeHtml($this->localiseText($category->getPluralName())) ?></a>
+                                    ],
+                                ) ?>">
+                                    <?= $this->escapeHtml($this->localiseText($category->getPluralName())) ?>
+                                </a>
                             </li>
                         <?php
                         endforeach ?>
@@ -244,25 +317,37 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             </a>
                         </li>
                         <?php if ($this->acl('activity_service_acl')->isAllowed('myActivities', 'view')): ?>
-                            <li><a href="<?= $this->url('activity/my') ?>"> <?= $this->translate('My activities') ?></a>
+                            <li>
+                                <a href="<?= $this->url('activity/my') ?>">
+                                    <?= $this->translate('My activities') ?>
+                                </a>
                             </li>
                         <?php endif; ?>
                         <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'view')): ?>
                             <li>
-                                <a href="<?= $this->url('activity/archive') ?>"> <?= $this->translate('Activity Archive') ?></a>
+                                <a href="<?= $this->url('activity/archive') ?>">
+                                    <?= $this->translate('Activity Archive') ?>
+                                </a>
                             </li>
                         <?php endif; ?>
                         <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'create')): ?>
                             <li>
-                                <a href="<?= $this->url('activity/create') ?>"> <?= $this->translate('Create an activity') ?></a>
+                                <a href="<?= $this->url('activity/create') ?>">
+                                    <?= $this->translate('Create an activity') ?>
+                                </a>
                             </li>
                         <?php endif; ?>
                         <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'create')): ?>
-                            <li><a href="<?= $this->url('activity_calendar') ?>"> <?= $this->translate('Option
-                            calendar') ?></a></li>
+                            <li>
+                                <a href="<?= $this->url('activity_calendar') ?>">
+                                    <?= $this->translate('Option calendar') ?>
+                                </a>
+                            </li>
                         <?php endif; ?>
                         <li>
-                            <a href="<?= $this->url('activity/career') ?>"> <?= $this->translate('Career related') ?></a>
+                            <a href="<?= $this->url('activity/career') ?>">
+                                <?= $this->translate('Career related') ?>
+                            </a>
                         </li>
                     </ul>
                 </li>
@@ -289,11 +374,19 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 </a>
                             </li>
                             <li>
-                                <a href="<?= $this->url('photo/weekly') ?>"><?= $this->translate('Photo of the week') ?></a>
+                                <a href="<?= $this->url('photo/weekly') ?>">
+                                    <?= $this->translate('Photo of the week') ?>
+                                </a>
                             </li>
                             <?php if (null != $this->identity()): ?>
                                 <li>
-                                    <a href="<?= $this->url('photo/album', ['album_id' => $this->identity()->getMember()->getLidnr(), 'album_type' => 'member']) ?>">
+                                    <a href="<?= $this->url(
+                                        'photo/album',
+                                        [
+                                            'album_id' => $this->identity()->getMember()->getLidnr(),
+                                            'album_type' => 'member',
+                                        ],
+                                    ) ?>">
                                         <?= $this->translate('My photo\'s') ?>
                                     </a>
                                 </li>
@@ -304,10 +397,13 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
             </ul>
             <?php if (null != $this->identity()): ?>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="<?= $this->moduleIsActive(['decision']) ? 'active' : '' ?>"><a
-                            href="<?= $this->url('member') ?>"><?= $this->translate('Members') ?></a></li>
+                    <li class="<?= $this->moduleIsActive(['decision']) ? 'active' : '' ?>">
+                        <a href="<?= $this->url('member') ?>">
+                            <?= $this->translate('Members') ?>
+                        </a>
+                    </li>
                 </ul>
             <?php endif; ?>
-        </div><!--/.nav-collapse -->
+        </div>
     </div>
 </nav>

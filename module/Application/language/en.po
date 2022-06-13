@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-07 16:29+0200\n"
-"PO-Revision-Date: 2022-06-07 16:32+0200\n"
+"POT-Creation-Date: 2022-06-13 21:00+0200\n"
+"PO-Revision-Date: 2022-06-13 21:02+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -23,67 +23,67 @@ msgstr ""
 msgid "You are not allowed to create activity proposals"
 msgstr "You are not allowed to create activity proposals"
 
-#: module/Activity/src/Controller/ActivityController.php:270
+#: module/Activity/src/Controller/ActivityController.php:271
 #: module/Activity/view/activity/activity/index.phtml:32
 msgid "Create Activity"
 msgstr "Create Activity"
 
-#: module/Activity/src/Controller/ActivityController.php:298
-#: module/Activity/src/Controller/ActivityController.php:393
-#: module/Activity/src/Controller/AdminController.php:330
-#: module/Activity/src/Controller/AdminController.php:416
+#: module/Activity/src/Controller/ActivityController.php:300
+#: module/Activity/src/Controller/ActivityController.php:396
+#: module/Activity/src/Controller/AdminController.php:331
+#: module/Activity/src/Controller/AdminController.php:417
 msgid "Invalid form"
 msgstr "Invalid form"
 
-#: module/Activity/src/Controller/ActivityController.php:307
-#: module/Activity/src/Controller/ActivityController.php:402
+#: module/Activity/src/Controller/ActivityController.php:309
+#: module/Activity/src/Controller/ActivityController.php:405
 msgid "You need to log in to subscribe"
 msgstr "You need to log in to subscribe"
 
-#: module/Activity/src/Controller/ActivityController.php:317
-#: module/Activity/src/Controller/ActivityController.php:412
+#: module/Activity/src/Controller/ActivityController.php:319
+#: module/Activity/src/Controller/ActivityController.php:415
 msgid "You cannot subscribe to this activity at this moment in time"
 msgstr "You cannot subscribe to this activity at this moment in time"
 
-#: module/Activity/src/Controller/ActivityController.php:326
+#: module/Activity/src/Controller/ActivityController.php:328
 msgid "You have already been subscribed for this activity"
 msgstr "You have already been subscribed for this activity"
 
-#: module/Activity/src/Controller/ActivityController.php:332
+#: module/Activity/src/Controller/ActivityController.php:334
 msgid "Successfully subscribed"
 msgstr "Successfully subscribed"
 
-#: module/Activity/src/Controller/ActivityController.php:337
-#: module/Activity/src/Controller/ActivityController.php:428
-#: module/Activity/src/Controller/AdminController.php:350
+#: module/Activity/src/Controller/ActivityController.php:339
+#: module/Activity/src/Controller/ActivityController.php:431
+#: module/Activity/src/Controller/AdminController.php:351
 msgid "Use the form to subscribe"
 msgstr "Use the form to subscribe"
 
-#: module/Activity/src/Controller/ActivityController.php:423
+#: module/Activity/src/Controller/ActivityController.php:426
 msgid "Successfully subscribed as external participant"
 msgstr "Successfully subscribed as external participant"
 
-#: module/Activity/src/Controller/ActivityController.php:454
+#: module/Activity/src/Controller/ActivityController.php:457
 msgid "Wrong form"
 msgstr "Wrong form"
 
-#: module/Activity/src/Controller/ActivityController.php:461
+#: module/Activity/src/Controller/ActivityController.php:464
 msgid "You have to be logged in to subscribe for this activity"
 msgstr "You have to be logged in to subscribe for this activity"
 
-#: module/Activity/src/Controller/ActivityController.php:472
+#: module/Activity/src/Controller/ActivityController.php:475
 msgid "You cannot unsubscribe from this activity at this moment in time"
 msgstr "You cannot unsubscribe from this activity at this moment in time"
 
-#: module/Activity/src/Controller/ActivityController.php:482
+#: module/Activity/src/Controller/ActivityController.php:485
 msgid "You are not subscribed to this activity!"
 msgstr "You are not subscribed to this activity!"
 
-#: module/Activity/src/Controller/ActivityController.php:488
+#: module/Activity/src/Controller/ActivityController.php:491
 msgid "Successfully unsubscribed"
 msgstr "Successfully unsubscribed"
 
-#: module/Activity/src/Controller/ActivityController.php:493
+#: module/Activity/src/Controller/ActivityController.php:496
 msgid "Use the form to unsubscribe"
 msgstr "Use the form to unsubscribe"
 
@@ -155,29 +155,29 @@ msgid "You are not allowed to view the participants of this activity"
 msgstr "You are not allowed to view the participants of this activity"
 
 #: module/Activity/src/Controller/AdminController.php:281
-#: module/Activity/src/Controller/AdminController.php:411
+#: module/Activity/src/Controller/AdminController.php:412
 #: module/User/view/user/api-admin/index.phtml:23
 msgid "Remove"
 msgstr "Remove"
 
 #: module/Activity/src/Controller/AdminController.php:318
-#: module/Activity/src/Controller/AdminController.php:404
+#: module/Activity/src/Controller/AdminController.php:405
 msgid "You are not allowed to use this form"
 msgstr "You are not allowed to use this form"
 
-#: module/Activity/src/Controller/AdminController.php:344
+#: module/Activity/src/Controller/AdminController.php:345
 msgid "Successfully subscribed external participant"
 msgstr "Successfully subscribed external participant"
 
-#: module/Activity/src/Controller/AdminController.php:428
+#: module/Activity/src/Controller/AdminController.php:429
 msgid "Successfully removed external participant"
 msgstr "Successfully removed external participant"
 
-#: module/Activity/src/Controller/AdminController.php:439
+#: module/Activity/src/Controller/AdminController.php:440
 msgid "Use the form to unsubscribe an external participant"
 msgstr "Use the form to unsubscribe an external participant"
 
-#: module/Activity/src/Controller/AdminController.php:456
+#: module/Activity/src/Controller/AdminController.php:457
 msgid "You are not allowed to administer activities"
 msgstr "You are not allowed to administer activities"
 
@@ -558,7 +558,8 @@ msgstr "Create activity proposal"
 
 #: module/Activity/view/activity/activity-calendar/create.phtml:50
 #: module/Activity/view/activity/activity-calendar/index.phtml:12
-#: module/Decision/view/decision/member/index.phtml:164
+#: module/Application/view/partial/main-nav.phtml:343
+#: module/Decision/view/decision/member/index.phtml:168
 msgid "Option calendar"
 msgstr "Option calendar"
 
@@ -912,10 +913,10 @@ msgstr "It will become visible after it has been approved by the board."
 #: module/Activity/view/activity/admin/participants.phtml:7
 #: module/Activity/view/activity/admin/view.phtml:3
 #: module/Application/view/partial/admin.phtml:29
-#: module/Application/view/partial/main-nav.phtml:234
-#: module/Application/view/partial/main-nav.phtml:238
-#: module/Application/view/partial/main-nav.phtml:243
-#: module/Decision/view/decision/member/index.phtml:160
+#: module/Application/view/partial/main-nav.phtml:307
+#: module/Application/view/partial/main-nav.phtml:311
+#: module/Application/view/partial/main-nav.phtml:316
+#: module/Decision/view/decision/member/index.phtml:164
 msgid "Activities"
 msgstr "Activities"
 
@@ -1088,7 +1089,7 @@ msgstr "old"
 #: module/Activity/view/activity/admin-approval/view.phtml:26
 #: module/Photo/view/partial/tags.phtml:40
 #: module/Photo/view/photo/album/index.phtml:265
-#: module/Photo/view/photo/album/index.phtml:606
+#: module/Photo/view/photo/album/index.phtml:610
 msgid "and"
 msgstr "and"
 
@@ -1358,43 +1359,17 @@ msgstr "Email"
 msgid "Sign-up List"
 msgstr "Sign-up List"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:54
-#: module/Decision/view/decision/member/self.phtml:67
-#: module/Decision/view/decision/member/view.phtml:55
-msgid "Ordinary"
-msgstr "Ordinary"
-
-#: module/Activity/view/activity/admin/participantsTable.phtml:57
-#: module/Decision/view/decision/member/self.phtml:70
-#: module/Decision/view/decision/member/view.phtml:58
-msgid "Prolonged"
-msgstr "Prolonged"
-
-#: module/Activity/view/activity/admin/participantsTable.phtml:60
-#: module/Activity/view/activity/admin/participantsTable.phtml:75
-#: module/Decision/view/decision/member/self.phtml:73
-#: module/Decision/view/decision/member/view.phtml:61
-msgid "External"
-msgstr "External"
-
-#: module/Activity/view/activity/admin/participantsTable.phtml:63
-#: module/Decision/view/decision/member/self.phtml:76
-#: module/Decision/view/decision/member/view.phtml:64
-msgid "Extraordinary"
-msgstr "Extraordinary"
-
-#: module/Activity/view/activity/admin/participantsTable.phtml:66
-#: module/Decision/view/decision/member/self.phtml:79
-#: module/Decision/view/decision/member/view.phtml:67
-msgid "Honorary"
-msgstr "Honorary"
-
-#: module/Activity/view/activity/admin/participantsTable.phtml:70
+#: module/Activity/view/activity/admin/participantsTable.phtml:51
 #, php-format
 msgid "User (%s)"
 msgstr "User (%s)"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:104
+#: module/Activity/view/activity/admin/participantsTable.phtml:57
+#: module/Decision/src/Model/Enums/MembershipTypes.php:22
+msgid "External"
+msgstr "External"
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:86
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -1408,7 +1383,7 @@ msgstr "User (%s)"
 msgid "Yes"
 msgstr "Yes"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:106
+#: module/Activity/view/activity/admin/participantsTable.phtml:88
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -1422,11 +1397,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:129
+#: module/Activity/view/activity/admin/participantsTable.phtml:111
 msgid "Additional actions"
 msgstr "Additional actions"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:133
+#: module/Activity/view/activity/admin/participantsTable.phtml:115
 msgid "Mail everybody"
 msgstr "Mail everybody"
 
@@ -1559,7 +1534,7 @@ msgid "Please fill in this CAPTCHA:"
 msgstr "Please fill in this CAPTCHA:"
 
 #: module/Activity/view/partial/signupForm.phtml:71
-#: module/Decision/view/decision/member/index.phtml:187
+#: module/Decision/view/decision/member/index.phtml:191
 msgid "Activity Policy"
 msgstr "Activity Policy"
 
@@ -1760,16 +1735,16 @@ msgid "Categories"
 msgstr "Categories"
 
 #: module/Application/view/partial/admin.phtml:51
-#: module/Application/view/partial/main-nav.phtml:191
-#: module/Application/view/partial/main-nav.phtml:195
-#: module/Application/view/partial/main-nav.phtml:200
+#: module/Application/view/partial/main-nav.phtml:262
+#: module/Application/view/partial/main-nav.phtml:266
+#: module/Application/view/partial/main-nav.phtml:271
 #: module/Company/view/company/admin/edit-company.phtml:4
 #: module/Company/view/company/admin/index.phtml:3
 msgid "Career"
 msgstr "Career"
 
 #: module/Application/view/partial/admin.phtml:59
-#: module/Application/view/partial/main-nav.phtml:228
+#: module/Application/view/partial/main-nav.phtml:301
 #: module/Education/view/education/admin/add-course.phtml:8
 #: module/Education/view/education/admin/bulk-exam.phtml:7
 #: module/Education/view/education/admin/bulk-summary.phtml:8
@@ -1802,7 +1777,7 @@ msgstr "Add courses"
 #: module/Decision/view/decision/admin/document.phtml:4
 #: module/Decision/view/decision/admin/minutes.phtml:3
 #: module/Decision/view/decision/decision/index.phtml:3
-#: module/Decision/view/decision/member/index.phtml:87
+#: module/Decision/view/decision/member/index.phtml:91
 msgid "Meetings"
 msgstr "Meetings"
 
@@ -1822,12 +1797,12 @@ msgstr "Documents"
 #: module/Decision/view/decision/admin/authorizations.phtml:4
 #: module/Decision/view/decision/decision/authorizations.phtml:3
 #: module/Decision/view/decision/decision/authorizations.phtml:9
-#: module/Decision/view/decision/member/index.phtml:51
+#: module/Decision/view/decision/member/index.phtml:52
 msgid "Authorizations"
 msgstr "Authorizations"
 
 #: module/Application/view/partial/admin.phtml:102
-#: module/Decision/view/decision/member/index.phtml:62
+#: module/Decision/view/decision/member/index.phtml:64
 #: module/Decision/view/decision/organ-admin/edit.phtml:11
 #: module/Decision/view/decision/organ-admin/index.phtml:3
 msgid "Organs"
@@ -1848,10 +1823,10 @@ msgid "Pages"
 msgstr "Pages"
 
 #: module/Application/view/partial/admin.phtml:118
-#: module/Application/view/partial/main-nav.phtml:273
-#: module/Application/view/partial/main-nav.phtml:277
-#: module/Application/view/partial/main-nav.phtml:281
-#: module/Application/view/partial/main-nav.phtml:288
+#: module/Application/view/partial/main-nav.phtml:358
+#: module/Application/view/partial/main-nav.phtml:362
+#: module/Application/view/partial/main-nav.phtml:366
+#: module/Application/view/partial/main-nav.phtml:373
 #: module/Photo/view/photo/album-admin/add.phtml:9
 #: module/Photo/view/photo/album-admin/create.phtml:3
 #: module/Photo/view/photo/album-admin/edit.phtml:3
@@ -1877,7 +1852,7 @@ msgid "API Users"
 msgstr "API Users"
 
 #: module/Application/view/partial/admin.phtml:153
-#: module/Application/view/partial/main-nav.phtml:102
+#: module/Application/view/partial/main-nav.phtml:111
 msgid "Admin"
 msgstr "Admin"
 
@@ -1895,7 +1870,7 @@ msgid "by WebCommissie GEWIS."
 msgstr "by WebCommissie GEWIS."
 
 #: module/Application/view/partial/footer.phtml:24
-#: module/Application/view/partial/main-nav.phtml:184
+#: module/Application/view/partial/main-nav.phtml:254
 #: module/Company/view/company/company/companyStory.phtml:21
 #: module/Company/view/company/company/jobs.phtml:89
 #: module/Company/view/partial/company/company/list/company.phtml:28
@@ -1907,7 +1882,7 @@ msgid "Language settings"
 msgstr "Language settings"
 
 #: module/Application/view/partial/main-nav.phtml:62
-#: module/Application/view/partial/main-nav.phtml:308
+#: module/Application/view/partial/main-nav.phtml:402
 #: module/Decision/view/decision/member/birthdays.phtml:4
 #: module/Decision/view/decision/member/index.phtml:5
 #: module/Decision/view/decision/member/index.phtml:19
@@ -1920,16 +1895,16 @@ msgstr "Members"
 msgid "Subscribe"
 msgstr "Subscribe"
 
-#: module/Application/view/partial/main-nav.phtml:93
+#: module/Application/view/partial/main-nav.phtml:95
 msgid "My information"
 msgstr "My information"
 
-#: module/Application/view/partial/main-nav.phtml:96
+#: module/Application/view/partial/main-nav.phtml:100
 #: module/Decision/view/decision/member/index.phtml:47
 msgid "SuSOS"
 msgstr "SuSOS"
 
-#: module/Application/view/partial/main-nav.phtml:99
+#: module/Application/view/partial/main-nav.phtml:105
 #: module/Decision/view/decision/member/index.phtml:9
 #: module/Decision/view/decision/member/index.phtml:33
 #: module/User/src/Form/Password.php:62
@@ -1938,109 +1913,101 @@ msgstr "SuSOS"
 msgid "Change password"
 msgstr "Change password"
 
-#: module/Application/view/partial/main-nav.phtml:106
+#: module/Application/view/partial/main-nav.phtml:117
 msgid "Logout"
 msgstr "Logout"
 
-#: module/Application/view/partial/main-nav.phtml:112
+#: module/Application/view/partial/main-nav.phtml:125
 msgid "Toggle navigation"
 msgstr "Toggle navigation"
 
-#: module/Application/view/partial/main-nav.phtml:125
-#: module/Application/view/partial/main-nav.phtml:130
-#: module/Application/view/partial/main-nav.phtml:135
-#: module/Decision/view/decision/member/index.phtml:58
+#: module/Application/view/partial/main-nav.phtml:138
+#: module/Application/view/partial/main-nav.phtml:143
+#: module/Application/view/partial/main-nav.phtml:148
+#: module/Decision/view/decision/member/index.phtml:60
 msgid "Association"
 msgstr "Association"
 
-#: module/Application/view/partial/main-nav.phtml:139
-msgid "Board 2015/2016"
+#: module/Application/view/partial/main-nav.phtml:159
+msgid "Board"
 msgstr "Board"
 
-#: module/Application/view/partial/main-nav.phtml:142
+#: module/Application/view/partial/main-nav.phtml:164
 #: module/Frontpage/view/frontpage/organ/committee-list.phtml:3
 #: module/Frontpage/view/frontpage/organ/committee-list.phtml:9
 #: module/Frontpage/view/frontpage/organ/organ.phtml:45
 msgid "Committees"
 msgstr "Committees"
 
-#: module/Application/view/partial/main-nav.phtml:145
+#: module/Application/view/partial/main-nav.phtml:169
 #: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:3
 #: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:7
 #: module/Frontpage/view/frontpage/organ/organ.phtml:41
 msgid "Fraternities"
 msgstr "Fraternities"
 
-#: module/Application/view/partial/main-nav.phtml:148
+#: module/Application/view/partial/main-nav.phtml:180
 msgid "Exceptional Members"
 msgstr "Exceptional Members"
 
-#: module/Application/view/partial/main-nav.phtml:151
+#: module/Application/view/partial/main-nav.phtml:191
 msgid "GEWIS song"
 msgstr "GEWIS song"
 
-#: module/Application/view/partial/main-nav.phtml:154
-#: module/Decision/view/decision/member/index.phtml:183
+#: module/Application/view/partial/main-nav.phtml:202
+#: module/Decision/view/decision/member/index.phtml:187
 msgid "Regulations"
 msgstr "Regulations"
 
-#: module/Application/view/partial/main-nav.phtml:160
-#: module/Application/view/partial/main-nav.phtml:165
+#: module/Application/view/partial/main-nav.phtml:209
+#: module/Application/view/partial/main-nav.phtml:214
 msgid "Useful Information"
 msgstr "Useful Information"
 
-#: module/Application/view/partial/main-nav.phtml:170
-#: module/Decision/view/decision/member/index.phtml:80
+#: module/Application/view/partial/main-nav.phtml:220
+#: module/Decision/view/decision/member/index.phtml:84
 msgid "Links"
 msgstr "Links"
 
-#: module/Application/view/partial/main-nav.phtml:173
+#: module/Application/view/partial/main-nav.phtml:225
 msgid "Well-being"
 msgstr "Well-being"
 
-#: module/Application/view/partial/main-nav.phtml:176
+#: module/Application/view/partial/main-nav.phtml:236
 msgid "Confidential Contact Person (CCP)"
 msgstr "Confidential Contact Person (CCP)"
 
-#: module/Application/view/partial/main-nav.phtml:179
+#: module/Application/view/partial/main-nav.phtml:241
 msgid "FAQ"
 msgstr "FAQ"
 
-#: module/Application/view/partial/main-nav.phtml:207
+#: module/Application/view/partial/main-nav.phtml:278
 #: module/Company/view/company/admin/index.phtml:140
 msgid "Featured"
 msgstr "Featured"
 
-#: module/Application/view/partial/main-nav.phtml:247
+#: module/Application/view/partial/main-nav.phtml:322
 msgid "My activities"
 msgstr "My activities"
 
-#: module/Application/view/partial/main-nav.phtml:252
+#: module/Application/view/partial/main-nav.phtml:329
 msgid "Activity Archive"
 msgstr "Activity Archive"
 
-#: module/Application/view/partial/main-nav.phtml:257
+#: module/Application/view/partial/main-nav.phtml:336
 msgid "Create an activity"
 msgstr "Create an activity"
 
-#: module/Application/view/partial/main-nav.phtml:261
-msgid ""
-"Option\n"
-"                            calendar"
-msgstr ""
-"Option\n"
-"                            calendar"
-
-#: module/Application/view/partial/main-nav.phtml:265
+#: module/Application/view/partial/main-nav.phtml:349
 msgid "Career related"
 msgstr "Career related"
 
-#: module/Application/view/partial/main-nav.phtml:292
+#: module/Application/view/partial/main-nav.phtml:378
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:200
 msgid "Photo of the week"
 msgstr "Photo of the week"
 
-#: module/Application/view/partial/main-nav.phtml:297
+#: module/Application/view/partial/main-nav.phtml:390
 #: module/Decision/view/decision/member/index.phtml:43
 msgid "My photo's"
 msgstr "My photos"
@@ -2088,7 +2055,7 @@ msgid "unavailable"
 msgstr "unavailable"
 
 #: module/Application/view/partial/privacy-widget.phtml:17
-#: module/Decision/view/decision/member/index.phtml:227
+#: module/Decision/view/decision/member/index.phtml:231
 msgid "Privacy Policy"
 msgstr "Privacy Policy"
 
@@ -2685,6 +2652,10 @@ msgstr "You are not allowed to approve polls."
 msgid "Not allowed to search for members."
 msgstr "Not allowed to search for members."
 
+#: module/Decision/src/Controller/MemberController.php:179
+msgid "You are not allowed to view the list of birthdays."
+msgstr "You are not allowed to view the list of birthdays."
+
 #: module/Decision/src/Form/Authorization.php:53
 #: module/Decision/view/decision/decision/authorizations.phtml:68
 #: module/Decision/view/decision/decision/authorizations.phtml:74
@@ -2772,10 +2743,22 @@ msgstr "Search query"
 #: module/Decision/src/Form/SearchDecision.php:38
 #: module/Decision/src/Form/SearchDecision.php:39
 #: module/Decision/view/decision/decision/search.phtml:30
-#: module/Decision/view/decision/member/index.phtml:122
+#: module/Decision/view/decision/member/index.phtml:126
 #: module/Education/view/education/education/index.phtml:46
 msgid "Search"
 msgstr "Search"
+
+#: module/Decision/src/Model/Enums/MembershipTypes.php:21
+msgid "Ordinary"
+msgstr "Ordinary"
+
+#: module/Decision/src/Model/Enums/MembershipTypes.php:23
+msgid "Graduate"
+msgstr "Graduate"
+
+#: module/Decision/src/Model/Enums/MembershipTypes.php:24
+msgid "Honorary"
+msgstr "Honorary"
 
 #: module/Decision/src/Service/Decision.php:174
 #: module/Decision/src/Service/Decision.php:193
@@ -2824,15 +2807,7 @@ msgstr "You are not authorize people."
 msgid "You are not allowed to view members."
 msgstr "You are not allowed to view members."
 
-#: module/Decision/src/Service/Member.php:99
-msgid "You are not allowed to view the list of today's birthdays."
-msgstr "You are not allowed to view the list of today's birthdays."
-
-#: module/Decision/src/Service/Member.php:105
-msgid "You are not allowed to view the list of birthdays."
-msgstr "You are not allowed to view the list of birthdays."
-
-#: module/Decision/src/Service/Member.php:136
+#: module/Decision/src/Service/Member.php:124
 msgid "Name must be at least "
 msgstr "Name must be at least "
 
@@ -3044,24 +3019,24 @@ msgstr "Personal"
 msgid "Profile"
 msgstr "Profile"
 
-#: module/Decision/view/decision/member/index.phtml:67
+#: module/Decision/view/decision/member/index.phtml:69
 msgid "Public archive"
 msgstr "Public archive"
 
-#: module/Decision/view/decision/member/index.phtml:71
+#: module/Decision/view/decision/member/index.phtml:74
 msgid "Find a member"
 msgstr "Find a member"
 
-#: module/Decision/view/decision/member/index.phtml:91
+#: module/Decision/view/decision/member/index.phtml:95
 msgid "Upcoming meeting"
 msgstr "Upcoming meeting"
 
-#: module/Decision/view/decision/member/index.phtml:96
+#: module/Decision/view/decision/member/index.phtml:100
 #, php-format
 msgid "The next meeting is %s%s %s%s on %s."
 msgstr "The next meeting is %s%s %s%s on %s."
 
-#: module/Decision/view/decision/member/index.phtml:109
+#: module/Decision/view/decision/member/index.phtml:113
 #, php-format
 msgid ""
 "If you aren't able to attend the meeting in person but you want your voice "
@@ -3070,81 +3045,81 @@ msgstr ""
 "If you aren't able to attend the meeting in person but you want your voice "
 "to be heard, consider %sauthorizing another member%s to act on your behalf."
 
-#: module/Decision/view/decision/member/index.phtml:117
+#: module/Decision/view/decision/member/index.phtml:121
 msgid "Search through the list of decisions accumulated from past meetings:"
 msgstr "Search through the list of decisions accumulated from past meetings:"
 
-#: module/Decision/view/decision/member/index.phtml:120
+#: module/Decision/view/decision/member/index.phtml:124
 msgid "Search by keyword or meeting number"
 msgstr "Search by keyword or meeting number"
 
-#: module/Decision/view/decision/member/index.phtml:127
+#: module/Decision/view/decision/member/index.phtml:131
 #, php-format
 msgid "The latest %s that took place:"
 msgstr "The latest %s that took place:"
 
-#: module/Decision/view/decision/member/index.phtml:134
+#: module/Decision/view/decision/member/index.phtml:138
 #, php-format
 msgid "%s %s on %s"
 msgstr "%s %s on %s"
 
-#: module/Decision/view/decision/member/index.phtml:146
+#: module/Decision/view/decision/member/index.phtml:150
 msgid "View all meetings"
 msgstr "View all meetings"
 
-#: module/Decision/view/decision/member/index.phtml:151
+#: module/Decision/view/decision/member/index.phtml:155
 msgid "Active members"
 msgstr "Active members"
 
-#: module/Decision/view/decision/member/index.phtml:152
+#: module/Decision/view/decision/member/index.phtml:156
 msgid "A list of helpful resources for active members."
 msgstr "A list of helpful resources for active members."
 
-#: module/Decision/view/decision/member/index.phtml:156
+#: module/Decision/view/decision/member/index.phtml:160
 msgid "Info"
 msgstr "Info"
 
-#: module/Decision/view/decision/member/index.phtml:168
+#: module/Decision/view/decision/member/index.phtml:172
 msgid "Corporate Identity"
 msgstr "Corporate Identity"
 
-#: module/Decision/view/decision/member/index.phtml:172
+#: module/Decision/view/decision/member/index.phtml:176
 msgid "Webmail"
 msgstr "Webmail"
 
-#: module/Decision/view/decision/member/index.phtml:176
+#: module/Decision/view/decision/member/index.phtml:180
 msgid "Administrator"
 msgstr "Administrator"
 
-#: module/Decision/view/decision/member/index.phtml:192
+#: module/Decision/view/decision/member/index.phtml:196
 msgid "Alcohol Policy"
 msgstr "Alcohol Policy"
 
-#: module/Decision/view/decision/member/index.phtml:197
+#: module/Decision/view/decision/member/index.phtml:201
 msgid "Board Policies"
 msgstr "Board Policies"
 
-#: module/Decision/view/decision/member/index.phtml:202
+#: module/Decision/view/decision/member/index.phtml:206
 msgid "Borrel Policy"
 msgstr "Borrel Policy"
 
-#: module/Decision/view/decision/member/index.phtml:207
+#: module/Decision/view/decision/member/index.phtml:211
 msgid "House Rules"
 msgstr "House Rules"
 
-#: module/Decision/view/decision/member/index.phtml:212
+#: module/Decision/view/decision/member/index.phtml:216
 msgid "ICT Policy"
 msgstr "ICT Policy"
 
-#: module/Decision/view/decision/member/index.phtml:217
+#: module/Decision/view/decision/member/index.phtml:221
 msgid "Key Policy"
 msgstr "Key Policy"
 
-#: module/Decision/view/decision/member/index.phtml:222
+#: module/Decision/view/decision/member/index.phtml:226
 msgid "Poster Policy"
 msgstr "Poster Policy"
 
-#: module/Decision/view/decision/member/index.phtml:233
+#: module/Decision/view/decision/member/index.phtml:237
 msgid "Organ Regulations"
 msgstr "Organ Regulations"
 
@@ -3232,15 +3207,15 @@ msgstr "Generation"
 msgid "Membership type"
 msgstr "Membership type"
 
-#: module/Decision/view/decision/member/self.phtml:85
+#: module/Decision/view/decision/member/self.phtml:67
 msgid "Last membership change"
 msgstr "Last membership change"
 
-#: module/Decision/view/decision/member/self.phtml:89
+#: module/Decision/view/decision/member/self.phtml:71
 msgid "End date of membership"
 msgstr "End date of membership"
 
-#: module/Decision/view/decision/member/self.phtml:96
+#: module/Decision/view/decision/member/self.phtml:78
 msgid ""
 "If your information is no longer up to date and you would like to change it, "
 "you can contact the secretary of GEWIS."
@@ -3248,91 +3223,91 @@ msgstr ""
 "If your information is no longer up to date and you would like to change it, "
 "you can contact the secretary of GEWIS."
 
-#: module/Decision/view/decision/member/self.phtml:97
+#: module/Decision/view/decision/member/self.phtml:79
 msgid "Also for data removal requests, you can contact"
 msgstr "Also for data removal requests, you can contact"
 
-#: module/Decision/view/decision/member/self.phtml:98
+#: module/Decision/view/decision/member/self.phtml:80
 msgid "Email the secretary of GEWIS"
 msgstr "Email the secretary of GEWIS"
 
-#: module/Decision/view/decision/member/self.phtml:98
+#: module/Decision/view/decision/member/self.phtml:80
 msgid "the secretary of GEWIS"
 msgstr "the secretary of GEWIS"
 
-#: module/Decision/view/decision/member/self.phtml:102
-#: module/Decision/view/decision/member/view.phtml:75
+#: module/Decision/view/decision/member/self.phtml:84
+#: module/Decision/view/decision/member/view.phtml:55
 msgid "Membership of committees and fraternities"
 msgstr "Membership of committees and fraternities"
 
-#: module/Decision/view/decision/member/self.phtml:112
-#: module/Decision/view/decision/member/view.phtml:89
+#: module/Decision/view/decision/member/self.phtml:94
+#: module/Decision/view/decision/member/view.phtml:69
 msgid "Adresses"
 msgstr "Adresses"
 
-#: module/Decision/view/decision/member/self.phtml:117
-#: module/Decision/view/decision/member/view.phtml:94
+#: module/Decision/view/decision/member/self.phtml:99
+#: module/Decision/view/decision/member/view.phtml:74
 msgid "Home address (parents)"
 msgstr "Home address (parents)"
 
-#: module/Decision/view/decision/member/self.phtml:120
-#: module/Decision/view/decision/member/view.phtml:97
+#: module/Decision/view/decision/member/self.phtml:102
+#: module/Decision/view/decision/member/view.phtml:77
 msgid "Student address"
 msgstr "Student address"
 
-#: module/Decision/view/decision/member/self.phtml:123
-#: module/Decision/view/decision/member/view.phtml:100
+#: module/Decision/view/decision/member/self.phtml:105
+#: module/Decision/view/decision/member/view.phtml:80
 msgid "Mail address"
 msgstr "Mail address"
 
-#: module/Decision/view/decision/member/self.phtml:129
-#: module/Decision/view/decision/member/view.phtml:106
+#: module/Decision/view/decision/member/self.phtml:111
+#: module/Decision/view/decision/member/view.phtml:86
 msgid "Country"
 msgstr "Country"
 
-#: module/Decision/view/decision/member/self.phtml:133
-#: module/Decision/view/decision/member/view.phtml:110
+#: module/Decision/view/decision/member/self.phtml:115
+#: module/Decision/view/decision/member/view.phtml:90
 msgid "Street and number"
 msgstr "Street and number"
 
-#: module/Decision/view/decision/member/self.phtml:137
-#: module/Decision/view/decision/member/view.phtml:114
+#: module/Decision/view/decision/member/self.phtml:119
+#: module/Decision/view/decision/member/view.phtml:94
 msgid "City and postal code"
 msgstr "City and postal code"
 
-#: module/Decision/view/decision/member/self.phtml:141
+#: module/Decision/view/decision/member/self.phtml:123
 msgid "Phone number"
 msgstr "Phone number"
 
-#: module/Decision/view/decision/member/self.phtml:147
+#: module/Decision/view/decision/member/self.phtml:129
 msgid "External applications"
 msgstr "External applications"
 
-#: module/Decision/view/decision/member/self.phtml:150
+#: module/Decision/view/decision/member/self.phtml:132
 msgid "App"
 msgstr "App"
 
-#: module/Decision/view/decision/member/self.phtml:151
+#: module/Decision/view/decision/member/self.phtml:133
 msgid "First authentication"
 msgstr "First authentication"
 
-#: module/Decision/view/decision/member/self.phtml:152
+#: module/Decision/view/decision/member/self.phtml:134
 msgid "Last authentication"
 msgstr "Last authentication"
 
-#: module/Decision/view/decision/member/self.phtml:197
+#: module/Decision/view/decision/member/self.phtml:179
 msgid "Remove this picture as your profile picture"
 msgstr "Remove this picture as your profile picture"
 
-#: module/Decision/view/decision/member/self.phtml:199
+#: module/Decision/view/decision/member/self.phtml:181
 msgid "Your profile picture will be chosen automatically instead."
 msgstr "Your profile picture will be chosen automatically instead."
 
-#: module/Decision/view/decision/member/self.phtml:214
+#: module/Decision/view/decision/member/self.phtml:196
 msgid "More of my photo's"
 msgstr "More of my photo's"
 
-#: module/Decision/view/decision/member/view.phtml:163
+#: module/Decision/view/decision/member/view.phtml:143
 #, php-format
 msgid "Photo's of %s"
 msgstr "Photo's of %s"
@@ -4155,9 +4130,26 @@ msgstr "1 vote"
 msgid "Not allowed to view photo details"
 msgstr "Not allowed to view photo details"
 
-#: module/Photo/src/Controller/PhotoController.php:99
+#: module/Photo/src/Controller/PhotoController.php:65
+#: module/Photo/src/Service/Album.php:125
+#: module/Photo/src/Service/Album.php:155
+#: module/Photo/src/Service/Album.php:294
+#: module/Photo/src/Service/Album.php:308
+msgid "Not allowed to view albums"
+msgstr "Not allowed to view albums"
+
+#: module/Photo/src/Controller/PhotoController.php:100
+#: module/Photo/src/Service/Photo.php:165
+msgid "Not allowed to download photos"
+msgstr "Not allowed to download photos"
+
+#: module/Photo/src/Controller/PhotoController.php:115
 msgid "Not allowed to view previous photos of the week"
 msgstr "Not allowed to view previous photos of the week"
+
+#: module/Photo/src/Controller/PhotoController.php:169
+msgid "Not allowed to vote for a photo of the week"
+msgstr "Not allowed to vote for a photo of the week"
 
 #: module/Photo/src/Controller/TagController.php:43
 msgid "Not allowed to add tags."
@@ -4202,12 +4194,6 @@ msgstr ""
 msgid "Not allowed to upload photos."
 msgstr "Not allowed to upload photos."
 
-#: module/Photo/src/Service/Album.php:125
-#: module/Photo/src/Service/Album.php:155
-#: module/Photo/src/Service/Album.php:294
-msgid "Not allowed to view albums"
-msgstr "Not allowed to view albums"
-
 #: module/Photo/src/Service/Album.php:178
 msgid "Not allowed to view albums without dates"
 msgstr "Not allowed to view albums without dates"
@@ -4220,57 +4206,53 @@ msgstr "Not allowed to create albums"
 msgid "Not allowed to create albums."
 msgstr "Not allowed to create albums."
 
-#: module/Photo/src/Service/Album.php:377
+#: module/Photo/src/Service/Album.php:386
 #, php-format
 msgid "Photos of the Week in %d/%d"
 msgstr "Photos of the Week in %d/%d"
 
-#: module/Photo/src/Service/Album.php:406
+#: module/Photo/src/Service/Album.php:415
 msgid "Not allowed to edit albums"
 msgstr "Not allowed to edit albums"
 
-#: module/Photo/src/Service/Album.php:425
+#: module/Photo/src/Service/Album.php:434
 msgid "Not allowed to edit albums."
 msgstr "Not allowed to edit albums."
 
-#: module/Photo/src/Service/Album.php:450
+#: module/Photo/src/Service/Album.php:459
 msgid "Not allowed to move albums"
 msgstr "Not allowed to move albums"
 
-#: module/Photo/src/Service/Album.php:484
+#: module/Photo/src/Service/Album.php:493
 msgid "Not allowed to delete albums."
 msgstr "Not allowed to delete albums."
 
-#: module/Photo/src/Service/Album.php:505
+#: module/Photo/src/Service/Album.php:514
 msgid "Not allowed to generate album covers."
 msgstr "Not allowed to generate album covers."
 
-#: module/Photo/src/Service/Album.php:547
+#: module/Photo/src/Service/Album.php:556
 msgid "Not allowed to move photos"
 msgstr "Not allowed to move photos"
 
 #: module/Photo/src/Service/Photo.php:139
-#: module/Photo/src/Service/Photo.php:179
-#: module/Photo/src/Service/Photo.php:221
-#: module/Photo/src/Service/Photo.php:272
-#: module/Photo/src/Service/Photo.php:288
+#: module/Photo/src/Service/Photo.php:184
+#: module/Photo/src/Service/Photo.php:226
+#: module/Photo/src/Service/Photo.php:277
+#: module/Photo/src/Service/Photo.php:293
 msgid "Not allowed to view photos"
 msgstr "Not allowed to view photos"
 
-#: module/Photo/src/Service/Photo.php:159
-msgid "Not allowed to download photos"
-msgstr "Not allowed to download photos"
-
-#: module/Photo/src/Service/Photo.php:306
+#: module/Photo/src/Service/Photo.php:311
 msgid "Not allowed to delete photos."
 msgstr "Not allowed to delete photos."
 
-#: module/Photo/src/Service/Photo.php:587
+#: module/Photo/src/Service/Photo.php:592
 msgid "You are not allowed to set a profile picture."
 msgstr "You are not allowed to set a profile picture."
 
-#: module/Photo/src/Service/Photo.php:734
-#: module/Photo/src/Service/Photo.php:796
+#: module/Photo/src/Service/Photo.php:739
+#: module/Photo/src/Service/Photo.php:801
 msgid "Not allowed to view tags."
 msgstr "Not allowed to view tags."
 
@@ -4326,19 +4308,19 @@ msgid "View on map"
 msgstr "View on map"
 
 #: module/Photo/view/partial/tags.phtml:10
-#: module/Photo/view/photo/album/index.phtml:593
+#: module/Photo/view/photo/album/index.phtml:597
 msgid "In this photo:"
 msgstr "In this photo:"
 
 #: module/Photo/view/partial/tags.phtml:11
-#: module/Photo/view/photo/album/index.phtml:594
+#: module/Photo/view/photo/album/index.phtml:598
 msgid ""
 "No one has been tagged in this photo yet. Tag someone you recognise now!"
 msgstr ""
 "No one has been tagged in this photo yet. Tag someone you recognise now!"
 
 #: module/Photo/view/partial/tags.phtml:49
-#: module/Photo/view/photo/album/index.phtml:620
+#: module/Photo/view/photo/album/index.phtml:626
 msgid "Tag someone"
 msgstr "Tag someone"
 
@@ -4548,31 +4530,31 @@ msgstr "Could not set as profile photo, try again"
 msgid "Cannot load vote"
 msgstr "Cannot load vote"
 
-#: module/Photo/view/photo/album/index.phtml:536
+#: module/Photo/view/photo/album/index.phtml:537
 msgid "Voted!"
 msgstr "Voted!"
 
-#: module/Photo/view/photo/album/index.phtml:548
+#: module/Photo/view/photo/album/index.phtml:549
 msgid "Could not vote, try again"
 msgstr "Could not vote, try again"
 
-#: module/Photo/view/photo/album/index.phtml:562
+#: module/Photo/view/photo/album/index.phtml:564
 msgid "Loading tags..."
 msgstr "Loading tags..."
 
-#: module/Photo/view/photo/album/index.phtml:581
+#: module/Photo/view/photo/album/index.phtml:585
 msgid "Cannot load tags"
 msgstr "Cannot load tags"
 
-#: module/Photo/view/photo/album/index.phtml:671
+#: module/Photo/view/photo/album/index.phtml:680
 msgid "Cannot load metadata"
 msgstr "Cannot load metadata"
 
-#: module/Photo/view/photo/album/index.phtml:697
+#: module/Photo/view/photo/album/index.phtml:706
 msgid "Photo of the Week:<br> Week"
 msgstr "Photo of the Week:<br> Week"
 
-#: module/Photo/view/photo/album/index.phtml:697
+#: module/Photo/view/photo/album/index.phtml:706
 msgid "of"
 msgstr "of"
 
