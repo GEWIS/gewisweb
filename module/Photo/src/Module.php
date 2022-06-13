@@ -6,7 +6,7 @@ use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Doctrine\ORM\Events;
 use Exception;
 use Laminas\Mvc\MvcEvent;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use League\Glide\Urls\UrlBuilderFactory;
 use Photo\Command\WeeklyPhoto;
 use Photo\Form\{

@@ -12,11 +12,14 @@ use Application\View\Helper\{
     LocaliseText,
 };
 use Doctrine\Common\Cache\MemcachedCache;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Router\Http\{
     Literal,
     Segment,
 };
+use Laminas\Cache\Service\StorageCacheAbstractServiceFactory;
+use Laminas\Session\Config\ConfigInterface;
+use Laminas\Session\Service\SessionConfigFactory;
 use Memcached;
 
 return [
@@ -52,14 +55,13 @@ return [
     ],
     'service_manager' => [
         'abstract_factories' => [
-            'Laminas\Cache\Service\StorageCacheAbstractServiceFactory',
-            'Laminas\Log\LoggerAbstractServiceFactory',
+            StorageCacheAbstractServiceFactory::class,
         ],
         'aliases' => [
             'translator' => 'MvcTranslator',
         ],
         'factories' => [
-            'Laminas\Session\Config\ConfigInterface' => 'Laminas\Session\Service\SessionConfigFactory',
+            ConfigInterface::class => SessionConfigFactory::class,
             'doctrine.cache.my_memcached' => function () {
                 $cache = new MemcachedCache();
                 $memcached = new Memcached();

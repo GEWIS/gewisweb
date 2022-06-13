@@ -22,7 +22,7 @@ use Company\Service\{
     Company as CompanySerivce,
     CompanyQuery as CompanyQueryService,
 };
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use User\Authorization\AclServiceFactory;
 
 class Module

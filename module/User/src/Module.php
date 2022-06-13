@@ -8,7 +8,7 @@ use Laminas\Crypt\Password\Bcrypt;
 use Laminas\Http\PhpEnvironment\RemoteAddress;
 use Laminas\Http\Request as HttpRequest;
 use Laminas\Mvc\MvcEvent;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use User\Authentication\{
     Adapter\ApiMapper,
     Adapter\Mapper,

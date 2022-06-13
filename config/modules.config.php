@@ -11,7 +11,6 @@ return [
     'Laminas\Mvc\I18n',
     'Laminas\Serializer',
     'Laminas\Mail',
-    'Laminas\Log',
     'Laminas\Cache',
     'Laminas\Cache\Storage\Adapter\Memcached',
     'Laminas\Cache\Storage\Adapter\Memory',

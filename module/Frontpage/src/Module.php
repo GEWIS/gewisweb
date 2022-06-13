@@ -22,7 +22,7 @@ use Frontpage\Service\{
     Page as PageService,
     Poll as PollService,
 };
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use RuntimeException;
 use User\Authorization\AclServiceFactory;
 

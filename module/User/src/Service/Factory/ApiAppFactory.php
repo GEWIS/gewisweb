@@ -2,7 +2,7 @@
 
 namespace User\Service\Factory;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use User\Service\ApiApp;
 

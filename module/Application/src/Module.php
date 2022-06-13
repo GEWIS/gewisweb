@@ -30,7 +30,7 @@ use Laminas\Mvc\{
     ModuleRouteListener,
     MvcEvent,
 };
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Http\Header\Accept\FieldValuePart\LanguageFieldValuePart;
 use Laminas\Http\Header\AcceptLanguage;
 use Laminas\Http\Header\HeaderInterface;

@@ -2,7 +2,7 @@
 
 namespace Photo\Controller\Factory\Plugin;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Photo\Controller\Plugin\AlbumPlugin;
 

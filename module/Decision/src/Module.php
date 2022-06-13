@@ -25,7 +25,7 @@ use Decision\Service\{
     Organ as OrganService,
 };
 use Doctrine\Laminas\Hydrator\DoctrineObject;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use User\Authorization\AclServiceFactory;
 
 class Module
