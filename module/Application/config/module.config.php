@@ -18,7 +18,6 @@ use Laminas\Router\Http\{
     Segment,
 };
 use Laminas\Cache\Service\StorageCacheAbstractServiceFactory;
-use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\Session\Config\ConfigInterface;
 use Laminas\Session\Service\SessionConfigFactory;
 use Memcached;
@@ -70,8 +69,8 @@ return [
             },
         ],
     ],
-    MvcTranslator::class => [
-        'locale' => 'nl',
+    'translator' => [
+        'locale' => 'en',
         'translation_file_patterns' => [
             [
                 'type' => 'gettext',
