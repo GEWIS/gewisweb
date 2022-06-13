@@ -7,6 +7,7 @@ use Decision\Model\Enums\MembershipTypes;
 use Decision\Model\Member;
 use Doctrine\Common\Collections\ArrayCollection;
 use Laminas\Mvc\Application;
+use Laminas\Mvc\ApplicationInterface;
 use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
@@ -44,7 +45,7 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
         $this->setUpMockMemberMapper();
     }
 
-    public function getApplication(): Application
+    public function getApplication(): ApplicationInterface
     {
         if ($this->application) {
             return $this->application;

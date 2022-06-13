@@ -27,3 +27,10 @@ parameters:
         - '#Property User\\Model\\ApiApp\:\:\$claims type mapping mismatch\: backing type string of enum User\\Model\\Enums\\JWTClaims does not match database type array.$#'
         - '#Property User\\Model\\ApiApp\:\:\$claims type mapping mismatch\: property can contain array but database expects User\\Model\\Enums\\JWTClaims\|null.$#'
         - '#^Return type \(array\) of method [a-zA-Z0-9\\_]+\:\:getInputFilterSpecification\(\) should be compatible with return type \(\*NEVER\*\) of method Laminas\\InputFilter\\InputFilterProviderInterface\:\:getInputFilterSpecification\(\)$#'
+        -
+            message: '#Unreachable statement \- code above always terminates.$#'
+            path: ..//module/*/test/*
+        -
+            message: '#If condition is always true.$#'
+            path: ..//module/*/test/*
+        - '#^Parameter \#1 \$valueMap of method PHPUnit\\Framework\\MockObject\\Builder\\InvocationMocker\<mixed\>\:\:willReturnMap\(\) expects array\<int, array\<int, mixed\>\>, array\<int, array\<int, mixed\>\|[a-zA-Z0-9\\_]+\> given.$#'
