@@ -72,8 +72,8 @@ class Module
         $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'logError']);
         $eventManager->attach(MvCEvent::EVENT_RENDER_ERROR, [$this, 'logError']);
 
-        // enable Laminas\Validate default translator
-        AbstractValidator::setDefaultTranslator($mvcTranslator, 'validate');
+        // Enable Laminas\Validator default translator
+        AbstractValidator::setDefaultTranslator($mvcTranslator);
     }
 
     /**
