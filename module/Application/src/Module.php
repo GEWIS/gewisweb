@@ -33,7 +33,6 @@ use Laminas\Mvc\{
 use Psr\Container\ContainerInterface;
 use Laminas\Http\Header\Accept\FieldValuePart\LanguageFieldValuePart;
 use Laminas\Http\Header\AcceptLanguage;
-use Laminas\Http\Header\HeaderInterface;
 use Laminas\Http\Request;
 use Laminas\Cache\Storage\Adapter\{
     Memcached,
@@ -73,8 +72,8 @@ class Module
         $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'logError']);
         $eventManager->attach(MvCEvent::EVENT_RENDER_ERROR, [$this, 'logError']);
 
-        // enable Laminas\Validate default translator
-        AbstractValidator::setDefaultTranslator($mvcTranslator, 'validate');
+        // Enable Laminas\Validator default translator
+        AbstractValidator::setDefaultTranslator($mvcTranslator);
     }
 
     /**

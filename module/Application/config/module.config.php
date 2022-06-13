@@ -12,16 +12,16 @@ use Application\View\Helper\{
     LocaliseText,
 };
 use Doctrine\Common\Cache\MemcachedCache;
-use Psr\Container\ContainerInterface;
+use Laminas\Cache\Service\StorageCacheAbstractServiceFactory;
+use Laminas\I18n\Translator\Resources;
 use Laminas\Router\Http\{
     Literal,
     Segment,
 };
-use Laminas\Cache\Service\StorageCacheAbstractServiceFactory;
-use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\Session\Config\ConfigInterface;
 use Laminas\Session\Service\SessionConfigFactory;
 use Memcached;
+use Psr\Container\ContainerInterface;
 
 return [
     'router' => [
@@ -70,20 +70,19 @@ return [
             },
         ],
     ],
-    MvcTranslator::class => [
-        'locale' => 'nl',
+    'translator' => [
+        'locale' => 'en',
         'translation_file_patterns' => [
             [
                 'type' => 'gettext',
                 'base_dir' => __DIR__ . '/../language',
                 'pattern' => '%s.mo',
             ],
-            // Zend\Validate translation
+            // Translations for Laminas\Validator.
             [
                 'type' => 'phparray',
-                'base_dir' => 'vendor/zendframework/zendframework/resources/languages/',
-                'pattern' => '%s/Zend_Validate.php',
-                'text_domain' => 'validate',
+                'base_dir' => Resources::getBasePath(),
+                'pattern' => Resources::getPatternForValidator(),
             ],
         ],
     ],

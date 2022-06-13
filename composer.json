@@ -46,6 +46,7 @@
         "laminas/laminas-http": "^2.15.1",
         "laminas/laminas-hydrator": "^4.3.1",
         "laminas/laminas-i18n": "^2.12.0",
+        "laminas/laminas-i18n-resources": "^2.8.0",
         "laminas/laminas-inputfilter": "^2.13.0",
         "laminas/laminas-json": "^3.3.0",
         "laminas/laminas-mail": "^2.15.0",
