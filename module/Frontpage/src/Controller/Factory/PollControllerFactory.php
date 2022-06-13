@@ -4,6 +4,7 @@ namespace Frontpage\Controller\Factory;
 
 use Frontpage\Controller\PollController;
 use Psr\Container\ContainerInterface;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class PollControllerFactory implements FactoryInterface
@@ -22,7 +23,7 @@ class PollControllerFactory implements FactoryInterface
     ): PollController {
         return new PollController(
             $container->get('frontpage_service_acl'),
-            $container->get('translator'),
+            $container->get(MvcTranslator::class),
             $container->get('frontpage_form_poll_comment'),
             $container->get('frontpage_service_poll'),
         );

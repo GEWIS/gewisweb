@@ -4,6 +4,7 @@ namespace Company\Controller\Factory;
 
 use Company\Controller\AdminController;
 use Psr\Container\ContainerInterface;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class AdminControllerFactory implements FactoryInterface
@@ -22,7 +23,7 @@ class AdminControllerFactory implements FactoryInterface
     ): AdminController {
         return new AdminController(
             $container->get('company_service_acl'),
-            $container->get('translator'),
+            $container->get(MvcTranslator::class),
             $container->get('company_service_company'),
             $container->get('company_service_companyquery'),
         );

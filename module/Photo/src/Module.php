@@ -2,6 +2,7 @@
 
 namespace Photo;
 
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Doctrine\ORM\Events;
 use Exception;
@@ -72,7 +73,7 @@ class Module
             'factories' => [
                 'photo_service_album' => function (ContainerInterface $container) {
                     $aclService = $container->get('photo_service_acl');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $photoService = $container->get('photo_service_photo');
                     $albumCoverService = $container->get('photo_service_album_cover');
                     $memberService = $container->get('decision_service_member');
@@ -100,7 +101,7 @@ class Module
                 },
                 'photo_service_photo' => function (ContainerInterface $container) {
                     $aclService = $container->get('photo_service_acl');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $memberService = $container->get('decision_service_member');
                     $storageService = $container->get('application_service_storage');
                     $photoMapper = $container->get('photo_mapper_photo');
@@ -140,7 +141,7 @@ class Module
                 },
                 'photo_service_admin' => function (ContainerInterface $container) {
                     $aclService = $container->get('photo_service_acl');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $photoService = $container->get('photo_service_photo');
                     $metadataService = $container->get('photo_service_metadata');
                     $storageService = $container->get('application_service_storage');
@@ -159,7 +160,7 @@ class Module
                 },
                 'photo_form_album_edit' => function (ContainerInterface $container) {
                     $form = new EditAlbumForm(
-                        $container->get('translator')
+                        $container->get(MvcTranslator::class)
                     );
                     $form->setHydrator($container->get('photo_hydrator'));
 
@@ -167,7 +168,7 @@ class Module
                 },
                 'photo_form_album_create' => function (ContainerInterface $container) {
                     $form = new CreateAlbumForm(
-                        $container->get('translator')
+                        $container->get(MvcTranslator::class)
                     );
                     $form->setHydrator($container->get('photo_hydrator'));
 

@@ -2,6 +2,7 @@
 
 namespace Activity;
 
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Activity\Command\CalendarNotify;
 use Activity\Form\{
     Activity as ActivityForm,
@@ -62,7 +63,7 @@ class Module
             'factories' => [
                 'activity_service_activity' => function (ContainerInterface $container) {
                     $aclService = $container->get('activity_service_acl');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $entityManager = $container->get('doctrine.entitymanager.orm_default');
                     $categoryService = $container->get('activity_service_category');
                     $organService = $container->get('decision_service_organ');
@@ -83,7 +84,7 @@ class Module
                 },
                 'activity_service_calendar' => function (ContainerInterface $container) {
                     $aclService = $container->get('activity_service_acl');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $entityManager = $container->get('doctrine.entitymanager.orm_default');
                     $organService = $container->get('decision_service_organ');
                     $emailService = $container->get('application_service_email');
@@ -123,7 +124,7 @@ class Module
                 },
                 'activity_service_category' => function (ContainerInterface $container) {
                     $aclService = $container->get('activity_service_acl');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $categoryMapper = $container->get('activity_mapper_category');
                     $categoryForm = $container->get('activity_form_category');
 
@@ -136,7 +137,7 @@ class Module
                 },
                 'activity_service_activityQuery' => function (ContainerInterface $container) {
                     $aclService = $container->get('activity_service_acl');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $organService = $container->get('decision_service_organ');
                     $activityMapper = $container->get('activity_mapper_activity');
                     $proposalMapper = $container->get('activity_mapper_proposal');
@@ -151,7 +152,7 @@ class Module
                 },
                 'activity_service_signup' => function (ContainerInterface $container) {
                     $aclService = $container->get('activity_service_acl');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $entityManager = $container->get('doctrine.entitymanager.orm_default');
                     $signupMapper = $container->get('activity_mapper_signup');
                     $signupOptionMapper = $container->get('activity_mapper_signup_option');
@@ -168,7 +169,7 @@ class Module
                 },
                 'activity_service_signupListQuery' => function (ContainerInterface $container) {
                     $aclService = $container->get('activity_service_acl');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $signupListMapper = $container->get('activity_mapper_signuplist');
 
                     return new SignupListQueryService(
@@ -181,44 +182,44 @@ class Module
                     return new SignupForm();
                 },
                 'activity_form_signuplist' => function (ContainerInterface $container) {
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $form = new SignupListForm($translator);
                     $form->setHydrator($container->get('activity_hydrator'));
 
                     return $form;
                 },
                 'activity_form_signuplist_fields' => function (ContainerInterface $container) {
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $form = new SignupListFieldForm($translator);
                     $form->setHydrator($container->get('activity_hydrator'));
 
                     return $form;
                 },
                 'activity_form_activity' => function (ContainerInterface $container) {
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $form = new ActivityForm($translator);
                     $form->setHydrator($container->get('activity_hydrator'));
 
                     return $form;
                 },
                 'activity_form_calendar_proposal' => function (ContainerInterface $container) {
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $calendarFormService = $container->get('activity_service_calendar_form');
                     $aclService = $container->get('activity_service_acl');
                     $createAlways = $aclService->isAllowed('create_always', 'activity');
                     return new ActivityCalendarProposalForm($translator, $calendarFormService, $createAlways);
                 },
                 'activity_form_calendar_option' => function (ContainerInterface $container) {
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $calendarFormService = $container->get('activity_service_calendar_form');
 
                     return new ActivityCalendarOptionForm($translator, $calendarFormService);
                 },
                 'activity_form_calendar_period' => function (ContainerInterface $container) {
-                    return new ActivityCalendarPeriodForm($container->get('translator'));
+                    return new ActivityCalendarPeriodForm($container->get(MvcTranslator::class));
                 },
                 'activity_form_category' => function (ContainerInterface $container) {
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
 
                     return new CategoryForm($translator);
                 },

@@ -4,6 +4,7 @@ namespace Decision\Controller\Factory;
 
 use Decision\Controller\MemberController;
 use Psr\Container\ContainerInterface;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class MemberControllerFactory implements FactoryInterface
@@ -22,7 +23,7 @@ class MemberControllerFactory implements FactoryInterface
     ): MemberController {
         return new MemberController(
             $container->get('decision_service_acl'),
-            $container->get('translator'),
+            $container->get(MvcTranslator::class),
             $container->get('decision_service_member'),
             $container->get('decision_service_memberinfo'),
             $container->get('decision_service_decision'),

@@ -3,6 +3,7 @@
 namespace Frontpage;
 
 use Doctrine\Laminas\Hydrator\DoctrineObject;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Frontpage\Form\{
     NewsItem as NewsItemForm,
     Page as PageForm,
@@ -48,7 +49,7 @@ class Module
         return [
             'factories' => [
                 'frontpage_service_frontpage' => function (ContainerInterface $container) {
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $aclService = $container->get('decision_service_acl');
                     $pollService = $container->get('frontpage_service_poll');
                     $newsService = $container->get('frontpage_service_news');
@@ -76,7 +77,7 @@ class Module
                 },
                 'frontpage_service_page' => function (ContainerInterface $container) {
                     $aclService = $container->get('frontpage_service_acl');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $storageService = $container->get('application_service_storage');
                     $pageMapper = $container->get('frontpage_mapper_page');
                     $pageForm = $container->get('frontpage_form_page');
@@ -93,7 +94,7 @@ class Module
                 },
                 'frontpage_service_poll' => function (ContainerInterface $container) {
                     $aclService = $container->get('frontpage_service_acl');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $emailService = $container->get('application_service_email');
                     $pollMapper = $container->get('frontpage_mapper_poll');
                     $pollForm = $container->get('frontpage_form_poll');
@@ -110,7 +111,7 @@ class Module
                 },
                 'frontpage_service_news' => function (ContainerInterface $container) {
                     $aclService = $container->get('frontpage_service_acl');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $newsItemMapper = $container->get('frontpage_mapper_news_item');
                     $newsItemForm = $container->get('frontpage_form_news_item');
 
@@ -123,7 +124,7 @@ class Module
                 },
                 'frontpage_form_page' => function (ContainerInterface $container) {
                     $form = new PageForm(
-                        $container->get('translator')
+                        $container->get(MvcTranslator::class)
                     );
                     $form->setHydrator($container->get('frontpage_hydrator'));
 
@@ -131,7 +132,7 @@ class Module
                 },
                 'frontpage_form_poll' => function (ContainerInterface $container) {
                     $form = new PollForm(
-                        $container->get('translator')
+                        $container->get(MvcTranslator::class)
                     );
                     $form->setHydrator($container->get('frontpage_hydrator'));
 
@@ -139,7 +140,7 @@ class Module
                 },
                 'frontpage_form_poll_comment' => function (ContainerInterface $container) {
                     $form = new PollCommentForm(
-                        $container->get('translator')
+                        $container->get(MvcTranslator::class)
                     );
                     $form->setHydrator($container->get('frontpage_hydrator'));
 
@@ -147,7 +148,7 @@ class Module
                 },
                 'frontpage_form_poll_approval' => function (ContainerInterface $container) {
                     $form = new PollApprovalForm(
-                        $container->get('translator')
+                        $container->get(MvcTranslator::class)
                     );
                     $form->setHydrator($container->get('frontpage_hydrator'));
 
@@ -155,7 +156,7 @@ class Module
                 },
                 'frontpage_form_news_item' => function (ContainerInterface $container) {
                     $form = new NewsItemForm(
-                        $container->get('translator')
+                        $container->get(MvcTranslator::class)
                     );
                     $form->setHydrator($container->get('frontpage_hydrator'));
 

@@ -4,6 +4,7 @@ namespace Frontpage\Controller\Factory;
 
 use Frontpage\Controller\NewsAdminController;
 use Psr\Container\ContainerInterface;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class NewsAdminControllerFactory implements FactoryInterface
@@ -22,7 +23,7 @@ class NewsAdminControllerFactory implements FactoryInterface
     ): NewsAdminController {
         return new NewsAdminController(
             $container->get('frontpage_service_acl'),
-            $container->get('translator'),
+            $container->get(MvcTranslator::class),
             $container->get('frontpage_service_news'),
         );
     }

@@ -3,6 +3,7 @@
 namespace Education;
 
 use Doctrine\Laminas\Hydrator\DoctrineObject;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Education\Form\{
     AddCourse as AddCourseForm,
     Bulk as BulkForm,
@@ -48,7 +49,7 @@ class Module
             'factories' => [
                 'education_service_exam' => function (ContainerInterface $container) {
                     $aclService = $container->get('education_service_acl');
-                    $translator = $container->get('translator');
+                    $translator = $container->get(MvcTranslator::class);
                     $storageService = $container->get('application_service_storage');
                     $courseMapper = $container->get('education_mapper_course');
                     $examMapper = $container->get('education_mapper_exam');
@@ -73,12 +74,12 @@ class Module
                 },
                 'education_form_tempupload' => function (ContainerInterface $container) {
                     return new TempUploadForm(
-                        $container->get('translator')
+                        $container->get(MvcTranslator::class)
                     );
                 },
                 'education_form_summaryupload' => function (ContainerInterface $container) {
                     $form = new SummaryUploadForm(
-                        $container->get('translator')
+                        $container->get(MvcTranslator::class)
                     );
                     $form->setHydrator($container->get('education_hydrator'));
 
@@ -86,29 +87,29 @@ class Module
                 },
                 'education_form_add_course' => function (ContainerInterface $container) {
                     return new AddCourseForm(
-                        $container->get('translator')
+                        $container->get(MvcTranslator::class)
                     );
                 },
                 'education_form_bulk_exam' => function (ContainerInterface $container) {
                     return new BulkForm(
-                        $container->get('translator'),
+                        $container->get(MvcTranslator::class),
                         $container->get('education_form_fieldset_exam')
                     );
                 },
                 'education_form_bulk_summary' => function (ContainerInterface $container) {
                     return new BulkForm(
-                        $container->get('translator'),
+                        $container->get(MvcTranslator::class),
                         $container->get('education_form_fieldset_summary')
                     );
                 },
                 'education_form_searchcourse' => function (ContainerInterface $container) {
                     return new SearchCourseForm(
-                        $container->get('translator')
+                        $container->get(MvcTranslator::class)
                     );
                 },
                 'education_form_fieldset_exam' => function (ContainerInterface $container) {
                     $fieldset = new ExamFieldset(
-                        $container->get('translator')
+                        $container->get(MvcTranslator::class)
                     );
                     $fieldset->setConfig($container->get('config'));
                     $fieldset->setObject(new ExamModel());
@@ -118,7 +119,7 @@ class Module
                 },
                 'education_form_fieldset_summary' => function (ContainerInterface $container) {
                     $fieldset = new SummaryFieldset(
-                        $container->get('translator')
+                        $container->get(MvcTranslator::class)
                     );
                     $fieldset->setConfig($container->get('config'));
                     $fieldset->setObject(new SummaryModel());
