@@ -26,7 +26,6 @@ parameters:
             path: ../module/Decision/src/Model/AssociationYear.php
         - '#Property User\\Model\\ApiApp\:\:\$claims type mapping mismatch\: backing type string of enum User\\Model\\Enums\\JWTClaims does not match database type array.$#'
         - '#Property User\\Model\\ApiApp\:\:\$claims type mapping mismatch\: property can contain array but database expects User\\Model\\Enums\\JWTClaims\|null.$#'
-        - '#^Return type \(array\) of method [a-zA-Z0-9\\_]+\:\:getInputFilterSpecification\(\) should be compatible with return type \(\*NEVER\*\) of method Laminas\\InputFilter\\InputFilterProviderInterface\:\:getInputFilterSpecification\(\)$#'
         -
             message: '#Unreachable statement \- code above always terminates.$#'
             path: ..//module/*/test/*
