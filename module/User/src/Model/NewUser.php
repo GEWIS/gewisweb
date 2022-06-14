@@ -134,16 +134,6 @@ class NewUser
     }
 
     /**
-     * Set the user's email address.
-     *
-     * @param string $email
-     */
-    public function setEmail(string $email): void
-    {
-        $this->email = $email;
-    }
-
-    /**
      * Set the activation code.
      *
      * @param string $code

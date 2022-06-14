@@ -50,8 +50,11 @@ class Member
     /**
      * Member's email address.
      */
-    #[Column(type: "string")]
-    protected string $email;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $email;
 
     /**
      * Member's last name.
@@ -267,9 +270,9 @@ class Member
     /**
      * Get the member's email address.
      *
-     * @return string
+     * @return string|null
      */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -327,9 +330,9 @@ class Member
     /**
      * Set the member's email address.
      *
-     * @param string $email
+     * @param string|null $email
      */
-    public function setEmail(string $email): void
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
     }

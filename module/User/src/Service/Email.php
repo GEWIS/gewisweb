@@ -71,7 +71,7 @@ class Email
         $message = new Message();
 
         $message->addFrom($this->emailConfig['from']);
-        $message->addTo($newUser->getEmail());
+        $message->addTo($member->getEmail());
         $message->setSubject($this->translator->translate('Account activation code for the GEWIS Website'));
         $message->setBody($body);
 
@@ -99,7 +99,7 @@ class Email
         $message = new Message();
 
         $message->addFrom($this->emailConfig['from']);
-        $message->addTo($newUser->getEmail());
+        $message->addTo($member->getEmail());
         $message->setSubject($this->translator->translate('Password reset code for the GEWIS Website'));
         $message->setBody($body);
 

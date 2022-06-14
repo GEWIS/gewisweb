@@ -131,13 +131,9 @@ class UserController extends AbstractActionController
     {
         if ($this->getRequest()->isPost()) {
             $newUser = $this->userService->register($this->getRequest()->getPost());
+
             if (null !== $newUser) {
-                return new ViewModel(
-                    [
-                        'registered' => true,
-                        'user' => $newUser,
-                    ]
-                );
+                return new ViewModel(['registered' => true]);
             }
         }
 
@@ -176,23 +172,23 @@ class UserController extends AbstractActionController
      */
     public function resetAction(): ViewModel
     {
+        $form = $this->userService->getResetForm();
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $newUser = $this->userService->reset($request->getPost());
-            if (null !== $newUser) {
-                return new ViewModel(
-                    [
-                        'reset' => true,
-                        'user' => $newUser,
-                    ]
-                );
+            $form->setData($request->getPost()->toArray());
+
+            if ($form->isValid()) {
+                $this->userService->reset($form->getData());
+
+                // To prevent enumeration, always say a password has been reset.
+                return new ViewModel(['reset' => true]);
             }
         }
 
         return new ViewModel(
             [
-                'form' => $this->userService->getRegisterForm(),
+                'form' => $form,
             ]
         );
     }

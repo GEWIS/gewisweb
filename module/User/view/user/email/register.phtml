@@ -4,8 +4,9 @@ For English, please see below.<br/><br/>
 <?= sprintf('Beste %s,', $member->getFullName()) ?><br/><br/>
 
 Je bent geregistreerd op de website van de Studievereniging GEWIS, met de volgende informatie:
-Lidnummer: <?= $user->getLidnr() ?>
-Email adres: <?= $user->getEmail() ?>
+
+Lidnummer: <?= $member->getLidnr() ?><br/>
+Email adres: <?= $member->getEmail() ?>
 
 Je kunt je account activeren met de volgende link:
 <?= $this->serverUrl($this->url('user/activate', ['code' => $user->getCode()])) ?>
@@ -19,8 +20,9 @@ De Web Commissie
 <?= sprintf('Dear %s,', $member->getFullName()) ?><br/><br/>
 
 You have been registered on the website of Study association GEWIS, with the following information:
-Membership number: <?= $user->getLidnr() ?>
-Email address: <?= $user->getEmail() ?>
+
+Membership number: <?= $member->getLidnr() ?><br/>
+Email address: <?= $member->getEmail() ?>
 
 You can activate your account on the following link:
 <?= $this->serverUrl($this->url('user/activate', ['code' => $user->getCode()])) ?>

@@ -34,6 +34,7 @@ use User\Form\{
     Login as LoginForm,
     Password as PasswordForm,
     Register as RegisterForm,
+    Reset as ResetForm,
 };
 use User\Permissions\NotAllowedException;
 use User\Service\{
@@ -123,6 +124,7 @@ class Module
                     $activateForm = $container->get('user_form_activate');
                     $loginForm = $container->get('user_form_login');
                     $passwordForm = $container->get('user_form_password');
+                    $resetForm = $container->get('user_form_reset');
 
                     return new UserService(
                         $aclService,
@@ -138,6 +140,7 @@ class Module
                         $activateForm,
                         $loginForm,
                         $passwordForm,
+                        $resetForm,
                     );
                 },
                 'user_service_loginattempt' => function (ContainerInterface $container) {
@@ -229,6 +232,11 @@ class Module
                 },
                 'user_form_passwordactivate' => function (ContainerInterface $container) {
                     return new ActivateForm(
+                        $container->get(MvcTranslator::class),
+                    );
+                },
+                'user_form_reset' => function (ContainerInterface $container) {
+                    return new ResetForm(
                         $container->get(MvcTranslator::class),
                     );
                 },
