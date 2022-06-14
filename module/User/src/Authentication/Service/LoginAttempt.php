@@ -65,7 +65,8 @@ class LoginAttempt
     /**
      * @param UserModel $user
      */
-    public function logFailedLogin(UserModel $user): void {
+    public function logFailedLogin(UserModel $user): void
+    {
         $attempt = new LoginAttemptModel();
 
         $attempt->setIp($this->remoteAddress);
@@ -100,7 +101,8 @@ class LoginAttempt
      *
      * @return bool
      */
-    public function loginAttemptsExceeded(UserModel $user): bool {
+    public function loginAttemptsExceeded(UserModel $user): bool
+    {
         $ip = $this->remoteAddress;
         $since = (new DateTime())->sub(new DateInterval('PT' . $this->rateLimitConfig['lockout_time'] . 'M'));
 
