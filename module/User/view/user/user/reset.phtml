@@ -51,6 +51,8 @@ $this->headTitle($this->translate('Reset password'));
                                 </div>
                             </div>
 
+                            <?= $this->formElement($form->get('security')) ?>
+
                             <?= $this->form()->closeTag($form); ?>
                         </div>
                     </div>

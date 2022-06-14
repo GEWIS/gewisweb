@@ -3,6 +3,7 @@
 namespace User\Form;
 
 use Laminas\Form\Element\{
+    Csrf,
     Email,
     Number,
     Submit,
@@ -58,6 +59,13 @@ class Reset extends Form implements InputProviderInterface
                 'attributes' => [
                     'value' => $translate->translate('Reset password'),
                 ],
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'security',
+                'type' => Csrf::class,
             ]
         );
     }

@@ -49,6 +49,8 @@ $this->headTitle($this->translate('Register'));
                                 </div>
                             </div>
 
+                            <?= $this->formElement($form->get('security')) ?>
+
                             <?= $this->form()->closeTag($form); ?>
                         </div>
                         <div class="panel-footer">

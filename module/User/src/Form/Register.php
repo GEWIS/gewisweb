@@ -3,7 +3,7 @@
 namespace User\Form;
 
 use Laminas\Form\Element\{
-    Email,
+    Csrf,
     Number,
     Submit,
 };
@@ -12,7 +12,6 @@ use Laminas\InputFilter\InputProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\{
     Digits,
-    EmailAddress,
     NotEmpty,
 };
 
@@ -53,6 +52,13 @@ class Register extends Form implements InputProviderInterface
                 'attributes' => [
                     'value' => $translate->translate('Register'),
                 ],
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'security',
+                'type' => Csrf::class,
             ]
         );
     }
