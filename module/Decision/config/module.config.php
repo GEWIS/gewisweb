@@ -5,7 +5,6 @@ namespace Decision;
 use Decision\Controller\{
     AdminController,
     DecisionController,
-    MemberApiController,
     MemberController,
     OrganAdminController,
     OrganController,
@@ -13,7 +12,6 @@ use Decision\Controller\{
 use Decision\Controller\Factory\{
     AdminControllerFactory,
     DecisionControllerFactory,
-    MemberApiControllerFactory,
     MemberControllerFactory,
     OrganAdminControllerFactory,
     OrganControllerFactory,
@@ -290,29 +288,6 @@ return [
                 ],
                 'priority' => 100,
             ],
-            'member_api' => [
-                'type' => Literal::class,
-                'options' => [
-                    'route' => '/api/member',
-                    'defaults' => [
-                        'controller' => MemberApiController::class,
-                        'action' => 'index',
-                    ],
-                ],
-                'may_terminate' => true,
-                'child_routes' => [
-                    'lidnr' => [
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '/lidnr/:lidnr',
-                            'defaults' => [
-                                'action' => 'lidnr',
-                            ],
-                        ],
-                    ],
-                ],
-                'priority' => 100,
-            ],
             'admin_organ' => [
                 'type' => Literal::class,
                 'options' => [
@@ -354,7 +329,6 @@ return [
         'factories' => [
             AdminController::class => AdminControllerFactory::class,
             DecisionController::class => DecisionControllerFactory::class,
-            MemberApiController::class => MemberApiControllerFactory::class,
             MemberController::class => MemberControllerFactory::class,
             OrganAdminController::class => OrganAdminControllerFactory::class,
             OrganController::class => OrganControllerFactory::class,

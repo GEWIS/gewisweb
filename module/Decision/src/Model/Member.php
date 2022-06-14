@@ -712,26 +712,6 @@ class Member
     }
 
     /**
-     * @return array
-     */
-    public function toApiArray(): array
-    {
-        return [
-            'lidnr' => $this->getLidnr(),
-            'email' => $this->getEmail(),
-            'fullName' => $this->getFullName(),
-            'initials' => $this->getInitials(),
-            'firstName' => $this->getFirstName(),
-            'middleName' => $this->getMiddleName(),
-            'lastName' => $this->getLastName(),
-            'birth' => $this->getBirth()->format(DateTimeInterface::ISO8601),
-            'generation' => $this->getGeneration(),
-            'membershipEndsOn' => $this->getMembershipEndsOn()?->format(DateTimeInterface::ISO8601) ?? null,
-            'expiration' => $this->getExpiration()->format(DateTimeInterface::ISO8601),
-        ];
-    }
-
-    /**
      * Get all addresses.
      *
      * @return Collection all addresses
