@@ -8,8 +8,6 @@ use Decision\Mapper\Member as MemberMapper;
 use Laminas\Crypt\Password\Bcrypt;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Stdlib\Parameters;
-use RuntimeException;
-use User\Authentication\Adapter\Mapper;
 use User\Authentication\AuthenticationService;
 use User\Form\{
     Activate as ActivateForm,
@@ -50,15 +48,8 @@ class User
 
     /**
      * @var AuthenticationService
-     * with regular Mapper adapter
      */
     private AuthenticationService $authService;
-
-    /**
-     * @var AuthenticationService
-     * with PinMapper adapter
-     */
-    private AuthenticationService $pinAuthService;
 
     /**
      * @var Email
@@ -110,7 +101,6 @@ class User
      * @param Translator $translator
      * @param Bcrypt $bcrypt
      * @param AuthenticationService $authService
-     * @param AuthenticationService $pinAuthService
      * @param Email $emailService
      * @param UserMapper $userMapper
      * @param NewUserMapper $newUserMapper
@@ -126,7 +116,6 @@ class User
         Translator $translator,
         Bcrypt $bcrypt,
         AuthenticationService $authService,
-        AuthenticationService $pinAuthService,
         Email $emailService,
         UserMapper $userMapper,
         NewUserMapper $newUserMapper,
@@ -141,7 +130,6 @@ class User
         $this->translator = $translator;
         $this->bcrypt = $bcrypt;
         $this->authService = $authService;
-        $this->pinAuthService = $pinAuthService;
         $this->emailService = $emailService;
         $this->userMapper = $userMapper;
         $this->newUserMapper = $newUserMapper;
@@ -322,11 +310,6 @@ class User
 
         // check the password
         $adapter = $this->authService->getAdapter();
-
-        if (!($adapter instanceof Mapper)) {
-            throw new RuntimeException("Adapter was not of the expected type");
-        }
-
         $user = $this->authService->getIdentity();
 
         if (!$adapter->verifyPassword($data['old_password'], $user->getPassword())) {
@@ -375,32 +358,6 @@ class User
         if (!$result->isValid()) {
             $form->setResult($result);
 
-            return null;
-        }
-
-        return $this->authService->getIdentity();
-    }
-
-    /**
-     * Login using a pin code.
-     *
-     * @param Parameters $data
-     *
-     * @return UserModel|null Authenticated user. Null if not authenticated.
-     */
-    public function pinLogin(Parameters $data): ?UserModel
-    {
-        if (!$this->aclService->isAllowed('pin_login', 'user')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to login using pin codes')
-            );
-        }
-
-        // Try to authenticate the user.
-        $result = $this->pinAuthService->authenticate($data['lidnr'], $data['pincode']);
-
-        // Check if authentication was successful.
-        if (!$result->isValid()) {
             return null;
         }
 

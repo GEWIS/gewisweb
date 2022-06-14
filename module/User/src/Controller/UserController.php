@@ -86,30 +86,6 @@ class UserController extends AbstractActionController
         return $form;
     }
 
-    public function pinLoginAction(): JsonModel
-    {
-        if ($this->getRequest()->isPost()) {
-            $data = $this->getRequest()->getPost();
-            // try to login
-            $login = $this->userService->pinLogin($data);
-
-            if (null !== $login) {
-                return new JsonModel(
-                    [
-                        'login' => true,
-                        'user' => $login->toArray(),
-                    ]
-                );
-            }
-        }
-
-        return new JsonModel(
-            [
-                'login' => false,
-            ]
-        );
-    }
-
     /**
      * User logout action.
      */

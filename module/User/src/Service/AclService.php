@@ -74,6 +74,5 @@ class AclService extends GenericAclService
 
         $this->acl->allow('user', 'user', ['password_change']);
         $this->acl->allow('photo_guest', 'user', ['password_change']);
-        $this->acl->allow('tueguest', 'user', 'pin_login');
     }
 }

@@ -65,7 +65,7 @@ class ApiAuthenticationService implements AuthenticationServiceInterface
         }
 
         throw new RuntimeException(
-            'ApiAuthenticationService expects the authentication adapter to be of type Mapper or PinMapper.'
+            'ApiAuthenticationService expects the authentication adapter to be of type ApiMapper.'
         );
     }
 

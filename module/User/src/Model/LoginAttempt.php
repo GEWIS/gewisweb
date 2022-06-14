@@ -18,9 +18,6 @@ use Doctrine\ORM\Mapping\{
 #[Entity]
 class LoginAttempt
 {
-    public const TYPE_PIN = 'pin';
-    public const TYPE_NORMAL = 'normal';
-
     /**
      * Id.
      */
@@ -45,12 +42,6 @@ class LoginAttempt
      */
     #[Column(type: "string")]
     protected string $ip;
-
-    /**
-     * Type of login {pin,normal}.
-     */
-    #[Column(type: "string")]
-    protected string $type;
 
     /**
      * Attempt timestamp.
@@ -96,22 +87,6 @@ class LoginAttempt
     public function setIp(string $ip): void
     {
         $this->ip = $ip;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType(): string
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string $type
-     */
-    public function setType(string $type): void
-    {
-        $this->type = $type;
     }
 
     /**

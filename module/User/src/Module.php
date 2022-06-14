@@ -13,7 +13,6 @@ use Psr\Container\ContainerInterface;
 use User\Authentication\{
     Adapter\ApiMapper,
     Adapter\Mapper,
-    Adapter\PinMapper,
     ApiAuthenticationService,
     AuthenticationService,
     Service\LoginAttempt as LoginAttemptService,
@@ -115,7 +114,6 @@ class Module
                     $translator = $container->get(MvcTranslator::class);
                     $bcrypt = $container->get('user_bcrypt');
                     $authService = $container->get('user_auth_service');
-                    $pinMapper = $container->get('user_pin_auth_service');
                     $emailService = $container->get('user_service_email');
                     $userMapper = $container->get('user_mapper_user');
                     $newUserMapper = $container->get('user_mapper_newuser');
@@ -131,7 +129,6 @@ class Module
                         $translator,
                         $bcrypt,
                         $authService,
-                        $pinMapper,
                         $emailService,
                         $userMapper,
                         $newUserMapper,
@@ -296,12 +293,6 @@ class Module
                         $container->get('user_mapper_apiuser'),
                     );
                 },
-                'user_pin_auth_adapter' => function (ContainerInterface $container) {
-                    return new PinMapper(
-                        $container->get('user_service_loginattempt'),
-                        $container->get('user_mapper_user'),
-                    );
-                },
                 'user_auth_service' => function (ContainerInterface $container) {
                     return new AuthenticationService(
                         $container->get('user_auth_storage'),
@@ -311,12 +302,6 @@ class Module
                 'user_apiauth_service' => function (ContainerInterface $container) {
                     return new ApiAuthenticationService(
                         $container->get('user_apiauth_adapter'),
-                    );
-                },
-                'user_pin_auth_service' => function (ContainerInterface $container) {
-                    return new AuthenticationService(
-                        $container->get('user_auth_storage'),
-                        $container->get('user_pin_auth_adapter'),
                     );
                 },
                 'user_remoteaddress' => function (ContainerInterface $container) {

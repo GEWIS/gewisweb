@@ -9,10 +9,7 @@ use Laminas\Authentication\{
     AuthenticationServiceInterface,
     Result,
 };
-use User\Authentication\Adapter\{
-    Mapper,
-    PinMapper,
-};
+use User\Authentication\Adapter\Mapper;
 use User\Authentication\Storage\Session;
 use User\Model\User;
 
@@ -28,9 +25,9 @@ class AuthenticationService implements AuthenticationServiceInterface
     /**
      * Authentication adapter.
      *
-     * @var Mapper|PinMapper
+     * @var Mapper
      */
-    protected Mapper|PinMapper $adapter;
+    protected Mapper $adapter;
 
     /**
      * Constructor.
@@ -50,9 +47,9 @@ class AuthenticationService implements AuthenticationServiceInterface
     /**
      * Returns the authentication adapter.
      *
-     * @return Mapper|PinMapper
+     * @return Mapper
      */
-    public function getAdapter(): PinMapper|Mapper
+    public function getAdapter(): Mapper
     {
         return $this->adapter;
     }
@@ -66,17 +63,14 @@ class AuthenticationService implements AuthenticationServiceInterface
      */
     public function setAdapter(AdapterInterface $adapter): self
     {
-        if (
-            $adapter instanceof Mapper
-            || $adapter instanceof PinMapper
-        ) {
+        if ($adapter instanceof Mapper) {
             $this->adapter = $adapter;
 
             return $this;
         }
 
         throw new RuntimeException(
-            'AuthenticationService expects the authentication adapter to be of type Mapper or PinMapper.'
+            'AuthenticationService expects the authentication adapter to be of type Mapper.'
         );
     }
 
