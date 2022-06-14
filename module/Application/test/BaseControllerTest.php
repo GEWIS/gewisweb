@@ -179,7 +179,6 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
     {
         $this->user = new User();
         $this->user->setLidnr($this::LIDNR);
-        $this->user->setEmail('web@gewis.nl');
         $this->user->setPassword('I dont care');
         $this->user->setRoles($roles);
         $this->user->setMember($this->member);
