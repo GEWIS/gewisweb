@@ -56,9 +56,9 @@ class UserSignup extends Signup
     /**
      * Get the email address of the user whom signed up for the activity.
      *
-     * @return string
+     * @return string|null
      */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->getUser()->getMember()->getEmail();
     }

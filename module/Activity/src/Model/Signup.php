@@ -121,7 +121,7 @@ abstract class Signup
     /**
      * Get the email address of the user whom signed up for the SignupList.
      *
-     * @return string
+     * @return string|null
      */
-    abstract public function getEmail(): string;
+    abstract public function getEmail(): ?string;
 }

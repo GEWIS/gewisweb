@@ -91,9 +91,9 @@ class User implements RoleInterface, ResourceInterface
     /**
      * Get the user's email address.
      *
-     * @return string
+     * @return string|null
      */
-    public function getEmail(): string
+    public function getEmail(): string|null
     {
         return $this->member->getEmail();
     }

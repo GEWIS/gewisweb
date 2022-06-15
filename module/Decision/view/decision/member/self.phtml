@@ -49,7 +49,14 @@ $this->headTitle($member->getFullName());
                     </tr>
                     <tr>
                         <th><?= $this->translate('Email') ?></th>
-                        <td><a href="mailto:<?= $member->getEmail() ?>"><?= $member->getEmail() ?></a></td>
+                        <td>
+                            <?php if (null !== ($email = $member->getEmail())): ?>
+                                <?php $email = $this->escapeHtml($email); ?>
+                                <a href="mailto:<?= $email ?>"><?= $email ?></a>
+                            <?php else: ?>
+                                <?= $this->translate('Onbekend') ?>
+                            <?php endif; ?>
+                        </td>
                     </tr>
                     <tr>
                         <th><?= $this->translate('Birth date') ?></th>

@@ -707,7 +707,7 @@ class Member
             'firstName' => $this->getFirstName(),
             'generation' => $this->getGeneration(),
             'membershipEndsOn' => $this->getMembershipEndsOn()?->format(DateTimeInterface::ISO8601) ?? null,
-            'expiration' => $this->getExpiration()->format('l j F Y'),
+            'expiration' => $this->getExpiration()->format(DateTimeInterface::ISO8601),
         ];
     }
 

@@ -35,15 +35,27 @@ use Decision\Model\Member;
     } ?>
     <?php foreach ($iterator as $signup): ?>
         <tr>
-            <td><?php echo $i;
+            <td>
+                <?php
+                echo $i;
                 $i = $i + 1;
-                $email = $this->escapeHtml($signup->getEmail());
-                $allEmailAddresses[] = $email; ?></td>
+
+                $email = $signup->getEmail();
+                if (null !== $email) {
+                    $email = $this->escapeHtml($email);
+                    $allEmailAddresses[] = $email;
+                }
+                ?>
+            </td>
             <td><?= $this->escapeHtml($signup->getFullName()) ?></td>
             <td>
-                <a href="mailto:<?= $email ?>">
-                    <?= $email ?>
-                </a>
+                <?php if (null !== $email): ?>
+                    <a href="mailto:<?= $email ?>">
+                        <?= $email ?>
+                    </a>
+                <?php else: ?>
+                    <?= $this->translate('Onbekend') ?>
+                <?php endif; ?>
             </td>
             <?php if ($signup instanceof UserSignup): ?>
                 <td>

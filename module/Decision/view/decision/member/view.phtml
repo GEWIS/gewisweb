@@ -33,7 +33,12 @@ $this->headTitle($this->translate('Members'));
                         <tr>
                             <th><?= $this->translate('Email') ?></th>
                             <td>
-                                <a href="mailto:<?= $member->getEmail() ?>"><?= $member->getEmail() ?></a>
+                                <?php if (null !== ($email = $member->getEmail())): ?>
+                                    <?php $email = $this->escapeHtml($email); ?>
+                                    <a href="mailto:<?= $email ?>"><?= $email ?></a>
+                                <?php else: ?>
+                                    <?= $this->translate('Onbekend') ?>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endif; ?>
