@@ -3676,21 +3676,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Service-Infimum.html#property_infimumConfig"
         },                {
-            "fqsen": "\\Application\\Service\\Legacy",
-            "name": "Legacy",
-            "summary": "This\u0020service\u0020contains\u0020all\u0020bindings\u0020to\u0020legacy\u0020systems\u0020such\u0020as\u0020SuSOS\u0020and\u0020the\u0020old\u0020website.",
-            "url": "classes/Application-Service-Legacy.html"
-        },                {
-            "fqsen": "\\Application\\Service\\Legacy\u003A\u003AcheckPincode\u0028\u0029",
-            "name": "checkPincode",
-            "summary": "Checks\u0020if\u0020a\u0020SuSOS\u0020pincode\u0020is\u0020correct.",
-            "url": "classes/Application-Service-Legacy.html#method_checkPincode"
-        },                {
-            "fqsen": "\\Application\\Service\\Legacy\u003A\u003AcheckPassword\u0028\u0029",
-            "name": "checkPassword",
-            "summary": "Checks\u0020a\u0020password\u0020against\u0020the\u0020old\u0020website\u0027s\u0020database\u0020and\u0020saves\u0020it\u0020in\u0020the\u0020new\u0020database\u0020if\u0020corrrect.",
-            "url": "classes/Application-Service-Legacy.html#method_checkPassword"
-        },                {
             "fqsen": "\\Application\\Service\\WatermarkService",
             "name": "WatermarkService",
             "summary": "",
@@ -6226,16 +6211,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Controller-Factory-DecisionControllerFactory.html#method___invoke"
         },                {
-            "fqsen": "\\Decision\\Controller\\Factory\\MemberApiControllerFactory",
-            "name": "MemberApiControllerFactory",
-            "summary": "",
-            "url": "classes/Decision-Controller-Factory-MemberApiControllerFactory.html"
-        },                {
-            "fqsen": "\\Decision\\Controller\\Factory\\MemberApiControllerFactory\u003A\u003A__invoke\u0028\u0029",
-            "name": "__invoke",
-            "summary": "",
-            "url": "classes/Decision-Controller-Factory-MemberApiControllerFactory.html#method___invoke"
-        },                {
             "fqsen": "\\Decision\\Controller\\Factory\\MemberControllerFactory",
             "name": "MemberControllerFactory",
             "summary": "",
@@ -6400,26 +6375,6 @@ Search.appendIndex(
             "name": "validFilepath",
             "summary": "A\u0020regex\u0020pattern\u0020matching\u0020all\u0020valid\u0020filepaths.",
             "url": "classes/Decision-Controller-FileBrowser-LocalFileReader.html#property_validFilepath"
-        },                {
-            "fqsen": "\\Decision\\Controller\\MemberApiController",
-            "name": "MemberApiController",
-            "summary": "",
-            "url": "classes/Decision-Controller-MemberApiController.html"
-        },                {
-            "fqsen": "\\Decision\\Controller\\MemberApiController\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "MemberApiController\u0020constructor.",
-            "url": "classes/Decision-Controller-MemberApiController.html#method___construct"
-        },                {
-            "fqsen": "\\Decision\\Controller\\MemberApiController\u003A\u003AlidnrAction\u0028\u0029",
-            "name": "lidnrAction",
-            "summary": "",
-            "url": "classes/Decision-Controller-MemberApiController.html#method_lidnrAction"
-        },                {
-            "fqsen": "\\Decision\\Controller\\MemberApiController\u003A\u003A\u0024memberService",
-            "name": "memberService",
-            "summary": "",
-            "url": "classes/Decision-Controller-MemberApiController.html#property_memberService"
         },                {
             "fqsen": "\\Decision\\Controller\\MemberController",
             "name": "MemberController",
@@ -7930,11 +7885,6 @@ Search.appendIndex(
             "name": "toArray",
             "summary": "Convert\u0020to\u0020array.",
             "url": "classes/Decision-Model-Member.html#method_toArray"
-        },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003AtoApiArray\u0028\u0029",
-            "name": "toApiArray",
-            "summary": "",
-            "url": "classes/Decision-Model-Member.html#method_toApiArray"
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetAddresses\u0028\u0029",
             "name": "getAddresses",
@@ -14466,51 +14416,6 @@ Search.appendIndex(
             "summary": "User\u0020Service\n\u0028for\u0020logging\u0020failed\u0020login\u0020attempts\u0029.",
             "url": "classes/User-Authentication-Adapter-Mapper.html#property_loginAttemptService"
         },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\PinMapper",
-            "name": "PinMapper",
-            "summary": "",
-            "url": "classes/User-Authentication-Adapter-PinMapper.html"
-        },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\PinMapper\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "Constructor.",
-            "url": "classes/User-Authentication-Adapter-PinMapper.html#method___construct"
-        },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\PinMapper\u003A\u003Aauthenticate\u0028\u0029",
-            "name": "authenticate",
-            "summary": "Try\u0020to\u0020authenticate.",
-            "url": "classes/User-Authentication-Adapter-PinMapper.html#method_authenticate"
-        },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\PinMapper\u003A\u003AsetCredentials\u0028\u0029",
-            "name": "setCredentials",
-            "summary": "Sets\u0020the\u0020credentials\u0020used\u0020to\u0020authenticate.",
-            "url": "classes/User-Authentication-Adapter-PinMapper.html#method_setCredentials"
-        },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\PinMapper\u003A\u003AgetMapper\u0028\u0029",
-            "name": "getMapper",
-            "summary": "Get\u0020the\u0020mapper.",
-            "url": "classes/User-Authentication-Adapter-PinMapper.html#method_getMapper"
-        },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\PinMapper\u003A\u003A\u0024mapper",
-            "name": "mapper",
-            "summary": "Mapper.",
-            "url": "classes/User-Authentication-Adapter-PinMapper.html#property_mapper"
-        },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\PinMapper\u003A\u003A\u0024loginAttemptService",
-            "name": "loginAttemptService",
-            "summary": "User\u0020Service\n\u0028for\u0020logging\u0020failed\u0020login\u0020attempts\u0029.",
-            "url": "classes/User-Authentication-Adapter-PinMapper.html#property_loginAttemptService"
-        },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\PinMapper\u003A\u003A\u0024lidnr",
-            "name": "lidnr",
-            "summary": "Lidnr.",
-            "url": "classes/User-Authentication-Adapter-PinMapper.html#property_lidnr"
-        },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\PinMapper\u003A\u003A\u0024pincode",
-            "name": "pincode",
-            "summary": "Pincode.",
-            "url": "classes/User-Authentication-Adapter-PinMapper.html#property_pincode"
-        },                {
             "fqsen": "\\User\\Authentication\\ApiAuthenticationService",
             "name": "ApiAuthenticationService",
             "summary": "",
@@ -14976,11 +14881,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Controller-UserController.html#method_handleRedirect"
         },                {
-            "fqsen": "\\User\\Controller\\UserController\u003A\u003ApinLoginAction\u0028\u0029",
-            "name": "pinLoginAction",
-            "summary": "",
-            "url": "classes/User-Controller-UserController.html#method_pinLoginAction"
-        },                {
             "fqsen": "\\User\\Controller\\UserController\u003A\u003AlogoutAction\u0028\u0029",
             "name": "logoutAction",
             "summary": "User\u0020logout\u0020action.",
@@ -15101,10 +15001,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Form-Register.html#method_getInputSpecification"
         },                {
-            "fqsen": "\\User\\Form\\Register\u003A\u003AERROR_WRONG_EMAIL",
-            "name": "ERROR_WRONG_EMAIL",
+            "fqsen": "\\User\\Form\\Register\u003A\u003AERROR_NO_EMAIL",
+            "name": "ERROR_NO_EMAIL",
             "summary": "",
-            "url": "classes/User-Form-Register.html#constant_ERROR_WRONG_EMAIL"
+            "url": "classes/User-Form-Register.html#constant_ERROR_NO_EMAIL"
         },                {
             "fqsen": "\\User\\Form\\Register\u003A\u003AERROR_MEMBER_NOT_EXISTS",
             "name": "ERROR_MEMBER_NOT_EXISTS",
@@ -15125,6 +15025,26 @@ Search.appendIndex(
             "name": "translate",
             "summary": "",
             "url": "classes/User-Form-Register.html#property_translate"
+        },                {
+            "fqsen": "\\User\\Form\\Reset",
+            "name": "Reset",
+            "summary": "",
+            "url": "classes/User-Form-Reset.html"
+        },                {
+            "fqsen": "\\User\\Form\\Reset\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/User-Form-Reset.html#method___construct"
+        },                {
+            "fqsen": "\\User\\Form\\Reset\u003A\u003AgetInputSpecification\u0028\u0029",
+            "name": "getInputSpecification",
+            "summary": "",
+            "url": "classes/User-Form-Reset.html#method_getInputSpecification"
+        },                {
+            "fqsen": "\\User\\Form\\Reset\u003A\u003A\u0024translate",
+            "name": "translate",
+            "summary": "",
+            "url": "classes/User-Form-Reset.html#property_translate"
         },                {
             "fqsen": "\\User\\Mapper\\ApiApp",
             "name": "ApiApp",
@@ -15526,16 +15446,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Model-LoginAttempt.html#method_setIp"
         },                {
-            "fqsen": "\\User\\Model\\LoginAttempt\u003A\u003AgetType\u0028\u0029",
-            "name": "getType",
-            "summary": "",
-            "url": "classes/User-Model-LoginAttempt.html#method_getType"
-        },                {
-            "fqsen": "\\User\\Model\\LoginAttempt\u003A\u003AsetType\u0028\u0029",
-            "name": "setType",
-            "summary": "",
-            "url": "classes/User-Model-LoginAttempt.html#method_setType"
-        },                {
             "fqsen": "\\User\\Model\\LoginAttempt\u003A\u003AgetTime\u0028\u0029",
             "name": "getTime",
             "summary": "",
@@ -15545,16 +15455,6 @@ Search.appendIndex(
             "name": "setTime",
             "summary": "",
             "url": "classes/User-Model-LoginAttempt.html#method_setTime"
-        },                {
-            "fqsen": "\\User\\Model\\LoginAttempt\u003A\u003ATYPE_PIN",
-            "name": "TYPE_PIN",
-            "summary": "",
-            "url": "classes/User-Model-LoginAttempt.html#constant_TYPE_PIN"
-        },                {
-            "fqsen": "\\User\\Model\\LoginAttempt\u003A\u003ATYPE_NORMAL",
-            "name": "TYPE_NORMAL",
-            "summary": "",
-            "url": "classes/User-Model-LoginAttempt.html#constant_TYPE_NORMAL"
         },                {
             "fqsen": "\\User\\Model\\LoginAttempt\u003A\u003A\u0024id",
             "name": "id",
@@ -15570,11 +15470,6 @@ Search.appendIndex(
             "name": "ip",
             "summary": "The\u0020ip\u0020from\u0020which\u0020the\u0020login\u0020was\u0020attempted.",
             "url": "classes/User-Model-LoginAttempt.html#property_ip"
-        },                {
-            "fqsen": "\\User\\Model\\LoginAttempt\u003A\u003A\u0024type",
-            "name": "type",
-            "summary": "Type\u0020of\u0020login\u0020\u007Bpin,normal\u007D.",
-            "url": "classes/User-Model-LoginAttempt.html#property_type"
         },                {
             "fqsen": "\\User\\Model\\LoginAttempt\u003A\u003A\u0024time",
             "name": "time",
@@ -15596,11 +15491,6 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020membership\u0020number.",
             "url": "classes/User-Model-NewUser.html#method_getLidnr"
         },                {
-            "fqsen": "\\User\\Model\\NewUser\u003A\u003AgetEmail\u0028\u0029",
-            "name": "getEmail",
-            "summary": "Get\u0020the\u0020user\u0027s\u0020email\u0020address.",
-            "url": "classes/User-Model-NewUser.html#method_getEmail"
-        },                {
             "fqsen": "\\User\\Model\\NewUser\u003A\u003AgetCode\u0028\u0029",
             "name": "getCode",
             "summary": "Get\u0020the\u0020activation\u0020code.",
@@ -15621,11 +15511,6 @@ Search.appendIndex(
             "summary": "Set\u0020the\u0020user\u0027s\u0020membership\u0020number.",
             "url": "classes/User-Model-NewUser.html#method_setLidnr"
         },                {
-            "fqsen": "\\User\\Model\\NewUser\u003A\u003AsetEmail\u0028\u0029",
-            "name": "setEmail",
-            "summary": "Set\u0020the\u0020user\u0027s\u0020email\u0020address.",
-            "url": "classes/User-Model-NewUser.html#method_setEmail"
-        },                {
             "fqsen": "\\User\\Model\\NewUser\u003A\u003AsetCode\u0028\u0029",
             "name": "setCode",
             "summary": "Set\u0020the\u0020activation\u0020code.",
@@ -15640,11 +15525,6 @@ Search.appendIndex(
             "name": "lidnr",
             "summary": "The\u0020membership\u0020number.",
             "url": "classes/User-Model-NewUser.html#property_lidnr"
-        },                {
-            "fqsen": "\\User\\Model\\NewUser\u003A\u003A\u0024email",
-            "name": "email",
-            "summary": "The\u0020user\u0027s\u0020email\u0020address.",
-            "url": "classes/User-Model-NewUser.html#property_email"
         },                {
             "fqsen": "\\User\\Model\\NewUser\u003A\u003A\u0024code",
             "name": "code",
@@ -15721,11 +15601,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Model-User.html#method_setLidnr"
         },                {
-            "fqsen": "\\User\\Model\\User\u003A\u003AsetEmail\u0028\u0029",
-            "name": "setEmail",
-            "summary": "",
-            "url": "classes/User-Model-User.html#method_setEmail"
-        },                {
             "fqsen": "\\User\\Model\\User\u003A\u003AsetMember\u0028\u0029",
             "name": "setMember",
             "summary": "",
@@ -15745,11 +15620,6 @@ Search.appendIndex(
             "name": "lidnr",
             "summary": "The\u0020membership\u0020number.",
             "url": "classes/User-Model-User.html#property_lidnr"
-        },                {
-            "fqsen": "\\User\\Model\\User\u003A\u003A\u0024email",
-            "name": "email",
-            "summary": "The\u0020user\u0027s\u0020email\u0020address.",
-            "url": "classes/User-Model-User.html#property_email"
         },                {
             "fqsen": "\\User\\Model\\User\u003A\u003A\u0024password",
             "name": "password",
@@ -16106,11 +15976,6 @@ Search.appendIndex(
             "summary": "Log\u0020the\u0020user\u0020in.",
             "url": "classes/User-Service-User.html#method_login"
         },                {
-            "fqsen": "\\User\\Service\\User\u003A\u003ApinLogin\u0028\u0029",
-            "name": "pinLogin",
-            "summary": "Login\u0020using\u0020a\u0020pin\u0020code.",
-            "url": "classes/User-Service-User.html#method_pinLogin"
-        },                {
             "fqsen": "\\User\\Service\\User\u003A\u003Alogout\u0028\u0029",
             "name": "logout",
             "summary": "Log\u0020the\u0020user\u0020out.",
@@ -16141,6 +16006,11 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020password\u0020form.",
             "url": "classes/User-Service-User.html#method_getPasswordForm"
         },                {
+            "fqsen": "\\User\\Service\\User\u003A\u003AgetResetForm\u0028\u0029",
+            "name": "getResetForm",
+            "summary": "Get\u0020the\u0020reset\u0020form.",
+            "url": "classes/User-Service-User.html#method_getResetForm"
+        },                {
             "fqsen": "\\User\\Service\\User\u003A\u003AgetLoginForm\u0028\u0029",
             "name": "getLoginForm",
             "summary": "Get\u0020the\u0020login\u0020form.",
@@ -16165,11 +16035,6 @@ Search.appendIndex(
             "name": "authService",
             "summary": "",
             "url": "classes/User-Service-User.html#property_authService"
-        },                {
-            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024pinAuthService",
-            "name": "pinAuthService",
-            "summary": "",
-            "url": "classes/User-Service-User.html#property_pinAuthService"
         },                {
             "fqsen": "\\User\\Service\\User\u003A\u003A\u0024emailService",
             "name": "emailService",
@@ -16210,6 +16075,11 @@ Search.appendIndex(
             "name": "passwordForm",
             "summary": "",
             "url": "classes/User-Service-User.html#property_passwordForm"
+        },                {
+            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024resetForm",
+            "name": "resetForm",
+            "summary": "",
+            "url": "classes/User-Service-User.html#property_resetForm"
         },                {
             "fqsen": "\\UserTest\\ControllerTest",
             "name": "ControllerTest",
