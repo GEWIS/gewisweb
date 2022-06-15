@@ -35,13 +35,6 @@ class User implements RoleInterface, ResourceInterface
     protected int $lidnr;
 
     /**
-     * The user's email address.
-     * Deprecated.
-     */
-    #[Column(type: "string")]
-    protected string $email;
-
-    /**
      * The user's password.
      */
     #[Column(type: "string")]
@@ -81,7 +74,6 @@ class User implements RoleInterface, ResourceInterface
 
         if (null !== $newUser) {
             $this->lidnr = $newUser->getLidnr();
-            $this->email = $newUser->getEmail();
             $this->member = $newUser->getMember();
         }
     }
@@ -99,9 +91,9 @@ class User implements RoleInterface, ResourceInterface
     /**
      * Get the user's email address.
      *
-     * @return string
+     * @return string|null
      */
-    public function getEmail(): string
+    public function getEmail(): string|null
     {
         return $this->member->getEmail();
     }
@@ -214,14 +206,6 @@ class User implements RoleInterface, ResourceInterface
     }
 
     /**
-     * @param string $email
-     */
-    public function setEmail(string $email): void
-    {
-        $this->email = $email;
-    }
-
-    /**
      * @param MemberModel $member
      */
     public function setMember(MemberModel $member): void
@@ -236,7 +220,6 @@ class User implements RoleInterface, ResourceInterface
     {
         return [
             'lidnr' => $this->getLidnr(),
-            'email' => $this->getEmail(),
             'member' => $this->getMember()->toArray(),
         ];
     }

@@ -50,7 +50,6 @@ class ActivityMapperTest extends BaseMapperTest
     {
         $this->user = new User();
         $this->user->setLidnr(8000);
-        $this->user->setEmail('web@gewis.nl');
         $this->user->setPassword('');
 
         $this->member = new Member();

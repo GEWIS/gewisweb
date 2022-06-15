@@ -4,7 +4,7 @@ $this->headTitle($this->translate('Reset password'));
 <section class="section">
     <div class="container">
         <?php if (isset($reset) && $reset): ?>
-            <?= sprintf($this->translate('An email has been sent to %s with instructions for resetting your password.'), $this->user->getEmail()) ?>
+            <?= sprintf($this->translate('An e-mail has been sent with instructions for resetting your password. If you have not received an e-mail, try again in 20 minutes.')) ?>
         <?php else: ?>
             <?php
             $form->prepare();
@@ -50,6 +50,8 @@ $this->headTitle($this->translate('Reset password'));
                                     <?= $this->formRow($submit); ?>
                                 </div>
                             </div>
+
+                            <?= $this->formElement($form->get('security')) ?>
 
                             <?= $this->form()->closeTag($form); ?>
                         </div>

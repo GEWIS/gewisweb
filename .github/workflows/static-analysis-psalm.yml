@@ -30,7 +30,6 @@ jobs:
                 with:
                     php-version: '8.1'
                     extensions: calendar, curl, exif, gd, intl, opcache, pgsql, pdo_mysql, pdo_pgsql, zip, imagick, memcached, xdebug
-                    tools: cs2pr
 
             -   name: Get Composer cache directory
                 id: composer-cache-head
@@ -98,4 +97,4 @@ jobs:
                 env:
                     DOCKER_DB_HOST: 127.0.0.1
                 run: |
-                    vendor/bin/psalm  --no-diff --no-cache --show-info=true --no-progress --output-format=checkstyle | cs2pr
+                    vendor/bin/psalm  --no-diff --no-cache --no-progress --output-format=github

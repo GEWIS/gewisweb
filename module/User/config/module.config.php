@@ -58,15 +58,6 @@ return [
                             ],
                         ],
                     ],
-                    'pinlogin' => [
-                        'type' => Literal::class,
-                        'options' => [
-                            'route' => '/pinlogin',
-                            'defaults' => [
-                                'action' => 'pinLogin',
-                            ],
-                        ],
-                    ],
                     'activate_reset' => [
                         'type' => Segment::class,
                         'options' => [

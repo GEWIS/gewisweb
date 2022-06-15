@@ -50,8 +50,11 @@ class Member
     /**
      * Member's email address.
      */
-    #[Column(type: "string")]
-    protected string $email;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $email;
 
     /**
      * Member's last name.
@@ -267,9 +270,9 @@ class Member
     /**
      * Get the member's email address.
      *
-     * @return string
+     * @return string|null
      */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -327,9 +330,9 @@ class Member
     /**
      * Set the member's email address.
      *
-     * @param string $email
+     * @param string|null $email
      */
-    public function setEmail(string $email): void
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
@@ -702,26 +705,6 @@ class Member
             'middleName' => $this->getMiddleName(),
             'initials' => $this->getInitials(),
             'firstName' => $this->getFirstName(),
-            'generation' => $this->getGeneration(),
-            'membershipEndsOn' => $this->getMembershipEndsOn()?->format(DateTimeInterface::ISO8601) ?? null,
-            'expiration' => $this->getExpiration()->format('l j F Y'),
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function toApiArray(): array
-    {
-        return [
-            'lidnr' => $this->getLidnr(),
-            'email' => $this->getEmail(),
-            'fullName' => $this->getFullName(),
-            'initials' => $this->getInitials(),
-            'firstName' => $this->getFirstName(),
-            'middleName' => $this->getMiddleName(),
-            'lastName' => $this->getLastName(),
-            'birth' => $this->getBirth()->format(DateTimeInterface::ISO8601),
             'generation' => $this->getGeneration(),
             'membershipEndsOn' => $this->getMembershipEndsOn()?->format(DateTimeInterface::ISO8601) ?? null,
             'expiration' => $this->getExpiration()->format(DateTimeInterface::ISO8601),

@@ -26,12 +26,6 @@ class NewUser
     protected int $lidnr;
 
     /**
-     * The user's email address.
-     */
-    #[Column(type: "string")]
-    protected string $email;
-
-    /**
      * The user's activation code.
      */
     #[Column(type: "string")]
@@ -68,7 +62,6 @@ class NewUser
     {
         if (null !== $member) {
             $this->lidnr = $member->getLidnr();
-            $this->email = $member->getEmail();
             $this->member = $member;
         }
     }
@@ -81,16 +74,6 @@ class NewUser
     public function getLidnr(): int
     {
         return $this->lidnr;
-    }
-
-    /**
-     * Get the user's email address.
-     *
-     * @return string
-     */
-    public function getEmail(): string
-    {
-        return $this->email;
     }
 
     /**
@@ -131,16 +114,6 @@ class NewUser
     public function setLidnr(int $lidnr): void
     {
         $this->lidnr = $lidnr;
-    }
-
-    /**
-     * Set the user's email address.
-     *
-     * @param string $email
-     */
-    public function setEmail(string $email): void
-    {
-        $this->email = $email;
     }
 
     /**

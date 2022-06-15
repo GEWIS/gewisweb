@@ -13,7 +13,6 @@ class LoginAttempt extends BaseMapper
 {
     /**
      * @param DateTime $since
-     * @param string $type
      * @param string $ip
      * @param UserModel|null $user
      *
@@ -21,17 +20,14 @@ class LoginAttempt extends BaseMapper
      */
     public function getFailedAttemptCount(
         DateTime $since,
-        string $type,
         string $ip,
         ?UserModel $user = null,
     ): int|string {
         $qb = $this->em->createQueryBuilder();
         $qb->select('count(a)')
             ->from($this->getRepositoryName(), 'a')
-            ->where('a.type = :type')
-            ->andWhere('a.time > :since')
+            ->where('a.time > :since')
             ->andWhere('a.ip = :ip')
-            ->setParameter('type', $type)
             ->setParameter('since', $since)
             ->setParameter('ip', $ip);
 

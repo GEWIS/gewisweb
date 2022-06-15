@@ -3,7 +3,7 @@
 namespace User\Form;
 
 use Laminas\Form\Element\{
-    Email,
+    Csrf,
     Number,
     Submit,
 };
@@ -12,13 +12,12 @@ use Laminas\InputFilter\InputProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\{
     Digits,
-    EmailAddress,
     NotEmpty,
 };
 
 class Register extends Form implements InputProviderInterface
 {
-    public const ERROR_WRONG_EMAIL = 'wrong_email';
+    public const ERROR_NO_EMAIL = 'no_email';
     public const ERROR_MEMBER_NOT_EXISTS = 'member_not_exists';
     public const ERROR_USER_ALREADY_EXISTS = 'user_already_exists';
     public const ERROR_ALREADY_REGISTERED = 'already_registered';
@@ -48,21 +47,18 @@ class Register extends Form implements InputProviderInterface
 
         $this->add(
             [
-                'name' => 'email',
-                'type' => Email::class,
-                'options' => [
-                    'label' => $translate->translate('E-mail address'),
+                'name' => 'submit',
+                'type' => Submit::class,
+                'attributes' => [
+                    'value' => $translate->translate('Register'),
                 ],
             ]
         );
 
         $this->add(
             [
-                'name' => 'submit',
-                'type' => Submit::class,
-                'attributes' => [
-                    'value' => $translate->translate('Register'),
-                ],
+                'name' => 'security',
+                'type' => Csrf::class,
             ]
         );
     }
@@ -75,11 +71,11 @@ class Register extends Form implements InputProviderInterface
     public function setError(string $error): void
     {
         switch ($error) {
-            case self::ERROR_WRONG_EMAIL:
+            case self::ERROR_NO_EMAIL:
                 $this->setMessages(
                     [
-                        'email' => [
-                            $this->translate->translate('This email address does not be long to the given member.'),
+                        'lidnr' => [
+                            $this->translate->translate('This member cannot create an account, please contact the secretary for more information.'),
                         ],
                     ]
                 );
@@ -97,7 +93,7 @@ class Register extends Form implements InputProviderInterface
                 $this->setMessages(
                     [
                         'lidnr' => [
-                            $this->translate->translate('You already attempted to register, please check your email or try again after 15 minutes.'),
+                            $this->translate->translate('You already attempted to register, please check your email or try again after 20 minutes.'),
                         ],
                     ]
                 );
@@ -128,17 +124,6 @@ class Register extends Form implements InputProviderInterface
                     ],
                     [
                         'name' => Digits::class,
-                    ],
-                ],
-            ],
-            'email' => [
-                'required' => true,
-                'validators' => [
-                    [
-                        'name' => NotEmpty::class,
-                    ],
-                    [
-                        'name' => EmailAddress::class,
                     ],
                 ],
             ],

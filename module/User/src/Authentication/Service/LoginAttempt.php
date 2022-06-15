@@ -9,7 +9,10 @@ use User\Mapper\{
     LoginAttempt as LoginAttemptMapper,
     User as UserMapper,
 };
-use User\Model\User as UserModel;
+use User\Model\{
+    LoginAttempt as LoginAttemptModel,
+    User as UserModel,
+};
 
 class LoginAttempt
 {
@@ -61,18 +64,17 @@ class LoginAttempt
 
     /**
      * @param UserModel $user
-     * @param string $type
      */
-    public function logFailedLogin(
-        UserModel $user,
-        string $type,
-    ): void {
-        $attempt = new \User\Model\LoginAttempt();
+    public function logFailedLogin(UserModel $user): void
+    {
+        $attempt = new LoginAttemptModel();
+
         $attempt->setIp($this->remoteAddress);
         $attempt->setTime(new DateTime());
-        $attempt->setType($type);
+
         $user = $this->detachUser($user);
         $attempt->setUser($user);
+
         $this->loginAttemptMapper->persist($attempt);
     }
 
@@ -96,22 +98,19 @@ class LoginAttempt
 
     /**
      * @param UserModel $user
-     * @param string $type
      *
      * @return bool
      */
-    public function loginAttemptsExceeded(
-        UserModel $user,
-        string $type,
-    ): bool {
+    public function loginAttemptsExceeded(UserModel $user): bool
+    {
         $ip = $this->remoteAddress;
-        $since = (new DateTime())->sub(new DateInterval('PT' . $this->rateLimitConfig[$type]['lockout_time'] . 'M'));
+        $since = (new DateTime())->sub(new DateInterval('PT' . $this->rateLimitConfig['lockout_time'] . 'M'));
 
-        if ($this->loginAttemptMapper->getFailedAttemptCount($since, $type, $ip) > $this->rateLimitConfig[$type]['ip']) {
+        if ($this->loginAttemptMapper->getFailedAttemptCount($since, $ip) > $this->rateLimitConfig['ip']) {
             return true;
         }
 
-        if ($this->loginAttemptMapper->getFailedAttemptCount($since, $type, $ip, $user) > $this->rateLimitConfig[$type]['user']) {
+        if ($this->loginAttemptMapper->getFailedAttemptCount($since, $ip, $user) > $this->rateLimitConfig['user']) {
             return true;
         }
 

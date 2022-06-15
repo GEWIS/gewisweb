@@ -4,7 +4,7 @@ $this->headTitle($this->translate('Register'));
 <section class="section">
     <div class="container">
         <?php if (isset($this->registered) && $this->registered): ?>
-            <?= sprintf($this->translate('You have been registered. An email has been sent to %s for activation.'), $this->user->getEmail()) ?>
+            <?= $this->translate('Your account for the GEWIS website has been registered, check your inbox for an activation e-mail.') ?>
         <?php else: ?>
             <?php
             $form = $this->form;
@@ -25,21 +25,19 @@ $this->headTitle($this->translate('Register'));
                         <div class="panel-body">
                             <?= $this->form()->openTag($form); ?>
 
-                            <?php foreach (['lidnr', 'email'] as $field): ?>
-                                <?php
-                                $element = $form->get($field);
-                                $element->setAttribute('id', $field);
-                                $element->setAttribute('class', 'form-control');
-                                ?>
-                                <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-                                    <label for="<?= $element->getAttribute('id') ?>"
-                                           class="control-label col-sm-5"><?= $element->getLabel() ?></label>
-                                    <div class="col-sm-7">
-                                        <?= $this->formInput($element) ?>
-                                        <?= $this->formElementErrors($element, ['class' => 'help-block']); ?>
-                                    </div>
+                            <?php
+                            $element = $form->get('lidnr');
+                            $element->setAttribute('id', 'lidnr');
+                            $element->setAttribute('class', 'form-control');
+                            ?>
+                            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                                <label for="<?= $element->getAttribute('id') ?>"
+                                       class="control-label col-sm-5"><?= $element->getLabel() ?></label>
+                                <div class="col-sm-7">
+                                    <?= $this->formInput($element) ?>
+                                    <?= $this->formElementErrors($element, ['class' => 'help-block']); ?>
                                 </div>
-                            <?php endforeach; ?>
+                            </div>
 
                             <div class="form-group">
                                 <div class="col-sm-offset-5 col-sm-7">
@@ -50,6 +48,8 @@ $this->headTitle($this->translate('Register'));
                                     <?= $this->formRow($submit); ?>
                                 </div>
                             </div>
+
+                            <?= $this->formElement($form->get('security')) ?>
 
                             <?= $this->form()->closeTag($form); ?>
                         </div>

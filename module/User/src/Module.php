@@ -13,7 +13,6 @@ use Psr\Container\ContainerInterface;
 use User\Authentication\{
     Adapter\ApiMapper,
     Adapter\Mapper,
-    Adapter\PinMapper,
     ApiAuthenticationService,
     AuthenticationService,
     Service\LoginAttempt as LoginAttemptService,
@@ -34,6 +33,7 @@ use User\Form\{
     Login as LoginForm,
     Password as PasswordForm,
     Register as RegisterForm,
+    Reset as ResetForm,
 };
 use User\Permissions\NotAllowedException;
 use User\Service\{
@@ -114,7 +114,6 @@ class Module
                     $translator = $container->get(MvcTranslator::class);
                     $bcrypt = $container->get('user_bcrypt');
                     $authService = $container->get('user_auth_service');
-                    $pinMapper = $container->get('user_pin_auth_service');
                     $emailService = $container->get('user_service_email');
                     $userMapper = $container->get('user_mapper_user');
                     $newUserMapper = $container->get('user_mapper_newuser');
@@ -123,13 +122,13 @@ class Module
                     $activateForm = $container->get('user_form_activate');
                     $loginForm = $container->get('user_form_login');
                     $passwordForm = $container->get('user_form_password');
+                    $resetForm = $container->get('user_form_reset');
 
                     return new UserService(
                         $aclService,
                         $translator,
                         $bcrypt,
                         $authService,
-                        $pinMapper,
                         $emailService,
                         $userMapper,
                         $newUserMapper,
@@ -138,6 +137,7 @@ class Module
                         $activateForm,
                         $loginForm,
                         $passwordForm,
+                        $resetForm,
                     );
                 },
                 'user_service_loginattempt' => function (ContainerInterface $container) {
@@ -232,6 +232,11 @@ class Module
                         $container->get(MvcTranslator::class),
                     );
                 },
+                'user_form_reset' => function (ContainerInterface $container) {
+                    return new ResetForm(
+                        $container->get(MvcTranslator::class),
+                    );
+                },
                 'user_form_apitoken' => function (ContainerInterface $container) {
                     $form = new ApiTokenForm(
                         $container->get(MvcTranslator::class)
@@ -288,12 +293,6 @@ class Module
                         $container->get('user_mapper_apiuser'),
                     );
                 },
-                'user_pin_auth_adapter' => function (ContainerInterface $container) {
-                    return new PinMapper(
-                        $container->get('user_service_loginattempt'),
-                        $container->get('user_mapper_user'),
-                    );
-                },
                 'user_auth_service' => function (ContainerInterface $container) {
                     return new AuthenticationService(
                         $container->get('user_auth_storage'),
@@ -303,12 +302,6 @@ class Module
                 'user_apiauth_service' => function (ContainerInterface $container) {
                     return new ApiAuthenticationService(
                         $container->get('user_apiauth_adapter'),
-                    );
-                },
-                'user_pin_auth_service' => function (ContainerInterface $container) {
-                    return new AuthenticationService(
-                        $container->get('user_auth_storage'),
-                        $container->get('user_pin_auth_adapter'),
                     );
                 },
                 'user_remoteaddress' => function (ContainerInterface $container) {

@@ -8,14 +8,13 @@ use Decision\Mapper\Member as MemberMapper;
 use Laminas\Crypt\Password\Bcrypt;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Stdlib\Parameters;
-use RuntimeException;
-use User\Authentication\Adapter\Mapper;
 use User\Authentication\AuthenticationService;
 use User\Form\{
     Activate as ActivateForm,
     Login as LoginForm,
     Password as PasswordForm,
     Register as RegisterForm,
+    Reset as ResetForm,
 };
 use User\Mapper\{
     NewUser as NewUserMapper,
@@ -49,15 +48,8 @@ class User
 
     /**
      * @var AuthenticationService
-     * with regular Mapper adapter
      */
     private AuthenticationService $authService;
-
-    /**
-     * @var AuthenticationService
-     * with PinMapper adapter
-     */
-    private AuthenticationService $pinAuthService;
 
     /**
      * @var Email
@@ -100,11 +92,15 @@ class User
     private PasswordForm $passwordForm;
 
     /**
+     * @var ResetForm
+     */
+    private ResetForm $resetForm;
+
+    /**
      * @param AclService $aclService
      * @param Translator $translator
      * @param Bcrypt $bcrypt
      * @param AuthenticationService $authService
-     * @param AuthenticationService $pinAuthService
      * @param Email $emailService
      * @param UserMapper $userMapper
      * @param NewUserMapper $newUserMapper
@@ -113,13 +109,13 @@ class User
      * @param ActivateForm $activateForm
      * @param LoginForm $loginForm
      * @param PasswordForm $passwordForm
+     * @param ResetForm $resetForm;
      */
     public function __construct(
         AclService $aclService,
         Translator $translator,
         Bcrypt $bcrypt,
         AuthenticationService $authService,
-        AuthenticationService $pinAuthService,
         Email $emailService,
         UserMapper $userMapper,
         NewUserMapper $newUserMapper,
@@ -128,12 +124,12 @@ class User
         ActivateForm $activateForm,
         LoginForm $loginForm,
         PasswordForm $passwordForm,
+        ResetForm $resetForm,
     ) {
         $this->aclService = $aclService;
         $this->translator = $translator;
         $this->bcrypt = $bcrypt;
         $this->authService = $authService;
-        $this->pinAuthService = $pinAuthService;
         $this->emailService = $emailService;
         $this->userMapper = $userMapper;
         $this->newUserMapper = $newUserMapper;
@@ -142,6 +138,7 @@ class User
         $this->activateForm = $activateForm;
         $this->loginForm = $loginForm;
         $this->passwordForm = $passwordForm;
+        $this->resetForm = $resetForm;
     }
 
     /**
@@ -209,9 +206,9 @@ class User
             return null;
         }
 
-        // check if the email is the same
-        if ($member->getEmail() != $data['email']) {
-            $form->setError(RegisterForm::ERROR_WRONG_EMAIL);
+        // Check if the member has an e-mail address.
+        if (null === $member->getEmail()) {
+            $form->setError(RegisterForm::ERROR_NO_EMAIL);
 
             return null;
         }
@@ -226,13 +223,16 @@ class User
 
         $newUser = $this->newUserMapper->getByLidnr($data['lidnr']);
         if (null !== $newUser) {
+            // Ensure that we only send the activation email every 20 minutes.
             $time = $newUser->getTime();
-            $requiredInterval = (new DateTime())->sub(new DateInterval('PT900S'));
+            $requiredInterval = (new DateTime())->sub(new DateInterval('PT1200S'));
+
             if ($time > $requiredInterval) {
                 $form->setError(RegisterForm::ERROR_ALREADY_REGISTERED);
 
                 return null;
             }
+
             $this->newUserMapper->deleteByMember($member);
         }
 
@@ -253,51 +253,40 @@ class User
      *
      * Will also send an email to the user.
      *
-     * @param Parameters $data Reset data
-     *
-     * @return UserModel|null User. Null when the password could not be reset.
+     * @param array $data Reset data
      */
-    public function reset(Parameters $data): ?UserModel
+    public function reset(array $data): void
     {
-        $form = $this->registerForm;
-        $form->setData($data);
-        // TODO: Move form validation to controller.
-        if (!$form->isValid()) {
-            return null;
+        $user = $this->userMapper->findByLidnr($data['lidnr']);
+
+        if (null !== $user) {
+            $member = $user->getMember();
+
+            if (strtolower($member->getEmail()) === strtolower($data['email'])) {
+                $newUser = $this->newUserMapper->getByLidnr($data['lidnr']);
+
+                if (null !== $newUser) {
+                    // Ensure that we only send the password reset e-mail every 20 minutes at most.
+                    $time = $newUser->getTime();
+                    $requiredInterval = (new DateTime())->sub(new DateInterval('PT1200S'));
+
+                    if ($time > $requiredInterval) {
+                        return;
+                    }
+
+                    $this->newUserMapper->deleteByMember($member);
+                }
+
+                // create new activation
+                $newUser = new NewUserModel($member);
+                $newUser->setCode($this->generateCode());
+                $newUser->setTime(new DateTime());
+
+                $this->newUserMapper->persist($newUser);
+
+                $this->emailService->sendPasswordLostMail($newUser, $member);
+            }
         }
-
-        // get the member
-        $data = $form->getData();
-        $member = $this->memberMapper->findByLidnr($data['lidnr']);
-
-        // check if the member has a corresponding user.
-        $user = $this->userMapper->findByLidnr($member->getLidnr());
-        if (null === $user) {
-            $form->setError(RegisterForm::ERROR_MEMBER_NOT_EXISTS);
-
-            return null;
-        }
-
-        // Check if the e-mail entered and the e-mail in the database match
-        if ($member->getEmail() != $data['email']) {
-            $form->setError(RegisterForm::ERROR_WRONG_EMAIL);
-
-            return null;
-        }
-
-        // Invalidate all previous password reset codes
-        // Makes sure that no double password reset codes are present in the database
-        $this->newUserMapper->deleteByMember($member);
-
-        // create new activation
-        $newUser = new NewUserModel($member);
-        $newUser->setCode($this->generateCode());
-
-        $this->newUserMapper->persist($newUser);
-
-        $this->emailService->sendPasswordLostMail($newUser, $member);
-
-        return $user;
     }
 
     /**
@@ -321,11 +310,6 @@ class User
 
         // check the password
         $adapter = $this->authService->getAdapter();
-
-        if (!($adapter instanceof Mapper)) {
-            throw new RuntimeException("Adapter was not of the expected type");
-        }
-
         $user = $this->authService->getIdentity();
 
         if (!$adapter->verifyPassword($data['old_password'], $user->getPassword())) {
@@ -381,32 +365,6 @@ class User
     }
 
     /**
-     * Login using a pin code.
-     *
-     * @param Parameters $data
-     *
-     * @return UserModel|null Authenticated user. Null if not authenticated.
-     */
-    public function pinLogin(Parameters $data): ?UserModel
-    {
-        if (!$this->aclService->isAllowed('pin_login', 'user')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to login using pin codes')
-            );
-        }
-
-        // Try to authenticate the user.
-        $result = $this->pinAuthService->authenticate($data['lidnr'], $data['pincode']);
-
-        // Check if authentication was successful.
-        if (!$result->isValid()) {
-            return null;
-        }
-
-        return $this->authService->getIdentity();
-    }
-
-    /**
      * Log the user out.
      */
     public function logout(): void
@@ -434,7 +392,7 @@ class User
      *
      * @return string
      */
-    public static function generateCode(int $length = 20): string
+    public static function generateCode(int $length = 32): string
     {
         $ret = '';
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -480,6 +438,16 @@ class User
         }
 
         return $this->passwordForm;
+    }
+
+    /**
+     * Get the reset form.
+     *
+     * @return ResetForm
+     */
+    public function getResetForm(): ResetForm
+    {
+        return $this->resetForm;
     }
 
     /**

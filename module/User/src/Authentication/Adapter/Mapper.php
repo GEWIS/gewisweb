@@ -80,7 +80,7 @@ class Mapper implements AdapterInterface
 
         $this->mapper->detach($user);
 
-        if ($this->loginAttemptService->loginAttemptsExceeded($user, LoginAttemptModel::TYPE_NORMAL)) {
+        if ($this->loginAttemptService->loginAttemptsExceeded($user)) {
             return new Result(
                 Result::FAILURE,
                 null,
@@ -88,7 +88,7 @@ class Mapper implements AdapterInterface
         }
 
         if (!$this->verifyPassword($this->password, $user->getPassword())) {
-            $this->loginAttemptService->logFailedLogin($user, LoginAttemptModel::TYPE_NORMAL);
+            $this->loginAttemptService->logFailedLogin($user);
 
             return new Result(
                 Result::FAILURE_CREDENTIAL_INVALID,
@@ -111,10 +111,6 @@ class Mapper implements AdapterInterface
         string $password,
         string $hash,
     ): bool {
-        if (0 === strlen($hash)) {
-            throw new RuntimeException("Legacy service is not available for Mapper Auth.");
-        }
-
         if ($this->bcrypt->verify($password, $hash)) {
             return true;
         }

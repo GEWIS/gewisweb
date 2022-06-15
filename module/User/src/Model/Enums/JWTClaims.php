@@ -19,7 +19,7 @@ enum JWTClaims: string
     case MembershipType = 'membership_type';
     case MiddleName = 'middle_name';
 
-    public function getValue(MemberModel $member): bool|int|string
+    public function getValue(MemberModel $member): bool|int|string|null
     {
         return match ($this) {
             self::Email => $member->getEmail(),

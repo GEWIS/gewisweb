@@ -15,7 +15,6 @@ use Application\Service\{
     Email as EmailService,
     FileStorage as FileStorageService,
     Infimum as InfimumService,
-    Legacy as LegacyService,
     WatermarkService,
 };
 use Application\View\Helper\{
@@ -166,9 +165,6 @@ class Module
     {
         return [
             'factories' => [
-                'application_service_legacy' => function () {
-                    return new LegacyService();
-                },
                 'application_service_email' => function (ContainerInterface $container) {
                     $renderer = $container->get('ViewRenderer');
                     $transport = $container->get('user_mail_transport');
