@@ -8,19 +8,6 @@ jobs:
         name: Psalm
         runs-on: ubuntu-latest
 
-        # Create a MySQL service.
-        services:
-            mysql:
-                image: mariadb
-                env:
-                    MYSQL_ROOT_PASSWORD: gewis
-                    MYSQL_DATABASE: gewis
-                    MYSQL_USER: gewis
-                    MYSQL_PASSWORD: gewis
-                ports:
-                    - 3306:3306
-                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
         steps:
             -   name: Checkout head branch
                 uses: actions/checkout@v2
@@ -62,14 +49,7 @@ jobs:
                 with:
                     env-file: .env.dist
 
-            -   name: Create database
-                env:
-                    DOCKER_DB_HOST: 127.0.0.1
-                run: ./orm orm:schema-tool:update --force
-
             -   name: Generate Psalm Baseline
-                env:
-                    DOCKER_DB_HOST: 127.0.0.1
                 run: |
                     echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?><files/>" > psalm/psalm-baseline.xml
                     echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?><files/>" > psalm/psalm-baseline-pr.xml
@@ -88,13 +68,6 @@ jobs:
                 with:
                     env-file: .env.dist
 
-            -   name: Create database
-                env:
-                    DOCKER_DB_HOST: 127.0.0.1
-                run: ./orm orm:schema-tool:update --force
-
             -   name: Run Psalm
-                env:
-                    DOCKER_DB_HOST: 127.0.0.1
                 run: |
                     vendor/bin/psalm  --no-diff --no-cache --no-progress --output-format=github
