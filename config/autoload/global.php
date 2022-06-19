@@ -43,16 +43,9 @@ return [
     'tue_range' => '131.155.',
 
     'login_rate_limits' => [
-        'normal' => [
-            'user' => 10,
-            'ip' => 100,
-            'lockout_time' => 10,
-        ],
-        'pin' => [
-            'user' => 5,
-            'ip' => 50,
-            'lockout_time' => 20,
-        ],
+         'user' => 5,
+         'ip' => 50,
+         'lockout_time' => 20,
     ],
     'storage' => [
         'storage_dir' => 'public/data',
