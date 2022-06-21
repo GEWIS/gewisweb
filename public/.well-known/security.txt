@@ -1,4 +1,27 @@
-Contact: mailto:web@gewis.nl
-Expires: 2024-12-31T23:00:00.000Z
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Contact: mailto:security@gewis.nl
+Expires: 2025-09-01T01:00:00.000Z
+Encryption: https://pgp.surfnet.nl/pks/lookup?op=get&search=0x701F3551437E221A
 Preferred-Languages: en, nl
+Canonical: https://gewis.nl/.well-known/security.txt
+Canonical: https://www.gewis.nl/.well-known/security.txt
 Policy: https://github.com/GEWIS/gewisweb/blob/master/SECURITY.md
+-----BEGIN PGP SIGNATURE-----
+
+iQJGBAEBCAAwFiEEmdeXXWSwTqSB7tHJfwZbKcXCCAcFAmKx0d8SHHNlY3VyaXR5
+QGdld2lzLm5sAAoJEH8GWynFwggH0EIQAK65BEQundpb9eJ60vfVcyOTaaTrvaFB
+MWohndTqoGUWWBneLTMQqrhprjacC8JCsnGF6JhaFMfcMtEGeL4JcgxEUJFk8yi+
+lPHuUO5kLOTn6ZVF2j+sKu7XiMyAQyE2S1X9gegArTAhpveIU525/x1g/yANL6LO
+X4BQg2/evrr5rueal8gzHaSx9rVi9/lytubp8k4/lCX8zn4jAP4jKkLkToMAw7O6
+5g7WmHBT7ZCx7K/sy2pIEAUFzZJlpc8bnPoiOn4fbBQOYXxiF6Mf7Kx3TEaXoW95
+HzcWkrTuZWl5q3BxiwpX3xQlRC2OnHarfAr+Es+zKq29jqhznm1nST4qSdWKzBg7
+/sE8Wccr1/SSITAei0em9+c8f151kyc+aBAy0XyzUqAej+y3uNnSZDWqAzijCRtB
+ZZxvY2M8LWx7zrHq8sum54XI9hD2XHC+RQ5+Ncm6qO+EI9tC1X4S/qRMTehSlApW
+RwPhdqX1zu3ZK551I8yYhxSjm0Vt9ovw/jKFg2fH0ZTlQ+e8gWUudaxOHFRJF9Y7
+IAtrTIC/q7AM799lOPhf5eVBFb8kU6LHLi6OUeZ2hDP4KG2pTZ12XwEC0y2fP0pz
+sMt81WQLxmU8Baz5ivIbWg91xGDti4fx+t3OLnGKBfgrBHr6E0xGjAvmiisAzE3E
+ePWapxlOZqGF
+=PnWS
+-----END PGP SIGNATURE-----
