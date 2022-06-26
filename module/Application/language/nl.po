@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-26 21:40+0200\n"
-"PO-Revision-Date: 2022-06-26 21:44+0200\n"
+"POT-Creation-Date: 2022-06-26 21:55+0200\n"
+"PO-Revision-Date: 2022-06-26 21:58+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -1379,8 +1379,16 @@ msgstr "Inschrijflijst"
 #: module/Activity/view/activity/admin/participantsTable.phtml:57
 #: module/Decision/view/decision/member/self.phtml:57
 #: module/Decision/view/decision/member/view.phtml:40
-msgid "Onbekend"
-msgstr ""
+#: module/Photo/view/partial/metadata.phtml:8
+#: module/Photo/view/partial/metadata.phtml:15
+#: module/Photo/view/partial/metadata.phtml:36
+#: module/Photo/view/partial/metadata.phtml:43
+#: module/Photo/view/partial/metadata.phtml:50
+#: module/Photo/view/partial/metadata.phtml:57
+#: module/Photo/view/partial/metadata.phtml:64
+#: module/Photo/view/partial/metadata.phtml:73
+msgid "Unknown"
+msgstr "Onbekend"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:63
 #, php-format
@@ -4300,17 +4308,6 @@ msgstr "Het is niet toegestaan om tags te zien."
 msgid "Artist"
 msgstr "Artiest"
 
-#: module/Photo/view/partial/metadata.phtml:8
-#: module/Photo/view/partial/metadata.phtml:15
-#: module/Photo/view/partial/metadata.phtml:36
-#: module/Photo/view/partial/metadata.phtml:43
-#: module/Photo/view/partial/metadata.phtml:50
-#: module/Photo/view/partial/metadata.phtml:57
-#: module/Photo/view/partial/metadata.phtml:64
-#: module/Photo/view/partial/metadata.phtml:73
-msgid "Unknown"
-msgstr "Onbekend"
-
 #: module/Photo/view/partial/metadata.phtml:13
 msgid "Camera"
 msgstr "Camera"
@@ -4721,19 +4718,20 @@ msgid ""
 "This member cannot create an account, please contact the secretary for more "
 "information."
 msgstr ""
+"Dit lid kan geen account aanmaken, neem contact op met de secretaris voor "
+"meer informatie."
 
 #: module/User/src/Form/Register.php:87
 msgid "There is no member with this membership number."
 msgstr "Er is geen lid met dit lidmaatschapsnummer."
 
 #: module/User/src/Form/Register.php:96
-#, fuzzy
 msgid ""
 "You already attempted to register, please check your email or try again "
 "after 20 minutes."
 msgstr ""
-"Je hebt al geprobeerd om te registreren; controleer je email of probeer het "
-"na een kwartier opnieuw."
+"Je hebt al geprobeerd te registreren, controleer je e-mail of probeer het na "
+"20 minuten opnieuw."
 
 #: module/User/src/Form/Register.php:105
 msgid "This member already has an account."
@@ -4906,6 +4904,8 @@ msgid ""
 "Your account for the GEWIS website has been registered, check your inbox for "
 "an activation e-mail."
 msgstr ""
+"Je account voor de GEWIS-website is geregistreerd, controleer je inbox voor "
+"een activerings e-mail."
 
 #: module/User/view/user/user/register.phtml:60
 #, php-format
@@ -4917,10 +4917,9 @@ msgstr ""
 "lid kunt worden, ga naar deze %sinformatie pagina%s."
 
 #: module/User/view/user/user/reset.phtml:7
-#, fuzzy
 msgid ""
 "An e-mail has been sent with instructions for resetting your password. If "
 "you have not received an e-mail, try again in 20 minutes."
 msgstr ""
-"Er is een e-mail naar %s gestuurd met instructies voor het resetten van je "
-"wachtwoord."
+"Er is een e-mail verzonden met instructies om je wachtwoord te resetten. Als "
+"je geen e-mail hebt ontvangen, probeer het dan over 20 minuten opnieuw."

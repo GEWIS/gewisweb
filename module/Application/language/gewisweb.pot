@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-26 21:40+0200\n"
+"POT-Creation-Date: 2022-06-26 21:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -860,7 +860,15 @@ msgstr ""
 #: module/Activity/view/activity/admin/participantsTable.phtml:57
 #: module/Decision/view/decision/member/self.phtml:57
 #: module/Decision/view/decision/member/view.phtml:40
-msgid "Onbekend"
+#: module/Photo/view/partial/metadata.phtml:8
+#: module/Photo/view/partial/metadata.phtml:15
+#: module/Photo/view/partial/metadata.phtml:36
+#: module/Photo/view/partial/metadata.phtml:43
+#: module/Photo/view/partial/metadata.phtml:50
+#: module/Photo/view/partial/metadata.phtml:57
+#: module/Photo/view/partial/metadata.phtml:64
+#: module/Photo/view/partial/metadata.phtml:73
+msgid "Unknown"
 msgstr ""
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:63
@@ -2989,17 +2997,6 @@ msgstr ""
 
 #: module/Photo/view/partial/metadata.phtml:6
 msgid "Artist"
-msgstr ""
-
-#: module/Photo/view/partial/metadata.phtml:8
-#: module/Photo/view/partial/metadata.phtml:15
-#: module/Photo/view/partial/metadata.phtml:36
-#: module/Photo/view/partial/metadata.phtml:43
-#: module/Photo/view/partial/metadata.phtml:50
-#: module/Photo/view/partial/metadata.phtml:57
-#: module/Photo/view/partial/metadata.phtml:64
-#: module/Photo/view/partial/metadata.phtml:73
-msgid "Unknown"
 msgstr ""
 
 #: module/Photo/view/partial/metadata.phtml:13
