@@ -41,15 +41,8 @@ class ApiApp
             'nonce' => bin2hex(openssl_random_pseudo_bytes(16)),
         ];
 
-        $claimsToAdd = $app->getClaims();
-
-        // Always provide the lidnr (even if no claims have been declared).
-        if (empty($claimsToAdd)) {
-            $token['lidnr'] = $member->getLidnr();
-        } else {
-            foreach ($app->getClaims() as $claim) {
-                $token[$claim->value] = $claim->getValue($member);
-            }
+        foreach ($app->getClaims() as $claim) {
+            $token[$claim->value] = $claim->getValue($member);
         }
 
         // Log the authentication.
