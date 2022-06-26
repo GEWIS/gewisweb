@@ -169,6 +169,7 @@ return [
         ],
         'template_map' => [
             'user/login' => __DIR__ . '/../view/partial/login.phtml',
+            'user_token/redirect' => __DIR__ . '/../view/user/api-authentication/redirect.phtml',
         ],
     ],
     'doctrine' => [

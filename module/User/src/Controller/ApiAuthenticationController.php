@@ -38,6 +38,7 @@ class ApiAuthenticationController extends AbstractActionController
      *
      * @param AclService $aclService
      * @param ApiAppService $apiAppService
+     * @param ApiAppAuthenticationMapper $apiAppAuthenticationMapper
      * @param ApiAppMapper $apiAppMapper
      */
     public function __construct(
@@ -71,13 +72,24 @@ class ApiAuthenticationController extends AbstractActionController
         if ($request->isPost()) {
             // Check against `cancel` such that we can work with confirm and continue.
             if (null === $request->getPost('cancel')) {
-                return $this->redirect()->toUrl(
-                    $this->apiAppService->callbackWithToken($app, $identity)
-                );
+                $url = $this->apiAppService->callbackWithToken($app, $identity);
             } else {
                 // If the user does not want to continue, let them navigate back to the application.
-                return $this->redirect()->toUrl($app->getUrl());
+                $url = $app->getUrl();
             }
+
+            // Change template to the redirect template, as we cannot use the `redirect` plugin to short-circuit
+            // execution of the request. Chromium browsers do not accept a `Location: ` redirect after `POST`ing (CSP
+            // violation). Hence, we must return an actual `ViewModel` that will "manually" refresh the page to redirect
+            // to the correct URL.
+            $viewModel = (new ViewModel())->setTemplate('user_token/redirect');
+
+            return $viewModel->setVariables(
+                [
+                    'app' => $app->getAppId(),
+                    'url' => $url,
+                ]
+            );
         }
 
         // If the user has previously authenticated with the external application, but it has been longer than 3 months
@@ -87,16 +99,24 @@ class ApiAuthenticationController extends AbstractActionController
             if (90 < (new DateTime('now'))->diff($lastAuthentication->getTime())->days) {
                 $remind = true;
             } else {
-                return $this->redirect()->toUrl(
-                    $this->apiAppService->callbackWithToken($app, $identity)
+                // Again, make sure that we do not use `Location: ` based redirects.
+                $viewModel = (new ViewModel())->setTemplate('user_token/redirect');
+
+                return $viewModel->setVariables(
+                    [
+                        'app' => $app->getAppId(),
+                        'url' => $this->apiAppService->callbackWithToken($app, $identity),
+                    ]
                 );
             }
         }
 
-        return new ViewModel([
-            'app' => $appId,
-            'claims' => $app->getClaims(),
-            'remind' => $remind,
-        ]);
+        return new ViewModel(
+            [
+                'app' => $appId,
+                'claims' => $app->getClaims(),
+                'remind' => $remind,
+            ]
+        );
     }
 }
