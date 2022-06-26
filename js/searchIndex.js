@@ -14796,6 +14796,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Controller-ApiAuthenticationController.html#property_apiAppMapper"
         },                {
+            "fqsen": "\\User\\Controller\\ApiAuthenticationController\u003A\u003A\u0024apiAppAuthorisationInitialForm",
+            "name": "apiAppAuthorisationInitialForm",
+            "summary": "",
+            "url": "classes/User-Controller-ApiAuthenticationController.html#property_apiAppAuthorisationInitialForm"
+        },                {
+            "fqsen": "\\User\\Controller\\ApiAuthenticationController\u003A\u003A\u0024apiAppAuthorisationReminderForm",
+            "name": "apiAppAuthorisationReminderForm",
+            "summary": "",
+            "url": "classes/User-Controller-ApiAuthenticationController.html#property_apiAppAuthorisationReminderForm"
+        },                {
             "fqsen": "\\User\\Controller\\ApiController",
             "name": "ApiController",
             "summary": "",
@@ -14925,6 +14935,21 @@ Search.appendIndex(
             "name": "getInputFilterSpecification",
             "summary": "",
             "url": "classes/User-Form-Activate.html#method_getInputFilterSpecification"
+        },                {
+            "fqsen": "\\User\\Form\\ApiAppAuthorisation",
+            "name": "ApiAppAuthorisation",
+            "summary": "",
+            "url": "classes/User-Form-ApiAppAuthorisation.html"
+        },                {
+            "fqsen": "\\User\\Form\\ApiAppAuthorisation\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/User-Form-ApiAppAuthorisation.html#method___construct"
+        },                {
+            "fqsen": "\\User\\Form\\ApiAppAuthorisation\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "",
+            "url": "classes/User-Form-ApiAppAuthorisation.html#property_type"
         },                {
             "fqsen": "\\User\\Form\\ApiToken",
             "name": "ApiToken",
@@ -15243,7 +15268,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\User\\Model\\ApiApp\u003A\u003A\u0024claims",
             "name": "claims",
-            "summary": "The\u0020claims\u0020that\u0020will\u0020be\u0020present\u0020in\u0020the\u0020JWT.\u0020If\u0020\u0060null\u0060\u0020only\u0020the\u0020lidnr\u0020will\u0020be\u0020passed\u0020along.",
+            "summary": "The\u0020claims\u0020that\u0020will\u0020be\u0020present\u0020in\u0020the\u0020JWT.\u0020If\u0020\u0060null\u0060\u0020only\u0020the\u0020member\u0027s\u0020id\u0020will\u0020be\u0020passed\u0020along.",
             "url": "classes/User-Model-ApiApp.html#property_claims"
         },                {
             "fqsen": "\\User\\Model\\ApiAppAuthentication",
