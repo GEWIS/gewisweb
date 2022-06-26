@@ -29,6 +29,7 @@ use User\Mapper\{
 };
 use User\Form\{
     Activate as ActivateForm,
+    ApiAppAuthorisation as ApiAppAuthorisationForm,
     ApiToken as ApiTokenForm,
     Login as LoginForm,
     Password as PasswordForm,
@@ -244,6 +245,17 @@ class Module
                     $form->setHydrator($container->get('user_hydrator'));
 
                     return $form;
+                },
+                'user_form_apiappauthorisation_initial' => function (ContainerInterface $container) {
+                    return new ApiAppAuthorisationForm(
+                        $container->get(MvcTranslator::class),
+                    );
+                },
+                'user_form_apiappauthorisation_reminder' => function (ContainerInterface $container) {
+                    return new ApiAppAuthorisationForm(
+                        $container->get(MvcTranslator::class),
+                        'reminder',
+                    );
                 },
 
                 'user_mapper_user' => function (ContainerInterface $container) {

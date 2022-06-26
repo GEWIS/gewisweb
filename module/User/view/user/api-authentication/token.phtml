@@ -1,3 +1,10 @@
+<?php
+$form = $this->form;
+
+$form->prepare();
+$form->setAttribute('method', 'post');
+$form->setAttribute('class', 'pull-right');
+?>
 <section class="section">
     <div class="container">
         <div class="row">
@@ -27,14 +34,15 @@
                                 <li><?= $claim->getName($this->plugin('translate')->getTranslator()) ?></li>
                             <?php endforeach; ?>
                         </ul>
-                        <form method="post" class="pull-right">
-                            <?php if (!$this->remind): ?>
-                                <input type="submit" name="cancel" class="btn btn-default" value="<?= $this->translate('Cancel') ?>">
-                                <input type="submit" name="confirm" class="btn btn-primary" value="<?= $this->translate('Confirm') ?>">
-                            <?php else: ?>
-                                <input type="submit" name="continue" class="btn btn-primary" value="<?= $this->translate('Continue') ?>">
-                            <?php endif; ?>
-                        </form>
+                        <?= $this->form()->openTag($form); ?>
+                        <?php if (!$this->remind): ?>
+                            <?= $this->formSubmit($form->get('cancel')); ?>
+                            <?= $this->formSubmit($form->get('authorise')); ?>
+                        <?php else: ?>
+                            <?= $this->formSubmit($form->get('continue')); ?>
+                        <?php endif; ?>
+                        <?= $this->formElement($form->get('security')) ?>
+                        <?= $this->form()->closeTag(); ?>
                     </div>
                 </div>
             </div>
