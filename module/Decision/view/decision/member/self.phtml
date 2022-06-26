@@ -54,7 +54,7 @@ $this->headTitle($member->getFullName());
                                 <?php $email = $this->escapeHtml($email); ?>
                                 <a href="mailto:<?= $email ?>"><?= $email ?></a>
                             <?php else: ?>
-                                <?= $this->translate('Onbekend') ?>
+                                <?= $this->translate('Unknown') ?>
                             <?php endif; ?>
                         </td>
                     </tr>
