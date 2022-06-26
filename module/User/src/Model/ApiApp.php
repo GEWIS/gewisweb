@@ -49,13 +49,11 @@ class ApiApp
     protected string $url;
 
     /**
-     * The claims that will be present in the JWT. If `null` only the lidnr will be passed along.
+     * The claims that will be present in the JWT. If `null` only the member's id will be passed along.
      */
     #[Column(
         type: "simple_array",
         nullable: true,
-        insertable: false,
-        updatable: false,
         enumType: JWTClaims::class,
     )]
     protected array $claims;
@@ -113,8 +111,12 @@ class ApiApp
         return $this->url;
     }
 
-    public function getClaims(): ?array
+    public function getClaims(): array
     {
+        if (empty($this->claims)) {
+            return [JWTClaims::Lidnr];
+        }
+
         return $this->claims;
     }
 }

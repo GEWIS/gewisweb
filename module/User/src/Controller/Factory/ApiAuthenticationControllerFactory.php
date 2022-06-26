@@ -27,6 +27,8 @@ class ApiAuthenticationControllerFactory implements FactoryInterface
             $container->get(ApiAppService::class),
             $container->get('user_mapper_apiappauthentication'),
             $container->get(ApiAppMapper::class),
+            $container->get('user_form_apiappauthorisation_initial'),
+            $container->get('user_form_apiappauthorisation_reminder'),
         );
     }
 }

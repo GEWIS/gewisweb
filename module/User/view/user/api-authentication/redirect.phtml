@@ -1,0 +1,32 @@
+<?php
+// Use a "manual" refresh to bypass the Chromium CSP enforcer, which does not allow redirects after a POST.
+$this->headMeta()->appendHttpEquiv('refresh', sprintf('0;URL=%s', $this->url));
+?>
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1 col-md-7 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>
+                            <?= sprintf(
+                                $this->translate('You are being redirected to %s'),
+                                $this->escapeHtml($this->app),
+                            ) ?>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            <?= sprintf(
+                                $this->translate(
+                                    'If your browser does not redirect you back, please <a href="%s">click here</a> to continue.'
+                                ),
+                                $this->url,
+                            ) ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
