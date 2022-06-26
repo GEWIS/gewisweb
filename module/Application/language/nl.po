@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-13 21:00+0200\n"
-"PO-Revision-Date: 2022-06-13 21:01+0200\n"
+"POT-Creation-Date: 2022-06-26 21:40+0200\n"
+"PO-Revision-Date: 2022-06-26 21:44+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -750,7 +750,7 @@ msgstr "Weet je zeker dat je deze optie wil verwijderen?"
 #: module/Photo/view/photo/album-admin/index.phtml:206
 #: module/Photo/view/photo/album-admin/index.phtml:238
 #: module/Photo/view/photo/photo-admin/index.phtml:128
-#: module/User/view/user/api-authentication/token.phtml:32
+#: module/User/src/Form/ApiAppAuthorisation.php:32
 msgid "Cancel"
 msgstr "Annuleer"
 
@@ -1376,17 +1376,23 @@ msgstr "Email"
 msgid "Sign-up List"
 msgstr "Inschrijflijst"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:51
+#: module/Activity/view/activity/admin/participantsTable.phtml:57
+#: module/Decision/view/decision/member/self.phtml:57
+#: module/Decision/view/decision/member/view.phtml:40
+msgid "Onbekend"
+msgstr ""
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:63
 #, php-format
 msgid "User (%s)"
 msgstr "Gebruiker (%s)"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:57
+#: module/Activity/view/activity/admin/participantsTable.phtml:69
 #: module/Decision/src/Model/Enums/MembershipTypes.php:22
 msgid "External"
 msgstr "Extern"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:86
+#: module/Activity/view/activity/admin/participantsTable.phtml:98
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -1400,7 +1406,7 @@ msgstr "Extern"
 msgid "Yes"
 msgstr "Ja"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:88
+#: module/Activity/view/activity/admin/participantsTable.phtml:100
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -1414,11 +1420,11 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nee"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:111
+#: module/Activity/view/activity/admin/participantsTable.phtml:123
 msgid "Additional actions"
 msgstr "Aanvullende acties"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:115
+#: module/Activity/view/activity/admin/participantsTable.phtml:127
 msgid "Mail everybody"
 msgstr "E-mail iedereen"
 
@@ -2081,7 +2087,7 @@ msgid "Privacy Policy"
 msgstr "Privacybeleid"
 
 #: module/Application/view/partial/privacy-widget.phtml:18
-#: module/User/view/user/api-authentication/token.phtml:35
+#: module/User/src/Form/ApiAppAuthorisation.php:54
 msgid "Continue"
 msgstr "Doorgaan"
 
@@ -3173,7 +3179,7 @@ msgstr ""
 "resultaten te zien."
 
 #: module/Decision/view/decision/member/self.phtml:15
-#: module/User/src/Form/Register.php:44
+#: module/User/src/Form/Register.php:43 module/User/src/Form/Reset.php:40
 msgid "Membership number"
 msgstr "Lidmaatschapsnummer"
 
@@ -3215,31 +3221,31 @@ msgstr "Vrouw"
 msgid "Other"
 msgstr "Anders"
 
-#: module/Decision/view/decision/member/self.phtml:55
-#: module/Decision/view/decision/member/view.phtml:41
+#: module/Decision/view/decision/member/self.phtml:62
+#: module/Decision/view/decision/member/view.phtml:46
 msgid "Birth date"
 msgstr "Geboortedatum"
 
-#: module/Decision/view/decision/member/self.phtml:59
-#: module/Decision/view/decision/member/view.phtml:45
+#: module/Decision/view/decision/member/self.phtml:66
+#: module/Decision/view/decision/member/view.phtml:50
 msgid "Generation"
 msgstr "Generatie"
 
-#: module/Decision/view/decision/member/self.phtml:63
-#: module/Decision/view/decision/member/view.phtml:50
+#: module/Decision/view/decision/member/self.phtml:70
+#: module/Decision/view/decision/member/view.phtml:55
 #: module/User/src/Model/Enums/JWTClaims.php:43
 msgid "Membership type"
 msgstr "Type lidmaatschap"
 
-#: module/Decision/view/decision/member/self.phtml:67
+#: module/Decision/view/decision/member/self.phtml:74
 msgid "Last membership change"
 msgstr "Laatste wijziging lidmaatschap"
 
-#: module/Decision/view/decision/member/self.phtml:71
+#: module/Decision/view/decision/member/self.phtml:78
 msgid "End date of membership"
 msgstr "Einddatum van lidmaatschap"
 
-#: module/Decision/view/decision/member/self.phtml:78
+#: module/Decision/view/decision/member/self.phtml:85
 msgid ""
 "If your information is no longer up to date and you would like to change it, "
 "you can contact the secretary of GEWIS."
@@ -3247,91 +3253,91 @@ msgstr ""
 "Als je gegevens niet meer actueel zijn of je ze wilt ze laten wijzigen, neem "
 "dan contact op met de secretaris van GEWIS."
 
-#: module/Decision/view/decision/member/self.phtml:79
+#: module/Decision/view/decision/member/self.phtml:86
 msgid "Also for data removal requests, you can contact"
 msgstr "Ook als je gegevens wilt laten verwijderen, neem dan contact op met"
 
-#: module/Decision/view/decision/member/self.phtml:80
+#: module/Decision/view/decision/member/self.phtml:87
 msgid "Email the secretary of GEWIS"
 msgstr "Email de secretaris van GEWIS"
 
-#: module/Decision/view/decision/member/self.phtml:80
+#: module/Decision/view/decision/member/self.phtml:87
 msgid "the secretary of GEWIS"
 msgstr "de secretaris van GEWIS"
 
-#: module/Decision/view/decision/member/self.phtml:84
-#: module/Decision/view/decision/member/view.phtml:55
+#: module/Decision/view/decision/member/self.phtml:91
+#: module/Decision/view/decision/member/view.phtml:60
 msgid "Membership of committees and fraternities"
 msgstr "Lidmaatschap van commissies en disputen"
 
-#: module/Decision/view/decision/member/self.phtml:94
-#: module/Decision/view/decision/member/view.phtml:69
+#: module/Decision/view/decision/member/self.phtml:101
+#: module/Decision/view/decision/member/view.phtml:74
 msgid "Adresses"
 msgstr "Adressen"
 
-#: module/Decision/view/decision/member/self.phtml:99
-#: module/Decision/view/decision/member/view.phtml:74
+#: module/Decision/view/decision/member/self.phtml:106
+#: module/Decision/view/decision/member/view.phtml:79
 msgid "Home address (parents)"
 msgstr "Thuisadres (ouders)"
 
-#: module/Decision/view/decision/member/self.phtml:102
-#: module/Decision/view/decision/member/view.phtml:77
+#: module/Decision/view/decision/member/self.phtml:109
+#: module/Decision/view/decision/member/view.phtml:82
 msgid "Student address"
 msgstr "Studentadres"
 
-#: module/Decision/view/decision/member/self.phtml:105
-#: module/Decision/view/decision/member/view.phtml:80
+#: module/Decision/view/decision/member/self.phtml:112
+#: module/Decision/view/decision/member/view.phtml:85
 msgid "Mail address"
 msgstr "Post adres"
 
-#: module/Decision/view/decision/member/self.phtml:111
-#: module/Decision/view/decision/member/view.phtml:86
+#: module/Decision/view/decision/member/self.phtml:118
+#: module/Decision/view/decision/member/view.phtml:91
 msgid "Country"
 msgstr "Land"
 
-#: module/Decision/view/decision/member/self.phtml:115
-#: module/Decision/view/decision/member/view.phtml:90
+#: module/Decision/view/decision/member/self.phtml:122
+#: module/Decision/view/decision/member/view.phtml:95
 msgid "Street and number"
 msgstr "Straat en huisnummer"
 
-#: module/Decision/view/decision/member/self.phtml:119
-#: module/Decision/view/decision/member/view.phtml:94
+#: module/Decision/view/decision/member/self.phtml:126
+#: module/Decision/view/decision/member/view.phtml:99
 msgid "City and postal code"
 msgstr "Woonplaats en postcode"
 
-#: module/Decision/view/decision/member/self.phtml:123
+#: module/Decision/view/decision/member/self.phtml:130
 msgid "Phone number"
 msgstr "Telefoonnummer"
 
-#: module/Decision/view/decision/member/self.phtml:129
+#: module/Decision/view/decision/member/self.phtml:136
 msgid "External applications"
 msgstr "Externe applicaties"
 
-#: module/Decision/view/decision/member/self.phtml:132
+#: module/Decision/view/decision/member/self.phtml:139
 msgid "App"
 msgstr "App"
 
-#: module/Decision/view/decision/member/self.phtml:133
+#: module/Decision/view/decision/member/self.phtml:140
 msgid "First authentication"
 msgstr "Eerste authenticatie"
 
-#: module/Decision/view/decision/member/self.phtml:134
+#: module/Decision/view/decision/member/self.phtml:141
 msgid "Last authentication"
 msgstr "Laatste authenticatie"
 
-#: module/Decision/view/decision/member/self.phtml:179
+#: module/Decision/view/decision/member/self.phtml:186
 msgid "Remove this picture as your profile picture"
 msgstr "Verwijder deze foto als profielfoto"
 
-#: module/Decision/view/decision/member/self.phtml:181
+#: module/Decision/view/decision/member/self.phtml:188
 msgid "Your profile picture will be chosen automatically instead."
 msgstr "Jouw profiel foto wordt in plaats hiervan automatisch gekozen."
 
-#: module/Decision/view/decision/member/self.phtml:196
+#: module/Decision/view/decision/member/self.phtml:203
 msgid "More of my photo's"
 msgstr "Meer van mijn foto’s"
 
-#: module/Decision/view/decision/member/view.phtml:143
+#: module/Decision/view/decision/member/view.phtml:148
 #, php-format
 msgid "Photo's of %s"
 msgstr "Foto's van %s"
@@ -4663,6 +4669,10 @@ msgstr "Verifieer je wachtwoord"
 msgid "Activate"
 msgstr "Activeer"
 
+#: module/User/src/Form/ApiAppAuthorisation.php:43
+msgid "Authorise"
+msgstr "Sta toe"
+
 #: module/User/src/Form/ApiToken.php:38
 #: module/User/view/user/api-admin/add.phtml:33
 msgid "Create API token"
@@ -4700,36 +4710,45 @@ msgstr "Nieuw wachtwoord"
 msgid "Verify new password"
 msgstr "Verifier nieuw wachtwoord"
 
-#: module/User/src/Form/Register.php:54
-#: module/User/src/Model/Enums/JWTClaims.php:38
-msgid "E-mail address"
-msgstr "E-mail adres"
-
-#: module/User/src/Form/Register.php:64
+#: module/User/src/Form/Register.php:53
 #: module/User/view/user/user/register.phtml:2
 #: module/User/view/user/user/register.phtml:23
 msgid "Register"
 msgstr "Registreer"
 
-#: module/User/src/Form/Register.php:82
-msgid "This email address does not be long to the given member."
-msgstr "Dit email adres is niet van het lid met dit lidmaatschapsnummer."
+#: module/User/src/Form/Register.php:78
+msgid ""
+"This member cannot create an account, please contact the secretary for more "
+"information."
+msgstr ""
 
-#: module/User/src/Form/Register.php:91
+#: module/User/src/Form/Register.php:87
 msgid "There is no member with this membership number."
 msgstr "Er is geen lid met dit lidmaatschapsnummer."
 
-#: module/User/src/Form/Register.php:100
+#: module/User/src/Form/Register.php:96
+#, fuzzy
 msgid ""
 "You already attempted to register, please check your email or try again "
-"after 15 minutes."
+"after 20 minutes."
 msgstr ""
 "Je hebt al geprobeerd om te registreren; controleer je email of probeer het "
 "na een kwartier opnieuw."
 
-#: module/User/src/Form/Register.php:109
+#: module/User/src/Form/Register.php:105
 msgid "This member already has an account."
 msgstr "Dit lid heeft al een account."
+
+#: module/User/src/Form/Reset.php:50
+#: module/User/src/Model/Enums/JWTClaims.php:38
+msgid "E-mail address"
+msgstr "E-mail adres"
+
+#: module/User/src/Form/Reset.php:60 module/User/view/user/user/reset.phtml:2
+#: module/User/view/user/user/reset.phtml:22
+#: module/User/view/user/user/reset.phtml:48
+msgid "Reset password"
+msgstr "Reset wachtwoord"
 
 #: module/User/src/Model/Enums/JWTClaims.php:39
 msgid "Family name"
@@ -4768,15 +4787,11 @@ msgstr "Activatiecode voor je account op de GEWIS Website"
 msgid "Password reset code for the GEWIS Website"
 msgstr "Wachtwoord reset code voor de GEWIS Website"
 
-#: module/User/src/Service/User.php:334
+#: module/User/src/Service/User.php:318
 msgid "Password incorrect"
 msgstr "Wachtwoord incorrect"
 
-#: module/User/src/Service/User.php:394
-msgid "You are not allowed to login using pin codes"
-msgstr "Het is niet toegestaan in te loggen"
-
-#: module/User/src/Service/User.php:478
+#: module/User/src/Service/User.php:436
 msgid "You are not allowed to change your password"
 msgstr "Je hebt niet de rechten om een wachtwoord te wijzigen"
 
@@ -4823,12 +4838,26 @@ msgstr "Voeg een nieuw Token toe"
 msgid "Remove Token"
 msgstr "Verwijder token"
 
-#: module/User/view/user/api-authentication/token.phtml:9
+#: module/User/view/user/api-authentication/redirect.phtml:13
+#, php-format
+msgid "You are being redirected to %s"
+msgstr "Je wordt doorgestuurd naar %s"
+
+#: module/User/view/user/api-authentication/redirect.phtml:22
+#, php-format
+msgid ""
+"If your browser does not redirect you back, please <a href=\"%s\">click "
+"here</a> to continue."
+msgstr ""
+"Als je  browser je niet doorstuurt, <a href=\"%s\">klik dan hier</a> om "
+"verder te gaan."
+
+#: module/User/view/user/api-authentication/token.phtml:16
 #, php-format
 msgid "Authorize %s to use your account?"
 msgstr "Geef je %s toestemming om je account te gebruiken?"
 
-#: module/User/view/user/api-authentication/token.phtml:18
+#: module/User/view/user/api-authentication/token.phtml:25
 #, php-format
 msgid ""
 "It has been more than 90 days since you last used <strong>%s</strong>. As a "
@@ -4837,13 +4866,9 @@ msgstr ""
 "Het is meer dan 90 dagen geleden dat je <strong>%s</strong> voor het laatst "
 "heeft gebruikt. Ter herinnering, de applicatie heeft toegang tot:"
 
-#: module/User/view/user/api-authentication/token.phtml:23
+#: module/User/view/user/api-authentication/token.phtml:30
 msgid "The application will get the following information:"
 msgstr "De applicatie zal de volgende informatie krijgen:"
-
-#: module/User/view/user/api-authentication/token.phtml:33
-msgid "Confirm"
-msgstr "Bevestig"
 
 #: module/User/view/user/user/activate.phtml:7
 msgid "Your account has been activated. You are now able to login."
@@ -4877,11 +4902,10 @@ msgid "Password changed successfully"
 msgstr "Wachtwoord succesvol gewijzigd"
 
 #: module/User/view/user/user/register.phtml:7
-#, php-format
-msgid "You have been registered. An email has been sent to %s for activation."
+msgid ""
+"Your account for the GEWIS website has been registered, check your inbox for "
+"an activation e-mail."
 msgstr ""
-"Je hebt je account geregistreerd. Een email is naar %s toegestuurd voor "
-"activatie."
 
 #: module/User/view/user/user/register.phtml:60
 #, php-format
@@ -4892,16 +4916,11 @@ msgstr ""
 "Om meer te lezen over de voordelen van het worden van een lid en hoe je een "
 "lid kunt worden, ga naar deze %sinformatie pagina%s."
 
-#: module/User/view/user/user/reset.phtml:2
-#: module/User/view/user/user/reset.phtml:22
-#: module/User/view/user/user/reset.phtml:48
-msgid "Reset password"
-msgstr "Reset wachtwoord"
-
 #: module/User/view/user/user/reset.phtml:7
-#, php-format
+#, fuzzy
 msgid ""
-"An email has been sent to %s with instructions for resetting your password."
+"An e-mail has been sent with instructions for resetting your password. If "
+"you have not received an e-mail, try again in 20 minutes."
 msgstr ""
 "Er is een e-mail naar %s gestuurd met instructies voor het resetten van je "
 "wachtwoord."
