@@ -40,15 +40,16 @@ class UserController extends AbstractActionController
 
         if ($request->isPost()) {
             $data = $request->getPost()->toArray();
+            // Update the referrer if a redirect is already set.
+            if (!empty($data['redirect'])) {
+                $referer = $data['redirect'];
+            }
+
             // try to login
             $login = $this->userService->login($data);
 
-            if (!is_null($login)) {
-                if (is_null($data['redirect']) || empty($data['redirect'])) {
-                    return $this->redirect()->toUrl($referer);
-                }
-
-                return $this->redirect()->toUrl($data['redirect']);
+            if (null !== $login) {
+                return $this->redirect()->toUrl($referer);
             }
         }
 
