@@ -17,11 +17,13 @@ use Decision\Controller\Factory\{
     OrganControllerFactory,
 };
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
+use Laminas\Http\Request;
 use Laminas\Router\Http\{
     Literal,
     Method,
     Regex,
-    Segment};
+    Segment,
+};
 
 return [
     'router' => [
@@ -165,7 +167,7 @@ return [
                             'post' => [
                                 'type' => Method::class,
                                 'options' => [
-                                    'verb' => 'POST',
+                                    'verb' => Request::METHOD_POST,
                                     'route' => '/document/delete',
                                     'defaults' => [
                                         'action' => 'deleteDocument',
@@ -184,7 +186,7 @@ return [
                             'post' => [
                                 'type' => Method::class,
                                 'options' => [
-                                    'verb' => 'POST',
+                                    'verb' => Request::METHOD_POST,
                                     'defaults' => [
                                         'action' => 'changePositionDocument',
                                     ],

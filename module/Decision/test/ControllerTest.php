@@ -3,6 +3,7 @@
 namespace DecisionTest;
 
 use ApplicationTest\BaseControllerTest;
+use Laminas\Http\Request;
 
 class ControllerTest extends BaseControllerTest
 {
@@ -65,6 +66,34 @@ class ControllerTest extends BaseControllerTest
         $this->setUpWithRole('admin');
         $this->dispatch('/admin/decision/document');
         $this->assertResponseStatusCode(200);
+    }
+
+    public function testAdminDecisionDocumentDeleteActionCannotBeAccessedAsAdminViaGet(): void
+    {
+        $this->setUpWithRole('admin');
+        $this->dispatch('/admin/decision/document/delete', Request::METHOD_GET);
+        $this->assertResponseStatusCode(404);
+    }
+
+    public function testAdminDecisionDocumentDeleteActionCanBeAccessedAsAdminViaPost(): void
+    {
+        $this->setUpWithRole('admin');
+        $this->dispatch('/admin/decision/document/delete', Request::METHOD_POST);
+        $this->assertResponseStatusCode(302);
+    }
+
+    public function testAdminDecisionDocumentPositionActionCannotBeAccessedAsAdminViaGet(): void
+    {
+        $this->setUpWithRole('admin');
+        $this->dispatch('/admin/decision/document/position', Request::METHOD_GET);
+        $this->assertResponseStatusCode(404);
+    }
+
+    public function testAdminDecisionDocumentPositionActionCanBeAccessedAsAdminViaPost(): void
+    {
+        $this->setUpWithRole('admin');
+        $this->dispatch('/admin/decision/document/position', Request::METHOD_POST);
+        $this->assertResponseStatusCode(400);
     }
 
     public function testAdminDecisionAuthorizationsActionCanBeAccessedAsAdmin(): void

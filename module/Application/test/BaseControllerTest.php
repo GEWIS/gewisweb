@@ -140,7 +140,7 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
     {
         $this->authService->method('getIdentity')->willReturn($this->setUpMockIdentity($role));
 
-        if ($role != 'guest') {
+        if ($role !== 'guest') {
             $this->authService->method('hasIdentity')->willReturn(true);
         } else {
             $this->authService->method('hasIdentity')->willReturn(false);
@@ -197,6 +197,7 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
         $this->member->setLastName('Committee');
         $this->member->setGeneration(2020);
         $this->member->setType(MembershipTypes::Ordinary);
+        $this->member->setMembershipEndsOn(null);
         $this->member->setExpiration(DateTime::createFromFormat('Y/m/d', '2030/01/01'));
         $this->member->setChangedOn(DateTime::createFromFormat('Y/m/d', '2020/01/01'));
     }
