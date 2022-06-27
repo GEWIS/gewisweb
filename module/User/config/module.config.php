@@ -58,28 +58,14 @@ return [
                             ],
                         ],
                     ],
-                    'activate_reset' => [
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '/reset/:code',
-                            'constraints' => [
-                                'code' => '[a-zA-Z0-9]*',
-                            ],
-                            'defaults' => [
-                                'code' => '',
-                                'action' => 'activateReset',
-                            ],
-                        ],
-                    ],
                     'activate' => [
                         'type' => Segment::class,
                         'options' => [
                             'route' => '/activate/:code',
                             'constraints' => [
-                                'code' => '[a-zA-Z0-9]*',
+                                'code' => '[a-zA-Z0-9]{32,}',
                             ],
                             'defaults' => [
-                                'code' => '',
                                 'action' => 'activate',
                             ],
                         ],
