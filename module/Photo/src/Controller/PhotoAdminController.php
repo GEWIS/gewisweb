@@ -2,6 +2,7 @@
 
 namespace Photo\Controller;
 
+use Laminas\Http\Request;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\{
     JsonModel,
@@ -67,8 +68,10 @@ class PhotoAdminController extends AbstractActionController
      */
     public function moveAction(): JsonModel
     {
+        /** @var Request $request */
         $request = $this->getRequest();
         $result = [];
+
         if ($request->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
             $albumId = $request->getPost()['album_id'];
@@ -83,7 +86,9 @@ class PhotoAdminController extends AbstractActionController
      */
     public function deleteAction(): JsonModel
     {
+        /** @var Request $request */
         $request = $this->getRequest();
+
         $result = [];
         if ($request->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');

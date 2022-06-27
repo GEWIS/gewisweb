@@ -2,7 +2,10 @@
 
 namespace User\Controller;
 
-use Laminas\Http\Response;
+use Laminas\Http\{
+    Request,
+    Response,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use User\Service\ApiUser as ApiUserService;
@@ -45,7 +48,9 @@ class ApiAdminController extends AbstractActionController
     {
         $form = $this->apiUserService->getApiTokenForm();
 
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $form->setData($request->getPost()->toArray());
 
@@ -76,6 +81,8 @@ class ApiAdminController extends AbstractActionController
     {
         $id = $this->params()->fromRoute('id');
         $service = $this->apiUserService;
+
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {

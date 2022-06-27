@@ -2,9 +2,14 @@
 
 namespace Frontpage\Controller;
 
-use Frontpage\Service\AclService;
-use Frontpage\Service\Poll as PollService;
-use Laminas\Http\Response;
+use Frontpage\Service\{
+    AclService,
+    Poll as PollService,
+};
+use Laminas\Http\{
+    Request,
+    Response,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Paginator\Paginator;
@@ -86,14 +91,17 @@ class PollAdminController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('You are not allowed to approve polls'));
         }
 
-        if ($this->getRequest()->isPost()) {
+        /** @var Request $request */
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
             $pollId = $this->params()->fromRoute('poll_id');
             $poll = $this->pollService->getPoll($pollId);
 
             if (null !== $poll) {
                 $approvalForm = $this->pollService->getPollApprovalForm();
                 $approvalForm->bind($poll);
-                $approvalForm->setData($this->getRequest()->getPost()->toArray());
+                $approvalForm->setData($request->getPost()->toArray());
 
                 if ($approvalForm->isValid()) {
                     if ($this->pollService->approvePoll($poll)) {
@@ -115,7 +123,10 @@ class PollAdminController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete polls'));
         }
 
-        if ($this->getRequest()->isPost()) {
+        /** @var Request $request */
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
             $pollId = $this->params()->fromRoute('poll_id');
             $poll = $this->pollService->getPoll($pollId);
 

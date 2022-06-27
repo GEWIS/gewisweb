@@ -37,11 +37,12 @@ class EducationController extends AbstractActionController
 
     public function indexAction(): ViewModel
     {
-        $query = $this->getRequest()->getQuery();
+        /** @var array $query */
+        $query = $this->params()->fromQuery();
         $form = $this->searchCourseForm;
 
         if (isset($query['query'])) {
-            $form->setData($query->toArray());
+            $form->setData($query);
 
             if ($form->isValid()) {
                 $courses = $this->examService->searchCourse($form->getData());

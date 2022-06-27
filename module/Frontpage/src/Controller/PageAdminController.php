@@ -4,6 +4,10 @@ namespace Frontpage\Controller;
 
 use Exception;
 use Frontpage\Service\Page as PageService;
+use Laminas\Http\{
+    Request,
+    Response,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\{
     JsonModel,
@@ -38,13 +42,14 @@ class PageAdminController extends AbstractActionController
         );
     }
 
-    public function createAction(): ViewModel
+    public function createAction(): Response|ViewModel
     {
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
             if ($this->pageService->createPage($request->getPost())) {
-                $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));
+                return $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));
             }
         }
 
@@ -63,14 +68,15 @@ class PageAdminController extends AbstractActionController
         return $view;
     }
 
-    public function editAction(): ViewModel
+    public function editAction(): Response|ViewModel
     {
         $pageId = $this->params()->fromRoute('page_id');
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
             if ($this->pageService->updatePage($pageId, $request->getPost())) {
-                $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));
+                return $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));
             }
         }
 
@@ -85,15 +91,17 @@ class PageAdminController extends AbstractActionController
         );
     }
 
-    public function deleteAction(): void
+    public function deleteAction(): Response
     {
         $pageId = $this->params()->fromRoute('page_id');
         $this->pageService->deletePage($pageId);
-        $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));
+
+        return $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));
     }
 
     public function uploadAction(): JsonModel
     {
+        /** @var Request $request */
         $request = $this->getRequest();
         $result = [];
         $result['uploaded'] = 0;
@@ -101,7 +109,7 @@ class PageAdminController extends AbstractActionController
         if ($request->isPost()) {
             try {
                 $path = $this->pageService->uploadImage($request->getFiles());
-                $result['url'] = $request->getBasePath() . '/' . $path;
+                $result['url'] = '/' . $path;
                 $result['fileName'] = $path;
                 $result['uploaded'] = 1;
             } catch (Exception $e) {

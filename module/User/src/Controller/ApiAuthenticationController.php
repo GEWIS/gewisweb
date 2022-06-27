@@ -3,7 +3,10 @@
 namespace User\Controller;
 
 use DateTime;
-use Laminas\Http\Response;
+use Laminas\Http\{
+    Request,
+    Response,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use User\Form\{
@@ -107,7 +110,9 @@ class ApiAuthenticationController extends AbstractActionController
             $form = $this->apiAppAuthorisationInitialForm;
         }
 
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $form->setData($request->getPost()->toArray());
 

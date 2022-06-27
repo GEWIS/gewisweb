@@ -3,7 +3,10 @@
 namespace Photo\Controller;
 
 use Exception;
-use Laminas\Http\Response;
+use Laminas\Http\{
+    Request,
+    Response,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\{
     JsonModel,
@@ -68,7 +71,9 @@ class AlbumAdminController extends AbstractActionController
     {
         $form = $this->albumService->getCreateAlbumForm();
 
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $albumId = $this->params()->fromRoute('album_id');
             $form->setData($request->getPost()->toArray());
@@ -114,7 +119,9 @@ class AlbumAdminController extends AbstractActionController
         $albumId = $this->params()->fromRoute('album_id');
         $form = $this->albumService->getEditAlbumForm($albumId);
 
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $form->setData($request->getPost()->toArray());
 
@@ -151,7 +158,9 @@ class AlbumAdminController extends AbstractActionController
      */
     public function uploadAction(): JsonModel
     {
+        /** @var Request $request */
         $request = $this->getRequest();
+
         $result = [];
         $result['success'] = false;
         if ($request->isPost()) {
@@ -175,7 +184,9 @@ class AlbumAdminController extends AbstractActionController
      */
     public function moveAction(): JsonModel
     {
+        /** @var Request $request */
         $request = $this->getRequest();
+
         $result = [];
         if ($request->isPost()) {
             $albumId = $this->params()->fromRoute('album_id');
@@ -196,7 +207,9 @@ class AlbumAdminController extends AbstractActionController
      */
     public function deleteAction(): JsonModel
     {
+        /** @var Request $request */
         $request = $this->getRequest();
+
         $albumId = $this->params()->fromRoute('album_id');
         if ($request->isPost()) {
             $this->albumService->deleteAlbum($albumId);
@@ -210,7 +223,10 @@ class AlbumAdminController extends AbstractActionController
      */
     public function coverAction(): JsonModel
     {
-        if ($this->getRequest()->isPost()) {
+        /** @var Request $request */
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
             $albumId = $this->params()->fromRoute('album_id');
             $this->albumService->generateAlbumCover($albumId);
         }

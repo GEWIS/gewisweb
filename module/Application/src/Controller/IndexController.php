@@ -2,7 +2,11 @@
 
 namespace Application\Controller;
 
-use Laminas\Http\Response;
+use Laminas\View\Model\ViewModel;
+use Laminas\Http\{
+    PhpEnvironment\Response as EnvironmentResponse,
+    Response,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Session\Container as SessionContainer;
 
@@ -42,8 +46,12 @@ class IndexController extends AbstractActionController
     /**
      * Throws a teapot error.
      */
-    public function teapotAction(): void
+    public function teapotAction(): ViewModel
     {
-        $this->getResponse()->setStatusCode(418);
+        /** @var EnvironmentResponse $response */
+        $response = $this->getResponse();
+        $response->setStatusCode(418);
+
+        return new ViewModel();
     }
 }

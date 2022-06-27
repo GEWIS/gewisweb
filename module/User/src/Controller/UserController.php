@@ -2,12 +2,13 @@
 
 namespace User\Controller;
 
-use Laminas\Http\Response;
-use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\{
-    JsonModel,
-    ViewModel,
+use Laminas\Http\{
+    PhpEnvironment\Request as RequestEnvironment,
+    Request,
+    Response,
 };
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
 use User\Form\Login as LoginForm;
 use User\Service\User as UserService;
 
@@ -33,12 +34,15 @@ class UserController extends AbstractActionController
      */
     public function indexAction(): Response|ViewModel
     {
-        $referer = $this->getRequest()->getServer('HTTP_REFERER');
+        /** @var Request $request */
+        $request = $this->getRequest();
+        $referer = (new RequestEnvironment())->getServer('HTTP_REFERER');
 
-        if ($this->getRequest()->isPost()) {
-            $data = $this->getRequest()->getPost();
+        if ($request->isPost()) {
+            $data = $request->getPost()->toArray();
             // try to login
             $login = $this->userService->login($data);
+
             if (!is_null($login)) {
                 if (is_null($data['redirect']) || empty($data['redirect'])) {
                     return $this->redirect()->toUrl($referer);
@@ -48,11 +52,9 @@ class UserController extends AbstractActionController
             }
         }
 
-        $form = $this->handleRedirect($referer);
-
         return new ViewModel(
             [
-                'form' => $form,
+                'form' => $this->handleRedirect($referer),
             ]
         );
     }
@@ -66,7 +68,7 @@ class UserController extends AbstractActionController
     {
         $form = $this->userService->getLoginForm();
         if (is_null($form->get('redirect')->getValue())) {
-            $redirect = $this->getRequest()->getQuery('redirect');
+            $redirect = $this->params()->fromQuery('redirect');
 
             if (isset($redirect)) {
                 $form->get('redirect')->setValue($redirect);
@@ -105,8 +107,11 @@ class UserController extends AbstractActionController
      */
     public function registerAction(): ViewModel
     {
-        if ($this->getRequest()->isPost()) {
-            $newUser = $this->userService->register($this->getRequest()->getPost());
+        /** @var Request $request */
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $newUser = $this->userService->register($request->getPost()->toArray());
 
             if (null !== $newUser) {
                 return new ViewModel(['registered' => true]);
@@ -126,6 +131,7 @@ class UserController extends AbstractActionController
      */
     public function passwordAction(): ViewModel
     {
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost() && $this->userService->changePassword($request->getPost())) {
@@ -149,6 +155,7 @@ class UserController extends AbstractActionController
     public function resetAction(): ViewModel
     {
         $form = $this->userService->getResetForm();
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -188,12 +195,17 @@ class UserController extends AbstractActionController
             return $this->redirect()->toRoute('home');
         }
 
-        if ($this->getRequest()->isPost() && $this->userService->activate($this->getRequest()->getPost(), $newUser)) {
-            return new ViewModel(
-                [
-                    'activated' => true,
-                ]
-            );
+        /** @var Request $request */
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            if ($this->userService->activate($request->getPost()->toArray(), $newUser)) {
+                return new ViewModel(
+                    [
+                        'activated' => true,
+                    ]
+                );
+            }
         }
 
         return new ViewModel(

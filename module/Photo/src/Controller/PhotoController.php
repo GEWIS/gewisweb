@@ -2,8 +2,11 @@
 
 namespace Photo\Controller;
 
-use Laminas\Http\Response;
-use Laminas\Http\Response\Stream;
+use Laminas\Http\{
+    Request,
+    Response,
+    Response\Stream,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\{
     JsonModel,
@@ -129,7 +132,10 @@ class PhotoController extends AbstractActionController
      */
     public function setProfilePhotoAction(): JsonModel|ViewModel
     {
-        if ($this->getRequest()->isPost()) {
+        /** @var Request $request */
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
             $this->photoService->setProfilePhoto($photoId);
 
@@ -170,7 +176,10 @@ class PhotoController extends AbstractActionController
             );
         }
 
-        if ($this->getRequest()->isPost()) {
+        /** @var Request $request */
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
             $photoId = $this->params()->fromRoute('photo_id');
             $this->photoService->countVote($photoId);
 
