@@ -66,7 +66,7 @@ return [
                             'route' => 'association/:type/:abbr',
                             'constraints' => [
                                 'type' => 'committee|fraternity|avc|avw|rva|kkk',
-                                'abbr' => '[^/]*',
+                                'abbr' => '[^/]+',
                             ],
                             'defaults' => [
                                 'controller' => OrganController::class,
