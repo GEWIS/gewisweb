@@ -157,30 +157,22 @@ class CompanyController extends AbstractActionController
         $companySlugName = $this->params('companySlugName');
         $jobCategorySlug = $this->params('category');
 
-        if (null !== $jobSlugName) {
-            $jobs = $this->companyQueryService->getJobs(
-                jobCategorySlug: $jobCategorySlug,
-                jobSlugName: $jobSlugName,
-                companySlugName: $companySlugName,
-            );
+        $jobs = $this->companyQueryService->getJobs(
+            jobCategorySlug: $jobCategorySlug,
+            jobSlugName: $jobSlugName,
+            companySlugName: $companySlugName,
+        );
 
-            if (!empty($jobs)) {
-                if ($jobs[0]->isActive()) {
-                    return new ViewModel(
-                        [
-                            'job' => $jobs[0],
-                        ]
-                    );
-                }
+        if (!empty($jobs)) {
+            if ($jobs[0]->isActive()) {
+                return new ViewModel(
+                    [
+                        'job' => $jobs[0],
+                    ]
+                );
             }
-
-            return $this->notFoundAction();
         }
 
-        return new ViewModel(
-            [
-                'activeJobList' => $this->companyQueryService->getActiveJobList(),
-            ]
-        );
+        return $this->notFoundAction();
     }
 }
