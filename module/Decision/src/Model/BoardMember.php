@@ -86,6 +86,15 @@ class BoardMember
     protected BoardInstallation $installationDec;
 
     /**
+     * Release date.
+     */
+    #[Column(
+        type: "date",
+        nullable: true,
+    )]
+    protected ?DateTime $releaseDate = null;
+
+    /**
      * Discharge date.
      */
     #[Column(
@@ -180,6 +189,26 @@ class BoardMember
     public function setInstallationDec(BoardInstallation $installationDec): void
     {
         $this->installationDec = $installationDec;
+    }
+
+    /**
+     * Get the release date.
+     *
+     * @return DateTime|null
+     */
+    public function getReleaseDate(): ?DateTime
+    {
+        return $this->releaseDate;
+    }
+
+    /**
+     * Set the release date.
+     *
+     * @param DateTime|null $releaseDate
+     */
+    public function setReleaseDate(?DateTime $releaseDate): void
+    {
+        $this->releaseDate = $releaseDate;
     }
 
     /**
