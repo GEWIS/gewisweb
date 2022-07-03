@@ -821,34 +821,17 @@ class Member
     protected function isCurrentBoard(BoardMember $boardMember): bool
     {
         $now = new DateTime();
-        $currentAssociationYear = AssociationYear::fromDate($now);
         $installDate = $boardMember->getInstallDate();
-        $dischargeDate = $boardMember->getDischargeDate();
+        $releaseDate = $boardMember->getReleaseDate();
 
         if ($installDate <= $now) {
             // Installation was (before) today.
             if (
-                null === $dischargeDate
-                || $dischargeDate >= $now
+                null === $releaseDate
+                || $releaseDate >= $now
             ) {
-                // Not yet discharged or the discharge is the in the future.
-                if ($installDate->format('Y') === $now->format('Y')) {
-                    if ($installDate >= $currentAssociationYear->getEndDate()) {
-                        // It is the calendar year of the installation and after July 1, hence this person is in the
-                        // current board.
-                        return true;
-                    }
-                } else {
-                    // It is not the same calendar year as the installation, so we need to check if it is before July 1.
-                    // Create a new DateTime from the installation date to be July 1 the following year.
-                    $newDate = DateTime::createFromFormat('Y-m-d', sprintf('%s-07-01', $installDate->format('Y')))
-                        ->add(new DateInterval('P1Y'));
-
-                    if ($now->format('Ymd') < $newDate->format('Ymd')) {
-                        // Year following the installation but before July 1, hence this person is in the current board.
-                        return true;
-                    }
-                }
+                // Not yet release or the release is the in the future.
+                return true;
             }
         }
 
