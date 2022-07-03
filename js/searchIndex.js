@@ -7121,6 +7121,16 @@ Search.appendIndex(
             "summary": "Set\u0020the\u0020installation\u0020decision.",
             "url": "classes/Decision-Model-BoardMember.html#method_setInstallationDec"
         },                {
+            "fqsen": "\\Decision\\Model\\BoardMember\u003A\u003AgetReleaseDate\u0028\u0029",
+            "name": "getReleaseDate",
+            "summary": "Get\u0020the\u0020release\u0020date.",
+            "url": "classes/Decision-Model-BoardMember.html#method_getReleaseDate"
+        },                {
+            "fqsen": "\\Decision\\Model\\BoardMember\u003A\u003AsetReleaseDate\u0028\u0029",
+            "name": "setReleaseDate",
+            "summary": "Set\u0020the\u0020release\u0020date.",
+            "url": "classes/Decision-Model-BoardMember.html#method_setReleaseDate"
+        },                {
             "fqsen": "\\Decision\\Model\\BoardMember\u003A\u003AgetDischargeDate\u0028\u0029",
             "name": "getDischargeDate",
             "summary": "Get\u0020the\u0020discharge\u0020date.",
@@ -7155,6 +7165,11 @@ Search.appendIndex(
             "name": "installationDec",
             "summary": "Installation.",
             "url": "classes/Decision-Model-BoardMember.html#property_installationDec"
+        },                {
+            "fqsen": "\\Decision\\Model\\BoardMember\u003A\u003A\u0024releaseDate",
+            "name": "releaseDate",
+            "summary": "Release\u0020date.",
+            "url": "classes/Decision-Model-BoardMember.html#property_releaseDate"
         },                {
             "fqsen": "\\Decision\\Model\\BoardMember\u003A\u003A\u0024dischargeDate",
             "name": "dischargeDate",
