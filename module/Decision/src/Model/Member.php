@@ -823,6 +823,7 @@ class Member
         $now = new DateTime();
         $installDate = $boardMember->getInstallDate();
         $releaseDate = $boardMember->getReleaseDate();
+        $dischargeDate = $boardMember->getDischargeDate();
 
         if ($installDate <= $now) {
             // Installation was (before) today.
@@ -830,8 +831,14 @@ class Member
                 null === $releaseDate
                 || $releaseDate >= $now
             ) {
-                // Not yet release or the release is the in the future.
-                return true;
+                // Not yet released or the release is the in the future.
+                if (
+                    null === $dischargeDate
+                    || $dischargeDate >= $now
+                ) {
+                    // Not yet discharged or the discharge is in the future.
+                    return true;
+                }
             }
         }
 
