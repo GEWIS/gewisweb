@@ -383,8 +383,10 @@ class Decision
         }
 
         // TODO: The actual file is never deleted.
-        $document = $this->getMeetingDocument($data['document']);
-        $this->meetingMapper->remove($document);
+        if (isset($data['document'])) {
+            $document = $this->getMeetingDocument($data['document']);
+            $this->meetingMapper->remove($document);
+        }
     }
 
     /**

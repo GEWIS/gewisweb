@@ -4,7 +4,10 @@ namespace Decision\Controller;
 
 use Decision\Service\Organ as OrganService;
 use Laminas\Form\FormInterface;
-use Laminas\Http\Response;
+use Laminas\Http\{
+    Request,
+    Response,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
@@ -51,7 +54,9 @@ class OrganAdminController extends AbstractActionController
 
         $form = $this->organService->getOrganInformationForm($organInformation);
 
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $post = array_merge_recursive(
                 $request->getPost()->toArray(),

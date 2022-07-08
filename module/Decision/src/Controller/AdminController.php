@@ -3,7 +3,10 @@
 namespace Decision\Controller;
 
 use Decision\Service\Decision as DecisionService;
-use Laminas\Http\Response;
+use Laminas\Http\{
+    PhpEnvironment\Response as EnvironmentResponse,
+    Request,
+    Response};
 use Laminas\Json\Json;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
@@ -39,7 +42,9 @@ class AdminController extends AbstractActionController
     {
         $form = $this->decisionService->getMinutesForm();
 
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $post = array_merge_recursive(
                 $request->getPost()->toArray(),
@@ -80,7 +85,9 @@ class AdminController extends AbstractActionController
 
         $form = $this->decisionService->getDocumentForm();
 
+        /** @var Request $request */
         $request = $this->getRequest();
+
         $success = false;
         if ($request->isPost()) {
             $post = array_merge_recursive(
@@ -110,27 +117,26 @@ class AdminController extends AbstractActionController
         );
     }
 
-    /**
-     * TODO: Non-idempotent requests should be POST, not GET.
-     */
     public function deleteDocumentAction(): Response
     {
-        $this->decisionService->deleteDocument($this->getRequest()->getPost()->toArray());
+        /** @var Request $request */
+        $request = $this->getRequest();
+        $this->decisionService->deleteDocument($request->getPost()->toArray());
 
         return $this->redirect()->toRoute('admin_decision/document');
     }
 
     public function changePositionDocumentAction(): mixed
     {
-        if (!$this->getRequest()->isPost()) {
-            return $this->getResponse()->setStatusCode(Response::STATUS_CODE_405); // Method Not Allowed
-        }
+        /** @var Request $request */
+        $request = $this->getRequest();
+        /** @var EnvironmentResponse $response */
+        $response = $this->getResponse();
 
-        $form = $this->decisionService->getReorderDocumentForm()
-            ->setData($this->getRequest()->getPost());
+        $form = $this->decisionService->getReorderDocumentForm()->setData($request->getPost()->toArray());
 
         if (!$form->isValid()) {
-            return $this->getResponse()
+            return $response
                 ->setStatusCode(Response::STATUS_CODE_400) // Bad Request
                 ->setContent(Json::encode($form->getMessages()));
         }
@@ -142,7 +148,7 @@ class AdminController extends AbstractActionController
         // Update ordering document
         $this->decisionService->changePositionDocument($id, $moveDown);
 
-        return $this->getResponse()->setStatusCode(Response::STATUS_CODE_204); // No Content (OK)
+        return $response->setStatusCode(Response::STATUS_CODE_204); // No Content (OK)
     }
 
     public function authorizationsAction(): ViewModel

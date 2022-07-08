@@ -3,7 +3,10 @@
 namespace User\Controller;
 
 use Decision\Service\MemberInfo as MemberInfoService;
-use Laminas\Http\PhpEnvironment\Response;
+use Laminas\Http\{
+    PhpEnvironment\Response as EnvironmentResponse,
+    Response,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Stdlib\ResponseInterface;
 use User\Service\AclService;
@@ -38,10 +41,13 @@ class ApiController extends AbstractActionController
     {
         if ($this->aclService->hasIdentity()) {
             $identity = $this->aclService->getIdentity();
+            /** @var EnvironmentResponse $response */
             $response = $this->getResponse();
+
             $response->setStatusCode(200);
             $headers = $response->getHeaders();
             $headers->addHeaderLine('GEWIS-MemberID', (string) $identity->getLidnr());
+
             if (null != $identity->getMember()) {
                 $member = $identity->getMember();
                 $name = $member->getFullName();
@@ -56,6 +62,7 @@ class ApiController extends AbstractActionController
 
             return $response;
         }
+
         $response = $this->getResponse();
         $response->setStatusCode(401);
 

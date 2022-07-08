@@ -183,11 +183,11 @@ class User
      *
      * Will also send an email to the user.
      *
-     * @param Parameters $data Registration data
+     * @param array $data Registration data
      *
      * @return NewUserModel|null New registered user. Null when the user could not be registered.
      */
-    public function register(Parameters $data): ?NewUserModel
+    public function register(array $data): ?NewUserModel
     {
         $form = $this->registerForm;
         $form->setData($data);
@@ -337,11 +337,11 @@ class User
     /**
      * Log the user in.
      *
-     * @param Parameters $data Login data
+     * @param array $data Login data
      *
      * @return UserModel|null Authenticated user. Null if not authenticated.
      */
-    public function login(Parameters $data): ?UserModel
+    public function login(array $data): ?UserModel
     {
         $form = $this->getLoginForm();
         $form->setData($data);

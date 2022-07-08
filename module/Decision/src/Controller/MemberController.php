@@ -190,12 +190,14 @@ class MemberController extends AbstractActionController
     /**
      * Action to download regulations.
      */
-    public function downloadRegulationAction(): Response
+    public function downloadRegulationAction(): Response|ViewModel
     {
         $regulation = $this->params('regulation');
-        if (isset($this->regulationsConfig['regulation'])) {
-            $this->getResponse()->setStatusCode(404);
+
+        if (!isset($this->regulationsConfig[$regulation])) {
+            return $this->notFoundAction();
         }
+
         $path = $this->regulationsConfig[$regulation];
 
         return $this->redirect()->toUrl($this->url()->fromRoute('decision/files', ['path' => '']) . $path);

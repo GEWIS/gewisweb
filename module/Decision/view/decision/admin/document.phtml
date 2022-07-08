@@ -84,7 +84,7 @@ $element = $form->get('meeting');
 
                             $form->setAttributes([
                                 'class' => 'form-reorder-document',
-                                'action' => $this->url('admin_decision/position_document')
+                                'action' => $this->url('admin_decision/position_document/post')
                             ]);
                             $form->populateValues([
                                 'document' => $document->getId()
@@ -103,7 +103,7 @@ $element = $form->get('meeting');
                             </a>
                         </td>
                         <td>
-                            <form method="POST" action="<?= $this->url('admin_decision/delete_document') ?>">
+                            <form method="POST" action="<?= $this->url('admin_decision/delete_document/post') ?>">
                                 <input type="hidden" name="document" value="<?= $document->getId() ?>">
                                 <input type="submit" name="submit" value="<?= $this->translate('Delete') ?>"
                                        class="btn btn-danger btn-xs pull-right"/>

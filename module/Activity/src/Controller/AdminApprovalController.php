@@ -9,7 +9,10 @@ use Activity\Service\{
     ActivityQuery as ActivityQueryService,
 };
 use InvalidArgumentException;
-use Laminas\Http\Response;
+use Laminas\Http\{
+    Request,
+    Response,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
@@ -106,8 +109,11 @@ class AdminApprovalController extends AbstractActionController
      */
     protected function setApprovalStatus(string $status): Response|ViewModel
     {
-        //Assure the form is used
-        if (!$this->getRequest()->isPost()) {
+        /** @var Request $request */
+        $request = $this->getRequest();
+
+        // Assure the form is used
+        if (!$request->isPost()) {
             return $this->notFoundAction();
         }
 
@@ -119,7 +125,7 @@ class AdminApprovalController extends AbstractActionController
         }
 
         $form = new RequestForm('updateApprovalStatus');
-        $form->setData($this->getRequest()->getPost());
+        $form->setData($request->getPost()->toArray());
 
         //Assure the form is valid
         if (!$form->isValid()) {
@@ -186,15 +192,17 @@ class AdminApprovalController extends AbstractActionController
      */
     public function applyProposalAction(): Response|ViewModel
     {
-        $id = (int)$this->params('id');
+        $id = (int) $this->params('id');
+        /** @var Request $request */
+        $request = $this->getRequest();
 
         //Assure the form is used
-        if (!$this->getRequest()->isPost()) {
+        if (!$request->isPost()) {
             return $this->notFoundAction();
         }
         $form = new RequestForm('proposalApply');
 
-        $form->setData($this->getRequest()->getPost());
+        $form->setData($request->getPost()->toArray());
 
         //Assure the form is valid
         if (!$form->isValid()) {
@@ -221,14 +229,17 @@ class AdminApprovalController extends AbstractActionController
      */
     public function revokeProposalAction(): Response|ViewModel
     {
-        $id = (int)$this->params('id');
+        $id = (int) $this->params('id');
+        /** @var Request $request */
+        $request = $this->getRequest();
+
         //Assure the form is used
-        if (!$this->getRequest()->isPost()) {
+        if (!$request->isPost()) {
             return $this->notFoundAction();
         }
         $form = new RequestForm('proposalRevoke');
 
-        $form->setData($this->getRequest()->getPost());
+        $form->setData($request->getPost()->toArray());
 
         //Assure the form is valid
         if (!$form->isValid()) {

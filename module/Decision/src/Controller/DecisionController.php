@@ -7,6 +7,7 @@ use Decision\Service\{
     AclService,
     Decision as DecisionService,
 };
+use Laminas\Http\Request;
 use Laminas\Http\Response\Stream;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
@@ -132,7 +133,9 @@ class DecisionController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('You are not allowed to search decisions.'));
         }
 
+        /** @var Request $request */
         $request = $this->getRequest();
+
         $form = $this->decisionService->getSearchDecisionForm();
 
         if ($request->isPost()) {
@@ -170,7 +173,9 @@ class DecisionController extends AbstractActionController
 
         $form = $this->decisionService->getAuthorizationForm();
 
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $form->setData($request->getPost()->toArray());
 

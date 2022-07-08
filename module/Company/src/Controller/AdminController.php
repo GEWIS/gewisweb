@@ -10,7 +10,10 @@ use Company\Service\{
 use Company\Model\CompanyJobPackage;
 use DateInterval;
 use DateTime;
-use Laminas\Http\Response;
+use Laminas\Http\{
+    Request,
+    Response,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
@@ -96,7 +99,9 @@ class AdminController extends AbstractActionController
         $form = $this->companyService->getCompanyForm();
 
         // Handle incoming form results
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             // Check if data is valid, and insert when it is
             $post = array_merge_recursive(
@@ -149,7 +154,9 @@ class AdminController extends AbstractActionController
         }
 
         // Handle incoming form data
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $post = array_merge_recursive(
                 $request->getPost()->toArray(),
@@ -199,7 +206,9 @@ class AdminController extends AbstractActionController
         }
 
         // Handle incoming form data
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if (!$request->isPost()) {
             return $this->notFoundAction();
         }
@@ -234,7 +243,9 @@ class AdminController extends AbstractActionController
         $packageForm = $this->companyService->getPackageForm($type);
 
         // Handle incoming form results
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $post = array_merge_recursive(
                 $request->getPost()->toArray(),
@@ -308,7 +319,9 @@ class AdminController extends AbstractActionController
         $packageForm = $this->companyService->getPackageForm($type);
 
         // Handle incoming form results
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $post = array_merge_recursive(
                 $request->getPost()->toArray(),
@@ -372,7 +385,9 @@ class AdminController extends AbstractActionController
         }
 
         // Handle incoming form data
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if (!$request->isPost()) {
             return $this->notFoundAction();
         }
@@ -431,7 +446,9 @@ class AdminController extends AbstractActionController
         $jobForm = $this->companyService->getJobForm();
 
         // Handle incoming form results
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $post = array_merge_recursive(
                 $request->getPost()->toArray(),
@@ -505,7 +522,9 @@ class AdminController extends AbstractActionController
         $jobForm = $this->companyService->getJobForm();
 
         // Handle incoming form results
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $post = array_merge_recursive(
                 $request->getPost()->toArray(),
@@ -553,7 +572,9 @@ class AdminController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete jobs'));
         }
 
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if (!$request->isPost()) {
             return $this->notFoundAction();
         }
@@ -597,7 +618,9 @@ class AdminController extends AbstractActionController
         $categoryForm = $this->companyService->getCategoryForm();
 
         // Handle incoming form results
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             // Check if data is valid, and insert when it is
             $categoryForm->setData($request->getPost()->toArray());
@@ -656,7 +679,9 @@ class AdminController extends AbstractActionController
         $categoryForm = $this->companyService->getCategoryForm();
 
         // Handle incoming form data
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $categoryForm->setData($request->getPost()->toArray());
             $categoryForm->setCurrentSlug($jobCategory->getPluralName());
@@ -683,7 +708,9 @@ class AdminController extends AbstractActionController
         $labelForm = $this->companyService->getLabelForm();
 
         // Handle incoming form results
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             // Check if data is valid, and insert when it is
             $labelForm->setData($request->getPost()->toArray());
@@ -741,7 +768,9 @@ class AdminController extends AbstractActionController
         $labelForm = $this->companyService->getLabelForm();
 
         // Handle incoming form data
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $labelForm->setData($request->getPost()->toArray());
 

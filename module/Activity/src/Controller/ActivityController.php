@@ -2,7 +2,6 @@
 
 namespace Activity\Controller;
 
-use Laminas\Stdlib\ParametersInterface;
 use Activity\Form\{
     ModifyRequest as RequestForm,
     Signup as SignupForm,
@@ -20,11 +19,17 @@ use Activity\Service\{
 };
 use DateTime;
 use Laminas\Form\FormInterface;
-use Laminas\Http\Response;
+use Laminas\Http\{
+    Request,
+    Response,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Session\Container as SessionContainer;
-use Laminas\Stdlib\Parameters;
+use Laminas\Stdlib\{
+    Parameters,
+    ParametersInterface,
+};
 use Laminas\View\Model\ViewModel;
 
 class ActivityController extends AbstractActionController
@@ -250,6 +255,7 @@ class ActivityController extends AbstractActionController
     public function createAction(): ViewModel
     {
         $form = $this->activityService->getActivityForm();
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -275,7 +281,7 @@ class ActivityController extends AbstractActionController
     }
 
     /**
-     * Signup for a activity.
+     * Signup for an activity.
      */
     public function signupAction(): Response|ViewModel
     {
@@ -287,6 +293,7 @@ class ActivityController extends AbstractActionController
             return $this->notFoundAction();
         }
 
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -383,6 +390,7 @@ class ActivityController extends AbstractActionController
             return $this->notFoundAction();
         }
 
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -446,11 +454,12 @@ class ActivityController extends AbstractActionController
             return $this->notFoundAction();
         }
 
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
             $form = new RequestForm('activitysignoff');
-            $form->setData($this->getRequest()->getPost());
+            $form->setData($request->getPost());
 
             // Check if the form is valid
             if (!$form->isValid()) {
