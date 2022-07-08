@@ -147,7 +147,6 @@ updatecomposer:
 updatepackage:
 		@docker cp ./package.json gewisweb_web_1:/code/package.json
 		@docker-compose exec web npm update
-		@docker-compose exec web npm audit fix
 		@docker cp gewisweb_web_1:/code/package-lock.json ./package-lock.json
 
 updatecss:
