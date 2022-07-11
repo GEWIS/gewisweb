@@ -1,5 +1,4 @@
 <?php
-// phpcs:ignoreFile
 
 namespace User\Model\Enums;
 

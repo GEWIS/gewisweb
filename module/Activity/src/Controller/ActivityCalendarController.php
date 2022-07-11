@@ -8,7 +8,10 @@ use Activity\Service\{
     ActivityCalendar as ActivityCalendarService,
     ActivityCalendarForm as ActivityCalendarFormService,
 };
-use Laminas\Http\Response;
+use Laminas\Http\{
+    Request,
+    Response,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
@@ -82,7 +85,7 @@ class ActivityCalendarController extends AbstractActionController
                 'editableOptions' => $this->calendarService->getEditableUpcomingOptions(),
                 'APIKey' => $config['google_api_key'],
                 'calendarKey' => $config['google_calendar_key'],
-                'success' => $this->getRequest()->getQuery('success', false),
+                'success' => (bool) $this->params()->fromQuery('success', false),
                 'canCreate' => $this->calendarService->canCreateProposal(),
                 'canApprove' => $this->calendarService->canApproveOption(),
             ]
@@ -91,6 +94,7 @@ class ActivityCalendarController extends AbstractActionController
 
     public function deleteAction(): Response|ViewModel
     {
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -103,6 +107,7 @@ class ActivityCalendarController extends AbstractActionController
 
     public function approveAction(): Response|ViewModel
     {
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -121,7 +126,9 @@ class ActivityCalendarController extends AbstractActionController
             );
         }
 
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $this->calendarProposalForm->setData($request->getPost()->toArray());
 

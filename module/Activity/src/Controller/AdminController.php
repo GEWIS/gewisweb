@@ -14,7 +14,10 @@ use Activity\Service\{
 };
 use DateTime;
 use Laminas\Form\FormInterface;
-use Laminas\Http\Response;
+use Laminas\Http\{
+    Request,
+    Response,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Paginator\Paginator;
@@ -25,7 +28,7 @@ use Laminas\Session\{
 use Laminas\Stdlib\{
     Parameters,
     ParametersInterface,
-    ResponseInterface};
+};
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
@@ -141,6 +144,7 @@ class AdminController extends AbstractActionController
         }
 
         $form = $this->activityService->getActivityForm();
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -304,7 +308,7 @@ class AdminController extends AbstractActionController
         return new ViewModel($result);
     }
 
-    public function externalSignupAction(): \Laminas\Http\PhpEnvironment\Response|ResponseInterface|ViewModel
+    public function externalSignupAction(): Response|ViewModel
     {
         $activityId = (int) $this->params('id');
         $signupListId = (int) $this->params('signupList');
@@ -318,6 +322,7 @@ class AdminController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('You are not allowed to use this form'));
         }
 
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -328,12 +333,16 @@ class AdminController extends AbstractActionController
 
             // Check if the form is valid
             if (!$form->isValid()) {
-                $error = $this->translator->translate('Invalid form');
                 $activityAdminSession = new SessionContainer('activityAdminRequest');
                 $activityAdminSession->signupData = $postData->toArray();
-                $this->redirectActivityAdminRequest($activityId, $signupListId, false, $error, $activityAdminSession);
 
-                return $this->getResponse();
+                return $this->redirectActivityAdminRequest(
+                    $activityId,
+                    $signupListId,
+                    false,
+                    $this->translator->translate('Invalid form'),
+                    $activityAdminSession,
+                );
             }
 
             $formData = $form->getData(FormInterface::VALUES_AS_ARRAY);
@@ -342,16 +351,21 @@ class AdminController extends AbstractActionController
             $email = $formData['email'];
             unset($formData['email']);
             $this->signupService->adminSignUp($signupList, $fullName, $email, $formData);
-            $message = $this->translator->translate('Successfully subscribed external participant');
-            $this->redirectActivityAdminRequest($activityId, $signupListId, true, $message);
 
-            return $this->getResponse();
+            return $this->redirectActivityAdminRequest(
+                $activityId,
+                $signupListId,
+                true,
+                $this->translator->translate('Successfully subscribed external participant'),
+            );
         }
 
-        $error = $this->translator->translate('Use the form to subscribe');
-        $this->redirectActivityAdminRequest($activityId, $signupListId, false, $error);
-
-        return $this->getResponse();
+        return $this->redirectActivityAdminRequest(
+            $activityId,
+            $signupListId,
+            false,
+            $this->translator->translate('Use the form to subscribe'),
+        );
     }
 
     /**
@@ -372,7 +386,7 @@ class AdminController extends AbstractActionController
         int $signupListId,
         bool $success,
         string $message,
-        AbstractContainer $session = null
+        AbstractContainer $session = null,
     ): Response {
         if (null === $session) {
             $session = new SessionContainer('activityAdminRequest');
@@ -405,6 +419,7 @@ class AdminController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('You are not allowed to use this form'));
         }
 
+        /** @var Request $request */
         $request = $this->getRequest();
 
         //Assure a form is used
@@ -414,44 +429,36 @@ class AdminController extends AbstractActionController
 
             //Assure the form is valid
             if (!$form->isValid()) {
-                $message = $this->translator->translate('Invalid form');
-                $this->redirectActivityAdminRequest(
+                return $this->redirectActivityAdminRequest(
                     $signupList->getActivity()->getId(),
                     $signupList->getId(),
                     false,
-                    $message
+                    $this->translator->translate('Invalid form'),
                 );
-
-                return $this->getResponse();
             }
 
             $this->signupService->externalSignOff($signup);
-            $message = $this->translator->translate('Successfully removed external participant');
-            $this->redirectActivityAdminRequest(
+
+            return $this->redirectActivityAdminRequest(
                 $signupList->getActivity()->getId(),
                 $signupList->getId(),
                 true,
-                $message
+                $this->translator->translate('Successfully removed external participant'),
             );
-
-            return $this->getResponse();
         }
 
-        $message = $this->translator->translate('Use the form to unsubscribe an external participant');
-        $this->redirectActivityAdminRequest(
+        return $this->redirectActivityAdminRequest(
             $signupList->getActivity()->getId(),
             $signupList->getId(),
             false,
-            $message
+            $this->translator->translate('Use the form to unsubscribe an external participant'),
         );
-
-        return $this->getResponse();
     }
 
     /**
      * Show a list of all activities this user can manage.
      */
-    public function viewAction(): array
+    public function viewAction(): ViewModel
     {
         if (!$this->aclService->isAllowed('viewAdmin', 'activity')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to administer activities'));
@@ -495,6 +502,6 @@ class AdminController extends AbstractActionController
             unset($activityAdminSession->message);
         }
 
-        return $result;
+        return new ViewModel($result);
     }
 }

@@ -6,7 +6,10 @@ use Activity\Service\{
     AclService,
     ActivityCategory as ActivityCategoryService,
 };
-use Laminas\Http\Response;
+use Laminas\Http\{
+    Request,
+    Response,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
@@ -71,6 +74,7 @@ class AdminCategoryController extends AbstractActionController
             );
         }
 
+        /** @var Request $request */
         $request = $this->getRequest();
         $form = $this->categoryService->getCategoryForm();
 
@@ -118,6 +122,7 @@ class AdminCategoryController extends AbstractActionController
      */
     public function deleteAction(): Response|ViewModel
     {
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -155,6 +160,7 @@ class AdminCategoryController extends AbstractActionController
         }
 
         $form = $this->categoryService->getCategoryForm();
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {

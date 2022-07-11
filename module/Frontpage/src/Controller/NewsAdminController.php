@@ -6,7 +6,10 @@ use Frontpage\Service\{
     AclService,
     News as NewsService,
 };
-use Laminas\Http\Response;
+use Laminas\Http\{
+    Request,
+    Response,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Paginator\Paginator;
@@ -77,7 +80,9 @@ class NewsAdminController extends AbstractActionController
 
         $form = $this->newsService->getNewsItemForm();
 
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $form->setData($request->getPost()->toArray());
 
@@ -119,7 +124,9 @@ class NewsAdminController extends AbstractActionController
 
         $form = $this->newsService->getNewsItemForm();
 
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $form->setData($request->getPost()->toArray());
 

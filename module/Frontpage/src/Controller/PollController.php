@@ -8,11 +8,13 @@ use Frontpage\Service\{
     AclService,
     Poll as PollService,
 };
-use Laminas\Http\PhpEnvironment\Response;
+use Laminas\Http\{
+    Request,
+    Response,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Paginator\Paginator;
-use Laminas\Stdlib\ResponseInterface;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
@@ -101,9 +103,10 @@ class PollController extends AbstractActionController
     /**
      * Submits a poll vote.
      */
-    public function voteAction(): Response|ResponseInterface
+    public function voteAction(): Response
     {
         $pollId = (int)$this->params('poll_id');
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -113,9 +116,7 @@ class PollController extends AbstractActionController
             }
         }
 
-        $this->redirect()->toRoute('poll/view', ['poll_id' => $pollId]);
-
-        return $this->getResponse();
+        return $this->redirect()->toRoute('poll/view', ['poll_id' => $pollId]);
     }
 
     /**
@@ -136,7 +137,9 @@ class PollController extends AbstractActionController
             return $this->notFoundAction();
         }
 
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $this->pollCommentForm->setData($request->getPost()->toArray());
 
@@ -182,7 +185,9 @@ class PollController extends AbstractActionController
     {
         $form = $this->pollService->getPollForm();
 
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             if ($this->pollService->requestPoll($request->getPost())) {
                 return new ViewModel(

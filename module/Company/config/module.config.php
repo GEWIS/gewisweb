@@ -102,7 +102,7 @@ return [
                                         'options' => [
                                             'route' => '/:jobSlugName',
                                             'constraints' => [
-                                                'jobSlugName' => '[a-zA-Z0-9_-]*',
+                                                'jobSlugName' => '[a-zA-Z0-9_-]+',
                                             ],
                                             'defaults' => [
                                                 'action' => 'jobs',

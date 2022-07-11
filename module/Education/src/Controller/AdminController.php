@@ -3,6 +3,7 @@
 namespace Education\Controller;
 
 use Education\Service\Exam as ExamService;
+use Laminas\Http\Request;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\{
     JsonModel,
@@ -42,6 +43,7 @@ class AdminController extends AbstractActionController
 
     public function addCourseAction(): ViewModel
     {
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -75,6 +77,7 @@ class AdminController extends AbstractActionController
 
     public function bulkExamAction(): ViewModel
     {
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -105,6 +108,7 @@ class AdminController extends AbstractActionController
 
     public function bulkSummaryAction(): ViewModel
     {
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -138,6 +142,7 @@ class AdminController extends AbstractActionController
      */
     public function editExamAction(): ViewModel
     {
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost() && $this->examService->bulkExamEdit($request->getPost()->toArray())) {
@@ -161,6 +166,7 @@ class AdminController extends AbstractActionController
      */
     public function editSummaryAction(): ViewModel
     {
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost() && $this->examService->bulkSummaryEdit($request->getPost()->toArray())) {
@@ -183,7 +189,9 @@ class AdminController extends AbstractActionController
 
     public function deleteTempAction(): JsonModel|ViewModel
     {
+        /** @var Request $request */
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $this->examService->deleteTempExam(
                 $this->params()->fromRoute('filename'),

@@ -9,7 +9,10 @@ use Activity\Service\{
 use Activity\Mapper\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodMapper;
 use DateTime;
 use Decision\Service\Organ as OrganService;
-use Laminas\Http\Response;
+use Laminas\Http\{
+    Request,
+    Response,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
@@ -86,6 +89,7 @@ class AdminOptionController extends AbstractActionController
         $form = $this->activityCalendarService->getCalendarPeriodForm();
         $organs = $this->organService->getEditableOrgans();
         $organCount = count($organs);
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -123,17 +127,25 @@ class AdminOptionController extends AbstractActionController
     public function deleteAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('delete', 'activity_calendar_period')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to delete option calendar periods'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to delete option calendar periods'),
+            );
         }
 
-        if ($this->getRequest()->isPost()) {
+        /** @var Request $request */
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
             $optionCreationPeriodId = $this->params('id');
             $optionCreationPeriod = $this->activityCalendarService->getOptionCreationPeriod($optionCreationPeriodId);
 
             if (null !== $optionCreationPeriod) {
                 $this->activityCalendarService->deleteOptionCreationPeriod($optionCreationPeriod);
 
-                return $this->redirectWithMessage(true, $this->translator->translate('Option planning period removed.'));
+                return $this->redirectWithMessage(
+                    true,
+                    $this->translator->translate('Option planning period removed.'),
+                );
             }
         }
 
@@ -159,6 +171,7 @@ class AdminOptionController extends AbstractActionController
 
         $form = $this->activityCalendarService->getCalendarPeriodForm();
         $organCount = $optionCreationPeriod->getMaxActivities()->count();
+        /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {

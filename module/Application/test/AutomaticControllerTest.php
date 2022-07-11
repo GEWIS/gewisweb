@@ -7,6 +7,7 @@ use Iterator;
 use Laminas\Router\Exception\InvalidArgumentException;
 use Laminas\Router\Http\{
     Literal,
+    Method,
     Part,
     Regex,
     Segment,
@@ -14,7 +15,6 @@ use Laminas\Router\Http\{
 };
 use Laminas\Router\PriorityList;
 use RuntimeException;
-use Traversable;
 
 class AutomaticControllerTest extends BaseControllerTest
 {
@@ -58,6 +58,8 @@ class AutomaticControllerTest extends BaseControllerTest
                 $this->parseSegment($element);
             } elseif ($element instanceof Regex) {
                 $this->parseRegex($element);
+            } elseif ($element instanceof Method) {
+                $this->parseMethod($element);
             } else {
                 throw new RuntimeException(
                     sprintf(
@@ -122,6 +124,11 @@ class AutomaticControllerTest extends BaseControllerTest
         $this->parseUrl($url);
     }
 
+    protected function parseMethod(Method $method): void
+    {
+        // We can assemble all we want, but we will never get a testable route (so we do nothing).
+    }
+
     protected function parseUrl(mixed $url): void
     {
         if (is_string($url)) {
@@ -129,7 +136,7 @@ class AutomaticControllerTest extends BaseControllerTest
         } else {
             throw new RuntimeException(
                 sprintf(
-                    'Unexpected type in parseLiteral: %s',
+                    'Unexpected type in parseUrl: %s',
                     get_class($url),
                 )
             );
@@ -184,6 +191,8 @@ class AutomaticControllerTest extends BaseControllerTest
 
         $params['regulation'] = 'key-policy';
         $params['filename'] = 'file.pdf';
+
+        $params['code'] = 'rbIfZwWKyN7gavp00f4Ygs1ANuGDsL8v';
 
         return $params;
     }

@@ -17,8 +17,11 @@ use Decision\Controller\Factory\{
     OrganControllerFactory,
 };
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
+use Laminas\Http\Request;
 use Laminas\Router\Http\{
     Literal,
+    Method,
+    Regex,
     Segment,
 };
 
@@ -69,7 +72,7 @@ return [
                         'may_terminate' => true,
                         'child_routes' => [
                             'minutes' => [
-                                'type' => Segment::class,
+                                'type' => Literal::class,
                                 'options' => [
                                     'route' => '/minutes',
                                     'defaults' => [
@@ -101,7 +104,7 @@ return [
                         ],
                     ],
                     'files' => [
-                        'type' => 'Regex',
+                        'type' => Regex::class,
                         'options' => [
                             'regex' => '/files(?<path>' . (new Module())->getServiceConfig()['filebrowser_valid_file'] . ')',
                             'defaults' => [
@@ -119,10 +122,9 @@ return [
                     'route' => '/admin/decision',
                     'defaults' => [
                         'controller' => AdminController::class,
-                        'action' => 'index',
                     ],
                 ],
-                'may_terminate' => true,
+                'may_terminate' => false,
                 'child_routes' => [
                     'default' => [
                         'type' => Segment::class,
@@ -156,20 +158,39 @@ return [
                         ],
                     ],
                     'delete_document' => [
-                        'type' => Segment::class,
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/document/delete',
-                            'defaults' => [
-                                'action' => 'deleteDocument',
+                        ],
+                        'may_terminate' => false,
+                        'child_routes' => [
+                            'post' => [
+                                'type' => Method::class,
+                                'options' => [
+                                    'verb' => Request::METHOD_POST,
+                                    'route' => '/document/delete',
+                                    'defaults' => [
+                                        'action' => 'deleteDocument',
+                                    ],
+                                ],
                             ],
                         ],
                     ],
                     'position_document' => [
-                        'type' => Segment::class,
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/document/position',
-                            'defaults' => [
-                                'action' => 'changePositionDocument',
+                        ],
+                        'may_terminate' => false,
+                        'child_routes' => [
+                            'post' => [
+                                'type' => Method::class,
+                                'options' => [
+                                    'verb' => Request::METHOD_POST,
+                                    'defaults' => [
+                                        'action' => 'changePositionDocument',
+                                    ],
+                                ],
                             ],
                         ],
                     ],
@@ -265,7 +286,7 @@ return [
                         ],
                     ],
                     'self' => [
-                        'type' => Segment::class,
+                        'type' => Literal::class,
                         'options' => [
                             'route' => '/self',
                             'defaults' => [
