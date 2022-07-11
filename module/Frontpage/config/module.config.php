@@ -47,7 +47,7 @@ return [
                     'page' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '[:category[/:sub_category][/:name]][/]',
+                            'route' => '[:category[/:sub_category][/:name][/]]',
                             'constraints' => [
                                 'category' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'sub_category' => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -66,7 +66,7 @@ return [
                             'route' => 'association/:type/:abbr',
                             'constraints' => [
                                 'type' => 'committee|fraternity|avc|avw|rva|kkk',
-                                'abbr' => '[^/]*',
+                                'abbr' => '[^/]+',
                             ],
                             'defaults' => [
                                 'controller' => OrganController::class,
