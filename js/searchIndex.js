@@ -118,7 +118,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Activity\\Controller\\ActivityController\u003A\u003AsignupAction\u0028\u0029",
             "name": "signupAction",
-            "summary": "Signup\u0020for\u0020a\u0020activity.",
+            "summary": "Signup\u0020for\u0020an\u0020activity.",
             "url": "classes/Activity-Controller-ActivityController.html#method_signupAction"
         },                {
             "fqsen": "\\Activity\\Controller\\ActivityController\u003A\u003AredirectActivityRequest\u0028\u0029",
@@ -4006,6 +4006,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/ApplicationTest-AutomaticControllerTest.html#method_parseRegex"
         },                {
+            "fqsen": "\\ApplicationTest\\AutomaticControllerTest\u003A\u003AparseMethod\u0028\u0029",
+            "name": "parseMethod",
+            "summary": "",
+            "url": "classes/ApplicationTest-AutomaticControllerTest.html#method_parseMethod"
+        },                {
             "fqsen": "\\ApplicationTest\\AutomaticControllerTest\u003A\u003AparseUrl\u0028\u0029",
             "name": "parseUrl",
             "summary": "",
@@ -6103,7 +6108,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Decision\\Controller\\AdminController\u003A\u003AdeleteDocumentAction\u0028\u0029",
             "name": "deleteDocumentAction",
-            "summary": "TODO\u003A\u0020Non\u002Didempotent\u0020requests\u0020should\u0020be\u0020POST,\u0020not\u0020GET.",
+            "summary": "",
             "url": "classes/Decision-Controller-AdminController.html#method_deleteDocumentAction"
         },                {
             "fqsen": "\\Decision\\Controller\\AdminController\u003A\u003AchangePositionDocumentAction\u0028\u0029",
@@ -9630,6 +9635,26 @@ Search.appendIndex(
             "name": "testAdminDecisionDocumentActionCanBeAccessedAsAdmin",
             "summary": "",
             "url": "classes/DecisionTest-ControllerTest.html#method_testAdminDecisionDocumentActionCanBeAccessedAsAdmin"
+        },                {
+            "fqsen": "\\DecisionTest\\ControllerTest\u003A\u003AtestAdminDecisionDocumentDeleteActionCannotBeAccessedAsAdminViaGet\u0028\u0029",
+            "name": "testAdminDecisionDocumentDeleteActionCannotBeAccessedAsAdminViaGet",
+            "summary": "",
+            "url": "classes/DecisionTest-ControllerTest.html#method_testAdminDecisionDocumentDeleteActionCannotBeAccessedAsAdminViaGet"
+        },                {
+            "fqsen": "\\DecisionTest\\ControllerTest\u003A\u003AtestAdminDecisionDocumentDeleteActionCanBeAccessedAsAdminViaPost\u0028\u0029",
+            "name": "testAdminDecisionDocumentDeleteActionCanBeAccessedAsAdminViaPost",
+            "summary": "",
+            "url": "classes/DecisionTest-ControllerTest.html#method_testAdminDecisionDocumentDeleteActionCanBeAccessedAsAdminViaPost"
+        },                {
+            "fqsen": "\\DecisionTest\\ControllerTest\u003A\u003AtestAdminDecisionDocumentPositionActionCannotBeAccessedAsAdminViaGet\u0028\u0029",
+            "name": "testAdminDecisionDocumentPositionActionCannotBeAccessedAsAdminViaGet",
+            "summary": "",
+            "url": "classes/DecisionTest-ControllerTest.html#method_testAdminDecisionDocumentPositionActionCannotBeAccessedAsAdminViaGet"
+        },                {
+            "fqsen": "\\DecisionTest\\ControllerTest\u003A\u003AtestAdminDecisionDocumentPositionActionCanBeAccessedAsAdminViaPost\u0028\u0029",
+            "name": "testAdminDecisionDocumentPositionActionCanBeAccessedAsAdminViaPost",
+            "summary": "",
+            "url": "classes/DecisionTest-ControllerTest.html#method_testAdminDecisionDocumentPositionActionCanBeAccessedAsAdminViaPost"
         },                {
             "fqsen": "\\DecisionTest\\ControllerTest\u003A\u003AtestAdminDecisionAuthorizationsActionCanBeAccessedAsAdmin\u0028\u0029",
             "name": "testAdminDecisionAuthorizationsActionCanBeAccessedAsAdmin",
