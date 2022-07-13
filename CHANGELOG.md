@@ -1,3 +1,27 @@
+## [v2.8.2](https://github.com/GEWIS/gewisweb/tree/v2.8.2) (2022-07-13)
+
+* Updated membership types.
+* Updated rate limit lockouts.
+* Changed `chairman` to `chair`.
+* Added additional ACL checks for `graduate` members, access to member information and photos is now limited.
+* Improved logic to determine if a board member is currently a board member.
+* Removed duplicate e-mail addresses for `User`s.
+* Removed legacy login service.
+* Removed legacy member API for REX.
+* Fixed issue where using the authentication process for external applications failed if the membership type claim was used.
+* Fixed issue where `Board` was incorrectly translated as a specific board.
+* Fixed issue where the menu would not switch between English and Dutch when changing languages.
+* Fixed issue where logging in was not possible due to improper rate limit lockout configuration.
+* Fixed issue where a CSP violation in Chromium based browsers broke the initial authorization with external applications.
+* Fixed issue where redirecting after a failed login would not redirect to the correct page.
+* Fixed issue where board members would not have `admin` privileges in the first year of the association year.
+* Fixed issue where viewing specific organ type without providing an organ abbreviation could result in an error.
+* Fixed issue where using two trailing slashes could result in an error.
+* Fixed issue where viewing a job category for a specific company without a job slug provided could result in an error.
+* Updated dependencies.
+
+---
+
 ## [v2.8.1](https://github.com/GEWIS/gewisweb/tree/v2.8.1) (2022-06-07)
 
 * Added the link to an activity in the description of the Google Calendar event creation tool.
