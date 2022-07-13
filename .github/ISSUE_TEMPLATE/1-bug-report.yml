@@ -6,7 +6,7 @@ body:
         id: current-behavior
         attributes:
             label: Current behaviour
-            description: A description of what is currently happening, including screenshots and other useful information.
+            description: A description of what is currently happening, including screenshots and other useful information (**DO NOT INCLUDE PRIVATE INFORMATION**).
             placeholder: Currently...
         validations:
             required: true
