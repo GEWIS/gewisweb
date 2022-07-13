@@ -1591,7 +1591,7 @@ msgstr "Member"
 
 #: module/Application/language/additional-strings:2
 msgid "Voorzitter"
-msgstr "Chairman"
+msgstr "Chair"
 
 #: module/Application/language/additional-strings:3
 msgid "Onderwijscommissaris"
@@ -1603,7 +1603,7 @@ msgstr "PR-Officer"
 
 #: module/Application/language/additional-strings:5
 msgid "Vice-Voorzitter"
-msgstr "Vice Chairman"
+msgstr "Vice Chair"
 
 #: module/Application/language/additional-strings:6
 msgid "Penningmeester"
