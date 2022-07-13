@@ -1,0 +1,23 @@
+name: "✨ Feature Request"
+description: Suggest a feature or enhancement to improve the GEWIS website.
+labels: ["Type: Idea"]
+body:
+    -   type: textarea
+        id: feature
+        attributes:
+            label: What would you like?
+            description: A clear description of the feature or enhancement wanted on the website.
+            placeholder: I'd like to be able to...
+        validations:
+            required: true
+    -   type: textarea
+        id: reason
+        attributes:
+            label: Why is this needed?
+            description: A clear description of why this would be useful to have on the website. 
+            placeholder: I want this because...
+    -   type: textarea
+        id: other
+        attributes:
+            label: Other information
+            placeholder: Any other details?

@@ -1,0 +1,65 @@
+name: "🐛 Bug Report"
+description: Report a bug found while using the GEWIS website.
+labels: ["Type: Bug", "Status: Triage"]
+body:
+    -   type: textarea
+        id: current-behavior
+        attributes:
+            label: Current behaviour
+            description: A description of what is currently happening, including screenshots and other useful information.
+            placeholder: Currently...
+        validations:
+            required: true
+    -   type: textarea
+        id: desired-behavior
+        attributes:
+            label: Desired behaviour
+            description: A clear description of what you think should happen.
+            placeholder: In this situation, I expected ...
+    -   type: textarea
+        id: reproduction
+        attributes:
+            label: Steps to reproduce
+            description: Clearly describe which steps or actions you have taken to arrive at the problem. If you have some experience with the code, please link to the specific pieces of code or fork [this repo](https://github.com/GEWIS/gewisweb), create a failing test case, and then link to your fork.
+            placeholder: I did X, then Y, before arriving at Z, when ERROR ...
+        validations:
+            required: true
+    -   type: input
+        id: version
+        attributes:
+            label: Website version
+            description: Check [the website](https://gewis.nl/admin/) to determine the version and short commit hash.
+            placeholder: ex. v2.8.2 (3dde2979b)
+        validations:
+            required: true
+    -   type: dropdown
+        id: os
+        attributes:
+            label: What operating are you seeing the problem on?
+            multiple: true
+            options:
+                - Linux
+                - macOS
+                - Windows
+                - Other
+        validations:
+            required: true
+    -   type: dropdown
+        id: browsers
+        attributes:
+            label: What browsers are you seeing the problem on?
+            multiple: true
+            options:
+                - Brave
+                - Chrome
+                - Firefox
+                - Microsoft Edge
+                - Safari
+                - Other
+        validations:
+            required: true
+    -   type: textarea
+        id: other
+        attributes:
+            label: Other information
+            description: Any other details? Things like browser and operating system version should go here.
