@@ -38,7 +38,7 @@ jobs:
                     pushd docs/_site &>/dev/null
                     : > .nojekyll
                     git add --all
-                    git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+                    git diff --exit-code || git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
                         commit --quiet \
                         --message "Deploy docs from ${GITHUB_SHA}" \
                         --message "$SOURCE_COMMIT" \
