@@ -241,6 +241,17 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                         <?= $this->translate('FAQ') ?>
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="<?= $this->url(
+                                        'home/page',
+                                        [
+                                            'category' => 'wellbeing',
+                                            'sub_category' => 'housing',
+                                        ],
+                                    ) ?>">
+                                        <?= $this->translate('Housing')?>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li>
