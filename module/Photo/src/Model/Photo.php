@@ -3,7 +3,10 @@
 namespace Photo\Model;
 
 use DateTime;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\{
+    ArrayCollection,
+    Collection,
+};
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -184,6 +187,17 @@ class Photo implements ResourceInterface
     protected Collection $tags;
 
     /**
+     * All the profile photos that use this photo.
+     */
+    #[OneToMany(
+        targetEntity: ProfilePhoto::class,
+        mappedBy: "photo",
+        cascade: ["persist", "remove"],
+        fetch: "EXTRA_LAZY",
+    )]
+    protected Collection $profilePhotos;
+
+    /**
      * The corresponding WeeklyPhoto entity if this photo has been a weekly photo.
      */
     #[OneToOne(
@@ -201,6 +215,12 @@ class Photo implements ResourceInterface
         nullable: true,
     )]
     protected ?float $aspectRatio = null;
+
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+        $this->profilePhotos = new ArrayCollection();
+    }
 
     /**
      * Get the ID.
@@ -590,6 +610,36 @@ class Photo implements ResourceInterface
     {
         $tag->setPhoto($this);
         $this->tags[] = $tag;
+    }
+
+    public function addProfilePhotos(array $profilePhotos): void
+    {
+        foreach ($profilePhotos as $profilePhoto) {
+            $this->addProfilePhoto($profilePhoto);
+        }
+    }
+
+    public function addProfilePhoto(ProfilePhoto $profilePhoto): void
+    {
+        $profilePhoto->setPhoto($this);
+        $this->profilePhotos->add($profilePhoto);
+    }
+
+    public function removeProfilePhotos(array $profilePhotos): void
+    {
+        foreach ($profilePhotos as $profilePhoto) {
+            $this->removeProfilePhoto($profilePhoto);
+        }
+    }
+
+    public function removeProfilePhoto(ProfilePhoto $profilePhoto): void
+    {
+        $this->profilePhotos->removeElement($profilePhoto);
+    }
+
+    public function getProfilePhotos(): Collection
+    {
+        return $this->profilePhotos;
     }
 
     /**
