@@ -1,3 +1,10 @@
+## [v2.8.3](https://github.com/GEWIS/gewisweb/tree/v2.8.3) (2022-07-25)
+
+* Added a link to the Housing page in the useful information menu.
+* Fixed issue where a photo could not be deleted if it was used as a profile photo.
+
+---
+
 ## [v2.8.2](https://github.com/GEWIS/gewisweb/tree/v2.8.2) (2022-07-13)
 
 * Updated membership types.
