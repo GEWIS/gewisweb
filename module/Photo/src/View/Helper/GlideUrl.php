@@ -6,7 +6,7 @@ use Laminas\View\Helper\AbstractHelper;
 use League\Glide\Urls\UrlBuilder;
 
 /**
- * Url view helper for generating (signed) glide url's
+ * Url view helper for generating (signed) glide urls
  * Usage: $this->glideUrl()->getUrl('path to image', ['parameters']);.
  */
 class GlideUrl extends AbstractHelper
@@ -37,9 +37,9 @@ class GlideUrl extends AbstractHelper
         array $params,
     ): string {
         // If the encoding format is not specifically defined, default to webp.
-         if (!isset($params['fm'])) {
-             $params['fm'] = 'webp';
-         }
+        if (!isset($params['fm'])) {
+            $params['fm'] = 'webp';
+        }
 
         return $this->urlBuilder->getUrl($imagePath, $params);
     }
