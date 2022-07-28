@@ -10,9 +10,8 @@
     ],
     "homepage": "https://gewis.nl/",
     "require": {
-        "php": ">=5.6.0",
+        "php": "^8.1",
         "ext-gd": "*",
-        "ext-imagick": ">=3.1",
         "ext-fileinfo": "*",
         "ext-zip": ">=1.12.5",
         "league/glide": "^2.0.0"

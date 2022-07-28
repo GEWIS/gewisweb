@@ -15,7 +15,7 @@ use League\Glide\Signatures\SignatureException;
 $server = League\Glide\ServerFactory::create([
     'source' => '/code/public/data',
     'cache' => '/glide/cache',
-    'driver' => 'imagick'
+    'driver' => 'gd',
 ]);
 
 // set complicated sign key
