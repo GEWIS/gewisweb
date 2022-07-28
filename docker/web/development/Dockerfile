@@ -73,7 +73,7 @@ COPY --chown=www-data:www-data ./public/scss ./public/scss/
 RUN npm run scss
 
 COPY --chown=www-data:www-data ./docker/web/development/php.ini /usr/local/etc/php/conf.d/default.ini
-COPY --chown=www-data:www-data ./docker/web/development/php-fpm.conf /usr/local/etc/php-fpm.d/php-fpm.conf
+COPY --chown=www-data:www-data ./docker/web/development/php-fpm.conf /usr/local/etc/php-fpm.d/zz-gewisweb.conf
 COPY --chown=www-data:www-data ./config/autoload/local.development.php.dist ./config/autoload/local.php
 COPY --chown=www-data:www-data ./config/autoload/doctrine.local.development.php.dist ./config/autoload/doctrine.local.php
 COPY --chown=www-data:www-data ./config/autoload/gewisdb.local.php.dist ./config/autoload/gewisdb.local.php

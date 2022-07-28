@@ -39,7 +39,7 @@ RUN mkdir cache \
     && chown www-data:www-data cache
 
 COPY --chown=www-data:www-data ./php.ini /usr/local/etc/php/conf.d/default.ini
-COPY --chown=www-data:www-data ./php-fpm.conf /usr/local/etc/php-fpm.d/php-fpm.conf
+COPY --chown=www-data:www-data ./php-fpm.conf /usr/local/etc/php-fpm.d/zz-glide.conf
 
 COPY --chown=www-data:www-data --from=composer-build /glide/vendor /glide/vendor
 
