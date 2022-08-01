@@ -190,7 +190,6 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
         $this->member->setLidnr($this::LIDNR);
         $this->member->setEmail('web@gewis.nl');
         $this->member->setBirth(DateTime::createFromFormat('Y/m/d', '2000/01/01'));
-        $this->member->setGender(Member::GENDER_MALE);
         $this->member->setInitials('W.C.');
         $this->member->setFirstName('Web');
         $this->member->setMiddleName('');

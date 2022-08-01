@@ -32,22 +32,6 @@ $this->headTitle($member->getFullName());
                         <td><?= $member->getLastName() ?></td>
                     </tr>
                     <tr>
-                        <th><?= $this->translate('Gender') ?></th>
-                        <td><?php
-                            switch ($member->getGender()) {
-                                case Member::GENDER_MALE:
-                                    echo $this->translate('Male');
-                                    break;
-                                case Member::GENDER_FEMALE:
-                                    echo $this->translate('Female');
-                                    break;
-                                case Member::GENDER_OTHER:
-                                    echo $this->translate('Other');
-                                    break;
-                            }
-                            ?></td>
-                    </tr>
-                    <tr>
                         <th><?= $this->translate('Email') ?></th>
                         <td>
                             <?php if (null !== ($email = $member->getEmail())): ?>
