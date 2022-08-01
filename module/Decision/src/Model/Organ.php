@@ -3,6 +3,7 @@
 namespace Decision\Model;
 
 use DateTime;
+use Decision\Model\Enums\OrganTypes;
 use Decision\Model\SubDecision\Foundation;
 use Doctrine\Common\Collections\{
     ArrayCollection,
@@ -29,13 +30,6 @@ use Doctrine\ORM\Mapping\{
 #[Entity]
 class Organ
 {
-    public const ORGAN_TYPE_COMMITTEE = 'committee';
-    public const ORGAN_TYPE_AVC = 'avc';
-    public const ORGAN_TYPE_FRATERNITY = 'fraternity';
-    public const ORGAN_TYPE_AVW = 'avw';
-    public const ORGAN_TYPE_KKK = 'kkk';
-    public const ORGAN_TYPE_RVA = 'rva';
-
     /**
      * Id.
      */
@@ -59,8 +53,11 @@ class Organ
     /**
      * Type of the organ.
      */
-    #[Column(type: "string")]
-    protected string $type;
+    #[Column(
+        type: "string",
+        enumType: OrganTypes::class,
+    )]
+    protected OrganTypes $type;
 
     /**
      * Reference to foundation of organ.
@@ -235,9 +232,9 @@ class Organ
     /**
      * Get the type.
      *
-     * @return string
+     * @return OrganTypes
      */
-    public function getType(): string
+    public function getType(): OrganTypes
     {
         return $this->type;
     }
@@ -245,9 +242,9 @@ class Organ
     /**
      * Set the type.
      *
-     * @param string $type
+     * @param OrganTypes $type
      */
-    public function setType(string $type): void
+    public function setType(OrganTypes $type): void
     {
         $this->type = $type;
     }

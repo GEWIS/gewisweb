@@ -3,6 +3,7 @@
 namespace Frontpage\Controller;
 
 use Activity\Service\ActivityQuery as ActivityQueryService;
+use Decision\Model\Enums\OrganTypes;
 use Decision\Model\Organ;
 use Decision\Service\Organ as OrganService;
 use Laminas\Mvc\Controller\AbstractActionController;
@@ -36,7 +37,7 @@ class OrganController extends AbstractActionController
 
     public function committeeListAction(): ViewModel
     {
-        $committees = $this->organService->findActiveOrgansByType(Organ::ORGAN_TYPE_COMMITTEE);
+        $committees = $this->organService->findActiveOrgansByType(OrganTypes::Committee);
 
         return new ViewModel(
             [
@@ -47,8 +48,8 @@ class OrganController extends AbstractActionController
 
     public function fraternityListAction(): ViewModel
     {
-        $activeFraternities = $this->organService->findActiveOrgansByType(Organ::ORGAN_TYPE_FRATERNITY);
-        $abrogatedFraternities = $this->organService->findAbrogatedOrgansByType(Organ::ORGAN_TYPE_FRATERNITY);
+        $activeFraternities = $this->organService->findActiveOrgansByType(OrganTypes::Fraternity);
+        $abrogatedFraternities = $this->organService->findAbrogatedOrgansByType(OrganTypes::Fraternity);
 
         return new ViewModel(
             [
@@ -60,7 +61,7 @@ class OrganController extends AbstractActionController
 
     public function organAction(): ViewModel
     {
-        $type = $this->params()->fromRoute('type');
+        $type = OrganTypes::from($this->params()->fromRoute('type'));
         $abbr = $this->params()->fromRoute('abbr');
         $organ = $this->organService->findOrganByAbbr($abbr, $type, true);
 

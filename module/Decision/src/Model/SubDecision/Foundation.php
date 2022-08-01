@@ -6,6 +6,7 @@ use Decision\Model\{
     Organ,
     SubDecision,
 };
+use Decision\Model\Enums\OrganTypes;
 use Doctrine\Common\Collections\{
     ArrayCollection,
     Collection,
@@ -16,7 +17,6 @@ use Doctrine\ORM\Mapping\{
     OneToMany,
     OneToOne,
 };
-use InvalidArgumentException;
 
 /**
  * Foundation of an organ.
@@ -24,13 +24,6 @@ use InvalidArgumentException;
 #[Entity]
 class Foundation extends SubDecision
 {
-    public const ORGAN_TYPE_COMMITTEE = 'committee';
-    public const ORGAN_TYPE_AVC = 'avc';
-    public const ORGAN_TYPE_FRATERNITY = 'fraternity';
-    public const ORGAN_TYPE_AVW = 'avw';
-    public const ORGAN_TYPE_KKK = 'kkk';
-    public const ORGAN_TYPE_RVA = 'rva';
-
     /**
      * Abbreviation (only for when organs are created).
      */
@@ -46,8 +39,11 @@ class Foundation extends SubDecision
     /**
      * Type of the organ.
      */
-    #[Column(type: "string")]
-    protected string $organType;
+    #[Column(
+        type: "string",
+        enumType: OrganTypes::class,
+    )]
+    protected OrganTypes $organType;
 
     /**
      * References from other subdecisions to this organ.
@@ -73,23 +69,6 @@ class Foundation extends SubDecision
     public function __construct()
     {
         $this->references = new ArrayCollection();
-    }
-
-    /**
-     * Get available organ types.
-     *
-     * @return array
-     */
-    public static function getOrganTypes(): array
-    {
-        return [
-            self::ORGAN_TYPE_COMMITTEE,
-            self::ORGAN_TYPE_AVC,
-            self::ORGAN_TYPE_FRATERNITY,
-            self::ORGAN_TYPE_AVW,
-            self::ORGAN_TYPE_KKK,
-            self::ORGAN_TYPE_RVA,
-        ];
     }
 
     /**
@@ -135,9 +114,9 @@ class Foundation extends SubDecision
     /**
      * Get the type.
      *
-     * @return string
+     * @return OrganTypes
      */
-    public function getOrganType(): string
+    public function getOrganType(): OrganTypes
     {
         return $this->organType;
     }
@@ -145,15 +124,10 @@ class Foundation extends SubDecision
     /**
      * Set the type.
      *
-     * @param string $organType
-     *
-     * @throws InvalidArgumentException if the type is wrong
+     * @param OrganTypes $organType
      */
-    public function setOrganType(string $organType): void
+    public function setOrganType(OrganTypes $organType): void
     {
-        if (!in_array($organType, self::getOrganTypes())) {
-            throw new InvalidArgumentException('Given type does not exist.');
-        }
         $this->organType = $organType;
     }
 

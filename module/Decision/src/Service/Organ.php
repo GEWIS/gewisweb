@@ -22,6 +22,7 @@ use Decision\Model\{
     Organ as OrganModel,
     OrganInformation as OrganInformationModel,
 };
+use Decision\Model\Enums\OrganTypes;
 use Imagick;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
@@ -154,12 +155,12 @@ class Organ
 
         if ($this->aclService->isAllowed('editall', 'organ')) {
             return array_merge(
-                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_COMMITTEE),
-                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_FRATERNITY),
-                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_AVC),
-                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_AVW),
-                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_KKK),
-                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_RVA)
+                $this->findActiveOrgansByType(OrganTypes::Committee),
+                $this->findActiveOrgansByType(OrganTypes::Fraternity),
+                $this->findActiveOrgansByType(OrganTypes::AVC),
+                $this->findActiveOrgansByType(OrganTypes::AVW),
+                $this->findActiveOrgansByType(OrganTypes::KKK),
+                $this->findActiveOrgansByType(OrganTypes::RvA),
             );
         }
 
@@ -197,11 +198,11 @@ class Organ
     }
 
     /**
-     * @param string $type either committee, avc or fraternity
+     * @param OrganTypes $type either committee, avc or fraternity
      *
      * @return array
      */
-    public function findActiveOrgansByType(string $type): array
+    public function findActiveOrgansByType(OrganTypes $type): array
     {
         return $this->organMapper->findActive($type);
     }
@@ -217,11 +218,11 @@ class Organ
     }
 
     /**
-     * @param string $type either committee, avc or fraternity
+     * @param OrganTypes $type either committee, avc or fraternity
      *
      * @return array
      */
-    public function findAbrogatedOrgansByType(string $type): array
+    public function findAbrogatedOrgansByType(OrganTypes $type): array
     {
         return $this->organMapper->findAbrogated($type);
     }
@@ -230,7 +231,7 @@ class Organ
      * Finds an organ by its abbreviation.
      *
      * @param string $abbr
-     * @param string|null $type
+     * @param OrganTypes|null $type
      * @param bool $latest  Whether to retrieve the latest occurrence of an organ or not
      *
      * @return OrganModel|null
@@ -241,7 +242,7 @@ class Organ
      */
     public function findOrganByAbbr(
         string $abbr,
-        ?string $type = null,
+        ?OrganTypes $type = null,
         bool $latest = false,
     ): ?OrganModel {
         return $this->organMapper->findByAbbr(
