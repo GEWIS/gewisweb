@@ -2,16 +2,7 @@
 
 namespace Decision\Model;
 
-use Doctrine\ORM\Mapping\{
-    Column,
-    DiscriminatorColumn,
-    DiscriminatorMap,
-    Entity,
-    Id,
-    InheritanceType,
-    JoinColumn,
-    ManyToOne,
-};
+use Decision\Model\Enums\MeetingTypes;
 use Decision\Model\SubDecision\{
     Abrogation,
     Board\Discharge as BoardDischarge,
@@ -25,6 +16,16 @@ use Decision\Model\SubDecision\{
     Installation,
     Other,
     Reckoning,
+};
+use Doctrine\ORM\Mapping\{
+    Column,
+    DiscriminatorColumn,
+    DiscriminatorMap,
+    Entity,
+    Id,
+    InheritanceType,
+    JoinColumn,
+    ManyToOne,
 };
 
 /**
@@ -85,8 +86,11 @@ abstract class SubDecision
      * NOTE: This is a hack to make the decision a primary key here.
      */
     #[Id]
-    #[Column(type: "string")]
-    protected string $meeting_type;
+    #[Column(
+        type: "string",
+        enumType: MeetingTypes::class,
+    )]
+    protected MeetingTypes $meeting_type;
 
     /**
      * Meeting number.
@@ -156,9 +160,9 @@ abstract class SubDecision
     /**
      * Get the meeting type.
      *
-     * @return string
+     * @return MeetingTypes
      */
-    public function getMeetingType(): string
+    public function getMeetingType(): MeetingTypes
     {
         return $this->meeting_type;
     }

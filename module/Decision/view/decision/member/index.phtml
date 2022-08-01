@@ -98,11 +98,21 @@ $meetings = $this->meetings;
                             <?=
                             sprintf(
                                 $this->translate('The next meeting is %s%s %s%s on %s.'),
-                                '<a href="' . $this->url('decision/meeting', ['type' => $this->upcoming->getType(), 'number' => $this->upcoming->getNumber()]) . '">',
-                                $this->upcoming->getType(),
+                                '<a href="' . $this->url(
+                                    'decision/meeting',
+                                    [
+                                        'type' => $this->upcoming->getType()->value,
+                                        'number' => $this->upcoming->getNumber(),
+                                    ],
+                                ) . '">',
+                                $this->upcoming->getType()->value,
                                 $this->upcoming->getNumber(),
                                 '</a>',
-                                $this->dateFormat($this->upcoming->getDate()->getTimestamp(), IntlDateFormatter::FULL, IntlDateFormatter::NONE)
+                                $this->dateFormat(
+                                    $this->upcoming->getDate()->getTimestamp(),
+                                    IntlDateFormatter::FULL,
+                                    IntlDateFormatter::NONE,
+                                ),
                             )
                             ?>
                         </div>
@@ -132,15 +142,23 @@ $meetings = $this->meetings;
                     <ul>
                         <?php foreach ($meetings as $meeting): ?>
                             <li>
-                                <a href="<?= $this->url('decision/meeting', ['type' => $meeting->getType(), 'number' => $meeting->getNumber()]) ?>">
-                                    <?=
-                                    sprintf(
+                                <a href="<?= $this->url(
+                                    'decision/meeting',
+                                    [
+                                        'type' => $meeting->getType()->value,
+                                        'number' => $meeting->getNumber(),
+                                    ],
+                                ) ?>">
+                                    <?= sprintf(
                                         $this->translate('%s %s on %s'),
-                                        $meeting->getType(),
+                                        $meeting->getType()->value,
                                         $meeting->getNumber(),
-                                        $this->dateFormat($meeting->getDate()->getTimestamp(), IntlDateFormatter::FULL, IntlDateFormatter::NONE)
-                                    )
-                                    ?>
+                                        $this->dateFormat(
+                                            $meeting->getDate()->getTimestamp(),
+                                            IntlDateFormatter::FULL,
+                                            IntlDateFormatter::NONE,
+                                        ),
+                                    ) ?>
                                 </a>
                             </li>
                         <?php endforeach; ?>

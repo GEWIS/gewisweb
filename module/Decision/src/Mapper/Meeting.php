@@ -9,6 +9,7 @@ use Decision\Model\{
     Meeting as MeetingModel,
     MeetingDocument as MeetingDocumentModel,
 };
+use Decision\Model\Enums\MeetingTypes;
 use Doctrine\ORM\{
     NonUniqueResultException,
     NoResultException,
@@ -44,11 +45,11 @@ class Meeting extends BaseMapper
     /**
      * Find all meetings which have the given type.
      *
-     * @param string $type AV|BV|VV|Virt
+     * @param MeetingTypes $type AV|BV|VV|Virt
      *
      * @return array
      */
-    public function findByType(string $type): array
+    public function findByType(MeetingTypes $type): array
     {
         $qb = $this->getRepository()->createQueryBuilder('m');
         $qb->where('m.type = :type')
@@ -61,14 +62,14 @@ class Meeting extends BaseMapper
     /**
      * Find all meetings that have taken place.
      *
-     * @param int|null $limit The amount of results, default is all
-     * @param string|null $type
+     * @param int $limit The amount of results
+     * @param MeetingTypes $type
      *
      * @return array Meetings that have taken place
      */
     public function findPast(
-        ?int $limit = null,
-        ?string $type = null,
+        int $limit,
+        MeetingTypes $type,
     ): array {
         $qb = $this->em->createQueryBuilder();
 
@@ -79,18 +80,13 @@ class Meeting extends BaseMapper
         $qb->select('m, COUNT(d)')
             ->from($this->getRepositoryName(), 'm')
             ->where('m.date <= :date')
+            ->andWhere('m.type = :type')
             ->leftJoin('m.decisions', 'd')
             ->groupBy('m')
             ->orderBy('m.date', 'DESC')
-            ->setParameter('date', $date);
-
-        if (is_int($limit) && $limit >= 0) {
-            $qb->setMaxResults($limit);
-        }
-
-        if (is_string($type)) {
-            $qb->andWhere('m.type = :type')->setParameter('type', $type);
-        }
+            ->setParameter('date', $date)
+            ->setParameter('type', $type)
+            ->setMaxResults($limit);
 
         return $qb->getQuery()->getResult();
     }
@@ -123,15 +119,15 @@ class Meeting extends BaseMapper
     /**
      * Find a meeting with all decisions.
      *
-     * @param string|null $type
-     * @param int|null $number
+     * @param MeetingTypes $type
+     * @param int $number
      *
      * @return MeetingModel|null
      * @throws NonUniqueResultException
      */
     public function findMeeting(
-        ?string $type,
-        ?int $number,
+        MeetingTypes $type,
+        int $number,
     ): ?MeetingModel {
         $qb = $this->em->createQueryBuilder();
         $qb->select('m, d, db')

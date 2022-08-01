@@ -3,6 +3,7 @@
 namespace Decision\Model;
 
 use DateTime;
+use Decision\Model\Enums\MeetingTypes;
 use Doctrine\Common\Collections\{
     ArrayCollection,
     Collection,
@@ -15,7 +16,6 @@ use Doctrine\ORM\Mapping\{
     OneToOne,
     OrderBy,
 };
-use InvalidArgumentException;
 
 /**
  * Meeting model.
@@ -23,17 +23,15 @@ use InvalidArgumentException;
 #[Entity]
 class Meeting
 {
-    public const TYPE_BV = 'BV'; // bestuursvergadering
-    public const TYPE_AV = 'AV'; // algemene leden vergadering
-    public const TYPE_VV = 'VV'; // voorzitters vergadering
-    public const TYPE_VIRT = 'Virt'; // virtual meeting
-
     /**
      * Meeting type.
      */
     #[Id]
-    #[Column(type: "string")]
-    protected string $type;
+    #[Column(
+        type: "string",
+        enumType: MeetingTypes::class,
+    )]
+    protected MeetingTypes $type;
 
     /**
      * Meeting number.
@@ -77,21 +75,6 @@ class Meeting
     protected ?MeetingMinutes $meetingMinutes = null;
 
     /**
-     * Get all allowed meeting types.
-     *
-     * @return array
-     */
-    public static function getTypes(): array
-    {
-        return [
-            self::TYPE_BV,
-            self::TYPE_AV,
-            self::TYPE_VV,
-            self::TYPE_VIRT,
-        ];
-    }
-
-    /**
      * Constructor.
      */
     public function __construct()
@@ -103,9 +86,9 @@ class Meeting
     /**
      * Get the meeting type.
      *
-     * @return string
+     * @return MeetingTypes
      */
-    public function getType(): string
+    public function getType(): MeetingTypes
     {
         return $this->type;
     }
@@ -131,13 +114,10 @@ class Meeting
     /**
      * Set the meeting type.
      *
-     * @param string $type
+     * @param MeetingTypes $type
      */
-    public function setType(string $type): void
+    public function setType(MeetingTypes $type): void
     {
-        if (!in_array($type, self::getTypes())) {
-            throw new InvalidArgumentException('Invalid meeting type given.');
-        }
         $this->type = $type;
     }
 

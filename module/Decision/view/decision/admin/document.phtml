@@ -25,9 +25,9 @@ $element = $form->get('meeting');
         <select class="form-control" name="meeting"
                 onchange="window.location='<?= $this->url('admin_decision/document') ?>/'+this.value">
             <?php foreach ($meetings as $m): ?>
-                <option value="<?= $m->getType() ?>/<?= $m->getNumber() ?>"
+                <option value="<?= $m->getType()->value ?>/<?= $m->getNumber() ?>"
                     <?= $m->getNumber() === intval($number) ? 'selected' : '' ?>>
-                    <?= $m->getType() ?> <?= $m->getNumber() ?> (<?= $m->getDate()->format('Y-m-d') ?>)
+                    <?= $m->getType()->value ?> <?= $m->getNumber() ?> (<?= $m->getDate()->format('Y-m-d') ?>)
                 </option>
             <?php endforeach; ?>
         </select>

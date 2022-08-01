@@ -1,5 +1,5 @@
 <?php
-$meetingName = sprintf('%s %d', $meeting->getType(), $meeting->getNumber());
+$meetingName = sprintf('%s %d', $meeting->getType()->value, $meeting->getNumber());
 
 $this->headTitle($meetingName);
 ?>
@@ -34,8 +34,8 @@ $this->headTitle($meetingName);
                     <h3><?= $this->translate('Minutes') ?></h3>
                     <?php
                     $minutesUrl = $this->url('decision/meeting/minutes', [
-                        'type' => $meeting->getType(),
-                        'number' => $meeting->getNumber()
+                        'type' => $meeting->getType()->value,
+                        'number' => $meeting->getNumber(),
                     ])
                     ?>
                     <p>
@@ -54,7 +54,7 @@ $this->headTitle($meetingName);
                         <?php foreach ($meeting->getDecisions() as $decision): ?>
                             <?php
                             $id = vsprintf('%s %s.%s.%s', [
-                                $meeting->getType(),
+                                $meeting->getType()->value,
                                 $meeting->getNumber(),
                                 $decision->getPoint(),
                                 $decision->getNumber(),
