@@ -93,19 +93,7 @@ $this->headTitle($member->getFullName());
                 </ul>
                 <h3><?= $this->translate('Adresses') ?></h3>
                 <?php foreach ($member->getAddresses() as $address): ?>
-                    <h4><?php
-                        switch ($address->getType()) {
-                            case Address::TYPE_HOME:
-                                echo $this->translate('Home address (parents)');
-                                break;
-                            case Address::TYPE_STUDENT:
-                                echo $this->translate('Student address');
-                                break;
-                            case Address::TYPE_MAIL:
-                                echo $this->translate('Mail address');
-                                break;
-                        }
-                        ?></h4>
+                    <h4><?= $address->getType()->getName($this->plugin('translate')->getTranslator()) ?></h4>
                     <table class="table table-bordered">
                         <tr>
                             <th><?= $this->translate('Country') ?></th>
