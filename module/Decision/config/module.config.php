@@ -147,7 +147,7 @@ return [
                     'document' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/document[/:type][/:number]',
+                            'route' => '/document[/:type/:number]',
                             'constraints' => [
                                 'type' => 'BV|AV|VV|Virt',
                                 'number' => '[0-9]+',

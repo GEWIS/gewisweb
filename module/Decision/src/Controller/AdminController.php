@@ -75,7 +75,12 @@ class AdminController extends AbstractActionController
      */
     public function documentAction(): ViewModel
     {
-        $type = MeetingTypes::from($this->params()->fromRoute('type'));
+        $type = $this->params()->fromRoute('type');
+
+        if (null !== $type) {
+            $type = MeetingTypes::from($type);
+        }
+
         $number = $this->params()->fromRoute('number');
 
         $meetings = $this->decisionService->getMeetingsByType(MeetingTypes::AV);
@@ -83,6 +88,7 @@ class AdminController extends AbstractActionController
 
         if (
             null === $number
+            && null === $type
             && !empty($meetings)
         ) {
             $number = $meetings[0]->getNumber();
