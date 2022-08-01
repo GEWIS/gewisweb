@@ -159,7 +159,7 @@ class Organ
                 $this->findActiveOrgansByType(OrganTypes::Fraternity),
                 $this->findActiveOrgansByType(OrganTypes::AVC),
                 $this->findActiveOrgansByType(OrganTypes::AVW),
-                $this->findActiveOrgansByType(OrganTypes::KKK),
+                $this->findActiveOrgansByType(OrganTypes::KCC),
                 $this->findActiveOrgansByType(OrganTypes::RvA),
             );
         }

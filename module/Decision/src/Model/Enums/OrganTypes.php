@@ -12,7 +12,7 @@ enum OrganTypes: string
     case Committee = 'committee';
     case AVC = 'avc';
     case Fraternity = 'fraternity';
-    case KKK = 'kkk';
+    case KCC = 'kcc';
     case AVW = 'avw';
     case RvA = 'rva';
 
@@ -22,7 +22,7 @@ enum OrganTypes: string
             self::Committee => $translator->translate('Committee'),
             self::AVC => $translator->translate('AV-committee'),
             self::Fraternity => $translator->translate('Fraternity'),
-            self::KKK => $translator->translate('Audit Committee'),
+            self::KCC => $translator->translate('Audit Committee'),
             self::AVW => $translator->translate('GM Task Force'),
             self::RvA => $translator->translate('Advisory Board'),
         };
