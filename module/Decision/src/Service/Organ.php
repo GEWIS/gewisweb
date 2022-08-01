@@ -447,20 +447,30 @@ class Organ
      */
     public function getOrganMemberInformation(OrganModel $organ): array
     {
+        $activeMembers = [];
+        $inactiveMembers = [];
         $oldMembers = [];
-        $currentMembers = [];
+
         foreach ($organ->getMembers() as $install) {
             if (null === $install->getDischargeDate()) {
                 // current member
-                if (!isset($currentMembers[$install->getMember()->getLidnr()])) {
-                    $currentMembers[$install->getMember()->getLidnr()] = [
-                        'member' => $install->getMember(),
-                        'functions' => [],
-                    ];
-                }
+                if ('Inactief Lid' === $install->getFunction()) {
+                    // inactive
+                    if (!isset($inactiveMembers[$install->getMember()->getLidnr()])) {
+                        $inactiveMembers[$install->getMember()->getLidnr()] = $install->getMember();
+                    }
+                } else {
+                    // active
+                    if (!isset($activeMembers[$install->getMember()->getLidnr()])) {
+                        $activeMembers[$install->getMember()->getLidnr()] = [
+                            'member' => $install->getMember(),
+                            'functions' => [],
+                        ];
+                    }
 
-                if ('Lid' != $install->getFunction()) {
-                    $currentMembers[$install->getMember()->getLidnr()]['functions'][] = $install->getFunction();
+                    if ('Lid' !== $install->getFunction()) {
+                        $activeMembers[$install->getMember()->getLidnr()]['functions'][] = $install->getFunction();
+                    }
                 }
             } else {
                 // old member
@@ -470,12 +480,13 @@ class Organ
             }
         }
 
-        $oldMembers = array_filter($oldMembers, function ($member) use ($currentMembers) {
-            return !isset($currentMembers[$member->getLidnr()]);
+        $oldMembers = array_filter($oldMembers, function ($member) use ($activeMembers) {
+            return !isset($activeMembers[$member->getLidnr()])
+                && !isset($inactiveMembers[$member->getLidnr()]);
         });
 
         // Sort members by function
-        usort($currentMembers, function ($a, $b) {
+        usort($activeMembers, function ($a, $b) {
             if ($a['functions'] == $b['functions']) {
                 return 0;
             }
@@ -488,8 +499,9 @@ class Organ
         });
 
         return [
+            'activeMembers' => $activeMembers,
+            'inactiveMembers' => $inactiveMembers,
             'oldMembers' => $oldMembers,
-            'currentMembers' => $currentMembers,
         ];
     }
 }

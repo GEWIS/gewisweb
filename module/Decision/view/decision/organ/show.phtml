@@ -6,16 +6,37 @@ $this->headTitle($organ->getName()); ?>
         <div class="row">
             <h1><?= $organ->getName() ?> (<?= $organ->getAbbr() ?>)</h1>
             <div class="col-md-4">
-                <h2><?= $this->translate('Current members') ?></h2>
+                <h2><?= $this->translate('Active members') ?></h2>
                 <ul>
-                    <?php foreach ($currentMembers as $membership): ?>
+                    <?php foreach ($activeMembers as $membership): ?>
+                        <li>
+                            <a href="<?= $this->url(
+                                'member/view',
+                                ['lidnr' => $membership['member']->getLidnr()],
+                            ) ?>">
+                                <?= $membership['member']->getFullName() ?>
+                            </a>
+                            <?php if (!empty($membership['functions'])): ?>
+                                (<?= implode(
+                                    ', ',
+                                    array_map(
+                                        fn (string $value): string => $this->translate($value),
+                                        $membership['functions'],
+                                    ),
+                                ) ?>)
+                            <?php endif ?>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+
+                <h2><?= $this->translate('Inactive members') ?></h2>
+                <ul>
+                    <?php foreach ($inactiveMembers as $membership): ?>
                         <li>
                             <a href="<?= $this->url('member/view', ['lidnr' => $membership['member']->getLidnr()]) ?>">
                                 <?= $membership['member']->getFullName() ?>
                             </a>
-                            <?php if (!empty($membership['functions'])): ?>
-                                (<?= implode(', ', array_map(fn(string $value): string => $this->translate($value), $membership['functions'])) ?>)
-                            <?php endif ?></li>
+                        </li>
                     <?php endforeach ?>
                 </ul>
 

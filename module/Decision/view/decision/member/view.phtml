@@ -60,13 +60,19 @@ $this->headTitle($this->translate('Members'));
                 <h3><?= $this->translate('Membership of committees and fraternities') ?></h3>
                 <ul>
                     <?php foreach ($memberships as $abbr => $install): ?>
-                        <li><a
-                                href="<?= $this->url('home/organ', ['type' => $install['organ']->getType(), 'abbr' =>
-                                    $abbr]) ?>"
-                            ><?= $abbr ?></a>
-                            <?php if (isset($install['functions'])): ?>
-                                (<?= $install['functions'] ?>)
-                            <?php endif; ?>
+                        <li>
+                            <a href="<?= $this->url(
+                                'home/organ',
+                                [
+                                    'type' => $install['organ']->getType(),
+                                    'abbr' => $abbr,
+                                ],
+                            ) ?>">
+                                <?= $abbr ?>
+                            </a>
+                            <?php if (!empty($install['functions'])): ?>
+                                (<?= implode(', ', $install['functions']) ?>)
+                            <?php endif ?>
                         </li>
                     <?php endforeach; ?>
                 </ul>

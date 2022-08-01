@@ -91,11 +91,20 @@ $this->headTitle($member->getFullName());
                 <h3><?= $this->translate('Membership of committees and fraternities') ?></h3>
                 <ul>
                     <?php foreach ($memberships as $abbr => $install): ?>
-                        <li><a href="<?= $this->url('home/organ', ['type' => $install['organ']->getType(), 'abbr' =>
-                                $abbr]) ?>"><?= $abbr ?></a>
-                            <?php $functions = $install['functions']; ?>
-                            <?php if (!empty($functions)): ?> (<?= $functions ?>)
-                            <?php endif ?></li>
+                        <li>
+                            <a href="<?= $this->url(
+                                'home/organ',
+                                [
+                                    'type' => $install['organ']->getType(),
+                                    'abbr' => $abbr,
+                                ],
+                            ) ?>">
+                                <?= $abbr ?>
+                            </a>
+                            <?php if (!empty($install['functions'])): ?>
+                                (<?= implode(', ', $install['functions']) ?>)
+                            <?php endif ?>
+                        </li>
                     <?php endforeach; ?>
                 </ul>
                 <h3><?= $this->translate('Adresses') ?></h3>

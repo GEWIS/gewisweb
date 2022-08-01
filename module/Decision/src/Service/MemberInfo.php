@@ -126,19 +126,20 @@ class MemberInfo
     public function getOrganMemberships(MemberModel $member): array
     {
         $memberships = [];
-        foreach ($member->getOrganInstallations() as $install) {
-            if (null !== $install->getDischargeDate()) {
-                continue;
-            }
-
+        foreach ($member->getCurrentOrganInstallations() as $install) {
             if (!isset($memberships[$install->getOrgan()->getAbbr()])) {
-                $memberships[$install->getOrgan()->getAbbr()] = [];
-                $memberships[$install->getOrgan()->getAbbr()]['organ'] = $install->getOrgan();
+                $memberships[$install->getOrgan()->getAbbr()] = [
+                    'organ' => $install->getOrgan(),
+                    'functions' => [],
+                ];
             }
 
-            if ('Lid' != $install->getFunction()) {
+            if (
+                'Lid' !== $install->getFunction()
+                && 'Inactief Lid' !== $install->getFunction()
+            ) {
                 $function = $this->translator->translate($install->getFunction());
-                $memberships[$install->getOrgan()->getAbbr()]['functions'] = $function;
+                $memberships[$install->getOrgan()->getAbbr()]['functions'][] = $function;
             }
         }
 
