@@ -89,10 +89,13 @@ class AdminController extends AbstractActionController
         if (
             null === $number
             && null === $type
-            && !empty($meetings)
         ) {
-            $number = $meetings[0]->getNumber();
-            $type = $meetings[0]->getType();
+            if (!empty($meetings)) {
+                $number = $meetings[0]->getNumber();
+                $type = $meetings[0]->getType();
+            } else {
+                return new ViewModel(['noMeetings' => true]);
+            }
         }
 
         $form = $this->decisionService->getDocumentForm();
