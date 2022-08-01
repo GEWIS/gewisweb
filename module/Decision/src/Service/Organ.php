@@ -481,7 +481,7 @@ class Organ
             }
         }
 
-        $oldMembers = array_filter($oldMembers, function ($member) use ($activeMembers) {
+        $oldMembers = array_filter($oldMembers, function ($member) use ($activeMembers, $inactiveMembers) {
             return !isset($activeMembers[$member->getLidnr()])
                 && !isset($inactiveMembers[$member->getLidnr()]);
         });
