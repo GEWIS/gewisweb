@@ -1,29 +1,29 @@
-FROM php:8.1-fpm as gewisweb_web_development
+FROM php:8.1-fpm-alpine as gewisweb_web_development
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        cron \
-        git \
-        ghostscript \
-        libcurl4-openssl-dev \
-        libfreetype6-dev \
-        libicu-dev \
-        libjpeg62-turbo-dev \
-        libmagickwand-dev \
-        libmemcached-dev \
-        libpng-dev \
-        libpq-dev \
-        libsqlite3-dev \
-        libzip-dev \
-        nano \
-        poppler-utils \
-        rsync \
-        ssh \
-        sshpass \
-        unzip \
-        zip \
-    && apt-get upgrade -y --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache \
+    $PHPIZE_DEPS \
+    curl-dev \
+    freetype-dev \
+    git \
+    ghostscript \
+    icu-dev \
+    imagemagick-dev \
+    imagemagick \
+    libjpeg-turbo-dev \
+    libmemcached-dev \
+    libpng-dev \
+    libpq-dev \
+    libzip-dev \
+    nano \
+    nodejs \
+    npm \
+    openssh \
+    poppler-utils \
+    rsync \
+    sqlite-dev \
+    sshpass \
+    unzip \
+    zip
 
 RUN docker-php-ext-configure \
         gd --with-freetype --with-jpeg \
@@ -48,20 +48,13 @@ RUN pecl install imagick \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug
 
-RUN sed -i 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/g' /etc/ImageMagick-6/policy.xml
+RUN sed -i 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/g' /etc/ImageMagick-7/policy.xml
 
 WORKDIR /code
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');"
-
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends \
-        nodejs \
-    && apt-get upgrade -y --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/*
 
 COPY --chown=www-data:www-data ./composer.json ./
 RUN php composer.phar install

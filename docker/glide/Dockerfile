@@ -1,16 +1,14 @@
-FROM php:8.1-fpm as php-target
+FROM php:8.1-fpm-alpine as php-target
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libmagickwand-dev \
-        libpng-dev \
-        libwebp-dev \
-        libzip-dev \
-        unzip \
-    && apt-get upgrade -y --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache \
+    $PHPIZE_DEPS \
+    freetype-dev \
+    imagemagick-dev \
+    libjpeg-turbo-dev \
+    libpng-dev \
+    libwebp-dev \
+    libzip-dev \
+    unzip
 
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install -j$(nproc) \

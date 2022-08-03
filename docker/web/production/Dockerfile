@@ -1,4 +1,4 @@
-FROM node:14-alpine as node-build
+FROM node:lts-alpine as node-build
 WORKDIR /code
 
 COPY ./package.json ./package-lock.json ./
@@ -9,29 +9,27 @@ RUN mkdir public && mkdir public/scss && mkdir public/css
 COPY ./public/scss ./public/scss/
 RUN npm run scss
 
-FROM php:8.1-fpm as php-target
+FROM php:8.1-fpm-alpine as php-target
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        cron \
-        git \
-        ghostscript \
-        libcurl4-openssl-dev \
-        libfreetype6-dev \
-        libicu-dev \
-        libjpeg62-turbo-dev \
-        libmagickwand-dev \
-        libmemcached-dev \
-        libpng-dev \
-        libpq-dev \
-        libzip-dev \
-        poppler-utils \
-        rsync \
-        ssh \
-        sshpass \
-        unzip \
-    && apt-get upgrade -y --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache \
+    $PHPIZE_DEPS \
+    curl-dev \
+    freetype-dev \
+    git \
+    ghostscript \
+    icu-dev \
+    imagemagick-dev \
+    imagemagick \
+    libjpeg-turbo-dev \
+    libmemcached-dev \
+    libpng-dev \
+    libpq-dev \
+    libzip-dev \
+    openssh \
+    poppler-utils \
+    rsync \
+    sshpass \
+    unzip
 
 RUN docker-php-ext-configure \
         gd --with-freetype --with-jpeg \
@@ -52,7 +50,7 @@ RUN pecl install -o imagick \
     && pecl install -o memcached \
     && docker-php-ext-enable memcached
 
-RUN sed -i 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/g' /etc/ImageMagick-6/policy.xml
+RUN sed -i 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/g' /etc/ImageMagick-7/policy.xml
 
 FROM php-target as gewisweb_web_production
 WORKDIR /code
