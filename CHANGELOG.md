@@ -1,3 +1,11 @@
+## [v2.8.4](https://github.com/GEWIS/gewisweb/tree/v2.8.4) (2022-08-03)
+
+* Fixed issue where an incorrect runtime configuration was used, resulting in reduced performance.
+* Fixed issue where performing a password reset resulted in an error.
+* Updated dependencies.
+
+---
+
 ## [v2.8.3](https://github.com/GEWIS/gewisweb/tree/v2.8.3) (2022-07-25)
 
 * Added a link to the Housing page in the useful information menu.
