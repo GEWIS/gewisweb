@@ -135,7 +135,7 @@ class UserController extends AbstractActionController
         /** @var Request $request */
         $request = $this->getRequest();
 
-        if ($request->isPost() && $this->userService->changePassword($request->getPost())) {
+        if ($request->isPost() && $this->userService->changePassword($request->getPost()->toArray())) {
             return new ViewModel(
                 [
                     'success' => true,

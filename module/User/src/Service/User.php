@@ -7,7 +7,6 @@ use DateTime;
 use Decision\Mapper\Member as MemberMapper;
 use Laminas\Crypt\Password\Bcrypt;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Stdlib\Parameters;
 use User\Authentication\AuthenticationService;
 use User\Form\{
     Activate as ActivateForm,
@@ -144,13 +143,13 @@ class User
     /**
      * Activate a user.
      *
-     * @param Parameters $data activation data
+     * @param array $data activation data
      * @param NewUserModel $newUser The user to create
      *
      * @return bool
      */
     public function activate(
-        Parameters $data,
+        array $data,
         NewUserModel $newUser,
     ): bool {
         $form = $this->activateForm;
@@ -292,11 +291,11 @@ class User
     /**
      * Change the password of a user.
      *
-     * @param Parameters $data Passworc change date
+     * @param array $data Passworc change date
      *
      * @return bool
      */
-    public function changePassword(Parameters $data): bool
+    public function changePassword(array $data): bool
     {
         $form = $this->getPasswordForm();
 
