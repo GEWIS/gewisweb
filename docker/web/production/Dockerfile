@@ -11,27 +11,27 @@ RUN npm run scss
 
 FROM php:8.1-fpm-alpine as php-target
 
-RUN apk add --no-cache \
-    $PHPIZE_DEPS \
-    curl-dev \
-    freetype-dev \
-    git \
-    ghostscript \
-    icu-dev \
-    imagemagick-dev \
-    imagemagick \
-    libjpeg-turbo-dev \
-    libmemcached-dev \
-    libpng-dev \
-    libpq-dev \
-    libzip-dev \
-    openssh \
-    poppler-utils \
-    rsync \
-    sshpass \
-    unzip
-
-RUN docker-php-ext-configure \
+RUN apk add --no-cache --virtual .build-deps \
+        $PHPIZE_DEPS \
+        curl-dev \
+        freetype-dev \
+        icu-dev \
+        imagemagick-dev \
+        libjpeg-turbo-dev \
+        libmemcached-dev \
+        libpng-dev \
+        libpq-dev \
+        libzip-dev \
+    && apk add --no-cache --virtual .runtime-deps \
+        git \
+        ghostscript \
+        imagemagick \
+        openssh \
+        poppler-utils \
+        rsync \
+        sshpass \
+        unzip \
+    && docker-php-ext-configure \
         gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) \
         calendar \
@@ -43,12 +43,20 @@ RUN docker-php-ext-configure \
         pgsql \
         pdo_mysql \
         pdo_pgsql \
-        zip
-
-RUN pecl install -o imagick \
+        zip \
+    && pecl install -o imagick \
     && docker-php-ext-enable imagick \
     && pecl install -o memcached \
-    && docker-php-ext-enable memcached
+    && docker-php-ext-enable memcached \
+    && rm -r /tmp/pear \
+    && runtimeDeps="$( \
+            scanelf --needed --nobanner --format '%n#p' --recursive /usr/local/lib/php/extensions \
+            | tr ',' '\n' \
+            | sort -u \
+            | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
+        )" \
+    && apk add --virtual .gewisweb-runtime-deps $runtimeDeps \
+    && apk del .build-deps
 
 RUN sed -i 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/g' /etc/ImageMagick-7/policy.xml
 
