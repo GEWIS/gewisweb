@@ -8,6 +8,7 @@ use Decision\Service\{
     Member as MemberService,
     MemberInfo as MemberInfoService,
 };
+use Decision\Model\Enums\MeetingTypes;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\{
@@ -78,9 +79,9 @@ class MemberController extends AbstractActionController
     {
         // Get the latest 3 meetings of each type and flatten result
         $meetingsCollection = [
-            'AV' => array_column($this->decisionService->getPastMeetings(3, 'AV'), 0),
-            'BV' => array_column($this->decisionService->getPastMeetings(3, 'BV'), 0),
-            'VV' => array_column($this->decisionService->getPastMeetings(3, 'VV'), 0),
+            MeetingTypes::AV->value => array_column($this->decisionService->getPastMeetings(3, MeetingTypes::AV), 0),
+            MeetingTypes::BV->value => array_column($this->decisionService->getPastMeetings(3, MeetingTypes::BV), 0),
+            MeetingTypes::VV->value => array_column($this->decisionService->getPastMeetings(3, MeetingTypes::VV), 0),
         ];
 
         $member = $this->aclService->getIdentityOrThrowException()->getMember();

@@ -31,10 +31,6 @@ use User\Model\User as UserModel;
 #[Entity]
 class Member
 {
-    public const GENDER_MALE = 'm';
-    public const GENDER_FEMALE = 'f';
-    public const GENDER_OTHER = 'o';
-
     /**
      * The user.
      */
@@ -79,19 +75,6 @@ class Member
      */
     #[Column(type: "string")]
     protected string $firstName;
-
-    /**
-     * Gender of the member.
-     *
-     * Either one of:
-     * - m
-     * - f
-     */
-    #[Column(
-        type: "string",
-        length: 1,
-    )]
-    protected string $gender;
 
     /**
      * Generation.
@@ -230,20 +213,6 @@ class Member
         mappedBy: "member",
     )]
     protected Collection $boardInstallations;
-
-    /**
-     * Static method to get available genders.
-     *
-     * @return array
-     */
-    protected static function getGenders(): array
-    {
-        return [
-            self::GENDER_MALE,
-            self::GENDER_FEMALE,
-            self::GENDER_OTHER,
-        ];
-    }
 
     /**
      * Constructor.
@@ -392,31 +361,6 @@ class Member
         }
 
         return $name . $this->getLastName();
-    }
-
-    /**
-     * Get the member's gender.
-     *
-     * @return string
-     */
-    public function getGender(): string
-    {
-        return $this->gender;
-    }
-
-    /**
-     * Set the member's gender.
-     *
-     * @param string $gender
-     *
-     * @throws InvalidArgumentException when the gender does not have correct value
-     */
-    public function setGender(string $gender): void
-    {
-        if (!in_array($gender, self::getGenders())) {
-            throw new InvalidArgumentException('Invalid gender value');
-        }
-        $this->gender = $gender;
     }
 
     /**

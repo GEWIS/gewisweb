@@ -2,6 +2,7 @@
 
 namespace Decision\Model;
 
+use Decision\Model\Enums\MeetingTypes;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -21,8 +22,11 @@ class MeetingMinutes implements ResourceInterface
      * Meeting type.
      */
     #[Id]
-    #[Column(type: "string")]
-    protected string $type;
+    #[Column(
+        type: "string",
+        enumType: MeetingTypes::class,
+    )]
+    protected MeetingTypes $meeting_type;
 
     /**
      * Meeting number.
@@ -70,7 +74,7 @@ class MeetingMinutes implements ResourceInterface
     public function setMeeting(Meeting $meeting): void
     {
         $this->meeting = $meeting;
-        $this->type = $meeting->getType();
+        $this->meeting_type = $meeting->getType();
         $this->number = $meeting->getNumber();
     }
 

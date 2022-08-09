@@ -75,8 +75,8 @@ class Minutes extends Form implements InputFilterProviderInterface
         $options = [];
         foreach ($meetings as $meeting) {
             $meeting = $meeting[0];
-            $name = $meeting->getType() . '/' . $meeting->getNumber();
-            $options[$name] = $meeting->getType() . ' ' . $meeting->getNumber()
+            $name = $meeting->getType()->value . '/' . $meeting->getNumber();
+            $options[$name] = $meeting->getType()->value . ' ' . $meeting->getNumber()
                 . ' (' . $meeting->getDate()->format('Y-m-d') . ')';
         }
 

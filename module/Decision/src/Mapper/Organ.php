@@ -3,6 +3,7 @@
 namespace Decision\Mapper;
 
 use Application\Mapper\BaseMapper;
+use Decision\Model\Enums\OrganTypes;
 use Decision\Model\Organ as OrganModel;
 use Doctrine\ORM\{
     NoResultException,
@@ -20,17 +21,17 @@ class Organ extends BaseMapper
     /**
      * Find all active organs.
      *
-     * @param string|null $type
+     * @param OrganTypes|null $type
      *
      * @return array
      */
-    public function findActive(?string $type = null): array
+    public function findActive(?OrganTypes $type = null): array
     {
         $criteria = [
             'abrogationDate' => null,
         ];
 
-        if (!is_null($type)) {
+        if (null !== $type) {
             $criteria['type'] = $type;
         }
 
@@ -57,16 +58,16 @@ class Organ extends BaseMapper
     /**
      * Find all abrogated organs.
      *
-     * @param string|null $type
+     * @param OrganTypes|null $type
      *
      * @return array
      */
-    public function findAbrogated(?string $type = null): array
+    public function findAbrogated(?OrganTypes $type = null): array
     {
         $qb = $this->getRepository()->createQueryBuilder('o');
         $qb->where('o.abrogationDate IS NOT NULL');
 
-        if (!is_null($type)) {
+        if (null !== $type) {
             $qb->andWhere('o.type = :type')
                 ->setParameter('type', $type);
         }
@@ -105,7 +106,7 @@ class Organ extends BaseMapper
      *
      * @param string $abbr
      * @param bool $latest Whether to retrieve the latest occurrence of an organ or not
-     * @param string|null $type
+     * @param OrganTypes|null $type
      *
      * @return OrganModel|null
      * @throws NoResultException
@@ -114,7 +115,7 @@ class Organ extends BaseMapper
     public function findByAbbr(
         string $abbr,
         bool $latest,
-        ?string $type = null,
+        ?OrganTypes $type = null,
     ): ?OrganModel {
         $qb = $this->getRepository()->createQueryBuilder('o');
         $qb->select('o, om, m')
@@ -123,7 +124,7 @@ class Organ extends BaseMapper
             ->where('o.abbr = :abbr')
             ->setParameter('abbr', $abbr);
 
-        if (!is_null($type)) {
+        if (null !== $type) {
             $qb->andWhere('o.type = :type')
                 ->setParameter('type', $type);
         }

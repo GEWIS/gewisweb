@@ -13,22 +13,6 @@ $this->headTitle($this->translate('Members'));
         <div class="row">
             <div class="col-md-6">
                 <table class="table table-bordered">
-                    <tr>
-                        <th><?= $this->translate('Gender') ?></th>
-                        <td><?php
-                            switch ($member->getGender()) {
-                                case Member::GENDER_MALE:
-                                    echo $this->translate('Male');
-                                    break;
-                                case Member::GENDER_FEMALE:
-                                    echo $this->translate('Female');
-                                    break;
-                                case Member::GENDER_OTHER:
-                                    echo $this->translate('Other');
-                                    break;
-                            }
-                            ?></td>
-                    </tr>
                     <?php if ($this->acl('decision_service_acl')->isAllowed('member', 'view_full')): ?>
                         <tr>
                             <th><?= $this->translate('Email') ?></th>
@@ -60,32 +44,26 @@ $this->headTitle($this->translate('Members'));
                 <h3><?= $this->translate('Membership of committees and fraternities') ?></h3>
                 <ul>
                     <?php foreach ($memberships as $abbr => $install): ?>
-                        <li><a
-                                href="<?= $this->url('home/organ', ['type' => $install['organ']->getType(), 'abbr' =>
-                                    $abbr]) ?>"
-                            ><?= $abbr ?></a>
-                            <?php if (isset($install['functions'])): ?>
-                                (<?= $install['functions'] ?>)
-                            <?php endif; ?>
+                        <li>
+                            <a href="<?= $this->url(
+                                'home/organ',
+                                [
+                                    'type' => $install['organ']->getType(),
+                                    'abbr' => $abbr,
+                                ],
+                            ) ?>">
+                                <?= $abbr ?>
+                            </a>
+                            <?php if (!empty($install['functions'])): ?>
+                                (<?= implode(', ', $install['functions']) ?>)
+                            <?php endif ?>
                         </li>
                     <?php endforeach; ?>
                 </ul>
                 <?php if ($this->acl('decision_service_acl')->isAllowed('member', 'view_full')): ?>
                     <h3><?= $this->translate('Adresses') ?></h3>
                     <?php foreach ($member->getAddresses() as $address): ?>
-                        <h4><?php
-                            switch ($address->getType()) {
-                                case Address::TYPE_HOME:
-                                    echo $this->translate('Home address (parents)');
-                                    break;
-                                case Address::TYPE_STUDENT:
-                                    echo $this->translate('Student address');
-                                    break;
-                                case Address::TYPE_MAIL:
-                                    echo $this->translate('Mail address');
-                                    break;
-                            }
-                            ?></h4>
+                        <h4><<?= $address->getType()->getName($this->plugin('translate')->getTranslator()) ?></h4>
                         <table class="table table-bordered">
                             <tr>
                                 <th><?= $this->translate('Country') ?></th>

@@ -2,11 +2,13 @@
 
 namespace Decision\Controller;
 
+use Decision\Model\Enums\MeetingTypes;
 use Decision\Service\Decision as DecisionService;
 use Laminas\Http\{
     PhpEnvironment\Response as EnvironmentResponse,
     Request,
-    Response};
+    Response,
+};
 use Laminas\Json\Json;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
@@ -74,13 +76,26 @@ class AdminController extends AbstractActionController
     public function documentAction(): ViewModel
     {
         $type = $this->params()->fromRoute('type');
-        $number = $this->params()->fromRoute('number');
-        $meetings = $this->decisionService->getMeetingsByType('AV');
-        $meetings = array_merge($meetings, $this->decisionService->getMeetingsByType('VV'));
 
-        if (null === $number && !empty($meetings)) {
-            $number = $meetings[0]->getNumber();
-            $type = $meetings[0]->getType();
+        if (null !== $type) {
+            $type = MeetingTypes::from($type);
+        }
+
+        $number = $this->params()->fromRoute('number');
+
+        $meetings = $this->decisionService->getMeetingsByType(MeetingTypes::AV);
+        $meetings = array_merge($meetings, $this->decisionService->getMeetingsByType(MeetingTypes::VV));
+
+        if (
+            null === $number
+            && null === $type
+        ) {
+            if (!empty($meetings)) {
+                $number = $meetings[0]->getNumber();
+                $type = $meetings[0]->getType();
+            } else {
+                return new ViewModel(['noMeetings' => true]);
+            }
         }
 
         $form = $this->decisionService->getDocumentForm();
@@ -153,7 +168,7 @@ class AdminController extends AbstractActionController
 
     public function authorizationsAction(): ViewModel
     {
-        $meetings = $this->decisionService->getMeetingsByType('AV');
+        $meetings = $this->decisionService->getMeetingsByType(MeetingTypes::AV);
         $number = $this->params()->fromRoute('number');
         $authorizations = [];
 

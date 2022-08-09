@@ -96,44 +96,4 @@ class Release extends SubDecision
     {
         $this->date = $date;
     }
-
-    /**
-     * Get the content.
-     *
-     * @return string
-     */
-    public function getContent(): string
-    {
-        $member = $this->getInstallation()->getMember()->getFullName();
-        $function = $this->getInstallation()->getFunction();
-
-        $zh = 'm' == $this->getInstallation()->getMember()->getGender() ? 'zijn' : 'haar';
-
-        return $member . ' wordt per ' . $this->formatDate($this->getDate())
-            . ' ontheven uit ' . $zh . ' functie als ' . $function
-            . ' der s.v. GEWIS.';
-    }
-
-    /**
-     * Format the date.
-     *
-     * returns the localized version of $date->format('d F Y')
-     *
-     * @param DateTime $date
-     *
-     * @return string Formatted date
-     */
-    protected function formatDate(DateTime $date): string
-    {
-        $formatter = new IntlDateFormatter(
-            'nl_NL', // yes, hardcoded :D
-            IntlDateFormatter::NONE,
-            IntlDateFormatter::NONE,
-            date_default_timezone_get(),
-            null,
-            'd MMMM Y'
-        );
-
-        return $formatter->format($date);
-    }
 }

@@ -25,6 +25,7 @@ use Decision\Model\{
     MeetingDocument as MeetingDocumentModel,
     MeetingMinutes as MeetingMinutesModel,
 };
+use Decision\Model\Enums\MeetingTypes;
 use Doctrine\ORM\{
     NonUniqueResultException,
     Exception\ORMException,
@@ -180,14 +181,14 @@ class Decision
     /**
      * Get past meetings.
      *
-     * @param int|null $limit The amount of meetings to retrieve, default is all
-     * @param string|null $type Constraint on the type of the meeting, default is none
+     * @param int $limit The amount of meetings to retrieve
+     * @param MeetingTypes $type Constraint on the type of the meeting
      *
      * @return array Of all meetings
      */
     public function getPastMeetings(
-        ?int $limit = null,
-        ?string $type = null,
+        int $limit,
+        MeetingTypes $type,
     ): array {
         if (!$this->aclService->isAllowed('list_meetings', 'decision')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings.'));
@@ -197,11 +198,11 @@ class Decision
     }
 
     /**
-     * @param string $type
+     * @param MeetingTypes $type
      *
      * @return array
      */
-    public function getMeetingsByType(string $type): array
+    public function getMeetingsByType(MeetingTypes $type): array
     {
         if (!$this->aclService->isAllowed('list_meetings', 'decision')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings.'));
@@ -213,15 +214,15 @@ class Decision
     /**
      * Get information about one meeting.
      *
-     * @param string|null $type
-     * @param int|null $number
+     * @param MeetingTypes $type
+     * @param int $number
      *
      * @return MeetingModel|null
      * @throws NonUniqueResultException
      */
     public function getMeeting(
-        ?string $type,
-        ?int $number,
+        MeetingTypes $type,
+        int $number,
     ): ?MeetingModel {
         if (!$this->aclService->isAllowed('view', 'meeting')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view meetings.'));
@@ -305,7 +306,7 @@ class Decision
         }
 
         $path = $meeting->getMinutes()->getPath();
-        $fileName = $meeting->getType() . '-' . $meeting->getNumber() . '.pdf';
+        $fileName = $meeting->getType()->value . '-' . $meeting->getNumber() . '.pdf';
 
         return $this->storageService->downloadFile($path, $fileName);
     }
@@ -321,7 +322,7 @@ class Decision
     public function uploadMinutes(array $data): bool
     {
         $parts = explode('/', $data['meeting']);
-        $meeting = $this->getMeeting($parts[0], intval($parts[1]));
+        $meeting = $this->getMeeting(MeetingTypes::from($parts[0]), intval($parts[1]));
         $path = $this->storageService->storeUploadedFile($data['upload']);
 
         $meetingMinutes = $meeting->getMinutes();
@@ -351,7 +352,7 @@ class Decision
         $path = $this->storageService->storeUploadedFile($data['upload']);
 
         $meeting = explode('/', $data['meeting']);
-        $meeting = $this->getMeeting($meeting[0], intval($meeting[1]));
+        $meeting = $this->getMeeting(MeetingTypes::from($meeting[0]), intval($meeting[1]));
 
         $document = new MeetingDocumentModel();
         $document->setPath($path);

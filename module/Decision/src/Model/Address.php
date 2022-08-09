@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping\{
     JoinColumn,
     ManyToOne,
 };
-use InvalidArgumentException;
+use Decision\Model\Enums\AddressTypes;
 
 /**
  * Address model.
@@ -17,10 +17,6 @@ use InvalidArgumentException;
 #[Entity]
 class Address
 {
-    public const TYPE_HOME = 'home';
-    public const TYPE_STUDENT = 'student'; // student room
-    public const TYPE_MAIL = 'mail'; // mailing address
-
     /**
      * Member.
      */
@@ -46,8 +42,11 @@ class Address
      * - mail (Where GEWIS mail should go to)
      */
     #[Id]
-    #[Column(type: "string")]
-    protected string $type;
+    #[Column(
+        type: "string",
+        enumType: AddressTypes::class,
+    )]
+    protected AddressTypes $type;
 
     /**
      * Country.
@@ -88,20 +87,6 @@ class Address
     protected string $phone;
 
     /**
-     * Get available address types.
-     *
-     * @return array
-     */
-    public static function getTypes(): array
-    {
-        return [
-            self::TYPE_HOME,
-            self::TYPE_STUDENT,
-            self::TYPE_MAIL,
-        ];
-    }
-
-    /**
      * Get the member.
      *
      * @return Member
@@ -124,9 +109,9 @@ class Address
     /**
      * Get the type.
      *
-     * @return string
+     * @return AddressTypes
      */
-    public function getType(): string
+    public function getType(): AddressTypes
     {
         return $this->type;
     }
@@ -134,15 +119,10 @@ class Address
     /**
      * Set the type.
      *
-     * @param string $type
-     *
-     * @throws InvalidArgumentException When the type is incorrect
+     * @param AddressTypes $type
      */
-    public function setType(string $type): void
+    public function setType(AddressTypes $type): void
     {
-        if (!in_array($type, self::getTypes())) {
-            throw new InvalidArgumentException('Non-existing type.');
-        }
         $this->type = $type;
     }
 

@@ -59,7 +59,6 @@ class ActivityMapperTest extends BaseMapperTest
         $this->member->setFirstName('Web');
         $this->member->setMiddleName('');
         $this->member->setLastName('Committee');
-        $this->member->setGender(Member::GENDER_OTHER);
         $this->member->setGeneration(2020);
         $this->member->setType(MembershipTypes::Ordinary);
         $this->member->setChangedOn(new DateTime());

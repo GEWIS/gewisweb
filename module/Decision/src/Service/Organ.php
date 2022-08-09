@@ -22,6 +22,7 @@ use Decision\Model\{
     Organ as OrganModel,
     OrganInformation as OrganInformationModel,
 };
+use Decision\Model\Enums\OrganTypes;
 use Imagick;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
@@ -154,12 +155,12 @@ class Organ
 
         if ($this->aclService->isAllowed('editall', 'organ')) {
             return array_merge(
-                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_COMMITTEE),
-                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_FRATERNITY),
-                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_AVC),
-                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_AVW),
-                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_KKK),
-                $this->findActiveOrgansByType(OrganModel::ORGAN_TYPE_RVA)
+                $this->findActiveOrgansByType(OrganTypes::Committee),
+                $this->findActiveOrgansByType(OrganTypes::Fraternity),
+                $this->findActiveOrgansByType(OrganTypes::AVC),
+                $this->findActiveOrgansByType(OrganTypes::AVW),
+                $this->findActiveOrgansByType(OrganTypes::KCC),
+                $this->findActiveOrgansByType(OrganTypes::RvA),
             );
         }
 
@@ -197,11 +198,11 @@ class Organ
     }
 
     /**
-     * @param string $type either committee, avc or fraternity
+     * @param OrganTypes $type either committee, avc or fraternity
      *
      * @return array
      */
-    public function findActiveOrgansByType(string $type): array
+    public function findActiveOrgansByType(OrganTypes $type): array
     {
         return $this->organMapper->findActive($type);
     }
@@ -217,11 +218,11 @@ class Organ
     }
 
     /**
-     * @param string $type either committee, avc or fraternity
+     * @param OrganTypes $type either committee, avc or fraternity
      *
      * @return array
      */
-    public function findAbrogatedOrgansByType(string $type): array
+    public function findAbrogatedOrgansByType(OrganTypes $type): array
     {
         return $this->organMapper->findAbrogated($type);
     }
@@ -230,7 +231,7 @@ class Organ
      * Finds an organ by its abbreviation.
      *
      * @param string $abbr
-     * @param string|null $type
+     * @param OrganTypes|null $type
      * @param bool $latest  Whether to retrieve the latest occurrence of an organ or not
      *
      * @return OrganModel|null
@@ -241,7 +242,7 @@ class Organ
      */
     public function findOrganByAbbr(
         string $abbr,
-        ?string $type = null,
+        ?OrganTypes $type = null,
         bool $latest = false,
     ): ?OrganModel {
         return $this->organMapper->findByAbbr(
@@ -447,20 +448,30 @@ class Organ
      */
     public function getOrganMemberInformation(OrganModel $organ): array
     {
+        $activeMembers = [];
+        $inactiveMembers = [];
         $oldMembers = [];
-        $currentMembers = [];
+
         foreach ($organ->getMembers() as $install) {
             if (null === $install->getDischargeDate()) {
                 // current member
-                if (!isset($currentMembers[$install->getMember()->getLidnr()])) {
-                    $currentMembers[$install->getMember()->getLidnr()] = [
-                        'member' => $install->getMember(),
-                        'functions' => [],
-                    ];
-                }
+                if ('Inactief Lid' === $install->getFunction()) {
+                    // inactive
+                    if (!isset($inactiveMembers[$install->getMember()->getLidnr()])) {
+                        $inactiveMembers[$install->getMember()->getLidnr()] = $install->getMember();
+                    }
+                } else {
+                    // active
+                    if (!isset($activeMembers[$install->getMember()->getLidnr()])) {
+                        $activeMembers[$install->getMember()->getLidnr()] = [
+                            'member' => $install->getMember(),
+                            'functions' => [],
+                        ];
+                    }
 
-                if ('Lid' != $install->getFunction()) {
-                    $currentMembers[$install->getMember()->getLidnr()]['functions'][] = $install->getFunction();
+                    if ('Lid' !== $install->getFunction()) {
+                        $activeMembers[$install->getMember()->getLidnr()]['functions'][] = $install->getFunction();
+                    }
                 }
             } else {
                 // old member
@@ -470,12 +481,13 @@ class Organ
             }
         }
 
-        $oldMembers = array_filter($oldMembers, function ($member) use ($currentMembers) {
-            return !isset($currentMembers[$member->getLidnr()]);
+        $oldMembers = array_filter($oldMembers, function ($member) use ($activeMembers, $inactiveMembers) {
+            return !isset($activeMembers[$member->getLidnr()])
+                && !isset($inactiveMembers[$member->getLidnr()]);
         });
 
         // Sort members by function
-        usort($currentMembers, function ($a, $b) {
+        usort($activeMembers, function ($a, $b) {
             if ($a['functions'] == $b['functions']) {
                 return 0;
             }
@@ -488,8 +500,9 @@ class Organ
         });
 
         return [
+            'activeMembers' => $activeMembers,
+            'inactiveMembers' => $inactiveMembers,
             'oldMembers' => $oldMembers,
-            'currentMembers' => $currentMembers,
         ];
     }
 }

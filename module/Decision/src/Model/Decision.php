@@ -2,6 +2,7 @@
 
 namespace Decision\Model;
 
+use Decision\Model\Enums\MeetingTypes;
 use Decision\Model\SubDecision\Destroy;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\{
@@ -46,9 +47,11 @@ class Decision
      * NOTE: This is a hack to make the meeting a primary key here.
      */
     #[Id]
-    #[Column(type: "string")]
-    protected string $meeting_type;
-
+    #[Column(
+        type: "string",
+        enumType: MeetingTypes::class,
+    )]
+    protected MeetingTypes $meeting_type;
     /**
      * Meeting number.
      *
@@ -116,9 +119,9 @@ class Decision
     /**
      * Get the meeting type.
      *
-     * @return string
+     * @return MeetingTypes
      */
-    public function getMeetingType(): string
+    public function getMeetingType(): MeetingTypes
     {
         return $this->meeting_type;
     }

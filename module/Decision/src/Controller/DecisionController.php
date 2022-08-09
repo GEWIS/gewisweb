@@ -3,6 +3,7 @@
 namespace Decision\Controller;
 
 use Decision\Controller\FileBrowser\FileReader;
+use Decision\Model\Enums\MeetingTypes;
 use Decision\Service\{
     AclService,
     Decision as DecisionService,
@@ -73,7 +74,7 @@ class DecisionController extends AbstractActionController
      */
     public function minutesAction(): ViewModel|Stream
     {
-        $type = $this->params()->fromRoute('type');
+        $type = MeetingTypes::from($this->params()->fromRoute('type'));
         $number = $this->params()->fromRoute('number');
 
         $meeting = $this->decisionService->getMeeting($type, $number);
@@ -109,7 +110,7 @@ class DecisionController extends AbstractActionController
      */
     public function viewAction(): ViewModel
     {
-        $type = $this->params()->fromRoute('type');
+        $type = MeetingTypes::from($this->params()->fromRoute('type'));
         $number = $this->params()->fromRoute('number');
 
         $meeting = $this->decisionService->getMeeting($type, $number);
