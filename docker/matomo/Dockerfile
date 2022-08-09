@@ -1,4 +1,4 @@
-FROM matomo:4.10-fpm-alpine as gewisweb_matomo
+FROM matomo:4.11-fpm-alpine as gewisweb_matomo
 
 RUN apk add --no-cache \
         gettext \
