@@ -2,7 +2,6 @@
 export REPOSITORY="GEWIS/gewisweb"
 export BRANCH="master"
 cd /tmp
-apt-get update && apt-get install -y wget
 wget --no-cache "https://github.com/${REPOSITORY}/archive/refs/heads/${BRANCH}.zip"
 unzip "${BRANCH}.zip"
 rm "${BRANCH}.zip"
