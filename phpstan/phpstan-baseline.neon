@@ -33,3 +33,6 @@ parameters:
             message: '#If condition is always true.$#'
             path: ..//module/*/test/*
         - '#^Parameter \#1 \$valueMap of method PHPUnit\\Framework\\MockObject\\Builder\\InvocationMocker\<mixed\>\:\:willReturnMap\(\) expects array\<int, array\<int, mixed\>\>, array\<int, array\<int, mixed\>\|[a-zA-Z0-9\\_]+\> given.$#'
+        - '#^Method [a-zA-Z0-9_]+\\Mapper\\[a-zA-Z0-9_]+\:\:[a-zA-Z0-9_]+\(\) should return [a-zA-Z0-9_]+\\Model\\[a-zA-Z0-9_\|]+ but returns object(\|null)?.$#'
+        - '#^Parameter \#[0-9]+ \$[a-zA-Z0-9_]+ of method [a-zA-Z0-9_\\]+\:\:[a-zA-Z0-9_]+\(\) expects array, array\|object given.$#'
+        - "#^Cannot access offset '[a-zA-Z0-9_\\-]+' on array\\|object.$#"

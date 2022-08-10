@@ -3,7 +3,7 @@ includes:
     - phpstan/phpstan-baseline-pr.neon
 
 parameters:
-    level: 6
+    level: 7
     treatPhpDocTypesAsCertain: true
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
