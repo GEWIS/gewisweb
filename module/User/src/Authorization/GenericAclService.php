@@ -8,8 +8,7 @@ use User\Authentication\{
     ApiAuthenticationService,
     AuthenticationService,
 };
-use Laminas\Permissions\Acl\Role\RoleInterface;
-use User\Model\User;
+use User\Model\{ApiUser, User};
 use User\Permissions\NotAllowedException;
 
 abstract class GenericAclService extends AbstractAclService
@@ -55,18 +54,27 @@ abstract class GenericAclService extends AbstractAclService
 
     /**
      * @inheritDoc
-     *
-     * The role that should take precedence should be returned first.
+ * The role that should take precedence should be returned first.
      * This is because of the behaviour of {@link \Laminas\Permissions\Acl\Role\Registry}.
+     *
+     * @return User|ApiUser|string
+     *
+     * @psalm-return 'guest'|'tueguest'|User|ApiUser
      */
-    protected function getRole(): RoleInterface|string
+    protected function getRole(): string|User|ApiUser
     {
         if ($this->authService->hasIdentity()) {
-            return $this->authService->getIdentity();
+            $identity = $this->authService->getIdentity();
+            if (!is_null($identity)) {
+                return $identity;
+            }
         }
 
         if ($this->apiAuthService->hasIdentity()) {
-            return $this->apiAuthService->getIdentity();
+            $identity = $this->apiAuthService->getIdentity();
+            if (!is_null($identity)) {
+                return $identity;
+            }
         }
 
         // TODO: We could create an assertion for this.

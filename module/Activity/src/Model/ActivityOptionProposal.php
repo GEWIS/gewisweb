@@ -27,7 +27,7 @@ class ActivityOptionProposal implements OrganResourceInterface
     #[Id]
     #[Column(type: "integer")]
     #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    protected int $id;
 
     /**
      * Name for the activity option proposal.
@@ -150,10 +150,7 @@ class ActivityOptionProposal implements OrganResourceInterface
         $this->organ = $organ;
     }
 
-    /**
-     * @return OrganModel|string
-     */
-    public function getOrganOrAlt(): OrganModel|string
+    public function getOrganOrAlt(): string|OrganModel|null
     {
         if ($this->organ) {
             return $this->organ;
@@ -164,18 +161,16 @@ class ActivityOptionProposal implements OrganResourceInterface
 
     /**
      * Returns the string identifier of the Resource.
-     *
-     * @return int|string
      */
-    public function getResourceId(): int|string
+    public function getResourceId(): string
     {
-        return $this->getId();
+        return strval($this->getId());
     }
 
     /**
-     * @return int|null
+     * @return int
      */
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -186,9 +181,9 @@ class ActivityOptionProposal implements OrganResourceInterface
      * 2. The alternative for an organ, other organising parties
      * 3. The full name of the member who created the proposal.
      *
-     * @return string
+     * @return null|string
      */
-    public function getCreatorAlt(): string
+    public function getCreatorAlt(): string|null
     {
         if (!is_null($this->getOrgan())) {
             return $this->getOrgan()->getAbbr();

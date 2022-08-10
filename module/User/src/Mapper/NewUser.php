@@ -57,9 +57,9 @@ class NewUser extends BaseMapper
      *
      * @param MemberModel $member
      *
-     * @return int
+     * @psalm-return list<mixed>
      */
-    public function deleteByMember(MemberModel $member): int
+    public function deleteByMember(MemberModel $member): array
     {
         $qb = $this->em->createQueryBuilder();
         $qb->delete($this->getRepositoryName(), 'u');

@@ -32,7 +32,7 @@ class UserController extends AbstractActionController
     /**
      * User login action.
      */
-    public function indexAction(): Response|ViewModel
+    public function indexAction(): ViewModel|Response
     {
         /** @var Request $request */
         $request = $this->getRequest();

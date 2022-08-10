@@ -156,10 +156,8 @@ class ActivityCalendarOption
 
     /**
      * Returns the string identifier of the Resource.
-     *
-     * @return int|string
      */
-    public function getResourceId(): int|string
+    public function getResourceId(): int|null|string
     {
         return $this->getId();
     }
@@ -178,9 +176,9 @@ class ActivityCalendarOption
      * 2. The alternative for an organ, other organising parties
      * 3. The full name of the member who created the proposal.
      *
-     * @return string
+     * @return null|string
      */
-    public function getCreatorAlt(): string
+    public function getCreatorAlt(): string|null
     {
         return $this->getProposal()->getCreatorAlt();
     }

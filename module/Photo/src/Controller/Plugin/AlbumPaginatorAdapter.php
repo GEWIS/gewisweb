@@ -84,11 +84,13 @@ class AlbumPaginatorAdapter implements AdapterInterface
 
     /**
      * Returns the total number of rows in the array.
-     *
-     * @return int
      */
     public function count(): int
     {
+        if (is_null($this->count)) {
+            return 0;
+        }
+
         return $this->count;
     }
 }

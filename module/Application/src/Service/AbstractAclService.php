@@ -35,7 +35,8 @@ abstract class AbstractAclService
         ResourceInterface|string $resource,
     ): bool {
         return $this->getAcl()->isAllowed(
-            $this->getRole(),
+            $this->
+            getRole(),
             $resource,
             $operation
         );

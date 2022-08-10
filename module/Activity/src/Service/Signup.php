@@ -198,15 +198,14 @@ class Signup
 
     /**
      * Sign a User up for an activity with the specified field values.
+     *
      * @param SignupListModel $signupList
      * @param array $fieldResults
-     *
-     * @return UserSignupModel
      */
     public function signUp(
         SignupListModel $signupList,
         array $fieldResults,
-    ): UserSignupModel {
+    ): ExternalSignupModel|UserSignupModel {
         if (!$this->aclService->isAllowed('signup', 'signupList')) {
             throw new NotAllowedException(
                 $this->translator->translate('You need to be logged in to sign up for this activity')
@@ -276,7 +275,7 @@ class Signup
      * @param string $email
      * @param array $fieldResults
      *
-     * @return ExternalSignupModel
+     * @return ExternalSignupModel|UserSignupModel
      *
      * @throws NotAllowedException
      * @throws ORMException
@@ -286,7 +285,7 @@ class Signup
         string $fullName,
         string $email,
         array $fieldResults,
-    ): ExternalSignupModel {
+    ): UserSignupModel|ExternalSignupModel {
         if (!($this->aclService->isAllowed('adminSignup', $signupList))) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to subscribe an external user to this sign-up list')
@@ -304,8 +303,6 @@ class Signup
      * @param string $email
      * @param array $fieldResults
      *
-     * @return ExternalSignupModel
-     *
      * @throws ORMException
      */
     protected function manualSignUp(
@@ -313,7 +310,7 @@ class Signup
         string $fullName,
         string $email,
         array $fieldResults,
-    ): ExternalSignupModel {
+    ): ExternalSignupModel|UserSignupModel {
         $signup = new ExternalSignupModel();
         $signup->setEmail($email);
         $signup->setFullName($fullName);

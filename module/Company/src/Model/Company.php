@@ -433,9 +433,9 @@ class Company
      * Returns the number of jobs that are contained in all packages of this
      * company.
      *
-     * @return int
+     * @return float|int
      */
-    public function getNumberOfJobs(): int
+    public function getNumberOfJobs(): int|float
     {
         $jobCount = function ($package) {
             if ('job' == $package->getType()) {
@@ -454,9 +454,9 @@ class Company
      *
      * @param JobCategoryModel|null $category
      *
-     * @return int
+     * @return float|int
      */
-    public function getNumberOfActiveJobs(?JobCategoryModel $category = null): int
+    public function getNumberOfActiveJobs(?JobCategoryModel $category = null): int|float
     {
         $jobCount = function ($package) use ($category) {
             return $package->getNumberOfActiveJobs($category);
