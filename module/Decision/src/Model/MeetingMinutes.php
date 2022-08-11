@@ -33,7 +33,7 @@ class MeetingMinutes implements ResourceInterface
      */
     #[Id]
     #[Column(type: "integer")]
-    protected int $number;
+    protected int $meeting_number;
 
     /**
      * The corresponding meeting for these minutes.
@@ -43,12 +43,12 @@ class MeetingMinutes implements ResourceInterface
         inversedBy: "meetingMinutes",
     )]
     #[JoinColumn(
-        name: "type",
+        name: "meeting_type",
         referencedColumnName: "type",
         nullable: false,
     )]
     #[JoinColumn(
-        name: "number",
+        name: "meeting_number",
         referencedColumnName: "number",
         nullable: false,
     )]
@@ -75,7 +75,7 @@ class MeetingMinutes implements ResourceInterface
     {
         $this->meeting = $meeting;
         $this->meeting_type = $meeting->getType();
-        $this->number = $meeting->getNumber();
+        $this->meeting_number = $meeting->getNumber();
     }
 
     /**
