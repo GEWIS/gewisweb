@@ -85,7 +85,7 @@ $this->headTitle($member->getFullName());
                             ) ?>">
                                 <?= $abbr ?>
                             </a>
-                            <?php if (isset($install['functions'])): ?>
+                            <?php if (!empty($install['functions'])): ?>
                                 (<?= implode(', ', $install['functions']) ?>)
                             <?php endif ?>
                         </li>
