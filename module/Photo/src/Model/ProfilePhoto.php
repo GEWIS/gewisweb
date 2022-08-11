@@ -33,7 +33,7 @@ class ProfilePhoto implements ResourceInterface
 
     #[ManyToOne(
         targetEntity: Photo::class,
-        inversedBy: "tags",
+        inversedBy: "profilePhotos",
     )]
     #[JoinColumn(
         name: "photo_id",
