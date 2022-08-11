@@ -1,6 +1,6 @@
 <?php $organInformation = $organ->getApprovedOrganInformation() ?>
 <div class="col-md-3 col-sm-4 col-xs-6">
-    <a href="<?= $this->url('home/organ', ['abbr' => $organ->getAbbr(), 'type' => $organ->getType()]) ?>">
+    <a href="<?= $this->url('home/organ', ['abbr' => $organ->getAbbr(), 'type' => $organ->getType()->value]) ?>">
         <div class="card">
             <div class="card-image">
                 <?php if (!is_null($organInformation) && !is_null($organInformation->getThumbnailPath())): ?>

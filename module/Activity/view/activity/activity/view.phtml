@@ -128,7 +128,7 @@ $flash = $this->plugin('FlashMessenger');
                 $organ = $activity->getOrgan();
 
                 if (!is_null($organ)) {
-                    $organString = "<a href='" . $this->url('home/organ', ['abbr' => $organ->getAbbr(), 'type' => $organ->getType()]) . "''>" . $this->escapeHtml($organ->getName()) . "</a>";
+                    $organString = "<a href='" . $this->url('home/organ', ['abbr' => $organ->getAbbr(), 'type' => $organ->getType()->value]) . "''>" . $this->escapeHtml($organ->getName()) . "</a>";
                 }
 
                 if ($activity->getIsMyFuture()) {

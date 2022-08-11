@@ -79,7 +79,7 @@ $this->headTitle($member->getFullName());
                             <a href="<?= $this->url(
                                 'home/organ',
                                 [
-                                    'type' => $install['organ']->getType(),
+                                    'type' => $install['organ']->getType()->value,
                                     'abbr' => $abbr,
                                 ],
                             ) ?>">
