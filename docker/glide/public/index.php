@@ -131,7 +131,7 @@ class GlideServer extends Server
 $server = GlideServerFactory::create([
     'source' => '/code/public/data',
     'cache' => '/glide/cache',
-    'driver' => 'gd',
+    'driver' => 'imagick',
 ]);
 
 // set complicated sign key
