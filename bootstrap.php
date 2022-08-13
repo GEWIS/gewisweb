@@ -2,6 +2,17 @@
 
 define('APP_ENV', getenv('APP_ENV') ?: 'production');
 
+// `NONCE_REPLACEMENT_STRING` is required for production, if not set we should not continue loading the application.
+if (APP_ENV === 'production') {
+    if (!getenv('NONCE_REPLACEMENT_STRING')) {
+        throw new RuntimeException(
+            "Could not find `NONCE_REPLACEMENT_STRING`.\n"
+        );
+    }
+}
+
+define('NONCE_REPLACEMENT_STRING', getenv('NONCE_REPLACEMENT_STRING') ?: '');
+
 // make sure we are in the correct directory
 chdir(__DIR__);
 
