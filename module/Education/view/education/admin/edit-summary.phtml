@@ -1,6 +1,10 @@
 <?php
 $this->inlineScript()
-    ->appendFile($this->basePath() . '/js/education-admin.js');
+    ->appendFile(
+        $this->basePath() . '/js/education-admin.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 
 $this->scriptUrl()->requireUrl('admin_education/delete_temp', ['type', 'filename']);
 

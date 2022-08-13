@@ -10,7 +10,11 @@ $this->headTitle($this->translate('Request a poll')); ?>
             <?php else: ?>
                 <?php
                 $this->inlineScript()
-                    ->appendFile($this->basePath() . '/js/frontpage-poll.js');
+                    ->appendFile(
+                        $this->basePath() . '/js/frontpage-poll.js',
+                        'text/javascript',
+                        ['nonce' => NONCE_REPLACEMENT_STRING],
+                    );
 
                 $form->setAttribute('action', $this->url('poll/request'));
                 $form->setAttribute('class', 'form-horizontal');

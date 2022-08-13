@@ -1,6 +1,10 @@
 <?php
 $this->headScript()
-    ->appendFile($this->basePath() . '/ckeditor/ckeditor.js');
+    ->appendFile(
+        $this->basePath() . '/ckeditor/ckeditor.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 $this->scriptUrl()->requireUrl('admin_page/upload');
 
 $this->breadcrumbs()
@@ -89,7 +93,7 @@ $submit->setAttribute('class', 'btn btn-primary');
 <?php endif ?>
 
 <?= $this->form()->closeTag(); ?>
-<script>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     CKEDITOR.replace('englishContent', {
         // Spelling checker language
         'scayt_sLang': 'en_US',

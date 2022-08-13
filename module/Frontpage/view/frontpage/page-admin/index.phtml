@@ -1,6 +1,10 @@
 <?php
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/tree.js');
+    ->appendFile(
+        $this->basePath() . '/js/tree.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 $this->headLink()->appendStylesheet($this->basePath() . '/css/tree.css');
 
 $this->breadcrumbs()
@@ -51,7 +55,7 @@ $this->breadcrumbs()
         </div>
     </div>
 </div>
-<script>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     $(document).ready(function () {
         $('.tree').treed();
     });

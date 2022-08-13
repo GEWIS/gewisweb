@@ -8,7 +8,11 @@ $this->headTitle($this->localiseText($job->getName()));
 $this->headTitle($this->localiseText($category->getPluralName()));
 
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/bootstrap/tooltip.js');
+    ->appendFile(
+        $this->basePath() . '/js/bootstrap/tooltip.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 ?>
 <section class="section section-breadcrumb">
     <div class="container">

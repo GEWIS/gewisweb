@@ -2,7 +2,11 @@
 $this->headTitle($this->translate('Edit Package'));
 
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/company-create.js');
+    ->appendFile(
+        $this->basePath() . '/js/company-create.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 
 $this->scriptUrl()->requireUrls(
     [
@@ -123,7 +127,7 @@ $form->setAttribute('class', 'form-company');
         </div>
     </div>
 </div>
-<script>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     Company.updateForm();
     deleteJob = function (id) {
         $("#deleteForm").attr('action', URLHelper.url('company_admin/company/edit/package/edit/job/delete', {

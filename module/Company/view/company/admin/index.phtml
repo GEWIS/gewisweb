@@ -4,7 +4,11 @@ $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Companies'));
 
 $this->inlineScript()
-    ->appendFile($this->basePath() . '/js/company-admin.js');
+    ->appendFile(
+        $this->basePath() . '/js/company-admin.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 $this->scriptUrl()->requireUrls(
     ['company_admin/company/delete'],
     ['companySlugName']

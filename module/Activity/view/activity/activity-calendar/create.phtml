@@ -1,7 +1,11 @@
 <?php
 $this->headTitle($this->translate('Create activity proposal'));
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/proposal-create.js');
+    ->appendFile(
+        $this->basePath() . '/js/proposal-create.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 
 $form->prepare();
 ?>
@@ -165,7 +169,7 @@ $form->prepare();
         <?= $this->form()->closeTag(); ?>
 </section>
 
-<script>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     Proposal.updateForm();
     for (var i = 0; i < <?= $index ?>; i++) {
         Proposal.updateOption(i);

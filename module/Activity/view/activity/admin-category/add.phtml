@@ -5,8 +5,16 @@ $this->breadcrumbs()
     ->addBreadcrumb($action);
 
 $this->headScript()
-    ->prependFile($this->basePath() . '/js/activity-create.js')
-    ->appendFile($this->basePath() . '/js/bootstrap/tooltip.js');
+    ->prependFile(
+        $this->basePath() . '/js/activity-create.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basePath() . '/js/bootstrap/tooltip.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 
 $form->prepare();
 $form->setAttribute('class', 'form-activity');
@@ -106,6 +114,6 @@ $form->setAttribute('class', 'form-activity');
     <?= $this->form()->closeTag($form) ?>
 </div>
 
-<script>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     Activity.updateForm();
 </script>

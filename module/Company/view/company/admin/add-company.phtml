@@ -2,7 +2,11 @@
 $this->headTitle($this->translate('Create Company'));
 
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/company-create.js');
+    ->appendFile(
+        $this->basePath() . '/js/company-create.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 
 $form->prepare();
 $form->setAttribute('class', 'form-company');
@@ -37,6 +41,6 @@ $form->setAttribute('class', 'form-company');
         <?= $this->form()->closeTag() ?>
     </div>
 </section>
-<script>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     Company.updateForm();
 </script>

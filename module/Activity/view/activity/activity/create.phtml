@@ -3,10 +3,21 @@ $this->headTitle($action);
 $this->headLink()
     ->appendStylesheet($this->basePath() . '/css/bootstrap-markdown.min.css');
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/activity-create.js')
-    ->appendFile($this->basePath() . '/js/bootstrap-markdown.js');
-$this->headScript()
-    ->appendFile($this->basePath() . '/js/bootstrap/tooltip.js');
+    ->appendFile(
+        $this->basePath() . '/js/activity-create.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basePath() . '/js/bootstrap-markdown.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basePath() . '/js/bootstrap/tooltip.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 
 $form->prepare();
 $form->setAttribute('class', 'form-activity');
@@ -223,7 +234,7 @@ $form->setAttribute('class', 'form-activity');
     </div>
 </section>
 
-<script>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     $('.markdown-editor').each(function () {
         $(this).markdown(
             {

@@ -69,14 +69,22 @@
     <!-- Le styles -->
     <!-- All headLinks are outputted here once. -->
     <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->basePath() . '/img/favicon.ico'])
-        ->prependStylesheet($this->basePath() . '/css/gewis-theme.css'); ?>
+        ->prependStylesheet($this->basePath() . '/css/gewis-theme.css') ?>
 
     <!-- Scripts -->
     <?= $this->headScript()
-        ->prependFile($this->basePath() . '/js/jquery.min.js')
-        ->prependFile($this->basePath() . '/js/url-helper.js'); ?>
+        ->prependFile(
+            $this->basePath() . '/js/jquery.min.js',
+            'text/javascript',
+            ['nonce' => NONCE_REPLACEMENT_STRING],
+        )
+        ->prependFile(
+            $this->basePath() . '/js/url-helper.js',
+            'text/javascript',
+            ['nonce' => NONCE_REPLACEMENT_STRING],
+        ); ?>
 
-    <script type="text/javascript">
+    <script type="text/javascript" nonce="<?= NONCE_REPLACEMENT_STRING ?>">
         var _paq = window._paq = window._paq || [];
         _paq.push(['trackPageView']);
         _paq.push(['enableLinkTracking']);
@@ -112,11 +120,22 @@ if (str_contains($viewModel->getTemplate(), 'admin')): ?>
 
 <!-- Scripts -->
 <?= $this->inlineScript()
-    ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-    ->prependFile($this->basePath() . '/js/privacy-widget.js')
-    ->prependFile($this->basePath() . '/js/navbar-submenu.js'); ?>
-
-<script>
+    ->prependFile(
+        $this->basePath() . '/js/bootstrap.min.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->prependFile(
+        $this->basePath() . '/js/privacy-widget.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->prependFile(
+        $this->basePath() . '/js/navbar-submenu.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    ); ?>
+<script type="text/javascript" nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     <?php foreach($this->scriptUrl()->getUrls() as $name => $url): ?>
     URLHelper.addUrl('<?= $name ?>', '<?= urldecode($url) ?>');
     <?php endforeach; ?>

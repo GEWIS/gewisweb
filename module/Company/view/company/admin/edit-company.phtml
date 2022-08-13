@@ -10,10 +10,18 @@ $this->breadcrumbs()
     ));
 
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/company-create.js');
+    ->appendFile(
+        $this->basePath() . '/js/company-create.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 
 $this->inlineScript()
-    ->appendFile($this->basePath() . '/js/company-admin.js');
+    ->appendFile(
+        $this->basePath() . '/js/company-admin.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 
 $this->scriptUrl()->requireUrls(
     [
@@ -188,6 +196,6 @@ $form->setAttribute('class', 'form-company');
         </div>
     </div>
 </div>
-<script>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     Company.updateForm();
 </script>

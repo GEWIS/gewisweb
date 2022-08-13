@@ -145,7 +145,7 @@ $form->setAttribute('class', 'form-activity');
     </div>
     <?= $this->form()->closeTag(); ?>
 </div>
-<script>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
 document.getElementById('global-value').addEventListener('input', (e) => {
     document.querySelectorAll('.organ-value').forEach(el => {
         el.value = (e.currentTarget.value < 0) ? 0 : e.currentTarget.value;

@@ -16,11 +16,31 @@ while (!is_null($currentAlbum->getParent())) {
 $this->headTitle($this->translate('Photos'));
 ?>
 <?php $this->headScript()
-    ->appendFile($this->basePath() . '/js/autocomplete.min.js')
-    ->appendFile($this->basePath() . '/js/photo.js')
-    ->appendFile($this->basePath() . '/js/masonry.pkgd.min.js')
-    ->appendFile($this->basePath() . '/js/lazyload.min.js')
-    ->appendFile($this->basePath() . '/js/bootstrap/tooltip.js');
+    ->appendFile(
+        $this->basePath() . '/js/autocomplete.min.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basePath() . '/js/photo.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basePath() . '/js/masonry.pkgd.min.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basePath() . '/js/lazyload.min.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basePath() . '/js/bootstrap/tooltip.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 $this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css');
 
 $this->scriptUrl()->requireUrl('member/search')
@@ -215,7 +235,7 @@ $this->scriptUrl()->requireUrl('member/search')
         </div>
     </div>
 </section>
-<script>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     $(document).ready(function () {
         Photo.initGrid();
     });
@@ -334,7 +354,7 @@ $this->scriptUrl()->requireUrl('member/search')
         return Math.ceil((((d - yearStart) / 86400000) + 1) / 7)
     };
 </script>
-<script type="module">
+<script type="module" nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     import PhotoSwipeLightbox from '<?= $this->basePath() ?>/js/photoswipe-lightbox.esm.min.js';
 
     const leftArrowSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 50 30" width="50" height="30"><use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#chevron-left"></use></svg>';

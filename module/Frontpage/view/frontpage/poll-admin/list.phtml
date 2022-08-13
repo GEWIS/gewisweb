@@ -1,6 +1,10 @@
 <?php
 $this->inlineScript()
-    ->appendFile($this->basePath() . '/js/poll-admin.js');
+    ->appendFile(
+        $this->basePath() . '/js/poll-admin.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 $this->scriptUrl()->requireUrls(
     [
         'admin_poll/approve',

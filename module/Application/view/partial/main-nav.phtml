@@ -2,7 +2,13 @@
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 ?>
 <?php if ($this->identity()?->getMember()->isBoardMember()): ?>
-    <?php $this->headStyle()->captureStart(); ?>
+    <?php
+    $this->headStyle()->captureStart(
+        'APPEND',
+        'text/css',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
+    ?>
         .rainbow {
             background: linear-gradient(to right bottom, #ff334d, #ff338b);
             animation: rainbow 6s steps(128, end) infinite;

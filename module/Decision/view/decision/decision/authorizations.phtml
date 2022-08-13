@@ -2,7 +2,11 @@
 // set title
 $this->headTitle($this->translate('Authorizations')); ?>
 <?php $this->inlineScript()
-    ->appendFile($this->basePath() . '/js/autocomplete.min.js'); ?>
+    ->appendFile(
+        $this->basePath() . '/js/autocomplete.min.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    ); ?>
 <br>
 <section class='section'>
     <div class='container'>
@@ -78,7 +82,7 @@ You may still be able to authorize someone or revoke an authorization by contact
         <?php endif; ?>
     </div>
 </section>
-<script>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     $(document).ready(function () {
         new VanillaAutocomplete(document.querySelector('#memberSearch'), {
             minChars: 2,
@@ -120,7 +124,7 @@ You may still be able to authorize someone or revoke an authorization by contact
                         data-dismiss='modal'><?= $this->translate('Cancel') ?></button>
                 <button type='button' class='btn btn-primary'
                         id='definitiveSubmit'><?= $this->translate('Confirm authorization') ?></button>
-                <script>
+                <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
                     $(document).ready(function () {
                         $('#definitiveSubmit').click(function () {
                             $('#authorizationForm').submit();
@@ -131,7 +135,7 @@ You may still be able to authorize someone or revoke an authorization by contact
         </div>
     </div>
 </div>
-<script>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     $('#initialSubmit').click(function () {
         var memberName = $('#memberSearch').val();
         var memberLidnr = $("[name='recipient']").val();

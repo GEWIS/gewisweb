@@ -1,6 +1,10 @@
 <?php
 $this->inlineScript()
-    ->appendFile($this->basePath() . '/js/dropzone.js');
+    ->appendFile(
+        $this->basePath() . '/js/dropzone.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 $this->headLink()
     ->appendStylesheet($this->basePath() . '/css/dropzone.css');
 

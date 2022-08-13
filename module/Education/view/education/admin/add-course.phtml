@@ -1,7 +1,15 @@
 <?php
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/autocomplete.min.js')
-    ->appendFile($this->basePath() . '/js/course.js');
+    ->appendFile(
+        $this->basePath() . '/js/autocomplete.min.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basePath() . '/js/course.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 $this->scriptUrl()->requireUrl('member/search');
 
 $this->breadcrumbs()
@@ -119,7 +127,7 @@ $form->setAttribute('class', 'form-horizontal');
         <?= $this->translate('The course was not added. Please check your input.') ?>
     <?php endif ?>
 
-    <script>
+    <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
         $(document).ready(function () {
             Course.initCourseAdding();
         });

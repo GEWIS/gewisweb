@@ -1,8 +1,20 @@
 <?php
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/imagesloaded.pkgd.min.js')
-    ->appendFile($this->basePath() . '/js/jquery.Jcrop.min.js')
-    ->appendFile($this->basePath() . '/ckeditor/ckeditor.js');
+    ->appendFile(
+        $this->basePath() . '/js/imagesloaded.pkgd.min.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basePath() . '/js/jquery.Jcrop.min.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basePath() . '/ckeditor/ckeditor.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 $this->headLink()
     ->appendStylesheet($this->basePath() . '/css/jquery.Jcrop.min.css');
 $this->scriptUrl()->requireUrl('admin_page/upload');
@@ -147,7 +159,7 @@ $submit->setAttribute('class', 'btn btn-primary');
 <?= $this->formButton($submit) ?>
 
 <?= $this->form()->closeTag(); ?>
-<script>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     CKEDITOR.replace('englishDescription', {
         // Spelling checker language
         'scayt_sLang': 'en_US',
