@@ -19,60 +19,14 @@ use Laminas\Mvc\I18n\Translator;
 
 class ActivityCalendarController extends AbstractActionController
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var ActivityCalendarService
-     */
-    private ActivityCalendarService $calendarService;
-
-    /**
-     * @var ActivityCalendarFormService
-     */
-    private ActivityCalendarFormService $calendarFormService;
-
-    /**
-     * @var ActivityCalendarProposalForm
-     */
-    private ActivityCalendarProposalForm $calendarProposalForm;
-
-    /**
-     * @var array
-     */
-    private array $calendarConfig;
-
-    /**
-     * ActivityCalendarController constructor.
-     *
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param ActivityCalendarService $calendarService
-     * @param ActivityCalendarFormService $calendarFormService
-     * @param ActivityCalendarProposalForm $calendarProposalForm
-     * @param array $calendarConfig
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        ActivityCalendarService $calendarService,
-        ActivityCalendarFormService $calendarFormService,
-        ActivityCalendarProposalForm $calendarProposalForm,
-        array $calendarConfig,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly ActivityCalendarService $calendarService,
+        private readonly ActivityCalendarFormService $calendarFormService,
+        private readonly ActivityCalendarProposalForm $calendarProposalForm,
+        private readonly array $calendarConfig,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->calendarService = $calendarService;
-        $this->calendarFormService = $calendarFormService;
-        $this->calendarProposalForm = $calendarProposalForm;
-        $this->calendarConfig = $calendarConfig;
     }
 
     public function indexAction(): ViewModel

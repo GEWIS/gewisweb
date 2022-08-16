@@ -23,44 +23,12 @@ use User\Permissions\NotAllowedException;
  */
 class AdminApprovalController extends AbstractActionController
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var ActivityService
-     */
-    private ActivityService $activityService;
-
-    /**
-     * @var ActivityQueryService
-     */
-    private ActivityQueryService $activityQueryService;
-
-    /**
-     * AdminApprovalController constructor.
-     *
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param ActivityService $activityService
-     * @param ActivityQueryService $activityQueryService
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        ActivityService $activityService,
-        ActivityQueryService $activityQueryService,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly ActivityService $activityService,
+        private readonly ActivityQueryService $activityQueryService,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->activityService = $activityService;
-        $this->activityQueryService = $activityQueryService;
     }
 
     /**

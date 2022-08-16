@@ -23,43 +23,13 @@ use User\Permissions\NotAllowedException;
 
 class PhotoController extends AbstractActionController
 {
-    private Translator $translator;
-
-    private AclService $aclService;
-
-    /**
-     * @var AlbumService
-     */
-    private AlbumService $albumService;
-
-    /**
-     * @var PhotoService
-     */
-    private PhotoService $photoService;
-
-    private array $photoConfig;
-
-    /**
-     * PhotoController constructor.
-     *
-     * @param Translator $translator
-     * @param AclService $aclService
-     * @param AlbumService $albumService
-     * @param PhotoService $photoService
-     * @param array $photoConfig
-     */
     public function __construct(
-        Translator $translator,
-        AclService $aclService,
-        AlbumService $albumService,
-        PhotoService $photoService,
-        array $photoConfig,
+        private readonly Translator $translator,
+        private readonly AclService $aclService,
+        private readonly AlbumService $albumService,
+        private readonly PhotoService $photoService,
+        private readonly array $photoConfig,
     ) {
-        $this->translator = $translator;
-        $this->aclService = $aclService;
-        $this->photoService = $photoService;
-        $this->albumService = $albumService;
-        $this->photoConfig = $photoConfig;
     }
 
     public function indexAction(): ViewModel

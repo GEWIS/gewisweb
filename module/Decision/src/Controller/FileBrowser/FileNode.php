@@ -11,32 +11,11 @@ use RuntimeException;
 class FileNode
 {
     /**
-     * Whether the node represents a file or a directory.
-     *
-     * @var string either 'file' or 'dir'
-     */
-    protected string $kind;
-
-    /**
-     * The path of the parent containing this node.
-     *
-     * @var string a valid path relative to some root
-     */
-    protected string $fullPath;
-
-    /**
-     * The name of this file or dir.
-     *
-     * @var string valid name in filesystem
-     */
-    protected string $name;
-
-    /**
      * The extension (according to the file name).
      *
      * @var string extension according to the filesystem
      */
-    protected string $extension;
+    private string $extension;
 
     /**
      * File extensions per FontAwesome icon.
@@ -75,25 +54,19 @@ class FileNode
         'fa-folder' => ['folder'],
     ];
 
-    /**
-     * @param string $kind
-     * @param string $fullPath
-     * @param string $name
-     */
     public function __construct(
-        string $kind,
-        string $fullPath,
-        string $name,
+        private readonly string $kind,
+        private readonly string $fullPath,
+        private readonly string $name,
     ) {
-        if ('dir' !== $kind && 'file' !== $kind) {
+        if (
+            'dir' !== $this->kind
+            && 'file' !== $this->kind
+        ) {
             throw new RuntimeException('Kind is not supported.');
         }
 
-        $this->kind = $kind;
-        $this->fullPath = $fullPath;
-        $this->name = $name;
-
-        if ('dir' === $kind) {
+        if ('dir' === $this->kind) {
             $this->extension = 'folder';
         } else {
             $filenameSplitted = explode('.', $name);

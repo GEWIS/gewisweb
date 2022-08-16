@@ -12,28 +12,10 @@ use User\Permissions\NotAllowedException;
 
 class ApiController extends AbstractActionController
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var ActivityQueryService
-     */
-    private ActivityQueryService $activityQueryService;
-
-    /**
-     * ApiController constructor.
-     *
-     * @param AclService $aclService
-     * @param ActivityQueryService $activityQueryService
-     */
     public function __construct(
-        AclService $aclService,
-        ActivityQueryService $activityQueryService,
+        private readonly AclService $aclService,
+        private readonly ActivityQueryService $activityQueryService,
     ) {
-        $this->aclService = $aclService;
-        $this->activityQueryService = $activityQueryService;
     }
 
     /**

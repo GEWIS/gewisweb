@@ -14,43 +14,13 @@ use User\Permissions\NotAllowedException;
 
 abstract class GenericAclService extends AbstractAclService
 {
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var AuthenticationService
-     */
-    private AuthenticationService $authService;
-
-    /**
-     * @var ApiAuthenticationService
-     */
-    private ApiAuthenticationService $apiAuthService;
-
-    /**
-     * @var string
-     */
-    private string $remoteAddress;
-
-    /**
-     * @var string
-     */
-    private string $tueRange;
-
     public function __construct(
-        Translator $translator,
-        AuthenticationService $authService,
-        ApiAuthenticationService $apiAuthService,
-        string $remoteAddress,
-        string $tueRange,
+        private readonly Translator $translator,
+        private readonly AuthenticationService $authService,
+        private readonly ApiAuthenticationService $apiAuthService,
+        private readonly string $remoteAddress,
+        private readonly string $tueRange,
     ) {
-        $this->translator = $translator;
-        $this->authService = $authService;
-        $this->apiAuthService = $apiAuthService;
-        $this->remoteAddress = $remoteAddress;
-        $this->tueRange = $tueRange;
     }
 
     /**
@@ -95,7 +65,7 @@ abstract class GenericAclService extends AbstractAclService
     /**
      * Gets the user identity if logged in or null otherwise
      *
-     * @return User|null the current logged in user
+     * @return User|null the current logged-in user
      */
     public function getIdentity(): ?User
     {

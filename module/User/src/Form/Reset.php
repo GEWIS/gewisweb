@@ -19,25 +19,16 @@ use Laminas\Validator\{
 
 class Reset extends Form implements InputProviderInterface
 {
-    /**
-     * @var Translator
-     */
-    protected Translator $translate;
-
-    /**
-     * @param Translator $translate
-     */
-    public function __construct(Translator $translate)
+    public function __construct(private readonly Translator $translator)
     {
         parent::__construct();
-        $this->translate = $translate;
 
         $this->add(
             [
                 'name' => 'lidnr',
                 'type' => Number::class,
                 'options' => [
-                    'label' => $translate->translate('Membership number'),
+                    'label' => $this->translator->translate('Membership number'),
                 ],
             ]
         );
@@ -47,7 +38,7 @@ class Reset extends Form implements InputProviderInterface
                 'name' => 'email',
                 'type' => Email::class,
                 'options' => [
-                    'label' => $translate->translate('E-mail address'),
+                    'label' => $this->translator->translate('E-mail address'),
                 ],
             ]
         );
@@ -57,7 +48,7 @@ class Reset extends Form implements InputProviderInterface
                 'name' => 'submit',
                 'type' => Submit::class,
                 'attributes' => [
-                    'value' => $translate->translate('Reset password'),
+                    'value' => $this->translator->translate('Reset password'),
                 ],
             ]
         );

@@ -19,42 +19,12 @@ use User\Permissions\NotAllowedException;
  */
 class Member
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var MemberMapper
-     */
-    private MemberMapper $memberMapper;
-
-    /**
-     * @var AuthorizationMapper
-     */
-    private AuthorizationMapper $authorizationMapper;
-
-    /**
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param MemberMapper $memberMapper
-     * @param AuthorizationMapper $authorizationMapper
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        MemberMapper $memberMapper,
-        AuthorizationMapper $authorizationMapper,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly MemberMapper $memberMapper,
+        private readonly AuthorizationMapper $authorizationMapper,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->memberMapper = $memberMapper;
-        $this->authorizationMapper = $authorizationMapper;
     }
 
     public const MIN_SEARCH_QUERY_LENGTH = 2;

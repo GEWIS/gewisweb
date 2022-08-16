@@ -33,85 +33,20 @@ use User\Permissions\NotAllowedException;
  */
 class Exam
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var FileStorageService
-     */
-    private FileStorageService $storageService;
-
-    /**
-     * @var CourseMapper
-     */
-    private CourseMapper $courseMapper;
-
-    /**
-     * @var ExamMapper
-     */
-    private ExamMapper $examMapper;
-
-    /**
-     * @var AddCourseForm
-     */
-    private AddCourseForm $addCourseForm;
-
-    /**
-     * @var TempUploadForm
-     */
-    private TempUploadForm $tempUploadForm;
-
-    /**
-     * @var BulkForm
-     */
-    private BulkForm $bulkSummaryForm;
-
-    /**
-     * @var BulkForm
-     */
-    private BulkForm $bulkExamForm;
-
-    /**
-     * @var array
-     */
-    private array $config;
-
-    /**
-     * Bulk form.
-     *
-     * @var BulkForm|null
-     */
     protected ?BulkForm $bulkForm = null;
 
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        FileStorageService $storageService,
-        CourseMapper $courseMapper,
-        ExamMapper $examMapper,
-        AddCourseForm $addCourseForm,
-        TempUploadForm $tempUploadForm,
-        BulkForm $bulkSummaryForm,
-        BulkForm $bulkExamForm,
-        array $config,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly FileStorageService $storageService,
+        private readonly CourseMapper $courseMapper,
+        private readonly ExamMapper $examMapper,
+        private readonly AddCourseForm $addCourseForm,
+        private readonly TempUploadForm $tempUploadForm,
+        private readonly BulkForm $bulkSummaryForm,
+        private readonly BulkForm $bulkExamForm,
+        private readonly array $config,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->storageService = $storageService;
-        $this->courseMapper = $courseMapper;
-        $this->examMapper = $examMapper;
-        $this->addCourseForm = $addCourseForm;
-        $this->tempUploadForm = $tempUploadForm;
-        $this->bulkSummaryForm = $bulkSummaryForm;
-        $this->bulkExamForm = $bulkExamForm;
-        $this->config = $config;
     }
 
     /**

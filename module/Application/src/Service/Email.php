@@ -19,34 +19,11 @@ use User\Model\User as UserModel;
  */
 class Email
 {
-    /**
-     * @var PhpRenderer
-     */
-    private PhpRenderer $renderer;
-
-    /**
-     * @var TransportInterface
-     */
-    private TransportInterface $transport;
-
-    /**
-     * @var array
-     */
-    private array $emailConfig;
-
-    /**
-     * @param PhpRenderer $renderer
-     * @param TransportInterface $transport
-     * @param array $emailConfig
-     */
     public function __construct(
-        PhpRenderer $renderer,
-        TransportInterface $transport,
-        array $emailConfig,
+        private readonly PhpRenderer $renderer,
+        private readonly TransportInterface $transport,
+        private readonly array $emailConfig,
     ) {
-        $this->renderer = $renderer;
-        $this->transport = $transport;
-        $this->emailConfig = $emailConfig;
     }
 
     /**

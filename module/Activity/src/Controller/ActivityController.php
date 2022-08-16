@@ -34,60 +34,14 @@ use Laminas\View\Model\ViewModel;
 
 class ActivityController extends AbstractActionController
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var ActivityService
-     */
-    private ActivityService $activityService;
-
-    /**
-     * @var ActivityQueryService
-     */
-    private ActivityQueryService $activityQueryService;
-
-    /**
-     * @var SignupService
-     */
-    private SignupService $signupService;
-
-    /**
-     * @var SignupListQueryService
-     */
-    private SignupListQueryService $signupListQueryService;
-
-    /**
-     * ActivityController constructor.
-     *
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param ActivityService $activityService
-     * @param ActivityQueryService $activityQueryService
-     * @param SignupService $signupService
-     * @param SignupListQueryService $signupListQueryService
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        ActivityService $activityService,
-        ActivityQueryService $activityQueryService,
-        SignupService $signupService,
-        SignupListQueryService $signupListQueryService,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly ActivityService $activityService,
+        private readonly ActivityQueryService $activityQueryService,
+        private readonly SignupService $signupService,
+        private readonly SignupListQueryService $signupListQueryService,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->activityService = $activityService;
-        $this->activityQueryService = $activityQueryService;
-        $this->signupService = $signupService;
-        $this->signupListQueryService = $signupListQueryService;
     }
 
     /**

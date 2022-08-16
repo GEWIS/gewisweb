@@ -17,9 +17,6 @@ use Laminas\Validator\StringLength;
 
 class JobLabel extends LocalisableForm implements InputFilterProviderInterface
 {
-    /**
-     * @param Translator $translator
-     */
     public function __construct(Translator $translator)
     {
         // we want to ignore the name passed

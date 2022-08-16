@@ -102,9 +102,6 @@ class Course implements ResourceInterface
     )]
     protected Collection $children;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->exams = new ArrayCollection();

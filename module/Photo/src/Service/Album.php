@@ -35,75 +35,18 @@ use User\Permissions\NotAllowedException;
  */
 class Album
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var PhotoService
-     */
-    private PhotoService $photoService;
-
-    /**
-     * @var AlbumCoverService
-     */
-    private AlbumCoverService $albumCoverService;
-
-    /**
-     * @var MemberService
-     */
-    private MemberService $memberService;
-
-    /**
-     * @var FileStorageService
-     */
-    private FileStorageService $storageService;
-
-    /**
-     * @var AlbumMapper
-     */
-    private AlbumMapper $albumMapper;
-
-    private WeeklyPhotoMapper $weeklyPhotoMapper;
-
-    /**
-     * @var CreateAlbumForm
-     */
-    private CreateAlbumForm $createAlbumForm;
-
-    /**
-     * @var EditAlbumForm
-     */
-    private EditAlbumForm $editAlbumForm;
-
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        PhotoService $photoService,
-        AlbumCoverService $albumCoverService,
-        MemberService $memberService,
-        FileStorageService $storageService,
-        AlbumMapper $albumMapper,
-        WeeklyPhotoMapper $weeklyPhotoMapper,
-        CreateAlbumForm $createAlbumForm,
-        EditAlbumForm $editAlbumForm,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly PhotoService $photoService,
+        private readonly AlbumCoverService $albumCoverService,
+        private readonly MemberService $memberService,
+        private readonly FileStorageService $storageService,
+        private readonly AlbumMapper $albumMapper,
+        private readonly WeeklyPhotoMapper $weeklyPhotoMapper,
+        private readonly CreateAlbumForm $createAlbumForm,
+        private readonly EditAlbumForm $editAlbumForm,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->photoService = $photoService;
-        $this->albumCoverService = $albumCoverService;
-        $this->memberService = $memberService;
-        $this->storageService = $storageService;
-        $this->albumMapper = $albumMapper;
-        $this->weeklyPhotoMapper = $weeklyPhotoMapper;
-        $this->createAlbumForm = $createAlbumForm;
-        $this->editAlbumForm = $editAlbumForm;
     }
 
     /**

@@ -70,9 +70,6 @@ abstract class CompanyPackage
     )]
     protected Company $company;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
     }

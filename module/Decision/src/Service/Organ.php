@@ -32,82 +32,17 @@ use User\Permissions\NotAllowedException;
  */
 class Organ
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var EntityManager
-     */
-    private EntityManager $entityManager;
-
-    /**
-     * @var FileStorageService
-     */
-    private FileStorageService $storageService;
-
-    /**
-     * @var EmailService
-     */
-    private EmailService $emailService;
-
-    /**
-     * @var MemberMapper
-     */
-    private MemberMapper $memberMapper;
-
-    /**
-     * @var OrganMapper
-     */
-    private OrganMapper $organMapper;
-
-    /**
-     * @var OrganInformationForm
-     */
-    private OrganInformationForm $organInformationForm;
-
-    /**
-     * @var array
-     */
-    private array $organInformationConfig;
-
-    /**
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param EntityManager $entityManager
-     * @param FileStorageService $storageService
-     * @param EmailService $emailService
-     * @param MemberMapper $memberMapper
-     * @param OrganMapper $organMapper
-     * @param OrganInformationForm $organInformationForm
-     * @param array $organInformationConfig
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        EntityManager $entityManager,
-        FileStorageService $storageService,
-        EmailService $emailService,
-        MemberMapper $memberMapper,
-        OrganMapper $organMapper,
-        OrganInformationForm $organInformationForm,
-        array $organInformationConfig,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly EntityManager $entityManager,
+        private readonly FileStorageService $storageService,
+        private readonly EmailService $emailService,
+        private readonly MemberMapper $memberMapper,
+        private readonly OrganMapper $organMapper,
+        private readonly OrganInformationForm $organInformationForm,
+        private readonly array $organInformationConfig,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->entityManager = $entityManager;
-        $this->storageService = $storageService;
-        $this->emailService = $emailService;
-        $this->memberMapper = $memberMapper;
-        $this->organMapper = $organMapper;
-        $this->organInformationForm = $organInformationForm;
-        $this->organInformationConfig = $organInformationConfig;
     }
 
     /**

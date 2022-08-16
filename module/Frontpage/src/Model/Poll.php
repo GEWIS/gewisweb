@@ -88,9 +88,6 @@ class Poll implements ResourceInterface
     #[JoinColumn(referencedColumnName: "lidnr")]
     protected ?UserModel $approver = null;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->options = new ArrayCollection();

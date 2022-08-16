@@ -19,18 +19,9 @@ use Laminas\Validator\{
 
 class SignupListField extends Fieldset implements InputFilterProviderInterface
 {
-    /**
-     * @var Translator
-     */
-    protected Translator $translator;
-
-    /**
-     * @param Translator $translator
-     */
-    public function __construct(Translator $translator)
+    public function __construct(private readonly Translator $translator)
     {
         parent::__construct('signupfield');
-        $this->translator = $translator;
         $this->setHydrator(new ClassMethodsHydrator(false))
             ->setObject(new SignupFieldModel());
 
@@ -39,7 +30,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                 'name' => 'name',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $translator->translate('Name'),
+                    'label' => $this->translator->translate('Name'),
                 ],
             ]
         );
@@ -49,7 +40,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                 'name' => 'nameEn',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $translator->translate('Name'),
+                    'label' => $this->translator->translate('Name'),
                 ],
             ]
         );
@@ -60,12 +51,12 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                 'type' => Select::class,
                 'options' => [
                     'value_options' => [
-                        '0' => $translator->translate('Text'),
-                        '1' => $translator->translate('Yes/No'),
-                        '2' => $translator->translate('Number'),
-                        '3' => $translator->translate('Choice'),
+                        '0' => $this->translator->translate('Text'),
+                        '1' => $this->translator->translate('Yes/No'),
+                        '2' => $this->translator->translate('Number'),
+                        '3' => $this->translator->translate('Choice'),
                     ],
-                    'label' => $translator->translate('Type'),
+                    'label' => $this->translator->translate('Type'),
                 ],
             ]
         );
@@ -75,7 +66,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                 'name' => 'minimumValue',
                 'type' => Number::class,
                 'options' => [
-                    'label' => $translator->translate('Min. value'),
+                    'label' => $this->translator->translate('Min. value'),
                 ],
             ]
         );
@@ -85,7 +76,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                 'name' => 'maximumValue',
                 'type' => Number::class,
                 'options' => [
-                    'label' => $translator->translate('Max. value'),
+                    'label' => $this->translator->translate('Max. value'),
                 ],
             ]
         );
@@ -95,10 +86,10 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                 'name' => 'options',
                 'type' => Text::class,
                 'attributes' => [
-                    'placeholder' => $translator->translate('Option 1, Option 2, ...'),
+                    'placeholder' => $this->translator->translate('Option 1, Option 2, ...'),
                 ],
                 'options' => [
-                    'label' => $translator->translate('Options'),
+                    'label' => $this->translator->translate('Options'),
                 ],
             ]
         );
@@ -108,10 +99,10 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                 'name' => 'optionsEn',
                 'type' => Text::class,
                 'attributes' => [
-                    'placeholder' => $translator->translate('Option 1, Option 2, ...'),
+                    'placeholder' => $this->translator->translate('Option 1, Option 2, ...'),
                 ],
                 'options' => [
-                    'label' => $translator->translate('Options'),
+                    'label' => $this->translator->translate('Options'),
                 ],
             ]
         );
@@ -164,7 +155,9 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                         'name' => Callback::class,
                         'options' => [
                             'messages' => [
-                                Callback::INVALID_VALUE => 'Some of the required fields for this type are empty',
+                                Callback::INVALID_VALUE => $this->translator->translate(
+                                    'Some of the required fields for this type are empty',
+                                ),
                             ],
                             'callback' => function ($value, $context = null) {
                                 return $this->fieldDependantRequired($value, $context, 'minimumValue', '2') &&
@@ -193,7 +186,9 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                         'name' => Callback::class,
                         'options' => [
                             'messages' => [
-                                Callback::INVALID_VALUE => 'The number of English options must equal the number of Dutch options',
+                                Callback::INVALID_VALUE => $this->translator->translate(
+                                    'The number of English options must equal the number of Dutch options',
+                                ),
                             ],
                             'callback' => function ($value, $context = null) {
                                 return !((new NotEmpty())->isValid($context['nameEn']))

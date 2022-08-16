@@ -8,17 +8,8 @@ use Laminas\View\Helper\AbstractHelper;
 
 class FeaturedCompanyPackage extends AbstractHelper
 {
-    /**
-     * @var CompanyService
-     */
-    private CompanyService $companyService;
-
-    /**
-     * @param CompanyService $companyService
-     */
-    public function __construct(CompanyService $companyService)
+    public function __construct(private readonly CompanyService $companyService)
     {
-        $this->companyService = $companyService;
     }
 
     /**

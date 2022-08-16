@@ -14,42 +14,12 @@ use User\Permissions\NotAllowedException;
  */
 class ApiUser
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var ApiUserMapper
-     */
-    private ApiUserMapper $apiUserMapper;
-
-    /**
-     * @var ApiTokenForm
-     */
-    private ApiTokenForm $apiTokenForm;
-
-    /**
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param ApiUserMapper $apiUserMapper
-     * @param ApiTokenForm $apiTokenForm
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        ApiUserMapper $apiUserMapper,
-        ApiTokenForm $apiTokenForm,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly ApiUserMapper $apiUserMapper,
+        private readonly ApiTokenForm $apiTokenForm,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->apiUserMapper = $apiUserMapper;
-        $this->apiTokenForm = $apiTokenForm;
     }
 
     /**

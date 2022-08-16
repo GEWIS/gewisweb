@@ -15,50 +15,13 @@ use Photo\Model\Album as AlbumModel;
  */
 class AlbumCover
 {
-    /**
-     * @var PhotoMapper
-     */
-    private PhotoMapper $photoMapper;
-
-    /**
-     * @var AlbumMapper
-     */
-    private AlbumMapper $albumMapper;
-
-    /**
-     * @var FileStorageService
-     */
-    private FileStorageService $storage;
-
-    /**
-     * @var array
-     */
-    private array $photoConfig;
-
-    /**
-     * @var array
-     */
-    private array $storageConfig;
-
-    /**
-     * @param PhotoMapper $photoMapper
-     * @param AlbumMapper $albumMapper
-     * @param FileStorageService $storage
-     * @param array $photoConfig
-     * @param array $storageConfig
-     */
     public function __construct(
-        PhotoMapper $photoMapper,
-        AlbumMapper $albumMapper,
-        FileStorageService $storage,
-        array $photoConfig,
-        array $storageConfig,
+        private readonly PhotoMapper $photoMapper,
+        private readonly AlbumMapper $albumMapper,
+        private readonly FileStorageService $storage,
+        private readonly array $photoConfig,
+        private readonly array $storageConfig,
     ) {
-        $this->photoMapper = $photoMapper;
-        $this->albumMapper = $albumMapper;
-        $this->storage = $storage;
-        $this->photoConfig = $photoConfig;
-        $this->storageConfig = $storageConfig;
     }
 
     /**

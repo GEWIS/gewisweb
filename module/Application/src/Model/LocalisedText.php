@@ -23,36 +23,18 @@ abstract class LocalisedText
     #[GeneratedValue(strategy: "IDENTITY")]
     protected ?int $id = null;
 
-    /**
-     * English text.
-     */
-    #[Column(
-        type: "text",
-        nullable: true,
-    )]
-    protected ?string $valueEN = null;
-
-    /**
-     * Dutch text.
-     */
-    #[Column(
-        type: "text",
-        nullable: true,
-    )]
-    protected ?string $valueNL = null;
-
-    /**
-     * LocalisedText constructor.
-     *
-     * @param string|null $valueEN
-     * @param string|null $valueNL
-     */
     public function __construct(
-        ?string $valueEN,
-        ?string $valueNL,
+        #[Column(
+            type: "text",
+            nullable: true,
+        )]
+        protected ?string $valueEN = null,
+        #[Column(
+            type: "text",
+            nullable: true,
+        )]
+        protected ?string $valueNL = null,
     ) {
-        $this->valueEN = $valueEN;
-        $this->valueNL = $valueNL;
     }
 
     /**

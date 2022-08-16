@@ -22,15 +22,7 @@ use Laminas\Validator\{
 
 class SignupList extends Fieldset implements InputFilterProviderInterface
 {
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @param Translator $translator
-     */
-    public function __construct(Translator $translator)
+    public function __construct(private readonly Translator $translator)
     {
         parent::__construct('signuplist');
         $this->setHydrator(new ClassMethodsHydrator(false))
@@ -41,7 +33,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 'name' => 'name',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $translator->translate('Name'),
+                    'label' => $this->translator->translate('Name'),
                 ],
             ]
         );
@@ -51,7 +43,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 'name' => 'nameEn',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $translator->translate('Name'),
+                    'label' => $this->translator->translate('Name'),
                 ],
             ]
         );
@@ -110,11 +102,10 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                     'should_create_template' => true,
                     'template_placeholder' => '__signuplist_field__',
                     'allow_add' => true,
-                    'target_element' => new SignupListField($translator),
+                    'target_element' => new SignupListField($this->translator),
                 ],
             ]
         );
-        $this->translator = $translator;
     }
 
     /**

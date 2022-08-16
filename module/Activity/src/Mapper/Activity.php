@@ -175,7 +175,7 @@ class Activity extends BaseMapper
         ?int $status = null,
     ): array {
         $qb = $this->activityByOrganizerQuery(
-            $this->em->createQueryBuilder()->expr()->gt('a.endTime', ':now'),
+            $this->getEntityManager()->createQueryBuilder()->expr()->gt('a.endTime', ':now'),
             $organs,
             $user,
             $status
@@ -247,7 +247,7 @@ class Activity extends BaseMapper
         ?int $status = null,
     ): DoctrineAdapter {
         $qb = $this->activityByOrganizerQuery(
-            $this->em->createQueryBuilder()->expr()->lt('a.endTime', ':now'),
+            $this->getEntityManager()->createQueryBuilder()->expr()->lt('a.endTime', ':now'),
             $organs,
             $user,
             $status

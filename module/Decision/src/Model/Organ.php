@@ -159,9 +159,6 @@ class Organ
     )]
     protected Collection $organInformation;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->members = new ArrayCollection();

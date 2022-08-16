@@ -11,25 +11,11 @@ use Decision\Model\Member as MemberModel;
  */
 class MemberAlbum extends VirtualAlbum
 {
-    /**
-     * Member that this album is for.
-     *
-     * @var MemberModel
-     */
-    private MemberModel $member;
-
-    /**
-     * MemberAlbum constructor.
-     *
-     * @param int $id it is best to use the member lidnr here
-     * @param MemberModel $member
-     */
     public function __construct(
         int $id,
-        MemberModel $member,
+        private readonly MemberModel $member,
     ) {
         parent::__construct($id);
-        $this->member = $member;
     }
 
     public function getMember(): MemberModel

@@ -9,34 +9,11 @@ use User\Permissions\NotAllowedException;
 
 class SignupListQuery
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var SignupListMapper
-     */
-    private SignupListMapper $signupListMapper;
-
-    /**
-     * @param Translator $translator
-     * @param SignupListMapper $signupListMapper
-     * @param AclService $aclService
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        SignupListMapper $signupListMapper,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly SignupListMapper $signupListMapper,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->signupListMapper = $signupListMapper;
     }
 
     /**

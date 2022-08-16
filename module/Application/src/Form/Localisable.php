@@ -12,21 +12,11 @@ use Laminas\Mvc\I18n\Translator;
  */
 abstract class Localisable extends Form implements InputFilterProviderInterface
 {
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @param Translator $translator
-     * @param bool $addElements
-     */
     public function __construct(
-        Translator $translator,
+        private readonly Translator $translator,
         bool $addElements = true,
     ) {
         parent::__construct();
-        $this->translator = $translator;
 
         if ($addElements) {
             $this->add(
@@ -76,8 +66,8 @@ abstract class Localisable extends Form implements InputFilterProviderInterface
             $filter += $this->createLocalisedInputFilterSpecification();
         }
 
-        // One of the language_dutch or language_english needs to set. If not, display a message at both, indicating that
-        // they need to be set
+        // One of the language_dutch or language_english needs to set. If not, display a message at both, indicating
+        // that they need to be set
         if (
             (isset($this->data['language_dutch']) && !$this->data['language_dutch'])
             && (isset($this->data['language_english']) && !$this->data['language_english'])

@@ -214,9 +214,6 @@ class Member
     )]
     protected Collection $boardInstallations;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->addresses = new ArrayCollection();

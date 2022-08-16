@@ -35,90 +35,18 @@ use User\Permissions\NotAllowedException;
  */
 class Photo
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var MemberService
-     */
-    private MemberService $memberService;
-
-    /**
-     * @var FileStorageService
-     */
-    private FileStorageService $storageService;
-
-    /**
-     * @var PhotoMapper
-     */
-    private PhotoMapper $photoMapper;
-
-    /**
-     * @var TagMapper
-     */
-    private TagMapper $tagMapper;
-
-    /**
-     * @var VoteMapper
-     */
-    private VoteMapper $voteMapper;
-
-    /**
-     * @var WeeklyPhotoMapper
-     */
-    private WeeklyPhotoMapper $weeklyPhotoMapper;
-
-    /**
-     * @var ProfilePhotoMapper
-     */
-    private ProfilePhotoMapper $profilePhotoMapper;
-
-    /**
-     * @var array
-     */
-    private array $photoConfig;
-
-    /**
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param MemberService $memberService
-     * @param FileStorageService $storageService
-     * @param PhotoMapper $photoMapper
-     * @param TagMapper $tagMapper
-     * @param VoteMapper $voteMapper
-     * @param WeeklyPhotoMapper $weeklyPhotoMapper
-     * @param ProfilePhotoMapper $profilePhotoMapper
-     * @param array $photoConfig
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        MemberService $memberService,
-        FileStorageService $storageService,
-        PhotoMapper $photoMapper,
-        TagMapper $tagMapper,
-        VoteMapper $voteMapper,
-        WeeklyPhotoMapper $weeklyPhotoMapper,
-        ProfilePhotoMapper $profilePhotoMapper,
-        array $photoConfig,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly MemberService $memberService,
+        private readonly FileStorageService $storageService,
+        private readonly PhotoMapper $photoMapper,
+        private readonly TagMapper $tagMapper,
+        private readonly VoteMapper $voteMapper,
+        private readonly WeeklyPhotoMapper $weeklyPhotoMapper,
+        private readonly ProfilePhotoMapper $profilePhotoMapper,
+        private readonly array $photoConfig,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->memberService = $memberService;
-        $this->storageService = $storageService;
-        $this->photoMapper = $photoMapper;
-        $this->tagMapper = $tagMapper;
-        $this->voteMapper = $voteMapper;
-        $this->weeklyPhotoMapper = $weeklyPhotoMapper;
-        $this->profilePhotoMapper = $profilePhotoMapper;
-        $this->photoConfig = $photoConfig;
     }
 
     /**

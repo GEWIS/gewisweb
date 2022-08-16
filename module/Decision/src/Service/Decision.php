@@ -42,114 +42,21 @@ use User\Permissions\NotAllowedException;
  */
 class Decision
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var FileStorageService
-     */
-    private FileStorageService $storageService;
-
-    /**
-     * @var EmailService
-     */
-    private EmailService $emailService;
-
-    /**
-     * @var MemberMapper
-     */
-    private MemberMapper $memberMapper;
-
-    /**
-     * @var MeetingMapper
-     */
-    private MeetingMapper $meetingMapper;
-
-    /**
-     * @var DecisionMapper
-     */
-    private DecisionMapper $decisionMapper;
-
-    /**
-     * @var AuthorizationMapper
-     */
-    private AuthorizationMapper $authorizationMapper;
-
-    /**
-     * @var MinutesForm
-     */
-    private MinutesForm $minutesForm;
-
-    /**
-     * @var DocumentForm
-     */
-    private DocumentForm $documentForm;
-
-    /**
-     * @var ReorderDocumentForm
-     */
-    private ReorderDocumentForm $reorderDocumentForm;
-
-    /**
-     * @var SearchDecisionForm
-     */
-    private SearchDecisionForm $searchDecisionForm;
-
-    /**
-     * @var AuthorizationForm
-     */
-    private AuthorizationForm $authorizationForm;
-
-    /**
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param FileStorageService $storageService
-     * @param EmailService $emailService
-     * @param MemberMapper $memberMapper
-     * @param MeetingMapper $meetingMapper
-     * @param DecisionMapper $decisionMapper
-     * @param AuthorizationMapper $authorizationMapper
-     * @param MinutesForm $minutesForm
-     * @param DocumentForm $documentForm
-     * @param ReorderDocumentForm $reorderDocumentForm
-     * @param SearchDecisionForm $searchDecisionForm
-     * @param AuthorizationForm $authorizationForm
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        FileStorageService $storageService,
-        EmailService $emailService,
-        MemberMapper $memberMapper,
-        MeetingMapper $meetingMapper,
-        DecisionMapper $decisionMapper,
-        AuthorizationMapper $authorizationMapper,
-        MinutesForm $minutesForm,
-        DocumentForm $documentForm,
-        ReorderDocumentForm $reorderDocumentForm,
-        SearchDecisionForm $searchDecisionForm,
-        AuthorizationForm $authorizationForm,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly FileStorageService $storageService,
+        private readonly EmailService $emailService,
+        private readonly MemberMapper $memberMapper,
+        private readonly MeetingMapper $meetingMapper,
+        private readonly DecisionMapper $decisionMapper,
+        private readonly AuthorizationMapper $authorizationMapper,
+        private readonly MinutesForm $minutesForm,
+        private readonly DocumentForm $documentForm,
+        private readonly ReorderDocumentForm $reorderDocumentForm,
+        private readonly SearchDecisionForm $searchDecisionForm,
+        private readonly AuthorizationForm $authorizationForm,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->storageService = $storageService;
-        $this->emailService = $emailService;
-        $this->memberMapper = $memberMapper;
-        $this->meetingMapper = $meetingMapper;
-        $this->decisionMapper = $decisionMapper;
-        $this->authorizationMapper = $authorizationMapper;
-        $this->minutesForm = $minutesForm;
-        $this->documentForm = $documentForm;
-        $this->reorderDocumentForm = $reorderDocumentForm;
-        $this->searchDecisionForm = $searchDecisionForm;
-        $this->authorizationForm = $authorizationForm;
     }
 
     /**

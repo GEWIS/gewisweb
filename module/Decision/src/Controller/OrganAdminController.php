@@ -13,19 +13,8 @@ use Laminas\View\Model\ViewModel;
 
 class OrganAdminController extends AbstractActionController
 {
-    /**
-     * @var OrganService
-     */
-    private OrganService $organService;
-
-    /**
-     * OrganAdminController constructor.
-     *
-     * @param OrganService $organService
-     */
-    public function __construct(OrganService $organService)
+    public function __construct(private readonly OrganService $organService)
     {
-        $this->organService = $organService;
     }
 
     /**

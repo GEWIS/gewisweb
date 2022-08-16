@@ -70,9 +70,6 @@ class JobLabel
     )]
     protected Collection $jobs;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->jobs = new ArrayCollection();

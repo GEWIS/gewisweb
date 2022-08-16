@@ -7,17 +7,8 @@ use Laminas\View\Helper\AbstractHelper;
 
 class JobCategories extends AbstractHelper
 {
-    /**
-     * @var CompanyQueryService
-     */
-    private CompanyQueryService $companyQueryService;
-
-    /**
-     * @param CompanyQueryService $companyQueryService
-     */
-    public function __construct(CompanyQueryService $companyQueryService)
+    public function __construct(private readonly CompanyQueryService $companyQueryService)
     {
-        $this->companyQueryService = $companyQueryService;
     }
 
     /**

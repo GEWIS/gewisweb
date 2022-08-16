@@ -22,58 +22,14 @@ use User\Permissions\NotAllowedException;
  */
 class Page
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var FileStorage
-     */
-    private FileStorage $storageService;
-
-    /**
-     * @var PageMapper
-     */
-    private PageMapper $pageMapper;
-
-    /**
-     * @var PageForm
-     */
-    private PageForm $pageForm;
-
-    /**
-     * @var array
-     */
-    private array $storageConfig;
-
-    /**
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param FileStorage $storageService
-     * @param PageMapper $pageMapper
-     * @param PageForm $pageForm
-     * @param array $storageConfig
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        FileStorage $storageService,
-        PageMapper $pageMapper,
-        PageForm $pageForm,
-        array $storageConfig,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly FileStorage $storageService,
+        private readonly PageMapper $pageMapper,
+        private readonly PageForm $pageForm,
+        private readonly array $storageConfig,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->storageService = $storageService;
-        $this->pageMapper = $pageMapper;
-        $this->pageForm = $pageForm;
-        $this->storageConfig = $storageConfig;
     }
 
     /**

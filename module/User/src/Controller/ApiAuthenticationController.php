@@ -26,48 +26,14 @@ use User\Service\{
 
 class ApiAuthenticationController extends AbstractActionController
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var ApiAppService
-     */
-    protected ApiAppService $apiAppService;
-
-    protected ApiAppAuthenticationMapper $apiAppAuthenticationMapper;
-
-    protected ApiAppMapper $apiAppMapper;
-
-    protected ApiAppAuthorisationInitialForm $apiAppAuthorisationInitialForm;
-
-    protected ApiAppAuthorisationReminderForm $apiAppAuthorisationReminderForm;
-
-    /**
-     * ApiAuthenticationController constructor.
-     *
-     * @param AclService $aclService
-     * @param ApiAppService $apiAppService
-     * @param ApiAppAuthenticationMapper $apiAppAuthenticationMapper
-     * @param ApiAppMapper $apiAppMapper
-     * @param ApiAppAuthorisationReminderForm $apiAppAuthorisationInitialForm
-     * @param ApiAppAuthorisationReminderForm $apiAppAuthorisationReminderForm
-     */
     public function __construct(
-        AclService $aclService,
-        ApiAppService $apiAppService,
-        ApiAppAuthenticationMapper $apiAppAuthenticationMapper,
-        ApiAppMapper $apiAppMapper,
-        ApiAppAuthorisationInitialForm $apiAppAuthorisationInitialForm,
-        ApiAppAuthorisationReminderForm $apiAppAuthorisationReminderForm,
+        private readonly AclService $aclService,
+        private readonly ApiAppService $apiAppService,
+        private readonly ApiAppAuthenticationMapper $apiAppAuthenticationMapper,
+        private readonly ApiAppMapper $apiAppMapper,
+        private readonly ApiAppAuthorisationInitialForm $apiAppAuthorisationInitialForm,
+        private readonly ApiAppAuthorisationReminderForm $apiAppAuthorisationReminderForm,
     ) {
-        $this->aclService = $aclService;
-        $this->apiAppService = $apiAppService;
-        $this->apiAppAuthenticationMapper = $apiAppAuthenticationMapper;
-        $this->apiAppMapper = $apiAppMapper;
-        $this->apiAppAuthorisationInitialForm = $apiAppAuthorisationInitialForm;
-        $this->apiAppAuthorisationReminderForm = $apiAppAuthorisationReminderForm;
     }
 
     public function tokenAction(): Response|ViewModel
@@ -126,9 +92,9 @@ class ApiAuthenticationController extends AbstractActionController
                 }
 
                 // Change template to the redirect template, as we cannot use the `redirect` plugin to short-circuit
-                // execution of the request. Chromium browsers do not accept a `Location: ` redirect after `POST`ing (CSP
-                // violation). Hence, we must return an actual `ViewModel` that will "manually" refresh the page to redirect
-                // to the correct URL.
+                // execution of the request. Chromium browsers do not accept a `Location: ` redirect after `POST`ing
+                // (CSP violation). Hence, we must return an actual `ViewModel` that will "manually" refresh the page to
+                // redirect to the correct URL.
                 $viewModel = (new ViewModel())->setTemplate('user_token/redirect');
 
                 return $viewModel->setVariables(

@@ -38,68 +38,15 @@ use User\Permissions\NotAllowedException;
  */
 class AdminController extends AbstractActionController
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var ActivityService
-     */
-    private ActivityService $activityService;
-
-    /**
-     * @var ActivityQueryService
-     */
-    private ActivityQueryService $activityQueryService;
-
-    /**
-     * @var SignupService
-     */
-    private SignupService $signupService;
-
-    /**
-     * @var SignupListQueryService
-     */
-    private SignupListQueryService $signupListQueryService;
-
-    /**
-     * @var SignupMapper
-     */
-    private SignupMapper $signupMapper;
-
-    /**
-     * AdminController constructor.
-     *
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param ActivityService $activityService
-     * @param ActivityQueryService $activityQueryService
-     * @param SignupService $signupService
-     * @param SignupListQueryService $signupListQueryService
-     * @param SignupMapper $signupMapper
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        ActivityService $activityService,
-        ActivityQueryService $activityQueryService,
-        SignupService $signupService,
-        SignupListQueryService $signupListQueryService,
-        SignupMapper $signupMapper,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly ActivityService $activityService,
+        private readonly ActivityQueryService $activityQueryService,
+        private readonly SignupService $signupService,
+        private readonly SignupListQueryService $signupListQueryService,
+        private readonly SignupMapper $signupMapper,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->activityService = $activityService;
-        $this->activityQueryService = $activityQueryService;
-        $this->signupService = $signupService;
-        $this->signupListQueryService = $signupListQueryService;
-        $this->signupMapper = $signupMapper;
     }
 
     public function updateAction(): Response|ViewModel
@@ -152,11 +99,11 @@ class AdminController extends AbstractActionController
 
             if ($form->isValid()) {
                 if ($this->activityService->createUpdateProposal($activity, $form->getData())) {
-                    $message = $this->translator->translate(
-                        'You have successfully created an update proposal for the activity! If the activity was already approved, the proposal will be applied after it has been approved by the board. Otherwise, the update has already been applied to the activity.'
+                    return $this->redirectActivityAdmin(
+                        true,
+                        // phpcs:ignore -- user-visible strings should not be split
+                        $this->translator->translate('You have successfully created an update proposal for the activity! If the activity was already approved, the proposal will be applied after it has been approved by the board. Otherwise, the update has already been applied to the activity.'),
                     );
-
-                    return $this->redirectActivityAdmin(true, $message);
                 }
             }
         }

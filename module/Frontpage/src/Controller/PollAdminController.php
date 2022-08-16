@@ -18,36 +18,11 @@ use User\Permissions\NotAllowedException;
 
 class PollAdminController extends AbstractActionController
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var PollService
-     */
-    private PollService $pollService;
-
-    /**
-     * PollAdminController constructor.
-     *
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param PollService $pollService
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        PollService $pollService,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly PollService $pollService,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->pollService = $pollService;
     }
 
     /**

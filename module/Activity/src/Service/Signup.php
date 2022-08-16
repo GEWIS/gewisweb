@@ -27,58 +27,14 @@ use User\Permissions\NotAllowedException;
 
 class Signup
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var EntityManager
-     */
-    private EntityManager $entityManager;
-
-    /**
-     * @var SignupMapper
-     */
-    private SignupMapper $signupMapper;
-
-    /**
-     * @var SignupFieldValueMapper
-     */
-    private SignupFieldValueMapper $signupFieldValueMapper;
-
-    /**
-     * @var SignupOptionMapper
-     */
-    private SignupOptionMapper $signupOptionMapper;
-
-    /**
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param EntityManager $entityManager
-     * @param SignupMapper $signupMapper
-     * @param SignupFieldValueMapper $signupFieldValueMapper
-     * @param SignupOptionMapper $signupOptionMapper
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        EntityManager $entityManager,
-        SignupMapper $signupMapper,
-        SignupFieldValueMapper $signupFieldValueMapper,
-        SignupOptionMapper $signupOptionMapper,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly EntityManager $entityManager,
+        private readonly SignupMapper $signupMapper,
+        private readonly SignupFieldValueMapper $signupFieldValueMapper,
+        private readonly SignupOptionMapper $signupOptionMapper,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->entityManager = $entityManager;
-        $this->signupMapper = $signupMapper;
-        $this->signupFieldValueMapper = $signupFieldValueMapper;
-        $this->signupOptionMapper = $signupOptionMapper;
     }
 
     /**

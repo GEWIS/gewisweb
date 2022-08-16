@@ -13,42 +13,12 @@ use User\Permissions\NotAllowedException;
 
 class ActivityCategory
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var ActivityCategoryMapper
-     */
-    private ActivityCategoryMapper $categoryMapper;
-
-    /**
-     * @var ActivityCategoryForm
-     */
-    private ActivityCategoryForm $categoryForm;
-
-    /**
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param ActivityCategoryMapper $categoryMapper
-     * @param ActivityCategoryForm $categoryForm
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        ActivityCategoryMapper $categoryMapper,
-        ActivityCategoryForm $categoryForm,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly ActivityCategoryMapper $categoryMapper,
+        private readonly ActivityCategoryForm $categoryForm,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->categoryMapper = $categoryMapper;
-        $this->categoryForm = $categoryForm;
     }
 
     /**

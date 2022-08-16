@@ -30,14 +30,8 @@ class Signup extends Form implements InputFilterProviderInterface
     public const EXTERNAL_USER = 2;
     public const EXTERNAL_ADMIN = 3;
 
-    /**
-     * @var int
-     */
     protected int $type;
 
-    /**
-     * @var SignupListModel
-     */
     protected SignupListModel $signupList;
 
     public function __construct()

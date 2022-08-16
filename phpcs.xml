@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ruleset name="GEWISWEB Coding Standard">
+    <description>GEWISWEB Coding Standard. We do not declare our own standard, but this allows portability.</description>
+
+    <file>module</file>
+    <file>config</file>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+
+    <arg name="parallel" value="8"/>
+    <arg name="extensions" value="php,dist"/>
+
+    <arg name="error-severity" value="1"/>
+    <arg name="warning-severity" value="1"/>
+    <rule ref="PSR1"/>
+    <rule ref="PSR12"/>
+    <rule ref="./phpcs"/>
+</ruleset>

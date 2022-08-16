@@ -14,24 +14,12 @@ use User\Permissions\NotAllowedException;
 
 class ApiController extends AbstractActionController
 {
-    private AclService $aclService;
-
-    private Translator $translator;
-
-    private TagMapper $tagMapper;
-
-    private VoteMapper $voteMapper;
-
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        TagMapper $tagMapper,
-        VoteMapper $voteMapper,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly TagMapper $tagMapper,
+        private readonly VoteMapper $voteMapper,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->tagMapper = $tagMapper;
-        $this->voteMapper = $voteMapper;
     }
 
     /**

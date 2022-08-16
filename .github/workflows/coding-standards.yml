@@ -23,4 +23,4 @@ jobs:
                     tools: cs2pr, phpcs
 
             -   name: Run PHPCS
-                run: phpcs --standard=PSR1,PSR12 --extensions=php,dist --report=checkstyle -q module config | cs2pr --graceful-warnings
+                run: phpcs --report=checkstyle -q | cs2pr --graceful-warnings

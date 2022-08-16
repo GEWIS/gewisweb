@@ -15,50 +15,13 @@ use User\Permissions\NotAllowedException;
  */
 class CompanyQuery
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var JobMapper
-     */
-    private JobMapper $jobMapper;
-
-    /**
-     * @var CategoryMapper
-     */
-    private CategoryMapper $categoryMapper;
-
-    /**
-     * @var LabelMapper
-     */
-    private LabelMapper $labelMapper;
-
-    /**
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param JobMapper $jobMapper
-     * @param CategoryMapper $categoryMapper
-     * @param LabelMapper $labelMapper
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        JobMapper $jobMapper,
-        CategoryMapper $categoryMapper,
-        LabelMapper $labelMapper,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly JobMapper $jobMapper,
+        private readonly CategoryMapper $categoryMapper,
+        private readonly LabelMapper $labelMapper,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->jobMapper = $jobMapper;
-        $this->categoryMapper = $categoryMapper;
-        $this->labelMapper = $labelMapper;
     }
 
     /**

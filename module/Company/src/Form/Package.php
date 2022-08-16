@@ -23,21 +23,11 @@ use Laminas\Mvc\I18n\Translator;
 
 class Package extends LocalisableForm implements InputFilterProviderInterface
 {
-    /**
-     * @var string
-     */
-    private string $type;
-
-    /**
-     * @param Translator $translator
-     * @param string $type
-     */
     public function __construct(
         Translator $translator,
-        string $type,
+        private readonly string $type,
     ) {
         parent::__construct($translator, ('featured' === $type));
-        $this->type = $type;
         $this->setAttribute('method', 'post');
 
         $this->add(

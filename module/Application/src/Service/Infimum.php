@@ -14,34 +14,11 @@ use Laminas\Mvc\I18n\Translator;
 
 class Infimum
 {
-    /**
-     * @var AbstractAdapter
-     */
-    private AbstractAdapter $infimumCache;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var array
-     */
-    private array $infimumConfig;
-
-    /**
-     * @param AbstractAdapter $infimumCache
-     * @param Translator $translator
-     * @param array $infimumConfig
-     */
     public function __construct(
-        AbstractAdapter $infimumCache,
-        Translator $translator,
-        array $infimumConfig,
+        private readonly AbstractAdapter $infimumCache,
+        private readonly Translator $translator,
+        private readonly array $infimumConfig,
     ) {
-        $this->infimumCache = $infimumCache;
-        $this->translator = $translator;
-        $this->infimumConfig = $infimumConfig;
     }
 
     /**

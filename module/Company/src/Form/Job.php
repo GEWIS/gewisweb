@@ -33,35 +33,17 @@ use Laminas\Validator\{
 
 class Job extends LocalisableForm implements InputFilterProviderInterface
 {
-    /**
-     * @var JobMapper
-     */
-    private JobMapper $mapper;
-
-    /**
-     * @var string
-     */
     private string $companySlug;
 
-    /**
-     * @var string|null
-     */
     private ?string $currentSlug = null;
 
-    /**
-     * @param JobMapper $mapper
-     * @param Translator $translator
-     * @param array $categories
-     * @param array $labels
-     */
     public function __construct(
-        JobMapper $mapper,
+        private readonly JobMapper $mapper,
         Translator $translator,
         array $categories,
         array $labels,
     ) {
         parent::__construct($translator);
-        $this->mapper = $mapper;
 
         $this->setAttribute('method', 'post');
 

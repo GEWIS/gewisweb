@@ -7,23 +7,11 @@ namespace Photo\Model;
  */
 class WeeklyAlbum extends VirtualAlbum
 {
-    /**
-     * The dates for each photo of the week in this year.
-     */
-    private array $dates;
-
-    /**
-     * MemberAlbum constructor.
-     *
-     * @param int $id
-     * @param array $dates
-     */
     public function __construct(
         int $id,
-        array $dates,
+        private readonly array $dates,
     ) {
         parent::__construct($id);
-        $this->dates = $dates;
     }
 
     public function getDates(): array

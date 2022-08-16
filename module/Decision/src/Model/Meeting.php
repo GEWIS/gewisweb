@@ -74,9 +74,6 @@ class Meeting
     )]
     protected ?MeetingMinutes $meetingMinutes = null;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->decisions = new ArrayCollection();

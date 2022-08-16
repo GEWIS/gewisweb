@@ -16,29 +16,11 @@ use Laminas\Validator\Callback;
 
 class ActivityCalendarOption extends Fieldset implements InputFilterProviderInterface
 {
-    /**
-     * @var Translator
-     */
-    protected Translator $translator;
-
-    /**
-     * @var ActivityCalendarForm
-     */
-    private ActivityCalendarForm $calendarFormService;
-
-    /**
-     * ActivityCalendarOption constructor.
-     *
-     * @param Translator $translator
-     * @param ActivityCalendarForm $calendarFormService
-     */
     public function __construct(
-        Translator $translator,
-        ActivityCalendarForm $calendarFormService,
+        private readonly Translator $translator,
+        private readonly ActivityCalendarForm $calendarFormService,
     ) {
         parent::__construct();
-        $this->translator = $translator;
-        $this->calendarFormService = $calendarFormService;
 
         $typeOptions = [
             'Morning' => $translator->translate('Morning'),

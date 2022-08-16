@@ -19,18 +19,9 @@ class Minutes extends Form implements InputFilterProviderInterface
 {
     public const ERROR_FILE_EXISTS = 'file_exists';
 
-    /**
-     * @var Translator
-     */
-    protected Translator $translator;
-
-    /**
-     * @param Translator $translator
-     */
-    public function __construct(Translator $translator)
+    public function __construct(private readonly Translator $translator)
     {
         parent::__construct();
-        $this->translator = $translator;
 
         $this->add(
             [

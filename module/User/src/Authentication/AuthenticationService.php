@@ -15,27 +15,10 @@ use User\Model\User;
 
 class AuthenticationService implements AuthenticationServiceInterface
 {
-    /**
-     * Persistent storage handler.
-     *
-     * @var Session
-     */
     protected Session $storage;
 
-    /**
-     * Authentication adapter.
-     *
-     * @var Mapper
-     */
     protected Mapper $adapter;
 
-    /**
-     * Constructor.
-     *
-     * @param StorageInterface $storage
-     * @param AdapterInterface $adapter
-     *
-     */
     public function __construct(
         StorageInterface $storage,
         AdapterInterface $adapter,

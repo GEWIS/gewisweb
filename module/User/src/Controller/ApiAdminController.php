@@ -12,19 +12,8 @@ use User\Service\ApiUser as ApiUserService;
 
 class ApiAdminController extends AbstractActionController
 {
-    /**
-     * @var ApiUserService
-     */
-    private ApiUserService $apiUserService;
-
-    /**
-     * ApiAdminController constructor.
-     *
-     * @param ApiUserService $apiUserService
-     */
-    public function __construct(ApiUserService $apiUserService)
+    public function __construct(private readonly ApiUserService $apiUserService)
     {
-        $this->apiUserService = $apiUserService;
     }
 
     /**

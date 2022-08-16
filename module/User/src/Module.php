@@ -143,14 +143,12 @@ class Module
                 },
                 'user_service_loginattempt' => function (ContainerInterface $container) {
                     $remoteAddress = $container->get('user_remoteaddress');
-                    $entityManager = $container->get('doctrine.entitymanager.orm_default');
                     $loginAttemptMapper = $container->get('user_mapper_loginattempt');
                     $userMapper = $container->get('user_mapper_user');
                     $rateLimitConfig = $container->get('config')['login_rate_limits'];
 
                     return new LoginAttemptService(
                         $remoteAddress,
-                        $entityManager,
                         $loginAttemptMapper,
                         $userMapper,
                         $rateLimitConfig,

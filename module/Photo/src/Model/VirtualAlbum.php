@@ -14,12 +14,11 @@ use Exception;
  */
 class VirtualAlbum extends Album
 {
-    /**
-     * @param int $id
-     */
+    // phpcs:ignore Gewis.General.RequireConstructorPromotion -- not possible
     public function __construct(int $id)
     {
         parent::__construct();
+
         $this->id = $id;
     }
 

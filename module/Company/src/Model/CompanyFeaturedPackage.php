@@ -30,9 +30,6 @@ class CompanyFeaturedPackage extends CompanyPackage
     )]
     protected CompanyLocalisedText $article;
 
-    /**
-     * CompanyFeaturedPackage constructor.
-     */
     public function __construct()
     {
         parent::__construct();

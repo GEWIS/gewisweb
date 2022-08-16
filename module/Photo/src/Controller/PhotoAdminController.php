@@ -15,28 +15,10 @@ use Photo\Service\{
 
 class PhotoAdminController extends AbstractActionController
 {
-    /**
-     * @var AlbumService
-     */
-    private AlbumService $albumService;
-
-    /**
-     * @var PhotoService
-     */
-    private PhotoService $photoService;
-
-    /**
-     * PhotoAdminController constructor.
-     *
-     * @param AlbumService $albumService
-     * @param PhotoService $photoService
-     */
     public function __construct(
-        AlbumService $albumService,
-        PhotoService $photoService,
+        private readonly AlbumService $albumService,
+        private readonly PhotoService $photoService,
     ) {
-        $this->albumService = $albumService;
-        $this->photoService = $photoService;
     }
 
     /**

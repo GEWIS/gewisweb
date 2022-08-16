@@ -61,9 +61,6 @@ class MailingList
     )]
     protected Collection $members;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->members = new ArrayCollection();

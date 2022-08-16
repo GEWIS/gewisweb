@@ -20,9 +20,6 @@ use Laminas\Validator\StringLength;
 
 class AddCourse extends Form implements InputFilterProviderInterface
 {
-    /**
-     * @param Translator $translator
-     */
     public function __construct(Translator $translator)
     {
         $qOptions = [

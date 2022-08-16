@@ -15,36 +15,11 @@ use Photo\Service\{
  */
 class AlbumPlugin extends AbstractPlugin
 {
-    /**
-     * @var AlbumService
-     */
-    private AlbumService $albumService;
-
-    /**
-     * @var PhotoService
-     */
-    private PhotoService $photoService;
-
-    /**
-     * @var array
-     */
-    private array $photoConfig;
-
-    /**
-     * AlbumPlugin constructor.
-     *
-     * @param AlbumService $albumService
-     * @param PhotoService $photoService
-     * @param array $photoConfig
-     */
     public function __construct(
-        AlbumService $albumService,
-        PhotoService $photoService,
-        array $photoConfig,
+        private readonly AlbumService $albumService,
+        private readonly PhotoService $photoService,
+        private readonly array $photoConfig,
     ) {
-        $this->photoService = $photoService;
-        $this->albumService = $albumService;
-        $this->photoConfig = $photoConfig;
     }
 
     /**
@@ -145,9 +120,9 @@ class AlbumPlugin extends AbstractPlugin
 
         $paginator = new Paginator\Paginator(
             new AlbumPaginatorAdapter(
-                $album,
                 $this->photoService,
-                $this->albumService
+                $this->albumService,
+                $album,
             )
         );
 

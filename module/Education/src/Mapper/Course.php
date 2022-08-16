@@ -22,7 +22,7 @@ class Course extends BaseMapper
      */
     public function findByCode(string $code): ?CourseModel
     {
-        $qb = $this->em->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->select('c, e, p, ch, ce')
             ->from($this->getRepositoryName(), 'c')

@@ -43,146 +43,25 @@ use User\Permissions\NotAllowedException;
  */
 class Company
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var FileStorage
-     */
-    private FileStorage $storageService;
-
-    /**
-     * @var CompanyMapper
-     */
-    private CompanyMapper $companyMapper;
-
-    /**
-     * @var PackageMapper
-     */
-    private PackageMapper $packageMapper;
-
-    /**
-     * @var BannerPackageMapper
-     */
-    private BannerPackageMapper $bannerPackageMapper;
-
-    /**
-     * @var FeaturedPackageMapper
-     */
-    private FeaturedPackageMapper $featuredPackageMapper;
-
-    /**
-     * @var JobMapper
-     */
-    private JobMapper $jobMapper;
-
-    /**
-     * @var CategoryMapper
-     */
-    private CategoryMapper $categoryMapper;
-
-    /**
-     * @var LabelMapper
-     */
-    private LabelMapper $labelMapper;
-
-    /**
-     * @var CompanyForm
-     */
-    private CompanyForm $companyForm;
-
-    /**
-     * @var EditPackageForm
-     */
-    private EditPackageForm $editPackageForm;
-
-    /**
-     * @var EditPackageForm
-     */
-    private EditPackageForm $editBannerPackageForm;
-
-    /**
-     * @var EditPackageForm
-     */
-    private EditPackageForm $editFeaturedPackageForm;
-
-    /**
-     * @var EditJobForm
-     */
-    private EditJobForm $editJobForm;
-
-    /**
-     * @var EditCategoryForm
-     */
-    private EditCategoryForm $editCategoryForm;
-
-    /**
-     * @var EditLabelForm
-     */
-    private EditLabelForm $editLabelForm;
-
-    /**
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param FileStorage $storageService
-     * @param CompanyMapper $companyMapper
-     * @param PackageMapper $packageMapper
-     * @param BannerPackageMapper $bannerPackageMapper
-     * @param FeaturedPackageMapper $featuredPackageMapper
-     * @param JobMapper $jobMapper
-     * @param CategoryMapper $categoryMapper
-     * @param LabelMapper $labelMapper
-     * @param CompanyForm $companyForm
-     * @param EditPackageForm $editPackageForm
-     * @param EditPackageForm $editBannerPackageForm
-     * @param EditPackageForm $editFeaturedPackageForm
-     * @param EditJobForm $editJobForm
-     * @param EditCategoryForm $editCategoryForm
-     * @param EditLabelForm $editLabelForm
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        FileStorage $storageService,
-        CompanyMapper $companyMapper,
-        PackageMapper $packageMapper,
-        BannerPackageMapper $bannerPackageMapper,
-        FeaturedPackageMapper $featuredPackageMapper,
-        JobMapper $jobMapper,
-        CategoryMapper $categoryMapper,
-        LabelMapper $labelMapper,
-        CompanyForm $companyForm,
-        EditPackageForm $editPackageForm,
-        EditPackageForm $editBannerPackageForm,
-        EditPackageForm $editFeaturedPackageForm,
-        EditJobForm $editJobForm,
-        EditCategoryForm $editCategoryForm,
-        EditLabelForm $editLabelForm,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly FileStorage $storageService,
+        private readonly CompanyMapper $companyMapper,
+        private readonly PackageMapper $packageMapper,
+        private readonly BannerPackageMapper $bannerPackageMapper,
+        private readonly FeaturedPackageMapper $featuredPackageMapper,
+        private readonly JobMapper $jobMapper,
+        private readonly CategoryMapper $categoryMapper,
+        private readonly LabelMapper $labelMapper,
+        private readonly CompanyForm $companyForm,
+        private readonly EditPackageForm $editPackageForm,
+        private readonly EditPackageForm $editBannerPackageForm,
+        private readonly EditPackageForm $editFeaturedPackageForm,
+        private readonly EditJobForm $editJobForm,
+        private readonly EditCategoryForm $editCategoryForm,
+        private readonly EditLabelForm $editLabelForm,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->storageService = $storageService;
-        $this->companyMapper = $companyMapper;
-        $this->packageMapper = $packageMapper;
-        $this->bannerPackageMapper = $bannerPackageMapper;
-        $this->featuredPackageMapper = $featuredPackageMapper;
-        $this->jobMapper = $jobMapper;
-        $this->categoryMapper = $categoryMapper;
-        $this->labelMapper = $labelMapper;
-        $this->companyForm = $companyForm;
-        $this->editPackageForm = $editPackageForm;
-        $this->editBannerPackageForm = $editBannerPackageForm;
-        $this->editFeaturedPackageForm = $editFeaturedPackageForm;
-        $this->editJobForm = $editJobForm;
-        $this->editCategoryForm = $editCategoryForm;
-        $this->editLabelForm = $editLabelForm;
     }
 
     /**

@@ -8,19 +8,8 @@ use Laminas\View\Model\ViewModel;
 
 class FrontpageController extends AbstractActionController
 {
-    /**
-     * @var FrontpageService
-     */
-    private FrontpageService $frontpageService;
-
-    /**
-     * FrontpageController constructor.
-     *
-     * @param FrontpageService $frontpageService
-     */
-    public function __construct(FrontpageService $frontpageService)
+    public function __construct(private readonly FrontpageService $frontpageService)
     {
-        $this->frontpageService = $frontpageService;
     }
 
     public function homeAction(): ViewModel

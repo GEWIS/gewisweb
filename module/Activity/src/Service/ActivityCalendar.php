@@ -27,90 +27,18 @@ use User\Permissions\NotAllowedException;
 
 class ActivityCalendar
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var EntityManager
-     */
-    private EntityManager $entityManager;
-
-    /**
-     * @var OrganService
-     */
-    private OrganService $organService;
-
-    /**
-     * @var EmailService
-     */
-    private EmailService $emailService;
-
-    /**
-     * @var ActivityCalendarOptionMapper
-     */
-    private ActivityCalendarOptionMapper $calendarOptionMapper;
-
-    /**
-     * @var MemberMapper
-     */
-    private MemberMapper $memberMapper;
-
-    /**
-     * @var ActivityCalendarPeriodForm
-     */
-    private ActivityCalendarPeriodForm $calendarPeriodForm;
-
-    /**
-     * @var ActivityOptionCreationPeriodMapper
-     */
-    private ActivityOptionCreationPeriodMapper $calendarCreationPeriodMapper;
-
-    /**
-     * @var ActivityCalendarForm
-     */
-    private ActivityCalendarForm $calendarFormService;
-
-    /**
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param EntityManager $entityManager
-     * @param OrganService $organService
-     * @param EmailService $emailService
-     * @param ActivityCalendarOptionMapper $calendarOptionMapper
-     * @param MemberMapper $memberMapper
-     * @param ActivityCalendarPeriodForm $calendarPeriodForm
-     * @param ActivityOptionCreationPeriodMapper $calendarCreationPeriodMapper
-     * @param ActivityCalendarForm $calendarFormService
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        EntityManager $entityManager,
-        OrganService $organService,
-        EmailService $emailService,
-        ActivityCalendarOptionMapper $calendarOptionMapper,
-        MemberMapper $memberMapper,
-        ActivityCalendarPeriodForm $calendarPeriodForm,
-        ActivityOptionCreationPeriodMapper $calendarCreationPeriodMapper,
-        ActivityCalendarForm $calendarFormService,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly EntityManager $entityManager,
+        private readonly OrganService $organService,
+        private readonly EmailService $emailService,
+        private readonly ActivityCalendarOptionMapper $calendarOptionMapper,
+        private readonly MemberMapper $memberMapper,
+        private readonly ActivityCalendarPeriodForm $calendarPeriodForm,
+        private readonly ActivityOptionCreationPeriodMapper $calendarCreationPeriodMapper,
+        private readonly ActivityCalendarForm $calendarFormService,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->entityManager = $entityManager;
-        $this->organService = $organService;
-        $this->emailService = $emailService;
-        $this->calendarOptionMapper = $calendarOptionMapper;
-        $this->memberMapper = $memberMapper;
-        $this->calendarPeriodForm = $calendarPeriodForm;
-        $this->calendarCreationPeriodMapper = $calendarCreationPeriodMapper;
-        $this->calendarFormService = $calendarFormService;
     }
 
     /**

@@ -14,50 +14,13 @@ use Exception;
 
 class ActivityCalendarForm
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var OrganService
-     */
-    private OrganService $organService;
-
-    /**
-     * @var ActivityOptionCreationPeriodMapper
-     */
-    private ActivityOptionCreationPeriodMapper $periodMapper;
-
-    /**
-     * @var MaxActivitiesMapper
-     */
-    private MaxActivitiesMapper $maxActivitiesMapper;
-
-    /**
-     * @var ActivityOptionProposalMapper
-     */
-    private ActivityOptionProposalMapper $optionProposalMapper;
-
-    /**
-     * @param AclService $aclService
-     * @param OrganService $organService
-     * @param ActivityOptionCreationPeriodMapper $periodMapper
-     * @param MaxActivitiesMapper $maxActivitiesMapper
-     * @param ActivityOptionProposalMapper $optionProposalMapper
-     */
     public function __construct(
-        AclService $aclService,
-        OrganService $organService,
-        ActivityOptionCreationPeriodMapper $periodMapper,
-        MaxActivitiesMapper $maxActivitiesMapper,
-        ActivityOptionProposalMapper $optionProposalMapper,
+        private readonly AclService $aclService,
+        private readonly OrganService $organService,
+        private readonly ActivityOptionCreationPeriodMapper $periodMapper,
+        private readonly MaxActivitiesMapper $maxActivitiesMapper,
+        private readonly ActivityOptionProposalMapper $optionProposalMapper,
     ) {
-        $this->aclService = $aclService;
-        $this->organService = $organService;
-        $this->periodMapper = $periodMapper;
-        $this->maxActivitiesMapper = $maxActivitiesMapper;
-        $this->optionProposalMapper = $optionProposalMapper;
     }
 
     /**

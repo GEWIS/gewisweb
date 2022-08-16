@@ -29,50 +29,14 @@ use User\Permissions\NotAllowedException;
  */
 class Poll
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var EmailService
-     */
-    private EmailService $emailService;
-
-    /**
-     * @var PollMapper
-     */
-    private PollMapper $pollMapper;
-
-    /**
-     * @var PollForm
-     */
-    private PollForm $pollForm;
-
-    /**
-     * @var PollApprovalForm
-     */
-    private PollApprovalForm $pollApprovalForm;
-
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        EmailService $emailService,
-        PollMapper $pollMapper,
-        PollForm $pollForm,
-        PollApprovalForm $pollApprovalForm,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly EmailService $emailService,
+        private readonly PollMapper $pollMapper,
+        private readonly PollForm $pollForm,
+        private readonly PollApprovalForm $pollApprovalForm,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->emailService = $emailService;
-        $this->pollMapper = $pollMapper;
-        $this->pollForm = $pollForm;
-        $this->pollApprovalForm = $pollApprovalForm;
     }
 
     /**

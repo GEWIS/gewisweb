@@ -24,120 +24,28 @@ use User\Model\{
     User as UserModel,
 };
 use User\Permissions\NotAllowedException;
+use User\Service\Email as EmailService;
 
 /**
  * User service.
  */
 class User
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var Bcrypt
-     */
-    private Bcrypt $bcrypt;
-
-    /**
-     * @var AuthenticationService
-     */
-    private AuthenticationService $authService;
-
-    /**
-     * @var Email
-     */
-    private Email $emailService;
-
-    /**
-     * @var UserMapper
-     */
-    private UserMapper $userMapper;
-
-    /**
-     * @var NewUserMapper
-     */
-    private NewUserMapper $newUserMapper;
-
-    /**
-     * @var MemberMapper
-     */
-    private MemberMapper $memberMapper;
-
-    /**
-     * @var RegisterForm
-     */
-    private RegisterForm $registerForm;
-
-    /**
-     * @var ActivateForm
-     */
-    private ActivateForm $activateForm;
-
-    /**
-     * @var LoginForm
-     */
-    private LoginForm $loginForm;
-
-    /**
-     * @var PasswordForm
-     */
-    private PasswordForm $passwordForm;
-
-    /**
-     * @var ResetForm
-     */
-    private ResetForm $resetForm;
-
-    /**
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param Bcrypt $bcrypt
-     * @param AuthenticationService $authService
-     * @param Email $emailService
-     * @param UserMapper $userMapper
-     * @param NewUserMapper $newUserMapper
-     * @param MemberMapper $memberMapper
-     * @param RegisterForm $registerForm
-     * @param ActivateForm $activateForm
-     * @param LoginForm $loginForm
-     * @param PasswordForm $passwordForm
-     * @param ResetForm $resetForm;
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        Bcrypt $bcrypt,
-        AuthenticationService $authService,
-        Email $emailService,
-        UserMapper $userMapper,
-        NewUserMapper $newUserMapper,
-        MemberMapper $memberMapper,
-        RegisterForm $registerForm,
-        ActivateForm $activateForm,
-        LoginForm $loginForm,
-        PasswordForm $passwordForm,
-        ResetForm $resetForm,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly Bcrypt $bcrypt,
+        private readonly AuthenticationService $authService,
+        private readonly EmailService $emailService,
+        private readonly UserMapper $userMapper,
+        private readonly NewUserMapper $newUserMapper,
+        private readonly MemberMapper $memberMapper,
+        private readonly RegisterForm $registerForm,
+        private readonly ActivateForm $activateForm,
+        private readonly LoginForm $loginForm,
+        private readonly PasswordForm $passwordForm,
+        private readonly ResetForm $resetForm,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->bcrypt = $bcrypt;
-        $this->authService = $authService;
-        $this->emailService = $emailService;
-        $this->userMapper = $userMapper;
-        $this->newUserMapper = $newUserMapper;
-        $this->memberMapper = $memberMapper;
-        $this->registerForm = $registerForm;
-        $this->activateForm = $activateForm;
-        $this->loginForm = $loginForm;
-        $this->passwordForm = $passwordForm;
-        $this->resetForm = $resetForm;
     }
 
     /**

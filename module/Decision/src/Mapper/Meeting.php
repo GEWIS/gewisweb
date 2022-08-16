@@ -28,7 +28,7 @@ class Meeting extends BaseMapper
      */
     public function findAllMeetings(?int $limit = null): array
     {
-        $qb = $this->em->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('m, COUNT(d)')
             ->from($this->getRepositoryName(), 'm')
             ->leftJoin('m.decisions', 'd')
@@ -71,7 +71,7 @@ class Meeting extends BaseMapper
         int $limit,
         MeetingTypes $type,
     ): array {
-        $qb = $this->em->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
         // Use yesterday because a meeting might still take place later on the day
         $date = new DateTime();
@@ -129,7 +129,7 @@ class Meeting extends BaseMapper
         MeetingTypes $type,
         int $number,
     ): ?MeetingModel {
-        $qb = $this->em->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('m, d, db')
             ->from($this->getRepositoryName(), 'm')
             ->where('m.type = :type')
@@ -153,7 +153,7 @@ class Meeting extends BaseMapper
      */
     public function findDocument(int $id): ?MeetingDocumentModel
     {
-        return $this->em->find('Decision\Model\MeetingDocument', $id);
+        return $this->getEntityManager()->find(MeetingDocumentModel::class, $id);
     }
 
     /**
@@ -188,7 +188,7 @@ class Meeting extends BaseMapper
      */
     public function findMaxDocumentPosition(MeetingModel $meeting): ?int
     {
-        $qb = $this->em->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('MAX(d.displayPosition)')
             ->from($this->getRepositoryName(), 'm')
             ->join('m.documents', 'd')
