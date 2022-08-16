@@ -15,6 +15,7 @@ RUN apk add --no-cache --virtual .build-deps \
     && apk add --no-cache --virtual .runtime-deps \
         git \
         ghostscript \
+        icu-data-full \
         imagemagick \
         nano \
         nodejs \
