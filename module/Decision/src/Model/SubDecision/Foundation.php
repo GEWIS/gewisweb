@@ -63,9 +63,6 @@ class Foundation extends SubDecision
     )]
     protected Organ $organ;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->references = new ArrayCollection();

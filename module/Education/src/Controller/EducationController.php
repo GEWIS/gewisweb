@@ -11,28 +11,10 @@ use Laminas\View\Model\ViewModel;
 
 class EducationController extends AbstractActionController
 {
-    /**
-     * @var ExamService
-     */
-    private ExamService $examService;
-
-    /**
-     * @var SearchCourseForm
-     */
-    private SearchCourseForm $searchCourseForm;
-
-    /**
-     * EducationController constructor.
-     *
-     * @param ExamService $examService
-     * @param SearchCourseForm $searchCourseForm
-     */
     public function __construct(
-        ExamService $examService,
-        SearchCourseForm $searchCourseForm
+        private readonly ExamService $examService,
+        private readonly SearchCourseForm $searchCourseForm
     ) {
-        $this->examService = $examService;
-        $this->searchCourseForm = $searchCourseForm;
     }
 
     public function indexAction(): ViewModel

@@ -23,7 +23,7 @@ class LoginAttempt extends BaseMapper
         string $ip,
         ?UserModel $user = null,
     ): int|string {
-        $qb = $this->em->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('count(a)')
             ->from($this->getRepositoryName(), 'a')
             ->where('a.time > :since')

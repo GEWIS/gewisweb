@@ -80,7 +80,7 @@ class Tag extends BaseMapper
      */
     public function getMostActiveMemberTag(array $members): ?TagModel
     {
-        $qb = $this->em->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
         // Retrieve the lidnr of the member with the most tags
         $qb->select('IDENTITY(t.member), COUNT(t.member) as tag_count')

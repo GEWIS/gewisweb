@@ -17,40 +17,13 @@ use UnexpectedValueException;
 
 class Session extends SessionStorage
 {
-    /**
-     * @var bool indicating whether we should remember the user
-     */
     protected bool $rememberMe;
 
-    /**
-     * @var Request
-     */
-    private Request $request;
-
-    /**
-     * @var Response
-     */
-    private Response $response;
-
-    /**
-     * @var array
-     */
-    private array $config;
-
-    /**
-     * @param Request $request
-     * @param Response $response
-     * @param array $config
-     */
     public function __construct(
-        Request $request,
-        Response $response,
-        array $config,
+        private readonly Request $request,
+        private readonly Response $response,
+        private readonly array $config,
     ) {
-        $this->request = $request;
-        $this->response = $response;
-        $this->config = $config;
-
         parent::__construct();
     }
 

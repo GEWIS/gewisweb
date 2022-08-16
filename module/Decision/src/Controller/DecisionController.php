@@ -17,44 +17,12 @@ use User\Permissions\NotAllowedException;
 
 class DecisionController extends AbstractActionController
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var DecisionService
-     */
-    private DecisionService $decisionService;
-
-    /**
-     * @var FileReader
-     */
-    private FileReader $fileReader;
-
-    /**
-     * DecisionController constructor.
-     *
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param DecisionService $decisionService
-     * @param FileReader $fileReader
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        DecisionService $decisionService,
-        FileReader $fileReader,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly DecisionService $decisionService,
+        private readonly FileReader $fileReader,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->decisionService = $decisionService;
-        $this->fileReader = $fileReader;
     }
 
     /**

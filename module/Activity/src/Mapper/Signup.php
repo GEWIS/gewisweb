@@ -65,7 +65,7 @@ class Signup extends BaseMapper
      */
     public function getNumberOfSignedUpMembers(SignupListModel $signupList): array
     {
-        $qb = $this->em->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('COUNT(s)')
             ->from($this->getRepositoryName(), 's')
             ->where('s.signupList = :signupList')

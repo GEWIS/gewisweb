@@ -14,34 +14,11 @@ use RuntimeException;
  */
 class FileStorage
 {
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var array
-     */
-    private array $storageConfig;
-
-    /**
-     * @var WatermarkService
-     */
-    private WatermarkService $watermarkService;
-
-    /**
-     * @param Translator $translator
-     * @param array $storageConfig
-     * @param WatermarkService $watermarkService
-     */
     public function __construct(
-        Translator $translator,
-        array $storageConfig,
-        WatermarkService $watermarkService,
+        private readonly Translator $translator,
+        private readonly array $storageConfig,
+        private readonly WatermarkService $watermarkService,
     ) {
-        $this->translator = $translator;
-        $this->storageConfig = $storageConfig;
-        $this->watermarkService = $watermarkService;
     }
 
     /**

@@ -12,30 +12,10 @@ use Laminas\Http\Response\Stream;
  */
 class LocalFileReader implements FileReader
 {
-    /**
-     * The location in the local filesystem that is considered the 'root' for this browser.
-     *
-     * @var string
-     */
-    private string $root;
-
-    /**
-     * A regex pattern matching all valid filepaths.
-     *
-     * @var string
-     */
-    private string $validFilepath;
-
-    /**
-     * @param string $root
-     * @param string $validFilepath
-     */
     public function __construct(
-        string $root,
-        string $validFilepath,
+        private readonly string $root,
+        private readonly string $validFilepath,
     ) {
-        $this->root = $root;
-        $this->validFilepath = $validFilepath;
     }
 
     /**

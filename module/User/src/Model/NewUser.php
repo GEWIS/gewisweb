@@ -51,19 +51,11 @@ class NewUser
     )]
     protected ?DateTime $time = null;
 
-    /**
-     * Constructor.
-     *
-     * We can populate most values from a member model.
-     *
-     * @param MemberModel $member
-     */
+    // phpcs:ignore Gewis.General.RequireConstructorPromotion -- not possible
     public function __construct(MemberModel $member)
     {
-        if (null !== $member) {
-            $this->lidnr = $member->getLidnr();
-            $this->member = $member;
-        }
+        $this->lidnr = $member->getLidnr();
+        $this->member = $member;
     }
 
     /**

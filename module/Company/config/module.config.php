@@ -27,7 +27,9 @@ return [
                     'priority' => 2,
                     'defaults' => [
                         'controller' => CompanyController::class,
-                        'action' => 'list', // index is reserved for some magical frontpage for the company module, but since it is not yet implemented, a company list will be presented.
+                        // index is reserved for some magical frontpage for the company module, but since it is not yet
+                        // implemented, a company list will be presented.
+                        'action' => 'list',
                     ],
                 ],
                 'may_terminate' => true,

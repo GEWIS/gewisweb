@@ -12,54 +12,15 @@ use User\Authentication\Service\LoginAttempt as LoginAttemptService;
 
 class Mapper implements AdapterInterface
 {
-    /**
-     * Mapper.
-     *
-     * @var UserMapper
-     */
-    protected UserMapper $mapper;
-
-    /**
-     * @var string
-     */
     private string $login;
 
-    /**
-     * Password.
-     *
-     * @var string
-     */
-    protected string $password;
+    private string $password;
 
-    /**
-     * Bcrypt instance.
-     *
-     * @var Bcrypt
-     */
-    protected Bcrypt $bcrypt;
-
-    /**
-     * User Service
-     * (for logging failed login attempts).
-     *
-     * @var LoginAttemptService
-     */
-    protected LoginAttemptService $loginAttemptService;
-
-    /**
-     * Constructor.
-     * @param Bcrypt $bcrypt
-     * @param LoginAttemptService $loginAttemptService
-     * @param UserMapper $mapper
-     */
     public function __construct(
-        Bcrypt $bcrypt,
-        LoginAttemptService $loginAttemptService,
-        UserMapper $mapper,
+        private readonly Bcrypt $bcrypt,
+        private readonly LoginAttemptService $loginAttemptService,
+        private readonly UserMapper $mapper,
     ) {
-        $this->bcrypt = $bcrypt;
-        $this->loginAttemptService = $loginAttemptService;
-        $this->mapper = $mapper;
     }
 
     /**

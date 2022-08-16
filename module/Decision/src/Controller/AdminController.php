@@ -16,25 +16,10 @@ use Laminas\View\Model\ViewModel;
 
 class AdminController extends AbstractActionController
 {
-    private Translator $translator;
-
-    /**
-     * @var DecisionService
-     */
-    private DecisionService $decisionService;
-
-    /**
-     * AdminController constructor.
-     *
-     * @param Translator $translator
-     * @param DecisionService $decisionService
-     */
     public function __construct(
-        Translator $translator,
-        DecisionService $decisionService,
+        private readonly Translator $translator,
+        private readonly DecisionService $decisionService,
     ) {
-        $this->translator = $translator;
-        $this->decisionService = $decisionService;
     }
 
     /**

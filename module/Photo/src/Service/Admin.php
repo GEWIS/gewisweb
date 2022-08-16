@@ -27,57 +27,15 @@ use User\Permissions\NotAllowedException;
  */
 class Admin
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var Photo
-     */
-    private Photo $photoService;
-
-    /**
-     * @var MetadataService
-     */
-    private MetadataService $metadataService;
-
-    /**
-     * @var FileStorageService
-     */
-    private FileStorageService $storageService;
-
-    /**
-     * @var PhotoMapper
-     */
-    private PhotoMapper $photoMapper;
-
-    /**
-     * @var array
-     */
-    private array $photoConfig;
-
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        PhotoService $photoService,
-        MetadataService $metadataService,
-        FileStorageService $storageService,
-        PhotoMapper $photoMapper,
-        array $photoConfig,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly PhotoService $photoService,
+        private readonly MetadataService $metadataService,
+        private readonly FileStorageService $storageService,
+        private readonly PhotoMapper $photoMapper,
+        private readonly array $photoConfig,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->photoService = $photoService;
-        $this->metadataService = $metadataService;
-        $this->storageService = $storageService;
-        $this->photoMapper = $photoMapper;
-        $this->photoConfig = $photoConfig;
     }
 
     /**
@@ -210,7 +168,9 @@ class Admin
 
         if (0 !== $files['file']['error']) {
             throw new Exception(
-                $this->translator->translate('An unknown error occurred during uploading (' . $files['file']['error'] . ')')
+                $this->translator->translate(
+                    'An unknown error occurred during uploading (' . $files['file']['error'] . ')',
+                )
             );
         }
         /**

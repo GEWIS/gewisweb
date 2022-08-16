@@ -21,50 +21,13 @@ use User\Permissions\NotAllowedException;
 
 class ActivityQuery
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var OrganService
-     */
-    private OrganService $organService;
-
-    /**
-     * @var ActivityMapper
-     */
-    private ActivityMapper $activityMapper;
-
-    /**
-     * @var ProposalMapper
-     */
-    private ProposalMapper $proposalMapper;
-
-    /**
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param OrganService $organService
-     * @param ActivityMapper $activityMapper
-     * @param ProposalMapper $proposalMapper
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        OrganService $organService,
-        ActivityMapper $activityMapper,
-        ProposalMapper $proposalMapper,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly OrganService $organService,
+        private readonly ActivityMapper $activityMapper,
+        private readonly ProposalMapper $proposalMapper,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->organService = $organService;
-        $this->activityMapper = $activityMapper;
-        $this->proposalMapper = $proposalMapper;
     }
 
     /**

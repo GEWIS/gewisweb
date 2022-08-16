@@ -11,36 +11,11 @@ use User\Permissions\NotAllowedException;
 
 class InfimumController extends AbstractActionController
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var InfimumService
-     */
-    private InfimumService $infimumService;
-
-    /**
-     * FrontpageController constructor.
-     *
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param InfimumService $infimumService
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        InfimumService $infimumService,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly InfimumService $infimumService,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->infimumService = $infimumService;
     }
 
     public function showAction(): JsonModel

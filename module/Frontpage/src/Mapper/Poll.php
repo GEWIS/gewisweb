@@ -25,7 +25,7 @@ class Poll extends BaseMapper
      */
     public function findPollOptionById(int $optionId): ?PollOptionModel
     {
-        return $this->em->getRepository(PollOptionModel::class)->find($optionId);
+        return $this->getEntityManager()->getRepository(PollOptionModel::class)->find($optionId);
     }
 
     /**
@@ -40,7 +40,7 @@ class Poll extends BaseMapper
         int $pollId,
         int $lidnr,
     ): ?PollVoteModel {
-        return $this->em->getRepository(PollVoteModel::class)->findOneBy(
+        return $this->getEntityManager()->getRepository(PollVoteModel::class)->findOneBy(
             [
                 'poll' => $pollId,
                 'respondent' => $lidnr,

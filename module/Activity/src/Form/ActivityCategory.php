@@ -12,9 +12,6 @@ use Laminas\Mvc\I18n\Translator;
 
 class ActivityCategory extends LocalisableForm implements InputFilterProviderInterface
 {
-    /**
-     * @param Translator $translator
-     */
     public function __construct(Translator $translator)
     {
         parent::__construct($translator);

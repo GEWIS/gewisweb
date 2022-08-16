@@ -12,28 +12,10 @@ use Laminas\View\Model\{
 
 class AdminController extends AbstractActionController
 {
-    /**
-     * @var ExamService
-     */
-    private ExamService $examService;
-
-    /**
-     * @var array
-     */
-    private array $educationTempConfig;
-
-    /**
-     * AdminController constructor.
-     *
-     * @param ExamService $examService
-     * @param array $educationTempConfig
-     */
     public function __construct(
-        ExamService $examService,
-        array $educationTempConfig,
+        private readonly ExamService $examService,
+        private readonly array $educationTempConfig,
     ) {
-        $this->examService = $examService;
-        $this->educationTempConfig = $educationTempConfig;
     }
 
     public function indexAction(): ViewModel

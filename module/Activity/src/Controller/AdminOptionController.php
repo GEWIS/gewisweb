@@ -20,58 +20,21 @@ use User\Permissions\NotAllowedException;
 
 class AdminOptionController extends AbstractActionController
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var ActivityCalendarService
-     */
-    private ActivityCalendarService $activityCalendarService;
-
-    /**
-     * @var OrganService
-     */
-    private OrganService $organService;
-
-    /**
-     * @var ActivityOptionCreationPeriodMapper
-     */
-    private ActivityOptionCreationPeriodMapper $activityOptionCreationPeriodMapper;
-
-    /**
-     * AdminOptionController constructor.
-     *
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param ActivityCalendarService $activityCalendarService
-     * @param OrganService $organService
-     * @param ActivityOptionCreationPeriodMapper $activityOptionCreationPeriodMapper
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        ActivityCalendarService $activityCalendarService,
-        OrganService $organService,
-        ActivityOptionCreationPeriodMapper $activityOptionCreationPeriodMapper,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly ActivityCalendarService $activityCalendarService,
+        private readonly OrganService $organService,
+        private readonly ActivityOptionCreationPeriodMapper $activityOptionCreationPeriodMapper,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->activityCalendarService = $activityCalendarService;
-        $this->organService = $organService;
-        $this->activityOptionCreationPeriodMapper = $activityOptionCreationPeriodMapper;
     }
 
     public function indexAction(): ViewModel
     {
         if (!$this->aclService->isAllowed('view', 'activity_calendar_period')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to administer option calendar periods'));
+            throw new NotAllowedException($this->translator->translate(
+                'You are not allowed to administer option calendar periods',
+            ));
         }
 
         return new ViewModel([
@@ -83,7 +46,9 @@ class AdminOptionController extends AbstractActionController
     public function addAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('create', 'activity_calendar_period')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to create option calendar periods'));
+            throw new NotAllowedException($this->translator->translate(
+                'You are not allowed to create option calendar periods',
+            ));
         }
 
         $form = $this->activityCalendarService->getCalendarPeriodForm();
@@ -98,7 +63,12 @@ class AdminOptionController extends AbstractActionController
 
             if ($form->isValid()) {
                 if ($this->activityCalendarService->createOptionPlanningPeriod($form->getData())) {
-                    return $this->redirectWithMessage(true, $this->translator->translate('Option planning period created successfully.'));
+                    return $this->redirectWithMessage(
+                        true,
+                        $this->translator->translate(
+                            'Option planning period created successfully.',
+                        ),
+                    );
                 }
             }
         }
@@ -155,7 +125,9 @@ class AdminOptionController extends AbstractActionController
     public function editAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('edit', 'activity_calendar_period')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to edit option calendar periods'));
+            throw new NotAllowedException($this->translator->translate(
+                'You are not allowed to edit option calendar periods',
+            ));
         }
 
         $optionCreationPeriodId = $this->params('id');
@@ -166,7 +138,12 @@ class AdminOptionController extends AbstractActionController
         }
 
         if ($optionCreationPeriod->getBeginPlanningTime() < new DateTime('now')) {
-            return $this->redirectWithMessage(false, $this->translator->translate('This option planning period cannot be edited.'));
+            return $this->redirectWithMessage(
+                false,
+                $this->translator->translate(
+                    'This option planning period cannot be edited.',
+                ),
+            );
         }
 
         $form = $this->activityCalendarService->getCalendarPeriodForm();
@@ -180,7 +157,12 @@ class AdminOptionController extends AbstractActionController
 
             if ($form->isValid()) {
                 if ($this->activityCalendarService->updateOptionPlanningPeriod($optionCreationPeriod, $form->getData())) {
-                    return $this->redirectWithMessage(true, $this->translator->translate('Option planning period has been updated.'));
+                    return $this->redirectWithMessage(
+                        true,
+                        $this->translator->translate(
+                            'Option planning period has been updated.',
+                        ),
+                    );
                 }
             }
         }

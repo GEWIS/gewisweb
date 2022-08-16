@@ -67,8 +67,8 @@ return [
 
             /**
              * Contains a list with all collector the profiler should run. Zend Developer Tools ships with
-             * 'db' (Laminas\Db), 'time', 'event', 'memory', 'exception', 'request' and 'mail' (Laminas\Mail). If you wish to
-             * disable a default collector, simply set the value to null or false.
+             * 'db' (Laminas\Db), 'time', 'event', 'memory', 'exception', 'request' and 'mail' (Laminas\Mail). If you
+             * wish to disable a default collector, simply set the value to null or false.
              *
              * Example: 'collectors' => array('db' => null)
              * Expects: array

@@ -30,7 +30,7 @@ class User extends BaseMapper
     public function findByLogin(string $login): ?UserModel
     {
         // create query for user
-        $qb = $this->em->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('u, r, m')
             ->from($this->getRepositoryName(), 'u')
             ->leftJoin('u.roles', 'r')
@@ -64,9 +64,9 @@ class User extends BaseMapper
         UserModel $user,
         NewUserModel $newUser,
     ): void {
-        $this->em->persist($user);
-        $this->em->remove($newUser);
-        $this->em->flush();
+        $this->persist($user);
+        $this->remove($newUser);
+        $this->flush();
     }
 
     /**

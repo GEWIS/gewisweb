@@ -13,9 +13,6 @@ use Laminas\Validator\StringLength;
 
 class CreateAlbum extends Form implements InputProviderInterface
 {
-    /**
-     * @param Translator $translate
-     */
     public function __construct(Translator $translate)
     {
         parent::__construct();

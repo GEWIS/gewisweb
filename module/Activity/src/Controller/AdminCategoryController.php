@@ -17,36 +17,11 @@ use User\Permissions\NotAllowedException;
 
 class AdminCategoryController extends AbstractActionController
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var ActivityCategoryService
-     */
-    private ActivityCategoryService $categoryService;
-
-    /**
-     * AdminCategoryController constructor.
-     *
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param ActivityCategoryService $categoryService
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        ActivityCategoryService $categoryService,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly ActivityCategoryService $categoryService,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->categoryService = $categoryService;
     }
 
     /**

@@ -151,9 +151,6 @@ class Company
     )]
     protected Collection $packages;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->packages = new ArrayCollection();

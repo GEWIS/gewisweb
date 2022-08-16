@@ -16,50 +16,12 @@ use User\Model\{
 
 class LoginAttempt
 {
-    /**
-     * @var string
-     */
-    private string $remoteAddress;
-
-    /**
-     * @var array
-     */
-    private array $rateLimitConfig;
-
-    /**
-     * @var LoginAttemptMapper
-     */
-    private LoginAttemptMapper $loginAttemptMapper;
-
-    /**
-     * @var EntityManager
-     */
-    private EntityManager $entityManager;
-
-    /**
-     * @var UserMapper
-     */
-    private UserMapper $userMapper;
-
-    /**
-     * @param string $remoteAddress
-     * @param EntityManager $entityManager
-     * @param LoginAttemptMapper $loginAttemptMapper
-     * @param UserMapper $userMapper
-     * @param array $rateLimitConfig
-     */
     public function __construct(
-        string $remoteAddress,
-        EntityManager $entityManager,
-        LoginAttemptMapper $loginAttemptMapper,
-        UserMapper $userMapper,
-        array $rateLimitConfig,
+        private readonly string $remoteAddress,
+        private readonly LoginAttemptMapper $loginAttemptMapper,
+        private readonly UserMapper $userMapper,
+        private readonly array $rateLimitConfig,
     ) {
-        $this->remoteAddress = $remoteAddress;
-        $this->loginAttemptMapper = $loginAttemptMapper;
-        $this->rateLimitConfig = $rateLimitConfig;
-        $this->entityManager = $entityManager;
-        $this->userMapper = $userMapper;
     }
 
     /**
@@ -91,7 +53,7 @@ class LoginAttempt
          * their day figuring out what kind of dark magic is upsetting the entity manager here, be my guest.
          * This hack only is needed when we want to flush the entity manager during login.
          */
-        $this->entityManager->clear();
+        $this->userMapper->getEntityManager()->clear();
 
         return $this->userMapper->findByLidnr($user->getLidnr());
     }

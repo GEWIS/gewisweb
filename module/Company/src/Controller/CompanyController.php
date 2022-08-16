@@ -11,28 +11,10 @@ use Laminas\View\Model\ViewModel;
 
 class CompanyController extends AbstractActionController
 {
-    /**
-     * @var CompanyService
-     */
-    private CompanyService $companyService;
-
-    /**
-     * @var CompanyQueryService
-     */
-    private CompanyQueryService $companyQueryService;
-
-    /**
-     * CompanyController constructor.
-     *
-     * @param CompanyService $companyService
-     * @param CompanyQueryService $companyQueryService
-     */
     public function __construct(
-        CompanyService $companyService,
-        CompanyQueryService $companyQueryService,
+        private readonly CompanyService $companyService,
+        private readonly CompanyQueryService $companyQueryService,
     ) {
-        $this->companyService = $companyService;
-        $this->companyQueryService = $companyQueryService;
     }
 
     /**

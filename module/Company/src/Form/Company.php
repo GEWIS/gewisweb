@@ -32,26 +32,16 @@ use Laminas\Validator\{
 class Company extends LocalisableForm implements InputFilterProviderInterface
 {
     /**
-     * @var CompanyMapper
-     */
-    private CompanyMapper $mapper;
-
-    /**
      * @var string|null $currentSlug
      */
     private ?string $currentSlug = null;
 
-    /**
-     * @param CompanyMapper $mapper
-     * @param Translator $translator
-     */
     public function __construct(
-        CompanyMapper $mapper,
+        private readonly CompanyMapper $mapper,
         Translator $translator,
     ) {
         // we want to ignore the name passed
         parent::__construct($translator);
-        $this->mapper = $mapper;
 
         $this->setAttribute('method', 'post');
 

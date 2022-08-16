@@ -24,95 +24,19 @@ use Photo\Service\Photo as PhotoService;
  */
 class Frontpage
 {
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    private AclService $aclService;
-
-    /**
-     * @var PollService
-     */
-    private Poll $pollService;
-
-    /**
-     * @var NewsService
-     */
-    private News $newsService;
-
-    /**
-     * @var MemberService
-     */
-    private MemberService $memberService;
-
-    /**
-     * @var CompanyService
-     */
-    private CompanyService $companyService;
-
-    /**
-     * @var PhotoService
-     */
-    private PhotoService $photoService;
-
-    /**
-     * @var TagMapper
-     */
-    private TagMapper $tagMapper;
-
-    /**
-     * @var ActivityMapper
-     */
-    private ActivityMapper $activityMapper;
-
-    /**
-     * @var array
-     */
-    private array $frontpageConfig;
-
-    /**
-     * @var array
-     */
-    private array $photoConfig;
-
-    /**
-     * @param Translator $translator
-     * @param AclService $aclService;
-     * @param Poll $pollService
-     * @param News $newsService
-     * @param MemberService $memberService
-     * @param CompanyService $companyService
-     * @param PhotoService $photoService
-     * @param TagMapper $tagMapper
-     * @param ActivityMapper $activityMapper
-     * @param array $frontpageConfig
-     * @param array $photoConfig
-     */
     public function __construct(
-        Translator $translator,
-        AclService $aclService,
-        Poll $pollService,
-        News $newsService,
-        MemberService $memberService,
-        CompanyService $companyService,
-        PhotoService $photoService,
-        TagMapper $tagMapper,
-        ActivityMapper $activityMapper,
-        array $frontpageConfig,
-        array $photoConfig,
+        private readonly Translator $translator,
+        private readonly AclService $aclService,
+        private readonly Poll $pollService,
+        private readonly News $newsService,
+        private readonly MemberService $memberService,
+        private readonly CompanyService $companyService,
+        private readonly PhotoService $photoService,
+        private readonly TagMapper $tagMapper,
+        private readonly ActivityMapper $activityMapper,
+        private readonly array $frontpageConfig,
+        private readonly array $photoConfig,
     ) {
-        $this->translator = $translator;
-        $this->aclService = $aclService;
-        $this->pollService = $pollService;
-        $this->newsService = $newsService;
-        $this->memberService = $memberService;
-        $this->companyService = $companyService;
-        $this->photoService = $photoService;
-        $this->tagMapper = $tagMapper;
-        $this->activityMapper = $activityMapper;
-        $this->frontpageConfig = $frontpageConfig;
-        $this->photoConfig = $photoConfig;
     }
 
     /**

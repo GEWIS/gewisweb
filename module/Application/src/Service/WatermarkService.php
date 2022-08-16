@@ -20,34 +20,11 @@ class WatermarkService
     // The quality of the produced PDFs
     private const DPI = 150;
 
-    /**
-     * @var array
-     */
-    private array $storageConfig;
-
-    /**
-     * @var AuthenticationService
-     */
-    private AuthenticationService $authService;
-
-    /**
-     * @var string
-     */
-    private string $remoteAddress;
-
-    /**
-     * @param array $storageConfig
-     * @param AuthenticationService $authService
-     * @param string $remoteAddress
-     */
     public function __construct(
-        array $storageConfig,
-        AuthenticationService $authService,
-        string $remoteAddress,
+        private readonly array $storageConfig,
+        private readonly AuthenticationService $authService,
+        private readonly string $remoteAddress,
     ) {
-        $this->storageConfig = $storageConfig;
-        $this->authService = $authService;
-        $this->remoteAddress = $remoteAddress;
     }
 
     /**

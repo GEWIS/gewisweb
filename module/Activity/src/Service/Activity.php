@@ -29,74 +29,16 @@ use User\Permissions\NotAllowedException;
 
 class Activity
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var EntityManager
-     */
-    private EntityManager $entityManager;
-
-    /**
-     * @var ActivityCategoryService
-     */
-    private ActivityCategoryService $categoryService;
-
-    /**
-     * @var OrganService
-     */
-    private OrganService $organService;
-
-    /**
-     * @var CompanyService
-     */
-    private CompanyService $companyService;
-
-    /**
-     * @var EmailService
-     */
-    private EmailService $emailService;
-
-    /**
-     * @var ActivityForm
-     */
-    private ActivityForm $activityForm;
-
-    /**
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param EntityManager $entityManager
-     * @param ActivityCategory $categoryService
-     * @param OrganService $organService
-     * @param CompanyService $companyService
-     * @param EmailService $emailService
-     * @param ActivityForm $activityForm
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        EntityManager $entityManager,
-        ActivityCategory $categoryService,
-        OrganService $organService,
-        CompanyService $companyService,
-        EmailService $emailService,
-        ActivityForm $activityForm,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly EntityManager $entityManager,
+        private readonly ActivityCategory $categoryService,
+        private readonly OrganService $organService,
+        private readonly CompanyService $companyService,
+        private readonly EmailService $emailService,
+        private readonly ActivityForm $activityForm,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->entityManager = $entityManager;
-        $this->categoryService = $categoryService;
-        $this->organService = $organService;
-        $this->companyService = $companyService;
-        $this->emailService = $emailService;
-        $this->activityForm = $activityForm;
     }
 
     /**

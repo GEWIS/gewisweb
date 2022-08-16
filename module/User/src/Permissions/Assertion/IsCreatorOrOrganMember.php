@@ -36,6 +36,7 @@ class IsCreatorOrOrganMember implements AssertionInterface
         $isCreator = new IsCreator();
         $isOrganMember = new IsOrganMember();
 
-        return $isCreator->assert($acl, $role, $resource, $privilege) || $isOrganMember->assert($acl, $role, $resource, $privilege);
+        return $isCreator->assert($acl, $role, $resource, $privilege)
+            || $isOrganMember->assert($acl, $role, $resource, $privilege);
     }
 }

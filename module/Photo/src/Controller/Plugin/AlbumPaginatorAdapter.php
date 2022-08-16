@@ -15,45 +15,18 @@ use Photo\Service\{
 class AlbumPaginatorAdapter implements AdapterInterface
 {
     /**
-     * Album.
-     *
-     * @var AlbumModel|null
-     */
-    protected ?AlbumModel $album = null;
-
-    /**
      * Item count.
      *
      * @var int|null
      */
     protected ?int $count = null;
 
-    /**
-     * @var PhotoService
-     */
-    private PhotoService $photoService;
-
-    /**
-     * @var AlbumService
-     */
-    private AlbumService $albumService;
-
-    /**
-     * Constructor.
-     *
-     * @param AlbumModel $album Album to paginate
-     * @param PhotoService $photoService
-     * @param AlbumService $albumService
-     */
+    // phpcs:ignore Gewis.General.RequireConstructorPromotion -- not possible
     public function __construct(
-        AlbumModel $album,
-        PhotoService $photoService,
-        AlbumService $albumService,
+        private readonly PhotoService $photoService,
+        private readonly AlbumService $albumService,
+        private readonly ?AlbumModel $album = null,
     ) {
-        $this->album = $album;
-        $this->photoService = $photoService;
-        $this->albumService = $albumService;
-
         $this->count = $album->getAlbumCount() + $album->getPhotoCount(false);
     }
 

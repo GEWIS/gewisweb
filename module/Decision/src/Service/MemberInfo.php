@@ -15,55 +15,14 @@ use User\Permissions\NotAllowedException;
  */
 class MemberInfo
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var PhotoService
-     */
-    private PhotoService $photoService;
-
-    /**
-     * @var MemberMapper
-     */
-    private MemberMapper $memberMapper;
-
-    private ApiAppAuthenticationMapper $apiAppAuthenticationMapper;
-
-    /**
-     * @var array
-     */
-    private array $photoConfig;
-
-    /**
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param PhotoService $photoService
-     * @param MemberMapper $memberMapper
-     * @param ApiAppAuthenticationMapper $apiAppAuthenticationMapper
-     * @param array $photoConfig
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        PhotoService $photoService,
-        MemberMapper $memberMapper,
-        ApiAppAuthenticationMapper $apiAppAuthenticationMapper,
-        array $photoConfig,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly PhotoService $photoService,
+        private readonly MemberMapper $memberMapper,
+        private readonly ApiAppAuthenticationMapper $apiAppAuthenticationMapper,
+        private readonly array $photoConfig,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->photoService = $photoService;
-        $this->memberMapper = $memberMapper;
-        $this->apiAppAuthenticationMapper = $apiAppAuthenticationMapper;
-        $this->photoConfig = $photoConfig;
     }
 
     /**

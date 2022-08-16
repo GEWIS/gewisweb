@@ -16,42 +16,12 @@ use User\Service\AclService;
  */
 class News
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var NewsItemMapper
-     */
-    private NewsItemMapper $newsItemMapper;
-
-    /**
-     * @var NewsItemForm
-     */
-    private NewsItemForm $newsItemForm;
-
-    /**
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param NewsItemMapper $newsItemMapper
-     * @param NewsItemForm $newsItemForm
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        NewsItemMapper $newsItemMapper,
-        NewsItemForm $newsItemForm,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly NewsItemMapper $newsItemMapper,
+        private readonly NewsItemForm $newsItemForm,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->newsItemMapper = $newsItemMapper;
-        $this->newsItemForm = $newsItemForm;
     }
 
     /**

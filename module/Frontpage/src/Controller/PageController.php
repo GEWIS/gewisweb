@@ -8,19 +8,8 @@ use Laminas\View\Model\ViewModel;
 
 class PageController extends AbstractActionController
 {
-    /**
-     * @var PageService
-     */
-    private PageService $pageService;
-
-    /**
-     * PageController constructor.
-     *
-     * @param PageService $pageService
-     */
-    public function __construct(PageService $pageService)
+    public function __construct(private readonly PageService $pageService)
     {
-        $this->pageService = $pageService;
     }
 
     public function pageAction(): ViewModel

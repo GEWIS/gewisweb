@@ -25,9 +25,6 @@ use Laminas\Validator\{
 
 class Activity extends LocalisableForm implements InputFilterProviderInterface
 {
-    /**
-     * @param Translator $translator
-     */
     public function __construct(Translator $translator)
     {
         parent::__construct($translator);

@@ -18,36 +18,11 @@ use User\Permissions\NotAllowedException;
 
 class NewsAdminController extends AbstractActionController
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var NewsService
-     */
-    private NewsService $newsService;
-
-    /**
-     * NewsAdminController constructor.
-     *
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param NewsService $newsService
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        NewsService $newsService,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly NewsService $newsService,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->newsService = $newsService;
     }
 
     public function listAction(): ViewModel

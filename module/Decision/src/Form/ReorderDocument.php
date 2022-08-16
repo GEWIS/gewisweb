@@ -20,15 +20,8 @@ use Laminas\Validator\{
 
 class ReorderDocument extends Form implements InputFilterProviderInterface
 {
-    /**
-     * @var Translator
-     */
     protected Translator $translator;
 
-    /**
-     * @param string|null $name
-     * @param array $options
-     */
     public function __construct(
         ?string $name = null,
         array $options = [],

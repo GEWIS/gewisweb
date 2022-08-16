@@ -28,9 +28,6 @@ class CompanyJobPackage extends CompanyPackage
     )]
     protected Collection $jobs;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         parent::__construct();

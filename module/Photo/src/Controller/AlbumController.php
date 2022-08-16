@@ -11,36 +11,11 @@ use Photo\Service\{
 
 class AlbumController extends AbstractActionController
 {
-    /**
-     * @var AlbumService
-     */
-    private AlbumService $albumService;
-
-    /**
-     * @var PhotoService
-     */
-    private PhotoService $photoService;
-
-    /**
-     * @var array
-     */
-    private array $photoConfig;
-
-    /**
-     * AlbumController constructor.
-     *
-     * @param AlbumService $albumService
-     * @param PhotoService $photoService
-     * @param array $photoConfig
-     */
     public function __construct(
-        AlbumService $albumService,
-        PhotoService $photoService,
-        array $photoConfig,
+        private readonly AlbumService $albumService,
+        private readonly PhotoService $photoService,
+        private readonly array $photoConfig,
     ) {
-        $this->albumService = $albumService;
-        $this->photoService = $photoService;
-        $this->photoConfig = $photoConfig;
     }
 
     /**

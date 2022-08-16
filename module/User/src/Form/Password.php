@@ -17,9 +17,6 @@ use Laminas\Validator\{
 
 class Password extends Form implements InputFilterProviderInterface
 {
-    /**
-     * @param Translator $translate
-     */
     public function __construct(Translator $translate)
     {
         parent::__construct();

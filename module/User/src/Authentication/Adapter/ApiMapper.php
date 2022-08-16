@@ -8,25 +8,10 @@ use User\Mapper\ApiUser as ApiUserMapper;
 
 class ApiMapper implements AdapterInterface
 {
-    /**
-     * Mapper.
-     *
-     * @var ApiUserMapper
-     */
-    protected ApiUserMapper $mapper;
-
-    /**
-     * @var string
-     */
     private string $token;
 
-    /**
-     * Constructor.
-     * @param ApiUserMapper $mapper
-     */
-    public function __construct(ApiUserMapper $mapper)
+    public function __construct(private readonly ApiUserMapper $mapper)
     {
-        $this->mapper = $mapper;
     }
 
     /**

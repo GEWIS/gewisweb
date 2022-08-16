@@ -20,59 +20,14 @@ use User\Permissions\NotAllowedException;
 
 class MemberController extends AbstractActionController
 {
-    /**
-     * @var AclService
-     */
-    private AclService $aclService;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var MemberService
-     */
-    private MemberService $memberService;
-
-    /**
-     * @var MemberInfoService
-     */
-    private MemberInfoService $memberInfoService;
-
-    /**
-     * @var DecisionService
-     */
-    private DecisionService $decisionService;
-
-    /**
-     * @var array
-     */
-    private array $regulationsConfig;
-
-    /**
-     * MemberController constructor.
-     *
-     * @param AclService $aclService
-     * @param MemberService $memberService
-     * @param MemberInfoService $memberInfoService
-     * @param DecisionService $decisionService
-     * @param array $regulationsConfig
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        MemberService $memberService,
-        MemberInfoService $memberInfoService,
-        DecisionService $decisionService,
-        array $regulationsConfig,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly MemberService $memberService,
+        private readonly MemberInfoService $memberInfoService,
+        private readonly DecisionService $decisionService,
+        private readonly array $regulationsConfig,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->memberService = $memberService;
-        $this->memberInfoService = $memberInfoService;
-        $this->decisionService = $decisionService;
-        $this->regulationsConfig = $regulationsConfig;
     }
 
     public function indexAction(): ViewModel

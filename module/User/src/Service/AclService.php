@@ -14,9 +14,6 @@ use User\Authorization\GenericAclService;
 
 class AclService extends GenericAclService
 {
-    /**
-     * @var Acl
-     */
     protected Acl $acl;
 
     public function __construct(

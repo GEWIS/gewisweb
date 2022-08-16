@@ -16,19 +16,8 @@ use Laminas\View\Model\{
 
 class PageAdminController extends AbstractActionController
 {
-    /**
-     * @var PageService
-     */
-    private PageService $pageService;
-
-    /**
-     * PageAdminController constructor.
-     *
-     * @param PageService $pageService
-     */
-    public function __construct(PageService $pageService)
+    public function __construct(private readonly PageService $pageService)
     {
-        $this->pageService = $pageService;
     }
 
     public function indexAction(): ViewModel

@@ -13,27 +13,13 @@ use User\Model\ApiUser;
 
 class ApiAuthenticationService implements AuthenticationServiceInterface
 {
-    /**
-     * Authentication adapter.
-     *
-     * @var ApiMapper
-     */
     protected ApiMapper $adapter;
 
     /**
      * The identity is only persisted for one request.
-     *
-     * @var ApiUser|null
      */
     private ?ApiUser $identity = null;
 
-    /**
-     * Constructor.
-     *
-     * @param ApiMapper $adapter
-     *
-     * @throws RuntimeException
-     */
     public function __construct(AdapterInterface $adapter)
     {
         $this->setAdapter($adapter);

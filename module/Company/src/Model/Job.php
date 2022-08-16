@@ -188,9 +188,6 @@ class Job
     #[JoinTable(name: "JobLabelAssignment")]
     protected Collection $labels;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->labels = new ArrayCollection();
@@ -278,7 +275,9 @@ class Job
 
     public function isActive(): bool
     {
-        return $this->isPublished() && $this->getPackage()->isActive() && !$this->getPackage()->getCompany()->isHidden();
+        return $this->isPublished()
+            && $this->getPackage()->isActive()
+            && !$this->getPackage()->getCompany()->isHidden();
     }
 
     /**

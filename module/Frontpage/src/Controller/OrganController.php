@@ -11,28 +11,10 @@ use Laminas\View\Model\ViewModel;
 
 class OrganController extends AbstractActionController
 {
-    /**
-     * @var ActivityQueryService
-     */
-    private ActivityQueryService $activityQueryService;
-
-    /**
-     * @var OrganService
-     */
-    private OrganService $organService;
-
-    /**
-     * OrganController constructor.
-     *
-     * @param ActivityQueryService $activityQueryService
-     * @param OrganService $organService
-     */
     public function __construct(
-        ActivityQueryService $activityQueryService,
-        OrganService $organService,
+        private readonly ActivityQueryService $activityQueryService,
+        private readonly OrganService $organService,
     ) {
-        $this->activityQueryService = $activityQueryService;
-        $this->organService = $organService;
     }
 
     public function committeeListAction(): ViewModel

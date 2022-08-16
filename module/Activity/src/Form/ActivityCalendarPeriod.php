@@ -19,18 +19,9 @@ use Laminas\Validator\{
 
 class ActivityCalendarPeriod extends Form implements InputFilterProviderInterface
 {
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @param Translator $translator
-     */
-    public function __construct(Translator $translator)
+    public function __construct(private readonly Translator $translator)
     {
         parent::__construct();
-        $this->translator = $translator;
 
         $this->add(
             [
@@ -133,7 +124,9 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
                         'name' => Callback::class,
                         'options' => [
                             'messages' => [
-                                Callback::INVALID_VALUE => $this->translator->translate('The planning period must end after it starts.'),
+                                Callback::INVALID_VALUE => $this->translator->translate(
+                                    'The planning period must end after it starts.',
+                                ),
                             ],
                             'callback' => [$this, 'afterOtherTime'],
                             'callbackOptions' => ['beginPlanningTime'],
@@ -154,7 +147,9 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
                         'name' => Callback::class,
                         'options' => [
                             'messages' => [
-                                Callback::INVALID_VALUE => $this->translator->translate('The option period must start after the planning period ends.'),
+                                Callback::INVALID_VALUE => $this->translator->translate(
+                                    'The option period must start after the planning period ends.',
+                                ),
                             ],
                             'callback' => [$this, 'afterOtherTime'],
                             'callbackOptions' => ['endPlanningTime'],
@@ -175,7 +170,9 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
                         'name' => Callback::class,
                         'options' => [
                             'messages' => [
-                                Callback::INVALID_VALUE => $this->translator->translate('The option period must end after it starts.'),
+                                Callback::INVALID_VALUE => $this->translator->translate(
+                                    'The option period must end after it starts.',
+                                ),
                             ],
                             'callback' => [$this, 'afterOtherTime'],
                             'callbackOptions' => ['beginOptionTime'],

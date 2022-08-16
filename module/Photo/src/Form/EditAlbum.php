@@ -15,9 +15,6 @@ use Laminas\Validator\NotEmpty;
 
 class EditAlbum extends Form implements InputProviderInterface
 {
-    /**
-     * @param Translator $translate
-     */
     public function __construct(Translator $translate)
     {
         parent::__construct();

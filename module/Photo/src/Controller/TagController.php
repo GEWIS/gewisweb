@@ -14,30 +14,11 @@ use User\Permissions\NotAllowedException;
 
 class TagController extends AbstractActionController
 {
-    private AclService $aclService;
-
-    private Translator $translator;
-
-    /**
-     * @var PhotoService
-     */
-    private PhotoService $photoService;
-
-    /**
-     * TagController constructor.
-     *
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param PhotoService $photoService
-     */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        PhotoService $photoService,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly PhotoService $photoService,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->photoService = $photoService;
     }
 
     public function addAction(): JsonModel

@@ -17,7 +17,7 @@ class NewUser extends BaseMapper
      */
     public function getByLidnr(int $lidnr): ?NewUserModel
     {
-        $qb = $this->em->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('u, m')
             ->from($this->getRepositoryName(), 'u')
             ->join('u.member', 'm')
@@ -39,7 +39,7 @@ class NewUser extends BaseMapper
      */
     public function getByCode(string $code): ?NewUserModel
     {
-        $qb = $this->em->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('u, m')
             ->from($this->getRepositoryName(), 'u')
             ->join('u.member', 'm')
@@ -61,7 +61,7 @@ class NewUser extends BaseMapper
      */
     public function deleteByMember(MemberModel $member): int
     {
-        $qb = $this->em->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->delete($this->getRepositoryName(), 'u');
         $qb->where('u.member = :member');
         $qb->setParameter('member', $member);

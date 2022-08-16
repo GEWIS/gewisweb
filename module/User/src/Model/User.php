@@ -63,11 +63,7 @@ class User implements RoleInterface, ResourceInterface
     )]
     protected MemberModel $member;
 
-    /**
-     * Constructor.
-     *
-     * @param NewUser|null $newUser
-     */
+    // phpcs:ignore Gewis.General.RequireConstructorPromotion -- not possible
     public function __construct(NewUser $newUser = null)
     {
         $this->roles = new ArrayCollection();

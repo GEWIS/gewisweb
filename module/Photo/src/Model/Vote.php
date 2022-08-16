@@ -34,43 +34,31 @@ class Vote
     protected DateTime $dateTime;
 
     /**
-     * The photo which was voted for.
-     */
-    #[ManyToOne(
-        targetEntity: Photo::class,
-        inversedBy: "votes",
-    )]
-    #[JoinColumn(
-        name: "photo_id",
-        referencedColumnName: "id",
-        nullable: false,
-    )]
-    protected Photo $photo;
-
-    /**
-     * The member who voted.
-     */
-    #[ManyToOne(targetEntity: UserModel::class)]
-    #[JoinColumn(
-        name: "voter_id",
-        referencedColumnName: "lidnr",
-        nullable: false,
-    )]
-    protected UserModel $voter;
-
-    /**
      * Vote constructor.
      *
      * @param Photo $photo
      * @param UserModel $voter The member who voted
      */
     public function __construct(
-        Photo $photo,
-        UserModel $voter,
+        #[ManyToOne(
+            targetEntity: Photo::class,
+            inversedBy: "votes",
+        )]
+        #[JoinColumn(
+            name: "photo_id",
+            referencedColumnName: "id",
+            nullable: false,
+        )]
+        protected Photo $photo,
+        #[ManyToOne(targetEntity: UserModel::class)]
+        #[JoinColumn(
+            name: "voter_id",
+            referencedColumnName: "lidnr",
+            nullable: false,
+        )]
+        protected UserModel $voter,
     ) {
         $this->dateTime = new DateTime();
-        $this->voter = $voter;
-        $this->photo = $photo;
     }
 
     /**

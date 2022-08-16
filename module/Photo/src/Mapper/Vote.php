@@ -25,7 +25,7 @@ class Vote extends BaseMapper
         DateTime $startDate,
         DateTime $endDate,
     ): array {
-        $qb = $this->em->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->select('IDENTITY(vote.photo)', 'Count(vote.photo)')
             ->from($this->getRepositoryName(), 'vote')

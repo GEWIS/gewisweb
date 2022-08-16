@@ -12,42 +12,12 @@ use User\Model\NewUser as NewUserModel;
 
 class Email
 {
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     * @var PhpRenderer
-     */
-    private PhpRenderer $renderer;
-
-    /**
-     * @var TransportInterface
-     */
-    private TransportInterface $transport;
-
-    /**
-     * @var array
-     */
-    private array $emailConfig;
-
-    /**
-     * @param Translator $translator
-     * @param PhpRenderer $renderer
-     * @param TransportInterface $transport
-     * @param array $emailConfig
-     */
     public function __construct(
-        Translator $translator,
-        PhpRenderer $renderer,
-        TransportInterface $transport,
-        array $emailConfig,
+        private readonly Translator $translator,
+        private readonly PhpRenderer $renderer,
+        private readonly TransportInterface $transport,
+        private readonly array $emailConfig,
     ) {
-        $this->translator = $translator;
-        $this->renderer = $renderer;
-        $this->transport = $transport;
-        $this->emailConfig = $emailConfig;
     }
 
     /**

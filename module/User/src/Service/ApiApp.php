@@ -13,11 +13,8 @@ use User\Model\{
 
 class ApiApp
 {
-    private ApiAppAuthenticationMapper $apiAppAuthenticationMapper;
-
-    public function __construct(ApiAppAuthenticationMapper $apiAppAuthenticationMapper)
+    public function __construct(private readonly ApiAppAuthenticationMapper $apiAppAuthenticationMapper)
     {
-        $this->apiAppAuthenticationMapper = $apiAppAuthenticationMapper;
     }
 
     /**

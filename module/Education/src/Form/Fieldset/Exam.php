@@ -24,14 +24,8 @@ use Laminas\Validator\{
 
 class Exam extends Fieldset implements InputFilterProviderInterface
 {
-    /**
-     * @var array
-     */
     protected array $config;
 
-    /**
-     * @param Translator $translator
-     */
     public function __construct(Translator $translator)
     {
         parent::__construct('exam');

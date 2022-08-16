@@ -19,9 +19,6 @@ use Laminas\Validator\{
 
 class Document extends Form implements InputFilterProviderInterface
 {
-    /**
-     * @param Translator $translator
-     */
     public function __construct(Translator $translator)
     {
         parent::__construct();

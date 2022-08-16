@@ -117,13 +117,13 @@ psalmfix: loadenv
 		@vendor/bin/psalm --no-cache --alter --issues=InvalidReturnType,InvalidNullableReturnType
 
 phpcs: loadenv
-		@vendor/bin/phpcs -p --standard=PSR1,PSR12 --extensions=php,dist module config
+		@vendor/bin/phpcs -p
 
 phpcbf: loadenv
-		@vendor/bin/phpcbf -p --standard=PSR1,PSR12 --extensions=php,dist --filter=GitModified module config
+		@vendor/bin/phpcbf -p --filter=GitModified
 
 phpcbfall: loadenv
-		@vendor/bin/phpcbf -p --standard=PSR1,PSR12 --extensions=php,dist module config
+		@vendor/bin/phpcbf -p
 
 phpcsfix: loadenv
 		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --rules=@PSR1,@PSR12,@DoctrineAnnotation,@PHP81Migration,group_import,-single_import_per_statement module

@@ -14,19 +14,8 @@ use User\Service\User as UserService;
 
 class UserController extends AbstractActionController
 {
-    /**
-     * @var UserService
-     */
-    private UserService $userService;
-
-    /**
-     * UserController constructor.
-     *
-     * @param UserService $userService
-     */
-    public function __construct(UserService $userService)
+    public function __construct(private readonly UserService $userService)
     {
-        $this->userService = $userService;
     }
 
     /**

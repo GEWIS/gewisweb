@@ -25,40 +25,16 @@ use Laminas\Validator\{
 
 class JobCategory extends Form implements InputFilterProviderInterface
 {
-    /**
-     * @var CategoryMapper
-     */
-    private CategoryMapper $mapper;
-
-    /**
-     * @var Translator
-     */
-    private Translator $translator;
-
-    /**
-     *
-     * @var string|null
-     */
     private ?string $currentSlug = null;
 
-    /**
-     *
-     * @var string|null
-     */
     private ?string $currentSlugEn = null;
 
-    /**
-     * @param CategoryMapper $mapper
-     * @param Translator $translator
-     */
     public function __construct(
-        CategoryMapper $mapper,
-        Translator $translator,
+        private readonly CategoryMapper $mapper,
+        private readonly Translator $translator,
     ) {
         // we want to ignore the name passed
         parent::__construct();
-        $this->mapper = $mapper;
-        $this->translator = $translator;
         $this->setAttribute('method', 'post');
 
         $this->add(

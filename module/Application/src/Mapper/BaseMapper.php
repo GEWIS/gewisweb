@@ -14,19 +14,8 @@ use Doctrine\ORM\{
 
 abstract class BaseMapper
 {
-    /**
-     * Doctrine entity manager.
-     *
-     * @var EntityManager
-     */
-    protected EntityManager $em;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(EntityManager $em)
+    public function __construct(private readonly EntityManager $em)
     {
-        $this->em = $em;
     }
 
     /**

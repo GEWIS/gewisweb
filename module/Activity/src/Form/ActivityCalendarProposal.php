@@ -20,34 +20,14 @@ use User\Permissions\NotAllowedException;
 
 class ActivityCalendarProposal extends Form implements InputFilterProviderInterface
 {
-    /**
-     * @var Translator
-     */
-    protected Translator $translator;
-
-    /**
-     * @var ActivityCalendarForm
-     */
-    private ActivityCalendarForm $calendarFormService;
-
-    /**
-     * @var int
-     */
     private int $maxOptions;
 
-    /**
-     * @param Translator $translator
-     * @param ActivityCalendarForm $calendarFormService
-     * @param bool $createAlways
-     */
     public function __construct(
-        Translator $translator,
-        ActivityCalendarForm $calendarFormService,
+        private readonly Translator $translator,
+        private readonly ActivityCalendarForm $calendarFormService,
         bool $createAlways,
     ) {
         parent::__construct();
-        $this->translator = $translator;
-        $this->calendarFormService = $calendarFormService;
 
         try {
             $organs = $calendarFormService->getEditableOrgans();
@@ -72,7 +52,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                 'type' => Select::class,
                 'options' => [
                     'empty_option' => [
-                        'label' => $translator->translate('Select an option'),
+                        'label' => $this->translator->translate('Select an option'),
                         'selected' => 'selected',
                         'disabled' => 'disabled',
                     ],
@@ -103,7 +83,10 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                     'count' => 1,
                     'should_create_template' => true,
                     'allow_add' => true,
-                    'target_element' => new ActivityCalendarOption($translator, $calendarFormService),
+                    'target_element' => new ActivityCalendarOption(
+                        $this->translator,
+                        $this->calendarFormService,
+                    ),
                 ],
             ]
         );
@@ -140,7 +123,9 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                         'name' => Callback::class,
                         'options' => [
                             'messages' => [
-                                Callback::INVALID_VALUE => $this->translator->translate('The activity does now have an acceptable amount of options'),
+                                Callback::INVALID_VALUE => $this->translator->translate(
+                                    'The activity does now have an acceptable amount of options',
+                                ),
                             ],
                             'callback' => function ($value, $context = []) {
                                 return $this->isGoodOptionCount($value, $context);
@@ -151,7 +136,9 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                         'name' => Callback::class,
                         'options' => [
                             'messages' => [
-                                Callback::INVALID_VALUE => $this->translator->translate('The options for this proposal do not fit in the valid range.'),
+                                Callback::INVALID_VALUE => $this->translator->translate(
+                                    'The options for this proposal do not fit in the valid range.',
+                                ),
                             ],
                             'callback' => function ($value, $context = []) {
                                 return $this->areGoodOptionDates($value, $context);

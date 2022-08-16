@@ -18,26 +18,10 @@ use Photo\Service\{
  */
 class Remove
 {
-    /**
-     * @var PhotoService
-     */
-    private PhotoService $photoService;
-
-    /**
-     * @var AlbumService
-     */
-    private AlbumService $albumService;
-
-    /**
-     * @param PhotoService $photoService
-     * @param AlbumService $albumService
-     */
     public function __construct(
-        PhotoService $photoService,
-        AlbumService $albumService,
+        private readonly PhotoService $photoService,
+        private readonly AlbumService $albumService,
     ) {
-        $this->photoService = $photoService;
-        $this->albumService = $albumService;
     }
 
     /**
