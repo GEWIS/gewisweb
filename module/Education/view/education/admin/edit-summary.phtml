@@ -38,8 +38,8 @@ $this->breadcrumbs()
                        href="<?= $this->basePath() ?>/<?= $config['public_summary_dir'] ?>/<?= $this->escapeHtmlAttr($fs->get('file')->getValue()) ?>">
                         <?= $this->escapeHtml($fs->get('file')->getValue()) ?>
                     </a>
-                    <a onclick="Education.Admin.deleteTemp('summary', '<?= $this->escapeHtmlAttr($fs->get('file')->getValue()) ?>', this)"
-                       class="btn btn-xs btn-danger pull-right">
+                    <a data-file-value="<?= $this->escapeHtmlAttr($fs->get('file')->getValue()) ?>"
+                       class="btn btn-xs btn-danger pull-right delete-temp-summary">
                         <?= $this->translate('Delete') ?>
                     </a>
                 </h3>
@@ -115,3 +115,13 @@ $this->breadcrumbs()
 
     <?= $this->form()->closeTag() ?>
 <?php endif ?>
+
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+    document.querySelectorAll('.delete-temp-summary').forEach(summary => {
+        summary.addEventListener('click', e => {
+            e.preventDefault();
+
+            Education.Admin.deleteTemp('summary', e.target.dataset.fileValue, e.target);
+        });
+    });
+</script>

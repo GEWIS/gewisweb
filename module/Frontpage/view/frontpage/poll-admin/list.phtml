@@ -64,14 +64,12 @@ $this->breadcrumbs()
             <td><?= $poll->getCreator()->getMember()->getFullName() ?></td>
             <td></td>
             <td>
-                <button type="button" class="btn btn-success btn-xs"
-                        onclick="Poll.Admin.approvePoll(<?= $poll->getId() ?>)" data-toggle="modal"
-                        data-target="#approveModal">
+                <button type="button" class="btn btn-success btn-xs approve-poll" data-poll-id="<?= $poll->getId() ?>"
+                        data-toggle="modal" data-target="#approveModal">
                     <?= $this->translate('Approve') ?>
                 </button>
-                <button type="button" class="btn btn-danger btn-xs"
-                        onclick="Poll.Admin.deletePoll(<?= $poll->getId() ?>)" data-toggle="modal"
-                        data-target="#deleteModal">
+                <button type="button" class="btn btn-danger btn-xs delete-poll" data-poll-id="<?= $poll->getId() ?>"
+                        data-toggle="modal" data-target="#deleteModal">
                     <?= $this->translate('Delete') ?>
                 </button>
             </td>
@@ -140,9 +138,8 @@ $this->breadcrumbs()
                 <td><?= $poll->getApprover()->getMember()->getFullName() ?></td>
                 <td>
                     <?php if ($poll->isActive()): ?>
-                        <button type="button" class="btn btn-danger btn-xs"
-                                onclick="Poll.Admin.deletePoll(<?= $poll->getId() ?>)" data-toggle="modal"
-                                data-target="#deleteModal">
+                        <button type="button" class="btn btn-danger btn-xs delete-poll"
+                                data-poll-id="<?= $poll->getId() ?>" data-toggle="modal" data-target="#deleteModal">
                             <?= $this->translate('Delete') ?>
                         </button>
                     <?php endif ?>
@@ -223,3 +220,13 @@ $this->breadcrumbs()
         </div>
     </div>
 </div>
+
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('approve-poll')) {
+            Poll.Admin.approvePoll(e.target.dataset.pollId);
+        } else if (e.target.classList.contains('delete-poll')) {
+            Poll.Admin.deletePoll(e.target.dataset.pollId);
+        }
+    });
+</script>

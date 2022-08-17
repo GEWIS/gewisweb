@@ -3,7 +3,7 @@ function addOption() {
     var template = $('#poll-options span.template').data('template');
     template = template.replace(/__index__/g, currentCount);
 
-    $(template).insertBefore('#poll-options div.add-option');
+    $(template).insertBefore('#poll-options div.option-menu');
     $("#removeButton").show();
     return false;
 }
