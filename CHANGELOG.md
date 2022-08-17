@@ -1,3 +1,15 @@
+## [v2.8.5](https://github.com/GEWIS/gewisweb/tree/v2.8.5) (2022-08-17)
+
+* Added support for inactive organ members.
+* Changed abbreviation of audit committee to `KCC`.
+* Removed gender from members.
+* Fixed issue where uploading meeting documents could fail.
+* Fixed issue where text that was supposed to be localised was not actually being localised.
+* Fixed issue where custom pages could be deleted without the required privileges.
+* Fixed issue where images could be uploaded without the proper privileges.
+
+---
+
 ## [v2.8.4](https://github.com/GEWIS/gewisweb/tree/v2.8.4) (2022-08-03)
 
 * Fixed issue where an incorrect runtime configuration was used, resulting in reduced performance.
@@ -5,6 +17,7 @@
 * Updated dependencies.
 
 ---
+
 
 ## [v2.8.3](https://github.com/GEWIS/gewisweb/tree/v2.8.3) (2022-07-25)
 
