@@ -228,14 +228,8 @@ class Page
 
     /**
      * Upload an image to be displayed on a page.
-     *
-     * @param Parameters $files
-     *
-     * @return string
-     *
-     * @throws Exception
      */
-    public function uploadImage(Parameters $files): string
+    public function uploadImage(array $files): string
     {
         $imageValidator = new IsImage(
             ['magicFile' => false]
@@ -252,10 +246,12 @@ class Page
 
                 return $config['public_dir'] . '/' . $fileName;
             }
+
             throw new InvalidArgumentException(
                 $this->translator->translate('The uploaded file does not have a valid extension')
             );
         }
+
         throw new InvalidArgumentException(
             $this->translator->translate('The uploaded file is not a valid image')
         );

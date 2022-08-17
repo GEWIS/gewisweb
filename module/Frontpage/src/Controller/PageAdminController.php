@@ -3,7 +3,11 @@
 namespace Frontpage\Controller;
 
 use Exception;
-use Frontpage\Service\Page as PageService;
+use Frontpage\Service\{
+    AclService,
+    Page as PageService,
+};
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Http\{
     Request,
     Response,
@@ -13,26 +17,40 @@ use Laminas\View\Model\{
     JsonModel,
     ViewModel,
 };
+use User\Permissions\NotAllowedException;
 
 class PageAdminController extends AbstractActionController
 {
-    public function __construct(private readonly PageService $pageService)
-    {
+    public function __construct(
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly PageService $pageService,
+    ) {
     }
 
     public function indexAction(): ViewModel
     {
-        $pages = $this->pageService->getPages();
+        if (!$this->aclService->isAllowed('list', 'page')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view the list of pages.')
+            );
+        }
 
         return new ViewModel(
             [
-                'pages' => $pages,
+                'pages' => $this->pageService->getPages(),
             ]
         );
     }
 
     public function createAction(): Response|ViewModel
     {
+        if (!$this->aclService->isAllowed('create', 'page')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to create new pages.')
+            );
+        }
+
         /** @var Request $request */
         $request = $this->getRequest();
 
@@ -59,6 +77,10 @@ class PageAdminController extends AbstractActionController
 
     public function editAction(): Response|ViewModel
     {
+        if (!$this->aclService->isAllowed('edit', 'page')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to edit pages.'));
+        }
+
         $pageId = $this->params()->fromRoute('page_id');
         /** @var Request $request */
         $request = $this->getRequest();
@@ -82,6 +104,10 @@ class PageAdminController extends AbstractActionController
 
     public function deleteAction(): Response
     {
+        if (!$this->aclService->isAllowed('delete', 'page')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to delete pages.'));
+        }
+
         $pageId = $this->params()->fromRoute('page_id');
         $this->pageService->deletePage($pageId);
 
@@ -90,6 +116,15 @@ class PageAdminController extends AbstractActionController
 
     public function uploadAction(): JsonModel
     {
+        if (
+            !$this->aclService->isAllowed('create', 'page')
+            && !$this->aclService->isAllowed('edit', 'page')
+            && !$this->aclService->isAllowed('create', 'news_item')
+            && !$this->aclService->isAllowed('edit', 'news_item')
+        ) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to upload images.'));
+        }
+
         /** @var Request $request */
         $request = $this->getRequest();
         $result = [];
@@ -97,7 +132,7 @@ class PageAdminController extends AbstractActionController
 
         if ($request->isPost()) {
             try {
-                $path = $this->pageService->uploadImage($request->getFiles());
+                $path = $this->pageService->uploadImage($request->getFiles()->toArray());
                 $result['url'] = '/' . $path;
                 $result['fileName'] = $path;
                 $result['uploaded'] = 1;
