@@ -26,9 +26,11 @@ return [
      * Email configuration.
      */
     'email' => [
-        'transport' => 'File',
+        'transport' => 'Smtp',
         'options' => [
-            'path' => 'data/mail/'
+            'name' => 'gewis.nl',
+            'host' => 'postfix',
+            'port' => '25'
         ],
         'from' => 'web@gewis.nl',
         'to' => [

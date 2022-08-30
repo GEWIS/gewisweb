@@ -36,6 +36,12 @@ services:
             context: .
         depends_on:
             - mysql
+    postfix:
+        image: mailhog/mailhog
+        env_file:
+            - .env
+        ports:
+            - "8025:8025"
     glide:
         build: docker/glide
     matomo:
