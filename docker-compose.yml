@@ -34,7 +34,6 @@ services:
             - .env
 #        environment:
 #            <<: *shared-envs
-#            NGINX_REQUIRE_AUTH: ''
 #            COOKIE_DOMAIN: ''
 #            GLIDE_HOST: ''
 #            GLIDE_KEY: ''
