@@ -42,9 +42,9 @@ $meetings = $this->meetings;
                         <div class="big-icon fas fa-image"></div>
                         <div class="panel-heading"><?= $this->translate('My photo\'s') ?></div>
                     </a>
-                    <a href="https://gewis.nl/susos/account/websitelogin.php" class="panel panel-image align-middle">
+                    <a href="<?= $this->url('user_token', ['appId' => 'sudosos']) ?>" class="panel panel-image align-middle">
                         <div class="big-icon fas fa-beer"></div>
-                        <div class="panel-heading"><?= $this->translate('SuSOS') ?></div>
+                        <div class="panel-heading"><?= $this->translate('SudoSOS') ?></div>
                     </a>
                     <?php if ($this->acl('decision_service_acl')->isAllowed('authorization', 'create')): ?>
                         <a href="<?= $this->url('decision/authorizations') ?>" class="panel panel-image align-middle">

@@ -57,12 +57,12 @@ runcoverage: loadenv
 
 getvendordir:
 		@rm -Rf ./vendor
-		@docker cp gewisweb_web_1:/code/vendor ./vendor
+		@docker cp "$(shell docker-compose ps -q web)":/code/vendor ./vendor
 
 replenish:
-		@docker cp ./public gewisweb_web_1:/code
+		@docker cp ./public "$(shell docker-compose ps -q web)":/code
 		@docker-compose exec web chown -R www-data:www-data /code/public
-		@docker cp ./data gewisweb_web_1:/code
+		@docker cp ./data "$(shell docker-compose ps -q web)":/code
 		@docker-compose exec web chown -R www-data:www-data /code/data
 		@docker-compose exec web rm -rf data/cache/module-config-cache.application.config.cache.php
 		@docker-compose exec web php composer.phar dump-autoload --dev
@@ -92,7 +92,7 @@ phpstanpr:
 		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon --generate-baseline phpstan/phpstan-baseline-pr.neon --memory-limit 1G --no-progress
 		@git checkout -- phpstan/phpstan-baseline.neon
 		@git checkout -
-		@docker cp gewisweb_web_1:/code/phpstan/phpstan-baseline-pr.neon ./phpstan/phpstan-baseline-pr.neon
+		@docker cp "$(shell docker-compose ps -q web)":/code/phpstan/phpstan-baseline-pr.neon ./phpstan/phpstan-baseline-pr.neon
 		@make rundev
 		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G --no-progress
 
@@ -138,32 +138,32 @@ checkcomposer: loadenv
 		@vendor/bin/composer-unused
 
 updatecomposer:
-		@docker cp ./composer.json gewisweb_web_1:/code/composer.json
+		@docker cp ./composer.json "$(shell docker-compose ps -q web)":/code/composer.json
 		@docker-compose exec web php composer.phar selfupdate
-		@docker cp gewisweb_web_1:/code/composer.phar ./composer.phar
+		@docker cp "$(shell docker-compose ps -q web)":/code/composer.phar ./composer.phar
 		@docker-compose exec web php composer.phar update -W
-		@docker cp gewisweb_web_1:/code/composer.lock ./composer.lock
+		@docker cp "$(shell docker-compose ps -q web)":/code/composer.lock ./composer.lock
 
 updatepackage:
-		@docker cp ./package.json gewisweb_web_1:/code/package.json
+		@docker cp ./package.json "$(shell docker-compose ps -q web)":/code/package.json
 		@docker-compose exec web npm update
-		@docker cp gewisweb_web_1:/code/package-lock.json ./package-lock.json
+		@docker cp "$(shell docker-compose ps -q web)":/code/package-lock.json ./package-lock.json
 
 updatecss:
-		@docker cp ./public gewisweb_web_1:/code
+		@docker cp ./public "$(shell docker-compose ps -q web)":/code
 		@docker-compose exec web chown -R www-data:www-data /code/public
 		@docker-compose exec web npm run scss
-		@docker cp gewisweb_web_1:/code/public/css/gewis-theme.css ./public/css/gewis-theme.css
+		@docker cp "$(shell docker-compose ps -q web)":/code/public/css/gewis-theme.css ./public/css/gewis-theme.css
 
 updateglide:
 		@docker-compose exec glide php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 		@docker-compose exec glide php composer-setup.php
 		@docker-compose exec glide php -r "unlink('composer-setup.php');"
-		@docker cp ./docker/glide/composer.json gewisweb_glide_1:/glide/composer.json
+		@docker cp ./docker/glide/composer.json "$(shell docker-compose ps -q glide)":/glide/composer.json
 		@docker-compose exec glide php composer.phar selfupdate
-		@docker cp gewisweb_glide_1:/glide/composer.phar ./docker/glide/composer.phar
+		@docker cp "$(shell docker-compose ps -q glide)":/glide/composer.phar ./docker/glide/composer.phar
 		@docker-compose exec glide php composer.phar update -W
-		@docker cp gewisweb_glide_1:/glide/composer.lock ./docker/glide/composer.lock
+		@docker cp "$(shell docker-compose ps -q glide)":/glide/composer.lock ./docker/glide/composer.lock
 
 updatedocker:
 		@docker-compose pull
