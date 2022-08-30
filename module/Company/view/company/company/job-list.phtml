@@ -8,7 +8,11 @@ if (isset($this->company)) {
 $this->headTitle($this->localiseText($jobCategory->getPluralName()));
 
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/bootstrap/tooltip.js');
+    ->appendFile(
+        $this->basePath() . '/js/bootstrap/tooltip.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 ?>
 <section class="section section-breadcrumb">
     <div class="container">
@@ -169,7 +173,7 @@ $this->headScript()
         <?php endif; ?>
     </div>
 </section>
-<script type="text/javascript">
+<script type="text/javascript" nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     var CardGrid = function ($grid, searchElements) {
         // Pre-compute card details
         var cards = $('.card', $grid).map(function () {

@@ -1,6 +1,10 @@
 <?php
 $this->inlineScript()
-    ->appendFile($this->basePath() . '/js/education-admin.js');
+    ->appendFile(
+        $this->basePath() . '/js/education-admin.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 
 $this->scriptUrl()->requireUrl('admin_education/delete_temp', ['type', 'filename']);
 
@@ -34,8 +38,8 @@ $this->breadcrumbs()
                        href="<?= $this->basePath() ?>/<?= $config['public_exam_dir'] ?>/<?= $this->escapeHtmlAttr($fs->get('file')->getValue()) ?>">
                         <?= $this->escapeHtml($fs->get('file')->getValue()) ?>
                     </a>
-                    <a onclick="Education.Admin.deleteTemp('exam', '<?= $this->escapeHtmlAttr($fs->get('file')->getValue()) ?>', this)"
-                       class="btn btn-xs btn-danger pull-right">
+                    <a data-file-value="<?= $this->escapeHtmlAttr($fs->get('file')->getValue()) ?>"
+                       class="btn btn-xs btn-danger pull-right delete-temp-exam">
                         <?= $this->translate('Delete') ?>
                     </a>
                 </h3>
@@ -109,3 +113,13 @@ $this->breadcrumbs()
 
     <?= $this->form()->closeTag() ?>
 <?php endif ?>
+
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+    document.querySelectorAll('.delete-temp-exam').forEach(exam => {
+        exam.addEventListener('click', e => {
+            e.preventDefault();
+
+            Education.Admin.deleteTemp('exam', e.target.dataset.fileValue, e.target);
+        });
+    });
+</script>

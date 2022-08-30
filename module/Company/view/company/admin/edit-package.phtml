@@ -2,7 +2,11 @@
 $this->headTitle($this->translate('Edit Package'));
 
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/company-create.js');
+    ->appendFile(
+        $this->basePath() . '/js/company-create.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 
 $this->scriptUrl()->requireUrls(
     [
@@ -80,9 +84,8 @@ $form->setAttribute('class', 'form-company');
                                ); ?>">
                                 <?= $this->translate('edit'); ?>
                             </a>
-                            <button class="btn btn-danger btn-xs" data-target="#deleteModal"
-                                    data-toggle="modal" onclick="deleteJob(<?= $job->getId() ?>)"
-                                    type="button">
+                            <button class="btn btn-danger btn-xs delete-job" data-target="#deleteModal"
+                                    data-job-id="<?= $job->getId() ?>" data-toggle="modal" type="button">
                                 <?= $this->translate('Delete') ?>
                             </button>
                         </td>
@@ -123,8 +126,15 @@ $form->setAttribute('class', 'form-company');
         </div>
     </div>
 </div>
-<script>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     Company.updateForm();
+
+    document.querySelectorAll('.delete-job').forEach(job => {
+        job.addEventListener('click', e => {
+            deleteJob(e.target.dataset.jobId);
+        });
+    });
+
     deleteJob = function (id) {
         $("#deleteForm").attr('action', URLHelper.url('company_admin/company/edit/package/edit/job/delete', {
             'companySlugName': '<?= $companySlugName ?>',

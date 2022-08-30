@@ -14,7 +14,7 @@ Proposal = {
         if (currentCount < maxCount) {
             var template = $('#additionalOptions span.template').data('template');
             template = template.replace(/__index__/g, currentCount);
-            $(template).insertBefore('#additionalOptions div.add-option');
+            $(template).insertBefore('#additionalOptions div.option-menu');
             Proposal.updateForm();
             return false;
         }

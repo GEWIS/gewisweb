@@ -56,7 +56,7 @@
     <?php endif; ?>
 </ul>
 
-<script type="application/javascript">
+<script type="application/javascript" nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     $(".reveal-button").click(function () {
         $(this).parent().addClass("revealed");
     });

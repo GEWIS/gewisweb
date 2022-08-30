@@ -10,10 +10,18 @@ $this->breadcrumbs()
     ));
 
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/company-create.js');
+    ->appendFile(
+        $this->basePath() . '/js/company-create.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 
 $this->inlineScript()
-    ->appendFile($this->basePath() . '/js/company-admin.js');
+    ->appendFile(
+        $this->basePath() . '/js/company-admin.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 
 $this->scriptUrl()->requireUrls(
     [
@@ -124,10 +132,10 @@ $form->setAttribute('class', 'form-company');
                                         ]
                                     ); ?>">
                                         <?= $this->translate('Edit'); ?></a>
-                                    <button type="button" class="btn btn-danger btn-xs"
-                                            onclick="Company.Admin.deletePackage('<?= $company->getSlugName() ?>', '<?= $package->getId() ?>')"
-                                            data-toggle="modal"
-                                            data-target="#deleteModal">
+                                    <button type="button" class="btn btn-danger btn-xs delete-package"
+                                            data-toggle="modal" data-target="#deleteModal"
+                                            data-slug-name="<?= $company->getSlugName() ?>"
+                                            data-package-id="<?= $package->getId() ?>">
                                         <?= $this->translate('Delete') ?>
                                     </button>
                                 </td>
@@ -188,6 +196,12 @@ $form->setAttribute('class', 'form-company');
         </div>
     </div>
 </div>
-<script>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     Company.updateForm();
+
+    document.querySelectorAll('.delete-package').forEach(package => {
+        package.addEventListener('click', e => {
+            Company.Admin.deletePackage(e.target.dataset.slugName, e.target.dataset.packageId);
+        });
+    });
 </script>

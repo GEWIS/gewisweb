@@ -3,10 +3,21 @@ $this->headTitle($action);
 $this->headLink()
     ->appendStylesheet($this->basePath() . '/css/bootstrap-markdown.min.css');
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/activity-create.js')
-    ->appendFile($this->basePath() . '/js/bootstrap-markdown.js');
-$this->headScript()
-    ->appendFile($this->basePath() . '/js/bootstrap/tooltip.js');
+    ->appendFile(
+        $this->basePath() . '/js/activity-create.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basePath() . '/js/bootstrap-markdown.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basePath() . '/js/bootstrap/tooltip.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 
 $form->prepare();
 $form->setAttribute('class', 'form-activity');
@@ -188,13 +199,11 @@ $form->setAttribute('class', 'form-activity');
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group signup-list-controls">
-                                            <button class="btn btn-danger" type="button"
-                                                    onclick="return Activity.removeSignupList()">
+                                            <button class="btn btn-danger remove-signup-list" type="button">
                                                 <span class="fas fa-minus"></span>
                                                 <?= $this->translate('Remove the last sign-up list') ?>
                                             </button>
-                                            <button class="btn btn-success" type="button"
-                                                    onclick="return Activity.addSignupList()">
+                                            <button class="btn btn-success add-signup-list" type="button">
                                                 <span class="fas fa-plus"></span>
                                                 <?= $this->translate('Add a sign-up list') ?>
                                             </button>
@@ -223,7 +232,7 @@ $form->setAttribute('class', 'form-activity');
     </div>
 </section>
 
-<script>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     $('.markdown-editor').each(function () {
         $(this).markdown(
             {
@@ -235,6 +244,22 @@ $form->setAttribute('class', 'form-activity');
     Activity.updateForm();
     Activity.updateAllFields();
     Activity.updateAllCategories();
+
+    document.querySelector('.add-signup-list').addEventListener('click', () => {
+        Activity.addSignupList();
+    });
+    document.querySelector('.remove-signup-list').addEventListener('click', () => {
+        Activity.removeSignupList();
+    });
+
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('remove-field')) {
+            Activity.removeField(e.target.dataset.signupListId);
+        } else if (e.target.classList.contains('add-field')) {
+            Activity.addField(e.target.dataset.signupListId);
+        }
+    });
+
     $('label[for^="categories-"]').on('click', function () {
         Activity.toggleCategory($(this).data('category-id'));
     });

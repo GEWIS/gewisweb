@@ -1,6 +1,24 @@
 <?php
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
+
 $this->headScript()
-    ->appendFile($this->basePath() . '/ckeditor/ckeditor.js');
+    ->appendFile(
+        $this->basePath() . '/js/ckeditor/ckeditor.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
+
+if ('nl' === $lang) {
+    $this->headScript()->appendFile(
+        $this->basePath() . '/js/ckeditor/translations/nl.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
+}
+
+$this->headLink()
+    ->appendStylesheet($this->basePath() . '/css/ckeditor/style.css');
+
 $this->scriptUrl()->requireUrl('admin_page/upload');
 
 $this->breadcrumbs()
@@ -30,8 +48,8 @@ $form->setAttribute('role', 'form');
 <div class="form-group">
     <?php
     $element = $form->get('englishContent');
-    $element->setAttribute('id', 'englishContent');
-    $element->setAttribute('required', 'required');
+    $element->setAttribute('id', 'english-content')
+        ->setAttribute('class', 'form-control');
     ?>
     <?= $this->formLabel($element); ?>
     <?= $this->formTextarea($element); ?>
@@ -54,8 +72,8 @@ $form->setAttribute('role', 'form');
 <div class="form-group">
     <?php
     $element = $form->get('dutchContent');
-    $element->setAttribute('id', 'dutchContent');
-    $element->setAttribute('required', 'required');
+    $element->setAttribute('id', 'dutch-content')
+        ->setAttribute('class', 'form-control');
     ?>
     <?= $this->formLabel($element); ?>
     <?= $this->formTextarea($element); ?>
@@ -89,16 +107,20 @@ $submit->setAttribute('class', 'btn btn-primary');
 <?php endif ?>
 
 <?= $this->form()->closeTag(); ?>
-<script>
-    CKEDITOR.replace('englishContent', {
-        // Spelling checker language
-        'scayt_sLang': 'en_US',
-        'height': 500
-    });
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+    ClassicEditor
+        .create(document.querySelector('#dutch-content'), {
+            language: '<?= $lang ?>'
+        })
+        .catch(error => {
+            console.error(error);
+        });
 
-    CKEDITOR.replace('dutchContent', {
-        // Spelling checker language
-        'scayt_sLang': 'nl_NL',
-        'height': 500
-    });
+    ClassicEditor
+        .create(document.querySelector('#english-content'), {
+            language: '<?= $lang ?>'
+        })
+        .catch(error => {
+            console.error(error);
+        });
 </script>

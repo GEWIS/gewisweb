@@ -1,8 +1,20 @@
 <?php
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/autocomplete.min.js')
-    ->appendFile($this->basePath() . '/js/photo.js')
-    ->appendFile($this->basePath() . '/js/photo-admin.js');
+    ->appendFile(
+        $this->basePath() . '/js/autocomplete.min.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basePath() . '/js/photo.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basePath() . '/js/photo-admin.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Photos'), true, $this->url('admin_photo/album_index'));
@@ -130,7 +142,7 @@ $this->scriptUrl()->requireUrls(
         </div>
     </div>
 </div>
-<script>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     $(document).ready(function () {
         Photo.Admin.initPhoto();
         Photo.initTagging(); // TODO: Allow tagging in admin interface.

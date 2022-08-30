@@ -19,7 +19,7 @@ $this->breadcrumbs()
     <table class="table table-hover">
         <tbody>
         <?php foreach ($paginator as $newsItem): ?>
-            <tr onclick="window.document.location='<?= $this->url('admin_news/edit', ['item_id' => $newsItem->getId()]) ?>'">
+            <tr class="news-item" data-link="<?= $this->url('admin_news/edit', ['item_id' => $newsItem->getId()]) ?>">
                 <td><?= $newsItem->getDutchTitle() ?></td>
                 <td><?= $newsItem->getEnglishTitle() ?></td>
                 <td><?= $newsItem->getDate()->format('d-m-Y') ?></td>
@@ -28,3 +28,11 @@ $this->breadcrumbs()
         </tbody>
     </table>
 <?php endif; ?>
+
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+    document.querySelectorAll('.news-item').forEach(item => {
+        item.addEventListener('click', () => {
+            window.document.location = item.dataset.link;
+        });
+    });
+</script>

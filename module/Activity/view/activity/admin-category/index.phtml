@@ -21,7 +21,7 @@ $this->breadcrumbs()
                    href="<?= $this->url('activity_admin_categories/edit', ['id' => $category->getId()]) ?>">
                     <span class="chip-label"><?= $this->escapeHtml($this->localiseText($category->getName())) ?></span>
                     <span class="chip-icon chip-delete-icon fas fa-times-circle"
-                          onclick="deleteActivityCategory(<?= $category->getId() ?>)"
+                          data-category-id="<?= $category->getId() ?>"
                           data-toggle="modal"
                           data-target="#deleteModal"></span>
                 </a>
@@ -59,11 +59,14 @@ $this->breadcrumbs()
         </div>
     </div>
 </div>
-<script>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     // Prevent the anchor tag from redirecting when trying to delete.
-    $(document).on('click', ".chip-delete-icon", function (e) {
-        e.stopPropagation();
-        e.preventDefault();
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('chip-delete-icon')) {
+            e.stopPropagation();
+            e.preventDefault();
+            deleteActivityCategory(e.target.dataset.categoryId);
+        }
     });
 
     // Set correct URL for the activity category deletion form.

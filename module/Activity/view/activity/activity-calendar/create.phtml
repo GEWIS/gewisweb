@@ -1,7 +1,11 @@
 <?php
 $this->headTitle($this->translate('Create activity proposal'));
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/proposal-create.js');
+    ->appendFile(
+        $this->basePath() . '/js/proposal-create.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 
 $form->prepare();
 ?>
@@ -143,14 +147,12 @@ $form->prepare();
                         $index++;
                     }
                     ?>
-                    <div class="form-group add-option spacing-top--md">
-                        <button class="btn btn-success" type="button" onclick="return Proposal.addOption()">
+                    <div class="form-group spacing-top--md option-menu">
+                        <button class="btn btn-success add-option" type="button">
                             <span class="fas fa-plus"></span>
                             <?= $this->translate('Add an option') ?>
                         </button>
-                    </div>
-                    <div class="form-group remove-option">
-                        <button class="btn btn-danger" type="button" onclick="return Proposal.removeOption()">
+                        <button class="btn btn-danger remove-option" type="button">
                             <span class="fas fa-minus"></span>
                             <?= $this->translate('Remove the last option') ?>
                         </button>
@@ -165,9 +167,28 @@ $form->prepare();
         <?= $this->form()->closeTag(); ?>
 </section>
 
-<script>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     Proposal.updateForm();
-    for (var i = 0; i < <?= $index ?>; i++) {
+
+    for (let i = 0; i < <?= $index ?>; i++) {
         Proposal.updateOption(i);
     }
+
+    document.querySelector('.add-option').addEventListener('click', () => {
+        Proposal.addOption();
+    });
+    document.querySelector('.remove-option').addEventListener('click', () => {
+        Proposal.removeOption();
+    });
+
+    document.addEventListener('change', (e) => {
+        if (e.target.classList.contains('begin-time')) {
+            let id = e.target.dataset.beginOptionId;
+            let end = document.querySelector('[data-end-option-id="' + id + '"]');
+
+            if ('' === end.value) {
+                end.value = e.target.value;
+            }
+        }
+    });
 </script>

@@ -1,7 +1,15 @@
 <?php
 $this->headScript()
-    ->appendFile($this->basePath() . '/js/fullcalendar.min.js')
-    ->appendFile($this->basePath() . '/js/language/nl.js');
+    ->appendFile(
+        $this->basePath() . '/js/fullcalendar.min.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basePath() . '/js/language/nl.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 $this->headLink()
     ->appendStylesheet($this->basePath() . '/css/fullcalendar.min.css');
 ?>
@@ -126,7 +134,7 @@ $this->headLink()
     </div>
 </section>
 
-<script type="text/javascript">
+<script type="text/javascript" nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     document.addEventListener('DOMContentLoaded', function() {
         const { sliceEvents, createPlugin, Calendar } = FullCalendar;
         const dayOptionListView = {

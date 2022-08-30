@@ -72,7 +72,7 @@ use Activity\Model\Activity;
                         $bannerShown = true; ?>
                     <?php endforeach; ?>
 
-                    <script>
+                    <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
                         $(".reveal-button").click(function () {
                             $(this).parent().addClass("revealed");
                         });
@@ -256,7 +256,7 @@ use Activity\Model\Activity;
                         </div>
                         <div class="panel-body">
                             <p id="infima"></p>
-                            <script>
+                            <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
                                 $.getJSON("<?= $this->url('infimum') ?>", function(data) {
                                     $("#infima")[0].textContent = data['content'];
                                 });

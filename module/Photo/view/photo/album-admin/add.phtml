@@ -1,8 +1,20 @@
 <?php
 $this->inlineScript()
-    ->appendFile($this->basePath() . '/js/dropzone.js')
-    ->appendFile($this->basePath() . '/js/photo.js')
-    ->appendFile($this->basePath() . '/js/photo-admin.js');
+    ->appendFile(
+        $this->basePath() . '/js/dropzone.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basePath() . '/js/photo.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basePath() . '/js/photo-admin.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 $this->headLink()->appendStylesheet($this->basePath() . '/css/dropzone.css');
 
 $this->breadcrumbs()

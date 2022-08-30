@@ -15,8 +15,8 @@
         </div>
         <div class="col-md-3 spacing-top-sm--sm">
             <?php $inputBeginTime = $this->fs->get('beginTime')
-                ->setAttribute('class', 'form-control')
-                ->setAttribute('id', 'begin-time-' . $this->index);
+                ->setAttribute('class', 'form-control begin-time')
+                ->setAttribute('data-begin-option-id', $this->index);
             ?>
             <div class="form-group <?= $this->bootstrapElementError($inputBeginTime) ?>">
                 <label for="<?= $inputBeginTime->getAttribute('id') ?>" class="control-label label-required">
@@ -29,7 +29,7 @@
         <div class="col-md-3 spacing-top-sm--sm">
             <?php $inputEndTime = $this->fs->get('endTime')
                 ->setAttribute('class', 'form-control')
-                ->setAttribute('id', 'end-time-' . $this->index);
+                ->setAttribute('data-end-option-id', $this->index);
             ?>
             <div class="form-group <?= $this->bootstrapElementError($inputEndTime) ?>">
                 <label for="<?= $inputEndTime->getAttribute('id') ?>" class="control-label label-required">
@@ -42,17 +42,3 @@
     </div>
     <hr/>
 </div>
-
-<script>
-    var options = {
-        dayOfWeekStart: 1,
-        timepicker: false,
-        format: 'Y/m/d',
-    };
-
-    $("#begin-time-<?= $this->index ?>").change(function () {
-        if ($("#end-time-<?= $this->index ?>").val() == "") {
-            $("#end-time-<?= $this->index ?>").val($("#begin-time-<?= $this->index ?>").val());
-        }
-    });
-</script>

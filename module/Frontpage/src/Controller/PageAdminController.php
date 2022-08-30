@@ -128,14 +128,11 @@ class PageAdminController extends AbstractActionController
         /** @var Request $request */
         $request = $this->getRequest();
         $result = [];
-        $result['uploaded'] = 0;
 
         if ($request->isPost()) {
             try {
                 $path = $this->pageService->uploadImage($request->getFiles()->toArray());
                 $result['url'] = '/' . $path;
-                $result['fileName'] = $path;
-                $result['uploaded'] = 1;
             } catch (Exception $e) {
                 $result['error']['message'] = $e->getMessage();
             }
