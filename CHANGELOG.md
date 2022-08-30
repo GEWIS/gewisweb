@@ -1,3 +1,11 @@
+## [v2.8.6](https://github.com/GEWIS/gewisweb/tree/v2.8.6) (2022-08-30)
+
+* Added a stricter Content Security Policy (CSP), mitigating multiple cross-site scripting (XSS) attacks.
+* Changed `SuSOS` to `SudoSOS` and updated the associated links.
+* Updated CKEditor.
+
+---
+
 ## [v2.8.5](https://github.com/GEWIS/gewisweb/tree/v2.8.5) (2022-08-17)
 
 * Added support for inactive organ members.
