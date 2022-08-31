@@ -70,6 +70,7 @@ services:
 #            GLIDE_HOST: ''
 #            GLIDE_KEY: ''
         volumes:
+            - gewisweb_glide_cache:/glide/cache:rw
             - gewisweb_glide_public:/glide/public:rw
             - gewisweb_public:/code/public:rw
         networks:
@@ -114,6 +115,7 @@ services:
 volumes:
     gewisweb_data:
     gewisweb_public:
+    gewisweb_glide_cache:
     gewisweb_glide_public:
     gewisweb_logs:
     gewisweb_matomo:
