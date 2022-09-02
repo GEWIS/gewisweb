@@ -68,6 +68,7 @@ class Member extends BaseMapper
      * Find all members with a birthday in the next $days days.
      *
      * When $days equals 0 or isn't given, it will give all birthdays of today.
+     * We do not show members whose membership has expired or who are hidden
      *
      * @param int $days the number of days to look ahead
      *
@@ -89,6 +90,7 @@ class Member extends BaseMapper
                 DATE_SUB(CURDATE(), INTERVAL YEAR(CURDATE()) YEAR)
             ) BETWEEN 0 AND :days
             AND t1.expiration >= CURDATE()
+            AND t1.hidden = 0
             ORDER BY DATE_SUB(t1.birth, INTERVAL YEAR(t1.birth) YEAR) ASC
             QUERY;
 
