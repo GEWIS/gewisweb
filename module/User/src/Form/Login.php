@@ -101,6 +101,15 @@ class Login extends Form implements InputProviderInterface
                         ]
                     );
                     break;
+                case Result::FAILURE_UNCATEGORIZED:
+                    $this->setMessages(
+                        [
+                            'login' => [
+                                $this->translate->translate('You cannot sign in to this account at this moment.'),
+                            ],
+                        ]
+                    );
+                    break;
                 case Result::FAILURE_CREDENTIAL_INVALID:
                     $this->setMessages(
                         [
