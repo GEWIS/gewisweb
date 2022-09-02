@@ -50,10 +50,12 @@ class Member extends BaseMapper
             ->addScalarResult('generation', 'generation', 'integer');
 
         $sql = <<<QUERY
-            SELECT `lidnr`, CONCAT_WS(' ', `firstName`, IF(LENGTH(`middleName`), `middleName`, NULL), `lastName`) as `fullName`, `generation`
+            SELECT `lidnr`,
+                    CONCAT_WS(' ', `firstName`, IF(LENGTH(`middleName`), `middleName`, NULL), `lastName`) as `fullName`,
+                    `generation`
             FROM `Member`
-            WHERE CONCAT(LOWER(`firstName`), ' ', LOWER(`lastName`)) LIKE :name
-            OR CONCAT(LOWER(`firstName`), ' ', LOWER(`middleName`), ' ', LOWER(`lastName`)) LIKE :name
+            WHERE CONCAT_WS(' ', `firstName`, IF(LENGTH(`middleName`), `middleName`, NULL), `lastName`) LIKE :name
+                    AND expiration >= NOW()
             ORDER BY $orderColumn $orderDirection LIMIT :limit
             QUERY;
 
