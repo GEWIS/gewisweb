@@ -79,6 +79,7 @@ class Module
                     $memberService = $container->get('decision_service_member');
                     $storageService = $container->get('application_service_storage');
                     $albumMapper = $container->get('photo_mapper_album');
+                    $tagMapper = $container->get('photo_mapper_tag');
                     $weeklyPhotoMapper = $container->get('photo_mapper_weekly_photo');
                     $createAlbumForm = $container->get('photo_form_album_create');
                     $editAlbumForm = $container->get('photo_form_album_edit');
@@ -91,6 +92,7 @@ class Module
                         $memberService,
                         $storageService,
                         $albumMapper,
+                        $tagMapper,
                         $weeklyPhotoMapper,
                         $createAlbumForm,
                         $editAlbumForm,

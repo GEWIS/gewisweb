@@ -15,6 +15,7 @@ use Photo\Form\{
 };
 use Photo\Mapper\{
     Album as AlbumMapper,
+    Tag as TagMapper,
     WeeklyPhoto as WeeklyPhotoMapper,
 };
 use Photo\Model\{
@@ -43,6 +44,7 @@ class Album
         private readonly MemberService $memberService,
         private readonly FileStorageService $storageService,
         private readonly AlbumMapper $albumMapper,
+        private readonly TagMapper $tagMapper,
         private readonly WeeklyPhotoMapper $weeklyPhotoMapper,
         private readonly CreateAlbumForm $createAlbumForm,
         private readonly EditAlbumForm $editAlbumForm,
@@ -513,5 +515,16 @@ class Album
         $this->albumMapper->flush();
 
         return true;
+    }
+
+    /**
+     * Get all unique albums a certain member is tagged in
+     *
+     * @param int $lidnr
+     * @return array
+     */
+    public function getAlbumsByMember(int $lidnr): array
+    {
+        return $this->tagMapper->getAlbumsByMember($lidnr);
     }
 }

@@ -46,7 +46,13 @@ class Member
      */
     public function findMemberByLidNr(int $lidnr): ?MemberModel
     {
-        if (!$this->aclService->isAllowed('view', 'member')) {
+        if (
+            !$this->aclService->isAllowed('view', 'member')
+            && (
+                !$this->aclService->isAllowed('view_self', 'member')
+                || $lidnr !== $this->aclService->getIdentityOrThrowException()->getLidnr()
+            )
+        ) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view members.'));
         }
 

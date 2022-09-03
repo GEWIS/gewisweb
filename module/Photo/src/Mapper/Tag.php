@@ -59,7 +59,10 @@ class Tag extends BaseMapper
             ->addScalarResult('fullName', 'fullName');
 
         $sql = <<<QUERY
-            SELECT `t`.`id`, `m`.`lidnr`, CONCAT_WS(' ', `m`.`firstName`, IF(LENGTH(`m`.`middleName`), `m`.`middleName`, NULL), `m`.`lastName`) as `fullName`
+            SELECT 
+                `t`.`id`,
+                `m`.`lidnr`,
+                CONCAT_WS(' ', `m`.`firstName`, IF(LENGTH(`m`.`middleName`), `m`.`middleName`, NULL), `m`.`lastName`) as `fullName`
             FROM `Member` `m`
             LEFT JOIN `Tag` `t` ON `m`.`lidnr` = `t`.`member_id`
             WHERE `t`.`photo_id` = :photo_id
@@ -67,6 +70,31 @@ class Tag extends BaseMapper
 
         $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
         $query->setParameter(':photo_id', $photoId);
+
+        return $query->getArrayResult();
+    }
+
+    /**
+     * Get all unique albums a certain member is tagged in
+     *
+     * @param int $lidnr
+     * @return array
+     */
+    public function getAlbumsByMember(int $lidnr): array
+    {
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('album_id', 'album_id', 'integer');
+
+        $sql = <<<QUERY
+            SELECT DISTINCT
+                `p`.`album_id` as `album_id`
+            FROM `Photo` `p`
+            LEFT JOIN `Tag` `t` ON `t`.`photo_id` = `p`.`id`
+            WHERE `t`.`member_id` = :member_id
+            QUERY;
+
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+        $query->setParameter(':member_id', $lidnr);
 
         return $query->getArrayResult();
     }
