@@ -7,7 +7,8 @@ use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\Permissions\Acl\Role\RoleInterface;
-use Photo\Model\{Album, Photo};
+use Photo\Model\Album;
+use Photo\Model\Photo;
 use User\Model\User;
 
 /**

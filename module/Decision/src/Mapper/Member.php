@@ -51,11 +51,15 @@ class Member extends BaseMapper
 
         $sql = <<<QUERY
             SELECT `lidnr`,
-                    CONCAT_WS(' ', `firstName`, IF(LENGTH(`middleName`), `middleName`, NULL), `lastName`) as `fullName`,
-                    `generation`
+                CONCAT_WS(' ', `firstName`, IF(LENGTH(`middleName`), `middleName`, NULL), `lastName`) as `fullName`,
+                `generation`
             FROM `Member`
-            WHERE CONCAT_WS(' ', `firstName`, IF(LENGTH(`middleName`), `middleName`, NULL), `lastName`) LIKE :name
-                    AND expiration >= NOW()
+            WHERE
+                (
+                CONCAT(LOWER(`firstName`), ' ', LOWER(`lastName`)) LIKE :name
+                OR CONCAT(LOWER(`firstName`), ' ', LOWER(`middleName`), ' ', LOWER(`lastName`)) LIKE :name
+                )
+                AND expiration >= NOW()
             ORDER BY $orderColumn $orderDirection LIMIT :limit
             QUERY;
 
