@@ -33,8 +33,8 @@ $this->headTitle($organ->getName()); ?>
                 <ul>
                     <?php foreach ($inactiveMembers as $membership): ?>
                         <li>
-                            <a href="<?= $this->url('member/view', ['lidnr' => $membership['member']->getLidnr()]) ?>">
-                                <?= $membership['member']->getFullName() ?>
+                            <a href="<?= $this->url('member/view', ['lidnr' => $membership->getLidnr()]) ?>">
+                                <?= $membership->getFullName() ?>
                             </a>
                         </li>
                     <?php endforeach ?>
