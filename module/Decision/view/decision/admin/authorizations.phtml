@@ -44,6 +44,6 @@ $this->breadcrumbs()
 </section>
 <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     document.getElementById('meeting-selector').addEventListener('change', e => {
-        window.location = '<?= $this->url('admin_decision/document') ?>/' + e.target.value;
+        window.location = e.target.value;
     });
 </script>
