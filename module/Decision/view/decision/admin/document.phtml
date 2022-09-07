@@ -26,8 +26,7 @@ else:
     <div class="form-group">
         <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
         <div class="col-sm-10">
-            <select class="form-control" name="meeting"
-                    onchange="window.location='<?= $this->url('admin_decision/document') ?>/'+this.value">
+            <select class="form-control" name="meeting" id="meeting-selector">
                 <?php foreach ($meetings as $m): ?>
                     <option value="<?= $m->getType()->value ?>/<?= $m->getNumber() ?>"
                         <?= $m->getNumber() === intval($number) ? 'selected' : '' ?>>
@@ -228,6 +227,10 @@ else:
                     documentsList.reverseLastStep();
                 }
             });
+        });
+
+        document.getElementById('meeting-selector').addEventListener('change', e => {
+            window.location = '<?= $this->url('admin_decision/document') ?>/' + e.target.value;
         });
     </script>
 <?php endif; ?>

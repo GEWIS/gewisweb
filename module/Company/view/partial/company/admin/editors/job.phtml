@@ -122,7 +122,6 @@
     <div class="col-md-6">
         <?php
         $checkboxDutch = $form->get('language_dutch')
-            ->setAttribute('onchange', 'Company.updateForm()')
             ->setAttribute('id', 'dutch-check')
             ->setAttribute('class', 'language-control');
         ?>
@@ -217,7 +216,6 @@
     <div class="col-md-6">
         <?php
         $checkboxEnglish = $form->get('language_english')
-            ->setAttribute('onchange', 'Company.updateForm()')
             ->setAttribute('id', 'english-check')
             ->setAttribute('class', 'language-control');
         ?>
@@ -358,3 +356,10 @@
         <?php endif; ?>
     </div>
 </div>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+    document.querySelectorAll('.language-control').forEach(checkbox => {
+        checkbox.addEventListener('click', () => {
+            Company.updateForm();
+        });
+    });
+</script>

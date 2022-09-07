@@ -50,6 +50,7 @@ services:
 #            DOCKER_DB2_USERNAME: ''
 #            DOCKER_DB2_PASSWORD: ''
 #            DOCKER_DB2_DATABASE: ''
+#            MATOMO_DOMAIN: ''
 #            SSH_USERNAME: ''
 #            SSH_PASSWORD: ''
 #            SSH_REMOTE: ''
