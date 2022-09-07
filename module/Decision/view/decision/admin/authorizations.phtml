@@ -6,7 +6,7 @@ $this->breadcrumbs()
 <section class="section">
     <div class="container">
         <div class="form-group">
-            <select class="form-control" onchange="window.location=this.value">
+            <select class="form-control" id="meeting-selector">
                 <?php foreach ($meetings as $meeting): ?>
                     <option
                         value="<?= $this->url('admin_decision/authorizations', ['number' => $meeting->getNumber()]) ?>"
@@ -42,3 +42,8 @@ $this->breadcrumbs()
         <?php endif ?>
     </div>
 </section>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+    document.getElementById('meeting-selector').addEventListener('change', e => {
+        window.location = '<?= $this->url('admin_decision/document') ?>/' + e.target.value;
+    });
+</script>

@@ -257,6 +257,8 @@ $form->setAttribute('class', 'form-activity');
             Activity.removeField(e.target.dataset.signupListId);
         } else if (e.target.classList.contains('add-field')) {
             Activity.addField(e.target.dataset.signupListId);
+        } else if (e.target.classList.contains('signup-list-field-type')) {
+            Activity.updateField(e.target.dataset.signupListId, e.target.dataset.fieldId);
         }
     });
 

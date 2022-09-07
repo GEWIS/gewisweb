@@ -7,9 +7,10 @@
             <div class="col-md-3 col-md-offset-3">
                 <?php
                 $element = $this->signupListField->get('type')
-                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('class', 'form-control signup-list-field-type')
                     ->setAttribute('id', 'type-field')
-                    ->setAttribute('onchange', 'Activity.updateField(' . $this->listIndex . ', ' . $this->index . ')');
+                    ->setAttribute('data-signup-list-id', $this->listIndex)
+                    ->setAttribute('data-field-id', $this->index);
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($element) ?>">
                     <label for="<?= $element->getAttribute('id') ?>" class="control-label">
