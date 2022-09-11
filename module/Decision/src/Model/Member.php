@@ -160,13 +160,14 @@ class Member
     protected ?string $supremum = null;
 
     /**
-     * Stores whether a member should be 'hidden'
-     * Hidden is implemented in gewisweb to lock logins and hide the birthday on the landing page
-     * It can be used for deleted members and members that are deceased but whose profile should be kept
+     * Stores whether a member should be 'hidden'.
+     *
+     * Hidden is implemented in gewisweb to lock logins and hide the birthday on the landing page. It can be used for
+     * deleted members and members that are deceased but whose profile should be kept.
      */
     #[Column(
         type: "boolean",
-        options: ['default' => false]
+        options: ["default" => false],
     )]
     protected bool $hidden = false;
 
