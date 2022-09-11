@@ -101,6 +101,7 @@ class Frontpage
             $age = $today->diff($member->getBirth())->y;
             $members[] = $member;
             //TODO: check member's privacy settings
+            // getBirthdayMembers() already takes hidden members into account
             $birthdays[] = ['member' => $member, 'age' => $age];
         }
 

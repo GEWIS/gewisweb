@@ -2,6 +2,7 @@
 
 namespace User\Authentication\Adapter;
 
+use DateTime;
 use Laminas\Authentication\Adapter\AdapterInterface;
 use Laminas\Authentication\Result;
 use Laminas\Crypt\Password\Bcrypt;
@@ -35,6 +36,16 @@ class Mapper implements AdapterInterface
         if (null === $user) {
             return new Result(
                 Result::FAILURE_IDENTITY_NOT_FOUND,
+                null,
+            );
+        }
+
+        if (
+            $user->getMember()->getHidden()
+            || $user->getMember()->getExpiration() < new DateTime()
+        ) {
+            return new Result(
+                Result::FAILURE_UNCATEGORIZED,
                 null,
             );
         }

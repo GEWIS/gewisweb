@@ -6,8 +6,10 @@ use DateTime;
 use Decision\Model\Enums\MembershipTypes;
 use Decision\Model\Member;
 use Doctrine\Common\Collections\ArrayCollection;
-use Laminas\Mvc\Application;
-use Laminas\Mvc\ApplicationInterface;
+use Laminas\Mvc\{
+    Application,
+    ApplicationInterface,
+};
 use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
