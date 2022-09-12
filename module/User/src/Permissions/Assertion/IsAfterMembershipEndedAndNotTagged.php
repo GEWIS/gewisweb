@@ -68,6 +68,7 @@ class IsAfterMembershipEndedAndNotTagged implements AssertionInterface
                 return $resource->getPhotos()->contains($tag->getPhoto());
             }
         );
+
         return $tags_in_album->isEmpty();
     }
 }

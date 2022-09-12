@@ -56,13 +56,19 @@ class PhotoController extends AbstractActionController
 
         // If the membership of the member has ended, only show albums before the end date or in which they are tagged
         if (null !== ($membershipEndsOn = $this->aclService->getIdentity()->getMember()->getMembershipEndsOn())) {
-            $member_album_ids = array_map(function ($a) {
-                return $a['album_id'];
-            }, $this->albumService->getAlbumsByMember($this->aclService->getIdentity()->getMember()->getLidnr()));
-            $albums = array_filter($albums, function (Album $v) use ($membershipEndsOn, $member_album_ids) {
-                return $membershipEndsOn > $v->getStartDateTime()
-                    || in_array($v->getId(), $member_album_ids);
-            });
+            $member_album_ids = array_map(
+                function ($a) {
+                    return $a['album_id'];
+                },
+                $this->albumService->getAlbumsByMember($this->aclService->getIdentity()->getMember()->getLidnr()),
+            );
+            $albums = array_filter(
+                $albums,
+                function (Album $v) use ($membershipEndsOn, $member_album_ids) {
+                    return $membershipEndsOn > $v->getStartDateTime()
+                        || in_array($v->getId(), $member_album_ids);
+                },
+            );
         }
 
         return new ViewModel(
