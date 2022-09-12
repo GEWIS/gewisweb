@@ -7,15 +7,18 @@ use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\Permissions\Acl\Role\RoleInterface;
-use Photo\Model\Album;
-use Photo\Model\Photo;
+use Photo\Model\{
+    Album,
+    Photo,
+    Tag,
+};
 use User\Model\User;
 
 /**
  * Assertion to check if when the user is a graduate, that the album they are trying to view is before their membership
- * ended.
+ * ended or they are tagged in at least one of the photos in the album.
  */
-class IsAfterMembershipEnded implements AssertionInterface
+class IsAfterMembershipEndedAndNotTagged implements AssertionInterface
 {
     /**
      * Returns true if and only if the assertion conditions are met.
@@ -54,6 +57,18 @@ class IsAfterMembershipEnded implements AssertionInterface
             $resource = $resource->getAlbum();
         }
 
-        return $role->getMember()->getMembershipEndsOn() < $resource->getStartDateTime();
+        // It is before the membership ended, allow access
+        if ($role->getMember()->getMembershipEndsOn() > $resource->getStartDateTime()) {
+            return false;
+        }
+
+        // Allow access if the member is tagged in the album
+        $tags_in_album = $role->getMember()->getTags()->filter(
+            function (Tag $tag) use ($resource) {
+                return $resource->getPhotos()->contains($tag->getPhoto());
+            }
+        );
+
+        return $tags_in_album->isEmpty();
     }
 }

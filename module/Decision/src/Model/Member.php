@@ -23,6 +23,7 @@ use Doctrine\ORM\Mapping\{
 use Decision\Model\Enums\MembershipTypes;
 use Decision\Model\SubDecision\Installation;
 use InvalidArgumentException;
+use Photo\Model\Tag as TagModel;
 use User\Model\User as UserModel;
 
 /**
@@ -226,12 +227,23 @@ class Member
     )]
     protected Collection $boardInstallations;
 
+    /**
+     * Member tags.
+     */
+    #[OneToMany(
+        targetEntity: TagModel::class,
+        mappedBy: "member",
+        fetch: "EXTRA_LAZY",
+    )]
+    protected Collection $tags;
+
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
         $this->installations = new ArrayCollection();
         $this->organInstallations = new ArrayCollection();
         $this->boardInstallations = new ArrayCollection();
+        $this->tags = new ArrayCollection();
         $this->lists = new ArrayCollection();
     }
 
@@ -634,6 +646,16 @@ class Member
     public function getBoardInstallations(): Collection
     {
         return $this->boardInstallations;
+    }
+
+    /**
+     * Get the tags.
+     *
+     * @return Collection
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
     }
 
     /**

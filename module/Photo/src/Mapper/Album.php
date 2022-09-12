@@ -4,7 +4,10 @@ namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
 use DateTime;
-use Photo\Model\Album as AlbumModel;
+use Photo\Model\{
+    Album as AlbumModel,
+    Tag as TagModel,
+};
 
 /**
  * Mappers for Album.
