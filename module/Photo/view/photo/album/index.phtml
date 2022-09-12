@@ -1,11 +1,13 @@
 <?php
 // set title
 use Decision\Model\AssociationYear;
+use Laminas\Permissions\Acl\Acl;
 use Photo\Model\{
     MemberAlbum,
     VirtualAlbum,
     WeeklyAlbum,
 };
+use User\Permissions\Assertion\IsAfterMembershipEndedAndNotTagged;
 
 /** @var MemberAlbum|VirtualAlbum|WeeklyAlbum $album */
 
@@ -151,10 +153,19 @@ $this->scriptUrl()->requireUrl('member/search')
                     <?php
                     if (
                         (
-                            null !== $album->getStartDateTime()
-                            && null !== $album->getEndDateTime()
+                            (
+                                null !== $album->getStartDateTime()
+                                && null !== $album->getEndDateTime()
+                            )
+                            || $this->acl('photo_service_acl')->isAllowed('album', 'nodate')
                         )
-                        || $this->acl('photo_service_acl')->isAllowed('album', 'nodate')
+                        && !(new IsAfterMembershipEndedAndNotTagged())->assert(
+                            // We can use a fake ACL as it is never used in the actual assertion (`getAcl()` is
+                            // protected on our normal ACLs).
+                            new Acl(),
+                            $this->identity(),
+                            $item,
+                        )
                     ):
                     ?>
                         <div class="col-lg-2 col-md-3 col-xs-6 thumb">
