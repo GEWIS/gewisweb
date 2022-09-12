@@ -1,3 +1,18 @@
+## [v2.8.7](https://github.com/GEWIS/gewisweb/tree/v2.8.7) (2022-09-12)
+
+* Added a switch to hide members from birthdays, search results, and logins.
+* Added functionality to allow `graduates` to see their own photos and albums they are tagged in.
+* Added a default cover for non-existing covers.
+* Fixed issue where it was not possible to enable translatable fields in forms.
+* Fixed issue where the Content Security Policy would break in production.
+* Fixed issue where the Glide cache would need to be repopulated.
+* Fixed issue where viewing organs with inactive members resulted in an error.
+* Fixed issue where viewing an album without start and/or end date resulted in an error.
+* Fixed issue where execution of automated tasks was delayed.
+* Updated CKEditor.
+
+---
+
 ## [v2.8.6](https://github.com/GEWIS/gewisweb/tree/v2.8.6) (2022-08-30)
 
 * Added a stricter Content Security Policy (CSP), mitigating multiple cross-site scripting (XSS) attacks.
