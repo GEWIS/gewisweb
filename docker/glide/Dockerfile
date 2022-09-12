@@ -8,6 +8,7 @@ RUN apk add --no-cache --virtual .build-deps \
         libpng-dev \
         libwebp-dev \
         libzip-dev \
+        tzdata \
     && apk add --no-cache --virtual .runtime-deps \
         imagemagick \
         unzip \
@@ -28,6 +29,8 @@ RUN apk add --no-cache --virtual .build-deps \
             | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
         )" \
     && apk add --virtual .gewisweb-runtime-deps $runtimeDeps \
+    && cp /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime \
+    && echo 'Europe/Amsterdam' > /etc/timezone \
     && apk del .build-deps
 
 FROM php-target as composer-build

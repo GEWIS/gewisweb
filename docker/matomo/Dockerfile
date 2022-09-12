@@ -1,8 +1,13 @@
 FROM matomo:4.11-fpm-alpine as gewisweb_matomo
 
-RUN apk add --no-cache \
+RUN apk add --no-cache --virtual .build-deps \
+        tzdata \
+    && apk add --no-cache --virtual .runtime-deps \
         gettext \
-        unzip
+        unzip \
+    && cp /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime \
+    && echo 'Europe/Amsterdam' > /etc/timezone \
+    && apk del .build-deps
 
 RUN curl -o LogViewer.zip \
       https://plugins.matomo.org/api/2.0/plugins/LogViewer/download/latest \

@@ -22,6 +22,7 @@ RUN apk add --no-cache --virtual .build-deps \
         libpng-dev \
         libpq-dev \
         libzip-dev \
+        tzdata \
     && apk add --no-cache --virtual .runtime-deps \
         git \
         ghostscript \
@@ -57,6 +58,8 @@ RUN apk add --no-cache --virtual .build-deps \
             | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
         )" \
     && apk add --virtual .gewisweb-runtime-deps $runtimeDeps \
+    && cp /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime \
+    && echo 'Europe/Amsterdam' > /etc/timezone \
     && apk del .build-deps
 
 RUN sed -i 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/g' /etc/ImageMagick-7/policy.xml
