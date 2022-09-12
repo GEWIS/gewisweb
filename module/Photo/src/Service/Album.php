@@ -225,7 +225,7 @@ class Album
      * Gets an album using the album id.
      *
      * @param int $albumId the id of the album
-     * @param string $type "album"|"member"|"year"
+     * @param string $type "album"|"member"|"weekly"
      *
      * @return MemberAlbumModel|AlbumModel|WeeklyAlbumModel|null album matching the given id
      *

@@ -7,6 +7,8 @@ use Photo\Model\{
     WeeklyAlbum,
 };
 
+/** @var MemberAlbum|VirtualAlbum|WeeklyAlbum $album */
+
 $this->headTitle($album->getName());
 $currentAlbum = $album;
 while (!is_null($currentAlbum->getParent())) {
@@ -60,11 +62,13 @@ $this->scriptUrl()->requireUrl('member/search')
                 <li>
                     <?php
                     // determine association year
-                    $associationYear = AssociationYear::fromDate($album->getStartDateTime());
+                    if (null !== ($startDateTime = $album->getStartDateTime())):
+                        $associationYear = AssociationYear::fromDate($startDateTime);
                     ?>
-                    <a href="<?= $this->url('photo/year', ['year' => $associationYear->getYear()]); ?>">
-                        <?= $associationYear->getYearString() ?>
-                    </a>
+                        <a href="<?= $this->url('photo/year', ['year' => $associationYear->getYear()]); ?>">
+                            <?= $associationYear->getYearString() ?>
+                        </a>
+                    <?php endif; ?>
                 </li>
             <?php elseif ($currentAlbum instanceof WeeklyAlbum): ?>
                 <li>
@@ -131,7 +135,11 @@ $this->scriptUrl()->requireUrl('member/search')
                                     $album->getEndDateTime()->format('Y')
                                 ) ?>
                         <?php else: ?>
-                            <?= $album->getStartDateTime()->format('Y-m-d') ?>
+                            <?php if (null !== ($startDateTime = $album->getStartDateTime())): ?>
+                                <?= $album->getStartDateTime()->format('Y-m-d') ?>
+                            <?php else: ?>
+                                <?= $this->translate('No date') ?>
+                            <?php endif; ?>
                         <?php endif; ?>
                     </small>
                 </h1>
@@ -140,22 +148,32 @@ $this->scriptUrl()->requireUrl('member/search')
         <?php if ($album->getAlbumCount() > 0): ?>
             <div class="row">
                 <?php foreach ($album->getChildren() as $item): ?>
-                    <div class="col-lg-2 col-md-3 col-xs-6 thumb">
-                        <a class="thumbnail" href="<?= $this->url(
-                            'photo/album',
-                            [
-                                'album_id' => $item->getId(),
-                                'album_type' => 'album',
-                            ],
-                        ) ?>">
-                            <?php if (null !== ($albumCover = $item->getCoverPath())): ?>
-                                <img class="img-responsive" src="<?= $this->fileUrl($albumCover) ?>" alt="">
-                            <?php endif; ?>
-                            <div class="caption">
-                                <?= $this->escapeHtml($item->getName()); ?>
-                            </div>
-                        </a>
-                    </div>
+                    <?php
+                    if (
+                        (
+                            null !== $album->getStartDateTime()
+                            && null !== $album->getEndDateTime()
+                        )
+                        || $this->acl('photo_service_acl')->isAllowed('album', 'nodate')
+                    ):
+                    ?>
+                        <div class="col-lg-2 col-md-3 col-xs-6 thumb">
+                            <a class="thumbnail" href="<?= $this->url(
+                                'photo/album',
+                                [
+                                    'album_id' => $item->getId(),
+                                    'album_type' => 'album',
+                                ],
+                            ) ?>">
+                                <?php if (null !== ($albumCover = $item->getCoverPath())): ?>
+                                    <img class="img-responsive" src="<?= $this->fileUrl($albumCover) ?>" alt="">
+                                <?php endif; ?>
+                                <div class="caption">
+                                    <?= $this->escapeHtml($item->getName()); ?>
+                                </div>
+                            </a>
+                        </div>
+                    <?php endif; ?>
                 <?php endforeach ?>
             </div>
         <?php endif; ?>
@@ -168,70 +186,74 @@ $this->scriptUrl()->requireUrl('member/search')
              data-recent-vote="<?= $hasRecentVote ? 'true' : 'false' ?>"
              data-lidnr="<?= $lidnr ?>"
         >
-            <div class="grid-sizer"></div>
-            <div class="gutter-sizer"></div>
-            <?php foreach ($album->getPhotos() as $key => $item): ?>
-                <?php
-                $ar = $item->getAspectRatio();
-                $width = $config['small_thumb_size']['width'];
-                $thumbnailSize = [
-                    'w' => $width,
-                    'h' => round($width * $ar)
-                ];
+            <?php if (0 === $album->getPhotoCount(false)): ?>
+                <p><?= $this->translate('This albums does not contain any photos.') ?></p>
+            <?php else: ?>
+                <div class="grid-sizer"></div>
+                <div class="gutter-sizer"></div>
+                <?php foreach ($album->getPhotos() as $key => $item): ?>
+                    <?php
+                    $ar = $item->getAspectRatio();
+                    $width = $config['small_thumb_size']['width'];
+                    $thumbnailSize = [
+                        'w' => $width,
+                        'h' => round($width * $ar)
+                    ];
 
-                $width = $config['large_thumb_size']['width'];
-                $largeSize = [
-                    'w' => $width,
-                    'h' => round($width * $ar)
-                ];
+                    $width = $config['large_thumb_size']['width'];
+                    $largeSize = [
+                        'w' => $width,
+                        'h' => round($width * $ar)
+                    ];
 
-                // Don't retrieve photo of the week when we are viewing photos of the week.
-                $weeklyPhoto = null;
-                if (!($album instanceof WeeklyAlbum)) {
-                    $weeklyPhoto = $item->getWeeklyPhoto();
-                }
-                ?>
-                <figure
-                    class="pswp-gallery__item<?= (null === $weeklyPhoto) ? '' : ' potw-thumb' ?>"
-                    data-id="<?= $item->getId() ?>"
-                    data-author="GEWIS"
-                    data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]) ?>"
-                    <?php if ($album instanceof VirtualAlbum): ?>
-                        data-original-album="<?= $this->url(
-                            'photo/album',
-                            ['album_id' => $item->getAlbum()->getId(), 'album_type' => 'album']
-                        ) ?>"
-                    <?php endif; ?>
-                    data-profile-photo-url="<?= $this->url('photo/set_profile_photo', ['photo_id' => $item->getId()]) ?>"
-                    data-details-url="<?= $this->url('api_photo/details', ['photo_id' => $item->getId()]) ?>"
-                    data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]) ?>"
-                    <?php if (null !== $weeklyPhoto): ?>
-                        data-weekly-date="<?= $weeklyPhoto->getWeek()->format('c') ?>"
-                    <?php elseif ($album instanceof WeeklyAlbum): ?>
-                        data-weekly-date="<?= $album->getDates()[$key]->format('c') ?>"
-                    <?php endif; ?>
-                >
-                    <a href="<?= $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
-                       target="_blank"
-                       data-pswp-height="<?= $largeSize['h'] ?>"
-                       data-pswp-width="<?= $largeSize['w'] ?>"
-                    >
-                        <img
-                            class="lazy-load"
-                            data-height="<?= $thumbnailSize['h'] ?>"
-                            data-width="<?= $thumbnailSize['w'] ?>"
-                            data-src="<?= $this->glideUrl()->getUrl($item->getPath(), $thumbnailSize) ?>"
-                            alt=""
-                        >
-                    </a>
-                    <figcaption class="hidden">
-                        <?php if ($canViewMetadata): ?>
-                            <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
+                    // Don't retrieve photo of the week when we are viewing photos of the week.
+                    $weeklyPhoto = null;
+                    if (!($album instanceof WeeklyAlbum)) {
+                        $weeklyPhoto = $item->getWeeklyPhoto();
+                    }
+                    ?>
+                    <figure
+                        class="pswp-gallery__item<?= (null === $weeklyPhoto) ? '' : ' potw-thumb' ?>"
+                        data-id="<?= $item->getId() ?>"
+                        data-author="GEWIS"
+                        data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]) ?>"
+                        <?php if ($album instanceof VirtualAlbum): ?>
+                            data-original-album="<?= $this->url(
+                                'photo/album',
+                                ['album_id' => $item->getAlbum()->getId(), 'album_type' => 'album']
+                            ) ?>"
                         <?php endif; ?>
-                    </figcaption>
-                    <figtags class="hidden"></figtags>
-                </figure>
-            <?php endforeach; ?>
+                        data-profile-photo-url="<?= $this->url('photo/set_profile_photo', ['photo_id' => $item->getId()]) ?>"
+                        data-details-url="<?= $this->url('api_photo/details', ['photo_id' => $item->getId()]) ?>"
+                        data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]) ?>"
+                        <?php if (null !== $weeklyPhoto): ?>
+                            data-weekly-date="<?= $weeklyPhoto->getWeek()->format('c') ?>"
+                        <?php elseif ($album instanceof WeeklyAlbum): ?>
+                            data-weekly-date="<?= $album->getDates()[$key]->format('c') ?>"
+                        <?php endif; ?>
+                    >
+                        <a href="<?= $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
+                           target="_blank"
+                           data-pswp-height="<?= $largeSize['h'] ?>"
+                           data-pswp-width="<?= $largeSize['w'] ?>"
+                        >
+                            <img
+                                class="lazy-load"
+                                data-height="<?= $thumbnailSize['h'] ?>"
+                                data-width="<?= $thumbnailSize['w'] ?>"
+                                data-src="<?= $this->glideUrl()->getUrl($item->getPath(), $thumbnailSize) ?>"
+                                alt=""
+                            >
+                        </a>
+                        <figcaption class="hidden">
+                            <?php if ($canViewMetadata): ?>
+                                <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
+                            <?php endif; ?>
+                        </figcaption>
+                        <figtags class="hidden"></figtags>
+                    </figure>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
 </section>
