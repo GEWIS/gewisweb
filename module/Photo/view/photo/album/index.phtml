@@ -147,7 +147,10 @@ $this->scriptUrl()->requireUrl('member/search')
                 </h1>
             </div>
         </div>
-        <?php if ($album->getAlbumCount() > 0): ?>
+        <?php
+        $shownAlbums = 0;
+        if ($album->getAlbumCount() > 0):
+        ?>
             <div class="row">
                 <?php foreach ($album->getChildren() as $item): ?>
                     <?php
@@ -167,6 +170,7 @@ $this->scriptUrl()->requireUrl('member/search')
                             $item,
                         )
                     ):
+                        $shownAlbums++;
                     ?>
                         <div class="col-lg-2 col-md-3 col-xs-6 thumb">
                             <a class="thumbnail" href="<?= $this->url(
@@ -189,6 +193,9 @@ $this->scriptUrl()->requireUrl('member/search')
                     <?php endif; ?>
                 <?php endforeach ?>
             </div>
+        <?php endif; ?>
+        <?php if (0 < $shownAlbums): ?>
+            <hr>
         <?php endif; ?>
         <?php
         $lidnr = $this->identity()->getLidnr();
