@@ -60,6 +60,7 @@ class Member extends BaseMapper
                 OR CONCAT(LOWER(`firstName`), ' ', LOWER(`middleName`), ' ', LOWER(`lastName`)) LIKE :name
                 )
                 AND expiration >= NOW()
+                AND hidden = 0
             ORDER BY $orderColumn $orderDirection LIMIT :limit
             QUERY;
 
