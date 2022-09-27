@@ -27,12 +27,5 @@ thead {
 
 /** Overwrite Bootstrap styling in the CKEditor */
 .ck-content .table {
-    width: auto !important;
     margin: 0 !important;
-}
-
-figure.table {
-    width: 0;
-    max-width: 0;
-    margin-bottom: 0;
 }
