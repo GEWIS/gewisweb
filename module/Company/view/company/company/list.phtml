@@ -58,12 +58,14 @@ $this->headTitle($this->translate('Companies'));
                         <?php
                         // Randomize the order of companies
                         shuffle($companyList);
+                        $jobCategories = $this->jobCategories();
 
                         foreach ($companyList as $company) {
                             echo $this->partial(
                                 'partial/company/company/grid/company.phtml',
                                 [
                                     'company' => $company,
+                                    'jobCategories' => $jobCategories,
                                 ],
                             );
                         }
