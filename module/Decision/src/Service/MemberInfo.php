@@ -84,10 +84,14 @@ class MemberInfo
      */
     public function getOrganMemberships(MemberModel $member): array
     {
-        $memberships = [];
-        foreach ($member->getCurrentOrganInstallations() as $install) {
-            if (!isset($memberships[$install->getOrgan()->getAbbr()])) {
-                $memberships[$install->getOrgan()->getAbbr()] = [
+        $memberships = [
+            'current' => [],
+            'historical' => [],
+        ];
+
+        foreach ($this->memberMapper->findCurrentInstallations($member) as $install) {
+            if (!isset($memberships['current'][$install->getOrgan()->getAbbr()])) {
+                $memberships['current'][$install->getOrgan()->getAbbr()] = [
                     'organ' => $install->getOrgan(),
                     'functions' => [],
                 ];
@@ -98,9 +102,27 @@ class MemberInfo
                 && 'Inactief Lid' !== $install->getFunction()
             ) {
                 $function = $this->translator->translate($install->getFunction());
-                $memberships[$install->getOrgan()->getAbbr()]['functions'][] = $function;
+                $memberships['current'][$install->getOrgan()->getAbbr()]['functions'][] = $function;
             }
         }
+
+        foreach ($this->memberMapper->findHistoricalInstallations($member) as $install) {
+            if (!isset($memberships['historical'][$install->getOrgan()->getAbbr()])) {
+                $memberships['historical'][$install->getOrgan()->getAbbr()] = [
+                    'organ' => $install->getOrgan(),
+                    'functions' => [],
+                ];
+            }
+
+            if (
+                'Lid' !== $install->getFunction()
+                && 'Inactief Lid' !== $install->getFunction()
+            ) {
+                $function = $this->translator->translate($install->getFunction());
+                $memberships['historical'][$install->getOrgan()->getAbbr()]['functions'][] = $function;
+            }
+        }
+
 
         return $memberships;
     }
