@@ -3,11 +3,10 @@
 namespace Decision\Mapper;
 
 use Application\Mapper\BaseMapper;
-use DateInterval;
-use DateTime;
 use Decision\Model\{
     Member as MemberModel,
     Organ as OrganModel,
+    OrganMember as OrganMemberModel,
 };
 use Doctrine\ORM\Query\{
     ResultSetMapping,
@@ -123,6 +122,40 @@ class Member extends BaseMapper
             ->andWhere('om.dischargeDate IS NULL');
 
         $qb->setParameter('lidnr', $member->getLidnr());
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Find all active installations of a member.
+     */
+    public function findCurrentInstallations(MemberModel $member): array
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('om')
+            ->from(OrganMemberModel::class, 'om')
+            ->leftJoin('om.organ', 'o')
+            ->where('om.member = :member')
+            ->andWhere('om.dischargeDate IS NULL');
+
+        $qb->setParameter('member', $member);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Find all past installations of a member.
+     */
+    public function findHistoricalInstallations(MemberModel $member): array
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('om')
+            ->from(OrganMemberModel::class, 'om')
+            ->leftJoin('om.organ', 'o')
+            ->where('om.member = :member')
+            ->andWhere('om.dischargeDate IS NOT NULL');
+
+        $qb->setParameter('member', $member);
 
         return $qb->getQuery()->getResult();
     }

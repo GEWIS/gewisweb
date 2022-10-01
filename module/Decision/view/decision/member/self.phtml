@@ -72,25 +72,56 @@ $this->headTitle($member->getFullName());
                     ?>
                 </p>
 
-                <h3><?= $this->translate('Membership of committees and fraternities') ?></h3>
-                <ul>
-                    <?php foreach ($memberships as $abbr => $install): ?>
-                        <li>
-                            <a href="<?= $this->url(
-                                'home/organ',
-                                [
-                                    'type' => $install['organ']->getType()->value,
-                                    'abbr' => $abbr,
-                                ],
-                            ) ?>">
-                                <?= $abbr ?>
-                            </a>
-                            <?php if (!empty($install['functions'])): ?>
-                                (<?= implode(', ', $install['functions']) ?>)
-                            <?php endif ?>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
+                <h3><?= $this->translate('Memberships of committees and fraternities') ?></h3>
+                <?php if (
+                    empty($memberships['current'])
+                    && empty($memberships['historical'])
+                ): ?>
+                    <p><?= $this->translate('You have not been a member of a committee or fraternity.') ?></p>
+                <?php endif; ?>
+                <?php if (!empty($memberships['current'])): ?>
+                    <p><?= $this->translate('You are currently a member of:') ?></p>
+                    <ul>
+                        <?php foreach ($memberships['current'] as $abbr => $install): ?>
+                            <li>
+                                <a href="<?= $this->url(
+                                    'home/organ',
+                                    [
+                                        'type' => $install['organ']->getType()->value,
+                                        'abbr' => $abbr,
+                                    ],
+                                ) ?>">
+                                    <?= $abbr ?>
+                                </a>
+                                <?php if (!empty($install['functions'])): ?>
+                                    (<?= implode(', ', $install['functions']) ?>)
+                                <?php endif ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+                <?php if (!empty($memberships['historical'])): ?>
+                    <p><?= $this->translate('You were a member of:') ?></p>
+                    <ul>
+                        <?php foreach ($memberships['historical'] as $abbr => $install): ?>
+                            <li>
+                                <a href="<?= $this->url(
+                                    'home/organ',
+                                    [
+                                        'type' => $install['organ']->getType()->value,
+                                        'abbr' => $abbr,
+                                    ],
+                                ) ?>">
+                                    <?= $abbr ?>
+                                </a>
+                                <?php if (!empty($install['functions'])): ?>
+                                    (<?= implode(', ', $install['functions']) ?>)
+                                <?php endif ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+
                 <h3><?= $this->translate('Adresses') ?></h3>
                 <?php foreach ($member->getAddresses() as $address): ?>
                     <h4><?= $address->getType()->getName($this->plugin('translate')->getTranslator()) ?></h4>

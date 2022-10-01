@@ -41,25 +41,70 @@ $this->headTitle($this->translate('Members'));
                         </tr>
                     <?php endif; ?>
                 </table>
-                <h3><?= $this->translate('Membership of committees and fraternities') ?></h3>
-                <ul>
-                    <?php foreach ($memberships as $abbr => $install): ?>
-                        <li>
-                            <a href="<?= $this->url(
-                                'home/organ',
-                                [
-                                    'type' => $install['organ']->getType()->value,
-                                    'abbr' => $abbr,
-                                ],
-                            ) ?>">
-                                <?= $abbr ?>
-                            </a>
-                            <?php if (!empty($install['functions'])): ?>
-                                (<?= implode(', ', $install['functions']) ?>)
-                            <?php endif ?>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
+                <h3><?= $this->translate('Memberships of committees and fraternities') ?></h3>
+                <?php if (
+                    empty($memberships['current'])
+                    && empty($memberships['historical'])
+                ): ?>
+                    <p>
+                        <?= sprintf(
+                            $this->translate('%s has never been part of a committee or fraternity.'),
+                            $member->getFirstName(),
+                        ) ?>
+                    </p>
+                <?php endif; ?>
+                <?php if (!empty($memberships['current'])): ?>
+                    <p>
+                        <?= sprintf(
+                            $this->translate('%s is currently a member of:'),
+                            $member->getFirstName(),
+                        ) ?>
+                    </p>
+                    <ul>
+                        <?php foreach ($memberships['current'] as $abbr => $install): ?>
+                            <li>
+                                <a href="<?= $this->url(
+                                    'home/organ',
+                                    [
+                                        'type' => $install['organ']->getType()->value,
+                                        'abbr' => $abbr,
+                                    ],
+                                ) ?>">
+                                    <?= $abbr ?>
+                                </a>
+                                <?php if (!empty($install['functions'])): ?>
+                                    (<?= implode(', ', $install['functions']) ?>)
+                                <?php endif ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+                <?php if (!empty($memberships['historical'])): ?>
+                    <p>
+                        <?= sprintf(
+                            $this->translate('%s was a member of:'),
+                            $member->getFirstName(),
+                        ) ?>
+                    </p>
+                    <ul>
+                        <?php foreach ($memberships['historical'] as $abbr => $install): ?>
+                            <li>
+                                <a href="<?= $this->url(
+                                    'home/organ',
+                                    [
+                                        'type' => $install['organ']->getType()->value,
+                                        'abbr' => $abbr,
+                                    ],
+                                ) ?>">
+                                    <?= $abbr ?>
+                                </a>
+                                <?php if (!empty($install['functions'])): ?>
+                                    (<?= implode(', ', $install['functions']) ?>)
+                                <?php endif ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
                 <?php if ($this->acl('decision_service_acl')->isAllowed('member', 'view_full')): ?>
                     <h3><?= $this->translate('Adresses') ?></h3>
                     <?php foreach ($member->getAddresses() as $address): ?>
