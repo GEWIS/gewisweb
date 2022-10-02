@@ -20,10 +20,10 @@ enum OrganTypes: string
     {
         return match ($this) {
             self::Committee => $translator->translate('Committee'),
-            self::AVC => $translator->translate('AV-committee'),
+            self::AVC => $translator->translate('GMM Committee'),
             self::Fraternity => $translator->translate('Fraternity'),
-            self::KCC => $translator->translate('Audit Committee'),
-            self::AVW => $translator->translate('GM Task Force'),
+            self::KCC => $translator->translate('Financial Audit Committee'),
+            self::AVW => $translator->translate('GMM Taskforce'),
             self::RvA => $translator->translate('Advisory Board'),
         };
     }
