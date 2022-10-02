@@ -9,11 +9,28 @@
                     <div class="col-sm-8">
                         <?php if ($this->acl('frontpage_service_acl')->isAllowed('infimum', 'view')): ?>
                             <h3><?= $this->translate('Infimum') ?></h3>
-                            <p id="infima-footer"></p>
+                            <p id="infimum-footer"><?= $this->translate('Loading an infimum...') ?></p>
                             <script type="text/javascript" nonce="<?= NONCE_REPLACEMENT_STRING ?>">
-                                $.getJSON("<?= $this->url('infimum') ?>", function(data) {
-                                    $("#infima-footer")[0].textContent = data['content'];
-                                });
+                                fetch('<?= $this->url('infimum') ?>')
+                                    .then(result => result.json())
+                                    .then(function (data) {
+                                        document.getElementById('infimum-footer').textContent = data['content'];
+
+                                        let secondInfimum;
+                                        if (null !== (secondInfimum = document.getElementById('infimum-body'))) {
+                                            secondInfimum.textContent = data['content'];
+                                        }
+                                    })
+                                    .catch(function() {
+                                        document.getElementById('infimum-footer').textContent =
+                                            '<?= $this->translate('Unable to retrieve infimum.') ?>';
+
+                                        let secondInfimum;
+                                        if (null !== (secondInfimum = document.getElementById('infimum-body'))) {
+                                            secondInfimum.textContent =
+                                                '<?= $this->translate('Unable to retrieve infimum.') ?>';
+                                        }
+                                    });
                             </script>
                         <?php endif ?>
                         <p>&copy; 2013
