@@ -47,6 +47,14 @@ function getOrganDescription($organInformation, $lang)
                         <a href="<?= $this->url('home/committee_list') ?>">
                             <?= $this->translate('Committees') ?>
                         </a>
+                    <?php elseif (OrganTypes::AVC === $organ->getType()): ?>
+                        <span><?= $this->translate('AV-committees') ?></span>
+                    <?php elseif (OrganTypes::AVW === $organ->getType()): ?>
+                        <span><?= $this->translate('GM Task Forces') ?></span>
+                    <?php elseif (OrganTypes::KCC === $organ->getType()): ?>
+                        <span><?= $this->translate('Audit Committees') ?></span>
+                    <?php elseif (OrganTypes::RvA === $organ->getType()): ?>
+                        <span><?= $this->translate('Advisory Boards') ?></span>
                     <?php endif; ?>
                 </li>
                 <li class="active">
