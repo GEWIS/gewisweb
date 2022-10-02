@@ -33,21 +33,21 @@ help:
 LAST_WEB_COMMIT := $(shell git rev-parse --short HEAD)
 
 runprod:
-		@docker-compose -f docker-compose.yml up -d --force-recreate --remove-orphans
+		@docker compose -f docker-compose.yml up -d --force-recreate --remove-orphans
 
 runprodtest: buildprod
-		@docker-compose -f docker-compose.yml up -d --force-recreate --remove-orphans
+		@docker compose -f docker-compose.yml up -d --force-recreate --remove-orphans
 
 rundev: builddev
-		@docker-compose up -d --force-recreate --remove-orphans
+		@docker compose up -d --force-recreate --remove-orphans
 		@make replenish
-		@docker-compose exec web rm -rf data/cache/module-config-cache.application.config.cache.php
+		@docker compose exec web rm -rf data/cache/module-config-cache.application.config.cache.php
 
 updatedb: rundev
-		@docker-compose exec -T web ./orm orm:schema-tool:update --force --no-interaction
+		@docker compose exec -T web ./orm orm:schema-tool:update --force --no-interaction
 
 stop:
-		@docker-compose down
+		@docker compose down
 
 runtest: loadenv
 		@vendor/phpunit/phpunit/phpunit --bootstrap ./bootstrap.php --configuration ./phpunit.xml --stop-on-error --stop-on-failure
@@ -57,16 +57,16 @@ runcoverage: loadenv
 
 getvendordir:
 		@rm -Rf ./vendor
-		@docker cp "$(shell docker-compose ps -q web)":/code/vendor ./vendor
+		@docker cp "$(shell docker compose ps -q web)":/code/vendor ./vendor
 
 replenish:
-		@docker cp ./public "$(shell docker-compose ps -q web)":/code
-		@docker-compose exec web chown -R www-data:www-data /code/public
-		@docker cp ./data "$(shell docker-compose ps -q web)":/code
-		@docker-compose exec web chown -R www-data:www-data /code/data
-		@docker-compose exec web rm -rf data/cache/module-config-cache.application.config.cache.php
-		@docker-compose exec web php composer.phar dump-autoload --dev
-		@docker-compose exec web ./orm orm:generate-proxies
+		@docker cp ./public "$(shell docker compose ps -q web)":/code
+		@docker compose exec web chown -R www-data:www-data /code/public
+		@docker cp ./data "$(shell docker compose ps -q web)":/code
+		@docker compose exec web chown -R www-data:www-data /code/data
+		@docker compose exec web rm -rf data/cache/module-config-cache.application.config.cache.php
+		@docker compose exec web php composer.phar dump-autoload --dev
+		@docker compose exec web ./orm orm:generate-proxies
 
 update: updatecomposer updatepackage updatecss updateglide updatedocker
 
@@ -79,8 +79,8 @@ copyconf:
 		cp config/autoload/laminas-developer-tools.local.php.dist config/autoload/laminas-developer-tools.local.php
 
 phpstan:
-		@docker-compose exec web echo "" > phpstan/phpstan-baseline-pr.neon
-		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G
+		@docker compose exec web echo "" > phpstan/phpstan-baseline-pr.neon
+		@docker compose exec web vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G
 
 phpstanpr:
 		@git fetch --all
@@ -89,12 +89,12 @@ phpstanpr:
 		@echo "" > phpstan/phpstan-baseline.neon
 		@echo "" > phpstan/phpstan-baseline-pr.neon
 		@make rundev
-		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon --generate-baseline phpstan/phpstan-baseline-pr.neon --memory-limit 1G --no-progress
+		@docker compose exec web vendor/bin/phpstan analyse -c phpstan.neon --generate-baseline phpstan/phpstan-baseline-pr.neon --memory-limit 1G --no-progress
 		@git checkout -- phpstan/phpstan-baseline.neon
 		@git checkout -
-		@docker cp "$(shell docker-compose ps -q web)":/code/phpstan/phpstan-baseline-pr.neon ./phpstan/phpstan-baseline-pr.neon
+		@docker cp "$(shell docker compose ps -q web)":/code/phpstan/phpstan-baseline-pr.neon ./phpstan/phpstan-baseline-pr.neon
 		@make rundev
-		@docker-compose exec web vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G --no-progress
+		@docker compose exec web vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G --no-progress
 
 psalm: loadenv
 		@echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?><files/>" > psalm/psalm-baseline-pr.xml
@@ -138,35 +138,35 @@ checkcomposer: loadenv
 		@vendor/bin/composer-unused
 
 updatecomposer:
-		@docker cp ./composer.json "$(shell docker-compose ps -q web)":/code/composer.json
-		@docker-compose exec web php composer.phar selfupdate
-		@docker cp "$(shell docker-compose ps -q web)":/code/composer.phar ./composer.phar
-		@docker-compose exec web php composer.phar update -W
-		@docker cp "$(shell docker-compose ps -q web)":/code/composer.lock ./composer.lock
+		@docker cp ./composer.json "$(shell docker compose ps -q web)":/code/composer.json
+		@docker compose exec web php composer.phar selfupdate
+		@docker cp "$(shell docker compose ps -q web)":/code/composer.phar ./composer.phar
+		@docker compose exec web php composer.phar update -W
+		@docker cp "$(shell docker compose ps -q web)":/code/composer.lock ./composer.lock
 
 updatepackage:
-		@docker cp ./package.json "$(shell docker-compose ps -q web)":/code/package.json
-		@docker-compose exec web npm update
-		@docker cp "$(shell docker-compose ps -q web)":/code/package-lock.json ./package-lock.json
+		@docker cp ./package.json "$(shell docker compose ps -q web)":/code/package.json
+		@docker compose exec web npm update
+		@docker cp "$(shell docker compose ps -q web)":/code/package-lock.json ./package-lock.json
 
 updatecss:
-		@docker cp ./public "$(shell docker-compose ps -q web)":/code
-		@docker-compose exec web chown -R www-data:www-data /code/public
-		@docker-compose exec web npm run scss
-		@docker cp "$(shell docker-compose ps -q web)":/code/public/css/gewis-theme.css ./public/css/gewis-theme.css
+		@docker cp ./public "$(shell docker compose ps -q web)":/code
+		@docker compose exec web chown -R www-data:www-data /code/public
+		@docker compose exec web npm run scss
+		@docker cp "$(shell docker compose ps -q web)":/code/public/css/gewis-theme.css ./public/css/gewis-theme.css
 
 updateglide:
-		@docker-compose exec glide php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-		@docker-compose exec glide php composer-setup.php
-		@docker-compose exec glide php -r "unlink('composer-setup.php');"
-		@docker cp ./docker/glide/composer.json "$(shell docker-compose ps -q glide)":/glide/composer.json
-		@docker-compose exec glide php composer.phar selfupdate
-		@docker cp "$(shell docker-compose ps -q glide)":/glide/composer.phar ./docker/glide/composer.phar
-		@docker-compose exec glide php composer.phar update -W
-		@docker cp "$(shell docker-compose ps -q glide)":/glide/composer.lock ./docker/glide/composer.lock
+		@docker compose exec glide php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+		@docker compose exec glide php composer-setup.php
+		@docker compose exec glide php -r "unlink('composer-setup.php');"
+		@docker cp ./docker/glide/composer.json "$(shell docker compose ps -q glide)":/glide/composer.json
+		@docker compose exec glide php composer.phar selfupdate
+		@docker cp "$(shell docker compose ps -q glide)":/glide/composer.phar ./docker/glide/composer.phar
+		@docker compose exec glide php composer.phar update -W
+		@docker cp "$(shell docker compose ps -q glide)":/glide/composer.lock ./docker/glide/composer.lock
 
 updatedocker:
-		@docker-compose pull
+		@docker compose pull
 		@docker build --pull --no-cache -t web.docker-registry.gewis.nl/gewisweb_web:production -f docker/web/production/Dockerfile .
 		@docker build --pull --no-cache -t web.docker-registry.gewis.nl/gewisweb_web:development -f docker/web/development/Dockerfile .
 		@docker build --pull --no-cache -t web.docker-registry.gewis.nl/gewisweb_glide:latest -f docker/glide/Dockerfile docker/glide
