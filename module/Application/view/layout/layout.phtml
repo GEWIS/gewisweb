@@ -86,6 +86,7 @@
 
     <?php $matomoDomain = getenv('MATOMO_DOMAIN'); ?>
     <script type="text/javascript" nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+        let matomoDomain = '<?= $matomoDomain ?>';
         var _paq = window._paq = window._paq || [];
         _paq.push(['trackPageView']);
         _paq.push(['enableLinkTracking']);
@@ -93,7 +94,7 @@
         _paq.push(['setTrackerUrl', '<?= $matomoDomain ?>/matomo.php']);
         _paq.push(['setSiteId', '1']);
     </script>
-    <script src="<?= $matomoDomain . '/matomo.js' ?>" nonce="<?= NONCE_REPLACEMENT_STRING ?>" async defer ></script>
+    <script src="<?= $matomoDomain . '/matomo.js' ?>" nonce="<?= NONCE_REPLACEMENT_STRING ?>" async defer></script>
 </head>
 <body>
 <?= $this->partial('partial/main-nav.phtml') ?>

@@ -255,12 +255,7 @@ use Activity\Model\Activity;
                             <h3><?= $this->translate('Infimum') ?></h3>
                         </div>
                         <div class="panel-body">
-                            <p id="infima"></p>
-                            <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
-                                $.getJSON("<?= $this->url('infimum') ?>", function(data) {
-                                    $("#infima")[0].textContent = data['content'];
-                                });
-                            </script>
+                            <p id="infimum-body"><?= $this->translate('Loading an infimum...') ?></p>
                         </div>
                     </div>
                 <?php endif ?>

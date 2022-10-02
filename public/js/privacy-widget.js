@@ -13,7 +13,7 @@ let status_unavailable = document.getElementById('opt-out-status-unavailable');
 // JSONP handler.
 const trackingRequest = (action) => {
     // action is expected to be one of; `isTracked`, `doIgnore`, or `doTrack`.
-    let url = 'https://analytics.gewis.nl/index.php?module=API&format=json&method=TrackingOptOut.';
+    let url = matomoDomain + '/index.php?module=API&format=json&method=TrackingOptOut.';
     let prefix = '__jsonp_tracking';
     let target = document.head || document.getElementsByTagName("head")[0];
     let timeout = 1000;
@@ -44,7 +44,7 @@ const trackingRequest = (action) => {
 
     // Create the Promise for the request.
     promise = new Promise((resolve, reject) => {
-        // Make sure the request can timeout.
+        // Make sure the request can time out.
         timer = setTimeout(() => {
             clean();
             reject(new Error('Request timed out.'));
@@ -143,7 +143,8 @@ privacy_widget_checkbox.addEventListener('change', (event) => {
 })
 
 privacy_widget_dismiss.addEventListener('click', () => {
-    document.cookie = "privacyWidgetDismissed=1; Domain=gewis.nl; Max-Age=31536000; SameSite=Lax; Secure";
+    document.cookie = "privacyWidgetDismissed=1; Domain=" + window.location.host
+        + "; Max-Age=31536000; SameSite=Lax; Secure";
     privacy_widget.classList.replace('open', 'closed');
 }, false);
 
