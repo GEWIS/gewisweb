@@ -1,3 +1,17 @@
+## [v2.8.8](https://github.com/GEWIS/gewisweb/tree/v2.8.8) (2022-10-02)
+
+* Added a historical overview of organ memberships on a member's page.
+* Added breadcrumbs for organs that are not listable.
+* Added a button to GEWIKI on the Members page.
+* Improved separation between sub-albums and photos in an album.
+* Improved the performance of the `/career` page by reducing the number of executed queries.
+* Improved loading of infima on the home page.
+* Fixed issue where the privacy widget would not work as expected.
+* Fixed issue where hidden members would appear in the results of a member search.
+* Updated CKEditor.
+
+---
+
 ## [v2.8.7](https://github.com/GEWIS/gewisweb/tree/v2.8.7) (2022-09-12)
 
 * Added a switch to hide members from birthdays, search results, and logins.
