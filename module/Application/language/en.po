@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-01 16:22+0200\n"
-"PO-Revision-Date: 2022-10-01 16:29+0200\n"
+"POT-Creation-Date: 2022-10-02 12:25+0200\n"
+"PO-Revision-Date: 2022-10-02 12:26+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -1358,8 +1358,8 @@ msgstr ""
 #: module/Activity/view/activity/admin/participantsTable.phtml:12
 #: module/Decision/src/Form/OrganInformation.php:34
 #: module/Decision/view/decision/member/self.phtml:35
-#: module/Decision/view/decision/member/view.phtml:20
-#: module/Frontpage/view/frontpage/organ/organ.phtml:75
+#: module/Decision/view/decision/member/view.phtml:18
+#: module/Frontpage/view/frontpage/organ/organ.phtml:83
 msgid "Email"
 msgstr "Email"
 
@@ -1369,7 +1369,7 @@ msgstr "Sign-up List"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:57
 #: module/Decision/view/decision/member/self.phtml:41
-#: module/Decision/view/decision/member/view.phtml:26
+#: module/Decision/view/decision/member/view.phtml:24
 #: module/Photo/view/partial/metadata.phtml:8
 #: module/Photo/view/partial/metadata.phtml:15
 #: module/Photo/view/partial/metadata.phtml:36
@@ -1642,6 +1642,8 @@ msgid "An unknown error occurred during uploading (%i)"
 msgstr "An unknown error occurred during uploading (%i)"
 
 #: module/Application/src/Service/Infimum.php:62
+#: module/Application/view/partial/footer.phtml:26
+#: module/Application/view/partial/footer.phtml:31
 msgid "Unable to retrieve infimum."
 msgstr "Unable to retrieve infimum."
 
@@ -1883,15 +1885,20 @@ msgstr "Admin"
 msgid "Infimum"
 msgstr "Infimum"
 
-#: module/Application/view/partial/footer.phtml:20
+#: module/Application/view/partial/footer.phtml:12
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:258
+msgid "Loading an infimum..."
+msgstr "Loading an infimum..."
+
+#: module/Application/view/partial/footer.phtml:37
 msgid "All rights reserved."
 msgstr "All rights reserved."
 
-#: module/Application/view/partial/footer.phtml:20
+#: module/Application/view/partial/footer.phtml:37
 msgid "by WebCommissie GEWIS."
 msgstr "by WebCommissie GEWIS."
 
-#: module/Application/view/partial/footer.phtml:24
+#: module/Application/view/partial/footer.phtml:41
 #: module/Application/view/partial/main-nav.phtml:278
 #: module/Company/view/company/company/companyStory.phtml:21
 #: module/Company/view/company/company/jobs.phtml:93
@@ -1909,7 +1916,7 @@ msgstr "Language settings"
 #: module/Decision/view/decision/member/index.phtml:5
 #: module/Decision/view/decision/member/index.phtml:19
 #: module/Decision/view/decision/member/search.phtml:4
-#: module/Decision/view/decision/member/view.phtml:10
+#: module/Decision/view/decision/member/view.phtml:8
 msgid "Members"
 msgstr "Members"
 
@@ -2196,7 +2203,7 @@ msgstr "Slogan"
 #: module/Company/src/Form/Company.php:170 module/Company/src/Form/Job.php:154
 #: module/Company/src/Form/Job.php:164
 #: module/Decision/src/Form/OrganInformation.php:44
-#: module/Frontpage/view/frontpage/organ/organ.phtml:86
+#: module/Frontpage/view/frontpage/organ/organ.phtml:94
 msgid "Website"
 msgstr "Website"
 
@@ -2807,20 +2814,20 @@ msgid "Committee"
 msgstr "Committee"
 
 #: module/Decision/src/Model/Enums/OrganTypes.php:23
-msgid "AV-committee"
-msgstr "AV-committee"
+msgid "GMM Committee"
+msgstr "GMM Committee"
 
 #: module/Decision/src/Model/Enums/OrganTypes.php:24
 msgid "Fraternity"
 msgstr "Fraternity"
 
 #: module/Decision/src/Model/Enums/OrganTypes.php:25
-msgid "Audit Committee"
-msgstr "Audit Committee"
+msgid "Financial Audit Committee"
+msgstr "Financial Audit Committee"
 
 #: module/Decision/src/Model/Enums/OrganTypes.php:26
-msgid "GM Task Force"
-msgstr "GM Task Force"
+msgid "GMM Taskforce"
+msgstr "GMM Taskforce"
 
 #: module/Decision/src/Model/Enums/OrganTypes.php:27
 msgid "Advisory Board"
@@ -3139,7 +3146,7 @@ msgstr "View all meetings"
 
 #: module/Decision/view/decision/member/index.phtml:173
 #: module/Decision/view/decision/organ/show.phtml:9
-#: module/Frontpage/view/frontpage/organ/organ.phtml:121
+#: module/Frontpage/view/frontpage/organ/organ.phtml:129
 msgid "Active members"
 msgstr "Active members"
 
@@ -3243,17 +3250,17 @@ msgid "Last name"
 msgstr "Last name"
 
 #: module/Decision/view/decision/member/self.phtml:46
-#: module/Decision/view/decision/member/view.phtml:32
+#: module/Decision/view/decision/member/view.phtml:30
 msgid "Birth date"
 msgstr "Birth date"
 
 #: module/Decision/view/decision/member/self.phtml:50
-#: module/Decision/view/decision/member/view.phtml:36
+#: module/Decision/view/decision/member/view.phtml:34
 msgid "Generation"
 msgstr "Generation"
 
 #: module/Decision/view/decision/member/self.phtml:54
-#: module/Decision/view/decision/member/view.phtml:41
+#: module/Decision/view/decision/member/view.phtml:39
 #: module/User/src/Model/Enums/JWTClaims.php:42
 msgid "Membership type"
 msgstr "Membership type"
@@ -3287,7 +3294,7 @@ msgid "the secretary of GEWIS"
 msgstr "the secretary of GEWIS"
 
 #: module/Decision/view/decision/member/self.phtml:75
-#: module/Decision/view/decision/member/view.phtml:46
+#: module/Decision/view/decision/member/view.phtml:44
 msgid "Memberships of committees and fraternities"
 msgstr "Memberships of committees and fraternities"
 
@@ -3304,22 +3311,22 @@ msgid "You were a member of:"
 msgstr "You were a member of:"
 
 #: module/Decision/view/decision/member/self.phtml:125
-#: module/Decision/view/decision/member/view.phtml:111
+#: module/Decision/view/decision/member/view.phtml:109
 msgid "Adresses"
 msgstr "Adresses"
 
 #: module/Decision/view/decision/member/self.phtml:130
-#: module/Decision/view/decision/member/view.phtml:116
+#: module/Decision/view/decision/member/view.phtml:114
 msgid "Country"
 msgstr "Country"
 
 #: module/Decision/view/decision/member/self.phtml:134
-#: module/Decision/view/decision/member/view.phtml:120
+#: module/Decision/view/decision/member/view.phtml:118
 msgid "Street and number"
 msgstr "Street and number"
 
 #: module/Decision/view/decision/member/self.phtml:138
-#: module/Decision/view/decision/member/view.phtml:124
+#: module/Decision/view/decision/member/view.phtml:122
 msgid "City and postal code"
 msgstr "City and postal code"
 
@@ -3355,22 +3362,22 @@ msgstr "Your profile picture will be chosen automatically instead."
 msgid "More of my photo's"
 msgstr "More of my photo's"
 
-#: module/Decision/view/decision/member/view.phtml:53
+#: module/Decision/view/decision/member/view.phtml:51
 #, php-format
 msgid "%s has never been part of a committee or fraternity."
 msgstr "%s has never been part of a committee or fraternity."
 
-#: module/Decision/view/decision/member/view.phtml:61
+#: module/Decision/view/decision/member/view.phtml:59
 #, php-format
 msgid "%s is currently a member of:"
 msgstr "%s is currently a member of:"
 
-#: module/Decision/view/decision/member/view.phtml:87
+#: module/Decision/view/decision/member/view.phtml:85
 #, php-format
 msgid "%s was a member of:"
 msgstr "%s was a member of:"
 
-#: module/Decision/view/decision/member/view.phtml:173
+#: module/Decision/view/decision/member/view.phtml:171
 #, php-format
 msgid "Photo's of %s"
 msgstr "Photo's of %s"
@@ -3965,7 +3972,7 @@ msgid "Donderdags is er %sborrel%s van 16.30 tot 19.00 uur."
 msgstr "Thursdays there is a %ssocial drink%s from 16.30 until 19.00."
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:176
-#: module/Frontpage/view/frontpage/organ/organ.phtml:112
+#: module/Frontpage/view/frontpage/organ/organ.phtml:120
 msgid "Complete agenda"
 msgstr "Complete agenda"
 
@@ -3973,24 +3980,24 @@ msgstr "Complete agenda"
 msgid "Google Calendar"
 msgstr "Google Calendar"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:269
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:264
 msgid "Poll"
 msgstr "Poll"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:282
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:277
 msgid "View the results"
 msgstr "View the results"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:287
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:282
 msgid "There currently is no poll."
 msgstr "There currently is no poll."
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:291
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:286
 #: module/Frontpage/view/frontpage/poll/request.phtml:162
 msgid "Request poll"
 msgstr "Request poll"
 
-#: module/Frontpage/view/frontpage/frontpage/home.phtml:294
+#: module/Frontpage/view/frontpage/frontpage/home.phtml:289
 #: module/Frontpage/view/frontpage/poll/index.phtml:10
 msgid "Old polls"
 msgstr "Old polls"
@@ -4045,12 +4052,28 @@ msgstr "Retired fraternities"
 msgid "The following fraternities have retired:"
 msgstr "The following fraternities have retired:"
 
-#: module/Frontpage/view/frontpage/organ/organ.phtml:98
+#: module/Frontpage/view/frontpage/organ/organ.phtml:51
+msgid "GMM Committees"
+msgstr "GMM Committees"
+
+#: module/Frontpage/view/frontpage/organ/organ.phtml:53
+msgid "GMM Taskforces"
+msgstr "GMM Taskforces"
+
+#: module/Frontpage/view/frontpage/organ/organ.phtml:55
+msgid "Financial Audit Committees"
+msgstr "Financial Audit Committees"
+
+#: module/Frontpage/view/frontpage/organ/organ.phtml:57
+msgid "Advisory Boards"
+msgstr "Advisory Boards"
+
+#: module/Frontpage/view/frontpage/organ/organ.phtml:106
 #, php-format
 msgid "%s's activities"
 msgstr "%s's activities"
 
-#: module/Frontpage/view/frontpage/organ/organ.phtml:144
+#: module/Frontpage/view/frontpage/organ/organ.phtml:152
 msgid "Login to view more information"
 msgstr "Login to view more information"
 
