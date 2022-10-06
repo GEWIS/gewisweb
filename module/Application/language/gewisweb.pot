@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-02 12:25+0200\n"
+"POT-Creation-Date: 2022-10-06 16:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,13 +17,22 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: module/Activity/view/activity/activity/archive.phtml:20
+#: module/Photo/view/photo/photo/index.phtml:23
+msgid "Older"
+msgstr ""
+
+#: module/Activity/view/activity/activity/archive.phtml:40
+msgid "There are no activities in the archive."
+msgstr ""
+
 #: module/Activity/view/activity/activity-calendar/create.phtml:2
 msgid "Create activity proposal"
 msgstr ""
 
 #: module/Activity/view/activity/activity-calendar/create.phtml:54
 #: module/Activity/view/activity/activity-calendar/index.phtml:20
-#: module/Application/view/partial/main-nav.phtml:367
+#: module/Application/view/partial/main-nav.phtml:360
 #: module/Decision/view/decision/member/index.phtml:186
 msgid "Option calendar"
 msgstr ""
@@ -50,12 +59,12 @@ msgstr ""
 #: module/Activity/view/activity/activity-calendar/create.phtml:103
 #: module/Activity/view/activity/activity-calendar/index.phtml:46
 #: module/Activity/view/activity/activity/view.phtml:243
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:112
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:117
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:129
 #: module/Activity/view/activity/admin-approval/view.phtml:64
 #: module/Activity/view/activity/admin-approval/view.phtml:69
 #: module/Activity/view/activity/admin-approval/view.phtml:76
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:112
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:117
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:129
 #: module/Activity/view/activity/admin-category/add.phtml:56
 #: module/Activity/view/activity/admin-category/add.phtml:93
 #: module/Activity/view/activity/admin/participantsTable.phtml:11
@@ -81,29 +90,29 @@ msgstr ""
 #: module/User/view/user/api-admin/index.phtml:10
 #: module/Activity/src/Form/ActivityCategory.php:24
 #: module/Activity/src/Form/ActivityCategory.php:34
-#: module/Activity/src/Form/SignupList.php:36
-#: module/Activity/src/Form/SignupList.php:46
 #: module/Activity/src/Form/SignupListField.php:33
 #: module/Activity/src/Form/SignupListField.php:43
+#: module/Activity/src/Form/SignupList.php:36
+#: module/Activity/src/Form/SignupList.php:46
 #: module/Company/src/Form/Company.php:53
-#: module/Company/src/Form/Company.php:95 module/Company/src/Form/Job.php:99
-#: module/Company/src/Form/Job.php:130 module/Company/src/Form/Job.php:140
+#: module/Company/src/Form/Company.php:95
 #: module/Company/src/Form/JobCategory.php:45
 #: module/Company/src/Form/JobCategory.php:55
 #: module/Company/src/Form/JobLabel.php:32
-#: module/Company/src/Form/JobLabel.php:42
+#: module/Company/src/Form/JobLabel.php:42 module/Company/src/Form/Job.php:99
+#: module/Company/src/Form/Job.php:130 module/Company/src/Form/Job.php:140
 #: module/Education/src/Form/AddCourse.php:58
 #: module/User/src/Form/ApiToken.php:25
 msgid "Name"
 msgstr ""
 
 #: module/Activity/view/activity/activity-calendar/create.phtml:120
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:199
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:204
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:216
 #: module/Activity/view/activity/admin-approval/view.phtml:121
 #: module/Activity/view/activity/admin-approval/view.phtml:126
 #: module/Activity/view/activity/admin-approval/view.phtml:133
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:199
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:204
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:216
 #: module/Activity/view/partial/create.phtml:74
 #: module/Activity/view/partial/create.phtml:148
 #: module/Company/view/company/company/jobs.phtml:128
@@ -290,15 +299,6 @@ msgstr ""
 msgid "Plan activity"
 msgstr ""
 
-#: module/Activity/view/activity/activity/archive.phtml:20
-#: module/Photo/view/photo/photo/index.phtml:23
-msgid "Older"
-msgstr ""
-
-#: module/Activity/view/activity/activity/archive.phtml:40
-msgid "There are no activities in the archive."
-msgstr ""
-
 #: module/Activity/view/activity/activity/create.phtml:38
 msgid "Organizer"
 msgstr ""
@@ -333,8 +333,8 @@ msgid "End date and time"
 msgstr ""
 
 #: module/Activity/view/activity/activity/create.phtml:117
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:242
 #: module/Activity/view/activity/admin-approval/view.phtml:149
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:242
 #: module/Activity/view/activity/admin-category/add.phtml:4
 #: module/Activity/view/activity/admin-category/index.phtml:2
 #: module/Activity/view/activity/admin-category/index.phtml:6
@@ -355,8 +355,8 @@ msgstr ""
 
 #: module/Activity/view/activity/activity/create.phtml:164
 #: module/Activity/view/activity/activity/view.phtml:110
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:269
 #: module/Activity/view/activity/admin-approval/view.phtml:163
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:269
 msgid "Sign-up Lists"
 msgstr ""
 
@@ -368,10 +368,10 @@ msgid ""
 msgstr ""
 
 #: module/Activity/view/activity/activity/create.phtml:171
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:99
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:279
 #: module/Activity/view/activity/admin-approval/view.phtml:51
 #: module/Activity/view/activity/admin-approval/view.phtml:169
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:99
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:279
 #: module/Activity/view/activity/admin-category/add.phtml:40
 #: module/Activity/view/partial/create.phtml:17
 #: module/Company/view/partial/company/admin/editors/category.phtml:7
@@ -386,10 +386,10 @@ msgid "Dutch"
 msgstr ""
 
 #: module/Activity/view/activity/activity/create.phtml:176
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:104
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:284
 #: module/Activity/view/activity/admin-approval/view.phtml:56
 #: module/Activity/view/activity/admin-approval/view.phtml:174
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:104
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:284
 #: module/Activity/view/activity/admin-category/add.phtml:77
 #: module/Activity/view/partial/create.phtml:91
 #: module/Company/view/partial/company/admin/editors/category.phtml:52
@@ -423,14 +423,14 @@ msgstr ""
 #: module/Activity/view/activity/activity/index.phtml:8
 #: module/Activity/view/activity/activity/view.phtml:4
 #: module/Activity/view/activity/activity/view.phtml:14
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:9
 #: module/Activity/view/activity/admin-approval/view.phtml:9
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:9
 #: module/Activity/view/activity/admin/participants.phtml:7
 #: module/Activity/view/activity/admin/view.phtml:3
 #: module/Application/view/partial/admin.phtml:29
-#: module/Application/view/partial/main-nav.phtml:331
-#: module/Application/view/partial/main-nav.phtml:335
-#: module/Application/view/partial/main-nav.phtml:340
+#: module/Application/view/partial/main-nav.phtml:324
+#: module/Application/view/partial/main-nav.phtml:328
+#: module/Application/view/partial/main-nav.phtml:333
 #: module/Decision/view/decision/member/index.phtml:182
 msgid "Activities"
 msgstr ""
@@ -463,12 +463,12 @@ msgstr ""
 
 #: module/Activity/view/activity/activity/list.phtml:42
 #: module/Activity/view/activity/activity/view.phtml:72
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:141
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:146
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:158
 #: module/Activity/view/activity/admin-approval/view.phtml:83
 #: module/Activity/view/activity/admin-approval/view.phtml:88
 #: module/Activity/view/activity/admin-approval/view.phtml:95
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:141
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:146
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:158
 #: module/Activity/view/partial/create.phtml:45
 #: module/Activity/view/partial/create.phtml:119
 #: module/Photo/view/partial/metadata.phtml:69
@@ -478,12 +478,12 @@ msgstr ""
 
 #: module/Activity/view/activity/activity/list.phtml:45
 #: module/Activity/view/activity/activity/view.phtml:75
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:170
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:175
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:187
 #: module/Activity/view/activity/admin-approval/view.phtml:102
 #: module/Activity/view/activity/admin-approval/view.phtml:107
 #: module/Activity/view/activity/admin-approval/view.phtml:114
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:170
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:175
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:187
 #: module/Activity/view/partial/create.phtml:59
 #: module/Activity/view/partial/create.phtml:133
 msgid "Costs"
@@ -559,13 +559,15 @@ msgstr ""
 msgid "Login to view the subscribed members."
 msgstr ""
 
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:6
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:16
-msgid "Update Proposal"
+#: module/Activity/view/activity/admin-approval/view.phtml:6
+#: module/Activity/view/activity/admin-approval/view.phtml:16
+#: module/Activity/view/activity/admin-approval/view.phtml:182
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:293
+msgid "Approval"
 msgstr ""
 
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:41
 #: module/Activity/view/activity/admin-approval/view.phtml:20
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:41
 #: module/Activity/view/partial/create.phtml:3
 #: module/Company/view/partial/company/admin/editors/category.phtml:3
 #: module/Company/view/partial/company/admin/editors/company.phtml:149
@@ -574,6 +576,51 @@ msgstr ""
 #: module/Company/view/partial/company/admin/editors/package.phtml:3
 #: module/Photo/view/photo/album/index.phtml:504
 msgid "Information"
+msgstr ""
+
+#: module/Activity/view/activity/admin-approval/view.phtml:26
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:55
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:68
+#: module/Photo/view/partial/tags.phtml:40
+#: module/Photo/view/photo/album/index.phtml:327
+#: module/Photo/view/photo/album/index.phtml:672
+msgid "and"
+msgstr ""
+
+#: module/Activity/view/activity/admin-approval/view.phtml:37
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:79
+#, php-format
+msgid ""
+"This is activity <strong>#%d</strong>, organised by <strong>%s</strong>, and "
+"it will start on <strong>%s</strong> and end on <strong>%s</strong>."
+msgstr ""
+
+#: module/Activity/view/activity/admin-approval/view.phtml:44
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:92
+msgid "More information about this activity is available below."
+msgstr ""
+
+#: module/Activity/view/activity/admin-approval/view.phtml:141
+msgid "View details / subscriptions"
+msgstr ""
+
+#: module/Activity/view/activity/admin-approval/view.phtml:204
+msgid "Disapprove"
+msgstr ""
+
+#: module/Activity/view/activity/admin-approval/view.phtml:214
+#, php-format
+msgid "This activity was approved by <strong>%s</strong>."
+msgstr ""
+
+#: module/Activity/view/activity/admin-approval/view.phtml:236
+#, php-format
+msgid "This activity was disapproved by <strong>%s</strong>."
+msgstr ""
+
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:6
+#: module/Activity/view/activity/admin-approval/view-proposal.phtml:16
+msgid "Update Proposal"
 msgstr ""
 
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:45
@@ -594,59 +641,12 @@ msgstr ""
 msgid "new"
 msgstr ""
 
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:55
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:68
-#: module/Activity/view/activity/admin-approval/view.phtml:26
-#: module/Photo/view/partial/tags.phtml:40
-#: module/Photo/view/photo/album/index.phtml:327
-#: module/Photo/view/photo/album/index.phtml:672
-msgid "and"
-msgstr ""
-
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:79
-#: module/Activity/view/activity/admin-approval/view.phtml:37
-#, php-format
-msgid ""
-"This is activity <strong>#%d</strong>, organised by <strong>%s</strong>, and "
-"it will start on <strong>%s</strong> and end on <strong>%s</strong>."
-msgstr ""
-
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:92
-#: module/Activity/view/activity/admin-approval/view.phtml:44
-msgid "More information about this activity is available below."
-msgstr ""
-
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:229
 msgid "View details of the old activity"
 msgstr ""
 
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:234
 msgid "View details of the new activity"
-msgstr ""
-
-#: module/Activity/view/activity/admin-approval/view-proposal.phtml:293
-#: module/Activity/view/activity/admin-approval/view.phtml:6
-#: module/Activity/view/activity/admin-approval/view.phtml:16
-#: module/Activity/view/activity/admin-approval/view.phtml:182
-msgid "Approval"
-msgstr ""
-
-#: module/Activity/view/activity/admin-approval/view.phtml:141
-msgid "View details / subscriptions"
-msgstr ""
-
-#: module/Activity/view/activity/admin-approval/view.phtml:204
-msgid "Disapprove"
-msgstr ""
-
-#: module/Activity/view/activity/admin-approval/view.phtml:214
-#, php-format
-msgid "This activity was approved by <strong>%s</strong>."
-msgstr ""
-
-#: module/Activity/view/activity/admin-approval/view.phtml:236
-#, php-format
-msgid "This activity was disapproved by <strong>%s</strong>."
 msgstr ""
 
 #: module/Activity/view/activity/admin-category/add.phtml:37
@@ -689,75 +689,6 @@ msgstr ""
 
 #: module/Activity/view/activity/admin-category/index.phtml:54
 msgid "Delete Activity Category"
-msgstr ""
-
-#: module/Activity/view/activity/admin-option/add.phtml:3
-#: module/Activity/view/activity/admin-option/index.phtml:3
-#: module/Application/view/partial/admin.phtml:42
-msgid "Option Calendar"
-msgstr ""
-
-#: module/Activity/view/activity/admin-option/add.phtml:12
-msgid "Planning Period"
-msgstr ""
-
-#: module/Activity/view/activity/admin-option/add.phtml:13
-msgid "Enter the start and end date and time of the planning period."
-msgstr ""
-
-#: module/Activity/view/activity/admin-option/add.phtml:52
-msgid "Option Period"
-msgstr ""
-
-#: module/Activity/view/activity/admin-option/add.phtml:53
-msgid "Enter the start and end date and time of the option period."
-msgstr ""
-
-#: module/Activity/view/activity/admin-option/add.phtml:92
-msgid "Max Activities"
-msgstr ""
-
-#: module/Activity/view/activity/admin-option/add.phtml:93
-msgid ""
-"Enter the maximum number of activities for which options can be created. You "
-"can either set the number globally or individually for each organ."
-msgstr ""
-
-#: module/Activity/view/activity/admin-option/add.phtml:100
-msgid "Global Value"
-msgstr ""
-
-#: module/Activity/view/activity/admin-option/index.phtml:4
-#: module/Activity/view/activity/admin/view.phtml:4
-#: module/Application/view/partial/admin.phtml:33
-msgid "Overview"
-msgstr ""
-
-#: module/Activity/view/activity/admin-option/index.phtml:12
-#, php-format
-msgid ""
-"Options can be proposed from <strong>%s</strong> till <strong>%s</strong> "
-"for the period <strong>%s</strong> to <strong>%s</strong>."
-msgstr ""
-
-#: module/Activity/view/activity/admin-option/index.phtml:20
-#, php-format
-msgid ""
-"The next option creation period will from <strong>%s</strong> till <strong>"
-"%s</strong>."
-msgstr ""
-
-#: module/Activity/view/activity/admin-option/index.phtml:25
-msgid "There is currently no option creation period planned."
-msgstr ""
-
-#: module/Activity/view/activity/admin-option/index.phtml:33
-#: module/Activity/src/Controller/AdminOptionController.php:93
-msgid "Add Option Period"
-msgstr ""
-
-#: module/Activity/view/activity/admin-option/index.phtml:37
-msgid "Edit Upcoming Period"
 msgstr ""
 
 #: module/Activity/view/activity/admin/list.phtml:13
@@ -824,6 +755,75 @@ msgstr ""
 #: module/Activity/view/activity/admin/participants.phtml:46
 #: module/Activity/view/activity/admin/view.phtml:82
 msgid "Participants"
+msgstr ""
+
+#: module/Activity/view/activity/admin-option/add.phtml:3
+#: module/Activity/view/activity/admin-option/index.phtml:3
+#: module/Application/view/partial/admin.phtml:42
+msgid "Option Calendar"
+msgstr ""
+
+#: module/Activity/view/activity/admin-option/add.phtml:12
+msgid "Planning Period"
+msgstr ""
+
+#: module/Activity/view/activity/admin-option/add.phtml:13
+msgid "Enter the start and end date and time of the planning period."
+msgstr ""
+
+#: module/Activity/view/activity/admin-option/add.phtml:52
+msgid "Option Period"
+msgstr ""
+
+#: module/Activity/view/activity/admin-option/add.phtml:53
+msgid "Enter the start and end date and time of the option period."
+msgstr ""
+
+#: module/Activity/view/activity/admin-option/add.phtml:92
+msgid "Max Activities"
+msgstr ""
+
+#: module/Activity/view/activity/admin-option/add.phtml:93
+msgid ""
+"Enter the maximum number of activities for which options can be created. You "
+"can either set the number globally or individually for each organ."
+msgstr ""
+
+#: module/Activity/view/activity/admin-option/add.phtml:100
+msgid "Global Value"
+msgstr ""
+
+#: module/Activity/view/activity/admin-option/index.phtml:4
+#: module/Activity/view/activity/admin/view.phtml:4
+#: module/Application/view/partial/admin.phtml:33
+msgid "Overview"
+msgstr ""
+
+#: module/Activity/view/activity/admin-option/index.phtml:12
+#, php-format
+msgid ""
+"Options can be proposed from <strong>%s</strong> till <strong>%s</strong> "
+"for the period <strong>%s</strong> to <strong>%s</strong>."
+msgstr ""
+
+#: module/Activity/view/activity/admin-option/index.phtml:20
+#, php-format
+msgid ""
+"The next option creation period will from <strong>%s</strong> till "
+"<strong>%s</strong>."
+msgstr ""
+
+#: module/Activity/view/activity/admin-option/index.phtml:25
+msgid "There is currently no option creation period planned."
+msgstr ""
+
+#: module/Activity/view/activity/admin-option/index.phtml:33
+#: module/Activity/src/Controller/AdminOptionController.php:93
+msgid "Add Option Period"
+msgstr ""
+
+#: module/Activity/view/activity/admin-option/index.phtml:37
+msgid "Edit Upcoming Period"
 msgstr ""
 
 #: module/Activity/view/activity/admin/participants.phtml:26
@@ -1210,16 +1210,16 @@ msgid "Categories"
 msgstr ""
 
 #: module/Application/view/partial/admin.phtml:51
-#: module/Application/view/partial/main-nav.phtml:286
-#: module/Application/view/partial/main-nav.phtml:290
-#: module/Application/view/partial/main-nav.phtml:295
+#: module/Application/view/partial/main-nav.phtml:279
+#: module/Application/view/partial/main-nav.phtml:283
+#: module/Application/view/partial/main-nav.phtml:288
 #: module/Company/view/company/admin/edit-company.phtml:4
 #: module/Company/view/company/admin/index.phtml:3
 msgid "Career"
 msgstr ""
 
 #: module/Application/view/partial/admin.phtml:59
-#: module/Application/view/partial/main-nav.phtml:325
+#: module/Application/view/partial/main-nav.phtml:318
 #: module/Education/view/education/admin/add-course.phtml:16
 #: module/Education/view/education/admin/bulk-exam.phtml:11
 #: module/Education/view/education/admin/bulk-summary.phtml:12
@@ -1298,10 +1298,10 @@ msgid "Pages"
 msgstr ""
 
 #: module/Application/view/partial/admin.phtml:118
-#: module/Application/view/partial/main-nav.phtml:382
-#: module/Application/view/partial/main-nav.phtml:386
+#: module/Application/view/partial/main-nav.phtml:375
+#: module/Application/view/partial/main-nav.phtml:379
+#: module/Application/view/partial/main-nav.phtml:383
 #: module/Application/view/partial/main-nav.phtml:390
-#: module/Application/view/partial/main-nav.phtml:397
 #: module/Photo/view/photo/album-admin/add.phtml:21
 #: module/Photo/view/photo/album-admin/create.phtml:3
 #: module/Photo/view/photo/album-admin/edit.phtml:3
@@ -1327,7 +1327,7 @@ msgid "API Users"
 msgstr ""
 
 #: module/Application/view/partial/admin.phtml:153
-#: module/Application/view/partial/main-nav.phtml:124
+#: module/Application/view/partial/main-nav.phtml:117
 msgid "Admin"
 msgstr ""
 
@@ -1356,7 +1356,7 @@ msgid "All rights reserved."
 msgstr ""
 
 #: module/Application/view/partial/footer.phtml:41
-#: module/Application/view/partial/main-nav.phtml:278
+#: module/Application/view/partial/main-nav.phtml:271
 #: module/Company/view/company/company/companyStory.phtml:21
 #: module/Company/view/company/company/jobs.phtml:93
 #: module/Company/view/partial/company/company/list/company.phtml:28
@@ -1368,7 +1368,7 @@ msgid "Language settings"
 msgstr ""
 
 #: module/Application/view/partial/main-nav.phtml:68
-#: module/Application/view/partial/main-nav.phtml:426
+#: module/Application/view/partial/main-nav.phtml:419
 #: module/Decision/view/decision/member/birthdays.phtml:4
 #: module/Decision/view/decision/member/index.phtml:5
 #: module/Decision/view/decision/member/index.phtml:19
@@ -1385,16 +1385,12 @@ msgstr ""
 msgid "My information"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:107
-msgid "SuSOS"
-msgstr ""
-
-#: module/Application/view/partial/main-nav.phtml:113
+#: module/Application/view/partial/main-nav.phtml:106
 #: module/Decision/view/decision/member/index.phtml:47
 msgid "SudoSOS"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:118
+#: module/Application/view/partial/main-nav.phtml:111
 #: module/Decision/view/decision/member/index.phtml:9
 #: module/Decision/view/decision/member/index.phtml:33
 #: module/User/view/user/user/password.phtml:2
@@ -1403,105 +1399,105 @@ msgstr ""
 msgid "Change password"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:130
+#: module/Application/view/partial/main-nav.phtml:123
 msgid "Logout"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:138
+#: module/Application/view/partial/main-nav.phtml:131
 msgid "Toggle navigation"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:151
-#: module/Application/view/partial/main-nav.phtml:156
-#: module/Application/view/partial/main-nav.phtml:161
+#: module/Application/view/partial/main-nav.phtml:144
+#: module/Application/view/partial/main-nav.phtml:149
+#: module/Application/view/partial/main-nav.phtml:154
 #: module/Decision/view/decision/member/index.phtml:60
 msgid "Association"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:172
+#: module/Application/view/partial/main-nav.phtml:165
 msgid "Board"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:177
+#: module/Application/view/partial/main-nav.phtml:170
 #: module/Frontpage/view/frontpage/organ/committee-list.phtml:3
 #: module/Frontpage/view/frontpage/organ/committee-list.phtml:9
 #: module/Frontpage/view/frontpage/organ/organ.phtml:48
 msgid "Committees"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:182
+#: module/Application/view/partial/main-nav.phtml:175
 #: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:3
 #: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:7
 #: module/Frontpage/view/frontpage/organ/organ.phtml:44
 msgid "Fraternities"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:193
+#: module/Application/view/partial/main-nav.phtml:186
 msgid "Exceptional Members"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:204
+#: module/Application/view/partial/main-nav.phtml:197
 msgid "GEWIS song"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:215
+#: module/Application/view/partial/main-nav.phtml:208
 #: module/Decision/view/decision/member/index.phtml:205
 msgid "Regulations"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:222
-#: module/Application/view/partial/main-nav.phtml:227
+#: module/Application/view/partial/main-nav.phtml:215
+#: module/Application/view/partial/main-nav.phtml:220
 msgid "Useful Information"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:233
+#: module/Application/view/partial/main-nav.phtml:226
 #: module/Decision/view/decision/member/index.phtml:84
 msgid "Links"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:238
+#: module/Application/view/partial/main-nav.phtml:231
 msgid "Well-being"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:249
+#: module/Application/view/partial/main-nav.phtml:242
 msgid "Confidential Contact Person (CCP)"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:254
+#: module/Application/view/partial/main-nav.phtml:247
 msgid "FAQ"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:265
+#: module/Application/view/partial/main-nav.phtml:258
 msgid "Housing"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:302
+#: module/Application/view/partial/main-nav.phtml:295
 #: module/Company/view/company/admin/index.phtml:144
 msgid "Featured"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:346
+#: module/Application/view/partial/main-nav.phtml:339
 msgid "My activities"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:353
+#: module/Application/view/partial/main-nav.phtml:346
 msgid "Activity Archive"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:360
+#: module/Application/view/partial/main-nav.phtml:353
 msgid "Create an activity"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:373
+#: module/Application/view/partial/main-nav.phtml:366
 msgid "Career related"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:402
+#: module/Application/view/partial/main-nav.phtml:395
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:200
 msgid "Photo of the week"
 msgstr ""
 
-#: module/Application/view/partial/main-nav.phtml:414
+#: module/Application/view/partial/main-nav.phtml:407
 #: module/Decision/view/decision/member/index.phtml:43
 msgid "My photo's"
 msgstr ""
@@ -1856,9 +1852,10 @@ msgstr ""
 
 #: module/Company/view/partial/company/admin/editors/company.phtml:5
 #: module/Company/view/partial/company/admin/editors/job.phtml:5
-#: module/Company/src/Form/Company.php:63 module/Company/src/Form/Job.php:65
+#: module/Company/src/Form/Company.php:63
 #: module/Company/src/Form/JobCategory.php:85
 #: module/Company/src/Form/JobCategory.php:95
+#: module/Company/src/Form/Job.php:65
 msgid "Slug"
 msgstr ""
 
@@ -3687,32 +3684,6 @@ msgstr ""
 msgid "You are not allowed to access the activities through the API"
 msgstr ""
 
-#: module/Activity/src/Form/Activity.php:34
-msgid "No organ"
-msgstr ""
-
-#: module/Activity/src/Form/Activity.php:35
-msgid "No Company"
-msgstr ""
-
-#: module/Activity/src/Form/Activity.php:289
-#: module/Activity/src/Form/Activity.php:301
-#: module/Activity/src/Form/Activity.php:315
-#: module/Activity/src/Form/Activity.php:327
-#: module/Activity/src/Form/Activity.php:339
-#: module/Activity/src/Form/Activity.php:351
-msgid "Value is required and can't be empty"
-msgstr ""
-
-#: module/Activity/src/Form/Activity.php:372
-msgid ""
-"The sign-up list closing date and time must be before the activity starts."
-msgstr ""
-
-#: module/Activity/src/Form/Activity.php:407
-msgid "The activity must start before it ends."
-msgstr ""
-
 #: module/Activity/src/Form/ActivityCalendarOption.php:26
 msgid "Morning"
 msgstr ""
@@ -3793,10 +3764,30 @@ msgstr ""
 msgid "The options for this proposal do not fit in the valid range."
 msgstr ""
 
-#: module/Activity/src/Form/SignupList.php:173
+#: module/Activity/src/Form/Activity.php:34
+msgid "No organ"
+msgstr ""
+
+#: module/Activity/src/Form/Activity.php:35
+msgid "No Company"
+msgstr ""
+
+#: module/Activity/src/Form/Activity.php:289
+#: module/Activity/src/Form/Activity.php:301
+#: module/Activity/src/Form/Activity.php:315
+#: module/Activity/src/Form/Activity.php:327
+#: module/Activity/src/Form/Activity.php:339
+#: module/Activity/src/Form/Activity.php:351
+msgid "Value is required and can't be empty"
+msgstr ""
+
+#: module/Activity/src/Form/Activity.php:372
 msgid ""
-"The sign-up list opening date and time must be before the sign-up list "
-"closes."
+"The sign-up list closing date and time must be before the activity starts."
+msgstr ""
+
+#: module/Activity/src/Form/Activity.php:407
+msgid "The activity must start before it ends."
 msgstr ""
 
 #: module/Activity/src/Form/SignupListField.php:89
@@ -3812,19 +3803,10 @@ msgstr ""
 msgid "The number of English options must equal the number of Dutch options"
 msgstr ""
 
-#: module/Activity/src/Service/Activity.php:56
-#: module/Activity/src/Service/Activity.php:97
-msgid "You are not allowed to create an activity"
-msgstr ""
-
-#: module/Activity/src/Service/Activity.php:137
-msgid "You are not allowed to create an activity for this organ"
-msgstr ""
-
-#: module/Activity/src/Service/Activity.php:714
-#: module/Activity/src/Service/Activity.php:732
-#: module/Activity/src/Service/Activity.php:750
-msgid "You are not allowed to change the status of the activity"
+#: module/Activity/src/Form/SignupList.php:173
+msgid ""
+"The sign-up list opening date and time must be before the sign-up list "
+"closes."
 msgstr ""
 
 #: module/Activity/src/Service/ActivityCalendar.php:168
@@ -3842,6 +3824,21 @@ msgstr ""
 
 #: module/Activity/src/Service/ActivityCategory.php:115
 msgid "You are not allowed to delete an activity category"
+msgstr ""
+
+#: module/Activity/src/Service/Activity.php:56
+#: module/Activity/src/Service/Activity.php:97
+msgid "You are not allowed to create an activity"
+msgstr ""
+
+#: module/Activity/src/Service/Activity.php:137
+msgid "You are not allowed to create an activity for this organ"
+msgstr ""
+
+#: module/Activity/src/Service/Activity.php:714
+#: module/Activity/src/Service/Activity.php:732
+#: module/Activity/src/Service/Activity.php:750
+msgid "You are not allowed to change the status of the activity"
 msgstr ""
 
 #: module/Activity/src/Service/ActivityQuery.php:91
@@ -3875,6 +3872,10 @@ msgid ""
 "You are not allowed to view upcoming activities coupled to a member account"
 msgstr ""
 
+#: module/Activity/src/Service/SignupListQuery.php:30
+msgid "You are not allowed to view sign-up lists"
+msgstr ""
+
 #: module/Activity/src/Service/Signup.php:54
 #: module/Activity/src/Service/Signup.php:168
 msgid "You need to be logged in to sign up for this activity"
@@ -3906,10 +3907,6 @@ msgstr ""
 
 #: module/Activity/src/Service/Signup.php:369
 msgid "You are not allowed to remove external signups for this activity"
-msgstr ""
-
-#: module/Activity/src/Service/SignupListQuery.php:30
-msgid "You are not allowed to view sign-up lists"
 msgstr ""
 
 #: module/Application/src/Service/FileStorage.php:62
@@ -4006,18 +4003,29 @@ msgstr ""
 msgid "Slogan"
 msgstr ""
 
-#: module/Company/src/Form/Company.php:242 module/Company/src/Form/Job.php:280
+#: module/Company/src/Form/Company.php:242
 #: module/Company/src/Form/JobCategory.php:194
+#: module/Company/src/Form/Job.php:280
 msgid "This slug is already taken"
 msgstr ""
 
-#: module/Company/src/Form/Company.php:251 module/Company/src/Form/Job.php:289
+#: module/Company/src/Form/Company.php:251
 #: module/Company/src/Form/JobCategory.php:203
+#: module/Company/src/Form/Job.php:289
 msgid "This slug contains invalid characters"
 msgstr ""
 
 #: module/Company/src/Form/Company.php:319 module/Company/src/Form/Job.php:336
 msgid "E-mail address format is not valid"
+msgstr ""
+
+#: module/Company/src/Form/JobCategory.php:65
+#: module/Company/src/Form/JobCategory.php:75
+msgid "Name (Plural)"
+msgstr ""
+
+#: module/Company/src/Form/JobCategory.php:105
+msgid "Hidden"
 msgstr ""
 
 #: module/Company/src/Form/Job.php:75
@@ -4030,15 +4038,6 @@ msgstr ""
 
 #: module/Company/src/Form/Job.php:214 module/Company/src/Form/Job.php:224
 msgid "Attachment"
-msgstr ""
-
-#: module/Company/src/Form/JobCategory.php:65
-#: module/Company/src/Form/JobCategory.php:75
-msgid "Name (Plural)"
-msgstr ""
-
-#: module/Company/src/Form/JobCategory.php:105
-msgid "Hidden"
 msgstr ""
 
 #: module/Company/src/Form/Package.php:38
@@ -4266,17 +4265,17 @@ msgstr ""
 msgid "You are not authorize people."
 msgstr ""
 
-#: module/Decision/src/Service/Member.php:56
+#: module/Decision/src/Service/MemberInfo.php:40
+msgid "You are not allowed to view membership info."
+msgstr ""
+
 #: module/Decision/src/Service/MemberInfo.php:42
+#: module/Decision/src/Service/Member.php:56
 msgid "You are not allowed to view members."
 msgstr ""
 
 #: module/Decision/src/Service/Member.php:100
 msgid "Name must be at least "
-msgstr ""
-
-#: module/Decision/src/Service/MemberInfo.php:40
-msgid "You are not allowed to view membership info."
 msgstr ""
 
 #: module/Decision/src/Service/Organ.php:56

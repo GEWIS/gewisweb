@@ -101,13 +101,6 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                     <?= $this->translate('My information') ?>
                                 </a>
                             </li>
-                            <?php if ($this->acl('decision_service_acl')->isAllowed('organ', 'edit')): ?>
-                                <li>
-                                    <a href="https://gewis.nl/susos/account/websitelogin.php">
-                                        <?= $this->translate('SuSOS') ?>
-                                    </a>
-                                </li>
-                            <?php endif; ?>
                             <li>
                                 <a href="<?= $this->url('user_token', ['appId' => 'sudosos']) ?>">
                                     <?= $this->translate('SudoSOS') ?>

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-02 12:25+0200\n"
-"PO-Revision-Date: 2022-10-02 12:33+0200\n"
+"POT-Creation-Date: 2022-10-06 16:29+0200\n"
+"PO-Revision-Date: 2022-10-06 16:32+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: module/Activity/src/Controller/ActivityCalendarController.php:79
 msgid "You are not allowed to create activity proposals"
@@ -577,7 +577,7 @@ msgstr "Creëer activiteitenvoorstel"
 
 #: module/Activity/view/activity/activity-calendar/create.phtml:54
 #: module/Activity/view/activity/activity-calendar/index.phtml:20
-#: module/Application/view/partial/main-nav.phtml:367
+#: module/Application/view/partial/main-nav.phtml:360
 #: module/Decision/view/decision/member/index.phtml:186
 msgid "Option calendar"
 msgstr "Optiekalender"
@@ -934,9 +934,9 @@ msgstr ""
 #: module/Activity/view/activity/admin/participants.phtml:7
 #: module/Activity/view/activity/admin/view.phtml:3
 #: module/Application/view/partial/admin.phtml:29
-#: module/Application/view/partial/main-nav.phtml:331
-#: module/Application/view/partial/main-nav.phtml:335
-#: module/Application/view/partial/main-nav.phtml:340
+#: module/Application/view/partial/main-nav.phtml:324
+#: module/Application/view/partial/main-nav.phtml:328
+#: module/Application/view/partial/main-nav.phtml:333
 #: module/Decision/view/decision/member/index.phtml:182
 msgid "Activities"
 msgstr "Activiteiten"
@@ -1781,16 +1781,16 @@ msgid "Categories"
 msgstr "Categorieën"
 
 #: module/Application/view/partial/admin.phtml:51
-#: module/Application/view/partial/main-nav.phtml:286
-#: module/Application/view/partial/main-nav.phtml:290
-#: module/Application/view/partial/main-nav.phtml:295
+#: module/Application/view/partial/main-nav.phtml:279
+#: module/Application/view/partial/main-nav.phtml:283
+#: module/Application/view/partial/main-nav.phtml:288
 #: module/Company/view/company/admin/edit-company.phtml:4
 #: module/Company/view/company/admin/index.phtml:3
 msgid "Career"
 msgstr "Carrière"
 
 #: module/Application/view/partial/admin.phtml:59
-#: module/Application/view/partial/main-nav.phtml:325
+#: module/Application/view/partial/main-nav.phtml:318
 #: module/Education/view/education/admin/add-course.phtml:16
 #: module/Education/view/education/admin/bulk-exam.phtml:11
 #: module/Education/view/education/admin/bulk-summary.phtml:12
@@ -1869,10 +1869,10 @@ msgid "Pages"
 msgstr "Pagina's"
 
 #: module/Application/view/partial/admin.phtml:118
-#: module/Application/view/partial/main-nav.phtml:382
-#: module/Application/view/partial/main-nav.phtml:386
+#: module/Application/view/partial/main-nav.phtml:375
+#: module/Application/view/partial/main-nav.phtml:379
+#: module/Application/view/partial/main-nav.phtml:383
 #: module/Application/view/partial/main-nav.phtml:390
-#: module/Application/view/partial/main-nav.phtml:397
 #: module/Photo/view/photo/album-admin/add.phtml:21
 #: module/Photo/view/photo/album-admin/create.phtml:3
 #: module/Photo/view/photo/album-admin/edit.phtml:3
@@ -1898,7 +1898,7 @@ msgid "API Users"
 msgstr "API gebruikers"
 
 #: module/Application/view/partial/admin.phtml:153
-#: module/Application/view/partial/main-nav.phtml:124
+#: module/Application/view/partial/main-nav.phtml:117
 msgid "Admin"
 msgstr "Admin"
 
@@ -1921,7 +1921,7 @@ msgid "by WebCommissie GEWIS."
 msgstr "door de WebCommissie van GEWIS."
 
 #: module/Application/view/partial/footer.phtml:41
-#: module/Application/view/partial/main-nav.phtml:278
+#: module/Application/view/partial/main-nav.phtml:271
 #: module/Company/view/company/company/companyStory.phtml:21
 #: module/Company/view/company/company/jobs.phtml:93
 #: module/Company/view/partial/company/company/list/company.phtml:28
@@ -1933,7 +1933,7 @@ msgid "Language settings"
 msgstr "Taalinstellingen"
 
 #: module/Application/view/partial/main-nav.phtml:68
-#: module/Application/view/partial/main-nav.phtml:426
+#: module/Application/view/partial/main-nav.phtml:419
 #: module/Decision/view/decision/member/birthdays.phtml:4
 #: module/Decision/view/decision/member/index.phtml:5
 #: module/Decision/view/decision/member/index.phtml:19
@@ -1950,16 +1950,12 @@ msgstr "Inschrijven"
 msgid "My information"
 msgstr "Mijn informatie"
 
-#: module/Application/view/partial/main-nav.phtml:107
-msgid "SuSOS"
-msgstr "SuSOS"
-
-#: module/Application/view/partial/main-nav.phtml:113
+#: module/Application/view/partial/main-nav.phtml:106
 #: module/Decision/view/decision/member/index.phtml:47
 msgid "SudoSOS"
 msgstr "SudoSOS"
 
-#: module/Application/view/partial/main-nav.phtml:118
+#: module/Application/view/partial/main-nav.phtml:111
 #: module/Decision/view/decision/member/index.phtml:9
 #: module/Decision/view/decision/member/index.phtml:33
 #: module/User/src/Form/Password.php:59
@@ -1968,105 +1964,105 @@ msgstr "SudoSOS"
 msgid "Change password"
 msgstr "Wijzig wachtwoord"
 
-#: module/Application/view/partial/main-nav.phtml:130
+#: module/Application/view/partial/main-nav.phtml:123
 msgid "Logout"
 msgstr "Uitloggen"
 
-#: module/Application/view/partial/main-nav.phtml:138
+#: module/Application/view/partial/main-nav.phtml:131
 msgid "Toggle navigation"
 msgstr "Klap navigatie in/uit"
 
-#: module/Application/view/partial/main-nav.phtml:151
-#: module/Application/view/partial/main-nav.phtml:156
-#: module/Application/view/partial/main-nav.phtml:161
+#: module/Application/view/partial/main-nav.phtml:144
+#: module/Application/view/partial/main-nav.phtml:149
+#: module/Application/view/partial/main-nav.phtml:154
 #: module/Decision/view/decision/member/index.phtml:60
 msgid "Association"
 msgstr "Vereniging"
 
-#: module/Application/view/partial/main-nav.phtml:172
+#: module/Application/view/partial/main-nav.phtml:165
 msgid "Board"
 msgstr "Bestuur"
 
-#: module/Application/view/partial/main-nav.phtml:177
+#: module/Application/view/partial/main-nav.phtml:170
 #: module/Frontpage/view/frontpage/organ/committee-list.phtml:3
 #: module/Frontpage/view/frontpage/organ/committee-list.phtml:9
 #: module/Frontpage/view/frontpage/organ/organ.phtml:48
 msgid "Committees"
 msgstr "Commissies"
 
-#: module/Application/view/partial/main-nav.phtml:182
+#: module/Application/view/partial/main-nav.phtml:175
 #: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:3
 #: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:7
 #: module/Frontpage/view/frontpage/organ/organ.phtml:44
 msgid "Fraternities"
 msgstr "Disputen"
 
-#: module/Application/view/partial/main-nav.phtml:193
+#: module/Application/view/partial/main-nav.phtml:186
 msgid "Exceptional Members"
 msgstr "Uitzonderlijke leden"
 
-#: module/Application/view/partial/main-nav.phtml:204
+#: module/Application/view/partial/main-nav.phtml:197
 msgid "GEWIS song"
 msgstr "GEWIS-lied"
 
-#: module/Application/view/partial/main-nav.phtml:215
+#: module/Application/view/partial/main-nav.phtml:208
 #: module/Decision/view/decision/member/index.phtml:205
 msgid "Regulations"
 msgstr "Reguleringen"
 
-#: module/Application/view/partial/main-nav.phtml:222
-#: module/Application/view/partial/main-nav.phtml:227
+#: module/Application/view/partial/main-nav.phtml:215
+#: module/Application/view/partial/main-nav.phtml:220
 msgid "Useful Information"
 msgstr "Praktische informatie"
 
-#: module/Application/view/partial/main-nav.phtml:233
+#: module/Application/view/partial/main-nav.phtml:226
 #: module/Decision/view/decision/member/index.phtml:84
 msgid "Links"
 msgstr "Links"
 
-#: module/Application/view/partial/main-nav.phtml:238
+#: module/Application/view/partial/main-nav.phtml:231
 msgid "Well-being"
 msgstr "Welzijn"
 
-#: module/Application/view/partial/main-nav.phtml:249
+#: module/Application/view/partial/main-nav.phtml:242
 msgid "Confidential Contact Person (CCP)"
 msgstr "Vertrouwenscontactpersonen (VCP)"
 
-#: module/Application/view/partial/main-nav.phtml:254
+#: module/Application/view/partial/main-nav.phtml:247
 msgid "FAQ"
 msgstr "FAQ"
 
-#: module/Application/view/partial/main-nav.phtml:265
+#: module/Application/view/partial/main-nav.phtml:258
 msgid "Housing"
 msgstr "Huisvesting"
 
-#: module/Application/view/partial/main-nav.phtml:302
+#: module/Application/view/partial/main-nav.phtml:295
 #: module/Company/view/company/admin/index.phtml:144
 msgid "Featured"
 msgstr "Uitgelicht"
 
-#: module/Application/view/partial/main-nav.phtml:346
+#: module/Application/view/partial/main-nav.phtml:339
 msgid "My activities"
 msgstr "Mijn activiteiten"
 
-#: module/Application/view/partial/main-nav.phtml:353
+#: module/Application/view/partial/main-nav.phtml:346
 msgid "Activity Archive"
 msgstr "Archief"
 
-#: module/Application/view/partial/main-nav.phtml:360
+#: module/Application/view/partial/main-nav.phtml:353
 msgid "Create an activity"
 msgstr "Maak een activiteit"
 
-#: module/Application/view/partial/main-nav.phtml:373
+#: module/Application/view/partial/main-nav.phtml:366
 msgid "Career related"
 msgstr "Carrière gerelateerd"
 
-#: module/Application/view/partial/main-nav.phtml:402
+#: module/Application/view/partial/main-nav.phtml:395
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:200
 msgid "Photo of the week"
 msgstr "Foto van de week"
 
-#: module/Application/view/partial/main-nav.phtml:414
+#: module/Application/view/partial/main-nav.phtml:407
 #: module/Decision/view/decision/member/index.phtml:43
 msgid "My photo's"
 msgstr "Mijn foto’s"
