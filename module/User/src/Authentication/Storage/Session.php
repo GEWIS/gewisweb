@@ -17,6 +17,9 @@ use UnexpectedValueException;
 
 class Session extends SessionStorage
 {
+    private const JWT_COOKIE_NAME = 'GEWISSESSTOKEN';
+    private const JWT_KEY_ALGORITHM = 'RS256';
+
     protected bool $rememberMe;
 
     public function __construct(
@@ -66,22 +69,29 @@ class Session extends SessionStorage
         }
 
         $cookies = $this->request->getHeaders()->get('cookie');
-        if (!isset($cookies->GEWISSESSTOKEN)) {
+        if (!isset($cookies[self::JWT_COOKIE_NAME])) {
             return false;
         }
 
         // Stop validation if we are destroying the session.
         if ($this->response->getHeaders()->has('set-cookie')) {
             foreach ($this->response->getHeaderS()->get('set-cookie') as $cookie) {
-                if ($cookie->getName() === 'GEWISSESSTOKEN' && $cookie->getValue() === 'deleted') {
+                if (
+                    self::JWT_COOKIE_NAME === $cookie->getName()
+                    && 'deleted' === $cookie->getValue()
+                ) {
                     return false;
                 }
             }
         }
 
         try {
-            $session = JWT::decode($cookies->GEWISSESSTOKEN, new Key($key, 'RS256'));
+            $session = JWT::decode($cookies[self::JWT_COOKIE_NAME], new Key($key, self::JWT_KEY_ALGORITHM));
         } catch (UnexpectedValueException $e) {
+            // This is a generic exception thrown by the JWT library. To ensure that if something goes wrong while
+            // decrypting the cookie, unset it. This ensures that people with the cookie do not end up in a loop.
+            $this->clearCookie();
+
             return false;
         }
 
@@ -133,7 +143,7 @@ class Session extends SessionStorage
             'nonce' => bin2hex(openssl_random_pseudo_bytes(16)),
         ];
 
-        $jwt = JWT::encode($token, $key, 'RS256');
+        $jwt = JWT::encode($token, $key, self::JWT_KEY_ALGORITHM);
 
         $this->saveCookie($jwt);
     }
@@ -157,7 +167,7 @@ class Session extends SessionStorage
      */
     protected function saveCookie(string $jwt): void
     {
-        $sessionToken = new SetCookie('GEWISSESSTOKEN', $jwt, strtotime('+2 weeks'), '/');
+        $sessionToken = new SetCookie(self::JWT_COOKIE_NAME, $jwt, strtotime('+2 weeks'), '/');
         $sessionToken = $this->setCookieParameters($sessionToken);
 
         $this->response->getHeaders()->addHeader($sessionToken);
@@ -168,7 +178,7 @@ class Session extends SessionStorage
      */
     protected function clearCookie(): void
     {
-        $sessionToken = new SetCookie('GEWISSESSTOKEN', 'deleted', strtotime('-1 Year'), '/');
+        $sessionToken = new SetCookie(self::JWT_COOKIE_NAME, 'deleted', strtotime('-1 Year'), '/');
         $sessionToken = $this->setCookieParameters($sessionToken);
 
         $this->response->getHeaders()->addHeader($sessionToken);
