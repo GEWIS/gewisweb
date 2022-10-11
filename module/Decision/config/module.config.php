@@ -102,6 +102,18 @@ return [
                                 'action' => 'authorizations',
                             ],
                         ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'revoke' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/revoke',
+                                    'defaults' => [
+                                        'action' => 'revokeAuthorization',
+                                    ],
+                                ],
+                            ],
+                        ],
                     ],
                     'files' => [
                         'type' => Regex::class,

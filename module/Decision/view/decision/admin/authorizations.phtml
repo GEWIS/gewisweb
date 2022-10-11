@@ -7,39 +7,80 @@ $this->breadcrumbs()
     <div class="container">
         <div class="form-group">
             <select class="form-control" id="meeting-selector">
-                <?php foreach ($meetings as $meeting): ?>
-                    <option
-                        value="<?= $this->url('admin_decision/authorizations', ['number' => $meeting->getNumber()]) ?>"
-                        <?= $meeting->getNumber() === intval($number) ? 'selected' : '' ?>>
-                        AV <?= $meeting->getNumber() ?> (<?= $meeting->getDate()->format('Y-m-d') ?>
-                        )
-                    </option>
-                <?php endforeach; ?>
+                <?php if (!empty($meetings)): ?>
+                    <?php foreach ($meetings as $meeting): ?>
+                        <option
+                            value="<?= $this->url(
+                                'admin_decision/authorizations',
+                                ['number' => $meeting->getNumber()],
+                            ) ?>"
+                            <?= $meeting->getNumber() === intval($number) ? 'selected' : '' ?>
+                        >
+                            <?= sprintf(
+                                $this->translate('GMM %d (%s)'),
+                                $meeting->getNumber(),
+                                $meeting->getDate()->format('Y-m-d')
+                            ) ?>
+                        </option>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <option selected disabled><?= $this->translate('No GMM available.') ?></option>
+                <?php endif; ?>
             </select>
         </div>
         <?php if (null !== $number): ?>
-            <h3><?= sprintf($this->translate('Authorizations for AV %s'), $number) ?></h3>
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <td><?= $this->translate('Authorizer') ?></td>
-                    <td><?= $this->translate('Recipient') ?></td>
-                    <td><?= $this->translate('Valid') ?></td>
-                </tr>
-                </thead>
-                <tbody>
-                <?php foreach ($authorizations as $authorization): ?>
+            <h3><?= sprintf($this->translate('Valid authorizations for GMM %d'), $number) ?></h3>
+            <?php if (!empty($valid)): ?>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td><?= $this->translate('Authorizer') ?></td>
+                            <td><?= $this->translate('Recipient') ?></td>
+                            <td><?= $this->translate('Created') ?></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($valid as $authorization): ?>
+                        <tr>
+                            <td><?= $authorization->getAuthorizer()->getFullName() ?></td>
+                            <td><?= $authorization->getRecipient()->getFullName() ?></td>
+                            <td><?= $authorization->getCreatedAt()->format('Y-m-d H:i:s') ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <p><?= $this->translate('There are no valid authorizations for this GMM.') ?></p>
+            <?php endif; ?>
+            <hr>
+            <h3><?= sprintf($this->translate('Revoked authorizations for GMM %d'), $number) ?></h3>
+            <?php if (!empty($revoked)): ?>
+                <table class="table table-bordered">
+                    <thead>
                     <tr>
-                        <td><?= $authorization->getAuthorizer()->getFullName() ?></td>
-                        <td><?= $authorization->getRecipient()->getFullName() ?></td>
-                        <td>
-                            <span class="fas <?= $authorization->getRevoked() ? 'fa-times' : 'fa-check' ?>">
-                        </td>
+                        <td><?= $this->translate('Authorizer') ?></td>
+                        <td><?= $this->translate('Recipient') ?></td>
+                        <td><?= $this->translate('Created') ?></td>
+                        <td><?= $this->translate('Revoked') ?></td>
                     </tr>
-                <?php endforeach ?>
-                </tbody>
-            </table>
-        <?php endif ?>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($revoked as $authorization): ?>
+                        <tr>
+                            <td><?= $authorization->getAuthorizer()->getFullName() ?></td>
+                            <td><?= $authorization->getRecipient()->getFullName() ?></td>
+                            <td><?= $authorization->getCreatedAt()->format('Y-m-d H:i:s') ?></td>
+                            <td><?= $authorization->getRevokedAt()->format('Y-m-d H:i:s') ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <p><?= $this->translate('There are no revoked authorizations for this GMM.') ?></p>
+            <?php endif; ?>
+        <?php elseif (!empty($meetings)): ?>
+            <p><?= $this->translate('Please select a GMM to view authorizations.') ?></p>
+        <?php endif; ?>
     </div>
 </section>
 <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">

@@ -2,12 +2,14 @@
 
 namespace Decision\Service;
 
+use DateTime;
 use Application\Service\{
     Email as EmailService,
     FileStorage as FileStorageService,
 };
 use Decision\Form\{
     Authorization as AuthorizationForm,
+    AuthorizationRevocation as AuthorizationRevocationForm,
     Document as DocumentForm,
     Minutes as MinutesForm,
     ReorderDocument as ReorderDocumentForm,
@@ -21,6 +23,7 @@ use Decision\Mapper\{
 };
 use Decision\Model\{
     Authorization as AuthorizationModel,
+    Enums\MembershipTypes,
     Meeting as MeetingModel,
     MeetingDocument as MeetingDocumentModel,
     MeetingMinutes as MeetingMinutesModel,
@@ -56,6 +59,7 @@ class Decision
         private readonly ReorderDocumentForm $reorderDocumentForm,
         private readonly SearchDecisionForm $searchDecisionForm,
         private readonly AuthorizationForm $authorizationForm,
+        private readonly AuthorizationRevocationForm $authorizationRevocationForm,
     ) {
     }
 
@@ -384,7 +388,10 @@ class Decision
             );
         }
 
-        return $this->authorizationMapper->findNotRevoked($meetingNumber);
+        return [
+            'valid' => $this->authorizationMapper->findAllByType($meetingNumber),
+            'revoked' => $this->authorizationMapper->findAllByType($meetingNumber, true),
+        ];
     }
 
     /**
@@ -408,10 +415,10 @@ class Decision
     /**
      * @param array $data
      *
-     * @return AuthorizationModel|false
+     * @return AuthorizationModel|null
      * @throws ORMException
      */
-    public function createAuthorization(array $data): AuthorizationModel|bool
+    public function createAuthorization(array $data): ?AuthorizationModel
     {
         $authorizer = $this->aclService->getIdentityOrThrowException()->getMember();
         $recipient = $this->memberMapper->findByLidnr($data['recipient']);
@@ -419,13 +426,15 @@ class Decision
         if (
             null === $recipient
             || $recipient->getLidnr() === $authorizer->getLidnr()
+            || MembershipTypes::Graduate === $recipient->getType()
+            || (new DateTime()) >= $recipient->getExpiration()
         ) {
-            return false;
+            return null;
         }
 
         $meeting = $this->getLatestAV();
         if (null === $meeting) {
-            return false;
+            return null;
         }
 
         // You cannot authorize more than one person, actually return the existing authorization model to ensure the
@@ -439,6 +448,7 @@ class Decision
         $authorization->setAuthorizer($authorizer);
         $authorization->setRecipient($recipient);
         $authorization->setMeetingNumber($meeting->getNumber());
+        $authorization->setCreatedAt(new DateTime());
         $this->authorizationMapper->persist($authorization);
 
         // Send an email to the recipient
@@ -460,6 +470,21 @@ class Decision
         );
 
         return $authorization;
+    }
+
+    public function revokeAuthorization(AuthorizationModel $authorization): void
+    {
+        $authorization->setRevokedAt(new DateTime());
+
+        $this->authorizationMapper->persist($authorization);
+
+        $this->emailService->sendEmailAsUserToUser(
+            $authorization->getRecipient(),
+            'email/authorization_revoked',
+            'Machtiging ingetrokken | Authorization revoked',
+            ['authorization' => $authorization],
+            $authorization->getAuthorizer(),
+        );
     }
 
     /**
@@ -522,10 +547,24 @@ class Decision
     public function getAuthorizationForm(): AuthorizationForm
     {
         if (!$this->aclService->isAllowed('create', 'authorization')) {
-            throw new NotAllowedException($this->translator->translate('You are not authorize people.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed authorize people.'));
         }
 
         return $this->authorizationForm;
+    }
+
+    /**
+     * Get the Authorization revocation form.
+     *
+     * @return AuthorizationRevocationForm
+     */
+    public function getAuthorizationRevocationForm(): AuthorizationRevocationForm
+    {
+        if (!$this->aclService->isAllowed('revoke', 'authorization')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to revoke authorizations.'));
+        }
+
+        return $this->authorizationRevocationForm;
     }
 
     /**
