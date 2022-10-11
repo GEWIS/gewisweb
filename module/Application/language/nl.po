@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-06 16:29+0200\n"
-"PO-Revision-Date: 2022-10-06 16:32+0200\n"
+"POT-Creation-Date: 2022-10-11 18:23+0200\n"
+"PO-Revision-Date: 2022-10-11 18:41+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -380,7 +380,7 @@ msgstr "De opties voor dit voorstel passen niet binnen het geldige bereik."
 #: module/Company/view/company/admin/edit-package.phtml:66
 #: module/Company/view/company/admin/index.phtml:109
 #: module/Company/view/company/admin/index.phtml:195
-#: module/Decision/view/decision/admin/document.phtml:43
+#: module/Decision/view/decision/admin/document.phtml:47
 #: module/Decision/view/decision/member/birthdays.phtml:12
 #: module/Decision/view/decision/organ-admin/index.phtml:12
 #: module/Decision/view/decision/organ/index.phtml:14
@@ -719,7 +719,7 @@ msgstr "Einde"
 #: module/Company/view/company/admin/edit-company.phtml:139
 #: module/Company/view/company/admin/edit-package.phtml:89
 #: module/Company/view/company/admin/index.phtml:187
-#: module/Decision/view/decision/admin/document.phtml:111
+#: module/Decision/view/decision/admin/document.phtml:115
 #: module/Education/view/education/admin/edit-exam.phtml:43
 #: module/Education/view/education/admin/edit-summary.phtml:43
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:73
@@ -753,7 +753,7 @@ msgstr "Weet je zeker dat je deze optie wil verwijderen?"
 #: module/Company/view/company/admin/edit-company.phtml:192
 #: module/Company/view/company/admin/edit-package.phtml:123
 #: module/Company/view/company/admin/index.phtml:227
-#: module/Decision/view/decision/decision/authorizations.phtml:124
+#: module/Decision/view/decision/decision/authorization.phtml:167
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:171
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:217
 #: module/Photo/view/photo/album-admin/index.phtml:218
@@ -1695,8 +1695,9 @@ msgid "An error occurred"
 msgstr "Er is een fout opgetreden"
 
 #: module/Application/view/error/500.phtml:4
-msgid "If this keeps occurring, please contact the WebCommittee"
-msgstr "Wanneer dit aanhoudt, contacteer de WebCommissie"
+msgid "If this keeps occurring, please contact the ApplicatieBeheerCommissie."
+msgstr ""
+"Blijft dit gebeuren, neem dan contact op met de ApplicatieBeheerCommissie."
 
 #: module/Application/view/error/debug/403.phtml:3
 msgid "403 Forbidden"
@@ -1841,8 +1842,8 @@ msgstr "Documenten"
 
 #: module/Application/view/partial/admin.phtml:94
 #: module/Decision/view/decision/admin/authorizations.phtml:4
-#: module/Decision/view/decision/decision/authorizations.phtml:3
-#: module/Decision/view/decision/decision/authorizations.phtml:13
+#: module/Decision/view/decision/decision/authorization.phtml:3
+#: module/Decision/view/decision/decision/authorization.phtml:16
 #: module/Decision/view/decision/member/index.phtml:52
 msgid "Authorizations"
 msgstr "Machtigingen"
@@ -1912,15 +1913,19 @@ msgstr "Infimum"
 msgid "Loading an infimum..."
 msgstr "Een infimum aan het laden..."
 
-#: module/Application/view/partial/footer.phtml:37
+#: module/Application/view/partial/footer.phtml:38
 msgid "All rights reserved."
 msgstr "Alle rechten voorbehouden."
 
-#: module/Application/view/partial/footer.phtml:37
-msgid "by WebCommissie GEWIS."
-msgstr "door de WebCommissie van GEWIS."
+#: module/Application/view/partial/footer.phtml:39
+msgid ""
+"Made with <3 by the ApplicatieBeheerCommissie and Web Commissie (2013 - "
+"2022)."
+msgstr ""
+"Met <3 gemaakt door de ApplicatieBeheerCommissie en Web Commissie (2013 - "
+"2022)."
 
-#: module/Application/view/partial/footer.phtml:41
+#: module/Application/view/partial/footer.phtml:44
 #: module/Application/view/partial/main-nav.phtml:271
 #: module/Company/view/company/company/companyStory.phtml:21
 #: module/Company/view/company/company/jobs.phtml:93
@@ -2696,11 +2701,16 @@ msgstr "Er zijn momenteel geen vacature-labels..."
 msgid "Meeting minutes uploaded"
 msgstr "Notulen geupload"
 
-#: module/Decision/src/Controller/DecisionController.php:102
+#: module/Decision/src/Controller/DecisionController.php:103
 msgid "You are not allowed to search decisions."
 msgstr "Het is niet toegestaan om besluiten te doorzoeken."
 
-#: module/Decision/src/Controller/DecisionController.php:179
+#: module/Decision/src/Controller/DecisionController.php:181
+#: module/Decision/src/Service/Decision.php:564
+msgid "You are not allowed to revoke authorizations."
+msgstr "Je hebt niet de rechten om machtigingen in te trekken."
+
+#: module/Decision/src/Controller/DecisionController.php:209
 msgid "You are not allowed to browse files."
 msgstr "Je hebt niet de rechten om door bestanden te bladeren."
 
@@ -2713,10 +2723,14 @@ msgid "You are not allowed to view the list of birthdays."
 msgstr "Het is niet toegestaan om de lijst met verjaardagen te zien."
 
 #: module/Decision/src/Form/Authorization.php:50
-#: module/Decision/view/decision/decision/authorizations.phtml:72
-#: module/Decision/view/decision/decision/authorizations.phtml:78
+#: module/Decision/view/decision/decision/authorization.phtml:115
+#: module/Decision/view/decision/decision/authorization.phtml:121
 msgid "Authorize"
 msgstr "Machtig"
+
+#: module/Decision/src/Form/AuthorizationRevocation.php:42
+msgid "Revoke authorization"
+msgstr "Machtiging intrekken"
 
 #: module/Decision/src/Form/Document.php:31
 #: module/Decision/src/Form/Minutes.php:31
@@ -2852,46 +2866,46 @@ msgstr "ALV-Werkgroep"
 msgid "Advisory Board"
 msgstr "Raad van Advies"
 
-#: module/Decision/src/Service/Decision.php:82
-#: module/Decision/src/Service/Decision.php:101
-#: module/Decision/src/Service/Decision.php:115
+#: module/Decision/src/Service/Decision.php:86
+#: module/Decision/src/Service/Decision.php:105
+#: module/Decision/src/Service/Decision.php:119
 msgid "You are not allowed to list meetings."
 msgstr "Het is niet toegestaan om de lijst van vergaderingen te zien."
 
-#: module/Decision/src/Service/Decision.php:135
+#: module/Decision/src/Service/Decision.php:139
 msgid "You are not allowed to view meetings."
 msgstr "Het is niet toegestaan om vergaderingen te zien."
 
-#: module/Decision/src/Service/Decision.php:187
+#: module/Decision/src/Service/Decision.php:191
 msgid "You are not allowed to view meeting documents."
 msgstr "Het is niet toegestaan om vergaderstukken te zien."
 
-#: module/Decision/src/Service/Decision.php:208
+#: module/Decision/src/Service/Decision.php:212
 msgid "You are not allowed to view meeting minutes."
 msgstr "Het is niet toegestaan om notulen te zien."
 
-#: module/Decision/src/Service/Decision.php:289
+#: module/Decision/src/Service/Decision.php:293
 msgid "You are not allowed to delete meeting documents."
 msgstr "Het is niet toegestaan om vergaderstukken te verwijderen."
 
-#: module/Decision/src/Service/Decision.php:383
+#: module/Decision/src/Service/Decision.php:387
 msgid "You are not allowed to view all authorizations."
 msgstr "Je hebt niet de rechten om alle machtigingen te bekijken."
 
-#: module/Decision/src/Service/Decision.php:400
+#: module/Decision/src/Service/Decision.php:407
 msgid "You are not allowed to view authorizations."
 msgstr "Je hebt niet de rechten om all machtigingen te bekijken."
 
-#: module/Decision/src/Service/Decision.php:473
+#: module/Decision/src/Service/Decision.php:498
 msgid "You are not allowed to upload meeting minutes."
 msgstr "Het is niet toegestaan om notulen te uploaden."
 
-#: module/Decision/src/Service/Decision.php:488
+#: module/Decision/src/Service/Decision.php:513
 msgid "You are not allowed to upload meeting documents."
 msgstr "Het is niet toegestaan om vergaderstukken te uploaden."
 
-#: module/Decision/src/Service/Decision.php:525
-msgid "You are not authorize people."
+#: module/Decision/src/Service/Decision.php:550
+msgid "You are not allowed authorize people."
 msgstr "Je hebt niet de rechten om iemand te machtigen."
 
 #: module/Decision/src/Service/Member.php:56
@@ -2923,22 +2937,55 @@ msgstr "Je hebt niet de rechten om organen te wijzigen"
 msgid "You are not allowed to edit this organ's information"
 msgstr "Je hebt niet de rechten om de informatie van dit orgaan te wijzigen"
 
-#: module/Decision/view/decision/admin/authorizations.phtml:21
+#: module/Decision/view/decision/admin/authorizations.phtml:20
 #, php-format
-msgid "Authorizations for AV %s"
-msgstr "Machtigingen voor AV %s"
+msgid "GMM %d (%s)"
+msgstr "ALV %d (%s)"
 
-#: module/Decision/view/decision/admin/authorizations.phtml:25
+#: module/Decision/view/decision/admin/authorizations.phtml:27
+msgid "No GMM available."
+msgstr "Geen ALV beschikbaar."
+
+#: module/Decision/view/decision/admin/authorizations.phtml:32
+#, php-format
+msgid "Valid authorizations for GMM %d"
+msgstr "Geldige machtigingen voor ALV %d"
+
+#: module/Decision/view/decision/admin/authorizations.phtml:37
+#: module/Decision/view/decision/admin/authorizations.phtml:61
 msgid "Authorizer"
 msgstr "Machtiger"
 
-#: module/Decision/view/decision/admin/authorizations.phtml:26
+#: module/Decision/view/decision/admin/authorizations.phtml:38
+#: module/Decision/view/decision/admin/authorizations.phtml:62
 msgid "Recipient"
 msgstr "Ontvanger"
 
-#: module/Decision/view/decision/admin/authorizations.phtml:27
-msgid "Valid"
-msgstr "Geldig"
+#: module/Decision/view/decision/admin/authorizations.phtml:39
+#: module/Decision/view/decision/admin/authorizations.phtml:63
+msgid "Created"
+msgstr "Aangemaakt"
+
+#: module/Decision/view/decision/admin/authorizations.phtml:53
+msgid "There are no valid authorizations for this GMM."
+msgstr "Er zijn geen geldige machtigingen voor deze ALV."
+
+#: module/Decision/view/decision/admin/authorizations.phtml:56
+#, php-format
+msgid "Revoked authorizations for GMM %d"
+msgstr "Ingetrokken machtigingen voor ALV %d"
+
+#: module/Decision/view/decision/admin/authorizations.phtml:64
+msgid "Revoked"
+msgstr "Ingetrokken"
+
+#: module/Decision/view/decision/admin/authorizations.phtml:79
+msgid "There are no revoked authorizations for this GMM."
+msgstr "Er zijn geen ingetrokken machtigingen voor deze ALV."
+
+#: module/Decision/view/decision/admin/authorizations.phtml:82
+msgid "Please select a GMM to view authorizations."
+msgstr "Selecteer een ALV om machtigingen te bekijken."
 
 #: module/Decision/view/decision/admin/document.phtml:8
 msgid "There are no meetings for which you can upload documents."
@@ -2948,11 +2995,15 @@ msgstr "Er zijn geen vergaderingen waarvoor je documenten kunt uploaden."
 msgid "Meeting document uploaded"
 msgstr "Vergaderstuk geupload"
 
-#: module/Decision/view/decision/admin/document.phtml:75
+#: module/Decision/view/decision/admin/document.phtml:38
+msgid "No meeting available."
+msgstr "Geen vergaderingen beschikbaar."
+
+#: module/Decision/view/decision/admin/document.phtml:79
 msgid "Documents for this meeting"
 msgstr "Documenten voor deze vergadering"
 
-#: module/Decision/view/decision/admin/document.phtml:78
+#: module/Decision/view/decision/admin/document.phtml:82
 msgid "This meeting does not have any associated documents."
 msgstr "Voor deze vergadering zijn geen documenten beschikbaar."
 
@@ -2961,7 +3012,7 @@ msgstr "Voor deze vergadering zijn geen documenten beschikbaar."
 msgid "Upload"
 msgstr "Upload"
 
-#: module/Decision/view/decision/decision/authorizations.phtml:15
+#: module/Decision/view/decision/decision/authorization.phtml:18
 msgid ""
 "There are no upcoming meetings for which you can authorize someone.\n"
 "You may still be able to authorize someone or revoke an authorization by "
@@ -2972,47 +3023,66 @@ msgstr ""
 "Mogelijk kun je nog wel iemand machtigen of een machtiging intrekken door "
 "contact op te nemen met het bestuur."
 
-#: module/Decision/view/decision/decision/authorizations.phtml:19
+#: module/Decision/view/decision/decision/authorization.phtml:22
 #, php-format
-msgid "You have authorized %s for GMM %s (%s)"
-msgstr "Je hebt %s gemachtigd voor ALV %s (%s)"
+msgid "You have authorized %s for the %s GMM (%s)."
+msgstr "Je hebt %s gemachtigd voor de %s ALV (%s)."
 
-#: module/Decision/view/decision/decision/authorizations.phtml:25
+#: module/Decision/view/decision/decision/authorization.phtml:29
+#, php-format
 msgid ""
-"If you want to revoke your authorization you have to communicate this to the "
-"board in writing (not by email)."
+"As per HR article 5 paragraph 4, you have the right to revoke your "
+"authorization before the start of the %s GMM. You can communicate this to "
+"the board in writing (not by email) or by using the form below. Please note "
+"that you can only revoke an authorization that was granted via this website "
+"by using the form below."
 msgstr ""
-"Mocht je deze machtiging willen intrekken, dan kan dit door dit schriftelijk "
-"aan te geven bij het bestuur (dus niet per mail)."
+"Conform HR artikel 5 lid 4 heb je het recht om jouw machtiging in te trekken "
+"voor aanvang van de %s ALV. Je kan dit schriftelijk (niet per e-mail) of via "
+"onderstaand formulier aan het bestuur kenbaar maken. Let op: je kan alleen "
+"een machtiging die via deze website is verleend via onderstaand formulier "
+"intrekken."
 
-#: module/Decision/view/decision/decision/authorizations.phtml:29
-#, php-format
-msgid "Authorize someone for GMM %s (%s)"
-msgstr "Machtig iemand voor ALV %s (%s)"
-
-#: module/Decision/view/decision/decision/authorizations.phtml:45
-msgid "Member"
-msgstr "Lid"
-
-#: module/Decision/view/decision/decision/authorizations.phtml:58
+#: module/Decision/view/decision/decision/authorization.phtml:45
+#: module/Decision/view/decision/decision/authorization.phtml:100
 msgid "Terms"
 msgstr "Voorwaarden"
 
-#: module/Decision/view/decision/decision/authorizations.phtml:63
+#: module/Decision/view/decision/decision/authorization.phtml:50
 #, php-format
 msgid ""
-"I, %s am fully aware that by filling in this form I authorize the person in "
-"this form to represent me at the General Members' Meeting %s of s.v. GEWIS"
+"I, %s am fully aware that by revoking my authorization, %s cannot represent "
+"me at the %s General Members Meeting (%s) of s.v. GEWIS."
 msgstr ""
-"Ik, %s, ben mij volledig bewust van het feit dat ik de persoon in dit "
-"formulier een machtiging geef voor de %sste Algemene ledenvergadering van "
-"Studievereniging GEWIS"
+"Ik, %s ben mij er volledig van bewust dat door het intrekken van mijn "
+"machtiging, %s mij niet kan vertegenwoordigen op de %s Algemene "
+"Ledenvergadering (%s) der s.v. GEWIS."
 
-#: module/Decision/view/decision/decision/authorizations.phtml:114
+#: module/Decision/view/decision/decision/authorization.phtml:71
+#, php-format
+msgid "Authorize someone for the %s GMM (%s)"
+msgstr "Machtig iemand voor de %s ALV (%s)"
+
+#: module/Decision/view/decision/decision/authorization.phtml:87
+msgid "Member"
+msgstr "Lid"
+
+#: module/Decision/view/decision/decision/authorization.phtml:105
+#, php-format
+msgid ""
+"I, %s I am fully aware that by filling in this form I authorize the person "
+"in this form to represent me at the %s General Members Meeting (%s) of s.v. "
+"GEWIS."
+msgstr ""
+"Ik, %s ben mij er volledig van bewust dat ik door het invullen van dit "
+"formulier de persoon op dit formulier machtig om mij te vertegenwoordigen op "
+"de %s Algemene Ledenvergadering (%s) der s.v. GEWIS."
+
+#: module/Decision/view/decision/decision/authorization.phtml:157
 msgid "Are you sure you would like to authorize"
 msgstr "Weet je zeker dat je wilt machtigen"
 
-#: module/Decision/view/decision/decision/authorizations.phtml:120
+#: module/Decision/view/decision/decision/authorization.phtml:163
 msgid ""
 "This member has already received 2 or more authorizations through the "
 "website. Since you can only use two authorizations at the same time, this "
@@ -3028,11 +3098,11 @@ msgstr ""
 "wordt. Als je iemand anders wilt machtigen, klik dan op \"annuleer\"; als je "
 "deze person toch wilt machtigen, klik dan op \"bevestig machtiging\"."
 
-#: module/Decision/view/decision/decision/authorizations.phtml:126
+#: module/Decision/view/decision/decision/authorization.phtml:169
 msgid "Confirm authorization"
 msgstr "Bevestig machtiging"
 
-#: module/Decision/view/decision/decision/authorizations.phtml:150
+#: module/Decision/view/decision/decision/authorization.phtml:193
 #, php-format
 msgid "Are you sure you would like to authorize %s"
 msgstr "Weet je zeker dat je %s wilt machtigen"
@@ -3960,10 +4030,11 @@ msgstr "Je hebt niet de rechten om polls aan te vragen"
 #: module/Frontpage/view/frontpage/admin/index.phtml:1
 msgid ""
 "Welcome to the admin interface of the GEWIS website. If you are experiencing "
-"any issues or have a question, please contact the web committee."
+"any issues or have a question, please contact the ApplicatieBeheerCommissie."
 msgstr ""
-"Welkom op de admin interface. Als er problemen zijn, of als je vragen hebt, "
-"contacteer de WebCommissie."
+"Welkom bij de beheerinterface van de GEWIS-website. Als je problemen "
+"ondervindt of een vraag hebt, neem dan contact op met de "
+"ApplicatieBeheerCommissie."
 
 #: module/Frontpage/view/frontpage/admin/index.phtml:3
 msgid "Recent changes"
