@@ -174,7 +174,7 @@ class AutomaticControllerTest extends BaseControllerTest
 
         $params['organ'] = 1;
         $params['type'] = 'committee';
-        $params['abbr'] = 'WC';
+        $params['abbr'] = 'ABC';
 
         $params['category'] = 'vacancies';
         $params['companySlugName'] = 'asml';
