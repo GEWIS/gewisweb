@@ -9,6 +9,7 @@ use Decision\Service\{
     Decision as DecisionService,
 };
 use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Http\Response\Stream;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
@@ -149,15 +150,20 @@ class DecisionController extends AbstractActionController
             $form->setData($request->getPost()->toArray());
 
             if ($form->isValid()) {
-                if (false !== ($authorization = $this->decisionService->createAuthorization($form->getData()))) {
+                if (null !== ($authorization = $this->decisionService->createAuthorization($form->getData()))) {
                     return new ViewModel(
                         [
                             'meeting' => $meeting,
+                            'form' => $this->decisionService->getAuthorizationRevocationForm(),
                             'authorization' => $authorization,
                         ]
                     );
                 }
             }
+        }
+
+        if (null !== $authorization) {
+            $form = $this->decisionService->getAuthorizationRevocationForm();
         }
 
         return new ViewModel(
@@ -167,6 +173,30 @@ class DecisionController extends AbstractActionController
                 'form' => $form,
             ]
         );
+    }
+
+    public function revokeAuthorizationAction(): Response|ViewModel
+    {
+        if (!$this->aclService->isAllowed('revoke', 'authorization')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to revoke authorizations.'));
+        }
+
+        /** @var Request $request */
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            if (null !== ($meeting = $this->decisionService->getLatestAV())) {
+                if (null !== ($authorization = $this->decisionService->getUserAuthorization($meeting))) {
+                    $form = $this->decisionService->getAuthorizationRevocationForm();
+                    $form->setData($request->getPost()->toArray());
+
+                    if ($form->isValid()) {
+                        $this->decisionService->revokeAuthorization($authorization);
+                    }
+                }
+            }
+        }
+
+        return $this->redirect()->toRoute('decision/authorizations');
     }
 
     /**

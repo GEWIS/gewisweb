@@ -2,6 +2,7 @@
 
 namespace Decision\Model;
 
+use DateTime;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -18,7 +19,7 @@ use Doctrine\ORM\Mapping\{
 #[Entity]
 #[UniqueConstraint(
     name: "auth_idx",
-    columns: ["authorizer", "recipient", "meetingNumber"],
+    columns: ["authorizer", "recipient", "meetingNumber", "revokedAt"],
 )]
 class Authorization
 {
@@ -57,10 +58,19 @@ class Authorization
     protected int $meetingNumber;
 
     /**
-     * Has the authorization been revoked?
+     * When the authorization was made.
      */
-    #[Column(type: "boolean")]
-    protected bool $revoked = false;
+    #[Column(type: "datetime")]
+    protected DateTime $createdAt;
+
+    /**
+     * When the authorization was revoked.
+     */
+    #[Column(
+        type: "datetime",
+        nullable: true,
+    )]
+    protected ?DateTime $revokedAt = null;
 
     /**
      * @return int|null
@@ -118,19 +128,23 @@ class Authorization
         $this->meetingNumber = $meetingNumber;
     }
 
-    /**
-     * @return bool
-     */
-    public function getRevoked(): bool
+    public function getCreatedAt(): DateTime
     {
-        return $this->revoked;
+        return $this->createdAt;
     }
 
-    /**
-     * @param bool $revoked
-     */
-    public function setRevoked(bool $revoked): void
+    public function setCreatedAt(DateTime $createdAt): void
     {
-        $this->revoked = $revoked;
+        $this->createdAt = $createdAt;
+    }
+
+    public function getRevokedAt(): ?DateTime
+    {
+        return $this->revokedAt;
+    }
+
+    public function setRevokedAt(?DateTime $revokedAt): void
+    {
+        $this->revokedAt = $revokedAt;
     }
 }

@@ -32,7 +32,7 @@ class AclService extends \User\Service\AclService
 
         $this->acl->allow('user', 'meeting', ['view', 'view_minutes', 'view_documents']);
 
-        $this->acl->allow('user', 'authorization', ['create', 'view_own']);
+        $this->acl->allow('user', 'authorization', ['create', 'revoke', 'view_own']);
 
         // users are allowed to use the filebrowser
         $this->acl->allow('user', 'files', 'browse');
@@ -42,6 +42,6 @@ class AclService extends \User\Service\AclService
 
         // graduates may not do a few things, so limit them.
         $this->acl->deny('graduate', 'member', ['view', 'search', 'birthdays']);
-        $this->acl->deny('graduate', 'authorization', ['create', 'view_own']);
+        $this->acl->deny('graduate', 'authorization', ['create', 'revoke', 'view_own']);
     }
 }

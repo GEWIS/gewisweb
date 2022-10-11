@@ -14,20 +14,27 @@ use Decision\Model\{
 class Authorization extends BaseMapper
 {
     /**
-     * Find all authorizations for a meeting.
+     * Find authorizations for a meeting.
      *
      * @param int $meetingNumber
      *
      * @return array
      */
-    public function findNotRevoked(int $meetingNumber): array
-    {
-        return $this->getRepository()->findBy(
-            [
-                'meetingNumber' => $meetingNumber,
-                'revoked' => false,
-            ]
-        );
+    public function findAllByType(
+        int $meetingNumber,
+        bool $revoked = false,
+    ): array {
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->where('a.meetingNumber = :meetingNumber')
+            ->setParameter('meetingNumber', $meetingNumber);
+
+        if ($revoked) {
+            $qb->andWhere('a.revokedAt IS NOT NULL');
+        } else {
+            $qb->andWhere('a.revokedAt IS NULL');
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -45,7 +52,7 @@ class Authorization extends BaseMapper
         $qb = $this->getRepository()->createQueryBuilder('a');
         $qb->where('a.meetingNumber = :meetingNumber')
             ->andWhere('a.authorizer = :authorizer')
-            ->andWhere('a.revoked = 0')
+            ->andWhere('a.revokedAt IS NULL')
             ->setParameter('meetingNumber', $meetingNumber)
             ->setParameter('authorizer', $authorizer);
 
@@ -67,7 +74,7 @@ class Authorization extends BaseMapper
         $qb = $this->getRepository()->createQueryBuilder('a');
         $qb->where('a.meetingNumber = :meetingNumber')
             ->andWhere('a.recipient = :recipient')
-            ->andWhere('a.revoked = 0')
+            ->andWhere('a.revokedAt IS NULL')
             ->setParameter('meetingNumber', $meetingNumber)
             ->setParameter('recipient', $recipient);
 

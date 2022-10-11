@@ -27,12 +27,16 @@ else:
         <label for="<?= $element->getName() ?>" class="control-label col-sm-2"><?= $element->getLabel() ?></label>
         <div class="col-sm-10">
             <select class="form-control" name="meeting" id="meeting-selector">
-                <?php foreach ($meetings as $m): ?>
-                    <option value="<?= $m->getType()->value ?>/<?= $m->getNumber() ?>"
-                        <?= $m->getNumber() === intval($number) ? 'selected' : '' ?>>
-                        <?= $m->getType()->value ?> <?= $m->getNumber() ?> (<?= $m->getDate()->format('Y-m-d') ?>)
-                    </option>
-                <?php endforeach; ?>
+                <?php if (!empty($meetings)): ?>
+                    <?php foreach ($meetings as $m): ?>
+                        <option value="<?= $m->getType()->value ?>/<?= $m->getNumber() ?>"
+                            <?= $m->getNumber() === intval($number) ? 'selected' : '' ?>>
+                            <?= $m->getType()->value ?> <?= $m->getNumber() ?> (<?= $m->getDate()->format('Y-m-d') ?>)
+                        </option>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <option selected disabled><?= $this->translate('No meeting available.') ?></option>
+                <?php endif; ?>
             </select>
         </div>
     </div>

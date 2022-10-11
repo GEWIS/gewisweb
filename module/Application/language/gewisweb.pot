@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-06 16:29+0200\n"
+"POT-Creation-Date: 2022-10-11 18:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,7 +81,7 @@ msgstr ""
 #: module/Company/view/company/admin/edit-package.phtml:66
 #: module/Company/view/company/admin/index.phtml:109
 #: module/Company/view/company/admin/index.phtml:195
-#: module/Decision/view/decision/admin/document.phtml:43
+#: module/Decision/view/decision/admin/document.phtml:47
 #: module/Decision/view/decision/member/birthdays.phtml:12
 #: module/Decision/view/decision/organ-admin/index.phtml:12
 #: module/Decision/view/decision/organ/index.phtml:14
@@ -225,7 +225,7 @@ msgstr ""
 #: module/Company/view/company/admin/edit-company.phtml:139
 #: module/Company/view/company/admin/edit-package.phtml:89
 #: module/Company/view/company/admin/index.phtml:187
-#: module/Decision/view/decision/admin/document.phtml:111
+#: module/Decision/view/decision/admin/document.phtml:115
 #: module/Education/view/education/admin/edit-exam.phtml:43
 #: module/Education/view/education/admin/edit-summary.phtml:43
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:73
@@ -259,7 +259,7 @@ msgstr ""
 #: module/Company/view/company/admin/edit-company.phtml:192
 #: module/Company/view/company/admin/edit-package.phtml:123
 #: module/Company/view/company/admin/index.phtml:227
-#: module/Decision/view/decision/decision/authorizations.phtml:124
+#: module/Decision/view/decision/decision/authorization.phtml:167
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:171
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:217
 #: module/Photo/view/photo/album-admin/index.phtml:218
@@ -1126,7 +1126,7 @@ msgid "An error occurred"
 msgstr ""
 
 #: module/Application/view/error/500.phtml:4
-msgid "If this keeps occurring, please contact the WebCommittee"
+msgid "If this keeps occurring, please contact the ApplicatieBeheerCommissie."
 msgstr ""
 
 #: module/Application/view/error/debug/403.phtml:3
@@ -1270,8 +1270,8 @@ msgstr ""
 
 #: module/Application/view/partial/admin.phtml:94
 #: module/Decision/view/decision/admin/authorizations.phtml:4
-#: module/Decision/view/decision/decision/authorizations.phtml:3
-#: module/Decision/view/decision/decision/authorizations.phtml:13
+#: module/Decision/view/decision/decision/authorization.phtml:3
+#: module/Decision/view/decision/decision/authorization.phtml:16
 #: module/Decision/view/decision/member/index.phtml:52
 msgid "Authorizations"
 msgstr ""
@@ -1347,15 +1347,17 @@ msgstr ""
 msgid "Unable to retrieve infimum."
 msgstr ""
 
-#: module/Application/view/partial/footer.phtml:37
-msgid "by WebCommissie GEWIS."
-msgstr ""
-
-#: module/Application/view/partial/footer.phtml:37
+#: module/Application/view/partial/footer.phtml:38
 msgid "All rights reserved."
 msgstr ""
 
-#: module/Application/view/partial/footer.phtml:41
+#: module/Application/view/partial/footer.phtml:39
+msgid ""
+"Made with <3 by the ApplicatieBeheerCommissie and Web Commissie (2013 - "
+"2022)."
+msgstr ""
+
+#: module/Application/view/partial/footer.phtml:44
 #: module/Application/view/partial/main-nav.phtml:271
 #: module/Company/view/company/company/companyStory.phtml:21
 #: module/Company/view/company/company/jobs.phtml:93
@@ -1915,21 +1917,54 @@ msgstr ""
 msgid "There are currently no job labels..."
 msgstr ""
 
-#: module/Decision/view/decision/admin/authorizations.phtml:21
+#: module/Decision/view/decision/admin/authorizations.phtml:20
 #, php-format
-msgid "Authorizations for AV %s"
-msgstr ""
-
-#: module/Decision/view/decision/admin/authorizations.phtml:25
-msgid "Authorizer"
-msgstr ""
-
-#: module/Decision/view/decision/admin/authorizations.phtml:26
-msgid "Recipient"
+msgid "GMM %d (%s)"
 msgstr ""
 
 #: module/Decision/view/decision/admin/authorizations.phtml:27
-msgid "Valid"
+msgid "No GMM available."
+msgstr ""
+
+#: module/Decision/view/decision/admin/authorizations.phtml:32
+#, php-format
+msgid "Valid authorizations for GMM %d"
+msgstr ""
+
+#: module/Decision/view/decision/admin/authorizations.phtml:37
+#: module/Decision/view/decision/admin/authorizations.phtml:61
+msgid "Authorizer"
+msgstr ""
+
+#: module/Decision/view/decision/admin/authorizations.phtml:38
+#: module/Decision/view/decision/admin/authorizations.phtml:62
+msgid "Recipient"
+msgstr ""
+
+#: module/Decision/view/decision/admin/authorizations.phtml:39
+#: module/Decision/view/decision/admin/authorizations.phtml:63
+msgid "Created"
+msgstr ""
+
+#: module/Decision/view/decision/admin/authorizations.phtml:53
+msgid "There are no valid authorizations for this GMM."
+msgstr ""
+
+#: module/Decision/view/decision/admin/authorizations.phtml:56
+#, php-format
+msgid "Revoked authorizations for GMM %d"
+msgstr ""
+
+#: module/Decision/view/decision/admin/authorizations.phtml:64
+msgid "Revoked"
+msgstr ""
+
+#: module/Decision/view/decision/admin/authorizations.phtml:79
+msgid "There are no revoked authorizations for this GMM."
+msgstr ""
+
+#: module/Decision/view/decision/admin/authorizations.phtml:82
+msgid "Please select a GMM to view authorizations."
 msgstr ""
 
 #: module/Decision/view/decision/admin/document.phtml:8
@@ -1940,11 +1975,15 @@ msgstr ""
 msgid "Meeting document uploaded"
 msgstr ""
 
-#: module/Decision/view/decision/admin/document.phtml:75
+#: module/Decision/view/decision/admin/document.phtml:38
+msgid "No meeting available."
+msgstr ""
+
+#: module/Decision/view/decision/admin/document.phtml:79
 msgid "Documents for this meeting"
 msgstr ""
 
-#: module/Decision/view/decision/admin/document.phtml:78
+#: module/Decision/view/decision/admin/document.phtml:82
 msgid "This meeting does not have any associated documents."
 msgstr ""
 
@@ -1959,55 +1998,68 @@ msgstr ""
 msgid "Upload"
 msgstr ""
 
-#: module/Decision/view/decision/decision/authorizations.phtml:15
+#: module/Decision/view/decision/decision/authorization.phtml:18
 msgid ""
 "There are no upcoming meetings for which you can authorize someone.\n"
 "You may still be able to authorize someone or revoke an authorization by "
 "contacting the board."
 msgstr ""
 
-#: module/Decision/view/decision/decision/authorizations.phtml:19
+#: module/Decision/view/decision/decision/authorization.phtml:22
 #, php-format
-msgid "You have authorized %s for GMM %s (%s)"
+msgid "You have authorized %s for the %s GMM (%s)."
 msgstr ""
 
-#: module/Decision/view/decision/decision/authorizations.phtml:25
+#: module/Decision/view/decision/decision/authorization.phtml:29
+#, php-format
 msgid ""
-"If you want to revoke your authorization you have to communicate this to the "
-"board in writing (not by email)."
+"As per HR article 5 paragraph 4, you have the right to revoke your "
+"authorization before the start of the %s GMM. You can communicate this to "
+"the board in writing (not by email) or by using the form below. Please note "
+"that you can only revoke an authorization that was granted via this website "
+"by using the form below."
 msgstr ""
 
-#: module/Decision/view/decision/decision/authorizations.phtml:29
-#, php-format
-msgid "Authorize someone for GMM %s (%s)"
-msgstr ""
-
-#: module/Decision/view/decision/decision/authorizations.phtml:45
-msgid "Member"
-msgstr ""
-
-#: module/Decision/view/decision/decision/authorizations.phtml:58
+#: module/Decision/view/decision/decision/authorization.phtml:45
+#: module/Decision/view/decision/decision/authorization.phtml:100
 msgid "Terms"
 msgstr ""
 
-#: module/Decision/view/decision/decision/authorizations.phtml:63
+#: module/Decision/view/decision/decision/authorization.phtml:50
 #, php-format
 msgid ""
-"I, %s am fully aware that by filling in this form I authorize the person in "
-"this form to represent me at the General Members' Meeting %s of s.v. GEWIS"
+"I, %s am fully aware that by revoking my authorization, %s cannot represent "
+"me at the %s General Members Meeting (%s) of s.v. GEWIS."
 msgstr ""
 
-#: module/Decision/view/decision/decision/authorizations.phtml:72
-#: module/Decision/view/decision/decision/authorizations.phtml:78
+#: module/Decision/view/decision/decision/authorization.phtml:71
+#, php-format
+msgid "Authorize someone for the %s GMM (%s)"
+msgstr ""
+
+#: module/Decision/view/decision/decision/authorization.phtml:87
+msgid "Member"
+msgstr ""
+
+#: module/Decision/view/decision/decision/authorization.phtml:105
+#, php-format
+msgid ""
+"I, %s I am fully aware that by filling in this form I authorize the person "
+"in this form to represent me at the %s General Members Meeting (%s) of s.v. "
+"GEWIS."
+msgstr ""
+
+#: module/Decision/view/decision/decision/authorization.phtml:115
+#: module/Decision/view/decision/decision/authorization.phtml:121
 #: module/Decision/src/Form/Authorization.php:50
 msgid "Authorize"
 msgstr ""
 
-#: module/Decision/view/decision/decision/authorizations.phtml:114
+#: module/Decision/view/decision/decision/authorization.phtml:157
 msgid "Are you sure you would like to authorize"
 msgstr ""
 
-#: module/Decision/view/decision/decision/authorizations.phtml:120
+#: module/Decision/view/decision/decision/authorization.phtml:163
 msgid ""
 "This member has already received 2 or more authorizations through the "
 "website. Since you can only use two authorizations at the same time, this "
@@ -2017,11 +2069,11 @@ msgid ""
 "click on \"confirm authorization\"."
 msgstr ""
 
-#: module/Decision/view/decision/decision/authorizations.phtml:126
+#: module/Decision/view/decision/decision/authorization.phtml:169
 msgid "Confirm authorization"
 msgstr ""
 
-#: module/Decision/view/decision/decision/authorizations.phtml:150
+#: module/Decision/view/decision/decision/authorization.phtml:193
 #, php-format
 msgid "Are you sure you would like to authorize %s"
 msgstr ""
@@ -2693,7 +2745,7 @@ msgstr ""
 #: module/Frontpage/view/frontpage/admin/index.phtml:1
 msgid ""
 "Welcome to the admin interface of the GEWIS website. If you are experiencing "
-"any issues or have a question, please contact the web committee."
+"any issues or have a question, please contact the ApplicatieBeheerCommissie."
 msgstr ""
 
 #: module/Frontpage/view/frontpage/admin/index.phtml:3
@@ -4103,11 +4155,16 @@ msgstr ""
 msgid "Meeting minutes uploaded"
 msgstr ""
 
-#: module/Decision/src/Controller/DecisionController.php:102
+#: module/Decision/src/Controller/DecisionController.php:103
 msgid "You are not allowed to search decisions."
 msgstr ""
 
-#: module/Decision/src/Controller/DecisionController.php:179
+#: module/Decision/src/Controller/DecisionController.php:181
+#: module/Decision/src/Service/Decision.php:564
+msgid "You are not allowed to revoke authorizations."
+msgstr ""
+
+#: module/Decision/src/Controller/DecisionController.php:209
 msgid "You are not allowed to browse files."
 msgstr ""
 
@@ -4117,6 +4174,10 @@ msgstr ""
 
 #: module/Decision/src/Controller/MemberController.php:135
 msgid "You are not allowed to view the list of birthdays."
+msgstr ""
+
+#: module/Decision/src/Form/AuthorizationRevocation.php:42
+msgid "Revoke authorization"
 msgstr ""
 
 #: module/Decision/src/Form/Document.php:41
@@ -4223,46 +4284,46 @@ msgstr ""
 msgid "Advisory Board"
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:82
-#: module/Decision/src/Service/Decision.php:101
-#: module/Decision/src/Service/Decision.php:115
+#: module/Decision/src/Service/Decision.php:86
+#: module/Decision/src/Service/Decision.php:105
+#: module/Decision/src/Service/Decision.php:119
 msgid "You are not allowed to list meetings."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:135
+#: module/Decision/src/Service/Decision.php:139
 msgid "You are not allowed to view meetings."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:187
+#: module/Decision/src/Service/Decision.php:191
 msgid "You are not allowed to view meeting documents."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:208
+#: module/Decision/src/Service/Decision.php:212
 msgid "You are not allowed to view meeting minutes."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:289
+#: module/Decision/src/Service/Decision.php:293
 msgid "You are not allowed to delete meeting documents."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:383
+#: module/Decision/src/Service/Decision.php:387
 msgid "You are not allowed to view all authorizations."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:400
+#: module/Decision/src/Service/Decision.php:407
 msgid "You are not allowed to view authorizations."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:473
+#: module/Decision/src/Service/Decision.php:498
 msgid "You are not allowed to upload meeting minutes."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:488
+#: module/Decision/src/Service/Decision.php:513
 msgid "You are not allowed to upload meeting documents."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:525
-msgid "You are not authorize people."
+#: module/Decision/src/Service/Decision.php:550
+msgid "You are not allowed authorize people."
 msgstr ""
 
 #: module/Decision/src/Service/MemberInfo.php:40

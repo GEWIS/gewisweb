@@ -6,6 +6,7 @@ use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Decision\Controller\FileBrowser\LocalFileReader;
 use Decision\Form\{
     Authorization as AuthorizationForm,
+    AuthorizationRevocation as AuthorizationRevocationForm,
     Document as DocumentForm,
     Minutes as MinutesForm,
     OrganInformation as OrganInformationForm,
@@ -87,6 +88,7 @@ class Module
                     $reorderDocumentForm = $container->get('decision_form_reorder_document');
                     $searchDecisionForm = $container->get('decision_form_searchdecision');
                     $authorizationForm = $container->get('decision_form_authorization');
+                    $authorizationRevocationForm = $container->get('decision_form_authorization_revocation');
 
                     return new DecisionService(
                         $aclService,
@@ -102,6 +104,7 @@ class Module
                         $reorderDocumentForm,
                         $searchDecisionForm,
                         $authorizationForm,
+                        $authorizationRevocationForm,
                     );
                 },
                 'decision_service_member' => function (ContainerInterface $container) {
@@ -176,6 +179,11 @@ class Module
                 },
                 'decision_form_authorization' => function (ContainerInterface $container) {
                     return new AuthorizationForm(
+                        $container->get(MvcTranslator::class),
+                    );
+                },
+                'decision_form_authorization_revocation' => function (ContainerInterface $container) {
+                    return new AuthorizationRevocationForm(
                         $container->get(MvcTranslator::class),
                     );
                 },
