@@ -41,8 +41,9 @@ class Mapper implements AdapterInterface
         }
 
         if (
-            $user->getMember()->getHidden()
-            || $user->getMember()->getExpiration() < new DateTime()
+            $user->getMember()->getDeleted()
+            || $user->getMember()->getHidden()
+            || $user->getMember()->isExpired()
         ) {
             return new Result(
                 Result::FAILURE_UNCATEGORIZED,

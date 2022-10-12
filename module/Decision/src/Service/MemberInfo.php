@@ -2,7 +2,10 @@
 
 namespace Decision\Service;
 
-use Decision\Mapper\Member as MemberMapper;
+use DateTime;
+use Decision\Mapper\{
+    Member as MemberMapper,
+};
 use Decision\Model\Member as MemberModel;
 use Exception;
 use Laminas\Mvc\I18n\Translator;
@@ -42,7 +45,6 @@ class MemberInfo
             throw new NotAllowedException($this->translator->translate('You are not allowed to view members.'));
         }
 
-
         if (null === $lidnr) {
             $lidnr = $this->aclService->getIdentityOrThrowException()->getLidnr();
         }
@@ -50,6 +52,13 @@ class MemberInfo
         $member = $this->memberMapper->findByLidnr($lidnr);
 
         if (null === $member) {
+            return null;
+        }
+
+        if (
+            $member->isExpired()
+            && !$this->aclService->isAllowed('view_expired', 'member')
+        ) {
             return null;
         }
 

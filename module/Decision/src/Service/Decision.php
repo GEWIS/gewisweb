@@ -426,8 +426,9 @@ class Decision
         if (
             null === $recipient
             || $recipient->getLidnr() === $authorizer->getLidnr()
+            || $recipient->getDeleted()
+            || $recipient->isExpired()
             || MembershipTypes::Graduate === $recipient->getType()
-            || (new DateTime()) >= $recipient->getExpiration()
         ) {
             return null;
         }
