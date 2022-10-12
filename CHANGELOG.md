@@ -1,3 +1,11 @@
+## [v2.8.9](https://github.com/GEWIS/gewisweb/tree/v2.8.9) (2022-10-12)
+
+* Added the option to revoke an authorization that was made on the website.
+* Improved the hiding of `deleted` members.
+* Removed references to the `Web Commissie` and replaced them with `ApplicatieBeheerCommissie`.
+
+---
+
 ## [v2.8.8](https://github.com/GEWIS/gewisweb/tree/v2.8.8) (2022-10-02)
 
 * Added a historical overview of organ memberships on a member's page.
