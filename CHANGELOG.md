@@ -3,6 +3,8 @@
 * Added the option to revoke an authorization that was made on the website.
 * Improved the hiding of `deleted` members.
 * Removed references to the `Web Commissie` and replaced them with `ApplicatieBeheerCommissie`.
+* Removed last reference to `SuSOS`.
+* Fixed issue where an invalid JWT cookie could lead to unauthenticated loops.
 
 ---
 
