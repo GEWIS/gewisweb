@@ -16,7 +16,7 @@ use Doctrine\ORM\Query\{
 class Member extends BaseMapper
 {
     /**
-     * Find a member by its membership number.
+     * Find a member by its membership number (NOTE: only members who are not deleted are returned).
      *
      * @param int $number Membership number
      *
@@ -24,7 +24,10 @@ class Member extends BaseMapper
      */
     public function findByLidnr(int $number): ?MemberModel
     {
-        return $this->getRepository()->findOneBy(['lidnr' => $number]);
+        return $this->getRepository()->findOneBy([
+            'lidnr' => $number,
+            'deleted' => false,
+        ]);
     }
 
     /**
@@ -58,6 +61,7 @@ class Member extends BaseMapper
                 CONCAT(LOWER(`firstName`), ' ', LOWER(`lastName`)) LIKE :name
                 OR CONCAT(LOWER(`firstName`), ' ', LOWER(`middleName`), ' ', LOWER(`lastName`)) LIKE :name
                 )
+                AND deleted = 0
                 AND expiration >= NOW()
                 AND hidden = 0
             ORDER BY $orderColumn $orderDirection LIMIT :limit
@@ -95,6 +99,7 @@ class Member extends BaseMapper
                 DATE_SUB(t1.birth, INTERVAL YEAR(t1.birth) YEAR),
                 DATE_SUB(CURDATE(), INTERVAL YEAR(CURDATE()) YEAR)
             ) BETWEEN 0 AND :days
+            AND t1.deleted = 0
             AND t1.expiration >= CURDATE()
             AND t1.hidden = 0
             ORDER BY DATE_SUB(t1.birth, INTERVAL YEAR(t1.birth) YEAR) ASC

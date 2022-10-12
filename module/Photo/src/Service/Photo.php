@@ -639,6 +639,14 @@ class Photo
         if (null === $this->findTag($photoId, $lidnr)) {
             $photo = $this->getPhoto($photoId);
             $member = $this->memberService->findMemberByLidnr($lidnr);
+
+            if (
+                null === $member
+                || $member->isExpired()
+            ) {
+                return null;
+            }
+
             $tag = new TagModel();
             $tag->setMember($member);
             $photo->addTag($tag);

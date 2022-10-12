@@ -2,7 +2,6 @@
 
 namespace Decision\Model;
 
-use DateInterval;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\{
@@ -22,7 +21,6 @@ use Doctrine\ORM\Mapping\{
 };
 use Decision\Model\Enums\MembershipTypes;
 use Decision\Model\SubDecision\Installation;
-use InvalidArgumentException;
 use Photo\Model\Tag as TagModel;
 use User\Model\User as UserModel;
 
@@ -226,6 +224,19 @@ class Member
         mappedBy: "member",
     )]
     protected Collection $boardInstallations;
+
+    /**
+     * Determines if a member is deleted. A deleted member is a member whose basic info needs to be retained to ensure
+     * that all decisions that mention this member can be kept (i.e., administrative purposes). This value is only set
+     * when deleting a member and cannot be altered via the interface.
+     *
+     * Additionally, this flag can be used to filter deleted members in external services (e.g., GEWISWEB).
+     */
+    #[Column(
+        type: "boolean",
+        options: ["default" => false],
+    )]
+    protected bool $deleted = false;
 
     /**
      * Member tags.
@@ -595,6 +606,26 @@ class Member
     }
 
     /**
+     * Get if the member is deleted.
+     *
+     * @return bool
+     */
+    public function getDeleted(): bool
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * Set if the member is deleted.
+     *
+     * @param bool $deleted
+     */
+    public function setDeleted(bool $deleted): void
+    {
+        $this->deleted = $deleted;
+    }
+
+    /**
      * Get the organ installations.
      *
      * @return Collection
@@ -702,6 +733,7 @@ class Member
             'firstName' => $this->getFirstName(),
             'generation' => $this->getGeneration(),
             'hidden' => $this->getHidden(),
+            'deleted' => $this->getDeleted(),
             'membershipEndsOn' => $this->getMembershipEndsOn()?->format(DateTimeInterface::ISO8601) ?? null,
             'expiration' => $this->getExpiration()->format(DateTimeInterface::ISO8601),
         ];
@@ -844,5 +876,10 @@ class Member
     public function is18Plus(): bool
     {
         return (18 <= (new DateTime('now'))->diff($this->getBirth())->y);
+    }
+
+    public function isExpired(): bool
+    {
+        return $this->getExpiration() < (new DateTime());
     }
 }
