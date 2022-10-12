@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-11 18:23+0200\n"
-"PO-Revision-Date: 2022-10-11 18:41+0200\n"
+"POT-Creation-Date: 2022-10-12 16:41+0200\n"
+"PO-Revision-Date: 2022-10-12 16:42+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -753,7 +753,7 @@ msgstr "Weet je zeker dat je deze optie wil verwijderen?"
 #: module/Company/view/company/admin/edit-company.phtml:192
 #: module/Company/view/company/admin/edit-package.phtml:123
 #: module/Company/view/company/admin/index.phtml:227
-#: module/Decision/view/decision/decision/authorization.phtml:167
+#: module/Decision/view/decision/decision/authorizations.phtml:167
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:171
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:217
 #: module/Photo/view/photo/album-admin/index.phtml:218
@@ -1842,8 +1842,8 @@ msgstr "Documenten"
 
 #: module/Application/view/partial/admin.phtml:94
 #: module/Decision/view/decision/admin/authorizations.phtml:4
-#: module/Decision/view/decision/decision/authorization.phtml:3
-#: module/Decision/view/decision/decision/authorization.phtml:16
+#: module/Decision/view/decision/decision/authorizations.phtml:3
+#: module/Decision/view/decision/decision/authorizations.phtml:16
 #: module/Decision/view/decision/member/index.phtml:52
 msgid "Authorizations"
 msgstr "Machtigingen"
@@ -2723,8 +2723,8 @@ msgid "You are not allowed to view the list of birthdays."
 msgstr "Het is niet toegestaan om de lijst met verjaardagen te zien."
 
 #: module/Decision/src/Form/Authorization.php:50
-#: module/Decision/view/decision/decision/authorization.phtml:115
-#: module/Decision/view/decision/decision/authorization.phtml:121
+#: module/Decision/view/decision/decision/authorizations.phtml:115
+#: module/Decision/view/decision/decision/authorizations.phtml:121
 msgid "Authorize"
 msgstr "Machtig"
 
@@ -3012,7 +3012,7 @@ msgstr "Voor deze vergadering zijn geen documenten beschikbaar."
 msgid "Upload"
 msgstr "Upload"
 
-#: module/Decision/view/decision/decision/authorization.phtml:18
+#: module/Decision/view/decision/decision/authorizations.phtml:18
 msgid ""
 "There are no upcoming meetings for which you can authorize someone.\n"
 "You may still be able to authorize someone or revoke an authorization by "
@@ -3023,32 +3023,32 @@ msgstr ""
 "Mogelijk kun je nog wel iemand machtigen of een machtiging intrekken door "
 "contact op te nemen met het bestuur."
 
-#: module/Decision/view/decision/decision/authorization.phtml:22
+#: module/Decision/view/decision/decision/authorizations.phtml:22
 #, php-format
 msgid "You have authorized %s for the %s GMM (%s)."
 msgstr "Je hebt %s gemachtigd voor de %s ALV (%s)."
 
-#: module/Decision/view/decision/decision/authorization.phtml:29
+#: module/Decision/view/decision/decision/authorizations.phtml:29
 #, php-format
 msgid ""
 "As per HR article 5 paragraph 4, you have the right to revoke your "
-"authorization before the start of the %s GMM. You can communicate this to "
-"the board in writing (not by email) or by using the form below. Please note "
-"that you can only revoke an authorization that was granted via this website "
-"by using the form below."
+"authorization for the %s GMM. You can communicate this to the board in "
+"writing (not by email) or by using the form below. Please note that you can "
+"only revoke an authorization that was granted via this website by using the "
+"form below."
 msgstr ""
-"Conform HR artikel 5 lid 4 heb je het recht om jouw machtiging in te trekken "
-"voor aanvang van de %s ALV. Je kan dit schriftelijk (niet per e-mail) of via "
+"Conform HR artikel 5 lid 4 heb je het recht om jouw machtiging voor de %s "
+"ALV in te trekken. Je kan dit schriftelijk (niet per e-mail) of via "
 "onderstaand formulier aan het bestuur kenbaar maken. Let op: je kan alleen "
 "een machtiging die via deze website is verleend via onderstaand formulier "
 "intrekken."
 
-#: module/Decision/view/decision/decision/authorization.phtml:45
-#: module/Decision/view/decision/decision/authorization.phtml:100
+#: module/Decision/view/decision/decision/authorizations.phtml:45
+#: module/Decision/view/decision/decision/authorizations.phtml:100
 msgid "Terms"
 msgstr "Voorwaarden"
 
-#: module/Decision/view/decision/decision/authorization.phtml:50
+#: module/Decision/view/decision/decision/authorizations.phtml:50
 #, php-format
 msgid ""
 "I, %s am fully aware that by revoking my authorization, %s cannot represent "
@@ -3058,16 +3058,16 @@ msgstr ""
 "machtiging, %s mij niet kan vertegenwoordigen op de %s Algemene "
 "Ledenvergadering (%s) der s.v. GEWIS."
 
-#: module/Decision/view/decision/decision/authorization.phtml:71
+#: module/Decision/view/decision/decision/authorizations.phtml:71
 #, php-format
 msgid "Authorize someone for the %s GMM (%s)"
 msgstr "Machtig iemand voor de %s ALV (%s)"
 
-#: module/Decision/view/decision/decision/authorization.phtml:87
+#: module/Decision/view/decision/decision/authorizations.phtml:87
 msgid "Member"
 msgstr "Lid"
 
-#: module/Decision/view/decision/decision/authorization.phtml:105
+#: module/Decision/view/decision/decision/authorizations.phtml:105
 #, php-format
 msgid ""
 "I, %s I am fully aware that by filling in this form I authorize the person "
@@ -3078,11 +3078,11 @@ msgstr ""
 "formulier de persoon op dit formulier machtig om mij te vertegenwoordigen op "
 "de %s Algemene Ledenvergadering (%s) der s.v. GEWIS."
 
-#: module/Decision/view/decision/decision/authorization.phtml:157
+#: module/Decision/view/decision/decision/authorizations.phtml:157
 msgid "Are you sure you would like to authorize"
 msgstr "Weet je zeker dat je wilt machtigen"
 
-#: module/Decision/view/decision/decision/authorization.phtml:163
+#: module/Decision/view/decision/decision/authorizations.phtml:163
 msgid ""
 "This member has already received 2 or more authorizations through the "
 "website. Since you can only use two authorizations at the same time, this "
@@ -3098,11 +3098,11 @@ msgstr ""
 "wordt. Als je iemand anders wilt machtigen, klik dan op \"annuleer\"; als je "
 "deze person toch wilt machtigen, klik dan op \"bevestig machtiging\"."
 
-#: module/Decision/view/decision/decision/authorization.phtml:169
+#: module/Decision/view/decision/decision/authorizations.phtml:169
 msgid "Confirm authorization"
 msgstr "Bevestig machtiging"
 
-#: module/Decision/view/decision/decision/authorization.phtml:193
+#: module/Decision/view/decision/decision/authorizations.phtml:193
 #, php-format
 msgid "Are you sure you would like to authorize %s"
 msgstr "Weet je zeker dat je %s wilt machtigen"
