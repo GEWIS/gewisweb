@@ -34,9 +34,18 @@ class MemberController extends AbstractActionController
     {
         // Get the latest 3 meetings of each type and flatten result
         $meetingsCollection = [
-            MeetingTypes::AV->value => array_column($this->decisionService->getPastMeetings(3, MeetingTypes::AV), 0),
-            MeetingTypes::BV->value => array_column($this->decisionService->getPastMeetings(3, MeetingTypes::BV), 0),
-            MeetingTypes::VV->value => array_column($this->decisionService->getPastMeetings(3, MeetingTypes::VV), 0),
+            MeetingTypes::AV->getAbbreviation($this->translator) => array_column(
+                $this->decisionService->getPastMeetings(3, MeetingTypes::AV),
+                0,
+            ),
+            MeetingTypes::BV->getAbbreviation($this->translator) => array_column(
+                $this->decisionService->getPastMeetings(3, MeetingTypes::BV),
+                0,
+            ),
+            MeetingTypes::VV->getAbbreviation($this->translator) => array_column(
+                $this->decisionService->getPastMeetings(3, MeetingTypes::VV),
+                0,
+            ),
         ];
 
         $member = $this->aclService->getIdentityOrThrowException()->getMember();

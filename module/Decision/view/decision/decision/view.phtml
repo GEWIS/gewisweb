@@ -1,5 +1,12 @@
 <?php
-$meetingName = sprintf('%s %d', $meeting->getType()->value, $meeting->getNumber());
+$translator = $this->plugin('translate')->getTranslator();
+$nf = new NumberFormatter($translator->getLocale(), NumberFormatter::ORDINAL);
+
+$meetingName = sprintf(
+    '%s %s',
+    $nf->format($meeting->getNumber()),
+    $meeting->getType()->getName($translator),
+);
 
 $this->headTitle($meetingName);
 ?>
@@ -40,7 +47,7 @@ $this->headTitle($meetingName);
                     ?>
                     <p>
                         <a href="<?= $minutesUrl ?>">
-                            <?= sprintf($this->translate('View the minutes of %s'), $meetingName) ?>
+                            <?= sprintf($this->translate('View the minutes of the %s'), $meetingName) ?>
                         </a>
                     </p>
                 </div>

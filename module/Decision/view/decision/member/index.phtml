@@ -2,6 +2,9 @@
 // set title
 use Decision\Model\Meeting;
 
+$translator = $this->plugin('translate')->getTranslator();
+$nf = new NumberFormatter($translator->getLocale(), NumberFormatter::ORDINAL);
+
 $this->headTitle($this->translate('Members'));
 
 $sections = [];
@@ -97,7 +100,7 @@ $meetings = $this->meetings;
                         <div class="panel-body">
                             <?=
                             sprintf(
-                                $this->translate('The next meeting is %s%s %s%s on %s.'),
+                                $this->translate('The next meeting is the %s%s %s%s on %s.'),
                                 '<a href="' . $this->url(
                                     'decision/meeting',
                                     [
@@ -105,8 +108,8 @@ $meetings = $this->meetings;
                                         'number' => $this->upcoming->getNumber(),
                                     ],
                                 ) . '">',
-                                $this->upcoming->getType()->value,
-                                $this->upcoming->getNumber(),
+                                $nf->format($this->upcoming->getNumber()),
+                                $this->upcoming->getType()->getAbbreviation($translator),
                                 '</a>',
                                 $this->dateFormat(
                                     $this->upcoming->getDate()->getTimestamp(),
@@ -151,8 +154,8 @@ $meetings = $this->meetings;
                                 ) ?>">
                                     <?= sprintf(
                                         $this->translate('%s %s on %s'),
-                                        $meeting->getType()->value,
-                                        $meeting->getNumber(),
+                                        $nf->format($meeting->getNumber()),
+                                        $meeting->getType()->getAbbreviation($translator),
                                         $this->dateFormat(
                                             $meeting->getDate()->getTimestamp(),
                                             IntlDateFormatter::FULL,
