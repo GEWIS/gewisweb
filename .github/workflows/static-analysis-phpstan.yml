@@ -79,6 +79,7 @@ jobs:
             -   name: Check out new branch
                 run: |
                     git checkout -- phpstan/phpstan-baseline.neon
+                    git checkout --theirs -- config/modules.config.php
                     git checkout -
 
             -   name: Install dependencies

@@ -58,6 +58,7 @@ jobs:
             -   name: Check out new branch
                 run: |
                     git checkout -- psalm/psalm-baseline.xml
+                    git checkout --theirs -- config/modules.config.php
                     git checkout -
 
             -   name: Install dependencies
