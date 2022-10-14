@@ -218,6 +218,8 @@
       <path value="$PROJECT_DIR$/vendor/bnf/phpstan-psr-container" />
       <path value="$PROJECT_DIR$/vendor/phpstan/phpstan-phpunit" />
       <path value="$PROJECT_DIR$/vendor/lctrs/psalm-psr-container-plugin" />
+      <path value="$PROJECT_DIR$/vendor/setasign/fpdi" />
+      <path value="$PROJECT_DIR$/vendor/tecnickcom/tcpdf" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
