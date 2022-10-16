@@ -51,7 +51,7 @@ class AdminController extends AbstractActionController
 
     public function updateAction(): Response|ViewModel
     {
-        $activityId = (int) $this->params('id');
+        $activityId = (int) $this->params()->fromRoute('id');
         $activity = $this->activityQueryService->getActivityWithDetails($activityId);
 
         if (null === $activity) {
@@ -174,8 +174,8 @@ class AdminController extends AbstractActionController
      */
     public function participantsAction(): ViewModel
     {
-        $activityId = (int) $this->params('id');
-        $signupListId = (int) $this->params('signupList');
+        $activityId = (int) $this->params()->fromRoute('id');
+        $signupListId = (int) $this->params()->fromRoute('signupList');
 
         if (0 === $signupListId) {
             $activity = $this->activityQueryService->getActivity($activityId);
@@ -257,8 +257,8 @@ class AdminController extends AbstractActionController
 
     public function externalSignupAction(): Response|ViewModel
     {
-        $activityId = (int) $this->params('id');
-        $signupListId = (int) $this->params('signupList');
+        $activityId = (int) $this->params()->fromRoute('id');
+        $signupListId = (int) $this->params()->fromRoute('signupList');
         $signupList = $this->signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
         if (null === $signupList) {
@@ -353,7 +353,7 @@ class AdminController extends AbstractActionController
 
     public function externalSignoffAction(): Response|ViewModel
     {
-        $signupId = (int) $this->params('id');
+        $signupId = (int) $this->params()->fromRoute('id');
         $signup = $this->signupMapper->getExternalSignUp($signupId);
 
         if (null === $signup) {

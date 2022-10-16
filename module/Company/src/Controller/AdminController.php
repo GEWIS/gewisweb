@@ -111,7 +111,7 @@ class AdminController extends AbstractActionController
         $companyForm = $this->companyService->getCompanyForm();
 
         // Get parameter
-        $companySlugName = $this->params('companySlugName');
+        $companySlugName = $this->params()->fromRoute('companySlugName');
 
         // Get the specified company
         $company = $this->companyService->getCompanyBySlugName($companySlugName);
@@ -182,7 +182,7 @@ class AdminController extends AbstractActionController
         }
 
         // Get parameters
-        $slugName = $this->params('companySlugName');
+        $slugName = $this->params()->fromRoute('companySlugName');
 
         $this->companyService->deleteCompanyBySlug($slugName);
 
@@ -199,8 +199,8 @@ class AdminController extends AbstractActionController
         }
 
         // Get parameter
-        $companySlugName = $this->params('companySlugName');
-        $type = $this->params('type');
+        $companySlugName = $this->params()->fromRoute('companySlugName');
+        $type = $this->params()->fromRoute('type');
         $company = $this->companyService->getCompanyBySlugName($companySlugName);
 
         if (null === $company) {
@@ -268,8 +268,8 @@ class AdminController extends AbstractActionController
         }
 
         // Get the parameters
-        $companySlugName = $this->params('companySlugName');
-        $packageId = (int) $this->params('packageId');
+        $companySlugName = $this->params()->fromRoute('companySlugName');
+        $packageId = (int) $this->params()->fromRoute('packageId');
 
         // Get the specified package
         $package = $this->companyService->getPackageById($packageId);
@@ -361,8 +361,8 @@ class AdminController extends AbstractActionController
         }
 
         // Get the parameters
-        $companySlugName = $this->params('companySlugName');
-        $packageId = (int) $this->params('packageId');
+        $companySlugName = $this->params()->fromRoute('companySlugName');
+        $packageId = (int) $this->params()->fromRoute('packageId');
 
         // Get the specified package
         $package = $this->companyService->getPackageById($packageId);
@@ -395,8 +395,8 @@ class AdminController extends AbstractActionController
         }
 
         // Get parameters
-        $companySlugName = $this->params('companySlugName');
-        $packageId = (int) $this->params('packageId');
+        $companySlugName = $this->params()->fromRoute('companySlugName');
+        $packageId = (int) $this->params()->fromRoute('packageId');
 
         // Get the specified package
         $package = $this->companyService->getPackageById($packageId);
@@ -470,9 +470,9 @@ class AdminController extends AbstractActionController
         }
 
         // Get parameters
-        $companySlugName = $this->params('companySlugName');
-        $packageId = (int) $this->params('packageId');
-        $jobId = (int) $this->params('jobId');
+        $companySlugName = $this->params()->fromRoute('companySlugName');
+        $packageId = (int) $this->params()->fromRoute('packageId');
+        $jobId = (int) $this->params()->fromRoute('jobId');
 
         // Find the specified jobs
         $job = $this->companyService->getJobById($jobId);
@@ -548,9 +548,9 @@ class AdminController extends AbstractActionController
         }
 
         // Get parameters
-        $companySlugName = $this->params('companySlugName');
-        $packageId = (int) $this->params('packageId');
-        $jobId = (int) $this->params('jobId');
+        $companySlugName = $this->params()->fromRoute('companySlugName');
+        $packageId = (int) $this->params()->fromRoute('packageId');
+        $jobId = (int) $this->params()->fromRoute('jobId');
 
         // Find the specified jobs
         $job = $this->companyService->getJobById($jobId);
@@ -633,7 +633,7 @@ class AdminController extends AbstractActionController
         }
 
         // Get parameter
-        $jobCategoryId = (int) $this->params('jobCategoryId');
+        $jobCategoryId = (int) $this->params()->fromRoute('jobCategoryId');
 
         // Get the specified category
         $jobCategory = $this->companyService->getJobCategoryById($jobCategoryId);
@@ -722,7 +722,7 @@ class AdminController extends AbstractActionController
         }
 
         // Get parameter
-        $jobLabelId = (int) $this->params('jobLabelId');
+        $jobLabelId = (int) $this->params()->fromRoute('jobLabelId');
 
         // Get the specified label
         $jobLabel = $this->companyService->getJobLabelById($jobLabelId);

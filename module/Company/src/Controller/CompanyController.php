@@ -43,7 +43,7 @@ class CompanyController extends AbstractActionController
 
     public function showAction(): ViewModel
     {
-        $companyName = $this->params('companySlugName');
+        $companyName = $this->params()->fromRoute('companySlugName');
         $company = $this->companyService->getCompanyBySlugName($companyName);
 
         if (null !== $company) {
@@ -87,7 +87,7 @@ class CompanyController extends AbstractActionController
      */
     public function jobListAction(): ViewModel
     {
-        $jobCategorySlug = $this->params('category');
+        $jobCategorySlug = $this->params()->fromRoute('category');
         $jobCategory = $this->companyService->getJobCategoryBySlug($jobCategorySlug);
 
         if (null === $jobCategory) {
@@ -100,7 +100,7 @@ class CompanyController extends AbstractActionController
             ]
         );
 
-        if ($companySlugName = $this->params('companySlugName', null)) {
+        if (null !== ($companySlugName = $this->params()->fromRoute('companySlugName'))) {
             // Retrieve published jobs for one specific company
             $jobs = $this->companyQueryService->getActiveJobList(
                 jobCategorySlug: $jobCategorySlug,
@@ -135,9 +135,9 @@ class CompanyController extends AbstractActionController
      */
     public function jobsAction(): ViewModel
     {
-        $jobSlugName = $this->params('jobSlugName');
-        $companySlugName = $this->params('companySlugName');
-        $jobCategorySlug = $this->params('category');
+        $jobSlugName = $this->params()->fromRoute('jobSlugName');
+        $companySlugName = $this->params()->fromRoute('companySlugName');
+        $jobCategorySlug = $this->params()->fromRoute('category');
 
         $jobs = $this->companyQueryService->getJobs(
             jobCategorySlug: $jobCategorySlug,

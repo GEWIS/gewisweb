@@ -106,7 +106,7 @@ class AdminOptionController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $optionCreationPeriodId = $this->params('id');
+            $optionCreationPeriodId = (int) $this->params()->fromRoute('id');
             $optionCreationPeriod = $this->activityCalendarService->getOptionCreationPeriod($optionCreationPeriodId);
 
             if (null !== $optionCreationPeriod) {
@@ -130,7 +130,7 @@ class AdminOptionController extends AbstractActionController
             ));
         }
 
-        $optionCreationPeriodId = $this->params('id');
+        $optionCreationPeriodId = (int) $this->params()->fromRoute('id');
         $optionCreationPeriod = $this->activityCalendarService->getOptionCreationPeriod($optionCreationPeriodId);
 
         if (null === $optionCreationPeriod) {

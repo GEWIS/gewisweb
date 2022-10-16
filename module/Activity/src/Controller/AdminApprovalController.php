@@ -36,7 +36,7 @@ class AdminApprovalController extends AbstractActionController
      */
     public function viewAction(): ViewModel
     {
-        $id = (int)$this->params('id');
+        $id = (int) $this->params()->fromRoute('id');
 
         if (!$this->aclService->isAllowed('approval', 'activity')) {
             throw new NotAllowedException(
@@ -85,7 +85,7 @@ class AdminApprovalController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        $id = (int) $this->params('id');
+        $id = (int) $this->params()->fromRoute('id');
         $activity = $this->activityQueryService->getActivity($id);
 
         if (null === $activity) {
@@ -138,7 +138,7 @@ class AdminApprovalController extends AbstractActionController
      */
     public function viewProposalAction(): ViewModel
     {
-        $id = (int)$this->params('id');
+        $id = (int) $this->params()->fromRoute('id');
 
         $proposal = $this->activityQueryService->getProposal($id);
 
@@ -160,7 +160,7 @@ class AdminApprovalController extends AbstractActionController
      */
     public function applyProposalAction(): Response|ViewModel
     {
-        $id = (int) $this->params('id');
+        $id = (int) $this->params()->fromRoute('id');
         /** @var Request $request */
         $request = $this->getRequest();
 
@@ -197,7 +197,7 @@ class AdminApprovalController extends AbstractActionController
      */
     public function revokeProposalAction(): Response|ViewModel
     {
-        $id = (int) $this->params('id');
+        $id = (int) $this->params()->fromRoute('id');
         /** @var Request $request */
         $request = $this->getRequest();
 

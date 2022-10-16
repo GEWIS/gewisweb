@@ -49,12 +49,13 @@ class ActivityController extends AbstractActionController
      */
     public function indexAction(): ViewModel
     {
-        $activities = $this->activityQueryService->getUpcomingActivities($this->params('category'));
+        $category = $this->params()->fromRoute('category');
+        $activities = $this->activityQueryService->getUpcomingActivities();
 
         return new ViewModel(
             [
                 'activities' => $activities,
-                'category' => $this->params('category'),
+                'category' => $category,
             ]
         );
     }
@@ -65,7 +66,7 @@ class ActivityController extends AbstractActionController
      */
     public function viewAction(): mixed
     {
-        $activityId = (int)$this->params('id');
+        $activityId = (int) $this->params()->fromRoute('id');
         $activity = $this->activityQueryService->getActivity($activityId);
 
         if (null === $activity) {
@@ -93,8 +94,8 @@ class ActivityController extends AbstractActionController
 
     public function viewSignupListAction(): ViewModel
     {
-        $activityId = (int)$this->params('id');
-        $signupListId = (int)$this->params('signupList');
+        $activityId = (int) $this->params()->fromRoute('id');
+        $signupListId = (int) $this->params()->fromRoute('signupList');
         $signupList = $this->signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
         if (null === $signupList) {
@@ -239,8 +240,8 @@ class ActivityController extends AbstractActionController
      */
     public function signupAction(): Response|ViewModel
     {
-        $activityId = (int)$this->params('id');
-        $signupListId = (int)$this->params('signupList');
+        $activityId = (int) $this->params()->fromRoute('id');
+        $signupListId = (int) $this->params()->fromRoute('signupList');
         $signupList = $this->signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
         if (null === $signupList) {
@@ -336,8 +337,8 @@ class ActivityController extends AbstractActionController
 
     public function externalSignupAction(): Response|ViewModel
     {
-        $activityId = (int)$this->params('id');
-        $signupListId = (int)$this->params('signupList');
+        $activityId = (int) $this->params()->fromRoute('id');
+        $signupListId = (int) $this->params()->fromRoute('signupList');
         $signupList = $this->signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
         if (null === $signupList) {
@@ -396,12 +397,12 @@ class ActivityController extends AbstractActionController
     }
 
     /**
-     * Signup for a activity.
+     * Signup for an activity.
      */
     public function signoffAction(): Response|ViewModel
     {
-        $activityId = (int)$this->params('id');
-        $signupListId = (int)$this->params('signupList');
+        $activityId = (int) $this->params()->fromRoute('id');
+        $signupListId = (int) $this->params()->fromRoute('signupList');
         $signupList = $this->signupListQueryService->getSignupListByActivity($signupListId, $activityId);
 
         if (null === $signupList) {

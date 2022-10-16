@@ -157,7 +157,7 @@ class MemberController extends AbstractActionController
      */
     public function downloadRegulationAction(): Response|ViewModel
     {
-        $regulation = $this->params('regulation');
+        $regulation = $this->params()->fromRoute('regulation');
 
         if (!isset($this->regulationsConfig[$regulation])) {
             return $this->notFoundAction();

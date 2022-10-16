@@ -101,7 +101,7 @@ class AdminCategoryController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $categoryId = (int) $this->params('id');
+            $categoryId = (int) $this->params()->fromRoute('id');
             $category = $this->categoryService->getCategoryById($categoryId);
 
             if (null === $category) {
@@ -127,7 +127,7 @@ class AdminCategoryController extends AbstractActionController
             );
         }
 
-        $categoryId = (int) $this->params('id');
+        $categoryId = (int) $this->params()->fromRoute('id');
         $category = $this->categoryService->getCategoryById($categoryId);
 
         if (null === $category) {
