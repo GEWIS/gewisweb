@@ -34,13 +34,13 @@ SHELL = /bin/bash
 LAST_WEB_COMMIT := $(shell git rev-parse --short HEAD)
 
 runprod:
-		@docker compose -f docker-compose.yml up -d --force-recreate --remove-orphans
+		@docker compose -f docker-compose.yml up -d --remove-orphans
 
 runprodtest: buildprod
-		@docker compose -f docker-compose.yml up -d --force-recreate --remove-orphans
+		@docker compose -f docker-compose.yml up -d --remove-orphans
 
 rundev: builddev
-		@docker compose up -d --force-recreate --remove-orphans
+		@docker compose up -d --remove-orphans
 		@make replenish
 		@docker compose exec web rm -rf data/cache/module-config-cache.application.config.cache.php
 
