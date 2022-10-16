@@ -157,7 +157,11 @@ class FileStorage
             if ($type !== 'application/pdf') {
                 throw new RuntimeException('Cannot watermark file that is not pdf.');
             }
-            $file = $this->watermarkService->watermarkPdf($file);
+
+            $file = $this->watermarkService->watermarkPdf(
+                $file,
+                $fileName,
+            );
         }
 
         $response = new Stream();

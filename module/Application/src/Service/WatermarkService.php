@@ -32,9 +32,12 @@ class WatermarkService
      *
      * @return string The CFS path of the watermarked file
      */
-    public function watermarkPdf(string $path): string
-    {
+    public function watermarkPdf(
+        string $path,
+        string $fileName,
+    ): string {
         $pdf = new Fpdi();
+        $pdf->setTitle($fileName);
         $pages = $pdf->setSourceFile($path);
         $watermark = $this->getWatermarkText();
 
