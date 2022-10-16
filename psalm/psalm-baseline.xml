@@ -27,6 +27,11 @@
       <code>string</code>
     </InvalidNullableReturnType>
   </file>
+  <file src="module/Application/src/Service/WatermarkService.php">
+    <TypeDoesNotContainNull occurrences="1">
+      <code>$this-&gt;remoteAddress</code>
+    </TypeDoesNotContainNull>
+  </file>
   <file src="module/Application/test/BaseControllerTest.php">
     <InvalidArgument occurrences="2">
       <code>[[$this::LIDNR], $this-&gt;member]</code>

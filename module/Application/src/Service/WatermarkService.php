@@ -3,25 +3,25 @@
 namespace Application\Service;
 
 use DateTime;
-use Imagick;
-use ImagickDraw;
-use ImagickDrawException;
-use ImagickException;
-use ImagickPixel;
+use setasign\Fpdi\Tcpdf\Fpdi;
 use User\Authentication\AuthenticationService;
 
 class WatermarkService
 {
     // The font size of the watermark
     private const FONT_SIZE = 32;
-
-    private const FONT = 'public/fonts/bitstream-vera/Vera.ttf';
-
-    // The quality of the produced PDFs
-    private const DPI = 150;
+    private const FONT = 'freesansb';
+    private const PDF_DENIED_PERMISSIONS = [
+        'modify',
+        'copy',
+        'annot-forms',
+        'fill-forms',
+        'extract',
+        'assemble',
+        'print-high',
+    ];
 
     public function __construct(
-        private readonly array $storageConfig,
         private readonly AuthenticationService $authService,
         private readonly string $remoteAddress,
     ) {
@@ -31,60 +31,86 @@ class WatermarkService
      * @param string $path The CFS path of the file to watermark
      *
      * @return string The CFS path of the watermarked file
-     *
-     * @throws ImagickException
-     * @throws ImagickDrawException
      */
     public function watermarkPdf(string $path): string
     {
-        $watermarkText = $this->getWatermarkText();
-        $newPath = tempnam($this->storageConfig['watermark_dir'], (new DateTime())->format('Y-m-d') . '-');
-        $newPath = $newPath . '.pdf';
+        $pdf = new Fpdi();
+        $pages = $pdf->setSourceFile($path);
+        $watermark = $this->getWatermarkText();
+        $tempName = tempnam(sys_get_temp_dir(), (new DateTime())->format('Y-m-d') . '-') . '.pdf';
 
-        $fillPixelLight = new ImagickPixel('rgb(200, 200, 200)');
-        $fillPixelDark = new ImagickPixel('rgb(50, 50, 50)');
+        for ($page = 1; $page <= $pages; $page++) {
+            // Import a page from the source PDF, this is used to determine all specifications for this specific page,
+            // such as the height, width, and orientation.
+            $templateIndex = $pdf->importPage($page);
+            $templateSpecs = $pdf->getTemplateSize($templateIndex);
+            $pdf->setPrintHeader(false);
+            $pdf->setPrintFooter(false);
 
-        $drawSettings = new ImagickDraw();
-        $drawSettings->setFontSize(self::FONT_SIZE);
-        $drawSettings->setFont(self::FONT);
-        $drawSettings->setTextAlignment(Imagick::ALIGN_CENTER);
-        $drawSettings->setFillColor($fillPixelLight);
-        $drawSettings->setFillOpacity(0.30);
-        $drawSettings->setStrokeWidth(1);
-        $drawSettings->setStrokeColor($fillPixelDark);
-        $drawSettings->setStrokeOpacity(0.20);
+            // Add an actual page to the resulting PDF, otherwise you only get a blank page. Uses the original page as a
+            // template.
+            $pdf->AddPage($templateSpecs['orientation']);
+            $pdf->useTemplate($templateIndex, 0, 0, $templateSpecs['width'], $templateSpecs['height'], true);
 
-        $pdf = new Imagick();
-        $pages = (new Imagick($path))->getNumberImages();
-        for ($page = 0; $page < $pages; $page++) {
-            $pdfPage = new Imagick();
-            $pdfPage->setResolution(self::DPI, self::DPI);
-            $pdfPage->readImage($path . '[' . $page . ']');
+            // Do the actual watermarking.
+            $pdf->setFont(self::FONT, '', self::FONT_SIZE);
+            $pdf->setTextColor(212, 0, 0);
+            // We do not have to reset the alpha layer after watermarking, as we are not adding any additional content.
+            $pdf->setAlpha(0.65);
 
-            $sizes = $pdfPage->getImagePage();
-            $sizeX = $sizes['width'];
-            $sizeY = $sizes['height'];
+            // Determine the position of the watermark, it should be (almost) centred on the page.
+            $width = $pdf->getPageWidth();
+            $height = $pdf->getPageHeight();
+            [$watermarkAngleDeg, $watermarkAngleRad] = $this->calculateTextAngle($width, $height);
+            $watermarkMaxWidth = 0.8 * sqrt($width * $width + $height * $height);
+            $watermarkMaxHeight = 20;
+            // Adjust the coordinates to account for the shape of the text cell. Note: this is an approximation, the
+            // watermark will not be completely centred on the page.
+            $watermarkAdjustment = $watermarkMaxHeight * sin($watermarkAngleRad);
+            $x = $watermarkAdjustment;
+            $y = $height - (2 * $watermarkAdjustment);
 
-            $pdfPage->annotateImage($drawSettings, $sizeX / 2, $sizeY / 2, 60, $watermarkText);
-            $pdfPage->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
-
-            // The following lines should be removed after we have upgraded to a more recent version of ImageMagick.
-            // This is a workaround for https://github.com/ImageMagick/ImageMagick/issues/2070.
-            $profiles = $pdfPage->getImageProfiles('*', false);
-
-            if (in_array('icc', $profiles)) {
-                $pdfPage->removeImageProfile('icc');
-            }
-            // End of workaround.
-
-            $pdf->addImage($pdfPage);
+            // Do the actual transformation. Do not allow overflow to cause page breaks.
+            $pdf->setAutoPageBreak(false);
+            $pdf->StartTransform();
+            $pdf->Rotate($watermarkAngleDeg, $x, $y);
+            // Set the current coordinates and use MultiCell to allow long watermarks (e.g., because of long names) to
+            // wrap onto a new line. The height of the cell is strictly less than or equal to `watermarkMaxHeight`, the
+            // font size will be auto-adjusted if there is too much text.
+            $pdf->setXY($x, $y);
+            $pdf->MultiCell(
+                w: $watermarkMaxWidth,
+                h: $watermarkMaxHeight,
+                txt: $watermark,
+                align: 'C',
+                maxh: $watermarkMaxHeight,
+                valign: 'C',
+                fitcell: true,
+            );
+            $pdf->StopTransform();
         }
 
-        $pdf->setCompression(Imagick::COMPRESSION_ZIP);
+        $pdf->setProtection(self::PDF_DENIED_PERMISSIONS, '', null, 3);
+        $pdf->Output($tempName, 'F');
 
-        $pdf->writeImages($newPath, true);
+        return $tempName;
+    }
 
-        return $newPath;
+    /**
+     * Calculate the angle at which the watermark text will be displayed.
+     *
+     * @return array{0: float, 1: float}
+     */
+    private function calculateTextAngle(
+        float|int $width,
+        float|int $height,
+    ): array {
+        $angle = atan($height / $width);
+
+        return [
+            rad2deg($angle),
+            $angle,
+        ];
     }
 
     /**
@@ -94,21 +120,13 @@ class WatermarkService
      */
     private function getWatermarkText(): string
     {
-        $dateTime = (new DateTime())->format('Y-m-d H-i-s');
-        $user = $this->authService->getIdentity();
-
-        if ($user !== null) {
-            return sprintf(
-                "This pdf was downloaded on %s by %s from https://gewis.nl",
-                $dateTime,
-                $user->getMember()->getFullName()
-            );
-        }
+        $text = 'This exam/summary was downloaded on %s by %s via https://gewis.nl.';
+        $dateTime = (new DateTime())->format('Y-m-d H:i:s');
 
         return sprintf(
-            "This pdf was downloaded on %s from %s from https://gewis.nl",
+            $text,
             $dateTime,
-            $this->remoteAddress
+            $this->authService->getIdentity()?->getMember()->getFullName() ?? $this->remoteAddress,
         );
     }
 }

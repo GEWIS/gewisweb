@@ -71,6 +71,9 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 COPY --chown=www-data:www-data ./composer.json ./
 RUN php composer.phar install
 
+# If you are not a member of the ApplicatieBeheerCommissie comment the line below.
+COPY --from=web.docker-registry.gewis.nl/gewisweb_patches:latest . /code
+
 COPY --chown=www-data:www-data ./package.json ./package-lock.json ./
 RUN npm install --production=false
 
