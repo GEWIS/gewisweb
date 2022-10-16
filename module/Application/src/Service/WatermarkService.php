@@ -37,7 +37,6 @@ class WatermarkService
         $pdf = new Fpdi();
         $pages = $pdf->setSourceFile($path);
         $watermark = $this->getWatermarkText();
-        $tempName = tempnam(sys_get_temp_dir(), (new DateTime())->format('Y-m-d') . '-') . '.pdf';
 
         for ($page = 1; $page <= $pages; $page++) {
             // Import a page from the source PDF, this is used to determine all specifications for this specific page,
@@ -90,10 +89,17 @@ class WatermarkService
             $pdf->StopTransform();
         }
 
-        $pdf->setProtection(self::PDF_DENIED_PERMISSIONS, '', null, 3);
-        $pdf->Output($tempName, 'F');
+        // Ensure that certain functionality is disabled in the PDF to prevent it from being copied.
+        // $pdf->setProtection(self::PDF_DENIED_PERMISSIONS, '', null, 3);
 
-        return $tempName;
+        // Output the file to a temporary location and convert it to a PDF of images.
+        $tempName = tempnam(sys_get_temp_dir(), (new DateTime())->format('Y-m-d') . '-');
+        $tempFile = $tempName . '.pdf';
+        $tempFlatFile = $tempName . '-flat.pdf';
+        $pdf->Output($tempFile, 'F');
+        exec("convert -density 120 " . escapeshellarg($tempFile) . " " . escapeshellarg($tempFlatFile));
+
+        return $tempFlatFile;
     }
 
     /**
