@@ -30,11 +30,16 @@ class AlbumCover
      *
      * @param AlbumModel $album the album to create the cover for
      *
-     * @return string the path to the cover image
+     * @return string|null the path to the cover image
      */
-    public function createCover(AlbumModel $album): string
+    public function createCover(AlbumModel $album): ?string
     {
         $cover = $this->generateCover($album);
+
+        if (null === $cover) {
+            return null;
+        }
+
         $tempFileName = sys_get_temp_dir() . '/CoverImage' . random_int(0, getrandmax()) . '.png';
         $cover->writeImage($tempFileName);
 
@@ -46,9 +51,9 @@ class AlbumCover
      *
      * @param AlbumModel $album the album to create a cover image for
      *
-     * @return Imagick the cover image
+     * @return Imagick|null the cover image or null if one could not be created
      */
-    protected function generateCover(AlbumModel $album): Imagick
+    protected function generateCover(AlbumModel $album): ?Imagick
     {
         $columns = $this->photoConfig['album_cover']['cols'];
         $rows = $this->photoConfig['album_cover']['rows'];
@@ -74,9 +79,11 @@ class AlbumCover
             $this->photoConfig['album_cover']['background']
         );
 
-        if (count($images) > 0) {
-            $this->drawComposition($target, $columns, $rows, $images);
+        if (0 === count($images)) {
+            return null;
         }
+
+        $this->drawComposition($target, $columns, $rows, $images);
         $target->setImageFormat('png');
 
         return $target;

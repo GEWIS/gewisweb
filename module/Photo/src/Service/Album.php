@@ -453,7 +453,7 @@ class Album
      *
      * @throws Exception
      */
-    public function generateAlbumCover(int $albumId): void
+    public function generateAlbumCover(int $albumId): ?string
     {
         if (!$this->aclService->isAllowed('edit', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to generate album covers.'));
@@ -463,12 +463,18 @@ class Album
         //if an existing cover photo was generated earlier, delete it.
         $coverPath = $this->albumCoverService->createCover($album);
 
+        if (null === $coverPath) {
+            return null;
+        }
+
         if (null !== $album->getCoverPath()) {
             $this->storageService->removeFile($album->getCoverPath());
         }
 
         $album->setCoverPath($coverPath);
         $this->albumMapper->flush();
+
+        return $coverPath;
     }
 
     /**

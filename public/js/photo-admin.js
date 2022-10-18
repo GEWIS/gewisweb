@@ -85,11 +85,14 @@ Photo.Admin.regenerateCover = function () {
     $("#coverPreview").hide();
     $("#coverSpinner").show();
     $.post(URLHelper.url('admin_photo/album_cover', {'album_id': Photo.Admin.activeData.album.id}), function (data) {
-        $.getJSON(Photo.Admin.activePage, function (data) {
-            $("#coverPreview").attr('src', URLHelper.url('home') + 'data/' + data.album.coverPath);
-            $("#coverPreview").show();
+        if (data.success) {
+            $("#coverPreview").attr('src', URLHelper.url('home') + 'data/' + data.coverPath);
             $("#coverSpinner").hide();
-        });
+            $("#coverPreview").show();
+        } else {
+            $("#coverSpinner").hide();
+            $("#coverError").show();
+        }
     });
 }
 
