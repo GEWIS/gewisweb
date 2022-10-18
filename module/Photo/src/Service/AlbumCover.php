@@ -102,11 +102,7 @@ class AlbumCover
         int $count,
     ): array {
         $photos = $this->photoMapper->getRandomAlbumPhotos($album, $count);
-        //retrieve more photo's from subalbums
-        foreach ($this->albumMapper->getSubAlbums($album) as $subAlbum) {
-            $needed = $count - count($photos);
-            $photos = array_merge($photos, $this->photoMapper->getRandomAlbumPhotos($subAlbum, $needed));
-        }
+
         //convert the photo objects to Imagick objects
         $images = [];
         foreach ($photos as $photo) {

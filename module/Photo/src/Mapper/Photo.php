@@ -3,6 +3,7 @@
 namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Photo\Model\{
     Album as AlbumModel,
     MemberAlbum as MemberAlbumModel,
@@ -28,21 +29,21 @@ class Photo extends BaseMapper
         int $start = 0,
         ?int $maxResults = null,
     ): array {
-        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb = $this->getRepository()->createQueryBuilder('p');
 
         if ($album instanceof MemberAlbumModel) {
-            $qb->innerJoin('a.tags', 't')
+            $qb->innerJoin('p.tags', 't')
                 ->where('t.member = ?1')
                 ->setParameter(1, $album->getMember());
             // We want to display the photos in a member's album in reversed
             // chronological order
             $qb->setFirstResult($start)
-                ->orderBy('a.dateTime', 'DESC');
+                ->orderBy('p.dateTime', 'DESC');
         } else {
-            $qb->where('a.album = ?1')
+            $qb->where('p.album = ?1')
                 ->setParameter(1, $album);
             $qb->setFirstResult($start)
-                ->orderBy('a.dateTime', 'ASC');
+                ->orderBy('p.dateTime', 'ASC');
         }
         if (!is_null($maxResults)) {
             $qb->setMaxResults($maxResults);
@@ -52,27 +53,73 @@ class Photo extends BaseMapper
     }
 
     /**
-     * Retrieves some random photos from the specified album. If the amount of
-     * available photos is smaller than the requested count, less photos
-     * will be returned.
+     * Retrieves some random photos from the specified album and its sub-albums (recursively). If the amount of
+     * available photos is smaller than the requested count, fewer photos will be returned.
+     *
+     * Note: `$depth` is the amount of sub-albums (recursively) inclusively to be included, `$album` is at a depth of
+     * zero (0). Example for a depth of 2:
+     *
+     * root (0):
+     *     photos
+     *     sub-album-1 (1):
+     *         [photos]
+     *     sub-album-2 (1):
+     *         [photos]
+     *         sub-sub-album-1 (2):
+     *             [photos]
      *
      * @param AlbumModel $album
      * @param int $maxResults
      *
-     * @return array of Photo\Model\Photo
+     * @return PhotoModel[]
      */
     public function getRandomAlbumPhotos(
         AlbumModel $album,
         int $maxResults,
+        int $depth = 2,
     ): array {
-        $qb = $this->getRepository()->createQueryBuilder('a');
-        $qb->where('a.album = ?1')
-            ->setParameter(1, $album)
-            ->addSelect('RAND() as HIDDEN rand')
-            ->orderBy('rand');
-        $qb->setMaxResults($maxResults);
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('photo_id', 'photo_id', 'integer');
 
-        return $qb->getQuery()->getResult();
+        $sql = <<<QUERY
+            WITH RECURSIVE `subAlbumContents` (`depth`, `id`, `photo_id`) AS (
+                SELECT 0 AS `depth`, `a`.`id`, `p`.`id` AS `photo_id`
+                FROM `Album` `a`
+                LEFT JOIN `Photo` `p` ON `p`.`album_id` = `a`.`id`
+                WHERE `a`.`id` = :album_id
+
+                UNION ALL
+
+                SELECT `s`.`depth` + 1 AS `depth`, `a`.`id`, `p`.`id` AS `photo_id`
+                FROM `Album` `a`
+                LEFT JOIN `Photo` `p` ON `p`.`album_id` = `a`.`id`
+                INNER JOIN `subAlbumContents` `s` ON `s`.`id` = `a`.`parent_id`
+                WHERE `depth` < :depth
+            )
+            SELECT `photo_id`
+            FROM `subAlbumContents`
+            WHERE `photo_id` IS NOT NULL
+                AND `depth` = (
+                    SELECT MIN(`depth`)
+                    FROM `subAlbumContents`
+                    WHERE `photo_id` IS NOT NULL
+                )
+            ORDER BY RAND()
+            LIMIT :limit;
+            QUERY;
+
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+        $query->setParameter('album_id', $album->getId())
+            ->setParameter('limit', $maxResults)
+            ->setParameter('depth', $depth);
+
+        $result = $query->getArrayResult();
+        $photos = [];
+        foreach ($result as $photo) {
+            $photos[] = $this->find($photo['photo_id']);
+        }
+
+        return $photos;
     }
 
     /**
@@ -84,20 +131,20 @@ class Photo extends BaseMapper
         PhotoModel $photo,
         AlbumModel $album,
     ): ?PhotoModel {
-        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb = $this->getRepository()->createQueryBuilder('p');
 
         if ($album instanceof MemberAlbumModel) {
-            $qb->innerJoin('a.tags', 't')
-                ->where('t.member = ?1 AND a.dateTime > ?2')
+            $qb->innerJoin('p.tags', 't')
+                ->where('t.member = ?1 AND p.dateTime > ?2')
                 ->setParameter(1, $album->getMember())
                 ->setParameter(2, $photo->getDateTime());
         } else {
-            $qb->where('a.dateTime > ?1 AND a.album = ?2')
+            $qb->where('p.dateTime > ?1 AND p.album = ?2')
                 ->setParameter(1, $photo->getDateTime())
                 ->setParameter(2, $photo->getAlbum());
         }
 
-        $qb->orderBy('a.dateTime', 'ASC')
+        $qb->orderBy('p.dateTime', 'ASC')
             ->setMaxResults(1);
         $res = $qb->getQuery()->getResult();
 
@@ -113,20 +160,20 @@ class Photo extends BaseMapper
         PhotoModel $photo,
         AlbumModel $album,
     ): ?PhotoModel {
-        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb = $this->getRepository()->createQueryBuilder('p');
 
         if ($album instanceof MemberAlbumModel) {
-            $qb->innerJoin('a.tags', 't')
-                ->where('t.member = ?1 AND a.dateTime < ?2')
+            $qb->innerJoin('p.tags', 't')
+                ->where('t.member = ?1 AND p.dateTime < ?2')
                 ->setParameter(1, $album->getMember())
                 ->setParameter(2, $photo->getDateTime());
         } else {
-            $qb->where('a.dateTime < ?1 AND a.album = ?2')
+            $qb->where('p.dateTime < ?1 AND p.album = ?2')
                 ->setParameter(1, $photo->getDateTime())
                 ->setParameter(2, $photo->getAlbum());
         }
 
-        $qb->orderBy('a.dateTime', 'DESC')
+        $qb->orderBy('p.dateTime', 'DESC')
             ->setMaxResults(1);
         $res = $qb->getQuery()->getResult();
 
