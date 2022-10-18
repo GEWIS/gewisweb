@@ -50,7 +50,7 @@ class ActivityController extends AbstractActionController
     public function indexAction(): ViewModel
     {
         $category = $this->params()->fromRoute('category');
-        $activities = $this->activityQueryService->getUpcomingActivities();
+        $activities = $this->activityQueryService->getUpcomingActivities($category);
 
         return new ViewModel(
             [
