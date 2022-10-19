@@ -53,73 +53,25 @@ class Photo extends BaseMapper
     }
 
     /**
-     * Retrieves some random photos from the specified album and its sub-albums (recursively). If the amount of
-     * available photos is smaller than the requested count, fewer photos will be returned.
+     * Retrieves some random photos from the specified albums. If the amount of available photos is smaller than the
+     * requested count, fewer photos will be returned.
      *
-     * Note: `$depth` is the amount of sub-albums (recursively) inclusively to be included, `$album` is at a depth of
-     * zero (0). Example for a depth of 2:
-     *
-     * root (0):
-     *     photos
-     *     sub-album-1 (1):
-     *         [photos]
-     *     sub-album-2 (1):
-     *         [photos]
-     *         sub-sub-album-1 (2):
-     *             [photos]
-     *
-     * @param AlbumModel $album
+     * @param array $albums
      * @param int $maxResults
      *
      * @return PhotoModel[]
      */
-    public function getRandomAlbumPhotos(
-        AlbumModel $album,
+    public function getRandomPhotosFromAlbums(
+        array $albums,
         int $maxResults,
-        int $depth = 2,
     ): array {
-        $rsm = new ResultSetMapping();
-        $rsm->addScalarResult('photo_id', 'photo_id', 'integer');
+        $qb = $this->getRepository()->createQueryBuilder('p');
+        $qb->where('p.album IN (:album_ids)')
+            ->orderBy('RAND()')
+            ->setMaxResults($maxResults)
+            ->setParameter('album_ids', $albums);
 
-        $sql = <<<QUERY
-            WITH RECURSIVE `subAlbumContents` (`depth`, `id`, `photo_id`) AS (
-                SELECT 0 AS `depth`, `a`.`id`, `p`.`id` AS `photo_id`
-                FROM `Album` `a`
-                LEFT JOIN `Photo` `p` ON `p`.`album_id` = `a`.`id`
-                WHERE `a`.`id` = :album_id
-
-                UNION ALL
-
-                SELECT `s`.`depth` + 1 AS `depth`, `a`.`id`, `p`.`id` AS `photo_id`
-                FROM `Album` `a`
-                LEFT JOIN `Photo` `p` ON `p`.`album_id` = `a`.`id`
-                INNER JOIN `subAlbumContents` `s` ON `s`.`id` = `a`.`parent_id`
-                WHERE `depth` < :depth
-            )
-            SELECT `photo_id`
-            FROM `subAlbumContents`
-            WHERE `photo_id` IS NOT NULL
-                AND `depth` = (
-                    SELECT MIN(`depth`)
-                    FROM `subAlbumContents`
-                    WHERE `photo_id` IS NOT NULL
-                )
-            ORDER BY RAND()
-            LIMIT :limit;
-            QUERY;
-
-        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
-        $query->setParameter('album_id', $album->getId())
-            ->setParameter('limit', $maxResults)
-            ->setParameter('depth', $depth);
-
-        $result = $query->getArrayResult();
-        $photos = [];
-        foreach ($result as $photo) {
-            $photos[] = $this->find($photo['photo_id']);
-        }
-
-        return $photos;
+        return $qb->getQuery()->getResult();
     }
 
     /**

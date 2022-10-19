@@ -128,14 +128,12 @@ class Module
                 },
                 'photo_service_album_cover' => function (ContainerInterface $container) {
                     $photoMapper = $container->get('photo_mapper_photo');
-                    $albumMapper = $container->get('photo_mapper_album');
                     $storage = $container->get('application_service_storage');
                     $photoConfig = $container->get('config')['photo'];
                     $storageConfig = $container->get('config')['storage'];
 
                     return new AlbumCoverService(
                         $photoMapper,
-                        $albumMapper,
                         $storage,
                         $photoConfig,
                         $storageConfig,
