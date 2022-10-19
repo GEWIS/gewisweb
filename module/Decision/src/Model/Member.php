@@ -225,6 +225,12 @@ class Member
     )]
     protected Collection $boardInstallations;
 
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $authenticationKey = null;
+
     /**
      * Determines if a member is deleted. A deleted member is a member whose basic info needs to be retained to ensure
      * that all decisions that mention this member can be kept (i.e., administrative purposes). This value is only set
@@ -604,6 +610,17 @@ class Member
     {
         return $this->installations;
     }
+
+    public function getAuthenticationKey(): ?string
+    {
+        return $this->authenticationKey;
+    }
+
+    public function setAuthenticationKey(?string $authenticationKey): void
+    {
+        $this->authenticationKey = $authenticationKey;
+    }
+
 
     /**
      * Get if the member is deleted.
