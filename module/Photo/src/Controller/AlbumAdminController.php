@@ -40,7 +40,7 @@ class AlbumAdminController extends AbstractActionController
 
         return new ViewModel(
             [
-                'albumsByYear' => $albumsByYear,
+                'albumsByYear' => array_reverse($albumsByYear, true),
                 'albumsWithoutDate' => $albumsWithoutDate,
             ]
         );
