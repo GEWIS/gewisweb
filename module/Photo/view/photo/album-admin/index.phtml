@@ -149,6 +149,9 @@ $this->scriptUrl()->requireUrl('admin_photo/album_page', ['album_id', 'page'])
             <div class="modal-body">
                 <center>
                     <div id="coverSpinner" class="spinner"></div>
+                    <p id="coverError"  style="display: none;">
+                        <?= $this->translate('An error occurred while trying to generate an album photo.') ?>
+                    </p>
                     <img id="coverPreview" class="cover-preview" src="">
                 </center>
             </div>

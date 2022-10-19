@@ -4,10 +4,7 @@ namespace Photo\Service;
 
 use Application\Service\FileStorage as FileStorageService;
 use Imagick;
-use Photo\Mapper\{
-    Album as AlbumMapper,
-    Photo as PhotoMapper,
-};
+use Photo\Mapper\Photo as PhotoMapper;
 use Photo\Model\Album as AlbumModel;
 
 /**
@@ -17,7 +14,6 @@ class AlbumCover
 {
     public function __construct(
         private readonly PhotoMapper $photoMapper,
-        private readonly AlbumMapper $albumMapper,
         private readonly FileStorageService $storage,
         private readonly array $photoConfig,
         private readonly array $storageConfig,
@@ -30,11 +26,16 @@ class AlbumCover
      *
      * @param AlbumModel $album the album to create the cover for
      *
-     * @return string the path to the cover image
+     * @return string|null the path to the cover image
      */
-    public function createCover(AlbumModel $album): string
+    public function createCover(AlbumModel $album): ?string
     {
         $cover = $this->generateCover($album);
+
+        if (null === $cover) {
+            return null;
+        }
+
         $tempFileName = sys_get_temp_dir() . '/CoverImage' . random_int(0, getrandmax()) . '.png';
         $cover->writeImage($tempFileName);
 
@@ -46,14 +47,19 @@ class AlbumCover
      *
      * @param AlbumModel $album the album to create a cover image for
      *
-     * @return Imagick the cover image
+     * @return Imagick|null the cover image or null if one could not be created
      */
-    protected function generateCover(AlbumModel $album): Imagick
+    protected function generateCover(AlbumModel $album): ?Imagick
     {
         $columns = $this->photoConfig['album_cover']['cols'];
         $rows = $this->photoConfig['album_cover']['rows'];
         $count = $columns * $rows;
         $images = $this->getImages($album, $count);
+
+        if (0 === count($images)) {
+            return null;
+        }
+
         /*
          * If there are not enough images available to fill the matrix we
          * reduce the amount of rows and columns
@@ -74,9 +80,7 @@ class AlbumCover
             $this->photoConfig['album_cover']['background']
         );
 
-        if (count($images) > 0) {
-            $this->drawComposition($target, $columns, $rows, $images);
-        }
+        $this->drawComposition($target, $columns, $rows, $images);
         $target->setImageFormat('png');
 
         return $target;
@@ -93,13 +97,17 @@ class AlbumCover
     protected function getImages(
         AlbumModel $album,
         int $count,
+        int $maxDepth = 3,
     ): array {
-        $photos = $this->photoMapper->getRandomAlbumPhotos($album, $count);
-        //retrieve more photo's from subalbums
-        foreach ($this->albumMapper->getSubAlbums($album) as $subAlbum) {
-            $needed = $count - count($photos);
-            $photos = array_merge($photos, $this->photoMapper->getRandomAlbumPhotos($subAlbum, $needed));
+        $albums = [];
+        if (0 === $album->getPhotos()->count()) {
+            $albums = $this->getLayerWithPhotos($album->getChildren()->toArray(), $maxDepth);
+        } else {
+            $albums[] = $album;
         }
+
+        $photos = $this->photoMapper->getRandomPhotosFromAlbums($albums, $count);
+
         //convert the photo objects to Imagick objects
         $images = [];
         foreach ($photos as $photo) {
@@ -108,6 +116,37 @@ class AlbumCover
         }
 
         return $images;
+    }
+
+    /**
+     * @param AlbumModel[] $subAlbums
+     *
+     * @return AlbumModel[]
+     */
+    protected function getLayerWithPhotos(
+        array $subAlbums,
+        int $maxDepth,
+    ): array {
+        if ($maxDepth < 0) {
+            return [];
+        }
+
+        $allChildren = [];
+        $output = [];
+
+        foreach ($subAlbums as $subAlbum) {
+            $allChildren = array_merge($allChildren, $subAlbum->getChildren()->toArray());
+
+            if (0 !== $subAlbum->getPhotos()->count()) {
+                $output[] = $subAlbum;
+            }
+        }
+
+        if (empty($output)) {
+            $output = $this->getLayerWithPhotos($allChildren, $maxDepth - 1);
+        }
+
+        return $output;
     }
 
     /**

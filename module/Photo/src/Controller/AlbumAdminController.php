@@ -210,9 +210,14 @@ class AlbumAdminController extends AbstractActionController
 
         if ($request->isPost()) {
             $albumId = $this->params()->fromRoute('album_id');
-            $this->albumService->generateAlbumCover($albumId);
+            if (null !== ($cover = $this->albumService->generateAlbumCover($albumId))) {
+                return new JsonModel([
+                    'success' => true,
+                    'coverPath' => $cover,
+                ]);
+            }
         }
 
-        return new JsonModel([]);
+        return new JsonModel(['success' => false]);
     }
 }
