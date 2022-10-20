@@ -212,7 +212,7 @@ $this->breadcrumbs()
                 <?php
                 echo sprintf(
                     $this->translate('This activity was approved by <strong>%s</strong>.'),
-                    $this->escapeHtml($activity->getApprover()->getMember()->getFullName())
+                    $this->escapeHtml($activity->getApprover()->getFullName())
                 );
                 ?>
             </p>
@@ -234,7 +234,7 @@ $this->breadcrumbs()
                 <?php
                 echo sprintf(
                     $this->translate('This activity was disapproved by <strong>%s</strong>.'),
-                    $this->escapeHtml($activity->getApprover()->getMember()->getFullName())
+                    $this->escapeHtml($activity->getApprover()->getFullName())
                 );
                 ?>
             </p>

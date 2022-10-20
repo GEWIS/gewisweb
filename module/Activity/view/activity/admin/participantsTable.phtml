@@ -61,7 +61,7 @@ use Decision\Model\Member;
                 <td>
                     <?= sprintf(
                         $this->translate('User (%s)'),
-                        $signup->getUser()->getMember()->getType()->getName($this->plugin('translate')->getTranslator()),
+                        $signup->getUser()->getType()->getName($this->plugin('translate')->getTranslator()),
                     ); ?>
                 </td>
             <?php else: ?>

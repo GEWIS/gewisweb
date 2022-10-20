@@ -135,7 +135,7 @@ $this->breadcrumbs()
                 <td><?= $this->escapeHtml($poll->getEnglishQuestion()) ?></td>
                 <td><?= $poll->getExpiryDate()->format('Y-m-d') ?></td>
                 <td><?= $poll->getCreator()->getFullName() ?></td>
-                <td><?= $poll->getApprover()->getMember()->getFullName() ?></td>
+                <td><?= $poll->getApprover()->getFullName() ?></td>
                 <td>
                     <?php if ($poll->isActive()): ?>
                         <button type="button" class="btn btn-danger btn-xs delete-poll"
