@@ -16,6 +16,7 @@ use Application\Service\Email as EmailService;
 use Company\Model\Company as CompanyModel;
 use Company\Service\Company as CompanyService;
 use DateTime;
+use Decision\Model\Member as MemberModel;
 use Decision\Model\Organ as OrganModel;
 use Decision\Service\Organ as OrganService;
 use Doctrine\ORM\{
@@ -57,7 +58,7 @@ class Activity
         }
 
         // Find the creator
-        $user = $this->aclService->getIdentityOrThrowException();
+        $member = $this->aclService->getIdentityOrThrowException()->getMember();
 
         // Find the organ the activity belongs to, and see if the user has permission to create an activity
         // for this organ. If the id is 0, the activity belongs to no organ.
@@ -76,11 +77,11 @@ class Activity
             $company = $this->companyService->getCompanyById($companyId);
         }
 
-        $activity = $this->saveActivityData($data, $user, $organ, $company, ActivityModel::STATUS_TO_APPROVE);
+        $activity = $this->saveActivityData($data, $member, $organ, $company, ActivityModel::STATUS_TO_APPROVE);
 
         // Send email to GEFLITST if user checked checkbox of GEFLITST
         if ($activity->getRequireGEFLITST()) {
-            $this->requestGEFLITST($activity, $user, $organ);
+            $this->requestGEFLITST($activity, $member, $organ);
         }
 
         return true;
@@ -147,7 +148,7 @@ class Activity
      * @pre $data is valid data of Activity\Form\Activity
      *
      * @param array $data Parameters describing activity
-     * @param UserModel $user The user that creates this activity
+     * @param MemberModel $user The user that creates this activity
      * @param OrganModel|null $organ The organ this activity is associated with
      * @param CompanyModel|null $company The company this activity is associated with
      * @param int $status
@@ -156,7 +157,7 @@ class Activity
      */
     protected function saveActivityData(
         array $data,
-        UserModel $user,
+        MemberModel $user,
         ?OrganModel $organ,
         ?CompanyModel $company,
         int $status,
@@ -328,12 +329,12 @@ class Activity
 
     /**
      * @param ActivityModel $activity
-     * @param UserModel $user
+     * @param MemberModel $user
      * @param OrganModel|null $organ
      */
     private function requestGEFLITST(
         ActivityModel $activity,
-        UserModel $user,
+        MemberModel $user,
         ?OrganModel $organ,
     ): void {
         // Default to an English title, otherwise use the Dutch title
@@ -372,7 +373,7 @@ class Activity
                 $type,
                 $view,
                 $subject,
-                ['activity' => $activity, 'requester' => $user->getMember()->getFullName()],
+                ['activity' => $activity, 'requester' => $user->getFullName()],
                 $user,
             );
         }
@@ -393,7 +394,7 @@ class Activity
         array $data,
     ): bool {
         // Find the creator
-        $user = $this->aclService->getIdentityOrThrowException();
+        $member = $this->aclService->getIdentityOrThrowException()->getMember();
 
         // Find the organ the activity belongs to, and see if the user has permission to create an activity
         // for this organ. If the id is 0, the activity belongs to no organ.
@@ -423,7 +424,7 @@ class Activity
 
         $newActivity = $this->saveActivityData(
             $data,
-            $user,
+            $member,
             $organ,
             $company,
             ActivityModel::STATUS_UPDATE
@@ -716,7 +717,7 @@ class Activity
         }
 
         $activity->setStatus(ActivityModel::STATUS_APPROVED);
-        $activity->setApprover($this->aclService->getIdentity());
+        $activity->setApprover($this->aclService->getIdentity()->getMember());
         $em = $this->entityManager;
         $em->persist($activity);
         $em->flush();
@@ -752,7 +753,7 @@ class Activity
         }
 
         $activity->setStatus(ActivityModel::STATUS_DISAPPROVED);
-        $activity->setApprover($this->aclService->getIdentity());
+        $activity->setApprover($this->aclService->getIdentity()->getMember());
         $em = $this->entityManager;
         $em->persist($activity);
         $em->flush();

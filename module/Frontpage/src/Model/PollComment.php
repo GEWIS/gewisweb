@@ -3,6 +3,7 @@
 namespace Frontpage\Model;
 
 use DateTime;
+use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -12,7 +13,6 @@ use Doctrine\ORM\Mapping\{
     ManyToOne,
 };
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
-use User\Model\User as UserModel;
 
 /**
  * Poll comment.
@@ -45,13 +45,13 @@ class PollComment implements ResourceInterface
     /**
      * User that posted the comment.
      */
-    #[ManyToOne(targetEntity: UserModel::class)]
+    #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(
         name: "user_lidnr",
         referencedColumnName: "lidnr",
         nullable: false,
     )]
-    protected UserModel $user;
+    protected MemberModel $user;
 
     /**
      * Author of the comment.
@@ -102,9 +102,9 @@ class PollComment implements ResourceInterface
     /**
      * Get the user.
      *
-     * @return UserModel
+     * @return MemberModel
      */
-    public function getUser(): UserModel
+    public function getUser(): MemberModel
     {
         return $this->user;
     }
@@ -112,7 +112,7 @@ class PollComment implements ResourceInterface
     /**
      * Set the user.
      */
-    public function setUser(UserModel $user): void
+    public function setUser(MemberModel $user): void
     {
         $this->user = $user;
     }

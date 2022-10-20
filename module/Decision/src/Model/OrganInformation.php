@@ -2,6 +2,7 @@
 
 namespace Decision\Model;
 
+use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -10,7 +11,6 @@ use Doctrine\ORM\Mapping\{
     JoinColumn,
     ManyToOne,
 };
-use User\Model\User as UserModel;
 
 /**
  * Organ information.
@@ -115,9 +115,9 @@ class OrganInformation
     /**
      * Who was the last one to approve this information. If null then nobody approved it.
      */
-    #[ManyToOne(targetEntity: UserModel::class)]
+    #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(referencedColumnName: "lidnr")]
-    protected ?UserModel $approver = null;
+    protected ?MemberModel $approver = null;
 
     /**
      * @return int|null
@@ -240,17 +240,17 @@ class OrganInformation
     }
 
     /**
-     * @return UserModel|null
+     * @return MemberModel|null
      */
-    public function getApprover(): ?UserModel
+    public function getApprover(): ?MemberModel
     {
         return $this->approver;
     }
 
     /**
-     * @param UserModel|null $approver
+     * @param MemberModel|null $approver
      */
-    public function setApprover(?UserModel $approver): void
+    public function setApprover(?MemberModel $approver): void
     {
         $this->approver = $approver;
     }

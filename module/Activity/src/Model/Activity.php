@@ -4,7 +4,10 @@ namespace Activity\Model;
 
 use Company\Model\Company as CompanyModel;
 use DateTime;
-use Decision\Model\Organ as OrganModel;
+use Decision\Model\{
+    Member as MemberModel,
+    Organ as OrganModel,
+};
 use Doctrine\Common\Collections\{
     ArrayCollection,
     Collection,
@@ -21,7 +24,6 @@ use Doctrine\ORM\Mapping\{
     OneToMany,
     OneToOne,
 };
-use User\Model\User as UserModel;
 use User\Permissions\Resource\{
     CreatorResourceInterface,
     OrganResourceInterface,
@@ -109,19 +111,19 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Who (dis)approved this activity?
      */
-    #[ManyToOne(targetEntity: UserModel::class)]
+    #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(referencedColumnName: "lidnr")]
-    protected ?UserModel $approver = null;
+    protected ?MemberModel $approver = null;
 
     /**
      * Who created this activity.
      */
-    #[ManyToOne(targetEntity: UserModel::class)]
+    #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(
         referencedColumnName: "lidnr",
         nullable: false,
     )]
-    protected UserModel $creator;
+    protected MemberModel $creator;
 
     /**
      * What is the approval status      .
@@ -215,17 +217,17 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return UserModel|null
+     * @return MemberModel|null
      */
-    public function getApprover(): ?UserModel
+    public function getApprover(): ?MemberModel
     {
         return $this->approver;
     }
 
     /**
-     * @param UserModel|null $approver
+     * @param MemberModel|null $approver
      */
-    public function setApprover(?UserModel $approver): void
+    public function setApprover(?MemberModel $approver): void
     {
         $this->approver = $approver;
     }
@@ -536,14 +538,14 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return UserModel
+     * @return MemberModel
      */
-    public function getCreator(): UserModel
+    public function getCreator(): MemberModel
     {
         return $this->creator;
     }
 
-    public function setCreator(UserModel $creator): void
+    public function setCreator(MemberModel $creator): void
     {
         $this->creator = $creator;
     }
@@ -609,9 +611,9 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Get the creator of this resource.
      *
-     * @return UserModel
+     * @return MemberModel
      */
-    public function getResourceCreator(): UserModel
+    public function getResourceCreator(): MemberModel
     {
         return $this->getCreator();
     }

@@ -2,12 +2,12 @@
 
 namespace Activity\Model;
 
+use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Mapping\{
     Entity,
     JoinColumn,
     ManyToOne,
 };
-use User\Model\User as UserModel;
 
 /**
  * Signup model.
@@ -18,12 +18,12 @@ class UserSignup extends Signup
     /**
      * Who is subscribed. This association cannot be nonnullable, as this breaks {@link ExternalSignup}.
      */
-    #[ManyToOne(targetEntity: UserModel::class)]
+    #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(
         name: "user_lidnr",
         referencedColumnName: "lidnr",
     )]
-    protected UserModel $user;
+    protected MemberModel $user;
 
     /**
      * Get the full name of the user whom signed up for the activity.
@@ -32,15 +32,15 @@ class UserSignup extends Signup
      */
     public function getFullName(): string
     {
-        return $this->getUser()->getMember()->getFullName();
+        return $this->getUser()->getFullName();
     }
 
     /**
      * Get the user that is signed up.
      *
-     * @return UserModel
+     * @return MemberModel
      */
-    public function getUser(): UserModel
+    public function getUser(): MemberModel
     {
         return $this->user;
     }
@@ -48,7 +48,7 @@ class UserSignup extends Signup
     /**
      * Set the user for the activity signup.
      */
-    public function setUser(UserModel $user): void
+    public function setUser(MemberModel $user): void
     {
         $this->user = $user;
     }
@@ -60,6 +60,6 @@ class UserSignup extends Signup
      */
     public function getEmail(): ?string
     {
-        return $this->getUser()->getMember()->getEmail();
+        return $this->getUser()->getEmail();
     }
 }
