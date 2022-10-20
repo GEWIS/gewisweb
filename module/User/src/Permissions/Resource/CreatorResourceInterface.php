@@ -2,15 +2,15 @@
 
 namespace User\Permissions\Resource;
 
+use Decision\Model\Member as MemberModel;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
-use User\Model\User;
 
 interface CreatorResourceInterface extends ResourceInterface
 {
     /**
-     * Get the creator (a user) of this resource.
+     * Get the creator (a member) of this resource.
      *
-     * @return User
+     * @return MemberModel
      */
-    public function getResourceCreator(): User;
+    public function getResourceCreator(): MemberModel;
 }

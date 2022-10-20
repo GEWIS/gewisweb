@@ -2,6 +2,7 @@
 
 namespace User\Permissions\Assertion;
 
+use Decision\Model\Member;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
@@ -43,7 +44,7 @@ class IsCreator implements AssertionInterface
 
         $creator = $resource->getResourceCreator();
 
-        if (!$creator instanceof User) {
+        if (!$creator instanceof Member) {
             return false;
         }
 

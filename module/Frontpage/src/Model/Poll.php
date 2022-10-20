@@ -3,6 +3,7 @@
 namespace Frontpage\Model;
 
 use DateTime;
+use Decision\Model\Member as MemberModel;
 use Doctrine\Common\Collections\{
     ArrayCollection,
     Collection,
@@ -17,7 +18,6 @@ use Doctrine\ORM\Mapping\{
     OneToMany,
 };
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
-use User\Model\User as UserModel;
 
 /**
  * Poll.
@@ -74,19 +74,19 @@ class Poll implements ResourceInterface
     /**
      * Who approved this poll. If null then nobody approved it.
      */
-    #[ManyToOne(targetEntity: UserModel::class)]
+    #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(
         referencedColumnName: "lidnr",
         nullable: false,
     )]
-    protected UserModel $creator;
+    protected MemberModel $creator;
 
     /**
      * Who approved this poll. If null then nobody approved it.
      */
-    #[ManyToOne(targetEntity: UserModel::class)]
+    #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(referencedColumnName: "lidnr")]
-    protected ?UserModel $approver = null;
+    protected ?MemberModel $approver = null;
 
     public function __construct()
     {
@@ -143,17 +143,17 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @return UserModel|null
+     * @return MemberModel|null
      */
-    public function getApprover(): ?UserModel
+    public function getApprover(): ?MemberModel
     {
         return $this->approver;
     }
 
     /**
-     * @return UserModel
+     * @return MemberModel
      */
-    public function getCreator(): UserModel
+    public function getCreator(): MemberModel
     {
         return $this->creator;
     }
@@ -196,17 +196,17 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @param UserModel $approver
+     * @param MemberModel $approver
      */
-    public function setApprover(UserModel $approver): void
+    public function setApprover(MemberModel $approver): void
     {
         $this->approver = $approver;
     }
 
     /**
-     * @param UserModel $creator
+     * @param MemberModel $creator
      */
-    public function setCreator(UserModel $creator): void
+    public function setCreator(MemberModel $creator): void
     {
         $this->creator = $creator;
     }

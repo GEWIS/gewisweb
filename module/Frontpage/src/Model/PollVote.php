@@ -2,6 +2,7 @@
 
 namespace Frontpage\Model;
 
+use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Mapping\{
     Entity,
     Id,
@@ -10,7 +11,6 @@ use Doctrine\ORM\Mapping\{
     UniqueConstraint,
 };
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
-use User\Model\User as UserModel;
 
 /**
  * Poll response
@@ -54,7 +54,7 @@ class PollVote implements ResourceInterface
      */
     #[Id]
     #[ManyToOne(
-        targetEntity: UserModel::class,
+        targetEntity: MemberModel::class,
         cascade: ["persist"],
     )]
     #[JoinColumn(
@@ -62,7 +62,7 @@ class PollVote implements ResourceInterface
         referencedColumnName: "lidnr",
         nullable: false,
     )]
-    protected UserModel $respondent;
+    protected MemberModel $respondent;
 
     /**
      * @return PollOption
@@ -89,9 +89,9 @@ class PollVote implements ResourceInterface
     }
 
     /**
-     * @param UserModel $respondent
+     * @param MemberModel $respondent
      */
-    public function setRespondent(UserModel $respondent): void
+    public function setRespondent(MemberModel $respondent): void
     {
         $this->respondent = $respondent;
     }

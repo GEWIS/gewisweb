@@ -3,7 +3,10 @@
 namespace Activity\Model;
 
 use DateTime;
-use Decision\Model\Organ as OrganModel;
+use Decision\Model\{
+    Member as MemberModel,
+    Organ as OrganModel,
+};
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -12,7 +15,6 @@ use Doctrine\ORM\Mapping\{
     JoinColumn,
     ManyToOne,
 };
-use User\Model\User as UserModel;
 use User\Permissions\Resource\OrganResourceInterface;
 
 /**
@@ -44,12 +46,12 @@ class ActivityOptionProposal implements OrganResourceInterface
     /**
      * Who created this activity option.
      */
-    #[ManyToOne(targetEntity: UserModel::class)]
+    #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(
         referencedColumnName: "lidnr",
         nullable: false,
     )]
-    protected UserModel $creator;
+    protected MemberModel $creator;
 
     /**
      * The date and time the activity option was created.
@@ -198,7 +200,7 @@ class ActivityOptionProposal implements OrganResourceInterface
             return $this->getOrganAlt();
         }
 
-        return $this->getCreator()->getMember()->getFullName();
+        return $this->getCreator()->getFullName();
     }
 
     /**
@@ -218,17 +220,17 @@ class ActivityOptionProposal implements OrganResourceInterface
     }
 
     /**
-     * @return UserModel
+     * @return MemberModel
      */
-    public function getCreator(): UserModel
+    public function getCreator(): MemberModel
     {
         return $this->creator;
     }
 
     /**
-     * @param UserModel $creator
+     * @param MemberModel $creator
      */
-    public function setCreator(UserModel $creator): void
+    public function setCreator(MemberModel $creator): void
     {
         $this->creator = $creator;
     }

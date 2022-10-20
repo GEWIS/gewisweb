@@ -3,6 +3,7 @@
 namespace Activity\Model;
 
 use DateTime;
+use Decision\Model\Member as MemberModel;
 use Decision\Model\Organ as OrganModel;
 use Doctrine\Common\Collections\{
     ArrayCollection,
@@ -19,7 +20,6 @@ use Doctrine\ORM\Mapping\{
     OneToOne,
     OrderBy,
 };
-use User\Model\User as UserModel;
 use User\Permissions\Resource\{
     CreatorResourceInterface,
     OrganResourceInterface,
@@ -325,9 +325,9 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Get the creator of this resource.
      *
-     * @return UserModel
+     * @return MemberModel
      */
-    public function getResourceCreator(): UserModel
+    public function getResourceCreator(): MemberModel
     {
         return $this->getActivity()->getCreator();
     }

@@ -38,7 +38,7 @@ class ActivityMapperTest extends BaseMapperTest
         $this->object->setDescription($this->localisedText);
         $this->object->setLocation($this->localisedText);
         $this->object->setCosts($this->localisedText);
-        $this->object->setCreator($this->user);
+        $this->object->setCreator($this->member);
         $this->object->setBeginTime(new DateTime());
         $this->object->setEndTime(new DateTime());
         $this->object->setStatus(Activity::STATUS_APPROVED);

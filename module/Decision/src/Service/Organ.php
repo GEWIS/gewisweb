@@ -300,7 +300,7 @@ class Organ
             $em->remove($oldInformation);
         }
 
-        $user = $this->aclService->getIdentityOrThrowException();
+        $user = $this->aclService->getIdentityOrThrowException()->getMember();
         $organInformation->setApprover($user);
         $em->flush();
     }

@@ -107,7 +107,7 @@ class ActivityCalendar
 
         $proposal->setCreationTime(new DateTime());
         $em = $this->entityManager;
-        $proposal->setCreator($this->aclService->getIdentityOrThrowException());
+        $proposal->setCreator($this->aclService->getIdentityOrThrowException()->getMember());
         $name = $data['name'];
         $proposal->setName($name);
         $description = $data['description'];
@@ -174,7 +174,7 @@ class ActivityCalendar
             return;
         }
 
-        $option->setModifiedBy($this->aclService->getIdentityOrThrowException());
+        $option->setModifiedBy($this->aclService->getIdentityOrThrowException()->getMember());
         $option->setStatus('approved');
         $this->calendarOptionMapper->flush();
 
@@ -216,7 +216,7 @@ class ActivityCalendar
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete this option'));
         }
 
-        $option->setModifiedBy($this->aclService->getIdentityOrThrowException());
+        $option->setModifiedBy($this->aclService->getIdentityOrThrowException()->getMember());
         $option->setStatus('deleted');
         $this->calendarOptionMapper->flush();
     }

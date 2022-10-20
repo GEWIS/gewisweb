@@ -4,6 +4,7 @@ namespace Frontpage\Service;
 
 use Application\Service\Email as EmailService;
 use DateTime;
+use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Exception\ORMException;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
 use Laminas\Stdlib\Parameters;
@@ -197,7 +198,7 @@ class Poll
         }
 
         $pollVote = new PollVoteModel();
-        $pollVote->setRespondent($this->aclService->getIdentity());
+        $pollVote->setRespondent($this->aclService->getIdentity()->getMember());
         $pollVote->setPoll($poll);
         $pollOption->addVote($pollVote);
         $this->pollMapper->persist($pollOption);
@@ -220,7 +221,7 @@ class Poll
         PollModel $poll,
         array $data,
     ): bool {
-        $user = $this->aclService->getIdentity();
+        $user = $this->aclService->getIdentity()->getMember();
         $comment = $this->saveCommentData($data, $poll, $user);
 
         $poll->addComment($comment);
@@ -236,7 +237,7 @@ class Poll
      *
      * @param array $data
      * @param PollModel $poll
-     * @param UserModel $user
+     * @param MemberModel $user
      *
      * @return PollCommentModel
      *
@@ -245,7 +246,7 @@ class Poll
     public function saveCommentData(
         array $data,
         PollModel $poll,
-        UserModel $user,
+        MemberModel $user,
     ): PollCommentModel {
         $comment = new PollCommentModel();
 
@@ -279,7 +280,7 @@ class Poll
         }
 
         // TODO: Change to {@link getIdentityOrThrowException()}.
-        $user = $this->aclService->getIdentity();
+        $user = $this->aclService->getIdentity()->getMember();
         $poll = $this->savePollData($form->getData(), $user);
 
         $this->pollMapper->persist($poll);
@@ -297,7 +298,7 @@ class Poll
 
     /**
      * @param array $data
-     * @param UserModel $user
+     * @param MemberModel $user
      *
      * @return PollModel
      *
@@ -305,7 +306,7 @@ class Poll
      */
     public function savePollData(
         array $data,
-        UserModel $user,
+        MemberModel $user,
     ): PollModel {
         $poll = new PollModel();
         $poll->setDutchQuestion($data['dutchQuestion']);
@@ -386,7 +387,7 @@ class Poll
      */
     public function approvePoll(PollModel $poll): bool
     {
-        $poll->setApprover($this->aclService->getIdentity());
+        $poll->setApprover($this->aclService->getIdentity()->getMember());
         $this->pollMapper->flush();
 
         return true;

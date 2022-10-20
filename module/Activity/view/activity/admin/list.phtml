@@ -36,7 +36,7 @@
             <td><?= $activity->getBeginTime()->format('Y-m-d') ?></td>
             <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $this->escapeHtml($activity->getOrgan()->getAbbr()) ?></td>
             <td><?= is_null($activity->getCompany()) ? $this->translate('None') : $this->escapeHtml($activity->getCompany()->getName()) ?></td>
-            <td><?= $this->escapeHtml($activity->getCreator()->getMember()->getFullName()) ?></td>
+            <td><?= $this->escapeHtml($activity->getCreator()->getFullName()) ?></td>
             <?php if ($admin): ?>
                 <td><?= $activity->getUpdateProposal()->count() === 0 ? '(-)' :
                         '<a href="' . $this->url('activity_admin_approval/proposal', ['id' => $activity->getUpdateProposal()->first()->getId()]) . '">' . $this->translate('Update pending') . '</a>' ?></td>

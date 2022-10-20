@@ -59,7 +59,7 @@ function diff($oldValue, $newValue)
             } else if (!is_null($old->getCompany())) {
                 $oldOrganisingParty = $this->escapeHtml($old->getCompany()->getName());
             } else {
-                $oldOrganisingParty = $this->escapeHtml($old->getCreator()->getMember()->getFullName());
+                $oldOrganisingParty = $this->escapeHtml($old->getCreator()->getFullName());
             }
 
             $newOrganisingParty = "";
@@ -72,7 +72,7 @@ function diff($oldValue, $newValue)
             } else if (!is_null($old->getCompany())) {
                 $newOrganisingParty = $this->escapeHtml($new->getCompany()->getName());
             } else {
-                $newOrganisingParty = $this->escapeHtml($new->getCreator()->getMember()->getFullName());
+                $newOrganisingParty = $this->escapeHtml($new->getCreator()->getFullName());
             }
 
             echo sprintf(

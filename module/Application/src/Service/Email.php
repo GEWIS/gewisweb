@@ -56,14 +56,14 @@ class Email
      * @param String $view Template of the email
      * @param String $subject Subject of the email
      * @param array $data Variables that you want to have available in the template
-     * @param UserModel $user The user as which the email should be sent
+     * @param MemberModel $user The user as which the email should be sent
      */
     public function sendEmailAsUser(
         string $type,
         string $view,
         string $subject,
         array $data,
-        UserModel $user,
+        MemberModel $user,
     ): void {
         $message = $this->createMessageFromView($view, $data);
 

@@ -3,6 +3,7 @@
 namespace Photo\Model;
 
 use DateTime;
+use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -11,7 +12,6 @@ use Doctrine\ORM\Mapping\{
     JoinColumn,
     ManyToOne,
 };
-use User\Model\User as UserModel;
 
 /**
  * Vote, represents a vote for a photo of the week.
@@ -37,7 +37,7 @@ class Vote
      * Vote constructor.
      *
      * @param Photo $photo
-     * @param UserModel $voter The member who voted
+     * @param MemberModel $voter The member who voted
      */
     public function __construct(
         #[ManyToOne(
@@ -50,13 +50,13 @@ class Vote
             nullable: false,
         )]
         protected Photo $photo,
-        #[ManyToOne(targetEntity: UserModel::class)]
+        #[ManyToOne(targetEntity: MemberModel::class)]
         #[JoinColumn(
             name: "voter_id",
             referencedColumnName: "lidnr",
             nullable: false,
         )]
-        protected UserModel $voter,
+        protected MemberModel $voter,
     ) {
         $this->dateTime = new DateTime();
     }

@@ -61,7 +61,7 @@ $this->breadcrumbs()
             <td><?= $this->escapeHtml($poll->getDutchQuestion()) ?></td>
             <td><?= $this->escapeHtml($poll->getEnglishQuestion()) ?></td>
             <td><?= $poll->getExpiryDate()->format('Y-m-d') ?></td>
-            <td><?= $poll->getCreator()->getMember()->getFullName() ?></td>
+            <td><?= $poll->getCreator()->getFullName() ?></td>
             <td></td>
             <td>
                 <button type="button" class="btn btn-success btn-xs approve-poll" data-poll-id="<?= $poll->getId() ?>"
@@ -134,7 +134,7 @@ $this->breadcrumbs()
                 <td><?= $this->escapeHtml($poll->getDutchQuestion()) ?></td>
                 <td><?= $this->escapeHtml($poll->getEnglishQuestion()) ?></td>
                 <td><?= $poll->getExpiryDate()->format('Y-m-d') ?></td>
-                <td><?= $poll->getCreator()->getMember()->getFullName() ?></td>
+                <td><?= $poll->getCreator()->getFullName() ?></td>
                 <td><?= $poll->getApprover()->getMember()->getFullName() ?></td>
                 <td>
                     <?php if ($poll->isActive()): ?>

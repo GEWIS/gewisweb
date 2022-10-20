@@ -30,7 +30,7 @@ $this->breadcrumbs()
             } else if (!is_null($activity->getCompany())) {
                 $organisingParty = $this->escapeHtml($activity->getCompany()->getName());
             } else {
-                $organisingParty = $this->escapeHtml($activity->getCreator()->getMember()->getFullName());
+                $organisingParty = $this->escapeHtml($activity->getCreator()->getFullName());
             }
 
             echo sprintf(

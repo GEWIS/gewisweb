@@ -3,6 +3,7 @@
 namespace Activity\Model;
 
 use DateTime;
+use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
@@ -11,7 +12,6 @@ use Doctrine\ORM\Mapping\{
     JoinColumn,
     ManyToOne,
 };
-use User\Model\User as UserModel;
 
 /**
  * Activity calendar option model.
@@ -70,9 +70,9 @@ class ActivityCalendarOption
     /**
      * Who modified this activity option, if null then the option is not modified.
      */
-    #[ManyToOne(targetEntity: UserModel::class)]
+    #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(referencedColumnName: "lidnr")]
-    protected ?UserModel $modifiedBy;
+    protected ?MemberModel $modifiedBy;
 
     /**
      * @return DateTime
@@ -107,17 +107,17 @@ class ActivityCalendarOption
     }
 
     /**
-     * @return UserModel|null
+     * @return MemberModel|null
      */
-    public function getModifiedBy(): ?UserModel
+    public function getModifiedBy(): ?MemberModel
     {
         return $this->modifiedBy;
     }
 
     /**
-     * @param UserModel|null $modifiedBy
+     * @param MemberModel|null $modifiedBy
      */
-    public function setModifiedBy(?UserModel $modifiedBy): void
+    public function setModifiedBy(?MemberModel $modifiedBy): void
     {
         $this->modifiedBy = $modifiedBy;
     }

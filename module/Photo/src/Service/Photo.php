@@ -617,7 +617,7 @@ class Photo
         }
 
         $photo = $this->getPhoto($photoId);
-        $vote = new VoteModel($photo, $identity);
+        $vote = new VoteModel($photo, $identity->getMember());
 
         $this->voteMapper->persist($vote);
         $this->voteMapper->flush();
