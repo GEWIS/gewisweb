@@ -58,7 +58,7 @@ class WatermarkService
             $pdf->setFont(self::FONT, '', self::FONT_SIZE);
             $pdf->setTextColor(212, 0, 0);
             // We do not have to reset the alpha layer after watermarking, as we are not adding any additional content.
-            $pdf->setAlpha(0.65);
+            $pdf->setAlpha(0.5);
 
             // Determine the position of the watermark, it should be (almost) centred on the page.
             $width = $pdf->getPageWidth();
