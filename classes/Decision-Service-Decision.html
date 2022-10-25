@@ -393,7 +393,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
     </aside>
 
@@ -431,6 +431,13 @@
     <a href="classes/Decision-Service-Decision.html#property_authorizationMapper">$authorizationMapper</a>
     <span>
                         &nbsp;: <a href="classes/Decision-Mapper-Authorization.html"><abbr title="\Decision\Mapper\Authorization">Authorization</abbr></a>            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/Decision-Service-Decision.html#property_authorizationRevocationForm">$authorizationRevocationForm</a>
+    <span>
+                        &nbsp;: <a href="classes/Decision-Form-AuthorizationRevocation.html"><abbr title="\Decision\Form\AuthorizationRevocation">AuthorizationRevocation</abbr></a>            </span>
 </dt>
 <dd></dd>
 
@@ -521,7 +528,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Service-Decision.html#method_createAuthorization">createAuthorization()</a>
     <span>
-                                &nbsp;: <a href="classes/Decision-Model-Authorization.html"><abbr title="\Decision\Model\Authorization">Authorization</abbr></a>|false    </span>
+                                &nbsp;: <a href="classes/Decision-Model-Authorization.html"><abbr title="\Decision\Model\Authorization">Authorization</abbr></a>|null    </span>
 </dt>
 <dd></dd>
 
@@ -545,6 +552,13 @@
                                 &nbsp;: <a href="classes/Decision-Form-Authorization.html"><abbr title="\Decision\Form\Authorization">Authorization</abbr></a>    </span>
 </dt>
 <dd>Get the Authorization form.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Decision-Service-Decision.html#method_getAuthorizationRevocationForm">getAuthorizationRevocationForm()</a>
+    <span>
+                                &nbsp;: <a href="classes/Decision-Form-AuthorizationRevocation.html"><abbr title="\Decision\Form\AuthorizationRevocation">AuthorizationRevocation</abbr></a>    </span>
+</dt>
+<dd>Get the Authorization revocation form.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Service-Decision.html#method_getDocumentForm">getDocumentForm()</a>
@@ -659,6 +673,13 @@
 <dd>Returns whether the current role is allowed to view files.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Decision-Service-Decision.html#method_revokeAuthorization">revokeAuthorization()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Service-Decision.html#method_search">search()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;|null    </span>
@@ -703,18 +724,18 @@
             phpdocumentor-element
             -property
             -private
-                                                        "
+                                                -read-only        "
 >
     <h4 class="phpdocumentor-element__name" id="property_aclService">
         $aclService
         <a href="classes/Decision-Service-Decision.html#property_aclService" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
     </aside>
 
@@ -725,8 +746,10 @@
     <span class="phpdocumentor-signature__name">$aclService</span>
     </code>
 
-    
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -735,18 +758,18 @@
             phpdocumentor-element
             -property
             -private
-                                                        "
+                                                -read-only        "
 >
     <h4 class="phpdocumentor-element__name" id="property_authorizationForm">
         $authorizationForm
         <a href="classes/Decision-Service-Decision.html#property_authorizationForm" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">107</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
@@ -757,8 +780,10 @@
     <span class="phpdocumentor-signature__name">$authorizationForm</span>
     </code>
 
-    
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -767,18 +792,18 @@
             phpdocumentor-element
             -property
             -private
-                                                        "
+                                                -read-only        "
 >
     <h4 class="phpdocumentor-element__name" id="property_authorizationMapper">
         $authorizationMapper
         <a href="classes/Decision-Service-Decision.html#property_authorizationMapper" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">56</span>
 
     </aside>
 
@@ -789,8 +814,10 @@
     <span class="phpdocumentor-signature__name">$authorizationMapper</span>
     </code>
 
-    
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -799,77 +826,13 @@
             phpdocumentor-element
             -property
             -private
-                                                        "
+                                                -read-only        "
 >
-    <h4 class="phpdocumentor-element__name" id="property_decisionMapper">
-        $decisionMapper
-        <a href="classes/Decision-Service-Decision.html#property_decisionMapper" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_authorizationRevocationForm">
+        $authorizationRevocationForm
+        <a href="classes/Decision-Service-Decision.html#property_authorizationRevocationForm" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">77</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Mapper-Decision.html"><abbr title="\Decision\Mapper\Decision">Decision</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$decisionMapper</span>
-    </code>
-
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_documentForm">
-        $documentForm
-        <a href="classes/Decision-Service-Decision.html#property_documentForm" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">92</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Form-Document.html"><abbr title="\Decision\Form\Document">Document</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$documentForm</span>
-    </code>
-
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_emailService">
-        $emailService
-        <a href="classes/Decision-Service-Decision.html#property_emailService" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
@@ -881,12 +844,14 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Application-Service-Email.html"><abbr title="\Application\Service\Email">Email</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$emailService</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Form-AuthorizationRevocation.html"><abbr title="\Decision\Form\AuthorizationRevocation">AuthorizationRevocation</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$authorizationRevocationForm</span>
     </code>
 
-    
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -895,30 +860,32 @@
             phpdocumentor-element
             -property
             -private
-                                                        "
+                                                -read-only        "
 >
-    <h4 class="phpdocumentor-element__name" id="property_meetingMapper">
-        $meetingMapper
-        <a href="classes/Decision-Service-Decision.html#property_meetingMapper" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_decisionMapper">
+        $decisionMapper
+        <a href="classes/Decision-Service-Decision.html#property_decisionMapper" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Mapper-Meeting.html"><abbr title="\Decision\Mapper\Meeting">Meeting</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$meetingMapper</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Mapper-Decision.html"><abbr title="\Decision\Mapper\Decision">Decision</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$decisionMapper</span>
     </code>
 
-    
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -927,30 +894,32 @@
             phpdocumentor-element
             -property
             -private
-                                                        "
+                                                -read-only        "
 >
-    <h4 class="phpdocumentor-element__name" id="property_memberMapper">
-        $memberMapper
-        <a href="classes/Decision-Service-Decision.html#property_memberMapper" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_documentForm">
+        $documentForm
+        <a href="classes/Decision-Service-Decision.html#property_documentForm" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">67</span>
+    <span class="phpdocumentor-element-found-in__line">58</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Mapper-Member.html"><abbr title="\Decision\Mapper\Member">Member</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$memberMapper</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Form-Document.html"><abbr title="\Decision\Form\Document">Document</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$documentForm</span>
     </code>
 
-    
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -959,141 +928,13 @@
             phpdocumentor-element
             -property
             -private
-                                                        "
+                                                -read-only        "
 >
-    <h4 class="phpdocumentor-element__name" id="property_minutesForm">
-        $minutesForm
-        <a href="classes/Decision-Service-Decision.html#property_minutesForm" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_emailService">
+        $emailService
+        <a href="classes/Decision-Service-Decision.html#property_emailService" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">87</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Form-Minutes.html"><abbr title="\Decision\Form\Minutes">Minutes</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$minutesForm</span>
-    </code>
-
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_reorderDocumentForm">
-        $reorderDocumentForm
-        <a href="classes/Decision-Service-Decision.html#property_reorderDocumentForm" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">97</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Form-ReorderDocument.html"><abbr title="\Decision\Form\ReorderDocument">ReorderDocument</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$reorderDocumentForm</span>
-    </code>
-
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_searchDecisionForm">
-        $searchDecisionForm
-        <a href="classes/Decision-Service-Decision.html#property_searchDecisionForm" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">102</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Form-SearchDecision.html"><abbr title="\Decision\Form\SearchDecision">SearchDecision</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$searchDecisionForm</span>
-    </code>
-
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_storageService">
-        $storageService
-        <a href="classes/Decision-Service-Decision.html#property_storageService" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">57</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Application-Service-FileStorage.html"><abbr title="\Application\Service\FileStorage">FileStorage</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$storageService</span>
-    </code>
-
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_translator">
-        $translator
-        <a href="classes/Decision-Service-Decision.html#property_translator" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
@@ -1105,12 +946,252 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Application-Service-Email.html"><abbr title="\Application\Service\Email">Email</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$emailService</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_meetingMapper">
+        $meetingMapper
+        <a href="classes/Decision-Service-Decision.html#property_meetingMapper" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">54</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Mapper-Meeting.html"><abbr title="\Decision\Mapper\Meeting">Meeting</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$meetingMapper</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_memberMapper">
+        $memberMapper
+        <a href="classes/Decision-Service-Decision.html#property_memberMapper" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">53</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Mapper-Member.html"><abbr title="\Decision\Mapper\Member">Member</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$memberMapper</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_minutesForm">
+        $minutesForm
+        <a href="classes/Decision-Service-Decision.html#property_minutesForm" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">57</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Form-Minutes.html"><abbr title="\Decision\Form\Minutes">Minutes</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$minutesForm</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_reorderDocumentForm">
+        $reorderDocumentForm
+        <a href="classes/Decision-Service-Decision.html#property_reorderDocumentForm" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">59</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Form-ReorderDocument.html"><abbr title="\Decision\Form\ReorderDocument">ReorderDocument</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$reorderDocumentForm</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_searchDecisionForm">
+        $searchDecisionForm
+        <a href="classes/Decision-Service-Decision.html#property_searchDecisionForm" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">60</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Form-SearchDecision.html"><abbr title="\Decision\Form\SearchDecision">SearchDecision</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$searchDecisionForm</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_storageService">
+        $storageService
+        <a href="classes/Decision-Service-Decision.html#property_storageService" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">51</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Application-Service-FileStorage.html"><abbr title="\Application\Service\FileStorage">FileStorage</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$storageService</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_translator">
+        $translator
+        <a href="classes/Decision-Service-Decision.html#property_translator" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">50</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
         <span class="phpdocumentor-signature__type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr></span>
     <span class="phpdocumentor-signature__name">$translator</span>
     </code>
 
-    
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -1134,16 +1215,17 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Service-AclService.html"><abbr title="\Decision\Service\AclService">AclService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$aclService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Service-FileStorage.html"><abbr title="\Application\Service\FileStorage">FileStorage</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$storageService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Service-Email.html"><abbr title="\Application\Service\Email">Email</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$emailService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Member.html"><abbr title="\Decision\Mapper\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$memberMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Meeting.html"><abbr title="\Decision\Mapper\Meeting">Meeting</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$meetingMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Decision.html"><abbr title="\Decision\Mapper\Decision">Decision</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$decisionMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Authorization.html"><abbr title="\Decision\Mapper\Authorization">Authorization</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$authorizationMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-Minutes.html"><abbr title="\Decision\Form\Minutes">Minutes</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$minutesForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-Document.html"><abbr title="\Decision\Form\Document">Document</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$documentForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-ReorderDocument.html"><abbr title="\Decision\Form\ReorderDocument">ReorderDocument</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reorderDocumentForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-SearchDecision.html"><abbr title="\Decision\Form\SearchDecision">SearchDecision</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$searchDecisionForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-Authorization.html"><abbr title="\Decision\Form\Authorization">Authorization</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$authorizationForm</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Service-AclService.html"><abbr title="\Decision\Service\AclService">AclService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$aclService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Service-FileStorage.html"><abbr title="\Application\Service\FileStorage">FileStorage</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$storageService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Service-Email.html"><abbr title="\Application\Service\Email">Email</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$emailService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Member.html"><abbr title="\Decision\Mapper\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$memberMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Meeting.html"><abbr title="\Decision\Mapper\Meeting">Meeting</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$meetingMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Decision.html"><abbr title="\Decision\Mapper\Decision">Decision</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$decisionMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Authorization.html"><abbr title="\Decision\Mapper\Authorization">Authorization</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$authorizationMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-Minutes.html"><abbr title="\Decision\Form\Minutes">Minutes</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$minutesForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-Document.html"><abbr title="\Decision\Form\Document">Document</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$documentForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-ReorderDocument.html"><abbr title="\Decision\Form\ReorderDocument">ReorderDocument</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reorderDocumentForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-SearchDecision.html"><abbr title="\Decision\Form\SearchDecision">SearchDecision</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$searchDecisionForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-Authorization.html"><abbr title="\Decision\Form\Authorization">Authorization</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$authorizationForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-AuthorizationRevocation.html"><abbr title="\Decision\Form\AuthorizationRevocation">AuthorizationRevocation</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$authorizationRevocationForm</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-    
+        <section class="phpdocumentor-description"></section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1151,91 +1233,112 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Service-AclService.html"><abbr title="\Decision\Service\AclService">AclService</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$translator</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$storageService</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Service-FileStorage.html"><abbr title="\Application\Service\FileStorage">FileStorage</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$emailService</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Service-Email.html"><abbr title="\Application\Service\Email">Email</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$memberMapper</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Member.html"><abbr title="\Decision\Mapper\Member">Member</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$meetingMapper</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Meeting.html"><abbr title="\Decision\Mapper\Meeting">Meeting</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$decisionMapper</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Decision.html"><abbr title="\Decision\Mapper\Decision">Decision</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$authorizationMapper</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Mapper-Authorization.html"><abbr title="\Decision\Mapper\Authorization">Authorization</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$minutesForm</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-Minutes.html"><abbr title="\Decision\Form\Minutes">Minutes</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$documentForm</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-Document.html"><abbr title="\Decision\Form\Document">Document</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$reorderDocumentForm</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-ReorderDocument.html"><abbr title="\Decision\Form\ReorderDocument">ReorderDocument</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$searchDecisionForm</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-SearchDecision.html"><abbr title="\Decision\Form\SearchDecision">SearchDecision</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$authorizationForm</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-Authorization.html"><abbr title="\Decision\Form\Authorization">Authorization</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$authorizationRevocationForm</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Form-AuthorizationRevocation.html"><abbr title="\Decision\Form\AuthorizationRevocation">AuthorizationRevocation</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1260,7 +1363,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">409</span>
+    <span class="phpdocumentor-element-found-in__line">321</span>
 
     </aside>
 
@@ -1345,14 +1448,14 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">506</span>
+    <span class="phpdocumentor-element-found-in__line">421</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">createAuthorization</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Authorization.html"><abbr title="\Decision\Model\Authorization">Authorization</abbr></a>|false</span></code>
+                    <span class="phpdocumentor-signature__name">createAuthorization</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Authorization.html"><abbr title="\Decision\Model\Authorization">Authorization</abbr></a>|null</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1383,7 +1486,7 @@ mutating two rows.</p>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Authorization.html"><abbr title="\Decision\Model\Authorization">Authorization</abbr></a>|false</span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Authorization.html"><abbr title="\Decision\Model\Authorization">Authorization</abbr></a>|null</span>
             &mdash;
         
     
@@ -1401,7 +1504,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">377</span>
+    <span class="phpdocumentor-element-found-in__line">289</span>
 
     </aside>
 
@@ -1457,7 +1560,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">471</span>
+    <span class="phpdocumentor-element-found-in__line">383</span>
 
     </aside>
 
@@ -1500,7 +1603,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">614</span>
+    <span class="phpdocumentor-element-found-in__line">548</span>
 
     </aside>
 
@@ -1526,6 +1629,39 @@ mutating two rows.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getAuthorizationRevocationForm">
+        getAuthorizationRevocationForm()
+        <a href="classes/Decision-Service-Decision.html#method_getAuthorizationRevocationForm" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">562</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get the Authorization revocation form.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getAuthorizationRevocationForm</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Form-AuthorizationRevocation.html"><abbr title="\Decision\Form\AuthorizationRevocation">AuthorizationRevocation</abbr></a></span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Form-AuthorizationRevocation.html"><abbr title="\Decision\Form\AuthorizationRevocation">AuthorizationRevocation</abbr></a></span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getDocumentForm">
         getDocumentForm()
         <a href="classes/Decision-Service-Decision.html#method_getDocumentForm" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1533,7 +1669,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">576</span>
+    <span class="phpdocumentor-element-found-in__line">510</span>
 
     </aside>
 
@@ -1566,7 +1702,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">239</span>
+    <span class="phpdocumentor-element-found-in__line">151</span>
 
     </aside>
 
@@ -1613,7 +1749,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">222</span>
+    <span class="phpdocumentor-element-found-in__line">134</span>
 
     </aside>
 
@@ -1621,21 +1757,21 @@ mutating two rows.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getMeeting</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$number</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getMeeting</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$number</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>|null</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$type</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$number</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -1677,7 +1813,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">263</span>
+    <span class="phpdocumentor-element-found-in__line">175</span>
 
     </aside>
 
@@ -1734,7 +1870,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">275</span>
+    <span class="phpdocumentor-element-found-in__line">187</span>
 
     </aside>
 
@@ -1777,7 +1913,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">297</span>
+    <span class="phpdocumentor-element-found-in__line">209</span>
 
     </aside>
 
@@ -1820,7 +1956,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">171</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
@@ -1867,21 +2003,21 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">204</span>
+    <span class="phpdocumentor-element-found-in__line">116</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getMeetingsByType</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getMeetingsByType</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$type</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -1909,7 +2045,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">562</span>
+    <span class="phpdocumentor-element-found-in__line">496</span>
 
     </aside>
 
@@ -1942,7 +2078,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">188</span>
+    <span class="phpdocumentor-element-found-in__line">100</span>
 
     </aside>
 
@@ -1950,26 +2086,26 @@ mutating two rows.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getPastMeetings</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$limit</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getPastMeetings</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$limit</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$limit</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The amount of meetings to retrieve, default is all</p>
+                    <section class="phpdocumentor-description"><p>The amount of meetings to retrieve</p>
 </section>
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$type</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a></span>
+                            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Constraint on the type of the meeting, default is none</p>
+                    <section class="phpdocumentor-description"><p>Constraint on the type of the meeting</p>
 </section>
 
             </dd>
@@ -1998,7 +2134,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">590</span>
+    <span class="phpdocumentor-element-found-in__line">524</span>
 
     </aside>
 
@@ -2030,7 +2166,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">604</span>
+    <span class="phpdocumentor-element-found-in__line">538</span>
 
     </aside>
 
@@ -2063,7 +2199,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">159</span>
+    <span class="phpdocumentor-element-found-in__line">71</span>
 
     </aside>
 
@@ -2096,7 +2232,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">250</span>
+    <span class="phpdocumentor-element-found-in__line">162</span>
 
     </aside>
 
@@ -2143,7 +2279,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">489</span>
+    <span class="phpdocumentor-element-found-in__line">404</span>
 
     </aside>
 
@@ -2186,7 +2322,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">628</span>
+    <span class="phpdocumentor-element-found-in__line">576</span>
 
     </aside>
 
@@ -2212,6 +2348,50 @@ mutating two rows.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_revokeAuthorization">
+        revokeAuthorization()
+        <a href="classes/Decision-Service-Decision.html#method_revokeAuthorization" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">476</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">revokeAuthorization</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Authorization.html"><abbr title="\Decision\Model\Authorization">Authorization</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$authorization</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$authorization</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Authorization.html"><abbr title="\Decision\Model\Authorization">Authorization</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_search">
         search()
         <a href="classes/Decision-Service-Decision.html#method_search" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2219,7 +2399,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">459</span>
+    <span class="phpdocumentor-element-found-in__line">371</span>
 
     </aside>
 
@@ -2266,7 +2446,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">349</span>
+    <span class="phpdocumentor-element-found-in__line">261</span>
 
     </aside>
 
@@ -2325,7 +2505,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">321</span>
+    <span class="phpdocumentor-element-found-in__line">233</span>
 
     </aside>
 
@@ -2384,7 +2564,7 @@ mutating two rows.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Service/Decision.php"><a href="files/module-decision-src-service-decision.html"><abbr title="module/Decision/src/Service/Decision.php">Decision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">642</span>
+    <span class="phpdocumentor-element-found-in__line">590</span>
 
     </aside>
 

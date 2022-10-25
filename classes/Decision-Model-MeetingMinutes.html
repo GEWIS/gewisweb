@@ -396,7 +396,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingMinutes.php"><a href="files/module-decision-src-model-meetingminutes.html"><abbr title="module/Decision/src/Model/MeetingMinutes.php">MeetingMinutes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">17</span>
+    <span class="phpdocumentor-element-found-in__line">18</span>
 
     </aside>
 
@@ -436,11 +436,18 @@
 <dd>The corresponding meeting for these minutes.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Model-MeetingMinutes.html#property_number">$number</a>
+    <a href="classes/Decision-Model-MeetingMinutes.html#property_meeting_number">$meeting_number</a>
     <span>
                         &nbsp;: int            </span>
 </dt>
 <dd>Meeting number.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Decision-Model-MeetingMinutes.html#property_meeting_type">$meeting_type</a>
+    <span>
+                        &nbsp;: <a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a>            </span>
+</dt>
+<dd>Meeting type.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-MeetingMinutes.html#property_path">$path</a>
@@ -448,13 +455,6 @@
                         &nbsp;: string            </span>
 </dt>
 <dd>The storage path.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Model-MeetingMinutes.html#property_type">$type</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-<dd>Meeting type.</dd>
 
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-MeetingMinutes.html#method_getPath">getPath()</a>
@@ -512,7 +512,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingMinutes.php"><a href="files/module-decision-src-model-meetingminutes.html"><abbr title="module/Decision/src/Model/MeetingMinutes.php">MeetingMinutes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
@@ -537,16 +537,16 @@
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_number">
-        $number
-        <a href="classes/Decision-Model-MeetingMinutes.html#property_number" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_meeting_number">
+        $meeting_number
+        <a href="classes/Decision-Model-MeetingMinutes.html#property_meeting_number" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingMinutes.php"><a href="files/module-decision-src-model-meetingminutes.html"><abbr title="module/Decision/src/Model/MeetingMinutes.php">MeetingMinutes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">30</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
@@ -555,7 +555,41 @@
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$number</span>
+    <span class="phpdocumentor-signature__name">$meeting_number</span>
+    </code>
+
+    
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_meeting_type">
+        $meeting_type
+        <a href="classes/Decision-Model-MeetingMinutes.html#property_meeting_type" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingMinutes.php"><a href="files/module-decision-src-model-meetingminutes.html"><abbr title="module/Decision/src/Model/MeetingMinutes.php">MeetingMinutes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">24</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Meeting type.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$meeting_type</span>
     </code>
 
     
@@ -580,7 +614,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingMinutes.php"><a href="files/module-decision-src-model-meetingminutes.html"><abbr title="module/Decision/src/Model/MeetingMinutes.php">MeetingMinutes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">56</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 
@@ -590,40 +624,6 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$path</span>
-    </code>
-
-    
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_type">
-        $type
-        <a href="classes/Decision-Model-MeetingMinutes.html#property_type" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingMinutes.php"><a href="files/module-decision-src-model-meetingminutes.html"><abbr title="module/Decision/src/Model/MeetingMinutes.php">MeetingMinutes.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">23</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Meeting type.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$type</span>
     </code>
 
     
@@ -652,7 +652,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingMinutes.php"><a href="files/module-decision-src-model-meetingminutes.html"><abbr title="module/Decision/src/Model/MeetingMinutes.php">MeetingMinutes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
     </aside>
 
@@ -684,7 +684,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingMinutes.php"><a href="files/module-decision-src-model-meetingminutes.html"><abbr title="module/Decision/src/Model/MeetingMinutes.php">MeetingMinutes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">90</span>
+    <span class="phpdocumentor-element-found-in__line">94</span>
 
     </aside>
 
@@ -717,7 +717,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingMinutes.php"><a href="files/module-decision-src-model-meetingminutes.html"><abbr title="module/Decision/src/Model/MeetingMinutes.php">MeetingMinutes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">70</span>
+    <span class="phpdocumentor-element-found-in__line">74</span>
 
     </aside>
 
@@ -759,7 +759,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingMinutes.php"><a href="files/module-decision-src-model-meetingminutes.html"><abbr title="module/Decision/src/Model/MeetingMinutes.php">MeetingMinutes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">80</span>
+    <span class="phpdocumentor-element-found-in__line">84</span>
 
     </aside>
 

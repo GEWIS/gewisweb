@@ -416,33 +416,19 @@
 </h3>
 
 <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+                    <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/Decision-Controller-FileBrowser-FileNode.html#property_extension">$extension</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 <dd>The extension (according to the file name).</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/Decision-Controller-FileBrowser-FileNode.html#property_fullPath">$fullPath</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
-<dd>The path of the parent containing this node.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Controller-FileBrowser-FileNode.html#property_kind">$kind</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-<dd>Whether the node represents a file or a directory.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Controller-FileBrowser-FileNode.html#property_name">$name</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-<dd>The name of this file or dir.</dd>
+<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/Decision-Controller-FileBrowser-FileNode.html#property_iconExtensions">$iconExtensions</a>
@@ -450,6 +436,20 @@
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
 <dd>File extensions per FontAwesome icon.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/Decision-Controller-FileBrowser-FileNode.html#property_kind">$kind</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/Decision-Controller-FileBrowser-FileNode.html#property_name">$name</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+<dd></dd>
 
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Controller-FileBrowser-FileNode.html#method___construct">__construct()</a>
@@ -509,7 +509,7 @@
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="property_extension">
@@ -521,14 +521,14 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/FileBrowser/FileNode.php"><a href="files/module-decision-src-controller-filebrowser-filenode.html"><abbr title="module/Decision/src/Controller/FileBrowser/FileNode.php">FileNode.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">18</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">The extension (according to the file name).</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
+    <span class="phpdocumentor-signature__visibility">private</span>
         <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$extension</span>
     </code>
@@ -544,103 +544,32 @@
         class="
             phpdocumentor-element
             -property
-            -protected
-                                                        "
+            -private
+                                                -read-only        "
 >
     <h4 class="phpdocumentor-element__name" id="property_fullPath">
         $fullPath
         <a href="classes/Decision-Controller-FileBrowser-FileNode.html#property_fullPath" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/FileBrowser/FileNode.php"><a href="files/module-decision-src-controller-filebrowser-filenode.html"><abbr title="module/Decision/src/Controller/FileBrowser/FileNode.php">FileNode.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">25</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">The path of the parent containing this node.</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
+    <span class="phpdocumentor-signature__visibility">private</span>
         <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$fullPath</span>
     </code>
 
-    
-        <section class="phpdocumentor-description"><p>a valid path relative to some root</p>
-</section>
+        <section class="phpdocumentor-description"></section>
 
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_kind">
-        $kind
-        <a href="classes/Decision-Controller-FileBrowser-FileNode.html#property_kind" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/FileBrowser/FileNode.php"><a href="files/module-decision-src-controller-filebrowser-filenode.html"><abbr title="module/Decision/src/Controller/FileBrowser/FileNode.php">FileNode.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">18</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Whether the node represents a file or a directory.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$kind</span>
-    </code>
-
-    
-        <section class="phpdocumentor-description"><p>either 'file' or 'dir'</p>
-</section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_name">
-        $name
-        <a href="classes/Decision-Controller-FileBrowser-FileNode.html#property_name" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/FileBrowser/FileNode.php"><a href="files/module-decision-src-controller-filebrowser-filenode.html"><abbr title="module/Decision/src/Controller/FileBrowser/FileNode.php">FileNode.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">32</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The name of this file or dir.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$name</span>
-    </code>
-
-    
-        <section class="phpdocumentor-description"><p>valid name in filesystem</p>
-</section>
+        <section class="phpdocumentor-description"></section>
 
     
 
@@ -661,7 +590,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/FileBrowser/FileNode.php"><a href="files/module-decision-src-controller-filebrowser-filenode.html"><abbr title="module/Decision/src/Controller/FileBrowser/FileNode.php">FileNode.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">25</span>
 
     </aside>
 
@@ -694,6 +623,74 @@
     
 
 </article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_kind">
+        $kind
+        <a href="classes/Decision-Controller-FileBrowser-FileNode.html#property_kind" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/FileBrowser/FileNode.php"><a href="files/module-decision-src-controller-filebrowser-filenode.html"><abbr title="module/Decision/src/Controller/FileBrowser/FileNode.php">FileNode.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">58</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$kind</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_name">
+        $name
+        <a href="classes/Decision-Controller-FileBrowser-FileNode.html#property_name" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/FileBrowser/FileNode.php"><a href="files/module-decision-src-controller-filebrowser-filenode.html"><abbr title="module/Decision/src/Controller/FileBrowser/FileNode.php">FileNode.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">60</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$name</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
             </section>
 
             <section class="phpdocumentor-methods">
@@ -714,7 +711,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/FileBrowser/FileNode.php"><a href="files/module-decision-src-controller-filebrowser-filenode.html"><abbr title="module/Decision/src/Controller/FileBrowser/FileNode.php">FileNode.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">83</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -723,7 +720,8 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$kind</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fullPath</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-    
+        <section class="phpdocumentor-description"></section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -731,21 +729,24 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$fullPath</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$name</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -770,7 +771,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/FileBrowser/FileNode.php"><a href="files/module-decision-src-controller-filebrowser-filenode.html"><abbr title="module/Decision/src/Controller/FileBrowser/FileNode.php">FileNode.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">139</span>
+    <span class="phpdocumentor-element-found-in__line">112</span>
 
     </aside>
 
@@ -805,7 +806,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/FileBrowser/FileNode.php"><a href="files/module-decision-src-controller-filebrowser-filenode.html"><abbr title="module/Decision/src/Controller/FileBrowser/FileNode.php">FileNode.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">149</span>
+    <span class="phpdocumentor-element-found-in__line">122</span>
 
     </aside>
 
@@ -840,7 +841,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/FileBrowser/FileNode.php"><a href="files/module-decision-src-controller-filebrowser-filenode.html"><abbr title="module/Decision/src/Controller/FileBrowser/FileNode.php">FileNode.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">119</span>
+    <span class="phpdocumentor-element-found-in__line">92</span>
 
     </aside>
 
@@ -875,7 +876,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/FileBrowser/FileNode.php"><a href="files/module-decision-src-controller-filebrowser-filenode.html"><abbr title="module/Decision/src/Controller/FileBrowser/FileNode.php">FileNode.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">109</span>
+    <span class="phpdocumentor-element-found-in__line">82</span>
 
     </aside>
 
@@ -910,7 +911,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/FileBrowser/FileNode.php"><a href="files/module-decision-src-controller-filebrowser-filenode.html"><abbr title="module/Decision/src/Controller/FileBrowser/FileNode.php">FileNode.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">102</span>
 
     </aside>
 

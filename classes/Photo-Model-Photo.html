@@ -396,7 +396,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">24</span>
+    <span class="phpdocumentor-element-found-in__line">27</span>
 
     </aside>
 
@@ -535,6 +535,13 @@ the storage directory.</dd>
 <dd>The path where the photo is located relative to the storage directory.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Photo-Model-Photo.html#property_profilePhotos">$profilePhotos</a>
+    <span>
+                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>            </span>
+</dt>
+<dd>All the profile photos that use this photo.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Photo-Model-Photo.html#property_shutterSpeed">$shutterSpeed</a>
     <span>
                         &nbsp;: string|null            </span>
@@ -571,6 +578,27 @@ the storage directory.</dd>
 <dd>The corresponding WeeklyPhoto entity if this photo has been a weekly photo.</dd>
 
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Photo-Model-Photo.html#method___construct">__construct()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Photo-Model-Photo.html#method_addProfilePhoto">addProfilePhoto()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Photo-Model-Photo.html#method_addProfilePhotos">addProfilePhotos()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Photo-Model-Photo.html#method_addTag">addTag()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -697,6 +725,13 @@ the storage directory.</dd>
 <dd>Get the path where the photo is stored.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Photo-Model-Photo.html#method_getProfilePhotos">getProfilePhotos()</a>
+    <span>
+                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Photo-Model-Photo.html#method_getResourceId">getResourceId()</a>
     <span>
                                 &nbsp;: string    </span>
@@ -742,6 +777,20 @@ the storage directory.</dd>
     <a href="classes/Photo-Model-Photo.html#method_getWeeklyPhoto">getWeeklyPhoto()</a>
     <span>
                                 &nbsp;: <a href="classes/Photo-Model-WeeklyPhoto.html"><abbr title="\Photo\Model\WeeklyPhoto">WeeklyPhoto</abbr></a>|null    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Photo-Model-Photo.html#method_removeProfilePhoto">removeProfilePhoto()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Photo-Model-Photo.html#method_removeProfilePhotos">removeProfilePhotos()</a>
+    <span>
+                                &nbsp;: void    </span>
 </dt>
 <dd></dd>
 
@@ -892,7 +941,7 @@ the storage directory.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">117</span>
+    <span class="phpdocumentor-element-found-in__line">120</span>
 
     </aside>
 
@@ -926,7 +975,7 @@ the storage directory.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">99</span>
+    <span class="phpdocumentor-element-found-in__line">102</span>
 
     </aside>
 
@@ -960,7 +1009,7 @@ the storage directory.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
@@ -994,7 +1043,7 @@ the storage directory.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">199</span>
+    <span class="phpdocumentor-element-found-in__line">213</span>
 
     </aside>
 
@@ -1028,7 +1077,7 @@ the storage directory.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -1062,7 +1111,7 @@ the storage directory.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -1096,7 +1145,7 @@ the storage directory.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">81</span>
+    <span class="phpdocumentor-element-found-in__line">84</span>
 
     </aside>
 
@@ -1130,7 +1179,7 @@ the storage directory.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
     </aside>
 
@@ -1164,7 +1213,7 @@ the storage directory.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
+    <span class="phpdocumentor-element-found-in__line">75</span>
 
     </aside>
 
@@ -1198,7 +1247,7 @@ the storage directory.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
@@ -1232,7 +1281,7 @@ the storage directory.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">108</span>
+    <span class="phpdocumentor-element-found-in__line">111</span>
 
     </aside>
 
@@ -1266,7 +1315,7 @@ the storage directory.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">145</span>
+    <span class="phpdocumentor-element-found-in__line">148</span>
 
     </aside>
 
@@ -1301,7 +1350,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">160</span>
+    <span class="phpdocumentor-element-found-in__line">163</span>
 
     </aside>
 
@@ -1335,7 +1384,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">151</span>
+    <span class="phpdocumentor-element-found-in__line">154</span>
 
     </aside>
 
@@ -1369,7 +1418,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">131</span>
+    <span class="phpdocumentor-element-found-in__line">134</span>
 
     </aside>
 
@@ -1394,6 +1443,40 @@ the storage directory.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_profilePhotos">
+        $profilePhotos
+        <a href="classes/Photo-Model-Photo.html#property_profilePhotos" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">192</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">All the profile photos that use this photo.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr></span>
+    <span class="phpdocumentor-signature__name">$profilePhotos</span>
+    </code>
+
+    
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_shutterSpeed">
         $shutterSpeed
         <a href="classes/Photo-Model-Photo.html#property_shutterSpeed" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1403,7 +1486,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">90</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
@@ -1437,7 +1520,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">138</span>
+    <span class="phpdocumentor-element-found-in__line">141</span>
 
     </aside>
 
@@ -1472,7 +1555,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">179</span>
+    <span class="phpdocumentor-element-found-in__line">182</span>
 
     </aside>
 
@@ -1506,7 +1589,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">169</span>
+    <span class="phpdocumentor-element-found-in__line">172</span>
 
     </aside>
 
@@ -1540,7 +1623,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">189</span>
+    <span class="phpdocumentor-element-found-in__line">203</span>
 
     </aside>
 
@@ -1571,6 +1654,127 @@ the storage directory.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method___construct">
+        __construct()
+        <a href="classes/Photo-Model-Photo.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">219</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">mixed</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_addProfilePhoto">
+        addProfilePhoto()
+        <a href="classes/Photo-Model-Photo.html#method_addProfilePhoto" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">622</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">addProfilePhoto</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Model-ProfilePhoto.html"><abbr title="\Photo\Model\ProfilePhoto">ProfilePhoto</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$profilePhoto</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$profilePhoto</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Model-ProfilePhoto.html"><abbr title="\Photo\Model\ProfilePhoto">ProfilePhoto</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_addProfilePhotos">
+        addProfilePhotos()
+        <a href="classes/Photo-Model-Photo.html#method_addProfilePhotos" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">615</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">addProfilePhotos</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$profilePhotos</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$profilePhotos</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_addTag">
         addTag()
         <a href="classes/Photo-Model-Photo.html#method_addTag" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1578,7 +1782,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">589</span>
+    <span class="phpdocumentor-element-found-in__line">609</span>
 
     </aside>
 
@@ -1621,7 +1825,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">579</span>
+    <span class="phpdocumentor-element-found-in__line">599</span>
 
     </aside>
 
@@ -1664,7 +1868,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">409</span>
+    <span class="phpdocumentor-element-found-in__line">429</span>
 
     </aside>
 
@@ -1697,7 +1901,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">310</span>
+    <span class="phpdocumentor-element-found-in__line">330</span>
 
     </aside>
 
@@ -1730,7 +1934,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">290</span>
+    <span class="phpdocumentor-element-found-in__line">310</span>
 
     </aside>
 
@@ -1763,7 +1967,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">230</span>
+    <span class="phpdocumentor-element-found-in__line">250</span>
 
     </aside>
 
@@ -1796,7 +2000,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">400</span>
+    <span class="phpdocumentor-element-found-in__line">420</span>
 
     </aside>
 
@@ -1828,7 +2032,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">240</span>
+    <span class="phpdocumentor-element-found-in__line">260</span>
 
     </aside>
 
@@ -1861,7 +2065,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">220</span>
+    <span class="phpdocumentor-element-found-in__line">240</span>
 
     </aside>
 
@@ -1894,7 +2098,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">270</span>
+    <span class="phpdocumentor-element-found-in__line">290</span>
 
     </aside>
 
@@ -1927,7 +2131,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">250</span>
+    <span class="phpdocumentor-element-found-in__line">270</span>
 
     </aside>
 
@@ -1960,7 +2164,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">260</span>
+    <span class="phpdocumentor-element-found-in__line">280</span>
 
     </aside>
 
@@ -1993,7 +2197,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">210</span>
+    <span class="phpdocumentor-element-found-in__line">230</span>
 
     </aside>
 
@@ -2026,7 +2230,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">300</span>
+    <span class="phpdocumentor-element-found-in__line">320</span>
 
     </aside>
 
@@ -2059,7 +2263,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">330</span>
+    <span class="phpdocumentor-element-found-in__line">350</span>
 
     </aside>
 
@@ -2092,7 +2296,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">360</span>
+    <span class="phpdocumentor-element-found-in__line">380</span>
 
     </aside>
 
@@ -2125,7 +2329,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">350</span>
+    <span class="phpdocumentor-element-found-in__line">370</span>
 
     </aside>
 
@@ -2158,7 +2362,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">320</span>
+    <span class="phpdocumentor-element-found-in__line">340</span>
 
     </aside>
 
@@ -2184,6 +2388,39 @@ the storage directory.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getProfilePhotos">
+        getProfilePhotos()
+        <a href="classes/Photo-Model-Photo.html#method_getProfilePhotos" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">640</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getProfilePhotos</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr></span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr></span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getResourceId">
         getResourceId()
         <a href="classes/Photo-Model-Photo.html#method_getResourceId" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2191,7 +2428,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">627</span>
+    <span class="phpdocumentor-element-found-in__line">677</span>
 
     </aside>
 
@@ -2224,7 +2461,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">280</span>
+    <span class="phpdocumentor-element-found-in__line">300</span>
 
     </aside>
 
@@ -2257,7 +2494,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">340</span>
+    <span class="phpdocumentor-element-found-in__line">360</span>
 
     </aside>
 
@@ -2290,7 +2527,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">376</span>
+    <span class="phpdocumentor-element-found-in__line">396</span>
 
     </aside>
 
@@ -2322,7 +2559,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">368</span>
+    <span class="phpdocumentor-element-found-in__line">388</span>
 
     </aside>
 
@@ -2354,7 +2591,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">384</span>
+    <span class="phpdocumentor-element-found-in__line">404</span>
 
     </aside>
 
@@ -2386,7 +2623,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">392</span>
+    <span class="phpdocumentor-element-found-in__line">412</span>
 
     </aside>
 
@@ -2411,6 +2648,94 @@ the storage directory.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_removeProfilePhoto">
+        removeProfilePhoto()
+        <a href="classes/Photo-Model-Photo.html#method_removeProfilePhoto" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">635</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">removeProfilePhoto</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Model-ProfilePhoto.html"><abbr title="\Photo\Model\ProfilePhoto">ProfilePhoto</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$profilePhoto</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$profilePhoto</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Model-ProfilePhoto.html"><abbr title="\Photo\Model\ProfilePhoto">ProfilePhoto</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_removeProfilePhotos">
+        removeProfilePhotos()
+        <a href="classes/Photo-Model-Photo.html#method_removeProfilePhotos" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">628</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">removeProfilePhotos</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$profilePhotos</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$profilePhotos</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setAlbum">
         setAlbum()
         <a href="classes/Photo-Model-Photo.html#method_setAlbum" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2418,7 +2743,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">509</span>
+    <span class="phpdocumentor-element-found-in__line">529</span>
 
     </aside>
 
@@ -2461,7 +2786,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">489</span>
+    <span class="phpdocumentor-element-found-in__line">509</span>
 
     </aside>
 
@@ -2504,7 +2829,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">429</span>
+    <span class="phpdocumentor-element-found-in__line">449</span>
 
     </aside>
 
@@ -2547,7 +2872,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">569</span>
+    <span class="phpdocumentor-element-found-in__line">589</span>
 
     </aside>
 
@@ -2590,7 +2915,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">439</span>
+    <span class="phpdocumentor-element-found-in__line">459</span>
 
     </aside>
 
@@ -2633,7 +2958,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">419</span>
+    <span class="phpdocumentor-element-found-in__line">439</span>
 
     </aside>
 
@@ -2677,7 +3002,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">469</span>
+    <span class="phpdocumentor-element-found-in__line">489</span>
 
     </aside>
 
@@ -2720,7 +3045,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">449</span>
+    <span class="phpdocumentor-element-found-in__line">469</span>
 
     </aside>
 
@@ -2763,7 +3088,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">459</span>
+    <span class="phpdocumentor-element-found-in__line">479</span>
 
     </aside>
 
@@ -2806,7 +3131,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">499</span>
+    <span class="phpdocumentor-element-found-in__line">519</span>
 
     </aside>
 
@@ -2849,7 +3174,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">529</span>
+    <span class="phpdocumentor-element-found-in__line">549</span>
 
     </aside>
 
@@ -2892,7 +3217,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">559</span>
+    <span class="phpdocumentor-element-found-in__line">579</span>
 
     </aside>
 
@@ -2935,7 +3260,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">549</span>
+    <span class="phpdocumentor-element-found-in__line">569</span>
 
     </aside>
 
@@ -2978,7 +3303,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">519</span>
+    <span class="phpdocumentor-element-found-in__line">539</span>
 
     </aside>
 
@@ -3021,7 +3346,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">479</span>
+    <span class="phpdocumentor-element-found-in__line">499</span>
 
     </aside>
 
@@ -3064,7 +3389,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">539</span>
+    <span class="phpdocumentor-element-found-in__line">559</span>
 
     </aside>
 
@@ -3107,7 +3432,7 @@ the storage directory.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Photo.php"><a href="files/module-photo-src-model-photo.html"><abbr title="module/Photo/src/Model/Photo.php">Photo.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">600</span>
+    <span class="phpdocumentor-element-found-in__line">650</span>
 
     </aside>
 
