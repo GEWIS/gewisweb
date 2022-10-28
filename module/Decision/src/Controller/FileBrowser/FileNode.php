@@ -52,6 +52,7 @@ class FileNode
         'fa-file-alt' => ['txt', 'tex', 'text', 'ini', 'md'],
         'fa-copy' => ['bak', 'tmp', 'dmp'],
         'fa-folder' => ['folder'],
+        'fa-archive' => ['folder-archive'],
     ];
 
     public function __construct(
@@ -67,7 +68,11 @@ class FileNode
         }
 
         if ('dir' === $this->kind) {
-            $this->extension = 'folder';
+            if ('archive' === mb_strtolower($this->name)) {
+                $this->extension = 'folder-archive';
+            } else {
+                $this->extension = 'folder';
+            }
         } else {
             $filenameSplitted = explode('.', $name);
             $this->extension = strtolower(end($filenameSplitted));
