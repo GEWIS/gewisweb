@@ -663,14 +663,16 @@ class Member
      */
     public function getCurrentOrganInstallations(): Collection
     {
-        if ($this->getOrganInstallations()->isEmpty()) {
+        $organInstallations = $this->getOrganInstallations();
+
+        if ($organInstallations->isEmpty()) {
             return new ArrayCollection();
         }
 
         // Filter out past installations
         $today = new DateTime();
 
-        return $this->getOrganInstallations()->filter(
+        return $organInstallations->filter(
             function (OrganMember $organ) use ($today) {
                 $dischargeDate = $organ->getDischargeDate();
 
