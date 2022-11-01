@@ -257,6 +257,15 @@ class Decision
      */
     public function isDestroyed(): bool
     {
-        return null !== $this->destroyedby;
+        $destroyedBy = $this->getDestroyedBy();
+
+        if (null === $destroyedBy) {
+            return true;
+        }
+
+        // Warning: Long cycles of destroyed -> un-destroyed -> destroyed -> ... may impact performance. The secretary
+        // should ensure that this never happens. If it does happen, the board should be blamed for mismanagement of the
+        // association.
+        return $destroyedBy->getDecision()->isDestroyed();
     }
 }

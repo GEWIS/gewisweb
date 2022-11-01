@@ -35,7 +35,12 @@ class Organ extends BaseMapper
             $criteria['type'] = $type;
         }
 
-        return $this->getRepository()->findBy($criteria);
+        return array_filter(
+            $this->getRepository()->findBy($criteria),
+            function (OrganModel $organ) {
+                return $organ->getFoundation()->isValid();
+            },
+        );
     }
 
     /**
@@ -47,12 +52,19 @@ class Organ extends BaseMapper
      */
     public function findActiveById(int $id): ?OrganModel
     {
-        return $this->getRepository()->findOneBy(
-            [
-                'id' => $id,
-                'abrogationDate' => null,
-            ]
-        );
+        $qb = $this->getRepository()->createQueryBuilder('o');
+        $qb->where('o.id = :id')
+            ->andWhere('o.abrogationDate IS NULL');
+
+        $qb->setParameter('id', $id);
+        /** @var OrganModel|null $result */
+        $result = $qb->getQuery()->getOneOrNullResult();
+
+        if (null !== $result) {
+            return $result->getFoundation()->isValid() ? $result : null;
+        }
+
+        return $result;
     }
 
     /**
@@ -72,7 +84,12 @@ class Organ extends BaseMapper
                 ->setParameter('type', $type);
         }
 
-        return $qb->getQuery()->getResult();
+        return array_filter(
+            $qb->getQuery()->getResult(),
+            function (OrganModel $organ) {
+                return $organ->getFoundation()->isValid();
+            },
+        );
     }
 
     /**
@@ -94,7 +111,14 @@ class Organ extends BaseMapper
 
         $qb->setParameter('id', $id);
 
-        return $qb->getQuery()->getOneOrNullResult();
+        /** @var OrganModel|null $result */
+        $result = $qb->getQuery()->getOneOrNullResult();
+
+        if (null !== $result) {
+            return $result->getFoundation()->isValid() ? $result : null;
+        }
+
+        return $result;
     }
 
     /**
@@ -109,7 +133,7 @@ class Organ extends BaseMapper
      * @param OrganTypes|null $type
      *
      * @return OrganModel|null
-     * @throws NoResultException
+     *
      * @throws NonUniqueResultException
      */
     public function findByAbbr(
@@ -139,10 +163,17 @@ class Organ extends BaseMapper
             }
 
             // the query returned at least 1 record, use first (= latest) record
-            return $queryResult[0];
+            return $queryResult[0]->getFoundation()->isValid() ? $queryResult[0] : null;
         }
 
-        return $qb->getQuery()->getSingleResult();
+        /** @var OrganModel|null $result */
+        $result = $qb->getQuery()->getOneOrNullResult();
+
+        if (null !== $result) {
+            return $result->getFoundation()->isValid() ? $result : null;
+        }
+
+        return $result;
     }
 
     /**

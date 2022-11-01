@@ -608,7 +608,9 @@ class Member
      */
     public function getInstallations(): Collection
     {
-        return $this->installations;
+        return $this->installations->filter(function (Installation $subDecision) {
+            return $subDecision->isValid();
+        });
     }
 
     public function getAuthenticationKey(): ?string
@@ -649,7 +651,9 @@ class Member
      */
     public function getOrganInstallations(): Collection
     {
-        return $this->organInstallations;
+        return $this->organInstallations->filter(function (OrganMember $organMember) {
+            return $organMember->getInstallation()->isValid();
+        });
     }
 
     /**
@@ -693,7 +697,9 @@ class Member
      */
     public function getBoardInstallations(): Collection
     {
-        return $this->boardInstallations;
+        return $this->boardInstallations->filter(function (BoardMember $boardMember) {
+            return $boardMember->getInstallationDec()->isValid();
+        });
     }
 
     /**

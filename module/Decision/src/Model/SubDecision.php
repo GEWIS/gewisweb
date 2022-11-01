@@ -236,4 +236,12 @@ abstract class SubDecision
     {
         $this->content = $content;
     }
+
+    /**
+     * Determine if the subdecision is valid. In other words, it has not been destroyed.
+     */
+    public function isValid(): bool
+    {
+        return $this->decision->isDestroyed();
+    }
 }

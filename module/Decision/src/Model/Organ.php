@@ -313,7 +313,9 @@ class Organ
      */
     public function getMembers(): Collection
     {
-        return $this->members;
+        return $this->members->filter(function (OrganMember $organMember) {
+            return $organMember->getInstallation()->isValid();
+        });
     }
 
     /**
@@ -341,13 +343,15 @@ class Organ
     }
 
     /**
-     * Get all subdecisions.of this organ.
+     * Get all subdecisions of this organ.
      *
      * @return Collection
      */
     public function getSubdecisions(): Collection
     {
-        return $this->subdecisions;
+        return $this->subdecisions->filter(function (SubDecision $subDecision) {
+            return $subDecision->isValid();
+        });
     }
 
     /**

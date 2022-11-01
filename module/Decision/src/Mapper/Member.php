@@ -128,7 +128,12 @@ class Member extends BaseMapper
 
         $qb->setParameter('lidnr', $member->getLidnr());
 
-        return $qb->getQuery()->getResult();
+        return array_filter(
+            $qb->getQuery()->getResult(),
+            function (OrganModel $organ) {
+                return $organ->getFoundation()->isValid();
+            },
+        );
     }
 
     /**
@@ -145,7 +150,12 @@ class Member extends BaseMapper
 
         $qb->setParameter('member', $member);
 
-        return $qb->getQuery()->getResult();
+        return array_filter(
+            $qb->getQuery()->getResult(),
+            function (OrganMemberModel $organ) {
+                return $organ->getInstallation()->isValid();
+            },
+        );
     }
 
     /**
@@ -162,7 +172,12 @@ class Member extends BaseMapper
 
         $qb->setParameter('member', $member);
 
-        return $qb->getQuery()->getResult();
+        return array_filter(
+            $qb->getQuery()->getResult(),
+            function (OrganMemberModel $organ) {
+                return $organ->getInstallation()->isValid();
+            },
+        );
     }
 
     /**
