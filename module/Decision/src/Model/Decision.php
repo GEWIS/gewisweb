@@ -101,7 +101,7 @@ class Decision
         targetEntity: Destroy::class,
         mappedBy: "target",
     )]
-    protected SubDecision\Destroy $destroyedby;
+    protected ?Destroy $destroyedby = null;
 
     /**
      * Set the meeting.
@@ -243,9 +243,9 @@ class Decision
      *
      * Or null, if it wasn't destroyed.
      *
-     * @return SubDecision\Destroy
+     * @return Destroy|null
      */
-    public function getDestroyedBy(): SubDecision\Destroy
+    public function getDestroyedBy(): ?Destroy
     {
         return $this->destroyedby;
     }
