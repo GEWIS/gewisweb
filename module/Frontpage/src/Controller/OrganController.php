@@ -4,14 +4,17 @@ namespace Frontpage\Controller;
 
 use Activity\Service\ActivityQuery as ActivityQueryService;
 use Decision\Model\Enums\OrganTypes;
-use Decision\Model\Organ;
-use Decision\Service\Organ as OrganService;
+use Decision\Service\{
+    AclService,
+    Organ as OrganService,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
 class OrganController extends AbstractActionController
 {
     public function __construct(
+        private readonly AclService $aclService,
         private readonly ActivityQueryService $activityQueryService,
         private readonly OrganService $organService,
     ) {
@@ -51,7 +54,15 @@ class OrganController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        $organMemberInformation = $this->organService->getOrganMemberInformation($organ);
+        if ($this->aclService->isAllowed('view', 'organ')) {
+            $organMemberInformation = $this->organService->getOrganMemberInformation($organ);
+        } else {
+            $organMemberInformation = [
+                'activeMembers' => [],
+                'inactiveMembers' => [],
+                'oldMembers' => [],
+            ];
+        }
         $activities = $this->activityQueryService->getOrganActivities($organ, 3);
 
         return new ViewModel(

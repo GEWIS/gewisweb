@@ -21,6 +21,7 @@ class OrganControllerFactory implements FactoryInterface
         ?array $options = null,
     ): OrganController {
         return new OrganController(
+            $container->get('decision_service_acl'),
             $container->get('activity_service_activityQuery'),
             $container->get('decision_service_organ'),
         );
