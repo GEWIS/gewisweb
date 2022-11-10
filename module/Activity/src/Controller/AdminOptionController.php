@@ -38,8 +38,8 @@ class AdminOptionController extends AbstractActionController
         }
 
         return new ViewModel([
-            'current' => $this->activityOptionCreationPeriodMapper->getCurrentActivityOptionCreationPeriod(),
-            'upcoming' => $this->activityOptionCreationPeriodMapper->getUpcomingActivityOptionCreationPeriod(),
+            'current' => $this->activityOptionCreationPeriodMapper->getCurrentActivityOptionCreationPeriods(),
+            'upcoming' => $this->activityOptionCreationPeriodMapper->getUpcomingActivityOptionCreationPeriods(),
         ]);
     }
 

@@ -11,41 +11,29 @@ class ActivityOptionCreationPeriod extends BaseMapper
 {
     /**
      * Finds the ActivityOptionCreationPeriod model that is currently active.
-     *
-     * @return ActivityOptionCreationPeriodModel|null
-     *
-     * @throws Exception
      */
-    public function getCurrentActivityOptionCreationPeriod(): ?ActivityOptionCreationPeriodModel
+    public function getCurrentActivityOptionCreationPeriods(): array
     {
         $qb = $this->getRepository()->createQueryBuilder('o');
         $qb->where('o.beginPlanningTime < :today')
             ->andWhere('o.endPlanningTime > :today')
             ->orderBy('o.beginPlanningTime', 'ASC')
-            ->setParameter('today', new DateTime())
-            ->setMaxResults(1);
+            ->setParameter('today', new DateTime());
 
-        $res = $qb->getQuery()->getResult();
-
-        return empty($res) ? null : $res[0];
+        return $qb->getQuery()->getResult();
     }
 
     /**
      * Finds the ActivityOptionCreationPeriod model that will be active next.
-     *
-     * @return ActivityOptionCreationPeriodModel|null
-     *
-     * @throws Exception
      */
-    public function getUpcomingActivityOptionCreationPeriod(): ?ActivityOptionCreationPeriodModel
+    public function getUpcomingActivityOptionCreationPeriods(): array
     {
         $qb = $this->getRepository()->createQueryBuilder('o');
         $qb->where('o.beginPlanningTime > :today')
             ->orderBy('o.beginPlanningTime', 'ASC')
-            ->setParameter('today', new DateTime())
-            ->setMaxResults(1);
+            ->setParameter('today', new DateTime());
 
-        return $qb->getQuery()->getOneOrNullResult();
+        return $qb->getQuery()->getResult();
     }
 
     /**

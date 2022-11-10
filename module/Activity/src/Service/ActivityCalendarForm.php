@@ -65,7 +65,7 @@ class ActivityCalendarForm
     {
         $mapper = $this->periodMapper;
 
-        return $mapper->getCurrentActivityOptionCreationPeriod();
+        return $mapper->getCurrentActivityOptionCreationPeriods();
     }
 
     /**
