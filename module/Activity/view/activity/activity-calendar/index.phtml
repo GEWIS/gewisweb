@@ -208,6 +208,8 @@ $this->headLink()
 
         let calendarEl = document.getElementById('calendar');
         let calendar = new FullCalendar.Calendar(calendarEl, {
+            //
+            firstDay: '1',
             // Auto-magically update the height of the view.
             contentHeight: 'auto',
             // Add a custom button to propose an option.
