@@ -98,17 +98,6 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                             },
                         ],
                     ],
-                    [
-                        'name' => Callback::class,
-                        'options' => [
-                            'messages' => [
-                                Callback::INVALID_VALUE => $this->translator->translate('The activity must be within the given period'),
-                            ],
-                            'callback' => function ($value, $context = []) {
-                                return $this->cannotPlanInPeriod($value, $context);
-                            },
-                        ],
-                    ],
                 ],
             ],
             'endTime' => [
@@ -159,28 +148,6 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
 
             return $this->calendarFormService->toDateTime($value) > $today;
         } catch (Exception) {
-            return false;
-        }
-    }
-
-    /**
-     * Check if a certain date is within the current planning period.
-     *
-     * @param string $value
-     * @param array $context
-     *
-     * @return bool
-     */
-    public function cannotPlanInPeriod(
-        string $value,
-        array $context = [],
-    ): bool {
-        try {
-            $beginTime = $this->calendarFormService->toDateTime($value);
-            $result = $this->calendarFormService->canCreateOption($beginTime);
-
-            return !$result;
-        } catch (Exception $e) {
             return false;
         }
     }

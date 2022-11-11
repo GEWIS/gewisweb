@@ -1,44 +1,45 @@
-<div class="option spacing-top--sm" id="additionalOption<?= $this->index ?>">
-    <div class="row">
-        <div class="col-md-3">
-            <?php $inputType = $this->fs->get('type')
-                ->setAttribute('class', 'form-control')
-                ->setAttribute('id', 'type-field-' . $this->index);
-            ?>
-            <div class="form-group <?= $this->bootstrapElementError($inputType) ?>">
-                <label for="<?= $inputType->getAttribute('id') ?>" class="control-label label-required">
-                    <?= $this->translate('Type') ?>
-                </label>
-                <?= $this->formSelect($inputType) ?>
-                <?= $this->formElementErrors($inputType) ?>
-            </div>
-        </div>
-        <div class="col-md-3 spacing-top-sm--sm">
-            <?php $inputBeginTime = $this->fs->get('beginTime')
-                ->setAttribute('class', 'form-control begin-time')
-                ->setAttribute('data-begin-option-id', $this->index);
-            ?>
-            <div class="form-group <?= $this->bootstrapElementError($inputBeginTime) ?>">
-                <label for="<?= $inputBeginTime->getAttribute('id') ?>" class="control-label label-required">
-                    <?= $this->translate('From') ?>
-                </label>
-                <?= $this->formDate($inputBeginTime) ?>
-                <?= $this->formElementErrors($inputBeginTime) ?>
-            </div>
-        </div>
-        <div class="col-md-3 spacing-top-sm--sm">
-            <?php $inputEndTime = $this->fs->get('endTime')
-                ->setAttribute('class', 'form-control')
-                ->setAttribute('data-end-option-id', $this->index);
-            ?>
-            <div class="form-group <?= $this->bootstrapElementError($inputEndTime) ?>">
-                <label for="<?= $inputEndTime->getAttribute('id') ?>" class="control-label label-required">
-                    <?= $this->translate('Until') ?>
-                </label>
-                <?= $this->formDate($inputEndTime) ?>
-                <?= $this->formElementErrors($inputEndTime) ?>
-            </div>
+<div class="row" id="additionalOption<?= $this->index ?>">
+    <div class="col-md-3">
+        <?php
+        $inputType = $this->fs->get('type')
+            ->setAttribute('class', 'form-control')
+            ->setAttribute('id', 'type-field-' . $this->index);
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($inputType) ?>">
+            <label for="<?= $inputType->getAttribute('id') ?>" class="control-label label-required">
+                <?= $this->translate('Type') ?>
+            </label>
+            <?= $this->formSelect($inputType) ?>
+            <?= $this->formElementErrors($inputType) ?>
         </div>
     </div>
-    <hr/>
+    <div class="col-md-3 spacing-top-sm--sm">
+        <?php
+        $inputBeginTime = $this->fs->get('beginTime')
+            ->setAttribute('class', 'form-control begin-time')
+            ->setAttribute('data-begin-option-id', $this->index);
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($inputBeginTime) ?>">
+            <label for="<?= $inputBeginTime->getAttribute('id') ?>" class="control-label label-required">
+                <?= $this->translate('From') ?>
+            </label>
+            <?= $this->formDate($inputBeginTime) ?>
+            <?= $this->formElementErrors($inputBeginTime) ?>
+        </div>
+    </div>
+    <div class="col-md-3 spacing-top-sm--sm">
+        <?php
+        $inputEndTime = $this->fs->get('endTime')
+            ->setAttribute('class', 'form-control')
+            ->setAttribute('data-end-option-id', $this->index);
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($inputEndTime) ?>">
+            <label for="<?= $inputEndTime->getAttribute('id') ?>" class="control-label label-required">
+                <?= $this->translate('Until') ?>
+            </label>
+            <?= $this->formDate($inputEndTime) ?>
+            <?= $this->formElementErrors($inputEndTime) ?>
+        </div>
+    </div>
 </div>
+<hr/>

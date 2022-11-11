@@ -2,6 +2,7 @@
 
 namespace Activity\Service;
 
+use Activity\Model\ActivityOptionCreationPeriod;
 use Activity\Mapper\{
     ActivityOptionCreationPeriod as ActivityOptionCreationPeriodMapper,
     ActivityOptionProposal as ActivityOptionProposalMapper,
@@ -32,22 +33,33 @@ class ActivityCalendarForm
      *
      * @throws Exception
      */
-    public function canCreateOption(DateTime $beginTime): bool
-    {
+    public function canCreateOptionInPeriod(
+        int $period,
+        DateTime $beginTime,
+        DateTime $endTime,
+    ): bool {
         if ($this->aclService->isAllowed('create_always', 'activity_calendar_proposal')) {
             return true;
         }
 
-        $period = $this->getCurrentPeriod();
+        // If not allowed to `create_always`, -1 certainly cannot be accepted.
+        if (-1 === $period) {
+            return false;
+        }
+
+        /** @var ActivityOptionCreationPeriod|null $period */
+        $period = $this->periodMapper->find($period);
 
         if (null === $period) {
             return false;
         }
 
-        $begin = $period->getBeginOptionTime();
-        $end = $period->getEndOptionTime();
-
-        if ($begin > $beginTime || $beginTime > $end) {
+        if (
+            $period->getBeginOptionTime() > $beginTime
+            || $period->getEndOptionTime() <= $beginTime
+            || $period->getBeginOptionTime() >= $endTime
+            || $period->getEndOptionTime() < $endTime
+        ) {
             return false;
         }
 
@@ -57,15 +69,11 @@ class ActivityCalendarForm
     /**
      * Get the current ActivityOptionCreationPeriod.
      *
-     * @return ActivityOptionCreationPeriodModel|null
-     *
-     * @throws Exception
+     * @return array<array-key, ActivityOptionCreationPeriod>
      */
-    public function getCurrentPeriod(): ?ActivityOptionCreationPeriodModel
+    public function getCurrentPeriods(): array
     {
-        $mapper = $this->periodMapper;
-
-        return $mapper->getCurrentActivityOptionCreationPeriods();
+        return $this->periodMapper->getCurrentActivityOptionCreationPeriods();
     }
 
     /**
@@ -81,6 +89,7 @@ class ActivityCalendarForm
         $organs = [];
         foreach ($allOrgans as $organ) {
             $organId = $organ->getId();
+
             if ($this->canOrganCreateProposal($organId)) {
                 $organs[] = $organ;
             }
@@ -100,24 +109,27 @@ class ActivityCalendarForm
      */
     public function canOrganCreateProposal(int $organId): bool
     {
+        if (!$this->aclService->isAllowed('create', 'activity_calendar_proposal')) {
+            return false;
+        }
+
         if ($this->aclService->isAllowed('create_always', 'activity_calendar_proposal')) {
             return true;
         }
 
-        $period = $this->getCurrentPeriod();
-
-        if (
-            null === $period
-            || !$this->aclService->isAllowed('create', 'activity_calendar_proposal')
-            || null == $organId
-        ) {
+        $periods = $this->getCurrentPeriods();
+        if (empty($periods)) {
             return false;
         }
 
-        $max = $this->getMaxActivities($organId, $period->getId());
-        $count = $this->getCurrentProposalCount($period, $organId);
+        $totalMaxActivities = 0;
+        $totalCount = 0;
+        foreach ($periods as $period) {
+            $totalMaxActivities += $this->getMaxActivities($organId, $period->getId());
+            $totalCount += $this->getCurrentProposalCount($period, $organId);
+        }
 
-        return $count < $max;
+        return $totalCount < $totalMaxActivities;
     }
 
     /**
