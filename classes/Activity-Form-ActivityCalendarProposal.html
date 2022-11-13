@@ -439,6 +439,13 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/Activity-Form-ActivityCalendarProposal.html#property_createAlways">$createAlways</a>
+    <span>
+                        &nbsp;: bool            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/Activity-Form-ActivityCalendarProposal.html#property_maxOptions">$maxOptions</a>
     <span>
                         &nbsp;: int            </span>
@@ -460,13 +467,6 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Activity-Form-ActivityCalendarProposal.html#method_areGoodOptionDates">areGoodOptionDates()</a>
-    <span>
-                                &nbsp;: bool    </span>
-</dt>
-<dd>Check if the begin times of the options are acceptable.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Activity-Form-ActivityCalendarProposal.html#method_getInputFilterSpecification">getInputFilterSpecification()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
@@ -479,6 +479,13 @@
                                 &nbsp;: bool    </span>
 </dt>
 <dd>Check if the amount of options is acceptable.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Activity-Form-ActivityCalendarProposal.html#method_isValid">isValid()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Validate the form.</dd>
 
         </dl>
 
@@ -517,6 +524,40 @@
     <span class="phpdocumentor-signature__visibility">private</span>
         <span class="phpdocumentor-signature__type"><a href="classes/Activity-Service-ActivityCalendarForm.html"><abbr title="\Activity\Service\ActivityCalendarForm">ActivityCalendarForm</abbr></a></span>
     <span class="phpdocumentor-signature__name">$calendarFormService</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_createAlways">
+        $createAlways
+        <a href="classes/Activity-Form-ActivityCalendarProposal.html#property_createAlways" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Form/ActivityCalendarProposal.php"><a href="files/module-activity-src-form-activitycalendarproposal.html"><abbr title="module/Activity/src/Form/ActivityCalendarProposal.php">ActivityCalendarProposal.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">28</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type">bool</span>
+    <span class="phpdocumentor-signature__name">$createAlways</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -667,22 +708,55 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_areGoodOptionDates">
-        areGoodOptionDates()
-        <a href="classes/Activity-Form-ActivityCalendarProposal.html#method_areGoodOptionDates" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getInputFilterSpecification">
+        getInputFilterSpecification()
+        <a href="classes/Activity-Form-ActivityCalendarProposal.html#method_getInputFilterSpecification" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Form/ActivityCalendarProposal.php"><a href="files/module-activity-src-form-activitycalendarproposal.html"><abbr title="module/Activity/src/Form/ActivityCalendarProposal.php">ActivityCalendarProposal.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">180</span>
+    <span class="phpdocumentor-element-found-in__line">184</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Check if the begin times of the options are acceptable.</p>
+        <p class="phpdocumentor-summary">Input filter specification.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">areGoodOptionDates</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$context</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">getInputFilterSpecification</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_isGoodOptionCount">
+        isGoodOptionCount()
+        <a href="classes/Activity-Form-ActivityCalendarProposal.html#method_isGoodOptionCount" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Form/ActivityCalendarProposal.php"><a href="files/module-activity-src-form-activitycalendarproposal.html"><abbr title="module/Activity/src/Form/ActivityCalendarProposal.php">ActivityCalendarProposal.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">237</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Check if the amount of options is acceptable.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">isGoodOptionCount</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$context</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -717,75 +791,25 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getInputFilterSpecification">
-        getInputFilterSpecification()
-        <a href="classes/Activity-Form-ActivityCalendarProposal.html#method_getInputFilterSpecification" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_isValid">
+        isValid()
+        <a href="classes/Activity-Form-ActivityCalendarProposal.html#method_isValid" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Form/ActivityCalendarProposal.php"><a href="files/module-activity-src-form-activitycalendarproposal.html"><abbr title="module/Activity/src/Form/ActivityCalendarProposal.php">ActivityCalendarProposal.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">98</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Input filter specification.</p>
+        <p class="phpdocumentor-summary">Validate the form.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getInputFilterSpecification</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">isValid</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     
     
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_isGoodOptionCount">
-        isGoodOptionCount()
-        <a href="classes/Activity-Form-ActivityCalendarProposal.html#method_isGoodOptionCount" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Form/ActivityCalendarProposal.php"><a href="files/module-activity-src-form-activitycalendarproposal.html"><abbr title="module/Activity/src/Form/ActivityCalendarProposal.php">ActivityCalendarProposal.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">161</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Check if the amount of options is acceptable.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">isGoodOptionCount</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$context</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$value</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$context</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>

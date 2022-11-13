@@ -456,7 +456,7 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Activity-Service-ActivityCalendarForm.html#method_canCreateOption">canCreateOption()</a>
+    <a href="classes/Activity-Service-ActivityCalendarForm.html#method_canCreateOptionInPeriod">canCreateOptionInPeriod()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
@@ -470,9 +470,9 @@
 <dd>Returns whether an organ may create a new activity proposal.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Activity-Service-ActivityCalendarForm.html#method_getCurrentPeriod">getCurrentPeriod()</a>
+    <a href="classes/Activity-Service-ActivityCalendarForm.html#method_getCurrentPeriods">getCurrentPeriods()</a>
     <span>
-                                &nbsp;: <a href="classes/Activity-Model-ActivityOptionCreationPeriod.html"><abbr title="\Activity\Model\ActivityOptionCreationPeriod">ActivityOptionCreationPeriod</abbr></a>|null    </span>
+                                &nbsp;: array&lt;array-key, <a href="classes/Activity-Model-ActivityOptionCreationPeriod.html"><abbr title="\Activity\Model\ActivityOptionCreationPeriod">ActivityOptionCreationPeriod</abbr></a>&gt;    </span>
 </dt>
 <dd>Get the current ActivityOptionCreationPeriod.</dd>
 
@@ -775,9 +775,9 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_canCreateOption">
-        canCreateOption()
-        <a href="classes/Activity-Service-ActivityCalendarForm.html#method_canCreateOption" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_canCreateOptionInPeriod">
+        canCreateOptionInPeriod()
+        <a href="classes/Activity-Service-ActivityCalendarForm.html#method_canCreateOptionInPeriod" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Service/ActivityCalendarForm.php"><a href="files/module-activity-src-service-activitycalendarform.html"><abbr title="module/Activity/src/Service/ActivityCalendarForm.php">ActivityCalendarForm.php</abbr></a></abbr>
@@ -790,17 +790,33 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">canCreateOption</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$beginTime</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">canCreateOptionInPeriod</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$period</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$beginTime</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$endTime</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$period</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$beginTime</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$endTime</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -839,7 +855,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Service/ActivityCalendarForm.php"><a href="files/module-activity-src-service-activitycalendarform.html"><abbr title="module/Activity/src/Service/ActivityCalendarForm.php">ActivityCalendarForm.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">101</span>
+    <span class="phpdocumentor-element-found-in__line">109</span>
 
     </aside>
 
@@ -889,14 +905,14 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getCurrentPeriod">
-        getCurrentPeriod()
-        <a href="classes/Activity-Service-ActivityCalendarForm.html#method_getCurrentPeriod" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getCurrentPeriods">
+        getCurrentPeriods()
+        <a href="classes/Activity-Service-ActivityCalendarForm.html#method_getCurrentPeriods" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Service/ActivityCalendarForm.php"><a href="files/module-activity-src-service-activitycalendarform.html"><abbr title="module/Activity/src/Service/ActivityCalendarForm.php">ActivityCalendarForm.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">64</span>
+    <span class="phpdocumentor-element-found-in__line">73</span>
 
     </aside>
 
@@ -904,28 +920,14 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getCurrentPeriod</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Activity-Model-ActivityOptionCreationPeriod.html"><abbr title="\Activity\Model\ActivityOptionCreationPeriod">ActivityOptionCreationPeriod</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getCurrentPeriods</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Activity-Model-ActivityOptionCreationPeriod.html"><abbr title="\Activity\Model\ActivityOptionCreationPeriod">ActivityOptionCreationPeriod</abbr></a>&gt;</span></code>
 
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Activity-Model-ActivityOptionCreationPeriod.html"><abbr title="\Activity\Model\ActivityOptionCreationPeriod">ActivityOptionCreationPeriod</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Activity-Model-ActivityOptionCreationPeriod.html"><abbr title="\Activity\Model\ActivityOptionCreationPeriod">ActivityOptionCreationPeriod</abbr></a>&gt;</span>
             &mdash;
         
     
@@ -943,7 +945,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Service/ActivityCalendarForm.php"><a href="files/module-activity-src-service-activitycalendarform.html"><abbr title="module/Activity/src/Service/ActivityCalendarForm.php">ActivityCalendarForm.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">85</span>
 
     </aside>
 
@@ -990,7 +992,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Service/ActivityCalendarForm.php"><a href="files/module-activity-src-service-activitycalendarform.html"><abbr title="module/Activity/src/Service/ActivityCalendarForm.php">ActivityCalendarForm.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">173</span>
+    <span class="phpdocumentor-element-found-in__line">184</span>
 
     </aside>
 
@@ -1039,7 +1041,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Service/ActivityCalendarForm.php"><a href="files/module-activity-src-service-activitycalendarform.html"><abbr title="module/Activity/src/Service/ActivityCalendarForm.php">ActivityCalendarForm.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">131</span>
+    <span class="phpdocumentor-element-found-in__line">142</span>
 
     </aside>
 
@@ -1089,7 +1091,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Service/ActivityCalendarForm.php"><a href="files/module-activity-src-service-activitycalendarform.html"><abbr title="module/Activity/src/Service/ActivityCalendarForm.php">ActivityCalendarForm.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">152</span>
+    <span class="phpdocumentor-element-found-in__line">163</span>
 
     </aside>
 

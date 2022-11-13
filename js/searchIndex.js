@@ -591,11 +591,6 @@ Search.appendIndex(
             "summary": "Check\u0020if\u0020a\u0020certain\u0020date\u0020is\u0020in\u0020the\u0020future.",
             "url": "classes/Activity-Form-ActivityCalendarOption.html#method_isFutureTime"
         },                {
-            "fqsen": "\\Activity\\Form\\ActivityCalendarOption\u003A\u003AcannotPlanInPeriod\u0028\u0029",
-            "name": "cannotPlanInPeriod",
-            "summary": "Check\u0020if\u0020a\u0020certain\u0020date\u0020is\u0020within\u0020the\u0020current\u0020planning\u0020period.",
-            "url": "classes/Activity-Form-ActivityCalendarOption.html#method_cannotPlanInPeriod"
-        },                {
             "fqsen": "\\Activity\\Form\\ActivityCalendarOption\u003A\u003A\u0024translator",
             "name": "translator",
             "summary": "",
@@ -641,6 +636,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Activity-Form-ActivityCalendarProposal.html#method___construct"
         },                {
+            "fqsen": "\\Activity\\Form\\ActivityCalendarProposal\u003A\u003AisValid\u0028\u0029",
+            "name": "isValid",
+            "summary": "Validate\u0020the\u0020form.",
+            "url": "classes/Activity-Form-ActivityCalendarProposal.html#method_isValid"
+        },                {
             "fqsen": "\\Activity\\Form\\ActivityCalendarProposal\u003A\u003AgetInputFilterSpecification\u0028\u0029",
             "name": "getInputFilterSpecification",
             "summary": "Input\u0020filter\u0020specification.",
@@ -650,11 +650,6 @@ Search.appendIndex(
             "name": "isGoodOptionCount",
             "summary": "Check\u0020if\u0020the\u0020amount\u0020of\u0020options\u0020is\u0020acceptable.",
             "url": "classes/Activity-Form-ActivityCalendarProposal.html#method_isGoodOptionCount"
-        },                {
-            "fqsen": "\\Activity\\Form\\ActivityCalendarProposal\u003A\u003AareGoodOptionDates\u0028\u0029",
-            "name": "areGoodOptionDates",
-            "summary": "Check\u0020if\u0020the\u0020begin\u0020times\u0020of\u0020the\u0020options\u0020are\u0020acceptable.",
-            "url": "classes/Activity-Form-ActivityCalendarProposal.html#method_areGoodOptionDates"
         },                {
             "fqsen": "\\Activity\\Form\\ActivityCalendarProposal\u003A\u003A\u0024maxOptions",
             "name": "maxOptions",
@@ -670,6 +665,11 @@ Search.appendIndex(
             "name": "calendarFormService",
             "summary": "",
             "url": "classes/Activity-Form-ActivityCalendarProposal.html#property_calendarFormService"
+        },                {
+            "fqsen": "\\Activity\\Form\\ActivityCalendarProposal\u003A\u003A\u0024createAlways",
+            "name": "createAlways",
+            "summary": "",
+            "url": "classes/Activity-Form-ActivityCalendarProposal.html#property_createAlways"
         },                {
             "fqsen": "\\Activity\\Form\\ActivityCategory",
             "name": "ActivityCategory",
@@ -936,15 +936,15 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Activity-Mapper-ActivityOptionCreationPeriod.html"
         },                {
-            "fqsen": "\\Activity\\Mapper\\ActivityOptionCreationPeriod\u003A\u003AgetCurrentActivityOptionCreationPeriod\u0028\u0029",
-            "name": "getCurrentActivityOptionCreationPeriod",
+            "fqsen": "\\Activity\\Mapper\\ActivityOptionCreationPeriod\u003A\u003AgetCurrentActivityOptionCreationPeriods\u0028\u0029",
+            "name": "getCurrentActivityOptionCreationPeriods",
             "summary": "Finds\u0020the\u0020ActivityOptionCreationPeriod\u0020model\u0020that\u0020is\u0020currently\u0020active.",
-            "url": "classes/Activity-Mapper-ActivityOptionCreationPeriod.html#method_getCurrentActivityOptionCreationPeriod"
+            "url": "classes/Activity-Mapper-ActivityOptionCreationPeriod.html#method_getCurrentActivityOptionCreationPeriods"
         },                {
-            "fqsen": "\\Activity\\Mapper\\ActivityOptionCreationPeriod\u003A\u003AgetUpcomingActivityOptionCreationPeriod\u0028\u0029",
-            "name": "getUpcomingActivityOptionCreationPeriod",
+            "fqsen": "\\Activity\\Mapper\\ActivityOptionCreationPeriod\u003A\u003AgetUpcomingActivityOptionCreationPeriods\u0028\u0029",
+            "name": "getUpcomingActivityOptionCreationPeriods",
             "summary": "Finds\u0020the\u0020ActivityOptionCreationPeriod\u0020model\u0020that\u0020will\u0020be\u0020active\u0020next.",
-            "url": "classes/Activity-Mapper-ActivityOptionCreationPeriod.html#method_getUpcomingActivityOptionCreationPeriod"
+            "url": "classes/Activity-Mapper-ActivityOptionCreationPeriod.html#method_getUpcomingActivityOptionCreationPeriods"
         },                {
             "fqsen": "\\Activity\\Mapper\\ActivityOptionCreationPeriod\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
@@ -2726,15 +2726,15 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Activity-Service-ActivityCalendarForm.html#method___construct"
         },                {
-            "fqsen": "\\Activity\\Service\\ActivityCalendarForm\u003A\u003AcanCreateOption\u0028\u0029",
-            "name": "canCreateOption",
+            "fqsen": "\\Activity\\Service\\ActivityCalendarForm\u003A\u003AcanCreateOptionInPeriod\u0028\u0029",
+            "name": "canCreateOptionInPeriod",
             "summary": "Returns\u0020whether\u0020a\u0020user\u0020may\u0020create\u0020an\u0020option\u0020with\u0020given\u0020start\u0020time.",
-            "url": "classes/Activity-Service-ActivityCalendarForm.html#method_canCreateOption"
+            "url": "classes/Activity-Service-ActivityCalendarForm.html#method_canCreateOptionInPeriod"
         },                {
-            "fqsen": "\\Activity\\Service\\ActivityCalendarForm\u003A\u003AgetCurrentPeriod\u0028\u0029",
-            "name": "getCurrentPeriod",
+            "fqsen": "\\Activity\\Service\\ActivityCalendarForm\u003A\u003AgetCurrentPeriods\u0028\u0029",
+            "name": "getCurrentPeriods",
             "summary": "Get\u0020the\u0020current\u0020ActivityOptionCreationPeriod.",
-            "url": "classes/Activity-Service-ActivityCalendarForm.html#method_getCurrentPeriod"
+            "url": "classes/Activity-Service-ActivityCalendarForm.html#method_getCurrentPeriods"
         },                {
             "fqsen": "\\Activity\\Service\\ActivityCalendarForm\u003A\u003AgetEditableOrgans\u0028\u0029",
             "name": "getEditableOrgans",
