@@ -13,9 +13,9 @@ use Laminas\Http\{
     Response,
 };
 use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
-use Laminas\Mvc\I18n\Translator;
 
 class ActivityCalendarController extends AbstractActionController
 {
@@ -80,14 +80,16 @@ class ActivityCalendarController extends AbstractActionController
             );
         }
 
+        $form = $this->calendarProposalForm;
+
         /** @var Request $request */
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $this->calendarProposalForm->setData($request->getPost()->toArray());
+            $form->setData($request->getPost()->toArray());
 
-            if ($this->calendarProposalForm->isValid()) {
-                if ($this->calendarService->createProposal($this->calendarProposalForm->getData())) {
+            if ($form->isValid()) {
+                if ($this->calendarService->createProposal($form->getData())) {
                     return $this->redirect()->toRoute(
                         'activity_calendar',
                         [],
@@ -101,12 +103,14 @@ class ActivityCalendarController extends AbstractActionController
             }
         }
 
-        $period = $this->calendarFormService->getCurrentPeriod();
+        $periods = $this->calendarFormService->getCurrentPeriods();
+        $createAlways = $this->aclService->isAllowed('create_always', 'activity_calendar_proposal');
 
         return new ViewModel(
             [
-                'period' => $period,
-                'form' => $this->calendarProposalForm,
+                'periods' => $periods,
+                'createAlways' => $createAlways,
+                'form' => $form,
             ]
         );
     }

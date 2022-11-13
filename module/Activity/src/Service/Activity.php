@@ -526,14 +526,14 @@ class Activity
                         if (array_key_exists('options', $field)) {
                             $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['options'] = explode(
                                 ',',
-                                $field['options']
+                                $field['options'],
                             );
                         }
 
                         if (array_key_exists('optionsEn', $field)) {
                             $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['optionsEn'] = explode(
                                 ',',
-                                $field['optionsEn']
+                                $field['optionsEn'],
                             );
                         }
                     }

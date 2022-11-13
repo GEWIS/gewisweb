@@ -1,41 +1,148 @@
 <?php
+$this->scriptUrl()->requireUrls(['activity_admin_options/delete'], ['id']);
+
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Option Calendar'))
     ->addBreadcrumb($this->translate('Overview'));
-
 ?>
 <div class="row">
-    <div class="col-md-12">
-        <p>
-            <?php if (null !== $current): ?>
-                <?= sprintf(
-                    $this->translate('Options can be proposed from <strong>%s</strong> till <strong>%s</strong> for the period <strong>%s</strong> to <strong>%s</strong>.'),
-                    $this->dateFormat($current->getBeginPlanningTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
-                    $this->dateFormat($current->getEndPlanningTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
-                    $this->dateFormat($current->getBeginOptionTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
-                    $this->dateFormat($current->getEndOptionTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
-                ) ?>
-            <?php elseif (null !== $upcoming): ?>
-                <?= sprintf(
-                    $this->translate('The next option creation period will from <strong>%s</strong> till <strong>%s</strong>.'),
-                    $this->dateFormat($upcoming->getBeginPlanningTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
-                    $this->dateFormat($upcoming->getEndPlanningTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
-                ) ?>
-            <?php else: ?>
-                <?= $this->translate('There is currently no option creation period planned.') ?>
-            <?php endif; ?>
-        </p>
+    <div class="col-md-6">
+        <h3><?= $this->translate('Active Option Planning Periods') ?></h3>
+        <?php if (!empty($current)): ?>
+            <table class="table table-striped">
+                <thead>
+                    <th>#</th>
+                    <th><?= $this->translate('Planning Period') ?></th>
+                    <th><?= $this->translate('Option Period') ?></th>
+                    <th><?= $this->translate('Actions') ?></th>
+                </thead>
+                <tbody>
+                    <?php foreach ($current as $period): ?>
+                        <tr>
+                            <td><?= $period->getId() ?></td>
+                            <td>
+                                <?= sprintf(
+                                    '%s - %s',
+                                    $period->getBeginPlanningTime()->format('Y-m-d'),
+                                    $period->getEndPlanningTime()->format('Y-m-d'),
+                                ) ?>
+                            </td>
+                            <td>
+                                <?= sprintf(
+                                    '%s - %s',
+                                    $period->getBeginOptionTime()->format('Y-m-d'),
+                                    $period->getEndOptionTime()->format('Y-m-d'),
+                                ) ?>
+                            </td>
+                            <td>
+                                <button data-period-id="<?= $period->getId() ?>"
+                                        class="btn btn-primary btn-xs btn-delete">
+                                    <?= $this->translate('Delete')?>
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <p><?= $this->translate('There is currently no option creation period planned.') ?></p>
+        <?php endif; ?>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <a href="<?= $this->url('activity_admin_options/add') ?>" class="btn btn-primary">
-            <?= $this->translate('Add Option Period')?>
-        </a>
-        <?php if (null !== $upcoming): ?>
-            <a href="<?= $this->url('activity_admin_options/edit', ['id' => $upcoming->getId()]) ?>" class="btn btn-primary">
-                <?= $this->translate('Edit Upcoming Period')?>
-            </a>
+    <div class="col-md-6">
+        <h3><?= $this->translate('Planned Option Planning Periods') ?></h3>
+        <?php if (!empty($upcoming)): ?>
+            <table class="table table-striped">
+                <thead>
+                    <th>#</th>
+                    <th><?= $this->translate('Planning Period') ?></th>
+                    <th><?= $this->translate('Option Period') ?></th>
+                    <th><?= $this->translate('Actions') ?></th>
+                </thead>
+                <tbody>
+                    <?php foreach ($upcoming as $period): ?>
+                        <tr>
+                            <td><?= $period->getId() ?></td>
+                            <td>
+                                <?= sprintf(
+                                    '%s - %s',
+                                    $period->getBeginPlanningTime()->format('Y-m-d'),
+                                    $period->getEndPlanningTime()->format('Y-m-d'),
+                                ) ?>
+                            </td>
+                            <td>
+                                <?= sprintf(
+                                    '%s - %s',
+                                    $period->getBeginOptionTime()->format('Y-m-d'),
+                                    $period->getEndOptionTime()->format('Y-m-d'),
+                                ) ?>
+                            </td>
+                            <td>
+                                <a href="<?= $this->url(
+                                    'activity_admin_options/edit',
+                                    [
+                                        'id' => $period->getId(),
+                                    ],
+                                ) ?>" class="btn btn-primary btn-xs">
+                                    <?= $this->translate('Edit')?>
+                                </a>
+                                <button data-period-id="<?= $period->getId() ?>"
+                                        class="btn btn-primary btn-xs btn-delete">
+                                    <?= $this->translate('Delete')?>
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <p><?= $this->translate('There are no planned option creation periods in the future.') ?></p>
         <?php endif; ?>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-12 text-right">
+        <a href="<?= $this->url('activity_admin_options/add') ?>" class="btn btn-primary">
+            <?= $this->translate('Add Option Period')?>
+        </a>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"><?= $this->translate('Delete period') ?></h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <?= $this->translate('Are you sure you want to delete this option planning period? This will <strong>not</strong> delete proposed options.') ?>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <form method="post" class="form form-inline form-delete">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <?= $this->translate('Cancel') ?>
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        <span class="far fa-trash-alt"></span>&nbsp;<?= $this->translate('Delete') ?>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+    document.querySelectorAll('.btn-delete').forEach(function(element) {
+        element.addEventListener('click', function() {
+            document.querySelector('.form-delete').action = URLHelper.url(
+                'activity_admin_options/delete',
+                {'id': element.dataset.periodId},
+            );
+            $('#deleteModal').modal('show');
+        })
+    });
+</script>

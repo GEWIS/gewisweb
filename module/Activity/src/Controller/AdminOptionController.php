@@ -2,11 +2,11 @@
 
 namespace Activity\Controller;
 
+use Activity\Mapper\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodMapper;
 use Activity\Service\{
     AclService,
     ActivityCalendar as ActivityCalendarService,
 };
-use Activity\Mapper\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodMapper;
 use DateTime;
 use Decision\Service\Organ as OrganService;
 use Laminas\Http\{
@@ -38,8 +38,8 @@ class AdminOptionController extends AbstractActionController
         }
 
         return new ViewModel([
-            'current' => $this->activityOptionCreationPeriodMapper->getCurrentActivityOptionCreationPeriod(),
-            'upcoming' => $this->activityOptionCreationPeriodMapper->getUpcomingActivityOptionCreationPeriod(),
+            'current' => $this->activityOptionCreationPeriodMapper->getCurrentActivityOptionCreationPeriods(),
+            'upcoming' => $this->activityOptionCreationPeriodMapper->getUpcomingActivityOptionCreationPeriods(),
         ]);
     }
 
@@ -110,11 +110,18 @@ class AdminOptionController extends AbstractActionController
             $optionCreationPeriod = $this->activityCalendarService->getOptionCreationPeriod($optionCreationPeriodId);
 
             if (null !== $optionCreationPeriod) {
+                if ($optionCreationPeriod->getEndPlanningTime() < new DateTime('now')) {
+                    return $this->redirectWithMessage(
+                        false,
+                        $this->translator->translate('Past option planning periods cannot be deleted.'),
+                    );
+                }
+
                 $this->activityCalendarService->deleteOptionCreationPeriod($optionCreationPeriod);
 
                 return $this->redirectWithMessage(
                     true,
-                    $this->translator->translate('Option planning period removed.'),
+                    $this->translator->translate('Option planning period deleted.'),
                 );
             }
         }

@@ -2,8 +2,7 @@
 
 namespace Activity\Form;
 
-use Activity\Service\ActivityCalendarForm;
-use Exception;
+use Activity\Service\ActivityCalendarForm as ActivityCalendarFormService;
 use Laminas\Form\Element\{
     Collection,
     Select,
@@ -14,6 +13,7 @@ use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\{
     Callback,
+    NotEmpty,
     StringLength,
 };
 use User\Permissions\NotAllowedException;
@@ -24,14 +24,14 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
 
     public function __construct(
         private readonly Translator $translator,
-        private readonly ActivityCalendarForm $calendarFormService,
-        bool $createAlways,
+        private readonly ActivityCalendarFormService $calendarFormService,
+        private readonly bool $createAlways,
     ) {
         parent::__construct();
 
         try {
-            $organs = $calendarFormService->getEditableOrgans();
-        } catch (NotAllowedException $e) {
+            $organs = $this->calendarFormService->getEditableOrgans();
+        } catch (NotAllowedException) {
             $organs = [];
         }
 
@@ -39,12 +39,35 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
         foreach ($organs as $organ) {
             $organOptions[$organ->getId()] = $organ->getAbbr();
         }
-        if ($createAlways) {
+
+        $periodOptions = [];
+        foreach ($this->calendarFormService->getCurrentPeriods() as $period) {
+            $periodOptions[$period->getId()] = $period->getBeginOptionTime()->format('Y-m-d')
+                . ' - ' . $period->getEndOptionTime()->format('Y-m-d');
+        }
+
+        if ($this->createAlways) {
             $organOptions[-1] = 'Board';
             $organOptions[-2] = 'Other';
+            $periodOptions[-1] = 'Board';
         }
 
         $this->maxOptions = 3;
+
+        $this->add(
+            [
+                'name' => 'period',
+                'type' => Select::class,
+                'options' => [
+                    'empty_option' => [
+                        'label' => $this->translator->translate('Select a period'),
+                        'selected' => 'selected',
+                        'disabled' => 'disabled',
+                    ],
+                    'value_options' => $periodOptions,
+                ],
+            ]
+        );
 
         $this->add(
             [
@@ -93,11 +116,77 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
     }
 
     /**
+     * Validate the form.
+     *
+     * @return bool
+     */
+    public function isValid(): bool
+    {
+        $valid = parent::isValid();
+
+        foreach ($this->get('options')->getFieldSets() as $option) {
+            if (!(new NotEmpty())->isValid($option->get('type')->getValue())) {
+                $option->get('type')->setMessages([
+                    $this->translator->translate('Value is required and can\'t be empty'),
+                ]);
+                $valid = false;
+            }
+
+            if (null !== ($period = $this->data['period'] ?? null)) {
+                $period = (int) $period;
+
+                $missingDate = false;
+                if (!(new NotEmpty())->isValid($option->get('beginTime')->getValue())) {
+                    $option->get('beginTime')->setMessages([
+                        $this->translator->translate('Value is required and can\'t be empty'),
+                    ]);
+                    $valid = false;
+                    $missingDate = true;
+                }
+
+                if (!(new NotEmpty())->isValid($option->get('endTime')->getValue())) {
+                    $option->get('endTime')->setMessages([
+                        $this->translator->translate('Value is required and can\'t be empty'),
+                    ]);
+                    $valid = false;
+                    $missingDate = true;
+                }
+
+                if (!$missingDate) {
+                    $beginTime = $this->calendarFormService->toDateTime($option->get('beginTime')->getValue());
+                    $endTime = $this->calendarFormService->toDateTime($option->get('endTime')->getValue());
+
+                    if ($endTime < $beginTime) {
+                        $option->get('endTime')->setMessages([
+                            $this->translator->translate('Option should end after it starts.'),
+                        ]);
+                        $valid = false;
+                    }
+
+                    if (!$this->calendarFormService->canCreateOptionInPeriod($period, $beginTime, $endTime)) {
+                        $option->get('beginTime')->setMessages([
+                            $this->translator->translate(
+                                'Option does not fall within option period (also check the end date).'
+                            ),
+                        ]);
+                        $valid = false;
+                    }
+                }
+            }
+        }
+
+        return $valid;
+    }
+
+    /**
      * Input filter specification.
      */
     public function getInputFilterSpecification(): array
     {
         return [
+            'period' => [
+                'required' => true,
+            ],
             'organ' => [
                 'required' => true,
             ],
@@ -132,19 +221,6 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                             },
                         ],
                     ],
-                    [
-                        'name' => Callback::class,
-                        'options' => [
-                            'messages' => [
-                                Callback::INVALID_VALUE => $this->translator->translate(
-                                    'The options for this proposal do not fit in the valid range.',
-                                ),
-                            ],
-                            'callback' => function ($value, $context = []) {
-                                return $this->areGoodOptionDates($value, $context);
-                            },
-                        ],
-                    ],
                 ],
             ],
         ];
@@ -162,36 +238,13 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
         array $value,
         array $context = [],
     ): bool {
-        if (count($value) < 1 || count($value) > $this->maxOptions) {
+        if (
+            count($value) < 1
+            || count($value) > $this->maxOptions
+        ) {
             return false;
         }
 
         return true;
-    }
-
-    /**
-     * Check if the begin times of the options are acceptable.
-     *
-     * @param array $value
-     * @param array $context
-     *
-     * @return bool
-     */
-    public function areGoodOptionDates(
-        array $value,
-        array $context = [],
-    ): bool {
-        $final = true;
-        foreach ($value as $option) {
-            try {
-                $beginTime = $this->calendarFormService->toDateTime($option['beginTime']);
-                $result = $this->calendarFormService->canCreateOption($beginTime);
-                $final = $final && $result;
-            } catch (Exception $e) {
-                return false;
-            }
-        }
-
-        return $final;
     }
 }

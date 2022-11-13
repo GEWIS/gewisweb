@@ -14,7 +14,8 @@ use Activity\Model\{
     ActivityCalendarOption as ActivityCalendarOptionModel,
     ActivityOptionCreationPeriod as ActivityOptionCreationPeriodModel,
     ActivityOptionProposal as ProposalModel,
-    MaxActivities as MaxActivitiesModel};
+    MaxActivities as MaxActivitiesModel,
+};
 use Application\Service\Email as EmailService;
 use DateInterval;
 use DateTime;
