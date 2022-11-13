@@ -2,7 +2,6 @@
 
 namespace Activity\Service;
 
-use Activity\Model\ActivityOptionCreationPeriod;
 use Activity\Mapper\{
     ActivityOptionCreationPeriod as ActivityOptionCreationPeriodMapper,
     ActivityOptionProposal as ActivityOptionProposalMapper,
@@ -47,7 +46,7 @@ class ActivityCalendarForm
             return false;
         }
 
-        /** @var ActivityOptionCreationPeriod|null $period */
+        /** @var ActivityOptionCreationPeriodModel|null $period */
         $period = $this->periodMapper->find($period);
 
         if (null === $period) {
@@ -69,7 +68,7 @@ class ActivityCalendarForm
     /**
      * Get the current ActivityOptionCreationPeriod.
      *
-     * @return array<array-key, ActivityOptionCreationPeriod>
+     * @return array<array-key, ActivityOptionCreationPeriodModel>
      */
     public function getCurrentPeriods(): array
     {

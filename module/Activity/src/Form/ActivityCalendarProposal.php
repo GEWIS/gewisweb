@@ -2,8 +2,7 @@
 
 namespace Activity\Form;
 
-use Activity\Service\ActivityCalendarForm;
-use Exception;
+use Activity\Service\ActivityCalendarForm as ActivityCalendarFormService;
 use Laminas\Form\Element\{
     Collection,
     Select,
@@ -15,7 +14,8 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\{
     Callback,
     NotEmpty,
-    StringLength};
+    StringLength,
+};
 use User\Permissions\NotAllowedException;
 
 class ActivityCalendarProposal extends Form implements InputFilterProviderInterface
@@ -24,7 +24,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
 
     public function __construct(
         private readonly Translator $translator,
-        private readonly ActivityCalendarForm $calendarFormService,
+        private readonly ActivityCalendarFormService $calendarFormService,
         private readonly bool $createAlways,
     ) {
         parent::__construct();
@@ -165,7 +165,9 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
 
                     if (!$this->calendarFormService->canCreateOptionInPeriod($period, $beginTime, $endTime)) {
                         $option->get('beginTime')->setMessages([
-                            $this->translator->translate('Option does not fall within option period (also check the end date).'),
+                            $this->translator->translate(
+                                'Option does not fall within option period (also check the end date).'
+                            ),
                         ]);
                         $valid = false;
                     }

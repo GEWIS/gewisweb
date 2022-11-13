@@ -8,15 +8,14 @@ use Activity\Service\{
     ActivityCalendar as ActivityCalendarService,
     ActivityCalendarForm as ActivityCalendarFormService,
 };
-use Activity\Mapper\Proposal;
 use Laminas\Http\{
     Request,
     Response,
 };
 use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
-use Laminas\Mvc\I18n\Translator;
 
 class ActivityCalendarController extends AbstractActionController
 {
