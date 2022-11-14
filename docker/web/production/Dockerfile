@@ -6,7 +6,7 @@ RUN apk add --no-cache --virtual .node-gyp-python \
         make \
         python3
 COPY ./package.json ./package-lock.json ./
-RUN npm install --production \
+RUN npm install --omit=dev \
     && apk del .node-gyp-python
 
 RUN mkdir public && mkdir public/scss && mkdir public/css
