@@ -1,8 +1,13 @@
-FROM node:lts-alpine3.14 as node-build
+FROM node:lts-alpine as node-build
 WORKDIR /code
 
+RUN apk add --no-cache --virtual .node-gyp-python \
+        g++ \
+        make \
+        python3
 COPY ./package.json ./package-lock.json ./
-RUN npm install --production
+RUN npm install --production \
+    && apk del .node-gyp-python
 
 RUN mkdir public && mkdir public/scss && mkdir public/css
 
