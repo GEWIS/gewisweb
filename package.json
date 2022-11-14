@@ -5,8 +5,8 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "scss": "node-sass --output-style compressed -o public/css public/scss/gewis-theme.scss",
-        "watch": "node-sass --watch -o public/css public/scss/gewis-theme.scss"
+        "scss": "sass --style compressed --no-source-map public/scss/gewis-theme.scss:public/css/gewis-theme.css",
+        "watch": "sass --watch public/scss/gewis-theme.scss:public/css"
     },
     "repository": {
         "type": "git",
@@ -22,6 +22,6 @@
     },
     "homepage": "https://github.com/GEWIS/gewisweb#readme",
     "dependencies": {
-        "node-sass": "^7.0.1"
+        "sass": "^1.56.1"
     }
 }
