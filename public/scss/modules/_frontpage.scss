@@ -8,3 +8,9 @@ Frontpage
     background-size: cover;
     background-position: center;
 }
+
+/** CKEditor 5 */
+.image.image_resized > img {
+    max-width: 100%;
+    height: auto !important;
+}
