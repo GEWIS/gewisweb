@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @function darken-lighten($color, $amount) {
     @if $amount >= 0% {
         @return darken($color, $amount);
@@ -8,7 +10,7 @@
 
 @mixin button-background($color, $amount, $accent) {
     @if $color == transparent {
-        background-color: fade-out(darken-lighten($accent, $amount), 1 - $amount / 100%);
+        background-color: fade-out(darken-lighten($accent, $amount), 1 - math.div($amount, 100%));
     } @else {
         background-color: darken-lighten($color, $amount);
     }

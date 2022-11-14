@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import '../variables';
 
 /*
@@ -57,7 +59,7 @@ $panel-link-color: #969696;
     box-shadow: none;
 
     .panel-heading {
-        padding: ($panel-spacing * 0.8) $panel-spacing ($panel-spacing / 2);
+        padding: ($panel-spacing * 0.8) $panel-spacing math.div($panel-spacing, 2);
         border: 0;
         background: $panel-bg;
 
@@ -88,7 +90,7 @@ $panel-link-color: #969696;
     }
 
     .panel-footer {
-        padding: ($panel-spacing / 2) $panel-spacing;
+        padding: math.div($panel-spacing, 2) $panel-spacing;
 
         border: 0;
         background: $panel-footer-bg;
