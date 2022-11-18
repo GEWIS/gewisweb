@@ -6,17 +6,17 @@ use Application\Service\FileStorage as FileStorageService;
 use DateTime;
 use DirectoryIterator;
 use Education\Form\{
-    AddCourse as AddCourseForm,
+    Course as CourseForm,
     Bulk as BulkForm,
     TempUpload as TempUploadForm,
 };
-use Doctrine\ORM\Exception\ORMException;
 use Education\Mapper\{
     Exam as ExamMapper,
     Course as CourseMapper,
 };
 use Education\Model\{
     Course as CourseModel,
+    Course,
     Exam as ExamModel,
     Summary as SummaryModel,
 };
@@ -41,7 +41,7 @@ class Exam
         private readonly FileStorageService $storageService,
         private readonly CourseMapper $courseMapper,
         private readonly ExamMapper $examMapper,
-        private readonly AddCourseForm $addCourseForm,
+        private readonly CourseForm $courseForm,
         private readonly TempUploadForm $tempUploadForm,
         private readonly BulkForm $bulkSummaryForm,
         private readonly BulkForm $bulkExamForm,
@@ -148,33 +148,35 @@ class Exam
          * exam, which we need in the upload process.
          */
         $storage = $this->storageService;
-        $this->examMapper->transactional(function ($mapper) use ($data, $type, $temporaryEducationConfig, $storage): void {
-            foreach ($data['exams'] as $examData) {
-                // finalize exam upload
-                $exam = new ExamModel();
-                if ('summary' === $type) {
-                    $exam = new SummaryModel();
+        $this->examMapper->transactional(
+            function ($mapper) use ($data, $type, $temporaryEducationConfig, $storage): void {
+                foreach ($data['exams'] as $examData) {
+                    // finalize exam upload
+                    $exam = new ExamModel();
+                    if ('summary' === $type) {
+                        $exam = new SummaryModel();
+                    }
+
+                    $exam->setDate(new DateTime($examData['date']));
+                    $exam->setCourse($this->getCourse($examData['course']));
+
+                    if ($exam instanceof SummaryModel) {
+                        $exam->setAuthor($examData['author']);
+                        $exam->setExamType(ExamModel::EXAM_TYPE_SUMMARY);
+                    }
+
+                    if (get_class($exam) === ExamModel::class) {
+                        $exam->setExamType($examData['examType']);
+                    }
+
+                    $exam->setLanguage($examData['language']);
+                    $localFile = $temporaryEducationConfig['upload_' . $type . '_dir'] . '/' . $examData['file'];
+                    $exam->setFilename($storage->storeFile($localFile));
+
+                    $mapper->persist($exam);
                 }
-
-                $exam->setDate(new DateTime($examData['date']));
-                $exam->setCourse($this->getCourse($examData['course']));
-
-                if ($exam instanceof SummaryModel) {
-                    $exam->setAuthor($examData['author']);
-                    $exam->setExamType(ExamModel::EXAM_TYPE_SUMMARY);
-                }
-
-                if (get_class($exam) === ExamModel::class) {
-                    $exam->setExamType($examData['examType']);
-                }
-
-                $exam->setLanguage($examData['language']);
-                $localFile = $temporaryEducationConfig['upload_' . $type . '_dir'] . '/' . $examData['file'];
-                $exam->setFilename($storage->storeFile($localFile));
-
-                $mapper->persist($exam);
             }
-        });
+        );
 
         return true;
     }
@@ -483,66 +485,52 @@ class Exam
     /**
      * Get the add course form.
      *
-     * @return AddCourseForm
+     * @return CourseForm
      * @throws NotAllowedException When not allowed to upload
      */
-    public function getAddCourseForm(): AddCourseForm
+    public function getCourseForm(?CourseModel $course = null): CourseForm
     {
-        if (!$this->aclService->isAllowed('upload', 'exam')) {
+        if (
+            !$this->aclService->isAllowed('add', 'course')
+            || !$this->aclService->isAllowed('edit', 'course')
+        ) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to add courses'));
         }
 
-        return $this->addCourseForm;
+        if (null === $course) {
+            $this->courseForm->setObject(new CourseModel());
+        } else {
+            $this->courseForm->setObject($course);
+            $this->courseForm->setCurrentCode($course->getCode());
+            $this->courseForm->setData($course->toArray());
+        }
+
+        return $this->courseForm;
     }
 
     /**
      * Add a new course.
-     *
-     * @param array $data Course data
-     *
-     * @return CourseModel|null New course. Null when the course could not be added.
-     * @throws ORMException
      */
-    public function addCourse(array $data): ?CourseModel
+    public function saveCourse(CourseModel $course): bool
     {
-        // TODO: Move the form check to the controller.
-        $form = $this->getAddCourseForm();
-        $form->setData($data);
+        $this->courseMapper->persist($course);
 
-        if (!$form->isValid()) {
-            return null;
+        return true;
+    }
+
+    public function deleteCourse(Course $course): void
+    {
+        /** @var ExamModel|SummaryModel $exam */
+        foreach ($course->getExams() as $exam) {
+            $this->storageService->removeFile($exam->getFilename());
+            $this->examMapper->remove($exam);
         }
 
-        // get the course
-        $data = $form->getData();
+        $this->courseMapper->remove($course);
+    }
 
-        // check if course already exists
-        $existingCourse = $this->getCourse($data['code']);
-        if (null !== $existingCourse) {
-            return null;
-        }
-
-        // check if parent course exists
-        if (strlen($data['parent']) > 0) {
-            $existingCourse = $this->getCourse($data['parent']);
-            if (null === $existingCourse) {
-                return null;
-            }
-        }
-
-        // save the data
-        $newCourse = new CourseModel();
-        $newCourse->setCode($data['code']);
-        $newCourse->setName($data['name']);
-        if (strlen($data['parent']) > 0) {
-            $newCourse->setParent($this->getCourse($data['parent']));
-        }
-        $newCourse->setUrl($data['url']);
-        $newCourse->setYear($data['year']);
-        $newCourse->setQuartile($data['quartile']);
-
-        $this->courseMapper->persist($newCourse);
-
-        return $newCourse;
+    public function getAllCourses(): array
+    {
+        return $this->courseMapper->findAll();
     }
 }

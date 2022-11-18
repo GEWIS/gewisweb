@@ -5,7 +5,7 @@ namespace Education;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Education\Form\{
-    AddCourse as AddCourseForm,
+    Course as CourseForm,
     Bulk as BulkForm,
     Fieldset\Exam as ExamFieldset,
     Fieldset\Summary as SummaryFieldset,
@@ -86,9 +86,13 @@ class Module
                     return $form;
                 },
                 'education_form_add_course' => function (ContainerInterface $container) {
-                    return new AddCourseForm(
-                        $container->get(MvcTranslator::class)
+                    $courseForm = new CourseForm(
+                        $container->get(MvcTranslator::class),
+                        $container->get('education_mapper_course'),
                     );
+                    $courseForm->setHydrator($container->get('education_hydrator'));
+
+                    return $courseForm;
                 },
                 'education_form_bulk_exam' => function (ContainerInterface $container) {
                     return new BulkForm(
@@ -139,7 +143,8 @@ class Module
                 },
                 'education_hydrator' => function (ContainerInterface $container) {
                     return new DoctrineObject(
-                        $container->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default'),
+                        false,
                     );
                 },
                 'education_service_acl' => AclServiceFactory::class,

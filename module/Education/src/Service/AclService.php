@@ -9,7 +9,9 @@ class AclService extends \User\Service\AclService
         parent::createAcl();
 
         // add resource
+        $this->acl->addResource('education');
         $this->acl->addResource('exam');
+        $this->acl->addResource('course');
 
         // users (logged in GEWIS members) are allowed to view
         // exams besides users, also people on the TU/e network are

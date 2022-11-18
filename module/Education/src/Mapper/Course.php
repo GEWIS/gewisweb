@@ -6,10 +6,7 @@ use Application\Mapper\BaseMapper;
 use Education\Model\Course as CourseModel;
 
 /**
- * Mappers for Course.
- *
- * NOTE: Organs will be modified externally by a script. Modifications will be
- * overwritten.
+ * Mappers for Courses.
  */
 class Course extends BaseMapper
 {
@@ -24,18 +21,13 @@ class Course extends BaseMapper
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('c, e, p, ch, ce')
+        $qb->select('c, e')
             ->from($this->getRepositoryName(), 'c')
             ->where('c.code = ?1')
-            ->leftJoin('c.exams', 'e')
-            ->leftJoin('c.parent', 'p')
-            ->leftJoin('c.children', 'ch')
-            ->leftJoin('ch.exams', 'ce');
+            ->leftJoin('c.exams', 'e');
         $qb->setParameter(1, $code);
 
-        $res = $qb->getQuery()->getResult();
-
-        return empty($res) ? null : $res[0];
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**

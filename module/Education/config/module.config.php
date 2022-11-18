@@ -80,21 +80,48 @@ return [
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
-                    'default' => [
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '[/:action]',
-                            'constraints' => [
-                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ],
-                        ],
-                    ],
-                    'add_course' => [
+                    'course' => [
                         'type' => Literal::class,
                         'options' => [
-                            'route' => '/add/course',
+                            'route' => '/course',
                             'defaults' => [
-                                'action' => 'addCourse',
+                                'action' => 'course',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'add' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/add',
+                                    'defaults' => [
+                                        'action' => 'addCourse',
+                                    ],
+                                ],
+                            ],
+                            'edit' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/:course/edit',
+                                    'constraints' => [
+                                        'course' => '[A-Z0-9]{5,9}',
+                                    ],
+                                    'defaults' => [
+                                        'action' => 'editCourse',
+                                    ],
+                                ],
+                            ],
+                            'delete' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/:course/delete',
+                                    'constraints' => [
+                                        'course' => '[A-Z0-9]{5,9}',
+                                    ],
+                                    'defaults' => [
+                                        'action' => 'deleteCourse',
+                                    ],
+                                ],
                             ],
                         ],
                     ],
