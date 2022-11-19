@@ -112,6 +112,10 @@
                 
             </li>
                     <li>
+                <a href="namespaces/application-hydrator.html" class="">Hydrator</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/application-mapper.html" class="">Mapper</a>
                 
             </li>
@@ -209,6 +213,10 @@
             </li>
                     <li>
                 <a href="namespaces/education-form.html" class="">Form</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/education-hydrator.html" class="">Hydrator</a>
                 
             </li>
                     <li>
@@ -377,7 +385,7 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    Exam
+    CourseDocument
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/Application-Mapper-BaseMapper.html"><abbr title="\Application\Mapper\BaseMapper">BaseMapper</abbr></a>
@@ -394,9 +402,9 @@
     </h2>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Mapper/Exam.php"><a href="files/module-education-src-mapper-exam.html"><abbr title="module/Education/src/Mapper/Exam.php">Exam.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Mapper/CourseDocument.php"><a href="files/module-education-src-mapper-coursedocument.html"><abbr title="module/Education/src/Mapper/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">12</span>
+    <span class="phpdocumentor-element-found-in__line">16</span>
 
     </aside>
 
@@ -460,6 +468,13 @@
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_findBy">findBy()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Education-Mapper-CourseDocument.html#method_findDocumentsByCourse">findDocumentsByCourse()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
@@ -543,7 +558,7 @@
 <dd>Get the repository for this mapper.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Education-Mapper-Exam.html#method_getRepositoryName">getRepositoryName()</a>
+    <a href="classes/Education-Mapper-CourseDocument.html#method_getRepositoryName">getRepositoryName()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
@@ -559,7 +574,7 @@
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Education-Mapper-Exam.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Education-Mapper-CourseDocument.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="
@@ -600,7 +615,7 @@
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Education-Mapper-Exam.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Education-Mapper-CourseDocument.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="phpdocumentor-element
@@ -859,6 +874,72 @@
             <section class="phpdocumentor-description"><p>The entities corresponding to the provided criteria</p>
 </section>
 
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_findDocumentsByCourse">
+        findDocumentsByCourse()
+        <a href="classes/Education-Mapper-CourseDocument.html#method_findDocumentsByCourse" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Mapper/CourseDocument.php"><a href="files/module-education-src-mapper-coursedocument.html"><abbr title="module/Education/src/Mapper/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">21</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">findDocumentsByCourse</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Education-Model-Course.html"><abbr title="\Education\Model\Course">Course</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$course</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$course</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Education-Model-Course.html"><abbr title="\Education\Model\Course">Course</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$type</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-param</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>class-string&lt;ExamModel&gt;|class-string&lt;SummaryModel&gt; $type</p>
+</section>
+
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+            &mdash;
+        
     
 </article>
                     <article
@@ -1413,12 +1494,12 @@ function.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_getRepositoryName">
         getRepositoryName()
-        <a href="classes/Education-Mapper-Exam.html#method_getRepositoryName" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Education-Mapper-CourseDocument.html#method_getRepositoryName" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Mapper/Exam.php"><a href="files/module-education-src-mapper-exam.html"><abbr title="module/Education/src/Mapper/Exam.php">Exam.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Mapper/CourseDocument.php"><a href="files/module-education-src-mapper-coursedocument.html"><abbr title="module/Education/src/Mapper/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">17</span>
+    <span class="phpdocumentor-element-found-in__line">37</span>
 
     </aside>
 
@@ -1531,7 +1612,7 @@ e.g. &quot;User/Model/User&quot;</p>
 </section>
             </div>
         </div>
-        <a href="classes/Education-Mapper-Exam.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Education-Mapper-CourseDocument.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

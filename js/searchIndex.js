@@ -3311,6 +3311,21 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Form-Localisable.html#property_translator"
         },                {
+            "fqsen": "\\Application\\Hydrator\\Strategy\\LanguageHydratorStrategy",
+            "name": "LanguageHydratorStrategy",
+            "summary": "",
+            "url": "classes/Application-Hydrator-Strategy-LanguageHydratorStrategy.html"
+        },                {
+            "fqsen": "\\Application\\Hydrator\\Strategy\\LanguageHydratorStrategy\u003A\u003Aextract\u0028\u0029",
+            "name": "extract",
+            "summary": "",
+            "url": "classes/Application-Hydrator-Strategy-LanguageHydratorStrategy.html#method_extract"
+        },                {
+            "fqsen": "\\Application\\Hydrator\\Strategy\\LanguageHydratorStrategy\u003A\u003Ahydrate\u0028\u0029",
+            "name": "hydrate",
+            "summary": "",
+            "url": "classes/Application-Hydrator-Strategy-LanguageHydratorStrategy.html#method_hydrate"
+        },                {
             "fqsen": "\\Application\\Mapper\\BaseMapper",
             "name": "BaseMapper",
             "summary": "",
@@ -3410,6 +3425,31 @@ Search.appendIndex(
             "name": "em",
             "summary": "",
             "url": "classes/Application-Mapper-BaseMapper.html#property_em"
+        },                {
+            "fqsen": "\\Application\\Model\\Enums\\Languages",
+            "name": "Languages",
+            "summary": "The\u0020different\u0020languages\u0020supported\u0020by\u0020the\u0020website.",
+            "url": "classes/Application-Model-Enums-Languages.html"
+        },                {
+            "fqsen": "\\Application\\Model\\Enums\\Languages\u003A\u003AgetName\u0028\u0029",
+            "name": "getName",
+            "summary": "",
+            "url": "classes/Application-Model-Enums-Languages.html#method_getName"
+        },                {
+            "fqsen": "\\Application\\Model\\Enums\\Languages\u003A\u003Avalues\u0028\u0029",
+            "name": "values",
+            "summary": "",
+            "url": "classes/Application-Model-Enums-Languages.html#method_values"
+        },                {
+            "fqsen": "\\Application\\Model\\Enums\\Languages\u003A\u003AEN",
+            "name": "EN",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\Application\\Model\\Enums\\Languages\u003A\u003ANL",
+            "name": "NL",
+            "summary": "",
+            "url": ""
         },                {
             "fqsen": "\\Application\\Model\\LocalisedText",
             "name": "LocalisedText",
@@ -9746,10 +9786,35 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Education-Controller-AdminController.html#method_indexAction"
         },                {
+            "fqsen": "\\Education\\Controller\\AdminController\u003A\u003AcourseAction\u0028\u0029",
+            "name": "courseAction",
+            "summary": "",
+            "url": "classes/Education-Controller-AdminController.html#method_courseAction"
+        },                {
             "fqsen": "\\Education\\Controller\\AdminController\u003A\u003AaddCourseAction\u0028\u0029",
             "name": "addCourseAction",
             "summary": "",
             "url": "classes/Education-Controller-AdminController.html#method_addCourseAction"
+        },                {
+            "fqsen": "\\Education\\Controller\\AdminController\u003A\u003AeditCourseAction\u0028\u0029",
+            "name": "editCourseAction",
+            "summary": "",
+            "url": "classes/Education-Controller-AdminController.html#method_editCourseAction"
+        },                {
+            "fqsen": "\\Education\\Controller\\AdminController\u003A\u003AdeleteCourseAction\u0028\u0029",
+            "name": "deleteCourseAction",
+            "summary": "",
+            "url": "classes/Education-Controller-AdminController.html#method_deleteCourseAction"
+        },                {
+            "fqsen": "\\Education\\Controller\\AdminController\u003A\u003AcourseDocumentsAction\u0028\u0029",
+            "name": "courseDocumentsAction",
+            "summary": "",
+            "url": "classes/Education-Controller-AdminController.html#method_courseDocumentsAction"
+        },                {
+            "fqsen": "\\Education\\Controller\\AdminController\u003A\u003AdeleteCourseDocumentAction\u0028\u0029",
+            "name": "deleteCourseDocumentAction",
+            "summary": "",
+            "url": "classes/Education-Controller-AdminController.html#method_deleteCourseDocumentAction"
         },                {
             "fqsen": "\\Education\\Controller\\AdminController\u003A\u003AbulkExamAction\u0028\u0029",
             "name": "bulkExamAction",
@@ -9775,6 +9840,16 @@ Search.appendIndex(
             "name": "deleteTempAction",
             "summary": "",
             "url": "classes/Education-Controller-AdminController.html#method_deleteTempAction"
+        },                {
+            "fqsen": "\\Education\\Controller\\AdminController\u003A\u003A\u0024aclService",
+            "name": "aclService",
+            "summary": "",
+            "url": "classes/Education-Controller-AdminController.html#property_aclService"
+        },                {
+            "fqsen": "\\Education\\Controller\\AdminController\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Education-Controller-AdminController.html#property_translator"
         },                {
             "fqsen": "\\Education\\Controller\\AdminController\u003A\u003A\u0024examService",
             "name": "examService",
@@ -9841,21 +9916,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Education-Controller-Factory-EducationControllerFactory.html#method___invoke"
         },                {
-            "fqsen": "\\Education\\Form\\AddCourse",
-            "name": "AddCourse",
-            "summary": "",
-            "url": "classes/Education-Form-AddCourse.html"
-        },                {
-            "fqsen": "\\Education\\Form\\AddCourse\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/Education-Form-AddCourse.html#method___construct"
-        },                {
-            "fqsen": "\\Education\\Form\\AddCourse\u003A\u003AgetInputFilterSpecification\u0028\u0029",
-            "name": "getInputFilterSpecification",
-            "summary": "",
-            "url": "classes/Education-Form-AddCourse.html#method_getInputFilterSpecification"
-        },                {
             "fqsen": "\\Education\\Form\\Bulk",
             "name": "Bulk",
             "summary": "",
@@ -9866,10 +9926,65 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Education-Form-Bulk.html#method___construct"
         },                {
+            "fqsen": "\\Education\\Form\\Bulk\u003A\u003AisValid\u0028\u0029",
+            "name": "isValid",
+            "summary": "",
+            "url": "classes/Education-Form-Bulk.html#method_isValid"
+        },                {
             "fqsen": "\\Education\\Form\\Bulk\u003A\u003AgetInputFilterSpecification\u0028\u0029",
             "name": "getInputFilterSpecification",
             "summary": "",
             "url": "classes/Education-Form-Bulk.html#method_getInputFilterSpecification"
+        },                {
+            "fqsen": "\\Education\\Form\\Bulk\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Education-Form-Bulk.html#property_translator"
+        },                {
+            "fqsen": "\\Education\\Form\\Bulk\u003A\u003A\u0024courseMapper",
+            "name": "courseMapper",
+            "summary": "",
+            "url": "classes/Education-Form-Bulk.html#property_courseMapper"
+        },                {
+            "fqsen": "\\Education\\Form\\Course",
+            "name": "Course",
+            "summary": "",
+            "url": "classes/Education-Form-Course.html"
+        },                {
+            "fqsen": "\\Education\\Form\\Course\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Education-Form-Course.html#method___construct"
+        },                {
+            "fqsen": "\\Education\\Form\\Course\u003A\u003AgetInputFilterSpecification\u0028\u0029",
+            "name": "getInputFilterSpecification",
+            "summary": "",
+            "url": "classes/Education-Form-Course.html#method_getInputFilterSpecification"
+        },                {
+            "fqsen": "\\Education\\Form\\Course\u003A\u003AsetCurrentCode\u0028\u0029",
+            "name": "setCurrentCode",
+            "summary": "Set\u0020the\u0020current\u0020code\u0020of\u0020a\u0020course.",
+            "url": "classes/Education-Form-Course.html#method_setCurrentCode"
+        },                {
+            "fqsen": "\\Education\\Form\\Course\u003A\u003AisCourseCodeUnique\u0028\u0029",
+            "name": "isCourseCodeUnique",
+            "summary": "",
+            "url": "classes/Education-Form-Course.html#method_isCourseCodeUnique"
+        },                {
+            "fqsen": "\\Education\\Form\\Course\u003A\u003A\u0024currentCode",
+            "name": "currentCode",
+            "summary": "",
+            "url": "classes/Education-Form-Course.html#property_currentCode"
+        },                {
+            "fqsen": "\\Education\\Form\\Course\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Education-Form-Course.html#property_translator"
+        },                {
+            "fqsen": "\\Education\\Form\\Course\u003A\u003A\u0024courseMapper",
+            "name": "courseMapper",
+            "summary": "",
+            "url": "classes/Education-Form-Course.html#property_courseMapper"
         },                {
             "fqsen": "\\Education\\Form\\Fieldset\\Exam",
             "name": "Exam",
@@ -9896,6 +10011,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Education-Form-Fieldset-Exam.html#property_config"
         },                {
+            "fqsen": "\\Education\\Form\\Fieldset\\Exam\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Education-Form-Fieldset-Exam.html#property_translator"
+        },                {
             "fqsen": "\\Education\\Form\\Fieldset\\Summary",
             "name": "Summary",
             "summary": "",
@@ -9921,6 +10041,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Education-Form-Fieldset-Summary.html#property_config"
         },                {
+            "fqsen": "\\Education\\Form\\Fieldset\\Summary\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Education-Form-Fieldset-Summary.html#property_translator"
+        },                {
             "fqsen": "\\Education\\Form\\SearchCourse",
             "name": "SearchCourse",
             "summary": "",
@@ -9935,21 +10060,6 @@ Search.appendIndex(
             "name": "getInputFilterSpecification",
             "summary": "",
             "url": "classes/Education-Form-SearchCourse.html#method_getInputFilterSpecification"
-        },                {
-            "fqsen": "\\Education\\Form\\SummaryUpload",
-            "name": "SummaryUpload",
-            "summary": "Upload\u0020a\u0020summary.",
-            "url": "classes/Education-Form-SummaryUpload.html"
-        },                {
-            "fqsen": "\\Education\\Form\\SummaryUpload\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/Education-Form-SummaryUpload.html#method___construct"
-        },                {
-            "fqsen": "\\Education\\Form\\SummaryUpload\u003A\u003AgetInputFilterSpecification\u0028\u0029",
-            "name": "getInputFilterSpecification",
-            "summary": "",
-            "url": "classes/Education-Form-SummaryUpload.html#method_getInputFilterSpecification"
         },                {
             "fqsen": "\\Education\\Form\\TempUpload",
             "name": "TempUpload",
@@ -9966,9 +10076,24 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Education-Form-TempUpload.html#method_getInputFilterSpecification"
         },                {
+            "fqsen": "\\Education\\Hydrator\\Strategy\\ExamTypeHydratorStrategy",
+            "name": "ExamTypeHydratorStrategy",
+            "summary": "",
+            "url": "classes/Education-Hydrator-Strategy-ExamTypeHydratorStrategy.html"
+        },                {
+            "fqsen": "\\Education\\Hydrator\\Strategy\\ExamTypeHydratorStrategy\u003A\u003Aextract\u0028\u0029",
+            "name": "extract",
+            "summary": "",
+            "url": "classes/Education-Hydrator-Strategy-ExamTypeHydratorStrategy.html#method_extract"
+        },                {
+            "fqsen": "\\Education\\Hydrator\\Strategy\\ExamTypeHydratorStrategy\u003A\u003Ahydrate\u0028\u0029",
+            "name": "hydrate",
+            "summary": "",
+            "url": "classes/Education-Hydrator-Strategy-ExamTypeHydratorStrategy.html#method_hydrate"
+        },                {
             "fqsen": "\\Education\\Mapper\\Course",
             "name": "Course",
-            "summary": "Mappers\u0020for\u0020Course.",
+            "summary": "Mappers\u0020for\u0020Courses.",
             "url": "classes/Education-Mapper-Course.html"
         },                {
             "fqsen": "\\Education\\Mapper\\Course\u003A\u003AfindByCode\u0028\u0029",
@@ -9986,15 +10111,20 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Education-Mapper-Course.html#method_getRepositoryName"
         },                {
-            "fqsen": "\\Education\\Mapper\\Exam",
-            "name": "Exam",
+            "fqsen": "\\Education\\Mapper\\CourseDocument",
+            "name": "CourseDocument",
             "summary": "Mapper\u0020for\u0020Exam.",
-            "url": "classes/Education-Mapper-Exam.html"
+            "url": "classes/Education-Mapper-CourseDocument.html"
         },                {
-            "fqsen": "\\Education\\Mapper\\Exam\u003A\u003AgetRepositoryName\u0028\u0029",
+            "fqsen": "\\Education\\Mapper\\CourseDocument\u003A\u003AfindDocumentsByCourse\u0028\u0029",
+            "name": "findDocumentsByCourse",
+            "summary": "",
+            "url": "classes/Education-Mapper-CourseDocument.html#method_findDocumentsByCourse"
+        },                {
+            "fqsen": "\\Education\\Mapper\\CourseDocument\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
             "summary": "",
-            "url": "classes/Education-Mapper-Exam.html#method_getRepositoryName"
+            "url": "classes/Education-Mapper-CourseDocument.html#method_getRepositoryName"
         },                {
             "fqsen": "\\Education\\Model\\Course",
             "name": "Course",
@@ -10016,25 +10146,10 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020course\u0020name.",
             "url": "classes/Education-Model-Course.html#method_getName"
         },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003AgetUrl\u0028\u0029",
-            "name": "getUrl",
-            "summary": "Get\u0020the\u0020course\u0020URL.",
-            "url": "classes/Education-Model-Course.html#method_getUrl"
-        },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003AgetYear\u0028\u0029",
-            "name": "getYear",
-            "summary": "Get\u0020the\u0020last\u0020year\u0020the\u0020course\u0020has\u0020been\u0020given.",
-            "url": "classes/Education-Model-Course.html#method_getYear"
-        },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003AgetQuartile\u0028\u0029",
-            "name": "getQuartile",
-            "summary": "Get\u0020the\u0020last\u0020quartile\u0020the\u0020course\u0020has\u0020been\u0020given.",
-            "url": "classes/Education-Model-Course.html#method_getQuartile"
-        },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003AgetExams\u0028\u0029",
-            "name": "getExams",
+            "fqsen": "\\Education\\Model\\Course\u003A\u003AgetDocuments\u0028\u0029",
+            "name": "getDocuments",
             "summary": "Get\u0020all\u0020exams\u0020belonging\u0020to\u0020this\u0020study.",
-            "url": "classes/Education-Model-Course.html#method_getExams"
+            "url": "classes/Education-Model-Course.html#method_getDocuments"
         },                {
             "fqsen": "\\Education\\Model\\Course\u003A\u003AsetCode\u0028\u0029",
             "name": "setCode",
@@ -10046,75 +10161,15 @@ Search.appendIndex(
             "summary": "Set\u0020the\u0020course\u0020name.",
             "url": "classes/Education-Model-Course.html#method_setName"
         },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003AsetUrl\u0028\u0029",
-            "name": "setUrl",
-            "summary": "Set\u0020the\u0020course\u0020URL.",
-            "url": "classes/Education-Model-Course.html#method_setUrl"
-        },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003AsetParent\u0028\u0029",
-            "name": "setParent",
-            "summary": "Set\u0020the\u0020parent\u0020course.",
-            "url": "classes/Education-Model-Course.html#method_setParent"
-        },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003AaddChild\u0028\u0029",
-            "name": "addChild",
-            "summary": "Add\u0020a\u0020child.",
-            "url": "classes/Education-Model-Course.html#method_addChild"
-        },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003AsetYear\u0028\u0029",
-            "name": "setYear",
-            "summary": "Set\u0020the\u0020last\u0020year\u0020the\u0020course\u0020has\u0020been\u0020given.",
-            "url": "classes/Education-Model-Course.html#method_setYear"
-        },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003AsetQuartile\u0028\u0029",
-            "name": "setQuartile",
-            "summary": "Set\u0020the\u0020last\u0020quartile\u0020the\u0020course\u0020has\u0020been\u0020given.",
-            "url": "classes/Education-Model-Course.html#method_setQuartile"
-        },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003AgetParent\u0028\u0029",
-            "name": "getParent",
-            "summary": "Get\u0020the\u0020parent\u0020course.",
-            "url": "classes/Education-Model-Course.html#method_getParent"
-        },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003AgetChildren\u0028\u0029",
-            "name": "getChildren",
-            "summary": "Get\u0020all\u0020children\u0020courses.",
-            "url": "classes/Education-Model-Course.html#method_getChildren"
-        },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003AaddExam\u0028\u0029",
-            "name": "addExam",
-            "summary": "Add\u0020an\u0020exam.",
-            "url": "classes/Education-Model-Course.html#method_addExam"
+            "fqsen": "\\Education\\Model\\Course\u003A\u003AtoArray\u0028\u0029",
+            "name": "toArray",
+            "summary": "",
+            "url": "classes/Education-Model-Course.html#method_toArray"
         },                {
             "fqsen": "\\Education\\Model\\Course\u003A\u003AgetResourceId\u0028\u0029",
             "name": "getResourceId",
             "summary": "Get\u0020the\u0020resource\u0020ID.",
             "url": "classes/Education-Model-Course.html#method_getResourceId"
-        },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003AQUARTILE_Q1",
-            "name": "QUARTILE_Q1",
-            "summary": "",
-            "url": "classes/Education-Model-Course.html#constant_QUARTILE_Q1"
-        },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003AQUARTILE_Q2",
-            "name": "QUARTILE_Q2",
-            "summary": "",
-            "url": "classes/Education-Model-Course.html#constant_QUARTILE_Q2"
-        },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003AQUARTILE_Q3",
-            "name": "QUARTILE_Q3",
-            "summary": "",
-            "url": "classes/Education-Model-Course.html#constant_QUARTILE_Q3"
-        },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003AQUARTILE_Q4",
-            "name": "QUARTILE_Q4",
-            "summary": "",
-            "url": "classes/Education-Model-Course.html#constant_QUARTILE_Q4"
-        },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003AQUARTILE_INTERIM",
-            "name": "QUARTILE_INTERIM",
-            "summary": "",
-            "url": "classes/Education-Model-Course.html#constant_QUARTILE_INTERIM"
         },                {
             "fqsen": "\\Education\\Model\\Course\u003A\u003A\u0024code",
             "name": "code",
@@ -10126,165 +10181,145 @@ Search.appendIndex(
             "summary": "Course\u0020name.",
             "url": "classes/Education-Model-Course.html#property_name"
         },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003A\u0024url",
-            "name": "url",
-            "summary": "Course\u0020url.",
-            "url": "classes/Education-Model-Course.html#property_url"
-        },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003A\u0024year",
-            "name": "year",
-            "summary": "Last\u0020year\u0020the\u0020course\u0020has\u0020been\u0020given.",
-            "url": "classes/Education-Model-Course.html#property_year"
-        },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003A\u0024quartile",
-            "name": "quartile",
-            "summary": "Quartile\u0020in\u0020which\u0020this\u0020course\u0020has\u0020been\u0020given.",
-            "url": "classes/Education-Model-Course.html#property_quartile"
-        },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003A\u0024exams",
-            "name": "exams",
+            "fqsen": "\\Education\\Model\\Course\u003A\u003A\u0024documents",
+            "name": "documents",
             "summary": "Exams\u0020\u0028and\u0020summaries\u0029\u0020in\u0020this\u0020course.",
-            "url": "classes/Education-Model-Course.html#property_exams"
+            "url": "classes/Education-Model-Course.html#property_documents"
         },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003A\u0024parent",
-            "name": "parent",
-            "summary": "Parent\u0020course.",
-            "url": "classes/Education-Model-Course.html#property_parent"
+            "fqsen": "\\Education\\Model\\CourseDocument",
+            "name": "CourseDocument",
+            "summary": "",
+            "url": "classes/Education-Model-CourseDocument.html"
         },                {
-            "fqsen": "\\Education\\Model\\Course\u003A\u003A\u0024children",
-            "name": "children",
-            "summary": "Children\u0020of\u0020this\u0020course.",
-            "url": "classes/Education-Model-Course.html#property_children"
+            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003AgetId\u0028\u0029",
+            "name": "getId",
+            "summary": "Get\u0020the\u0020ID.",
+            "url": "classes/Education-Model-CourseDocument.html#method_getId"
+        },                {
+            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003AgetDate\u0028\u0029",
+            "name": "getDate",
+            "summary": "Get\u0020the\u0020date.",
+            "url": "classes/Education-Model-CourseDocument.html#method_getDate"
+        },                {
+            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003AsetDate\u0028\u0029",
+            "name": "setDate",
+            "summary": "Set\u0020the\u0020date.",
+            "url": "classes/Education-Model-CourseDocument.html#method_setDate"
+        },                {
+            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003AgetLanguage\u0028\u0029",
+            "name": "getLanguage",
+            "summary": "Get\u0020the\u0020language.",
+            "url": "classes/Education-Model-CourseDocument.html#method_getLanguage"
+        },                {
+            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003AsetLanguage\u0028\u0029",
+            "name": "setLanguage",
+            "summary": "Set\u0020the\u0020language.",
+            "url": "classes/Education-Model-CourseDocument.html#method_setLanguage"
+        },                {
+            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003AgetFilename\u0028\u0029",
+            "name": "getFilename",
+            "summary": "Get\u0020the\u0020filename.",
+            "url": "classes/Education-Model-CourseDocument.html#method_getFilename"
+        },                {
+            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003AsetFilename\u0028\u0029",
+            "name": "setFilename",
+            "summary": "Set\u0020the\u0020filename.",
+            "url": "classes/Education-Model-CourseDocument.html#method_setFilename"
+        },                {
+            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003AgetCourse\u0028\u0029",
+            "name": "getCourse",
+            "summary": "Get\u0020the\u0020course.",
+            "url": "classes/Education-Model-CourseDocument.html#method_getCourse"
+        },                {
+            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003AsetCourse\u0028\u0029",
+            "name": "setCourse",
+            "summary": "Set\u0020the\u0020course.",
+            "url": "classes/Education-Model-CourseDocument.html#method_setCourse"
+        },                {
+            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003AgetResourceId\u0028\u0029",
+            "name": "getResourceId",
+            "summary": "",
+            "url": "classes/Education-Model-CourseDocument.html#method_getResourceId"
+        },                {
+            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003A\u0024id",
+            "name": "id",
+            "summary": "",
+            "url": "classes/Education-Model-CourseDocument.html#property_id"
+        },                {
+            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003A\u0024date",
+            "name": "date",
+            "summary": "Date\u0020of\u0020the\u0020exam.",
+            "url": "classes/Education-Model-CourseDocument.html#property_date"
+        },                {
+            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003A\u0024language",
+            "name": "language",
+            "summary": "The\u0020language\u0020of\u0020the\u0020exam.",
+            "url": "classes/Education-Model-CourseDocument.html#property_language"
+        },                {
+            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003A\u0024filename",
+            "name": "filename",
+            "summary": "Filename\u0020of\u0020the\u0020exam.",
+            "url": "classes/Education-Model-CourseDocument.html#property_filename"
+        },                {
+            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003A\u0024course",
+            "name": "course",
+            "summary": "The\u0020course\u0020to\u0020which\u0020this\u0020document\u0020belongs.",
+            "url": "classes/Education-Model-CourseDocument.html#property_course"
+        },                {
+            "fqsen": "\\Education\\Model\\Enums\\ExamTypes",
+            "name": "ExamTypes",
+            "summary": "Enum\u0020for\u0020the\u0020different\u0020exam\u0020types.",
+            "url": "classes/Education-Model-Enums-ExamTypes.html"
+        },                {
+            "fqsen": "\\Education\\Model\\Enums\\ExamTypes\u003A\u003AgetName\u0028\u0029",
+            "name": "getName",
+            "summary": "",
+            "url": "classes/Education-Model-Enums-ExamTypes.html#method_getName"
+        },                {
+            "fqsen": "\\Education\\Model\\Enums\\ExamTypes\u003A\u003Avalues\u0028\u0029",
+            "name": "values",
+            "summary": "",
+            "url": "classes/Education-Model-Enums-ExamTypes.html#method_values"
+        },                {
+            "fqsen": "\\Education\\Model\\Enums\\ExamTypes\u003A\u003AFinal",
+            "name": "Final",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\Education\\Model\\Enums\\ExamTypes\u003A\u003AInterim",
+            "name": "Interim",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\Education\\Model\\Enums\\ExamTypes\u003A\u003AAnswers",
+            "name": "Answers",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\Education\\Model\\Enums\\ExamTypes\u003A\u003AOther",
+            "name": "Other",
+            "summary": "",
+            "url": ""
         },                {
             "fqsen": "\\Education\\Model\\Exam",
             "name": "Exam",
             "summary": "Exam.",
             "url": "classes/Education-Model-Exam.html"
         },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "Get\u0020the\u0020ID.",
-            "url": "classes/Education-Model-Exam.html#method_getId"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003AgetDate\u0028\u0029",
-            "name": "getDate",
-            "summary": "Get\u0020the\u0020date.",
-            "url": "classes/Education-Model-Exam.html#method_getDate"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003AgetFilename\u0028\u0029",
-            "name": "getFilename",
-            "summary": "Get\u0020the\u0020filename.",
-            "url": "classes/Education-Model-Exam.html#method_getFilename"
-        },                {
             "fqsen": "\\Education\\Model\\Exam\u003A\u003AgetExamType\u0028\u0029",
             "name": "getExamType",
             "summary": "Get\u0020the\u0020type.",
             "url": "classes/Education-Model-Exam.html#method_getExamType"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003AgetCourse\u0028\u0029",
-            "name": "getCourse",
-            "summary": "Get\u0020the\u0020course.",
-            "url": "classes/Education-Model-Exam.html#method_getCourse"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003AgetLanguage\u0028\u0029",
-            "name": "getLanguage",
-            "summary": "Get\u0020the\u0020language.",
-            "url": "classes/Education-Model-Exam.html#method_getLanguage"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003AsetDate\u0028\u0029",
-            "name": "setDate",
-            "summary": "Set\u0020the\u0020date.",
-            "url": "classes/Education-Model-Exam.html#method_setDate"
         },                {
             "fqsen": "\\Education\\Model\\Exam\u003A\u003AsetExamType\u0028\u0029",
             "name": "setExamType",
             "summary": "Set\u0020the\u0020type.",
             "url": "classes/Education-Model-Exam.html#method_setExamType"
         },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003AsetFilename\u0028\u0029",
-            "name": "setFilename",
-            "summary": "Set\u0020the\u0020filename.",
-            "url": "classes/Education-Model-Exam.html#method_setFilename"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003AsetLanguage\u0028\u0029",
-            "name": "setLanguage",
-            "summary": "Set\u0020the\u0020language.",
-            "url": "classes/Education-Model-Exam.html#method_setLanguage"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003AsetCourse\u0028\u0029",
-            "name": "setCourse",
-            "summary": "Set\u0020the\u0020course.",
-            "url": "classes/Education-Model-Exam.html#method_setCourse"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003AgetResourceId\u0028\u0029",
-            "name": "getResourceId",
-            "summary": "Get\u0020the\u0020resource\u0020ID.",
-            "url": "classes/Education-Model-Exam.html#method_getResourceId"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003AEXAM_TYPE_FINAL",
-            "name": "EXAM_TYPE_FINAL",
-            "summary": "",
-            "url": "classes/Education-Model-Exam.html#constant_EXAM_TYPE_FINAL"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003AEXAM_TYPE_INTERMEDIATE_TEST",
-            "name": "EXAM_TYPE_INTERMEDIATE_TEST",
-            "summary": "",
-            "url": "classes/Education-Model-Exam.html#constant_EXAM_TYPE_INTERMEDIATE_TEST"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003AEXAM_TYPE_ANSWERS",
-            "name": "EXAM_TYPE_ANSWERS",
-            "summary": "",
-            "url": "classes/Education-Model-Exam.html#constant_EXAM_TYPE_ANSWERS"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003AEXAM_TYPE_OTHER",
-            "name": "EXAM_TYPE_OTHER",
-            "summary": "",
-            "url": "classes/Education-Model-Exam.html#constant_EXAM_TYPE_OTHER"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003AEXAM_TYPE_SUMMARY",
-            "name": "EXAM_TYPE_SUMMARY",
-            "summary": "",
-            "url": "classes/Education-Model-Exam.html#constant_EXAM_TYPE_SUMMARY"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003AEXAM_LANGUAGE_ENGLISH",
-            "name": "EXAM_LANGUAGE_ENGLISH",
-            "summary": "",
-            "url": "classes/Education-Model-Exam.html#constant_EXAM_LANGUAGE_ENGLISH"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003AEXAM_LANGUAGE_DUTCH",
-            "name": "EXAM_LANGUAGE_DUTCH",
-            "summary": "",
-            "url": "classes/Education-Model-Exam.html#constant_EXAM_LANGUAGE_DUTCH"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Study\u0020ID.",
-            "url": "classes/Education-Model-Exam.html#property_id"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003A\u0024date",
-            "name": "date",
-            "summary": "Date\u0020of\u0020the\u0020exam.",
-            "url": "classes/Education-Model-Exam.html#property_date"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003A\u0024filename",
-            "name": "filename",
-            "summary": "Filename\u0020of\u0020the\u0020exam.",
-            "url": "classes/Education-Model-Exam.html#property_filename"
-        },                {
             "fqsen": "\\Education\\Model\\Exam\u003A\u003A\u0024examType",
             "name": "examType",
-            "summary": "Type\u0020of\u0020exam.\u0020One\u0020of\u0020\u007Bexam,\u0020intermediate,\u0020answers,\u0020summary\u007D.",
+            "summary": "Type\u0020of\u0020exam.",
             "url": "classes/Education-Model-Exam.html#property_examType"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003A\u0024language",
-            "name": "language",
-            "summary": "The\u0020language\u0020of\u0020the\u0020exam.",
-            "url": "classes/Education-Model-Exam.html#property_language"
-        },                {
-            "fqsen": "\\Education\\Model\\Exam\u003A\u003A\u0024course",
-            "name": "course",
-            "summary": "Course\u0020belonging\u0020to\u0020this\u0020exam.",
-            "url": "classes/Education-Model-Exam.html#property_course"
         },                {
             "fqsen": "\\Education\\Model\\Summary",
             "name": "Summary",
@@ -10356,10 +10391,10 @@ Search.appendIndex(
             "summary": "Get\u0020a\u0020course.",
             "url": "classes/Education-Service-Exam.html#method_getCourse"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AgetExamDownload\u0028\u0029",
-            "name": "getExamDownload",
+            "fqsen": "\\Education\\Service\\Exam\u003A\u003AgetDocumentDownload\u0028\u0029",
+            "name": "getDocumentDownload",
             "summary": "Get\u0020an\u0020exam.",
-            "url": "classes/Education-Service-Exam.html#method_getExamDownload"
+            "url": "classes/Education-Service-Exam.html#method_getDocumentDownload"
         },                {
             "fqsen": "\\Education\\Service\\Exam\u003A\u003AbulkEdit\u0028\u0029",
             "name": "bulkEdit",
@@ -10391,10 +10426,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Education-Service-Exam.html#method_tempSummaryUpload"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AexamToFilename\u0028\u0029",
-            "name": "examToFilename",
+            "fqsen": "\\Education\\Service\\Exam\u003A\u003AcourseDocumentToFilename\u0028\u0029",
+            "name": "courseDocumentToFilename",
             "summary": "Get\u0020a\u0020filename\u0020from\u0020an\u0020exam\u0020\u0028or\u0020summary\u0029.",
-            "url": "classes/Education-Service-Exam.html#method_examToFilename"
+            "url": "classes/Education-Service-Exam.html#method_courseDocumentToFilename"
         },                {
             "fqsen": "\\Education\\Service\\Exam\u003A\u003AgetConfig\u0028\u0029",
             "name": "getConfig",
@@ -10421,10 +10456,10 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020bulk\u0020exam\u0020edit\u0020form.",
             "url": "classes/Education-Service-Exam.html#method_getBulkExamForm"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AguessExamData\u0028\u0029",
-            "name": "guessExamData",
+            "fqsen": "\\Education\\Service\\Exam\u003A\u003AguessCourseDocumentData\u0028\u0029",
+            "name": "guessCourseDocumentData",
             "summary": "Guesses\u0020the\u0020course\u0020code\u0020and\u0020date\u0020based\u0020on\u0020an\u0020exam\u0027s\u0020filename.",
-            "url": "classes/Education-Service-Exam.html#method_guessExamData"
+            "url": "classes/Education-Service-Exam.html#method_guessCourseDocumentData"
         },                {
             "fqsen": "\\Education\\Service\\Exam\u003A\u003AguessSummaryAuthor\u0028\u0029",
             "name": "guessSummaryAuthor",
@@ -10436,15 +10471,40 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020Temporary\u0020Upload\u0020form.",
             "url": "classes/Education-Service-Exam.html#method_getTempUploadForm"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AgetAddCourseForm\u0028\u0029",
-            "name": "getAddCourseForm",
+            "fqsen": "\\Education\\Service\\Exam\u003A\u003AgetCourseForm\u0028\u0029",
+            "name": "getCourseForm",
             "summary": "Get\u0020the\u0020add\u0020course\u0020form.",
-            "url": "classes/Education-Service-Exam.html#method_getAddCourseForm"
+            "url": "classes/Education-Service-Exam.html#method_getCourseForm"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AaddCourse\u0028\u0029",
-            "name": "addCourse",
+            "fqsen": "\\Education\\Service\\Exam\u003A\u003AsaveCourse\u0028\u0029",
+            "name": "saveCourse",
             "summary": "Add\u0020a\u0020new\u0020course.",
-            "url": "classes/Education-Service-Exam.html#method_addCourse"
+            "url": "classes/Education-Service-Exam.html#method_saveCourse"
+        },                {
+            "fqsen": "\\Education\\Service\\Exam\u003A\u003AdeleteCourse\u0028\u0029",
+            "name": "deleteCourse",
+            "summary": "Delete\u0020a\u0020course\u0020and\u0020all\u0020its\u0020documents.",
+            "url": "classes/Education-Service-Exam.html#method_deleteCourse"
+        },                {
+            "fqsen": "\\Education\\Service\\Exam\u003A\u003AgetAllCourses\u0028\u0029",
+            "name": "getAllCourses",
+            "summary": "Get\u0020all\u0020courses.",
+            "url": "classes/Education-Service-Exam.html#method_getAllCourses"
+        },                {
+            "fqsen": "\\Education\\Service\\Exam\u003A\u003AgetDocumentsForCourse\u0028\u0029",
+            "name": "getDocumentsForCourse",
+            "summary": "Get\u0020all\u0020documents\u0020of\u0020a\u0020specific\u0020type\u0020for\u0020a\u0020specific\u0020course.",
+            "url": "classes/Education-Service-Exam.html#method_getDocumentsForCourse"
+        },                {
+            "fqsen": "\\Education\\Service\\Exam\u003A\u003AgetDocument\u0028\u0029",
+            "name": "getDocument",
+            "summary": "Get\u0020a\u0020specific\u0020course\u0020document.",
+            "url": "classes/Education-Service-Exam.html#method_getDocument"
+        },                {
+            "fqsen": "\\Education\\Service\\Exam\u003A\u003AdeleteDocument\u0028\u0029",
+            "name": "deleteDocument",
+            "summary": "Delete\u0020a\u0020course\u0020document",
+            "url": "classes/Education-Service-Exam.html#method_deleteDocument"
         },                {
             "fqsen": "\\Education\\Service\\Exam\u003A\u003A\u0024bulkForm",
             "name": "bulkForm",
@@ -10471,15 +10531,15 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Education-Service-Exam.html#property_courseMapper"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003A\u0024examMapper",
-            "name": "examMapper",
+            "fqsen": "\\Education\\Service\\Exam\u003A\u003A\u0024courseDocumentMapper",
+            "name": "courseDocumentMapper",
             "summary": "",
-            "url": "classes/Education-Service-Exam.html#property_examMapper"
+            "url": "classes/Education-Service-Exam.html#property_courseDocumentMapper"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003A\u0024addCourseForm",
-            "name": "addCourseForm",
+            "fqsen": "\\Education\\Service\\Exam\u003A\u003A\u0024courseForm",
+            "name": "courseForm",
             "summary": "",
-            "url": "classes/Education-Service-Exam.html#property_addCourseForm"
+            "url": "classes/Education-Service-Exam.html#property_courseForm"
         },                {
             "fqsen": "\\Education\\Service\\Exam\u003A\u003A\u0024tempUploadForm",
             "name": "tempUploadForm",
@@ -16401,10 +16461,25 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/application-form.html"
         },                {
+            "fqsen": "\\Application\\Hydrator\\Strategy",
+            "name": "Strategy",
+            "summary": "",
+            "url": "namespaces/application-hydrator-strategy.html"
+        },                {
+            "fqsen": "\\Application\\Hydrator",
+            "name": "Hydrator",
+            "summary": "",
+            "url": "namespaces/application-hydrator.html"
+        },                {
             "fqsen": "\\Application\\Mapper",
             "name": "Mapper",
             "summary": "",
             "url": "namespaces/application-mapper.html"
+        },                {
+            "fqsen": "\\Application\\Model\\Enums",
+            "name": "Enums",
+            "summary": "",
+            "url": "namespaces/application-model-enums.html"
         },                {
             "fqsen": "\\Application\\Model",
             "name": "Model",
@@ -16561,6 +16636,16 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/education-form-fieldset.html"
         },                {
+            "fqsen": "\\Education\\Hydrator\\Strategy",
+            "name": "Strategy",
+            "summary": "",
+            "url": "namespaces/education-hydrator-strategy.html"
+        },                {
+            "fqsen": "\\Education\\Hydrator",
+            "name": "Hydrator",
+            "summary": "",
+            "url": "namespaces/education-hydrator.html"
+        },                {
             "fqsen": "\\Education\\Mapper",
             "name": "Mapper",
             "summary": "",
@@ -16570,6 +16655,11 @@ Search.appendIndex(
             "name": "Model",
             "summary": "",
             "url": "namespaces/education-model.html"
+        },                {
+            "fqsen": "\\Education\\Model\\Enums",
+            "name": "Enums",
+            "summary": "",
+            "url": "namespaces/education-model-enums.html"
         },                {
             "fqsen": "\\Education\\Service",
             "name": "Service",

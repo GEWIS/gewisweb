@@ -112,6 +112,10 @@
                 
             </li>
                     <li>
+                <a href="namespaces/application-hydrator.html" class="">Hydrator</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/application-mapper.html" class="">Mapper</a>
                 
             </li>
@@ -209,6 +213,10 @@
             </li>
                     <li>
                 <a href="namespaces/education-form.html" class="">Form</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/education-hydrator.html" class="">Hydrator</a>
                 
             </li>
                     <li>
@@ -380,7 +388,7 @@
     Summary
 
         <span class="phpdocumentor-element__extends">
-        extends <a href="classes/Education-Model-Exam.html"><abbr title="\Education\Model\Exam">Exam</abbr></a>
+        extends <a href="classes/Education-Model-CourseDocument.html"><abbr title="\Education\Model\CourseDocument">CourseDocument</abbr></a>
     </span>
     
             <div class="phpdocumentor-element__package">
@@ -416,159 +424,96 @@
 </h3>
 
 <dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/Education-Model-Exam.html#constant_EXAM_LANGUAGE_DUTCH">EXAM_LANGUAGE_DUTCH</a>
-    <span>
-        &nbsp;= &#039;nl&#039;                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/Education-Model-Exam.html#constant_EXAM_LANGUAGE_ENGLISH">EXAM_LANGUAGE_ENGLISH</a>
-    <span>
-        &nbsp;= &#039;en&#039;                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/Education-Model-Exam.html#constant_EXAM_TYPE_ANSWERS">EXAM_TYPE_ANSWERS</a>
-    <span>
-        &nbsp;= &#039;answers&#039;                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/Education-Model-Exam.html#constant_EXAM_TYPE_FINAL">EXAM_TYPE_FINAL</a>
-    <span>
-        &nbsp;= &#039;exam&#039;                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/Education-Model-Exam.html#constant_EXAM_TYPE_INTERMEDIATE_TEST">EXAM_TYPE_INTERMEDIATE_TEST</a>
-    <span>
-        &nbsp;= &#039;intermediate&#039;                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/Education-Model-Exam.html#constant_EXAM_TYPE_OTHER">EXAM_TYPE_OTHER</a>
-    <span>
-        &nbsp;= &#039;other&#039;                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/Education-Model-Exam.html#constant_EXAM_TYPE_SUMMARY">EXAM_TYPE_SUMMARY</a>
-    <span>
-        &nbsp;= &#039;summary&#039;                            </span>
-</dt>
-<dd></dd>
-
                     <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Education-Model-Summary.html#property_author">$author</a>
     <span>
-                        &nbsp;: string            </span>
+                        &nbsp;: string|null            </span>
 </dt>
 <dd>Author of the summary.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Education-Model-Exam.html#property_course">$course</a>
+    <a href="classes/Education-Model-CourseDocument.html#property_course">$course</a>
     <span>
                         &nbsp;: <a href="classes/Education-Model-Course.html"><abbr title="\Education\Model\Course">Course</abbr></a>            </span>
 </dt>
-<dd>Course belonging to this exam.</dd>
+<dd>The course to which this document belongs.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Education-Model-Exam.html#property_date">$date</a>
+    <a href="classes/Education-Model-CourseDocument.html#property_date">$date</a>
     <span>
                         &nbsp;: <abbr title="\DateTime">DateTime</abbr>            </span>
 </dt>
 <dd>Date of the exam.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Education-Model-Exam.html#property_examType">$examType</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-<dd>Type of exam. One of {exam, intermediate, answers, summary}.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Education-Model-Exam.html#property_filename">$filename</a>
+    <a href="classes/Education-Model-CourseDocument.html#property_filename">$filename</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 <dd>Filename of the exam.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Education-Model-Exam.html#property_id">$id</a>
+    <a href="classes/Education-Model-CourseDocument.html#property_id">$id</a>
     <span>
                         &nbsp;: int|null            </span>
 </dt>
-<dd>Study ID.</dd>
+<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Education-Model-Exam.html#property_language">$language</a>
+    <a href="classes/Education-Model-CourseDocument.html#property_language">$language</a>
     <span>
-                        &nbsp;: string            </span>
+                        &nbsp;: <a href="classes/Application-Model-Enums-Languages.html"><abbr title="\Application\Model\Enums\Languages">Languages</abbr></a>            </span>
 </dt>
 <dd>The language of the exam.</dd>
 
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Education-Model-Summary.html#method_getAuthor">getAuthor()</a>
     <span>
-                                &nbsp;: string    </span>
+                                &nbsp;: string|null    </span>
 </dt>
 <dd>Get the author.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Education-Model-Exam.html#method_getCourse">getCourse()</a>
+    <a href="classes/Education-Model-CourseDocument.html#method_getCourse">getCourse()</a>
     <span>
                                 &nbsp;: <a href="classes/Education-Model-Course.html"><abbr title="\Education\Model\Course">Course</abbr></a>    </span>
 </dt>
 <dd>Get the course.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Education-Model-Exam.html#method_getDate">getDate()</a>
+    <a href="classes/Education-Model-CourseDocument.html#method_getDate">getDate()</a>
     <span>
                                 &nbsp;: <abbr title="\DateTime">DateTime</abbr>    </span>
 </dt>
 <dd>Get the date.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Education-Model-Exam.html#method_getExamType">getExamType()</a>
-    <span>
-                                &nbsp;: string    </span>
-</dt>
-<dd>Get the type.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Education-Model-Exam.html#method_getFilename">getFilename()</a>
+    <a href="classes/Education-Model-CourseDocument.html#method_getFilename">getFilename()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
 <dd>Get the filename.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Education-Model-Exam.html#method_getId">getId()</a>
+    <a href="classes/Education-Model-CourseDocument.html#method_getId">getId()</a>
     <span>
                                 &nbsp;: int|null    </span>
 </dt>
 <dd>Get the ID.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Education-Model-Exam.html#method_getLanguage">getLanguage()</a>
+    <a href="classes/Education-Model-CourseDocument.html#method_getLanguage">getLanguage()</a>
     <span>
-                                &nbsp;: string    </span>
+                                &nbsp;: <a href="classes/Application-Model-Enums-Languages.html"><abbr title="\Application\Model\Enums\Languages">Languages</abbr></a>    </span>
 </dt>
 <dd>Get the language.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Education-Model-Exam.html#method_getResourceId">getResourceId()</a>
+    <a href="classes/Education-Model-CourseDocument.html#method_getResourceId">getResourceId()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
-<dd>Get the resource ID.</dd>
+<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Education-Model-Summary.html#method_setAuthor">setAuthor()</a>
@@ -578,35 +523,28 @@
 <dd>Set the author.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Education-Model-Exam.html#method_setCourse">setCourse()</a>
+    <a href="classes/Education-Model-CourseDocument.html#method_setCourse">setCourse()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Set the course.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Education-Model-Exam.html#method_setDate">setDate()</a>
+    <a href="classes/Education-Model-CourseDocument.html#method_setDate">setDate()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Set the date.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Education-Model-Exam.html#method_setExamType">setExamType()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Set the type.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Education-Model-Exam.html#method_setFilename">setFilename()</a>
+    <a href="classes/Education-Model-CourseDocument.html#method_setFilename">setFilename()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Set the filename.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Education-Model-Exam.html#method_setLanguage">setLanguage()</a>
+    <a href="classes/Education-Model-CourseDocument.html#method_setLanguage">setLanguage()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
@@ -617,215 +555,6 @@
 
 
         
-    <section class="phpdocumentor-constants">
-        <h3 class="phpdocumentor-elements__header" id="constants">
-            Constants
-            <a href="classes/Education-Model-Summary.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
-        </h3>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_EXAM_LANGUAGE_DUTCH">
-        EXAM_LANGUAGE_DUTCH
-        <a href="classes/Education-Model-Exam.html#constant_EXAM_LANGUAGE_DUTCH" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">43</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">EXAM_LANGUAGE_DUTCH</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;nl&#039;</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_EXAM_LANGUAGE_ENGLISH">
-        EXAM_LANGUAGE_ENGLISH
-        <a href="classes/Education-Model-Exam.html#constant_EXAM_LANGUAGE_ENGLISH" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">42</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">EXAM_LANGUAGE_ENGLISH</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;en&#039;</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_EXAM_TYPE_ANSWERS">
-        EXAM_TYPE_ANSWERS
-        <a href="classes/Education-Model-Exam.html#constant_EXAM_TYPE_ANSWERS" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">38</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">EXAM_TYPE_ANSWERS</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;answers&#039;</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_EXAM_TYPE_FINAL">
-        EXAM_TYPE_FINAL
-        <a href="classes/Education-Model-Exam.html#constant_EXAM_TYPE_FINAL" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">36</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">EXAM_TYPE_FINAL</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;exam&#039;</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_EXAM_TYPE_INTERMEDIATE_TEST">
-        EXAM_TYPE_INTERMEDIATE_TEST
-        <a href="classes/Education-Model-Exam.html#constant_EXAM_TYPE_INTERMEDIATE_TEST" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">37</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">EXAM_TYPE_INTERMEDIATE_TEST</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;intermediate&#039;</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_EXAM_TYPE_OTHER">
-        EXAM_TYPE_OTHER
-        <a href="classes/Education-Model-Exam.html#constant_EXAM_TYPE_OTHER" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">39</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">EXAM_TYPE_OTHER</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;other&#039;</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_EXAM_TYPE_SUMMARY">
-        EXAM_TYPE_SUMMARY
-        <a href="classes/Education-Model-Exam.html#constant_EXAM_TYPE_SUMMARY" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">40</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">EXAM_TYPE_SUMMARY</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;summary&#039;</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-            </section>
 
         
     <section class="phpdocumentor-properties">
@@ -857,9 +586,9 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string</span>
+        <span class="phpdocumentor-signature__type">string|null</span>
     <span class="phpdocumentor-signature__name">$author</span>
-    </code>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
         <section class="phpdocumentor-description"></section>
@@ -876,18 +605,18 @@
 >
     <h4 class="phpdocumentor-element__name" id="property_course">
         $course
-        <a href="classes/Education-Model-Exam.html#property_course" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Education-Model-CourseDocument.html#property_course" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">80</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Course belonging to this exam.</p>
+        <p class="phpdocumentor-summary">The course to which this document belongs.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -910,14 +639,14 @@
 >
     <h4 class="phpdocumentor-element__name" id="property_date">
         $date
-        <a href="classes/Education-Model-Exam.html#property_date" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Education-Model-CourseDocument.html#property_date" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">56</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -942,50 +671,16 @@
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_examType">
-        $examType
-        <a href="classes/Education-Model-Exam.html#property_examType" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">68</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Type of exam. One of {exam, intermediate, answers, summary}.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$examType</span>
-    </code>
-
-    
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="property_filename">
         $filename
-        <a href="classes/Education-Model-Exam.html#property_filename" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Education-Model-CourseDocument.html#property_filename" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -1012,26 +707,26 @@
 >
     <h4 class="phpdocumentor-element__name" id="property_id">
         $id
-        <a href="classes/Education-Model-Exam.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Education-Model-CourseDocument.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Study ID.</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">int|null</span>
     <span class="phpdocumentor-signature__name">$id</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
-    
+        <section class="phpdocumentor-description"></section>
+
         <section class="phpdocumentor-description"></section>
 
     
@@ -1046,14 +741,14 @@
 >
     <h4 class="phpdocumentor-element__name" id="property_language">
         $language
-        <a href="classes/Education-Model-Exam.html#property_language" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Education-Model-CourseDocument.html#property_language" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">74</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
@@ -1061,7 +756,7 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Application-Model-Enums-Languages.html"><abbr title="\Application\Model\Enums\Languages">Languages</abbr></a></span>
     <span class="phpdocumentor-signature__name">$language</span>
     </code>
 
@@ -1091,7 +786,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Summary.php"><a href="files/module-education-src-model-summary.html"><abbr title="module/Education/src/Model/Summary.php">Summary.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">28</span>
 
     </aside>
 
@@ -1099,14 +794,14 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getAuthor</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">getAuthor</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
+    <span class="phpdocumentor-signature__response_type">string|null</span>
             &mdash;
         
     
@@ -1119,12 +814,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_getCourse">
         getCourse()
-        <a href="classes/Education-Model-Exam.html#method_getCourse" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Education-Model-CourseDocument.html#method_getCourse" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">136</span>
+    <span class="phpdocumentor-element-found-in__line">133</span>
 
     </aside>
 
@@ -1152,12 +847,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_getDate">
         getDate()
-        <a href="classes/Education-Model-Exam.html#method_getDate" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Education-Model-CourseDocument.html#method_getDate" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">106</span>
+    <span class="phpdocumentor-element-found-in__line">85</span>
 
     </aside>
 
@@ -1183,47 +878,14 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getExamType">
-        getExamType()
-        <a href="classes/Education-Model-Exam.html#method_getExamType" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">126</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get the type.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getExamType</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
-
-    
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_getFilename">
         getFilename()
-        <a href="classes/Education-Model-Exam.html#method_getFilename" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Education-Model-CourseDocument.html#method_getFilename" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">116</span>
+    <span class="phpdocumentor-element-found-in__line">117</span>
 
     </aside>
 
@@ -1251,12 +913,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_getId">
         getId()
-        <a href="classes/Education-Model-Exam.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Education-Model-CourseDocument.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">96</span>
+    <span class="phpdocumentor-element-found-in__line">77</span>
 
     </aside>
 
@@ -1284,12 +946,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_getLanguage">
         getLanguage()
-        <a href="classes/Education-Model-Exam.html#method_getLanguage" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Education-Model-CourseDocument.html#method_getLanguage" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">146</span>
+    <span class="phpdocumentor-element-found-in__line">101</span>
 
     </aside>
 
@@ -1297,14 +959,14 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getLanguage</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">getLanguage</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-Enums-Languages.html"><abbr title="\Application\Model\Enums\Languages">Languages</abbr></a></span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-Enums-Languages.html"><abbr title="\Application\Model\Enums\Languages">Languages</abbr></a></span>
             &mdash;
         
     
@@ -1317,17 +979,16 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_getResourceId">
         getResourceId()
-        <a href="classes/Education-Model-Exam.html#method_getResourceId" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Education-Model-CourseDocument.html#method_getResourceId" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">206</span>
+    <span class="phpdocumentor-element-found-in__line">149</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get the resource ID.</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getResourceId</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
@@ -1335,6 +996,19 @@
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">inheritDoc</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">string</span>
@@ -1355,7 +1029,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Summary.php"><a href="files/module-education-src-model-summary.html"><abbr title="module/Education/src/Model/Summary.php">Summary.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
     </aside>
 
@@ -1363,17 +1037,18 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setAuthor</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$author</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">setAuthor</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$author</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$author</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1393,12 +1068,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_setCourse">
         setCourse()
-        <a href="classes/Education-Model-Exam.html#method_setCourse" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Education-Model-CourseDocument.html#method_setCourse" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">196</span>
+    <span class="phpdocumentor-element-found-in__line">141</span>
 
     </aside>
 
@@ -1416,7 +1091,8 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Education-Model-Course.html"><abbr title="\Education\Model\Course">Course</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1436,12 +1112,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_setDate">
         setDate()
-        <a href="classes/Education-Model-Exam.html#method_setDate" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Education-Model-CourseDocument.html#method_setDate" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">156</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
@@ -1459,50 +1135,8 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
+                    <section class="phpdocumentor-description"></section>
 
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_setExamType">
-        setExamType()
-        <a href="classes/Education-Model-Exam.html#method_setExamType" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">166</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Set the type.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setExamType</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$examType</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$examType</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
             </dd>
             </dl>
 
@@ -1522,12 +1156,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_setFilename">
         setFilename()
-        <a href="classes/Education-Model-Exam.html#method_setFilename" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Education-Model-CourseDocument.html#method_setFilename" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">176</span>
+    <span class="phpdocumentor-element-found-in__line">125</span>
 
     </aside>
 
@@ -1545,7 +1179,8 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1565,12 +1200,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_setLanguage">
         setLanguage()
-        <a href="classes/Education-Model-Exam.html#method_setLanguage" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Education-Model-CourseDocument.html#method_setLanguage" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Exam.php"><a href="files/module-education-src-model-exam.html"><abbr title="module/Education/src/Model/Exam.php">Exam.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">186</span>
+    <span class="phpdocumentor-element-found-in__line">109</span>
 
     </aside>
 
@@ -1578,17 +1213,18 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setLanguage</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$language</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">setLanguage</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Model-Enums-Languages.html"><abbr title="\Application\Model\Enums\Languages">Languages</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$language</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$language</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Model-Enums-Languages.html"><abbr title="\Application\Model\Enums\Languages">Languages</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
