@@ -69,8 +69,12 @@ $this->breadcrumbs()
                             <tr class="course-item">
                                 <td><?= $exam->getId() ?></td>
                                 <td><?= $exam->getDate()->format('Y-m-d') ?></td>
-                                <td><?= $exam->getExamType() ?></td>
-                                <td><?= $exam->getLanguage() ?></td>
+                                <td>
+                                    <?= $exam->getExamType()->getName($this->plugin('translate')->getTranslator()) ?>
+                                </td>
+                                <td>
+                                    <?= $exam->getLanguage()->getName($this->plugin('translate')->getTranslator()) ?>
+                                </td>
                                 <td>
                                     <button type="button" class="btn btn-danger btn-xs btn-delete"
                                             data-id="<?= $exam->getId() ?>" data-toggle="modal"
@@ -116,8 +120,10 @@ $this->breadcrumbs()
                             <tr class="course-item">
                                 <td><?= $summary->getId() ?></td>
                                 <td><?= $summary->getDate()->format('Y-m-d') ?></td>
-                                <td><?= $this->escapeHtml($summary->getAuthor()) ?></td>
-                                <td><?= $summary->getLanguage() ?></td>
+                                <td><?= $this->escapeHtml($summary->getAuthor() ?? $this->translate('N/A')) ?></td>
+                                <td>
+                                    <?= $summary->getLanguage()->getName($this->plugin('translate')->getTranslator()) ?>
+                                </td>
                                 <td>
                                     <button type="button" class="btn btn-danger btn-xs btn-delete" data-toggle="modal"
                                             data-id="<?= $summary->getId() ?>"

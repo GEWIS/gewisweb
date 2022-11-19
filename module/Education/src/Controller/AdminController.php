@@ -7,7 +7,9 @@ use Education\Service\{
     Exam as ExamService,
 };
 use Education\Model\Course as CourseModel;
+use Education\Model\Exam;
 use Education\Model\Exam as ExamModel;
+use Education\Model\Summary as SummaryModel;
 use Laminas\Http\{
     Request,
     Response,
@@ -167,14 +169,14 @@ class AdminController extends AbstractActionController
 
         return new ViewModel([
             'course' => $course,
-            'exams' => $this->examService->getDocumentsForCourse($course, ExamModel::EXAM_TYPE_FINAL),
-            'summaries' => $this->examService->getDocumentsForCourse($course, ExamModel::EXAM_TYPE_SUMMARY),
+            'exams' => $this->examService->getDocumentsForCourse($course, ExamModel::class),
+            'summaries' => $this->examService->getDocumentsForCourse($course, SummaryModel::class),
         ]);
     }
 
     public function deleteCourseDocumentAction(): Response|ViewModel
     {
-        if (!$this->aclService->isAllowed('delete', 'exam')) {
+        if (!$this->aclService->isAllowed('delete', 'course_document')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to delete course documents')
             );
@@ -272,18 +274,25 @@ class AdminController extends AbstractActionController
     {
         /** @var Request $request */
         $request = $this->getRequest();
+        $form = $this->examService->getBulkExamForm();
 
-        if ($request->isPost() && $this->examService->bulkExamEdit($request->getPost()->toArray())) {
-            return new ViewModel(
-                [
-                    'success' => true,
-                ]
-            );
+        if ($request->isPost()) {
+            $form->setData($request->getPost()->toArray());
+
+            if ($form->isValid()) {
+                if ($this->examService->bulkExamEdit($form->getData())) {
+                    return new ViewModel(
+                        [
+                            'success' => true,
+                        ]
+                    );
+                }
+            }
         }
 
         return new ViewModel(
             [
-                'form' => $this->examService->getBulkExamForm(),
+                'form' => $form,
                 'config' => $this->educationTempConfig,
             ]
         );

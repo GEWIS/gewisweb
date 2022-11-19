@@ -24,7 +24,7 @@ class Course extends BaseMapper
         $qb->select('c, e')
             ->from($this->getRepositoryName(), 'c')
             ->where('c.code = ?1')
-            ->leftJoin('c.exams', 'e');
+            ->leftJoin('c.documents', 'e');
         $qb->setParameter(1, $code);
 
         return $qb->getQuery()->getOneOrNullResult();

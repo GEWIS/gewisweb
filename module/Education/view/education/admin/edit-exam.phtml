@@ -14,7 +14,7 @@ $this->breadcrumbs()
 ?>
 <?php if (isset($success) && $success): ?>
     <?= $this->translate('Upload of all exams was finished.') ?>
-<?php elseif (count($form->get('exams')->getIterator()) == 0): ?>
+<?php elseif (count($form->get('documents')->getIterator()) == 0): ?>
     <?= $this->translate('There are no exams to be edited. Upload exams to edit them.') ?>
 <?php else: ?>
     <?php
@@ -28,7 +28,7 @@ $this->breadcrumbs()
     <?= $this->form()->openTag($form) ?>
 
     <?php
-    $exams = $form->get('exams');
+    $exams = $form->get('documents');
     ?>
     <?php foreach ($exams->getIterator() as $fs): ?>
         <div>

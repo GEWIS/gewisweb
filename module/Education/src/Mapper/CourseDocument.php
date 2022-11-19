@@ -3,24 +3,30 @@
 namespace Education\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Closure;
-use Education\Model\Course as CourseModel;
-use Education\Model\Exam as ExamModel;
+use Education\Model\{
+    Course as CourseModel,
+    CourseDocument as CourseDocumentModel,
+    Exam as ExamModel,
+    Summary as SummaryModel,
+};
 
 /**
  * Mapper for Exam.
  */
-class Exam extends BaseMapper
+class CourseDocument extends BaseMapper
 {
+    /**
+     * @psalm-param class-string<ExamModel>|class-string<SummaryModel> $type
+     */
     public function findDocumentsByCourse(
         CourseModel $course,
         string $type,
     ): array {
         $qb = $this->getRepository()->createQueryBuilder('d');
         $qb->where('d.course = :course')
-            ->andWhere('d.examType = :type')
+            ->andWhere('d INSTANCE OF :type')
             ->setParameter('course', $course)
-            ->setParameter('type', $type);
+            ->setParameter('type', $this->getEntityManager()->getClassMetadata($type));
 
         return $qb->getQuery()->getResult();
     }
@@ -30,6 +36,6 @@ class Exam extends BaseMapper
      */
     protected function getRepositoryName(): string
     {
-        return ExamModel::class;
+        return CourseDocumentModel::class;
     }
 }

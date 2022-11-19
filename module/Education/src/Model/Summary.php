@@ -11,30 +11,29 @@ use Doctrine\ORM\Mapping\{
  * Summary.
  */
 #[Entity]
-class Summary extends Exam
+class Summary extends CourseDocument
 {
     /**
      * Author of the summary.
      */
-    #[Column(type: "string")]
-    protected string $author;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $author = null;
 
     /**
      * Get the author.
-     *
-     * @return string
      */
-    public function getAuthor(): string
+    public function getAuthor(): ?string
     {
         return $this->author;
     }
 
     /**
      * Set the author.
-     *
-     * @param string $author
      */
-    public function setAuthor(string $author): void
+    public function setAuthor(?string $author): void
     {
         $this->author = $author;
     }

@@ -40,14 +40,14 @@ class Course implements ResourceInterface
      * Exams (and summaries) in this course.
      */
     #[OneToMany(
-        targetEntity: Exam::class,
+        targetEntity: CourseDocument::class,
         mappedBy: "course",
     )]
-    protected Collection $exams;
+    protected Collection $documents;
 
     public function __construct()
     {
-        $this->exams = new ArrayCollection();
+        $this->documents = new ArrayCollection();
     }
 
     /**
@@ -76,9 +76,9 @@ class Course implements ResourceInterface
      * @psalm-return Collection<int, Exam|Summary>
      * @return Collection
      */
-    public function getExams(): Collection
+    public function getDocuments(): Collection
     {
-        return $this->exams;
+        return $this->documents;
     }
 
     /**

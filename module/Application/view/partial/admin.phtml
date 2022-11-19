@@ -52,7 +52,7 @@ $flash = $this->plugin('FlashMessenger');
                             </a>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('education_service_acl')->isAllowed('exam', 'upload')): ?>
+                    <?php if ($this->acl('education_service_acl')->isAllowed('course_document', 'upload')): ?>
                         <li class="dropdown <?= $this->moduleIsActive(['frontpage', 'exam']) ? 'active' : '' ?>">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">

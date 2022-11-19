@@ -5,8 +5,7 @@ $this->inlineScript()
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
-$this->headLink()
-    ->appendStylesheet($this->basePath() . '/css/dropzone.css');
+$this->headLink()->appendStylesheet($this->basePath() . '/css/dropzone.css');
 
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Education'), true, $this->url('admin_education'))
