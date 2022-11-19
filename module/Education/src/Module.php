@@ -2,20 +2,20 @@
 
 namespace Education;
 
+use Application\Hydrator\Strategy\LanguageHydratorStrategy;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
-use Laminas\Mvc\I18n\Translator as MvcTranslator;
+use Education\Hydrator\Strategy\ExamTypeHydratorStrategy;
 use Education\Form\{
-    AddCourse as AddCourseForm,
+    Course as CourseForm,
     Bulk as BulkForm,
     Fieldset\Exam as ExamFieldset,
     Fieldset\Summary as SummaryFieldset,
     SearchCourse as SearchCourseForm,
-    SummaryUpload as SummaryUploadForm,
     TempUpload as TempUploadForm,
 };
 use Education\Mapper\{
     Course as CourseMapper,
-    Exam as ExamMapper,
+    CourseDocument as CourseDocumentMapper,
 };
 use Education\Model\{
     Exam as ExamModel,
@@ -23,6 +23,7 @@ use Education\Model\{
 };
 use Education\Service\Exam as ExamService;
 use Education\View\Helper\ExamUrl;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Psr\Container\ContainerInterface;
 use User\Authorization\AclServiceFactory;
 
@@ -52,7 +53,7 @@ class Module
                     $translator = $container->get(MvcTranslator::class);
                     $storageService = $container->get('application_service_storage');
                     $courseMapper = $container->get('education_mapper_course');
-                    $examMapper = $container->get('education_mapper_exam');
+                    $courseDocumentMapper = $container->get('education_mapper_courseDocument');
                     $addCourseForm = $container->get('education_form_add_course');
                     $tempUploadForm = $container->get('education_form_tempupload');
                     $bulkSummaryForm = $container->get('education_form_bulk_summary');
@@ -64,7 +65,7 @@ class Module
                         $translator,
                         $storageService,
                         $courseMapper,
-                        $examMapper,
+                        $courseDocumentMapper,
                         $addCourseForm,
                         $tempUploadForm,
                         $bulkSummaryForm,
@@ -77,28 +78,26 @@ class Module
                         $container->get(MvcTranslator::class)
                     );
                 },
-                'education_form_summaryupload' => function (ContainerInterface $container) {
-                    $form = new SummaryUploadForm(
-                        $container->get(MvcTranslator::class)
-                    );
-                    $form->setHydrator($container->get('education_hydrator'));
-
-                    return $form;
-                },
                 'education_form_add_course' => function (ContainerInterface $container) {
-                    return new AddCourseForm(
-                        $container->get(MvcTranslator::class)
+                    $courseForm = new CourseForm(
+                        $container->get(MvcTranslator::class),
+                        $container->get('education_mapper_course'),
                     );
+                    $courseForm->setHydrator($container->get('education_hydrator'));
+
+                    return $courseForm;
                 },
                 'education_form_bulk_exam' => function (ContainerInterface $container) {
                     return new BulkForm(
                         $container->get(MvcTranslator::class),
+                        $container->get('education_mapper_course'),
                         $container->get('education_form_fieldset_exam')
                     );
                 },
                 'education_form_bulk_summary' => function (ContainerInterface $container) {
                     return new BulkForm(
                         $container->get(MvcTranslator::class),
+                        $container->get('education_mapper_course'),
                         $container->get('education_form_fieldset_summary')
                     );
                 },
@@ -113,7 +112,9 @@ class Module
                     );
                     $fieldset->setConfig($container->get('config'));
                     $fieldset->setObject(new ExamModel());
-                    $fieldset->setHydrator($container->get('education_hydrator'));
+                    $hydrator = $container->get('education_hydrator_document');
+                    $hydrator->addStrategy('examType', new ExamTypeHydratorStrategy());
+                    $fieldset->setHydrator($hydrator);
 
                     return $fieldset;
                 },
@@ -123,12 +124,12 @@ class Module
                     );
                     $fieldset->setConfig($container->get('config'));
                     $fieldset->setObject(new SummaryModel());
-                    $fieldset->setHydrator($container->get('education_hydrator'));
+                    $fieldset->setHydrator($container->get('education_hydrator_document'));
 
                     return $fieldset;
                 },
-                'education_mapper_exam' => function (ContainerInterface $container) {
-                    return new ExamMapper(
+                'education_mapper_courseDocument' => function (ContainerInterface $container) {
+                    return new CourseDocumentMapper(
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },
@@ -139,8 +140,18 @@ class Module
                 },
                 'education_hydrator' => function (ContainerInterface $container) {
                     return new DoctrineObject(
-                        $container->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default'),
+                        false,
                     );
+                },
+                'education_hydrator_document' => function (ContainerInterface $container) {
+                    $hydrator = new DoctrineObject(
+                        $container->get('doctrine.entitymanager.orm_default'),
+                        false,
+                    );
+                    $hydrator->addStrategy('language', new LanguageHydratorStrategy());
+
+                    return $hydrator;
                 },
                 'education_service_acl' => AclServiceFactory::class,
             ],

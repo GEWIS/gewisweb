@@ -2,18 +2,25 @@
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Education'), true, $this->url('admin_education'))
     ->addBreadcrumb($this->translate('Courses'), true, $this->url('admin_education/course'))
-    ->addBreadcrumb($this->translate('Add'));
+    ->addBreadcrumb(
+        $this->escapeHtml($course->getCode()),
+        true,
+        $this->url('admin_education/course/edit', ['course' => $course->getCode()]),
+    )
+    ->addBreadcrumb($this->translate('Edit'));
+?>
 
+<?php
 $form->prepare();
 
-$form->setAttribute('action', $this->url('admin_education/course/add'));
+$form->setAttribute('action', $this->url('admin_education/course/edit', ['course' => $course->getCode()]));
 $form->setAttribute('method', 'post');
 ?>
 <?= $this->form()->openTag($form) ?>
 
 <div class="row">
     <div class="col-md-12">
-        <h1><?= $this->translate('Add Course') ?></h1>
+        <h1><?= $this->translate('Edit Course') ?></h1>
     </div>
     <div class="col-md-12">
         <?php
@@ -51,10 +58,4 @@ $form->setAttribute('method', 'post');
         </div>
     </div>
     <?= $this->form()->closeTag() ?>
-    <hr>
 </div>
-<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
-    $(document).ready(function () {
-        Course.initCourseAdding();
-    });
-</script>

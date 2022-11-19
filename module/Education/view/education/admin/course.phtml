@@ -1,0 +1,130 @@
+<?php
+$this->scriptUrl()->requireUrls(['admin_education/course/delete'], ['course']);
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Education'), true, $this->url('admin_education'))
+    ->addBreadcrumb($this->translate('Courses'));
+?>
+<div class="row">
+    <div class="col-md-12">
+        <h1><?= $this->translate('Course Admin') ?></h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-10">
+        <input type="text" class="form-control"id="filterCourses" placeholder="<?= $this->translate('Filter...') ?>">
+    </div>
+    <div class="col-md-2">
+        <a href="<?= $this->url('admin_education/course/add') ?>" class="btn btn-success pull-right">
+            <span class="fas fa-plus"></span> <?= $this->translate('Add Course') ?>
+        </a>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <th>
+                    <?= $this->translate('Code') ?>
+                </th>
+                <th>
+                    <?= $this->translate('Name') ?>
+                </th>
+                <th>
+                    <?= $this->translate('Actions') ?>
+                </th>
+            </thead>
+            <tbody>
+                <?php foreach ($courses as $course): ?>
+                    <tr class="course-item">
+                        <td><?= $this->escapeHtml($course->getCode()) ?></td>
+                        <td><?= $this->escapeHtml($course->getName()) ?></td>
+                        <td>
+                            <a href="<?= $this->url(
+                                'admin_education/course/documents',
+                                ['course' => $course->getCode()],
+                            ) ?>" class="btn btn-primary btn-xs">
+                                <?= $this->translate('Documents') ?>
+                            </a>
+                            <a href="<?= $this->url('admin_education/course/edit', ['course' => $course->getCode()]) ?>"
+                               class="btn btn-primary btn-xs"
+                            >
+                                <?= $this->translate('Edit') ?>
+                            </a>
+                            <button type="button" class="btn btn-danger btn-xs btn-delete"
+                                    data-code="<?= $this->escapeHtmlAttr($course->getCode()) ?>" data-toggle="modal"
+                            >
+                                <?= $this->translate('Delete') ?>
+                            </button>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"><?= $this->translate('Delete Course') ?></h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <?= sprintf(
+                        $this->translate(
+                            'Are you sure you want to delete %s? This will also delete all associated exams and summaries will be deleted.'
+                        ),
+                        '<strong id="deleteCourseCode"></strong>',
+                    ) ?>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <form method="post" class="form form-inline form-delete">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <?= $this->translate('Cancel') ?>
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        <span class="far fa-trash-alt"></span>&nbsp;<?= $this->translate('Delete') ?>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+    document.querySelector('#filterCourses').addEventListener('keyup', (event) => {
+        let searchTerm = event.target.value.toUpperCase();
+
+        if ('' === searchTerm) {
+            document.querySelectorAll('.course-item').forEach((element) => {
+                element.style.display = 'table-row';
+            });
+        } else {
+            document.querySelectorAll('.course-item').forEach((element) => {
+                if (-1 === element.firstElementChild.textContent.indexOf(searchTerm)) {
+                    element.style.display = 'none';
+                } else {
+                    element.style.display = 'table-row';
+                }
+            });
+        }
+    });
+
+    document.querySelectorAll('.btn-delete').forEach((element) => {
+        element.addEventListener('click', () => {
+            document.querySelector('#deleteCourseCode').textContent = element.dataset.code;
+            document.querySelector('.form-delete').action = URLHelper.url(
+                'admin_education/course/delete',
+                {'course': element.dataset.code},
+            );
+            $('#deleteModal').modal('show');
+        })
+    });
+</script>

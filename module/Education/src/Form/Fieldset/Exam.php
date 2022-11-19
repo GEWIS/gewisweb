@@ -2,7 +2,8 @@
 
 namespace Education\Form\Fieldset;
 
-use Education\Model\Exam as ExamModel;
+use Application\Model\Enums\Languages;
+use Education\Model\Enums\ExamTypes;
 use Laminas\Filter\StringToUpper;
 use Laminas\Form\Element\{
     Date,
@@ -18,6 +19,7 @@ use Laminas\Validator\{
     Callback,
     Date as DateValidator,
     File\Exists,
+    InArray,
     Regex,
     StringLength,
 };
@@ -26,7 +28,7 @@ class Exam extends Fieldset implements InputFilterProviderInterface
 {
     protected array $config;
 
-    public function __construct(Translator $translator)
+    public function __construct(private readonly Translator $translator)
     {
         parent::__construct('exam');
 
@@ -42,7 +44,7 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                 'name' => 'course',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $translator->translate('Course code'),
+                    'label' => $this->translator->translate('Course code'),
                 ],
             ]
         );
@@ -52,7 +54,7 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                 'name' => 'date',
                 'type' => Date::class,
                 'options' => [
-                    'label' => $translator->translate('Exam date'),
+                    'label' => $this->translator->translate('Exam date'),
                     'format' => 'Y-m-d',
                 ],
             ]
@@ -63,12 +65,12 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                 'name' => 'examType',
                 'type' => Select::class,
                 'options' => [
-                    'label' => $translator->translate('Type'),
+                    'label' => $this->translator->translate('Type'),
                     'value_options' => [
-                        ExamModel::EXAM_TYPE_FINAL => $translator->translate('Final examination'),
-                        ExamModel::EXAM_TYPE_INTERMEDIATE_TEST => $translator->translate('Intermediate test'),
-                        ExamModel::EXAM_TYPE_ANSWERS => $translator->translate('Exam answers'),
-                        ExamModel::EXAM_TYPE_OTHER => $translator->translate('Other'),
+                        ExamTypes::Final->value => ExamTypes::Final->getName($this->translator),
+                        ExamTypes::Interim->value => ExamTypes::Interim->getName($this->translator),
+                        ExamTypes::Answers->value => ExamTypes::Answers->getName($this->translator),
+                        ExamTypes::Other->value => ExamTypes::Other->getName($this->translator),
                     ],
                 ],
             ]
@@ -79,10 +81,10 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                 'name' => 'language',
                 'type' => Select::class,
                 'options' => [
-                    'label' => $translator->translate('Language'),
+                    'label' => $this->translator->translate('Language'),
                     'value_options' => [
-                        ExamModel::EXAM_LANGUAGE_ENGLISH => $translator->translate('English'),
-                        ExamModel::EXAM_LANGUAGE_DUTCH => $translator->translate('Dutch'),
+                        Languages::EN->value => Languages::EN->getName($this->translator),
+                        Languages::NL->value => Languages::NL->getName($this->translator),
                     ],
                 ],
             ]
@@ -152,12 +154,33 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                     ],
                 ],
             ],
-
             'date' => [
                 'required' => true,
                 'validators' => [
                     [
                         'name' => DateValidator::class,
+                    ],
+                ],
+            ],
+            'examType' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => InArray::class,
+                        'options' => [
+                            'haystack' => ExamTypes::values(),
+                        ],
+                    ],
+                ],
+            ],
+            'language' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => InArray::class,
+                        'options' => [
+                            'haystack' => Languages::values(),
+                        ],
                     ],
                 ],
             ],

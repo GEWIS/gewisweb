@@ -52,13 +52,18 @@ $flash = $this->plugin('FlashMessenger');
                             </a>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('education_service_acl')->isAllowed('exam', 'upload')): ?>
+                    <?php if ($this->acl('education_service_acl')->isAllowed('course_document', 'upload')): ?>
                         <li class="dropdown <?= $this->moduleIsActive(['frontpage', 'exam']) ? 'active' : '' ?>">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">
                                 <?= $this->translate('Education') ?> <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
+                                <li>
+                                    <a href="<?= $this->url('admin_education/course') ?>">
+                                        <?= $this->translate('Courses') ?>
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="<?= $this->url('admin_education/bulk_upload_exam') ?>">
                                         <?= $this->translate('Upload exams') ?>
@@ -67,11 +72,6 @@ $flash = $this->plugin('FlashMessenger');
                                 <li>
                                     <a href="<?= $this->url('admin_education/bulk_upload_summary') ?>">
                                         <?= $this->translate('Upload summaries') ?>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="<?= $this->url('admin_education/add_course') ?>">
-                                        <?= $this->translate('Add courses') ?>
                                     </a>
                                 </li>
                             </ul>

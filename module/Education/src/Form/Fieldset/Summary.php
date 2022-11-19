@@ -2,8 +2,11 @@
 
 namespace Education\Form\Fieldset;
 
-use Education\Model\Exam as ExamModel;
-use Laminas\Filter\StringToUpper;
+use Application\Model\Enums\Languages;
+use Laminas\Filter\{
+    StringToUpper,
+    ToNull,
+};
 use Laminas\Form\Element\{
     Date,
     Hidden,
@@ -18,6 +21,7 @@ use Laminas\Validator\{
     Callback,
     Date as DateValidator,
     File\Exists,
+    InArray,
     Regex,
     StringLength,
 };
@@ -26,7 +30,7 @@ class Summary extends Fieldset implements InputFilterProviderInterface
 {
     protected array $config;
 
-    public function __construct(Translator $translator)
+    public function __construct(private readonly Translator $translator)
     {
         parent::__construct('exam');
 
@@ -42,7 +46,7 @@ class Summary extends Fieldset implements InputFilterProviderInterface
                 'name' => 'course',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $translator->translate('Course code'),
+                    'label' => $this->translator->translate('Course code'),
                 ],
             ]
         );
@@ -52,7 +56,7 @@ class Summary extends Fieldset implements InputFilterProviderInterface
                 'name' => 'date',
                 'type' => Date::class,
                 'options' => [
-                    'label' => $translator->translate('Summary date'),
+                    'label' => $this->translator->translate('Summary date'),
                     'format' => 'Y-m-d',
                 ],
             ]
@@ -63,7 +67,7 @@ class Summary extends Fieldset implements InputFilterProviderInterface
                 'name' => 'author',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $translator->translate('Author'),
+                    'label' => $this->translator->translate('Author'),
                 ],
             ]
         );
@@ -73,10 +77,10 @@ class Summary extends Fieldset implements InputFilterProviderInterface
                 'name' => 'language',
                 'type' => Select::class,
                 'options' => [
-                    'label' => $translator->translate('Language'),
+                    'label' => $this->translator->translate('Language'),
                     'value_options' => [
-                        ExamModel::EXAM_LANGUAGE_ENGLISH => $translator->translate('English'),
-                        ExamModel::EXAM_LANGUAGE_DUTCH => $translator->translate('Dutch'),
+                        Languages::EN->value => Languages::EN->getName($this->translator),
+                        Languages::NL->value => Languages::NL->getName($this->translator),
                     ],
                 ],
             ]
@@ -126,7 +130,6 @@ class Summary extends Fieldset implements InputFilterProviderInterface
                     ],
                 ],
             ],
-
             'course' => [
                 'required' => true,
                 'validators' => [
@@ -147,7 +150,6 @@ class Summary extends Fieldset implements InputFilterProviderInterface
                     ],
                 ],
             ],
-
             'author' => [
                 'required' => true,
                 'validators' => [
@@ -159,13 +161,28 @@ class Summary extends Fieldset implements InputFilterProviderInterface
                         ],
                     ],
                 ],
+                'filters' => [
+                    [
+                        'name' => ToNull::class,
+                    ],
+                ],
             ],
-
             'date' => [
                 'required' => true,
                 'validators' => [
                     [
                         'name' => DateValidator::class,
+                    ],
+                ],
+            ],
+            'language' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => InArray::class,
+                        'options' => [
+                            'haystack' => Languages::values(),
+                        ],
                     ],
                 ],
             ],

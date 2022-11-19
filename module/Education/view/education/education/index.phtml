@@ -83,7 +83,7 @@ $this->headTitle($this->translate('Education'));
                                     <?= $course->getName() ?>
                                 </td>
                                 <td>
-                                    <?= count($course->getExams()) ?: $this->translate('None') ?>
+                                    <?= $course->getDocuments()->count() ?: $this->translate('None') ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

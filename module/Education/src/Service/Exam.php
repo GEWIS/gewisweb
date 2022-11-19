@@ -2,25 +2,29 @@
 
 namespace Education\Service;
 
+use Application\Model\Enums\Languages;
 use Application\Service\FileStorage as FileStorageService;
 use DateTime;
 use DirectoryIterator;
 use Education\Form\{
-    AddCourse as AddCourseForm,
+    Course as CourseForm,
     Bulk as BulkForm,
     TempUpload as TempUploadForm,
 };
-use Doctrine\ORM\Exception\ORMException;
 use Education\Mapper\{
-    Exam as ExamMapper,
+    CourseDocument as CourseDocumentMapper,
     Course as CourseMapper,
 };
 use Education\Model\{
     Course as CourseModel,
+    Course,
+    CourseDocument as CourseDocumentModel,
+    Enums\ExamTypes,
     Exam as ExamModel,
     Summary as SummaryModel,
 };
 use Exception;
+use InvalidArgumentException;
 use Laminas\Form\Fieldset;
 use Laminas\Http\Response\Stream;
 use Laminas\Mvc\I18n\Translator;
@@ -40,8 +44,8 @@ class Exam
         private readonly Translator $translator,
         private readonly FileStorageService $storageService,
         private readonly CourseMapper $courseMapper,
-        private readonly ExamMapper $examMapper,
-        private readonly AddCourseForm $addCourseForm,
+        private readonly CourseDocumentMapper $courseDocumentMapper,
+        private readonly CourseForm $courseForm,
         private readonly TempUploadForm $tempUploadForm,
         private readonly BulkForm $bulkSummaryForm,
         private readonly BulkForm $bulkExamForm,
@@ -80,19 +84,21 @@ class Exam
      *
      * @return Stream|null
      */
-    public function getExamDownload(int $id): ?Stream
+    public function getDocumentDownload(int $id): ?Stream
     {
-        if (!$this->aclService->isAllowed('download', 'exam')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to download exams'));
+        if (!$this->aclService->isAllowed('download', 'course_document')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to download course documents')
+            );
         }
 
-        $exam = $this->examMapper->find($id);
+        $document = $this->courseDocumentMapper->find($id);
 
-        if (is_null($exam)) {
+        if (null === $document) {
             return null;
         }
 
-        return $this->storageService->downloadFile($exam->getFilename(), $this->examToFilename($exam), true);
+        return $this->storageService->downloadFile($document->getFilename(), $this->courseDocumentToFilename($document), true);
     }
 
     /**
@@ -108,35 +114,7 @@ class Exam
         array $data,
         string $type,
     ): bool {
-        $form = $this->getBulkForm($type);
-
-        $form->setData($data);
-        // TODO: Move the form check to the controller.
-        if (!$form->isValid()) {
-            return false;
-        }
-
-        $data = $form->getData();
-
         $temporaryEducationConfig = $this->getConfig('education_temp');
-
-        $messages = [];
-
-        // check if all courses exist
-        foreach ($data['exams'] as $key => $examData) {
-            if (is_null($this->getCourse($examData['course']))) {
-                // course doesn't exist
-                $messages['exams'][$key] = [
-                    'course' => [$this->translator->translate("Course doesn't exist")],
-                ];
-            }
-        }
-
-        if (!empty($messages)) {
-            $form->setMessages($messages);
-
-            return false;
-        }
 
         /**
          * Persist the exams and save the uploaded files.
@@ -148,33 +126,37 @@ class Exam
          * exam, which we need in the upload process.
          */
         $storage = $this->storageService;
-        $this->examMapper->transactional(function ($mapper) use ($data, $type, $temporaryEducationConfig, $storage): void {
-            foreach ($data['exams'] as $examData) {
-                // finalize exam upload
-                $exam = new ExamModel();
-                if ('summary' === $type) {
-                    $exam = new SummaryModel();
+        $this->courseDocumentMapper->transactional(
+            function ($mapper) use ($data, $type, $temporaryEducationConfig, $storage): void {
+                foreach ($data['documents'] as $documentData) {
+                    // finalize document upload
+                    if ('exam' === $type) {
+                        $document = new ExamModel();
+                    } else if ('summary' === $type) {
+                        $document = new SummaryModel();
+                    } else {
+                        throw new InvalidArgumentException('Course document does not have proper type');
+                    }
+
+                    $document->setDate(new DateTime($documentData['date']));
+                    $document->setCourse($this->getCourse($documentData['course']));
+
+                    if ($document instanceof SummaryModel) {
+                        $document->setAuthor($documentData['author']);
+                    }
+
+                    if ($document instanceof ExamModel) {
+                        $document->setExamType(ExamTypes::from($documentData['examType']));
+                    }
+
+                    $document->setLanguage(Languages::from($documentData['language']));
+                    $localFile = $temporaryEducationConfig['upload_' . $type . '_dir'] . '/' . $documentData['file'];
+                    $document->setFilename($storage->storeFile($localFile));
+
+                    $mapper->persist($document);
                 }
-
-                $exam->setDate(new DateTime($examData['date']));
-                $exam->setCourse($this->getCourse($examData['course']));
-
-                if ($exam instanceof SummaryModel) {
-                    $exam->setAuthor($examData['author']);
-                    $exam->setExamType(ExamModel::EXAM_TYPE_SUMMARY);
-                }
-
-                if (get_class($exam) === ExamModel::class) {
-                    $exam->setExamType($examData['examType']);
-                }
-
-                $exam->setLanguage($examData['language']);
-                $localFile = $temporaryEducationConfig['upload_' . $type . '_dir'] . '/' . $examData['file'];
-                $exam->setFilename($storage->storeFile($localFile));
-
-                $mapper->persist($exam);
             }
-        });
+        );
 
         return true;
     }
@@ -283,26 +265,24 @@ class Exam
      *
      * <code>-<author>-summary-<year>-<month>-<day>.pdf
      *
-     * @param ExamModel $exam
+     * @param CourseDocumentModel $document
      *
      * @return string Filename
      */
-    public function examToFilename(ExamModel $exam): string
+    public function courseDocumentToFilename(CourseDocumentModel $document): string
     {
-        $code = $exam->getCourse()->getCode();
-
+        $code = $document->getCourse()->getCode();
         $filename = [];
-
         $filename[] = $code;
 
-        if ($exam instanceof SummaryModel) {
-            $filename[] = $exam->getAuthor();
+        if ($document instanceof SummaryModel) {
+            $filename[] = $document->getAuthor();
             $filename[] = 'summary';
         } else {
             $filename[] = 'exam';
         }
 
-        $filename[] = $exam->getDate()->format('Y-m-d');
+        $filename[] = $document->getDate()->format('Y-m-d');
 
         return implode('-', $filename) . '.pdf';
     }
@@ -329,7 +309,7 @@ class Exam
         string $filename,
         string $type = 'exam',
     ): void {
-        if (!$this->aclService->isAllowed('delete', 'exam')) {
+        if (!$this->aclService->isAllowed('delete', 'course_document')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete exams'));
         }
 
@@ -348,7 +328,7 @@ class Exam
      */
     protected function getBulkForm(string $type): BulkForm
     {
-        if (!$this->aclService->isAllowed('upload', 'exam')) {
+        if (!$this->aclService->isAllowed('upload', 'course_document')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to upload exams'));
         }
 
@@ -372,7 +352,7 @@ class Exam
 
         foreach ($dir as $file) {
             if ($file->isFile() && !str_starts_with($file->getFilename(), '.')) {
-                $examData = $this->guessExamData($file->getFilename());
+                $examData = $this->guessCourseDocumentData($file->getFilename());
 
                 if ('summary' === $type) {
                     $examData['author'] = $this->guessSummaryAuthor($file->getFilename());
@@ -383,7 +363,7 @@ class Exam
             }
         }
 
-        $form = $this->bulkForm->get('exams');
+        $form = $this->bulkForm->get('documents');
 
         if (!$form instanceof Fieldset) {
             throw new RuntimeException('The form could not be retrieved');
@@ -423,7 +403,7 @@ class Exam
      *
      * @return array
      */
-    public function guessExamData(string $filename): array
+    public function guessCourseDocumentData(string $filename): array
     {
         $matches = [];
         $course = preg_match('/\d[a-zA-Z][0-9a-zA-Z]{3,4}/', $filename, $matches) ? $matches[0] : '';
@@ -473,7 +453,7 @@ class Exam
      */
     public function getTempUploadForm(): TempUploadForm
     {
-        if (!$this->aclService->isAllowed('upload', 'exam')) {
+        if (!$this->aclService->isAllowed('upload', 'course_document')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to upload exams'));
         }
 
@@ -483,66 +463,87 @@ class Exam
     /**
      * Get the add course form.
      *
-     * @return AddCourseForm
+     * @return CourseForm
      * @throws NotAllowedException When not allowed to upload
      */
-    public function getAddCourseForm(): AddCourseForm
+    public function getCourseForm(?CourseModel $course = null): CourseForm
     {
-        if (!$this->aclService->isAllowed('upload', 'exam')) {
+        if (
+            !$this->aclService->isAllowed('add', 'course')
+            || !$this->aclService->isAllowed('edit', 'course')
+        ) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to add courses'));
         }
 
-        return $this->addCourseForm;
+        if (null === $course) {
+            $this->courseForm->setObject(new CourseModel());
+        } else {
+            $this->courseForm->setObject($course);
+            $this->courseForm->setCurrentCode($course->getCode());
+            $this->courseForm->setData($course->toArray());
+        }
+
+        return $this->courseForm;
     }
 
     /**
      * Add a new course.
-     *
-     * @param array $data Course data
-     *
-     * @return CourseModel|null New course. Null when the course could not be added.
-     * @throws ORMException
      */
-    public function addCourse(array $data): ?CourseModel
+    public function saveCourse(CourseModel $course): bool
     {
-        // TODO: Move the form check to the controller.
-        $form = $this->getAddCourseForm();
-        $form->setData($data);
+        $this->courseMapper->persist($course);
 
-        if (!$form->isValid()) {
-            return null;
+        return true;
+    }
+
+    /**
+     * Delete a course and all its documents.
+     */
+    public function deleteCourse(Course $course): void
+    {
+        /** @var ExamModel|SummaryModel $exam */
+        foreach ($course->getDocuments() as $exam) {
+            $this->storageService->removeFile($exam->getFilename());
+            $this->courseDocumentMapper->remove($exam);
         }
 
-        // get the course
-        $data = $form->getData();
+        $this->courseMapper->remove($course);
+    }
 
-        // check if course already exists
-        $existingCourse = $this->getCourse($data['code']);
-        if (null !== $existingCourse) {
-            return null;
-        }
+    /**
+     * Get all courses.
+     */
+    public function getAllCourses(): array
+    {
+        return $this->courseMapper->findAll();
+    }
 
-        // check if parent course exists
-        if (strlen($data['parent']) > 0) {
-            $existingCourse = $this->getCourse($data['parent']);
-            if (null === $existingCourse) {
-                return null;
-            }
-        }
+    /**
+     * Get all documents of a specific type for a specific course.
+     *
+     * @psalm-param class-string<ExamModel>|class-string<SummaryModel> $type
+     */
+    public function getDocumentsForCourse(
+        CourseModel $course,
+        string $type,
+    ): array {
+        return $this->courseDocumentMapper->findDocumentsByCourse($course, $type);
+    }
 
-        // save the data
-        $newCourse = new CourseModel();
-        $newCourse->setCode($data['code']);
-        $newCourse->setName($data['name']);
-        if (strlen($data['parent']) > 0) {
-            $newCourse->setParent($this->getCourse($data['parent']));
-        }
-        $newCourse->setUrl($data['url']);
-        $newCourse->setYear($data['year']);
-        $newCourse->setQuartile($data['quartile']);
+    /**
+     * Get a specific course document.
+     */
+    public function getDocument(int $id): ExamModel|SummaryModel|null
+    {
+        return $this->courseDocumentMapper->find($id);
+    }
 
-        $this->courseMapper->persist($newCourse);
-
-        return $newCourse;
+    /**
+     * Delete a course document
+     */
+    public function deleteDocument(ExamModel|SummaryModel $document): void
+    {
+        $this->storageService->removeFile($document->getFilename());
+        $this->courseDocumentMapper->remove($document);
     }
 }

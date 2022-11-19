@@ -23,12 +23,6 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 #[Entity]
 class Course implements ResourceInterface
 {
-    public const QUARTILE_Q1 = 'q1';
-    public const QUARTILE_Q2 = 'q2';
-    public const QUARTILE_Q3 = 'q3';
-    public const QUARTILE_Q4 = 'q4';
-    public const QUARTILE_INTERIM = 'interim';
-
     /**
      * Course code.
      */
@@ -43,69 +37,17 @@ class Course implements ResourceInterface
     protected string $name;
 
     /**
-     * Course url.
-     */
-    #[Column(
-        type: "string",
-        nullable: true,
-    )]
-    protected ?string $url = null;
-
-    /**
-     * Last year the course has been given.
-     */
-    #[Column(type: "integer")]
-    protected int $year;
-
-    /**
-     * Quartile in which this course has been given.
-     *
-     * This is an enum. With the following possible values:
-     *
-     * - q1
-     * - q2
-     * - q3
-     * - q4
-     * - interim
-     */
-    #[Column(type: "string")]
-    protected string $quartile;
-
-    /**
      * Exams (and summaries) in this course.
      */
     #[OneToMany(
-        targetEntity: Exam::class,
+        targetEntity: CourseDocument::class,
         mappedBy: "course",
     )]
-    protected Collection $exams;
-
-    /**
-     * Parent course.
-     */
-    #[ManyToOne(
-        targetEntity: Course::class,
-        inversedBy: "children",
-    )]
-    #[JoinColumn(
-        name: "parent_code",
-        referencedColumnName: "code",
-    )]
-    protected ?Course $parent = null;
-
-    /**
-     * Children of this course.
-     */
-    #[OneToMany(
-        targetEntity: Course::class,
-        mappedBy: "parent",
-    )]
-    protected Collection $children;
+    protected Collection $documents;
 
     public function __construct()
     {
-        $this->exams = new ArrayCollection();
-        $this->children = new ArrayCollection();
+        $this->documents = new ArrayCollection();
     }
 
     /**
@@ -129,43 +71,14 @@ class Course implements ResourceInterface
     }
 
     /**
-     * Get the course URL.
-     *
-     * @return string|null
-     */
-    public function getUrl(): ?string
-    {
-        return $this->url;
-    }
-
-    /**
-     * Get the last year the course has been given.
-     *
-     * @return int
-     */
-    public function getYear(): int
-    {
-        return $this->year;
-    }
-
-    /**
-     * Get the last quartile the course has been given.
-     *
-     * @return string
-     */
-    public function getQuartile(): string
-    {
-        return $this->quartile;
-    }
-
-    /**
      * Get all exams belonging to this study.
      *
+     * @psalm-return Collection<int, Exam|Summary>
      * @return Collection
      */
-    public function getExams(): Collection
+    public function getDocuments(): Collection
     {
-        return $this->exams;
+        return $this->documents;
     }
 
     /**
@@ -188,93 +101,12 @@ class Course implements ResourceInterface
         $this->name = $name;
     }
 
-    /**
-     * Set the course URL.
-     *
-     * @param string|null $url
-     */
-    public function setUrl(?string $url): void
+    public function toArray(): array
     {
-        $this->url = $url;
-    }
-
-    /**
-     * Set the parent course.
-     */
-    public function setParent(Course $parent): void
-    {
-        $parent->addChild($this);
-        $this->parent = $parent;
-    }
-
-    /**
-     * Add a child.
-     */
-    public function addChild(Course $child): void
-    {
-        $this->children[] = $child;
-    }
-
-    /**
-     * Set the last year the course has been given.
-     *
-     * @param int $year
-     */
-    public function setYear(int $year): void
-    {
-        $this->year = $year;
-    }
-
-    /**
-     * Set the last quartile the course has been given.
-     *
-     * @param string $quartile
-     */
-    public function setQuartile(string $quartile): void
-    {
-        if (
-            !in_array(
-                $quartile,
-                [
-                    self::QUARTILE_Q1,
-                    self::QUARTILE_Q2,
-                    self::QUARTILE_Q3,
-                    self::QUARTILE_Q4,
-                    self::QUARTILE_INTERIM,
-                ]
-            )
-        ) {
-            throw new InvalidArgumentException('Invalid argument supplied, must be a valid quartile.');
-        }
-        $this->quartile = $quartile;
-    }
-
-    /**
-     * Get the parent course.
-     *
-     * @return Course|null
-     */
-    public function getParent(): ?Course
-    {
-        return $this->parent;
-    }
-
-    /**
-     * Get all children courses.
-     *
-     * @return Collection
-     */
-    public function getChildren(): Collection
-    {
-        return $this->children;
-    }
-
-    /**
-     * Add an exam.
-     */
-    public function addExam(Exam $exam): void
-    {
-        $this->exams[] = $exam;
+        return [
+            'code' => $this->getCode(),
+            'name' => $this->getName(),
+        ];
     }
 
     /**
