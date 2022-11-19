@@ -22,8 +22,8 @@ $this->scriptUrl()->requireUrls(
         <div class="row">
             <div class="col-md-10">
                 <div class="form-group">
-                    <input type="text" class="form-control" onkeyup="Company.Admin.filterCompanies()"
-                           id="filterCompanies" placeholder="Filter...">
+                    <input type="text" class="form-control" id="filterCompanies"
+                           placeholder="<?= $this->translate('Filter...') ?>">
                 </div>
             </div>
             <div class="col-md-2">
@@ -310,21 +310,25 @@ $this->scriptUrl()->requireUrls(
 <?php endif ?>
 
 <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
-    document.querySelectorAll('.sort-by-name').forEach(sorter => {
-        sorter.addEventListener('click', e => {
+    document.querySelector('#filterCompanies').addEventListener('keyup', () => {
+        Company.Admin.filterCompanies();
+    });
+
+    document.querySelectorAll('.sort-by-name').forEach((sorter) => {
+        sorter.addEventListener('click', () => {
             Company.Admin.sortCompaniesByName(sorter.dataset.order);
         });
     });
 
-    document.querySelectorAll('.sort-by-column').forEach(sorter => {
-        sorter.addEventListener('click', e => {
+    document.querySelectorAll('.sort-by-column').forEach((sorter) => {
+        sorter.addEventListener('click', () => {
             Company.Admin.sortCompaniesByColumn(sorter.dataset.order, sorter.dataset.column);
         });
     });
 
-    document.querySelectorAll('.delete-company').forEach(company => {
-        company.addEventListener('click', e => {
-            Company.Admin.deleteCompany(e.target.dataset.slugName);
+    document.querySelectorAll('.delete-company').forEach((company) => {
+        company.addEventListener('click', (event) => {
+            Company.Admin.deleteCompany(event.target.dataset.slugName);
         });
     });
 </script>
