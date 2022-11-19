@@ -1,3 +1,21 @@
+## [v2.9](https://github.com/GEWIS/gewisweb/tree/v2.9) (2022-11-19)
+
+* Added elementary support for remote member information update requests.
+* Added support for editable courses.
+* Added support for the deletion of courses and course documents.
+* Changed option calendar to always start on Mondays regardless of used locale.
+* Changed how options for activities can be proposed (this includes the ability to propose in different periods at the same time).
+* Improved associations between members and resources to allow for easier removal of member data.
+* Improved translations of all things related to meetings.
+* Improved validation of the option proposal form.
+* Improved ordering of album years in the photo admin dashboard.
+* Improved distinction between normal folders and `Archive`d folders in the public archive.
+* Fixed issue where the generation of an album cover would fail it the album only contained sub-sub-albums with photos.
+* Fixed issue where course documents could not be downloaded due timeouts.
+* Fixed issue where incorrectly filling out the option proposal form resulted in an error.
+
+---
+
 ## [v2.8.9](https://github.com/GEWIS/gewisweb/tree/v2.8.9) (2022-10-12)
 
 * Added the option to revoke an authorization that was made on the website.
