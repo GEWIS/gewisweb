@@ -3,8 +3,10 @@
 namespace Education\Form\Fieldset;
 
 use Application\Model\Enums\Languages;
-use Education\Model\Exam as ExamModel;
-use Laminas\Filter\StringToUpper;
+use Laminas\Filter\{
+    StringToUpper,
+    ToNull,
+};
 use Laminas\Form\Element\{
     Date,
     Hidden,
@@ -157,6 +159,11 @@ class Summary extends Fieldset implements InputFilterProviderInterface
                             'min' => 3,
                             'max' => 150,
                         ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => ToNull::class,
                     ],
                 ],
             ],

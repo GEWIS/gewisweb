@@ -1,7 +1,13 @@
-<?php use Education\Model\Exam;
-use Education\Model\Summary;
+<?php
 
-$this->headTitle(sprintf('%s %s', $course->getCode(), $course->getName()));
+use Education\Model\Enums\ExamTypes;
+use Education\Model\Summary as SummaryModel;
+
+$this->headTitle(sprintf(
+    '%s %s',
+    $this->escapeHtml($course->getCode()),
+    $this->escapeHtml($course->getName()),
+));
 $this->headTitle($this->translate('Education'));
 ?>
 <section class="section">
@@ -10,91 +16,66 @@ $this->headTitle($this->translate('Education'));
             <div class="col-md-12">
                 <h1><?= $this->escapeHtml($course->getCode()) ?> - <?= $this->escapeHtml($course->getName()) ?></h1>
             </div>
-            <?php
-            if (null !== $course->getUrl()):
-                ?>
-                <div class="col-md-12">
-                    <p>
-                        <strong><?= $this->translate('Course URL') ?>:</strong> <a href="<?= $course->getUrl() ?>">
-                            <?= $this->escapeHtml($course->getUrl()) ?>
-                        </a>
-                    </p>
-                </div>
-            <?php
-            endif;
-            ?>
         </div>
         <hr>
         <div class="row">
-            <?php if (!$course->getChildren()->isEmpty()): ?>
-                <div class="col-md-4">
-                    <h2><?= $this->translate('Subcourses') ?></h2>
-                        <ul>
-                            <?php foreach ($course->getChildren() as $child): ?>
-                                <li>
-                                    <a href="<?= $this->url('education/course', ['code' => $child->getCode()])?>">
-                                        <strong><?= $this->escapeHtml($child->getCode()) ?></strong> <?= $this->escapeHtml($child->getName()) ?>
-                                    </a>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                </div>
-            <?php endif; ?>
             <div class="col-md-8">
                 <h2><?= $this->translate('Exams and summaries') ?></h2>
                 <ul>
-                    <?php
-                    // Doctrine `Collections` are `Traversable`s, for which we can use `iterator_to_array` instead of
-                    // `array_push` or `foreach`. To keep original ordering, unshift the array, should be slightly
-                    // faster than reversing the array twice (when appending).
-                    $courses = iterator_to_array($course->getChildren());
-                    array_unshift($courses, $course);
-                    ?>
-                    <?php foreach ($courses as $key => $child): ?>
-                        <?php foreach ($child->getExams() as $exam): ?>
-                            <li><a href="<?= $this->url('education/course/download', [
-                                    'code' => $exam->getCourse()->getCode(),
-                                    'id' => $exam->getId()
-                                ]) ?>">
-                                    <?php if (0 !== $key): // Don't show course code for main course. ?>
-                                        <strong>(<?= $this->escapeHtml($child->getCode()) ?>)</strong>
-                                    <?php endif; ?>
-                                    <?php if ($exam instanceof Summary): ?>
-                                        <?= $this->escapeHtml(
-                                            sprintf(
-                                                $this->translate('Summary by %s on %s (%s)'),
-                                                $exam->getAuthor(),
-                                                $exam->getDate()->format('Y-m-d'),
-                                                $exam->getLanguage(),
-                                            )
+                    <?php foreach ($course->getDocuments() as $document): ?>
+                        <li>
+                            <a href="<?= $this->url('education/course/download', [
+                                'code' => $course->getCode(),
+                                'id' => $document->getId()
+                            ]) ?>">
+                                <?php if ($document instanceof SummaryModel): ?>
+                                    <?php if (null !== ($author = $document->getauthor())): ?>
+                                        <?= sprintf(
+                                            $this->translate('Summary by %s on %s (%s)'),
+                                            $this->escapeHtml($document->getAuthor()),
+                                            $document->getDate()->format('Y-m-d'),
+                                            $document->getLanguage()->getName(
+                                                $this->plugin('translate')->getTranslator()
+                                            ),
                                         ) ?>
                                     <?php else: ?>
-                                        <?php
-                                        switch ($exam->getExamType()) {
-                                            case Exam::EXAM_TYPE_FINAL:
-                                                $name = $this->translate('Examination from %s (%s)');
-                                                break;
-                                            case Exam::EXAM_TYPE_INTERMEDIATE_TEST:
-                                                $name = $this->translate('Intermediate test from %s (%s)');
-                                                break;
-                                            case Exam::EXAM_TYPE_ANSWERS:
-                                                $name = $this->translate('Answers from %s (%s)');
-                                                break;
-                                            case Exam::EXAM_TYPE_OTHER:
-                                                $name = $this->translate('Other exam material from %s (%s)');
-                                                break;
-                                        }
-                                        ?>
-                                        <?= $this->escapeHtml(
-                                            sprintf(
-                                                $name,
-                                                $exam->getDate()->format('Y-m-d'),
-                                                $exam->getLanguage(),
-                                            )
+                                        <?= sprintf(
+                                            $this->translate('Summary on %s (%s)'),
+                                            $document->getDate()->format('Y-m-d'),
+                                            $document->getLanguage()->getName(
+                                                $this->plugin('translate')->getTranslator()
+                                            ),
                                         ) ?>
-                                    <?php endif ?>
-                                </a></li>
-                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                <?php else: ?>
+                                    <?php
+                                    switch ($document->getExamType()) {
+                                        case ExamTypes::Final:
+                                            $name = $this->translate('Final test from %s (%s)');
+                                            break;
+                                        case ExamTypes::Interim:
+                                            $name = $this->translate('Interim test from %s (%s)');
+                                            break;
+                                        case ExamTypes::Answers:
+                                            $name = $this->translate('Answers from %s (%s)');
+                                            break;
+                                        case ExamTypes::Other:
+                                            $name = $this->translate('Other exam material from %s (%s)');
+                                            break;
+                                    }
+                                    ?>
+                                    <?= $this->escapeHtml(
+                                        sprintf(
+                                            $name,
+                                            $document->getDate()->format('Y-m-d'),
+                                            $document->getLanguage()->getName(
+                                                $this->plugin('translate')->getTranslator()
+                                            ),
+                                        )
+                                    ) ?>
+                                <?php endif ?>
+                            </a>
+                        </li>
                     <?php endforeach; ?>
                 </ul>
             </div>
