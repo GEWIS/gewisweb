@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-13 16:38+0200\n"
-"PO-Revision-Date: 2022-10-13 16:41+0200\n"
+"POT-Creation-Date: 2022-11-19 12:43+0100\n"
+"PO-Revision-Date: 2022-11-19 12:57+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -23,67 +23,67 @@ msgstr ""
 msgid "You are not allowed to create activity proposals"
 msgstr "You are not allowed to create activity proposals"
 
-#: module/Activity/src/Controller/ActivityController.php:231
+#: module/Activity/src/Controller/ActivityController.php:232
 #: module/Activity/view/activity/activity/index.phtml:32
 msgid "Create Activity"
 msgstr "Create Activity"
 
-#: module/Activity/src/Controller/ActivityController.php:261
-#: module/Activity/src/Controller/ActivityController.php:358
+#: module/Activity/src/Controller/ActivityController.php:262
+#: module/Activity/src/Controller/ActivityController.php:359
 #: module/Activity/src/Controller/AdminController.php:290
 #: module/Activity/src/Controller/AdminController.php:383
 msgid "Invalid form"
 msgstr "Invalid form"
 
-#: module/Activity/src/Controller/ActivityController.php:270
-#: module/Activity/src/Controller/ActivityController.php:367
+#: module/Activity/src/Controller/ActivityController.php:271
+#: module/Activity/src/Controller/ActivityController.php:368
 msgid "You need to log in to subscribe"
 msgstr "You need to log in to subscribe"
 
-#: module/Activity/src/Controller/ActivityController.php:280
-#: module/Activity/src/Controller/ActivityController.php:377
+#: module/Activity/src/Controller/ActivityController.php:281
+#: module/Activity/src/Controller/ActivityController.php:378
 msgid "You cannot subscribe to this activity at this moment in time"
 msgstr "You cannot subscribe to this activity at this moment in time"
 
-#: module/Activity/src/Controller/ActivityController.php:289
+#: module/Activity/src/Controller/ActivityController.php:290
 msgid "You have already been subscribed for this activity"
 msgstr "You have already been subscribed for this activity"
 
-#: module/Activity/src/Controller/ActivityController.php:295
+#: module/Activity/src/Controller/ActivityController.php:296
 msgid "Successfully subscribed"
 msgstr "Successfully subscribed"
 
-#: module/Activity/src/Controller/ActivityController.php:300
-#: module/Activity/src/Controller/ActivityController.php:393
+#: module/Activity/src/Controller/ActivityController.php:301
+#: module/Activity/src/Controller/ActivityController.php:394
 #: module/Activity/src/Controller/AdminController.php:314
 msgid "Use the form to subscribe"
 msgstr "Use the form to subscribe"
 
-#: module/Activity/src/Controller/ActivityController.php:388
+#: module/Activity/src/Controller/ActivityController.php:389
 msgid "Successfully subscribed as external participant"
 msgstr "Successfully subscribed as external participant"
 
-#: module/Activity/src/Controller/ActivityController.php:420
+#: module/Activity/src/Controller/ActivityController.php:421
 msgid "Wrong form"
 msgstr "Wrong form"
 
-#: module/Activity/src/Controller/ActivityController.php:427
+#: module/Activity/src/Controller/ActivityController.php:428
 msgid "You have to be logged in to subscribe for this activity"
 msgstr "You have to be logged in to subscribe for this activity"
 
-#: module/Activity/src/Controller/ActivityController.php:438
+#: module/Activity/src/Controller/ActivityController.php:439
 msgid "You cannot unsubscribe from this activity at this moment in time"
 msgstr "You cannot unsubscribe from this activity at this moment in time"
 
-#: module/Activity/src/Controller/ActivityController.php:448
+#: module/Activity/src/Controller/ActivityController.php:449
 msgid "You are not subscribed to this activity!"
 msgstr "You are not subscribed to this activity!"
 
-#: module/Activity/src/Controller/ActivityController.php:454
+#: module/Activity/src/Controller/ActivityController.php:455
 msgid "Successfully unsubscribed"
 msgstr "Successfully unsubscribed"
 
-#: module/Activity/src/Controller/ActivityController.php:459
+#: module/Activity/src/Controller/ActivityController.php:460
 msgid "Use the form to unsubscribe"
 msgstr "Use the form to unsubscribe"
 
@@ -194,7 +194,7 @@ msgid "Option planning period created successfully."
 msgstr "Option planning period created successfully."
 
 #: module/Activity/src/Controller/AdminOptionController.php:93
-#: module/Activity/view/activity/admin-option/index.phtml:33
+#: module/Activity/view/activity/admin-option/index.phtml:105
 msgid "Add Option Period"
 msgstr "Add Option Period"
 
@@ -202,23 +202,27 @@ msgstr "Add Option Period"
 msgid "You are not allowed to delete option calendar periods"
 msgstr "You are not allowed to delete option calendar periods"
 
-#: module/Activity/src/Controller/AdminOptionController.php:117
-msgid "Option planning period removed."
-msgstr "Option planning period removed."
+#: module/Activity/src/Controller/AdminOptionController.php:116
+msgid "Past option planning periods cannot be deleted."
+msgstr "Past option planning periods cannot be deleted."
 
-#: module/Activity/src/Controller/AdminOptionController.php:129
+#: module/Activity/src/Controller/AdminOptionController.php:124
+msgid "Option planning period deleted."
+msgstr "Option planning period deleted."
+
+#: module/Activity/src/Controller/AdminOptionController.php:136
 msgid "You are not allowed to edit option calendar periods"
 msgstr "You are not allowed to edit option calendar periods"
 
-#: module/Activity/src/Controller/AdminOptionController.php:144
+#: module/Activity/src/Controller/AdminOptionController.php:151
 msgid "This option planning period cannot be edited."
 msgstr "This option planning period cannot be edited."
 
-#: module/Activity/src/Controller/AdminOptionController.php:163
+#: module/Activity/src/Controller/AdminOptionController.php:170
 msgid "Option planning period has been updated."
 msgstr "Option planning period has been updated."
 
-#: module/Activity/src/Controller/AdminOptionController.php:185
+#: module/Activity/src/Controller/AdminOptionController.php:192
 msgid "Edit Option Period"
 msgstr "Edit Option Period"
 
@@ -240,6 +244,10 @@ msgstr "No Company"
 #: module/Activity/src/Form/Activity.php:327
 #: module/Activity/src/Form/Activity.php:339
 #: module/Activity/src/Form/Activity.php:351
+#: module/Activity/src/Form/ActivityCalendarProposal.php:130
+#: module/Activity/src/Form/ActivityCalendarProposal.php:141
+#: module/Activity/src/Form/ActivityCalendarProposal.php:149
+#: module/Education/src/Form/Bulk.php:59
 msgid "Value is required and can't be empty"
 msgstr "Value is required and can't be empty"
 
@@ -290,10 +298,6 @@ msgstr "The activity must start before it ends"
 msgid "The activity must start after today"
 msgstr "The activity must start after today"
 
-#: module/Activity/src/Form/ActivityCalendarOption.php:105
-msgid "The activity must be within the given period"
-msgstr "The activity must be within the given period"
-
 #: module/Activity/src/Form/ActivityCalendarPeriod.php:32
 msgid "Start date and time of planning period"
 msgstr "Start date and time of planning period"
@@ -326,17 +330,25 @@ msgstr "The option period must start after the planning period ends."
 msgid "The option period must end after it starts."
 msgstr "The option period must end after it starts."
 
-#: module/Activity/src/Form/ActivityCalendarProposal.php:55
+#: module/Activity/src/Form/ActivityCalendarProposal.php:63
+msgid "Select a period"
+msgstr "Select a period"
+
+#: module/Activity/src/Form/ActivityCalendarProposal.php:78
 msgid "Select an option"
 msgstr "Select an option"
 
-#: module/Activity/src/Form/ActivityCalendarProposal.php:127
+#: module/Activity/src/Form/ActivityCalendarProposal.php:161
+msgid "Option should end after it starts."
+msgstr "Option should end after it starts."
+
+#: module/Activity/src/Form/ActivityCalendarProposal.php:169
+msgid "Option does not fall within option period (also check the end date)."
+msgstr "Option does not fall within option period (also check the end date)."
+
+#: module/Activity/src/Form/ActivityCalendarProposal.php:216
 msgid "The activity does now have an acceptable amount of options"
 msgstr "The activity does now have an acceptable amount of options"
-
-#: module/Activity/src/Form/ActivityCalendarProposal.php:140
-msgid "The options for this proposal do not fit in the valid range."
-msgstr "The options for this proposal do not fit in the valid range."
 
 #: module/Activity/src/Form/ActivityCategory.php:24
 #: module/Activity/src/Form/ActivityCategory.php:34
@@ -344,7 +356,7 @@ msgstr "The options for this proposal do not fit in the valid range."
 #: module/Activity/src/Form/SignupList.php:46
 #: module/Activity/src/Form/SignupListField.php:33
 #: module/Activity/src/Form/SignupListField.php:43
-#: module/Activity/view/activity/activity-calendar/create.phtml:103
+#: module/Activity/view/activity/activity-calendar/create.phtml:81
 #: module/Activity/view/activity/activity-calendar/index.phtml:46
 #: module/Activity/view/activity/activity/view.phtml:243
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:112
@@ -380,7 +392,8 @@ msgstr "The options for this proposal do not fit in the valid range."
 #: module/Decision/view/decision/member/birthdays.phtml:12
 #: module/Decision/view/decision/organ-admin/index.phtml:12
 #: module/Decision/view/decision/organ/index.phtml:14
-#: module/Education/src/Form/AddCourse.php:58
+#: module/Education/src/Form/Course.php:43
+#: module/Education/view/education/admin/course.phtml:32
 #: module/Photo/view/photo/album-admin/edit.phtml:23
 #: module/User/src/Form/ApiToken.php:25
 #: module/User/view/user/api-admin/add.phtml:45
@@ -423,7 +436,8 @@ msgstr "Choice"
 #: module/Activity/view/partial/option.phtml:10
 #: module/Decision/view/decision/decision/index.phtml:9
 #: module/Decision/view/decision/organ/index.phtml:15
-#: module/Education/src/Form/Fieldset/Exam.php:66
+#: module/Education/src/Form/Fieldset/Exam.php:68
+#: module/Education/view/education/admin/course-documents.phtml:58
 msgid "Type"
 msgstr "Type"
 
@@ -444,7 +458,7 @@ msgstr "Option 1, Option 2, ..."
 
 #: module/Activity/src/Form/SignupListField.php:92
 #: module/Activity/src/Form/SignupListField.php:105
-#: module/Activity/view/activity/activity-calendar/create.phtml:129
+#: module/Activity/view/activity/activity-calendar/create.phtml:110
 #: module/Activity/view/activity/activity-calendar/index.phtml:175
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:145
 #: module/Activity/view/partial/create.phtml:157
@@ -459,26 +473,26 @@ msgstr "Some of the required fields for this type are empty"
 msgid "The number of English options must equal the number of Dutch options"
 msgstr "The number of English options must equal the number of Dutch options"
 
-#: module/Activity/src/Service/Activity.php:56
-#: module/Activity/src/Service/Activity.php:97
+#: module/Activity/src/Service/Activity.php:57
+#: module/Activity/src/Service/Activity.php:98
 msgid "You are not allowed to create an activity"
 msgstr "You are not allowed to create an activity"
 
-#: module/Activity/src/Service/Activity.php:137
+#: module/Activity/src/Service/Activity.php:138
 msgid "You are not allowed to create an activity for this organ"
 msgstr "You are not allowed to create an activity for this organ"
 
-#: module/Activity/src/Service/Activity.php:714
-#: module/Activity/src/Service/Activity.php:732
-#: module/Activity/src/Service/Activity.php:750
+#: module/Activity/src/Service/Activity.php:715
+#: module/Activity/src/Service/Activity.php:733
+#: module/Activity/src/Service/Activity.php:751
 msgid "You are not allowed to change the status of the activity"
 msgstr "You are not allowed to change the status of the activity"
 
-#: module/Activity/src/Service/ActivityCalendar.php:168
+#: module/Activity/src/Service/ActivityCalendar.php:169
 msgid "You are not allowed to approve this option"
 msgstr "You are not allowed to approve this option"
 
-#: module/Activity/src/Service/ActivityCalendar.php:216
+#: module/Activity/src/Service/ActivityCalendar.php:217
 msgid "You are not allowed to delete this option"
 msgstr "You are not allowed to delete this option"
 
@@ -560,37 +574,49 @@ msgstr "You are not allowed to remove external signups for this activity"
 msgid "You are not allowed to view sign-up lists"
 msgstr "You are not allowed to view sign-up lists"
 
-#: module/Activity/view/activity/activity-calendar/create.phtml:2
+#: module/Activity/view/activity/activity-calendar/create.phtml:5
 msgid "Create activity proposal"
 msgstr "Create activity proposal"
 
-#: module/Activity/view/activity/activity-calendar/create.phtml:54
+#: module/Activity/view/activity/activity-calendar/create.phtml:21
 #: module/Activity/view/activity/activity-calendar/index.phtml:20
 #: module/Application/view/partial/main-nav.phtml:360
 #: module/Decision/view/decision/member/index.phtml:189
 msgid "Option calendar"
 msgstr "Option calendar"
 
+#: module/Activity/view/activity/activity-calendar/create.phtml:22
+msgid "Propose options for an activity"
+msgstr "Propose options for an activity"
+
+#: module/Activity/view/activity/activity-calendar/create.phtml:30
+msgid "Organisation"
+msgstr "Organisation"
+
+#: module/Activity/view/activity/activity-calendar/create.phtml:31
+#: module/Activity/view/activity/activity-calendar/create.phtml:69
+msgid ""
+"Select the organ for which the options are and in which option period the "
+"options should be planned."
+msgstr ""
+"Select the organ for which the options are and in which option period the "
+"options should be planned."
+
+#: module/Activity/view/activity/activity-calendar/create.phtml:40
+msgid "Period"
+msgstr "Period"
+
 #: module/Activity/view/activity/activity-calendar/create.phtml:55
-msgid "Plan an activity"
-msgstr "Plan an activity"
-
-#: module/Activity/view/activity/activity-calendar/create.phtml:63
-#, php-format
-msgid "You can currently plan options between %s and %s."
-msgstr "You can currently plan options between %s and %s."
-
-#: module/Activity/view/activity/activity-calendar/create.phtml:74
-#: module/Activity/view/activity/admin/list.phtml:59
-msgid "Details"
-msgstr "Details"
-
-#: module/Activity/view/activity/activity-calendar/create.phtml:86
 #: module/Activity/view/activity/activity/create.phtml:49
 msgid "Committee / fraternity"
 msgstr "Committee / fraternity"
 
-#: module/Activity/view/activity/activity-calendar/create.phtml:120
+#: module/Activity/view/activity/activity-calendar/create.phtml:68
+#: module/Activity/view/activity/admin/list.phtml:59
+msgid "Details"
+msgstr "Details"
+
+#: module/Activity/view/activity/activity-calendar/create.phtml:97
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:199
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:204
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:216
@@ -607,17 +633,20 @@ msgstr "Committee / fraternity"
 msgid "Description"
 msgstr "Description"
 
-#: module/Activity/view/activity/activity-calendar/create.phtml:153
+#: module/Activity/view/activity/activity-calendar/create.phtml:111
+msgid "Add options for your activity proposal."
+msgstr "Add options for your activity proposal."
+
+#: module/Activity/view/activity/activity-calendar/create.phtml:133
 msgid "Add an option"
 msgstr "Add an option"
 
-#: module/Activity/view/activity/activity-calendar/create.phtml:157
+#: module/Activity/view/activity/activity-calendar/create.phtml:137
 msgid "Remove the last option"
 msgstr "Remove the last option"
 
-#: module/Activity/view/activity/activity-calendar/create.phtml:164
+#: module/Activity/view/activity/activity-calendar/create.phtml:145
 #: module/Decision/src/Form/Minutes.php:53
-#: module/Education/src/Form/SummaryUpload.php:94
 #: module/Frontpage/src/Form/Poll.php:62
 msgid "Submit"
 msgstr "Submit"
@@ -704,10 +733,18 @@ msgstr "End"
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:70
 #: module/Activity/view/activity/activity-calendar/index.phtml:103
+#: module/Activity/view/activity/admin-option/index.phtml:40
+#: module/Activity/view/activity/admin-option/index.phtml:90
+#: module/Activity/view/activity/admin-option/index.phtml:130
 #: module/Company/view/company/admin/edit-company.phtml:139
 #: module/Company/view/company/admin/edit-package.phtml:89
 #: module/Company/view/company/admin/index.phtml:187
 #: module/Decision/view/decision/admin/document.phtml:115
+#: module/Education/view/education/admin/course-documents.phtml:82
+#: module/Education/view/education/admin/course-documents.phtml:131
+#: module/Education/view/education/admin/course-documents.phtml:166
+#: module/Education/view/education/admin/course.phtml:58
+#: module/Education/view/education/admin/course.phtml:93
 #: module/Education/view/education/admin/edit-exam.phtml:43
 #: module/Education/view/education/admin/edit-summary.phtml:43
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:73
@@ -738,14 +775,17 @@ msgstr "Are you sure you want to delete this option?"
 #: module/Activity/view/activity/activity-calendar/index.phtml:101
 #: module/Activity/view/activity/activity-calendar/index.phtml:125
 #: module/Activity/view/activity/admin-category/index.phtml:56
+#: module/Activity/view/activity/admin-option/index.phtml:127
 #: module/Company/view/company/admin/edit-company.phtml:192
 #: module/Company/view/company/admin/edit-package.phtml:123
 #: module/Company/view/company/admin/index.phtml:227
 #: module/Decision/view/decision/decision/authorizations.phtml:167
+#: module/Education/view/education/admin/course-documents.phtml:163
+#: module/Education/view/education/admin/course.phtml:90
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:171
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:217
-#: module/Photo/view/photo/album-admin/index.phtml:218
-#: module/Photo/view/photo/album-admin/index.phtml:250
+#: module/Photo/view/photo/album-admin/index.phtml:221
+#: module/Photo/view/photo/album-admin/index.phtml:253
 #: module/Photo/view/photo/photo-admin/index.phtml:140
 #: module/User/src/Form/ApiAppAuthorisation.php:26
 msgid "Cancel"
@@ -772,7 +812,7 @@ msgstr "There are no activities."
 msgid "There are no options."
 msgstr "There are no options."
 
-#: module/Activity/view/activity/activity-calendar/index.phtml:216
+#: module/Activity/view/activity/activity-calendar/index.phtml:218
 msgid "Plan activity"
 msgstr "Plan activity"
 
@@ -867,14 +907,12 @@ msgstr ""
 #: module/Activity/view/activity/admin-approval/view.phtml:169
 #: module/Activity/view/activity/admin-category/add.phtml:40
 #: module/Activity/view/partial/create.phtml:17
+#: module/Application/src/Model/Enums/Languages.php:19
 #: module/Company/view/partial/company/admin/editors/category.phtml:7
 #: module/Company/view/partial/company/admin/editors/company.phtml:163
 #: module/Company/view/partial/company/admin/editors/job.phtml:133
 #: module/Company/view/partial/company/admin/editors/label.phtml:16
 #: module/Company/view/partial/company/admin/editors/package.phtml:61
-#: module/Education/src/Form/Fieldset/Exam.php:85
-#: module/Education/src/Form/Fieldset/Summary.php:79
-#: module/Education/src/Form/SummaryUpload.php:73
 msgid "Dutch"
 msgstr "Dutch"
 
@@ -885,14 +923,12 @@ msgstr "Dutch"
 #: module/Activity/view/activity/admin-approval/view.phtml:174
 #: module/Activity/view/activity/admin-category/add.phtml:77
 #: module/Activity/view/partial/create.phtml:91
+#: module/Application/src/Model/Enums/Languages.php:18
 #: module/Company/view/partial/company/admin/editors/category.phtml:52
 #: module/Company/view/partial/company/admin/editors/company.phtml:224
 #: module/Company/view/partial/company/admin/editors/job.phtml:227
 #: module/Company/view/partial/company/admin/editors/label.phtml:61
 #: module/Company/view/partial/company/admin/editors/package.phtml:93
-#: module/Education/src/Form/Fieldset/Exam.php:84
-#: module/Education/src/Form/Fieldset/Summary.php:78
-#: module/Education/src/Form/SummaryUpload.php:72
 msgid "English"
 msgstr "English"
 
@@ -1179,8 +1215,8 @@ msgstr "Add Category"
 #: module/Company/view/company/admin/edit-package.phtml:114
 #: module/Company/view/company/admin/index.phtml:214
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:160
-#: module/Photo/view/photo/album-admin/index.phtml:199
-#: module/Photo/view/photo/album-admin/index.phtml:231
+#: module/Photo/view/photo/album-admin/index.phtml:202
+#: module/Photo/view/photo/album-admin/index.phtml:234
 #: module/Photo/view/photo/photo-admin/index.phtml:121
 msgid "Delete confirmation"
 msgstr "Delete confirmation"
@@ -1194,12 +1230,14 @@ msgid "Delete Activity Category"
 msgstr "Delete Activity Category"
 
 #: module/Activity/view/activity/admin-option/add.phtml:3
-#: module/Activity/view/activity/admin-option/index.phtml:3
+#: module/Activity/view/activity/admin-option/index.phtml:5
 #: module/Application/view/partial/admin.phtml:42
 msgid "Option Calendar"
 msgstr "Option Calendar"
 
 #: module/Activity/view/activity/admin-option/add.phtml:12
+#: module/Activity/view/activity/admin-option/index.phtml:15
+#: module/Activity/view/activity/admin-option/index.phtml:57
 msgid "Planning Period"
 msgstr "Planning Period"
 
@@ -1208,6 +1246,8 @@ msgid "Enter the start and end date and time of the planning period."
 msgstr "Enter the start and end date and time of the planning period."
 
 #: module/Activity/view/activity/admin-option/add.phtml:52
+#: module/Activity/view/activity/admin-option/index.phtml:16
+#: module/Activity/view/activity/admin-option/index.phtml:58
 msgid "Option Period"
 msgstr "Option Period"
 
@@ -1231,37 +1271,63 @@ msgstr ""
 msgid "Global Value"
 msgstr "Global Value"
 
-#: module/Activity/view/activity/admin-option/index.phtml:4
+#: module/Activity/view/activity/admin-option/index.phtml:6
 #: module/Activity/view/activity/admin/view.phtml:4
 #: module/Application/view/partial/admin.phtml:33
 msgid "Overview"
 msgstr "Overview"
 
-#: module/Activity/view/activity/admin-option/index.phtml:12
-#, php-format
-msgid ""
-"Options can be proposed from <strong>%s</strong> till <strong>%s</strong> "
-"for the period <strong>%s</strong> to <strong>%s</strong>."
-msgstr ""
-"Options can be proposed from <strong>%s</strong> till <strong>%s</strong> "
-"for the period <strong>%s</strong> to <strong>%s</strong>."
+#: module/Activity/view/activity/admin-option/index.phtml:10
+msgid "Active Option Planning Periods"
+msgstr "Active Option Planning Periods"
 
-#: module/Activity/view/activity/admin-option/index.phtml:20
-#, php-format
-msgid ""
-"The next option creation period will from <strong>%s</strong> till <strong>"
-"%s</strong>."
-msgstr ""
-"The next option creation period will from <strong>%s</strong> till <strong>"
-"%s</strong>."
+#: module/Activity/view/activity/admin-option/index.phtml:17
+#: module/Activity/view/activity/admin-option/index.phtml:59
+#: module/Company/view/company/admin/edit-company.phtml:100
+#: module/Company/view/company/admin/edit-package.phtml:68
+#: module/Company/view/company/admin/index.phtml:160
+#: module/Company/view/company/admin/index.phtml:201
+#: module/Education/view/education/admin/course-documents.phtml:64
+#: module/Education/view/education/admin/course-documents.phtml:115
+#: module/Education/view/education/admin/course.phtml:35
+msgid "Actions"
+msgstr "Actions"
 
-#: module/Activity/view/activity/admin-option/index.phtml:25
+#: module/Activity/view/activity/admin-option/index.phtml:48
 msgid "There is currently no option creation period planned."
 msgstr "There is currently no option creation period planned."
 
-#: module/Activity/view/activity/admin-option/index.phtml:37
-msgid "Edit Upcoming Period"
-msgstr "Edit Upcoming Period"
+#: module/Activity/view/activity/admin-option/index.phtml:52
+msgid "Planned Option Planning Periods"
+msgstr "Planned Option Planning Periods"
+
+#: module/Activity/view/activity/admin-option/index.phtml:86
+#: module/Activity/view/activity/admin/list.phtml:55
+#: module/Company/view/company/admin/edit-company.phtml:134
+#: module/Decision/view/decision/organ-admin/edit.phtml:37
+#: module/Education/view/education/admin/course-documents.phtml:24
+#: module/Education/view/education/admin/course.phtml:53
+#: module/Education/view/education/admin/edit-course.phtml:10
+#: module/Frontpage/view/frontpage/news-admin/edit.phtml:26
+#: module/Frontpage/view/frontpage/page-admin/edit.phtml:26
+msgid "Edit"
+msgstr "Edit"
+
+#: module/Activity/view/activity/admin-option/index.phtml:98
+msgid "There are no planned option creation periods in the future."
+msgstr "There are no planned option creation periods in the future."
+
+#: module/Activity/view/activity/admin-option/index.phtml:117
+msgid "Delete period"
+msgstr "Delete period"
+
+#: module/Activity/view/activity/admin-option/index.phtml:121
+msgid ""
+"Are you sure you want to delete this option planning period? This will "
+"<strong>not</strong> delete proposed options."
+msgstr ""
+"Are you sure you want to delete this option planning period? This will "
+"<strong>not</strong> delete proposed options."
 
 #: module/Activity/view/activity/admin/list.phtml:13
 #: module/Activity/view/activity/admin/view.phtml:53
@@ -1312,14 +1378,6 @@ msgstr "None"
 #: module/Activity/view/activity/admin/list.phtml:44
 msgid "Update pending"
 msgstr "Update pending"
-
-#: module/Activity/view/activity/admin/list.phtml:55
-#: module/Company/view/company/admin/edit-company.phtml:134
-#: module/Decision/view/decision/organ-admin/edit.phtml:37
-#: module/Frontpage/view/frontpage/news-admin/edit.phtml:26
-#: module/Frontpage/view/frontpage/page-admin/edit.phtml:26
-msgid "Edit"
-msgstr "Edit"
 
 #: module/Activity/view/activity/admin/list.phtml:63
 #: module/Activity/view/activity/admin/participants.phtml:4
@@ -1509,11 +1567,11 @@ msgstr ""
 "When this is checked, GEFLITST will be notified that this activity needs a "
 "photographer."
 
-#: module/Activity/view/partial/option.phtml:23
+#: module/Activity/view/partial/option.phtml:24
 msgid "From"
 msgstr "From"
 
-#: module/Activity/view/partial/option.phtml:36
+#: module/Activity/view/partial/option.phtml:38
 msgid "Until"
 msgstr "Until"
 
@@ -1769,32 +1827,38 @@ msgstr "Career"
 
 #: module/Application/view/partial/admin.phtml:59
 #: module/Application/view/partial/main-nav.phtml:318
-#: module/Education/view/education/admin/add-course.phtml:16
+#: module/Education/view/education/admin/add-course.phtml:3
 #: module/Education/view/education/admin/bulk-exam.phtml:11
-#: module/Education/view/education/admin/bulk-summary.phtml:12
+#: module/Education/view/education/admin/bulk-summary.phtml:11
+#: module/Education/view/education/admin/course-documents.phtml:17
+#: module/Education/view/education/admin/course.phtml:5
+#: module/Education/view/education/admin/edit-course.phtml:3
 #: module/Education/view/education/admin/edit-exam.phtml:12
 #: module/Education/view/education/admin/edit-summary.phtml:12
 #: module/Education/view/education/admin/index.phtml:3
-#: module/Education/view/education/admin/summary.phtml:3
-#: module/Education/view/education/education/course.phtml:5
+#: module/Education/view/education/education/course.phtml:11
 #: module/Education/view/education/education/index.phtml:2
 #: module/Education/view/education/education/index.phtml:17
 msgid "Education"
 msgstr "Education"
 
 #: module/Application/view/partial/admin.phtml:64
+#: module/Education/view/education/admin/add-course.phtml:4
+#: module/Education/view/education/admin/course-documents.phtml:18
+#: module/Education/view/education/admin/course.phtml:6
+#: module/Education/view/education/admin/edit-course.phtml:4
+msgid "Courses"
+msgstr "Courses"
+
+#: module/Application/view/partial/admin.phtml:69
 #: module/Education/view/education/admin/bulk-exam.phtml:16
 msgid "Upload exams"
 msgstr "Upload exams"
 
-#: module/Application/view/partial/admin.phtml:69
-#: module/Education/view/education/admin/bulk-summary.phtml:17
+#: module/Application/view/partial/admin.phtml:74
+#: module/Education/view/education/admin/bulk-summary.phtml:16
 msgid "Upload summaries"
 msgstr "Upload summaries"
-
-#: module/Application/view/partial/admin.phtml:74
-msgid "Add courses"
-msgstr "Add courses"
 
 #: module/Application/view/partial/admin.phtml:84
 #: module/Decision/view/decision/admin/authorizations.phtml:3
@@ -1814,6 +1878,7 @@ msgstr "Minutes"
 #: module/Application/view/partial/admin.phtml:91
 #: module/Decision/view/decision/admin/document.phtml:5
 #: module/Decision/view/decision/decision/view.phtml:19
+#: module/Education/view/education/admin/course.phtml:48
 msgid "Documents"
 msgstr "Documents"
 
@@ -2397,13 +2462,6 @@ msgstr "Expiration date"
 msgid "Jobs / Type"
 msgstr "Jobs / Type"
 
-#: module/Company/view/company/admin/edit-company.phtml:100
-#: module/Company/view/company/admin/edit-package.phtml:68
-#: module/Company/view/company/admin/index.phtml:160
-#: module/Company/view/company/admin/index.phtml:201
-msgid "Actions"
-msgstr "Actions"
-
 #: module/Company/view/company/admin/edit-company.phtml:117
 #: module/Company/view/company/admin/index.phtml:252
 #: module/Company/view/company/admin/index.phtml:284
@@ -2484,6 +2542,11 @@ msgstr "Delete job"
 #: module/Company/view/company/company/spotlight.phtml:17
 msgid "Companies"
 msgstr "Companies"
+
+#: module/Company/view/company/admin/index.phtml:26
+#: module/Education/view/education/admin/course.phtml:15
+msgid "Filter..."
+msgstr "Filter..."
 
 #: module/Company/view/company/admin/index.phtml:31
 msgid "Add Company"
@@ -3016,7 +3079,6 @@ msgid "This meeting does not have any associated documents."
 msgstr "This meeting does not have any associated documents."
 
 #: module/Decision/view/decision/admin/minutes.phtml:44
-#: module/Education/view/education/admin/summary.phtml:86
 msgid "Upload"
 msgstr "Upload"
 
@@ -3146,6 +3208,8 @@ msgstr "Meeting number"
 
 #: module/Decision/view/decision/decision/index.phtml:11
 #: module/Decision/view/decision/member/birthdays.phtml:11
+#: module/Education/view/education/admin/course-documents.phtml:55
+#: module/Education/view/education/admin/course-documents.phtml:106
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:26
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:99
 msgid "Date"
@@ -3521,135 +3585,130 @@ msgstr "Previous members"
 msgid "Organ mutations"
 msgstr "Organ mutations"
 
-#: module/Education/src/Form/AddCourse.php:26
-msgid "Quartile 1"
-msgstr "Quartile 1"
+#: module/Education/src/Controller/AdminController.php:39
+msgid "You are not allowed to administer education settings"
+msgstr "You are not allowed to administer education settings"
 
-#: module/Education/src/Form/AddCourse.php:27
-msgid "Quartile 2"
-msgstr "Quartile 2"
+#: module/Education/src/Controller/AdminController.php:49
+msgid "You are not allowed to administer courses"
+msgstr "You are not allowed to administer courses"
 
-#: module/Education/src/Form/AddCourse.php:28
-msgid "Quartile 3"
-msgstr "Quartile 3"
+#: module/Education/src/Controller/AdminController.php:58
+#: module/Education/src/Service/Exam.php:475
+msgid "You are not allowed to add courses"
+msgstr "You are not allowed to add courses"
 
-#: module/Education/src/Form/AddCourse.php:29
-msgid "Quartile 4"
-msgstr "Quartile 4"
+#: module/Education/src/Controller/AdminController.php:74
+msgid "Successfully added course!"
+msgstr "Successfully added course!"
 
-#: module/Education/src/Form/AddCourse.php:30
-msgid "Interim"
-msgstr "Interim"
+#: module/Education/src/Controller/AdminController.php:80
+#: module/Education/src/Controller/AdminController.php:123
+msgid "An error occurred while saving the course!"
+msgstr "An error occurred while saving the course!"
 
-#: module/Education/src/Form/AddCourse.php:40
-#: module/Education/src/Form/Fieldset/Exam.php:45
-#: module/Education/src/Form/Fieldset/Summary.php:45
-#: module/Education/src/Form/SummaryUpload.php:39
+#: module/Education/src/Controller/AdminController.php:96
+#: module/Education/src/Controller/AdminController.php:160
+msgid "You are not allowed to edit courses"
+msgstr "You are not allowed to edit courses"
+
+#: module/Education/src/Controller/AdminController.php:119
+msgid "Successfully updated course information!"
+msgstr "Successfully updated course information!"
+
+#: module/Education/src/Controller/AdminController.php:138
+msgid "You are not allowed to delete courses"
+msgstr "You are not allowed to delete courses"
+
+#: module/Education/src/Controller/AdminController.php:181
+msgid "You are not allowed to delete course documents"
+msgstr "You are not allowed to delete course documents"
+
+#: module/Education/src/Form/Bulk.php:45
+msgid "Finalize uploads"
+msgstr "Finalize uploads"
+
+#: module/Education/src/Form/Bulk.php:66
+msgid "Course does not exist"
+msgstr "Course does not exist"
+
+#: module/Education/src/Form/Course.php:33
+#: module/Education/src/Form/Fieldset/Exam.php:47
+#: module/Education/src/Form/Fieldset/Summary.php:49
 #: module/Education/view/education/education/index.phtml:65
 msgid "Course code"
 msgstr "Course code"
 
-#: module/Education/src/Form/AddCourse.php:49
-msgid "Parent course code"
-msgstr "Parent course code"
-
-#: module/Education/src/Form/AddCourse.php:67
-msgid "URL"
-msgstr "URL"
-
-#: module/Education/src/Form/AddCourse.php:76
-msgid "Year"
-msgstr "Year"
-
-#: module/Education/src/Form/AddCourse.php:86
-msgid "Quartile"
-msgstr "Quartile"
-
-#: module/Education/src/Form/AddCourse.php:97
+#: module/Education/src/Form/Course.php:53
 msgid "Add course"
 msgstr "Add course"
 
-#: module/Education/src/Form/Bulk.php:42
-msgid "Finalize uploads"
-msgstr "Finalize uploads"
+#: module/Education/src/Form/Course.php:84
+msgid "There already exists a course with this code"
+msgstr "There already exists a course with this code"
 
-#: module/Education/src/Form/Fieldset/Exam.php:55
+#: module/Education/src/Form/Fieldset/Exam.php:57
 msgid "Exam date"
 msgstr "Exam date"
 
-#: module/Education/src/Form/Fieldset/Exam.php:68
-msgid "Final examination"
-msgstr "Final examination"
-
-#: module/Education/src/Form/Fieldset/Exam.php:69
-msgid "Intermediate test"
-msgstr "Intermediate test"
-
-#: module/Education/src/Form/Fieldset/Exam.php:70
-msgid "Exam answers"
-msgstr "Exam answers"
-
-#: module/Education/src/Form/Fieldset/Exam.php:71
-msgid "Other"
-msgstr "Other"
-
-#: module/Education/src/Form/Fieldset/Exam.php:82
-#: module/Education/src/Form/Fieldset/Summary.php:76
-#: module/Education/src/Form/SummaryUpload.php:70
+#: module/Education/src/Form/Fieldset/Exam.php:84
+#: module/Education/src/Form/Fieldset/Summary.php:80
+#: module/Education/view/education/admin/course-documents.phtml:61
+#: module/Education/view/education/admin/course-documents.phtml:112
 msgid "Language"
 msgstr "Language"
 
-#: module/Education/src/Form/Fieldset/Summary.php:55
-#: module/Education/src/Form/SummaryUpload.php:49
+#: module/Education/src/Form/Fieldset/Summary.php:59
 msgid "Summary date"
 msgstr "Summary date"
 
-#: module/Education/src/Form/Fieldset/Summary.php:66
-#: module/Education/src/Form/SummaryUpload.php:60
+#: module/Education/src/Form/Fieldset/Summary.php:70
+#: module/Education/view/education/admin/course-documents.phtml:109
 #: module/Frontpage/src/Form/PollComment.php:26
 msgid "Author"
 msgstr "Author"
-
-#: module/Education/src/Form/SummaryUpload.php:84
-msgid "Summary to upload"
-msgstr "Summary to upload"
 
 #: module/Education/src/Form/TempUpload.php:25
 msgid "Exam to upload"
 msgstr "Exam to upload"
 
-#: module/Education/src/Service/Exam.php:86
-msgid "You are not allowed to download exams"
-msgstr "You are not allowed to download exams"
+#: module/Education/src/Model/Enums/ExamTypes.php:20
+msgid "Final"
+msgstr "Final"
 
-#: module/Education/src/Service/Exam.php:130
-msgid "Course doesn't exist"
-msgstr "Course doesn't exist"
+#: module/Education/src/Model/Enums/ExamTypes.php:21
+msgid "Interim"
+msgstr "Interim"
 
-#: module/Education/src/Service/Exam.php:333
+#: module/Education/src/Model/Enums/ExamTypes.php:22
+msgid "Answers"
+msgstr "Answers"
+
+#: module/Education/src/Model/Enums/ExamTypes.php:23
+msgid "Other"
+msgstr "Other"
+
+#: module/Education/src/Service/Exam.php:91
+msgid "You are not allowed to download course documents"
+msgstr "You are not allowed to download course documents"
+
+#: module/Education/src/Service/Exam.php:313
 msgid "You are not allowed to delete exams"
 msgstr "You are not allowed to delete exams"
 
-#: module/Education/src/Service/Exam.php:352
-#: module/Education/src/Service/Exam.php:477
+#: module/Education/src/Service/Exam.php:332
+#: module/Education/src/Service/Exam.php:457
 msgid "You are not allowed to upload exams"
 msgstr "You are not allowed to upload exams"
 
-#: module/Education/src/Service/Exam.php:492
-msgid "You are not allowed to add courses"
-msgstr "You are not allowed to add courses"
+#: module/Education/view/education/admin/add-course.phtml:5
+msgid "Add"
+msgstr "Add"
 
-#: module/Education/view/education/admin/add-course.phtml:17
+#: module/Education/view/education/admin/add-course.phtml:16
+#: module/Education/view/education/admin/course.phtml:19
 msgid "Add Course"
 msgstr "Add Course"
-
-#: module/Education/view/education/admin/add-course.phtml:125
-msgid "The course was added."
-msgstr "The course was added."
-
-#: module/Education/view/education/admin/add-course.phtml:127
-msgid "The course was not added. Please check your input."
-msgstr "The course was not added. Please check your input."
 
 #: module/Education/view/education/admin/bulk-exam.phtml:12
 msgid "Upload Exams"
@@ -3659,13 +3718,69 @@ msgstr "Upload Exams"
 msgid "Finalize exam uploads"
 msgstr "Finalize exam uploads"
 
-#: module/Education/view/education/admin/bulk-summary.phtml:13
+#: module/Education/view/education/admin/bulk-summary.phtml:12
 msgid "Upload Summaries"
 msgstr "Upload Summaries"
 
-#: module/Education/view/education/admin/bulk-summary.phtml:28
+#: module/Education/view/education/admin/bulk-summary.phtml:27
 msgid "Finalize summary uploads"
 msgstr "Finalize summary uploads"
+
+#: module/Education/view/education/admin/course-documents.phtml:37
+#, php-format
+msgid "Course Documents of %s"
+msgstr "Course Documents of %s"
+
+#: module/Education/view/education/admin/course-documents.phtml:47
+#: module/Education/view/education/education/index.phtml:22
+msgid "Exams"
+msgstr "Exams"
+
+#: module/Education/view/education/admin/course-documents.phtml:90
+#: module/Education/view/education/admin/course-documents.phtml:139
+msgid "This course does not have any exams."
+msgstr "This course does not have any exams."
+
+#: module/Education/view/education/admin/course-documents.phtml:98
+msgid "Summaries"
+msgstr "Summaries"
+
+#: module/Education/view/education/admin/course-documents.phtml:123
+msgid "N/A"
+msgstr "N/A"
+
+#: module/Education/view/education/admin/course-documents.phtml:153
+msgid "Delete Document"
+msgstr "Delete Document"
+
+#: module/Education/view/education/admin/course-documents.phtml:157
+msgid "Are you sure you want to delete this document?"
+msgstr "Are you sure you want to delete this document?"
+
+#: module/Education/view/education/admin/course.phtml:10
+msgid "Course Admin"
+msgstr "Course Admin"
+
+#: module/Education/view/education/admin/course.phtml:29
+msgid "Code"
+msgstr "Code"
+
+#: module/Education/view/education/admin/course.phtml:75
+msgid "Delete Course"
+msgstr "Delete Course"
+
+#: module/Education/view/education/admin/course.phtml:81
+#, php-format
+msgid ""
+"Are you sure you want to delete %s? This will also delete all associated "
+"exams and summaries will be deleted."
+msgstr ""
+"Are you sure you want to delete %s? This will also delete all associated "
+"exams and summaries will be deleted."
+
+#: module/Education/view/education/admin/edit-course.phtml:23
+msgid "Edit Course"
+msgstr "Edit Course"
 
 #: module/Education/view/education/admin/edit-exam.phtml:13
 msgid "Edit Exam"
@@ -3695,54 +3810,39 @@ msgstr "There are no summaries to be edited. Upload exams to edit them."
 msgid "Education admin"
 msgstr "Education admin"
 
-#: module/Education/view/education/admin/summary.phtml:4
-msgid "Add Summary"
-msgstr "Add Summary"
-
-#: module/Education/view/education/admin/summary.phtml:7
-msgid "Summary successfully uploaded!"
-msgstr "Summary successfully uploaded!"
-
-#: module/Education/view/education/education/course.phtml:18
-msgid "Course URL"
-msgstr "Course URL"
-
-#: module/Education/view/education/education/course.phtml:31
-msgid "Subcourses"
-msgstr "Subcourses"
-
-#: module/Education/view/education/education/course.phtml:44
+#: module/Education/view/education/education/course.phtml:23
 msgid "Exams and summaries"
 msgstr "Exams and summaries"
 
-#: module/Education/view/education/education/course.phtml:65
+#: module/Education/view/education/education/course.phtml:34
 #, php-format
 msgid "Summary by %s on %s (%s)"
 msgstr "Summary by %s on %s (%s)"
 
-#: module/Education/view/education/education/course.phtml:75
+#: module/Education/view/education/education/course.phtml:43
 #, php-format
-msgid "Examination from %s (%s)"
-msgstr "Examination from %s (%s)"
+msgid "Summary on %s (%s)"
+msgstr "Summary on %s (%s)"
 
-#: module/Education/view/education/education/course.phtml:78
+#: module/Education/view/education/education/course.phtml:54
 #, php-format
-msgid "Intermediate test from %s (%s)"
-msgstr "Intermediate test from %s (%s)"
+msgid "Final test from %s (%s)"
+msgstr "Final test from %s (%s)"
 
-#: module/Education/view/education/education/course.phtml:81
+#: module/Education/view/education/education/course.phtml:57
+#, php-format
+msgid "Interim test from %s (%s)"
+msgstr "Interim test from %s (%s)"
+
+#: module/Education/view/education/education/course.phtml:60
 #, php-format
 msgid "Answers from %s (%s)"
 msgstr "Answers from %s (%s)"
 
-#: module/Education/view/education/education/course.phtml:84
+#: module/Education/view/education/education/course.phtml:63
 #, php-format
 msgid "Other exam material from %s (%s)"
 msgstr "Other exam material from %s (%s)"
-
-#: module/Education/view/education/education/index.phtml:22
-msgid "Exams"
-msgstr "Exams"
 
 #: module/Education/view/education/education/index.phtml:41
 msgid "Course code or course description"
@@ -4012,15 +4112,15 @@ msgstr "The uploaded file does not have a valid extension"
 msgid "The uploaded file is not a valid image"
 msgstr "The uploaded file is not a valid image"
 
-#: module/Frontpage/src/Service/Poll.php:71
+#: module/Frontpage/src/Service/Poll.php:72
 msgid "You are not allowed to view unapproved polls"
 msgstr "You are not allowed to view unapproved polls"
 
-#: module/Frontpage/src/Service/Poll.php:196
+#: module/Frontpage/src/Service/Poll.php:197
 msgid "You are not allowed to vote on this poll."
 msgstr "You are not allowed to vote on this poll."
 
-#: module/Frontpage/src/Service/Poll.php:351
+#: module/Frontpage/src/Service/Poll.php:352
 msgid "You are not allowed to request polls"
 msgstr "You are not allowed to request polls"
 
@@ -4404,7 +4504,7 @@ msgstr "Not allowed to delete albums."
 msgid "Not allowed to generate album covers."
 msgstr "Not allowed to generate album covers."
 
-#: module/Photo/src/Service/Album.php:501
+#: module/Photo/src/Service/Album.php:507
 msgid "Not allowed to move photos"
 msgstr "Not allowed to move photos"
 
@@ -4544,7 +4644,7 @@ msgid "Regenerate album cover"
 msgstr "Regenerate album cover"
 
 #: module/Photo/view/photo/album-admin/index.phtml:126
-#: module/Photo/view/photo/album-admin/index.phtml:217
+#: module/Photo/view/photo/album-admin/index.phtml:220
 msgid "Delete album"
 msgstr "Delete album"
 
@@ -4556,34 +4656,38 @@ msgstr "Delete %i photos"
 msgid "Generate a new cover photo"
 msgstr "Generate a new cover photo"
 
-#: module/Photo/view/photo/album-admin/index.phtml:157
+#: module/Photo/view/photo/album-admin/index.phtml:153
+msgid "An error occurred while trying to generate an album photo."
+msgstr "An error occurred while trying to generate an album photo."
+
+#: module/Photo/view/photo/album-admin/index.phtml:160
 msgid "Regenerate"
 msgstr "Regenerate"
 
-#: module/Photo/view/photo/album-admin/index.phtml:159
+#: module/Photo/view/photo/album-admin/index.phtml:162
 #: module/Photo/view/photo/album/index.phtml:420
 msgid "Close"
 msgstr "Close"
 
-#: module/Photo/view/photo/album-admin/index.phtml:172
+#: module/Photo/view/photo/album-admin/index.phtml:175
 msgid "Move the album"
 msgstr "Move the album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:177
+#: module/Photo/view/photo/album-admin/index.phtml:180
 msgid "Select a new parent for the album"
 msgstr "Select a new parent for the album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:181
+#: module/Photo/view/photo/album-admin/index.phtml:184
 msgid "The album has been moved"
 msgstr "The album has been moved"
 
-#: module/Photo/view/photo/album-admin/index.phtml:186
-#: module/Photo/view/photo/album-admin/index.phtml:277
+#: module/Photo/view/photo/album-admin/index.phtml:189
+#: module/Photo/view/photo/album-admin/index.phtml:280
 #: module/Photo/view/photo/photo-admin/index.phtml:108
 msgid "Move"
 msgstr "Move"
 
-#: module/Photo/view/photo/album-admin/index.phtml:203
+#: module/Photo/view/photo/album-admin/index.phtml:206
 msgid ""
 "Are you sure you want to delete this album including all photos inside of "
 "it? <strong>This action can not be reverted.</strong>"
@@ -4591,15 +4695,15 @@ msgstr ""
 "Are you sure you want to delete this album including all photos inside of "
 "it? <strong>This action can not be reverted.</strong>"
 
-#: module/Photo/view/photo/album-admin/index.phtml:206
+#: module/Photo/view/photo/album-admin/index.phtml:209
 msgid "Please wait while the album is being deleted."
 msgstr "Please wait while the album is being deleted."
 
-#: module/Photo/view/photo/album-admin/index.phtml:212
+#: module/Photo/view/photo/album-admin/index.phtml:215
 msgid "The album has been deleted"
 msgstr "The album has been deleted"
 
-#: module/Photo/view/photo/album-admin/index.phtml:235
+#: module/Photo/view/photo/album-admin/index.phtml:238
 msgid ""
 "Are you sure you want to delete the selected items? <strong>This action can "
 "not be reverted.</strong>"
@@ -4607,28 +4711,28 @@ msgstr ""
 "Are you sure you want to delete the selected items? <strong>This action can "
 "not be reverted.</strong>"
 
-#: module/Photo/view/photo/album-admin/index.phtml:238
+#: module/Photo/view/photo/album-admin/index.phtml:241
 msgid "Please wait while the photos are being deleted."
 msgstr "Please wait while the photos are being deleted."
 
-#: module/Photo/view/photo/album-admin/index.phtml:244
+#: module/Photo/view/photo/album-admin/index.phtml:247
 msgid "The photos have been been deleted"
 msgstr "The photos have been been deleted"
 
-#: module/Photo/view/photo/album-admin/index.phtml:249
+#: module/Photo/view/photo/album-admin/index.phtml:252
 msgid "Delete photos"
 msgstr "Delete photos"
 
-#: module/Photo/view/photo/album-admin/index.phtml:263
+#: module/Photo/view/photo/album-admin/index.phtml:266
 msgid "Move the photos to another album"
 msgstr "Move the photos to another album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:268
+#: module/Photo/view/photo/album-admin/index.phtml:271
 #: module/Photo/view/photo/photo-admin/index.phtml:99
 msgid "Select a new parent album"
 msgstr "Select a new parent album"
 
-#: module/Photo/view/photo/album-admin/index.phtml:272
+#: module/Photo/view/photo/album-admin/index.phtml:275
 msgid "The photos have been moved"
 msgstr "The photos have been moved"
 
