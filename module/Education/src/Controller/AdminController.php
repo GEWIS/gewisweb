@@ -7,6 +7,7 @@ use Education\Service\{
     Exam as ExamService,
 };
 use Education\Model\Course as CourseModel;
+use Education\Model\Exam as ExamModel;
 use Laminas\Http\{
     Request,
     Response,
@@ -145,6 +146,57 @@ class AdminController extends AbstractActionController
                 $this->examService->deleteCourse($course);
 
                 return $this->redirect()->toRoute('admin_education/course');
+            }
+        }
+
+        return $this->notFoundAction();
+    }
+
+    public function courseDocumentsAction(): ViewModel
+    {
+        if (!$this->aclService->isAllowed('edit', 'course')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to edit courses'));
+        }
+
+        $courseId = $this->params()->fromRoute('course');
+        $course = $this->examService->getCourse($courseId);
+
+        if (null === $course) {
+            return $this->notFoundAction();
+        }
+
+        return new ViewModel([
+            'course' => $course,
+            'exams' => $this->examService->getDocumentsForCourse($course, ExamModel::EXAM_TYPE_FINAL),
+            'summaries' => $this->examService->getDocumentsForCourse($course, ExamModel::EXAM_TYPE_SUMMARY),
+        ]);
+    }
+
+    public function deleteCourseDocumentAction(): Response|ViewModel
+    {
+        if (!$this->aclService->isAllowed('delete', 'exam')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to delete course documents')
+            );
+        }
+
+        $courseId = $this->params()->fromRoute('course');
+        $course = $this->examService->getCourse($courseId);
+
+        if (null === $course) {
+            return $this->notFoundAction();
+        }
+
+        /** @var Request $request */
+        $request = $this->getRequest();
+
+        if ($request->getPost()) {
+            $documentId = $this->params()->fromRoute('document');
+
+            if (null !== ($document = $this->examService->getDocument($documentId))) {
+                $this->examService->deleteDocument($document);
+
+                return $this->redirect()->toRoute('admin_education/course/documents', ['course' => $course->getCode()]);
             }
         }
 

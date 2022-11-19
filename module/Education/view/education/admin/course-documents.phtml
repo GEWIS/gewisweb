@@ -1,0 +1,181 @@
+<?php
+
+use Education\Model\{
+    Exam as ExamModel,
+    Summary as SummaryModel,
+};
+
+$this->scriptUrl()->requireUrls(
+    ['admin_education/course/documents/delete'],
+    [
+        'course',
+        'document',
+    ],
+);
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Education'), true, $this->url('admin_education'))
+    ->addBreadcrumb($this->translate('Courses'), true, $this->url('admin_education/course'))
+    ->addBreadcrumb(
+        $this->escapeHtml($course->getCode()),
+        true,
+        $this->url('admin_education/course/edit', ['course' => $course->getCode()]),
+    )
+    ->addBreadcrumb($this->translate('Edit'));
+
+/**
+ * @var ExamModel[] $exams
+ * @var ExamModel $exam
+ * @var SummaryModel[] $summaries
+ * @var SummaryModel $summary
+ */
+?>
+<div class="row">
+    <div class="col-md-12">
+        <h1>
+            <?= sprintf(
+                $this->translate('Course Documents of %s'),
+                $this->escapeHtml($course->getCode()),
+            ) ?>
+        </h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <h2><?= $this->translate('Exams') ?></h2>
+            </div>
+            <div class="col-md-12">
+                <?php if (!empty($exams)): ?>
+                    <table class="table table-striped">
+                        <thead>
+                            <th>#</th>
+                            <th>
+                                <?= $this->translate('Date') ?>
+                            </th>
+                            <th>
+                                <?= $this->translate('Type') ?>
+                            </th>
+                            <th>
+                                <?= $this->translate('Language') ?>
+                            </th>
+                            <th>
+                                <?= $this->translate('Actions') ?>
+                            </th>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($exams as $exam): ?>
+                            <tr class="course-item">
+                                <td><?= $exam->getId() ?></td>
+                                <td><?= $exam->getDate()->format('Y-m-d') ?></td>
+                                <td><?= $exam->getExamType() ?></td>
+                                <td><?= $exam->getLanguage() ?></td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-xs btn-delete"
+                                            data-id="<?= $exam->getId() ?>" data-toggle="modal"
+                                    >
+                                        <?= $this->translate('Delete') ?>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php else: ?>
+                    <p><?= $this->translate('This course does not have any exams.') ?></p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <h2><?= $this->translate('Summaries') ?></h2>
+            </div>
+            <div class="col-md-12">
+                <?php if (!empty($summaries)): ?>
+                    <table class="table table-striped">
+                        <thead>
+                            <th>#</th>
+                            <th>
+                                <?= $this->translate('Date') ?>
+                            </th>
+                            <th>
+                                <?= $this->translate('Author') ?>
+                            </th>
+                            <th>
+                                <?= $this->translate('Language') ?>
+                            </th>
+                            <th>
+                                <?= $this->translate('Actions') ?>
+                            </th>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($summaries as $summary): ?>
+                            <tr class="course-item">
+                                <td><?= $summary->getId() ?></td>
+                                <td><?= $summary->getDate()->format('Y-m-d') ?></td>
+                                <td><?= $this->escapeHtml($summary->getAuthor()) ?></td>
+                                <td><?= $summary->getLanguage() ?></td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-xs btn-delete" data-toggle="modal"
+                                            data-id="<?= $summary->getId() ?>"
+                                    >
+                                        <?= $this->translate('Delete') ?>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php else: ?>
+                    <p><?= $this->translate('This course does not have any exams.') ?></p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"><?= $this->translate('Delete Document') ?></h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <?= $this->translate('Are you sure you want to delete this document?') ?>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <form method="post" class="form form-inline form-delete">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <?= $this->translate('Cancel') ?>
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        <span class="far fa-trash-alt"></span>&nbsp;<?= $this->translate('Delete') ?>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+    document.querySelectorAll('.btn-delete').forEach((element) => {
+        element.addEventListener('click', () => {
+            document.querySelector('.form-delete').action = URLHelper.url(
+                'admin_education/course/documents/delete',
+                {
+                    'course': '<?= $course->getCode() ?>',
+                    'document': element.dataset.id,
+                },
+            );
+            $('#deleteModal').modal('show');
+        })
+    });
+</script>

@@ -518,6 +518,9 @@ class Exam
         return true;
     }
 
+    /**
+     * Delete a course and all its documents.
+     */
     public function deleteCourse(Course $course): void
     {
         /** @var ExamModel|SummaryModel $exam */
@@ -529,8 +532,38 @@ class Exam
         $this->courseMapper->remove($course);
     }
 
+    /**
+     * Get all courses.
+     */
     public function getAllCourses(): array
     {
         return $this->courseMapper->findAll();
+    }
+
+    /**
+     * Get all documents of a specific type for a specific course.
+     */
+    public function getDocumentsForCourse(
+        CourseModel $course,
+        string $type,
+    ): array {
+        return $this->examMapper->findDocumentsByCourse($course, $type);
+    }
+
+    /**
+     * Get a specific course document.
+     */
+    public function getDocument(int $id): ExamModel|SummaryModel|null
+    {
+        return $this->examMapper->find($id);
+    }
+
+    /**
+     * Delete a course document
+     */
+    public function deleteDocument(ExamModel|SummaryModel $document): void
+    {
+        $this->storageService->removeFile($document->getFilename());
+        $this->examMapper->remove($document);
     }
 }

@@ -99,6 +99,33 @@ return [
                                     ],
                                 ],
                             ],
+                            'documents' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/:course/documents',
+                                    'constraints' => [
+                                        'course' => '[A-Z0-9]{5,9}',
+                                    ],
+                                    'defaults' => [
+                                        'action' => 'courseDocuments',
+                                    ],
+                                ],
+                                'may_terminate' => true,
+                                'child_routes' => [
+                                    'delete' => [
+                                        'type' => Segment::class,
+                                        'options' => [
+                                            'route' => '/:document/delete',
+                                            'constraints' => [
+                                                'document' => '\d+',
+                                            ],
+                                            'defaults' => [
+                                                'action' => 'deleteCourseDocument',
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ],
                             'edit' => [
                                 'type' => Segment::class,
                                 'options' => [

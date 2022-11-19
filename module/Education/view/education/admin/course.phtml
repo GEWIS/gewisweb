@@ -23,7 +23,7 @@ $this->breadcrumbs()
 <hr>
 <div class="row">
     <div class="col-md-12">
-        <table class="table table-striped ">
+        <table class="table table-striped">
             <thead>
                 <th>
                     <?= $this->translate('Code') ?>
@@ -41,13 +41,19 @@ $this->breadcrumbs()
                         <td><?= $this->escapeHtml($course->getCode()) ?></td>
                         <td><?= $this->escapeHtml($course->getName()) ?></td>
                         <td>
+                            <a href="<?= $this->url(
+                                'admin_education/course/documents',
+                                ['course' => $course->getCode()],
+                            ) ?>" class="btn btn-primary btn-xs">
+                                <?= $this->translate('Documents') ?>
+                            </a>
                             <a href="<?= $this->url('admin_education/course/edit', ['course' => $course->getCode()]) ?>"
                                class="btn btn-primary btn-xs"
                             >
                                 <?= $this->translate('Edit') ?>
                             </a>
                             <button type="button" class="btn btn-danger btn-xs btn-delete"
-                                    data-code="<?= $course->getCode() ?>" data-toggle="modal"
+                                    data-code="<?= $this->escapeHtmlAttr($course->getCode()) ?>" data-toggle="modal"
                             >
                                 <?= $this->translate('Delete') ?>
                             </button>
@@ -55,6 +61,7 @@ $this->breadcrumbs()
                     </tr>
                 <?php endforeach; ?>
             </tbody>
+        </table>
     </div>
 </div>
 
