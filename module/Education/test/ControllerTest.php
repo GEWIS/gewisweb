@@ -61,7 +61,7 @@ class ControllerTest extends BaseControllerTest
     public function testAdminEducationCourseActionCanBeAccessedAsAdmin(): void
     {
         $this->setUpWithRole('admin');
-        $this->dispatch('/admin/education/add/course');
+        $this->dispatch('/admin/education/course/add');
         $this->assertResponseStatusCode(200);
     }
 }
