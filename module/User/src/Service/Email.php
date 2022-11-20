@@ -3,6 +3,7 @@
 namespace User\Service;
 
 use Decision\Model\Member as MemberModel;
+use Laminas\Mail\Header\MessageId;
 use Laminas\Mail\Message;
 use Laminas\Mail\Transport\TransportInterface;
 use Laminas\Mvc\I18n\Translator;
@@ -39,6 +40,7 @@ class Email
         );
 
         $message = new Message();
+        $message->getHeaders()->addHeader((new MessageId())->setId());
 
         $message->addFrom($this->emailConfig['from']);
         $message->addTo($member->getEmail());
@@ -67,6 +69,7 @@ class Email
         );
 
         $message = new Message();
+        $message->getHeaders()->addHeader((new MessageId())->setId());
 
         $message->addFrom($this->emailConfig['from']);
         $message->addTo($member->getEmail());

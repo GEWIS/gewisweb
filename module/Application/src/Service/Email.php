@@ -6,13 +6,15 @@ use Decision\Model\{
     Member as MemberModel,
     OrganInformation as OrganInformationModel,
 };
+use Laminas\Mail\Header\MessageId;
 use Laminas\Mail\Message;
 use Laminas\Mail\Transport\TransportInterface;
-use Laminas\Mime\Message as MimeMessage;
-use Laminas\Mime\Part as MimePart;
+use Laminas\Mime\{
+    Message as MimeMessage,
+    Part as MimePart,
+};
 use Laminas\View\Model\ViewModel;
 use Laminas\View\Renderer\PhpRenderer;
-use User\Model\User as UserModel;
 
 /**
  * This service is used for sending emails.
@@ -148,6 +150,7 @@ class Email
         $mimeMessage->setParts([$html]);
 
         $message = new Message();
+        $message->getHeaders()->addHeader((new MessageId())->setId());
         $message->setBody($mimeMessage);
 
         return $message;
