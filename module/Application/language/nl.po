@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-19 12:43+0100\n"
+"POT-Creation-Date: 2022-11-27 13:42+0100\n"
 "PO-Revision-Date: 2022-11-19 12:54+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -1160,8 +1160,8 @@ msgid ""
 "it will start on <strong>%s</strong> and end on <strong>%s</strong>."
 msgstr ""
 "Dit is activiteit <strong>#%d</strong>, georganiseerd door <strong>%s</"
-"strong>, en deze zal beginnen op <strong>%s</strong> en eindigen op <strong>"
-"%s</strong>."
+"strong>, en deze zal beginnen op <strong>%s</strong> en eindigen op "
+"<strong>%s</strong>."
 
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:92
 #: module/Activity/view/activity/admin-approval/view.phtml:44
@@ -1440,11 +1440,17 @@ msgstr ""
 msgid "Email"
 msgstr "Email"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:15
+#: module/Activity/view/activity/admin/participantsTable.phtml:14
+#: module/Decision/view/decision/member/self.phtml:50
+#: module/Decision/view/decision/member/view.phtml:34
+msgid "Generation"
+msgstr "Generatie"
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:16
 msgid "Sign-up List"
 msgstr "Inschrijflijst"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:57
+#: module/Activity/view/activity/admin/participantsTable.phtml:58
 #: module/Decision/view/decision/member/self.phtml:41
 #: module/Decision/view/decision/member/view.phtml:24
 #: module/Photo/view/partial/metadata.phtml:8
@@ -1458,17 +1464,22 @@ msgstr "Inschrijflijst"
 msgid "Unknown"
 msgstr "Onbekend"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:63
+#: module/Activity/view/activity/admin/participantsTable.phtml:64
 #, php-format
 msgid "User (%s)"
 msgstr "Gebruiker (%s)"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:69
+#: module/Activity/view/activity/admin/participantsTable.phtml:71
 #: module/Decision/src/Model/Enums/MembershipTypes.php:21
 msgid "External"
 msgstr "Extern"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:98
+#: module/Activity/view/activity/admin/participantsTable.phtml:84
+#: module/Education/view/education/admin/course-documents.phtml:123
+msgid "N/A"
+msgstr "N.V.T."
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:101
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -1482,7 +1493,7 @@ msgstr "Extern"
 msgid "Yes"
 msgstr "Ja"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:100
+#: module/Activity/view/activity/admin/participantsTable.phtml:103
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -1496,11 +1507,11 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nee"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:123
+#: module/Activity/view/activity/admin/participantsTable.phtml:126
 msgid "Additional actions"
 msgstr "Aanvullende acties"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:127
+#: module/Activity/view/activity/admin/participantsTable.phtml:130
 msgid "Mail everybody"
 msgstr "E-mail iedereen"
 
@@ -3442,11 +3453,6 @@ msgstr "Achternaam"
 msgid "Birth date"
 msgstr "Geboortedatum"
 
-#: module/Decision/view/decision/member/self.phtml:50
-#: module/Decision/view/decision/member/view.phtml:34
-msgid "Generation"
-msgstr "Generatie"
-
 #: module/Decision/view/decision/member/self.phtml:54
 #: module/Decision/view/decision/member/view.phtml:39
 #: module/User/src/Model/Enums/JWTClaims.php:42
@@ -3774,10 +3780,6 @@ msgstr "Deze cursus heeft geen examens."
 #: module/Education/view/education/admin/course-documents.phtml:98
 msgid "Summaries"
 msgstr "Samenvattingen"
-
-#: module/Education/view/education/admin/course-documents.phtml:123
-msgid "N/A"
-msgstr "N.V.T."
 
 #: module/Education/view/education/admin/course-documents.phtml:153
 msgid "Delete Document"
@@ -5055,11 +5057,11 @@ msgstr "Je hebt niet de rechten om API tokens te verwijderen"
 msgid "You are not allowed to add API tokens"
 msgstr "Je hebt niet de rechten om API tokens toe te voegen"
 
-#: module/User/src/Service/Email.php:45
+#: module/User/src/Service/Email.php:47
 msgid "Account activation code for the GEWIS Website"
 msgstr "Activatiecode voor je account op de GEWIS Website"
 
-#: module/User/src/Service/Email.php:73
+#: module/User/src/Service/Email.php:76
 msgid "Password reset code for the GEWIS Website"
 msgstr "Wachtwoord reset code voor de GEWIS Website"
 

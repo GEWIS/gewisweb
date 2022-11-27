@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-19 12:43+0100\n"
+"POT-Creation-Date: 2022-11-27 13:42+0100\n"
 "PO-Revision-Date: 2022-11-19 12:57+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -1421,11 +1421,17 @@ msgstr ""
 msgid "Email"
 msgstr "Email"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:15
+#: module/Activity/view/activity/admin/participantsTable.phtml:14
+#: module/Decision/view/decision/member/self.phtml:50
+#: module/Decision/view/decision/member/view.phtml:34
+msgid "Generation"
+msgstr "Generation"
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:16
 msgid "Sign-up List"
 msgstr "Sign-up List"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:57
+#: module/Activity/view/activity/admin/participantsTable.phtml:58
 #: module/Decision/view/decision/member/self.phtml:41
 #: module/Decision/view/decision/member/view.phtml:24
 #: module/Photo/view/partial/metadata.phtml:8
@@ -1439,17 +1445,22 @@ msgstr "Sign-up List"
 msgid "Unknown"
 msgstr "Unknown"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:63
+#: module/Activity/view/activity/admin/participantsTable.phtml:64
 #, php-format
 msgid "User (%s)"
 msgstr "User (%s)"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:69
+#: module/Activity/view/activity/admin/participantsTable.phtml:71
 #: module/Decision/src/Model/Enums/MembershipTypes.php:21
 msgid "External"
 msgstr "External"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:98
+#: module/Activity/view/activity/admin/participantsTable.phtml:84
+#: module/Education/view/education/admin/course-documents.phtml:123
+msgid "N/A"
+msgstr "N/A"
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:101
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -1463,7 +1474,7 @@ msgstr "External"
 msgid "Yes"
 msgstr "Yes"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:100
+#: module/Activity/view/activity/admin/participantsTable.phtml:103
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -1477,11 +1488,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:123
+#: module/Activity/view/activity/admin/participantsTable.phtml:126
 msgid "Additional actions"
 msgstr "Additional actions"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:127
+#: module/Activity/view/activity/admin/participantsTable.phtml:130
 msgid "Mail everybody"
 msgstr "Mail everybody"
 
@@ -3415,11 +3426,6 @@ msgstr "Last name"
 msgid "Birth date"
 msgstr "Birth date"
 
-#: module/Decision/view/decision/member/self.phtml:50
-#: module/Decision/view/decision/member/view.phtml:34
-msgid "Generation"
-msgstr "Generation"
-
 #: module/Decision/view/decision/member/self.phtml:54
 #: module/Decision/view/decision/member/view.phtml:39
 #: module/User/src/Model/Enums/JWTClaims.php:42
@@ -3744,10 +3750,6 @@ msgstr "This course does not have any exams."
 #: module/Education/view/education/admin/course-documents.phtml:98
 msgid "Summaries"
 msgstr "Summaries"
-
-#: module/Education/view/education/admin/course-documents.phtml:123
-msgid "N/A"
-msgstr "N/A"
 
 #: module/Education/view/education/admin/course-documents.phtml:153
 msgid "Delete Document"
@@ -5018,11 +5020,11 @@ msgstr "You are not allowed to remove API tokens"
 msgid "You are not allowed to add API tokens"
 msgstr "You are not allowed to add API tokens"
 
-#: module/User/src/Service/Email.php:45
+#: module/User/src/Service/Email.php:47
 msgid "Account activation code for the GEWIS Website"
 msgstr "Account activation code for the GEWIS Website"
 
-#: module/User/src/Service/Email.php:73
+#: module/User/src/Service/Email.php:76
 msgid "Password reset code for the GEWIS Website"
 msgstr "Password reset code for the GEWIS Website"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-19 12:43+0100\n"
+"POT-Creation-Date: 2022-11-27 13:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -898,11 +898,17 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:15
+#: module/Activity/view/activity/admin/participantsTable.phtml:14
+#: module/Decision/view/decision/member/self.phtml:50
+#: module/Decision/view/decision/member/view.phtml:34
+msgid "Generation"
+msgstr ""
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:16
 msgid "Sign-up List"
 msgstr ""
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:57
+#: module/Activity/view/activity/admin/participantsTable.phtml:58
 #: module/Decision/view/decision/member/self.phtml:41
 #: module/Decision/view/decision/member/view.phtml:24
 #: module/Photo/view/partial/metadata.phtml:8
@@ -916,17 +922,22 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:63
+#: module/Activity/view/activity/admin/participantsTable.phtml:64
 #, php-format
 msgid "User (%s)"
 msgstr ""
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:69
+#: module/Activity/view/activity/admin/participantsTable.phtml:71
 #: module/Decision/src/Model/Enums/MembershipTypes.php:21
 msgid "External"
 msgstr ""
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:98
+#: module/Activity/view/activity/admin/participantsTable.phtml:84
+#: module/Education/view/education/admin/course-documents.phtml:123
+msgid "N/A"
+msgstr ""
+
+#: module/Activity/view/activity/admin/participantsTable.phtml:101
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -940,7 +951,7 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:100
+#: module/Activity/view/activity/admin/participantsTable.phtml:103
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -954,11 +965,11 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:123
+#: module/Activity/view/activity/admin/participantsTable.phtml:126
 msgid "Additional actions"
 msgstr ""
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:127
+#: module/Activity/view/activity/admin/participantsTable.phtml:130
 msgid "Mail everybody"
 msgstr ""
 
@@ -2377,11 +2388,6 @@ msgstr ""
 msgid "Birth date"
 msgstr ""
 
-#: module/Decision/view/decision/member/self.phtml:50
-#: module/Decision/view/decision/member/view.phtml:34
-msgid "Generation"
-msgstr ""
-
 #: module/Decision/view/decision/member/self.phtml:54
 #: module/Decision/view/decision/member/view.phtml:39
 #: module/User/src/Model/Enums/JWTClaims.php:42
@@ -2614,10 +2620,6 @@ msgstr ""
 #: module/Education/src/Form/Fieldset/Summary.php:70
 #: module/Frontpage/src/Form/PollComment.php:26
 msgid "Author"
-msgstr ""
-
-#: module/Education/view/education/admin/course-documents.phtml:123
-msgid "N/A"
 msgstr ""
 
 #: module/Education/view/education/admin/course-documents.phtml:153
@@ -4935,11 +4937,11 @@ msgstr ""
 msgid "You are not allowed to add API tokens"
 msgstr ""
 
-#: module/User/src/Service/Email.php:45
+#: module/User/src/Service/Email.php:47
 msgid "Account activation code for the GEWIS Website"
 msgstr ""
 
-#: module/User/src/Service/Email.php:73
+#: module/User/src/Service/Email.php:76
 msgid "Password reset code for the GEWIS Website"
 msgstr ""
 
