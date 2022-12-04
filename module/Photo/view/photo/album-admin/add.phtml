@@ -1,7 +1,7 @@
 <?php
 $this->inlineScript()
     ->appendFile(
-        $this->basePath() . '/js/dropzone.js',
+        $this->basePath() . '/js/dropzone-min.js',
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
@@ -31,5 +31,14 @@ $this->breadcrumbs()
 <h1><?= sprintf($this->translate('Uploading photos to %s'), $album->getName()) ?></h1>
 <hr>
 <div class="panel panel-default">
-    <form action="upload" class="dropzone panel-body"></form>
+    <form action="upload" class="dropzone" id="image-dropzone"></form>
 </div>
+
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+    document.addEventListener("DOMContentLoaded", function() {
+        Dropzone.options.imageDropzone = {
+            acceptedFiles: 'image/*',
+        };
+        Dropzone.discover();
+    });
+</script>
