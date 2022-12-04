@@ -85,10 +85,6 @@
     height: 100%;
 }
 
-.pswp {
-    position: fixed;
-}
-
 .pswp__img,
 .pswp__zoom-wrap {
     width: auto;
@@ -127,7 +123,8 @@
 /* Prevent selection and tap highlights */
 .pswp__container,
 .pswp__img,
-.pswp__button {
+.pswp__button,
+.pswp__counter {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
