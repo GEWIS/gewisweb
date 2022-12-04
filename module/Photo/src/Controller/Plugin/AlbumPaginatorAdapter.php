@@ -3,7 +3,10 @@
 namespace Photo\Controller\Plugin;
 
 use Laminas\Paginator\Adapter\AdapterInterface;
-use Photo\Model\Album as AlbumModel;
+use Photo\Model\{
+    Album as AlbumModel,
+    Photo as PhotoModel,
+};
 use Photo\Service\{
     Album as AlbumService,
     Photo as PhotoService,
@@ -11,6 +14,8 @@ use Photo\Service\{
 
 /**
  * Paginator for album pages.
+ *
+ * @template-implements AdapterInterface<int, PhotoModel>
  */
 class AlbumPaginatorAdapter implements AdapterInterface
 {
