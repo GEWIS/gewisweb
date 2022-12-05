@@ -105,4 +105,10 @@
       <code>int</code>
     </InvalidReturnType>
   </file>
+  <file src="public/index.php">
+    <PossiblyUndefinedArrayOffset occurrences="2">
+      <code>$_SERVER['REQUEST_URI']</code>
+      <code>$_SERVER['SERVER_PROTOCOL']</code>
+    </PossiblyUndefinedArrayOffset>
+  </file>
 </files>

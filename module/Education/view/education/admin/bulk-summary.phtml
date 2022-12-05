@@ -1,7 +1,7 @@
 <?php
 $this->inlineScript()
     ->appendFile(
-        $this->basePath() . '/js/dropzone.js',
+        $this->basePath() . '/js/dropzone-min.js',
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
@@ -17,7 +17,7 @@ $this->breadcrumbs()
             <hr>
             <div class="panel panel-default">
                 <form action="<?= $this->url('admin_education/bulk_upload_summary') ?>"
-                      class="dropzone panel-body"></form>
+                      class="dropzone" id="summary-dropzone"></form>
             </div>
     </div>
 </div>
@@ -27,3 +27,12 @@ $this->breadcrumbs()
            class="btn btn-primary"><?= $this->translate('Finalize summary uploads') ?></a>
     </div>
 </div>
+
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+    document.addEventListener("DOMContentLoaded", function() {
+        Dropzone.options.summaryDropzone = {
+            acceptedFiles: 'application/pdf',
+        };
+        Dropzone.discover();
+    });
+</script>
