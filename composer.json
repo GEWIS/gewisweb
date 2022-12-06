@@ -154,7 +154,8 @@
         },
         "patches": {
             "doctrine/orm": {
-                "Fix issues with SubDecisions.": "https://raw.githubusercontent.com/GEWIS/orm/2.13.x/1-to-1-multiple-join-columns.patch"
+                "Fix issues with SubDecisions.": "https://raw.githubusercontent.com/GEWIS/orm/2.13.x/1-to-1-multiple-join-columns.patch",
+                "Fix issues with Backed Enums in association mappings.": "https://raw.githubusercontent.com/GEWIS/orm/2.13.x/fix-backed-enum-issues.patch"
             }
         }
     },
