@@ -1,4 +1,4 @@
-FROM php:8.1-fpm-alpine as gewisweb_web_development
+FROM php:8.2-fpm-alpine as gewisweb_web_development
 
 RUN apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
