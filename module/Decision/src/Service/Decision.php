@@ -156,12 +156,11 @@ class Decision
     /**
      * Returns the closest upcoming meeting for members.
      *
-     * @return MeetingModel|null
-     * @throws NonUniqueResultException
+     * @return array<array-key, MeetingModel>
      */
-    public function getUpcomingMeeting(): ?MeetingModel
+    public function getUpcomingAnnouncedMeetings(): array
     {
-        return $this->meetingMapper->findUpcomingMeeting();
+        return $this->meetingMapper->findUpcomingAnnouncedMeetings();
     }
 
     /**

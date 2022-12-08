@@ -92,38 +92,50 @@ $meetings = $this->meetings;
         <div class="row mt-3">
             <div class="col-md-6 mt-2">
                 <h2><?= $this->translate('Meetings') ?></h2>
-                <?php if (!is_null($this->upcoming)): ?>
+                <?php if (!empty($upcoming)): ?>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <strong><?= $this->translate('Upcoming meeting') ?></strong>
+                            <strong>
+                                <?= $this->translatePlural(
+                                    'Upcoming meeting',
+                                    'Upcoming meetings',
+                                    count($upcoming),
+                                ) ?>
+                            </strong>
                         </div>
                         <div class="panel-body">
-                            <?=
-                            sprintf(
-                                $this->translate('The next meeting is the %s%s %s%s on %s.'),
-                                '<a href="' . $this->url(
-                                    'decision/meeting',
-                                    [
-                                        'type' => $this->upcoming->getType()->value,
-                                        'number' => $this->upcoming->getNumber(),
-                                    ],
-                                ) . '">',
-                                $nf->format($this->upcoming->getNumber()),
-                                $this->upcoming->getType()->getAbbreviation($translator),
-                                '</a>',
-                                $this->dateFormat(
-                                    $this->upcoming->getDate()->getTimestamp(),
-                                    IntlDateFormatter::FULL,
-                                    IntlDateFormatter::NONE,
-                                ),
-                            )
-                            ?>
+                            <ul class="list-unstyled">
+                                <?php foreach ($upcoming as $meeting): ?>
+                                    <li>
+                                        <?=
+                                        sprintf(
+                                            $this->translate('The %s%s %s%s will be held on %s.'),
+                                            '<a href="' . $this->url(
+                                                'decision/meeting',
+                                                [
+                                                    'type' => $meeting->getType()->value,
+                                                    'number' => $meeting->getNumber(),
+                                                ],
+                                            ) . '">',
+                                            $nf->format($meeting->getNumber()),
+                                            $meeting->getType()->getAbbreviation($translator),
+                                            '</a>',
+                                            $this->dateFormat(
+                                                $meeting->getDate()->getTimestamp(),
+                                                IntlDateFormatter::FULL,
+                                                IntlDateFormatter::NONE,
+                                            ),
+                                        )
+                                        ?>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
                         </div>
                     </div>
                     <p>
                         <?=
                         sprintf(
-                            $this->translate('If you aren\'t able to attend the meeting in person but you want your voice to be heard, consider %sauthorizing another member%s to act on your behalf.'),
+                            $this->translate('If you aren\'t able to attend a GMM in person but you want your voice to be heard, consider %sauthorizing another member%s to act on your behalf.'),
                             '<a href="' . $this->url('decision/authorizations') . '">',
                             '</a>'
                         )

@@ -92,31 +92,6 @@ class Meeting extends BaseMapper
     }
 
     /**
-     * Returns the latest upcoming AV or null if there is none.
-     *
-     * Note that if multiple AVs are planned, the one that is planned furthest
-     * away is returned.
-     *
-     * @return MeetingModel|null
-     * @throws NonUniqueResultException
-     */
-    public function findLatestAV(): ?MeetingModel
-    {
-        return $this->findFutureMeeting('DESC');
-    }
-
-    /**
-     * Returns the closest upcoming AV.
-     *
-     * @return MeetingModel|null
-     * @throws NonUniqueResultException
-     */
-    public function findUpcomingMeeting(): ?MeetingModel
-    {
-        return $this->findFutureMeeting('ASC', true);
-    }
-
-    /**
      * Find a meeting with all decisions.
      *
      * @param MeetingTypes $type
@@ -202,38 +177,50 @@ class Meeting extends BaseMapper
     }
 
     /**
-     * Finds an AV or VV planned in the future.
+     * Returns the latest upcoming AV or null if there is none.
      *
-     * @param string $order Order of the future AV's
-     * @param bool $vvs If VV's are included in this
+     * Note that if multiple AVs are planned, the one that is planned furthest
+     * away is returned.
      *
      * @return MeetingModel|null
      * @throws NonUniqueResultException
      */
-    private function findFutureMeeting(
-        string $order,
-        bool $vvs = false,
-    ): ?MeetingModel {
+    public function findLatestAV(): ?MeetingModel
+    {
         $qb = $this->getRepository()->createQueryBuilder('m');
 
         $today = new DateTime();
         $maxDate = $today->sub(new DateInterval('P1D'));
 
-        $qb->where('m.type = :type')
-            ->where('m.date >= :date')
-            ->orderBy('m.date', $order)
+        $qb->where('m.type = :gmm')
+            ->andWhere('m.date >= :date')
+            ->orderBy('m.date', 'DESC')
+            ->setParameter('gmm', MeetingTypes::AV)
             ->setParameter('date', $maxDate)
             ->setMaxResults(1);
 
-        if ($vvs) {
-            $qb->andWhere("m.type = 'AV' OR m.type = 'VV'");
-
-            return $qb->getQuery()->getOneOrNullResult();
-        }
-
-        $qb->andWhere("m.type = 'AV'");
-
         return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @return array<array-key, MeetingModel>
+     */
+    public function findUpcomingAnnouncedMeetings(): array
+    {
+        $qb = $this->getRepository()->createQueryBuilder('m');
+
+        $today = new DateTime();
+        $maxDate = $today->sub(new DateInterval('P1D'));
+
+        $qb->where('m.type = :gmm OR m.type = :cm')
+            ->andWhere('m.date >= :date')
+            ->orderBy('m.date', 'ASC');
+
+        $qb->setParameter('gmm', MeetingTypes::AV)
+            ->setParameter('cm', MeetingTypes::VV)
+            ->setParameter('date', $maxDate);
+
+        return $qb->getQuery()->getResult();
     }
 
     /**

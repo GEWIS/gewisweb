@@ -54,7 +54,7 @@ class MemberController extends AbstractActionController
             [
                 'member' => $member,
                 'isActive' => $this->memberService->isActiveMember(),
-                'upcoming' => $this->decisionService->getUpcomingMeeting(),
+                'upcoming' => $this->decisionService->getUpcomingAnnouncedMeetings(),
                 'meetingsCollection' => $meetingsCollection,
             ]
         );
