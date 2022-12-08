@@ -6756,16 +6756,6 @@ Search.appendIndex(
             "summary": "Find\u0020all\u0020meetings\u0020that\u0020have\u0020taken\u0020place.",
             "url": "classes/Decision-Mapper-Meeting.html#method_findPast"
         },                {
-            "fqsen": "\\Decision\\Mapper\\Meeting\u003A\u003AfindLatestAV\u0028\u0029",
-            "name": "findLatestAV",
-            "summary": "Returns\u0020the\u0020latest\u0020upcoming\u0020AV\u0020or\u0020null\u0020if\u0020there\u0020is\u0020none.",
-            "url": "classes/Decision-Mapper-Meeting.html#method_findLatestAV"
-        },                {
-            "fqsen": "\\Decision\\Mapper\\Meeting\u003A\u003AfindUpcomingMeeting\u0028\u0029",
-            "name": "findUpcomingMeeting",
-            "summary": "Returns\u0020the\u0020closest\u0020upcoming\u0020AV.",
-            "url": "classes/Decision-Mapper-Meeting.html#method_findUpcomingMeeting"
-        },                {
             "fqsen": "\\Decision\\Mapper\\Meeting\u003A\u003AfindMeeting\u0028\u0029",
             "name": "findMeeting",
             "summary": "Find\u0020a\u0020meeting\u0020with\u0020all\u0020decisions.",
@@ -6786,10 +6776,15 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020maximum\u0020document\u0020position\u0020for\u0020the\u0020given\u0020meeting.",
             "url": "classes/Decision-Mapper-Meeting.html#method_findMaxDocumentPosition"
         },                {
-            "fqsen": "\\Decision\\Mapper\\Meeting\u003A\u003AfindFutureMeeting\u0028\u0029",
-            "name": "findFutureMeeting",
-            "summary": "Finds\u0020an\u0020AV\u0020or\u0020VV\u0020planned\u0020in\u0020the\u0020future.",
-            "url": "classes/Decision-Mapper-Meeting.html#method_findFutureMeeting"
+            "fqsen": "\\Decision\\Mapper\\Meeting\u003A\u003AfindLatestAV\u0028\u0029",
+            "name": "findLatestAV",
+            "summary": "Returns\u0020the\u0020latest\u0020upcoming\u0020AV\u0020or\u0020null\u0020if\u0020there\u0020is\u0020none.",
+            "url": "classes/Decision-Mapper-Meeting.html#method_findLatestAV"
+        },                {
+            "fqsen": "\\Decision\\Mapper\\Meeting\u003A\u003AfindUpcomingAnnouncedMeetings\u0028\u0029",
+            "name": "findUpcomingAnnouncedMeetings",
+            "summary": "",
+            "url": "classes/Decision-Mapper-Meeting.html#method_findUpcomingAnnouncedMeetings"
         },                {
             "fqsen": "\\Decision\\Mapper\\Meeting\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
@@ -9281,10 +9276,10 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020latest\u0020upcoming\u0020AV\u0020or\u0020null\u0020if\u0020there\u0020is\u0020none.",
             "url": "classes/Decision-Service-Decision.html#method_getLatestAV"
         },                {
-            "fqsen": "\\Decision\\Service\\Decision\u003A\u003AgetUpcomingMeeting\u0028\u0029",
-            "name": "getUpcomingMeeting",
+            "fqsen": "\\Decision\\Service\\Decision\u003A\u003AgetUpcomingAnnouncedMeetings\u0028\u0029",
+            "name": "getUpcomingAnnouncedMeetings",
             "summary": "Returns\u0020the\u0020closest\u0020upcoming\u0020meeting\u0020for\u0020members.",
-            "url": "classes/Decision-Service-Decision.html#method_getUpcomingMeeting"
+            "url": "classes/Decision-Service-Decision.html#method_getUpcomingAnnouncedMeetings"
         },                {
             "fqsen": "\\Decision\\Service\\Decision\u003A\u003AgetMeetingDocument\u0028\u0029",
             "name": "getMeetingDocument",

@@ -537,11 +537,11 @@
 <dd>Find all meetings that have taken place.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Mapper-Meeting.html#method_findUpcomingMeeting">findUpcomingMeeting()</a>
+    <a href="classes/Decision-Mapper-Meeting.html#method_findUpcomingAnnouncedMeetings">findUpcomingAnnouncedMeetings()</a>
     <span>
-                                &nbsp;: <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>|null    </span>
+                                &nbsp;: array&lt;array-key, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;    </span>
 </dt>
-<dd>Returns the closest upcoming AV.</dd>
+<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_flush">flush()</a>
@@ -619,13 +619,6 @@
                                 &nbsp;: string    </span>
 </dt>
 <dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a href="classes/Decision-Mapper-Meeting.html#method_findFutureMeeting">findFutureMeeting()</a>
-    <span>
-                                &nbsp;: <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>|null    </span>
-</dt>
-<dd>Finds an AV or VV planned in the future.</dd>
 
         </dl>
 
@@ -1044,7 +1037,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Meeting.php"><a href="files/module-decision-src-mapper-meeting.html"><abbr title="module/Decision/src/Mapper/Meeting.php">Meeting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">154</span>
+    <span class="phpdocumentor-element-found-in__line">129</span>
 
     </aside>
 
@@ -1100,7 +1093,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Meeting.php"><a href="files/module-decision-src-mapper-meeting.html"><abbr title="module/Decision/src/Mapper/Meeting.php">Meeting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">169</span>
+    <span class="phpdocumentor-element-found-in__line">144</span>
 
     </aside>
 
@@ -1169,7 +1162,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Meeting.php"><a href="files/module-decision-src-mapper-meeting.html"><abbr title="module/Decision/src/Mapper/Meeting.php">Meeting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">103</span>
+    <span class="phpdocumentor-element-found-in__line">188</span>
 
     </aside>
 
@@ -1219,7 +1212,7 @@ away is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Meeting.php"><a href="files/module-decision-src-mapper-meeting.html"><abbr title="module/Decision/src/Mapper/Meeting.php">Meeting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">189</span>
+    <span class="phpdocumentor-element-found-in__line">164</span>
 
     </aside>
 
@@ -1286,7 +1279,7 @@ away is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Meeting.php"><a href="files/module-decision-src-mapper-meeting.html"><abbr title="module/Decision/src/Mapper/Meeting.php">Meeting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">128</span>
+    <span class="phpdocumentor-element-found-in__line">103</span>
 
     </aside>
 
@@ -1443,43 +1436,28 @@ away is returned.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_findUpcomingMeeting">
-        findUpcomingMeeting()
-        <a href="classes/Decision-Mapper-Meeting.html#method_findUpcomingMeeting" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_findUpcomingAnnouncedMeetings">
+        findUpcomingAnnouncedMeetings()
+        <a href="classes/Decision-Mapper-Meeting.html#method_findUpcomingAnnouncedMeetings" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Meeting.php"><a href="files/module-decision-src-mapper-meeting.html"><abbr title="module/Decision/src/Mapper/Meeting.php">Meeting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">114</span>
+    <span class="phpdocumentor-element-found-in__line">208</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Returns the closest upcoming AV.</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">findUpcomingMeeting</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">findUpcomingAnnouncedMeetings</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;</span></code>
 
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Doctrine\ORM\NonUniqueResultException">NonUniqueResultException</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;</span>
             &mdash;
         
     
@@ -1995,7 +1973,7 @@ function.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Meeting.php"><a href="files/module-decision-src-mapper-meeting.html"><abbr title="module/Decision/src/Mapper/Meeting.php">Meeting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">242</span>
+    <span class="phpdocumentor-element-found-in__line">229</span>
 
     </aside>
 
@@ -2028,74 +2006,6 @@ function.</p>
 e.g. &quot;User/Model/User&quot;</p>
 </section>
 
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_findFutureMeeting">
-        findFutureMeeting()
-        <a href="classes/Decision-Mapper-Meeting.html#method_findFutureMeeting" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Meeting.php"><a href="files/module-decision-src-mapper-meeting.html"><abbr title="module/Decision/src/Mapper/Meeting.php">Meeting.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">213</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Finds an AV or VV planned in the future.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">findFutureMeeting</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$order</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$vvs</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>|null</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$order</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Order of the future AV's</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$vvs</span>
-                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">false</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>If VV's are included in this</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Doctrine\ORM\NonUniqueResultException">NonUniqueResultException</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>|null</span>
-            &mdash;
-        
     
 </article>
             </section>
