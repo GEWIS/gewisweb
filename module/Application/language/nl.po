@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-27 13:42+0100\n"
-"PO-Revision-Date: 2022-11-19 12:54+0100\n"
+"POT-Creation-Date: 2022-12-08 12:47+0100\n"
+"PO-Revision-Date: 2022-12-08 12:54+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -592,7 +592,7 @@ msgstr "Creëer activiteitenvoorstel"
 #: module/Activity/view/activity/activity-calendar/create.phtml:21
 #: module/Activity/view/activity/activity-calendar/index.phtml:20
 #: module/Application/view/partial/main-nav.phtml:360
-#: module/Decision/view/decision/member/index.phtml:189
+#: module/Decision/view/decision/member/index.phtml:201
 msgid "Option calendar"
 msgstr "Optiekalender"
 
@@ -973,7 +973,7 @@ msgstr ""
 #: module/Application/view/partial/main-nav.phtml:324
 #: module/Application/view/partial/main-nav.phtml:328
 #: module/Application/view/partial/main-nav.phtml:333
-#: module/Decision/view/decision/member/index.phtml:185
+#: module/Decision/view/decision/member/index.phtml:197
 msgid "Activities"
 msgstr "Activiteiten"
 
@@ -1160,8 +1160,8 @@ msgid ""
 "it will start on <strong>%s</strong> and end on <strong>%s</strong>."
 msgstr ""
 "Dit is activiteit <strong>#%d</strong>, georganiseerd door <strong>%s</"
-"strong>, en deze zal beginnen op <strong>%s</strong> en eindigen op "
-"<strong>%s</strong>."
+"strong>, en deze zal beginnen op <strong>%s</strong> en eindigen op <strong>"
+"%s</strong>."
 
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:92
 #: module/Activity/view/activity/admin-approval/view.phtml:44
@@ -1646,7 +1646,7 @@ msgid "Please fill in this CAPTCHA:"
 msgstr "CAPTCHA:"
 
 #: module/Activity/view/partial/signupForm.phtml:71
-#: module/Decision/view/decision/member/index.phtml:212
+#: module/Decision/view/decision/member/index.phtml:224
 msgid "Activity Policy"
 msgstr "Activiteitenbeleid"
 
@@ -2088,7 +2088,7 @@ msgid "GEWIS song"
 msgstr "GEWIS-lied"
 
 #: module/Application/view/partial/main-nav.phtml:208
-#: module/Decision/view/decision/member/index.phtml:208
+#: module/Decision/view/decision/member/index.phtml:220
 msgid "Regulations"
 msgstr "Reguleringen"
 
@@ -2192,7 +2192,7 @@ msgid "unavailable"
 msgstr "niet beschikbaar"
 
 #: module/Application/view/partial/privacy-widget.phtml:17
-#: module/Decision/view/decision/member/index.phtml:252
+#: module/Decision/view/decision/member/index.phtml:264
 msgid "Privacy Policy"
 msgstr "Privacybeleid"
 
@@ -2781,7 +2781,7 @@ msgid "You are not allowed to search decisions."
 msgstr "Het is niet toegestaan om besluiten te doorzoeken."
 
 #: module/Decision/src/Controller/DecisionController.php:181
-#: module/Decision/src/Service/Decision.php:565
+#: module/Decision/src/Service/Decision.php:564
 msgid "You are not allowed to revoke authorizations."
 msgstr "Je hebt niet de rechten om machtigingen in te trekken."
 
@@ -2888,7 +2888,7 @@ msgstr "Zoek query"
 #: module/Decision/src/Form/SearchDecision.php:35
 #: module/Decision/src/Form/SearchDecision.php:36
 #: module/Decision/view/decision/decision/search.phtml:30
-#: module/Decision/view/decision/member/index.phtml:139
+#: module/Decision/view/decision/member/index.phtml:151
 #: module/Education/view/education/education/index.phtml:46
 msgid "Search"
 msgstr "Zoek"
@@ -2983,35 +2983,35 @@ msgstr "Het is niet toegestaan om de lijst van vergaderingen te zien."
 msgid "You are not allowed to view meetings."
 msgstr "Het is niet toegestaan om vergaderingen te zien."
 
-#: module/Decision/src/Service/Decision.php:191
+#: module/Decision/src/Service/Decision.php:190
 msgid "You are not allowed to view meeting documents."
 msgstr "Het is niet toegestaan om vergaderstukken te zien."
 
-#: module/Decision/src/Service/Decision.php:212
+#: module/Decision/src/Service/Decision.php:211
 msgid "You are not allowed to view meeting minutes."
 msgstr "Het is niet toegestaan om notulen te zien."
 
-#: module/Decision/src/Service/Decision.php:293
+#: module/Decision/src/Service/Decision.php:292
 msgid "You are not allowed to delete meeting documents."
 msgstr "Het is niet toegestaan om vergaderstukken te verwijderen."
 
-#: module/Decision/src/Service/Decision.php:387
+#: module/Decision/src/Service/Decision.php:386
 msgid "You are not allowed to view all authorizations."
 msgstr "Je hebt niet de rechten om alle machtigingen te bekijken."
 
-#: module/Decision/src/Service/Decision.php:407
+#: module/Decision/src/Service/Decision.php:406
 msgid "You are not allowed to view authorizations."
 msgstr "Je hebt niet de rechten om all machtigingen te bekijken."
 
-#: module/Decision/src/Service/Decision.php:499
+#: module/Decision/src/Service/Decision.php:498
 msgid "You are not allowed to upload meeting minutes."
 msgstr "Het is niet toegestaan om notulen te uploaden."
 
-#: module/Decision/src/Service/Decision.php:514
+#: module/Decision/src/Service/Decision.php:513
 msgid "You are not allowed to upload meeting documents."
 msgstr "Het is niet toegestaan om vergaderstukken te uploaden."
 
-#: module/Decision/src/Service/Decision.php:551
+#: module/Decision/src/Service/Decision.php:550
 msgid "You are not allowed authorize people."
 msgstr "Je hebt niet de rechten om iemand te machtigen."
 
@@ -3303,101 +3303,98 @@ msgstr "Openbaar Archief"
 msgid "Find a member"
 msgstr "Vind een lid"
 
-#: module/Decision/view/decision/member/index.phtml:98
-msgid "Upcoming meeting"
-msgstr "Aankomende vergaderingen"
-
-#: module/Decision/view/decision/member/index.phtml:103
+#: module/Decision/view/decision/member/index.phtml:112
 #, php-format
-msgid "The next meeting is the %s%s %s%s on %s."
-msgstr "De volgende vergadering is de %s%s %s%s op %s."
+msgid "The %s%s %s%s will be held on %s."
+msgstr "De %s%s %s%s zal plaatsvinden op %s."
 
-#: module/Decision/view/decision/member/index.phtml:126
+#: module/Decision/view/decision/member/index.phtml:138
 #, php-format
 msgid ""
-"If you aren't able to attend the meeting in person but you want your voice "
-"to be heard, consider %sauthorizing another member%s to act on your behalf."
+"If you aren't able to attend a GMM in person but you want your voice to be "
+"heard, consider %sauthorizing another member%s to act on your behalf."
 msgstr ""
-"Als je niet in staat bent aanwezig te zijn, maar je wilt dat je stem gehoord "
-"wordt, overweeg %seen ander lid te machtigen%s jou te vertegenwoordigen."
+"Als je niet in staat bent een ALV persoonlijk bij te wonen, maar je wilt "
+"toch dat je stem wordt gehoord, overweeg dan %seen ander lid%s te machtigen "
+"om jou te vertegenwoordingen."
 
-#: module/Decision/view/decision/member/index.phtml:134
+#: module/Decision/view/decision/member/index.phtml:146
 msgid "Search through the list of decisions accumulated from past meetings:"
 msgstr "Doorzoek de lijst van alle beslissingen van eerdere vergaderingen:"
 
-#: module/Decision/view/decision/member/index.phtml:137
+#: module/Decision/view/decision/member/index.phtml:149
 msgid "Search by keyword or meeting number"
 msgstr "Zoek met trefwoord of vergaderingsnummer"
 
-#: module/Decision/view/decision/member/index.phtml:144
+#: module/Decision/view/decision/member/index.phtml:156
 #, php-format
 msgid "The latest %s that took place:"
 msgstr "De laatste %s die plaatsvond:"
 
-#: module/Decision/view/decision/member/index.phtml:156
+#: module/Decision/view/decision/member/index.phtml:168
 #, php-format
 msgid "%s %s on %s"
 msgstr "%s %s op %s"
 
-#: module/Decision/view/decision/member/index.phtml:171
+#: module/Decision/view/decision/member/index.phtml:183
 msgid "View all meetings"
 msgstr "Toon alle vergaderingen"
 
-#: module/Decision/view/decision/member/index.phtml:176
+#: module/Decision/view/decision/member/index.phtml:188
 #: module/Decision/view/decision/organ/show.phtml:9
 #: module/Frontpage/view/frontpage/organ/organ.phtml:129
 msgid "Active members"
 msgstr "Actieve leden"
 
-#: module/Decision/view/decision/member/index.phtml:177
+#: module/Decision/view/decision/member/index.phtml:189
 msgid "A list of helpful resources for active members."
 msgstr "Een lijst met nuttige pagina's voor actieve leden."
 
-#: module/Decision/view/decision/member/index.phtml:181
+#: module/Decision/view/decision/member/index.phtml:193
 msgid "Webmail"
 msgstr "Webmail"
 
-#: module/Decision/view/decision/member/index.phtml:193
+#: module/Decision/view/decision/member/index.phtml:205
 msgid "GEWIKI"
 msgstr "GEWIKI"
 
-#: module/Decision/view/decision/member/index.phtml:197
+#: module/Decision/view/decision/member/index.phtml:209
 msgid "Corporate Identity"
 msgstr "Huisstijl"
 
-#: module/Decision/view/decision/member/index.phtml:201
+#: module/Decision/view/decision/member/index.phtml:213
 msgid "Administrator"
 msgstr "Administrator"
 
-#: module/Decision/view/decision/member/index.phtml:217
+#: module/Decision/view/decision/member/index.phtml:229
 msgid "Alcohol Policy"
 msgstr "Alcoholreglement"
 
-#: module/Decision/view/decision/member/index.phtml:222
+#: module/Decision/view/decision/member/index.phtml:234
 msgid "Board Policies"
 msgstr "Beleidsnota's"
 
-#: module/Decision/view/decision/member/index.phtml:227
+#: module/Decision/view/decision/member/index.phtml:239
 msgid "Borrel Policy"
 msgstr "Borrelreglement"
 
-#: module/Decision/view/decision/member/index.phtml:232
+#: module/Decision/view/decision/member/index.phtml:244
 msgid "House Rules"
 msgstr "Huisregels"
 
-#: module/Decision/view/decision/member/index.phtml:237
+#: module/Decision/view/decision/member/index.phtml:249
 msgid "ICT Policy"
 msgstr "ICT-reglement"
 
-#: module/Decision/view/decision/member/index.phtml:242
+#: module/Decision/view/decision/member/index.phtml:254
 msgid "Key Policy"
 msgstr "Sleutelreglement"
 
-#: module/Decision/view/decision/member/index.phtml:247
+#: module/Decision/view/decision/member/index.phtml:259
 msgid "Poster Policy"
 msgstr "Posterbeleid"
 
-#: module/Decision/view/decision/member/index.phtml:258
+#: module/Decision/view/decision/member/index.phtml:270
 msgid "Organ Regulations"
 msgstr "Orgaanreglementen"
 
@@ -3750,7 +3747,7 @@ msgstr "Vak toevoegen"
 msgid "Upload Exams"
 msgstr "Upload tentamens"
 
-#: module/Education/view/education/admin/bulk-exam.phtml:26
+#: module/Education/view/education/admin/bulk-exam.phtml:27
 msgid "Finalize exam uploads"
 msgstr "Rond uploaden tentamens af"
 

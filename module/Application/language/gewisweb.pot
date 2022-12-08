@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-27 13:42+0100\n"
+"POT-Creation-Date: 2022-12-08 12:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgstr ""
 #: module/Activity/view/activity/activity-calendar/create.phtml:21
 #: module/Activity/view/activity/activity-calendar/index.phtml:20
 #: module/Application/view/partial/main-nav.phtml:360
-#: module/Decision/view/decision/member/index.phtml:189
+#: module/Decision/view/decision/member/index.phtml:201
 msgid "Option calendar"
 msgstr ""
 
@@ -452,7 +452,7 @@ msgstr ""
 #: module/Application/view/partial/main-nav.phtml:324
 #: module/Application/view/partial/main-nav.phtml:328
 #: module/Application/view/partial/main-nav.phtml:333
-#: module/Decision/view/decision/member/index.phtml:185
+#: module/Decision/view/decision/member/index.phtml:197
 msgid "Activities"
 msgstr ""
 
@@ -1121,7 +1121,7 @@ msgid "Please fill in this CAPTCHA:"
 msgstr ""
 
 #: module/Activity/view/partial/signupForm.phtml:71
-#: module/Decision/view/decision/member/index.phtml:212
+#: module/Decision/view/decision/member/index.phtml:224
 msgid "Activity Policy"
 msgstr ""
 
@@ -1506,7 +1506,7 @@ msgid "GEWIS song"
 msgstr ""
 
 #: module/Application/view/partial/main-nav.phtml:208
-#: module/Decision/view/decision/member/index.phtml:208
+#: module/Decision/view/decision/member/index.phtml:220
 msgid "Regulations"
 msgstr ""
 
@@ -1606,7 +1606,7 @@ msgid "unavailable"
 msgstr ""
 
 #: module/Application/view/partial/privacy-widget.phtml:17
-#: module/Decision/view/decision/member/index.phtml:252
+#: module/Decision/view/decision/member/index.phtml:264
 msgid "Privacy Policy"
 msgstr ""
 
@@ -2193,7 +2193,7 @@ msgid "Search query"
 msgstr ""
 
 #: module/Decision/view/decision/decision/search.phtml:30
-#: module/Decision/view/decision/member/index.phtml:139
+#: module/Decision/view/decision/member/index.phtml:151
 #: module/Education/view/education/education/index.phtml:46
 #: module/Decision/src/Form/SearchDecision.php:35
 #: module/Decision/src/Form/SearchDecision.php:36
@@ -2242,99 +2242,95 @@ msgstr ""
 msgid "Find a member"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:98
-msgid "Upcoming meeting"
-msgstr ""
-
-#: module/Decision/view/decision/member/index.phtml:103
+#: module/Decision/view/decision/member/index.phtml:112
 #, php-format
-msgid "The next meeting is the %s%s %s%s on %s."
+msgid "The %s%s %s%s will be held on %s."
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:126
+#: module/Decision/view/decision/member/index.phtml:138
 #, php-format
 msgid ""
-"If you aren't able to attend the meeting in person but you want your voice "
-"to be heard, consider %sauthorizing another member%s to act on your behalf."
+"If you aren't able to attend a GMM in person but you want your voice to be "
+"heard, consider %sauthorizing another member%s to act on your behalf."
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:134
+#: module/Decision/view/decision/member/index.phtml:146
 msgid "Search through the list of decisions accumulated from past meetings:"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:137
+#: module/Decision/view/decision/member/index.phtml:149
 msgid "Search by keyword or meeting number"
-msgstr ""
-
-#: module/Decision/view/decision/member/index.phtml:144
-#, php-format
-msgid "The latest %s that took place:"
 msgstr ""
 
 #: module/Decision/view/decision/member/index.phtml:156
 #, php-format
+msgid "The latest %s that took place:"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:168
+#, php-format
 msgid "%s %s on %s"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:171
+#: module/Decision/view/decision/member/index.phtml:183
 msgid "View all meetings"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:176
+#: module/Decision/view/decision/member/index.phtml:188
 #: module/Decision/view/decision/organ/show.phtml:9
 #: module/Frontpage/view/frontpage/organ/organ.phtml:129
 msgid "Active members"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:177
+#: module/Decision/view/decision/member/index.phtml:189
 msgid "A list of helpful resources for active members."
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:181
+#: module/Decision/view/decision/member/index.phtml:193
 msgid "Webmail"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:193
+#: module/Decision/view/decision/member/index.phtml:205
 msgid "GEWIKI"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:197
+#: module/Decision/view/decision/member/index.phtml:209
 msgid "Corporate Identity"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:201
+#: module/Decision/view/decision/member/index.phtml:213
 msgid "Administrator"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:217
+#: module/Decision/view/decision/member/index.phtml:229
 msgid "Alcohol Policy"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:222
+#: module/Decision/view/decision/member/index.phtml:234
 msgid "Board Policies"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:227
+#: module/Decision/view/decision/member/index.phtml:239
 msgid "Borrel Policy"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:232
+#: module/Decision/view/decision/member/index.phtml:244
 msgid "House Rules"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:237
+#: module/Decision/view/decision/member/index.phtml:249
 msgid "ICT Policy"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:242
+#: module/Decision/view/decision/member/index.phtml:254
 msgid "Key Policy"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:247
+#: module/Decision/view/decision/member/index.phtml:259
 msgid "Poster Policy"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:258
+#: module/Decision/view/decision/member/index.phtml:270
 msgid "Organ Regulations"
 msgstr ""
 
@@ -2578,7 +2574,7 @@ msgstr ""
 msgid "Upload Exams"
 msgstr ""
 
-#: module/Education/view/education/admin/bulk-exam.phtml:26
+#: module/Education/view/education/admin/bulk-exam.phtml:27
 msgid "Finalize exam uploads"
 msgstr ""
 
@@ -4277,7 +4273,7 @@ msgid "You are not allowed to search decisions."
 msgstr ""
 
 #: module/Decision/src/Controller/DecisionController.php:181
-#: module/Decision/src/Service/Decision.php:565
+#: module/Decision/src/Service/Decision.php:564
 msgid "You are not allowed to revoke authorizations."
 msgstr ""
 
@@ -4443,35 +4439,35 @@ msgstr ""
 msgid "You are not allowed to view meetings."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:191
+#: module/Decision/src/Service/Decision.php:190
 msgid "You are not allowed to view meeting documents."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:212
+#: module/Decision/src/Service/Decision.php:211
 msgid "You are not allowed to view meeting minutes."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:293
+#: module/Decision/src/Service/Decision.php:292
 msgid "You are not allowed to delete meeting documents."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:387
+#: module/Decision/src/Service/Decision.php:386
 msgid "You are not allowed to view all authorizations."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:407
+#: module/Decision/src/Service/Decision.php:406
 msgid "You are not allowed to view authorizations."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:499
+#: module/Decision/src/Service/Decision.php:498
 msgid "You are not allowed to upload meeting minutes."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:514
+#: module/Decision/src/Service/Decision.php:513
 msgid "You are not allowed to upload meeting documents."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:551
+#: module/Decision/src/Service/Decision.php:550
 msgid "You are not allowed authorize people."
 msgstr ""
 
