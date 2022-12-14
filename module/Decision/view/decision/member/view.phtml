@@ -106,7 +106,7 @@ $this->headTitle($this->translate('Members'));
                     </ul>
                 <?php endif; ?>
                 <?php if ($this->acl('decision_service_acl')->isAllowed('member', 'view_full')): ?>
-                    <h3><?= $this->translate('Adresses') ?></h3>
+                    <h3><?= $this->translate('Addresses') ?></h3>
                     <?php foreach ($member->getAddresses() as $address): ?>
                         <h4><<?= $address->getType()->getName($this->plugin('translate')->getTranslator()) ?></h4>
                         <table class="table table-bordered">
