@@ -20,10 +20,10 @@ class AclService extends GenericAclService
         Translator $translator,
         AuthenticationService $authService,
         ApiAuthenticationService $apiAuthService,
+        array $tueRanges,
         string $remoteAddress,
-        string $tueRange,
     ) {
-        parent::__construct($translator, $authService, $apiAuthService, $remoteAddress, $tueRange);
+        parent::__construct($translator, $authService, $apiAuthService, $tueRanges, $remoteAddress);
         $this->createAcl();
     }
 
