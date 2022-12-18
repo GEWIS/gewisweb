@@ -14,12 +14,14 @@ use User\Permissions\NotAllowedException;
 
 abstract class GenericAclService extends AbstractAclService
 {
+    private array $checkedIps = [];
+
     public function __construct(
         private readonly Translator $translator,
         private readonly AuthenticationService $authService,
         private readonly ApiAuthenticationService $apiAuthService,
+        private readonly array $tueRanges,
         private readonly string $remoteAddress,
-        private readonly string $tueRange,
     ) {
     }
 
@@ -39,8 +41,7 @@ abstract class GenericAclService extends AbstractAclService
             return $this->apiAuthService->getIdentity();
         }
 
-        // TODO: We could create an assertion for this.
-        if (str_starts_with($this->remoteAddress, $this->tueRange)) {
+        if ($this->fromTueNetwork()) {
             return 'tueguest';
         }
 
@@ -80,5 +81,51 @@ abstract class GenericAclService extends AbstractAclService
     public function hasIdentity(): bool
     {
         return !is_null($this->getIdentity());
+    }
+
+    /**
+     * Check whether the remote address (as returned by the proxy) comes from a TU/e network. Networks are provided in
+     * CIDR notation.
+     */
+    private function fromTueNetwork(): bool
+    {
+        // If we already checked the in the past, we do not need to do it again.
+        if (isset($this->checkedIps[$this->remoteAddress])) {
+            return $this->checkedIps[$this->remoteAddress];
+        }
+
+        // We only accept and expect IPv4 addresses.
+        if (!filter_var($this->remoteAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+            return $this->checkedIps[$this->remoteAddress] = false;
+        }
+
+        if (!empty($this->tueRanges)) {
+            foreach ($this->tueRanges as $range) {
+                // Ensure that we actually check against a range.
+                if (!str_contains($range, '/')) {
+                    continue;
+                }
+
+                [$subnet, $bits] = explode('/', $range, 2);
+                $bits = (int) $bits;
+
+                // Ensure that the subnet is valid.
+                if (
+                    0 > $bits
+                    || 32 < $bits
+                    || false === ip2long($subnet)
+                ) {
+                    continue;
+                }
+
+                // Precompute the netmask to be able to re-align the range (if necessary) and check the remote address.
+                $netmask = -1 << (32 - $bits);
+                if ((ip2long($subnet) & $netmask) === (ip2long($this->remoteAddress) & $netmask)) {
+                    return $this->checkedIps[$this->remoteAddress] = true;
+                }
+            }
+        }
+
+        return $this->checkedIps[$this->remoteAddress] = false;
     }
 }

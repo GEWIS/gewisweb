@@ -37,10 +37,15 @@ return [
     'bcrypt_cost' => 13,
 
     /*
-     * IP address start for the TU/e. All IP addresses starting with this will
-     * be allowed more base rights, like viewing exams
+     * Subnets in use by the TU/e. All IP addresses in a listed subnet will be allowed more base rights, like being able
+     * to download exams.
+     *
+     * Note: the subnets must be provided in CIDR format.
      */
-    'tue_range' => '131.155.',
+    'tue_ranges' => [
+        '131.155.0.0/16',
+        '10.64.0.0/10',
+    ],
 
     'login_rate_limits' => [
          'user' => 5,
