@@ -1,3 +1,14 @@
+## [v2.9.1](https://github.com/GEWIS/gewisweb/tree/v2.9.1) (2022-12-18)
+
+* Added generation of members to the admin sign-up list participants overview.
+* Improved the way upcoming meetings are displayed when multiple are planned.
+* Improved several translations.
+* Fixed issue where exams and summaries would be inaccessible from the university's NAT'd Wi-Fi network.
+* Fixed issue where e-mails could be incorrectly classified as spam due to a missing `Message-Id` value.
+* Updated dependencies.
+
+---
+
 ## [v2.9](https://github.com/GEWIS/gewisweb/tree/v2.9) (2022-11-19)
 
 * Added elementary support for remote member information update requests.
