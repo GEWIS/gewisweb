@@ -446,6 +446,13 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/User-Authorization-GenericAclService.html#property_checkedIps">$checkedIps</a>
+    <span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/User-Authorization-GenericAclService.html#property_remoteAddress">$remoteAddress</a>
     <span>
                         &nbsp;: string            </span>
@@ -460,9 +467,9 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/User-Authorization-GenericAclService.html#property_tueRange">$tueRange</a>
+    <a href="classes/User-Authorization-GenericAclService.html#property_tueRanges">$tueRanges</a>
     <span>
-                        &nbsp;: string            </span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
 <dd></dd>
 
@@ -521,6 +528,14 @@
                                 &nbsp;: <abbr title="\Laminas\Permissions\Acl\Role\RoleInterface">RoleInterface</abbr>|string    </span>
 </dt>
 <dd>Get the current user&#039;s role.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a href="classes/User-Authorization-GenericAclService.html#method_fromTueNetwork">fromTueNetwork()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Check whether the remote address (as returned by the proxy) comes from a TU/e network. Networks are provided in
+CIDR notation.</dd>
 
         </dl>
 
@@ -584,7 +599,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">20</span>
+    <span class="phpdocumentor-element-found-in__line">22</span>
 
     </aside>
 
@@ -618,7 +633,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">19</span>
+    <span class="phpdocumentor-element-found-in__line">21</span>
 
     </aside>
 
@@ -628,6 +643,40 @@
         <span class="phpdocumentor-signature__type"><a href="classes/User-Authentication-AuthenticationService.html"><abbr title="\User\Authentication\AuthenticationService">AuthenticationService</abbr></a></span>
     <span class="phpdocumentor-signature__name">$authService</span>
     </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_checkedIps">
+        $checkedIps
+        <a href="classes/User-Authorization-GenericAclService.html#property_checkedIps" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">17</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$checkedIps</span>
+     = <span class="phpdocumentor-signature__default-value">[]</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -652,7 +701,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">21</span>
+    <span class="phpdocumentor-element-found-in__line">24</span>
 
     </aside>
 
@@ -686,7 +735,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">18</span>
+    <span class="phpdocumentor-element-found-in__line">20</span>
 
     </aside>
 
@@ -711,24 +760,24 @@
             -private
                                                 -read-only        "
 >
-    <h4 class="phpdocumentor-element__name" id="property_tueRange">
-        $tueRange
-        <a href="classes/User-Authorization-GenericAclService.html#property_tueRange" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_tueRanges">
+        $tueRanges
+        <a href="classes/User-Authorization-GenericAclService.html#property_tueRanges" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                         <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">22</span>
+    <span class="phpdocumentor-element-found-in__line">23</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$tueRange</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$tueRanges</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -765,7 +814,7 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-AuthenticationService.html"><abbr title="\User\Authentication\AuthenticationService">AuthenticationService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$authService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-ApiAuthenticationService.html"><abbr title="\User\Authentication\ApiAuthenticationService">ApiAuthenticationService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$apiAuthService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$remoteAddress</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tueRange</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-AuthenticationService.html"><abbr title="\User\Authentication\AuthenticationService">AuthenticationService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$authService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-ApiAuthenticationService.html"><abbr title="\User\Authentication\ApiAuthenticationService">ApiAuthenticationService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$apiAuthService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tueRanges</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$remoteAddress</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -796,15 +845,15 @@
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$remoteAddress</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-signature__argument__name">$tueRanges</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"></section>
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$tueRange</span>
+                <span class="phpdocumentor-signature__argument__name">$remoteAddress</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
@@ -834,7 +883,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">70</span>
+    <span class="phpdocumentor-element-found-in__line">71</span>
 
     </aside>
 
@@ -869,7 +918,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">56</span>
 
     </aside>
 
@@ -904,7 +953,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">80</span>
+    <span class="phpdocumentor-element-found-in__line">81</span>
 
     </aside>
 
@@ -1074,6 +1123,40 @@
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Permissions\Acl\Role\RoleInterface">RoleInterface</abbr>|string</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_fromTueNetwork">
+        fromTueNetwork()
+        <a href="classes/User-Authorization-GenericAclService.html#method_fromTueNetwork" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">90</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Check whether the remote address (as returned by the proxy) comes from a TU/e network. Networks are provided in
+CIDR notation.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+                    <span class="phpdocumentor-signature__name">fromTueNetwork</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">bool</span>
             &mdash;
         
     

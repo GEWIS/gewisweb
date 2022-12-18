@@ -14941,6 +14941,16 @@ Search.appendIndex(
             "summary": "Checks\u0020whether\u0020the\u0020user\u0020is\u0020logged\u0020in",
             "url": "classes/User-Authorization-GenericAclService.html#method_hasIdentity"
         },                {
+            "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003AfromTueNetwork\u0028\u0029",
+            "name": "fromTueNetwork",
+            "summary": "Check\u0020whether\u0020the\u0020remote\u0020address\u0020\u0028as\u0020returned\u0020by\u0020the\u0020proxy\u0029\u0020comes\u0020from\u0020a\u0020TU\/e\u0020network.\u0020Networks\u0020are\u0020provided\u0020in\nCIDR\u0020notation.",
+            "url": "classes/User-Authorization-GenericAclService.html#method_fromTueNetwork"
+        },                {
+            "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003A\u0024checkedIps",
+            "name": "checkedIps",
+            "summary": "",
+            "url": "classes/User-Authorization-GenericAclService.html#property_checkedIps"
+        },                {
             "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003A\u0024translator",
             "name": "translator",
             "summary": "",
@@ -14956,15 +14966,15 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Authorization-GenericAclService.html#property_apiAuthService"
         },                {
+            "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003A\u0024tueRanges",
+            "name": "tueRanges",
+            "summary": "",
+            "url": "classes/User-Authorization-GenericAclService.html#property_tueRanges"
+        },                {
             "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003A\u0024remoteAddress",
             "name": "remoteAddress",
             "summary": "",
             "url": "classes/User-Authorization-GenericAclService.html#property_remoteAddress"
-        },                {
-            "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003A\u0024tueRange",
-            "name": "tueRange",
-            "summary": "",
-            "url": "classes/User-Authorization-GenericAclService.html#property_tueRange"
         },                {
             "fqsen": "\\User\\Controller\\ApiAdminController",
             "name": "ApiAdminController",
