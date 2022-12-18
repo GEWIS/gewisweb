@@ -107,6 +107,7 @@ abstract class GenericAclService extends AbstractAclService
                 }
 
                 [$subnet, $bits] = explode('/', $range, 2);
+                $bits = (int) $bits;
 
                 // Ensure that the subnet is valid.
                 if (
