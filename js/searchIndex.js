@@ -2256,6 +2256,16 @@ Search.appendIndex(
             "summary": "Sets\u0020whether\u0020or\u0020not\u0020this\u0020SignupList\u0020should\u0020show\u0020the\u0020number\u0020of\u0020members\u0020who\nsigned\u0020up\u0020when\u0020the\u0020user\u0020is\u0020not\u0020logged\u0020in.",
             "url": "classes/Activity-Model-SignupList.html#method_setDisplaySubscribedNumber"
         },                {
+            "fqsen": "\\Activity\\Model\\SignupList\u003A\u003AgetLimitedCapacity\u0028\u0029",
+            "name": "getLimitedCapacity",
+            "summary": "Returns\u0020true\u0020if\u0020this\u0020SignupList\u0020has\u0020a\u0020limited\u0020capacity.",
+            "url": "classes/Activity-Model-SignupList.html#method_getLimitedCapacity"
+        },                {
+            "fqsen": "\\Activity\\Model\\SignupList\u003A\u003AsetLimitedCapacity\u0028\u0029",
+            "name": "setLimitedCapacity",
+            "summary": "Sets\u0020whether\u0020or\u0020not\u0020this\u0020SignupList\u0020has\u0020limited\u0020capacity.",
+            "url": "classes/Activity-Model-SignupList.html#method_setLimitedCapacity"
+        },                {
             "fqsen": "\\Activity\\Model\\SignupList\u003A\u003AgetActivity\u0028\u0029",
             "name": "getActivity",
             "summary": "Returns\u0020the\u0020associated\u0020Activity.",
@@ -2320,6 +2330,11 @@ Search.appendIndex(
             "name": "displaySubscribedNumber",
             "summary": "Determines\u0020if\u0020the\u0020number\u0020of\u0020signed\u0020up\u0020members\u0020should\u0020be\u0020displayed\nwhen\u0020the\u0020user\u0020is\u0020NOT\u0020logged\u0020in.",
             "url": "classes/Activity-Model-SignupList.html#property_displaySubscribedNumber"
+        },                {
+            "fqsen": "\\Activity\\Model\\SignupList\u003A\u003A\u0024limitedCapacity",
+            "name": "limitedCapacity",
+            "summary": "If\u0020the\u0020sign\u002Dup\u0020list\u0020has\u0020limited\u0020capacity,\u0020we\u0020should\u0020show\u0020users\u0020a\u0020warning\u0020that\u0020this\u0020is\u0020the\u0020case.",
+            "url": "classes/Activity-Model-SignupList.html#property_limitedCapacity"
         },                {
             "fqsen": "\\Activity\\Model\\SignupList\u003A\u003A\u0024fields",
             "name": "fields",
