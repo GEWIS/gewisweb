@@ -45,7 +45,10 @@ class Tag implements ResourceInterface
     )]
     protected Photo $photo;
 
-    #[ManyToOne(targetEntity: MemberModel::class)]
+    #[ManyToOne(
+        targetEntity: MemberModel::class,
+        inversedBy: "tags",
+    )]
     #[JoinColumn(
         name: "member_id",
         referencedColumnName: "lidnr",
