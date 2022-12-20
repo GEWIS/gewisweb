@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-14 22:14+0100\n"
-"PO-Revision-Date: 2022-12-14 22:14+0100\n"
+"POT-Creation-Date: 2022-12-20 18:35+0100\n"
+"PO-Revision-Date: 2022-12-20 18:36+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -4787,7 +4787,7 @@ msgid "No date"
 msgstr "Geen datum"
 
 #: module/Photo/view/photo/album/index.phtml:210
-msgid "This albums does not contain any photos."
+msgid "This album does not contain any photos."
 msgstr "Dit album bevat geen foto's."
 
 #: module/Photo/view/photo/album/index.phtml:383
@@ -4921,7 +4921,7 @@ msgstr "Huidige foto van de week"
 msgid "Old photos of the week"
 msgstr "Oude foto's van de week"
 
-#: module/User/src/Authorization/GenericAclService.php:59
+#: module/User/src/Authorization/GenericAclService.php:60
 msgid "You need to log in to perform this action"
 msgstr "Je moet ingelogd zijn om dit te doen"
 
