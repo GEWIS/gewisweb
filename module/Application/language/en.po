@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-20 18:35+0100\n"
-"PO-Revision-Date: 2022-12-20 18:36+0100\n"
+"POT-Creation-Date: 2022-12-20 19:38+0100\n"
+"PO-Revision-Date: 2022-12-20 19:39+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -358,7 +358,7 @@ msgstr "The activity does now have an acceptable amount of options"
 #: module/Activity/src/Form/SignupListField.php:43
 #: module/Activity/view/activity/activity-calendar/create.phtml:81
 #: module/Activity/view/activity/activity-calendar/index.phtml:46
-#: module/Activity/view/activity/activity/view.phtml:243
+#: module/Activity/view/activity/activity/view.phtml:244
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:112
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:117
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:129
@@ -371,9 +371,9 @@ msgstr "The activity does now have an acceptable amount of options"
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:5
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:10
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:17
-#: module/Activity/view/partial/admin-approval/signuplists.phtml:78
-#: module/Activity/view/partial/admin-approval/signuplists.phtml:83
-#: module/Activity/view/partial/admin-approval/signuplists.phtml:90
+#: module/Activity/view/partial/admin-approval/signuplists.phtml:89
+#: module/Activity/view/partial/admin-approval/signuplists.phtml:94
+#: module/Activity/view/partial/admin-approval/signuplists.phtml:101
 #: module/Activity/view/partial/create.phtml:31
 #: module/Activity/view/partial/create.phtml:105
 #: module/Activity/view/partial/signuplist.phtml:41
@@ -401,7 +401,7 @@ msgstr "The activity does now have an acceptable amount of options"
 msgid "Name"
 msgstr "Name"
 
-#: module/Activity/src/Form/SignupList.php:173
+#: module/Activity/src/Form/SignupList.php:184
 msgid ""
 "The sign-up list opening date and time must be before the sign-up list "
 "closes."
@@ -410,29 +410,29 @@ msgstr ""
 "closes."
 
 #: module/Activity/src/Form/SignupListField.php:54
-#: module/Activity/view/partial/admin-approval/signuplists.phtml:104
+#: module/Activity/view/partial/admin-approval/signuplists.phtml:115
 msgid "Text"
 msgstr "Text"
 
 #: module/Activity/src/Form/SignupListField.php:55
-#: module/Activity/view/partial/admin-approval/signuplists.phtml:107
+#: module/Activity/view/partial/admin-approval/signuplists.phtml:118
 msgid "Yes/No"
 msgstr "Yes/No"
 
 #: module/Activity/src/Form/SignupListField.php:56
-#: module/Activity/view/partial/admin-approval/signuplists.phtml:110
+#: module/Activity/view/partial/admin-approval/signuplists.phtml:121
 msgid "Number"
 msgstr "Number"
 
 #: module/Activity/src/Form/SignupListField.php:57
-#: module/Activity/view/partial/admin-approval/signuplists.phtml:113
+#: module/Activity/view/partial/admin-approval/signuplists.phtml:124
 msgid "Choice"
 msgstr "Choice"
 
 #: module/Activity/src/Form/SignupListField.php:59
 #: module/Activity/view/activity/activity-calendar/index.phtml:47
 #: module/Activity/view/activity/admin/participantsTable.phtml:13
-#: module/Activity/view/partial/admin-approval/signuplists.phtml:97
+#: module/Activity/view/partial/admin-approval/signuplists.phtml:108
 #: module/Activity/view/partial/option.phtml:10
 #: module/Decision/view/decision/decision/index.phtml:9
 #: module/Decision/view/decision/organ/index.phtml:15
@@ -442,12 +442,12 @@ msgid "Type"
 msgstr "Type"
 
 #: module/Activity/src/Form/SignupListField.php:69
-#: module/Activity/view/partial/admin-approval/signuplists.phtml:123
+#: module/Activity/view/partial/admin-approval/signuplists.phtml:134
 msgid "Min. value"
 msgstr "Min. value"
 
 #: module/Activity/src/Form/SignupListField.php:79
-#: module/Activity/view/partial/admin-approval/signuplists.phtml:133
+#: module/Activity/view/partial/admin-approval/signuplists.phtml:144
 msgid "Max. value"
 msgstr "Max. value"
 
@@ -460,7 +460,7 @@ msgstr "Option 1, Option 2, ..."
 #: module/Activity/src/Form/SignupListField.php:105
 #: module/Activity/view/activity/activity-calendar/create.phtml:110
 #: module/Activity/view/activity/activity-calendar/index.phtml:175
-#: module/Activity/view/partial/admin-approval/signuplists.phtml:145
+#: module/Activity/view/partial/admin-approval/signuplists.phtml:156
 #: module/Activity/view/partial/create.phtml:157
 msgid "Options"
 msgstr "Options"
@@ -482,9 +482,9 @@ msgstr "You are not allowed to create an activity"
 msgid "You are not allowed to create an activity for this organ"
 msgstr "You are not allowed to create an activity for this organ"
 
-#: module/Activity/src/Service/Activity.php:715
-#: module/Activity/src/Service/Activity.php:733
-#: module/Activity/src/Service/Activity.php:751
+#: module/Activity/src/Service/Activity.php:716
+#: module/Activity/src/Service/Activity.php:734
+#: module/Activity/src/Service/Activity.php:752
 msgid "You are not allowed to change the status of the activity"
 msgstr "You are not allowed to change the status of the activity"
 
@@ -1038,53 +1038,57 @@ msgstr ""
 #: module/Activity/view/activity/activity/view.phtml:156
 #, php-format
 msgid ""
-"This sign-up list is open from <strong>%s</strong> till <strong>%s</strong>."
+"This sign-up list%sis open from <strong>%s</strong> till <strong>%s</strong>."
 msgstr ""
-"This sign-up list is open from <strong>%s</strong> till <strong>%s</strong>."
+"This sign-up list%sis open from <strong>%s</strong> till <strong>%s</strong>."
 
-#: module/Activity/view/activity/activity/view.phtml:168
+#: module/Activity/view/activity/activity/view.phtml:157
+msgid " <strong>has a limited capacity</strong> and "
+msgstr " <strong>has a limited capacity</strong> and "
+
+#: module/Activity/view/activity/activity/view.phtml:169
 msgid "Already subscribed"
 msgstr "Already subscribed"
 
-#: module/Activity/view/activity/activity/view.phtml:175
+#: module/Activity/view/activity/activity/view.phtml:176
 msgid "Subscription closed"
 msgstr "Subscription closed"
 
-#: module/Activity/view/activity/activity/view.phtml:181
+#: module/Activity/view/activity/activity/view.phtml:182
 msgid "Subscribe now"
 msgstr "Subscribe now"
 
-#: module/Activity/view/activity/activity/view.phtml:188
+#: module/Activity/view/activity/activity/view.phtml:189
 msgid "Unsubscribe yourself"
 msgstr "Unsubscribe yourself"
 
-#: module/Activity/view/activity/activity/view.phtml:191
+#: module/Activity/view/activity/activity/view.phtml:192
 msgid "You are not allowed to unsubscribe after the deadline!"
 msgstr "You are not allowed to unsubscribe after the deadline!"
 
-#: module/Activity/view/activity/activity/view.phtml:210
-#: module/Activity/view/activity/activity/view.phtml:227
+#: module/Activity/view/activity/activity/view.phtml:211
+#: module/Activity/view/activity/activity/view.phtml:228
 msgid "Subscribe yourself"
 msgstr "Subscribe yourself"
 
-#: module/Activity/view/activity/activity/view.phtml:213
+#: module/Activity/view/activity/activity/view.phtml:214
 msgid "Login to subscribe"
 msgstr "Login to subscribe"
 
-#: module/Activity/view/activity/activity/view.phtml:217
+#: module/Activity/view/activity/activity/view.phtml:218
 msgid "Or subscribe without a GEWIS membership: "
 msgstr "Or subscribe without a GEWIS membership: "
 
-#: module/Activity/view/activity/activity/view.phtml:238
+#: module/Activity/view/activity/activity/view.phtml:239
 msgid "Current subscriptions"
 msgstr "Current subscriptions"
 
-#: module/Activity/view/activity/activity/view.phtml:256
+#: module/Activity/view/activity/activity/view.phtml:257
 #, php-format
 msgid "The number of subscribed members is currently %d."
 msgstr "The number of subscribed members is currently %d."
 
-#: module/Activity/view/activity/activity/view.phtml:260
+#: module/Activity/view/activity/activity/view.phtml:261
 msgid "Login to view the subscribed members."
 msgstr "Login to view the subscribed members."
 
@@ -1465,6 +1469,8 @@ msgstr "N/A"
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:63
+#: module/Activity/view/partial/admin-approval/signuplists.phtml:71
+#: module/Activity/view/partial/admin-approval/signuplists.phtml:74
 #: module/Application/language/additional-strings:12
 #: module/Company/view/company/admin/edit-company.phtml:107
 #: module/Company/view/company/admin/edit-package.phtml:74
@@ -1479,6 +1485,8 @@ msgstr "Yes"
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:63
+#: module/Activity/view/partial/admin-approval/signuplists.phtml:71
+#: module/Activity/view/partial/admin-approval/signuplists.phtml:74
 #: module/Application/language/additional-strings:13
 #: module/Company/view/company/admin/edit-company.phtml:107
 #: module/Company/view/company/admin/edit-package.phtml:74
@@ -1534,7 +1542,12 @@ msgstr "GEWIS members only"
 msgid "Display GEWIS member count"
 msgstr "Display GEWIS member count"
 
-#: module/Activity/view/partial/admin-approval/signuplists.phtml:69
+#: module/Activity/view/partial/admin-approval/signuplists.phtml:68
+#: module/Activity/view/partial/signuplist.phtml:107
+msgid "Has limited capacity"
+msgstr "Has limited capacity"
+
+#: module/Activity/view/partial/admin-approval/signuplists.phtml:80
 msgid ""
 "This sign-up list contains additional fields which require input from "
 "subscribers, they are shown below."
@@ -1654,11 +1667,21 @@ msgstr ""
 "Select this to display the number of subscribed GEWIS members to external "
 "visitors."
 
-#: module/Activity/view/partial/signuplist.phtml:123
+#: module/Activity/view/partial/signuplist.phtml:109
+msgid ""
+"Select this if this sign-up list has limited capacity or is expected to have "
+"limited capacity. Please ensure that you also write this in the description "
+"of the activity."
+msgstr ""
+"Select this if this sign-up list has limited capacity or is expected to have "
+"limited capacity. Please ensure that you also write this in the description "
+"of the activity."
+
+#: module/Activity/view/partial/signuplist.phtml:140
 msgid "Remove the last sign-up list field"
 msgstr "Remove the last sign-up list field"
 
-#: module/Activity/view/partial/signuplist.phtml:128
+#: module/Activity/view/partial/signuplist.phtml:145
 msgid "Add a sign-up list field"
 msgstr "Add a sign-up list field"
 
