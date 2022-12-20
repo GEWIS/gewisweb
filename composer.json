@@ -64,7 +64,7 @@
         "laminas/laminas-validator": "^2.28.0",
         "laminas/laminas-view": "^2.25.0",
         "doctrine/dbal": "^3.5.0",
-        "doctrine/orm": "^2.13.4",
+        "doctrine/orm": "^2.14.0",
         "doctrine/doctrine-module": "^5.2.0",
         "doctrine/doctrine-orm-module": "^5.2.0",
         "doctrine/doctrine-laminas-hydrator": "^3.2.0",
@@ -154,8 +154,7 @@
         },
         "patches": {
             "doctrine/orm": {
-                "Fix issues with SubDecisions.": "https://raw.githubusercontent.com/GEWIS/orm/2.13.x/1-to-1-multiple-join-columns.patch",
-                "Fix issues with Backed Enums in association mappings.": "https://raw.githubusercontent.com/GEWIS/orm/2.13.x/fix-backed-enum-issues.patch"
+                "Fix issues with SubDecisions.": "https://raw.githubusercontent.com/GEWIS/orm/2.13.x/1-to-1-multiple-join-columns.patch"
             }
         }
     },
