@@ -96,6 +96,23 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-3">
+                <?php
+                $limitedCapacity = $signupList->get('limitedCapacity');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($limitedCapacity) ?>">
+                    <label>
+                        <?= $this->formCheckbox($limitedCapacity) ?>
+                        <?= $this->translate('Has limited capacity') ?>
+                        <span data-toggle="tooltip" data-placement="right"
+                              title="<?= $this->translate('Select this if this sign-up list has limited capacity or is expected to have limited capacity. Please ensure that you also write this in the description of the activity.') ?>"
+                              class="fas fa-info-circle" aria-hidden="true"></span>
+                    </label>
+                    <?= $this->formElementErrors($limitedCapacity) ?>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-md-12">
         <?php

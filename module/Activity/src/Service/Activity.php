@@ -239,6 +239,7 @@ class Activity
 
         $signupList->setOnlyGEWIS($data['onlyGEWIS']);
         $signupList->setDisplaySubscribedNumber($data['displaySubscribedNumber']);
+        $signupList->setLimitedCapacity($data['limitedCapacity']);
 
         if (isset($data['fields'])) {
             $em = $this->entityManager;

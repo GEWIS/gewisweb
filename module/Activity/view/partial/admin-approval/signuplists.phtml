@@ -63,6 +63,17 @@
                 <?= $signupList->getDisplaySubscribedNumber() ? $this->translate("Yes") : $this->translate("No"); ?>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-2">
+                <strong><?= $this->translate('Has limited capacity') ?></strong>
+            </div>
+            <div class="col-md-5">
+                <?= $signupList->getLimitedCapacity() ? $this->translate("Yes") : $this->translate("No") ?>
+            </div>
+            <div class="col-md-5 overview-sidebar">
+                <?= $signupList->getLimitedCapacity() ? $this->translate("Yes") : $this->translate("No"); ?>
+            </div>
+        </div>
         <?php if ($signupList->getFields()->count() > 0): ?>
             <div class="row">
                 <div class="col-md-10 col-md-offset-2">
