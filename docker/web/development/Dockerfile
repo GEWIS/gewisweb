@@ -11,6 +11,8 @@ RUN apk add --no-cache --virtual .build-deps \
         libpng-dev \
         libpq-dev \
         libzip-dev \
+        linux-headers \
+        openldap-dev \
         sqlite-dev \
         tzdata \
     && apk add --no-cache --virtual .runtime-deps \
