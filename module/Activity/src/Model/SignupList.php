@@ -95,6 +95,12 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     protected bool $displaySubscribedNumber;
 
     /**
+     * If the sign-up list has limited capacity, we should show users a warning that this is the case.
+     */
+    #[Column(type: "boolean")]
+    protected bool $limitedCapacity;
+
+    /**
      * All additional fields belonging to the activity.
      */
     #[OneToMany(
@@ -259,6 +265,22 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
+     * Returns true if this SignupList has a limited capacity.
+     */
+    public function getLimitedCapacity(): bool
+    {
+        return $this->limitedCapacity;
+    }
+
+    /**
+     * Sets whether or not this SignupList has limited capacity.
+     */
+    public function setLimitedCapacity(bool $limitedCapacity): void
+    {
+        $this->limitedCapacity = $limitedCapacity;
+    }
+
+    /**
      * Returns the associated Activity.
      *
      * @return Activity
@@ -298,6 +320,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
             'closeDate' => $this->getCloseDate(),
             'onlyGEWIS' => $this->getOnlyGEWIS(),
             'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
+            'limitedCapacity' => $this->getLimitedCapacity(),
             'fields' => $fieldsArrays,
         ];
     }

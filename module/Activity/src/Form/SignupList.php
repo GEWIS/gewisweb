@@ -95,6 +95,17 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
 
         $this->add(
             [
+                'name' => 'limitedCapacity',
+                'type' => Checkbox::class,
+                'options' => [
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
+                ],
+            ]
+        );
+
+        $this->add(
+            [
                 'name' => 'fields',
                 'type' => Collection::class,
                 'options' => [
