@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-14 22:14+0100\n"
+"POT-Creation-Date: 2022-12-20 18:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3372,7 +3372,7 @@ msgid "No date"
 msgstr ""
 
 #: module/Photo/view/photo/album/index.phtml:210
-msgid "This albums does not contain any photos."
+msgid "This album does not contain any photos."
 msgstr ""
 
 #: module/Photo/view/photo/album/index.phtml:383
@@ -4827,7 +4827,7 @@ msgstr ""
 msgid "Not allowed to view tags."
 msgstr ""
 
-#: module/User/src/Authorization/GenericAclService.php:59
+#: module/User/src/Authorization/GenericAclService.php:60
 msgid "You need to log in to perform this action"
 msgstr ""
 
