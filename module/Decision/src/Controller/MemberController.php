@@ -34,8 +34,8 @@ class MemberController extends AbstractActionController
     {
         // Get the latest 3 meetings of each type and flatten result
         $meetingsCollection = [
-            MeetingTypes::AV->getAbbreviation($this->translator) => array_column(
-                $this->decisionService->getPastMeetings(3, MeetingTypes::AV),
+            MeetingTypes::ALV->getAbbreviation($this->translator) => array_column(
+                $this->decisionService->getPastMeetings(3, MeetingTypes::ALV),
                 0,
             ),
             MeetingTypes::BV->getAbbreviation($this->translator) => array_column(
@@ -110,7 +110,7 @@ class MemberController extends AbstractActionController
     public function canAuthorizeAction(): JsonModel|ViewModel
     {
         $lidnr = $this->params()->fromQuery('q');
-        $meeting = $this->decisionService->getLatestAV();
+        $meeting = $this->decisionService->getLatestALV();
 
         if (!empty($lidnr) && !empty($meeting)) {
             $member = $this->memberService->findMemberByLidNr($lidnr);

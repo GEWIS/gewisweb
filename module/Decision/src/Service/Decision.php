@@ -143,14 +143,14 @@ class Decision
     }
 
     /**
-     * Returns the latest upcoming AV or null if there is none.
+     * Returns the latest upcoming ALV or null if there is none.
      *
      * @return MeetingModel|null
      * @throws NonUniqueResultException
      */
-    public function getLatestAV(): ?MeetingModel
+    public function getLatestALV(): ?MeetingModel
     {
-        return $this->meetingMapper->findLatestAV();
+        return $this->meetingMapper->findLatestALV();
     }
 
     /**
@@ -432,7 +432,7 @@ class Decision
             return null;
         }
 
-        $meeting = $this->getLatestAV();
+        $meeting = $this->getLatestALV();
         if (null === $meeting) {
             return null;
         }

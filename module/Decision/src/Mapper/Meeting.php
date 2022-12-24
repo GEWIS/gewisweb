@@ -45,7 +45,7 @@ class Meeting extends BaseMapper
     /**
      * Find all meetings which have the given type.
      *
-     * @param MeetingTypes $type AV|BV|VV|Virt
+     * @param MeetingTypes $type ALV|BV|VV|Virt
      *
      * @return array
      */
@@ -177,15 +177,15 @@ class Meeting extends BaseMapper
     }
 
     /**
-     * Returns the latest upcoming AV or null if there is none.
+     * Returns the latest upcoming ALV or null if there is none.
      *
-     * Note that if multiple AVs are planned, the one that is planned furthest
+     * Note that if multiple ALVs are planned, the one that is planned furthest
      * away is returned.
      *
      * @return MeetingModel|null
      * @throws NonUniqueResultException
      */
-    public function findLatestAV(): ?MeetingModel
+    public function findLatestALV(): ?MeetingModel
     {
         $qb = $this->getRepository()->createQueryBuilder('m');
 
@@ -195,7 +195,7 @@ class Meeting extends BaseMapper
         $qb->where('m.type = :gmm')
             ->andWhere('m.date >= :date')
             ->orderBy('m.date', 'DESC')
-            ->setParameter('gmm', MeetingTypes::AV)
+            ->setParameter('gmm', MeetingTypes::ALV)
             ->setParameter('date', $maxDate)
             ->setMaxResults(1);
 
@@ -216,7 +216,7 @@ class Meeting extends BaseMapper
             ->andWhere('m.date >= :date')
             ->orderBy('m.date', 'ASC');
 
-        $qb->setParameter('gmm', MeetingTypes::AV)
+        $qb->setParameter('gmm', MeetingTypes::ALV)
             ->setParameter('cm', MeetingTypes::VV)
             ->setParameter('date', $maxDate);
 
