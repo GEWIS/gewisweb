@@ -3766,11 +3766,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Service-WatermarkService.html#constant_FONT"
         },                {
-            "fqsen": "\\Application\\Service\\WatermarkService\u003A\u003APDF_DENIED_PERMISSIONS",
-            "name": "PDF_DENIED_PERMISSIONS",
-            "summary": "",
-            "url": "classes/Application-Service-WatermarkService.html#constant_PDF_DENIED_PERMISSIONS"
-        },                {
             "fqsen": "\\Application\\Service\\WatermarkService\u003A\u003A\u0024authService",
             "name": "authService",
             "summary": "",
