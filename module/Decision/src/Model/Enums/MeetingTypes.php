@@ -10,7 +10,7 @@ use Laminas\Mvc\I18n\Translator;
 enum MeetingTypes: string
 {
     case BV = 'BV'; // bestuursvergadering
-    case AV = 'AV'; // algemene leden vergadering
+    case ALV = 'ALV'; // algemene leden vergadering
     case VV = 'VV'; // voorzitters vergadering
     case VIRT = 'Virt'; // virtual meeting
 
@@ -18,7 +18,7 @@ enum MeetingTypes: string
     {
         return match ($this) {
             self::BV => $translator->translate('Board Meeting'),
-            self::AV => $translator->translate('General Members Meeting'),
+            self::ALV => $translator->translate('General Members Meeting'),
             self::VV => $translator->translate('Chair\'s Meeting'),
             self::VIRT => $translator->translate('Virtual Meeting'),
         };
@@ -28,7 +28,7 @@ enum MeetingTypes: string
     {
         return match ($this) {
             self::BV => $translator->translate('BM'),
-            self::AV => $translator->translate('GMM'),
+            self::ALV => $translator->translate('GMM'),
             self::VV => $translator->translate('CM'),
             self::VIRT => $translator->translate('VIRT'),
         };

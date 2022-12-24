@@ -134,7 +134,7 @@ class DecisionController extends AbstractActionController
 
     public function authorizationsAction(): ViewModel
     {
-        $meeting = $this->decisionService->getLatestAV();
+        $meeting = $this->decisionService->getLatestALV();
         $authorization = null;
 
         if (null !== $meeting) {
@@ -184,7 +184,7 @@ class DecisionController extends AbstractActionController
         /** @var Request $request */
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if (null !== ($meeting = $this->decisionService->getLatestAV())) {
+            if (null !== ($meeting = $this->decisionService->getLatestALV())) {
                 if (null !== ($authorization = $this->decisionService->getUserAuthorization($meeting))) {
                     $form = $this->decisionService->getAuthorizationRevocationForm();
                     $form->setData($request->getPost()->toArray());

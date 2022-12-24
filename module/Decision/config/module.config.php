@@ -62,7 +62,7 @@ return [
                         'options' => [
                             'route' => '/:type/:number',
                             'constraints' => [
-                                'type' => 'BV|AV|VV|Virt',
+                                'type' => 'BV|ALV|VV|Virt',
                                 'number' => '[0-9]+',
                             ],
                             'defaults' => [
@@ -161,7 +161,7 @@ return [
                         'options' => [
                             'route' => '/document[/:type/:number]',
                             'constraints' => [
-                                'type' => 'BV|AV|VV|Virt',
+                                'type' => 'BV|ALV|VV|Virt',
                                 'number' => '[0-9]+',
                             ],
                             'defaults' => [

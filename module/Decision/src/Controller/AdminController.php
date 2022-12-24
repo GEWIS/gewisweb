@@ -68,7 +68,7 @@ class AdminController extends AbstractActionController
 
         $number = $this->params()->fromRoute('number');
 
-        $meetings = $this->decisionService->getMeetingsByType(MeetingTypes::AV);
+        $meetings = $this->decisionService->getMeetingsByType(MeetingTypes::ALV);
         $meetings = array_merge($meetings, $this->decisionService->getMeetingsByType(MeetingTypes::VV));
 
         if (
@@ -153,7 +153,7 @@ class AdminController extends AbstractActionController
 
     public function authorizationsAction(): ViewModel
     {
-        $meetings = $this->decisionService->getMeetingsByType(MeetingTypes::AV);
+        $meetings = $this->decisionService->getMeetingsByType(MeetingTypes::ALV);
         $number = $this->params()->fromRoute('number');
 
         if (null === $number && !empty($meetings)) {
