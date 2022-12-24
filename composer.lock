@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b61f7d1a26ea5818d9f96e44cb504362",
+    "content-hash": "394a6aa9f2bd7082ed22d26203974af3",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -8495,63 +8495,6 @@
             "time": "2022-12-18T00:47:22+00:00"
         },
         {
-            "name": "fzaninotto/faker",
-            "version": "v1.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "d0190b156bcca848d401fb80f31f504f37141c8d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/d0190b156bcca848d401fb80f31f504f37141c8d",
-                "reference": "d0190b156bcca848d401fb80f31f504f37141c8d",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0",
-                "squizlabs/php_codesniffer": "~1.5"
-            },
-            "suggest": {
-                "ext-intl": "*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.5.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Faker\\": "src/Faker/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "François Zaninotto"
-                }
-            ],
-            "description": "Faker is a PHP library that generates fake data for you.",
-            "keywords": [
-                "data",
-                "faker",
-                "fixtures"
-            ],
-            "support": {
-                "issues": "https://github.com/fzaninotto/Faker/issues",
-                "source": "https://github.com/fzaninotto/Faker/tree/master"
-            },
-            "abandoned": true,
-            "time": "2015-05-29T06:29:14+00:00"
-        },
-        {
             "name": "icanhazstring/composer-unused",
             "version": "0.8.5",
             "source": {
@@ -8635,38 +8578,6 @@
                 }
             ],
             "time": "2022-12-02T10:46:30+00:00"
-        },
-        {
-            "name": "jszanto/gewisweb-test-data",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jszanto/gewisweb-test-data",
-                "reference": "13320f77f98c9189c20f5a5584aa6782d8367d89"
-            },
-            "require": {
-                "fzaninotto/faker": "^1.5",
-                "php": ">=5.3.3"
-            },
-            "default-branch": true,
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "TestData": "src/"
-                },
-                "classmap": [
-                    "./Module.php"
-                ]
-            },
-            "license": [
-                "GPL-3.0"
-            ],
-            "description": "Module for migration scripts to the new website",
-            "homepage": "https://github.com/jszanto/gewisweb-test-data",
-            "keywords": [
-                "gewis"
-            ],
-            "time": "2017-12-07T15:14:32+00:00"
         },
         {
             "name": "laminas/laminas-component-installer",
@@ -13000,9 +12911,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "jszanto/gewisweb-test-data": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
