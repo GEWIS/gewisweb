@@ -25,7 +25,6 @@
       <path value="$PROJECT_DIR$/vendor/psr/container" />
       <path value="$PROJECT_DIR$/vendor/psr/cache" />
       <path value="$PROJECT_DIR$/vendor/twbs/bootstrap-sass" />
-      <path value="$PROJECT_DIR$/vendor/fzaninotto/faker" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-code" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-developer-tools" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-inputfilter" />
@@ -81,7 +80,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
       <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/console" />
-      <path value="$PROJECT_DIR$/vendor/jszanto/gewisweb-test-data" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-cache-storage-adapter-zend-server" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-cache-storage-adapter-xcache" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-cache-storage-adapter-wincache" />
