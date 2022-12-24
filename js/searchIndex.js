@@ -6786,10 +6786,10 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020maximum\u0020document\u0020position\u0020for\u0020the\u0020given\u0020meeting.",
             "url": "classes/Decision-Mapper-Meeting.html#method_findMaxDocumentPosition"
         },                {
-            "fqsen": "\\Decision\\Mapper\\Meeting\u003A\u003AfindLatestAV\u0028\u0029",
-            "name": "findLatestAV",
-            "summary": "Returns\u0020the\u0020latest\u0020upcoming\u0020AV\u0020or\u0020null\u0020if\u0020there\u0020is\u0020none.",
-            "url": "classes/Decision-Mapper-Meeting.html#method_findLatestAV"
+            "fqsen": "\\Decision\\Mapper\\Meeting\u003A\u003AfindLatestALV\u0028\u0029",
+            "name": "findLatestALV",
+            "summary": "Returns\u0020the\u0020latest\u0020upcoming\u0020ALV\u0020or\u0020null\u0020if\u0020there\u0020is\u0020none.",
+            "url": "classes/Decision-Mapper-Meeting.html#method_findLatestALV"
         },                {
             "fqsen": "\\Decision\\Mapper\\Meeting\u003A\u003AfindUpcomingAnnouncedMeetings\u0028\u0029",
             "name": "findUpcomingAnnouncedMeetings",
@@ -7416,8 +7416,8 @@ Search.appendIndex(
             "summary": "",
             "url": ""
         },                {
-            "fqsen": "\\Decision\\Model\\Enums\\MeetingTypes\u003A\u003AAV",
-            "name": "AV",
+            "fqsen": "\\Decision\\Model\\Enums\\MeetingTypes\u003A\u003AALV",
+            "name": "ALV",
             "summary": "",
             "url": ""
         },                {
@@ -9281,10 +9281,10 @@ Search.appendIndex(
             "summary": "Get\u0020information\u0020about\u0020one\u0020meeting.",
             "url": "classes/Decision-Service-Decision.html#method_getMeeting"
         },                {
-            "fqsen": "\\Decision\\Service\\Decision\u003A\u003AgetLatestAV\u0028\u0029",
-            "name": "getLatestAV",
-            "summary": "Returns\u0020the\u0020latest\u0020upcoming\u0020AV\u0020or\u0020null\u0020if\u0020there\u0020is\u0020none.",
-            "url": "classes/Decision-Service-Decision.html#method_getLatestAV"
+            "fqsen": "\\Decision\\Service\\Decision\u003A\u003AgetLatestALV\u0028\u0029",
+            "name": "getLatestALV",
+            "summary": "Returns\u0020the\u0020latest\u0020upcoming\u0020ALV\u0020or\u0020null\u0020if\u0020there\u0020is\u0020none.",
+            "url": "classes/Decision-Service-Decision.html#method_getLatestALV"
         },                {
             "fqsen": "\\Decision\\Service\\Decision\u003A\u003AgetUpcomingAnnouncedMeetings\u0028\u0029",
             "name": "getUpcomingAnnouncedMeetings",
