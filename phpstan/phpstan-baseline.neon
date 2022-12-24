@@ -33,3 +33,5 @@ parameters:
             message: '#If condition is always true.$#'
             path: ..//module/*/test/*
         - '#^Parameter \#1 \$valueMap of method PHPUnit\\Framework\\MockObject\\Builder\\InvocationMocker\<mixed\>\:\:willReturnMap\(\) expects array\<int, array\<int, mixed\>\>, array\<int, array\<int, mixed\>\|[a-zA-Z0-9\\_]+\> given.$#'
+        - '#Return type \(array\) of method [a-zA-Z0-9_]+\\Form\\[a-zA-Z0-9_]+\:\:getInputFilterSpecification\(\) should be compatible with return type \(\*NEVER\*\) of method Laminas\\InputFilter\\InputFilterProviderInterface\:\:getInputFilterSpecification\(\)$#'
+        - '#Return type \(array\) of method [a-zA-Z0-9_]+\\Form\\Fieldset\\[a-zA-Z0-9_]+\:\:getInputFilterSpecification\(\) should be compatible with return type \(\*NEVER\*\) of method Laminas\\InputFilter\\InputFilterProviderInterface\:\:getInputFilterSpecification\(\)$#'

@@ -11,15 +11,6 @@ class WatermarkService
     // The font size of the watermark
     private const FONT_SIZE = 32;
     private const FONT = 'freesansb';
-    private const PDF_DENIED_PERMISSIONS = [
-        'modify',
-        'copy',
-        'annot-forms',
-        'fill-forms',
-        'extract',
-        'assemble',
-        'print-high',
-    ];
 
     public function __construct(
         private readonly AuthenticationService $authService,

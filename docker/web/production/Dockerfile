@@ -9,7 +9,7 @@ RUN mkdir public && mkdir public/scss && mkdir public/css
 COPY ./public/scss ./public/scss/
 RUN npm run scss
 
-FROM php:8.1-fpm-alpine as php-target
+FROM php:8.2-fpm-alpine as php-target
 
 RUN apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
