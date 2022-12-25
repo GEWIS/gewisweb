@@ -71,7 +71,8 @@ class LoginAttempt
     /**
      * Check if there are too many login tries for a specific account.
      */
-    public function loginAttemptsExceeded(CompanyUserModel|UserModel $user): bool {
+    public function loginAttemptsExceeded(CompanyUserModel|UserModel $user): bool
+    {
         $ip = $this->remoteAddress;
         $since = (new DateTime())->sub(new DateInterval('PT' . $this->rateLimitConfig['lockout_time'] . 'M'));
 

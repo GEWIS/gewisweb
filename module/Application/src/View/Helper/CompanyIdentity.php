@@ -23,7 +23,8 @@ class CompanyIdentity extends AbstractHelper
     /**
      * @param AuthenticationService $companyUserAuthService
      */
-    public function __construct(AuthenticationService $companyUserAuthService) {
+    public function __construct(AuthenticationService $companyUserAuthService)
+    {
         $this->companyUserAuthService = $companyUserAuthService;
     }
 

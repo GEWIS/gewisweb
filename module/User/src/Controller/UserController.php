@@ -7,11 +7,13 @@ use Laminas\Http\{
     Response,
 };
 use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
 use User\Form\{
     CompanyUserLogin as CompanyLoginForm,
     UserLogin as UserLoginForm,
 };
+use User\Permissions\NotAllowedException;
 use User\Service\AclService;
 use User\Service\User as UserService;
 
@@ -19,6 +21,7 @@ class UserController extends AbstractActionController
 {
     public function __construct(
         private readonly AclService $aclService,
+        private readonly Translator $translator,
         private readonly UserService $userService,
     ) {
     }
@@ -152,7 +155,12 @@ class UserController extends AbstractActionController
      */
     public function changePasswordAction(): ViewModel
     {
-        /** @var Request $request */
+        if (!$this->aclService->isAllowed('password_change', 'user')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to change passwords'),
+            );
+        }
+
         $request = $this->getRequest();
         $form = $this->userService->getPasswordForm();
 

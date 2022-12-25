@@ -34,7 +34,10 @@ class NewCompanyUser
     /**
      * Date and time at which the activation or password reset was requested.
      */
-    #[Column(type: "datetime")]
+    #[Column(
+        type: "datetime",
+        nullable: true,
+    )]
     protected ?DateTime $time = null;
 
     /**
