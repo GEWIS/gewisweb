@@ -2,7 +2,14 @@
 
 namespace Company\Controller;
 
-use Company\Service\AclService;
+use Application\Model\Enums\ApprovableStatus;
+use Company\Mapper\Package as JobPackageMapper;
+use Company\Model\CompanyJobPackage;
+use Company\Service\{
+    AclService,
+    Company as CompanyService,
+};
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
@@ -21,17 +28,32 @@ class CompanyAccountController extends AbstractActionController
     private Translator $translator;
 
     /**
+     * @var JobPackageMapper
+     */
+    private JobPackageMapper $jobPackageMapper;
+
+    /**
+     * @var CompanyService
+     */
+    private CompanyService $companyService;
+
+    /**
      * CompanyAccountController constructor.
      *
      * @param AclService $aclService
      * @param Translator $translator
+     * @param CompanyService $companyService
      */
     public function __construct(
         AclService $aclService,
         Translator $translator,
+        JobPackageMapper $jobPackageMapper,
+        CompanyService $companyService,
     ) {
         $this->aclService = $aclService;
         $this->translator = $translator;
+        $this->jobPackageMapper = $jobPackageMapper;
+        $this->companyService = $companyService;
     }
 
     public function selfAction(): ViewModel
@@ -64,22 +86,127 @@ class CompanyAccountController extends AbstractActionController
             );
         }
 
-        return new ViewModel([]);
+        $result = [];
+        $splitJobs = [
+            ApprovableStatus::Unapproved->value => [],
+            ApprovableStatus::Approved->value => [],
+            ApprovableStatus::Rejected->value => [],
+        ];
+        $company = $this->aclService->getIdentity()->getCompany();
+
+        // `packageId` is an optional part of the route and can be used to display jobs specific to that job package. It
+        // is null of it was not specified.
+        if (null !== ($packageId = $this->params('packageId'))) {
+            $package = $this->jobPackageMapper->find($packageId);
+
+            // Check if the package exists and if it belongs to the company of the company user.
+            if (
+                null === $package
+                || $package->getCompany()->getSlugName() !== $company->getSlugName()
+            ) {
+                return $this->notFoundAction();
+            }
+
+            $jobs = $package->getJobs();
+            $result['package'] = $package;
+        } else {
+            // TODO: Get most recent n jobs for each type. Type should also be updated when ORM supports native enums.
+            $jobs = [];
+            $result['packages'] = $company->getPackages()->filter(function ($package) {
+                return 'job' === $package->getType();
+            });
+        }
+
+        foreach ($jobs as $job) {
+            $splitJobs[$job->getApproved()][] = $job;
+        }
+
+        $result += [
+            'unapproved' => $splitJobs[ApprovableStatus::Unapproved->value],
+            'approved' => $splitJobs[ApprovableStatus::Approved->value],
+            'rejected' => $splitJobs[ApprovableStatus::Rejected->value],
+        ];
+
+        return new ViewModel($result);
     }
 
-    public function addJobAction(): ViewModel
+    public function addJobAction(): ViewModel|Response
     {
+        // This is a bit confusing, but to prevent us from having an extra layer of child routes the `packageId` part
+        // of the route is not required. However, it is necessary to perform the actions here, hence without it, the
+        // route is invalid, and as such we should display an error 404. This applies to the `addJob`, `editJob`, and
+        // `deleteJob` actions.
+        if (null === ($packageId = $this->params('packageId'))) {
+            return $this->notFoundAction();
+        }
+
         if (!$this->aclService->isAllowed('createOwn', 'job')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to create jobs')
             );
         }
 
-        return new ViewModel([]);
+        // Get the specified package and company user (through ACL, as it is already included).
+        $package = $this->jobPackageMapper->find($packageId);
+        $companySlugName = $this->aclService->getIdentity()->getCompany()->getSlugName();
+
+        // Check if the package exists and if it belongs to the company of the company user.
+        if (
+            null === $package
+            || $package->getCompany()->getSlugName() !== $companySlugName
+        ) {
+            return $this->notFoundAction();
+        }
+
+        $jobForm = $this->companyService->getJobForm();
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = array_merge_recursive(
+                $request->getPost()->toArray(),
+                $request->getFiles()->toArray(),
+            );
+
+            $jobForm->setData($post);
+            $jobForm->setCompanySlug($companySlugName);
+
+            if ($jobForm->isValid()) {
+                if (false !== $this->companyService->createJob($package, $jobForm->getData())) {
+                    return $this->redirect()->toRoute(
+                        'company_account/jobs',
+                        [
+                            'packageId' => $packageId,
+                        ]
+                    );
+                }
+            }
+        }
+
+        // Initialize the form
+        $jobForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'company_account/jobs/add',
+                [
+                    'packageId' => $packageId,
+                ]
+            )
+        );
+
+        // Initialize the view
+        return new ViewModel(
+            [
+                'form' => $jobForm,
+            ]
+        );
     }
 
     public function editJobAction(): ViewModel
     {
+        if (null === ($packageId = $this->params('packageId'))) {
+            return $this->notFoundAction();
+        }
+
         if (!$this->aclService->isAllowed('editOwn', 'job')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to edit jobs')
@@ -91,6 +218,10 @@ class CompanyAccountController extends AbstractActionController
 
     public function deleteJobAction(): ViewModel
     {
+        if (null === ($packageId = $this->params('packageId'))) {
+            return $this->notFoundAction();
+        }
+
         if (!$this->aclService->isAllowed('deleteOwn', 'job')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to delete jobs')

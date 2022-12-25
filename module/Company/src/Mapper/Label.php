@@ -11,18 +11,6 @@ use Company\Model\JobLabel as JobLabelModel;
 class Label extends BaseMapper
 {
     /**
-     * @return array
-     */
-    public function findVisibleLabels(): array
-    {
-        $qb = $this->getRepository()->createQueryBuilder('l');
-        $qb->where('l.hidden = :hidden')
-            ->setParameter('hidden', false);
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
      * @inheritDoc
      */
     protected function getRepositoryName(): string

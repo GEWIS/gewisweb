@@ -1,0 +1,94 @@
+<?php
+$this->headTitle($this->translate('Jobs'));
+?>
+<div class="row">
+    <div class="col-md-3 col-md-push-9">
+        <h2><?= $this->translate('Notifications') ?></h2>
+    </div>
+    <div class="col-md-9 col-md-pull-3">
+        <?php if (isset($packages)): ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2><?= $this->translate('Job Packages') ?></h2>
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <?= $this->translate('Contract Number') ?>
+                                </th>
+                                <th>
+                                    <?= $this->translate('Start date'); ?>
+                                </th>
+                                <th>
+                                    <?= $this->translate('Expiration date'); ?>
+                                </th>
+                                <th>
+                                    <?= $this->translate('Actions'); ?>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($packages as $package): ?>
+                                <tr>
+                                    <td>
+                                        <?= $package->getContractNumber() ?? '-' ?>
+                                    </td>
+                                    <td>
+                                        <?= $package->getStartingDate()->format('d-m-Y') ?>
+                                    </td>
+                                    <td>
+                                        <?= $package->getExpirationDate()->format('d-m-Y') ?>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-xs btn-primary" href="<?= $this->url(
+                                            'company_account/jobs/add',
+                                            [
+                                                'packageId' => $package->getId(),
+                                            ]
+                                        ); ?>">
+                                            <?= $this->translate('Add Job'); ?>
+                                        </a>
+                                        <a class="btn btn-xs btn-primary" href="<?= $this->url(
+                                            'company_account/jobs',
+                                            [
+                                                'packageId' => $package->getId(),
+                                            ]
+                                        ); ?>">
+                                            <?= $this->translate('View'); ?>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr>
+        <?php endif; ?>
+        <?php
+        // TODO: This should probably look a bit better.
+        ?>
+        <div class="row">
+            <div class="col-md-4">
+                <h2><?= $this->translate('Approved Jobs') ?></h2>
+                <?php foreach($approved as $job): ?>
+                    <p><?= $this->localiseText($job->getName()) ?></p>
+                <?php endforeach; ?>
+            </div>
+            <div class="col-md-4">
+                <h2><?= $this->translate('Rejected Jobs') ?></h2>
+                <?php foreach($rejected as $job): ?>
+                    <p><?= $this->localiseText($job->getName()) ?></p>
+                <?php endforeach; ?>
+            </div>
+            <div class="col-md-4">
+                <h2><?= $this->translate('Unapproved Jobs') ?></h2>
+                <?php foreach($unapproved as $job): ?>
+                    <p><?= $this->localiseText($job->getName()) ?></p>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+</div>

@@ -164,9 +164,7 @@ class CompanyQuery
             throw new NotAllowedException($this->translator->translate('You are not allowed to list job labels'));
         }
 
-        $labels = $this->labelMapper->findVisibleLabels();
-
-        return $this->filterLabels($labels);
+        return $this->filterLabels($this->labelMapper->findAll());
     }
 
     /**

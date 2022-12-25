@@ -4,33 +4,29 @@ $this->headTitle($this->translate('Edit Job Category'));
 $form->prepare();
 $form->setAttribute('class', 'form-company');
 ?>
-<section class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1><?= $this->translate('Edit Job Category') ?></h1>
-            </div>
-        </div>
-        <hr>
-        <?= $this->form()->openTag($form) ?>
-        <?= $this->partial(
-            'partial/company/admin/editors/category.phtml',
-            [
-                'form' => $form,
-            ],
-        ) ?>
-        <div class="row">
-            <div class="col-md-12">
-                <?php
-                $submit = $form->get('submit')
-                    ->setValue($this->translate('Update Job Category'))
-                    ->setAttribute('class', 'btn btn-primary pull-right');
-                ?>
-                <div class="form-group">
-                    <?= $this->formSubmit($submit) ?>
-                </div>
-            </div>
-        </div>
-        <?= $this->form()->closeTag() ?>
+<div class="row">
+    <div class="col-md-12">
+        <h1><?= $this->translate('Edit Job Category') ?></h1>
     </div>
-</section>
+</div>
+<hr>
+<?= $this->form()->openTag($form) ?>
+<?= $this->partial(
+    'partial/company/admin/editors/category.phtml',
+    [
+        'form' => $form,
+    ],
+) ?>
+<div class="row">
+    <div class="col-md-12">
+        <?php
+        $submit = $form->get('submit')
+            ->setValue($this->translate('Update Job Category'))
+            ->setAttribute('class', 'btn btn-primary pull-right');
+        ?>
+        <div class="form-group">
+            <?= $this->formSubmit($submit) ?>
+        </div>
+    </div>
+</div>
+<?= $this->form()->closeTag() ?>

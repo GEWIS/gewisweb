@@ -140,9 +140,12 @@ return [
                         ],
                     ],
                     'jobs' => [
-                        'type' => Literal::class,
+                        'type' => Segment::class,
                         'options' => [
-                            'route' => '/jobs',
+                            'route' => '/jobs[/:packageId]',
+                            'constraints' => [
+                                'packageId' => '[0-9]+',
+                            ],
                             'defaults' => [
                                 'action' => 'jobs',
                             ],
@@ -150,7 +153,7 @@ return [
                         'may_terminate' => true,
                         'child_routes' => [
                             'add' => [
-                                'type' => Segment::class,
+                                'type' => Literal::class,
                                 'options' => [
                                     'route' => '/add',
                                     'defaults' => [
@@ -166,7 +169,7 @@ return [
                                         'action' => 'deleteJob',
                                     ],
                                     'constraints' => [
-                                        'jobId' => '[0-9]*',
+                                        'jobId' => '[0-9]+',
                                     ],
                                 ],
                             ],
@@ -178,7 +181,7 @@ return [
                                         'action' => 'editJob',
                                     ],
                                     'constraints' => [
-                                        'jobId' => '[0-9]*',
+                                        'jobId' => '[0-9]+',
                                     ],
                                 ],
                             ],
@@ -276,7 +279,7 @@ return [
                                                         'action' => 'deletePackage',
                                                     ],
                                                     'constraints' => [
-                                                        'packageId' => '[0-9]*',
+                                                        'packageId' => '[0-9]+',
                                                     ],
                                                 ],
                                             ],
@@ -288,7 +291,7 @@ return [
                                                         'action' => 'editPackage',
                                                     ],
                                                     'constraints' => [
-                                                        'packageId' => '[0-9]*',
+                                                        'packageId' => '[0-9]+',
                                                     ],
                                                 ],
                                                 'may_terminate' => true,
@@ -301,7 +304,7 @@ return [
                                                         'may_terminate' => false,
                                                         'child_routes' => [
                                                             'add' => [
-                                                                'type' => Segment::class,
+                                                                'type' => Literal::class,
                                                                 'options' => [
                                                                     'route' => '/add',
                                                                     'defaults' => [
@@ -317,7 +320,7 @@ return [
                                                                         'action' => 'deleteJob',
                                                                     ],
                                                                     'constraints' => [
-                                                                        'jobId' => '[0-9]*',
+                                                                        'jobId' => '[0-9]+',
                                                                     ],
                                                                 ],
                                                             ],
@@ -329,7 +332,7 @@ return [
                                                                         'action' => 'editJob',
                                                                     ],
                                                                     'constraints' => [
-                                                                        'jobId' => '[0-9]*',
+                                                                        'jobId' => '[0-9]+',
                                                                     ],
                                                                 ],
                                                             ],
@@ -429,6 +432,8 @@ return [
         'template_map' => [
             'company/admin/index-categories' => __DIR__ . '/../view/company/admin/categories.phtml',
             'company/admin/index-labels' => __DIR__ . '/../view/company/admin/labels.phtml',
+            'company/company-account/add-job' => __DIR__ . '/../view/company/admin/add-job.phtml',
+            'company/company-account/edit-job' => __DIR__ . '/../view/company/admin/edit-job.phtml',
         ],
     ],
     'doctrine' => [

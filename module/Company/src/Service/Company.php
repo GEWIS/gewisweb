@@ -338,6 +338,8 @@ class Company
             $company->setApproved(ApprovableStatus::Approved->value);
             $company->setApprovedAt(new DateTime());
             $company->setApprover($this->aclService->getIdentity());
+        } else {
+            $company->setApproved(ApprovableStatus::Unapproved->value);
         }
 
         // Upload the logo of the company.
@@ -625,6 +627,8 @@ class Company
             $job->setApproved(ApprovableStatus::Approved->value);
             $job->setApprovedAt(new DateTime());
             $job->setApprover($this->aclService->getIdentity());
+        } else {
+            $job->setApproved(ApprovableStatus::Unapproved->value);
         }
 
         // Upload the attachments.
@@ -798,6 +802,10 @@ class Company
     public function getJobCategoryById(int $jobCategoryId): ?JobCategoryModel
     {
         if (!$this->aclService->isAllowed('listAll', 'jobCategory')) {
+            if ($this->aclService->isAllowed('list', 'jobCategory')) {
+                return $this->categoryMapper->findVisibleCategoryById($jobCategoryId);
+            }
+
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit job categories'));
         }
 
@@ -872,7 +880,7 @@ class Company
     {
         if (
             !$this->aclService->isAllowed('create', 'jobCategory')
-            || !$this->aclService->isAllowed('edit', 'jobCategory')
+            && !$this->aclService->isAllowed('edit', 'jobCategory')
         ) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit categories'));
         }
@@ -889,7 +897,7 @@ class Company
     {
         if (
             !$this->aclService->isAllowed('create', 'jobLabel')
-            || !$this->aclService->isAllowed('edit', 'jobLabel')
+            && !$this->aclService->isAllowed('edit', 'jobLabel')
         ) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit labels'));
         }
@@ -926,9 +934,9 @@ class Company
     {
         if (
             !$this->aclService->isAllowed('create', 'job')
-            || !$this->aclService->isAllowed('edit', 'job')
-            || !$this->aclService->isAllowed('createOwn', 'job')
-            || !$this->aclService->isAllowed('editOwn', 'job')
+            && !$this->aclService->isAllowed('edit', 'job')
+            && !$this->aclService->isAllowed('createOwn', 'job')
+            && !$this->aclService->isAllowed('editOwn', 'job')
         ) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit jobs'));
         }
@@ -943,8 +951,8 @@ class Company
     {
         if (
             !$this->aclService->isAllowed('create', 'company')
-            || !$this->aclService->isAllowed('edit', 'company')
-            || !$this->aclService->isAllowed('editOwn', 'company')
+            && !$this->aclService->isAllowed('edit', 'company')
+            && !$this->aclService->isAllowed('editOwn', 'company')
         ) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create a company'));
         }

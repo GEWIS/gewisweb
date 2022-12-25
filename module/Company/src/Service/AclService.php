@@ -66,6 +66,7 @@ class AclService extends \User\Service\AclService
         );
 
         // Company users can view and edit their own company account. They can also create, edit, and delete jobs.
+        // Additionally, they can view all job labels.
         // TODO: Make this an assertion to ensure a CompanyUser can only edit their own company (`Own` is temporary):
         $this->acl->allow(
             roles: 'company',
@@ -83,6 +84,12 @@ class AclService extends \User\Service\AclService
             roles: 'company',
             resources: 'job',
             privileges: ['createOwn', 'editOwn', 'deleteOwn'],
+        );
+
+        $this->acl->allow(
+            roles: 'company',
+            resources: 'jobLabel',
+            privileges: 'listAll',
         );
     }
 }

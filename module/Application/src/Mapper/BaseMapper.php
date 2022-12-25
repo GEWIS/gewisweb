@@ -155,10 +155,10 @@ abstract class BaseMapper
     }
 
     /**
-     * @param mixed $criteria The criteria that describe the entity to be retrieved
+     * @param array $criteria The criteria that describe the entity to be retrieved
      * @return mixed The entity corresponding to the provided criteria or null of the entity cannot be found
      */
-    public function findOneBy(mixed $criteria): mixed
+    public function findOneBy(array $criteria): mixed
     {
         return $this->getRepository()->findOneBy($criteria);
     }

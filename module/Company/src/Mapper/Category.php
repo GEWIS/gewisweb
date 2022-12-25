@@ -51,6 +51,19 @@ class Category extends BaseMapper
     }
 
     /**
+     * @param int $id
+     *
+     * @return JobCategoryModel|null
+     */
+    public function findVisibleCategoryById(int $id): ?JobCategoryModel
+    {
+        return $this->getRepository()->findOneBy([
+            'id' => $id,
+            'hidden' => false,
+        ]);
+    }
+
+    /**
      * @inheritDoc
      */
     protected function getRepositoryName(): string
