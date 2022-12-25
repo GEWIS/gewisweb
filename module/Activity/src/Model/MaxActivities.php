@@ -2,12 +2,11 @@
 
 namespace Activity\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use Decision\Model\Organ as OrganModel;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
 };
@@ -20,13 +19,7 @@ use Doctrine\ORM\Mapping\{
 #[Entity]
 class MaxActivities
 {
-    /**
-     * ID for the field.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "IDENTITY")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * Who created this activity.
@@ -69,14 +62,6 @@ class MaxActivities
     public function setPeriod(ActivityOptionCreationPeriod $period): void
     {
         $this->period = $period;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**

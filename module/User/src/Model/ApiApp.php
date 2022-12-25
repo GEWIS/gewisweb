@@ -2,11 +2,10 @@
 
 namespace User\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
 };
 use User\Model\Enums\JWTClaims;
 
@@ -16,13 +15,7 @@ use User\Model\Enums\JWTClaims;
 #[Entity]
 class ApiApp
 {
-    /**
-     * Id.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * Application ID.
@@ -57,14 +50,6 @@ class ApiApp
         enumType: JWTClaims::class,
     )]
     protected array $claims;
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @return string

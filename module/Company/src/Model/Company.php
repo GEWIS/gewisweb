@@ -34,9 +34,9 @@ use Exception;
 #[HasLifecycleCallbacks]
 class Company
 {
-    use IdentifiableTrait,
-        TimestampableTrait,
-        ApprovableTrait;
+    use IdentifiableTrait;
+    use TimestampableTrait;
+    use ApprovableTrait;
 
     /**
      * The company's display name.

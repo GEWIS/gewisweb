@@ -3,13 +3,12 @@
 namespace Education\Model;
 
 use Application\Model\Enums\Languages;
+use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\ORM\Mapping\{
     Column,
     DiscriminatorColumn,
     DiscriminatorMap,
     Entity,
-    GeneratedValue,
-    Id,
     InheritanceType,
     JoinColumn,
     ManyToOne,
@@ -31,10 +30,7 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 )]
 abstract class CourseDocument implements ResourceInterface
 {
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * Date of the exam.
@@ -70,14 +66,6 @@ abstract class CourseDocument implements ResourceInterface
         nullable: false,
     )]
     protected Course $course;
-
-    /**
-     * Get the ID.
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * Get the date.

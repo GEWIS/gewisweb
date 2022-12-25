@@ -28,7 +28,7 @@ class LoginAttempt extends BaseMapper
         if ($user instanceof CompanyUserModel) {
             $qb->andWhere('a.companyUser = :user')
                 ->setParameter('user', $user);
-        } else if ($user instanceof UserModel) {
+        } elseif ($user instanceof UserModel) {
             $qb->andWhere('a.user = :user')
                 ->setParameter('user', $user);
         }

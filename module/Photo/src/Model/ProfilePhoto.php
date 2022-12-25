@@ -2,14 +2,12 @@
 
 namespace Photo\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    HasLifecycleCallbacks,
-    Id,
     JoinColumn,
     ManyToOne,
     OneToOne,
@@ -20,16 +18,9 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
  * ProfilePhoto.
  */
 #[Entity]
-#[HasLifecycleCallbacks]
 class ProfilePhoto implements ResourceInterface
 {
-    /**
-     * Tag ID.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     #[ManyToOne(
         targetEntity: Photo::class,
@@ -61,14 +52,6 @@ class ProfilePhoto implements ResourceInterface
      */
     #[Column(type: "boolean")]
     protected bool $explicit;
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @return Photo
@@ -104,14 +87,6 @@ class ProfilePhoto implements ResourceInterface
     public function isExplicit(): bool
     {
         return $this->explicit;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
     }
 
     /**

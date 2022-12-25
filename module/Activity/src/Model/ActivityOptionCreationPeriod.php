@@ -2,13 +2,13 @@
 
 namespace Activity\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
-    OneToMany};
+    OneToMany,
+};
 use Doctrine\Common\Collections\{
     ArrayCollection,
     Collection,
@@ -21,13 +21,7 @@ use Doctrine\Common\Collections\{
 #[Entity]
 class ActivityOptionCreationPeriod
 {
-    /**
-     * ID for the field.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "IDENTITY")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * The date and time the planning period starts.
@@ -67,14 +61,6 @@ class ActivityOptionCreationPeriod
     public function __construct()
     {
         $this->maxActivities = new ArrayCollection();
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**

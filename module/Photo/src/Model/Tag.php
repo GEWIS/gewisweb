@@ -2,12 +2,10 @@
 
 namespace Photo\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Mapping\{
-    Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
     Table,
@@ -26,13 +24,7 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 )]
 class Tag implements ResourceInterface
 {
-    /**
-     * Tag ID.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     #[ManyToOne(
         targetEntity: Photo::class,
@@ -57,14 +49,6 @@ class Tag implements ResourceInterface
     protected MemberModel $member;
 
     /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    /**
      * @return Photo
      */
     public function getPhoto(): Photo
@@ -78,14 +62,6 @@ class Tag implements ResourceInterface
     public function getMember(): MemberModel
     {
         return $this->member;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
     }
 
     /**

@@ -23,17 +23,19 @@ trait IdentifiableTrait
     protected ?int $id = null;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
+     * Setting the identifier manually will, in most instances, result in undefined behaviour. Use with caution!
+     *
+     * @param int|null $id
      */
-    public function setId(int $id): void
+    public function setId(?int $id): void
     {
         $this->id = $id;
     }

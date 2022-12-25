@@ -2,6 +2,7 @@
 
 namespace Photo\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Doctrine\Common\Collections\{
     ArrayCollection,
@@ -10,9 +11,7 @@ use Doctrine\Common\Collections\{
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
     HasLifecycleCallbacks,
-    Id,
     JoinColumn,
     ManyToOne,
     OneToMany,
@@ -28,13 +27,7 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 #[HasLifecycleCallbacks]
 class Photo implements ResourceInterface
 {
-    /**
-     * Photo ID.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * Date and time when the photo was taken.
@@ -220,16 +213,6 @@ class Photo implements ResourceInterface
     {
         $this->tags = new ArrayCollection();
         $this->profilePhotos = new ArrayCollection();
-    }
-
-    /**
-     * Get the ID.
-     *
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**

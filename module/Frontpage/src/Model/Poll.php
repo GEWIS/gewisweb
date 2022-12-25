@@ -2,6 +2,7 @@
 
 namespace Frontpage\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Decision\Model\Member as MemberModel;
 use Doctrine\Common\Collections\{
@@ -11,8 +12,6 @@ use Doctrine\Common\Collections\{
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
     OneToMany,
@@ -25,13 +24,7 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 #[Entity]
 class Poll implements ResourceInterface
 {
-    /**
-     * Poll ID.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * The date the poll expires.
@@ -92,14 +85,6 @@ class Poll implements ResourceInterface
     {
         $this->options = new ArrayCollection();
         $this->comments = new ArrayCollection();
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Decision\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Decision\Model\Enums\OrganTypes;
 use Decision\Model\SubDecision\Foundation;
@@ -12,8 +13,6 @@ use Doctrine\Common\Collections\{
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     InverseJoinColumn,
     JoinColumn,
     JoinTable,
@@ -30,13 +29,7 @@ use Doctrine\ORM\Mapping\{
 #[Entity]
 class Organ
 {
-    /**
-     * Id.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * Abbreviation (only for when organs are created).
@@ -164,26 +157,6 @@ class Organ
         $this->members = new ArrayCollection();
         $this->subdecisions = new ArrayCollection();
         $this->organInformation = new ArrayCollection();
-    }
-
-    /**
-     * Get the ID.
-     *
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set the ID.
-     *
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
     }
 
     /**

@@ -2,11 +2,10 @@
 
 namespace User\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
 };
@@ -19,13 +18,7 @@ use Doctrine\ORM\Mapping\{
 #[Entity]
 class UserRole
 {
-    /**
-     * Id.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * The membership number of the user with this role.
@@ -45,16 +38,6 @@ class UserRole
      */
     #[Column(type: "string")]
     protected string $role;
-
-    /**
-     * Get the id.
-     *
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * Get the membership number.

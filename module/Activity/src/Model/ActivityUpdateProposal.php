@@ -2,11 +2,9 @@
 
 namespace Activity\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\ORM\Mapping\{
-    Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
 };
@@ -17,13 +15,7 @@ use Doctrine\ORM\Mapping\{
 #[Entity]
 class ActivityUpdateProposal
 {
-    /**
-     * ID for the proposal.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "IDENTITY")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * The previous activity version, if any.
@@ -47,14 +39,6 @@ class ActivityUpdateProposal
         nullable: false,
     )]
     protected Activity $new;
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @return Activity

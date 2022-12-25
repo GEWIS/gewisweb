@@ -2,12 +2,11 @@
 
 namespace User\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
 };
@@ -22,13 +21,7 @@ use User\Model\{
 #[Entity]
 class LoginAttempt
 {
-    /**
-     * Id.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * The user for which the login was attempted.
@@ -61,14 +54,6 @@ class LoginAttempt
      */
     #[Column(type: "datetime")]
     protected DateTime $time;
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @return UserModel|null

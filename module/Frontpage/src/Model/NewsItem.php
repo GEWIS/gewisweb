@@ -2,12 +2,11 @@
 
 namespace Frontpage\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
 };
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
@@ -17,13 +16,7 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 #[Entity]
 class NewsItem implements ResourceInterface
 {
-    /**
-     * News item ID.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * The date the news item was written.
@@ -75,14 +68,6 @@ class NewsItem implements ResourceInterface
     public function setPinned(bool $pinned): void
     {
         $this->pinned = $pinned;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**

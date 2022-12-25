@@ -2,13 +2,12 @@
 
 namespace Photo\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
 };
@@ -19,13 +18,7 @@ use Doctrine\ORM\Mapping\{
 #[Entity]
 class Vote
 {
-    /**
-     * Vote ID.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * Date and time when the photo was voted for.
@@ -59,14 +52,6 @@ class Vote
         protected MemberModel $voter,
     ) {
         $this->dateTime = new DateTime();
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**

@@ -2,12 +2,11 @@
 
 namespace User\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
 };
@@ -18,13 +17,7 @@ use Doctrine\ORM\Mapping\{
 #[Entity]
 class ApiAppAuthentication
 {
-    /**
-     * Id.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * The user who was authenticated.
@@ -53,16 +46,6 @@ class ApiAppAuthentication
      */
     #[Column(type: "datetime")]
     protected DateTime $time;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
 
     public function getUser(): User
     {

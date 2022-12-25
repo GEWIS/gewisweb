@@ -2,11 +2,10 @@
 
 namespace Frontpage\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
     OneToMany,
@@ -20,13 +19,7 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 #[Entity]
 class PollOption implements ResourceInterface
 {
-    /**
-     * Poll Option ID.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * Referenced poll.
@@ -71,14 +64,6 @@ class PollOption implements ResourceInterface
         options: ["default" => 0],
     )]
     protected int $anonymousVotes = 0;
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @return Poll

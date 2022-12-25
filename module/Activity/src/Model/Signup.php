@@ -2,17 +2,15 @@
 
 namespace Activity\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\Common\Collections\{
     ArrayCollection,
     Collection,
 };
 use Doctrine\ORM\Mapping\{
-    Column,
     DiscriminatorColumn,
     DiscriminatorMap,
     Entity,
-    GeneratedValue,
-    Id,
     InheritanceType,
     JoinColumn,
     ManyToOne,
@@ -36,13 +34,7 @@ use Doctrine\ORM\Mapping\{
 )]
 abstract class Signup
 {
-    /**
-     * ID for the signup.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "IDENTITY")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * The SignupList the signup is for.
@@ -71,16 +63,6 @@ abstract class Signup
     public function __construct()
     {
         $this->fieldValues = new ArrayCollection();
-    }
-
-    /**
-     * Get the signup id.
-     *
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**

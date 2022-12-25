@@ -31,9 +31,9 @@ use Doctrine\ORM\Mapping\{
 #[HasLifecycleCallbacks]
 class Job
 {
-    use IdentifiableTrait,
-        TimestampableTrait,
-        ApprovableTrait;
+    use IdentifiableTrait;
+    use TimestampableTrait;
+    use ApprovableTrait;
 
     /**
      * The job's slug name.

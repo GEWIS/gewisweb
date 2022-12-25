@@ -2,6 +2,7 @@
 
 namespace Activity\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use Company\Model\Company as CompanyModel;
 use DateTime;
 use Decision\Model\{
@@ -15,8 +16,6 @@ use Doctrine\Common\Collections\{
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     JoinTable,
     ManyToMany,
@@ -35,6 +34,8 @@ use User\Permissions\Resource\{
 #[Entity]
 class Activity implements OrganResourceInterface, CreatorResourceInterface
 {
+    use IdentifiableTrait;
+
     /**
      * Status codes for the activity.
      */
@@ -42,14 +43,6 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     public const STATUS_APPROVED = 2;  // The activity is approved
     public const STATUS_DISAPPROVED = 3; // The board disapproved the activity
     public const STATUS_UPDATE = 4; // This activity is an update for some activity
-
-    /**
-     * ID for the activity.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "IDENTITY")]
-    protected ?int $id = null;
 
     /**
      * Name for the activity.
@@ -359,14 +352,6 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     public function getSignupLists(): Collection
     {
         return $this->signupLists;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**
