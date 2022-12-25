@@ -436,7 +436,7 @@ class Company implements ResourceInterface
     public function isHidden(): bool
     {
         // If the company is not approved, it should never be shown.
-        if (ApprovableStatus::Approved->value !== $this->getApproved()) {
+        if (ApprovableStatus::Approved !== $this->getApproved()) {
             return true;
         }
 

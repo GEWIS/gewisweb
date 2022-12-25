@@ -4,7 +4,6 @@ namespace Company\Controller;
 
 use Application\Model\Enums\ApprovableStatus;
 use Company\Mapper\Package as JobPackageMapper;
-use Company\Model\CompanyJobPackage;
 use Company\Service\{
     AclService,
     Company as CompanyService,
@@ -118,7 +117,7 @@ class CompanyAccountController extends AbstractActionController
         }
 
         foreach ($jobs as $job) {
-            $splitJobs[$job->getApproved()][] = $job;
+            $splitJobs[$job->getApproved()->value][] = $job;
         }
 
         $result += [

@@ -334,12 +334,11 @@ class Company
 
         // If the user can approve (changes to) companies, directly approve the company.
         if ($this->aclService->isAllowed('approve', 'company')) {
-            // TODO: Remove the `->value` part (once ORM supports enums natively).
-            $company->setApproved(ApprovableStatus::Approved->value);
+            $company->setApproved(ApprovableStatus::Approved);
             $company->setApprovedAt(new DateTime());
             $company->setApprover($this->aclService->getIdentity());
         } else {
-            $company->setApproved(ApprovableStatus::Unapproved->value);
+            $company->setApproved(ApprovableStatus::Unapproved);
         }
 
         // Upload the logo of the company.
@@ -372,8 +371,7 @@ class Company
         if ($this->aclService->isAllowed('approve', 'company')) {
             $company->exchangeArray($data);
 
-            // TODO: Remove the `->value` part (once ORM supports enums natively).
-            $company->setApproved(ApprovableStatus::Approved->value);
+            $company->setApproved(ApprovableStatus::Approved);
             $company->setApprovedAt(new DateTime());
             $company->setApprover($this->aclService->getIdentity());
 
@@ -623,12 +621,11 @@ class Company
 
         // If the user can approve (changed to) jobs, directly approve the job.
         if ($this->aclService->isAllowed('approve', 'job')) {
-            // TODO: Remove the `->value` part (once ORM supports enums natively).
-            $job->setApproved(ApprovableStatus::Approved->value);
+            $job->setApproved(ApprovableStatus::Approved);
             $job->setApprovedAt(new DateTime());
             $job->setApprover($this->aclService->getIdentity());
         } else {
-            $job->setApproved(ApprovableStatus::Unapproved->value);
+            $job->setApproved(ApprovableStatus::Unapproved);
         }
 
         // Upload the attachments.

@@ -3,6 +3,7 @@
 namespace Application\Model\Traits;
 
 use Application\Model\ApprovableText as ApprovableTextModel;
+use Application\Model\Enums\ApprovableStatus;
 use DateTime;
 use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Mapping\{
@@ -24,10 +25,9 @@ trait ApprovableTrait
      */
     #[Column(
         type: "integer",
-        // TODO: Change to ORM supported enum when ORM v2.11.0 is released:
-        // TODO: enumType: ApprovableStatus::class,
+        enumType: ApprovableStatus::class,
     )]
-    protected int $approved;
+    protected ApprovableStatus $approved;
 
     /**
      * The date when the entity was approved.
@@ -62,21 +62,17 @@ trait ApprovableTrait
     protected ?ApprovableTextModel $approvableText = null;
 
     /**
-     * TODO: Change to {@link ApprovableStatus}.
-     *
-     * @return int
+     * @return ApprovableStatus
      */
-    public function getApproved(): int
+    public function getApproved(): ApprovableStatus
     {
         return $this->approved;
     }
 
     /**
-     * TODO: Change to {@link ApprovableStatus}.
-     *
-     * @param int $approved
+     * @param ApprovableStatus $approved
      */
-    public function setApproved(int $approved): void
+    public function setApproved(ApprovableStatus $approved): void
     {
         $this->approved = $approved;
     }
