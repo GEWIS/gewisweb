@@ -64,7 +64,6 @@ class Frontpage
         $pollDetails['poll'] = $poll;
         $news = $this->getNewsItems();
         $companyBanner = $this->companyService->getCurrentBanner();
-        $photoConfig = $this->photoConfig;
 
         return [
             'birthdays' => $birthdayInfo['birthdays'],
@@ -74,7 +73,7 @@ class Frontpage
             'poll' => $pollDetails,
             'news' => $news,
             'companyBanner' => $companyBanner,
-            'photoConfig' => $photoConfig,
+            'photoConfig' => $this->photoConfig,
         ];
     }
 

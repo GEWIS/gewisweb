@@ -12,11 +12,6 @@ use Laminas\View\Helper\Placeholder\Container\{
  */
 class Breadcrumbs extends AbstractStandalone
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * Add a breadcrumb to the container. By default, the breadcrumb is placed after the last breadcrumb (or first if no
      * other breadcrumbs have been added). This behaviour can be changed by setting `$setType`.
