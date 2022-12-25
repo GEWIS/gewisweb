@@ -29,24 +29,34 @@ return [
                     'route' => '/user',
                     'defaults' => [
                         'controller' => UserController::class,
-                        'action' => 'index',
                     ],
                 ],
-                'may_terminate' => true,
+                'may_terminate' => false,
                 'child_routes' => [
-                    'default' => [
+                    'activate' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '[/:action]',
+                            'route' => '/activate/:user_type/:code',
                             'constraints' => [
-                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'code' => '[a-zA-Z0-9]+',
+                                'user_type' => '(company|member)',
+                            ],
+                            'defaults' => [
+                                'action' => 'activate',
                             ],
                         ],
                     ],
                     'login' => [
-                        'type' => Literal::class,
+                        'type' => Segment::class,
                         'options' => [
-                            'route' => '/login',
+                            'route' => '/login[/:user_type]',
+                            'constraints' => [
+                                'user_type' => '(company|member)',
+                            ],
+                            'defaults' => [
+                                'action' => 'login',
+                                'user_type' => 'member',
+                            ],
                         ],
                     ],
                     'logout' => [
@@ -58,15 +68,42 @@ return [
                             ],
                         ],
                     ],
-                    'activate' => [
-                        'type' => Segment::class,
+                    'password' => [
+                        'type' => Literal::class,
                         'options' => [
-                            'route' => '/activate/:code',
-                            'constraints' => [
-                                'code' => '[a-zA-Z0-9]{32,}',
+                            'route' => '/password',
+                        ],
+                        'may_terminate' => false,
+                        'child_routes' => [
+                            'change' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/change',
+                                    'defaults' => [
+                                        'action' => 'changePassword',
+                                    ],
+                                ],
                             ],
+                            'reset' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => 'reset/:user_type',
+                                    'constraints' => [
+                                        'user_type' => '(company|member)',
+                                    ],
+                                    'defaults' => [
+                                        'action' => 'resetPassword',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'register' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/register',
                             'defaults' => [
-                                'action' => 'activate',
+                                'action' => 'register',
                             ],
                         ],
                     ],
@@ -154,7 +191,6 @@ return [
             'user' => __DIR__ . '/../view/',
         ],
         'template_map' => [
-            'user/login' => __DIR__ . '/../view/partial/login.phtml',
             'user_token/redirect' => __DIR__ . '/../view/user/api-authentication/redirect.phtml',
         ],
     ],

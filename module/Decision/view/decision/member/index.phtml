@@ -7,11 +7,6 @@ $nf = new NumberFormatter($translator->getLocale(), NumberFormatter::ORDINAL);
 
 $this->headTitle($this->translate('Members'));
 
-$sections = [];
-$sections[$this->translate('Personal')] = [
-    [$this->translate('Change password'), 'lock', $this->url('user/default', ['action' => 'password'])],
-];
-
 /** @var Meeting[] $meetings */
 $meetings = $this->meetings;
 ?>
@@ -30,7 +25,7 @@ $meetings = $this->meetings;
                         <div class="big-icon fas fa-user"></div>
                         <div class="panel-heading"><?= $this->translate('Profile') ?></div>
                     </a>
-                    <a href="<?= $this->url('user/default', ['action' => 'password']) ?>"
+                    <a href="<?= $this->url('user/password/change') ?>"
                        class="panel panel-image align-middle">
                         <div class="big-icon fas fa-lock"></div>
                         <div class="panel-heading"><?= $this->translate('Change password') ?></div>
@@ -206,7 +201,7 @@ $meetings = $this->meetings;
                         </a>
                         <a href="/corporateidentity" class="panel panel-image">
                             <div class="big-icon gi gewis-s"></div>
-                            <div class="panel-heading"><?= $this->translate('Corporate Identity') ?></div>
+                            <div class="panel-heading"><?= $this->translate('Corporate CompanyIdentity') ?></div>
                         </a>
                         <a href="<?= $this->url('admin') ?>" class="panel panel-image align-middle">
                             <div class="big-icon fas fa-cog"></div>

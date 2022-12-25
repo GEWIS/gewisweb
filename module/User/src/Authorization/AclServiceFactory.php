@@ -7,13 +7,14 @@ use Company\Service\AclService as CompanyAclService;
 use Decision\Service\AclService as DecisionAclService;
 use Education\Service\AclService as EducationAclService;
 use Frontpage\Service\AclService as FrontpageAclService;
-use Psr\Container\ContainerInterface;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\ServiceManager\Exception\InvalidArgumentException;
 use Photo\Service\AclService as PhotoAclService;
+use Psr\Container\ContainerInterface;
 use User\Authentication\{
     ApiAuthenticationService,
+    AuthenticationService as CompanyUserAuthenticationService,
     AuthenticationService as UserAuthenticationService,
 };
 use User\Service\AclService as UserAclService;
@@ -35,9 +36,11 @@ class AclServiceFactory implements FactoryInterface
         /** @var MvcTranslator $translator */
         $translator = $container->get(MvcTranslator::class);
         /** @var UserAuthenticationService $authService */
-        $authService = $container->get('user_auth_service');
-        /** @var ApiAuthenticationService $apiAuthService */
-        $apiAuthService = $container->get('user_apiauth_service');
+        $userAuthService = $container->get('user_auth_user_service');
+        /** @var CompanyUserAuthenticationService $companyUserAuthService */
+        $companyUserAuthService = $container->get('user_auth_companyUser_service');
+        /** @var ApiAuthenticationService $apiUserAuthService */
+        $apiUserAuthService = $container->get('user_auth_apiUser_service');
         /** @var array<array-key, string> $tueRanges */
         $tueRanges = $container->get('config')['tue_ranges'];
         /** @var string $remoteAddress */
@@ -46,50 +49,57 @@ class AclServiceFactory implements FactoryInterface
         return match ($requestedName) {
             'activity_service_acl' => new ActivityAclService(
                 $translator,
-                $authService,
-                $apiAuthService,
+                $userAuthService,
+                $companyUserAuthService,
+                $apiUserAuthService,
                 $tueRanges,
                 $remoteAddress,
             ),
             'company_service_acl' => new CompanyAclService(
                 $translator,
-                $authService,
-                $apiAuthService,
+                $userAuthService,
+                $companyUserAuthService,
+                $apiUserAuthService,
                 $tueRanges,
                 $remoteAddress,
             ),
             'decision_service_acl' => new DecisionAclService(
                 $translator,
-                $authService,
-                $apiAuthService,
+                $userAuthService,
+                $companyUserAuthService,
+                $apiUserAuthService,
                 $tueRanges,
                 $remoteAddress,
             ),
             'education_service_acl' => new EducationAclService(
                 $translator,
-                $authService,
-                $apiAuthService,
+                $userAuthService,
+                $companyUserAuthService,
+                $apiUserAuthService,
                 $tueRanges,
                 $remoteAddress,
             ),
             'frontpage_service_acl' => new FrontpageAclService(
                 $translator,
-                $authService,
-                $apiAuthService,
+                $userAuthService,
+                $companyUserAuthService,
+                $apiUserAuthService,
                 $tueRanges,
                 $remoteAddress,
             ),
             'photo_service_acl' => new PhotoAclService(
                 $translator,
-                $authService,
-                $apiAuthService,
+                $userAuthService,
+                $companyUserAuthService,
+                $apiUserAuthService,
                 $tueRanges,
                 $remoteAddress,
             ),
             'user_service_acl' => new UserAclService(
                 $translator,
-                $authService,
-                $apiAuthService,
+                $userAuthService,
+                $companyUserAuthService,
+                $apiUserAuthService,
                 $tueRanges,
                 $remoteAddress,
             ),

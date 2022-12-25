@@ -11,7 +11,7 @@ use User\Mapper\User as UserMapper;
 use User\Model\LoginAttempt as LoginAttemptModel;
 use User\Authentication\Service\LoginAttempt as LoginAttemptService;
 
-class Mapper implements AdapterInterface
+class UserAdapter implements AdapterInterface
 {
     private string $login;
 

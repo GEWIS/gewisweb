@@ -17,7 +17,7 @@ $flash = $this->plugin('FlashMessenger');
                 <ul class="nav navbar-nav">
                     <?php if (null === $this->identity()): ?>
                         <li>
-                            <a href="<?= $this->url('user') ?>">
+                            <a href="<?= $this->url('user/login', ['user_type' => 'member']) ?>">
                                 <?= $this->translate('Login') ?>
                             </a>
                         </li>

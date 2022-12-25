@@ -61,7 +61,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         </li>
                     </ul>
                 </li>
-                <?php if (null === $this->identity()): ?>
+                <?php if (null === $this->identity() && null === $this->companyIdentity()): ?>
                     <li class="dropdown pull-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <span class="fas fa-user"></span>
@@ -70,7 +70,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="<?= $this->url('user') ?>">
+                                <a href="<?= $this->url('user/login') ?>">
                                     <?= $this->translate('Login') ?>
                                 </a>
                             </li>
@@ -87,12 +87,28 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             </li>
                         </ul>
                     </li>
-                <?php else: ?>
-                    <?php $member = $this->identity()->getMember() ?>
+                <?php elseif (null !== $this->companyIdentity()): ?>
+                    <?php $company = $this->companyIdentity()->getCompany(); ?>
                     <li class="dropdown pull-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
-                            <?= $member->getFirstName() ?>
+                            <?= $this->escapeHtml($company->getName()) ?>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="<?= $this->url('user/logout') ?>">
+                                    <?= $this->translate('Logout') ?>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                <?php else: ?>
+                    <?php $member = $this->identity()->getMember(); ?>
+                    <li class="dropdown pull-right">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            <?= $this->escapeHtml($member->getFirstName()) ?>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -107,7 +123,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 </a>
                             </li>
                             <li>
-                                <a href="<?= $this->url('user/default', ['action' => 'password']) ?>">
+                                <a href="<?= $this->url('user/password/change') ?>">
                                     <?= $this->translate('Change password') ?>
                                 </a>
                             </li>
@@ -119,7 +135,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 </li>
                             <?php endif; ?>
                             <li>
-                                <a href="<?= $this->url('user/default', ['action' => 'logout']) ?>">
+                                <a href="<?= $this->url('user/logout') ?>">
                                     <?= $this->translate('Logout') ?>
                                 </a>
                             </li>
@@ -412,7 +428,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     <?php endif; ?>
                 </li>
             </ul>
-            <?php if (null != $this->identity()): ?>
+            <?php if (null !== $this->identity()): ?>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="<?= $this->moduleIsActive(['decision']) ? 'active' : '' ?>">
                         <a href="<?= $this->url('member') ?>">

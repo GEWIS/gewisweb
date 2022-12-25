@@ -6,7 +6,7 @@ use Laminas\Authentication\Adapter\AdapterInterface;
 use Laminas\Authentication\Result;
 use User\Mapper\ApiUser as ApiUserMapper;
 
-class ApiMapper implements AdapterInterface
+class ApiUserAdapter implements AdapterInterface
 {
     private string $token;
 

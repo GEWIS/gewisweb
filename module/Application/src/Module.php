@@ -187,7 +187,7 @@ class Module
                     return new FileStorageService($translator, $storageConfig, $watermarkService);
                 },
                 'application_service_watermark' => function (ContainerInterface $container) {
-                    $authService = $container->get('user_auth_service');
+                    $authService = $container->get('user_auth_user_service');
                     $remoteAddress = $container->get('user_remoteaddress');
 
                     return new WatermarkService($authService, $remoteAddress);

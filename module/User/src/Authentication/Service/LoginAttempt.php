@@ -4,12 +4,13 @@ namespace User\Authentication\Service;
 
 use DateInterval;
 use DateTime;
-use Doctrine\ORM\EntityManager;
 use User\Mapper\{
+    CompanyUser as CompanyUserMapper,
     LoginAttempt as LoginAttemptMapper,
     User as UserMapper,
 };
 use User\Model\{
+    CompanyUser as CompanyUserModel,
     LoginAttempt as LoginAttemptModel,
     User as UserModel,
 };
@@ -19,15 +20,16 @@ class LoginAttempt
     public function __construct(
         private readonly string $remoteAddress,
         private readonly LoginAttemptMapper $loginAttemptMapper,
+        private readonly CompanyUserMapper $companyUserMapper,
         private readonly UserMapper $userMapper,
         private readonly array $rateLimitConfig,
     ) {
     }
 
     /**
-     * @param UserModel $user
+     * Log a failed login attempt.
      */
-    public function logFailedLogin(UserModel $user): void
+    public function logFailedLogin(UserModel|CompanyUserModel $user): void
     {
         $attempt = new LoginAttemptModel();
 
@@ -35,17 +37,17 @@ class LoginAttempt
         $attempt->setTime(new DateTime());
 
         $user = $this->detachUser($user);
-        $attempt->setUser($user);
+
+        if ($user instanceof CompanyUserModel) {
+            $attempt->setCompanyUser($user);
+        } else {
+            $attempt->setUser($user);
+        }
 
         $this->loginAttemptMapper->persist($attempt);
     }
 
-    /**
-     * @param UserModel $user
-     *
-     * @return UserModel|null
-     */
-    public function detachUser(UserModel $user): ?UserModel
+    public function detachUser(CompanyUserModel|UserModel $user): CompanyUserModel|UserModel|null
     {
         /*
          * TODO: This probably shouldn't be neccessary
@@ -55,15 +57,19 @@ class LoginAttempt
          */
         $this->userMapper->getEntityManager()->clear();
 
-        return $this->userMapper->findByLidnr($user->getLidnr());
+        if ($user instanceof CompanyUserModel) {
+            return $this->companyUserMapper->find($user->getId());
+        }
+
+        if ($user instanceof UserModel) {
+            return $this->userMapper->find($user->getId());
+        }
     }
 
     /**
-     * @param UserModel $user
-     *
-     * @return bool
+     * Check if there are too many login tries for a specific account.
      */
-    public function loginAttemptsExceeded(UserModel $user): bool
+    public function loginAttemptsExceeded(CompanyUserModel|UserModel $user): bool
     {
         $ip = $this->remoteAddress;
         $since = (new DateTime())->sub(new DateInterval('PT' . $this->rateLimitConfig['lockout_time'] . 'M'));
@@ -72,7 +78,12 @@ class LoginAttempt
             return true;
         }
 
-        if ($this->loginAttemptMapper->getFailedAttemptCount($since, $ip, $user) > $this->rateLimitConfig['user']) {
+        $maxLoginAttempts = $this->rateLimitConfig['user'];
+        if ($user instanceof CompanyUserModel) {
+            $maxLoginAttempts = $this->rateLimitConfig['company'];
+        }
+
+        if ($this->loginAttemptMapper->getFailedAttemptCount($since, $ip, $user) > $maxLoginAttempts) {
             return true;
         }
 

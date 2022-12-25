@@ -8,9 +8,9 @@ use Application\View\Helper\{
     BootstrapElementError,
     Breadcrumbs,
     FeaturedCompanyPackage,
+    CompanyIdentity,
     LocalisedTextElement,
-    LocaliseText,
-};
+    LocaliseText};
 use Doctrine\Common\Cache\MemcachedCache;
 use Laminas\Cache\Service\StorageCacheAbstractServiceFactory;
 use Laminas\I18n\Translator\Resources;
@@ -99,7 +99,7 @@ return [
         'exception_template' => (APP_ENV === 'production' ? 'error/500' : 'error/debug/500'),
         'template_map' => [
             'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
-            'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
+            'application/index/index' => __DIR__ . '/../view/application/index/login.phtml',
             'application/index/teapot' => __DIR__ . '/../view/error/418.phtml',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
             'error/403' => __DIR__ . '/../view/error/403.phtml',
@@ -127,6 +127,11 @@ return [
             },
             'bootstrapElementError' => function () {
                 return new BootstrapElementError();
+            },
+            'companyIdentity' => function (ContainerInterface $container) {
+                return new CompanyIdentity(
+                    $container->get('user_auth_companyUser_service'),
+                );
             },
             'localisedTextElement' => function () {
                 return new LocalisedTextElement();

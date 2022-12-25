@@ -11,6 +11,10 @@ use Doctrine\ORM\Mapping\{
     JoinColumn,
     ManyToOne,
 };
+use User\Model\{
+    CompanyUser as CompanyUserModel,
+    User as UserModel,
+};
 
 /**
  * A failed login attempt.
@@ -29,13 +33,22 @@ class LoginAttempt
     /**
      * The user for which the login was attempted.
      */
-    #[ManyToOne(targetEntity: User::class)]
+    #[ManyToOne(targetEntity: UserModel::class)]
     #[JoinColumn(
         name: "user_id",
         referencedColumnName: "lidnr",
-        nullable: false,
     )]
-    protected User $user;
+    protected ?UserModel $user = null;
+
+    /**
+     * The user for which the login was attempted.
+     */
+    #[ManyToOne(targetEntity: CompanyUserModel::class)]
+    #[JoinColumn(
+        name: "company_id",
+        referencedColumnName: "id",
+    )]
+    protected ?CompanyUserModel $companyUser = null;
 
     /**
      * The ip from which the login was attempted.
@@ -58,19 +71,35 @@ class LoginAttempt
     }
 
     /**
-     * @return User
+     * @return UserModel|null
      */
-    public function getUser(): User
+    public function getUser(): ?UserModel
     {
         return $this->user;
     }
 
     /**
-     * @param User $user
+     * @param UserModel|null $user
      */
-    public function setUser(User $user): void
+    public function setUser(?UserModel $user): void
     {
         $this->user = $user;
+    }
+
+    /**
+     * @return CompanyUserModel|null
+     */
+    public function getCompanyUser(): ?CompanyUserModel
+    {
+        return $this->companyUser;
+    }
+
+    /**
+     * @param CompanyUserModel|null $company
+     */
+    public function setCompanyUser(?CompanyUserModel $company): void
+    {
+        $this->companyUser = $company;
     }
 
     /**

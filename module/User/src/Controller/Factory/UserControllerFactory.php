@@ -21,6 +21,7 @@ class UserControllerFactory implements FactoryInterface
         ?array $options = null,
     ): UserController {
         return new UserController(
+            $container->get('user_service_acl'),
             $container->get('user_service_user'),
         );
     }

@@ -9,7 +9,11 @@ use User\Authentication\{
     AuthenticationService,
 };
 use Laminas\Permissions\Acl\Role\RoleInterface;
-use User\Model\User;
+use User\Model\{
+    ApiUser as ApiUserModel,
+    CompanyUser as CompanyUserModel,
+    User as UserModel,
+};
 use User\Permissions\NotAllowedException;
 
 abstract class GenericAclService extends AbstractAclService
@@ -18,8 +22,9 @@ abstract class GenericAclService extends AbstractAclService
 
     public function __construct(
         private readonly Translator $translator,
-        private readonly AuthenticationService $authService,
-        private readonly ApiAuthenticationService $apiAuthService,
+        private readonly AuthenticationService $userAuthService,
+        private readonly AuthenticationService $companyUserAuthService,
+        private readonly ApiAuthenticationService $apiUserAuthService,
         private readonly array $tueRanges,
         private readonly string $remoteAddress,
     ) {
@@ -33,12 +38,8 @@ abstract class GenericAclService extends AbstractAclService
      */
     protected function getRole(): RoleInterface|string
     {
-        if ($this->authService->hasIdentity()) {
-            return $this->authService->getIdentity();
-        }
-
-        if ($this->apiAuthService->hasIdentity()) {
-            return $this->apiAuthService->getIdentity();
+        if ($this->hasIdentity()) {
+            return $this->getIdentity();
         }
 
         if ($this->fromTueNetwork()) {
@@ -51,26 +52,38 @@ abstract class GenericAclService extends AbstractAclService
     /**
      * Gets the user identity, or gives a 403 if the user is not logged in
      *
-     * @return User|null the current logged in user
+     * @return CompanyUserModel|UserModel|null the current logged in user
      */
-    public function getIdentityOrThrowException(): ?User
+    public function getIdentityOrThrowException(): CompanyUserModel|UserModel|null
     {
         if (!$this->hasIdentity()) {
             throw new NotAllowedException(
                 $this->translator->translate('You need to log in to perform this action')
             );
         }
+
         return $this->getIdentity();
     }
 
     /**
      * Gets the user identity if logged in or null otherwise
      *
-     * @return User|null the current logged-in user
      */
-    public function getIdentity(): ?User
+    public function getIdentity(): ApiUserModel|CompanyUserModel|UserModel|null
     {
-        return $this->authService->getIdentity();
+        if ($this->userAuthService->hasIdentity()) {
+            return $this->userAuthService->getIdentity();
+        }
+
+        if ($this->companyUserAuthService->hasIdentity()) {
+            return $this->companyUserAuthService->getIdentity();
+        }
+
+        if ($this->apiUserAuthService->hasIdentity()) {
+            return $this->apiUserAuthService->getIdentity();
+        }
+
+        return null;
     }
 
     /**
@@ -80,7 +93,9 @@ abstract class GenericAclService extends AbstractAclService
      */
     public function hasIdentity(): bool
     {
-        return !is_null($this->getIdentity());
+        return $this->userAuthService->hasIdentity()
+            || $this->companyUserAuthService->hasIdentity()
+            || $this->apiUserAuthService->hasIdentity();
     }
 
     /**

@@ -3,23 +3,13 @@
 namespace User\Mapper;
 
 use Application\Mapper\BaseMapper;
-use User\Model\NewUser as NewUserModel;
-use User\Model\User as UserModel;
+use User\Model\{
+    NewUser as NewUserModel,
+    User as UserModel,
+};
 
 class User extends BaseMapper
 {
-    /**
-     * Find a user by its membership number.
-     *
-     * @param int $lidnr Membership number
-     *
-     * @return UserModel|null
-     */
-    public function findByLidnr(int $lidnr): ?UserModel
-    {
-        return $this->getRepository()->findOneBy(['lidnr' => $lidnr]);
-    }
-
     /**
      * Find a user by its login.
      *

@@ -210,7 +210,7 @@ $flash = $this->plugin('FlashMessenger');
                             <h2>
                                 <?= $this->translate('Subscribe yourself') ?>
                             </h2>
-                            <a href="<?= $this->url('user') ?>">
+                            <a href="<?= $this->url('user/login', ['user_type' => 'member']) ?>">
                                 <?= $this->translate('Login to subscribe') ?>
                             </a>
                             <?php if (!$signupList->getOnlyGEWIS() && !is_null($form)): ?>
@@ -257,7 +257,7 @@ $flash = $this->plugin('FlashMessenger');
                                         echo sprintf($this->translate('The number of subscribed members is currently %d.'), $memberSignups) . '<br/>';
                                     }
                                     ?>
-                                    <a href="<?= $this->url('user') ?>">
+                                    <a href="<?= $this->url('user/login', ['user_type' => 'member']) ?>">
                                         <?= $this->translate('Login to view the subscribed members.') ?>
                                     </a>
                                 </td>

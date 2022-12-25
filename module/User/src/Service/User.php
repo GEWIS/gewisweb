@@ -7,9 +7,15 @@ use DateTime;
 use Decision\Mapper\Member as MemberMapper;
 use Laminas\Crypt\Password\Bcrypt;
 use Laminas\Mvc\I18n\Translator;
-use User\Authentication\AuthenticationService;
+use RuntimeException;
+use User\Authentication\{
+    Adapter\CompanyUserAdapter,
+    Adapter\UserAdapter,
+    AuthenticationService,
+};
 use User\Form\{
     Activate as ActivateForm,
+    CompanyUserLogin as CompanyLoginForm,
     Login as LoginForm,
     Password as PasswordForm,
     Register as RegisterForm,
@@ -20,6 +26,7 @@ use User\Mapper\{
     User as UserMapper,
 };
 use User\Model\{
+    CompanyUser as CompanyUserModel,
     NewUser as NewUserModel,
     User as UserModel,
 };
@@ -35,7 +42,8 @@ class User
         private readonly AclService $aclService,
         private readonly Translator $translator,
         private readonly Bcrypt $bcrypt,
-        private readonly AuthenticationService $authService,
+        private readonly AuthenticationService $userAuthService,
+        private readonly AuthenticationService $companyUserAuthService,
         private readonly EmailService $emailService,
         private readonly UserMapper $userMapper,
         private readonly NewUserMapper $newUserMapper,
@@ -43,6 +51,7 @@ class User
         private readonly RegisterForm $registerForm,
         private readonly ActivateForm $activateForm,
         private readonly LoginForm $loginForm,
+        private readonly CompanyLoginForm $companyLoginForm,
         private readonly PasswordForm $passwordForm,
         private readonly ResetForm $resetForm,
     ) {
@@ -71,7 +80,7 @@ class User
         $data = $form->getData();
 
         // first try to obtain the user
-        $user = $this->userMapper->findByLidnr($newUser->getLidnr());
+        $user = $this->userMapper->find($newUser->getLidnr());
         if (null === $user) {
             // create a new user from this data, and insert it into the database
             $user = new UserModel($newUser);
@@ -121,7 +130,7 @@ class User
         }
 
         // check if the member already has a corresponding user.
-        $user = $this->userMapper->findByLidnr($member->getLidnr());
+        $user = $this->userMapper->find($member->getLidnr());
         if (null !== $user) {
             $form->setError(RegisterForm::ERROR_USER_ALREADY_EXISTS);
 
@@ -164,7 +173,7 @@ class User
      */
     public function reset(array $data): void
     {
-        $user = $this->userMapper->findByLidnr($data['lidnr']);
+        $user = $this->userMapper->find($data['lidnr']);
 
         if (null !== $user) {
             $member = $user->getMember();
@@ -198,29 +207,23 @@ class User
 
     /**
      * Change the password of a user.
-     *
-     * @param array $data Passworc change date
-     *
-     * @return bool
      */
     public function changePassword(array $data): bool
     {
-        $form = $this->getPasswordForm();
+        $user = $this->aclService->getIdentity();
 
-        $form->setData($data);
-        // TODO: Move form validation to controller.
-        if (!$form->isValid()) {
-            return false;
+        if ($user instanceof CompanyUserModel) {
+            /** @var CompanyUserAdapter $adapter */
+            $adapter = $this->companyUserAuthService->getAdapter();
+        } elseif ($user instanceof UserModel) {
+            /** @var UserAdapter $adapter */
+            $adapter = $this->userAuthService->getAdapter();
+        } else {
+            throw new RuntimeException("Unexpected type of user while trying to change passwords");
         }
 
-        $data = $form->getData();
-
-        // check the password
-        $adapter = $this->authService->getAdapter();
-        $user = $this->authService->getIdentity();
-
         if (!$adapter->verifyPassword($data['old_password'], $user->getPassword())) {
-            $form->setMessages([
+            $this->getPasswordForm()->setMessages([
                 'old_password' => [
                     $this->translator->translate('Password incorrect'),
                 ],
@@ -229,46 +232,49 @@ class User
             return false;
         }
 
-        $mapper = $this->userMapper;
-
-        // get the actual user and save
-        $actUser = $mapper->findByLidnr($user->getLidnr());
-
-        $actUser->setPassword($this->bcrypt->create($data['password']));
-
-        $mapper->persist($actUser);
+        $user->setPassword($this->bcrypt->create($data['password']));
+        $adapter->getMapper()->persist($user);
 
         return true;
     }
 
     /**
      * Log the user in.
-     *
-     * @param array $data Login data
-     *
-     * @return UserModel|null Authenticated user. Null if not authenticated.
      */
-    public function login(array $data): ?UserModel
+    public function userLogin(array $data): ?UserModel
     {
-        $form = $this->getLoginForm();
-        $form->setData($data);
-        // TODO: Move form validation to controller.
-        if (!$form->isValid()) {
-            return null;
-        }
-
         // Try to authenticate the user.
-        $this->authService->setRememberMe($data['remember'] === '1');
-        $result = $this->authService->authenticate($data['login'], $data['password']);
+        $this->userAuthService->setRememberMe($data['remember'] === '1');
+        $result = $this->userAuthService->authenticate($data['login'], $data['password']);
 
         // Check if authentication was successful.
         if (!$result->isValid()) {
+            $form = $this->getUserLoginForm();
             $form->setResult($result);
 
             return null;
         }
 
-        return $this->authService->getIdentity();
+        return $this->userAuthService->getIdentity();
+    }
+
+    /**
+     * Log the company in.
+     */
+    public function companyLogin(array $data): ?CompanyUserModel
+    {
+        // Try to authenticate the company user.
+        $result = $this->companyUserAuthService->authenticate($data['email'], $data['password']);
+
+        // Check if authentication was successful.
+        if (!$result->isValid()) {
+            $form = $this->getCompanyUserLoginForm();
+            $form->setResult($result);
+
+            return null;
+        }
+
+        return $this->companyUserAuthService->getIdentity();
     }
 
     /**
@@ -277,7 +283,8 @@ class User
     public function logout(): void
     {
         // clear the user identity
-        $this->authService->clearIdentity();
+        $this->userAuthService->clearIdentity();
+        $this->companyUserAuthService->clearIdentity();
     }
 
     /**
@@ -362,8 +369,16 @@ class User
      *
      * @return LoginForm Login form
      */
-    public function getLoginForm(): LoginForm
+    public function getUserLoginForm(): LoginForm
     {
         return $this->loginForm;
+    }
+
+    /**
+     * @return CompanyLoginForm
+     */
+    public function getCompanyUserLoginForm(): CompanyLoginForm
+    {
+        return $this->companyLoginForm;
     }
 }

@@ -20,6 +20,7 @@ use Laminas\Permissions\Acl\{
     Role\RoleInterface,
 };
 use RuntimeException;
+use User\Authentication\AuthenticationService;
 
 /**
  * User model.
@@ -72,6 +73,16 @@ class User implements RoleInterface, ResourceInterface
             $this->lidnr = $newUser->getLidnr();
             $this->member = $newUser->getMember();
         }
+    }
+
+    /**
+     * Return the `lidnr` of this user, generalised to `id` for the {@link AuthenticationService}.
+     *
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->getLidnr();
     }
 
     /**

@@ -16,14 +16,31 @@ class AclService extends GenericAclService
 {
     protected Acl $acl;
 
+    /**
+     * @param Translator $translator
+     * @param AuthenticationService $userAuthService
+     * @param AuthenticationService $companyUserAuthService
+     * @param ApiAuthenticationService $apiUserAuthService
+     * @param array $tueRanges
+     * @param string $remoteAddress
+     */
     public function __construct(
         Translator $translator,
-        AuthenticationService $authService,
-        ApiAuthenticationService $apiAuthService,
+        AuthenticationService $userAuthService,
+        AuthenticationService $companyUserAuthService,
+        ApiAuthenticationService $apiUserAuthService,
         array $tueRanges,
         string $remoteAddress,
     ) {
-        parent::__construct($translator, $authService, $apiAuthService, $tueRanges, $remoteAddress);
+        parent::__construct(
+            $translator,
+            $userAuthService,
+            $companyUserAuthService,
+            $apiUserAuthService,
+            $tueRanges,
+            $remoteAddress,
+        );
+
         $this->createAcl();
     }
 
@@ -48,6 +65,7 @@ class AclService extends GenericAclService
          * - user: GEWIS-member
          * - active_member: a GEWIS-member who is part on an organ
          * - graduate: an old GEWIS-member, has limited privileges
+         * - company: a company which uses the career section of the website
          * - apiuser: Automated tool given access by an admin
          * - admin: Defined administrators
          * - photo_guest: Special role for non-members but friends of GEWIS nonetheless
@@ -55,6 +73,7 @@ class AclService extends GenericAclService
         $this->acl->addRole(new Role('guest'));
         $this->acl->addRole(new Role('tueguest'), 'guest');
         $this->acl->addRole(new Role('user'), 'tueguest');
+        $this->acl->addRole(new Role('company'), 'guest');
         $this->acl->addrole(new Role('apiuser'), 'guest');
         $this->acl->addrole(new Role('active_member'), 'user');
         $this->acl->addRole(new Role('graduate'), 'user');
@@ -70,6 +89,7 @@ class AclService extends GenericAclService
         $this->acl->addResource(new Resource('user'));
 
         $this->acl->allow('user', 'user', ['password_change']);
+        $this->acl->allow('company', 'user', ['password_change']);
         $this->acl->allow('photo_guest', 'user', ['password_change']);
     }
 }
