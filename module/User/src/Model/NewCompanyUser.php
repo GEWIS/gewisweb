@@ -56,6 +56,7 @@ class NewCompanyUser
      */
     public function __construct(CompanyModel $company)
     {
+        $this->id = $company->getId();
         $this->company = $company;
     }
 
@@ -75,6 +76,16 @@ class NewCompanyUser
     public function getCompany(): CompanyModel
     {
         return $this->company;
+    }
+
+    /**
+     * Get the email address of the company's representative.
+     *
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->company->getRepresentativeEmail();
     }
 
     /**

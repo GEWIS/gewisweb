@@ -65,6 +65,22 @@ class Company extends BaseMapper
     }
 
     /**
+     * Return a company by a given representative's e-mail address.
+     *
+     * @param string $email
+     *
+     * @return CompanyModel|null
+     */
+    public function findCompanyByRepresentativeEmail(string $email): ?CompanyModel
+    {
+        return $this->getRepository()->findOneBy(
+            [
+                'representativeEmail' => $email,
+            ],
+        );
+    }
+
+    /**
      * @inheritDoc
      */
     protected function getRepositoryName(): string

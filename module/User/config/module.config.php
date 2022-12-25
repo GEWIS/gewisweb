@@ -85,14 +85,15 @@ return [
                                 ],
                             ],
                             'reset' => [
-                                'type' => Literal::class,
+                                'type' => Segment::class,
                                 'options' => [
-                                    'route' => 'reset/:user_type',
+                                    'route' => '/reset[/:user_type]',
                                     'constraints' => [
                                         'user_type' => '(company|member)',
                                     ],
                                     'defaults' => [
                                         'action' => 'resetPassword',
+                                        'user_type' => 'member',
                                     ],
                                 ],
                             ],

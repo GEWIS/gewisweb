@@ -2,6 +2,7 @@
 
 namespace User\Service;
 
+use Company\Model\Company as CompanyModel;
 use Decision\Model\Member as MemberModel;
 use Laminas\Mail\Header\MessageId;
 use Laminas\Mail\Message;
@@ -9,7 +10,10 @@ use Laminas\Mail\Transport\TransportInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
 use Laminas\View\Renderer\PhpRenderer;
-use User\Model\NewUser as NewUserModel;
+use User\Model\{
+    NewCompanyUser as NewCompanyUserModel,
+    NewUser as NewUserModel,
+};
 
 class Email
 {
@@ -74,6 +78,28 @@ class Email
         $message->addFrom($this->emailConfig['from']);
         $message->addTo($member->getEmail());
         $message->setSubject($this->translator->translate('Password reset code for the GEWIS Website'));
+        $message->setBody($body);
+
+        $this->transport->send($message);
+    }
+
+    public function sendCompanyPasswordLostMail(
+        NewCompanyUserModel $newCompanyUser,
+        CompanyModel $company,
+    ):void {
+        $body = $this->render(
+            'user/email/company-reset',
+            [
+                'user' => $newCompanyUser,
+                'company' => $company,
+            ]
+        );
+
+        $message = new Message();
+
+        $message->addFrom($this->emailConfig['from']);
+        $message->addTo($newCompanyUser->getEmail());
+        $message->setSubject($this->translator->translate('Password reset code for the GEWIS website'));
         $message->setBody($body);
 
         $this->transport->send($message);

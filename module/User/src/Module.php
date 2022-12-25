@@ -25,7 +25,8 @@ use User\Form\{
     Activate as ActivateForm,
     ApiAppAuthorisation as ApiAppAuthorisationForm,
     ApiToken as ApiTokenForm,
-    CompanyUserLogin as CompanyLoginForm,
+    CompanyUserLogin as CompanyUserLoginForm,
+    CompanyUserReset as CompanyUserResetForm,
     UserLogin as UserLoginForm,
     Password as PasswordForm,
     Register as RegisterForm,
@@ -38,6 +39,7 @@ use User\Mapper\{
     CompanyUser as CompanyUserMapper,
     Factory\ApiAppFactory as ApiAppMapperFactory,
     LoginAttempt as LoginAttemptMapper,
+    NewCompanyUser as NewCompanyUserMapper,
     NewUser as NewUserMapper,
     User as UserMapper,
 };
@@ -123,12 +125,15 @@ class Module
                     $companyUserAuthService = $container->get('user_auth_companyUser_service');
                     $emailService = $container->get('user_service_email');
                     $userMapper = $container->get('user_mapper_user');
-                    $newUserMapper = $container->get('user_mapper_newuser');
+                    $newUserMapper = $container->get('user_mapper_newUser');
+                    $newCompanyUserMapper = $container->get('user_mapper_newCompanyUser');
+                    $companyMapper = $container->get('company_mapper_company');
                     $memberMapper = $container->get('decision_mapper_member');
                     $registerForm = $container->get('user_form_register');
                     $activateForm = $container->get('user_form_activate');
                     $loginForm = $container->get('user_form_login');
-                    $companyLoginForm = $container->get('user_form_companyLogin');
+                    $companyUserLoginForm = $container->get('user_form_companyUserLogin');
+                    $companyUserResetForm = $container->get('user_form_companyUserReset');
                     $passwordForm = $container->get('user_form_password');
                     $resetForm = $container->get('user_form_reset');
 
@@ -141,18 +146,21 @@ class Module
                         $emailService,
                         $userMapper,
                         $newUserMapper,
+                        $newCompanyUserMapper,
+                        $companyMapper,
                         $memberMapper,
                         $registerForm,
                         $activateForm,
                         $loginForm,
-                        $companyLoginForm,
+                        $companyUserLoginForm,
+                        $companyUserResetForm,
                         $passwordForm,
                         $resetForm,
                     );
                 },
                 'user_service_loginattempt' => function (ContainerInterface $container) {
                     $remoteAddress = $container->get('user_remoteaddress');
-                    $loginAttemptMapper = $container->get('user_mapper_loginattempt');
+                    $loginAttemptMapper = $container->get('user_mapper_loginAttempt');
                     $companyUserMapper = $container->get('user_mapper_companyUser');
                     $userMapper = $container->get('user_mapper_user');
                     $rateLimitConfig = $container->get('config')['login_rate_limits'];
@@ -168,7 +176,7 @@ class Module
                 'user_service_apiuser' => function (ContainerInterface $container) {
                     $aclService = $container->get('user_service_acl');
                     $translator = $container->get(MvcTranslator::class);
-                    $apiUserMapper = $container->get('user_mapper_apiuser');
+                    $apiUserMapper = $container->get('user_mapper_apiUser');
                     $apiTokenForm = $container->get('user_form_apitoken');
 
                     return new ApiUserService(
@@ -235,8 +243,13 @@ class Module
                         $container->get(MvcTranslator::class),
                     );
                 },
-                'user_form_companyLogin' => function (ContainerInterface $container) {
-                    return new CompanyLoginForm(
+                'user_form_companyUserLogin' => function (ContainerInterface $container) {
+                    return new CompanyUserLoginForm(
+                        $container->get(MvcTranslator::class),
+                    );
+                },
+                'user_form_companyUserReset' => function (ContainerInterface $container) {
+                    return new CompanyUserResetForm(
                         $container->get(MvcTranslator::class),
                     );
                 },
@@ -290,17 +303,22 @@ class Module
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'user_mapper_newuser' => function (ContainerInterface $container) {
+                'user_mapper_newUser' => function (ContainerInterface $container) {
                     return new NewUserMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'user_mapper_apiuser' => function (ContainerInterface $container) {
+                'user_mapper_newCompanyUser' => function (ContainerInterface $container) {
+                    return new NewCompanyUserMapper(
+                        $container->get('doctrine.entitymanager.orm_default'),
+                    );
+                },
+                'user_mapper_apiUser' => function (ContainerInterface $container) {
                     return new ApiUserMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'user_mapper_loginattempt' => function (ContainerInterface $container) {
+                'user_mapper_loginAttempt' => function (ContainerInterface $container) {
                     return new LoginAttemptMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
@@ -332,7 +350,7 @@ class Module
                 },
                 'user_auth_apiUser_adapter' => function (ContainerInterface $container) {
                     return new ApiUserAdapter(
-                        $container->get('user_mapper_apiuser'),
+                        $container->get('user_mapper_apiUser'),
                     );
                 },
                 'user_auth_user_service' => function (ContainerInterface $container) {

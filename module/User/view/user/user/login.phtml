@@ -23,9 +23,9 @@ $isMember = ('member' === $userType);
                         <h3><?= $this->translate('Login') ?></h3>
                     </div>
                     <?php if ($isMember): ?>
-                        <?= $this->partial('partial/member-login.phtml', ['form' => $form]) ?>
+                        <?= $this->partial('partial/login/member.phtml', ['form' => $form]) ?>
                     <?php else: ?>
-                        <?= $this->partial('partial/company-login.phtml', ['form' => $form]) ?>
+                        <?= $this->partial('partial/login/company.phtml', ['form' => $form]) ?>
                     <?php endif; ?>
                 </div>
             </div>

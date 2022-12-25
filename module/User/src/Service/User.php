@@ -2,6 +2,7 @@
 
 namespace User\Service;
 
+use Company\Mapper\Company as CompanyMapper;
 use DateInterval;
 use DateTime;
 use Decision\Mapper\Member as MemberMapper;
@@ -15,18 +16,21 @@ use User\Authentication\{
 };
 use User\Form\{
     Activate as ActivateForm,
-    CompanyUserLogin as CompanyLoginForm,
+    CompanyUserLogin as CompanyUserLoginForm,
+    CompanyUserReset as CompanyUserResetForm,
     UserLogin as UserLoginForm,
     Password as PasswordForm,
     Register as RegisterForm,
     Reset as ResetForm,
 };
 use User\Mapper\{
+    NewCompanyUser as NewCompanyUserMapper,
     NewUser as NewUserMapper,
     User as UserMapper,
 };
 use User\Model\{
     CompanyUser as CompanyUserModel,
+    NewCompanyUser as NewCompanyUserModel,
     NewUser as NewUserModel,
     User as UserModel,
 };
@@ -47,11 +51,14 @@ class User
         private readonly EmailService $emailService,
         private readonly UserMapper $userMapper,
         private readonly NewUserMapper $newUserMapper,
+        private readonly NewCompanyUserMapper $newCompanyUserMapper,
+        private readonly CompanyMapper $companyMapper,
         private readonly MemberMapper $memberMapper,
         private readonly RegisterForm $registerForm,
         private readonly ActivateForm $activateForm,
         private readonly UserLoginForm $userLoginForm,
-        private readonly CompanyLoginForm $companyLoginForm,
+        private readonly CompanyUserLoginForm $companyUserLoginForm,
+        private readonly CompanyUserResetForm $companyUserResetForm,
         private readonly PasswordForm $passwordForm,
         private readonly ResetForm $resetForm,
     ) {
@@ -59,37 +66,32 @@ class User
 
     /**
      * Activate a user.
-     *
-     * @param array $data activation data
-     * @param NewUserModel $newUser The user to create
-     *
-     * @return bool
      */
     public function activate(
         array $data,
-        NewUserModel $newUser,
+        NewCompanyUserModel|NewUserModel $newUser,
     ): bool {
-        $form = $this->activateForm;
-
-        $form->setData($data);
-        // TODO: Move form validation to controller.
-        if (!$form->isValid()) {
-            return false;
+        if ($newUser instanceof NewCompanyUserModel) {
+            $adapter = $this->companyUserAuthService->getAdapter();
+        } else {
+            $adapter = $this->userAuthService->getAdapter();
         }
 
-        $data = $form->getData();
-
-        // first try to obtain the user
-        $user = $this->userMapper->find($newUser->getLidnr());
+        $user = $adapter->getMapper()->find($newUser->getId());
         if (null === $user) {
-            // create a new user from this data, and insert it into the database
-            $user = new UserModel($newUser);
+            // The user does not yet exist.
+            if ($newUser instanceof NewCompanyUserModel) {
+                $user = new CompanyUserModel($newUser);
+            } else {
+                $user = new UserModel($newUser);
+            }
         }
 
         $user->setPassword($this->bcrypt->create($data['password']));
 
         // this will also save a user with a lost password
-        $this->userMapper->createUser($user, $newUser);
+        $adapter->getMapper()->persist($user);
+        $adapter->getMapper()->remove($newUser);
 
         return true;
     }
@@ -165,13 +167,11 @@ class User
     }
 
     /**
-     * Request a password reset.
+     * Request a password reset for a member.
      *
      * Will also send an email to the user.
-     *
-     * @param array $data Reset data
      */
-    public function reset(array $data): void
+    public function resetMember(array $data): void
     {
         $user = $this->userMapper->find($data['lidnr']);
 
@@ -203,6 +203,26 @@ class User
                 $this->emailService->sendPasswordLostMail($newUser, $member);
             }
         }
+    }
+
+    /**
+     * Request a password reset for a company.
+     */
+    public function resetCompany(array $data): void
+    {
+        $company = $this->companyMapper->findCompanyByRepresentativeEmail($data['email']);
+
+        if (null === $company) {
+            return;
+        }
+
+        $this->newCompanyUserMapper->deleteByCompany($company);
+
+        $newCompanyUser = new NewCompanyUserModel($company);
+        $newCompanyUser->setCode($this->generateCode());
+
+        $this->newCompanyUserMapper->persist($newCompanyUser);
+        $this->emailService->sendCompanyPasswordLostMail($newCompanyUser, $company);
     }
 
     /**
@@ -300,13 +320,25 @@ class User
     }
 
     /**
+     * Get the new company user.
+     *
+     * @param string $code
+     *
+     * @return NewCompanyUserModel|null
+     */
+    public function getNewCompanyUser(string $code): ?NewCompanyUserModel
+    {
+        return $this->newCompanyUserMapper->getByCode($code);
+    }
+
+    /**
      * Generate an activation code for the user.
      *
      * @param int $length
      *
      * @return string
      */
-    public static function generateCode(int $length = 32): string
+    public static function generateCode(int $length = 48): string
     {
         $ret = '';
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -375,10 +407,18 @@ class User
     }
 
     /**
-     * @return CompanyLoginForm
+     * @return CompanyUserLoginForm
      */
-    public function getCompanyUserLoginForm(): CompanyLoginForm
+    public function getCompanyUserLoginForm(): CompanyUserLoginForm
     {
-        return $this->companyLoginForm;
+        return $this->companyUserLoginForm;
+    }
+
+    /**
+     * @return CompanyUserResetForm
+     */
+    public function getCompanyUserResetForm(): CompanyUserResetForm
+    {
+        return $this->companyUserResetForm;
     }
 }

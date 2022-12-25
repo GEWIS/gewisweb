@@ -328,6 +328,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                     ],
                 ],
             ],
+            // TODO: Add a callback to make sure this e-mail address is unique across all companies.
             'representativeEmail' => [
                 'required' => true,
                 'validators' => [

@@ -190,21 +190,20 @@ class UserController extends AbstractActionController
         /** @var Request $request */
         $request = $this->getRequest();
 
+        if ('company' === $userType) {
+            $form = $this->userService->getCompanyUserResetForm();
+        } else {
+            $form = $this->userService->getRegisterForm();
+        }
+
         if ($request->isPost()) {
-            if ('company' === $userType) {
-                // TODO: Company password reset.
-            } else {
-                $form = $this->userService->getResetForm();
-            }
-
             $form->setData($request->getPost()->toArray());
-            if ($form->isValid()) {
-                $data = $form->getData();
 
+            if ($form->isValid()) {
                 if ('company' === $userType) {
-                    // TODO: Company password reset.
+                    $this->userService->resetCompany($form->getData());
                 } else {
-                    $this->userService->reset($data);
+                    $this->userService->resetMember($form->getData());
                 }
 
                 // To prevent account enumeration never say whether the e-mail address was (in)correct. Ideally, we
@@ -217,6 +216,7 @@ class UserController extends AbstractActionController
         return new ViewModel(
             [
                 'form' => $form,
+                'userType' => $userType,
             ]
         );
     }
@@ -229,9 +229,11 @@ class UserController extends AbstractActionController
         $userType = $this->params()->fromRoute('user_type');
         $code = (string) $this->params()->fromRoute('code');
 
-        // get the new user
-        // TODO: Company activation and reset
-        $newUser = $this->userService->getNewUser($code);
+        if ('company' === $userType) {
+            $newUser = $this->userService->getNewCompanyUser($code);
+        } else {
+            $newUser = $this->userService->getNewUser($code);
+        }
 
         if (null === $newUser) {
             return $this->redirect()->toRoute('home');
@@ -239,21 +241,27 @@ class UserController extends AbstractActionController
 
         /** @var Request $request */
         $request = $this->getRequest();
+        $form = $this->userService->getActivateForm();
 
         if ($request->isPost()) {
-            if ($this->userService->activate($request->getPost()->toArray(), $newUser)) {
-                return new ViewModel(
-                    [
-                        'activated' => true,
-                    ]
-                );
+            $form->setData($request->getPost()->toArray());
+
+            if ($form->isValid()) {
+                if ($this->userService->activate($form->getData(), $newUser)) {
+                    return new ViewModel(
+                        [
+                            'activated' => true,
+                        ]
+                    );
+                }
             }
         }
 
         return new ViewModel(
             [
-                'form' => $this->userService->getActivateForm(),
+                'form' => $form,
                 'user' => $newUser,
+                'userType' => $userType,
             ]
         );
     }

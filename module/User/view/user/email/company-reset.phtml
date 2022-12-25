@@ -1,0 +1,26 @@
+For Dutch, please see below.<br/><br/>
+
+<?= sprintf('Dear %s,', $company->getRepresentativeName()) ?><br/><br/>
+
+A password reset was requested for the company account of <i><?= $company->getName() ?></i>.
+
+You can reset your password using the following link:
+<?= $this->serverUrl($this->url('user/activate', ['user_type' => 'company', 'code' => $user->getCode()])) ?>
+
+Your reset code is: <?= $user->getCode() ?>
+
+With kind regards,<br/>
+The Web Committee
+<hr/><br/>
+
+<?= sprintf('Beste %s,', $company->getRepresentativeName()) ?><br/><br/>
+
+Een wachtwoord reset is aangevraagd voor het bedrijfsprofiel van <i><?= $company->getName() ?></i>.
+
+U kunt het account resetten met de volgende link:
+<?= $this->serverUrl($this->url('user/activate', ['user_type' => 'company', 'code' => $user->getCode()])) ?>
+
+De reset code is: <?= $user->getCode() ?>
+
+Met vriendelijke groeten,<br/>
+De Web Commissie

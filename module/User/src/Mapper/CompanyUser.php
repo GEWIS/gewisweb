@@ -3,19 +3,12 @@
 namespace User\Mapper;
 
 use Application\Mapper\BaseMapper;
-use User\Model\{
-    NewCompanyUser as NewCompanyUserModel,
-    CompanyUser as CompanyUserModel,
-};
+use User\Model\CompanyUser as CompanyUserModel;
 
 class CompanyUser extends BaseMapper
 {
     /**
      * Find a company by its login.
-     *
-     * @param string $login
-     *
-     * @return CompanyUserModel|null
      */
     public function findByLogin(string $login): ?CompanyUserModel
     {
@@ -33,23 +26,6 @@ class CompanyUser extends BaseMapper
         $res = $qb->getQuery()->getResult();
 
         return empty($res) ? null : $res[0];
-    }
-
-    /**
-     * Finish company account creation.
-     *
-     * This will both destroy the NewCompanyUser and create the given company.
-     *
-     * @param CompanyUserModel $companyUser CompanyUser to create
-     * @param NewCompanyUserModel $newCompanyUser NewCompanyUser to destroy
-     */
-    public function createUser(
-        CompanyUserModel $companyUser,
-        NewCompanyUserModel $newCompanyUser,
-    ): void {
-        $this->getEntityManager()->persist($companyUser);
-        $this->getEntityManager()->remove($newCompanyUser);
-        $this->getEntityManager()->flush();
     }
 
     /**

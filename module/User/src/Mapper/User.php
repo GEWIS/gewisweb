@@ -3,19 +3,12 @@
 namespace User\Mapper;
 
 use Application\Mapper\BaseMapper;
-use User\Model\{
-    NewUser as NewUserModel,
-    User as UserModel,
-};
+use User\Model\User as UserModel;
 
 class User extends BaseMapper
 {
     /**
      * Find a user by its login.
-     *
-     * @param string $login
-     *
-     * @return UserModel|null
      */
     public function findByLogin(string $login): ?UserModel
     {
@@ -40,23 +33,6 @@ class User extends BaseMapper
         $res = $qb->getQuery()->getResult();
 
         return empty($res) ? null : $res[0];
-    }
-
-    /**
-     * Finish user creation.
-     *
-     * This will both destroy the NewUser and create the given user
-     *
-     * @param UserModel $user User to create
-     * @param NewUserModel $newUser NewUser to destroy
-     */
-    public function createUser(
-        UserModel $user,
-        NewUserModel $newUser,
-    ): void {
-        $this->persist($user);
-        $this->remove($newUser);
-        $this->flush();
     }
 
     /**
