@@ -16,7 +16,7 @@ use User\Authentication\{
 use User\Form\{
     Activate as ActivateForm,
     CompanyUserLogin as CompanyLoginForm,
-    Login as LoginForm,
+    UserLogin as UserLoginForm,
     Password as PasswordForm,
     Register as RegisterForm,
     Reset as ResetForm,
@@ -50,7 +50,7 @@ class User
         private readonly MemberMapper $memberMapper,
         private readonly RegisterForm $registerForm,
         private readonly ActivateForm $activateForm,
-        private readonly LoginForm $loginForm,
+        private readonly UserLoginForm $userLoginForm,
         private readonly CompanyLoginForm $companyLoginForm,
         private readonly PasswordForm $passwordForm,
         private readonly ResetForm $resetForm,
@@ -367,11 +367,11 @@ class User
     /**
      * Get the login form.
      *
-     * @return LoginForm Login form
+     * @return UserLoginForm UserLogin form
      */
-    public function getUserLoginForm(): LoginForm
+    public function getUserLoginForm(): UserLoginForm
     {
-        return $this->loginForm;
+        return $this->userLoginForm;
     }
 
     /**

@@ -26,7 +26,7 @@ use User\Form\{
     ApiAppAuthorisation as ApiAppAuthorisationForm,
     ApiToken as ApiTokenForm,
     CompanyUserLogin as CompanyLoginForm,
-    Login as LoginForm,
+    UserLogin as UserLoginForm,
     Password as PasswordForm,
     Register as RegisterForm,
     Reset as ResetForm,
@@ -231,13 +231,13 @@ class Module
                     );
                 },
                 'user_form_login' => function (ContainerInterface $container) {
-                    return new LoginForm(
+                    return new UserLoginForm(
                         $container->get(MvcTranslator::class),
                     );
                 },
                 'user_form_companyLogin' => function (ContainerInterface $container) {
                     return new CompanyLoginForm(
-                        $container->get('translator'),
+                        $container->get(MvcTranslator::class),
                     );
                 },
                 'user_form_password' => function (ContainerInterface $container) {

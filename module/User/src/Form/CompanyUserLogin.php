@@ -60,7 +60,7 @@ class CompanyUserLogin extends Form implements InputProviderInterface
                 'name' => 'submit',
                 'type' => Submit::class,
                 'attributes' => [
-                    'value' => $translate->translate('Login'),
+                    'value' => $translate->translate('Log in as company'),
                 ],
             ]
         );

@@ -10,7 +10,7 @@ use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use User\Form\{
     CompanyUserLogin as CompanyLoginForm,
-    Login as LoginForm,
+    UserLogin as UserLoginForm,
 };
 use User\Service\AclService;
 use User\Service\User as UserService;
@@ -76,12 +76,12 @@ class UserController extends AbstractActionController
      * @param string $userType
      * @param string|null $referer
      *
-     * @return CompanyLoginForm|LoginForm
+     * @return CompanyLoginForm|UserLoginForm
      */
     private function handleRedirect(
         string $userType,
         ?string $referer,
-    ): CompanyLoginForm|LoginForm {
+    ): CompanyLoginForm|UserLoginForm {
         if ('company' === $userType) {
             $form = $this->userService->getCompanyUserLoginForm();
         } else {

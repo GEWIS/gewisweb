@@ -19,7 +19,7 @@ use Laminas\Validator\{
     StringLength,
 };
 
-class Login extends Form implements InputProviderInterface
+class UserLogin extends Form implements InputProviderInterface
 {
     public function __construct(private readonly Translator $translate)
     {
@@ -50,7 +50,7 @@ class Login extends Form implements InputProviderInterface
                 'name' => 'submit',
                 'type' => Submit::class,
                 'attributes' => [
-                    'value' => $translate->translate('Login'),
+                    'value' => $translate->translate('Log in as member'),
                 ],
             ]
         );

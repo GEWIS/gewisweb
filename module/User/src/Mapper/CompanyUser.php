@@ -20,7 +20,7 @@ class CompanyUser extends BaseMapper
     public function findByLogin(string $login): ?CompanyUserModel
     {
         // create query for company
-        $qb = $this->em->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('u, c')
             ->from($this->getRepositoryName(), 'u')
             ->join('u.company', 'c')
@@ -47,9 +47,9 @@ class CompanyUser extends BaseMapper
         CompanyUserModel $companyUser,
         NewCompanyUserModel $newCompanyUser,
     ): void {
-        $this->em->persist($companyUser);
-        $this->em->remove($newCompanyUser);
-        $this->em->flush();
+        $this->getEntityManager()->persist($companyUser);
+        $this->getEntityManager()->remove($newCompanyUser);
+        $this->getEntityManager()->flush();
     }
 
     /**
