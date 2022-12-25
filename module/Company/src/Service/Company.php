@@ -2,6 +2,7 @@
 
 namespace Company\Service;
 
+use Application\Model\Enums\ApprovableStatus;
 use Application\Service\FileStorage;
 use Doctrine\ORM\{
     NonUniqueResultException,
@@ -32,7 +33,10 @@ use Company\Model\{
     CompanyPackage as CompanyPackageModel,
     Job as JobModel,
     JobCategory as JobCategoryModel,
-    JobLabel as JobLabelModel};
+    JobLabel as JobLabelModel,
+    Proposals\CompanyUpdate as CompanyUpdateProposal,
+    Proposals\JobUpdate as JobUpdateProposal
+};
 use DateTime;
 use Exception;
 use Laminas\Mvc\I18n\Translator;
@@ -326,6 +330,14 @@ class Company
         $company->setWebsite(new CompanyLocalisedText($data['websiteEn'], $data['website']));
         $company->setDescription(new CompanyLocalisedText($data['descriptionEn'], $data['description']));
 
+        // If the user can approve (changes to) companies, directly approve the company.
+        if ($this->aclService->isAllowed('approve', 'company')) {
+            // TODO: Remove the `->value` part (once ORM supports enums natively).
+            $company->setApproved(ApprovableStatus::Approved->value);
+            $company->setApprovedAt(new DateTime());
+            $company->setApprover($this->aclService->getIdentity());
+        }
+
         // Upload the logo of the company.
         if (!$this->uploadFile($company, $data['logo'])) {
             return false;
@@ -350,11 +362,34 @@ class Company
         CompanyModel $company,
         array $data,
     ): bool {
-        $company->exchangeArray($data);
+        // If the user can approve changes to companies, directly apply the changes to the company.
+        if ($this->aclService->isAllowed('approve', 'company')) {
+            $company->exchangeArray($data);
 
-        // Upload the logo of the company.
-        if (!$this->uploadFile($company, $data['logo'])) {
-            return false;
+            // TODO: Remove the `->value` part (once ORM supports enums natively).
+            $company->setApproved(ApprovableStatus::Approved->value);
+            $company->setApprovedAt(new DateTime());
+            $company->setApprover($this->aclService->getIdentity());
+
+            // Upload the logo of the company.
+            if (!$this->uploadFile($company, $data['logo'])) {
+                return false;
+            }
+        } else {
+            // If the user does not have the privileges to approve changes to a company, create an update proposal.
+            $updateProposal = $this->createCompany($data);
+
+            if (!$updateProposal instanceof CompanyModel) {
+                return false;
+            }
+
+            $companyUpdateProposal = new CompanyUpdateProposal();
+            $companyUpdateProposal->setCurrent($company);
+            $companyUpdateProposal->setProposal($updateProposal);
+
+            $this->companyMapper->persist($updateProposal);
+
+            // TODO: Send e-mail to CEB/C4 about proposed changes.
         }
 
         $this->persistCompany($company);
@@ -539,14 +574,14 @@ class Company
      * @param CompanyJobPackageModel $package
      * @param array $data
      *
-     * @return bool
+     * @return JobModel|bool
      *
      * @throws ORMException
      */
     public function createJob(
         CompanyJobPackageModel $package,
         array $data,
-    ): bool {
+    ): JobModel|bool {
         $job = new JobModel();
 
         $category = $this->categoryMapper->find($data['category']);
@@ -580,6 +615,14 @@ class Company
         $job->setPackage($package);
         $package->addJob($job);
 
+        // If the user can approve (changed to) jobs, directly approve the job.
+        if ($this->aclService->isAllowed('approve', 'company')) {
+            // TODO: Remove the `->value` part (once ORM supports enums natively).
+            $job->setApproved(ApprovableStatus::Approved->value);
+            $job->setApprovedAt(new DateTime());
+            $job->setApprover($this->aclService->getIdentity());
+        }
+
         // Upload the attachments.
         if (!$this->uploadFile($job, $data['attachment'])) {
             return false;
@@ -589,11 +632,9 @@ class Company
             return false;
         }
 
-        $job->setTimeStamp(new DateTime());
-
         $this->persistJob($job);
 
-        return true;
+        return $job;
     }
 
     /**
@@ -608,57 +649,74 @@ class Company
         JobModel $job,
         array $data,
     ): bool {
-        $category = $this->categoryMapper->find($data['category']);
-        if (null === $category) {
-            return false;
-        }
+        // If the user can approve changes to jobs, directly apply the changes to the job.
+        if ($this->aclService->isAllowed('approve', 'company')) {
+            $category = $this->categoryMapper->find($data['category']);
 
-        $job->setSlugName($data['slugName']);
-        $job->setCategory($category);
-        $job->setPublished($data['published']);
-        $job->setContactName($data['contactName']);
-        $job->setContactEmail($data['contactEmail']);
-        $job->setContactPhone($data['contactPhone']);
-
-        $job->getName()->updateValues($data['nameEn'], $data['name']);
-        $job->getLocation()->updateValues($data['locationEn'], $data['location']);
-        $job->getWebsite()->updateValues($data['websiteEn'], $data['website']);
-        $job->getDescription()->updateValues($data['descriptionEn'], $data['description']);
-
-        if (isset($data['labels'])) {
-            $newLabels = $data['labels'];
-            $currentLabels = $job->getLabels()->map(function ($label) {
-                return $label->getId();
-            })->toArray();
-
-            $intersection = array_intersect($newLabels, $currentLabels);
-            $toRemove = array_diff($currentLabels, $newLabels);
-            $toAdd = array_diff($newLabels, $intersection);
-
-            foreach ($toRemove as $label) {
-                $label = $this->getJobLabelById($label);
-                $job->removeLabel($label);
+            if (null === $category) {
+                return false;
             }
 
-            foreach ($toAdd as $label) {
-                $label = $this->getJobLabelById($label);
+            $job->setSlugName($data['slugName']);
+            $job->setCategory($category);
+            $job->setPublished($data['published']);
+            $job->setContactName($data['contactName']);
+            $job->setContactEmail($data['contactEmail']);
+            $job->setContactPhone($data['contactPhone']);
 
-                if (null !== $label) {
-                    $job->addLabel($label);
+            $job->getName()->updateValues($data['nameEn'], $data['name']);
+            $job->getLocation()->updateValues($data['locationEn'], $data['location']);
+            $job->getWebsite()->updateValues($data['websiteEn'], $data['website']);
+            $job->getDescription()->updateValues($data['descriptionEn'], $data['description']);
+
+            if (isset($data['labels'])) {
+                $newLabels = $data['labels'];
+                $currentLabels = $job->getLabels()->map(function ($label) {
+                    return $label->getId();
+                })->toArray();
+
+                $intersection = array_intersect($newLabels, $currentLabels);
+                $toRemove = array_diff($currentLabels, $newLabels);
+                $toAdd = array_diff($newLabels, $intersection);
+
+                foreach ($toRemove as $label) {
+                    $label = $this->getJobLabelById($label);
+                    $job->removeLabel($label);
+                }
+
+                foreach ($toAdd as $label) {
+                    $label = $this->getJobLabelById($label);
+
+                    if (null !== $label) {
+                        $job->addLabel($label);
+                    }
                 }
             }
-        }
 
-        // Upload the attachments.
-        if (!$this->uploadFile($job, $data['attachment'])) {
-            return false;
-        }
+            // Upload the attachments.
+            if (!$this->uploadFile($job, $data['attachment'])) {
+                return false;
+            }
 
-        if (!$this->uploadFile($job, $data['attachmentEn'], 'En')) {
-            return false;
-        }
+            if (!$this->uploadFile($job, $data['attachmentEn'], 'En')) {
+                return false;
+            }
+        } else {
+            // If the user does not have the privileges to approve changes to a job, create an update proposal.
+            $updateProposal = $this->createJob($job->getPackage(), $data);
 
-        $job->setTimeStamp(new DateTime());
+            if (!$updateProposal instanceof JobModel) {
+                return false;
+            }
+
+            $companyUpdateProposal = new JobUpdateProposal();
+            $companyUpdateProposal->setCurrent($job);
+            $companyUpdateProposal->setProposal($updateProposal);
+
+            $this->jobMapper->persist($updateProposal);
+
+            // TODO: Send e-mail to CEB/C4 about proposed changes.
+        }
 
         $this->persistJob($job);
 

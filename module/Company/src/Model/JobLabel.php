@@ -2,15 +2,13 @@
 
 namespace Company\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\Common\Collections\{
     ArrayCollection,
     Collection,
 };
 use Doctrine\ORM\Mapping\{
-    Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToMany,
     OneToOne,
@@ -22,13 +20,7 @@ use Doctrine\ORM\Mapping\{
 #[Entity]
 class JobLabel
 {
-    /**
-     * The label id.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * The name of the label.
@@ -73,26 +65,6 @@ class JobLabel
     public function __construct()
     {
         $this->jobs = new ArrayCollection();
-    }
-
-    /**
-     * Gets the id.
-     *
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    /**
-     * Sets the id.
-     *
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
     }
 
     /**

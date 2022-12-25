@@ -428,7 +428,7 @@ class AdminController extends AbstractActionController
 
             // Check if data is valid, and insert when it is
             if ($jobForm->isValid()) {
-                if ($this->companyService->createJob($package, $jobForm->getData())) {
+                if (false !== $this->companyService->createJob($package, $jobForm->getData())) {
                     return $this->redirect()->toRoute(
                         'company_admin/company/edit/package/edit',
                         [

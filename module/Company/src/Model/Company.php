@@ -2,7 +2,16 @@
 
 namespace Company\Model;
 
-use Company\Model\JobCategory as JobCategoryModel;
+use Application\Model\Enums\ApprovableStatus;
+use Application\Model\Traits\{
+    ApprovableTrait,
+    IdentifiableTrait,
+    TimestampableTrait,
+};
+use Company\Model\{
+    JobCategory as JobCategoryModel,
+    Proposals\CompanyUpdate as CompanyUpdateProposal,
+};
 use DateTime;
 use Doctrine\Common\Collections\{
     ArrayCollection,
@@ -11,8 +20,7 @@ use Doctrine\Common\Collections\{
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
+    HasLifecycleCallbacks,
     JoinColumn,
     OneToMany,
     OneToOne,
@@ -23,15 +31,12 @@ use Exception;
  * Company model.
  */
 #[Entity]
+#[HasLifecycleCallbacks]
 class Company
 {
-    /**
-     * The company id.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait,
+        TimestampableTrait,
+        ApprovableTrait;
 
     /**
      * The company's display name.
@@ -163,29 +168,23 @@ class Company
     )]
     protected Collection $packages;
 
+    /**
+     * Proposed updates to this company.
+     */
+    #[OneToMany(
+        targetEntity: CompanyUpdateProposal::class,
+        mappedBy: "current",
+        fetch: "EXTRA_LAZY",
+    )]
+    protected Collection $updateProposals;
+
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->packages = new ArrayCollection();
-    }
-
-    /**
-     * Get the company's id.
-     *
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set the company's id.
-     *
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
+        $this->updateProposals = new ArrayCollection();
     }
 
     /**
@@ -435,6 +434,11 @@ class Company
      */
     public function isHidden(): bool
     {
+        // If the company is not approved, it should never be shown.
+        if (ApprovableStatus::Approved->value !== $this->getApproved()) {
+            return true;
+        }
+
         $visible = false;
 
         // When any packages is not expired, the company should be shown to the user
@@ -489,6 +493,14 @@ class Company
     }
 
     /**
+     * @return Collection
+     */
+    public function getUpdateProposals(): Collection
+    {
+        return $this->updateProposals;
+    }
+
+    /**
      * Returns the number of jobs that are contained in all packages of this
      * company.
      *
@@ -497,7 +509,7 @@ class Company
     public function getNumberOfJobs(): int
     {
         $jobCount = function ($package) {
-            if ('job' == $package->getType()) {
+            if ('job' === $package->getType()) {
                 return $package->getJobs()->count();
             }
 
@@ -518,7 +530,11 @@ class Company
     public function getNumberOfActiveJobs(?JobCategoryModel $category = null): int
     {
         $jobCount = function ($package) use ($category) {
-            return $package->getNumberOfActiveJobs($category);
+            if ('job' === $package->getType()) {
+                return $package->getNumberOfActiveJobs($category);
+            }
+
+            return 0;
         };
 
         return array_sum(array_map($jobCount, $this->getPackages()->toArray()));

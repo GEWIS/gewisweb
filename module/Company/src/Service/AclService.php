@@ -21,6 +21,8 @@ class AclService extends \User\Service\AclService
         $this->acl->allow('company_admin', 'company', ['create', 'edit', 'delete']);
         $this->acl->allow('company_admin', 'company', ['listall', 'listAllCategories', 'listAllLabels']);
 
+        $this->acl->allow('company_admin', 'company', 'approve');
+
         $this->acl->allow('company', 'company', 'viewAccount');
     }
 }

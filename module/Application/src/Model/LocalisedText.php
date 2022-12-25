@@ -2,11 +2,8 @@
 
 namespace Application\Model;
 
-use Doctrine\ORM\Mapping\{
-    Column,
-    GeneratedValue,
-    Id,
-};
+use Application\Model\Traits\IdentifiableTrait;
+use Doctrine\ORM\Mapping\Column;
 use InvalidArgumentException;
 use Laminas\Session\Container as SessionContainer;
 
@@ -15,13 +12,7 @@ use Laminas\Session\Container as SessionContainer;
  */
 abstract class LocalisedText
 {
-    /**
-     * ID for the LocalisedText.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "IDENTITY")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     public function __construct(
         #[Column(
@@ -35,14 +26,6 @@ abstract class LocalisedText
         )]
         protected ?string $valueNL = null,
     ) {
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**

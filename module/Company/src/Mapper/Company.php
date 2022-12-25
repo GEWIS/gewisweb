@@ -3,6 +3,7 @@
 namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
+use Application\Model\Enums\ApprovableStatus;
 use Company\Model\Company as CompanyModel;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
@@ -25,6 +26,7 @@ class Company extends BaseMapper
         $rsmBuilder->addRootEntityFromClassMetadata($this->getRepositoryName(), 'c');
 
         $select = $rsmBuilder->generateSelectClause(['c' => 't1']);
+        $approved = ApprovableStatus::Approved->value;
 
         $sql = <<<QUERY
             SELECT {$select} FROM `Company` AS `t1`
@@ -43,6 +45,7 @@ class Company extends BaseMapper
                 GROUP BY `company_id`
             ) `CompanyPackages` ON `CompanyPackages`.`company_id` = `t1`.`id`
             WHERE `t1`.`published` = 1
+            AND `t1`.`approved` = "{$approved}"
             AND `CompanyPackages`.`totalPackages` > `CompanyPackages`.`expiredHiddenOrNotStartedPackages`
             ORDER BY `t1`.`name` ASC
             QUERY;

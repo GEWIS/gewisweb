@@ -2,15 +2,13 @@
 
 namespace Company\Model;
 
-use Company\Model\JobCategory as JobCategoryModel;
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Doctrine\ORM\Mapping\{
     Column,
     DiscriminatorColumn,
     DiscriminatorMap,
     Entity,
-    GeneratedValue,
-    Id,
     InheritanceType,
     ManyToOne,
 };
@@ -35,13 +33,7 @@ use Exception;
 )]
 abstract class CompanyPackage
 {
-    /**
-     * The package's id.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * The package's starting date.
@@ -72,16 +64,6 @@ abstract class CompanyPackage
 
     public function __construct()
     {
-    }
-
-    /**
-     * Get the package's id.
-     *
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**

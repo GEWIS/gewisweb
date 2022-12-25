@@ -2,7 +2,12 @@
 
 namespace Company\Model;
 
-use DateTime;
+use Application\Model\Traits\{
+    ApprovableTrait,
+    IdentifiableTrait,
+    TimestampableTrait,
+};
+use Company\Model\Proposals\JobUpdate as JobUpdateProposal;
 use Doctrine\Common\Collections\{
     ArrayCollection,
     Collection,
@@ -10,27 +15,25 @@ use Doctrine\Common\Collections\{
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
+    HasLifecycleCallbacks,
     JoinColumn,
     JoinTable,
     ManyToMany,
     ManyToOne,
-    OneToOne};
+    OneToMany,
+    OneToOne,
+};
 
 /**
  * Job model.
  */
 #[Entity]
+#[HasLifecycleCallbacks]
 class Job
 {
-    /**
-     * The job id.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait,
+        TimestampableTrait,
+        ApprovableTrait;
 
     /**
      * The job's slug name.
@@ -147,12 +150,6 @@ class Job
     protected CompanyLocalisedText $attachment;
 
     /**
-     * The job's timestamp.
-     */
-    #[Column(type: "date")]
-    protected DateTime $timestamp;
-
-    /**
      * The job's package.
      */
     #[ManyToOne(
@@ -188,19 +185,23 @@ class Job
     #[JoinTable(name: "JobLabelAssignment")]
     protected Collection $labels;
 
+    /**
+     * Proposed updates to this job.
+     */
+    #[OneToMany(
+        targetEntity: JobUpdateProposal::class,
+        mappedBy: "current",
+        fetch: "EXTRA_LAZY",
+    )]
+    protected Collection $updateProposals;
+
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->labels = new ArrayCollection();
-    }
-
-    /**
-     * Get the job's id.
-     *
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
+        $this->updateProposals = new ArrayCollection();
     }
 
     /**
@@ -391,26 +392,6 @@ class Job
     }
 
     /**
-     * Get the job's timestamp.
-     *
-     * @return DateTime
-     */
-    public function getTimestamp(): DateTime
-    {
-        return $this->timestamp;
-    }
-
-    /**
-     * Set the job's timestamp.
-     *
-     * @param DateTime $timestamp
-     */
-    public function setTimeStamp(DateTime $timestamp): void
-    {
-        $this->timestamp = $timestamp;
-    }
-
-    /**
      * Get the job's description.
      *
      * @return CompanyLocalisedText
@@ -536,6 +517,14 @@ class Job
     public function setLocation(CompanyLocalisedText $location): void
     {
         $this->location = $location;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getUpdateProposals(): Collection
+    {
+        return $this->updateProposals;
     }
 
     /**
