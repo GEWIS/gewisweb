@@ -56,6 +56,9 @@ runtest: loadenv
 runcoverage: loadenv
 		@vendor/phpunit/phpunit/phpunit --bootstrap ./bootstrap.php --configuration ./phpunit.xml --coverage-html ./coverage
 
+runworkflows:
+                @act -P ubuntu-latest=shivammathur/node:latest
+
 getvendordir:
 		@rm -Rf ./vendor
 		@docker cp "$(shell docker compose ps -q web)":/code/vendor ./vendor
