@@ -3,6 +3,7 @@
 namespace User\Service;
 
 use Company\Mapper\Company as CompanyMapper;
+use Company\Model\Company as CompanyModel;
 use DateInterval;
 use DateTime;
 use Decision\Mapper\Member as MemberMapper;
@@ -164,6 +165,20 @@ class User
         $this->emailService->sendRegisterEmail($newUser, $member);
 
         return $newUser;
+    }
+
+    /**
+     * Register a company.
+     */
+    public function registerCompanyUser(CompanyModel $company): void
+    {
+        $newCompanyUser = new NewCompanyUserModel($company);
+        $newCompanyUser->setCode($this->generateCode());
+        $newCompanyUser->setTime(new DateTime());
+
+        $this->newCompanyUserMapper->persist($newCompanyUser);
+
+        $this->emailService->sendCompanyRegisterMail($newCompanyUser, $company);
     }
 
     /**

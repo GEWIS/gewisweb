@@ -173,6 +173,7 @@ class Module
                 $jobForm = $container->get('company_admin_job_form');
                 $jobCategoryForm = $container->get('company_admin_jobcategory_form');
                 $jobLabelForm = $container->get('company_admin_joblabel_form');
+                $userService = $container->get('user_service_user');
 
                 return new CompanySerivce(
                     $aclService,
@@ -192,6 +193,7 @@ class Module
                     $jobForm,
                     $jobCategoryForm,
                     $jobLabelForm,
+                    $userService,
                 );
             },
             'company_service_companyquery' => function (ContainerInterface $container) {

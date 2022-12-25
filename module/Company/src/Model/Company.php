@@ -629,6 +629,10 @@ class Company implements ResourceInterface
 
         $arraycopy['name'] = $this->getName();
         $arraycopy['slugName'] = $this->getSlugName();
+
+        $arraycopy['representativeName'] = $this->getRepresentativeName();
+        $arraycopy['representativeEmail'] = $this->getRepresentativeEmail();
+
         $arraycopy['logo'] = $this->getLogo();
         $arraycopy['contactName'] = $this->getContactName();
         $arraycopy['contactEmail'] = $this->getContactEmail();

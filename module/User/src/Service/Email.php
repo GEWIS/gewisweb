@@ -54,6 +54,28 @@ class Email
         $this->transport->send($message);
     }
 
+    public function sendCompanyRegisterMail(
+        NewCompanyUserModel $newCompanyUser,
+        CompanyModel $company,
+    ): void {
+        $body = $this->render(
+            'user/email/company-register',
+            [
+                'user' => $newCompanyUser,
+                'company' => $company,
+            ]
+        );
+
+        $message = new Message();
+
+        $message->addFrom($this->emailConfig['from']);
+        $message->addTo($newCompanyUser->getEmail());
+        $message->setSubject($this->translator->translate('Company account for the GEWIS website'));
+        $message->setBody($body);
+
+        $this->transport->send($message);
+    }
+
     /**
      * Send password lost email.
      *

@@ -41,6 +41,7 @@ use DateTime;
 use Exception;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
+use User\Service\User as UserService;
 
 /**
  * Company service.
@@ -65,6 +66,7 @@ class Company
         private readonly EditJobForm $editJobForm,
         private readonly EditCategoryForm $editCategoryForm,
         private readonly EditLabelForm $editLabelForm,
+        private readonly UserService $userService,
     ) {
     }
 
@@ -344,6 +346,8 @@ class Company
         }
 
         $this->persistCompany($company);
+
+        $this->userService->registerCompanyUser($company);
 
         return $company;
     }
