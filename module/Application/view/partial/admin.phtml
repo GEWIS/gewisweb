@@ -45,11 +45,35 @@ $flash = $this->plugin('FlashMessenger');
                             </ul>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('company_service_acl')->isAllowed('company', 'listall')): ?>
-                        <li class="<?= $this->moduleIsActive(['company']) ? 'active' : '' ?>">
-                            <a href="<?= $this->url('company_admin') ?>">
-                                <?= $this->translate('Career') ?>
+                    <?php if ($this->acl('company_service_acl')->isAllowed('company', 'listAll')): ?>
+                        <li class="dropdown <?= $this->moduleIsActive(['company']) ? 'active' : '' ?>">
+                            <a href="<?= $this->url('company_admin') ?>" class="dropdown-toggle" data-toggle="dropdown"
+                               role="button" aria-haspopup="true" aria-expanded="false">
+                                <?= $this->translate('Career') ?> <span class="caret"></span>
                             </a>
+                            <ul class="dropdown-menu">
+                                <?php if ($this->acl('company_service_acl')->isAllowed('company', 'listAll')): ?>
+                                    <li>
+                                        <a href="<?= $this->url('company_admin') ?>">
+                                            <?= $this->translate('Companies') ?>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
+                                <?php if ($this->acl('company_service_acl')->isAllowed('jobCategory', 'listAll')): ?>
+                                    <li>
+                                        <a href="<?= $this->url('company_admin/categories') ?>">
+                                            <?= $this->translate('Categories') ?>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
+                                <?php if ($this->acl('company_service_acl')->isAllowed('jobLabel', 'listAll')): ?>
+                                    <li>
+                                        <a href="<?= $this->url('company_admin/labels') ?>">
+                                            <?= $this->translate('Labels') ?>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
+                            </ul>
                         </li>
                     <?php endif; ?>
                     <?php if ($this->acl('education_service_acl')->isAllowed('course_document', 'upload')): ?>

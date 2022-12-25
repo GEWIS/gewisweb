@@ -44,8 +44,6 @@ class AdminController extends AbstractActionController
         return new ViewModel(
             [
                 'companyList' => $this->companyService->getHiddenCompanyList(),
-                'categoryList' => $this->companyQueryService->getCategoryList(false),
-                'labelList' => $this->companyQueryService->getLabelList(false),
                 'packageFuture' => $this->companyService->getPackageChangeEvents(
                     (new DateTime())->add(
                         new DateInterval('P1M')
@@ -53,6 +51,16 @@ class AdminController extends AbstractActionController
                 ),
             ]
         );
+    }
+
+    public function indexCategoriesAction(): ViewModel
+    {
+        return new ViewModel(['categoryList' => $this->companyQueryService->getCategoryList(false)]);
+    }
+
+    public function indexLabelsAction(): ViewModel
+    {
+        return new ViewModel(['labelList' => $this->companyQueryService->getLabelList(false)]);
     }
 
     /**

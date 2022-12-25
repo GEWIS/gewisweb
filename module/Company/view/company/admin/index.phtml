@@ -14,11 +14,76 @@ $this->scriptUrl()->requireUrls(
     ['companySlugName']
 );
 ?>
-<?php if (array_sum(array_map("count", $packageFuture)) != 0): ?>
 <div class="row">
-    <div class="col-md-8">
-        <?php endif ?>
-
+    <div class="col-md-2 col-md-push-10">
+        <h2><?= $this->translate('Notifications') ?></h2>
+        <?php if (0 === array_sum(array_map("count", $packageFuture))): ?>
+            <p><?= $this->translate('No notifications') ?></p>
+        <?php endif; ?>
+        <?php foreach ($packageFuture[0] as $package): ?>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <?= $this->escapeHtml($package->getCompany()->getName()) ?>
+                </div>
+                <div class="panel-body">
+                    <?php
+                    $type = $package->getType();
+                    switch ($type) {
+                        case "banner":
+                            $packageType = $this->translate("Banner Package");
+                            break;
+                        case "featured":
+                            $packageType = $this->translate("Featured Package");
+                            break;
+                        case "job":
+                            $packageType = sprintf($this->translate("Job Package (%s active)"), $package->getNumberOfActiveJobs());
+                            break;
+                    }
+                    $company = $package->getCompany();
+                    $companySlugName = $company->getSlugName();
+                    ?>
+                    <?= sprintf(
+                        $this->translate("%s for company %s will start at %s"),
+                        "<a href='" . $this->url('company_admin/company/edit/package/edit', ['companySlugName' => $companySlugName, 'packageId' => $package->getId()]) . "'> " . $packageType . "</a>",
+                        "<a href=" . $this->url('company_admin/company/edit', ['companySlugName' => $companySlugName]) . ">" . $this->escapeHtml($package->getCompany()->getName()) . "</a>",
+                        $package->getStartingDate()->format("l d M"))
+                    ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+        <?php foreach ($packageFuture[1] as $package): ?>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <?= $this->escapeHtml($package->getCompany()->getName()) ?>
+                </div>
+                <div class="panel-body">
+                    <?php
+                    $type = $package->getType();
+                    switch ($type) {
+                        case "banner":
+                            $packageType = $this->translate("Banner Package");
+                            break;
+                        case "featured":
+                            $packageType = $this->translate("Featured Package");
+                            break;
+                        case "job":
+                            $packageType = sprintf($this->translate("Job Package (%s active)"), $package->getNumberOfActiveJobs());
+                            break;
+                    }
+                    $company = $package->getCompany();
+                    $companySlugName = $company->getSlugName();
+                    ?>
+                    <?= sprintf(
+                        $this->translate("%s for company %s will expire at %s"),
+                        "<a href='" . $this->url('company_admin/company/edit/package/edit', ['companySlugName' => $companySlugName, 'packageId' => $package->getId()]) . "'> " . $packageType . "</a>",
+                        "<a href=" . $this->url('company_admin/company/edit', ['companySlugName' => $companySlugName]) . ">" . $this->escapeHtml($package->getCompany()->getName()) . "</a>",
+                        $package->getExpirationDate()->format("l d M"))
+                    ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <div class="col-md-10 col-md-pull-2">
         <div class="row">
             <div class="col-md-10">
                 <div class="form-group">
@@ -28,78 +93,11 @@ $this->scriptUrl()->requireUrls(
             </div>
             <div class="col-md-2">
                 <a class="btn btn-success" href=<?= $this->url('company_admin/company/add') ?>>
-                    <span class="fas fa-plus"></span><?= $this->translate('Add Company') ?>
+                    <span class="fas fa-plus"></span> <?= $this->translate('Add Company') ?>
                 </a>
             </div>
         </div>
         <hr>
-        <div class="row">
-            <div class="col-sm-6">
-                <a class="btn btn-success" href='<?= $this->url('company_admin/category/add') ?>'>
-                    <span class="fa fa-plus"></span><?= $this->translate('Add Category') ?>
-                </a>
-                <table class="table table-striped ">
-                    <thead>
-                        <tr>
-                            <th>
-                                <?= $this->translate('Categories') ?>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        foreach ($categoryList as $category):
-                            $editUrl = $this->url('company_admin/category/edit',
-                                ['jobCategoryId' => $category->getId()]);
-                            ?>
-                            <tr>
-                                <td>
-                                    <?= $this->escapeHtml($this->localiseText($category->getName())) ?>
-                                    (<a href="<?= $editUrl; ?>"><?= $this->translate('edit') ?></a>)
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th><?= $this->translate('Categories') ?></th>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-            <div class="col-sm-6">
-                <a class="btn btn-success" href='<?= $this->url('company_admin/label/add') ?>'>
-                    <span class="fa fa-plus"></span><?= $this->translate('Add Label'); ?>
-                </a>
-                <table class="table table-striped ">
-                    <thead>
-                        <tr>
-                            <th>
-                                <?= $this->translate('Labels') ?>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        foreach ($labelList as $label):
-                            $editUrl = $this->url('company_admin/label/edit', ['jobLabelId' => $label->getId()]);
-                        ?>
-                            <tr>
-                                <td>
-                                    <?= $this->escapeHtml($this->localiseText($label->getName())) ?>
-                                    (<a href=<?= $editUrl; ?>><?= $this->translate('edit') ?></a>)
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th><?= $this->translate('Labels') ?></th>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-striped ">
@@ -230,84 +228,8 @@ $this->scriptUrl()->requireUrls(
                 </div>
             </div>
         </div>
-
-        <?php if (array_sum(array_map("count", $packageFuture)) != 0): ?>
-    </div>
-    <div class="col-md-4">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <?= $this->translate("Package changes next month") ?>
-            </div>
-            <div class="panel-body">
-                <?php foreach ($packageFuture[0] as $package): ?>
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <?= $package->getCompany()->getName() ?>
-                        </div>
-                        <div class="panel-body">
-                            <?php
-                            $type = $package->getType();
-                            switch ($type) {
-                                case "banner":
-                                    $packageType = $this->translate("Banner Package");
-                                    break;
-                                case "featured":
-                                    $packageType = $this->translate("Featured Package");
-                                    break;
-                                case "job":
-                                    $packageType = sprintf($this->translate("Job Package(%s active)"), $package->getNumberOfActiveJobs());
-                                    break;
-                            }
-                            $company = $package->getCompany();
-                            $companySlugName = $company->getSlugName();
-                            $companyName = $company->getName();
-                            ?>
-                            <?= sprintf(
-                                $this->translate("%s for company %s will start at %s"),
-                                "<a href='" . $this->url('company_admin/company/edit/package/edit', ['companySlugName' => $companySlugName, 'packageId' => $package->getId()]) . "'> " . $packageType . "</a>",
-                                "<a href=" . $this->url('company_admin/company/edit', ['companySlugName' => $companySlugName]) . ">" . $companyName . "</a>",
-                                $package->getStartingDate()->format("l d M"))
-                            ?>
-                        </div>
-                    </div>
-                <?php endforeach ?>
-                <?php foreach ($packageFuture[1] as $package): ?>
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <?= $package->getCompany()->getName() ?>
-                        </div>
-                        <div class="panel-body">
-                            <?php
-                            $type = $package->getType();
-                            switch ($type) {
-                                case "banner":
-                                    $packageType = $this->translate("Banner Package");
-                                    break;
-                                case "featured":
-                                    $packageType = $this->translate("Featured Package");
-                                    break;
-                                case "job":
-                                    $packageType = sprintf($this->translate("Job Package(%s active)"), $package->getNumberOfActiveJobs());
-                                    break;
-                            }
-                            $company = $package->getCompany();
-                            $companySlugName = $company->getSlugName();
-                            $companyName = $company->getName();
-                            ?>
-                            <?= sprintf(
-                                $this->translate("%s for company %s will expire at %s"),
-                                "<a href='" . $this->url('company_admin/company/edit/package/edit', ['companySlugName' => $companySlugName, 'packageId' => $package->getId()]) . "'> " . $packageType . "</a>",
-                                "<a href=" . $this->url('company_admin/company/edit', ['companySlugName' => $companySlugName]) . ">" . $companyName . "</a>",
-                                $package->getExpirationDate()->format("l d M"))
-                            ?>
-                        </div>
-                    </div>
-                <?php endforeach ?>
-            </div>
-        </div>
     </div>
 </div>
-<?php endif ?>
 
 <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     document.querySelector('#filterCompanies').addEventListener('keyup', () => {

@@ -289,12 +289,15 @@ return [
                             ],
                         ],
                     ],
-                    'category' => [
+                    'categories' => [
                         'type' => Literal::class,
                         'options' => [
-                            'route' => '/category',
+                            'route' => '/categories',
+                            'defaults' => [
+                                'action' => 'indexCategories',
+                            ],
                         ],
-                        'may_terminate' => false,
+                        'may_terminate' => true,
                         'child_routes' => [
                             'add' => [
                                 'type' => Literal::class,
@@ -320,12 +323,15 @@ return [
                             ],
                         ],
                     ],
-                    'label' => [
+                    'labels' => [
                         'type' => Literal::class,
                         'options' => [
-                            'route' => '/label',
+                            'route' => '/labels',
+                            'defaults' => [
+                                'action' => 'indexLabels',
+                            ],
                         ],
-                        'may_terminate' => false,
+                        'may_terminate' => true,
                         'child_routes' => [
                             'add' => [
                                 'type' => Literal::class,
@@ -365,6 +371,10 @@ return [
     'view_manager' => [
         'template_path_stack' => [
             'company' => __DIR__ . '/../view/',
+        ],
+        'template_map' => [
+            'company/admin/index-categories' => __DIR__ . '/../view/company/admin/categories.phtml',
+            'company/admin/index-labels' => __DIR__ . '/../view/company/admin/labels.phtml',
         ],
     ],
     'doctrine' => [

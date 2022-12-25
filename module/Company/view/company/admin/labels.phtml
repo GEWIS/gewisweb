@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-sm-6">
+        <a class="btn btn-success" href='<?= $this->url('company_admin/labels/add') ?>'>
+            <span class="fa fa-plus"></span><?= $this->translate('Add Label'); ?>
+        </a>
+        <table class="table table-striped ">
+            <thead>
+            <tr>
+                <th>
+                    <?= $this->translate('Labels') ?>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            foreach ($labelList as $label):
+                $editUrl = $this->url('company_admin/labels/edit', ['jobLabelId' => $label->getId()]);
+                ?>
+                <tr>
+                    <td>
+                        <?= $this->escapeHtml($this->localiseText($label->getName())) ?>
+                        (<a href=<?= $editUrl; ?>><?= $this->translate('edit') ?></a>)
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th><?= $this->translate('Labels') ?></th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
