@@ -122,11 +122,11 @@ abstract class LocalisedText
     /**
      * @param string|null $locale
      *
-     * @return string the localised text
+     * @return string|null the localised text
      *
      * @throws InvalidArgumentException
      */
-    public function getExactText(string $locale = null): string
+    public function getExactText(?string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->getPreferredLocale();

@@ -135,19 +135,6 @@ abstract class CompanyPackage
     }
 
     /**
-     * Get the number of jobs in the package.
-     * This method can be overridden in subclasses.
-     *
-     * @param JobCategoryModel|null $category
-     *
-     * @return integer 0
-     */
-    public function getNumberOfActiveJobs(?JobCategoryModel $category): int
-    {
-        return 0;
-    }
-
-    /**
      * Set the package's publish state.
      *
      * @param bool $published
