@@ -62,9 +62,7 @@ class Company extends BaseMapper
      */
     public function findCompanyBySlugName(string $slugName): ?CompanyModel
     {
-        $result = $this->getRepository()->findBy(['slugName' => $slugName]);
-
-        return empty($result) ? null : $result[0];
+        return $this->getRepository()->findOneBy(['slugName' => $slugName]);
     }
 
     /**
@@ -76,11 +74,7 @@ class Company extends BaseMapper
      */
     public function findCompanyByRepresentativeEmail(string $email): ?CompanyModel
     {
-        return $this->getRepository()->findOneBy(
-            [
-                'representativeEmail' => $email,
-            ],
-        );
+        return $this->getRepository()->findOneBy(['representativeEmail' => $email]);
     }
 
     /**

@@ -13,19 +13,12 @@ class CompanyUser extends BaseMapper
     public function findByLogin(string $login): ?CompanyUserModel
     {
         // create query for company
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('u, c')
-            ->from($this->getRepositoryName(), 'u')
-            ->join('u.company', 'c')
-            ->where('LOWER(c.representativeEmail) = ?1');
+        $qb = $this->getRepository()->createQueryBuilder('u');
+        $qb->join('u.company', 'c')
+            ->where('LOWER(c.representativeEmail) = :email')
+            ->setParameter(':email', strtolower($login));
 
-        // set the parameters
-        $qb->setParameter(1, strtolower($login));
-        $qb->setMaxResults(1);
-
-        $res = $qb->getQuery()->getResult();
-
-        return empty($res) ? null : $res[0];
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**

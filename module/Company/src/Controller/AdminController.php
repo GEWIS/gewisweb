@@ -141,6 +141,7 @@ class AdminController extends AbstractActionController
 
             $companyForm->setData($post);
             $companyForm->setCurrentSlug($companySlugName);
+            $companyForm->setCurrentRepresentativeEmail($company->getRepresentativeEmail());
 
             if ($companyForm->isValid()) {
                 if (
