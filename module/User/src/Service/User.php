@@ -313,7 +313,7 @@ class User
             return null;
         }
 
-        $identity = $this->userAuthService->getIdentity();
+        $identity = $this->companyUserAuthService->getIdentity();
         if ($identity instanceof CompanyUserModel) {
             return $identity;
         }
