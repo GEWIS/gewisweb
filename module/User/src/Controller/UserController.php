@@ -14,8 +14,10 @@ use User\Form\{
     UserLogin as UserLoginForm,
 };
 use User\Permissions\NotAllowedException;
-use User\Service\AclService;
-use User\Service\User as UserService;
+use User\Service\{
+    AclService,
+    User as UserService,
+};
 
 class UserController extends AbstractActionController
 {

@@ -34,8 +34,8 @@ use Company\Model\{
     Proposals\JobUpdate as JobUpdateProposal};
 use DateTime;
 use Doctrine\ORM\{
-    Exception\ORMException,
     NonUniqueResultException,
+    Exception\ORMException,
 };
 use Exception;
 use Laminas\Mvc\I18n\Translator;
