@@ -46,13 +46,14 @@ $this->scriptUrl()->requireUrls(
                         $this->translate("%s for company %s will start at %s"),
                         "<a href='" . $this->url('company_admin/company/edit/package/edit', ['companySlugName' => $companySlugName, 'packageId' => $package->getId()]) . "'> " . $packageType . "</a>",
                         "<a href=" . $this->url('company_admin/company/edit', ['companySlugName' => $companySlugName]) . ">" . $this->escapeHtml($package->getCompany()->getName()) . "</a>",
-                        $package->getStartingDate()->format("l d M"))
+                        $this->dateFormat($package->getStartingDate(), IntlDateFormatter::LONG, IntlDateFormatter::NONE),
+                    )
                     ?>
                 </div>
             </div>
         <?php endforeach; ?>
         <?php foreach ($packageFuture[1] as $package): ?>
-            <div class="panel panel-info">
+            <div class="panel panel-warning">
                 <div class="panel-heading">
                     <?= $this->escapeHtml($package->getCompany()->getName()) ?>
                 </div>
@@ -77,7 +78,8 @@ $this->scriptUrl()->requireUrls(
                         $this->translate("%s for company %s will expire at %s"),
                         "<a href='" . $this->url('company_admin/company/edit/package/edit', ['companySlugName' => $companySlugName, 'packageId' => $package->getId()]) . "'> " . $packageType . "</a>",
                         "<a href=" . $this->url('company_admin/company/edit', ['companySlugName' => $companySlugName]) . ">" . $this->escapeHtml($package->getCompany()->getName()) . "</a>",
-                        $package->getExpirationDate()->format("l d M"))
+                        $this->dateFormat($package->getExpirationDate(), IntlDateFormatter::LONG, IntlDateFormatter::NONE),
+                    )
                     ?>
                 </div>
             </div>
