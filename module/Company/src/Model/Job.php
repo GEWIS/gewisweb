@@ -23,13 +23,14 @@ use Doctrine\ORM\Mapping\{
     OneToMany,
     OneToOne,
 };
+use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Job model.
  */
 #[Entity]
 #[HasLifecycleCallbacks]
-class Job
+class Job implements ResourceInterface
 {
     use IdentifiableTrait;
     use TimestampableTrait;
@@ -556,5 +557,13 @@ class Job
             'attachmentEn' => $this->getAttachment()->getValueEN(),
             'labels' => $labelsArrays,
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getResourceId(): string
+    {
+        return 'job';
     }
 }

@@ -26,13 +26,14 @@ use Doctrine\ORM\Mapping\{
     OneToOne,
 };
 use Exception;
+use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Company model.
  */
 #[Entity]
 #[HasLifecycleCallbacks]
-class Company
+class Company implements ResourceInterface
 {
     use IdentifiableTrait;
     use TimestampableTrait;
@@ -644,5 +645,13 @@ class Company
         $arraycopy['descriptionEn'] = $this->getDescription()->getValueEN();
 
         return $arraycopy;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResourceId(): string
+    {
+        return 'company';
     }
 }
