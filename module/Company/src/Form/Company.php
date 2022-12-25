@@ -367,6 +367,9 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                     [
                         'name' => StringTrim::class,
                     ],
+                    [
+                        'name' => ToNull::class,
+                    ],
                 ],
             ],
             'contactEmail' => [
