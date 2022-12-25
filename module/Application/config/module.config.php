@@ -13,6 +13,7 @@ use Application\View\Helper\{
     LocaliseText,
 };
 use Doctrine\Common\Cache\MemcachedCache;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Cache\Service\StorageCacheAbstractServiceFactory;
 use Laminas\I18n\Translator\Resources;
 use Laminas\Router\Http\{
@@ -146,6 +147,21 @@ return [
             'message_open_format' => '<div%s><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><ul><li>',
             'message_close_string' => '</li></ul></div>',
             'message_separator_string' => '</li><li>',
+        ],
+    ],
+    'doctrine' => [
+        'driver' => [
+            __NAMESPACE__ . '_driver' => [
+                'class' => AttributeDriver::class,
+                'paths' => [
+                    __DIR__ . '/../src/Model/',
+                ],
+            ],
+            'orm_default' => [
+                'drivers' => [
+                    __NAMESPACE__ . '\Model' => __NAMESPACE__ . '_driver',
+                ],
+            ],
         ],
     ],
 ];
