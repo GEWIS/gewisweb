@@ -97,6 +97,11 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         </a>
                         <ul class="dropdown-menu">
                             <li>
+                                <a href="<?= $this->url('company_account/self') ?>">
+                                    <?= $this->translate('My Company') ?>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="<?= $this->url('user/password/change') ?>">
                                     <?= $this->translate('Change password') ?>
                                 </a>

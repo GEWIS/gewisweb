@@ -5,10 +5,12 @@ namespace Company;
 use Application\View\Helper\Truncate;
 use Company\Controller\{
     AdminController,
-    CompanyController,
+    CompanyAccountController,
+CompanyController,
 };
 use Company\Controller\Factory\{
     AdminControllerFactory,
+    CompanyAccountControllerFactory,
     CompanyControllerFactory,
 };
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
@@ -112,6 +114,28 @@ return [
                                         ],
                                     ],
                                 ],
+                            ],
+                        ],
+                    ],
+                ],
+                'priority' => 100,
+            ],
+            'company_account' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/company',
+                    'defaults' => [
+                        'controller' => CompanyAccountController::class,
+                    ],
+                ],
+                'may_terminate' => false,
+                'child_routes' => [
+                    'self' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/self',
+                            'defaults' => [
+                                'action' => 'self',
                             ],
                         ],
                     ],
@@ -334,6 +358,7 @@ return [
     'controllers' => [
         'factories' => [
             AdminController::class => AdminControllerFactory::class,
+            CompanyAccountController::class => CompanyAccountControllerFactory::class,
             CompanyController::class => CompanyControllerFactory::class,
         ],
     ],
