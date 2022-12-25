@@ -75,7 +75,7 @@ class Company
      */
     public function getCurrentBanner(): ?CompanyBannerPackageModel
     {
-        if (!$this->aclService->isAllowed('showBanner', 'company')) {
+        if (!$this->aclService->isAllowed('viewBanner', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view the banner'));
         }
 
@@ -87,7 +87,7 @@ class Company
      */
     public function getFeaturedPackage(): ?CompanyFeaturedPackageModel
     {
-        if (!$this->aclService->isAllowed('viewFeaturedCompany', 'company')) {
+        if (!$this->aclService->isAllowed('viewFeatured', 'company')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view the featured company')
             );
@@ -157,7 +157,7 @@ class Company
      */
     public function getPackageChangeEvents(DateTime $date): array
     {
-        if (!$this->aclService->isAllowed('listall', 'company')) {
+        if (!$this->aclService->isAllowed('listAll', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list the companies'));
         }
 
@@ -191,7 +191,7 @@ class Company
      */
     public function getHiddenCompanyList(): array
     {
-        if (!$this->aclService->isAllowed('listall', 'company')) {
+        if (!$this->aclService->isAllowed('listAll', 'company')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to access the admin interface')
             );
@@ -209,7 +209,7 @@ class Company
      */
     public function getCompanyById(int $id): ?CompanyModel
     {
-        if (!$this->aclService->isAllowed('listall', 'company')) {
+        if (!$this->aclService->isAllowed('listAll', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list the companies'));
         }
 
@@ -616,7 +616,7 @@ class Company
         $package->addJob($job);
 
         // If the user can approve (changed to) jobs, directly approve the job.
-        if ($this->aclService->isAllowed('approve', 'company')) {
+        if ($this->aclService->isAllowed('approve', 'job')) {
             // TODO: Remove the `->value` part (once ORM supports enums natively).
             $job->setApproved(ApprovableStatus::Approved->value);
             $job->setApprovedAt(new DateTime());
@@ -650,7 +650,7 @@ class Company
         array $data,
     ): bool {
         // If the user can approve changes to jobs, directly apply the changes to the job.
-        if ($this->aclService->isAllowed('approve', 'company')) {
+        if ($this->aclService->isAllowed('approve', 'job')) {
             $category = $this->categoryMapper->find($data['category']);
 
             if (null === $category) {
@@ -732,7 +732,7 @@ class Company
      */
     public function deletePackage(CompanyPackageModel $package): void
     {
-        if (!$this->aclService->isAllowed('delete', 'company')) {
+        if (!$this->aclService->isAllowed('delete', 'package')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete packages'));
         }
 
@@ -748,7 +748,7 @@ class Company
      */
     public function deleteJob(JobModel $job): void
     {
-        if (!$this->aclService->isAllowed('delete', 'company')) {
+        if (!$this->aclService->isAllowed('delete', 'job')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete jobs'));
         }
 
@@ -793,7 +793,7 @@ class Company
      */
     public function getJobCategoryById(int $jobCategoryId): ?JobCategoryModel
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (!$this->aclService->isAllowed('listAll', 'jobCategory')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit job categories'));
         }
 
@@ -809,7 +809,7 @@ class Company
      */
     public function getJobLabelById(int $jobLabelId): ?JobLabelModel
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (!$this->aclService->isAllowed('listAll', 'jobLabel')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit job labels'));
         }
 
@@ -825,7 +825,7 @@ class Company
      */
     public function getPackageById(int $packageId): ?CompanyPackageModel
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (!$this->aclService->isAllowed('edit', 'package')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit packages'));
         }
 
@@ -852,7 +852,7 @@ class Company
      */
     public function getJobById(int $jobId): ?JobModel
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (!$this->aclService->isAllowed('edit', 'job')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit jobs'));
         }
 
@@ -866,7 +866,10 @@ class Company
      */
     public function getCategoryForm(): EditCategoryForm
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (
+            !$this->aclService->isAllowed('create', 'jobCategory')
+            || !$this->aclService->isAllowed('edit', 'jobCategory')
+        ) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit categories'));
         }
 
@@ -880,7 +883,10 @@ class Company
      */
     public function getLabelForm(): EditLabelForm
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (
+            !$this->aclService->isAllowed('create', 'jobLabel')
+            || !$this->aclService->isAllowed('edit', 'jobLabel')
+        ) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit labels'));
         }
 
@@ -914,7 +920,10 @@ class Company
      */
     public function getJobForm(): EditJobForm
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (
+            !$this->aclService->isAllowed('create', 'job')
+            || !$this->aclService->isAllowed('edit', 'job')
+        ) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit jobs'));
         }
 
@@ -926,7 +935,10 @@ class Company
      */
     public function getCompanyForm(): CompanyForm
     {
-        if (!$this->aclService->isAllowed('create', 'company')) {
+        if (
+            !$this->aclService->isAllowed('create', 'company')
+            || !$this->aclService->isAllowed('edit', 'company')
+        ) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create a company'));
         }
 

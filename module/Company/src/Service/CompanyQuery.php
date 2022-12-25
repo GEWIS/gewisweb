@@ -103,7 +103,7 @@ class CompanyQuery
     public function getCategoryList(bool $visible): array
     {
         if (!$visible) {
-            if (!$this->aclService->isAllowed('listAllCategories', 'company')) {
+            if (!$this->aclService->isAllowed('listAll', 'jobCategory')) {
                 throw new NotAllowedException(
                     $this->translator->translate('You are not allowed to list all job categories')
                 );
@@ -112,7 +112,7 @@ class CompanyQuery
             return $this->categoryMapper->findAll();
         }
 
-        if (!$this->aclService->isAllowed('listVisibleCategories', 'company')) {
+        if (!$this->aclService->isAllowed('list', 'jobCategory')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list job categories'));
         }
 
@@ -151,7 +151,7 @@ class CompanyQuery
     public function getLabelList(bool $visible): array
     {
         if (!$visible) {
-            if (!$this->aclService->isAllowed('listAllLabels', 'company')) {
+            if (!$this->aclService->isAllowed('listAll', 'jobLabel')) {
                 throw new NotAllowedException(
                     $this->translator->translate('You are not allowed to list all job labels')
                 );
@@ -160,7 +160,7 @@ class CompanyQuery
             return $this->labelMapper->findAll();
         }
 
-        if (!$this->aclService->isAllowed('listVisibleLabels', 'company')) {
+        if (!$this->aclService->isAllowed('list', 'jobLabel')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list job labels'));
         }
 

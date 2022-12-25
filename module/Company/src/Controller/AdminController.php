@@ -34,7 +34,7 @@ class AdminController extends AbstractActionController
      */
     public function indexAction(): ViewModel
     {
-        if (!$this->aclService->isAllowed('listAllLabels', 'company')) {
+        if (!$this->aclService->isAllowed('create', 'company')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to administer career settings')
             );
@@ -194,7 +194,7 @@ class AdminController extends AbstractActionController
      */
     public function addPackageAction(): Response|ViewModel
     {
-        if (!$this->aclService->isAllowed('create', 'company')) {
+        if (!$this->aclService->isAllowed('create', 'package')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create packages'));
         }
 
@@ -263,7 +263,7 @@ class AdminController extends AbstractActionController
      */
     public function editPackageAction(): Response|ViewModel
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (!$this->aclService->isAllowed('edit', 'package')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit packages'));
         }
 
@@ -348,7 +348,7 @@ class AdminController extends AbstractActionController
      */
     public function deletePackageAction(): Response|ViewModel
     {
-        if (!$this->aclService->isAllowed('delete', 'company')) {
+        if (!$this->aclService->isAllowed('delete', 'package')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete packages'));
         }
 
@@ -390,7 +390,7 @@ class AdminController extends AbstractActionController
      */
     public function addJobAction(): Response|ViewModel
     {
-        if (!$this->aclService->isAllowed('create', 'company')) {
+        if (!$this->aclService->isAllowed('create', 'job')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create jobs'));
         }
 
@@ -465,7 +465,7 @@ class AdminController extends AbstractActionController
      */
     public function editJobAction(): Response|ViewModel
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (!$this->aclService->isAllowed('edit', 'job')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit jobs'));
         }
 
@@ -536,7 +536,7 @@ class AdminController extends AbstractActionController
      */
     public function deleteJobAction(): Response|ViewModel
     {
-        if (!$this->aclService->isAllowed('delete', 'company')) {
+        if (!$this->aclService->isAllowed('delete', 'job')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete jobs'));
         }
 
@@ -578,7 +578,7 @@ class AdminController extends AbstractActionController
 
     public function addCategoryAction(): Response|ViewModel
     {
-        if (!$this->aclService->isAllowed('create', 'company')) {
+        if (!$this->aclService->isAllowed('create', 'jobCategory')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create job categories'));
         }
 
@@ -628,7 +628,7 @@ class AdminController extends AbstractActionController
      */
     public function editCategoryAction(): ViewModel
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (!$this->aclService->isAllowed('edit', 'jobCategory')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit job categories'));
         }
 
@@ -668,7 +668,7 @@ class AdminController extends AbstractActionController
 
     public function addLabelAction(): Response|ViewModel
     {
-        if (!$this->aclService->isAllowed('create', 'company')) {
+        if (!$this->aclService->isAllowed('create', 'jobLabel')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create job labels'));
         }
 
@@ -717,7 +717,7 @@ class AdminController extends AbstractActionController
      */
     public function editLabelAction(): ViewModel
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (!$this->aclService->isAllowed('edit', 'jobLabel')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit job labels'));
         }
 
