@@ -1,0 +1,59 @@
+<?php
+// The FlashMessenger config does allow for namespaced options, hence we need to define all classes below.
+$flash = $this->plugin('FlashMessenger');
+?>
+<div class="admin-container">
+    <nav class="navbar navbar-gewis-admin navbar-fixed-left rainbow">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" id="admin-collapsable" data-toggle="collapse" data-target="#navbar-admin" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="navbar-admin" class="navbar-collapse collapse width" aria-expanded="false">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="<?= $this->url('company_account/self') ?>">
+                            <?= $this->translate('Home') ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= $this->url('company_account/jobs') ?>">
+                            <?= $this->translate('Jobs') ?>
+                        </a>
+                    </li>
+                    <li class="stick-to-bottom">
+                        <a href="<?= $this->url('company_account/settings') ?>">
+                            <?= $this->translate('Settings') ?>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="content-container">
+        <section class="section section-breadcrumb">
+            <div class="container-admin">
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <a href="<?= $this->url('company_account/self') ?>"><?= $this->translate('Company') ?></a>
+                    </li>
+                    <?= $this->breadcrumbs() ?>
+                </ol>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container-admin">
+                <?= $flash->render('default', ['alert', 'alert-dismissible', 'alert-info']) ?>
+                <?= $flash->render('error', ['alert', 'alert-dismissible', 'alert-danger']) ?>
+                <?= $flash->render('info', ['alert', 'alert-dismissible', 'alert-info']) ?>
+                <?= $flash->render('success', ['alert', 'alert-dismissible', 'alert-success']) ?>
+                <?= $flash->render('warning', ['alert', 'alert-dismissible', 'alert-warning']) ?>
+                <?= $this->content ?>
+            </div>
+        </section>
+    </div>
+</div>

@@ -3,6 +3,7 @@
 namespace Company\Controller\Factory;
 
 use Company\Controller\CompanyAccountController;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
 
@@ -22,6 +23,7 @@ class CompanyAccountControllerFactory implements FactoryInterface
     ): CompanyAccountController {
         return new CompanyAccountController(
             $container->get('company_service_acl'),
+            $container->get(MvcTranslator::class),
         );
     }
 }

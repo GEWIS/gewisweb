@@ -139,6 +139,60 @@ return [
                             ],
                         ],
                     ],
+                    'jobs' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/jobs',
+                            'defaults' => [
+                                'action' => 'jobs',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'add' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/add',
+                                    'defaults' => [
+                                        'action' => 'addJob',
+                                    ],
+                                ],
+                            ],
+                            'delete' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/delete/:jobId',
+                                    'defaults' => [
+                                        'action' => 'deleteJob',
+                                    ],
+                                    'constraints' => [
+                                        'jobId' => '[0-9]*',
+                                    ],
+                                ],
+                            ],
+                            'edit' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/edit/:jobId',
+                                    'defaults' => [
+                                        'action' => 'editJob',
+                                    ],
+                                    'constraints' => [
+                                        'jobId' => '[0-9]*',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'settings' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/settings',
+                            'defaults' => [
+                                'action' => 'settings',
+                            ],
+                        ],
+                    ],
                 ],
                 'priority' => 100,
             ],
