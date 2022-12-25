@@ -89,6 +89,26 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
 
         $this->add(
             [
+                'name' => 'representativeName',
+                'type' => Text::class,
+                'options' => [
+                    'label' => $this->getTranslator()->translate('Name'),
+                ],
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'representativeEmail',
+                'type' => Email::class,
+                'options' => [
+                    'label' => $this->getTranslator()->translate('E-mail Address'),
+                ],
+            ]
+        );
+
+        $this->add(
+            [
                 'name' => 'contactName',
                 'type' => Text::class,
                 'options' => [
@@ -287,6 +307,46 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
             ],
             'published' => [
                 'required' => true,
+            ],
+            'representativeName' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => StringLength::class,
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'max' => 200,
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StripTags::class,
+                    ],
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
+            ],
+            'representativeEmail' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => EmailAddress::class,
+                        'options' => [
+                            'messages' => [
+                                'emailAddressInvalidFormat' => $this->getTranslator()->translate(
+                                    'E-mail address format is not valid'
+                                ),
+                            ],
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
             ],
             'contactName' => [
                 'required' => false,

@@ -46,6 +46,18 @@ class Company
     protected string $slugName;
 
     /**
+     * The name of the person representing the company. Is used for communications with the company.
+     */
+    #[Column(type: "string")]
+    protected string $representativeName;
+
+    /**
+     * The email address of the person representing the company. Is used for communications with the company.
+     */
+    #[Column(type: "string")]
+    protected string $representativeEmail;
+
+    /**
      * The company's contact's name.
      */
     #[Column(
@@ -55,7 +67,7 @@ class Company
     protected ?string $contactName;
 
     /**
-     * The company's address.
+     * The company's contact address.
      */
     #[Column(
         type: "string",
@@ -64,7 +76,7 @@ class Company
     protected ?string $contactAddress;
 
     /**
-     * The company's email.
+     * The company's contact email address.
      */
     #[Column(
         type: "string",
@@ -73,7 +85,7 @@ class Company
     protected ?string $contactEmail;
 
     /**
-     * The company's phone.
+     * The company's contact phone.
      */
     #[Column(
         type: "string",
@@ -204,6 +216,46 @@ class Company
     public function setSlugName(string $slugName): void
     {
         $this->slugName = $slugName;
+    }
+
+    /**
+     * Get the name of the person representing the company.
+     *
+     * @return string
+     */
+    public function getRepresentativeName(): string
+    {
+        return $this->representativeName;
+    }
+
+    /**
+     * Set the name of the person representing the company.
+     *
+     * @param string $name
+     */
+    public function setRepresentativeName(string $name): void
+    {
+        $this->representativeName = $name;
+    }
+
+    /**
+     * Get the email address of the person representing the company.
+     *
+     * @return string
+     */
+    public function getRepresentativeEmail(): string
+    {
+        return $this->representativeEmail;
+    }
+
+    /**
+     * Set the email address of the person representing the company.
+     *
+     * @param string $email
+     */
+    public function setRepresentativeEmail(string $email): void
+    {
+        $this->representativeEmail = $email;
     }
 
     /**
@@ -524,6 +576,10 @@ class Company
     {
         $this->setName($data['name']);
         $this->setSlugName($data['slugName']);
+
+        $this->setRepresentativeName($data['representativeName']);
+        $this->setRepresentativeEmail($data['representativeEmail']);
+
         $this->setContactName($data['contactName']);
         $this->setContactAddress($data['contactAddress']);
         $this->setContactEmail($data['contactEmail']);

@@ -312,6 +312,10 @@ class Company
         $company->setName($data['name']);
         $company->setSlugName($data['slugName']);
         $company->setPublished($data['published']);
+
+        $company->setRepresentativeName($data['representativeName']);
+        $company->setRepresentativeEmail($data['representativeEmail']);
+
         $company->setContactName($data['contactName']);
         $company->setContactEmail($data['contactEmail']);
         $company->setContactPhone($data['contactPhone']);

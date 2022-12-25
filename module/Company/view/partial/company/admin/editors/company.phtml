@@ -78,12 +78,54 @@
     <div class="col-md-6">
         <div class="row">
             <div class="col-md-12">
+                <h2><?= $this->translate('Representative Information') ?></h2>
+                <p><?= $this->translate('Enter information about the representative for this company.') ?></p>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php
+                        $representativeName = $form->get('representativeName')
+                            ->setAttribute('class', 'form-control')
+                            ->setAttribute('id', 'representative-name');
+                        ?>
+                        <div class="form-group <?= $this->bootstrapElementError($representativeName) ?>">
+                            <label for="<?= $representativeName->getAttribute('id') ?>" class="control-label  label-required">
+                                <?= $representativeName->getLabel() ?>
+                            </label>
+                            <?= $this->formText($representativeName) ?>
+                            <?= $this->formElementErrors($representativeName) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <?php
+                        $representativeEmail = $form->get('representativeEmail')
+                            ->setAttribute('class', 'form-control')
+                            ->setAttribute('id', 'representative-email');
+                        ?>
+                        <div class="form-group <?= $this->bootstrapElementError($representativeEmail) ?>">
+                            <label for="<?= $representativeEmail->getAttribute('id') ?>" class="control-label label-required">
+                                <?= $representativeEmail->getLabel() ?>
+                            </label>
+                            <?= $this->formText($representativeEmail) ?>
+                            <?= $this->formElementErrors($representativeEmail) ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
                 <h2><?= $this->translate('Contact Information') ?></h2>
                 <p><?= $this->translate('Enter how someone can contact this company and who is responsible for this company.') ?></p>
             </div>
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <?php
                         $contactName = $form->get('contactName')
                             ->setAttribute('class', 'form-control')
@@ -97,11 +139,11 @@
                             <?= $this->formElementErrors($contactName) ?>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <?php
                         $contactEmail = $form->get('contactEmail')
                             ->setAttribute('class', 'form-control')
-                            ->setAttribute('id', 'email');
+                            ->setAttribute('id', 'contact-email');
                         ?>
                         <div class="form-group <?= $this->bootstrapElementError($contactEmail) ?>">
                             <label for="<?= $contactEmail->getAttribute('id') ?>" class="control-label">
@@ -111,11 +153,11 @@
                             <?= $this->formElementErrors($contactEmail) ?>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <?php
                         $contactPhone = $form->get('contactPhone')
                             ->setAttribute('class', 'form-control')
-                            ->setAttribute('id', 'phone');
+                            ->setAttribute('id', 'contact-phone');
                         ?>
                         <div class="form-group <?= $this->bootstrapElementError($contactPhone) ?>">
                             <label for="<?= $contactPhone->getAttribute('id') ?>" class="control-label">
@@ -125,11 +167,11 @@
                             <?= $this->formElementErrors($contactPhone) ?>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <?php
                         $contactAddress = $form->get('contactAddress')
                             ->setAttribute('class', 'form-control')
-                            ->setAttribute('id', 'address');
+                            ->setAttribute('id', 'contact-address');
                         ?>
                         <div class="form-group <?= $this->bootstrapElementError($contactAddress) ?>">
                             <label for="<?= $contactAddress->getAttribute('id') ?>" class="control-label">
