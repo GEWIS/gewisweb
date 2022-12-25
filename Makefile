@@ -138,7 +138,12 @@ phpcsfixrisky: loadenv
 
 checkcomposer: loadenv
 		@XDEBUG_MODE=off vendor/bin/composer-require-checker check composer.json
-		@vendor/bin/composer-unused
+
+checkcomposerunused: loadenv
+		@XDEBUG_MODE=off vendor/bin/composer-unused
+
+checkcomposeroutdated:
+		@php composer.phar outdated
 
 updatecomposer:
 		@docker cp ./composer.json "$(shell docker compose ps -q web)":/code/composer.json
