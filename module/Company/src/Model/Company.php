@@ -179,6 +179,16 @@ class Company
     }
 
     /**
+     * Set the company's id.
+     *
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
      * Get the company's name.
      *
      * @return string

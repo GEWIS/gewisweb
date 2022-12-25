@@ -6,9 +6,15 @@ use ApplicationTest\BaseControllerTest;
 
 class ControllerTest extends BaseControllerTest
 {
-    public function testUserActionCanBeAccessed(): void
+    public function testCompanyLoginActionCanBeAccessed(): void
     {
-        $this->dispatch('/user');
+        $this->dispatch('/user/login/member');
+        $this->assertResponseStatusCode(200);
+    }
+
+    public function testMemberLoginActionCanBeAccessed(): void
+    {
+        $this->dispatch('/user/login/member');
         $this->assertResponseStatusCode(200);
     }
 
@@ -18,9 +24,15 @@ class ControllerTest extends BaseControllerTest
         $this->assertResponseStatusCode(200);
     }
 
+    public function testCompanyUserResetActionCanBeAccessed(): void
+    {
+        $this->dispatch('/user/password/reset/company');
+        $this->assertResponseStatusCode(200);
+    }
+
     public function testUserResetActionCanBeAccessed(): void
     {
-        $this->dispatch('/user/reset');
+        $this->dispatch('/user/password/reset/member');
         $this->assertResponseStatusCode(200);
     }
 

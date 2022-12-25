@@ -61,11 +61,7 @@ class LoginAttempt
             return $this->companyUserMapper->find($user->getId());
         }
 
-        if ($user instanceof UserModel) {
-            return $this->userMapper->find($user->getId());
-        }
-
-        return null;
+        return $this->userMapper->find($user->getId());
     }
 
     /**

@@ -86,7 +86,7 @@ class Email
     public function sendCompanyPasswordLostMail(
         NewCompanyUserModel $newCompanyUser,
         CompanyModel $company,
-    ):void {
+    ): void {
         $body = $this->render(
             'user/email/company-reset',
             [

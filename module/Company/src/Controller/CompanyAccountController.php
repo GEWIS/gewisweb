@@ -19,7 +19,8 @@ class CompanyAccountController extends AbstractActionController
      *
      * @param AclService $aclService
      */
-    public function __construct(AclService $aclService) {
+    public function __construct(AclService $aclService)
+    {
         $this->aclService = $aclService;
     }
 
