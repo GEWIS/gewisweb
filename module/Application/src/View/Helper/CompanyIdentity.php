@@ -33,8 +33,9 @@ class CompanyIdentity extends AbstractHelper
      */
     public function __invoke(): CompanyUserModel|null
     {
-        if ($this->companyUserAuthService->hasIdentity()) {
-            return $this->companyUserAuthService->getIdentity();
+        $identity = $this->companyUserAuthService->getIdentity();
+        if ($identity instanceof CompanyUserModel) {
+            return $identity;
         }
 
         return null;

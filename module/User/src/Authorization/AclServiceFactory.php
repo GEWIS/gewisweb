@@ -13,9 +13,13 @@ use Laminas\ServiceManager\Exception\InvalidArgumentException;
 use Photo\Service\AclService as PhotoAclService;
 use Psr\Container\ContainerInterface;
 use User\Authentication\{
+    Adapter\CompanyUserAdapter,
+    Adapter\UserAdapter,
     ApiAuthenticationService,
     AuthenticationService as CompanyUserAuthenticationService,
     AuthenticationService as UserAuthenticationService,
+    Storage\CompanyUserSession,
+    Storage\UserSession,
 };
 use User\Service\AclService as UserAclService;
 
@@ -35,9 +39,9 @@ class AclServiceFactory implements FactoryInterface
     ): GenericAclService {
         /** @var MvcTranslator $translator */
         $translator = $container->get(MvcTranslator::class);
-        /** @var UserAuthenticationService $authService */
+        /** @var UserAuthenticationService<UserSession, UserAdapter> $userAuthService */
         $userAuthService = $container->get('user_auth_user_service');
-        /** @var CompanyUserAuthenticationService $companyUserAuthService */
+        /** @var CompanyUserAuthenticationService<CompanyUserSession, CompanyUserAdapter> $companyUserAuthService */
         $companyUserAuthService = $container->get('user_auth_companyUser_service');
         /** @var ApiAuthenticationService $apiUserAuthService */
         $apiUserAuthService = $container->get('user_auth_apiUser_service');

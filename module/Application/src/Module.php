@@ -44,6 +44,11 @@ use Locale;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 use RuntimeException;
+use User\Authentication\{
+    Adapter\UserAdapter,
+    AuthenticationService,
+    Storage\UserSession,
+};
 use User\Permissions\NotAllowedException;
 
 class Module
@@ -187,6 +192,7 @@ class Module
                     return new FileStorageService($translator, $storageConfig, $watermarkService);
                 },
                 'application_service_watermark' => function (ContainerInterface $container) {
+                    /** @var AuthenticationService<UserSession, UserAdapter> $authService */
                     $authService = $container->get('user_auth_user_service');
                     $remoteAddress = $container->get('user_remoteaddress');
 

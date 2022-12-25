@@ -4,14 +4,24 @@ namespace Application\Service;
 
 use DateTime;
 use setasign\Fpdi\Tcpdf\Fpdi;
-use User\Authentication\AuthenticationService;
+use User\Authentication\{
+    Adapter\UserAdapter,
+    AuthenticationService,
+    Storage\UserSession,
+};
 
+/**
+ * @psalm-template TUserAuth of AuthenticationService<UserSession, UserAdapter>
+ */
 class WatermarkService
 {
     // The font size of the watermark
     private const FONT_SIZE = 32;
     private const FONT = 'freesansb';
 
+    /**
+     * @psalm-param TUserAuth $authService
+     */
     public function __construct(
         private readonly AuthenticationService $authService,
         private readonly string $remoteAddress,

@@ -169,7 +169,7 @@ class Photo
         $next = $this->getNextPhoto($photo, $album);
         $previous = $this->getPreviousPhoto($photo, $album);
 
-        $lidnr = $this->aclService->getIdentity()->getLidnr();
+        $lidnr = $this->aclService->getUserIdentityOrThrowException()->getLidnr();
         $isTagged = $this->isTaggedIn($photoId, $lidnr);
         $profilePhoto = $this->getStoredProfilePhoto($lidnr);
         $isProfilePhoto = false;
@@ -408,9 +408,9 @@ class Photo
     public function removeProfilePhoto(?ProfilePhotoModel $profilePhoto = null): void
     {
         if (null === $profilePhoto) {
-            $member = $this->aclService->getIdentity()->getMember();
-            $lidnr = $member->getLidnr();
-            $profilePhoto = $this->getStoredProfilePhoto($lidnr);
+            $profilePhoto = $this->getStoredProfilePhoto(
+                $this->aclService->getUserIdentityOrThrowException()->getLidnr()
+            );
         }
 
         if (null !== $profilePhoto) {
@@ -514,13 +514,7 @@ class Photo
             throw new NoResultException();
         }
 
-        $member = $this->aclService->getIdentity()?->getMember();
-        if (!$member instanceof MemberModel) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to set a profile picture.')
-            );
-        }
-
+        $member = $this->aclService->getUserIdentityOrThrowException()->getMember();
         $lidnr = $member->getLidnr();
         $profilePhoto = $this->getStoredProfilePhoto($lidnr);
 
@@ -609,7 +603,7 @@ class Photo
      */
     public function countVote(int $photoId): void
     {
-        $identity = $this->aclService->getIdentity();
+        $identity = $this->aclService->getUserIdentityOrThrowException();
 
         if (null !== $this->voteMapper->findVote($photoId, $identity->getLidnr())) {
             // Already voted
@@ -755,7 +749,9 @@ class Photo
      */
     public function hasRecentVote(): bool
     {
-        $lidnr = $this->aclService->getIdentityOrThrowException()->getLidnr();
+        $this->aclService->isAllowed('view', 'album');
+
+        $lidnr = $this->aclService->getUserIdentityOrThrowException()->getLidnr();
 
         return $this->voteMapper->hasRecentVote($lidnr);
     }

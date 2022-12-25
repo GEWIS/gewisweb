@@ -27,10 +27,10 @@ use User\Form\{
     ApiToken as ApiTokenForm,
     CompanyUserLogin as CompanyUserLoginForm,
     CompanyUserReset as CompanyUserResetForm,
-    UserLogin as UserLoginForm,
     Password as PasswordForm,
     Register as RegisterForm,
     Reset as ResetForm,
+    UserLogin as UserLoginForm,
 };
 use User\Mapper\{
     ApiApp as ApiAppMapper,
@@ -47,8 +47,8 @@ use User\Permissions\NotAllowedException;
 use User\Service\{
     ApiApp as ApiAppService,
     ApiUser as ApiUserService,
-    Factory\ApiAppFactory as ApiAppServiceFactory,
     Email as EmailService,
+    Factory\ApiAppFactory as ApiAppServiceFactory,
     User as UserService,
 };
 

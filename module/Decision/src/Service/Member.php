@@ -50,7 +50,7 @@ class Member
             !$this->aclService->isAllowed('view', 'member')
             && (
                 !$this->aclService->isAllowed('view_self', 'member')
-                || $lidnr !== $this->aclService->getIdentityOrThrowException()->getLidnr()
+                || $lidnr !== $this->aclService->getUserIdentityOrThrowException()->getLidnr()
             )
         ) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view members.'));

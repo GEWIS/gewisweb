@@ -2,6 +2,7 @@
 
 namespace User\Authentication;
 
+use Application\Model\IdentityInterface;
 use Laminas\Authentication\Adapter\AdapterInterface;
 use Laminas\Authentication\Storage\StorageInterface;
 use RuntimeException;
@@ -18,19 +19,29 @@ use User\Authentication\Storage\{
     UserSession,
 };
 use User\Model\{
-    CompanyUser as CompanyUserModel,
-    User as UserModel,
+    CompanyUser,
+    User,
 };
 
+/**
+ * @template TStorage of CompanyUserSession|UserSession
+ * @template TAdapter of CompanyUserAdapter|UserAdapter
+ */
 class AuthenticationService implements AuthenticationServiceInterface
 {
+    /** @psalm-var TStorage $storage */
     private CompanyUserSession|UserSession $storage;
 
+    /** @psalm-var TAdapter $storage */
     private CompanyUserAdapter|UserAdapter $adapter;
 
+    /**
+     * @psalm-param TStorage $storage
+     * @psalm-param TAdapter $adapter
+     */
     public function __construct(
-        StorageInterface $storage,
-        AdapterInterface $adapter,
+        CompanyUserSession|UserSession $storage,
+        CompanyUserAdapter|UserAdapter $adapter,
     ) {
         $this->setStorage($storage);
         $this->setAdapter($adapter);
@@ -38,6 +49,8 @@ class AuthenticationService implements AuthenticationServiceInterface
 
     /**
      * Returns the authentication adapter.
+     *
+     * @psalm-return TAdapter
      */
     public function getAdapter(): CompanyUserAdapter|UserAdapter
     {
@@ -46,25 +59,20 @@ class AuthenticationService implements AuthenticationServiceInterface
 
     /**
      * Sets the authentication adapter.
+     *
+     * @psalm-param TAdapter $adapter
      */
-    public function setAdapter(AdapterInterface $adapter): self
+    public function setAdapter(CompanyUserAdapter|UserAdapter $adapter): self
     {
-        if (
-            $adapter instanceof CompanyUserAdapter
-            || $adapter instanceof UserAdapter
-        ) {
-            $this->adapter = $adapter;
+        $this->adapter = $adapter;
 
-            return $this;
-        }
-
-        throw new RuntimeException(
-            'AuthenticationService expects the authentication adapter to be of type CompanyUserAdapter or UserAdapter.'
-        );
+        return $this;
     }
 
     /**
      * Returns the persistent storage handler.
+     *
+     * @psalm-return TStorage
      */
     public function getStorage(): CompanyUserSession|UserSession
     {
@@ -73,21 +81,14 @@ class AuthenticationService implements AuthenticationServiceInterface
 
     /**
      * Sets the persistent storage handler.
+     *
+     * @psalm-param TStorage $storage
      */
-    public function setStorage(StorageInterface $storage): self
+    public function setStorage(CompanyUserSession|UserSession $storage): self
     {
-        if (
-            $storage instanceof CompanyUserSession
-            || $storage instanceof UserSession
-        ) {
-            $this->storage = $storage;
+        $this->storage = $storage;
 
-            return $this;
-        }
-
-        throw new RuntimeException(
-            'AuthenticationService expects the persistent storage handler to be of type CompanyUserSession or UserSession.'
-        );
+        return $this;
     }
 
     /**
@@ -132,8 +133,10 @@ class AuthenticationService implements AuthenticationServiceInterface
 
     /**
      * Returns the authenticated CompanyUser|User or null if no identity is available.
+     *
+     * @psalm-return (TAdapter is CompanyUserAdapter ? CompanyUser|null : User|null)
      */
-    public function getIdentity(): CompanyUserModel|UserModel|null
+    public function getIdentity(): ?IdentityInterface
     {
         if (!$this->hasIdentity()) {
             return null;

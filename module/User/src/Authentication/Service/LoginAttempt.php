@@ -2,6 +2,7 @@
 
 namespace User\Authentication\Service;
 
+use Application\Model\IdentityInterface;
 use DateInterval;
 use DateTime;
 use User\Mapper\{
@@ -10,9 +11,9 @@ use User\Mapper\{
     User as UserMapper,
 };
 use User\Model\{
+    User as UserModel,
     CompanyUser as CompanyUserModel,
     LoginAttempt as LoginAttemptModel,
-    User as UserModel,
 };
 
 class LoginAttempt
@@ -29,7 +30,7 @@ class LoginAttempt
     /**
      * Log a failed login attempt.
      */
-    public function logFailedLogin(UserModel|CompanyUserModel $user): void
+    public function logFailedLogin(IdentityInterface $user): void
     {
         $attempt = new LoginAttemptModel();
 
@@ -40,14 +41,14 @@ class LoginAttempt
 
         if ($user instanceof CompanyUserModel) {
             $attempt->setCompanyUser($user);
-        } else {
+        } elseif ($user instanceof UserModel) {
             $attempt->setUser($user);
         }
 
         $this->loginAttemptMapper->persist($attempt);
     }
 
-    public function detachUser(CompanyUserModel|UserModel $user): CompanyUserModel|UserModel|null
+    public function detachUser(IdentityInterface $user): ?IdentityInterface
     {
         /*
          * TODO: This probably shouldn't be neccessary
@@ -59,15 +60,17 @@ class LoginAttempt
 
         if ($user instanceof CompanyUserModel) {
             return $this->companyUserMapper->find($user->getId());
+        } elseif ($user instanceof UserModel) {
+            return $this->userMapper->find($user->getId());
         }
 
-        return $this->userMapper->find($user->getId());
+        return null;
     }
 
     /**
      * Check if there are too many login tries for a specific account.
      */
-    public function loginAttemptsExceeded(CompanyUserModel|UserModel $user): bool
+    public function loginAttemptsExceeded(IdentityInterface $user): bool
     {
         $ip = $this->remoteAddress;
         $since = (new DateTime())->sub(new DateInterval('PT' . $this->rateLimitConfig['lockout_time'] . 'M'));

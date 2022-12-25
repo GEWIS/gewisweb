@@ -194,9 +194,10 @@ class ActivityQuery
                     )
                 );
             }
-            $user = $this->aclService->getIdentityOrThrowException();
 
-            return $this->activityMapper->getUpcomingActivitiesForMember($user);
+            return $this->activityMapper->getUpcomingActivitiesForMember(
+                $this->aclService->getUserIdentityOrThrowException()
+            );
         }
 
         return $this->activityMapper->getUpcomingActivities(category: $category);

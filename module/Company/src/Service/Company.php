@@ -4,14 +4,10 @@ namespace Company\Service;
 
 use Application\Model\Enums\ApprovableStatus;
 use Application\Service\FileStorage;
-use Doctrine\ORM\{
-    NonUniqueResultException,
-    Exception\ORMException,
-};
 use Company\Form\{
-    JobCategory as EditCategoryForm,
     Company as CompanyForm,
     Job as EditJobForm,
+    JobCategory as EditCategoryForm,
     JobLabel as EditLabelForm,
     Package as EditPackageForm,
 };
@@ -26,18 +22,21 @@ use Company\Mapper\{
 };
 use Company\Model\{
     Company as CompanyModel,
-    CompanyFeaturedPackage as CompanyFeaturedPackageModel,
-    CompanyLocalisedText,
     CompanyBannerPackage as CompanyBannerPackageModel,
+    CompanyFeaturedPackage as CompanyFeaturedPackageModel,
     CompanyJobPackage as CompanyJobPackageModel,
+    CompanyLocalisedText,
     CompanyPackage as CompanyPackageModel,
     Job as JobModel,
     JobCategory as JobCategoryModel,
     JobLabel as JobLabelModel,
     Proposals\CompanyUpdate as CompanyUpdateProposal,
-    Proposals\JobUpdate as JobUpdateProposal
-};
+    Proposals\JobUpdate as JobUpdateProposal};
 use DateTime;
+use Doctrine\ORM\{
+    Exception\ORMException,
+    NonUniqueResultException,
+};
 use Exception;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
@@ -336,7 +335,7 @@ class Company
         if ($this->aclService->isAllowed('approve', 'company')) {
             $company->setApproved(ApprovableStatus::Approved);
             $company->setApprovedAt(new DateTime());
-            $company->setApprover($this->aclService->getIdentity());
+            $company->setApprover($this->aclService->getUserIdentityOrThrowException()->getMember());
         } else {
             $company->setApproved(ApprovableStatus::Unapproved);
         }
@@ -373,7 +372,7 @@ class Company
 
             $company->setApproved(ApprovableStatus::Approved);
             $company->setApprovedAt(new DateTime());
-            $company->setApprover($this->aclService->getIdentity());
+            $company->setApprover($this->aclService->getUserIdentityOrThrowException()->getMember());
 
             // Upload the logo of the company.
             if (!$this->uploadFile($company, $data['logo'])) {
@@ -623,7 +622,7 @@ class Company
         if ($this->aclService->isAllowed('approve', 'job')) {
             $job->setApproved(ApprovableStatus::Approved);
             $job->setApprovedAt(new DateTime());
-            $job->setApprover($this->aclService->getIdentity());
+            $job->setApprover($this->aclService->getUserIdentityOrThrowException()->getMember());
         } else {
             $job->setApproved(ApprovableStatus::Unapproved);
         }

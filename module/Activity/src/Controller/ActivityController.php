@@ -121,7 +121,7 @@ class ActivityController extends AbstractActionController
 
         $isSignedUp = false;
         if ($this->signupService->isAllowedToInternalSubscribe()) {
-            $identity = $this->aclService->getIdentityOrThrowException();
+            $identity = $this->aclService->getUserIdentityOrThrowException();
             $isSignedUp = $isAllowedToSubscribe
                 && $this->signupService->isSignedUp($signupList, $identity);
         }
@@ -283,7 +283,7 @@ class ActivityController extends AbstractActionController
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
             }
 
-            $identity = $this->aclService->getIdentityOrThrowException();
+            $identity = $this->aclService->getUserIdentityOrThrowException();
 
             // Check if the user is not already subscribed
             if ($this->signupService->isSignedUp($signupList, $identity)) {
@@ -442,7 +442,7 @@ class ActivityController extends AbstractActionController
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
             }
 
-            $identity = $this->aclService->getIdentityOrThrowException();
+            $identity = $this->aclService->getUserIdentityOrThrowException();
 
             // Check if the user is subscribed
             if (!$this->signupService->isSignedUp($signupList, $identity)) {

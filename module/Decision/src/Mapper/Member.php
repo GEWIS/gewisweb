@@ -10,7 +10,6 @@ use Decision\Model\{
 };
 use Doctrine\ORM\Query\{
     ResultSetMapping,
-    ResultSetMappingBuilder,
 };
 
 class Member extends BaseMapper

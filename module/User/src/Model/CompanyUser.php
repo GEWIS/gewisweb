@@ -2,6 +2,7 @@
 
 namespace User\Model;
 
+use Application\Model\IdentityInterface;
 use Company\Model\Company as CompanyModel;
 use Doctrine\ORM\Mapping\{Column,
     Entity,
@@ -9,17 +10,13 @@ use Doctrine\ORM\Mapping\{Column,
     JoinColumn,
     OneToOne,
 };
-use Laminas\Permissions\Acl\{
-    Resource\ResourceInterface,
-    Role\RoleInterface,
-};
 use User\Model\NewCompanyUser as NewCompanyUserModel;
 
 /**
  * CompanyUser model.
  */
 #[Entity]
-class CompanyUser implements RoleInterface, ResourceInterface
+class CompanyUser implements IdentityInterface
 {
     /**
      * The internal identifier for this company.

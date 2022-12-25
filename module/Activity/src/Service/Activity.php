@@ -58,7 +58,7 @@ class Activity
         }
 
         // Find the creator
-        $member = $this->aclService->getIdentityOrThrowException()->getMember();
+        $member = $this->aclService->getUserIdentityOrThrowException()->getMember();
 
         // Find the organ the activity belongs to, and see if the user has permission to create an activity
         // for this organ. If the id is 0, the activity belongs to no organ.
@@ -394,8 +394,12 @@ class Activity
         ActivityModel $currentActivity,
         array $data,
     ): bool {
+        if (!$this->aclService->isAllowed('create', 'activity_calendar_proposal')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to create a proposal'));
+        }
+
         // Find the creator
-        $member = $this->aclService->getIdentityOrThrowException()->getMember();
+        $member = $this->aclService->getUserIdentityOrThrowException()->getMember();
 
         // Find the organ the activity belongs to, and see if the user has permission to create an activity
         // for this organ. If the id is 0, the activity belongs to no organ.
@@ -718,7 +722,7 @@ class Activity
         }
 
         $activity->setStatus(ActivityModel::STATUS_APPROVED);
-        $activity->setApprover($this->aclService->getIdentity()->getMember());
+        $activity->setApprover($this->aclService->getUserIdentityOrThrowException()->getMember());
         $em = $this->entityManager;
         $em->persist($activity);
         $em->flush();
@@ -754,7 +758,7 @@ class Activity
         }
 
         $activity->setStatus(ActivityModel::STATUS_DISAPPROVED);
-        $activity->setApprover($this->aclService->getIdentity()->getMember());
+        $activity->setApprover($this->aclService->getUserIdentityOrThrowException()->getMember());
         $em = $this->entityManager;
         $em->persist($activity);
         $em->flush();

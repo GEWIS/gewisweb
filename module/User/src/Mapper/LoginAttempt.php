@@ -3,6 +3,7 @@
 namespace User\Mapper;
 
 use Application\Mapper\BaseMapper;
+use Application\Model\IdentityInterface;
 use DateTime;
 use User\Model\{
     CompanyUser as CompanyUserModel,
@@ -15,7 +16,7 @@ class LoginAttempt extends BaseMapper
     public function getFailedAttemptCount(
         DateTime $since,
         string $ip,
-        CompanyUserModel|UserModel|null $user = null,
+        ?IdentityInterface $user = null,
     ): int|string {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('count(a.id)')

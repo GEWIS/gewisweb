@@ -290,7 +290,11 @@ class User
             return null;
         }
 
-        return $this->userAuthService->getIdentity();
+        $identity = $this->userAuthService->getIdentity();
+        if ($identity instanceof UserModel) {
+            return $identity;
+        }
+        return null;
     }
 
     /**
@@ -309,7 +313,11 @@ class User
             return null;
         }
 
-        return $this->companyUserAuthService->getIdentity();
+        $identity = $this->userAuthService->getIdentity();
+        if ($identity instanceof CompanyUserModel) {
+            return $identity;
+        }
+        return null;
     }
 
     /**

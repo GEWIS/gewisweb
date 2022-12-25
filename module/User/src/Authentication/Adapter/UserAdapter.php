@@ -8,7 +8,6 @@ use Laminas\Authentication\Result;
 use Laminas\Crypt\Password\Bcrypt;
 use RuntimeException;
 use User\Mapper\User as UserMapper;
-use User\Model\LoginAttempt as LoginAttemptModel;
 use User\Authentication\Service\LoginAttempt as LoginAttemptService;
 
 class UserAdapter implements AdapterInterface

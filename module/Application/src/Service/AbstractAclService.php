@@ -2,6 +2,7 @@
 
 namespace Application\Service;
 
+use Application\Model\IdentityInterface;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\Permissions\Acl\Role\RoleInterface;
@@ -39,5 +40,28 @@ abstract class AbstractAclService
             $resource,
             $operation
         );
+    }
+
+    /**
+     * Gets the user identity if logged in or null otherwise
+     *
+     * @return IdentityInterface|null the current logged in user
+     */
+    abstract public function getIdentity(): ?IdentityInterface;
+
+    /**
+     * Checks whether the user is logged in
+     *
+     * @return bool true if the user is logged in, false otherwise
+     */
+    public function hasIdentity(): bool
+    {
+        $identity = $this->getIdentity();
+
+        if ($identity === null) {
+            return false;
+        }
+
+        return true;
     }
 }

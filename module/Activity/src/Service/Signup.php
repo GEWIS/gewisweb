@@ -169,7 +169,7 @@ class Signup
             );
         }
 
-        $user = $this->aclService->getIdentityOrThrowException()->getMember();
+        $user = $this->aclService->getUserIdentityOrThrowException()->getMember();
         $signup = new UserSignupModel();
         $signup->setUser($user);
 

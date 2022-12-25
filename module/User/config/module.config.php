@@ -10,13 +10,11 @@ use Laminas\Router\Http\{
 use User\Controller\{
     ApiAdminController,
     ApiAuthenticationController,
-    ApiController,
     UserController,
 };
 use User\Controller\Factory\{
     ApiAdminControllerFactory,
     ApiAuthenticationControllerFactory,
-    ApiControllerFactory,
     UserControllerFactory,
 };
 
@@ -166,24 +164,12 @@ return [
                 ],
                 'priority' => 100,
             ],
-            'validate_login' => [
-                'type' => Segment::class,
-                'options' => [
-                    'route' => '/api/validateLogin',
-                    'defaults' => [
-                        'controller' => ApiController::class,
-                        'action' => 'validate',
-                    ],
-                ],
-                'priority' => 100,
-            ],
         ],
     ],
     'controllers' => [
         'factories' => [
             ApiAdminController::class => ApiAdminControllerFactory::class,
             ApiAuthenticationController::class => ApiAuthenticationControllerFactory::class,
-            ApiController::class => ApiControllerFactory::class,
             UserController::class => UserControllerFactory::class,
         ],
     ],

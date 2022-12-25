@@ -2,21 +2,18 @@
 
 namespace User\Model;
 
+use Application\Model\IdentityInterface;
 use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-};
-use Laminas\Permissions\Acl\{
-    Resource\ResourceInterface,
-    Role\RoleInterface,
 };
 
 /**
  * User model.
  */
 #[Entity]
-class ApiUser implements RoleInterface, ResourceInterface
+class ApiUser implements IdentityInterface
 {
     use IdentifiableTrait;
 

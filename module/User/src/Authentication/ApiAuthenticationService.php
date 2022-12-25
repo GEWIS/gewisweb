@@ -20,7 +20,7 @@ class ApiAuthenticationService implements AuthenticationServiceInterface
      */
     private ?ApiUser $identity = null;
 
-    public function __construct(AdapterInterface $adapter)
+    public function __construct(ApiUserAdapter $adapter)
     {
         $this->setAdapter($adapter);
     }
@@ -36,17 +36,11 @@ class ApiAuthenticationService implements AuthenticationServiceInterface
     /**
      * Sets the authentication adapter.
      */
-    public function setAdapter(AdapterInterface $adapter): self
+    public function setAdapter(ApiUserAdapter $adapter): self
     {
-        if ($adapter instanceof ApiUserAdapter) {
-            $this->adapter = $adapter;
+        $this->adapter = $adapter;
 
-            return $this;
-        }
-
-        throw new RuntimeException(
-            'ApiAuthenticationService expects the authentication adapter to be of type ApiUserAdapter.'
-        );
+        return $this;
     }
 
     /**

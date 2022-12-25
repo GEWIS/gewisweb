@@ -41,6 +41,7 @@ class CompanyAccountController extends AbstractActionController
      *
      * @param AclService $aclService
      * @param Translator $translator
+     * @param JobPackageMapper $jobPackageMapper
      * @param CompanyService $companyService
      */
     public function __construct(
@@ -91,7 +92,7 @@ class CompanyAccountController extends AbstractActionController
             ApprovableStatus::Approved->value => [],
             ApprovableStatus::Rejected->value => [],
         ];
-        $company = $this->aclService->getIdentity()->getCompany();
+        $company = $this->aclService->getCompanyUserIdentityOrThrowException()->getCompany();
 
         // `packageId` is an optional part of the route and can be used to display jobs specific to that job package. It
         // is null of it was not specified.
@@ -147,7 +148,7 @@ class CompanyAccountController extends AbstractActionController
 
         // Get the specified package and company user (through ACL, as it is already included).
         $package = $this->jobPackageMapper->find($packageId);
-        $companySlugName = $this->aclService->getIdentity()->getCompany()->getSlugName();
+        $companySlugName = $this->aclService->getCompanyUserIdentityOrThrowException()->getCompany()->getSlugName();
 
         // Check if the package exists and if it belongs to the company of the company user.
         if (

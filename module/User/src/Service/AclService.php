@@ -7,8 +7,13 @@ use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
 use Laminas\Permissions\Acl\Role\GenericRole as Role;
 use User\Authentication\{
+    Adapter\CompanyUserAdapter,
+    Adapter\UserAdapter,
     ApiAuthenticationService,
-    AuthenticationService,
+    AuthenticationService as CompanyUserAuthenticationService,
+    AuthenticationService as UserAuthenticationService,
+    Storage\CompanyUserSession,
+    Storage\UserSession,
 };
 use User\Authorization\GenericAclService;
 
@@ -17,17 +22,13 @@ class AclService extends GenericAclService
     protected Acl $acl;
 
     /**
-     * @param Translator $translator
-     * @param AuthenticationService $userAuthService
-     * @param AuthenticationService $companyUserAuthService
-     * @param ApiAuthenticationService $apiUserAuthService
-     * @param array $tueRanges
-     * @param string $remoteAddress
+     * @psalm-param UserAuthenticationService<UserSession, UserAdapter> $userAuthService
+     * @psalm-param CompanyUserAuthenticationService<CompanyUserSession, CompanyUserAdapter> $companyUserAuthService
      */
     public function __construct(
         Translator $translator,
-        AuthenticationService $userAuthService,
-        AuthenticationService $companyUserAuthService,
+        UserAuthenticationService $userAuthService,
+        CompanyUserAuthenticationService $companyUserAuthService,
         ApiAuthenticationService $apiUserAuthService,
         array $tueRanges,
         string $remoteAddress,

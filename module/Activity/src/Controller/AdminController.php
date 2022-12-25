@@ -423,7 +423,7 @@ class AdminController extends AbstractActionController
             $approvedActivities = $this->activityQueryService->getApprovedActivities();
         }
 
-        $identity = $this->aclService->getIdentityOrThrowException();
+        $identity = $this->aclService->getUserIdentityOrThrowException();
         $paginator = new Paginator($this->activityQueryService->getOldCreatedActivitiesPaginator($identity));
         $paginator->setDefaultItemCountPerPage(15);
         $page = $this->params()->fromRoute('page');
