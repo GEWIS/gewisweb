@@ -56,17 +56,14 @@ class NewUser extends BaseMapper
      * Delete the existing activation code for a member.
      *
      * @param MemberModel $member
-     *
-     * @return int
      */
-    public function deleteByMember(MemberModel $member): int
+    public function deleteByMember(MemberModel $member): void
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->delete($this->getRepositoryName(), 'u');
-        $qb->where('u.member = :member');
-        $qb->setParameter('member', $member);
-
-        return $qb->getQuery()->getResult();
+        $qb->delete($this->getRepositoryName(), 'u')
+            ->where('u.member = :member')
+            ->setParameter('member', $member);
+        $qb->getQuery()->execute();
     }
 
     /**

@@ -34,17 +34,14 @@ class NewCompanyUser extends BaseMapper
      * Delete the existing activation code for a company.
      *
      * @param CompanyModel $company
-     *
-     * @return int
      */
-    public function deleteByCompany(CompanyModel $company): int
+    public function deleteByCompany(CompanyModel $company): void
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->delete($this->getRepositoryName(), 'u');
-        $qb->where('u.company = :company');
-        $qb->setParameter('company', $company);
-
-        return $qb->getQuery()->getResult();
+        $qb->delete($this->getRepositoryName(), 'u')
+            ->where('u.company = :company')
+            ->setParameter('company', $company);
+        $qb->getQuery()->execute();
     }
 
     /**
