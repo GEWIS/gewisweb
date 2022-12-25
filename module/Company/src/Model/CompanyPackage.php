@@ -36,6 +36,15 @@ abstract class CompanyPackage
     use IdentifiableTrait;
 
     /**
+     * An alphanumeric strings which identifies to which contract this package belongs.
+     */
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $contractNumber = null;
+
+    /**
      * The package's starting date.
      */
     #[Column(type: "date")]
@@ -64,6 +73,22 @@ abstract class CompanyPackage
 
     public function __construct()
     {
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getContractNumber(): ?string
+    {
+        return $this->contractNumber;
+    }
+
+    /**
+     * @param string|null $contractNumber
+     */
+    public function setContractNumber(?string $contractNumber): void
+    {
+        $this->contractNumber = $contractNumber;
     }
 
     /**
@@ -203,6 +228,7 @@ abstract class CompanyPackage
     public function toArray(): array
     {
         return [
+            'contractNumber' => $this->getContractNumber(),
             'startDate' => $this->getStartingDate()->format('Y-m-d'),
             'expirationDate' => $this->getExpirationDate()->format('Y-m-d'),
             'published' => $this->isPublished(),
@@ -216,6 +242,7 @@ abstract class CompanyPackage
      */
     public function exchangeArray(array $data): void
     {
+        $this->setContractNumber($data['contractNumber']);
         $this->setStartingDate(
             (isset($data['startDate'])) ? new DateTime($data['startDate']) : $this->getStartingDate()
         );

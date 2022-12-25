@@ -8,15 +8,18 @@ use Laminas\Form\Element\{
     Date,
     File,
     Submit,
+    Text,
     Textarea,
 };
 use Laminas\Validator\{
     Date as DateValidator,
     StringLength,
 };
+use Laminas\I18n\Validator\Alnum;
 use Laminas\Filter\{
     StringTrim,
     StripTags,
+    ToNull,
 };
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
@@ -67,6 +70,16 @@ class Package extends LocalisableForm implements InputFilterProviderInterface
                     'value_options' => [
                         '0' => 'Enabled',
                     ],
+                ],
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'contractNumber',
+                'type' => Text::class,
+                'options' => [
+                    'label' => $translator->translate('Contract Number'),
                 ],
             ]
         );
@@ -154,6 +167,22 @@ class Package extends LocalisableForm implements InputFilterProviderInterface
                     ],
                     [
                         'name' => StringTrim::class,
+                    ],
+                ],
+            ],
+            'contractNumber' => [
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => Alnum::class,
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                    [
+                        'name' => ToNull::class,
                     ],
                 ],
             ],

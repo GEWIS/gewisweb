@@ -85,6 +85,9 @@ $form->setAttribute('class', 'form-company');
                         <thead>
                         <tr>
                             <th>
+                                <?= $this->translate('Contract Number') ?>
+                            </th>
+                            <th>
                                 <?= $this->translate('Active'); ?>
                             </th>
                             <th>
@@ -103,6 +106,9 @@ $form->setAttribute('class', 'form-company');
                         </thead>
                         <?php foreach ($company->getPackages() as $package): ?>
                             <tr>
+                                <td>
+                                    <?= $package->getContractNumber() ?? '-' ?>
+                                </td>
                                 <td>
                                     <?= $package->isActive() ? $this->translate('Yes') : $this->translate('No') ?>
                                 </td>

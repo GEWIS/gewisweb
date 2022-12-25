@@ -3,29 +3,49 @@
         <h2><?= $this->translate('Information') ?></h2>
     </div>
     <div class="col-md-6">
-        <?php
-        $startDate = $form->get('startDate')
-            ->setAttribute('class', 'form-control')
-            ->setAttribute('id', 'start-date');
-        ?>
-        <div class="form-group <?= $this->bootstrapElementError($startDate) ?>">
-            <label for="<?= $startDate->getAttribute('id') ?>" class="control-label label-required">
-                <?= $startDate->getLabel() ?>
-            </label>
-            <?= $this->formDate($startDate) ?>
-            <?= $this->formElementErrors($startDate) ?>
-        </div>
-        <?php
-        $expirationDate = $form->get('expirationDate')
-            ->setAttribute('class', 'form-control')
-            ->setAttribute('id', 'expiration-date');
-        ?>
-        <div class="form-group <?= $this->bootstrapElementError($expirationDate) ?>">
-            <label for="<?= $expirationDate->getAttribute('id') ?>" class="control-label label-required">
-                <?= $expirationDate->getLabel() ?>
-            </label>
-            <?= $this->formDate($expirationDate) ?>
-            <?= $this->formElementErrors($expirationDate) ?>
+        <div class="row">
+            <div class="col-md-6">
+                <?php
+                $startDate = $form->get('startDate')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'start-date');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($startDate) ?>">
+                    <label for="<?= $startDate->getAttribute('id') ?>" class="control-label label-required">
+                        <?= $startDate->getLabel() ?>
+                    </label>
+                    <?= $this->formDate($startDate) ?>
+                    <?= $this->formElementErrors($startDate) ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <?php
+                $expirationDate = $form->get('expirationDate')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'expiration-date');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($expirationDate) ?>">
+                    <label for="<?= $expirationDate->getAttribute('id') ?>" class="control-label label-required">
+                        <?= $expirationDate->getLabel() ?>
+                    </label>
+                    <?= $this->formDate($expirationDate) ?>
+                    <?= $this->formElementErrors($expirationDate) ?>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <?php
+                $contractNumber = $form->get('contractNumber')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'contract-number');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($contractNumber) ?>">
+                    <label for="<?= $contractNumber->getAttribute('id') ?>" class="control-label">
+                        <?= $contractNumber->getLabel() ?>
+                    </label>
+                    <?= $this->formText($contractNumber) ?>
+                    <?= $this->formElementErrors($contractNumber) ?>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-md-6">
