@@ -33,7 +33,9 @@
     </TypeDoesNotContainNull>
   </file>
   <file src="module/Application/test/BaseControllerTest.php">
-    <InvalidArgument occurrences="2">
+    <InvalidArgument occurrences="4">
+      <code>[[$this::COMPANY_ID], $this-&gt;company]</code>
+      <code>[[$this::COMPANY_ID], $this-&gt;companyUser]</code>
       <code>[[$this::LIDNR], $this-&gt;member]</code>
       <code>[[$this::LIDNR], $this-&gt;user]</code>
     </InvalidArgument>

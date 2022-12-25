@@ -55,12 +55,12 @@ class PhotoController extends AbstractActionController
         $albums = $this->albumService->getAlbumsByYear($year);
 
         // If the membership of the member has ended, only show albums before the end date or in which they are tagged
-        if (null !== ($membershipEndsOn = $this->aclService->getIdentity()->getMember()->getMembershipEndsOn())) {
+        if (null !== ($membershipEndsOn = $this->aclService->getUserIdentity()->getMember()->getMembershipEndsOn())) {
             $member_album_ids = array_map(
                 function ($a) {
                     return $a['album_id'];
                 },
-                $this->albumService->getAlbumsByMember($this->aclService->getIdentity()->getMember()->getLidnr()),
+                $this->albumService->getAlbumsByMember($this->aclService->getUserIdentity()->getMember()->getLidnr()),
             );
             $albums = array_filter(
                 $albums,

@@ -23,7 +23,9 @@ trait IdentifiableTrait
     protected ?int $id = null;
 
     /**
-     * @return int|null
+     * Get the identifier of the object.
+     *
+     * @psalm-ignore-nullable-return
      */
     public function getId(): ?int
     {
@@ -32,8 +34,6 @@ trait IdentifiableTrait
 
     /**
      * Setting the identifier manually will, in most instances, result in undefined behaviour. Use with caution!
-     *
-     * @param int|null $id
      */
     public function setId(?int $id): void
     {

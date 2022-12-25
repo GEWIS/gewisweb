@@ -220,7 +220,7 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
             $this->setUpMockNewCompanyUser();
             $this->setUpMockCompanyUser();
 
-            $this->companyMapper->method('find')->willReturnMap([[$this::COMPANY_ID], $this->companyUser]);
+            $this->companyMapper->method('find')->willReturnMap([[$this::COMPANY_ID], $this->company]);
             $this->companyUserMapper->method('find')->willReturnMap([[$this::COMPANY_ID], $this->companyUser]);
 
             return $this->companyUser;

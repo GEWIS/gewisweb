@@ -190,7 +190,7 @@ class UserSession extends SessionStorage
     /**
      * Get the private key to use for JWT.
      */
-    protected function getPrivateKey(): bool|string
+    protected function getPrivateKey(): false|string
     {
         if (!is_readable($this->config['jwt_key_path'])) {
             return false;
@@ -202,7 +202,7 @@ class UserSession extends SessionStorage
     /**
      * Get the public key to use for JWT.
      */
-    protected function getPublicKey(): bool|string
+    protected function getPublicKey(): false|string
     {
         if (!is_readable($this->config['jwt_pub_key_path'])) {
             return false;
