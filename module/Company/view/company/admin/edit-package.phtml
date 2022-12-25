@@ -61,9 +61,10 @@ $form->setAttribute('class', 'form-company');
     <table class="table table-striped">
         <thead>
             <tr>
-                <th><?= $this->translate('Name'); ?></th>
-                <th><?= $this->translate('Active'); ?></th>
-                <th><?= $this->translate('Actions'); ?></th>
+                <th><?= $this->translate('Name') ?></th>
+                <th><?= $this->translate('Active') ?></th>
+                <th><?= $this->translate('Approved') ?></th>
+                <th><?= $this->translate('Actions') ?></th>
             </tr>
         </thead>
         <?php foreach ($package->getJobs() as $job): ?>
@@ -71,6 +72,21 @@ $form->setAttribute('class', 'form-company');
                 <td><?= $this->escapeHtml($this->localiseText($job->getName())) ?></td>
                 <td><?= $job->isActive() ? $this->translate('Yes') : $this->translate('No') ?></td>
                 <td>
+                    <?php $icons = ['fa-circle-question', 'fa-circle-check', 'fa-circle-xmark'] ?>
+                    <span class="fas <?= $icons[$job->getApproved()->value] ?>"></span>&nbsp;
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-xs"
+                       href="<?= $this->url(
+                           'company_admin/company/edit/package/edit/job/approval',
+                           [
+                               'companySlugName' => $companySlugName,
+                               'packageId' => $package->getId(),
+                               'jobId' => $job->getId(),
+                           ],
+                       ) ?>">
+                        <?= $this->translate('Details') ?>
+                    </a>
                     <a class="btn btn-xs btn-primary"
                        href="<?= $this->url(
                            'company_admin/company/edit/package/edit/job/edit',
@@ -80,7 +96,7 @@ $form->setAttribute('class', 'form-company');
                                'jobId' => $job->getId(),
                            ]
                        ); ?>">
-                        <?= $this->translate('edit'); ?>
+                        <?= $this->translate('Edit') ?>
                     </a>
                     <button class="btn btn-danger btn-xs delete-job" data-target="#deleteModal"
                             data-job-id="<?= $job->getId() ?>" data-toggle="modal" type="button">

@@ -4,15 +4,15 @@ namespace Company;
 
 use Application\View\Helper\Truncate;
 use Company\Controller\{
+    AdminApprovalController,
     AdminController,
     CompanyAccountController,
-CompanyController,
-};
+    CompanyController};
 use Company\Controller\Factory\{
+    AdminApprovalControllerFactory,
     AdminControllerFactory,
     CompanyAccountControllerFactory,
-    CompanyControllerFactory,
-};
+    CompanyControllerFactory};
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Router\Http\{
     Literal,
@@ -187,6 +187,24 @@ return [
                             ],
                         ],
                     ],
+                    'highlights' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/highlights',
+                            'defaults' => [
+                                'action' => 'highlights',
+                            ],
+                        ],
+                    ],
+                    'banner' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/banner',
+                            'defaults' => [
+                                'action' => 'banner',
+                            ],
+                        ],
+                    ],
                     'settings' => [
                         'type' => Literal::class,
                         'options' => [
@@ -279,7 +297,7 @@ return [
                                                         'action' => 'deletePackage',
                                                     ],
                                                     'constraints' => [
-                                                        'packageId' => '[0-9]+',
+                                                        'packageId' => '\d+',
                                                     ],
                                                 ],
                                             ],
@@ -291,7 +309,7 @@ return [
                                                         'action' => 'editPackage',
                                                     ],
                                                     'constraints' => [
-                                                        'packageId' => '[0-9]+',
+                                                        'packageId' => '\d+',
                                                     ],
                                                 ],
                                                 'may_terminate' => true,
@@ -320,7 +338,7 @@ return [
                                                                         'action' => 'deleteJob',
                                                                     ],
                                                                     'constraints' => [
-                                                                        'jobId' => '[0-9]+',
+                                                                        'jobId' => '\d+',
                                                                     ],
                                                                 ],
                                                             ],
@@ -332,7 +350,35 @@ return [
                                                                         'action' => 'editJob',
                                                                     ],
                                                                     'constraints' => [
-                                                                        'jobId' => '[0-9]+',
+                                                                        'jobId' => '\d+',
+                                                                    ],
+                                                                ],
+                                                            ],
+                                                            'approval' => [
+                                                                'type' => Segment::class,
+                                                                'options' => [
+                                                                    'route' => '/approval/:jobId',
+                                                                    'defaults' => [
+                                                                        'controller' => AdminApprovalController::class,
+                                                                        'action' => 'jobApproval',
+                                                                    ],
+                                                                    'constraints' => [
+                                                                        'jobId' => '\d+',
+                                                                    ],
+                                                                ],
+                                                                'may_terminate' => true,
+                                                                'child_routes' => [
+                                                                    'update' => [
+                                                                        'type' => Segment::class,
+                                                                        'options' => [
+                                                                            'route' => '/:type',
+                                                                            'defaults' => [
+                                                                                'action' => 'changeJobApprovalStatus',
+                                                                            ],
+                                                                        ],
+                                                                        'constraints' => [
+                                                                            'type' => '(approve|disapprove|reset)',
+                                                                        ],
                                                                     ],
                                                                 ],
                                                             ],
@@ -421,6 +467,7 @@ return [
     'controllers' => [
         'factories' => [
             AdminController::class => AdminControllerFactory::class,
+            AdminApprovalController::class => AdminApprovalControllerFactory::class,
             CompanyAccountController::class => CompanyAccountControllerFactory::class,
             CompanyController::class => CompanyControllerFactory::class,
         ],

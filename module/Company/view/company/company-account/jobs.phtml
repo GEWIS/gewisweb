@@ -25,6 +25,9 @@ $this->headTitle($this->translate('Jobs'));
                                     <?= $this->translate('Expiration date'); ?>
                                 </th>
                                 <th>
+                                    <?= $this->translate('Jobs (Active)'); ?>
+                                </th>
+                                <th>
                                     <?= $this->translate('Actions'); ?>
                                 </th>
                             </tr>
@@ -40,6 +43,9 @@ $this->headTitle($this->translate('Jobs'));
                                     </td>
                                     <td>
                                         <?= $package->getExpirationDate()->format('d-m-Y') ?>
+                                    </td>
+                                    <td>
+                                        <?= sprintf('%d (%d)', $package->getJobs()->count(), $package->getNumberOfActiveJobs()) ?>
                                     </td>
                                     <td>
                                         <a class="btn btn-xs btn-primary" href="<?= $this->url(

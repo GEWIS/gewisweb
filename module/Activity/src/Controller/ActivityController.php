@@ -2,8 +2,8 @@
 
 namespace Activity\Controller;
 
+use Application\Form\ModifyRequest as RequestForm;
 use Activity\Form\{
-    ModifyRequest as RequestForm,
     Signup as SignupForm,
 };
 use Activity\Model\{

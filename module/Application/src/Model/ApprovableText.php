@@ -19,6 +19,11 @@ class ApprovableText
     #[Column(type: "string")]
     protected string $message;
 
+    public function __construct(string $message)
+    {
+        $this->message = $message;
+    }
+
     /**
      * @return string
      */

@@ -2,6 +2,7 @@
 
 namespace Company\Service;
 
+use Application\Model\ApprovableText as ApprovableTextModel;
 use Application\Model\Enums\ApprovableStatus;
 use Application\Service\FileStorage;
 use Company\Form\{
@@ -954,5 +955,32 @@ class Company
         }
 
         return $this->companyForm;
+    }
+
+    public function setJobApproval(
+        JobModel $job,
+        ApprovableStatus $status,
+        string $message,
+    ): void {
+        $job->setApproved($status);
+        $job->setApprovedAt(new DateTime());
+        $job->setApprover($this->aclService->getUserIdentityOrThrowException()->getMember());
+
+        $message = trim($message);
+        $message = ("" === $message) ? null : new ApprovableTextModel($message);
+        $job->setApprovableText($message);
+
+        $this->jobMapper->flush();
+    }
+
+    public function resetJobApproval(JobModel $job): void
+    {
+        $job->setApproved(ApprovableStatus::Unapproved);
+        $job->setApprovedAt(null);
+        $job->setApprover(null);
+        // Orphans are automatically deleted, so we do not have to check if there is an actual approvable text.
+        $job->setApprovableText(null);
+
+        $this->jobMapper->flush();
     }
 }

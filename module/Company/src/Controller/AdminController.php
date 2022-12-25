@@ -437,6 +437,10 @@ class AdminController extends AbstractActionController
             // Check if data is valid, and insert when it is
             if ($jobForm->isValid()) {
                 if (false !== $this->companyService->createJob($package, $jobForm->getData())) {
+                    $this->plugin('FlashMessenger')->addSuccessMessage(
+                        $this->translator->translate('Job successfully created!')
+                    );
+
                     return $this->redirect()->toRoute(
                         'company_admin/company/edit/package/edit',
                         [
@@ -512,6 +516,10 @@ class AdminController extends AbstractActionController
 
             if ($jobForm->isValid()) {
                 if ($this->companyService->updateJob($job, $jobForm->getData())) {
+                    $this->plugin('FlashMessenger')->addSuccessMessage(
+                        $this->translator->translate('Job successfully edited!')
+                    );
+
                     return $this->redirect()->toRoute(
                         'company_admin/company/edit/package/edit',
                         [
@@ -605,9 +613,13 @@ class AdminController extends AbstractActionController
                 $jobCategory = $this->companyService->createJobCategory($categoryForm->getData());
 
                 if (is_object($jobCategory)) {
+                    $this->plugin('FlashMessenger')->addSuccessMessage(
+                        $this->translator->translate('Job category successfully created!')
+                    );
+
                     // Redirect to edit page
                     return $this->redirect()->toRoute(
-                        'company_admin/category/edit',
+                        'company_admin/categories/edit',
                         [
                             'jobCategoryId' => $jobCategory->getId(),
                         ],
@@ -621,7 +633,7 @@ class AdminController extends AbstractActionController
         // Initialize the form
         $categoryForm->setAttribute(
             'action',
-            $this->url()->fromRoute('company_admin/category/add'),
+            $this->url()->fromRoute('company_admin/categories/add'),
         );
         // Initialize the view
         return new ViewModel(
@@ -695,9 +707,13 @@ class AdminController extends AbstractActionController
                 $jobLabel = $this->companyService->createJobLabel($labelForm->getData());
 
                 if (is_object($jobLabel)) {
+                    $this->plugin('FlashMessenger')->addSuccessMessage(
+                        $this->translator->translate('Job label successfully created!')
+                    );
+
                     // Redirect to edit page
                     return $this->redirect()->toRoute(
-                        'company_admin/label/edit',
+                        'company_admin/labels/edit',
                         [
                             'jobLabelId' => $jobLabel->getId(),
                         ],
@@ -709,7 +725,7 @@ class AdminController extends AbstractActionController
         // Initialize the form
         $labelForm->setAttribute(
             'action',
-            $this->url()->fromRoute('company_admin/label/add'),
+            $this->url()->fromRoute('company_admin/labels/add'),
         );
 
         // Initialize the view

@@ -2,6 +2,7 @@
 
 namespace Company\Service;
 
+use Application\Model\Enums\ApprovableStatus;
 use Company\Mapper\{
     Category as CategoryMapper,
     Job as JobMapper,
@@ -89,7 +90,7 @@ class CompanyQuery
         );
 
         return array_filter($jobList, function ($job) {
-            return $job->isActive();
+            return $job->isActive() && $job->isApproved();
         });
     }
 

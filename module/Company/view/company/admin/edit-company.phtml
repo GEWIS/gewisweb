@@ -95,7 +95,7 @@ $form->setAttribute('class', 'form-company');
                         <?= $this->translate('Expiration date'); ?>
                     </th>
                     <th>
-                        <?= $this->translate('Jobs / Type'); ?>
+                        <?= $this->translate('Jobs (Active) / Type'); ?>
                     </th>
                     <th>
                         <?= $this->translate('Actions'); ?>
@@ -123,7 +123,7 @@ $form->setAttribute('class', 'form-company');
                                 if ($package->getType() == 'featured') {
                                     echo $this->translate('Featured Package');
                                 } else {
-                                    echo $package->getJobs()->count();
+                                    echo sprintf('%d (%d)', $package->getJobs()->count(), $package->getNumberOfActiveJobs());
                                 }
                             } ?>
                         </td>

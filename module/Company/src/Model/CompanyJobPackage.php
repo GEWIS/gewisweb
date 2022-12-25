@@ -2,6 +2,7 @@
 
 namespace Company\Model;
 
+use Application\Model\Enums\ApprovableStatus;
 use Company\Model\JobCategory as JobCategoryModel;
 use Doctrine\Common\Collections\{
     ArrayCollection,
@@ -67,10 +68,10 @@ class CompanyJobPackage extends CompanyPackage
     {
         $filter = function ($job) use ($category) {
             if (null === $category) {
-                return $job->isActive();
+                return $job->isActive() && $job->isApproved();
             }
 
-            return $job->getCategory() === $category && $job->isActive();
+            return $job->getCategory() === $category && $job->isActive() && $job->isApproved();
         };
 
         return array_filter($this->jobs->toArray(), $filter);

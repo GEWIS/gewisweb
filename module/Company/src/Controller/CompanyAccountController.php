@@ -172,6 +172,10 @@ class CompanyAccountController extends AbstractActionController
 
             if ($jobForm->isValid()) {
                 if (false !== $this->companyService->createJob($package, $jobForm->getData())) {
+                    $this->plugin('FlashMessenger')->addSuccessMessage(
+                        $this->translator->translate('Job proposal successfully created! It will become active after it has been approved.')
+                    );
+
                     return $this->redirect()->toRoute(
                         'company_account/jobs',
                         [
@@ -228,6 +232,16 @@ class CompanyAccountController extends AbstractActionController
             );
         }
 
+        return new ViewModel([]);
+    }
+
+    public function highlightsAction(): ViewModel
+    {
+        return new ViewModel([]);
+    }
+
+    public function bannerAction(): ViewModel
+    {
         return new ViewModel([]);
     }
 }

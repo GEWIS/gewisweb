@@ -51,6 +51,7 @@ trait ApprovableTrait
      */
     #[OneToOne(
         targetEntity: ApprovableTextModel::class,
+        cascade: ["persist", "remove"],
         fetch: "EXTRA_LAZY",
         orphanRemoval: true,
     )]
@@ -67,6 +68,14 @@ trait ApprovableTrait
     public function getApproved(): ApprovableStatus
     {
         return $this->approved;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isApproved(): bool
+    {
+        return ApprovableStatus::Approved === $this->getApproved();
     }
 
     /**
@@ -110,17 +119,17 @@ trait ApprovableTrait
     }
 
     /**
-     * @return ApprovableTextModel
+     * @return ApprovableTextModel|null
      */
-    public function getApprovableText(): ApprovableTextModel
+    public function getApprovableText(): ?ApprovableTextModel
     {
         return $this->approvableText;
     }
 
     /**
-     * @param ApprovableTextModel $approvableText
+     * @param ApprovableTextModel|null $approvableText
      */
-    public function setApprovableText(ApprovableTextModel $approvableText): void
+    public function setApprovableText(?ApprovableTextModel $approvableText): void
     {
         $this->approvableText = $approvableText;
     }

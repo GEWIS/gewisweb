@@ -277,7 +277,8 @@ class Job implements ResourceInterface
 
     public function isActive(): bool
     {
-        return $this->isPublished()
+        return $this->isApproved()
+            && $this->isPublished()
             && $this->getPackage()->isActive()
             && !$this->getPackage()->getCompany()->isHidden();
     }

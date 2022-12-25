@@ -5,14 +5,14 @@
                 <strong><?= $this->translate('Name') ?></strong>
             </div>
             <div class="col-md-5">
-                <span class="activity-property">
+                <span class="approvable-property">
                     <span class="flag-icon flag-icon-nl"></span>
                     <strong><?= $this->translate('Name') ?>:</strong>
                 </span>
                 <?= $this->escapeHtml($signupList->getName()->getValueNL()) ?>
             </div>
             <div class="col-md-5">
-                <span class="activity-property">
+                <span class="approvable-property">
                     <span class="flag-icon flag-icon-en"></span>
                     <strong><?= $this->translate('Name') ?>:</strong>
                 </span>
@@ -89,14 +89,14 @@
                         <strong><?= $this->translate('Name') ?></strong>
                     </div>
                     <div class="col-md-5">
-                        <span class="activity-property">
+                        <span class="approvable-property">
                             <span class="flag-icon flag-icon-nl"></span>
                             <strong><?= $this->translate('Name') ?>:</strong>
                         </span>
                         <?= $this->escapeHtml($field->getName()->getValueNL()) ?>
                     </div>
                     <div class="col-md-5">
-                        <span class="activity-property">
+                        <span class="approvable-property">
                             <span class="flag-icon flag-icon-en"></span>
                             <strong><?= $this->translate('Name') ?>:</strong>
                         </span>
@@ -159,13 +159,13 @@
                             <div class="row">
                                 <?php foreach ($field->getOptions() as $option): ?>
                                     <div class="col-md-6">
-                                        <span class="activity-property">
+                                        <span class="approvable-property">
                                             <span class="flag-icon flag-icon-nl"></span>
                                         </span>
                                         <?= $this->escapeHtml($option->getValue()->getValueNL()) ?>
                                     </div>
                                     <div class="col-md-6">
-                                        <span class="activity-property">
+                                        <span class="approvable-property">
                                             <span class="flag-icon flag-icon-en"></span>
                                         </span>
                                         <?= $this->escapeHtml($option->getValue()->getValueEN()) ?>

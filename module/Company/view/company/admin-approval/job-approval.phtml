@@ -1,0 +1,356 @@
+<?php
+
+use Application\Model\Enums\ApprovableStatus;
+use Laminas\Form\Element\Text;
+
+$this->headTitle($this->escapeHtml($this->localiseText($job->getName())));
+$this->headTitle($this->translate('Approval'));
+?>
+<div class="row admin-section admin-approvable-overview">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Information') ?></h2>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-2 overview-sidebar">
+                <strong><?= $this->translate('Slug') ?></strong>
+            </div>
+            <div class="col-md-10">
+                <span class="approvable-property">
+                    <strong><?= $this->translate('Slug') ?>:</strong>
+                </span>
+                <?= $this->escapeHtml($job->getSlugName()) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 overview-sidebar">
+                <strong><?= $this->translate('Category') ?></strong>
+            </div>
+            <div class="col-md-10">
+                <span class="approvable-property">
+                    <strong><?= $this->translate('Category') ?>:</strong>
+                </span>
+                <?= $this->escapeHtml($this->localiseText($job->getCategory()->getName())) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 overview-sidebar">
+                <strong><?= $this->translate('Name') ?></strong>
+            </div>
+            <div class="col-md-10">
+                <span class="approvable-property">
+                    <strong><?= $this->translate('Name') ?>:</strong>
+                </span>
+                <?= $this->escapeHtml($job->getContactName()) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 overview-sidebar">
+                <strong><?= $this->translate('Phone number') ?></strong>
+            </div>
+            <div class="col-md-10">
+                <span class="approvable-property">
+                    <strong><?= $this->translate('Phone number') ?>:</strong>
+                </span>
+                <?= $this->escapeHtml($job->getContactPhone()) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 overview-sidebar">
+                <strong><?= $this->translate('E-mail address') ?></strong>
+            </div>
+            <div class="col-md-10">
+                <span class="approvable-property">
+                    <strong><?= $this->translate('E-mail address') ?>:</strong>
+                </span>
+                <?= $this->escapeHtml($job->getContactEmail()) ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <hr>
+        <h2><?= $this->translate('Details') ?></h2>
+    </div>
+    <div class="col-md-10 col-md-offset-2 overview-header">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="flag-icon flag-icon-nl"></span>
+                <strong><?= $this->translate('Dutch') ?></strong>
+                <hr>
+            </div>
+            <div class="col-md-6">
+                <span class="flag-icon flag-icon-en"></span>
+                <strong><?= $this->translate('English') ?></strong>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-2 overview-sidebar">
+                <strong><?= $this->translate('Name') ?></strong>
+            </div>
+            <div class="col-md-5">
+                <span class="approvable-property">
+                    <span class="flag-icon flag-icon-nl"></span>
+                    <strong><?= $this->translate('Name') ?>:</strong>
+                </span>
+                <?= $this->escapeHtml($job->getName()->getValueNL()) ?>
+            </div>
+            <div class="col-md-5">
+                <span class="approvable-property">
+                    <span class="flag-icon flag-icon-en"></span>
+                    <strong><?= $this->translate('Name') ?>:</strong>
+                </span>
+                <?= $this->escapeHtml($job->getName()->getValueEN()) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 overview-sidebar">
+                <strong><?= $this->translate('Website') ?></strong>
+            </div>
+            <div class="col-md-5">
+                <span class="approvable-property">
+                    <span class="flag-icon flag-icon-nl"></span>
+                    <strong><?= $this->translate('Website') ?>:</strong>
+                </span>
+                <?= $this->escapeHtml($job->getWebsite()->getValueNL()) ?>
+            </div>
+            <div class="col-md-5">
+                <span class="approvable-property">
+                    <span class="flag-icon flag-icon-en"></span>
+                    <strong><?= $this->translate('Website') ?>:</strong>
+                </span>
+                <?= $this->escapeHtml($job->getWebsite()->getValueEN()) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 overview-sidebar">
+                <strong><?= $this->translate('Location') ?></strong>
+            </div>
+            <div class="col-md-5">
+                <span class="approvable-property">
+                    <span class="flag-icon flag-icon-nl"></span>
+                    <strong><?= $this->translate('Location') ?>:</strong>
+                </span>
+                <?= $this->escapeHtml($job->getLocation()->getValueNL()) ?>
+            </div>
+            <div class="col-md-5">
+                <span class="approvable-property">
+                    <span class="flag-icon flag-icon-en"></span>
+                    <strong><?= $this->translate('Location') ?>:</strong>
+                </span>
+                <?= $this->escapeHtml($job->getLocation()->getValueEN()) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 overview-sidebar">
+                <strong><?= $this->translate('Description') ?></strong>
+            </div>
+            <div class="col-md-5">
+                <span class="approvable-property">
+                    <span class="flag-icon flag-icon-nl"></span>
+                    <strong><?= $this->translate('Description') ?>:</strong>
+                </span>
+                <?= $this->escapeHtml($job->getDescription()->getValueNL()) ?>
+            </div>
+            <div class="col-md-5">
+                <span class="approvable-property">
+                    <span class="flag-icon flag-icon-en"></span>
+                    <strong><?= $this->translate('Description') ?>:</strong>
+                </span>
+                <?= $this->escapeHtml($job->getDescription()->getValueEN()) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 overview-sidebar">
+                <strong><?= $this->translate('Attachment') ?></strong>
+            </div>
+            <div class="col-md-5">
+                <span class="approvable-property">
+                    <span class="flag-icon flag-icon-nl"></span>
+                    <strong><?= $this->translate('Attachment') ?>:</strong>
+                </span>
+                <?php if (null !== ($attachment = $job->getAttachment()->getValueNL())): ?>
+                    <a href="<?= $this->fileUrl($attachment) ?>">
+                        <?= $this->translate('View Attachment') ?>
+                    </a>
+                <?php endif; ?>
+            </div>
+            <div class="col-md-5">
+                <span class="approvable-property">
+                    <span class="flag-icon flag-icon-en"></span>
+                    <strong><?= $this->translate('Attachment') ?>:</strong>
+                </span>
+                <?php if (null !== ($attachment = $job->getAttachment()->getValueEN())): ?>
+                    <a href="<?= $this->fileUrl($attachment) ?>">
+                        <?= $this->translate('View Attachment') ?>
+                    </a>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+    <?php if ($job->getLabels()->count() > 0): ?>
+        <div class="col-md-12">
+            <hr>
+            <h2><?= $this->translate('Labels') ?></h2>
+        </div>
+        <div class="col-md-12">
+            <?php foreach ($job->getLabels() as $label): ?>
+                <div class="chip">
+                <span class="chip-label">
+                    <?= $this->escapeHtml($this->localiseText($label->getName())) ?>
+                </span>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+    <div class="col-md-12">
+        <hr>
+        <h2><?= $this->translate('Approval') ?></h2>
+    </div>
+    <?php if (ApprovableStatus::Unapproved === $job->getApproved()): ?>
+        <div class="col-md-2">
+            <?php
+            $approvalForm->setAttribute('action', $this->url(
+                'company_admin/company/edit/package/edit/job/approval/update',
+                [
+                    ...$formUrlData,
+                    'type' => 'approve'
+                ],
+            ));
+            $approvalForm->prepare();
+            echo $this->form()->openTag($approvalForm);
+            echo $this->formElement($approvalForm->get('security'));
+            ?>
+            <div class="form-group">
+                <?php
+                $message = new Text('message');
+                $message->setAttributes([
+                    'placeholder' => $this->translate('Optional message...'),
+                    'class' => 'form-control',
+                ]);
+                echo $this->formText($message);
+                ?>
+            </div>
+            <div class="form-group">
+                <?php
+                $submit = $approvalForm->get('submit');
+                $submit->setAttribute('class', 'btn btn-default');
+                echo $this->formSubmit($submit);
+                ?>
+            </div>
+            <?php
+            echo $this->form()->closeTag();
+            ?>
+        </div>
+        <div class="col-md-2">
+            <?php
+            $disapprovalForm->setAttribute('action', $this->url(
+                'company_admin/company/edit/package/edit/job/approval/update',
+                [
+                    ...$formUrlData,
+                    'type' => 'disapprove'
+                ],
+            ));
+            $disapprovalForm->prepare();
+            echo $this->form()->openTag($disapprovalForm);
+            echo $this->formHidden($disapprovalForm->get('security'));
+            ?>
+            <div class="form-group">
+                <?php
+                $message = new Text('message');
+                $message->setAttributes([
+                    'placeholder' => $this->translate('Optional message...'),
+                    'class' => 'form-control',
+                ]);
+                echo $this->formText($message);
+                ?>
+            </div>
+            <div class="form-group">
+                <?php
+                $submit = $disapprovalForm->get('submit');
+                $submit->setAttribute('class', 'btn btn-default');
+                echo $this->formSubmit($submit);
+                ?>
+            </div>
+            <?php
+            echo $this->form()->closeTag();
+            ?>
+        </div>
+    <?php elseif (ApprovableStatus::Approved === $job->getApproved()): ?>
+        <div class="col-md-12">
+            <p>
+                <?php
+                if (null !== ($text = $job->getApprovableText())) {
+                    echo sprintf(
+                        $this->translate('This job was approved by <strong>%s</strong> with the message "%s".'),
+                        $this->escapeHtml($job->getApprover()->getMember()->getFullName()),
+                        $this->escapeHtml($text->getMessage()),
+                    );
+                } else {
+                    echo sprintf(
+                        $this->translate('This job was approved by <strong>%s</strong>.'),
+                        $this->escapeHtml($job->getApprover()->getMember()->getFullName()),
+                    );
+                }
+                ?>
+            </p>
+        </div>
+        <div class="col-md-2">
+            <?php
+            $resetForm->setAttribute('action', $this->url(
+                'company_admin/company/edit/package/edit/job/approval/update',
+                [
+                    ...$formUrlData,
+                    'type' => 'reset'
+                ],
+            ));
+            $resetForm->prepare();
+            echo $this->form()->openTag($resetForm);
+            echo $this->formHidden($resetForm->get('security'));
+            $submit = $resetForm->get('submit');
+            $submit->setAttribute('class', 'btn btn-default');
+            echo $this->formSubmit($submit);
+            echo $this->form()->closeTag();
+            ?>
+        </div>
+    <?php elseif (ApprovableStatus::Rejected === $job->getApproved()): ?>
+        <div class="col-md-12">
+            <p>
+                <?php
+                if (null !== ($text = $job->getApprovableText())) {
+                    echo sprintf(
+                        $this->translate('This job was disapproved by <strong>%s</strong> with the message "%s".'),
+                        $this->escapeHtml($job->getApprover()->getMember()->getFullName()),
+                        $this->escapeHtml($text->getMessage()),
+                    );
+                } else {
+                    echo sprintf(
+                        $this->translate('This job was disapproved by <strong>%s</strong>.'),
+                        $this->escapeHtml($job->getApprover()->getMember()->getFullName()),
+                    );
+                }
+                ?>
+            </p>
+        </div>
+        <div class="col-md-2">
+            <?php
+            $resetForm->setAttribute('action', $this->url(
+                'company_admin/company/edit/package/edit/job/approval/update',
+                [
+                    ...$formUrlData,
+                    'type' => 'reset'
+                ],
+            ));
+            $resetForm->prepare();
+            echo $this->form()->openTag($resetForm);
+            echo $this->formHidden($resetForm->get('security'));
+            $submit = $resetForm->get('submit');
+            $submit->setAttribute('class', 'btn btn-default');
+            echo $this->formSubmit($submit);
+            echo $this->form()->closeTag();
+            ?>
+        </div>
+    <?php endif; ?>
+</div>

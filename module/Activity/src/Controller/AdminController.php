@@ -2,7 +2,6 @@
 
 namespace Activity\Controller;
 
-use Activity\Form\ModifyRequest as RequestForm;
 use Activity\Mapper\Signup as SignupMapper;
 use Activity\Model\Activity as ActivityModel;
 use Activity\Service\{
@@ -12,6 +11,7 @@ use Activity\Service\{
     Signup as SignupService,
     SignupListQuery as SignupListQueryService,
 };
+use Application\Form\ModifyRequest as RequestForm;
 use DateTime;
 use Laminas\Form\FormInterface;
 use Laminas\Http\{

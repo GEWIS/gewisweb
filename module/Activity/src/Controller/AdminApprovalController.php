@@ -2,12 +2,12 @@
 
 namespace Activity\Controller;
 
-use Activity\Form\ModifyRequest as RequestForm;
 use Activity\Service\{
     AclService,
     Activity as ActivityService,
     ActivityQuery as ActivityQueryService,
 };
+use Application\Form\ModifyRequest as RequestForm;
 use InvalidArgumentException;
 use Laminas\Http\{
     Request,
