@@ -65,7 +65,7 @@ trait TimestampableTrait
      * Automatically fill in the `DateTime`s before the initial call to `persist()`.
      */
     #[PrePersist]
-    public function prePerist(): void
+    public function prePersist(): void
     {
         $now = new DateTime();
 
