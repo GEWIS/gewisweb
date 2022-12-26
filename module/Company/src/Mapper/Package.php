@@ -4,14 +4,15 @@ namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Company\Model\{
+    Company as CompanyModel,
     CompanyBannerPackage as CompanyBannerPackageModel,
     CompanyFeaturedPackage as CompanyFeaturedPackageModel,
     CompanyJobPackage as CompanyJobPackageModel,
     CompanyPackage as CompanyPackageModel,
-    Enums\CompanyPackageTypes};
+};
+use Company\Model\Enums\CompanyPackageTypes;
 use DateTime;
 use Doctrine\ORM\QueryBuilder;
-use Exception;
 
 /**
  * Mappers for package.
@@ -107,6 +108,20 @@ class Package extends BaseMapper
         }
 
         return $packages[0];
+    }
+
+    /**
+     * Get all job packages for a specific company.
+     *
+     * @return array<array-key, CompanyJobPackageModel>
+     */
+    public function findJobPackagesByCompany(CompanyModel $company): array
+    {
+        $qb = $this->getRepository()->createQueryBuilder('p');
+        $qb->where('p.company = :company')
+            ->setParameter('company', $company);
+
+        return $qb->getQuery()->getResult();
     }
 
     public function createPackage(CompanyPackageTypes $type): CompanyPackageModel

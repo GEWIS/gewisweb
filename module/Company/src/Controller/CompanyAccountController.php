@@ -8,14 +8,19 @@ use Company\Service\{
     AclService,
     Company as CompanyService,
 };
-use Company\Model\CompanyPackage as CompanyPackageModel;
+use Company\Model\CompanyJobPackage as CompanyJobPackageModel;
 use Company\Model\Enums\CompanyPackageTypes;
+use DateTime;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
+/**
+ * @method FlashMessenger flashMessenger()
+ */
 class CompanyAccountController extends AbstractActionController
 {
     /**
@@ -114,9 +119,7 @@ class CompanyAccountController extends AbstractActionController
         } else {
             // TODO: Get most recent n jobs for each type.
             $jobs = [];
-            $result['packages'] = $company->getPackages()->filter(function (CompanyPackageModel $package) {
-                return CompanyPackageTypes::Job === $package->getType();
-            });
+            $result['packages'] = $this->jobPackageMapper->findJobPackagesByCompany($company);
         }
 
         foreach ($jobs as $job) {
@@ -149,6 +152,7 @@ class CompanyAccountController extends AbstractActionController
         }
 
         // Get the specified package and company user (through ACL, as it is already included).
+        /** @var CompanyJobPackageModel|null $package */
         $package = $this->jobPackageMapper->find($packageId);
         $companySlugName = $this->aclService->getCompanyUserIdentityOrThrowException()->getCompany()->getSlugName();
 
@@ -158,6 +162,14 @@ class CompanyAccountController extends AbstractActionController
             || $package->getCompany()->getSlugName() !== $companySlugName
         ) {
             return $this->notFoundAction();
+        }
+
+        if ((new DateTime()) >= $package->getExpirationDate()) {
+            $this->flashMessenger()->addErrorMessage(
+                $this->translator->translate('You cannot create new vacancies in expired job packages.')
+            );
+
+            return $this->redirect()->toRoute('company_account/jobs', ['packageId' => $packageId]);
         }
 
         $jobForm = $this->companyService->getJobForm();
@@ -174,7 +186,7 @@ class CompanyAccountController extends AbstractActionController
 
             if ($jobForm->isValid()) {
                 if (false !== $this->companyService->createJob($package, $jobForm->getData())) {
-                    $this->plugin('FlashMessenger')->addSuccessMessage(
+                    $this->flashMessenger()->addSuccessMessage(
                         $this->translator->translate('Job proposal successfully created! It will become active after it has been approved.')
                     );
 

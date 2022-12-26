@@ -179,13 +179,11 @@ abstract class CompanyPackage
     abstract public function getType(): CompanyPackageTypes;
 
     /**
-     * @param DateTime $now
-     *
-     * @return bool
+     * Check whether this package is expired.
      */
-    public function isExpired(DateTime $now): bool
+    public function isExpired(): bool
     {
-        if ($now > $this->getExpirationDate()) {
+        if ((new DateTime()) >= $this->getExpirationDate()) {
             return true;
         }
 
@@ -198,7 +196,7 @@ abstract class CompanyPackage
     public function isActive(): bool
     {
         $now = new DateTime();
-        if ($this->isExpired($now)) {
+        if ($this->isExpired()) {
             // unpublish activity
             $this->setPublished(false);
 

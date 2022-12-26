@@ -48,14 +48,16 @@ $this->headTitle($this->translate('Jobs'));
                                         <?= sprintf('%d (%d)', $package->getJobs()->count(), $package->getNumberOfActiveJobs()) ?>
                                     </td>
                                     <td>
-                                        <a class="btn btn-xs btn-primary" href="<?= $this->url(
-                                            'company_account/jobs/add',
-                                            [
-                                                'packageId' => $package->getId(),
-                                            ]
-                                        ); ?>">
-                                            <?= $this->translate('Add Job'); ?>
-                                        </a>
+                                        <?php if (!$package->isExpired()): ?>
+                                            <a class="btn btn-xs btn-primary" href="<?= $this->url(
+                                                'company_account/jobs/add',
+                                                [
+                                                    'packageId' => $package->getId(),
+                                                ]
+                                            ); ?>">
+                                                <?= $this->translate('Add Job'); ?>
+                                            </a>
+                                        <?php endif; ?>
                                         <a class="btn btn-xs btn-primary" href="<?= $this->url(
                                             'company_account/jobs',
                                             [
