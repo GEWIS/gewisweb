@@ -1,9 +1,13 @@
 <?php
+
+use Laminas\Mvc\Plugin\FlashMessenger\View\HelperTrait as FlashMessengerHelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/** @var PhpRenderer|FlashMessengerHelperTrait $this */
+
 // set title
 $this->headTitle($this->escapeHtml($this->localiseText($activity->getName())));
 $this->headTitle($this->translate('Activities'));
-
-$flash = $this->plugin('FlashMessenger');
 ?>
 <?php if (!isset($breadcrumb)): // only show breadcrumbs if they were not yet shown ?>
     <section class="section section-breadcrumb">
@@ -36,11 +40,11 @@ $flash = $this->plugin('FlashMessenger');
 <section class="section">
     <div class="container">
         <div class="row">
-            <?= $flash->render('default', ['alert', 'alert-dismissible', 'alert-info']) ?>
-            <?= $flash->render('error', ['alert', 'alert-dismissible', 'alert-danger']) ?>
-            <?= $flash->render('info', ['alert', 'alert-dismissible', 'alert-info']) ?>
-            <?= $flash->render('success', ['alert', 'alert-dismissible', 'alert-success']) ?>
-            <?= $flash->render('warning', ['alert', 'alert-dismissible', 'alert-warning']) ?>
+            <?= $this->flashMessenger()->render('default', ['alert', 'alert-dismissible', 'alert-info']) ?>
+            <?= $this->flashMessenger()->render('error', ['alert', 'alert-dismissible', 'alert-danger']) ?>
+            <?= $this->flashMessenger()->render('info', ['alert', 'alert-dismissible', 'alert-info']) ?>
+            <?= $this->flashMessenger()->render('success', ['alert', 'alert-dismissible', 'alert-success']) ?>
+            <?= $this->flashMessenger()->render('warning', ['alert', 'alert-dismissible', 'alert-warning']) ?>
             <div class="col-md-12">
                 <h1><?= $this->escapeHtml($this->localiseText($activity->getName())) ?></h1>
             </div>

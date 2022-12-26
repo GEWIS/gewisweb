@@ -12,8 +12,12 @@ use Laminas\Http\{
 use Laminas\Json\Json;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
 
+/**
+ * @method FlashMessenger flashMessenger()
+ */
 class AdminController extends AbstractActionController
 {
     public function __construct(
@@ -41,7 +45,7 @@ class AdminController extends AbstractActionController
 
             if ($form->isValid()) {
                 if ($this->decisionService->uploadMinutes($form->getData())) {
-                    $this->plugin('FlashMessenger')->addSuccessMessage($this->translator->translate('Meeting minutes uploaded'));
+                    $this->flashMessenger()->addSuccessMessage($this->translator->translate('Meeting minutes uploaded'));
 
                     return $this->redirect()->toRoute('admin_decision/minutes');
                 }

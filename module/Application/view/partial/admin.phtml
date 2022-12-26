@@ -1,6 +1,9 @@
 <?php
-// The FlashMessenger config does allow for namespaced options, hence we need to define all classes below.
-$flash = $this->plugin('FlashMessenger');
+
+use Laminas\Mvc\Plugin\FlashMessenger\View\HelperTrait as FlashMessengerHelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/** @var PhpRenderer|FlashMessengerHelperTrait $this */
 ?>
 <div class="admin-container">
     <nav class="navbar navbar-gewis-admin navbar-fixed-left rainbow">
@@ -182,11 +185,12 @@ $flash = $this->plugin('FlashMessenger');
         </section>
         <section class="section">
             <div class="container-admin">
-                <?= $flash->render('default', ['alert', 'alert-dismissible', 'alert-info']) ?>
-                <?= $flash->render('error', ['alert', 'alert-dismissible', 'alert-danger']) ?>
-                <?= $flash->render('info', ['alert', 'alert-dismissible', 'alert-info']) ?>
-                <?= $flash->render('success', ['alert', 'alert-dismissible', 'alert-success']) ?>
-                <?= $flash->render('warning', ['alert', 'alert-dismissible', 'alert-warning']) ?>
+                <?php // The FlashMessenger config accepts namespaced options, we only need to define the classes. ?>
+                <?= $this->flashMessenger()->render('default', ['alert', 'alert-dismissible', 'alert-info']) ?>
+                <?= $this->flashMessenger()->render('error', ['alert', 'alert-dismissible', 'alert-danger']) ?>
+                <?= $this->flashMessenger()->render('info', ['alert', 'alert-dismissible', 'alert-info']) ?>
+                <?= $this->flashMessenger()->render('success', ['alert', 'alert-dismissible', 'alert-success']) ?>
+                <?= $this->flashMessenger()->render('warning', ['alert', 'alert-dismissible', 'alert-warning']) ?>
                 <?= $this->content ?>
             </div>
         </section>

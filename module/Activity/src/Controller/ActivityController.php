@@ -25,6 +25,7 @@ use Laminas\Http\{
 };
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\Stdlib\{
     Parameters,
@@ -32,6 +33,9 @@ use Laminas\Stdlib\{
 };
 use Laminas\View\Model\ViewModel;
 
+/**
+ * @method FlashMessenger flashMessenger()
+ */
 class ActivityController extends AbstractActionController
 {
     public function __construct(
@@ -321,9 +325,9 @@ class ActivityController extends AbstractActionController
         string $message,
     ): Response {
         if ($success) {
-            $this->plugin('FlashMessenger')->addSuccessMessage($message);
+            $this->flashMessenger()->addSuccessMessage($message);
         } else {
-            $this->plugin('FlashMessenger')->addErrorMessage($message);
+            $this->flashMessenger()->addErrorMessage($message);
         }
 
         return $this->redirect()->toRoute(

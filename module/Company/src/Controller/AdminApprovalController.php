@@ -11,9 +11,13 @@ use Application\Model\Enums\ApprovableStatus;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
+/**
+ * @method FlashMessenger flashMessenger()
+ */
 class AdminApprovalController extends AbstractActionController
 {
     private AclService $aclService;
@@ -127,7 +131,7 @@ class AdminApprovalController extends AbstractActionController
                     ApprovableStatus::Approved,
                     $request->getPost()->get('message'),
                 );
-                $this->plugin('FlashMessenger')->addSuccessMessage($this->translator->translate('Job approved!'));
+                $this->flashMessenger()->addSuccessMessage($this->translator->translate('Job approved!'));
                 break;
             case 'disapprove':
                 $this->companyService->setJobApproval(
@@ -135,11 +139,11 @@ class AdminApprovalController extends AbstractActionController
                     ApprovableStatus::Rejected,
                     $request->getPost()->get('message'),
                 );
-                $this->plugin('FlashMessenger')->addSuccessMessage($this->translator->translate('Job disapproved!'));
+                $this->flashMessenger()->addSuccessMessage($this->translator->translate('Job disapproved!'));
                 break;
             case 'reset':
                 $this->companyService->resetJobApproval($job);
-                $this->plugin('FlashMessenger')->addSuccessMessage($this->translator->translate('Job approval status reset!'));
+                $this->flashMessenger()->addSuccessMessage($this->translator->translate('Job approval status reset!'));
                 break;
         };
 

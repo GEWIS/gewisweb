@@ -17,9 +17,13 @@ use Laminas\Http\{
 };
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
+/**
+ * @method FlashMessenger flashMessenger()
+ */
 class AdminController extends AbstractActionController
 {
     public function __construct(
@@ -439,7 +443,7 @@ class AdminController extends AbstractActionController
             // Check if data is valid, and insert when it is
             if ($jobForm->isValid()) {
                 if (false !== $this->companyService->createJob($package, $jobForm->getData())) {
-                    $this->plugin('FlashMessenger')->addSuccessMessage(
+                    $this->flashMessenger()->addSuccessMessage(
                         $this->translator->translate('Job successfully created!')
                     );
 
@@ -518,7 +522,7 @@ class AdminController extends AbstractActionController
 
             if ($jobForm->isValid()) {
                 if ($this->companyService->updateJob($job, $jobForm->getData())) {
-                    $this->plugin('FlashMessenger')->addSuccessMessage(
+                    $this->flashMessenger()->addSuccessMessage(
                         $this->translator->translate('Job successfully edited!')
                     );
 
@@ -615,7 +619,7 @@ class AdminController extends AbstractActionController
                 $jobCategory = $this->companyService->createJobCategory($categoryForm->getData());
 
                 if (is_object($jobCategory)) {
-                    $this->plugin('FlashMessenger')->addSuccessMessage(
+                    $this->flashMessenger()->addSuccessMessage(
                         $this->translator->translate('Job category successfully created!')
                     );
 
@@ -709,7 +713,7 @@ class AdminController extends AbstractActionController
                 $jobLabel = $this->companyService->createJobLabel($labelForm->getData());
 
                 if (is_object($jobLabel)) {
-                    $this->plugin('FlashMessenger')->addSuccessMessage(
+                    $this->flashMessenger()->addSuccessMessage(
                         $this->translator->translate('Job label successfully created!')
                     );
 

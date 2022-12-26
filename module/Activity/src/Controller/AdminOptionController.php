@@ -15,9 +15,13 @@ use Laminas\Http\{
 };
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
+/**
+ * @method FlashMessenger flashMessenger()
+ */
 class AdminOptionController extends AbstractActionController
 {
     public function __construct(
@@ -207,9 +211,9 @@ class AdminOptionController extends AbstractActionController
         string $message,
     ): Response {
         if ($success) {
-            $this->plugin('FlashMessenger')->addSuccessMessage($message);
+            $this->flashMessenger()->addSuccessMessage($message);
         } else {
-            $this->plugin('FlashMessenger')->addErrorMessage($message);
+            $this->flashMessenger()->addErrorMessage($message);
         }
 
         return $this->redirect()->toRoute('activity_admin_options');
