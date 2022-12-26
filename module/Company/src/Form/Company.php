@@ -514,7 +514,10 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
      */
     public function isSlugNameUnique(string $slugName): bool
     {
-        if (strtolower($this->currentSlug) === strtolower($slugName)) {
+        if (
+            null !== $this->currentSlug
+            && mb_strtolower($this->currentSlug) === mb_strtolower($slugName)
+        ) {
             return true;
         }
 
@@ -523,7 +526,10 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
 
     public function isRepresentativeEmailUnique(string $email): bool
     {
-        if (strtolower($this->currentRepresentativeEmail) === strtolower($email)) {
+        if (
+            null !== $this->currentRepresentativeEmail
+            && mb_strtolower($this->currentRepresentativeEmail) === mb_strtolower($email)
+        ) {
             return true;
         }
 
