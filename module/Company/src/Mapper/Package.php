@@ -8,7 +8,7 @@ use Company\Model\{
     CompanyFeaturedPackage as CompanyFeaturedPackageModel,
     CompanyJobPackage as CompanyJobPackageModel,
     CompanyPackage as CompanyPackageModel,
-};
+    Enums\CompanyPackageTypes};
 use DateTime;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
@@ -109,20 +109,12 @@ class Package extends BaseMapper
         return $packages[0];
     }
 
-    /**
-     * @param string $type
-     *
-     * @return CompanyPackageModel
-     *
-     * @throws Exception
-     */
-    public function createPackage(string $type): CompanyPackageModel
+    public function createPackage(CompanyPackageTypes $type): CompanyPackageModel
     {
         return match ($type) {
-            'banner' => new CompanyBannerPackageModel(),
-            'featured' => new CompanyFeaturedPackageModel(),
-            'job' => new CompanyJobPackageModel(),
-            default => throw new Exception('Unknown type for class that extends CompanyPackage'),
+            CompanyPackageTypes::Banner => new CompanyBannerPackageModel(),
+            CompanyPackageTypes::Featured => new CompanyFeaturedPackageModel(),
+            CompanyPackageTypes::Job => new CompanyJobPackageModel(),
         };
     }
 

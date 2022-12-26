@@ -8,6 +8,8 @@ use Company\Service\{
     AclService,
     Company as CompanyService,
 };
+use Company\Model\CompanyPackage as CompanyPackageModel;
+use Company\Model\Enums\CompanyPackageTypes;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
@@ -110,10 +112,10 @@ class CompanyAccountController extends AbstractActionController
             $jobs = $package->getJobs();
             $result['package'] = $package;
         } else {
-            // TODO: Get most recent n jobs for each type. Type should also be updated when ORM supports native enums.
+            // TODO: Get most recent n jobs for each type.
             $jobs = [];
-            $result['packages'] = $company->getPackages()->filter(function ($package) {
-                return 'job' === $package->getType();
+            $result['packages'] = $company->getPackages()->filter(function (CompanyPackageModel $package) {
+                return CompanyPackageTypes::Job === $package->getType();
             });
         }
 

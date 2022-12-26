@@ -1,4 +1,7 @@
 <?php
+
+use Company\Model\Enums\CompanyPackageTypes;
+
 $this->headTitle($this->translate('Edit Company'));
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Career'), true, $this->url('company_admin'))
@@ -47,7 +50,7 @@ $form->setAttribute('class', 'form-company');
         <a class="btn btn-success" href="<?= $this->url(
             'company_admin/company/edit/package/add',
             [
-                'type' => 'job',
+                'type' => CompanyPackageTypes::Job->value,
                 'companySlugName' => $company->getSlugName(),
             ],
         ); ?>">
@@ -57,7 +60,7 @@ $form->setAttribute('class', 'form-company');
         <a class="btn btn-success" href="<?= $this->url(
             'company_admin/company/edit/package/add',
             [
-                'type' => 'featured',
+                'type' => CompanyPackageTypes::Featured->value,
                 'companySlugName' => $company->getSlugName(),
             ],
         ); ?>">
@@ -67,7 +70,7 @@ $form->setAttribute('class', 'form-company');
         <a class="btn btn-success" href="<?= $this->url(
             'company_admin/company/edit/package/add',
             [
-                'type' => 'banner',
+                'type' => CompanyPackageTypes::Banner->value,
                 'companySlugName' => $company->getSlugName(),
             ],
         ); ?>">
@@ -117,10 +120,10 @@ $form->setAttribute('class', 'form-company');
                             <?= $package->getExpirationDate()->format('d-m-Y') ?>
                         </td>
                         <td>
-                            <?php if ($package->getType() === 'banner') {
+                            <?php if (CompanyPackageTypes::Banner === $package->getType()) {
                                 echo $this->translate('Banner Package');
                             } else {
-                                if ($package->getType() == 'featured') {
+                                if (CompanyPackageTypes::Featured === $package->getType()) {
                                     echo $this->translate('Featured Package');
                                 } else {
                                     echo sprintf('%d (%d)', $package->getJobs()->count(), $package->getNumberOfActiveJobs());
@@ -202,8 +205,8 @@ $form->setAttribute('class', 'form-company');
 <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     Company.updateForm();
 
-    document.querySelectorAll('.delete-package').forEach(package => {
-        package.addEventListener('click', e => {
+    document.querySelectorAll('.delete-package').forEach(companyPackage => {
+        companyPackage.addEventListener('click', e => {
             Company.Admin.deletePackage(e.target.dataset.slugName, e.target.dataset.packageId);
         });
     });

@@ -1,4 +1,9 @@
 <?php
+
+use Company\Model\Enums\CompanyPackageTypes;
+
+/** @var CompanyPackageTypes $type */
+
 $this->headTitle($this->translate('Edit Package'));
 
 $this->headScript()
@@ -46,7 +51,7 @@ $form->setAttribute('class', 'form-company');
 </div>
 <?= $this->form()->closeTag() ?>
 <hr>
-<?php if ('banner' === $type): ?>
+<?php if (CompanyPackageTypes::Banner === $type): ?>
     <div class="row">
         <div class="col-md-12">
             <h2><?= $this->translate('Banner') ?></h2>
@@ -56,7 +61,7 @@ $form->setAttribute('class', 'form-company');
         </div>
     </div>
     <hr>
-<?php elseif ('job' === $type): ?>
+<?php elseif (CompanyPackageTypes::Job === $type): ?>
     <h2><?= $this->translate('Jobs') ?></h2>
     <table class="table table-striped">
         <thead>

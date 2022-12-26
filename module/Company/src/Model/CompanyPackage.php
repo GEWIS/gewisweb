@@ -3,6 +3,7 @@
 namespace Company\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
+use Company\Model\Enums\CompanyPackageTypes;
 use DateTime;
 use Doctrine\ORM\Mapping\{
     Column,
@@ -23,6 +24,7 @@ use Exception;
 #[DiscriminatorColumn(
     name: "packageType",
     type: "string",
+    enumType: CompanyPackageTypes::class,
 )]
 #[DiscriminatorMap(
     value: [
@@ -57,7 +59,7 @@ abstract class CompanyPackage
     protected DateTime $expires;
 
     /**
-     * The package's pusblish state.
+     * The package's published state.
      */
     #[Column(type: "boolean")]
     protected bool $published;
@@ -173,20 +175,8 @@ abstract class CompanyPackage
 
     /**
      * Gets the type of the package.
-     *
-     * @return string
-     *
-     * @throws Exception
      */
-    public function getType(): string
-    {
-        return match (ClassUtils::getClass($this)) {
-            CompanyBannerPackage::class => 'banner',
-            CompanyJobPackage::class => 'job',
-            CompanyFeaturedPackage::class => 'featured',
-            default => throw new Exception('Unknown type for class that extends CompanyPackage'),
-        };
-    }
+    abstract public function getType(): CompanyPackageTypes;
 
     /**
      * @param DateTime $now

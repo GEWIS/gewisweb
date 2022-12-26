@@ -8,6 +8,7 @@ use Company\Service\{
     CompanyQuery as CompanyQueryService,
 };
 use Company\Model\CompanyJobPackage;
+use Company\Model\Enums\CompanyPackageTypes;
 use DateInterval;
 use DateTime;
 use Laminas\Http\{
@@ -209,7 +210,7 @@ class AdminController extends AbstractActionController
 
         // Get parameter
         $companySlugName = $this->params()->fromRoute('companySlugName');
-        $type = $this->params()->fromRoute('type');
+        $type = CompanyPackageTypes::from($this->params()->fromRoute('type'));
         $company = $this->companyService->getCompanyBySlugName($companySlugName);
 
         if (null === $company) {
@@ -253,7 +254,7 @@ class AdminController extends AbstractActionController
                 'company_admin/company/edit/package/add',
                 [
                     'companySlugName' => $companySlugName,
-                    'type' => $type,
+                    'type' => $type->value,
                 ],
             )
         );
@@ -324,7 +325,7 @@ class AdminController extends AbstractActionController
         // Initialize form
         $packageData = $package->toArray();
 
-        if ('featured' === $type) {
+        if (CompanyPackageTypes::Featured === $type) {
             $packageData['language_dutch'] = null !== $packageData['article'];
             $packageData['language_english'] = null !== $packageData['articleEn'];
         }

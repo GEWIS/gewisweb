@@ -28,6 +28,7 @@ use Company\Model\{
     CompanyJobPackage as CompanyJobPackageModel,
     CompanyLocalisedText,
     CompanyPackage as CompanyPackageModel,
+    Enums\CompanyPackageTypes,
     Job as JobModel,
     JobCategory as JobCategoryModel,
     JobLabel as JobLabelModel,
@@ -520,7 +521,7 @@ class Company
      *
      * @param CompanyModel $company
      * @param array $data
-     * @param string $type
+     * @param CompanyPackageTypes $type
      *
      * @return bool
      *
@@ -529,12 +530,12 @@ class Company
     public function createPackage(
         CompanyModel $company,
         array $data,
-        string $type = 'job',
+        CompanyPackageTypes $type = CompanyPackageTypes::Job,
     ): bool {
         $package = $this->packageMapper->createPackage($type);
         $package->setCompany($company);
 
-        if (CompanyBannerPackageModel::class === get_class($package)) {
+        if (CompanyPackageTypes::Banner === $type) {
             if (!$this->uploadFile($package, $data['banner'])) {
                 return false;
             }
@@ -560,7 +561,7 @@ class Company
         CompanyPackageModel $package,
         array $data,
     ): bool {
-        if (CompanyBannerPackageModel::class === get_class($package)) {
+        if (CompanyPackageTypes::Banner === $package->getType()) {
             if (!$this->uploadFile($package, $data['banner'])) {
                 return false;
             }
@@ -905,17 +906,15 @@ class Company
     /**
      * Returns a the form for entering packages.
      *
-     * @param string $type
-     *
      * @return EditPackageForm Form
      */
-    public function getPackageForm(string $type = 'job'): EditPackageForm
+    public function getPackageForm(CompanyPackageTypes $type = CompanyPackageTypes::Job): EditPackageForm
     {
-        if ('banner' === $type) {
+        if (CompanyPackageTypes::Banner === $type) {
             return $this->editBannerPackageForm;
         }
 
-        if ('featured' === $type) {
+        if (CompanyPackageTypes::Featured === $type) {
             return $this->editFeaturedPackageForm;
         }
 

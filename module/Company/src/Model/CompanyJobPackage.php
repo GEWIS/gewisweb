@@ -3,6 +3,7 @@
 namespace Company\Model;
 
 use Application\Model\Enums\ApprovableStatus;
+use Company\Model\Enums\CompanyPackageTypes;
 use Company\Model\JobCategory as JobCategoryModel;
 use Doctrine\Common\Collections\{
     ArrayCollection,
@@ -95,5 +96,13 @@ class CompanyJobPackage extends CompanyPackage
     public function removeJob(Job $job): void
     {
         $this->jobs->removeElement($job);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getType(): CompanyPackageTypes
+    {
+        return CompanyPackageTypes::Job;
     }
 }

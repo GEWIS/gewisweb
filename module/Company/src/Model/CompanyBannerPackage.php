@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping\{
     Column,
     Entity,
 };
+use Company\Model\Enums\CompanyPackageTypes;
 
 /**
  * CompanyBannerPackage model.
@@ -43,10 +44,10 @@ class CompanyBannerPackage extends CompanyPackage
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
-    public function getType(): string
+    public function getType(): CompanyPackageTypes
     {
-        return 'banner';
+        return CompanyPackageTypes::Banner;
     }
 }
