@@ -185,6 +185,27 @@ return [
                                     ],
                                 ],
                             ],
+                            'status' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/status/:jobId',
+                                    'defaults' => [
+                                        'action' => 'statusJob',
+                                    ],
+                                    'constraints' => [
+                                        'jobId' => '[0-9]+',
+                                    ],
+                                ],
+                            ],
+                            'transfer' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/transfer',
+                                    'defaults' => [
+                                        'action' => 'transferJob',
+                                    ],
+                                ],
+                            ],
                         ],
                     ],
                     'highlights' => [

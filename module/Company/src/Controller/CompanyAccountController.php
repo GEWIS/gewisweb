@@ -3,13 +3,15 @@
 namespace Company\Controller;
 
 use Application\Model\Enums\ApprovableStatus;
-use Company\Mapper\Package as JobPackageMapper;
+use Company\Mapper\{
+    Package as JobPackageMapper,
+    Job as JobMapper,
+};
+use Company\Model\CompanyJobPackage as CompanyJobPackageModel;
 use Company\Service\{
     AclService,
     Company as CompanyService,
 };
-use Company\Model\CompanyJobPackage as CompanyJobPackageModel;
-use Company\Model\Enums\CompanyPackageTypes;
 use DateTime;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
@@ -23,42 +25,29 @@ use User\Permissions\NotAllowedException;
  */
 class CompanyAccountController extends AbstractActionController
 {
-    /**
-     * @var AclService
-     */
     private AclService $aclService;
 
-    /**
-     * @var Translator
-     */
     private Translator $translator;
 
-    /**
-     * @var JobPackageMapper
-     */
+    private JobMapper $jobMapper;
+
     private JobPackageMapper $jobPackageMapper;
 
-    /**
-     * @var CompanyService
-     */
     private CompanyService $companyService;
 
     /**
      * CompanyAccountController constructor.
-     *
-     * @param AclService $aclService
-     * @param Translator $translator
-     * @param JobPackageMapper $jobPackageMapper
-     * @param CompanyService $companyService
      */
     public function __construct(
         AclService $aclService,
         Translator $translator,
+        JobMapper $jobMapper,
         JobPackageMapper $jobPackageMapper,
         CompanyService $companyService,
     ) {
         $this->aclService = $aclService;
         $this->translator = $translator;
+        $this->jobMapper = $jobMapper;
         $this->jobPackageMapper = $jobPackageMapper;
         $this->companyService = $companyService;
     }
@@ -94,11 +83,6 @@ class CompanyAccountController extends AbstractActionController
         }
 
         $result = [];
-        $splitJobs = [
-            ApprovableStatus::Unapproved->value => [],
-            ApprovableStatus::Approved->value => [],
-            ApprovableStatus::Rejected->value => [],
-        ];
         $company = $this->aclService->getCompanyUserIdentityOrThrowException()->getCompany();
 
         // `packageId` is an optional part of the route and can be used to display jobs specific to that job package. It
@@ -114,23 +98,25 @@ class CompanyAccountController extends AbstractActionController
                 return $this->notFoundAction();
             }
 
-            $jobs = $package->getJobs();
+            $result['jobs'] = $package->getJobs();
             $result['package'] = $package;
         } else {
-            // TODO: Get most recent n jobs for each type.
-            $jobs = [];
             $result['packages'] = $this->jobPackageMapper->findJobPackagesByCompany($company);
+            $result += [
+                'unapproved' => $this->jobMapper->findRecentByApprovedStatus(
+                    ApprovableStatus::Unapproved,
+                    $company->getSlugName(),
+                ),
+                'approved' => $this->jobMapper->findRecentByApprovedStatus(
+                    ApprovableStatus::Approved,
+                    $company->getSlugName(),
+                ),
+                'rejected' => $this->jobMapper->findRecentByApprovedStatus(
+                    ApprovableStatus::Rejected,
+                    $company->getSlugName(),
+                ),
+            ];
         }
-
-        foreach ($jobs as $job) {
-            $splitJobs[$job->getApproved()->value][] = $job;
-        }
-
-        $result += [
-            'unapproved' => $splitJobs[ApprovableStatus::Unapproved->value],
-            'approved' => $splitJobs[ApprovableStatus::Approved->value],
-            'rejected' => $splitJobs[ApprovableStatus::Rejected->value],
-        ];
 
         return new ViewModel($result);
     }
@@ -243,6 +229,36 @@ class CompanyAccountController extends AbstractActionController
         if (!$this->aclService->isAllowed('deleteOwn', 'job')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to delete jobs')
+            );
+        }
+
+        return new ViewModel([]);
+    }
+
+    public function statusJobAction(): ViewModel
+    {
+        if (null === ($packageId = $this->params('packageId'))) {
+            return $this->notFoundAction();
+        }
+
+        if (!$this->aclService->isAllowed('statusOwn', 'job')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view the status of a job')
+            );
+        }
+
+        return new ViewModel([]);
+    }
+
+    public function transferJobAction(): ViewModel
+    {
+        if (null === ($packageId = $this->params('packageId'))) {
+            return $this->notFoundAction();
+        }
+
+        if (!$this->aclService->isAllowed('transferOwn', 'job')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to transfer jobs')
             );
         }
 

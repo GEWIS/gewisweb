@@ -24,6 +24,7 @@ class CompanyAccountControllerFactory implements FactoryInterface
         return new CompanyAccountController(
             $container->get('company_service_acl'),
             $container->get(MvcTranslator::class),
+            $container->get('company_mapper_job'),
             $container->get('company_mapper_package'),
             $container->get('company_service_company'),
         );

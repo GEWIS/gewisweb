@@ -83,7 +83,7 @@ class AclService extends \User\Service\AclService
         $this->acl->allow(
             roles: 'company',
             resources: 'job',
-            privileges: ['createOwn', 'editOwn', 'deleteOwn'],
+            privileges: ['createOwn', 'editOwn', 'deleteOwn', 'statusOwn', 'transferOwn'],
         );
 
         $this->acl->allow(

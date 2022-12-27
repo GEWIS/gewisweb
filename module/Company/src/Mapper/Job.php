@@ -3,7 +3,9 @@
 namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
+use Application\Model\Enums\ApprovableStatus;
 use Company\Model\Job as JobModel;
+use DateTime;
 use Doctrine\ORM\Query\Expr\Join;
 
 /**
@@ -98,6 +100,32 @@ class Job extends BaseMapper
             $qb->andWhere('c.slugName=:companySlugName')
                 ->setParameter('companySlugName', $companySlugName);
         }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Get the `$count` most recent jobs for a company with a specific status.
+     *
+     * @return array<array-key, JobModel>
+     */
+    public function findRecentByApprovedStatus(
+        ApprovableStatus $status,
+        string $companySlugName,
+        int $count = 5,
+    ): array {
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->innerJoin('j.package', 'p')
+            ->innerJoin('p.company', 'c')
+            ->where('p.expires > :now')
+            ->andWhere('j.approved = :status')
+            ->andWhere('c.slugName = :slugName')
+            ->orderBy('j.id', 'DESC')
+            ->setMaxResults($count);
+
+        $qb->setParameter('now', new DateTime())
+            ->setParameter('status', $status)
+            ->setParameter('slugName', $companySlugName);
 
         return $qb->getQuery()->getResult();
     }
