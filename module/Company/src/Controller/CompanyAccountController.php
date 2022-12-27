@@ -25,31 +25,16 @@ use User\Permissions\NotAllowedException;
  */
 class CompanyAccountController extends AbstractActionController
 {
-    private AclService $aclService;
-
-    private Translator $translator;
-
-    private JobMapper $jobMapper;
-
-    private JobPackageMapper $jobPackageMapper;
-
-    private CompanyService $companyService;
-
     /**
      * CompanyAccountController constructor.
      */
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        JobMapper $jobMapper,
-        JobPackageMapper $jobPackageMapper,
-        CompanyService $companyService,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly JobMapper $jobMapper,
+        private readonly JobPackageMapper $jobPackageMapper,
+        private readonly CompanyService $companyService,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->jobMapper = $jobMapper;
-        $this->jobPackageMapper = $jobPackageMapper;
-        $this->companyService = $companyService;
     }
 
     public function selfAction(): ViewModel

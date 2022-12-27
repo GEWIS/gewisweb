@@ -51,9 +51,7 @@ class NewCompanyUser
     )]
     protected CompanyModel $company;
 
-    /**
-     * @param CompanyModel $company
-     */
+    // phpcs:ignore Gewis.General.RequireConstructorPromotion -- not possible
     public function __construct(CompanyModel $company)
     {
         $this->id = $company->getId();

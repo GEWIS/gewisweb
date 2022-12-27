@@ -45,9 +45,7 @@ class CompanyUser implements IdentityInterface
     )]
     protected CompanyModel $company;
 
-    /**
-     * @param NewCompanyUserModel $newCompanyUser
-     */
+    // phpcs:ignore Gewis.General.RequireConstructorPromotion -- not possible
     public function __construct(NewCompanyUserModel $newCompanyUser)
     {
         $this->id = $newCompanyUser->getId();

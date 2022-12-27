@@ -15,17 +15,8 @@ use User\Model\CompanyUser as CompanyUserModel;
  */
 class CompanyIdentity extends AbstractHelper
 {
-    /**
-     * @var AuthenticationService
-     */
-    private AuthenticationService $companyUserAuthService;
-
-    /**
-     * @param AuthenticationService $companyUserAuthService
-     */
-    public function __construct(AuthenticationService $companyUserAuthService)
+    public function __construct(private readonly AuthenticationService $companyUserAuthService)
     {
-        $this->companyUserAuthService = $companyUserAuthService;
     }
 
     /**

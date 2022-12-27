@@ -22,18 +22,9 @@ use Laminas\Validator\{
 
 class CompanyUserLogin extends Form implements InputProviderInterface
 {
-    /**
-     * @var Translator
-     */
-    protected Translator $translate;
-
-    /**
-     * @param Translator $translate
-     */
-    public function __construct(Translator $translate)
+    public function __construct(private readonly Translator $translate)
     {
         parent::__construct();
-        $this->translate = $translate;
 
         $this->add(
             [

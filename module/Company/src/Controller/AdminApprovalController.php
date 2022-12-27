@@ -20,20 +20,11 @@ use User\Permissions\NotAllowedException;
  */
 class AdminApprovalController extends AbstractActionController
 {
-    private AclService $aclService;
-
-    private Translator $translator;
-
-    private CompanyService $companyService;
-
     public function __construct(
-        AclService $aclService,
-        Translator $translator,
-        CompanyService $companyService,
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly CompanyService $companyService,
     ) {
-        $this->aclService = $aclService;
-        $this->translator = $translator;
-        $this->companyService = $companyService;
     }
 
     public function jobApprovalAction(): ViewModel

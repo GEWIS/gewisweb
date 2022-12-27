@@ -13,15 +13,13 @@ class ApprovableText
 {
     use IdentifiableTrait;
 
-    /**
-     * The message accompanying the state of the approval.
-     */
-    #[Column(type: "string")]
-    protected string $message;
-
-    public function __construct(string $message)
-    {
-        $this->message = $message;
+    public function __construct(
+        /**
+         * The message accompanying the state of the approval.
+         */
+        #[Column(type: "string")]
+        protected string $message,
+    ) {
     }
 
     /**
