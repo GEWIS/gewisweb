@@ -13,8 +13,8 @@ use Laminas\Form\Element\{
 };
 use Laminas\Validator\{
     Date as DateValidator,
-    StringLength,
-};
+    Regex,
+    StringLength};
 use Laminas\I18n\Validator\Alnum;
 use Laminas\Filter\{
     StringTrim,
@@ -171,10 +171,18 @@ class Package extends LocalisableForm implements InputFilterProviderInterface
                 ],
             ],
             'contractNumber' => [
-                'required' => false,
+                'required' => true,
                 'validators' => [
                     [
-                        'name' => Alnum::class,
+                        'name' => Regex::class,
+                        'options' => [
+                            'pattern' => '/^[0-9a-zA-Z_\-\.\s]+$/',
+                            'messages' => [
+                                Regex::ERROROUS => $this->getTranslator()->translate(
+                                    'Contract numbers can only contain letters, numbers, _, -, ., and spaces'
+                                ),
+                            ],
+                        ],
                     ],
                 ],
                 'filters' => [

@@ -762,6 +762,30 @@ class Company
     }
 
     /**
+     * Move jobs from an expired package to a non-expired package.
+     */
+    public function transferJobs(array $data): bool
+    {
+        $newPackage = $this->packageMapper->find((int) $data['packages']);
+
+        if (null === $newPackage) {
+            return false;
+        }
+
+        foreach ($data['jobs'] as $formJob) {
+            /** @var JobModel|null $job */
+            if (null !== ($job = $this->jobMapper->find((int) $formJob))) {
+                $job->setPackage($newPackage);
+                $this->jobMapper->persist($job);
+            }
+        }
+
+        $this->jobMapper->flush();
+
+        return true;
+    }
+
+    /**
      * Deletes the company identified with $slug.
      *
      * @param string $slug

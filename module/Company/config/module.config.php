@@ -139,10 +139,19 @@ return [
                             ],
                         ],
                     ],
+                    'jobs_overview' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/jobs',
+                            'defaults' => [
+                                'action' => 'jobs',
+                            ],
+                        ],
+                    ],
                     'jobs' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/jobs[/:packageId]',
+                            'route' => '/jobs/:packageId',
                             'constraints' => [
                                 'packageId' => '[0-9]+',
                             ],
@@ -202,7 +211,7 @@ return [
                                 'options' => [
                                     'route' => '/transfer',
                                     'defaults' => [
-                                        'action' => 'transferJob',
+                                        'action' => 'transferJobs',
                                     ],
                                 ],
                             ],

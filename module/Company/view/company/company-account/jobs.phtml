@@ -11,7 +11,7 @@ if (isset($packages)) {
         ->addBreadcrumb($this->translate('Jobs'), true);
 } else {
     $this->breadcrumbs()
-        ->addBreadcrumb($this->translate('Jobs'), true, $this->url('company_account/jobs'))
+        ->addBreadcrumb($this->translate('Jobs'), true, $this->url('company_account/jobs_overview'))
         ->addBreadcrumb($package->getContractNumber() ?? '-', true);
 }
 ?>
@@ -163,6 +163,7 @@ if (isset($packages)) {
                 </div>
             </div>
         <?php elseif (isset($jobs)): ?>
+            <?php $isExpired = $package->isExpired(); ?>
             <div class="row">
                 <div class="col-md-12">
                     <h2><?= $this->translate('Jobs') ?></h2>
@@ -210,16 +211,18 @@ if (isset($packages)) {
                                                ) ?>">
                                                 <?= $this->translate('Details') ?>
                                             </a>
-                                            <a class="btn btn-xs btn-primary"
-                                               href="<?= $this->url(
-                                                   'company_account/jobs/edit',
-                                                   [
-                                                       'packageId' => $package->getId(),
-                                                       'jobId' => $job->getId(),
-                                                   ],
-                                               ) ?>">
-                                                <?= $this->translate('Edit') ?>
-                                            </a>
+                                            <?php if (!$isExpired): ?>
+                                                <a class="btn btn-xs btn-primary"
+                                                   href="<?= $this->url(
+                                                       'company_account/jobs/edit',
+                                                       [
+                                                           'packageId' => $package->getId(),
+                                                           'jobId' => $job->getId(),
+                                                       ],
+                                                   ) ?>">
+                                                    <?= $this->translate('Edit') ?>
+                                                </a>
+                                            <?php endif; ?>
                                             <button class="btn btn-danger btn-xs delete-job"
                                                     data-target="#deleteModal"
                                                     data-job-id="<?= $job->getId() ?>"
@@ -237,17 +240,17 @@ if (isset($packages)) {
                 </div>
             </div>
             <div class="row">
-                <?php if ($package->isExpired() && 0 !== count($jobs)): ?>
+                <?php if ($isExpired && 0 !== count($jobs)): ?>
                     <div class="col-md-12">
                         <a class="btn btn-primary" href="<?= $this->url(
                             'company_account/jobs/transfer',
                             ['packageId' => $package->getId()],
                         ) ?>">
-                            <span class="fas fa-plus"></span>
+                            <span class="fas fa-arrow-right"></span>
                             <?= $this->translate('Transfer Jobs') ?>
                         </a>
                     </div>
-                <?php elseif (!$package->isExpired()): ?>
+                <?php elseif (!$isExpired): ?>
                     <div class="col-md-12">
                         <a class="btn btn-primary" href="<?= $this->url(
                             'company_account/jobs/add',

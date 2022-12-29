@@ -124,6 +124,21 @@ class Package extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * Get non-expired packages for a specific company.
+     *
+     * @return array<array-key, CompanyJobPackageModel>
+     */
+    public function findNonExpiredPackages(CompanyModel $company): array
+    {
+        $qb = $this->getRepository()->createQueryBuilder('p');
+        $qb->where('p.company = :company')
+            ->andWhere('p.expires > CURRENT_DATE()')
+            ->setParameter('company', $company);
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function createPackage(CompanyPackageTypes $type): CompanyPackageModel
     {
         return match ($type) {

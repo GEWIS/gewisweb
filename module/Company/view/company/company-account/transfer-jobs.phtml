@@ -1,0 +1,77 @@
+<?php
+$this->headTitle($this->translate('Transfer Jobs'));
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Jobs'), true, $this->url('company_account/jobs_overview'));
+
+$form->prepare();
+$form->setAttribute('class', 'form-company');
+?>
+<div class="row">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Transfer Jobs') ?></h2>
+    </div>
+</div>
+<div class="row">
+    <?= $this->form()->openTag($form) ?>
+    <div class="col-md-9">
+        <p><?= $this->translate('Select the jobs that you want to transfer to another job package.') ?></p>
+        <?php
+        $jobs = $form->get('jobs');
+        $jobsName = $jobs->getName();
+        $jobsOptions = $jobs->getValueOptions();
+        $jobsSelectedValues = $jobs->getValue();
+
+        if (!empty($jobsSelectedValues)) {
+            $selectedJobIds = [];
+
+            foreach ($jobsSelectedValues as $job) {
+                $selectedJobIds[] = is_string($job) ? $job : $job['id'];
+            }
+        }
+        ?>
+        <fieldset>
+            <label class="control-label label-required"><?= $jobs->getLabel() ?></label>
+            <?php if (empty($jobsOptions)): ?>
+                <p><em><?= $this->translate('There are no jobs that you can transfer...') ?></em></p>
+            <?php else: ?>
+                <?php foreach ($jobsOptions as $option => $value): ?>
+                    <?php
+                    $checked = (isset($selectedJobIds) && in_array($option, $selectedJobIds)) ? 'checked' : '';
+                    ?>
+                    <label for="<?= $jobsName ?>-<?= $option ?>">
+                        <input type="checkbox" name="<?= $jobsName ?>[]" id="<?= $jobsName ?>-<?= $option; ?>"
+                               value="<?= $option ?>" <?= $checked ?>>
+                        <?= $this->escapeHtml($this->localiseText($value)) ?>
+                    </label>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </fieldset>
+    </div>
+    <div class="col-md-3">
+        <p><?= $this->translate('Choose to which job package you want to transfer the selected jobs.') ?></p>
+        <?php
+        $packages = $form->get('packages')
+            ->setAttribute('class', 'form-control')
+            ->setAttribute('id', 'packages');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($packages) ?>">
+            <label for="<?= $packages->getAttribute('id') ?>" class="control-label label-required">
+                <?= $packages->getLabel() ?>
+            </label>
+            <?= $this->formSelect($packages) ?>
+            <?= $this->formElementErrors($packages) ?>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <?php
+        $submit = $form->get('submit')
+            ->setAttribute('value', $this->translate('Move Jobs'))
+            ->setAttribute('class', 'btn btn-primary pull-right');
+        ?>
+        <div class="form-group">
+            <?= $this->formSubmit($submit) ?>
+        </div>
+    </div>
+    <?= $this->form()->closeTag($form) ?>
+</div>

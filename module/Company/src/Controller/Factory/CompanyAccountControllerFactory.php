@@ -26,6 +26,7 @@ class CompanyAccountControllerFactory implements FactoryInterface
             $container->get(MvcTranslator::class),
             $container->get('company_mapper_job'),
             $container->get('company_mapper_package'),
+            $container->get('company_admin_jobsTransfer_form'),
             $container->get('company_service_company'),
         );
     }

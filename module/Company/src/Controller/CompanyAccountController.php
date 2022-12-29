@@ -3,6 +3,7 @@
 namespace Company\Controller;
 
 use Application\Model\Enums\ApprovableStatus;
+use Company\Form\JobsTransfer as JobsTransferForm;
 use Company\Mapper\{
     Package as JobPackageMapper,
     Job as JobMapper,
@@ -33,6 +34,7 @@ class CompanyAccountController extends AbstractActionController
         private readonly Translator $translator,
         private readonly JobMapper $jobMapper,
         private readonly JobPackageMapper $jobPackageMapper,
+        private readonly JobsTransferForm $jobsTransferForm,
         private readonly CompanyService $companyService,
     ) {
     }
@@ -71,7 +73,7 @@ class CompanyAccountController extends AbstractActionController
         $company = $this->aclService->getCompanyUserIdentityOrThrowException()->getCompany();
 
         // `packageId` is an optional part of the route and can be used to display jobs specific to that job package. It
-        // is null of it was not specified.
+        // is null if it was not specified (`jobs_overview` route).
         if (null !== ($packageId = $this->params('packageId'))) {
             $package = $this->jobPackageMapper->find($packageId);
 
@@ -108,14 +110,6 @@ class CompanyAccountController extends AbstractActionController
 
     public function addJobAction(): ViewModel|Response
     {
-        // This is a bit confusing, but to prevent us from having an extra layer of child routes the `packageId` part
-        // of the route is not required. However, it is necessary to perform the actions here, hence without it, the
-        // route is invalid, and as such we should display an error 404. This applies to the `addJob`, `editJob`, and
-        // `deleteJob` actions.
-        if (null === ($packageId = $this->params('packageId'))) {
-            return $this->notFoundAction();
-        }
-
         if (!$this->aclService->isAllowed('createOwn', 'job')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to create jobs')
@@ -123,6 +117,7 @@ class CompanyAccountController extends AbstractActionController
         }
 
         // Get the specified package and company user (through ACL, as it is already included).
+        $packageId = $this->params()->fromRoute('packageId');
         /** @var CompanyJobPackageModel|null $package */
         $package = $this->jobPackageMapper->find($packageId);
         $companySlugName = $this->aclService->getCompanyUserIdentityOrThrowException()->getCompany()->getSlugName();
@@ -192,14 +187,24 @@ class CompanyAccountController extends AbstractActionController
 
     public function editJobAction(): ViewModel
     {
-        if (null === ($packageId = $this->params('packageId'))) {
-            return $this->notFoundAction();
-        }
-
         if (!$this->aclService->isAllowed('editOwn', 'job')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to edit jobs')
             );
+        }
+
+        $packageId = (int) $this->params()->fromRoute('packageId');
+        $jobId = (int) $this->params()->fromRoute('jobId');
+        $companySlugName = $this->aclService->getCompanyUserIdentityOrThrowException()->getCompany()->getSlugName();
+        $job = $this->jobMapper->findByPackageAndCompany(
+            $companySlugName,
+            $packageId,
+            $jobId,
+        );
+
+        // Check if the job exists (and the associated package) and that it belongs to the company of the company user.
+        if (null === $job) {
+            return $this->notFoundAction();
         }
 
         return new ViewModel([]);
@@ -207,14 +212,24 @@ class CompanyAccountController extends AbstractActionController
 
     public function deleteJobAction(): ViewModel
     {
-        if (null === ($packageId = $this->params('packageId'))) {
-            return $this->notFoundAction();
-        }
-
         if (!$this->aclService->isAllowed('deleteOwn', 'job')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to delete jobs')
             );
+        }
+
+        $packageId = (int) $this->params()->fromRoute('packageId');
+        $jobId = (int) $this->params()->fromRoute('jobId');
+        $companySlugName = $this->aclService->getCompanyUserIdentityOrThrowException()->getCompany()->getSlugName();
+        $job = $this->jobMapper->findByPackageAndCompany(
+            $companySlugName,
+            $packageId,
+            $jobId,
+        );
+
+        // Check if the job exists (and the associated package) and that it belongs to the company of the company user.
+        if (null === $job) {
+            return $this->notFoundAction();
         }
 
         return new ViewModel([]);
@@ -222,32 +237,86 @@ class CompanyAccountController extends AbstractActionController
 
     public function statusJobAction(): ViewModel
     {
-        if (null === ($packageId = $this->params('packageId'))) {
-            return $this->notFoundAction();
-        }
-
         if (!$this->aclService->isAllowed('statusOwn', 'job')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view the status of a job')
             );
         }
 
-        return new ViewModel([]);
-    }
+        $packageId = (int) $this->params()->fromRoute('packageId');
+        $jobId = (int) $this->params()->fromRoute('jobId');
+        $companySlugName = $this->aclService->getCompanyUserIdentityOrThrowException()->getCompany()->getSlugName();
+        $job = $this->jobMapper->findByPackageAndCompany(
+            $companySlugName,
+            $packageId,
+            $jobId,
+        );
 
-    public function transferJobAction(): ViewModel
-    {
-        if (null === ($packageId = $this->params('packageId'))) {
+        // Check if the job exists (and the associated package) and that it belongs to the company of the company user.
+        if (null === $job) {
             return $this->notFoundAction();
         }
 
+        return new ViewModel([]);
+    }
+
+    public function transferJobsAction(): Response|ViewModel
+    {
         if (!$this->aclService->isAllowed('transferOwn', 'job')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to transfer jobs')
             );
         }
 
-        return new ViewModel([]);
+        // Get the specified package and company user (through ACL, as it is already included).
+        $packageId = $this->params()->fromRoute('packageId');
+        /** @var CompanyJobPackageModel|null $package */
+        $package = $this->jobPackageMapper->find($packageId);
+        $company = $this->aclService->getCompanyUserIdentityOrThrowException()->getCompany();
+        $companySlugName = $company->getSlugName();
+
+        // Check if the package exists and if it belongs to the company of the company user.
+        if (
+            null === $package
+            || $package->getCompany()->getSlugName() !== $companySlugName
+            || !$package->isExpired()
+        ) {
+            return $this->notFoundAction();
+        }
+
+        $form = $this->jobsTransferForm;
+        $form->populateValueOptions(
+            $package->getJobs()->toArray(),
+            $this->jobPackageMapper->findNonExpiredPackages($company),
+        );
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $form->setData($request->getPost()->toArray());
+
+            if ($form->isValid()) {
+                if ($this->companyService->transferJobs($form->getData())) {
+                    $this->flashMessenger()->addSuccessMessage(
+                        $this->translator->translate('Jobs successfully transferred')
+                    );
+
+                    return $this->redirect()->toRoute(
+                        'company_account/jobs',
+                        ['packageId' => (int) $form->getData()['packages']],
+                    );
+                } else {
+                    $this->flashMessenger()->addErrorMessage(
+                        $this->translator->translate(
+                            'An unknown error occurred while trying to transfer jobs, please try again.'
+                        )
+                    );
+                }
+            }
+        }
+
+        return new ViewModel([
+            'form' => $form,
+        ]);
     }
 
     public function highlightsAction(): ViewModel

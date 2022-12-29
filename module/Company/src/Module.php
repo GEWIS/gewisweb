@@ -8,6 +8,7 @@ use Company\Form\{
     Company as CompanyForm,
     Job as JobForm,
     JobLabel as JobLabelForm,
+    JobsTransfer as JobsTransferForm,
     Package as PackageForm,
 };
 use Company\Mapper\{
@@ -86,6 +87,9 @@ class Module
                     $container->get('company_mapper_jobcategory')->findAll(),
                     $container->get('company_mapper_joblabel')->findAll(),
                 );
+            },
+            'company_admin_jobsTransfer_form' => function (ContainerInterface $container) {
+                return new JobsTransferForm($container->get(MvcTranslator::class));
             },
         ];
     }

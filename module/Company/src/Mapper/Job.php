@@ -104,6 +104,22 @@ class Job extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    public function findByPackageAndCompany(
+        string $companySlugName,
+        int $packageId,
+        int $jobId,
+    ): ?JobModel {
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->innerJoin('j.package', 'p', 'WITH', 'p.id = :packageId')
+            ->innerJoin('p.company', 'c', 'WITH', 'c.slugName = :companySlugName')
+            ->where('j.id = :jobId')
+            ->setParameter('jobId', $jobId)
+            ->setParameter('packageId', $packageId)
+            ->setParameter('companySlugName', $companySlugName);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
     /**
      * Get the `$count` most recent jobs for a company with a specific status.
      *
@@ -117,14 +133,13 @@ class Job extends BaseMapper
         $qb = $this->getRepository()->createQueryBuilder('j');
         $qb->innerJoin('j.package', 'p')
             ->innerJoin('p.company', 'c')
-            ->where('p.expires > :now')
+            ->where('p.expires > CURRENT_DATE()')
             ->andWhere('j.approved = :status')
             ->andWhere('c.slugName = :slugName')
             ->orderBy('j.id', 'DESC')
             ->setMaxResults($count);
 
-        $qb->setParameter('now', new DateTime())
-            ->setParameter('status', $status)
+        $qb->setParameter('status', $status)
             ->setParameter('slugName', $companySlugName);
 
         return $qb->getQuery()->getResult();
