@@ -210,12 +210,16 @@ class CompanyAccountController extends AbstractActionController
         return new ViewModel([]);
     }
 
-    public function deleteJobAction(): ViewModel
+    public function deleteJobAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('deleteOwn', 'job')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to delete jobs')
             );
+        }
+
+        if (!$this->getRequest()->isPost()) {
+            return $this->notFoundAction();
         }
 
         $packageId = (int) $this->params()->fromRoute('packageId');
@@ -232,7 +236,10 @@ class CompanyAccountController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        return new ViewModel([]);
+        $this->companyService->deleteJob($job);
+        $this->flashMessenger()->addSuccessMessage($this->translator->translate('Job successfully deleted.'));
+
+        return $this->redirect()->toRoute('company_account/jobs', ['packageId' => $packageId]);
     }
 
     public function statusJobAction(): ViewModel

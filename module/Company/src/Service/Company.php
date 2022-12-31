@@ -754,8 +754,12 @@ class Company
      */
     public function deleteJob(JobModel $job): void
     {
-        if (!$this->aclService->isAllowed('delete', 'job')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to delete jobs'));
+        if (null !== ($dutchAttachment = $job->getAttachment()->getValueNL())) {
+            $this->storageService->removeFile($dutchAttachment);
+        }
+
+        if (null !== ($englishAttachment = $job->getAttachment()->getValueEN())) {
+            $this->storageService->removeFile($englishAttachment);
         }
 
         $this->jobMapper->remove($job);
