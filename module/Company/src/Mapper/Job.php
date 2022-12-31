@@ -5,7 +5,6 @@ namespace Company\Mapper;
 use Application\Mapper\BaseMapper;
 use Application\Model\Enums\ApprovableStatus;
 use Company\Model\Job as JobModel;
-use DateTime;
 use Doctrine\ORM\Query\Expr\Join;
 
 /**
@@ -63,7 +62,10 @@ class Job extends BaseMapper
         $qb->join('j.package', 'p')
             ->addSelect('p')
             ->join('p.company', 'c')
-            ->addSelect('c');
+            ->addSelect('c')
+            ->where('j.isUpdate = :isUpdate');
+
+        $qb->setParameter('isUpdate', false);
 
         if (null !== $jobCategoryId) {
             $qb->join('j.category', 'cat')
@@ -134,12 +136,14 @@ class Job extends BaseMapper
         $qb->innerJoin('j.package', 'p')
             ->innerJoin('p.company', 'c')
             ->where('p.expires > CURRENT_DATE()')
+            ->andWhere('j.isUpdate = :isUpdate')
             ->andWhere('j.approved = :status')
             ->andWhere('c.slugName = :slugName')
             ->orderBy('j.id', 'DESC')
             ->setMaxResults($count);
 
-        $qb->setParameter('status', $status)
+        $qb->setParameter('isUpdate', false)
+            ->setParameter('status', $status)
             ->setParameter('slugName', $companySlugName);
 
         return $qb->getQuery()->getResult();

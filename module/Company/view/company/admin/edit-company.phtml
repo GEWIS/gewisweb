@@ -126,7 +126,11 @@ $form->setAttribute('class', 'form-company');
                                 if (CompanyPackageTypes::Featured === $package->getType()) {
                                     echo $this->translate('Featured Package');
                                 } else {
-                                    echo sprintf('%d (%d)', $package->getJobs()->count(), $package->getNumberOfActiveJobs());
+                                    echo sprintf(
+                                        '%d (%d)',
+                                        $package->getJobsWithoutProposals()->count(),
+                                        $package->getNumberOfActiveJobs(),
+                                    );
                                 }
                             } ?>
                         </td>

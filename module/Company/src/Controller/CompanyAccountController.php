@@ -75,6 +75,7 @@ class CompanyAccountController extends AbstractActionController
         // `packageId` is an optional part of the route and can be used to display jobs specific to that job package. It
         // is null if it was not specified (`jobs_overview` route).
         if (null !== ($packageId = $this->params('packageId'))) {
+            /** @var CompanyJobPackageModel|null $package */
             $package = $this->jobPackageMapper->find($packageId);
 
             // Check if the package exists and if it belongs to the company of the company user.
@@ -85,7 +86,7 @@ class CompanyAccountController extends AbstractActionController
                 return $this->notFoundAction();
             }
 
-            $result['jobs'] = $package->getJobs();
+            $result['jobs'] = $package->getJobsWithoutProposals();
             $result['package'] = $package;
         } else {
             $result['packages'] = $this->jobPackageMapper->findJobPackagesByCompany($company);
@@ -132,7 +133,7 @@ class CompanyAccountController extends AbstractActionController
 
         if ((new DateTime()) >= $package->getExpirationDate()) {
             $this->flashMessenger()->addErrorMessage(
-                $this->translator->translate('You cannot create new vacancies in expired job packages.')
+                $this->translator->translate('You cannot create new jobs in expired job packages.')
             );
 
             return $this->redirect()->toRoute('company_account/jobs', ['packageId' => $packageId]);
@@ -185,7 +186,7 @@ class CompanyAccountController extends AbstractActionController
         );
     }
 
-    public function editJobAction(): ViewModel
+    public function editJobAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('editOwn', 'job')) {
             throw new NotAllowedException(
@@ -207,7 +208,73 @@ class CompanyAccountController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        return new ViewModel([]);
+        if ((new DateTime()) >= $job->getPackage()->getExpirationDate()) {
+            $this->flashMessenger()->addErrorMessage(
+                $this->translator->translate('You cannot update jobs in expired job packages.')
+            );
+
+            return $this->redirect()->toRoute('company_account/jobs', ['packageId' => $packageId]);
+        }
+
+        $jobForm = $this->companyService->getJobForm();
+        $updateProposals = $job->getUpdateProposals();
+
+        if (0 !== $updateProposals->count()) {
+            // If there are already updates proposed for this job, show the last update proposal instead.
+            $job = $updateProposals->last()->getProposal();
+        }
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = array_merge_recursive(
+                $request->getPost()->toArray(),
+                $request->getFiles()->toArray(),
+            );
+
+            $jobForm->setData($post);
+            $jobForm->setCompanySlug($companySlugName);
+            $jobForm->setCurrentSlug($job->getSlugName());
+
+            if ($jobForm->isValid()) {
+                if (false !== $this->companyService->updateJob($job, $jobForm->getData())) {
+                    $this->flashMessenger()->addSuccessMessage(
+                        $this->translator->translate('Update proposal for job successfully created! It will become active after it has been approved.')
+                    );
+
+                    return $this->redirect()->toRoute(
+                        'company_account/jobs',
+                        [
+                            'packageId' => $packageId,
+                        ]
+                    );
+                }
+            }
+        }
+
+        // Initialize the form
+        $jobData = $job->toArray();
+        $jobData['language_dutch'] = null !== $jobData['description'];
+        $jobData['language_english'] = null !== $jobData['descriptionEn'];
+        $jobData['category'] = $job->getCategory()->getId();
+        $jobForm->setData($jobData);
+        $jobForm->setAttribute(
+            'action',
+            $this->url()->fromRoute(
+                'company_account/jobs/edit',
+                [
+                    'packageId' => $packageId,
+                    'jobId' => $jobId,
+                ]
+            )
+        );
+
+        // Initialize the view
+        return new ViewModel(
+            [
+                'form' => $jobForm,
+                'attachments' => $job->getAttachment(),
+            ]
+        );
     }
 
     public function deleteJobAction(): Response|ViewModel
@@ -293,7 +360,7 @@ class CompanyAccountController extends AbstractActionController
 
         $form = $this->jobsTransferForm;
         $form->populateValueOptions(
-            $package->getJobs()->toArray(),
+            $package->getJobsWithoutProposals()->toArray(),
             $this->jobPackageMapper->findNonExpiredPackages($company),
         );
 

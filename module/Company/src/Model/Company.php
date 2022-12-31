@@ -2,12 +2,12 @@
 
 namespace Company\Model;
 
-use Application\Model\Enums\ApprovableStatus;
 use Application\Model\Traits\{
     ApprovableTrait,
     IdentifiableTrait,
     TimestampableTrait,
 };
+use Company\Model\Enums\CompanyPackageTypes;
 use Company\Model\{
     JobCategory as JobCategoryModel,
     Proposals\CompanyUpdate as CompanyUpdateProposal,
@@ -509,9 +509,10 @@ class Company implements ResourceInterface
      */
     public function getNumberOfJobs(): int
     {
-        $jobCount = function ($package) {
-            if ('job' === $package->getType()) {
-                return $package->getJobs()->count();
+        $jobCount = function (CompanyPackage $package) {
+            if (CompanyPackageTypes::Job === $package->getType()) {
+                /** @var CompanyJobPackage $package */
+                return $package->getJobsWithoutProposals()->count();
             }
 
             return 0;
@@ -530,8 +531,9 @@ class Company implements ResourceInterface
      */
     public function getNumberOfActiveJobs(?JobCategoryModel $category = null): int
     {
-        $jobCount = function ($package) use ($category) {
-            if ('job' === $package->getType()) {
+        $jobCount = function (CompanyPackage $package) use ($category) {
+            if (CompanyPackageTypes::Job === $package->getType()) {
+                /** @var CompanyJobPackage $package */
                 return $package->getNumberOfActiveJobs($category);
             }
 
@@ -551,8 +553,8 @@ class Company implements ResourceInterface
         return count(
             array_filter(
                 $this->getPackages()->toArray(),
-                function ($package) {
-                    return $package->isExpired(new DateTime());
+                function (CompanyPackage $package) {
+                    return $package->isExpired();
                 }
             )
         );
@@ -567,8 +569,8 @@ class Company implements ResourceInterface
     {
         $featuredPackages = array_filter(
             $this->getPackages()->toArray(),
-            function ($package) {
-                return 'featured' === $package->getType() && $package->isActive();
+            function (CompanyPackage $package) {
+                return CompanyPackageTypes::Featured === $package->getType() && $package->isActive();
             }
         );
 
@@ -584,8 +586,8 @@ class Company implements ResourceInterface
     {
         $banners = array_filter(
             $this->getPackages()->toArray(),
-            function ($package) {
-                return 'banner' === $package->getType() && $package->isActive();
+            function (CompanyPackage $package) {
+                return CompanyPackageTypes::Banner === $package->getType() && $package->isActive();
             }
         );
 

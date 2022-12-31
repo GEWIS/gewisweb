@@ -63,7 +63,7 @@ if (isset($packages)) {
                                     <td>
                                         <?= sprintf(
                                             '%d (%d)',
-                                            $package->getJobs()->count(),
+                                            $package->getJobsWithoutProposals()->count(),
                                             $package->getNumberOfActiveJobs(),
                                         ) ?>
                                     </td>
@@ -199,6 +199,9 @@ if (isset($packages)) {
                                             $icons = ['fa-circle-question', 'fa-circle-check', 'fa-circle-xmark'];
                                             ?>
                                             <span class="fas <?= $icons[$job->getApproved()->value] ?>"></span>
+                                            <?php if (0 !== $job->getUpdateProposals()->count()): ?>
+                                                <span class="fas fa-circle-question"></span>
+                                            <?php endif; ?>
                                         </td>
                                         <td>
                                             <a class="btn btn-xs btn-primary"

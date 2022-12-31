@@ -17,7 +17,7 @@ class JobUpdate
     use IdentifiableTrait;
 
     /**
-     * The current company, to which an update is proposed.
+     * The current job, to which an update is proposed.
      */
     #[ManyToOne(
         targetEntity: JobModel::class,
@@ -27,7 +27,7 @@ class JobUpdate
         referencedColumnName: "id",
         nullable: false,
     )]
-    protected JobModel $current;
+    protected JobModel $original;
 
     /**
      * The proposed update of the company.
@@ -40,23 +40,23 @@ class JobUpdate
     protected JobModel $proposal;
 
     /**
-     * @return JobModel
+     * Get the original `Job`.
      */
-    public function getCurrent(): JobModel
+    public function getOriginal(): JobModel
     {
-        return $this->current;
+        return $this->original;
     }
 
     /**
-     * @param JobModel $current
+     * Set the original `Job`.
      */
-    public function setCurrent(JobModel $current): void
+    public function setOriginal(JobModel $original): void
     {
-        $this->current = $current;
+        $this->original = $original;
     }
 
     /**
-     * @return JobModel
+     * Get the proposed update of `$original`.
      */
     public function getProposal(): JobModel
     {
@@ -64,7 +64,7 @@ class JobUpdate
     }
 
     /**
-     * @param JobModel $proposal
+     * Set the proposed update for `$original`.
      */
     public function setProposal(JobModel $proposal): void
     {

@@ -6,8 +6,9 @@ use Application\Model\Traits\{
     ApprovableTrait,
     IdentifiableTrait,
     TimestampableTrait,
+    UpdateProposableTrait,
 };
-use Company\Model\Proposals\JobUpdate as JobUpdateProposal;
+use Company\Model\Proposals\JobUpdate as JobUpdateProposalModel;
 use Doctrine\Common\Collections\{
     ArrayCollection,
     Collection,
@@ -35,6 +36,7 @@ class Job implements ResourceInterface
     use IdentifiableTrait;
     use TimestampableTrait;
     use ApprovableTrait;
+    use UpdateProposableTrait;
 
     /**
      * The job's slug name.
@@ -190,8 +192,8 @@ class Job implements ResourceInterface
      * Proposed updates to this job.
      */
     #[OneToMany(
-        targetEntity: JobUpdateProposal::class,
-        mappedBy: "current",
+        targetEntity: JobUpdateProposalModel::class,
+        mappedBy: "original",
         fetch: "EXTRA_LAZY",
     )]
     protected Collection $updateProposals;
@@ -279,6 +281,7 @@ class Job implements ResourceInterface
     {
         return $this->isApproved()
             && $this->isPublished()
+            && !$this->isUpdate()
             && $this->getPackage()->isActive()
             && !$this->getPackage()->getCompany()->isHidden();
     }

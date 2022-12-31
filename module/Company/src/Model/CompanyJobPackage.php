@@ -2,7 +2,6 @@
 
 namespace Company\Model;
 
-use Application\Model\Enums\ApprovableStatus;
 use Company\Model\Enums\CompanyPackageTypes;
 use Company\Model\JobCategory as JobCategoryModel;
 use Doctrine\Common\Collections\{
@@ -47,6 +46,16 @@ class CompanyJobPackage extends CompanyPackage
     }
 
     /**
+     * Get the jobs in the package, but without any that are actually update proposals.
+     */
+    public function getJobsWithoutProposals(): Collection
+    {
+        return $this->jobs->filter(function (Job $job) {
+            return !$job->isUpdate();
+        });
+    }
+
+    /**
      * Get the number of jobs in the package.
      *
      * @param JobCategoryModel|null $category
@@ -67,12 +76,12 @@ class CompanyJobPackage extends CompanyPackage
      */
     public function getJobsInCategory(?JobCategoryModel $category = null): array
     {
-        $filter = function ($job) use ($category) {
+        $filter = function (Job $job) use ($category) {
             if (null === $category) {
-                return $job->isActive() && $job->isApproved();
+                return $job->isActive() && $job->isApproved() && !$job->isUpdate();
             }
 
-            return $job->getCategory() === $category && $job->isActive() && $job->isApproved();
+            return $job->getCategory() === $category && $job->isActive() && $job->isApproved() && !$job->isUpdate();
         };
 
         return array_filter($this->jobs->toArray(), $filter);

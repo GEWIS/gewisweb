@@ -72,7 +72,7 @@ $form->setAttribute('class', 'form-company');
                 <th><?= $this->translate('Actions') ?></th>
             </tr>
         </thead>
-        <?php foreach ($package->getJobs() as $job): ?>
+        <?php foreach ($package->getJobsWithoutProposals() as $job): ?>
             <tr>
                 <td><?= $this->escapeHtml($this->localiseText($job->getName())) ?></td>
                 <td><?= $job->isActive() ? $this->translate('Yes') : $this->translate('No') ?></td>

@@ -33,7 +33,8 @@ use Company\Model\{
     JobCategory as JobCategoryModel,
     JobLabel as JobLabelModel,
     Proposals\CompanyUpdate as CompanyUpdateProposal,
-    Proposals\JobUpdate as JobUpdateProposal};
+    Proposals\JobUpdate as JobUpdateProposalModel,
+};
 use DateTime;
 use Doctrine\ORM\{
     NonUniqueResultException,
@@ -587,13 +588,13 @@ class Company
         CompanyJobPackageModel $package,
         array $data,
     ): JobModel|bool {
-        $job = new JobModel();
 
         $category = $this->categoryMapper->find($data['category']);
         if (null === $category) {
             return false;
         }
 
+        $job = new JobModel();
         $job->setSlugName($data['slugName']);
         $job->setCategory($category);
         $job->setPublished($data['published']);
@@ -715,11 +716,14 @@ class Company
                 return false;
             }
 
-            $companyUpdateProposal = new JobUpdateProposal();
-            $companyUpdateProposal->setCurrent($job);
-            $companyUpdateProposal->setProposal($updateProposal);
+            $updateProposal->setIsUpdate(true);
+
+            $jobUpdateProposal = new JobUpdateProposalModel();
+            $jobUpdateProposal->setOriginal($job);
+            $jobUpdateProposal->setProposal($updateProposal);
 
             $this->jobMapper->persist($updateProposal);
+            $this->jobMapper->persist($jobUpdateProposal);
 
             // TODO: Send e-mail to CEB/C4 about proposed changes.
         }
@@ -760,6 +764,11 @@ class Company
 
         if (null !== ($englishAttachment = $job->getAttachment()->getValueEN())) {
             $this->storageService->removeFile($englishAttachment);
+        }
+
+        /** @var JobUpdateProposalModel $jobUpdateProposal */
+        foreach ($job->getUpdateProposals() as $jobUpdateProposal) {
+            $this->deleteJob($jobUpdateProposal->getProposal());
         }
 
         $this->jobMapper->remove($job);
