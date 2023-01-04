@@ -422,6 +422,16 @@ return [
                             ],
                         ],
                     ],
+                    'approval_queue' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/approvals',
+                            'defaults' => [
+                                'controller' => AdminApprovalController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
                     'categories' => [
                         'type' => Literal::class,
                         'options' => [

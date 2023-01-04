@@ -24,6 +24,8 @@ class AdminApprovalControllerFactory implements FactoryInterface
         return new AdminApprovalController(
             $container->get('company_service_acl'),
             $container->get(MvcTranslator::class),
+            $container->get('company_mapper_company'),
+            $container->get('company_mapper_job'),
             $container->get('company_service_company'),
         );
     }

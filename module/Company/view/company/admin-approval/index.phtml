@@ -1,0 +1,86 @@
+<?php
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Career'), true, $this->url('company_admin'))
+    ->addBreadcrumb($this->translate('Approvals'));
+?>
+<div class="row">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Unapproved Companies') ?></h2>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th><?= $this->translate('Name') ?></th>
+                    <th><?= $this->translate('Actions') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (0 === count($companies)): ?>
+                    <tr class="text-center">
+                        <td colspan="2">
+                            <?= $this->translate('There are no companies that require your approval.') ?>
+                        </td>
+                    </tr>
+                <?php else: ?>
+
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Unapproved Jobs') ?></h2>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th><?= $this->translate('Dutch Slug') ?></th>
+                    <th><?= $this->translate('English Slug') ?></th>
+                    <th><?= $this->translate('Company') ?></th>
+                    <th><?= $this->translate('Status') ?></th>
+                    <th><?= $this->translate('Actions') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (0 === count($jobs)): ?>
+                    <tr class="text-center">
+                        <td colspan="5">
+                            <?= $this->translate('There are no jobs that require your approval.') ?>
+                        </td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($jobs as $job): ?>
+                        <tr>
+                            <td><?= $this->escapeHtml($job->getName()->getValueNL()) ?></td>
+                            <td><?= $this->escapeHtml($job->getName()->getValueEN()) ?></td>
+                            <td><?= $this->escapeHtml($job->getPackage()->getCompany()->getName())?></td>
+                            <td>
+                                <?php if ($job->isUpdate()): ?>
+                                    <?= $this->translate('Update') ?>
+                                <?php else: ?>
+                                    <?= $this->translate('New') ?>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <a class="btn btn-xs btn-primary"
+                                   href="<?= $this->url(
+                                       'company_admin/company/edit/package/edit/job/approval',
+                                       [
+                                           'companySlugName' => $job->getPackage()->getCompany()->getSlugName(),
+                                           'packageId' => $job->getPackage()->getId(),
+                                           'jobId' => $job->getId(),
+                                       ],
+                                   ) ?>">
+                                    <?= $this->translate('Details') ?>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

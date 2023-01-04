@@ -3,6 +3,10 @@
 namespace Company\Controller;
 
 use Application\Form\ModifyRequest as RequestForm;
+use Company\Mapper\{
+    Company as CompanyMapper,
+    Job as JobMapper,
+};
 use Company\Service\{
     AclService,
     Company as CompanyService,
@@ -23,8 +27,42 @@ class AdminApprovalController extends AbstractActionController
     public function __construct(
         private readonly AclService $aclService,
         private readonly Translator $translator,
+        private readonly CompanyMapper $companyMapper,
+        private readonly JobMapper $jobMapper,
         private readonly CompanyService $companyService,
     ) {
+    }
+
+    public function indexAction(): ViewModel
+    {
+        $approveCompanies = $this->aclService->isAllowed('approve', 'company');
+        $approveJobs = $this->aclService->isAllowed('approve', 'job');
+
+        if (
+            !$approveCompanies
+            && !$approveJobs
+        ) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view the approval status of jobs')
+            );
+        }
+
+        $companies = [];
+        if ($approveCompanies) {
+            $companies = $this->companyMapper->findUpdateProposals();
+        }
+
+        $jobs = [];
+        if ($approveJobs) {
+            $jobs = $this->jobMapper->findUpdateProposals();
+        }
+
+        return new ViewModel(
+            [
+                'companies' => $companies,
+                'jobs' => $jobs,
+            ]
+        );
     }
 
     public function jobApprovalAction(): ViewModel

@@ -78,6 +78,14 @@ class Company extends BaseMapper
     }
 
     /**
+     * @return array<array-key, CompanyModel>
+     */
+    public function findUpdateProposals(): array
+    {
+        return $this->getRepository()->findBy(['approved' => ApprovableStatus::Unapproved]);
+    }
+
+    /**
      * @inheritDoc
      */
     protected function getRepositoryName(): string

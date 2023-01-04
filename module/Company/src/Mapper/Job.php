@@ -150,6 +150,14 @@ class Job extends BaseMapper
     }
 
     /**
+     * @return array<array-key, JobModel>
+     */
+    public function findUpdateProposals(): array
+    {
+        return $this->getRepository()->findBy(['approved' => ApprovableStatus::Unapproved]);
+    }
+
+    /**
      * @inheritDoc
      */
     protected function getRepositoryName(): string
