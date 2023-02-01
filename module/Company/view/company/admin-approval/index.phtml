@@ -37,10 +37,9 @@ $this->breadcrumbs()
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th><?= $this->translate('Dutch Slug') ?></th>
-                    <th><?= $this->translate('English Slug') ?></th>
+                    <th><?= $this->translate('Dutch Name') ?></th>
+                    <th><?= $this->translate('English Name') ?></th>
                     <th><?= $this->translate('Company') ?></th>
-                    <th><?= $this->translate('Status') ?></th>
                     <th><?= $this->translate('Actions') ?></th>
                 </tr>
             </thead>
@@ -58,24 +57,23 @@ $this->breadcrumbs()
                             <td><?= $this->escapeHtml($job->getName()->getValueEN()) ?></td>
                             <td><?= $this->escapeHtml($job->getPackage()->getCompany()->getName())?></td>
                             <td>
-                                <?php if ($job->isUpdate()): ?>
-                                    <?= $this->translate('Update') ?>
+                                <?php if (0 !== $job->getUpdateProposals()->count()): ?>
+                                    <a class="btn btn-xs btn-primary"
+                                       href="<?= $this->url(
+                                           'company_admin_approval/job_proposal',
+                                           ['proposalId' => $job->getUpdateProposals()->last()->getId()],
+                                       ) ?>">
+                                        <?= $this->translate('View Update') ?>
+                                    </a>
                                 <?php else: ?>
-                                    <?= $this->translate('New') ?>
+                                    <a class="btn btn-xs btn-primary"
+                                       href="<?= $this->url(
+                                           'company_admin_approval/job_approval',
+                                           ['jobId' => $job->getId()],
+                                       ) ?>">
+                                        <?= $this->translate('Details') ?>
+                                    </a>
                                 <?php endif; ?>
-                            </td>
-                            <td>
-                                <a class="btn btn-xs btn-primary"
-                                   href="<?= $this->url(
-                                       'company_admin/company/edit/package/edit/job/approval',
-                                       [
-                                           'companySlugName' => $job->getPackage()->getCompany()->getSlugName(),
-                                           'packageId' => $job->getPackage()->getId(),
-                                           'jobId' => $job->getId(),
-                                       ],
-                                   ) ?>">
-                                    <?= $this->translate('Details') ?>
-                                </a>
                             </td>
                         </tr>
                     <?php endforeach ?>

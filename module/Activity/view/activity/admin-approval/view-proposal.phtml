@@ -246,14 +246,14 @@ function diff($oldValue, $newValue)
             $oldCategories = $old->getCategories()->toArray();
             $newCategories = $new->getCategories()->toArray();
             ?>
-            <?php foreach ($old->getCategories() as $category): ?>
+            <?php foreach ($oldCategories as $category): ?>
                 <div class="chip <?= (in_array($category, $newCategories)) ? '' : 'diff-old' ?>">
                     <span class="chip-label">
                         <?= $this->escapeHtml($this->localiseText($category->getName())) ?>
                     </span>
                 </div>
             <?php endforeach; ?>
-            <?php foreach ($new->getCategories() as $category): ?>
+            <?php foreach ($newCategories as $category): ?>
                 <?php if (!in_array($category, $oldCategories)): ?>
                     <div class="chip diff-new">
                         <span class="chip-label">

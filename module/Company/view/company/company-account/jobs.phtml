@@ -176,7 +176,7 @@ if (isset($packages)) {
                             <tr>
                                 <th><?= $this->translate('Name') ?></th>
                                 <th><?= $this->translate('Active') ?></th>
-                                <th><?= $this->translate('Approved') ?></th>
+                                <th><?= $this->translate('Approved (Has Updates)') ?></th>
                                 <th><?= $this->translate('Actions') ?></th>
                             </tr>
                         </thead>
@@ -200,7 +200,7 @@ if (isset($packages)) {
                                             ?>
                                             <span class="fas <?= $icons[$job->getApproved()->value] ?>"></span>
                                             <?php if (0 !== $job->getUpdateProposals()->count()): ?>
-                                                <span class="fas fa-circle-question"></span>
+                                                (<?= $this->translate('Yes') ?>)
                                             <?php endif; ?>
                                         </td>
                                         <td>

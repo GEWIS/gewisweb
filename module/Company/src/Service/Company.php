@@ -390,7 +390,7 @@ class Company
             }
 
             $companyUpdateProposal = new CompanyUpdateProposal();
-            $companyUpdateProposal->setCurrent($company);
+            $companyUpdateProposal->setOriginal($company);
             $companyUpdateProposal->setProposal($updateProposal);
 
             $this->companyMapper->persist($updateProposal);
@@ -655,9 +655,13 @@ class Company
     public function updateJob(
         JobModel $job,
         array $data,
+        bool $applyProposal = false,
     ): bool {
         // If the user can approve changes to jobs, directly apply the changes to the job.
-        if ($this->aclService->isAllowed('approve', 'job')) {
+        if (
+            $this->aclService->isAllowed('approve', 'job')
+            || $applyProposal
+        ) {
             $category = $this->categoryMapper->find($data['category']);
 
             if (null === $category) {
@@ -796,6 +800,35 @@ class Company
         $this->jobMapper->flush();
 
         return true;
+    }
+
+    public function applyJobProposal(JobUpdateProposalModel $jobUpdate) {
+        $job = $jobUpdate->getOriginal();
+        $data = $jobUpdate->getProposal()->toArray();
+
+        // Fix some attributes.
+        $data['category'] = $data['category']->getId();
+        foreach ($data['labels'] as $key => $label) {
+            $data['labels'][$key] = $label->getId();
+        }
+
+        $this->updateJob($job, $data, true);
+
+        foreach ($job->getUpdateProposals() as $update) {
+            // The proposed job is cascade deleted.
+            $this->jobMapper->remove($update);
+        }
+    }
+
+    public function cancelJobProposal(
+        JobUpdateProposalModel $jobUpdate,
+        string $message,
+    ): void {
+        $this->setJobApproval(
+            $jobUpdate->getProposal(),
+            ApprovableStatus::Rejected,
+            $message,
+        );
     }
 
     /**
@@ -996,14 +1029,22 @@ class Company
     public function setJobApproval(
         JobModel $job,
         ApprovableStatus $status,
-        string $message,
+        ?string $message = null,
     ): void {
         $job->setApproved($status);
         $job->setApprovedAt(new DateTime());
         $job->setApprover($this->aclService->getUserIdentityOrThrowException()->getMember());
 
-        $message = trim($message);
-        $message = ("" === $message) ? null : new ApprovableTextModel($message);
+        if (
+            null === $message
+            || "" === $message
+        ) {
+            $message = null;
+        } else {
+            $message = trim($message);
+            $message = new ApprovableTextModel($message);
+        }
+
         $job->setApprovableText($message);
 
         $this->jobMapper->flush();

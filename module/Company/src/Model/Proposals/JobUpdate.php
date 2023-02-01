@@ -32,7 +32,10 @@ class JobUpdate
     /**
      * The proposed update of the company.
      */
-    #[OneToOne(targetEntity: JobModel::class)]
+    #[OneToOne(
+        targetEntity: JobModel::class,
+        cascade: ["remove"],
+    )]
     #[JoinColumn(
         referencedColumnName: "id",
         nullable: false,

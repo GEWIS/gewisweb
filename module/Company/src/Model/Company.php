@@ -6,6 +6,7 @@ use Application\Model\Traits\{
     ApprovableTrait,
     IdentifiableTrait,
     TimestampableTrait,
+    UpdateProposableTrait,
 };
 use Company\Model\Enums\CompanyPackageTypes;
 use Company\Model\{
@@ -38,6 +39,7 @@ class Company implements ResourceInterface
     use IdentifiableTrait;
     use TimestampableTrait;
     use ApprovableTrait;
+    use UpdateProposableTrait;
 
     /**
      * The company's display name.
@@ -174,7 +176,7 @@ class Company implements ResourceInterface
      */
     #[OneToMany(
         targetEntity: CompanyUpdateProposal::class,
-        mappedBy: "current",
+        mappedBy: "original",
         fetch: "EXTRA_LAZY",
     )]
     protected Collection $updateProposals;

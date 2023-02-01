@@ -384,34 +384,6 @@ return [
                                                                     ],
                                                                 ],
                                                             ],
-                                                            'approval' => [
-                                                                'type' => Segment::class,
-                                                                'options' => [
-                                                                    'route' => '/approval/:jobId',
-                                                                    'defaults' => [
-                                                                        'controller' => AdminApprovalController::class,
-                                                                        'action' => 'jobApproval',
-                                                                    ],
-                                                                    'constraints' => [
-                                                                        'jobId' => '\d+',
-                                                                    ],
-                                                                ],
-                                                                'may_terminate' => true,
-                                                                'child_routes' => [
-                                                                    'update' => [
-                                                                        'type' => Segment::class,
-                                                                        'options' => [
-                                                                            'route' => '/:type',
-                                                                            'defaults' => [
-                                                                                'action' => 'changeJobApprovalStatus',
-                                                                            ],
-                                                                        ],
-                                                                        'constraints' => [
-                                                                            'type' => '(approve|disapprove|reset)',
-                                                                        ],
-                                                                    ],
-                                                                ],
-                                                            ],
                                                         ],
                                                     ],
                                                 ],
@@ -419,16 +391,6 @@ return [
                                         ],
                                     ],
                                 ],
-                            ],
-                        ],
-                    ],
-                    'approval_queue' => [
-                        'type' => Literal::class,
-                        'options' => [
-                            'route' => '/approvals',
-                            'defaults' => [
-                                'controller' => AdminApprovalController::class,
-                                'action' => 'index',
                             ],
                         ],
                     ],
@@ -495,6 +457,74 @@ return [
                                     ],
                                     'constraints' => [
                                         'jobLabelId' => '[0-9]*',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'company_admin_approval' => [
+                'priority' => 1000,
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/admin/career/approval',
+                    'defaults' => [
+                        'controller' => AdminApprovalController::class,
+                        'action' => 'index',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'job_approval' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/job/:jobId',
+                            'defaults' => [
+                                'action' => 'jobApproval',
+                            ],
+                            'constraints' => [
+                                'jobId' => '\d+',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'update' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/:type',
+                                    'defaults' => [
+                                        'action' => 'changeJobApprovalStatus',
+                                    ],
+                                    'constraints' => [
+                                        'type' => '(approve|disapprove|reset)',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'job_proposal' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/job/proposal/:proposalId',
+                            'defaults' => [
+                                'action' => 'jobProposal',
+                            ],
+                            'constraints' => [
+                                'proposalId' => '\d+',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'update' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/:type',
+                                    'defaults' => [
+                                        'action' => 'changeJobProposalStatus',
+                                    ],
+                                    'constraints' => [
+                                        'type' => '(apply|cancel)',
                                     ],
                                 ],
                             ],

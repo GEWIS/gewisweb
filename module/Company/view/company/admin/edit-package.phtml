@@ -78,17 +78,21 @@ $form->setAttribute('class', 'form-company');
                 <td><?= $job->isActive() ? $this->translate('Yes') : $this->translate('No') ?></td>
                 <td>
                     <?php $icons = ['fa-circle-question', 'fa-circle-check', 'fa-circle-xmark'] ?>
-                    <span class="fas <?= $icons[$job->getApproved()->value] ?>"></span>&nbsp;
+                    <span class="fas <?= $icons[$job->getApproved()->value] ?>"></span>
+                    <?php if (0 !== $job->getUpdateProposals()->count()): ?>
+                        <a href="<?= $this->url(
+                            'company_admin_approval/job_proposal',
+                            ['proposalId' => $job->getUpdateProposals()->last()->getId()],
+                        ) ?>">
+                            <?= $this->translate('(Update Pending)') ?>
+                        </a>
+                    <?php endif; ?>
                 </td>
                 <td>
                     <a class="btn btn-primary btn-xs"
                        href="<?= $this->url(
-                           'company_admin/company/edit/package/edit/job/approval',
-                           [
-                               'companySlugName' => $companySlugName,
-                               'packageId' => $package->getId(),
-                               'jobId' => $job->getId(),
-                           ],
+                           'company_admin_approval/job_approval',
+                           ['jobId' => $job->getId()],
                        ) ?>">
                         <?= $this->translate('Details') ?>
                     </a>

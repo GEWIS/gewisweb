@@ -54,7 +54,7 @@ class AdminApprovalController extends AbstractActionController
 
         $jobs = [];
         if ($approveJobs) {
-            $jobs = $this->jobMapper->findUpdateProposals();
+            $jobs = $this->jobMapper->findProposals();
         }
 
         return new ViewModel(
@@ -73,42 +73,29 @@ class AdminApprovalController extends AbstractActionController
             );
         }
 
-        // Get parameters.
-        $companySlugName = $this->params()->fromRoute('companySlugName');
-        $packageId = (int) $this->params()->fromRoute('packageId');
+        // Get parameter and find specific job.
         $jobId = (int) $this->params()->fromRoute('jobId');
-
-        // Find the specified job.
         $job = $this->companyService->getJobById($jobId);
 
         // Check the job is found. If not, throw 404.
-        if (
-            null === $job
-            || $job->getPackage()->getId() !== $packageId
-            || $job->getCompany()->getSlugName() !== $companySlugName
-        ) {
+        if (null === $job) {
             return $this->notFoundAction();
         }
 
         return new ViewModel(
             [
                 'job' => $job,
-                'formUrlData' => [
-                    'companySlugName' => $companySlugName,
-                    'packageId' => $packageId,
-                    'jobId' => $jobId,
-                ],
                 'approvalForm' => new RequestForm(
                     'updateJobApprovalStatus',
-                    $this->translator->translate('Approve'),
+                    $this->translator->translate('Approve Job'),
                 ),
                 'disapprovalForm' => new RequestForm(
                     'updateJobApprovalStatus',
-                    $this->translator->translate('Disapprove'),
+                    $this->translator->translate('Disapprove Job'),
                 ),
                 'resetForm' => new RequestForm(
                     'updateJobApprovalStatus',
-                    $this->translator->translate('Reset'),
+                    $this->translator->translate('Reset Approval Status'),
                 ),
             ]
         );
@@ -127,20 +114,12 @@ class AdminApprovalController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        // Get parameters.
-        $companySlugName = $this->params()->fromRoute('companySlugName');
-        $packageId = (int) $this->params()->fromRoute('packageId');
+        // Get parameter and find specific job.
         $jobId = (int) $this->params()->fromRoute('jobId');
-
-        // Find the specified job.
         $job = $this->companyService->getJobById($jobId);
 
         // Check the job is found. If not, throw 404.
-        if (
-            null === $job
-            || $job->getPackage()->getId() !== $packageId
-            || $job->getCompany()->getSlugName() !== $companySlugName
-        ) {
+        if (null === $job) {
             return $this->notFoundAction();
         }
 
@@ -151,14 +130,13 @@ class AdminApprovalController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        $changeType = $this->params('type');
+        $changeType = $this->params()->fromRoute('type');
 
         switch ($changeType) {
             case 'approve':
                 $this->companyService->setJobApproval(
                     $job,
                     ApprovableStatus::Approved,
-                    $request->getPost()->get('message'),
                 );
                 $this->flashMessenger()->addSuccessMessage($this->translator->translate('Job approved!'));
                 break;
@@ -176,12 +154,83 @@ class AdminApprovalController extends AbstractActionController
                 break;
         };
 
-        return $this->redirect()->toRoute(
-            'company_admin/company/edit/package/edit',
+        return $this->redirect()->toRoute('company_admin_approval');
+    }
+
+    public function jobProposalAction(): ViewModel
+    {
+        if (!$this->aclService->isAllowed('approve', 'job')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to approve update proposals of jobs')
+            );
+        }
+
+        $proposalId = (int) $this->params()->fromRoute('proposalId');
+        $proposal = $this->jobMapper->findProposal($proposalId);
+
+        if (null === $proposal) {
+            return $this->notFoundAction();
+        }
+
+        return new ViewModel(
             [
-                'companySlugName' => $companySlugName,
-                'packageId' => $packageId,
-            ],
+                'proposal' => $proposal,
+                'proposalApplyForm' => new RequestForm(
+                    'updateJobProposalStatus',
+                    $this->translator->translate('Apply Update'),
+                ),
+                'proposalRejectForm' => new RequestForm(
+                    'updateJobProposalStatus',
+                    $this->translator->translate('Reject Update'),
+                ),
+            ]
         );
+    }
+
+    public function changeJobProposalStatusAction(): Response|ViewModel
+    {
+        if (!$this->aclService->isAllowed('approve', 'job')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to approve update proposals of jobs')
+            );
+        }
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->notFoundAction();
+        }
+
+        $proposalId = (int) $this->params()->fromRoute('proposalId');
+        $proposal = $this->jobMapper->findProposal($proposalId);
+
+        if (null === $proposal) {
+            return $this->notFoundAction();
+        }
+
+        $form = new RequestForm('updateJobProposalStatus');
+        $form->setData($request->getPost()->toArray());
+
+        if (!$form->isValid()) {
+            $this->flashMessenger()->addErrorMessage($this->translator->translate('An unknown error occurred while try to change the status of a job update proposal. Please try again.'));
+
+            return $this->redirect()->toRoute('company_admin_approval/job_proposal', ['proposalId' => $proposalId]);
+        }
+
+        $changeType = $this->params()->fromRoute('type');
+
+        switch ($changeType) {
+            case 'apply':
+                $this->companyService->applyJobProposal($proposal);
+                $this->flashMessenger()->addSuccessMessage($this->translator->translate('Job has been updated!'));
+                break;
+            case 'cancel':
+                $this->companyService->cancelJobProposal(
+                    $proposal,
+                    $request->getPost()->get('message'),
+                );
+                $this->flashMessenger()->addSuccessMessage($this->translator->translate('Job update has been rejected!'));
+                break;
+        }
+
+        return $this->redirect()->toRoute('company_admin_approval');
     }
 }

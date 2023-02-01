@@ -219,11 +219,6 @@ class CompanyAccountController extends AbstractActionController
         $jobForm = $this->companyService->getJobForm();
         $updateProposals = $job->getUpdateProposals();
 
-        if (0 !== $updateProposals->count()) {
-            // If there are already updates proposed for this job, show the last update proposal instead.
-            $job = $updateProposals->last()->getProposal();
-        }
-
         $request = $this->getRequest();
         if ($request->isPost()) {
             $post = array_merge_recursive(
@@ -249,6 +244,13 @@ class CompanyAccountController extends AbstractActionController
                     );
                 }
             }
+        }
+
+        // Do not do this before the form validation, because otherwise you get an update to an update, while we always
+        // want updates of a real job.
+        if (0 !== $updateProposals->count()) {
+            // If there are already updates proposed for this job, show the last update proposal instead.
+            $job = $updateProposals->last()->getProposal();
         }
 
         // Initialize the form

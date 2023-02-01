@@ -439,7 +439,7 @@ class Job implements ResourceInterface
     /**
      * Get the labels. Returns an array of JobLabelAssignments.
      *
-     * @return Collection
+     * @psalm-return Collection<int, JobLabel>
      */
     public function getLabels(): Collection
     {
@@ -525,7 +525,7 @@ class Job implements ResourceInterface
     }
 
     /**
-     * @return Collection
+     * @psalm-return Collection<int, JobUpdateProposalModel>
      */
     public function getUpdateProposals(): Collection
     {

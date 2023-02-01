@@ -5,10 +5,24 @@ use Laminas\Form\Element\Text;
 
 $this->headTitle($this->escapeHtml($this->localiseText($job->getName())));
 $this->headTitle($this->translate('Approval'));
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Career'), true, $this->url('company_admin'))
+    ->addBreadcrumb($this->translate('Approvals'), true, $this->url('company_admin_approval'))
+    ->addBreadcrumb($this->escapeHtml($this->localiseText($job->getName())));
 ?>
 <div class="row admin-section admin-approvable-overview">
     <div class="col-md-12">
         <h2><?= $this->translate('Information') ?></h2>
+    </div>
+    <div class="col-md-12">
+        <p>
+            <?= sprintf(
+                $this->translate('This job is proposed by <strong>%s</strong> as part of job package %s.'),
+                $this->escapeHtml($job->getCompany()->getName()),
+                $this->escapeHtml($job->getPackage()->getContractNumber()),
+            ) ?>
+        </p>
     </div>
     <div class="col-md-12">
         <div class="row">
@@ -213,26 +227,16 @@ $this->headTitle($this->translate('Approval'));
         <div class="col-md-2">
             <?php
             $approvalForm->setAttribute('action', $this->url(
-                'company_admin/company/edit/package/edit/job/approval/update',
+                'company_admin_approval/job_approval/update',
                 [
-                    ...$formUrlData,
-                    'type' => 'approve'
+                    'jobId' => $job->getId(),
+                    'type' => 'approve',
                 ],
             ));
             $approvalForm->prepare();
             echo $this->form()->openTag($approvalForm);
             echo $this->formElement($approvalForm->get('security'));
             ?>
-            <div class="form-group">
-                <?php
-                $message = new Text('message');
-                $message->setAttributes([
-                    'placeholder' => $this->translate('Optional message...'),
-                    'class' => 'form-control',
-                ]);
-                echo $this->formText($message);
-                ?>
-            </div>
             <div class="form-group">
                 <?php
                 $submit = $approvalForm->get('submit');
@@ -247,10 +251,10 @@ $this->headTitle($this->translate('Approval'));
         <div class="col-md-2">
             <?php
             $disapprovalForm->setAttribute('action', $this->url(
-                'company_admin/company/edit/package/edit/job/approval/update',
+                'company_admin_approval/job_approval/update',
                 [
-                    ...$formUrlData,
-                    'type' => 'disapprove'
+                    'jobId' => $job->getId(),
+                    'type' => 'disapprove',
                 ],
             ));
             $disapprovalForm->prepare();
@@ -285,13 +289,13 @@ $this->headTitle($this->translate('Approval'));
                 if (null !== ($text = $job->getApprovableText())) {
                     echo sprintf(
                         $this->translate('This job was approved by <strong>%s</strong> with the message "%s".'),
-                        $this->escapeHtml($job->getApprover()->getMember()->getFullName()),
+                        $this->escapeHtml($job->getApprover()->getFullName()),
                         $this->escapeHtml($text->getMessage()),
                     );
                 } else {
                     echo sprintf(
                         $this->translate('This job was approved by <strong>%s</strong>.'),
-                        $this->escapeHtml($job->getApprover()->getMember()->getFullName()),
+                        $this->escapeHtml($job->getApprover()->getFullName()),
                     );
                 }
                 ?>
@@ -300,10 +304,10 @@ $this->headTitle($this->translate('Approval'));
         <div class="col-md-2">
             <?php
             $resetForm->setAttribute('action', $this->url(
-                'company_admin/company/edit/package/edit/job/approval/update',
+                'company_admin_approval/job_approval/update',
                 [
-                    ...$formUrlData,
-                    'type' => 'reset'
+                    'jobId' => $job->getId(),
+                    'type' => 'reset',
                 ],
             ));
             $resetForm->prepare();
@@ -322,13 +326,13 @@ $this->headTitle($this->translate('Approval'));
                 if (null !== ($text = $job->getApprovableText())) {
                     echo sprintf(
                         $this->translate('This job was disapproved by <strong>%s</strong> with the message "%s".'),
-                        $this->escapeHtml($job->getApprover()->getMember()->getFullName()),
+                        $this->escapeHtml($job->getApprover()->getFullName()),
                         $this->escapeHtml($text->getMessage()),
                     );
                 } else {
                     echo sprintf(
                         $this->translate('This job was disapproved by <strong>%s</strong>.'),
-                        $this->escapeHtml($job->getApprover()->getMember()->getFullName()),
+                        $this->escapeHtml($job->getApprover()->getFullName()),
                     );
                 }
                 ?>
@@ -337,10 +341,10 @@ $this->headTitle($this->translate('Approval'));
         <div class="col-md-2">
             <?php
             $resetForm->setAttribute('action', $this->url(
-                'company_admin/company/edit/package/edit/job/approval/update',
+                'company_admin_approval/job_approval/update',
                 [
-                    ...$formUrlData,
-                    'type' => 'reset'
+                    'jobId' => $job->getId(),
+                    'type' => 'reset',
                 ],
             ));
             $resetForm->prepare();

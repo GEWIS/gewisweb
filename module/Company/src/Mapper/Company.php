@@ -5,6 +5,7 @@ namespace Company\Mapper;
 use Application\Mapper\BaseMapper;
 use Application\Model\Enums\ApprovableStatus;
 use Company\Model\Company as CompanyModel;
+use Company\Model\Proposals\CompanyUpdate as CompanyUpdateModel;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 /**
@@ -82,7 +83,21 @@ class Company extends BaseMapper
      */
     public function findUpdateProposals(): array
     {
-        return $this->getRepository()->findBy(['approved' => ApprovableStatus::Unapproved]);
+        $qb = $this->getRepository()->createQueryBuilder('c');
+        $qb->where('(c.approved = :approved AND c.isUpdate = :isUpdate)');
+
+        $qbu = $this->getEntityManager()->createQueryBuilder();
+        $qbu->select('IDENTITY(u.original)')->distinct()
+            ->from(CompanyUpdateModel::class, 'u')
+            ->orderBy('u.id', 'DESC');
+
+        $qb->orWhere($qb->expr()->in('c.id', $qbu->getDQL()))
+            ->orderBy('c.id', 'DESC');
+
+        $qb->setParameter('approved', ApprovableStatus::Unapproved)
+            ->setParameter('isUpdate', false);
+
+        return $qb->getQuery()->getResult();
     }
 
     /**

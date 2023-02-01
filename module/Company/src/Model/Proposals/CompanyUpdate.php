@@ -27,12 +27,15 @@ class CompanyUpdate
         referencedColumnName: "id",
         nullable: false,
     )]
-    protected CompanyModel $current;
+    protected CompanyModel $original;
 
     /**
      * The proposed update of the company.
      */
-    #[OneToOne(targetEntity: CompanyModel::class)]
+    #[OneToOne(
+        targetEntity: CompanyModel::class,
+        cascade: ["remove"],
+    )]
     #[JoinColumn(
         referencedColumnName: "id",
         nullable: false,
@@ -42,17 +45,17 @@ class CompanyUpdate
     /**
      * @return CompanyModel
      */
-    public function getCurrent(): CompanyModel
+    public function getOriginal(): CompanyModel
     {
-        return $this->current;
+        return $this->original;
     }
 
     /**
-     * @param CompanyModel $current
+     * @param CompanyModel $original
      */
-    public function setCurrent(CompanyModel $current): void
+    public function setOriginal(CompanyModel $original): void
     {
-        $this->current = $current;
+        $this->original = $original;
     }
 
     /**

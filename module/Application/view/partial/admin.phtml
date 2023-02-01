@@ -62,6 +62,18 @@ use Laminas\View\Renderer\PhpRenderer;
                                         </a>
                                     </li>
                                 <?php endif; ?>
+                                <?php
+                                if (
+                                    $this->acl('company_service_acl')->isAllowed('company', 'approve')
+                                    || $this->acl('company_service_acl')->isAllowed('job', 'approve')
+                                ):
+                                    ?>
+                                    <li>
+                                        <a href="<?= $this->url('company_admin_approval') ?>">
+                                            <?= $this->translate('Approvals') ?>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
                                 <?php if ($this->acl('company_service_acl')->isAllowed('jobCategory', 'listAll')): ?>
                                     <li>
                                         <a href="<?= $this->url('company_admin/categories') ?>">
@@ -73,18 +85,6 @@ use Laminas\View\Renderer\PhpRenderer;
                                     <li>
                                         <a href="<?= $this->url('company_admin/labels') ?>">
                                             <?= $this->translate('Labels') ?>
-                                        </a>
-                                    </li>
-                                <?php endif; ?>
-                                <?php
-                                if (
-                                    $this->acl('company_service_acl')->isAllowed('company', 'approve')
-                                    || $this->acl('company_service_acl')->isAllowed('job', 'approve')
-                                ):
-                                ?>
-                                    <li>
-                                        <a href="<?= $this->url('company_admin/approval_queue') ?>">
-                                            <?= $this->translate('Approvals') ?>
                                         </a>
                                     </li>
                                 <?php endif; ?>

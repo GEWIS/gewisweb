@@ -5,6 +5,7 @@ namespace Company\Mapper;
 use Application\Mapper\BaseMapper;
 use Application\Model\Enums\ApprovableStatus;
 use Company\Model\Job as JobModel;
+use Company\Model\Proposals\JobUpdate as JobUpdateModel;
 use Doctrine\ORM\Query\Expr\Join;
 
 /**
@@ -152,9 +153,37 @@ class Job extends BaseMapper
     /**
      * @return array<array-key, JobModel>
      */
-    public function findUpdateProposals(): array
+    public function findProposals(): array
     {
-        return $this->getRepository()->findBy(['approved' => ApprovableStatus::Unapproved]);
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->where('(j.approved = :approved AND j.isUpdate = :isUpdate)');
+
+        $qbu = $this->getEntityManager()->createQueryBuilder();
+        $qbu->select('IDENTITY(u.original)')->distinct()
+            ->from(JobUpdateModel::class, 'u')
+            ->innerJoin('u.proposal', 'p')
+            ->where('p.approved = :approved')
+            ->orderBy('u.id', 'DESC');
+
+        $qb->orWhere($qb->expr()->in('j.id', $qbu->getDQL()))
+            ->orderBy('j.id', 'DESC');
+
+        $qb->setParameter('approved', ApprovableStatus::Unapproved)
+            ->setParameter('isUpdate', false);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findProposal(int $proposalId): ?JobUpdateModel
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('u')
+            ->from(JobUpdateModel::class, 'u')
+            ->where('u.id = :proposalId');
+
+        $qb->setParameter('proposalId', $proposalId);
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
