@@ -17,8 +17,10 @@ use Laminas\Validator\{
 
 class Password extends Form implements InputFilterProviderInterface
 {
-    public function __construct(Translator $translate)
-    {
+    public function __construct(
+        private readonly Translator $translator,
+        private readonly int $passwordLength,
+    ) {
         parent::__construct();
 
         $this->add(
@@ -26,7 +28,7 @@ class Password extends Form implements InputFilterProviderInterface
                 'name' => 'old_password',
                 'type' => PasswordElement::class,
                 'options' => [
-                    'label' => $translate->translate('Old password'),
+                    'label' => $this->translator->translate('Old password'),
                 ],
             ]
         );
@@ -36,7 +38,7 @@ class Password extends Form implements InputFilterProviderInterface
                 'name' => 'password',
                 'type' => PasswordElement::class,
                 'options' => [
-                    'label' => $translate->translate('New password'),
+                    'label' => $this->translator->translate('New password'),
                 ],
             ]
         );
@@ -46,7 +48,7 @@ class Password extends Form implements InputFilterProviderInterface
                 'name' => 'password_verify',
                 'type' => PasswordElement::class,
                 'options' => [
-                    'label' => $translate->translate('Verify new password'),
+                    'label' => $this->translator->translate('Verify new password'),
                 ],
             ]
         );
@@ -56,7 +58,7 @@ class Password extends Form implements InputFilterProviderInterface
                 'name' => 'submit',
                 'type' => Submit::class,
                 'attributes' => [
-                    'value' => $translate->translate('Change password'),
+                    'value' => $this->translator->translate('Change password'),
                 ],
             ]
         );
@@ -77,7 +79,7 @@ class Password extends Form implements InputFilterProviderInterface
                     [
                         'name' => StringLength::class,
                         'options' => [
-                            'min' => 8,
+                            'min' => $this->passwordLength,
                         ],
                     ],
                 ],
@@ -91,7 +93,7 @@ class Password extends Form implements InputFilterProviderInterface
                     [
                         'name' => StringLength::class,
                         'options' => [
-                            'min' => 8,
+                            'min' => $this->passwordLength,
                         ],
                     ],
                     [

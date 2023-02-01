@@ -74,11 +74,15 @@ return [
                         'may_terminate' => false,
                         'child_routes' => [
                             'change' => [
-                                'type' => Literal::class,
+                                'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/change',
+                                    'route' => '/change[/:user_type]',
+                                    'constraints' => [
+                                        'user_type' => '(company|member)',
+                                    ],
                                     'defaults' => [
                                         'action' => 'changePassword',
+                                        'user_type' => 'member',
                                     ],
                                 ],
                             ],

@@ -130,11 +130,13 @@ class Module
                     $companyMapper = $container->get('company_mapper_company');
                     $memberMapper = $container->get('decision_mapper_member');
                     $registerForm = $container->get('user_form_register');
-                    $activateForm = $container->get('user_form_activate');
-                    $loginForm = $container->get('user_form_login');
+                    $activateFormCompanyUser = $container->get('user_form_activate_companyUser');
+                    $activateFormUser = $container->get('user_form_activate_user');
+                    $loginForm = $container->get('user_form_userLogin');
                     $companyUserLoginForm = $container->get('user_form_companyUserLogin');
                     $companyUserResetForm = $container->get('user_form_companyUserReset');
-                    $passwordForm = $container->get('user_form_password');
+                    $passwordFormCompanyUser = $container->get('user_form_password_companyUser');
+                    $passwordFormUser = $container->get('user_form_password_user');
                     $resetForm = $container->get('user_form_reset');
 
                     return new UserService(
@@ -150,11 +152,13 @@ class Module
                         $companyMapper,
                         $memberMapper,
                         $registerForm,
-                        $activateForm,
+                        $activateFormCompanyUser,
+                        $activateFormUser,
                         $loginForm,
                         $companyUserLoginForm,
                         $companyUserResetForm,
-                        $passwordForm,
+                        $passwordFormCompanyUser,
+                        $passwordFormUser,
                         $resetForm,
                     );
                 },
@@ -217,7 +221,7 @@ class Module
                 },
                 'user_bcrypt' => function (ContainerInterface $container) {
                     $bcrypt = new Bcrypt();
-                    $config = $container->get('config');
+                    $config = $container->get('config')['passwords'];
                     $bcrypt->setCost($config['bcrypt_cost']);
 
                     return $bcrypt;
@@ -228,9 +232,16 @@ class Module
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'user_form_activate' => function (ContainerInterface $container) {
+                'user_form_activate_companyUser' => function (ContainerInterface $container) {
                     return new ActivateForm(
                         $container->get(MvcTranslator::class),
+                        $container->get('config')['passwords']['min_length_companyUser'],
+                    );
+                },
+                'user_form_activate_user' => function (ContainerInterface $container) {
+                    return new ActivateForm(
+                        $container->get(MvcTranslator::class),
+                        $container->get('config')['passwords']['min_length_user'],
                     );
                 },
                 'user_form_register' => function (ContainerInterface $container) {
@@ -238,13 +249,14 @@ class Module
                         $container->get(MvcTranslator::class),
                     );
                 },
-                'user_form_login' => function (ContainerInterface $container) {
-                    return new UserLoginForm(
-                        $container->get(MvcTranslator::class),
-                    );
-                },
                 'user_form_companyUserLogin' => function (ContainerInterface $container) {
                     return new CompanyUserLoginForm(
+                        $container->get(MvcTranslator::class),
+                        $container->get('config')['passwords']['min_length_companyUser'],
+                    );
+                },
+                'user_form_userLogin' => function (ContainerInterface $container) {
+                    return new UserLoginForm(
                         $container->get(MvcTranslator::class),
                     );
                 },
@@ -253,14 +265,16 @@ class Module
                         $container->get(MvcTranslator::class),
                     );
                 },
-                'user_form_password' => function (ContainerInterface $container) {
+                'user_form_password_companyUser' => function (ContainerInterface $container) {
                     return new PasswordForm(
                         $container->get(MvcTranslator::class),
+                        $container->get('config')['passwords']['min_length_companyUser'],
                     );
                 },
-                'user_form_passwordactivate' => function (ContainerInterface $container) {
-                    return new ActivateForm(
+                'user_form_password_user' => function (ContainerInterface $container) {
+                    return new PasswordForm(
                         $container->get(MvcTranslator::class),
+                        $container->get('config')['passwords']['min_length_user'],
                     );
                 },
                 'user_form_reset' => function (ContainerInterface $container) {

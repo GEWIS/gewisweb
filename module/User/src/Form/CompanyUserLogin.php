@@ -22,8 +22,10 @@ use Laminas\Validator\{
 
 class CompanyUserLogin extends Form implements InputProviderInterface
 {
-    public function __construct(private readonly Translator $translate)
-    {
+    public function __construct(
+        private readonly Translator $translate,
+        private readonly int $passwordLength,
+    ) {
         parent::__construct();
 
         $this->add(
@@ -146,7 +148,7 @@ class CompanyUserLogin extends Form implements InputProviderInterface
                     [
                         'name' => StringLength::class,
                         'options' => [
-                            'min' => 8,
+                            'min' => $this->passwordLength,
                         ],
                     ],
                 ],

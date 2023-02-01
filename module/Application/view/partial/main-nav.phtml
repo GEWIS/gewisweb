@@ -102,7 +102,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 </a>
                             </li>
                             <li>
-                                <a href="<?= $this->url('user/password/change') ?>">
+                                <a href="<?= $this->url('user/password/change', ['user_type' => 'company']) ?>">
                                     <?= $this->translate('Change password') ?>
                                 </a>
                             </li>
@@ -133,7 +133,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 </a>
                             </li>
                             <li>
-                                <a href="<?= $this->url('user/password/change') ?>">
+                                <a href="<?= $this->url('user/password/change', ['user_type' => 'member']) ?>">
                                     <?= $this->translate('Change password') ?>
                                 </a>
                             </li>

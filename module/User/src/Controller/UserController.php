@@ -163,8 +163,10 @@ class UserController extends AbstractActionController
             );
         }
 
+        $userType = $this->params()->fromRoute('user_type');
+        $form = $this->userService->getPasswordForm($userType);
+
         $request = $this->getRequest();
-        $form = $this->userService->getPasswordForm();
 
         if ($request->isPost()) {
             $form->setData($request->getPost()->toArray());
@@ -179,6 +181,7 @@ class UserController extends AbstractActionController
         return new ViewModel(
             [
                 'form' => $form,
+                'userType' => $userType,
             ]
         );
     }
@@ -243,7 +246,7 @@ class UserController extends AbstractActionController
 
         /** @var Request $request */
         $request = $this->getRequest();
-        $form = $this->userService->getActivateForm();
+        $form = $this->userService->getActivateForm($userType);
 
         if ($request->isPost()) {
             $form->setData($request->getPost()->toArray());

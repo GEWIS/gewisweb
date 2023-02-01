@@ -56,11 +56,13 @@ class User
         private readonly CompanyMapper $companyMapper,
         private readonly MemberMapper $memberMapper,
         private readonly RegisterForm $registerForm,
-        private readonly ActivateForm $activateForm,
+        private readonly ActivateForm $activateFormCompanyUser,
+        private readonly ActivateForm $activateFormUser,
         private readonly UserLoginForm $userLoginForm,
         private readonly CompanyUserLoginForm $companyUserLoginForm,
         private readonly CompanyUserResetForm $companyUserResetForm,
-        private readonly PasswordForm $passwordForm,
+        private readonly PasswordForm $passwordFormCompanyUser,
+        private readonly PasswordForm $passwordFormUser,
         private readonly ResetForm $resetForm,
     ) {
     }
@@ -250,15 +252,17 @@ class User
         if ($user instanceof CompanyUserModel) {
             /** @var CompanyUserAdapter $adapter */
             $adapter = $this->companyUserAuthService->getAdapter();
+            $type = 'company';
         } elseif ($user instanceof UserModel) {
             /** @var UserAdapter $adapter */
             $adapter = $this->userAuthService->getAdapter();
+            $type = 'member';
         } else {
             throw new RuntimeException("Unexpected type of user while trying to change passwords");
         }
 
         if (!$adapter->verifyPassword($data['old_password'], $user->getPassword())) {
-            $this->getPasswordForm()->setMessages([
+            $this->getPasswordForm($type)->setMessages([
                 'old_password' => [
                     $this->translator->translate('Password incorrect'),
                 ],
@@ -378,9 +382,13 @@ class User
      *
      * @return ActivateForm Activate form
      */
-    public function getActivateForm(): ActivateForm
+    public function getActivateForm(string $userType): ActivateForm
     {
-        return $this->activateForm;
+        if ('company' === $userType) {
+            return $this->activateFormCompanyUser;
+        }
+
+        return $this->activateFormUser;
     }
 
     /**
@@ -398,7 +406,7 @@ class User
      *
      * @return PasswordForm Password change form
      */
-    public function getPasswordForm(): PasswordForm
+    public function getPasswordForm(string $userType): PasswordForm
     {
         if (!$this->aclService->isAllowed('password_change', 'user')) {
             throw new NotAllowedException(
@@ -406,7 +414,11 @@ class User
             );
         }
 
-        return $this->passwordForm;
+        if ('company' === $userType) {
+            return $this->passwordFormCompanyUser;
+        }
+
+        return $this->passwordFormUser;
     }
 
     /**

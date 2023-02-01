@@ -25,7 +25,7 @@ $meetings = $this->meetings;
                         <div class="big-icon fas fa-user"></div>
                         <div class="panel-heading"><?= $this->translate('Profile') ?></div>
                     </a>
-                    <a href="<?= $this->url('user/password/change') ?>"
+                    <a href="<?= $this->url('user/password/change', ['user_type' => 'member']) ?>"
                        class="panel panel-image align-middle">
                         <div class="big-icon fas fa-lock"></div>
                         <div class="panel-heading"><?= $this->translate('Change password') ?></div>

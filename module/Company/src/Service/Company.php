@@ -802,7 +802,8 @@ class Company
         return true;
     }
 
-    public function applyJobProposal(JobUpdateProposalModel $jobUpdate) {
+    public function applyJobProposal(JobUpdateProposalModel $jobUpdate): void
+    {
         $job = $jobUpdate->getOriginal();
         $data = $jobUpdate->getProposal()->toArray();
 
