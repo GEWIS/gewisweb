@@ -2,11 +2,10 @@
 
 namespace Decision\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
 };
@@ -17,13 +16,7 @@ use Doctrine\ORM\Mapping\{
 #[Entity]
 class MeetingDocument
 {
-    /**
-     * Document id.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * Meeting.
@@ -64,16 +57,6 @@ class MeetingDocument
         options: ["default" => 0],
     )]
     protected int $displayPosition;
-
-    /**
-     * Get the document id.
-     *
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * Get the meeting.

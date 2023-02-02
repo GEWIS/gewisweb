@@ -1,0 +1,84 @@
+<?php
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Career'), true, $this->url('company_admin'))
+    ->addBreadcrumb($this->translate('Approvals'));
+?>
+<div class="row">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Unapproved Companies') ?></h2>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th><?= $this->translate('Name') ?></th>
+                    <th><?= $this->translate('Actions') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (0 === count($companies)): ?>
+                    <tr class="text-center">
+                        <td colspan="2">
+                            <?= $this->translate('There is no company or update proposal that requires your approval.') ?>
+                        </td>
+                    </tr>
+                <?php else: ?>
+
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Unapproved Jobs') ?></h2>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th><?= $this->translate('Dutch Name') ?></th>
+                    <th><?= $this->translate('English Name') ?></th>
+                    <th><?= $this->translate('Company') ?></th>
+                    <th><?= $this->translate('Actions') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (0 === count($jobs)): ?>
+                    <tr class="text-center">
+                        <td colspan="5">
+                            <?= $this->translate('There is no job or update proposal that requires your approval.') ?>
+                        </td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($jobs as $job): ?>
+                        <tr>
+                            <td><?= $this->escapeHtml($job->getName()->getValueNL()) ?></td>
+                            <td><?= $this->escapeHtml($job->getName()->getValueEN()) ?></td>
+                            <td><?= $this->escapeHtml($job->getPackage()->getCompany()->getName())?></td>
+                            <td>
+                                <?php if (0 !== $job->getUpdateProposals()->count()): ?>
+                                    <a class="btn btn-xs btn-primary"
+                                       href="<?= $this->url(
+                                           'company_admin_approval/job_proposal',
+                                           ['proposalId' => $job->getUpdateProposals()->last()->getId()],
+                                       ) ?>">
+                                        <?= $this->translate('View Update') ?>
+                                    </a>
+                                <?php else: ?>
+                                    <a class="btn btn-xs btn-primary"
+                                       href="<?= $this->url(
+                                           'company_admin_approval/job_approval',
+                                           ['jobId' => $job->getId()],
+                                       ) ?>">
+                                        <?= $this->translate('View Proposal') ?>
+                                    </a>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

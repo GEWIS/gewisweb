@@ -10,13 +10,11 @@ use Laminas\Router\Http\{
 use User\Controller\{
     ApiAdminController,
     ApiAuthenticationController,
-    ApiController,
     UserController,
 };
 use User\Controller\Factory\{
     ApiAdminControllerFactory,
     ApiAuthenticationControllerFactory,
-    ApiControllerFactory,
     UserControllerFactory,
 };
 
@@ -29,24 +27,34 @@ return [
                     'route' => '/user',
                     'defaults' => [
                         'controller' => UserController::class,
-                        'action' => 'index',
                     ],
                 ],
-                'may_terminate' => true,
+                'may_terminate' => false,
                 'child_routes' => [
-                    'default' => [
+                    'activate' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '[/:action]',
+                            'route' => '/activate/:user_type/:code',
                             'constraints' => [
-                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'code' => '[a-zA-Z0-9]+',
+                                'user_type' => '(company|member)',
+                            ],
+                            'defaults' => [
+                                'action' => 'activate',
                             ],
                         ],
                     ],
                     'login' => [
-                        'type' => Literal::class,
+                        'type' => Segment::class,
                         'options' => [
-                            'route' => '/login',
+                            'route' => '/login[/:user_type]',
+                            'constraints' => [
+                                'user_type' => '(company|member)',
+                            ],
+                            'defaults' => [
+                                'action' => 'login',
+                                'user_type' => 'member',
+                            ],
                         ],
                     ],
                     'logout' => [
@@ -58,15 +66,47 @@ return [
                             ],
                         ],
                     ],
-                    'activate' => [
-                        'type' => Segment::class,
+                    'password' => [
+                        'type' => Literal::class,
                         'options' => [
-                            'route' => '/activate/:code',
-                            'constraints' => [
-                                'code' => '[a-zA-Z0-9]{32,}',
+                            'route' => '/password',
+                        ],
+                        'may_terminate' => false,
+                        'child_routes' => [
+                            'change' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/change[/:user_type]',
+                                    'constraints' => [
+                                        'user_type' => '(company|member)',
+                                    ],
+                                    'defaults' => [
+                                        'action' => 'changePassword',
+                                        'user_type' => 'member',
+                                    ],
+                                ],
                             ],
+                            'reset' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/reset[/:user_type]',
+                                    'constraints' => [
+                                        'user_type' => '(company|member)',
+                                    ],
+                                    'defaults' => [
+                                        'action' => 'resetPassword',
+                                        'user_type' => 'member',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'register' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/register',
                             'defaults' => [
-                                'action' => 'activate',
+                                'action' => 'register',
                             ],
                         ],
                     ],
@@ -128,24 +168,12 @@ return [
                 ],
                 'priority' => 100,
             ],
-            'validate_login' => [
-                'type' => Segment::class,
-                'options' => [
-                    'route' => '/api/validateLogin',
-                    'defaults' => [
-                        'controller' => ApiController::class,
-                        'action' => 'validate',
-                    ],
-                ],
-                'priority' => 100,
-            ],
         ],
     ],
     'controllers' => [
         'factories' => [
             ApiAdminController::class => ApiAdminControllerFactory::class,
             ApiAuthenticationController::class => ApiAuthenticationControllerFactory::class,
-            ApiController::class => ApiControllerFactory::class,
             UserController::class => UserControllerFactory::class,
         ],
     ],
@@ -154,7 +182,6 @@ return [
             'user' => __DIR__ . '/../view/',
         ],
         'template_map' => [
-            'user/login' => __DIR__ . '/../view/partial/login.phtml',
             'user_token/redirect' => __DIR__ . '/../view/user/api-authentication/redirect.phtml',
         ],
     ],

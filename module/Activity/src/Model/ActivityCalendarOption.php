@@ -2,13 +2,12 @@
 
 namespace Activity\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
 };
@@ -19,13 +18,7 @@ use Doctrine\ORM\Mapping\{
 #[Entity]
 class ActivityCalendarOption
 {
-    /**
-     * ID for the option.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * Type for the option.
@@ -162,14 +155,6 @@ class ActivityCalendarOption
     public function getResourceId(): int|string
     {
         return $this->getId();
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**

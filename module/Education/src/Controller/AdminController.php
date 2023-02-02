@@ -16,12 +16,16 @@ use Laminas\Http\{
 };
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\{
     JsonModel,
     ViewModel,
 };
 use User\Permissions\NotAllowedException;
 
+/**
+ * @method FlashMessenger flashMessenger()
+ */
 class AdminController extends AbstractActionController
 {
     public function __construct(
@@ -70,13 +74,13 @@ class AdminController extends AbstractActionController
                 $course = $form->getObject();
 
                 if ($this->examService->saveCourse($course)) {
-                    $this->plugin('FlashMessenger')->addSuccessMessage(
+                    $this->flashMessenger()->addSuccessMessage(
                         $this->translator->translate('Successfully added course!')
                     );
 
                     return $this->redirect()->toRoute('admin_education/course/edit', ['course' => $course->getCode()]);
                 } else {
-                    $this->plugin('FlashMessenger')->addErrorMessage(
+                    $this->flashMessenger()->addErrorMessage(
                         $this->translator->translate('An error occurred while saving the course!')
                     );
                 }
@@ -115,11 +119,11 @@ class AdminController extends AbstractActionController
                 $course = $form->getObject();
 
                 if ($this->examService->saveCourse($course)) {
-                    $this->plugin('FlashMessenger')->addSuccessMessage(
+                    $this->flashMessenger()->addSuccessMessage(
                         $this->translator->translate('Successfully updated course information!')
                     );
                 } else {
-                    $this->plugin('FlashMessenger')->addErrorMessage(
+                    $this->flashMessenger()->addErrorMessage(
                         $this->translator->translate('An error occurred while saving the course!')
                     );
                 }

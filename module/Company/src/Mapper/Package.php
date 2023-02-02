@@ -4,14 +4,15 @@ namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Company\Model\{
+    Company as CompanyModel,
     CompanyBannerPackage as CompanyBannerPackageModel,
     CompanyFeaturedPackage as CompanyFeaturedPackageModel,
     CompanyJobPackage as CompanyJobPackageModel,
     CompanyPackage as CompanyPackageModel,
 };
+use Company\Model\Enums\CompanyPackageTypes;
 use DateTime;
 use Doctrine\ORM\QueryBuilder;
-use Exception;
 
 /**
  * Mappers for package.
@@ -110,19 +111,40 @@ class Package extends BaseMapper
     }
 
     /**
-     * @param string $type
+     * Get all job packages for a specific company.
      *
-     * @return CompanyPackageModel
-     *
-     * @throws Exception
+     * @return array<array-key, CompanyJobPackageModel>
      */
-    public function createPackage(string $type): CompanyPackageModel
+    public function findJobPackagesByCompany(CompanyModel $company): array
+    {
+        $qb = $this->getRepository()->createQueryBuilder('p');
+        $qb->where('p.company = :company')
+            ->setParameter('company', $company);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Get non-expired packages for a specific company.
+     *
+     * @return array<array-key, CompanyJobPackageModel>
+     */
+    public function findNonExpiredPackages(CompanyModel $company): array
+    {
+        $qb = $this->getRepository()->createQueryBuilder('p');
+        $qb->where('p.company = :company')
+            ->andWhere('p.expires > CURRENT_DATE()')
+            ->setParameter('company', $company);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function createPackage(CompanyPackageTypes $type): CompanyPackageModel
     {
         return match ($type) {
-            'banner' => new CompanyBannerPackageModel(),
-            'featured' => new CompanyFeaturedPackageModel(),
-            'job' => new CompanyJobPackageModel(),
-            default => throw new Exception('Unknown type for class that extends CompanyPackage'),
+            CompanyPackageTypes::Banner => new CompanyBannerPackageModel(),
+            CompanyPackageTypes::Featured => new CompanyFeaturedPackageModel(),
+            CompanyPackageTypes::Job => new CompanyJobPackageModel(),
         };
     }
 

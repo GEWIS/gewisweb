@@ -15,25 +15,23 @@ use Laminas\Http\{
 };
 use UnexpectedValueException;
 
-class Session extends SessionStorage
+class UserSession extends SessionStorage
 {
     private const JWT_COOKIE_NAME = 'GEWISSESSTOKEN';
     private const JWT_KEY_ALGORITHM = 'RS256';
 
-    protected bool $rememberMe;
+    private bool $rememberMe;
 
     public function __construct(
         private readonly Request $request,
         private readonly Response $response,
         private readonly array $config,
     ) {
-        parent::__construct();
+        parent::__construct('Laminas_Auth_User');
     }
 
     /**
      * Set whether we should remember this session or not.
-     *
-     * @param bool $rememberMe
      */
     public function setRememberMe(bool $rememberMe): void
     {
@@ -42,8 +40,6 @@ class Session extends SessionStorage
 
     /**
      * Defined by Laminas\Authentication\Storage\StorageInterface.
-     *
-     * @return bool
      */
     public function isEmpty(): bool
     {
@@ -56,8 +52,6 @@ class Session extends SessionStorage
 
     /**
      * Check if there is a session stored in the database and load it when possible.
-     *
-     * @return bool indicating whether a session was loaded
      */
     protected function validateSession(): bool
     {
@@ -109,8 +103,6 @@ class Session extends SessionStorage
 
     /**
      * Defined by Laminas\Authentication\Storage\StorageInterface.
-     *
-     * @param int $contents
      */
     public function write($contents): void
     {
@@ -123,8 +115,6 @@ class Session extends SessionStorage
 
     /**
      * Store the current session.
-     *
-     * @param int $lidnr the lidnr of the logged in user
      */
     protected function saveSession(int $lidnr): void
     {
@@ -162,8 +152,6 @@ class Session extends SessionStorage
 
     /**
      * Store the session token as a cookie.
-     *
-     * @param string $jwt The session token to store
      */
     protected function saveCookie(string $jwt): void
     {
@@ -185,9 +173,7 @@ class Session extends SessionStorage
     }
 
     /**
-     * @param SetCookie $sessionToken
-     *
-     * @return SetCookie
+     * Set specific cookie parameters.
      */
     private function setCookieParameters(SetCookie $sessionToken): SetCookie
     {
@@ -203,10 +189,8 @@ class Session extends SessionStorage
 
     /**
      * Get the private key to use for JWT.
-     *
-     * @return string|bool returns false if the private key is not readable
      */
-    protected function getPrivateKey(): bool|string
+    protected function getPrivateKey(): false|string
     {
         if (!is_readable($this->config['jwt_key_path'])) {
             return false;
@@ -217,10 +201,8 @@ class Session extends SessionStorage
 
     /**
      * Get the public key to use for JWT.
-     *
-     * @return string|bool returns false if the public key is not readable
      */
-    protected function getPublicKey(): bool|string
+    protected function getPublicKey(): false|string
     {
         if (!is_readable($this->config['jwt_pub_key_path'])) {
             return false;

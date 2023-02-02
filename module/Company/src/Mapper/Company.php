@@ -3,7 +3,9 @@
 namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
+use Application\Model\Enums\ApprovableStatus;
 use Company\Model\Company as CompanyModel;
+use Company\Model\Proposals\CompanyUpdate as CompanyUpdateModel;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 /**
@@ -25,6 +27,7 @@ class Company extends BaseMapper
         $rsmBuilder->addRootEntityFromClassMetadata($this->getRepositoryName(), 'c');
 
         $select = $rsmBuilder->generateSelectClause(['c' => 't1']);
+        $approved = ApprovableStatus::Approved->value;
 
         $sql = <<<QUERY
             SELECT {$select} FROM `Company` AS `t1`
@@ -43,6 +46,7 @@ class Company extends BaseMapper
                 GROUP BY `company_id`
             ) `CompanyPackages` ON `CompanyPackages`.`company_id` = `t1`.`id`
             WHERE `t1`.`published` = 1
+            AND `t1`.`approved` = "{$approved}"
             AND `CompanyPackages`.`totalPackages` > `CompanyPackages`.`expiredHiddenOrNotStartedPackages`
             ORDER BY `t1`.`name` ASC
             QUERY;
@@ -59,9 +63,41 @@ class Company extends BaseMapper
      */
     public function findCompanyBySlugName(string $slugName): ?CompanyModel
     {
-        $result = $this->getRepository()->findBy(['slugName' => $slugName]);
+        return $this->getRepository()->findOneBy(['slugName' => $slugName]);
+    }
 
-        return empty($result) ? null : $result[0];
+    /**
+     * Return a company by a given representative's e-mail address.
+     *
+     * @param string $email
+     *
+     * @return CompanyModel|null
+     */
+    public function findCompanyByRepresentativeEmail(string $email): ?CompanyModel
+    {
+        return $this->getRepository()->findOneBy(['representativeEmail' => $email]);
+    }
+
+    /**
+     * @return array<array-key, CompanyModel>
+     */
+    public function findUpdateProposals(): array
+    {
+        $qb = $this->getRepository()->createQueryBuilder('c');
+        $qb->where('(c.approved = :approved AND c.isUpdate = :isUpdate)');
+
+        $qbu = $this->getEntityManager()->createQueryBuilder();
+        $qbu->select('IDENTITY(u.original)')->distinct()
+            ->from(CompanyUpdateModel::class, 'u')
+            ->orderBy('u.id', 'DESC');
+
+        $qb->orWhere($qb->expr()->in('c.id', $qbu->getDQL()))
+            ->orderBy('c.id', 'DESC');
+
+        $qb->setParameter('approved', ApprovableStatus::Unapproved)
+            ->setParameter('isUpdate', false);
+
+        return $qb->getQuery()->getResult();
     }
 
     /**

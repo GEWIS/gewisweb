@@ -2,25 +2,22 @@
 
 namespace User\Authentication\Adapter;
 
-use DateTime;
 use Laminas\Authentication\Adapter\AdapterInterface;
 use Laminas\Authentication\Result;
 use Laminas\Crypt\Password\Bcrypt;
-use RuntimeException;
-use User\Mapper\User as UserMapper;
-use User\Model\LoginAttempt as LoginAttemptModel;
+use User\Mapper\CompanyUser as CompanyUserMapper;
 use User\Authentication\Service\LoginAttempt as LoginAttemptService;
 
-class Mapper implements AdapterInterface
+class CompanyUserAdapter implements AdapterInterface
 {
-    private string $login;
+    private string $email;
 
     private string $password;
 
     public function __construct(
         private readonly Bcrypt $bcrypt,
         private readonly LoginAttemptService $loginAttemptService,
-        private readonly UserMapper $mapper,
+        private readonly CompanyUserMapper $mapper,
     ) {
     }
 
@@ -31,37 +28,26 @@ class Mapper implements AdapterInterface
      */
     public function authenticate(): Result
     {
-        $user = $this->mapper->findByLogin($this->login);
+        $company = $this->mapper->findByLogin($this->email);
 
-        if (null === $user) {
+        if (null === $company) {
             return new Result(
                 Result::FAILURE_IDENTITY_NOT_FOUND,
                 null,
             );
         }
 
-        if (
-            $user->getMember()->getDeleted()
-            || $user->getMember()->getHidden()
-            || $user->getMember()->isExpired()
-        ) {
-            return new Result(
-                Result::FAILURE_UNCATEGORIZED,
-                null,
-            );
-        }
+        $this->mapper->detach($company);
 
-        $this->mapper->detach($user);
-
-        if ($this->loginAttemptService->loginAttemptsExceeded($user)) {
+        if ($this->loginAttemptService->loginAttemptsExceeded($company)) {
             return new Result(
                 Result::FAILURE,
                 null,
             );
         }
 
-        if (!$this->verifyPassword($this->password, $user->getPassword())) {
-            $this->loginAttemptService->logFailedLogin($user);
+        if (!$this->verifyPassword($this->password, $company->getPassword())) {
+            $this->loginAttemptService->logFailedLogin($company);
 
             return new Result(
                 Result::FAILURE_CREDENTIAL_INVALID,
@@ -69,7 +55,7 @@ class Mapper implements AdapterInterface
             );
         }
 
-        return new Result(Result::SUCCESS, $user);
+        return new Result(Result::SUCCESS, $company);
     }
 
     /**
@@ -94,23 +80,23 @@ class Mapper implements AdapterInterface
     /**
      * Sets the credentials used to authenticate.
      *
-     * @param string $login
+     * @param string $email
      * @param string $password
      */
     public function setCredentials(
-        string $login,
+        string $email,
         string $password,
     ): void {
-        $this->login = $login;
+        $this->email = $email;
         $this->password = $password;
     }
 
     /**
      * Get the mapper.
      *
-     * @return UserMapper
+     * @return CompanyUserMapper
      */
-    public function getMapper(): UserMapper
+    public function getMapper(): CompanyUserMapper
     {
         return $this->mapper;
     }

@@ -68,10 +68,8 @@ class ActivityCalendar
             return $this->calendarOptionMapper->getUpcomingOptions(true);
         }
 
-        $user = $this->aclService->getIdentityOrThrowException();
-
         return $this->calendarOptionMapper->getUpcomingOptionsByOrgans(
-            $this->memberMapper->findOrgans($user->getMember())
+            $this->memberMapper->findOrgans($this->aclService->getUserIdentityOrThrowException()->getMember())
         );
     }
 
@@ -108,7 +106,7 @@ class ActivityCalendar
 
         $proposal->setCreationTime(new DateTime());
         $em = $this->entityManager;
-        $proposal->setCreator($this->aclService->getIdentityOrThrowException()->getMember());
+        $proposal->setCreator($this->aclService->getUserIdentityOrThrowException()->getMember());
         $name = $data['name'];
         $proposal->setName($name);
         $description = $data['description'];
@@ -175,7 +173,7 @@ class ActivityCalendar
             return;
         }
 
-        $option->setModifiedBy($this->aclService->getIdentityOrThrowException()->getMember());
+        $option->setModifiedBy($this->aclService->getUserIdentityOrThrowException()->getMember());
         $option->setStatus('approved');
         $this->calendarOptionMapper->flush();
 
@@ -217,7 +215,7 @@ class ActivityCalendar
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete this option'));
         }
 
-        $option->setModifiedBy($this->aclService->getIdentityOrThrowException()->getMember());
+        $option->setModifiedBy($this->aclService->getUserIdentityOrThrowException()->getMember());
         $option->setStatus('deleted');
         $this->calendarOptionMapper->flush();
     }
@@ -239,7 +237,8 @@ class ActivityCalendar
 
         if (
             null === $option->getProposal()->getOrgan()
-            && $option->getProposal()->getCreator()->getLidnr() === $this->aclService->getIdentityOrThrowException()->getLidnr()
+            && $option->getProposal()->getCreator()->getLidnr()
+                === $this->aclService->getUserIdentityOrThrowException()->getLidnr()
         ) {
             return true;
         }

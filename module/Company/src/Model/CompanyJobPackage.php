@@ -2,6 +2,7 @@
 
 namespace Company\Model;
 
+use Company\Model\Enums\CompanyPackageTypes;
 use Company\Model\JobCategory as JobCategoryModel;
 use Doctrine\Common\Collections\{
     ArrayCollection,
@@ -10,6 +11,7 @@ use Doctrine\Common\Collections\{
 use Doctrine\ORM\Mapping\{
     Entity,
     OneToMany,
+    OrderBy,
 };
 
 /**
@@ -26,6 +28,7 @@ class CompanyJobPackage extends CompanyPackage
         mappedBy: "package",
         cascade: ["persist", "remove"],
     )]
+    #[OrderBy(["updatedAt" => "DESC"])]
     protected Collection $jobs;
 
     public function __construct()
@@ -42,6 +45,16 @@ class CompanyJobPackage extends CompanyPackage
     public function getJobs(): Collection
     {
         return $this->jobs;
+    }
+
+    /**
+     * Get the jobs in the package, but without any that are actually update proposals.
+     */
+    public function getJobsWithoutProposals(): Collection
+    {
+        return $this->jobs->filter(function (Job $job) {
+            return !$job->isUpdate();
+        });
     }
 
     /**
@@ -65,12 +78,12 @@ class CompanyJobPackage extends CompanyPackage
      */
     public function getJobsInCategory(?JobCategoryModel $category = null): array
     {
-        $filter = function ($job) use ($category) {
+        $filter = function (Job $job) use ($category) {
             if (null === $category) {
-                return $job->isActive();
+                return $job->isActive() && $job->isApproved() && !$job->isUpdate();
             }
 
-            return $job->getCategory() === $category && $job->isActive();
+            return $job->getCategory() === $category && $job->isActive() && $job->isApproved() && !$job->isUpdate();
         };
 
         return array_filter($this->jobs->toArray(), $filter);
@@ -94,5 +107,13 @@ class CompanyJobPackage extends CompanyPackage
     public function removeJob(Job $job): void
     {
         $this->jobs->removeElement($job);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getType(): CompanyPackageTypes
+    {
+        return CompanyPackageTypes::Job;
     }
 }

@@ -8,57 +8,44 @@ use Laminas\Authentication\{
     Result,
 };
 use RuntimeException;
-use User\Authentication\Adapter\ApiMapper;
+use User\Authentication\Adapter\ApiUserAdapter;
 use User\Model\ApiUser;
 
 class ApiAuthenticationService implements AuthenticationServiceInterface
 {
-    protected ApiMapper $adapter;
+    private ApiUserAdapter $adapter;
 
     /**
      * The identity is only persisted for one request.
      */
     private ?ApiUser $identity = null;
 
-    public function __construct(AdapterInterface $adapter)
+    public function __construct(ApiUserAdapter $adapter)
     {
         $this->setAdapter($adapter);
     }
 
     /**
      * Returns the authentication adapter.
-     *
-     * @return ApiMapper
      */
-    public function getAdapter(): ApiMapper
+    public function getAdapter(): ApiUserAdapter
     {
         return $this->adapter;
     }
 
     /**
      * Sets the authentication adapter.
-     *
-     * @param AdapterInterface $adapter
-     *
-     * @return self Provides a fluent interface
      */
-    public function setAdapter(AdapterInterface $adapter): self
+    public function setAdapter(ApiUserAdapter $adapter): self
     {
-        if ($adapter instanceof ApiMapper) {
-            $this->adapter = $adapter;
+        $this->adapter = $adapter;
 
-            return $this;
-        }
-
-        throw new RuntimeException(
-            'ApiAuthenticationService expects the authentication adapter to be of type ApiMapper.'
-        );
+        return $this;
     }
 
     /**
-     * @param string|null $token
-     *
-     * @return Result
+     * Authenticates against the authentication adapter. The default values must be `null` to be compatible with the
+     * `AuthenticationServiceInterface`.
      */
     public function authenticate(?string $token = null): Result
     {
@@ -73,7 +60,7 @@ class ApiAuthenticationService implements AuthenticationServiceInterface
     }
 
     /**
-     * @return bool
+     * Returns true if and only if an identity is available.
      */
     public function hasIdentity(): bool
     {
@@ -81,13 +68,16 @@ class ApiAuthenticationService implements AuthenticationServiceInterface
     }
 
     /**
-     * @return ApiUser|null
+     * Returns the authenticated ApiUser or null if no identity is available.
      */
     public function getIdentity(): ?ApiUser
     {
         return $this->identity;
     }
 
+    /**
+     * Clears the identity.
+     */
     public function clearIdentity(): void
     {
         $this->identity = null;

@@ -1,4 +1,7 @@
 <?php
+
+use Company\Model\Enums\CompanyPackageTypes;
+
 $this->headTitle($this->translate('Edit Company'));
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Career'), true, $this->url('company_admin'))
@@ -33,144 +36,151 @@ $this->scriptUrl()->requireUrls(
 $form->prepare();
 $form->setAttribute('class', 'form-company');
 ?>
-<section class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1><?= sprintf($this->translate('Edit %s'), $this->escapeHtml($company->getName())) ?></h1>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-12">
-                <h2><?= $this->translate('Packages') ?></h2>
-            </div>
-            <div class="col-md-12">
-                <a class="btn btn-success" href="<?= $this->url(
-                    'company_admin/company/edit/package/add',
-                    [
-                        'type' => 'job',
-                        'companySlugName' => $company->getSlugName(),
-                    ],
-                ); ?>">
-                    <span class="fas fa-plus"></span>
-                    <?= $this->translate('Add Job Package'); ?>
-                </a>
-                <a class="btn btn-success" href="<?= $this->url(
-                    'company_admin/company/edit/package/add',
-                    [
-                        'type' => 'featured',
-                        'companySlugName' => $company->getSlugName(),
-                    ],
-                ); ?>">
-                    <span class="fas fa-asterisk"></span>
-                    <?= $this->translate('Add Spotlight Package'); ?>
-                </a>
-                <a class="btn btn-success" href="<?= $this->url(
-                    'company_admin/company/edit/package/add',
-                    [
-                        'type' => 'banner',
-                        'companySlugName' => $company->getSlugName(),
-                    ],
-                ); ?>">
-                    <span class="fas fa-image"></span>
-                    <?= $this->translate('Add Banner Package'); ?>
-                </a>
-            </div>
-            <?php
-            if ($company->getPackages()->count() > 0):
-            ?>
-                <div class="col-md-12">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>
-                                <?= $this->translate('Active'); ?>
-                            </th>
-                            <th>
-                                <?= $this->translate('Start date'); ?>
-                            </th>
-                            <th>
-                                <?= $this->translate('Expiration date'); ?>
-                            </th>
-                            <th>
-                                <?= $this->translate('Jobs / Type'); ?>
-                            </th>
-                            <th>
-                                <?= $this->translate('Actions'); ?>
-                            </th>
-                        </tr>
-                        </thead>
-                        <?php foreach ($company->getPackages() as $package): ?>
-                            <tr>
-                                <td>
-                                    <?= $package->isActive() ? $this->translate('Yes') : $this->translate('No') ?>
-                                </td>
-                                <td>
-                                    <?= $package->getStartingDate()->format('d-m-Y') ?>
-                                </td>
-                                <td>
-                                    <?= $package->getExpirationDate()->format('d-m-Y') ?>
-                                </td>
-                                <td>
-                                    <?php if ($package->getType() === 'banner') {
-                                        echo $this->translate('Banner Package');
-                                    } else {
-                                        if ($package->getType() == 'featured') {
-                                            echo $this->translate('Featured Package');
-                                        } else {
-                                            echo $package->getJobs()->count();
-                                        }
-                                    } ?>
-                                </td>
-                                <td>
-                                    <a class="btn btn-xs btn-primary" href="<?= $this->url(
-                                        'company_admin/company/edit/package/edit',
-                                        [
-                                            'companySlugName' => $company->getSlugName(),
-                                            'packageId' => $package->getId(),
-                                        ]
-                                    ); ?>">
-                                        <?= $this->translate('Edit'); ?></a>
-                                    <button type="button" class="btn btn-danger btn-xs delete-package"
-                                            data-toggle="modal" data-target="#deleteModal"
-                                            data-slug-name="<?= $company->getSlugName() ?>"
-                                            data-package-id="<?= $package->getId() ?>">
-                                        <?= $this->translate('Delete') ?>
-                                    </button>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
-            <?php
-            endif;
-            ?>
-        </div>
-        <hr>
-        <?= $this->form()->openTag($form) ?>
-        <?= $this->partial(
-            'partial/company/admin/editors/company.phtml',
-            [
-                'form' => $form,
-                'companyLogo' => $company->getLogo(),
-            ]
-        ); ?>
-        <div class="row">
-            <div class="col-md-12">
-                <?php
-                $submit = $form->get('submit')
-                    ->setValue($this->translate('Update Company'))
-                    ->setAttribute('class', 'btn btn-primary pull-right');
-                ?>
-                <div class="form-group">
-                    <?= $this->formSubmit($submit) ?>
-                </div>
-            </div>
-        </div>
-        <?= $this->form()->closeTag() ?>
+<div class="row">
+    <div class="col-md-12">
+        <h1><?= sprintf($this->translate('Edit %s'), $this->escapeHtml($company->getName())) ?></h1>
     </div>
-</section>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Packages') ?></h2>
+    </div>
+    <div class="col-md-12">
+        <a class="btn btn-success" href="<?= $this->url(
+            'company_admin/company/edit/package/add',
+            [
+                'type' => CompanyPackageTypes::Job->value,
+                'companySlugName' => $company->getSlugName(),
+            ],
+        ); ?>">
+            <span class="fas fa-plus"></span>
+            <?= $this->translate('Add Job Package'); ?>
+        </a>
+        <a class="btn btn-success" href="<?= $this->url(
+            'company_admin/company/edit/package/add',
+            [
+                'type' => CompanyPackageTypes::Featured->value,
+                'companySlugName' => $company->getSlugName(),
+            ],
+        ); ?>">
+            <span class="fas fa-asterisk"></span>
+            <?= $this->translate('Add Spotlight Package'); ?>
+        </a>
+        <a class="btn btn-success" href="<?= $this->url(
+            'company_admin/company/edit/package/add',
+            [
+                'type' => CompanyPackageTypes::Banner->value,
+                'companySlugName' => $company->getSlugName(),
+            ],
+        ); ?>">
+            <span class="fas fa-image"></span>
+            <?= $this->translate('Add Banner Package'); ?>
+        </a>
+    </div>
+    <?php
+    if ($company->getPackages()->count() > 0):
+    ?>
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>
+                        <?= $this->translate('Contract Number') ?>
+                    </th>
+                    <th>
+                        <?= $this->translate('Active'); ?>
+                    </th>
+                    <th>
+                        <?= $this->translate('Start date'); ?>
+                    </th>
+                    <th>
+                        <?= $this->translate('Expiration date'); ?>
+                    </th>
+                    <th>
+                        <?= $this->translate('Jobs (Active) / Type'); ?>
+                    </th>
+                    <th>
+                        <?= $this->translate('Actions'); ?>
+                    </th>
+                </tr>
+                </thead>
+                <?php foreach ($company->getPackages() as $package): ?>
+                    <tr>
+                        <td>
+                            <?= $package->getContractNumber() ?? '-' ?>
+                        </td>
+                        <td>
+                            <?= $package->isActive() ? $this->translate('Yes') : $this->translate('No') ?>
+                        </td>
+                        <td>
+                            <?= $package->getStartingDate()->format('d-m-Y') ?>
+                        </td>
+                        <td>
+                            <?= $package->getExpirationDate()->format('d-m-Y') ?>
+                        </td>
+                        <td>
+                            <?php if (CompanyPackageTypes::Banner === $package->getType()) {
+                                echo $this->translate('Banner Package');
+                            } else {
+                                if (CompanyPackageTypes::Featured === $package->getType()) {
+                                    echo $this->translate('Featured Package');
+                                } else {
+                                    echo sprintf(
+                                        '%d (%d)',
+                                        $package->getJobsWithoutProposals()->count(),
+                                        $package->getNumberOfActiveJobs(),
+                                    );
+                                }
+                            } ?>
+                        </td>
+                        <td>
+                            <a class="btn btn-xs btn-primary" href="<?= $this->url(
+                                'company_admin/company/edit/package/edit',
+                                [
+                                    'companySlugName' => $company->getSlugName(),
+                                    'packageId' => $package->getId(),
+                                ]
+                            ); ?>">
+                                <?= $this->translate('Edit'); ?></a>
+                            <button type="button" class="btn btn-danger btn-xs delete-package"
+                                    data-toggle="modal" data-target="#deleteModal"
+                                    data-slug-name="<?= $company->getSlugName() ?>"
+                                    data-package-id="<?= $package->getId() ?>">
+                                <?= $this->translate('Delete') ?>
+                            </button>
+
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+    <?php
+    endif;
+    ?>
+</div>
+<hr>
+<?= $this->form()->openTag($form) ?>
+<?= $this->partial(
+    'partial/company/admin/editors/company.phtml',
+    [
+        'form' => $form,
+        'companyLogo' => $company->getLogo(),
+    ]
+); ?>
+<div class="row">
+    <div class="col-md-12">
+        <?php
+        $submit = $form->get('submit')
+            ->setValue($this->translate('Update Company'))
+            ->setAttribute('class', 'btn btn-primary pull-right');
+        ?>
+        <div class="form-group">
+            <?= $this->formSubmit($submit) ?>
+        </div>
+    </div>
+</div>
+<?= $this->form()->closeTag() ?>
 <!-- Delete package modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -199,8 +209,8 @@ $form->setAttribute('class', 'form-company');
 <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     Company.updateForm();
 
-    document.querySelectorAll('.delete-package').forEach(package => {
-        package.addEventListener('click', e => {
+    document.querySelectorAll('.delete-package').forEach(companyPackage => {
+        companyPackage.addEventListener('click', e => {
             Company.Admin.deletePackage(e.target.dataset.slugName, e.target.dataset.packageId);
         });
     });

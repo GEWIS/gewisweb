@@ -1,0 +1,314 @@
+<?php
+$this->scriptUrl()->requireUrls(
+    ['company_account/jobs/delete'],
+    ['packageId', 'jobId']
+);
+
+$this->headTitle($this->translate('Jobs'));
+
+if (isset($packages)) {
+    $this->breadcrumbs()
+        ->addBreadcrumb($this->translate('Jobs'), true);
+} else {
+    $this->breadcrumbs()
+        ->addBreadcrumb($this->translate('Jobs'), true, $this->url('company_account/jobs_overview'))
+        ->addBreadcrumb($package->getContractNumber() ?? '-', true);
+}
+?>
+<div class="row">
+    <div class="col-md-3 col-md-push-9">
+        <h2><?= $this->translate('Notifications') ?></h2>
+    </div>
+    <div class="col-md-9 col-md-pull-3">
+        <?php if (isset($packages)): ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2><?= $this->translate('Job Packages') ?></h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <?= $this->translate('Contract Number') ?>
+                                </th>
+                                <th>
+                                    <?= $this->translate('Start date'); ?>
+                                </th>
+                                <th>
+                                    <?= $this->translate('Expiration date'); ?>
+                                </th>
+                                <th>
+                                    <?= $this->translate('Jobs (Active)'); ?>
+                                </th>
+                                <th>
+                                    <?= $this->translate('Actions'); ?>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($packages as $package): ?>
+                                <tr>
+                                    <td>
+                                        <?= $package->getContractNumber() ?? '-' ?>
+                                    </td>
+                                    <td>
+                                        <?= $package->getStartingDate()->format('d-m-Y') ?>
+                                    </td>
+                                    <td>
+                                        <?= $package->getExpirationDate()->format('d-m-Y') ?>
+                                    </td>
+                                    <td>
+                                        <?= sprintf(
+                                            '%d (%d)',
+                                            $package->getJobsWithoutProposals()->count(),
+                                            $package->getNumberOfActiveJobs(),
+                                        ) ?>
+                                    </td>
+                                    <td>
+                                        <?php if (!$package->isExpired()): ?>
+                                            <a class="btn btn-xs btn-primary" href="<?= $this->url(
+                                                'company_account/jobs/add',
+                                                [
+                                                    'packageId' => $package->getId(),
+                                                ]
+                                            ); ?>">
+                                                <?= $this->translate('Add Job'); ?>
+                                            </a>
+                                        <?php endif; ?>
+                                        <a class="btn btn-xs btn-primary" href="<?= $this->url(
+                                            'company_account/jobs',
+                                            [
+                                                'packageId' => $package->getId(),
+                                            ]
+                                        ); ?>">
+                                            <?= $this->translate('View'); ?>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-4">
+                    <h2><?= $this->translate('Recently Approved Jobs') ?></h2>
+                    <?php if (0 === count($approved)): ?>
+                        <p><?= $this->translate('You do not have recently approved jobs.') ?></p>
+                    <?php else: ?>
+                        <ul class="list-unstyled">
+                            <?php foreach($approved as $job): ?>
+                                <li>
+                                    <a href="<?= $this->url(
+                                        'company_account/jobs/status',
+                                        [
+                                            'packageId' => $job->getPackage()->getId(),
+                                            'jobId' => $job->getId(),
+                                        ],
+                                    ) ?>">
+                                        <?= $this->localiseText($job->getName()) ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+                <div class="col-md-4">
+                    <h2><?= $this->translate('Recently Rejected Jobs') ?></h2>
+                    <?php if (0 === count($rejected)): ?>
+                        <p><?= $this->translate('You do not have recently rejected jobs.') ?></p>
+                    <?php else: ?>
+                        <ul class="list-unstyled">
+                            <?php foreach($rejected as $job): ?>
+                                <li>
+                                    <a href="<?= $this->url(
+                                        'company_account/jobs/status',
+                                        [
+                                            'packageId' => $job->getPackage()->getId(),
+                                            'jobId' => $job->getId(),
+                                        ],
+                                    ) ?>">
+                                        <?= $this->localiseText($job->getName()) ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+                <div class="col-md-4">
+                    <h2><?= $this->translate('Recently Unapproved Jobs') ?></h2>
+                    <?php if (0 === count($unapproved)): ?>
+                        <p><?= $this->translate('You do not have any recent jobs pending approval.') ?></p>
+                    <?php else: ?>
+                        <ul class="list-unstyled">
+                            <?php foreach($unapproved as $job): ?>
+                                <li>
+                                    <a href="<?= $this->url(
+                                        'company_account/jobs/status',
+                                        [
+                                            'packageId' => $job->getPackage()->getId(),
+                                            'jobId' => $job->getId(),
+                                        ],
+                                    ) ?>">
+                                        <?= $this->localiseText($job->getName()) ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+            </div>
+        <?php elseif (isset($jobs)): ?>
+            <?php $isExpired = $package->isExpired(); ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2><?= $this->translate('Jobs') ?></h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th><?= $this->translate('Name') ?></th>
+                                <th><?= $this->translate('Active') ?></th>
+                                <th><?= $this->translate('Approved (Has Updates)') ?></th>
+                                <th><?= $this->translate('Actions') ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (0 === count($jobs)): ?>
+                                <tr class="text-center">
+                                    <td colspan="4">
+                                        <?= $this->translate('This job package does not contain any jobs.') ?>
+                                    </td>
+                                </tr>
+                            <?php else: ?>
+                                <?php foreach ($jobs as $job): ?>
+                                    <tr>
+                                        <td><?= $this->escapeHtml($this->localiseText($job->getName())) ?></td>
+                                        <td>
+                                            <?= $job->isActive() ? $this->translate('Yes') : $this->translate('No') ?>
+                                        </td>
+                                        <td>
+                                            <?php
+                                            $icons = ['fa-circle-question', 'fa-circle-check', 'fa-circle-xmark'];
+                                            ?>
+                                            <span class="fas <?= $icons[$job->getApproved()->value] ?>"></span>
+                                            <?php if (0 !== $job->getUpdateProposals()->count()): ?>
+                                                (<?= $this->translate('Yes') ?>)
+                                            <?php endif; ?>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-xs btn-primary"
+                                               href="<?= $this->url(
+                                                   'company_account/jobs/status',
+                                                   [
+                                                       'packageId' => $package->getId(),
+                                                       'jobId' => $job->getId(),
+                                                   ],
+                                               ) ?>">
+                                                <?= $this->translate('Details') ?>
+                                            </a>
+                                            <?php if (!$isExpired): ?>
+                                                <a class="btn btn-xs btn-primary"
+                                                   href="<?= $this->url(
+                                                       'company_account/jobs/edit',
+                                                       [
+                                                           'packageId' => $package->getId(),
+                                                           'jobId' => $job->getId(),
+                                                       ],
+                                                   ) ?>">
+                                                    <?= $this->translate('Edit') ?>
+                                                </a>
+                                            <?php endif; ?>
+                                            <button class="btn btn-danger btn-xs delete-job"
+                                                    data-target="#deleteModal"
+                                                    data-job-id="<?= $job->getId() ?>"
+                                                    data-toggle="modal"
+                                                    type="button"
+                                            >
+                                                <?= $this->translate('Delete') ?>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <?php if ($isExpired && 0 !== count($jobs)): ?>
+                    <div class="col-md-12">
+                        <a class="btn btn-primary" href="<?= $this->url(
+                            'company_account/jobs/transfer',
+                            ['packageId' => $package->getId()],
+                        ) ?>">
+                            <span class="fas fa-arrow-right"></span>
+                            <?= $this->translate('Transfer Jobs') ?>
+                        </a>
+                    </div>
+                <?php elseif (!$isExpired): ?>
+                    <div class="col-md-12">
+                        <a class="btn btn-primary" href="<?= $this->url(
+                            'company_account/jobs/add',
+                            ['packageId' => $package->getId()],
+                        ) ?>">
+                            <span class="fas fa-plus"></span>
+                            <?= $this->translate('Add Job') ?>
+                        </a>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title"><?= $this->translate('Delete confirmation') ?></h4>
+                        </div>
+                        <div class="modal-body">
+                            <p><?= $this->translate('Are you sure you want to delete this job?') ?> </p>
+                        </div>
+                        <div class="modal-footer">
+                            <form id="deleteForm" method="POST">
+                                <input class="btn btn-danger" name="submit" type="submit"
+                                       value="<?= $this->translate('Delete job') ?>">
+                                <button type="button" class="btn" data-dismiss="modal">
+                                    <?= $this->translate('Cancel') ?>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+                document.querySelectorAll('.delete-job').forEach(job => {
+                    job.addEventListener('click', e => {
+                        deleteJob(e.target.dataset.jobId);
+                    });
+                });
+
+                deleteJob = function (id) {
+                    document.querySelector('#deleteForm').setAttribute(
+                        'action',
+                        URLHelper.url(
+                            'company_account/jobs/delete',
+                            {
+                                'packageId': '<?= $package->getId() ?>',
+                                'jobId': id
+                            }
+                        )
+                    );
+                };
+            </script>
+        <?php endif; ?>
+    </div>
+</div>

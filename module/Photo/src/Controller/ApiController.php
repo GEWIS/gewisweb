@@ -52,7 +52,7 @@ class ApiController extends AbstractActionController
 
         return new JsonModel([
             'tags' => $this->tagMapper->getTagsByPhoto($photoId),
-            'voted' => null !== $this->voteMapper->findVote($photoId, $this->aclService->getIdentity()->getLidnr()),
+            'voted' => null !== $this->voteMapper->findVote($photoId, $this->aclService->getUserIdentity()->getLidnr()),
         ]);
     }
 }

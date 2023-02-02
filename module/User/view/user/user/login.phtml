@@ -1,0 +1,36 @@
+<?php
+$this->headTitle($this->translate('Log in'));
+
+$isMember = ('member' === $userType);
+?>
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1 col-md-7 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-navigation">
+                        <ul class="nav nav-tabs nav-justified">
+                            <li role="presentation" class="<?= $isMember ? 'active' : '' ?>">
+                                <a href="<?= $this->url('user/login', ['user_type' => 'member']) ?>">
+                                    <?= $this->translate('Member') ?>
+                                </a>
+                            </li>
+                            <li role="presentation" class="<?= !$isMember ? 'active' : '' ?>">
+                                <a href="<?= $this->url('user/login', ['user_type' => 'company']) ?>">
+                                    <?= $this->translate('Company') ?></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="panel-heading">
+                        <h3><?= $this->translate('Login') ?></h3>
+                    </div>
+                    <?php if ($isMember): ?>
+                        <?= $this->partial('partial/login/member.phtml', ['form' => $form]) ?>
+                    <?php else: ?>
+                        <?= $this->partial('partial/login/company.phtml', ['form' => $form]) ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

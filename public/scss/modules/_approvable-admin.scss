@@ -1,10 +1,10 @@
-.admin-activity {
+.admin-section {
     h2 {
         margin-bottom: 0;
     }
 }
 
-.admin-activity-overview {
+.admin-approvable-overview {
     .overview-header,
     .overview-sidebar, {
         @media (max-width: $screen-sm-max) {
@@ -12,7 +12,7 @@
         }
     }
 
-    .activity-property {
+    .approvable-property {
         @media (max-width: $screen-md-max) {
             display: inline-block;
         }

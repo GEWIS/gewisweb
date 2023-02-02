@@ -88,6 +88,9 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                     'checked_value' => '1',
                     'unchecked_value' => '0',
                 ],
+                'attributes' => [
+                    'value' => '1',
+                ],
             ]
         );
 

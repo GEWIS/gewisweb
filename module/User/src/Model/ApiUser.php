@@ -2,30 +2,20 @@
 
 namespace User\Model;
 
+use Application\Model\IdentityInterface;
+use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id
-};
-use Laminas\Permissions\Acl\{
-    Resource\ResourceInterface,
-    Role\RoleInterface,
 };
 
 /**
  * User model.
  */
 #[Entity]
-class ApiUser implements RoleInterface, ResourceInterface
+class ApiUser implements IdentityInterface
 {
-    /**
-     * Id.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * Application name.
@@ -38,16 +28,6 @@ class ApiUser implements RoleInterface, ResourceInterface
      */
     #[Column(type: "string")]
     protected string $token;
-
-    /**
-     * Get the id.
-     *
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * Get the name.

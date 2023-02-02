@@ -4,17 +4,16 @@ namespace Frontpage\Service;
 
 use Application\Service\FileStorage;
 use Doctrine\ORM\Exception\ORMException;
-use Exception;
 use Frontpage\Form\Page as PageForm;
 use Frontpage\Mapper\Page as PageMapper;
 use Frontpage\Model\Page as PageModel;
 use InvalidArgumentException;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Stdlib\Parameters;
 use Laminas\Validator\File\{
     Extension,
     IsImage,
 };
-use Laminas\Stdlib\Parameters;
 use User\Permissions\NotAllowedException;
 
 /**

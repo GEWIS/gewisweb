@@ -46,7 +46,7 @@ class MemberInfo
         }
 
         if (null === $lidnr) {
-            $lidnr = $this->aclService->getIdentityOrThrowException()->getLidnr();
+            $lidnr = $this->aclService->getUserIdentityOrThrowException()->getLidnr();
         }
 
         $member = $this->memberMapper->findByLidnr($lidnr);

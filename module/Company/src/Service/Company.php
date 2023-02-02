@@ -2,15 +2,13 @@
 
 namespace Company\Service;
 
+use Application\Model\ApprovableText as ApprovableTextModel;
+use Application\Model\Enums\ApprovableStatus;
 use Application\Service\FileStorage;
-use Doctrine\ORM\{
-    NonUniqueResultException,
-    Exception\ORMException,
-};
 use Company\Form\{
-    JobCategory as EditCategoryForm,
     Company as CompanyForm,
     Job as EditJobForm,
+    JobCategory as EditCategoryForm,
     JobLabel as EditLabelForm,
     Package as EditPackageForm,
 };
@@ -25,18 +23,27 @@ use Company\Mapper\{
 };
 use Company\Model\{
     Company as CompanyModel,
-    CompanyFeaturedPackage as CompanyFeaturedPackageModel,
-    CompanyLocalisedText,
     CompanyBannerPackage as CompanyBannerPackageModel,
+    CompanyFeaturedPackage as CompanyFeaturedPackageModel,
     CompanyJobPackage as CompanyJobPackageModel,
+    CompanyLocalisedText,
     CompanyPackage as CompanyPackageModel,
+    Enums\CompanyPackageTypes,
     Job as JobModel,
     JobCategory as JobCategoryModel,
-    JobLabel as JobLabelModel};
+    JobLabel as JobLabelModel,
+    Proposals\CompanyUpdate as CompanyUpdateProposal,
+    Proposals\JobUpdate as JobUpdateProposalModel,
+};
 use DateTime;
+use Doctrine\ORM\{
+    NonUniqueResultException,
+    Exception\ORMException,
+};
 use Exception;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
+use User\Service\User as UserService;
 
 /**
  * Company service.
@@ -61,6 +68,7 @@ class Company
         private readonly EditJobForm $editJobForm,
         private readonly EditCategoryForm $editCategoryForm,
         private readonly EditLabelForm $editLabelForm,
+        private readonly UserService $userService,
     ) {
     }
 
@@ -71,7 +79,7 @@ class Company
      */
     public function getCurrentBanner(): ?CompanyBannerPackageModel
     {
-        if (!$this->aclService->isAllowed('showBanner', 'company')) {
+        if (!$this->aclService->isAllowed('viewBanner', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view the banner'));
         }
 
@@ -83,7 +91,7 @@ class Company
      */
     public function getFeaturedPackage(): ?CompanyFeaturedPackageModel
     {
-        if (!$this->aclService->isAllowed('viewFeaturedCompany', 'company')) {
+        if (!$this->aclService->isAllowed('viewFeatured', 'company')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to view the featured company')
             );
@@ -153,7 +161,7 @@ class Company
      */
     public function getPackageChangeEvents(DateTime $date): array
     {
-        if (!$this->aclService->isAllowed('listall', 'company')) {
+        if (!$this->aclService->isAllowed('listAll', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list the companies'));
         }
 
@@ -187,7 +195,7 @@ class Company
      */
     public function getHiddenCompanyList(): array
     {
-        if (!$this->aclService->isAllowed('listall', 'company')) {
+        if (!$this->aclService->isAllowed('listAll', 'company')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to access the admin interface')
             );
@@ -205,7 +213,7 @@ class Company
      */
     public function getCompanyById(int $id): ?CompanyModel
     {
-        if (!$this->aclService->isAllowed('listall', 'company')) {
+        if (!$this->aclService->isAllowed('listAll', 'company')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list the companies'));
         }
 
@@ -312,6 +320,10 @@ class Company
         $company->setName($data['name']);
         $company->setSlugName($data['slugName']);
         $company->setPublished($data['published']);
+
+        $company->setRepresentativeName($data['representativeName']);
+        $company->setRepresentativeEmail($data['representativeEmail']);
+
         $company->setContactName($data['contactName']);
         $company->setContactEmail($data['contactEmail']);
         $company->setContactPhone($data['contactPhone']);
@@ -322,12 +334,23 @@ class Company
         $company->setWebsite(new CompanyLocalisedText($data['websiteEn'], $data['website']));
         $company->setDescription(new CompanyLocalisedText($data['descriptionEn'], $data['description']));
 
+        // If the user can approve (changes to) companies, directly approve the company.
+        if ($this->aclService->isAllowed('approve', 'company')) {
+            $company->setApproved(ApprovableStatus::Approved);
+            $company->setApprovedAt(new DateTime());
+            $company->setApprover($this->aclService->getUserIdentityOrThrowException()->getMember());
+        } else {
+            $company->setApproved(ApprovableStatus::Unapproved);
+        }
+
         // Upload the logo of the company.
         if (!$this->uploadFile($company, $data['logo'])) {
             return false;
         }
 
         $this->persistCompany($company);
+
+        $this->userService->registerCompanyUser($company);
 
         return $company;
     }
@@ -346,11 +369,33 @@ class Company
         CompanyModel $company,
         array $data,
     ): bool {
-        $company->exchangeArray($data);
+        // If the user can approve changes to companies, directly apply the changes to the company.
+        if ($this->aclService->isAllowed('approve', 'company')) {
+            $company->exchangeArray($data);
 
-        // Upload the logo of the company.
-        if (!$this->uploadFile($company, $data['logo'])) {
-            return false;
+            $company->setApproved(ApprovableStatus::Approved);
+            $company->setApprovedAt(new DateTime());
+            $company->setApprover($this->aclService->getUserIdentityOrThrowException()->getMember());
+
+            // Upload the logo of the company.
+            if (!$this->uploadFile($company, $data['logo'])) {
+                return false;
+            }
+        } else {
+            // If the user does not have the privileges to approve changes to a company, create an update proposal.
+            $updateProposal = $this->createCompany($data);
+
+            if (!$updateProposal instanceof CompanyModel) {
+                return false;
+            }
+
+            $companyUpdateProposal = new CompanyUpdateProposal();
+            $companyUpdateProposal->setOriginal($company);
+            $companyUpdateProposal->setProposal($updateProposal);
+
+            $this->companyMapper->persist($updateProposal);
+
+            // TODO: Send e-mail to CEB/C4 about proposed changes.
         }
 
         $this->persistCompany($company);
@@ -477,7 +522,7 @@ class Company
      *
      * @param CompanyModel $company
      * @param array $data
-     * @param string $type
+     * @param CompanyPackageTypes $type
      *
      * @return bool
      *
@@ -486,12 +531,12 @@ class Company
     public function createPackage(
         CompanyModel $company,
         array $data,
-        string $type = 'job',
+        CompanyPackageTypes $type = CompanyPackageTypes::Job,
     ): bool {
         $package = $this->packageMapper->createPackage($type);
         $package->setCompany($company);
 
-        if (CompanyBannerPackageModel::class === get_class($package)) {
+        if (CompanyPackageTypes::Banner === $type) {
             if (!$this->uploadFile($package, $data['banner'])) {
                 return false;
             }
@@ -517,7 +562,7 @@ class Company
         CompanyPackageModel $package,
         array $data,
     ): bool {
-        if (CompanyBannerPackageModel::class === get_class($package)) {
+        if (CompanyPackageTypes::Banner === $package->getType()) {
             if (!$this->uploadFile($package, $data['banner'])) {
                 return false;
             }
@@ -535,21 +580,21 @@ class Company
      * @param CompanyJobPackageModel $package
      * @param array $data
      *
-     * @return bool
+     * @return JobModel|bool
      *
      * @throws ORMException
      */
     public function createJob(
         CompanyJobPackageModel $package,
         array $data,
-    ): bool {
-        $job = new JobModel();
+    ): JobModel|bool {
 
         $category = $this->categoryMapper->find($data['category']);
         if (null === $category) {
             return false;
         }
 
+        $job = new JobModel();
         $job->setSlugName($data['slugName']);
         $job->setCategory($category);
         $job->setPublished($data['published']);
@@ -576,6 +621,15 @@ class Company
         $job->setPackage($package);
         $package->addJob($job);
 
+        // If the user can approve (changed to) jobs, directly approve the job.
+        if ($this->aclService->isAllowed('approve', 'job')) {
+            $job->setApproved(ApprovableStatus::Approved);
+            $job->setApprovedAt(new DateTime());
+            $job->setApprover($this->aclService->getUserIdentityOrThrowException()->getMember());
+        } else {
+            $job->setApproved(ApprovableStatus::Unapproved);
+        }
+
         // Upload the attachments.
         if (!$this->uploadFile($job, $data['attachment'])) {
             return false;
@@ -585,11 +639,9 @@ class Company
             return false;
         }
 
-        $job->setTimeStamp(new DateTime());
-
         $this->persistJob($job);
 
-        return true;
+        return $job;
     }
 
     /**
@@ -603,58 +655,82 @@ class Company
     public function updateJob(
         JobModel $job,
         array $data,
+        bool $applyProposal = false,
     ): bool {
-        $category = $this->categoryMapper->find($data['category']);
-        if (null === $category) {
-            return false;
-        }
+        // If the user can approve changes to jobs, directly apply the changes to the job.
+        if (
+            $this->aclService->isAllowed('approve', 'job')
+            || $applyProposal
+        ) {
+            $category = $this->categoryMapper->find($data['category']);
 
-        $job->setSlugName($data['slugName']);
-        $job->setCategory($category);
-        $job->setPublished($data['published']);
-        $job->setContactName($data['contactName']);
-        $job->setContactEmail($data['contactEmail']);
-        $job->setContactPhone($data['contactPhone']);
-
-        $job->getName()->updateValues($data['nameEn'], $data['name']);
-        $job->getLocation()->updateValues($data['locationEn'], $data['location']);
-        $job->getWebsite()->updateValues($data['websiteEn'], $data['website']);
-        $job->getDescription()->updateValues($data['descriptionEn'], $data['description']);
-
-        if (isset($data['labels'])) {
-            $newLabels = $data['labels'];
-            $currentLabels = $job->getLabels()->map(function ($label) {
-                return $label->getId();
-            })->toArray();
-
-            $intersection = array_intersect($newLabels, $currentLabels);
-            $toRemove = array_diff($currentLabels, $newLabels);
-            $toAdd = array_diff($newLabels, $intersection);
-
-            foreach ($toRemove as $label) {
-                $label = $this->getJobLabelById($label);
-                $job->removeLabel($label);
+            if (null === $category) {
+                return false;
             }
 
-            foreach ($toAdd as $label) {
-                $label = $this->getJobLabelById($label);
+            $job->setSlugName($data['slugName']);
+            $job->setCategory($category);
+            $job->setPublished($data['published']);
+            $job->setContactName($data['contactName']);
+            $job->setContactEmail($data['contactEmail']);
+            $job->setContactPhone($data['contactPhone']);
 
-                if (null !== $label) {
-                    $job->addLabel($label);
+            $job->getName()->updateValues($data['nameEn'], $data['name']);
+            $job->getLocation()->updateValues($data['locationEn'], $data['location']);
+            $job->getWebsite()->updateValues($data['websiteEn'], $data['website']);
+            $job->getDescription()->updateValues($data['descriptionEn'], $data['description']);
+
+            if (isset($data['labels'])) {
+                $newLabels = $data['labels'];
+                $currentLabels = $job->getLabels()->map(function ($label) {
+                    return $label->getId();
+                })->toArray();
+
+                $intersection = array_intersect($newLabels, $currentLabels);
+                $toRemove = array_diff($currentLabels, $newLabels);
+                $toAdd = array_diff($newLabels, $intersection);
+
+                foreach ($toRemove as $label) {
+                    $label = $this->getJobLabelById($label);
+                    $job->removeLabel($label);
+                }
+
+                foreach ($toAdd as $label) {
+                    $label = $this->getJobLabelById($label);
+
+                    if (null !== $label) {
+                        $job->addLabel($label);
+                    }
                 }
             }
-        }
 
-        // Upload the attachments.
-        if (!$this->uploadFile($job, $data['attachment'])) {
-            return false;
-        }
+            // Upload the attachments.
+            if (!$this->uploadFile($job, $data['attachment'])) {
+                return false;
+            }
 
-        if (!$this->uploadFile($job, $data['attachmentEn'], 'En')) {
-            return false;
-        }
+            if (!$this->uploadFile($job, $data['attachmentEn'], 'En')) {
+                return false;
+            }
+        } else {
+            // If the user does not have the privileges to approve changes to a job, create an update proposal.
+            $updateProposal = $this->createJob($job->getPackage(), $data);
 
-        $job->setTimeStamp(new DateTime());
+            if (!$updateProposal instanceof JobModel) {
+                return false;
+            }
+
+            $updateProposal->setIsUpdate(true);
+
+            $jobUpdateProposal = new JobUpdateProposalModel();
+            $jobUpdateProposal->setOriginal($job);
+            $jobUpdateProposal->setProposal($updateProposal);
+
+            $this->jobMapper->persist($updateProposal);
+            $this->jobMapper->persist($jobUpdateProposal);
+
+            // TODO: Send e-mail to CEB/C4 about proposed changes.
+        }
 
         $this->persistJob($job);
 
@@ -670,7 +746,7 @@ class Company
      */
     public function deletePackage(CompanyPackageModel $package): void
     {
-        if (!$this->aclService->isAllowed('delete', 'company')) {
+        if (!$this->aclService->isAllowed('delete', 'package')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete packages'));
         }
 
@@ -678,7 +754,7 @@ class Company
     }
 
     /**
-     * Deletes the given job.
+     * Deletes the given job and its associated data.
      *
      * @param JobModel $job
      *
@@ -686,11 +762,82 @@ class Company
      */
     public function deleteJob(JobModel $job): void
     {
-        if (!$this->aclService->isAllowed('delete', 'company')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to delete jobs'));
+        $this->deleteJobAttachments($job);
+
+        /** @var JobUpdateProposalModel $jobUpdateProposal */
+        foreach ($job->getUpdateProposals() as $jobUpdateProposal) {
+            $this->deleteJobAttachments($jobUpdateProposal->getProposal());
         }
 
         $this->jobMapper->remove($job);
+    }
+
+    /**
+     * Remove the actual attachments from a job.
+     */
+    private function deleteJobAttachments(JobModel $job): void
+    {
+        if (null !== ($dutchAttachment = $job->getAttachment()->getValueNL())) {
+            $this->storageService->removeFile($dutchAttachment);
+        }
+
+        if (null !== ($englishAttachment = $job->getAttachment()->getValueEN())) {
+            $this->storageService->removeFile($englishAttachment);
+        }
+    }
+
+    /**
+     * Move jobs from an expired package to a non-expired package.
+     */
+    public function transferJobs(array $data): bool
+    {
+        $newPackage = $this->packageMapper->find((int) $data['packages']);
+
+        if (null === $newPackage) {
+            return false;
+        }
+
+        foreach ($data['jobs'] as $formJob) {
+            /** @var JobModel|null $job */
+            if (null !== ($job = $this->jobMapper->find((int) $formJob))) {
+                $job->setPackage($newPackage);
+                $this->jobMapper->persist($job);
+            }
+        }
+
+        $this->jobMapper->flush();
+
+        return true;
+    }
+
+    public function applyJobProposal(JobUpdateProposalModel $jobUpdate): void
+    {
+        $job = $jobUpdate->getOriginal();
+        $data = $jobUpdate->getProposal()->toArray();
+
+        // Fix some attributes.
+        $data['category'] = $data['category']->getId();
+        foreach ($data['labels'] as $key => $label) {
+            $data['labels'][$key] = $label->getId();
+        }
+
+        $this->updateJob($job, $data, true);
+
+        foreach ($job->getUpdateProposals() as $update) {
+            // The proposed job is cascade deleted.
+            $this->jobMapper->remove($update);
+        }
+    }
+
+    public function cancelJobProposal(
+        JobUpdateProposalModel $jobUpdate,
+        string $message,
+    ): void {
+        $this->setJobApproval(
+            $jobUpdate->getProposal(),
+            ApprovableStatus::Rejected,
+            $message,
+        );
     }
 
     /**
@@ -731,7 +878,11 @@ class Company
      */
     public function getJobCategoryById(int $jobCategoryId): ?JobCategoryModel
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (!$this->aclService->isAllowed('listAll', 'jobCategory')) {
+            if ($this->aclService->isAllowed('list', 'jobCategory')) {
+                return $this->categoryMapper->findVisibleCategoryById($jobCategoryId);
+            }
+
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit job categories'));
         }
 
@@ -747,7 +898,7 @@ class Company
      */
     public function getJobLabelById(int $jobLabelId): ?JobLabelModel
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (!$this->aclService->isAllowed('listAll', 'jobLabel')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit job labels'));
         }
 
@@ -763,7 +914,7 @@ class Company
      */
     public function getPackageById(int $packageId): ?CompanyPackageModel
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (!$this->aclService->isAllowed('edit', 'package')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit packages'));
         }
 
@@ -790,7 +941,7 @@ class Company
      */
     public function getJobById(int $jobId): ?JobModel
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (!$this->aclService->isAllowed('edit', 'job')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit jobs'));
         }
 
@@ -804,7 +955,10 @@ class Company
      */
     public function getCategoryForm(): EditCategoryForm
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (
+            !$this->aclService->isAllowed('create', 'jobCategory')
+            && !$this->aclService->isAllowed('edit', 'jobCategory')
+        ) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit categories'));
         }
 
@@ -818,7 +972,10 @@ class Company
      */
     public function getLabelForm(): EditLabelForm
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (
+            !$this->aclService->isAllowed('create', 'jobLabel')
+            && !$this->aclService->isAllowed('edit', 'jobLabel')
+        ) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit labels'));
         }
 
@@ -828,17 +985,15 @@ class Company
     /**
      * Returns a the form for entering packages.
      *
-     * @param string $type
-     *
      * @return EditPackageForm Form
      */
-    public function getPackageForm(string $type = 'job'): EditPackageForm
+    public function getPackageForm(CompanyPackageTypes $type = CompanyPackageTypes::Job): EditPackageForm
     {
-        if ('banner' === $type) {
+        if (CompanyPackageTypes::Banner === $type) {
             return $this->editBannerPackageForm;
         }
 
-        if ('featured' === $type) {
+        if (CompanyPackageTypes::Featured === $type) {
             return $this->editFeaturedPackageForm;
         }
 
@@ -852,7 +1007,12 @@ class Company
      */
     public function getJobForm(): EditJobForm
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (
+            !$this->aclService->isAllowed('create', 'job')
+            && !$this->aclService->isAllowed('edit', 'job')
+            && !$this->aclService->isAllowed('createOwn', 'job')
+            && !$this->aclService->isAllowed('editOwn', 'job')
+        ) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit jobs'));
         }
 
@@ -864,10 +1024,49 @@ class Company
      */
     public function getCompanyForm(): CompanyForm
     {
-        if (!$this->aclService->isAllowed('create', 'company')) {
+        if (
+            !$this->aclService->isAllowed('create', 'company')
+            && !$this->aclService->isAllowed('edit', 'company')
+            && !$this->aclService->isAllowed('editOwn', 'company')
+        ) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create a company'));
         }
 
         return $this->companyForm;
+    }
+
+    public function setJobApproval(
+        JobModel $job,
+        ApprovableStatus $status,
+        ?string $message = null,
+    ): void {
+        $job->setApproved($status);
+        $job->setApprovedAt(new DateTime());
+        $job->setApprover($this->aclService->getUserIdentityOrThrowException()->getMember());
+
+        if (
+            null === $message
+            || "" === $message
+        ) {
+            $message = null;
+        } else {
+            $message = trim($message);
+            $message = new ApprovableTextModel($message);
+        }
+
+        $job->setApprovableText($message);
+
+        $this->jobMapper->flush();
+    }
+
+    public function resetJobApproval(JobModel $job): void
+    {
+        $job->setApproved(ApprovableStatus::Unapproved);
+        $job->setApprovedAt(null);
+        $job->setApprover(null);
+        // Orphans are automatically deleted, so we do not have to check if there is an actual approvable text.
+        $job->setApprovableText(null);
+
+        $this->jobMapper->flush();
     }
 }

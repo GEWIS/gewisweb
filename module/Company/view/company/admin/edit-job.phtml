@@ -16,37 +16,64 @@ $this->headScript()
 $form->prepare();
 $form->setAttribute('class', 'form-company');
 ?>
-<section class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1><?= $this->translate('Edit Job') ?></h1>
-            </div>
-        </div>
-        <hr>
-        <?= $this->form()->openTag($form) ?>
-        <?= $this->partial(
-            'partial/company/admin/editors/job.phtml',
-            [
-                'form' => $form,
-                'attachments' => $attachments,
-            ],
-        ) ?>
-        <div class="row">
-            <div class="col-md-12">
-                <?php
-                $submit = $form->get('submit')
-                    ->setValue($this->translate('Update Job'))
-                    ->setAttribute('class', 'btn btn-primary pull-right');
-                ?>
-                <div class="form-group">
-                    <?= $this->formSubmit($submit) ?>
-                </div>
-            </div>
-        </div>
-        <?= $this->form()->closeTag() ?>
+<div class="row">
+    <div class="col-md-12">
+        <h1><?= $this->translate('Edit Job') ?></h1>
     </div>
-</section>
+    <?php if (isset($isJobRejected) && $isJobRejected): ?>
+        <div class="col-md-12">
+            <div class="alert alert-info">
+                <p>
+                    <?php if ($isJobUpdate && null !== $jobRejectedMessage): ?>
+                        <?= sprintf(
+                            $this->translate(
+                                'You are currently updating an update proposal that was previously rejected for the following reason: %s'
+                            ),
+                            $this->escapeHtml($jobRejectedMessage),
+                        ) ?>
+                    <?php elseif ($isJobUpdate && null === $jobRejectedMessage): ?>
+                        <?= $this->translate(
+                            'You are currently updating an update proposal that was previously rejected, however, no reason was provided.'
+                        ) ?>
+                    <?php elseif (!$isJobUpdate && null !== $jobRejectedMessage): ?>
+                        <?= sprintf(
+                            $this->translate(
+                                'You are currently updating a job that was previously rejected for the following reason: %s'
+                            ),
+                            $this->escapeHtml($jobRejectedMessage),
+                        ) ?>
+                    <?php else: ?>
+                        <?= $this->translate(
+                            'You are currently updating a job that was previously rejected, however, no reason was provided.'
+                        ) ?>
+                    <?php endif; ?>
+                </p>
+            </div>
+        </div>
+    <?php endif; ?>
+</div>
+<hr>
+<?= $this->form()->openTag($form) ?>
+<?= $this->partial(
+    'partial/company/admin/editors/job.phtml',
+    [
+        'form' => $form,
+        'attachments' => $attachments,
+    ],
+) ?>
+<div class="row">
+    <div class="col-md-12">
+        <?php
+        $submit = $form->get('submit')
+            ->setValue($this->translate('Update Job'))
+            ->setAttribute('class', 'btn btn-primary pull-right');
+        ?>
+        <div class="form-group">
+            <?= $this->formSubmit($submit) ?>
+        </div>
+    </div>
+</div>
+<?= $this->form()->closeTag() ?>
 <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     Company.updateForm();
     Job.updateAllLabels();

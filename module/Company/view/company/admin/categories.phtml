@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-sm-6">
+        <a class="btn btn-success" href='<?= $this->url('company_admin/categories/add') ?>'>
+            <span class="fa fa-plus"></span><?= $this->translate('Add Category') ?>
+        </a>
+        <table class="table table-striped ">
+            <thead>
+            <tr>
+                <th>
+                    <?= $this->translate('Categories') ?>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            foreach ($categoryList as $category):
+                $editUrl = $this->url('company_admin/categories/edit',
+                    ['jobCategoryId' => $category->getId()]);
+                ?>
+                <tr>
+                    <td>
+                        <?= $this->escapeHtml($this->localiseText($category->getName())) ?>
+                        (<a href="<?= $editUrl; ?>"><?= $this->translate('edit') ?></a>)
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th><?= $this->translate('Categories') ?></th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

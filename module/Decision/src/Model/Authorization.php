@@ -2,12 +2,11 @@
 
 namespace Decision\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
     UniqueConstraint,
@@ -23,13 +22,7 @@ use Doctrine\ORM\Mapping\{
 )]
 class Authorization
 {
-    /**
-     * Authorization ID.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * Member submitting this authorization.
@@ -71,14 +64,6 @@ class Authorization
         nullable: true,
     )]
     protected ?DateTime $revokedAt = null;
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @return Member

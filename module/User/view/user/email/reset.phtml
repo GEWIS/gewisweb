@@ -6,7 +6,7 @@ For English, please see below.<br/><br/>
 Er is geprobeerd het wachtwoord van je account te resetten.
 
 Je kunt je account resetten met de volgende link:
-<?= $this->serverUrl($this->url('user/activate', ['code' => $user->getCode()])) ?>
+<?= $this->serverUrl($this->url('user/activate', ['user_type' => 'member', 'code' => $user->getCode()])) ?>
 
 Je reset code is: <?= $user->getCode() ?>
 
@@ -19,7 +19,7 @@ De ApplicatieBeheerCommissie
 A password reset was requested for your account.
 
 You can reset your password on the following link:
-<?= $this->serverUrl($this->url('user/activate', ['code' => $user->getCode()])) ?>
+<?= $this->serverUrl($this->url('user/activate', ['user_type' => 'member', 'code' => $user->getCode()])) ?>
 
 Your reset code is: <?= $user->getCode() ?>
 

@@ -82,8 +82,6 @@ class Poll
      * @param int $optionId The id of the poll option to retrieve
      *
      * @return PollOptionModel|null
-     *
-     * @throws ORMException
      */
     public function getPollOption(int $optionId): ?PollOptionModel
     {
@@ -168,13 +166,10 @@ class Poll
      */
     public function getVote(PollModel $poll): ?PollVoteModel
     {
-        $user = $this->aclService->getIdentity();
-
-        if ($user instanceof UserModel) {
-            return $this->pollMapper->findVote($poll->getId(), $user->getLidnr());
-        }
-
-        return null;
+        return $this->pollMapper->findVote(
+            $poll->getId(),
+            $this->aclService->getUserIdentityOrThrowException()->getLidnr(),
+        );
     }
 
     /**
@@ -198,7 +193,8 @@ class Poll
         }
 
         $pollVote = new PollVoteModel();
-        $pollVote->setRespondent($this->aclService->getIdentity()->getMember());
+
+        $pollVote->setRespondent($this->aclService->getUserIdentityOrThrowException()->getMember());
         $pollVote->setPoll($poll);
         $pollOption->addVote($pollVote);
         $this->pollMapper->persist($pollOption);
@@ -221,7 +217,7 @@ class Poll
         PollModel $poll,
         array $data,
     ): bool {
-        $user = $this->aclService->getIdentity()->getMember();
+        $user = $this->aclService->getUserIdentityOrThrowException()->getMember();
         $comment = $this->saveCommentData($data, $poll, $user);
 
         $poll->addComment($comment);
@@ -279,8 +275,7 @@ class Poll
             return false;
         }
 
-        // TODO: Change to {@link getIdentityOrThrowException()}.
-        $user = $this->aclService->getIdentity()->getMember();
+        $user = $this->aclService->getUserIdentityOrThrowException()->getMember();
         $poll = $this->savePollData($form->getData(), $user);
 
         $this->pollMapper->persist($poll);
@@ -387,7 +382,7 @@ class Poll
      */
     public function approvePoll(PollModel $poll): bool
     {
-        $poll->setApprover($this->aclService->getIdentity()->getMember());
+        $poll->setApprover($this->aclService->getUserIdentityOrThrowException()->getMember());
         $this->pollMapper->flush();
 
         return true;

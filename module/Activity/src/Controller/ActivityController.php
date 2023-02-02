@@ -2,8 +2,8 @@
 
 namespace Activity\Controller;
 
+use Application\Form\ModifyRequest as RequestForm;
 use Activity\Form\{
-    ModifyRequest as RequestForm,
     Signup as SignupForm,
 };
 use Activity\Model\{
@@ -25,6 +25,7 @@ use Laminas\Http\{
 };
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\Stdlib\{
     Parameters,
@@ -32,6 +33,9 @@ use Laminas\Stdlib\{
 };
 use Laminas\View\Model\ViewModel;
 
+/**
+ * @method FlashMessenger flashMessenger()
+ */
 class ActivityController extends AbstractActionController
 {
     public function __construct(
@@ -121,7 +125,7 @@ class ActivityController extends AbstractActionController
 
         $isSignedUp = false;
         if ($this->signupService->isAllowedToInternalSubscribe()) {
-            $identity = $this->aclService->getIdentityOrThrowException();
+            $identity = $this->aclService->getUserIdentityOrThrowException();
             $isSignedUp = $isAllowedToSubscribe
                 && $this->signupService->isSignedUp($signupList, $identity);
         }
@@ -283,7 +287,7 @@ class ActivityController extends AbstractActionController
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
             }
 
-            $identity = $this->aclService->getIdentityOrThrowException();
+            $identity = $this->aclService->getUserIdentityOrThrowException();
 
             // Check if the user is not already subscribed
             if ($this->signupService->isSignedUp($signupList, $identity)) {
@@ -321,9 +325,9 @@ class ActivityController extends AbstractActionController
         string $message,
     ): Response {
         if ($success) {
-            $this->plugin('FlashMessenger')->addSuccessMessage($message);
+            $this->flashMessenger()->addSuccessMessage($message);
         } else {
-            $this->plugin('FlashMessenger')->addErrorMessage($message);
+            $this->flashMessenger()->addErrorMessage($message);
         }
 
         return $this->redirect()->toRoute(
@@ -442,7 +446,7 @@ class ActivityController extends AbstractActionController
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
             }
 
-            $identity = $this->aclService->getIdentityOrThrowException();
+            $identity = $this->aclService->getUserIdentityOrThrowException();
 
             // Check if the user is subscribed
             if (!$this->signupService->isSignedUp($signupList, $identity)) {

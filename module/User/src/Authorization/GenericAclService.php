@@ -2,24 +2,38 @@
 
 namespace User\Authorization;
 
+use Application\Model\IdentityInterface;
 use Application\Service\AbstractAclService;
 use Laminas\Mvc\I18n\Translator;
-use User\Authentication\{
-    ApiAuthenticationService,
-    AuthenticationService,
-};
 use Laminas\Permissions\Acl\Role\RoleInterface;
-use User\Model\User;
+use User\Authentication\{
+    Adapter\CompanyUserAdapter,
+    Adapter\UserAdapter,
+    ApiAuthenticationService,
+    AuthenticationService as CompanyUserAuthenticationService,
+    AuthenticationService as UserAuthenticationService,
+    Storage\CompanyUserSession,
+    Storage\UserSession,
+};
+use User\Model\{
+    CompanyUser as CompanyUserModel,
+    User as UserModel,
+};
 use User\Permissions\NotAllowedException;
 
 abstract class GenericAclService extends AbstractAclService
 {
     private array $checkedIps = [];
 
+    /**
+     * @psalm-param UserAuthenticationService<UserSession, UserAdapter> $userAuthService
+     * @psalm-param CompanyUserAuthenticationService<CompanyUserSession, CompanyUserAdapter> $companyUserAuthService
+     */
     public function __construct(
         private readonly Translator $translator,
-        private readonly AuthenticationService $authService,
-        private readonly ApiAuthenticationService $apiAuthService,
+        private readonly UserAuthenticationService $userAuthService,
+        private readonly CompanyUserAuthenticationService $companyUserAuthService,
+        private readonly ApiAuthenticationService $apiUserAuthService,
         private readonly array $tueRanges,
         private readonly string $remoteAddress,
     ) {
@@ -33,12 +47,8 @@ abstract class GenericAclService extends AbstractAclService
      */
     protected function getRole(): RoleInterface|string
     {
-        if ($this->authService->hasIdentity()) {
-            return $this->authService->getIdentity();
-        }
-
-        if ($this->apiAuthService->hasIdentity()) {
-            return $this->apiAuthService->getIdentity();
+        if (null !== ($identity = $this->getIdentity())) {
+            return $identity;
         }
 
         if ($this->fromTueNetwork()) {
@@ -48,39 +58,69 @@ abstract class GenericAclService extends AbstractAclService
         return 'guest';
     }
 
-    /**
-     * Gets the user identity, or gives a 403 if the user is not logged in
-     *
-     * @return User|null the current logged in user
-     */
-    public function getIdentityOrThrowException(): ?User
+    public function getIdentity(): ?IdentityInterface
     {
-        if (!$this->hasIdentity()) {
-            throw new NotAllowedException(
-                $this->translator->translate('You need to log in to perform this action')
-            );
+        if ($this->userAuthService->hasIdentity()) {
+            return $this->userAuthService->getIdentity();
         }
-        return $this->getIdentity();
+
+        if ($this->companyUserAuthService->hasIdentity()) {
+            return $this->companyUserAuthService->getIdentity();
+        }
+
+        if ($this->apiUserAuthService->hasIdentity()) {
+            return $this->apiUserAuthService->getIdentity();
+        }
+
+        return null;
     }
 
     /**
-     * Gets the user identity if logged in or null otherwise
-     *
-     * @return User|null the current logged-in user
+     * Get the company user identity or `null` if no `CompanyUser` is logged in.
      */
-    public function getIdentity(): ?User
+    public function getCompanyUserIdentity(): ?CompanyUserModel
     {
-        return $this->authService->getIdentity();
+        return $this->companyUserAuthService->getIdentity();
     }
 
     /**
-     * Checks whether the user is logged in
+     * Gets the company user identity or gives a 403 if the company user is not logged in.
      *
-     * @return bool true if the user is logged in, false otherwise
+     * @throws NotAllowedException
      */
-    public function hasIdentity(): bool
+    public function getCompanyUserIdentityOrThrowException(): CompanyUserModel
     {
-        return !is_null($this->getIdentity());
+        if (null !== ($identity = $this->getCompanyUserIdentity())) {
+            return $identity;
+        }
+
+        throw new NotAllowedException(
+            $this->translator->translate('You are not allowed to perform this action. If you are not logged in please do so before continuing. If you are already logged in this action may require you to login in with a different account.')
+        );
+    }
+
+    /**
+     * Get the user identity or `null` if no `User` is logged in.
+     */
+    public function getUserIdentity(): ?UserModel
+    {
+        return $this->userAuthService->getIdentity();
+    }
+
+    /**
+     * Gets the user identity or gives a 403 if the user is not logged in.
+     *
+     * @throws NotAllowedException
+     */
+    public function getUserIdentityOrThrowException(): UserModel
+    {
+        if (null !== ($identity = $this->getUserIdentity())) {
+            return $identity;
+        }
+
+        throw new NotAllowedException(
+            $this->translator->translate('You are not allowed to perform this action. If you are not logged in please do so before continuing. If you are already logged in this action may require you to login in with a different account.')
+        );
     }
 
     /**

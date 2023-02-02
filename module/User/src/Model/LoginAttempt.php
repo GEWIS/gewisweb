@@ -2,14 +2,17 @@
 
 namespace User\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
+};
+use User\Model\{
+    CompanyUser as CompanyUserModel,
+    User as UserModel,
 };
 
 /**
@@ -18,24 +21,27 @@ use Doctrine\ORM\Mapping\{
 #[Entity]
 class LoginAttempt
 {
-    /**
-     * Id.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * The user for which the login was attempted.
      */
-    #[ManyToOne(targetEntity: User::class)]
+    #[ManyToOne(targetEntity: UserModel::class)]
     #[JoinColumn(
         name: "user_id",
         referencedColumnName: "lidnr",
-        nullable: false,
     )]
-    protected User $user;
+    protected ?UserModel $user = null;
+
+    /**
+     * The user for which the login was attempted.
+     */
+    #[ManyToOne(targetEntity: CompanyUserModel::class)]
+    #[JoinColumn(
+        name: "company_id",
+        referencedColumnName: "id",
+    )]
+    protected ?CompanyUserModel $companyUser = null;
 
     /**
      * The ip from which the login was attempted.
@@ -50,27 +56,35 @@ class LoginAttempt
     protected DateTime $time;
 
     /**
-     * @return int|null
+     * @return UserModel|null
      */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return User
-     */
-    public function getUser(): User
+    public function getUser(): ?UserModel
     {
         return $this->user;
     }
 
     /**
-     * @param User $user
+     * @param UserModel|null $user
      */
-    public function setUser(User $user): void
+    public function setUser(?UserModel $user): void
     {
         $this->user = $user;
+    }
+
+    /**
+     * @return CompanyUserModel|null
+     */
+    public function getCompanyUser(): ?CompanyUserModel
+    {
+        return $this->companyUser;
+    }
+
+    /**
+     * @param CompanyUserModel|null $company
+     */
+    public function setCompanyUser(?CompanyUserModel $company): void
+    {
+        $this->companyUser = $company;
     }
 
     /**

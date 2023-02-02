@@ -2,28 +2,28 @@
 
 namespace Decision\Service;
 
-use ImagickException;
-use Doctrine\ORM\{
-    NonUniqueResultException,
-    NoResultException,
-    Exception\ORMException,
-    EntityManager,
-};
 use Application\Service\{
     Email as EmailService,
     FileStorage as FileStorageService,
 };
 use Decision\Form\OrganInformation as OrganInformationForm;
 use Decision\Mapper\{
-    Organ as OrganMapper,
     Member as MemberMapper,
+    Organ as OrganMapper,
 };
 use Decision\Model\{
     Organ as OrganModel,
     OrganInformation as OrganInformationModel,
 };
 use Decision\Model\Enums\OrganTypes;
+use Doctrine\ORM\{
+    EntityManager,
+    Exception\ORMException,
+    NonUniqueResultException,
+    NoResultException,
+};
 use Imagick;
+use ImagickException;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
 
@@ -99,9 +99,7 @@ class Organ
             );
         }
 
-        $user = $this->aclService->getIdentityOrThrowException();
-
-        return $this->memberMapper->findOrgans($user->getMember());
+        return $this->memberMapper->findOrgans($this->aclService->getUserIdentityOrThrowException()->getMember());
     }
 
     /**
@@ -121,9 +119,8 @@ class Organ
             return true;
         }
 
-        $user = $this->aclService->getIdentityOrThrowException();
-
-        foreach ($this->memberMapper->findOrgans($user->getMember()) as $memberOrgan) {
+        $organs = $this->memberMapper->findOrgans($this->aclService->getUserIdentityOrThrowException()->getMember());
+        foreach ($organs as $memberOrgan) {
             if ($memberOrgan->getId() === $organ->getId()) {
                 return true;
             }
@@ -300,7 +297,7 @@ class Organ
             $em->remove($oldInformation);
         }
 
-        $user = $this->aclService->getIdentityOrThrowException()->getMember();
+        $user = $this->aclService->getUserIdentityOrThrowException()->getMember();
         $organInformation->setApprover($user);
         $em->flush();
     }

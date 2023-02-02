@@ -56,6 +56,9 @@ runtest: loadenv
 runcoverage: loadenv
 		@vendor/phpunit/phpunit/phpunit --bootstrap ./bootstrap.php --configuration ./phpunit.xml --coverage-html ./coverage
 
+runworkflows:
+                @act -P ubuntu-latest=shivammathur/node:latest
+
 getvendordir:
 		@rm -Rf ./vendor
 		@docker cp "$(shell docker compose ps -q web)":/code/vendor ./vendor
@@ -138,7 +141,12 @@ phpcsfixrisky: loadenv
 
 checkcomposer: loadenv
 		@XDEBUG_MODE=off vendor/bin/composer-require-checker check composer.json
-		@vendor/bin/composer-unused
+
+checkcomposerunused: loadenv
+		@XDEBUG_MODE=off vendor/bin/composer-unused
+
+checkcomposeroutdated:
+		@php composer.phar outdated
 
 updatecomposer:
 		@docker cp ./composer.json "$(shell docker compose ps -q web)":/code/composer.json

@@ -2,11 +2,9 @@
 
 namespace Activity\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\ORM\Mapping\{
-    Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
     OneToOne,
@@ -19,13 +17,7 @@ use Doctrine\ORM\Mapping\{
 #[Entity]
 class SignupOption
 {
-    /**
-     * ID for the field.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "IDENTITY")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * Field that the option belongs to.
@@ -56,14 +48,6 @@ class SignupOption
         nullable: false,
     )]
     protected ActivityLocalisedText $value;
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @return SignupField

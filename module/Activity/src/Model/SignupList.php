@@ -2,6 +2,7 @@
 
 namespace Activity\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Decision\Model\Member as MemberModel;
 use Decision\Model\Organ as OrganModel;
@@ -12,8 +13,6 @@ use Doctrine\Common\Collections\{
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
     OneToMany,
@@ -31,13 +30,7 @@ use User\Permissions\Resource\{
 #[Entity]
 class SignupList implements OrganResourceInterface, CreatorResourceInterface
 {
-    /**
-     * ID for the SignupList.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "IDENTITY")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * The Activity this SignupList belongs to.
@@ -124,14 +117,6 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     public function __construct()
     {
         $this->signUps = new ArrayCollection();
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**

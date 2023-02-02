@@ -1,4 +1,9 @@
 <?php
+
+use Company\Model\Enums\CompanyPackageTypes;
+
+/** @var CompanyPackageTypes $type */
+
 $this->headTitle($this->translate('Edit Package'));
 
 $this->headScript()
@@ -18,91 +23,109 @@ $this->scriptUrl()->requireUrls(
 $form->prepare();
 $form->setAttribute('class', 'form-company');
 ?>
-<section class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1><?= $this->translate('Edit Package') ?></h1>
-            </div>
+<div class="row">
+    <div class="col-md-12">
+        <h1><?= $this->translate('Edit Package') ?></h1>
+    </div>
+</div>
+<hr>
+<?= $this->form()->openTag($form) ?>
+<?= $this->partial(
+    'partial/company/admin/editors/package.phtml',
+    [
+        'form' => $form,
+        'type' => $type,
+    ],
+) ?>
+<div class="row">
+    <div class="col-md-12">
+        <?php
+        $submit = $form->get('submit')
+            ->setValue($this->translate('Update Package'))
+            ->setAttribute('class', 'btn btn-primary pull-right');
+        ?>
+        <div class="form-group">
+            <?= $this->formSubmit($submit) ?>
         </div>
-        <hr>
-        <?= $this->form()->openTag($form) ?>
-        <?= $this->partial(
-            'partial/company/admin/editors/package.phtml',
-            [
-                'form' => $form,
-                'type' => $type,
-            ],
-        ) ?>
-        <div class="row">
-            <div class="col-md-12">
-                <?php
-                $submit = $form->get('submit')
-                    ->setValue($this->translate('Update Package'))
-                    ->setAttribute('class', 'btn btn-primary pull-right');
-                ?>
-                <div class="form-group">
-                    <?= $this->formSubmit($submit) ?>
-                </div>
-            </div>
+    </div>
+</div>
+<?= $this->form()->closeTag() ?>
+<hr>
+<?php if (CompanyPackageTypes::Banner === $type): ?>
+    <div class="row">
+        <div class="col-md-12">
+            <h2><?= $this->translate('Banner') ?></h2>
         </div>
-        <?= $this->form()->closeTag() ?>
-        <hr>
-        <?php if ('banner' === $type): ?>
-            <div class="row">
-                <div class="col-md-12">
-                    <h2><?= $this->translate('Banner') ?></h2>
-                </div>
-                <div class="col-md-6">
-                    <img class="img-responsive" src="<?= $this->fileUrl($package->getImage()) ?>">
-                </div>
-            </div>
-            <hr>
-        <?php elseif ('job' === $type): ?>
-            <h2><?= $this->translate('Jobs') ?></h2>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th><?= $this->translate('Name'); ?></th>
-                        <th><?= $this->translate('Active'); ?></th>
-                        <th><?= $this->translate('Actions'); ?></th>
-                    </tr>
-                </thead>
-                <?php foreach ($package->getJobs() as $job): ?>
-                    <tr>
-                        <td><?= $this->escapeHtml($this->localiseText($job->getName())) ?></td>
-                        <td><?= $job->isActive() ? $this->translate('Yes') : $this->translate('No') ?></td>
-                        <td>
-                            <a class="btn btn-xs btn-primary"
-                               href="<?= $this->url(
-                                   'company_admin/company/edit/package/edit/job/edit',
-                                   [
-                                       'companySlugName' => $companySlugName,
-                                       'packageId' => $package->getId(),
-                                       'jobId' => $job->getId(),
-                                   ]
-                               ); ?>">
-                                <?= $this->translate('edit'); ?>
-                            </a>
-                            <button class="btn btn-danger btn-xs delete-job" data-target="#deleteModal"
-                                    data-job-id="<?= $job->getId() ?>" data-toggle="modal" type="button">
-                                <?= $this->translate('Delete') ?>
-                            </button>
-                        </td>
-                    </tr>
-                <?php endforeach ?>
-            </table>
-            <a class="btn btn-success pull-right" href="<?= $this->url(
-                'company_admin/company/edit/package/edit/job/add',
-                [
-                    'companySlugName' => $companySlugName,
-                    'packageId' => $package->getId(),
-                ]
-            ); ?>">
-                <span class="fas fa-plus"></span>
-                <?= $this->translate('Add Job'); ?>
-            </a>
-        <?php endif ?>
+        <div class="col-md-6">
+            <img class="img-responsive" src="<?= $this->fileUrl($package->getImage()) ?>">
+        </div>
+    </div>
+    <hr>
+<?php elseif (CompanyPackageTypes::Job === $type): ?>
+    <h2><?= $this->translate('Jobs') ?></h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th><?= $this->translate('Name') ?></th>
+                <th><?= $this->translate('Active') ?></th>
+                <th><?= $this->translate('Approved') ?></th>
+                <th><?= $this->translate('Actions') ?></th>
+            </tr>
+        </thead>
+        <?php foreach ($package->getJobsWithoutProposals() as $job): ?>
+            <tr>
+                <td><?= $this->escapeHtml($this->localiseText($job->getName())) ?></td>
+                <td><?= $job->isActive() ? $this->translate('Yes') : $this->translate('No') ?></td>
+                <td>
+                    <?php $icons = ['fa-circle-question', 'fa-circle-check', 'fa-circle-xmark'] ?>
+                    <span class="fas <?= $icons[$job->getApproved()->value] ?>"></span>
+                    <?php if (0 !== $job->getUpdateProposals()->count()): ?>
+                        <a href="<?= $this->url(
+                            'company_admin_approval/job_proposal',
+                            ['proposalId' => $job->getUpdateProposals()->last()->getId()],
+                        ) ?>">
+                            <?= $this->translate('(Update Pending)') ?>
+                        </a>
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-xs"
+                       href="<?= $this->url(
+                           'company_admin_approval/job_approval',
+                           ['jobId' => $job->getId()],
+                       ) ?>">
+                        <?= $this->translate('Details') ?>
+                    </a>
+                    <a class="btn btn-xs btn-primary"
+                       href="<?= $this->url(
+                           'company_admin/company/edit/package/edit/job/edit',
+                           [
+                               'companySlugName' => $companySlugName,
+                               'packageId' => $package->getId(),
+                               'jobId' => $job->getId(),
+                           ]
+                       ); ?>">
+                        <?= $this->translate('Edit') ?>
+                    </a>
+                    <button class="btn btn-danger btn-xs delete-job" data-target="#deleteModal"
+                            data-job-id="<?= $job->getId() ?>" data-toggle="modal" type="button">
+                        <?= $this->translate('Delete') ?>
+                    </button>
+                </td>
+            </tr>
+        <?php endforeach ?>
+    </table>
+    <a class="btn btn-success pull-right" href="<?= $this->url(
+        'company_admin/company/edit/package/edit/job/add',
+        [
+            'companySlugName' => $companySlugName,
+            'packageId' => $package->getId(),
+        ]
+    ); ?>">
+        <span class="fas fa-plus"></span>
+        <?= $this->translate('Add Job'); ?>
+    </a>
+<?php endif ?>
 <!-- Delete job modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">

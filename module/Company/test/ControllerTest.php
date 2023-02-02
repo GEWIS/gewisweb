@@ -36,4 +36,17 @@ class ControllerTest extends BaseControllerTest
         $this->dispatch('/admin/career');
         $this->assertResponseStatusCode(200);
     }
+
+    public function testCompanyAccountSelfActionCannotBeAccessed(): void
+    {
+        $this->dispatch('/company/self');
+        $this->assertResponseStatusCode(403);
+    }
+
+    public function testCompanyAccountSelfActionCanBeAccessedAsCompany(): void
+    {
+        $this->setUpWithRole('company');
+        $this->dispatch('/company/self');
+        $this->assertResponseStatusCode(200);
+    }
 }

@@ -2,7 +2,17 @@
 
 namespace Company\Model;
 
-use Company\Model\JobCategory as JobCategoryModel;
+use Application\Model\Traits\{
+    ApprovableTrait,
+    IdentifiableTrait,
+    TimestampableTrait,
+    UpdateProposableTrait,
+};
+use Company\Model\Enums\CompanyPackageTypes;
+use Company\Model\{
+    JobCategory as JobCategoryModel,
+    Proposals\CompanyUpdate as CompanyUpdateProposal,
+};
 use DateTime;
 use Doctrine\Common\Collections\{
     ArrayCollection,
@@ -11,27 +21,25 @@ use Doctrine\Common\Collections\{
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
+    HasLifecycleCallbacks,
     JoinColumn,
     OneToMany,
     OneToOne,
 };
 use Exception;
+use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Company model.
  */
 #[Entity]
-class Company
+#[HasLifecycleCallbacks]
+class Company implements ResourceInterface
 {
-    /**
-     * The company id.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
+    use TimestampableTrait;
+    use ApprovableTrait;
+    use UpdateProposableTrait;
 
     /**
      * The company's display name.
@@ -46,6 +54,18 @@ class Company
     protected string $slugName;
 
     /**
+     * The name of the person representing the company. Is used for communications with the company.
+     */
+    #[Column(type: "string")]
+    protected string $representativeName;
+
+    /**
+     * The email address of the person representing the company. Is used for communications with the company.
+     */
+    #[Column(type: "string")]
+    protected string $representativeEmail;
+
+    /**
      * The company's contact's name.
      */
     #[Column(
@@ -55,7 +75,7 @@ class Company
     protected ?string $contactName;
 
     /**
-     * The company's address.
+     * The company's contact address.
      */
     #[Column(
         type: "string",
@@ -64,7 +84,7 @@ class Company
     protected ?string $contactAddress;
 
     /**
-     * The company's email.
+     * The company's contact email address.
      */
     #[Column(
         type: "string",
@@ -73,7 +93,7 @@ class Company
     protected ?string $contactEmail;
 
     /**
-     * The company's phone.
+     * The company's contact phone.
      */
     #[Column(
         type: "string",
@@ -151,19 +171,23 @@ class Company
     )]
     protected Collection $packages;
 
+    /**
+     * Proposed updates to this company.
+     */
+    #[OneToMany(
+        targetEntity: CompanyUpdateProposal::class,
+        mappedBy: "original",
+        fetch: "EXTRA_LAZY",
+    )]
+    protected Collection $updateProposals;
+
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->packages = new ArrayCollection();
-    }
-
-    /**
-     * Get the company's id.
-     *
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
+        $this->updateProposals = new ArrayCollection();
     }
 
     /**
@@ -204,6 +228,46 @@ class Company
     public function setSlugName(string $slugName): void
     {
         $this->slugName = $slugName;
+    }
+
+    /**
+     * Get the name of the person representing the company.
+     *
+     * @return string
+     */
+    public function getRepresentativeName(): string
+    {
+        return $this->representativeName;
+    }
+
+    /**
+     * Set the name of the person representing the company.
+     *
+     * @param string $name
+     */
+    public function setRepresentativeName(string $name): void
+    {
+        $this->representativeName = $name;
+    }
+
+    /**
+     * Get the email address of the person representing the company.
+     *
+     * @return string
+     */
+    public function getRepresentativeEmail(): string
+    {
+        return $this->representativeEmail;
+    }
+
+    /**
+     * Set the email address of the person representing the company.
+     *
+     * @param string $email
+     */
+    public function setRepresentativeEmail(string $email): void
+    {
+        $this->representativeEmail = $email;
     }
 
     /**
@@ -373,6 +437,11 @@ class Company
      */
     public function isHidden(): bool
     {
+        // If the company is not approved, it should never be shown.
+        if (!$this->isApproved()) {
+            return true;
+        }
+
         $visible = false;
 
         // When any packages is not expired, the company should be shown to the user
@@ -427,6 +496,14 @@ class Company
     }
 
     /**
+     * @return Collection
+     */
+    public function getUpdateProposals(): Collection
+    {
+        return $this->updateProposals;
+    }
+
+    /**
      * Returns the number of jobs that are contained in all packages of this
      * company.
      *
@@ -434,9 +511,10 @@ class Company
      */
     public function getNumberOfJobs(): int
     {
-        $jobCount = function ($package) {
-            if ('job' == $package->getType()) {
-                return $package->getJobs()->count();
+        $jobCount = function (CompanyPackage $package) {
+            if (CompanyPackageTypes::Job === $package->getType()) {
+                /** @var CompanyJobPackage $package */
+                return $package->getJobsWithoutProposals()->count();
             }
 
             return 0;
@@ -455,8 +533,13 @@ class Company
      */
     public function getNumberOfActiveJobs(?JobCategoryModel $category = null): int
     {
-        $jobCount = function ($package) use ($category) {
-            return $package->getNumberOfActiveJobs($category);
+        $jobCount = function (CompanyPackage $package) use ($category) {
+            if (CompanyPackageTypes::Job === $package->getType()) {
+                /** @var CompanyJobPackage $package */
+                return $package->getNumberOfActiveJobs($category);
+            }
+
+            return 0;
         };
 
         return array_sum(array_map($jobCount, $this->getPackages()->toArray()));
@@ -472,8 +555,8 @@ class Company
         return count(
             array_filter(
                 $this->getPackages()->toArray(),
-                function ($package) {
-                    return $package->isExpired(new DateTime());
+                function (CompanyPackage $package) {
+                    return $package->isExpired();
                 }
             )
         );
@@ -488,8 +571,8 @@ class Company
     {
         $featuredPackages = array_filter(
             $this->getPackages()->toArray(),
-            function ($package) {
-                return 'featured' === $package->getType() && $package->isActive();
+            function (CompanyPackage $package) {
+                return CompanyPackageTypes::Featured === $package->getType() && $package->isActive();
             }
         );
 
@@ -505,8 +588,8 @@ class Company
     {
         $banners = array_filter(
             $this->getPackages()->toArray(),
-            function ($package) {
-                return 'banner' === $package->getType() && $package->isActive();
+            function (CompanyPackage $package) {
+                return CompanyPackageTypes::Banner === $package->getType() && $package->isActive();
             }
         );
 
@@ -524,6 +607,10 @@ class Company
     {
         $this->setName($data['name']);
         $this->setSlugName($data['slugName']);
+
+        $this->setRepresentativeName($data['representativeName']);
+        $this->setRepresentativeEmail($data['representativeEmail']);
+
         $this->setContactName($data['contactName']);
         $this->setContactAddress($data['contactAddress']);
         $this->setContactEmail($data['contactEmail']);
@@ -546,6 +633,10 @@ class Company
 
         $arraycopy['name'] = $this->getName();
         $arraycopy['slugName'] = $this->getSlugName();
+
+        $arraycopy['representativeName'] = $this->getRepresentativeName();
+        $arraycopy['representativeEmail'] = $this->getRepresentativeEmail();
+
         $arraycopy['logo'] = $this->getLogo();
         $arraycopy['contactName'] = $this->getContactName();
         $arraycopy['contactEmail'] = $this->getContactEmail();
@@ -562,5 +653,13 @@ class Company
         $arraycopy['descriptionEn'] = $this->getDescription()->getValueEN();
 
         return $arraycopy;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResourceId(): string
+    {
+        return 'company';
     }
 }

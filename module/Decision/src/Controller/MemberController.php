@@ -32,6 +32,12 @@ class MemberController extends AbstractActionController
 
     public function indexAction(): ViewModel
     {
+        if (!$this->aclService->isAllowed('view', 'meeting')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to create an activity category')
+            );
+        }
+
         // Get the latest 3 meetings of each type and flatten result
         $meetingsCollection = [
             MeetingTypes::ALV->getAbbreviation($this->translator) => array_column(
@@ -48,11 +54,9 @@ class MemberController extends AbstractActionController
             ),
         ];
 
-        $member = $this->aclService->getIdentityOrThrowException()->getMember();
-
         return new ViewModel(
             [
-                'member' => $member,
+                'member' => $this->aclService->getUserIdentityOrThrowException()->getMember(),
                 'isActive' => $this->memberService->isActiveMember(),
                 'upcoming' => $this->decisionService->getUpcomingAnnouncedMeetings(),
                 'meetingsCollection' => $meetingsCollection,

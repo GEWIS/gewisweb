@@ -2,6 +2,7 @@
 
 namespace Activity\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Decision\Model\{
     Member as MemberModel,
@@ -10,8 +11,6 @@ use Decision\Model\{
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
 };
@@ -23,13 +22,7 @@ use User\Permissions\Resource\OrganResourceInterface;
 #[Entity]
 class ActivityOptionProposal implements OrganResourceInterface
 {
-    /**
-     * ID for the option.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * Name for the activity option proposal.
@@ -172,14 +165,6 @@ class ActivityOptionProposal implements OrganResourceInterface
     public function getResourceId(): int|string
     {
         return $this->getId();
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Company\Model;
 
+use Company\Model\Enums\CompanyPackageTypes;
 use Doctrine\ORM\Mapping\{
     Entity,
     JoinColumn,
@@ -54,6 +55,14 @@ class CompanyFeaturedPackage extends CompanyPackage
     public function setArticle(CompanyLocalisedText $article): void
     {
         $this->article = $article;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getType(): CompanyPackageTypes
+    {
+        return CompanyPackageTypes::Featured;
     }
 
     /**

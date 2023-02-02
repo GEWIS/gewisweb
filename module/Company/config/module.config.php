@@ -4,13 +4,15 @@ namespace Company;
 
 use Application\View\Helper\Truncate;
 use Company\Controller\{
+    AdminApprovalController,
     AdminController,
-    CompanyController,
-};
+    CompanyAccountController,
+    CompanyController};
 use Company\Controller\Factory\{
+    AdminApprovalControllerFactory,
     AdminControllerFactory,
-    CompanyControllerFactory,
-};
+    CompanyAccountControllerFactory,
+    CompanyControllerFactory};
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Router\Http\{
     Literal,
@@ -118,6 +120,133 @@ return [
                 ],
                 'priority' => 100,
             ],
+            'company_account' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/company',
+                    'defaults' => [
+                        'controller' => CompanyAccountController::class,
+                    ],
+                ],
+                'may_terminate' => false,
+                'child_routes' => [
+                    'self' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/self',
+                            'defaults' => [
+                                'action' => 'self',
+                            ],
+                        ],
+                    ],
+                    'jobs_overview' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/jobs',
+                            'defaults' => [
+                                'action' => 'jobs',
+                            ],
+                        ],
+                    ],
+                    'jobs' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/jobs/:packageId',
+                            'constraints' => [
+                                'packageId' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'jobs',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'add' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/add',
+                                    'defaults' => [
+                                        'action' => 'addJob',
+                                    ],
+                                ],
+                            ],
+                            'delete' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/delete/:jobId',
+                                    'defaults' => [
+                                        'action' => 'deleteJob',
+                                    ],
+                                    'constraints' => [
+                                        'jobId' => '[0-9]+',
+                                    ],
+                                ],
+                            ],
+                            'edit' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/edit/:jobId',
+                                    'defaults' => [
+                                        'action' => 'editJob',
+                                    ],
+                                    'constraints' => [
+                                        'jobId' => '[0-9]+',
+                                    ],
+                                ],
+                            ],
+                            'status' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/status/:jobId',
+                                    'defaults' => [
+                                        'action' => 'statusJob',
+                                    ],
+                                    'constraints' => [
+                                        'jobId' => '[0-9]+',
+                                    ],
+                                ],
+                            ],
+                            'transfer' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/transfer',
+                                    'defaults' => [
+                                        'action' => 'transferJobs',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'highlights' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/highlights',
+                            'defaults' => [
+                                'action' => 'highlights',
+                            ],
+                        ],
+                    ],
+                    'banner' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/banner',
+                            'defaults' => [
+                                'action' => 'banner',
+                            ],
+                        ],
+                    ],
+                    'settings' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/settings',
+                            'defaults' => [
+                                'action' => 'settings',
+                            ],
+                        ],
+                    ],
+                ],
+                'priority' => 100,
+            ],
             'company_admin' => [
                 'priority' => 1000,
                 'type' => Literal::class,
@@ -198,7 +327,7 @@ return [
                                                         'action' => 'deletePackage',
                                                     ],
                                                     'constraints' => [
-                                                        'packageId' => '[0-9]*',
+                                                        'packageId' => '\d+',
                                                     ],
                                                 ],
                                             ],
@@ -210,7 +339,7 @@ return [
                                                         'action' => 'editPackage',
                                                     ],
                                                     'constraints' => [
-                                                        'packageId' => '[0-9]*',
+                                                        'packageId' => '\d+',
                                                     ],
                                                 ],
                                                 'may_terminate' => true,
@@ -223,7 +352,7 @@ return [
                                                         'may_terminate' => false,
                                                         'child_routes' => [
                                                             'add' => [
-                                                                'type' => Segment::class,
+                                                                'type' => Literal::class,
                                                                 'options' => [
                                                                     'route' => '/add',
                                                                     'defaults' => [
@@ -239,7 +368,7 @@ return [
                                                                         'action' => 'deleteJob',
                                                                     ],
                                                                     'constraints' => [
-                                                                        'jobId' => '[0-9]*',
+                                                                        'jobId' => '\d+',
                                                                     ],
                                                                 ],
                                                             ],
@@ -251,7 +380,7 @@ return [
                                                                         'action' => 'editJob',
                                                                     ],
                                                                     'constraints' => [
-                                                                        'jobId' => '[0-9]*',
+                                                                        'jobId' => '\d+',
                                                                     ],
                                                                 ],
                                                             ],
@@ -265,12 +394,15 @@ return [
                             ],
                         ],
                     ],
-                    'category' => [
+                    'categories' => [
                         'type' => Literal::class,
                         'options' => [
-                            'route' => '/category',
+                            'route' => '/categories',
+                            'defaults' => [
+                                'action' => 'indexCategories',
+                            ],
                         ],
-                        'may_terminate' => false,
+                        'may_terminate' => true,
                         'child_routes' => [
                             'add' => [
                                 'type' => Literal::class,
@@ -296,12 +428,15 @@ return [
                             ],
                         ],
                     ],
-                    'label' => [
+                    'labels' => [
                         'type' => Literal::class,
                         'options' => [
-                            'route' => '/label',
+                            'route' => '/labels',
+                            'defaults' => [
+                                'action' => 'indexLabels',
+                            ],
                         ],
-                        'may_terminate' => false,
+                        'may_terminate' => true,
                         'child_routes' => [
                             'add' => [
                                 'type' => Literal::class,
@@ -329,17 +464,93 @@ return [
                     ],
                 ],
             ],
+            'company_admin_approval' => [
+                'priority' => 1000,
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/admin/career/approval',
+                    'defaults' => [
+                        'controller' => AdminApprovalController::class,
+                        'action' => 'index',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'job_approval' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/job/:jobId',
+                            'defaults' => [
+                                'action' => 'jobApproval',
+                            ],
+                            'constraints' => [
+                                'jobId' => '\d+',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'update' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/:type',
+                                    'defaults' => [
+                                        'action' => 'changeJobApprovalStatus',
+                                    ],
+                                    'constraints' => [
+                                        'type' => '(approve|disapprove|reset)',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'job_proposal' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/job/proposal/:proposalId',
+                            'defaults' => [
+                                'action' => 'jobProposal',
+                            ],
+                            'constraints' => [
+                                'proposalId' => '\d+',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'update' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/:type',
+                                    'defaults' => [
+                                        'action' => 'changeJobProposalStatus',
+                                    ],
+                                    'constraints' => [
+                                        'type' => '(apply|cancel)',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
         'factories' => [
             AdminController::class => AdminControllerFactory::class,
+            AdminApprovalController::class => AdminApprovalControllerFactory::class,
+            CompanyAccountController::class => CompanyAccountControllerFactory::class,
             CompanyController::class => CompanyControllerFactory::class,
         ],
     ],
     'view_manager' => [
         'template_path_stack' => [
             'company' => __DIR__ . '/../view/',
+        ],
+        'template_map' => [
+            'company/admin/index-categories' => __DIR__ . '/../view/company/admin/categories.phtml',
+            'company/admin/index-labels' => __DIR__ . '/../view/company/admin/labels.phtml',
+            'company/company-account/add-job' => __DIR__ . '/../view/company/admin/add-job.phtml',
+            'company/company-account/edit-job' => __DIR__ . '/../view/company/admin/edit-job.phtml',
         ],
     ],
     'doctrine' => [

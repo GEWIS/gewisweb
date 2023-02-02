@@ -2,6 +2,7 @@
 
 namespace Activity\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\Common\Collections\{
     ArrayCollection,
     Collection,
@@ -9,8 +10,6 @@ use Doctrine\Common\Collections\{
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
     OneToMany,
@@ -23,13 +22,7 @@ use Doctrine\ORM\Mapping\{
 #[Entity]
 class SignupField
 {
-    /**
-     * ID for the field.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "IDENTITY")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * Activity that the SignupField belongs to.
@@ -122,14 +115,6 @@ class SignupField
     public function getOptions(): Collection
     {
         return $this->options;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**

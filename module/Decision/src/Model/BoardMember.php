@@ -2,13 +2,12 @@
 
 namespace Decision\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Decision\Model\SubDecision\Board\Installation as BoardInstallation;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
     OneToOne,
@@ -22,13 +21,7 @@ use Doctrine\ORM\Mapping\{
 #[Entity]
 class BoardMember
 {
-    /**
-     * Id.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * Member lidnr.
@@ -102,16 +95,6 @@ class BoardMember
         nullable: true,
     )]
     protected ?DateTime $dischargeDate = null;
-
-    /**
-     * Get the ID.
-     *
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * Get the member.

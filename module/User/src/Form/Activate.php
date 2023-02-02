@@ -17,8 +17,10 @@ use Laminas\Validator\{
 
 class Activate extends Form implements InputFilterProviderInterface
 {
-    public function __construct(Translator $translate)
-    {
+    public function __construct(
+        private readonly Translator $translator,
+        private readonly int $passwordLength,
+    ) {
         parent::__construct();
 
         $this->add(
@@ -26,7 +28,7 @@ class Activate extends Form implements InputFilterProviderInterface
                 'name' => 'password',
                 'type' => Password::class,
                 'options' => [
-                    'label' => $translate->translate('Your password'),
+                    'label' => $this->translator->translate('Your password'),
                 ],
             ]
         );
@@ -36,7 +38,7 @@ class Activate extends Form implements InputFilterProviderInterface
                 'name' => 'password_verify',
                 'type' => Password::class,
                 'options' => [
-                    'label' => $translate->translate('Verify your password'),
+                    'label' => $this->translator->translate('Verify your password'),
                 ],
             ]
         );
@@ -46,7 +48,7 @@ class Activate extends Form implements InputFilterProviderInterface
                 'name' => 'submit',
                 'type' => Submit::class,
                 'attributes' => [
-                    'value' => $translate->translate('Activate'),
+                    'value' => $this->translator->translate('Activate'),
                 ],
             ]
         );
@@ -67,7 +69,7 @@ class Activate extends Form implements InputFilterProviderInterface
                     [
                         'name' => StringLength::class,
                         'options' => [
-                            'min' => 8,
+                            'min' => $this->passwordLength,
                         ],
                     ],
                 ],
@@ -81,7 +83,7 @@ class Activate extends Form implements InputFilterProviderInterface
                     [
                         'name' => StringLength::class,
                         'options' => [
-                            'min' => 8,
+                            'min' => $this->passwordLength,
                         ],
                     ],
                     [

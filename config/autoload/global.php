@@ -34,7 +34,11 @@ return [
      * The number represents the base-2 logarithm of the iteration count used for
      * hashing. Default is 13 (about 20 hashes per second on an i5).
      */
-    'bcrypt_cost' => 13,
+    'passwords' => [
+        'bcrypt_cost' => 13,
+        'min_length_user' => 12,
+        'min_length_companyUser' => 16,
+    ],
 
     /*
      * Subnets in use by the TU/e. All IP addresses in a listed subnet will be allowed more base rights, like being able
@@ -48,9 +52,10 @@ return [
     ],
 
     'login_rate_limits' => [
-         'user' => 5,
-         'ip' => 50,
-         'lockout_time' => 20,
+        'user' => 10,
+        'company' => 10,
+        'ip' => 100,
+        'lockout_time' => 10,
     ],
     'storage' => [
         'storage_dir' => 'public/data',

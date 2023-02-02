@@ -2,6 +2,7 @@
 
 namespace Photo\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Doctrine\Common\Collections\{
     ArrayCollection,
@@ -9,9 +10,7 @@ use Doctrine\Common\Collections\{
 };
 use Doctrine\ORM\Mapping\{Column,
     Entity,
-    GeneratedValue,
     HasLifecycleCallbacks,
-    Id,
     JoinColumn,
     ManyToOne,
     OneToMany,
@@ -26,13 +25,7 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 #[HasLifecycleCallbacks]
 class Album implements ResourceInterface
 {
-    /**
-     * Album ID.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * First date of photos in album.
@@ -208,16 +201,6 @@ class Album implements ResourceInterface
             'photoCount' => $this->getPhotoCount(),
             'albumCount' => $this->getAlbumCount(),
         ];
-    }
-
-    /**
-     * Get the ID.
-     *
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**

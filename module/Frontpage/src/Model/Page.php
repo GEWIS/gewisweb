@@ -2,11 +2,10 @@
 
 namespace Frontpage\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     UniqueConstraint,
 };
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
@@ -21,13 +20,7 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 )]
 class Page implements ResourceInterface
 {
-    /**
-     * Tag ID.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * Category of the page.
@@ -82,14 +75,6 @@ class Page implements ResourceInterface
      */
     #[Column(type: "string")]
     protected string $requiredRole;
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @return string
@@ -153,14 +138,6 @@ class Page implements ResourceInterface
     public function getRequiredRole(): string
     {
         return $this->requiredRole;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
     }
 
     /**

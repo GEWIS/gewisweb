@@ -17,8 +17,8 @@ use Photo\Model\{
     Photo as PhotoModel,
 };
 use Photo\Service\{
-    Photo as PhotoService,
     Metadata as MetadataService,
+    Photo as PhotoService,
 };
 use User\Permissions\NotAllowedException;
 

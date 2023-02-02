@@ -1,0 +1,26 @@
+For Dutch, please see below.<br/><br/>
+
+<?= sprintf('Dear %s,', $company->getRepresentativeName()) ?><br/><br/>
+
+You have been made the representative of <i><?= $company->getName() ?> on the website of s.v. GEWIS.</i>.
+
+You can activate your account by creating password using the following link:
+<?= $this->serverUrl($this->url('user/activate', ['user_type' => 'company', 'code' => $user->getCode()])) ?>
+
+Your activation code is: <?= $user->getCode() ?>
+
+With kind regards,<br/>
+The ApplicatieBeheerCommissie
+<hr/><br/>
+
+<?= sprintf('Beste %s,', $company->getRepresentativeName()) ?><br/><br/>
+
+U bent aangesteld als vertegenwoordiger van <i><?= $company->getName() ?> op de website van s.v. GEWIS.</i>.
+
+U kunt uw account activeren door een wachtwoord aan te maken via de volgende link:
+<?= $this->serverUrl($this->url('user/activate', ['user_type' => 'company', 'code' => $user->getCode()])) ?>
+
+Uw activeringscode is: <?= $user->getCode() ?>
+
+Met vriendelijke groeten,<br/>
+De ApplicatieBeheerCommissie

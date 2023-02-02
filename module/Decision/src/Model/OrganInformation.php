@@ -2,12 +2,11 @@
 
 namespace Decision\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
 };
@@ -18,13 +17,7 @@ use Doctrine\ORM\Mapping\{
 #[Entity]
 class OrganInformation
 {
-    /**
-     * Organ information ID.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      *
@@ -59,7 +52,7 @@ class OrganInformation
     protected ?string $website = null;
 
     /**
-     * A short description of the organ in dutch.
+     * A short description of the organ in Dutch.
      */
     #[Column(
         type: "string",
@@ -68,7 +61,7 @@ class OrganInformation
     protected ?string $shortDutchDescription = null;
 
     /**
-     * A description of the organ in dutch.
+     * A description of the organ in Dutch.
      */
     #[Column(
         type: "text",
@@ -77,7 +70,7 @@ class OrganInformation
     protected ?string $dutchDescription = null;
 
     /**
-     * A short description of the organ in english.
+     * A short description of the organ in English.
      */
     #[Column(
         type: "string",
@@ -86,7 +79,7 @@ class OrganInformation
     protected ?string $shortEnglishDescription = null;
 
     /**
-     * A description of the organ in english.
+     * A description of the organ in English.
      */
     #[Column(
         type: "text",
@@ -118,14 +111,6 @@ class OrganInformation
     #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(referencedColumnName: "lidnr")]
     protected ?MemberModel $approver = null;
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @return Organ

@@ -475,17 +475,21 @@ a.navbar-brand  {
 .navbar-gewis-admin {
     background-color: darken($brand-primary, 5%);
 
-    .navbar-nav > li {
-        &.active > a {
-            background-color: darken($brand-primary, 10%);
-        }
+    .navbar-nav {
+        width: 100%;
 
-        > a {
-            color: #FFFFFF;
-
-            &:hover,
-            &:focus {
+        & > li {
+            &.active > a {
                 background-color: darken($brand-primary, 10%);
+            }
+
+            > a {
+                color: #FFFFFF;
+
+                &:hover,
+                &:focus {
+                    background-color: darken($brand-primary, 10%);
+                }
             }
         }
     }

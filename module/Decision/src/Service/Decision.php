@@ -18,8 +18,8 @@ use Decision\Form\{
 use Decision\Mapper\{
     Authorization as AuthorizationMapper,
     Decision as DecisionMapper,
-    Member as MemberMapper,
     Meeting as MeetingMapper,
+    Member as MemberMapper,
 };
 use Decision\Model\{
     Authorization as AuthorizationModel,
@@ -30,8 +30,8 @@ use Decision\Model\{
 };
 use Decision\Model\Enums\MeetingTypes;
 use Doctrine\ORM\{
-    NonUniqueResultException,
     Exception\ORMException,
+    NonUniqueResultException,
     PersistentCollection,
 };
 use Exception;
@@ -406,9 +406,10 @@ class Decision
             throw new NotAllowedException($this->translator->translate('You are not allowed to view authorizations.'));
         }
 
-        $member = $this->aclService->getIdentityOrThrowException()->getMember();
-
-        return $this->authorizationMapper->findUserAuthorization($meeting->getNumber(), $member);
+        return $this->authorizationMapper->findUserAuthorization(
+            $meeting->getNumber(),
+            $this->aclService->getUserIdentityOrThrowException()->getMember(),
+        );
     }
 
     /**
@@ -419,7 +420,11 @@ class Decision
      */
     public function createAuthorization(array $data): ?AuthorizationModel
     {
-        $authorizer = $this->aclService->getIdentityOrThrowException()->getMember();
+        if (!$this->aclService->isAllowed('create', 'authorization')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to authorize someone.'));
+        }
+
+        $authorizer = $this->aclService->getUserIdentityOrThrowException()->getMember();
         $recipient = $this->memberMapper->findByLidnr($data['recipient']);
 
         if (

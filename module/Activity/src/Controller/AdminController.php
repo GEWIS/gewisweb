@@ -2,7 +2,6 @@
 
 namespace Activity\Controller;
 
-use Activity\Form\ModifyRequest as RequestForm;
 use Activity\Mapper\Signup as SignupMapper;
 use Activity\Model\Activity as ActivityModel;
 use Activity\Service\{
@@ -12,6 +11,7 @@ use Activity\Service\{
     Signup as SignupService,
     SignupListQuery as SignupListQueryService,
 };
+use Application\Form\ModifyRequest as RequestForm;
 use DateTime;
 use Laminas\Form\FormInterface;
 use Laminas\Http\{
@@ -20,6 +20,7 @@ use Laminas\Http\{
 };
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\Paginator\Paginator;
 use Laminas\Session\{
     AbstractContainer,
@@ -35,6 +36,8 @@ use User\Permissions\NotAllowedException;
 /**
  * Controller that gives some additional details for activities, such as a list of email adresses
  * or an export function specially tailored for the organizer.
+ *
+ * @method FlashMessenger flashMessenger()
  */
 class AdminController extends AbstractActionController
 {
@@ -159,9 +162,9 @@ class AdminController extends AbstractActionController
         string $message,
     ): Response {
         if ($success) {
-            $this->plugin('FlashMessenger')->addSuccessMessage($message);
+            $this->flashMessenger()->addSuccessMessage($message);
         } else {
-            $this->plugin('FlashMessenger')->addErrorMessage($message);
+            $this->flashMessenger()->addErrorMessage($message);
         }
 
         return $this->redirect()->toRoute('activity_admin');
@@ -423,7 +426,7 @@ class AdminController extends AbstractActionController
             $approvedActivities = $this->activityQueryService->getApprovedActivities();
         }
 
-        $identity = $this->aclService->getIdentityOrThrowException();
+        $identity = $this->aclService->getUserIdentityOrThrowException();
         $paginator = new Paginator($this->activityQueryService->getOldCreatedActivitiesPaginator($identity));
         $paginator->setDefaultItemCountPerPage(15);
         $page = $this->params()->fromRoute('page');

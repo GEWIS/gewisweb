@@ -1,6 +1,6 @@
 <?php
 
-namespace Activity\Form;
+namespace Application\Form;
 
 use Laminas\Form\Element\{
     Csrf,
@@ -10,9 +10,8 @@ use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 
 /**
- * Specifies a form that is used to let an user do a modification request that
- * does not require any other data, such as signing off for activities or
- * approving or disapproving them.
+ * Specifies a form that is used to let a user do a modification request that does not require any other data, such as
+ * signing off for activities, (dis)approving entities with an {@see \Application\Model\Traits\ApprovableTrait}.
  */
 class ModifyRequest extends Form implements InputFilterProviderInterface
 {

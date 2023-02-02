@@ -2,13 +2,12 @@
 
 namespace Decision\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Decision\Model\SubDecision\Installation;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
     OneToOne,
@@ -22,13 +21,7 @@ use Doctrine\ORM\Mapping\{
 #[Entity]
 class OrganMember
 {
-    /**
-     * Id.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * Organ.
@@ -101,14 +94,6 @@ class OrganMember
         nullable: true,
     )]
     protected ?DateTime $dischargeDate = null;
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * Set the organ.

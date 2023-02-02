@@ -2,12 +2,11 @@
 
 namespace Photo\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     OneToOne,
 };
@@ -19,13 +18,7 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 #[Entity]
 class WeeklyPhoto implements ResourceInterface
 {
-    /**
-     * Week Id.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * The start date of the week the photo is based on.
@@ -48,14 +41,6 @@ class WeeklyPhoto implements ResourceInterface
     protected Photo $photo;
 
     /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    /**
      * @return DateTime
      */
     public function getWeek(): DateTime
@@ -69,14 +54,6 @@ class WeeklyPhoto implements ResourceInterface
     public function getPhoto(): Photo
     {
         return $this->photo;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
     }
 
     /**

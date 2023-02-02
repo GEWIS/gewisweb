@@ -2,7 +2,13 @@
 
 namespace Company\Model;
 
-use DateTime;
+use Application\Model\Traits\{
+    ApprovableTrait,
+    IdentifiableTrait,
+    TimestampableTrait,
+    UpdateProposableTrait,
+};
+use Company\Model\Proposals\JobUpdate as JobUpdateProposalModel;
 use Doctrine\Common\Collections\{
     ArrayCollection,
     Collection,
@@ -10,27 +16,27 @@ use Doctrine\Common\Collections\{
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
+    HasLifecycleCallbacks,
     JoinColumn,
     JoinTable,
     ManyToMany,
     ManyToOne,
-    OneToOne};
+    OneToMany,
+    OneToOne,
+};
+use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Job model.
  */
 #[Entity]
-class Job
+#[HasLifecycleCallbacks]
+class Job implements ResourceInterface
 {
-    /**
-     * The job id.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
+    use TimestampableTrait;
+    use ApprovableTrait;
+    use UpdateProposableTrait;
 
     /**
      * The job's slug name.
@@ -147,12 +153,6 @@ class Job
     protected CompanyLocalisedText $attachment;
 
     /**
-     * The job's timestamp.
-     */
-    #[Column(type: "date")]
-    protected DateTime $timestamp;
-
-    /**
      * The job's package.
      */
     #[ManyToOne(
@@ -188,19 +188,25 @@ class Job
     #[JoinTable(name: "JobLabelAssignment")]
     protected Collection $labels;
 
+    /**
+     * Proposed updates to this job.
+     */
+    #[OneToMany(
+        targetEntity: JobUpdateProposalModel::class,
+        mappedBy: "original",
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
+        fetch: "EXTRA_LAZY",
+    )]
+    protected Collection $updateProposals;
+
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->labels = new ArrayCollection();
-    }
-
-    /**
-     * Get the job's id.
-     *
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
+        $this->updateProposals = new ArrayCollection();
     }
 
     /**
@@ -275,7 +281,9 @@ class Job
 
     public function isActive(): bool
     {
-        return $this->isPublished()
+        return $this->isApproved()
+            && $this->isPublished()
+            && !$this->isUpdate()
             && $this->getPackage()->isActive()
             && !$this->getPackage()->getCompany()->isHidden();
     }
@@ -391,26 +399,6 @@ class Job
     }
 
     /**
-     * Get the job's timestamp.
-     *
-     * @return DateTime
-     */
-    public function getTimestamp(): DateTime
-    {
-        return $this->timestamp;
-    }
-
-    /**
-     * Set the job's timestamp.
-     *
-     * @param DateTime $timestamp
-     */
-    public function setTimeStamp(DateTime $timestamp): void
-    {
-        $this->timestamp = $timestamp;
-    }
-
-    /**
      * Get the job's description.
      *
      * @return CompanyLocalisedText
@@ -453,7 +441,7 @@ class Job
     /**
      * Get the labels. Returns an array of JobLabelAssignments.
      *
-     * @return Collection
+     * @psalm-return Collection<int, JobLabel>
      */
     public function getLabels(): Collection
     {
@@ -539,6 +527,14 @@ class Job
     }
 
     /**
+     * @psalm-return Collection<int, JobUpdateProposalModel>
+     */
+    public function getUpdateProposals(): Collection
+    {
+        return $this->updateProposals;
+    }
+
+    /**
      * @return array
      */
     public function toArray(): array
@@ -567,5 +563,13 @@ class Job
             'attachmentEn' => $this->getAttachment()->getValueEN(),
             'labels' => $labelsArrays,
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getResourceId(): string
+    {
+        return 'job';
     }
 }

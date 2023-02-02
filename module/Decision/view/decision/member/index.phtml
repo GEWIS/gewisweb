@@ -7,11 +7,6 @@ $nf = new NumberFormatter($translator->getLocale(), NumberFormatter::ORDINAL);
 
 $this->headTitle($this->translate('Members'));
 
-$sections = [];
-$sections[$this->translate('Personal')] = [
-    [$this->translate('Change password'), 'lock', $this->url('user/default', ['action' => 'password'])],
-];
-
 /** @var Meeting[] $meetings */
 $meetings = $this->meetings;
 ?>
@@ -30,7 +25,7 @@ $meetings = $this->meetings;
                         <div class="big-icon fas fa-user"></div>
                         <div class="panel-heading"><?= $this->translate('Profile') ?></div>
                     </a>
-                    <a href="<?= $this->url('user/default', ['action' => 'password']) ?>"
+                    <a href="<?= $this->url('user/password/change', ['user_type' => 'member']) ?>"
                        class="panel panel-image align-middle">
                         <div class="big-icon fas fa-lock"></div>
                         <div class="panel-heading"><?= $this->translate('Change password') ?></div>

@@ -58,6 +58,31 @@ $panel-link-color: #969696;
     border: 0;
     box-shadow: none;
 
+    .panel-navigation .nav-tabs-justified {
+        > li > a {
+            border-top-left-radius: 0;
+            background-color: #FFFFFF;
+            transition: background-color 100ms, border-color 100ms;
+        }
+
+        > li > a:hover,
+        > li > a:focus {
+            border-color: darken($panel-footer-bg, 20%);
+            background-color: darken($panel-footer-bg, 20%);
+        }
+
+        > li.active > a {
+            border-bottom-color: $panel-bg;
+            border-top-right-radius: 0;
+            background-color: $panel-bg;
+        }
+
+        > li.active > a:hover,
+        > li.active > a:focus {
+            border-color: $nav-tabs-active-link-hover-border-color $nav-tabs-active-link-hover-border-color $panel-bg $nav-tabs-active-link-hover-border-color;
+        }
+    }
+
     .panel-heading {
         padding: ($panel-spacing * 0.8) $panel-spacing math.div($panel-spacing, 2);
         border: 0;

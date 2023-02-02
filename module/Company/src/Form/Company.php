@@ -31,10 +31,9 @@ use Laminas\Validator\{
 
 class Company extends LocalisableForm implements InputFilterProviderInterface
 {
-    /**
-     * @var string|null $currentSlug
-     */
     private ?string $currentSlug = null;
+
+    private ?string $currentRepresentativeEmail = null;
 
     public function __construct(
         private readonly CompanyMapper $mapper,
@@ -83,6 +82,26 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                     'label' => $this->getTranslator()->translate('Published'),
                     'checked_value' => '1',
                     'unchecked_value' => '0',
+                ],
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'representativeName',
+                'type' => Text::class,
+                'options' => [
+                    'label' => $this->getTranslator()->translate('Name'),
+                ],
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'representativeEmail',
+                'type' => Email::class,
+                'options' => [
+                    'label' => $this->getTranslator()->translate('E-mail Address'),
                 ],
             ]
         );
@@ -288,6 +307,57 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
             'published' => [
                 'required' => true,
             ],
+            'representativeName' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => StringLength::class,
+                        'options' => [
+                            'encoding' => 'UTF-8',
+                            'max' => 200,
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StripTags::class,
+                    ],
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
+            ],
+            'representativeEmail' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => EmailAddress::class,
+                        'options' => [
+                            'messages' => [
+                                'emailAddressInvalidFormat' => $this->getTranslator()->translate(
+                                    'E-mail address format is not valid.'
+                                ),
+                            ],
+                        ],
+                    ],
+                    [
+                        'name' => Callback::class,
+                        'options' => [
+                            'messages' => [
+                                Callback::INVALID_VALUE => $this->getTranslator()->translate(
+                                    'The e-mail address must be unique across companies.',
+                                ),
+                            ],
+                            'callback' => [$this, 'isRepresentativeEmailUnique'],
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
+            ],
             'contactName' => [
                 'required' => false,
                 'validators' => [
@@ -305,6 +375,9 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                     ],
                     [
                         'name' => StringTrim::class,
+                    ],
+                    [
+                        'name' => ToNull::class,
                     ],
                 ],
             ],
@@ -427,6 +500,11 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
         $this->currentSlug = $slugName;
     }
 
+    public function setCurrentRepresentativeEmail(?string $email): void
+    {
+        $this->currentRepresentativeEmail = $email;
+    }
+
     /**
      * Determine if the slug is unique.
      *
@@ -436,10 +514,25 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
      */
     public function isSlugNameUnique(string $slugName): bool
     {
-        if ($this->currentSlug === $slugName) {
+        if (
+            null !== $this->currentSlug
+            && mb_strtolower($this->currentSlug) === mb_strtolower($slugName)
+        ) {
             return true;
         }
 
         return null === $this->mapper->findCompanyBySlugName($slugName);
+    }
+
+    public function isRepresentativeEmailUnique(string $email): bool
+    {
+        if (
+            null !== $this->currentRepresentativeEmail
+            && mb_strtolower($this->currentRepresentativeEmail) === mb_strtolower($email)
+        ) {
+            return true;
+        }
+
+        return null === $this->mapper->findCompanyByRepresentativeEmail($email);
     }
 }

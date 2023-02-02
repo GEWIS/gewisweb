@@ -205,8 +205,9 @@ class DecisionController extends AbstractActionController
     public function filesAction(): bool|ViewModel|Stream
     {
         if (!$this->decisionService->isAllowedToBrowseFiles()) {
-            $translator = $this->decisionService->getTranslator();
-            throw new NotAllowedException($translator->translate('You are not allowed to browse files.'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to browse files.')
+            );
         }
         $path = $this->params()->fromRoute('path');
         if (is_null($path)) {

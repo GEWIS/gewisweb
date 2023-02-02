@@ -2,13 +2,12 @@
 
 namespace Frontpage\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToOne,
 };
@@ -20,13 +19,7 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 #[Entity]
 class PollComment implements ResourceInterface
 {
-    /**
-     * Poll comment ID.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * Referenced poll.
@@ -70,16 +63,6 @@ class PollComment implements ResourceInterface
      */
     #[Column(type: "datetime")]
     protected DateTime $createdOn;
-
-    /**
-     * Get the comment ID.
-     *
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * Get the poll.

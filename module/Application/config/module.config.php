@@ -8,10 +8,12 @@ use Application\View\Helper\{
     BootstrapElementError,
     Breadcrumbs,
     FeaturedCompanyPackage,
+    CompanyIdentity,
     LocalisedTextElement,
     LocaliseText,
 };
 use Doctrine\Common\Cache\MemcachedCache;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Cache\Service\StorageCacheAbstractServiceFactory;
 use Laminas\I18n\Translator\Resources;
 use Laminas\Router\Http\{
@@ -99,7 +101,6 @@ return [
         'exception_template' => (APP_ENV === 'production' ? 'error/500' : 'error/debug/500'),
         'template_map' => [
             'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
-            'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'application/index/teapot' => __DIR__ . '/../view/error/418.phtml',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
             'error/403' => __DIR__ . '/../view/error/403.phtml',
@@ -128,6 +129,11 @@ return [
             'bootstrapElementError' => function () {
                 return new BootstrapElementError();
             },
+            'companyIdentity' => function (ContainerInterface $container) {
+                return new CompanyIdentity(
+                    $container->get('user_auth_companyUser_service'),
+                );
+            },
             'localisedTextElement' => function () {
                 return new LocalisedTextElement();
             },
@@ -141,6 +147,21 @@ return [
             'message_open_format' => '<div%s><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><ul><li>',
             'message_close_string' => '</li></ul></div>',
             'message_separator_string' => '</li><li>',
+        ],
+    ],
+    'doctrine' => [
+        'driver' => [
+            __NAMESPACE__ . '_driver' => [
+                'class' => AttributeDriver::class,
+                'paths' => [
+                    __DIR__ . '/../src/Model/',
+                ],
+            ],
+            'orm_default' => [
+                'drivers' => [
+                    __NAMESPACE__ . '\Model' => __NAMESPACE__ . '_driver',
+                ],
+            ],
         ],
     ],
 ];

@@ -1,0 +1,73 @@
+<?php
+
+use Laminas\Mvc\Plugin\FlashMessenger\View\HelperTrait as FlashMessengerHelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/** @var PhpRenderer|FlashMessengerHelperTrait $this */
+?>
+<div class="admin-container">
+    <nav class="navbar navbar-gewis-admin navbar-fixed-left rainbow">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" id="admin-collapsable" data-toggle="collapse" data-target="#navbar-admin" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="navbar-admin" class="navbar-collapse collapse width" aria-expanded="false">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="<?= $this->url('company_account/self') ?>">
+                            <?= $this->translate('Home') ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= $this->url('company_account/jobs_overview') ?>">
+                            <?= $this->translate('Jobs') ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= $this->url('company_account/highlights') ?>">
+                            <?= $this->translate('Highlights') ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= $this->url('company_account/banner') ?>">
+                            <?= $this->translate('Banner') ?>
+                        </a>
+                    </li>
+                    <li class="stick-to-bottom">
+                        <a href="<?= $this->url('company_account/settings') ?>">
+                            <?= $this->translate('Settings') ?>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="content-container">
+        <section class="section section-breadcrumb">
+            <div class="container-admin">
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <a href="<?= $this->url('company_account/self') ?>"><?= $this->translate('My Company') ?></a>
+                    </li>
+                    <?= $this->breadcrumbs() ?>
+                </ol>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container-admin">
+                <?php // The FlashMessenger config accepts namespaced options, we only need to define the classes. ?>
+                <?= $this->flashMessenger()->render('default', ['alert', 'alert-dismissible', 'alert-info']) ?>
+                <?= $this->flashMessenger()->render('error', ['alert', 'alert-dismissible', 'alert-danger']) ?>
+                <?= $this->flashMessenger()->render('info', ['alert', 'alert-dismissible', 'alert-info']) ?>
+                <?= $this->flashMessenger()->render('success', ['alert', 'alert-dismissible', 'alert-success']) ?>
+                <?= $this->flashMessenger()->render('warning', ['alert', 'alert-dismissible', 'alert-warning']) ?>
+                <?= $this->content ?>
+            </div>
+        </section>
+    </div>
+</div>

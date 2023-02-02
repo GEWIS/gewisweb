@@ -172,6 +172,9 @@ class AutomaticControllerTest extends BaseControllerTest
 
         $params['lidnr'] = 8000;
 
+        $params['user_type'] = 'member';
+        $params['code'] = 'DS55VL8dCQuJ8Uc7nfMU4DQyT65BWmL5fJnLvgSutUjkDTCr';
+
         $params['organ'] = 1;
         $params['type'] = 'committee';
         $params['abbr'] = 'ABC';

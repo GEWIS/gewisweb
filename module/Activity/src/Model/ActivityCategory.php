@@ -2,15 +2,13 @@
 
 namespace Activity\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\Common\Collections\{
     ArrayCollection,
     Collection,
 };
 use Doctrine\ORM\Mapping\{
-    Column,
     Entity,
-    GeneratedValue,
-    Id,
     JoinColumn,
     ManyToMany,
     OneToOne,
@@ -22,13 +20,7 @@ use Doctrine\ORM\Mapping\{
 #[Entity]
 class ActivityCategory
 {
-    /**
-     * Id for the Category.
-     */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "IDENTITY")]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * The Activities this Category belongs to.
@@ -82,14 +74,6 @@ class ActivityCategory
         }
 
         $this->activities->removeElement($activity);
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**

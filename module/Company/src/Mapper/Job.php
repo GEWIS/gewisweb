@@ -3,7 +3,9 @@
 namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
+use Application\Model\Enums\ApprovableStatus;
 use Company\Model\Job as JobModel;
+use Company\Model\Proposals\JobUpdate as JobUpdateModel;
 use Doctrine\ORM\Query\Expr\Join;
 
 /**
@@ -61,7 +63,10 @@ class Job extends BaseMapper
         $qb->join('j.package', 'p')
             ->addSelect('p')
             ->join('p.company', 'c')
-            ->addSelect('c');
+            ->addSelect('c')
+            ->where('j.isUpdate = :isUpdate');
+
+        $qb->setParameter('isUpdate', false);
 
         if (null !== $jobCategoryId) {
             $qb->join('j.category', 'cat')
@@ -100,6 +105,85 @@ class Job extends BaseMapper
         }
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function findByPackageAndCompany(
+        string $companySlugName,
+        int $packageId,
+        int $jobId,
+    ): ?JobModel {
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->innerJoin('j.package', 'p', 'WITH', 'p.id = :packageId')
+            ->innerJoin('p.company', 'c', 'WITH', 'c.slugName = :companySlugName')
+            ->where('j.id = :jobId')
+            ->setParameter('jobId', $jobId)
+            ->setParameter('packageId', $packageId)
+            ->setParameter('companySlugName', $companySlugName);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * Get the `$count` most recent jobs for a company with a specific status.
+     *
+     * @return array<array-key, JobModel>
+     */
+    public function findRecentByApprovedStatus(
+        ApprovableStatus $status,
+        string $companySlugName,
+        int $count = 5,
+    ): array {
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->innerJoin('j.package', 'p')
+            ->innerJoin('p.company', 'c')
+            ->where('p.expires > CURRENT_DATE()')
+            ->andWhere('j.isUpdate = :isUpdate')
+            ->andWhere('j.approved = :status')
+            ->andWhere('c.slugName = :slugName')
+            ->orderBy('j.id', 'DESC')
+            ->setMaxResults($count);
+
+        $qb->setParameter('isUpdate', false)
+            ->setParameter('status', $status)
+            ->setParameter('slugName', $companySlugName);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return array<array-key, JobModel>
+     */
+    public function findProposals(): array
+    {
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->where('(j.approved = :approved AND j.isUpdate = :isUpdate)');
+
+        $qbu = $this->getEntityManager()->createQueryBuilder();
+        $qbu->select('IDENTITY(u.original)')->distinct()
+            ->from(JobUpdateModel::class, 'u')
+            ->innerJoin('u.proposal', 'p')
+            ->where('p.approved = :approved')
+            ->orderBy('u.id', 'DESC');
+
+        $qb->orWhere($qb->expr()->in('j.id', $qbu->getDQL()))
+            ->orderBy('j.id', 'DESC');
+
+        $qb->setParameter('approved', ApprovableStatus::Unapproved)
+            ->setParameter('isUpdate', false);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findProposal(int $proposalId): ?JobUpdateModel
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('u')
+            ->from(JobUpdateModel::class, 'u')
+            ->where('u.id = :proposalId');
+
+        $qb->setParameter('proposalId', $proposalId);
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**

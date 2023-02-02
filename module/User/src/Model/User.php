@@ -2,6 +2,7 @@
 
 namespace User\Model;
 
+use Application\Model\IdentityInterface;
 use Decision\Model\Enums\MembershipTypes;
 use Decision\Model\Member as MemberModel;
 use Doctrine\Common\Collections\{
@@ -15,17 +16,14 @@ use Doctrine\ORM\Mapping\{Column,
     OneToMany,
     OneToOne,
 };
-use Laminas\Permissions\Acl\{
-    Resource\ResourceInterface,
-    Role\RoleInterface,
-};
 use RuntimeException;
+use User\Authentication\AuthenticationService;
 
 /**
  * User model.
  */
 #[Entity]
-class User implements RoleInterface, ResourceInterface
+class User implements IdentityInterface
 {
     /**
      * The membership number.
@@ -72,6 +70,16 @@ class User implements RoleInterface, ResourceInterface
             $this->lidnr = $newUser->getLidnr();
             $this->member = $newUser->getMember();
         }
+    }
+
+    /**
+     * Return the `lidnr` of this user, generalised to `id` for the {@link AuthenticationService}.
+     *
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->getLidnr();
     }
 
     /**

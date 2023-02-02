@@ -2,15 +2,14 @@
 
 namespace Company\Model;
 
-use Company\Model\JobCategory as JobCategoryModel;
+use Application\Model\Traits\IdentifiableTrait;
+use Company\Model\Enums\CompanyPackageTypes;
 use DateTime;
 use Doctrine\ORM\Mapping\{
     Column,
     DiscriminatorColumn,
     DiscriminatorMap,
     Entity,
-    GeneratedValue,
-    Id,
     InheritanceType,
     ManyToOne,
 };
@@ -25,6 +24,7 @@ use Exception;
 #[DiscriminatorColumn(
     name: "packageType",
     type: "string",
+    enumType: CompanyPackageTypes::class,
 )]
 #[DiscriminatorMap(
     value: [
@@ -35,13 +35,16 @@ use Exception;
 )]
 abstract class CompanyPackage
 {
+    use IdentifiableTrait;
+
     /**
-     * The package's id.
+     * An alphanumeric strings which identifies to which contract this package belongs.
      */
-    #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "AUTO")]
-    protected ?int $id = null;
+    #[Column(
+        type: "string",
+        nullable: true,
+    )]
+    protected ?string $contractNumber = null;
 
     /**
      * The package's starting date.
@@ -56,7 +59,7 @@ abstract class CompanyPackage
     protected DateTime $expires;
 
     /**
-     * The package's pusblish state.
+     * The package's published state.
      */
     #[Column(type: "boolean")]
     protected bool $published;
@@ -75,13 +78,19 @@ abstract class CompanyPackage
     }
 
     /**
-     * Get the package's id.
-     *
-     * @return int|null
+     * @return string|null
      */
-    public function getId(): ?int
+    public function getContractNumber(): ?string
     {
-        return $this->id;
+        return $this->contractNumber;
+    }
+
+    /**
+     * @param string|null $contractNumber
+     */
+    public function setContractNumber(?string $contractNumber): void
+    {
+        $this->contractNumber = $contractNumber;
     }
 
     /**
@@ -135,19 +144,6 @@ abstract class CompanyPackage
     }
 
     /**
-     * Get the number of jobs in the package.
-     * This method can be overridden in subclasses.
-     *
-     * @param JobCategoryModel|null $category
-     *
-     * @return integer 0
-     */
-    public function getNumberOfActiveJobs(?JobCategoryModel $category): int
-    {
-        return 0;
-    }
-
-    /**
      * Set the package's publish state.
      *
      * @param bool $published
@@ -179,29 +175,15 @@ abstract class CompanyPackage
 
     /**
      * Gets the type of the package.
-     *
-     * @return string
-     *
-     * @throws Exception
      */
-    public function getType(): string
-    {
-        return match (ClassUtils::getClass($this)) {
-            CompanyBannerPackage::class => 'banner',
-            CompanyJobPackage::class => 'job',
-            CompanyFeaturedPackage::class => 'featured',
-            default => throw new Exception('Unknown type for class that extends CompanyPackage'),
-        };
-    }
+    abstract public function getType(): CompanyPackageTypes;
 
     /**
-     * @param DateTime $now
-     *
-     * @return bool
+     * Check whether this package is expired.
      */
-    public function isExpired(DateTime $now): bool
+    public function isExpired(): bool
     {
-        if ($now > $this->getExpirationDate()) {
+        if ((new DateTime()) >= $this->getExpirationDate()) {
             return true;
         }
 
@@ -214,7 +196,7 @@ abstract class CompanyPackage
     public function isActive(): bool
     {
         $now = new DateTime();
-        if ($this->isExpired($now)) {
+        if ($this->isExpired()) {
             // unpublish activity
             $this->setPublished(false);
 
@@ -234,6 +216,7 @@ abstract class CompanyPackage
     public function toArray(): array
     {
         return [
+            'contractNumber' => $this->getContractNumber(),
             'startDate' => $this->getStartingDate()->format('Y-m-d'),
             'expirationDate' => $this->getExpirationDate()->format('Y-m-d'),
             'published' => $this->isPublished(),
@@ -247,6 +230,7 @@ abstract class CompanyPackage
      */
     public function exchangeArray(array $data): void
     {
+        $this->setContractNumber($data['contractNumber']);
         $this->setStartingDate(
             (isset($data['startDate'])) ? new DateTime($data['startDate']) : $this->getStartingDate()
         );

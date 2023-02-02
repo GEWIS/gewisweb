@@ -112,7 +112,7 @@ $this->headScript()
                             ]);
                             ?>
                             <a href="<?= $jobUrl ?>" class="card job-card" data-index="<?= $index ?>"
-                               data-posted="<?= $job->getTimestamp()->format(DateTime::ATOM) ?>">
+                               data-posted="<?= $job->getCreatedAt()->format(DateTime::ATOM) ?>">
                                 <div class="card-img">
                                     <img
                                         src="<?= $this->fileUrl($company->getLogo()) ?>"

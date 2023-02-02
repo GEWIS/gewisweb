@@ -8,6 +8,7 @@ use Company\Service\{
     CompanyQuery as CompanyQueryService,
 };
 use Company\Model\CompanyJobPackage;
+use Company\Model\Enums\CompanyPackageTypes;
 use DateInterval;
 use DateTime;
 use Laminas\Http\{
@@ -16,9 +17,13 @@ use Laminas\Http\{
 };
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
+/**
+ * @method FlashMessenger flashMessenger()
+ */
 class AdminController extends AbstractActionController
 {
     public function __construct(
@@ -34,7 +39,7 @@ class AdminController extends AbstractActionController
      */
     public function indexAction(): ViewModel
     {
-        if (!$this->aclService->isAllowed('listAllLabels', 'company')) {
+        if (!$this->aclService->isAllowed('create', 'company')) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to administer career settings')
             );
@@ -44,8 +49,6 @@ class AdminController extends AbstractActionController
         return new ViewModel(
             [
                 'companyList' => $this->companyService->getHiddenCompanyList(),
-                'categoryList' => $this->companyQueryService->getCategoryList(false),
-                'labelList' => $this->companyQueryService->getLabelList(false),
                 'packageFuture' => $this->companyService->getPackageChangeEvents(
                     (new DateTime())->add(
                         new DateInterval('P1M')
@@ -53,6 +56,16 @@ class AdminController extends AbstractActionController
                 ),
             ]
         );
+    }
+
+    public function indexCategoriesAction(): ViewModel
+    {
+        return new ViewModel(['categoryList' => $this->companyQueryService->getCategoryList(false)]);
+    }
+
+    public function indexLabelsAction(): ViewModel
+    {
+        return new ViewModel(['labelList' => $this->companyQueryService->getLabelList(false)]);
     }
 
     /**
@@ -133,6 +146,7 @@ class AdminController extends AbstractActionController
 
             $companyForm->setData($post);
             $companyForm->setCurrentSlug($companySlugName);
+            $companyForm->setCurrentRepresentativeEmail($company->getRepresentativeEmail());
 
             if ($companyForm->isValid()) {
                 if (
@@ -194,13 +208,13 @@ class AdminController extends AbstractActionController
      */
     public function addPackageAction(): Response|ViewModel
     {
-        if (!$this->aclService->isAllowed('create', 'company')) {
+        if (!$this->aclService->isAllowed('create', 'package')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create packages'));
         }
 
         // Get parameter
         $companySlugName = $this->params()->fromRoute('companySlugName');
-        $type = $this->params()->fromRoute('type');
+        $type = CompanyPackageTypes::from($this->params()->fromRoute('type'));
         $company = $this->companyService->getCompanyBySlugName($companySlugName);
 
         if (null === $company) {
@@ -244,7 +258,7 @@ class AdminController extends AbstractActionController
                 'company_admin/company/edit/package/add',
                 [
                     'companySlugName' => $companySlugName,
-                    'type' => $type,
+                    'type' => $type->value,
                 ],
             )
         );
@@ -263,7 +277,7 @@ class AdminController extends AbstractActionController
      */
     public function editPackageAction(): Response|ViewModel
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (!$this->aclService->isAllowed('edit', 'package')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit packages'));
         }
 
@@ -315,7 +329,7 @@ class AdminController extends AbstractActionController
         // Initialize form
         $packageData = $package->toArray();
 
-        if ('featured' === $type) {
+        if (CompanyPackageTypes::Featured === $type) {
             $packageData['language_dutch'] = null !== $packageData['article'];
             $packageData['language_english'] = null !== $packageData['articleEn'];
         }
@@ -348,7 +362,7 @@ class AdminController extends AbstractActionController
      */
     public function deletePackageAction(): Response|ViewModel
     {
-        if (!$this->aclService->isAllowed('delete', 'company')) {
+        if (!$this->aclService->isAllowed('delete', 'package')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete packages'));
         }
 
@@ -390,7 +404,7 @@ class AdminController extends AbstractActionController
      */
     public function addJobAction(): Response|ViewModel
     {
-        if (!$this->aclService->isAllowed('create', 'company')) {
+        if (!$this->aclService->isAllowed('create', 'job')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create jobs'));
         }
 
@@ -428,7 +442,11 @@ class AdminController extends AbstractActionController
 
             // Check if data is valid, and insert when it is
             if ($jobForm->isValid()) {
-                if ($this->companyService->createJob($package, $jobForm->getData())) {
+                if (false !== $this->companyService->createJob($package, $jobForm->getData())) {
+                    $this->flashMessenger()->addSuccessMessage(
+                        $this->translator->translate('Job successfully created!')
+                    );
+
                     return $this->redirect()->toRoute(
                         'company_admin/company/edit/package/edit',
                         [
@@ -465,7 +483,7 @@ class AdminController extends AbstractActionController
      */
     public function editJobAction(): Response|ViewModel
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (!$this->aclService->isAllowed('edit', 'job')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit jobs'));
         }
 
@@ -504,6 +522,10 @@ class AdminController extends AbstractActionController
 
             if ($jobForm->isValid()) {
                 if ($this->companyService->updateJob($job, $jobForm->getData())) {
+                    $this->flashMessenger()->addSuccessMessage(
+                        $this->translator->translate('Job successfully edited!')
+                    );
+
                     return $this->redirect()->toRoute(
                         'company_admin/company/edit/package/edit',
                         [
@@ -536,7 +558,7 @@ class AdminController extends AbstractActionController
      */
     public function deleteJobAction(): Response|ViewModel
     {
-        if (!$this->aclService->isAllowed('delete', 'company')) {
+        if (!$this->aclService->isAllowed('delete', 'job')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete jobs'));
         }
 
@@ -578,7 +600,7 @@ class AdminController extends AbstractActionController
 
     public function addCategoryAction(): Response|ViewModel
     {
-        if (!$this->aclService->isAllowed('create', 'company')) {
+        if (!$this->aclService->isAllowed('create', 'jobCategory')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create job categories'));
         }
 
@@ -597,9 +619,13 @@ class AdminController extends AbstractActionController
                 $jobCategory = $this->companyService->createJobCategory($categoryForm->getData());
 
                 if (is_object($jobCategory)) {
+                    $this->flashMessenger()->addSuccessMessage(
+                        $this->translator->translate('Job category successfully created!')
+                    );
+
                     // Redirect to edit page
                     return $this->redirect()->toRoute(
-                        'company_admin/category/edit',
+                        'company_admin/categories/edit',
                         [
                             'jobCategoryId' => $jobCategory->getId(),
                         ],
@@ -613,7 +639,7 @@ class AdminController extends AbstractActionController
         // Initialize the form
         $categoryForm->setAttribute(
             'action',
-            $this->url()->fromRoute('company_admin/category/add'),
+            $this->url()->fromRoute('company_admin/categories/add'),
         );
         // Initialize the view
         return new ViewModel(
@@ -628,7 +654,7 @@ class AdminController extends AbstractActionController
      */
     public function editCategoryAction(): ViewModel
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (!$this->aclService->isAllowed('edit', 'jobCategory')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit job categories'));
         }
 
@@ -668,7 +694,7 @@ class AdminController extends AbstractActionController
 
     public function addLabelAction(): Response|ViewModel
     {
-        if (!$this->aclService->isAllowed('create', 'company')) {
+        if (!$this->aclService->isAllowed('create', 'jobLabel')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to create job labels'));
         }
 
@@ -687,9 +713,13 @@ class AdminController extends AbstractActionController
                 $jobLabel = $this->companyService->createJobLabel($labelForm->getData());
 
                 if (is_object($jobLabel)) {
+                    $this->flashMessenger()->addSuccessMessage(
+                        $this->translator->translate('Job label successfully created!')
+                    );
+
                     // Redirect to edit page
                     return $this->redirect()->toRoute(
-                        'company_admin/label/edit',
+                        'company_admin/labels/edit',
                         [
                             'jobLabelId' => $jobLabel->getId(),
                         ],
@@ -701,7 +731,7 @@ class AdminController extends AbstractActionController
         // Initialize the form
         $labelForm->setAttribute(
             'action',
-            $this->url()->fromRoute('company_admin/label/add'),
+            $this->url()->fromRoute('company_admin/labels/add'),
         );
 
         // Initialize the view
@@ -717,7 +747,7 @@ class AdminController extends AbstractActionController
      */
     public function editLabelAction(): ViewModel
     {
-        if (!$this->aclService->isAllowed('edit', 'company')) {
+        if (!$this->aclService->isAllowed('edit', 'jobLabel')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit job labels'));
         }
 

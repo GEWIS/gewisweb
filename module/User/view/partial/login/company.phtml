@@ -1,0 +1,66 @@
+<?php
+$form = $this->form;
+$form->prepare();
+
+$form->setAttribute('action', $this->url('user/login', ['user_type' => 'company']));
+$form->setAttribute('method', 'post');
+
+$form->setAttribute('role', 'form');
+$form->setAttribute('class', 'form-horizontal');
+?>
+<div class="panel-body">
+    <?= $this->form()->openTag($form) ?>
+    <?php
+    $email = $form->get('email');
+    $email->setAttribute('id', 'email');
+    $email->setAttribute('class', 'form-control');
+    // TODO: Re-enable login after re-enabling the creation of company accounts.
+    $email->setAttribute('disabled', 'disabled');
+    ?>
+    <div class="form-group <?= $this->bootstrapElementError($email) ?>">
+        <label for="<?= $email->getAttribute('id') ?>"
+               class="control-label col-sm-5"><?= $email->getLabel() ?></label>
+        <div class="col-sm-7">
+            <?= $this->formEmail($email) ?>
+            <?= $this->formElementErrors($email); ?>
+        </div>
+    </div>
+    <?php
+    $password = $form->get('password');
+    $password->setAttribute('id', 'password');
+    $password->setAttribute('class', 'form-control');
+    // TODO: Re-enable login after re-enabling the creation of company accounts.
+    $password->setAttribute('disabled', 'disabled');
+    ?>
+    <div class="form-group <?= $this->bootstrapElementError($password) ?>">
+        <label for="<?= $password->getAttribute('id') ?>"
+               class="control-label col-sm-5"><?= $password->getLabel() ?></label>
+        <div class="col-sm-7">
+            <?= $this->formPassword($password) ?>
+            <?= $this->formElementErrors($password); ?>
+        </div>
+    </div>
+
+    <?= $this->formInput($form->get('redirect')) ?>
+
+    <div class="form-group">
+        <div class="col-sm-offset-5 col-sm-7">
+            <?php
+            echo $this->formElement($form->get('security'));
+            $submit = $form->get('submit');
+            $submit->setAttribute('class', 'btn btn-primary');
+            // TODO: Re-enable login after re-enabling the creation of company accounts.
+            $submit->setAttribute('disabled', 'disabled');
+            ?>
+            <?= $this->formRow($submit); ?>
+        </div>
+    </div>
+
+    <?= $this->form()->closeTag(); ?>
+</div>
+<div class="panel-footer">
+    <?php $url = $this->url('user/password/reset', ['user_type' => 'company']); ?>
+    <p>
+        <?= sprintf($this->translate("If you forgot your password, go to the %sPassword reset page%s"), '<a href="' . $url . '">', '</a>') ?>
+    </p>
+</div>
